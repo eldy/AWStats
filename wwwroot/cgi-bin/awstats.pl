@@ -64,8 +64,9 @@ use vars qw/
   $lowerval
   $PluginMode
   $MetaRobot
+  $AverageVisits $AveragePages $AverageHits $AverageBytes
   $TotalUnique $TotalVisits $TotalHostsKnown $TotalHostsUnknown
-  $TotalPages $TotalHits $TotalBytes
+  $TotalPages $TotalHits $TotalBytes $TotalHitsErrors
   $TotalNotViewedPages $TotalNotViewedHits $TotalNotViewedBytes
   $TotalEntries $TotalExits $TotalBytesPages $TotalDifferentPages
   $TotalKeyphrases $TotalKeywords $TotalDifferentKeyphrases $TotalDifferentKeywords
@@ -85,8 +86,9 @@ $LastUpdate          = 0;
 $lowerval            = 0;
 $PluginMode          = '';
 $MetaRobot           = 0;
+$AverageVisits = $AveragePages = $AverageHits = $AverageBytes = 0; 
 $TotalUnique         = $TotalVisits = $TotalHostsKnown = $TotalHostsUnknown = 0;
-$TotalPages          = $TotalHits = $TotalBytes = 0;
+$TotalPages          = $TotalHits = $TotalBytes = $TotalHitsErrors = 0;
 $TotalNotViewedPages = $TotalNotViewedHits = $TotalNotViewedBytes = 0;
 $TotalEntries = $TotalExits = $TotalBytesPages = $TotalDifferentPages = 0;
 $TotalKeyphrases = $TotalKeywords = $TotalDifferentKeyphrases = 0;
@@ -996,9 +998,6 @@ EOF
 			# Call to plugins' function AddHTMLStyles
 			foreach my $pluginname ( keys %{ $PluginsLoaded{'AddHTMLStyles'} } )
 			{
-
-				# my $function="AddHTMLStyles_$pluginname()";
-				# eval("$function");
 				my $function = "AddHTMLStyles_$pluginname";
 				&$function();
 			}
@@ -1019,6 +1018,13 @@ EOF
 #	print "<script type=\"text\/javascript\" src=\"/js/fabtabulous.js\"><\/script>";
 #	print "<script type=\"text\/javascript\" src=\"/js/mytablekit.js\"><\/script>";
 
+		# Call to plugins' function AddHTMLHeader
+		foreach my $pluginname ( keys %{ $PluginsLoaded{'AddHTMLHeader'} } )
+		{
+			my $function = "AddHTMLHeader_$pluginname";
+			&$function();
+		}
+			
 		print "</head>\n\n";
 		if ( $FrameName ne 'index' ) {
 			print "<body style=\"margin-top: 0px\"";
@@ -8333,7 +8339,7 @@ sub Convert_IP_To_Decimal {
 }
 
 #------------------------------------------------------------------------------
-# Function:     Test there is at least on value in list not null
+# Function:     Test there is at least one value in list not null
 # Parameters:   List of values
 # Input:        None
 # Output:       None
@@ -8347,6 +8353,171 @@ sub AtLeastOneNotNull {
 		if ($val) { return 1; }
 	}
 	return 0;
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the command line interface help information
+# Parameters:   None
+# Input:        None
+# Output:       None
+# Return:       None
+#------------------------------------------------------------------------------
+sub PrintCLIHelp{
+	&Read_Ref_Data(
+		'browsers',       'domains', 'operating_systems', 'robots',
+		'search_engines', 'worms'
+	);
+	print "----- $PROG $VERSION (c) 2000-2010 Laurent Destailleur -----\n";
+	print
+"AWStats is a free web server logfile analyzer to show you advanced web\n";
+	print "statistics.\n";
+	print
+"AWStats comes with ABSOLUTELY NO WARRANTY. It's a free software distributed\n";
+	print "with a GNU General Public License (See LICENSE file for details).\n";
+	print "\n";
+	print "Syntax: $PROG.$Extension -config=virtualhostname [options]\n";
+	print "\n";
+	print
+"  This runs $PROG in command line to update statistics (-update option) of a\n";
+	print
+"   web site, from the log file defined in AWStats config file, or build a HTML\n";
+	print "   report (-output option).\n";
+	print
+"  First, $PROG tries to read $PROG.virtualhostname.conf as the config file.\n";
+	print "  If not found, $PROG tries to read $PROG.conf, and finally the full path passed to -config=\n";
+	print
+"  Note 1: Config files ($PROG.virtualhostname.conf or $PROG.conf) must be\n";
+	print
+"   in /etc/awstats, /usr/local/etc/awstats, /etc or same directory than\n";
+	print "   awstats.pl script file.\n";
+	print
+"  Note 2: If AWSTATS_FORCE_CONFIG environment variable is defined, AWStats will\n";
+	print
+"   use it as the \"config\" value, whatever is the value on command line or URL.\n";
+	print "   See AWStats documentation for all setup instrutions.\n";
+	print "\n";
+	print "Options to update statistics:\n";
+	print "  -update        to update statistics (default)\n";
+	print
+"  -showsteps     to add benchmark information every $NBOFLINESFORBENCHMARK lines processed\n";
+	print
+"  -showcorrupted to add output for each corrupted lines found, with reason\n";
+	print
+"  -showdropped   to add output for each dropped lines found, with reason\n";
+	print "  -showunknownorigin  to output referer when it can't be parsed\n";
+	print
+"  -showdirectorigin   to output log line when origin is a direct access\n";
+	print "  -updatefor=n   to stop the update process after parsing n lines\n";
+	print
+"  -LogFile=x     to change log to analyze whatever is 'LogFile' in config file\n";
+	print
+"  Be care to process log files in chronological order when updating statistics.\n";
+	print "\n";
+	print "Options to show statistics:\n";
+	print
+"  -output      to output main HTML report (no update made except with -update)\n";
+	print "  -output=x    to output other report pages where x is:\n";
+	print
+"               alldomains       to build page of all domains/countries\n";
+	print "               allhosts         to build page of all hosts\n";
+	print
+	  "               lasthosts        to build page of last hits for hosts\n";
+	print
+	  "               unknownip        to build page of all unresolved IP\n";
+	print
+"               allemails        to build page of all email senders (maillog)\n";
+	print
+"               lastemails       to build page of last email senders (maillog)\n";
+	print
+"               allemailr        to build page of all email receivers (maillog)\n";
+	print
+"               lastemailr       to build page of last email receivers (maillog)\n";
+	print "               alllogins        to build page of all logins used\n";
+	print
+	  "               lastlogins       to build page of last hits for logins\n";
+	print
+"               allrobots        to build page of all robots/spider visits\n";
+	print
+	  "               lastrobots       to build page of last hits for robots\n";
+	print "               urldetail        to list most often viewed pages \n";
+	print
+"               urldetail:filter to list most often viewed pages matching filter\n";
+	print "               urlentry         to list entry pages\n";
+	print
+	  "               urlentry:filter  to list entry pages matching filter\n";
+	print "               urlexit          to list exit pages\n";
+	print
+	  "               urlexit:filter   to list exit pages matching filter\n";
+	print
+"               osdetail         to build page with os detailed versions\n";
+	print
+"               browserdetail    to build page with browsers detailed versions\n";
+	print
+"               unknownbrowser   to list 'User Agents' with unknown browser\n";
+	print
+	  "               unknownos        to list 'User Agents' with unknown OS\n";
+	print
+"               refererse        to build page of all refering search engines\n";
+	print
+	  "               refererpages     to build page of all refering pages\n";
+
+ #print "               referersites     to build page of all refering sites\n";
+	print
+"               keyphrases       to list all keyphrases used on search engines\n";
+	print
+"               keywords         to list all keywords used on search engines\n";
+	print "               errors404        to list 'Referers' for 404 errors\n";
+	print
+"               allextraX        to build page of all values for ExtraSection X\n";
+	print "  -staticlinks           to have static links in HTML report page\n";
+	print "  -staticlinksext=xxx    to have static links with .xxx extension instead of .html\n";
+	print
+"  -lang=LL     to output a HTML report in language LL (en,de,es,fr,it,nl,...)\n";
+	print "  -month=MM    to output a HTML report for an old month MM\n";
+	print "  -year=YYYY   to output a HTML report for an old year YYYY\n";
+	print
+"  The 'date' options doesn't allow you to process old log file. They only\n";
+	print
+"  allow you to see a past report for a chosen month/year period instead of\n";
+	print "  current month/year.\n";
+	print "\n";
+	print "Other options:\n";
+	print
+"  -debug=X     to add debug informations lesser than level X (speed reduced)\n";
+	print "\n";
+	print "Now supports/detects:\n";
+	print
+"  Web/Ftp/Mail/streaming server log analyzis (and load balanced log files)\n";
+	print "  Reverse DNS lookup (IPv4 and IPv6) and GeoIP lookup\n";
+	print "  Number of visits, number of unique visitors\n";
+	print "  Visits duration and list of last visits\n";
+	print "  Authenticated users\n";
+	print "  Days of week and rush hours\n";
+	print "  Hosts list and unresolved IP addresses list\n";
+	print "  Most viewed, entry and exit pages\n";
+	print "  Files type and Web compression (mod_gzip, mod_deflate stats)\n";
+	print "  Screen size\n";
+	print "  Ratio of Browsers with support of: Java, Flash, RealG2 reader,\n";
+	print "                        Quicktime reader, WMA reader, PDF reader\n";
+	print "  Configurable personalized reports\n";
+	print "  " . ( scalar keys %DomainsHashIDLib ) . " domains/countries\n";
+	print "  " . ( scalar keys %RobotsHashIDLib ) . " robots\n";
+	print "  " . ( scalar keys %WormsHashLib ) . " worm's families\n";
+	print "  " . ( scalar keys %OSHashLib ) . " operating systems\n";
+	print "  " . ( scalar keys %BrowsersHashIDLib ) . " browsers";
+	&Read_Ref_Data('browsers_phone');
+	print " ("
+	  . ( scalar keys %BrowsersHashIDLib )
+	  . " with phone browsers database)\n";
+	print "  "
+	  . ( scalar keys %SearchEnginesHashLib )
+	  . " search engines (and keyphrases/keywords used from them)\n";
+	print "  All HTTP errors with last referrer\n";
+	print "  Report by day/month/year\n";
+	print "  Dynamic or static HTML or XHTML reports, static PDF reports\n";
+	print "  Indexed text or XML monthly database\n";
+	print "  And a lot of other advanced features and options...\n";
+	print "New versions and FAQ at http://awstats.sourceforge.net\n";
 }
 
 #------------------------------------------------------------------------------
@@ -8372,7 +8543,7 @@ sub Tooltip {
 # Output:       HTML Form
 # Return:       None
 #------------------------------------------------------------------------------
-sub ShowFormFilter {
+sub HTMLShowFormFilter {
 	my $fieldfiltername    = shift;
 	my $fieldfilterinvalue = shift;
 	my $fieldfilterexvalue = shift;
@@ -8444,7 +8615,7 @@ sub ShowFormFilter {
 # Output:       URL link
 # Return:       None
 #------------------------------------------------------------------------------
-sub ShowUserInfo {
+sub HTMLShowUserInfo {
 	my $user = shift;
 
 	# Call to plugins' function ShowInfoUser
@@ -8464,7 +8635,7 @@ sub ShowUserInfo {
 # Output:       Cluster info
 # Return:       None
 #------------------------------------------------------------------------------
-sub ShowClusterInfo {
+sub HTMLShowClusterInfo {
 	my $user = shift;
 
 	# Call to plugins' function ShowInfoCluster
@@ -8485,7 +8656,7 @@ sub ShowClusterInfo {
 # Output:       None
 # Return:       None
 #------------------------------------------------------------------------------
-sub ShowHostInfo {
+sub HTMLShowHostInfo {
 	my $host = shift;
 
 	# Call to plugins' function ShowInfoHost
@@ -8505,7 +8676,7 @@ sub ShowHostInfo {
 # Output:       URL link
 # Return:       None
 #------------------------------------------------------------------------------
-sub ShowURLInfo {
+sub HTMLShowURLInfo {
 	my $url     = shift;
 	my $nompage = CleanXSS($url);
 
@@ -9050,7 +9221,15 @@ sub DefinePerlParsingFormat {
 	if ($Debug) { debug(" PerlParsingFormat is $PerlParsingFormat"); }
 }
 
-sub ShowMenuCateg {
+#------------------------------------------------------------------------------
+# Function:     Prints a menu category for the frame or static header
+# Parameters:   -
+# Input:        $categ, $categtext, $categicon, $frame, $targetpage, $linkanchor,
+#				$NewLinkParams, $NewLinkTarget
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLShowMenuCateg {
 	my ( $categ, $categtext, $categicon, $frame, $targetpage, $linkanchor,
 		$NewLinkParams, $NewLinkTarget )
 	  = ( shift, shift, shift, shift, shift, shift, shift, shift );
@@ -9105,7 +9284,14 @@ sub ShowMenuCateg {
 	print( $frame? "" : "</td></tr>\n" );
 }
 
-sub ShowEmailSendersChart {
+#------------------------------------------------------------------------------
+# Function:     Prints HTML to display an email senders chart
+# Parameters:   -
+# Input:        $NewLinkParams, NewLinkTarget
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLShowEmailSendersChart {
 	my $NewLinkParams         = shift;
 	my $NewLinkTarget         = shift;
 	my $MaxLengthOfShownEMail = 48;
@@ -9265,7 +9451,14 @@ sub ShowEmailSendersChart {
 	&tab_end();
 }
 
-sub ShowEmailReceiversChart {
+#------------------------------------------------------------------------------
+# Function:     Prints HTML to display an email receivers chart
+# Parameters:   -
+# Input:        $NewLinkParams, NewLinkTarget
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLShowEmailReceiversChart {
 	my $NewLinkParams         = shift;
 	my $NewLinkTarget         = shift;
 	my $MaxLengthOfShownEMail = 48;
@@ -9423,6 +9616,6555 @@ sub ShowEmailReceiversChart {
 			  . Format_Bytes( $rest_k / ( $rest_h || 1 ) ) . "</td>";
 		}
 		if ( $ShowEMailReceivers =~ /L/i ) { print "<td>&nbsp;</td>"; }
+		print "</tr>\n";
+	}
+	&tab_end();
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the top banner of the inner frame or static page
+# Parameters:   $WIDTHMENU1
+# Input:        _
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLTopBanner{
+	my $WIDTHMENU1 = shift;
+	my $frame = ( $FrameName eq 'mainleft' );
+
+	if ($Debug) { debug( "ShowTopBan", 2 ); }
+	print "$Center<a name=\"menu\">&nbsp;</a>\n";
+
+	if ( $FrameName ne 'mainleft' ) {
+		my $NewLinkParams = ${QueryString};
+		$NewLinkParams =~ s/(^|&|&amp;)update(=\w*|$)//i;
+		$NewLinkParams =~ s/(^|&|&amp;)staticlinks(=\w*|$)//i;
+		$NewLinkParams =~ s/(^|&|&amp;)year=[^&]*//i;
+		$NewLinkParams =~ s/(^|&|&amp;)month=[^&]*//i;
+		$NewLinkParams =~ s/(^|&|&amp;)framename=[^&]*//i;
+		$NewLinkParams =~ s/(&amp;|&)+/&amp;/i;
+		$NewLinkParams =~ s/^&amp;//;
+		$NewLinkParams =~ s/&amp;$//;
+		my $NewLinkTarget = '';
+
+		if ( $FrameName eq 'mainright' ) {
+			$NewLinkTarget = " target=\"_parent\"";
+		}
+		print "<form name=\"FormDateFilter\" action=\""
+		  . XMLEncode("$AWScript?${NewLinkParams}")
+		  . "\" style=\"padding: 0px 0px 0px 0px; margin-top: 0\"$NewLinkTarget>\n";
+	}
+
+	if ( $QueryString !~ /buildpdf/i ) {
+		print
+"<table class=\"aws_border\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\" width=\"100%\">\n";
+		print "<tr><td>\n";
+		print
+"<table class=\"aws_data sortable\" border=\"0\" cellpadding=\"1\" cellspacing=\"0\" width=\"100%\">\n";
+	}
+	else {
+		print "<table width=\"100%\">\n";
+	}
+
+	if ( $FrameName ne 'mainright' ) {
+
+		# Print Statistics Of
+		if ( $FrameName eq 'mainleft' ) {
+			my $shortSiteDomain = $SiteDomain;
+			if ( length($SiteDomain) > 30 ) {
+				$shortSiteDomain =
+				    substr( $SiteDomain, 0, 20 ) . "..."
+				  . substr( $SiteDomain, length($SiteDomain) - 5, 5 );
+			}
+			print
+"<tr><td class=\"awsm\"><b>$Message[7]:</b></td></tr><tr><td class=\"aws\"><span style=\"font-size: 12px;\">$shortSiteDomain</span></td>";
+		}
+		else {
+			print
+"<tr><td class=\"aws\" valign=\"middle\"><b>$Message[7]:</b>&nbsp;</td><td class=\"aws\" valign=\"middle\"><span style=\"font-size: 14px;\">$SiteDomain</span></td>";
+		}
+
+		# Logo and flags
+		if ( $FrameName ne 'mainleft' ) {
+			if ( $LogoLink =~ "http://awstats.sourceforge.net" ) {
+				print "<td align=\"right\" rowspan=\"3\"><a href=\""
+				  . XMLEncode($LogoLink)
+				  . "\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=\"0\""
+				  . AltTitle( ucfirst($PROG) . " Web Site" )
+				  . " /></a>";
+			}
+			else {
+				print "<td align=\"right\" rowspan=\"3\"><a href=\""
+				  . XMLEncode($LogoLink)
+				  . "\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=\"0\" /></a>";
+			}
+			if ( !$StaticLinks ) { print "<br />"; Show_Flag_Links($Lang); }
+			print "</td>";
+		}
+		print "</tr>\n";
+	}
+	if ( $FrameName ne 'mainleft' ) {
+
+		# Print Last Update
+		print
+"<tr valign=\"middle\"><td class=\"aws\" valign=\"middle\" width=\"$WIDTHMENU1\"><b>$Message[35]:</b>&nbsp;</td>";
+		print
+"<td class=\"aws\" valign=\"middle\"><span style=\"font-size: 12px;\">";
+		if ($LastUpdate) { print Format_Date( $LastUpdate, 0 ); }
+		else {
+
+			# Here NbOfOldLines = 0 (because LastUpdate is not defined)
+			if ( !$UpdateStats ) {
+				print "<span style=\"color: #880000\">$Message[24]</span>";
+			}
+			else {
+				print
+"<span style=\"color: #880000\">No qualified records found in log ($NbOfLinesCorrupted corrupted, $NbOfLinesDropped dropped)</span>";
+			}
+
+		}
+		print "</span>";
+
+		# Print Update Now link
+		if ( $AllowToUpdateStatsFromBrowser && !$StaticLinks ) {
+			my $NewLinkParams = ${QueryString};
+			$NewLinkParams =~ s/(^|&|&amp;)update(=\w*|$)//i;
+			$NewLinkParams =~ s/(^|&|&amp;)staticlinks(=\w*|$)//i;
+			$NewLinkParams =~ s/(^|&|&amp;)framename=[^&]*//i;
+			if ( $FrameName eq 'mainright' ) {
+				$NewLinkParams .= "&amp;framename=mainright";
+			}
+			$NewLinkParams =~ s/(&amp;|&)+/&amp;/i;
+			$NewLinkParams =~ s/^&amp;//;
+			$NewLinkParams =~ s/&amp;$//;
+			if ($NewLinkParams) {
+				$NewLinkParams = "${NewLinkParams}&amp;";
+			}
+			print "&nbsp; &nbsp; &nbsp; &nbsp;";
+			print "<a href=\""
+			  . XMLEncode("$AWScript?${NewLinkParams}update=1")
+			  . "\">$Message[74]</a>";
+		}
+		print "</td>";
+
+		# Logo and flags
+		if ( $FrameName eq 'mainright' ) {
+			if ( $LogoLink =~ "http://awstats.sourceforge.net" ) {
+				print "<td align=\"right\" rowspan=\"2\"><a href=\""
+				  . XMLEncode($LogoLink)
+				  . "\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=\"0\""
+				  . AltTitle( ucfirst($PROG) . " Web Site" )
+				  . " /></a>\n";
+			}
+			else {
+				print "<td align=\"right\" rowspan=\"2\"><a href=\""
+				  . XMLEncode($LogoLink)
+				  . "\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=\"0\" /></a>\n";
+			}
+			if ( !$StaticLinks ) { print "<br />"; Show_Flag_Links($Lang); }
+			print "</td>";
+		}
+
+		print "</tr>\n";
+
+		# Print selected period of analysis (month and year required)
+		print
+"<tr><td class=\"aws\" valign=\"middle\"><b>$Message[133]:</b></td>";
+		print "<td class=\"aws\" valign=\"middle\">";
+		if ( $ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ) {
+			print "<select class=\"aws_formfield\" name=\"month\">\n";
+			foreach ( 1 .. 12 ) {
+				my $monthix = sprintf( "%02s", $_ );
+				print "<option"
+				  . (
+					  "$MonthRequired" eq "$monthix"
+					? " selected=\"true\""
+					: ""
+				  )
+				  . " value=\"$monthix\">$MonthNumLib{$monthix}</option>\n";
+			}
+			if ( $AllowFullYearView >= 2 ) {
+				print "<option"
+				  . ( $MonthRequired eq 'all' ? " selected=\"true\"" : "" )
+				  . " value=\"all\">- $Message[6] -</option>\n";
+			}
+			print "</select>\n";
+			print "<select class=\"aws_formfield\" name=\"year\">\n";
+
+			# Add YearRequired in list if not in ListOfYears
+			$ListOfYears{$YearRequired} ||= $MonthRequired;
+			foreach ( sort keys %ListOfYears ) {
+				print "<option"
+				  . ( $YearRequired eq "$_" ? " selected=\"true\"" : "" )
+				  . " value=\"$_\">$_</option>\n";
+			}
+			print "</select>\n";
+			print "<input type=\"hidden\" name=\"output\" value=\""
+			  . join( ',', keys %HTMLOutput )
+			  . "\" />\n";
+			if ($SiteConfig) {
+				print
+"<input type=\"hidden\" name=\"config\" value=\"$SiteConfig\" />\n";
+			}
+			if ($DirConfig) {
+				print
+"<input type=\"hidden\" name=\"configdir\" value=\"$DirConfig\" />\n";
+			}
+			if ( $QueryString =~ /lang=(\w+)/i ) {
+				print
+				  "<input type=\"hidden\" name=\"lang\" value=\"$1\" />\n";
+			}
+			if ( $QueryString =~ /debug=(\d+)/i ) {
+				print
+				  "<input type=\"hidden\" name=\"debug\" value=\"$1\" />\n";
+			}
+			if ( $FrameName eq 'mainright' ) {
+				print
+"<input type=\"hidden\" name=\"framename\" value=\"index\" />\n";
+			}
+			print
+"<input type=\"submit\" value=\" $Message[115] \" class=\"aws_button\" />";
+		}
+		else {
+			print "<span style=\"font-size: 14px;\">";
+			if ($DayRequired) { print "$Message[4] $DayRequired - "; }
+			if ( $MonthRequired eq 'all' ) {
+				print "$Message[6] $YearRequired";
+			}
+			else {
+				print
+				  "$Message[5] $MonthNumLib{$MonthRequired} $YearRequired";
+			}
+			print "</span>";
+		}
+		print "</td></tr>\n";
+	}
+	if ( $QueryString !~ /buildpdf/i ) {
+		print "</table>\n";
+		print "</td></tr></table>\n";
+	}
+	else {
+		print "</table>\n";
+	}
+
+	if ( $FrameName ne 'mainleft' ) { print "</form>\n"; }
+	else { print "<br />\n"; }
+	print "\n";
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the menu in a frame or below the top banner
+# Parameters:   _
+# Input:        _
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLMenu{
+	my $NewLinkParams = shift;
+	my $NewLinkTarget = shift;
+	my $frame = ( $FrameName eq 'mainleft' );
+
+	if ($Debug) { debug( "ShowMenu", 2 ); }
+
+	# Print menu links
+	if ( ( $HTMLOutput{'main'} && $FrameName ne 'mainright' )
+		|| $FrameName eq 'mainleft' )
+	{    # If main page asked
+		    # Define link anchor
+		my $linkanchor =
+		  ( $FrameName eq 'mainleft' ? "$AWScript?${NewLinkParams}" : "" );
+		if ( $linkanchor && ( $linkanchor !~ /framename=mainright/ ) ) {
+			$linkanchor .= "framename=mainright";
+		}
+		$linkanchor =~ s/(&|&amp;)$//;
+		$linkanchor = XMLEncode("$linkanchor");
+
+		# Define target
+		my $targetpage =
+		  ( $FrameName eq 'mainleft' ? " target=\"mainright\"" : "" );
+
+		# Print Menu
+		my $linetitle;    # TODO a virer
+		if ( !$PluginsLoaded{'ShowMenu'}{'menuapplet'} ) {
+			my $menuicon = 0;    # TODO a virer
+			                     # Menu HTML
+			print "<table"
+			  . (
+				$frame
+				? " cellspacing=\"0\" cellpadding=\"0\" border=\"0\""
+				: ""
+			  )
+			  . ">\n";
+			if ( $FrameName eq 'mainleft' && $ShowMonthStats ) {
+				print( $frame? "<tr><td class=\"awsm\">" : "" );
+				print
+"<a href=\"$linkanchor#top\"$targetpage>$Message[128]</a>";
+				print( $frame? "</td></tr>\n" : " &nbsp; " );
+			}
+			my %menu     = ();
+			my %menulink = ();
+			my %menutext = ();
+
+			# When
+			%menu = (
+				'month'       => $ShowMonthStats       ? 1 : 0,
+				'daysofmonth' => $ShowDaysOfMonthStats ? 2 : 0,
+				'daysofweek'  => $ShowDaysOfWeekStats  ? 3 : 0,
+				'hours'       => $ShowHoursStats       ? 4 : 0
+			);
+			%menulink = (
+				'month'       => 1,
+				'daysofmonth' => 1,
+				'daysofweek'  => 1,
+				'hours'       => 1
+			);
+			%menutext = (
+				'month'       => $Message[162],
+				'daysofmonth' => $Message[138],
+				'daysofweek'  => $Message[91],
+				'hours'       => $Message[20]
+			);
+			HTMLShowMenuCateg(
+				'when',         $Message[93],
+				'menu4.png',    $frame,
+				$targetpage,    $linkanchor,
+				$NewLinkParams, $NewLinkTarget,
+				\%menu,         \%menulink,
+				\%menutext
+			);
+
+			# Who
+			%menu = (
+				'countries'  => $ShowDomainsStats ? 1 : 0,
+				'alldomains' => $ShowDomainsStats ? 2 : 0,
+				'visitors'   => $ShowHostsStats   ? 3 : 0,
+				'allhosts'   => $ShowHostsStats   ? 4 : 0,
+				'lasthosts' => ( $ShowHostsStats =~ /L/i ) ? 5 : 0,
+				'unknownip' => $ShowHostsStats         ? 6 : 0,
+				'logins'    => $ShowAuthenticatedUsers ? 7 : 0,
+				'alllogins' => $ShowAuthenticatedUsers ? 8 : 0,
+				'lastlogins' => ( $ShowAuthenticatedUsers =~ /L/i ) ? 9 : 0,
+				'emailsenders' => $ShowEMailSenders ? 10 : 0,
+				'allemails'    => $ShowEMailSenders ? 11 : 0,
+				'lastemails' => ( $ShowEMailSenders =~ /L/i ) ? 12 : 0,
+				'emailreceivers' => $ShowEMailReceivers ? 13 : 0,
+				'allemailr'      => $ShowEMailReceivers ? 14 : 0,
+				'lastemailr' => ( $ShowEMailReceivers =~ /L/i ) ? 15 : 0,
+				'robots'    => $ShowRobotsStats ? 16 : 0,
+				'allrobots' => $ShowRobotsStats ? 17 : 0,
+				'lastrobots' => ( $ShowRobotsStats =~ /L/i ) ? 18 : 0,
+				'worms' => $ShowWormsStats ? 19 : 0
+			);
+			%menulink = (
+				'countries'      => 1,
+				'alldomains'     => 2,
+				'visitors'       => 1,
+				'allhosts'       => 2,
+				'lasthosts'      => 2,
+				'unknownip'      => 2,
+				'logins'         => 1,
+				'alllogins'      => 2,
+				'lastlogins'     => 2,
+				'emailsenders'   => 1,
+				'allemails'      => 2,
+				'lastemails'     => 2,
+				'emailreceivers' => 1,
+				'allemailr'      => 2,
+				'lastemailr'     => 2,
+				'robots'         => 1,
+				'allrobots'      => 2,
+				'lastrobots'     => 2,
+				'worms'          => 1
+			);
+			%menutext = (
+				'countries'      => $Message[148],
+				'alldomains'     => $Message[80],
+				'visitors'       => $Message[81],
+				'allhosts'       => $Message[80],
+				'lasthosts'      => $Message[9],
+				'unknownip'      => $Message[45],
+				'logins'         => $Message[94],
+				'alllogins'      => $Message[80],
+				'lastlogins'     => $Message[9],
+				'emailsenders'   => $Message[131],
+				'allemails'      => $Message[80],
+				'lastemails'     => $Message[9],
+				'emailreceivers' => $Message[132],
+				'allemailr'      => $Message[80],
+				'lastemailr'     => $Message[9],
+				'robots'         => $Message[53],
+				'allrobots'      => $Message[80],
+				'lastrobots'     => $Message[9],
+				'worms'          => $Message[136]
+			);
+			HTMLShowMenuCateg(
+				'who',          $Message[92],
+				'menu5.png',    $frame,
+				$targetpage,    $linkanchor,
+				$NewLinkParams, $NewLinkTarget,
+				\%menu,         \%menulink,
+				\%menutext
+			);
+
+			# Navigation
+			$linetitle = &AtLeastOneNotNull(
+				$ShowSessionsStats,  $ShowPagesStats,
+				$ShowFileTypesStats, $ShowFileSizesStats,
+				$ShowOSStats,        $ShowBrowsersStats,
+				$ShowScreenSizeStats
+			);
+			if ($linetitle) {
+				print "<tr><td class=\"awsm\""
+				  . ( $frame ? "" : " valign=\"top\"" ) . ">"
+				  . (
+					$menuicon
+					? "<img src=\"$DirIcons/other/menu2.png\" />&nbsp;"
+					: ""
+				  )
+				  . "<b>$Message[72]:</b></td>\n";
+			}
+			if ($linetitle) {
+				print( $frame? "</tr>\n" : "<td class=\"awsm\">" );
+			}
+			if ($ShowSessionsStats) {
+				print( $frame? "<tr><td class=\"awsm\">" : "" );
+				print
+"<a href=\"$linkanchor#sessions\"$targetpage>$Message[117]</a>";
+				print( $frame? "</td></tr>\n" : " &nbsp; " );
+			}
+			if ($ShowFileTypesStats) {
+				print( $frame? "<tr><td class=\"awsm\">" : "" );
+				print
+"<a href=\"$linkanchor#filetypes\"$targetpage>$Message[73]</a>";
+				print( $frame? "</td></tr>\n" : " &nbsp; " );
+			}
+			if ($ShowPagesStats) {
+				print( $frame? "<tr><td class=\"awsm\">" : "" );
+				print
+"<a href=\"$linkanchor#urls\"$targetpage>$Message[29]</a>\n";
+				print( $frame? "</td></tr>\n" : " &nbsp; " );
+			}
+			if ($ShowPagesStats) {
+				print( $frame
+					? "<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> "
+					: ""
+				);
+				print "<a href=\""
+				  . (
+					$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
+					? XMLEncode(
+						"$AWScript?${NewLinkParams}output=urldetail")
+					: "$StaticLinks.urldetail.$StaticExt"
+				  )
+				  . "\"$NewLinkTarget>$Message[80]</a>\n";
+				print( $frame? "</td></tr>\n" : " &nbsp; " );
+			}
+			if ( $ShowPagesStats =~ /E/i ) {
+				print( $frame
+					? "<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> "
+					: ""
+				);
+				print "<a href=\""
+				  . (
+					$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
+					? XMLEncode(
+						"$AWScript?${NewLinkParams}output=urlentry")
+					: "$StaticLinks.urlentry.$StaticExt"
+				  )
+				  . "\"$NewLinkTarget>$Message[104]</a>\n";
+				print( $frame? "</td></tr>\n" : " &nbsp; " );
+			}
+			if ( $ShowPagesStats =~ /X/i ) {
+				print( $frame
+					? "<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> "
+					: ""
+				);
+				print "<a href=\""
+				  . (
+					$ENV{'GATEWAY_INTERFACE'}
+					  || !$StaticLinks
+					? XMLEncode("$AWScript?${NewLinkParams}output=urlexit")
+					: "$StaticLinks.urlexit.$StaticExt"
+				  )
+				  . "\"$NewLinkTarget>$Message[116]</a>\n";
+				print( $frame? "</td></tr>\n" : " &nbsp; " );
+			}
+			if ($ShowOSStats) {
+				print( $frame? "<tr><td class=\"awsm\">" : "" );
+				print
+				  "<a href=\"$linkanchor#os\"$targetpage>$Message[59]</a>";
+				print( $frame? "</td></tr>\n" : " &nbsp; " );
+			}
+			if ($ShowOSStats) {
+				print( $frame
+					? "<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> "
+					: ""
+				);
+				print "<a href=\""
+				  . (
+					$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
+					? XMLEncode(
+						"$AWScript?${NewLinkParams}output=osdetail")
+					: "$StaticLinks.osdetail.$StaticExt"
+				  )
+				  . "\"$NewLinkTarget>$Message[58]</a>\n";
+				print( $frame? "</td></tr>\n" : " &nbsp; " );
+			}
+			if ($ShowOSStats) {
+				print( $frame
+					? "<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> "
+					: ""
+				);
+				print "<a href=\""
+				  . (
+					$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
+					? XMLEncode(
+						"$AWScript?${NewLinkParams}output=unknownos")
+					: "$StaticLinks.unknownos.$StaticExt"
+				  )
+				  . "\"$NewLinkTarget>$Message[0]</a>\n";
+				print( $frame? "</td></tr>\n" : " &nbsp; " );
+			}
+			if ($ShowBrowsersStats) {
+				print( $frame? "<tr><td class=\"awsm\">" : "" );
+				print
+"<a href=\"$linkanchor#browsers\"$targetpage>$Message[21]</a>";
+				print( $frame? "</td></tr>\n" : " &nbsp; " );
+			}
+			if ($ShowBrowsersStats) {
+				print( $frame
+					? "<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> "
+					: ""
+				);
+				print "<a href=\""
+				  . (
+					$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
+					? XMLEncode(
+						"$AWScript?${NewLinkParams}output=browserdetail")
+					: "$StaticLinks.browserdetail.$StaticExt"
+				  )
+				  . "\"$NewLinkTarget>$Message[58]</a>\n";
+				print( $frame? "</td></tr>\n" : " &nbsp; " );
+			}
+			if ($ShowBrowsersStats) {
+				print( $frame
+					? "<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> "
+					: ""
+				);
+				print "<a href=\""
+				  . (
+					$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
+					? XMLEncode(
+						"$AWScript?${NewLinkParams}output=unknownbrowser")
+					: "$StaticLinks.unknownbrowser.$StaticExt"
+				  )
+				  . "\"$NewLinkTarget>$Message[0]</a>\n";
+				print( $frame? "</td></tr>\n" : " &nbsp; " );
+			}
+			if ($ShowScreenSizeStats) {
+				print( $frame? "<tr><td class=\"awsm\">" : "" );
+				print
+"<a href=\"$linkanchor#screensizes\"$targetpage>$Message[135]</a>";
+				print( $frame? "</td></tr>\n" : " &nbsp; " );
+			}
+			if ($linetitle) { print( $frame? "" : "</td></tr>\n" ); }
+
+			# Referers
+			%menu = (
+				'referer'      => $ShowOriginStats ? 1 : 0,
+				'refererse'    => $ShowOriginStats ? 2 : 0,
+				'refererpages' => $ShowOriginStats ? 3 : 0,
+				'keys' => ( $ShowKeyphrasesStats || $ShowKeywordsStats )
+				? 4
+				: 0,
+				'keyphrases' => $ShowKeyphrasesStats ? 5 : 0,
+				'keywords'   => $ShowKeywordsStats   ? 6 : 0
+			);
+			%menulink = (
+				'referer'      => 1,
+				'refererse'    => 2,
+				'refererpages' => 2,
+				'keys'         => 1,
+				'keyphrases'   => 2,
+				'keywords'     => 2
+			);
+			%menutext = (
+				'referer'      => $Message[37],
+				'refererse'    => $Message[126],
+				'refererpages' => $Message[127],
+				'keys'         => $Message[14],
+				'keyphrases'   => $Message[120],
+				'keywords'     => $Message[121]
+			);
+			HTMLShowMenuCateg(
+				'referers',     $Message[23],
+				'menu7.png',    $frame,
+				$targetpage,    $linkanchor,
+				$NewLinkParams, $NewLinkTarget,
+				\%menu,         \%menulink,
+				\%menutext
+			);
+
+			# Others
+			%menu = (
+				'filetypes' => ( $ShowFileTypesStats =~ /C/i ) ? 1 : 0,
+				'misc' => $ShowMiscStats ? 2 : 0,
+				'errors' => ( $ShowHTTPErrorsStats || $ShowSMTPErrorsStats )
+				? 3
+				: 0,
+				'clusters' => $ShowClusterStats ? 5 : 0
+			);
+			%menulink = (
+				'filetypes' => 1,
+				'misc'      => 1,
+				'errors'    => 1,
+				'clusters'  => 1
+			);
+			%menutext = (
+				'filetypes' => $Message[98],
+				'misc'      => $Message[139],
+				'errors'    =>
+				  ( $ShowSMTPErrorsStats ? $Message[147] : $Message[32] ),
+				'clusters' => $Message[155]
+			);
+			foreach ( keys %TrapInfosForHTTPErrorCodes ) {
+				$menu{"errors$_"}     = $ShowHTTPErrorsStats ? 4 : 0;
+				$menulink{"errors$_"} = 2;
+				$menutext{"errors$_"} = $Message[31];
+			}
+			HTMLShowMenuCateg(
+				'others',       $Message[2],
+				'menu8.png',    $frame,
+				$targetpage,    $linkanchor,
+				$NewLinkParams, $NewLinkTarget,
+				\%menu,         \%menulink,
+				\%menutext
+			);
+
+			# Extra/Marketing
+			%menu     = ();
+			%menulink = ();
+			%menutext = ();
+			my $i = 1;
+			foreach ( 1 .. @ExtraName - 1 ) {
+				$menu{"extra$_"}        = $i++;
+				$menulink{"extra$_"}    = 1;
+				$menutext{"extra$_"}    = $ExtraName[$_];
+				$menu{"allextra$_"}     = $i++;
+				$menulink{"allextra$_"} = 2;
+				$menutext{"allextra$_"} = $Message[80];
+			}
+			HTMLShowMenuCateg(
+				'extra',        $Message[134],
+				'',             $frame,
+				$targetpage,    $linkanchor,
+				$NewLinkParams, $NewLinkTarget,
+				\%menu,         \%menulink,
+				\%menutext
+			);
+			print "</table>\n";
+		}
+		else {
+
+			# Menu Applet
+			if ($frame) { }
+			else { }
+		}
+
+		#print ($frame?"":"<br />\n");
+		print "<br />\n";
+	}
+
+	# Print Back link
+	elsif ( !$HTMLOutput{'main'} ) {
+		print "<table>\n";
+		$NewLinkParams =~ s/(^|&|&amp;)hostfilter=[^&]*//i;
+		$NewLinkParams =~ s/(^|&|&amp;)urlfilter=[^&]*//i;
+		$NewLinkParams =~ s/(^|&|&amp;)refererpagesfilter=[^&]*//i;
+		$NewLinkParams =~ s/(&amp;|&)+/&amp;/i;
+		$NewLinkParams =~ s/^&amp;//;
+		$NewLinkParams =~ s/&amp;$//;
+		if (   !$DetailedReportsOnNewWindows
+			|| $FrameName eq 'mainright'
+			|| $QueryString =~ /buildpdf/i )
+		{
+			print "<tr><td class=\"aws\"><a href=\""
+			  . (
+				$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
+				? XMLEncode(
+					"$AWScript"
+					  . ( ${NewLinkParams} ? "?${NewLinkParams}" : "" )
+				  )
+				: "$StaticLinks.$StaticExt"
+			  )
+			  . "\">$Message[76]</a></td></tr>\n";
+		}
+		else {
+			print
+"<tr><td class=\"aws\"><a href=\"javascript:parent.window.close();\">$Message[118]</a></td></tr>\n";
+		}
+		print "</table>\n";
+		print "\n";
+	}
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the File Type table
+# Parameters:   _
+# Input:        _
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLMainFileType{
+	if ($Debug) { debug( "ShowFileTypesStatsCompressionStats", 2 ); }
+	print "$Center<a name=\"filetypes\">&nbsp;</a><br />\n";
+	my $Totalh = 0;
+	foreach ( keys %_filetypes_h ) { $Totalh += $_filetypes_h{$_}; }
+	my $Totalk = 0;
+	foreach ( keys %_filetypes_k ) { $Totalk += $_filetypes_k{$_}; }
+	my $title = "$Message[73]";
+	if ( $ShowFileTypesStats =~ /C/i ) { $title .= " - $Message[98]"; }
+	
+	# build keylist at top
+	&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_filetypes_h,
+		\%_filetypes_h );
+		
+	&tab_head( "$title", 19, 0, 'filetypes' );
+		
+	# Graph the top five in a pie chart
+	if (scalar @keylist > 1){
+		foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
+		{
+			my @blocklabel = ();
+			my @valdata = ();
+			my @valcolor = ($color_p);
+			my $cnt = 0;
+			foreach my $key (@keylist) {
+				push @valdata, int( $_filetypes_h{$key} / $Totalh * 1000 ) / 10;
+				push @blocklabel, "$key";
+				$cnt++;
+				if ($cnt > 4) { last; }
+			}
+			print "<tr><td colspan=\"7\">";
+			my $function = "ShowGraph_$pluginname";
+			&$function(
+				"$title",              "filetypes",
+				0, 						\@blocklabel,
+				0,           			\@valcolor,
+				0,              		0,
+				0,          			\@valdata
+			);
+			print "</td></tr>";
+		}
+	}
+	
+	print
+"<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"3\">$Message[73]</th>";
+
+	if ( $ShowFileTypesStats =~ /H/i ) {
+		print "<th bgcolor=\"#$color_h\" width=\"80\""
+		  . Tooltip(4)
+		  . ">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th>";
+	}
+	if ( $ShowFileTypesStats =~ /B/i ) {
+		print "<th bgcolor=\"#$color_k\" width=\"80\""
+		  . Tooltip(5)
+		  . ">$Message[75]</th><th bgcolor=\"#$color_k\" width=\"80\">$Message[15]</th>";
+	}
+	if ( $ShowFileTypesStats =~ /C/i ) {
+		print
+"<th bgcolor=\"#$color_k\" width=\"100\">$Message[100]</th><th bgcolor=\"#$color_k\" width=\"100\">$Message[101]</th><th bgcolor=\"#$color_k\" width=\"100\">$Message[99]</th>";
+	}
+	print "</tr>\n";
+	my $total_con = 0;
+	my $total_cre = 0;
+	my $count     = 0;
+	foreach my $key (@keylist) {
+		my $p_h = '&nbsp;';
+		my $p_k = '&nbsp;';
+		if ($Totalh) {
+			$p_h = int( $_filetypes_h{$key} / $Totalh * 1000 ) / 10;
+			$p_h = "$p_h %";
+		}
+		if ($Totalk) {
+			$p_k = int( $_filetypes_k{$key} / $Totalk * 1000 ) / 10;
+			$p_k = "$p_k %";
+		}
+		if ( $key eq 'Unknown' ) {
+			print "<tr><td"
+			  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
+			  . "><img src=\"$DirIcons\/mime\/unknown.png\""
+			  . AltTitle("")
+			  . " /></td><td class=\"aws\" colspan=\"2\"><span style=\"color: #$color_other\">$Message[0]</span></td>";
+		}
+		else {
+			my $nameicon = $MimeHashIcon{$key} || "notavailable";
+			my $nametype =
+			  $MimeHashLib{ $MimeHashFamily{$key} || "" } || "&nbsp;";
+			print "<tr><td"
+			  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
+			  . "><img src=\"$DirIcons\/mime\/$nameicon.png\""
+			  . AltTitle("")
+			  . " /></td><td class=\"aws\">$key</td>";
+			print "<td class=\"aws\">$nametype</td>";
+		}
+		if ( $ShowFileTypesStats =~ /H/i ) {
+			print "<td>".Format_Number($_filetypes_h{$key})."</td><td>$p_h</td>";
+		}
+		if ( $ShowFileTypesStats =~ /B/i ) {
+			print '<td nowrap="nowrap">'
+			  . Format_Bytes( $_filetypes_k{$key} )
+			  . "</td><td>$p_k</td>";
+		}
+		if ( $ShowFileTypesStats =~ /C/i ) {
+			if ( $_filetypes_gz_in{$key} ) {
+				my $percent = int(
+					100 * (
+						1 - $_filetypes_gz_out{$key} /
+						  $_filetypes_gz_in{$key}
+					)
+				);
+				printf(
+					"<td>%s</td><td>%s</td><td>%s (%s%)</td>",
+					Format_Bytes( $_filetypes_gz_in{$key} ),
+					Format_Bytes( $_filetypes_gz_out{$key} ),
+					Format_Bytes(
+						$_filetypes_gz_in{$key} -
+						  $_filetypes_gz_out{$key}
+					),
+					$percent
+				);
+				$total_con += $_filetypes_gz_in{$key};
+				$total_cre += $_filetypes_gz_out{$key};
+			}
+			else {
+				print "<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>";
+			}
+		}
+		print "</tr>\n";
+		$count++;
+	}
+
+	# Add total (only usefull if compression is enabled)
+	if ( $ShowFileTypesStats =~ /C/i ) {
+		my $colspan = 3;
+		if ( $ShowFileTypesStats =~ /H/i ) { $colspan += 2; }
+		if ( $ShowFileTypesStats =~ /B/i ) { $colspan += 2; }
+		print "<tr>";
+		print
+"<td class=\"aws\" colspan=\"$colspan\"><b>$Message[98]</b></td>";
+		if ( $ShowFileTypesStats =~ /C/i ) {
+			if ($total_con) {
+				my $percent =
+				  int( 100 * ( 1 - $total_cre / $total_con ) );
+				printf(
+					"<td>%s</td><td>%s</td><td>%s (%s%)</td>",
+					Format_Bytes($total_con),
+					Format_Bytes($total_cre),
+					Format_Bytes( $total_con - $total_cre ),
+					$percent
+				);
+			}
+			else {
+				print "<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>";
+			}
+		}
+		print "</tr>\n";
+	}
+	&tab_end();
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the Browser Detail frame or static page
+# Parameters:   _
+# Input:        _
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLShowBrowserDetail{
+	# Show browsers versions
+	print "$Center<a name=\"browsersversions\">&nbsp;</a><br />";
+	my $title = "$Message[21]";
+	&tab_head( "$title", 19, 0, 'browsersversions' );
+	print
+"<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[58]</th>";
+	print
+"<th width=\"80\">$Message[111]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th>";
+	print "<th>&nbsp;</th>";
+	print "</tr>\n";
+	my $total_h = 0;
+	my $count = 0;
+	&BuildKeyList( MinimumButNoZero( scalar keys %_browser_h, 500 ),
+		1, \%_browser_h, \%_browser_h );
+	my %keysinkeylist = ();
+	my $max_h = 1;
+
+	# Count total by family
+	my %totalfamily_h = ();
+	my $TotalFamily   = 0;
+  BROWSERLOOP: foreach my $key (@keylist) {
+		$total_h += $_browser_h{$key};
+		if ( $_browser_h{$key} > $max_h ) {
+			$max_h = $_browser_h{$key};
+		}
+		foreach my $family ( keys %BrowsersFamily ) {
+			if ( $key =~ /^$family/i ) {
+				$totalfamily_h{$family} += $_browser_h{$key};
+				$TotalFamily            += $_browser_h{$key};
+				next BROWSERLOOP;
+			}
+		}
+	}
+
+	# Write records grouped in a browser family
+	foreach my $family (
+		sort { $BrowsersFamily{$a} <=> $BrowsersFamily{$b} }
+		keys %BrowsersFamily
+	  )
+	{
+		my $p = '&nbsp;';
+		if ($total_h) {
+			$p = int( $totalfamily_h{$family} / $total_h * 1000 ) / 10;
+			$p = "$p %";
+		}
+		my $familyheadershown = 0;
+
+		#foreach my $key ( reverse sort keys %_browser_h ) {
+		foreach my $key ( reverse sort SortBrowsers keys %_browser_h ) {
+			if ( $key =~ /^$family(.*)/i ) {
+				if ( !$familyheadershown ) {
+					print
+"<tr bgcolor=\"#F6F6F6\"><td class=\"aws\" colspan=\"2\"><b>"
+				  . uc($family)
+				  . "</b></td>";
+				print "<td>&nbsp;</td><td><b>"
+				  . Format_Number(int( $totalfamily_h{$family} ))
+				  . "</b></td><td><b>$p</b></td><td>&nbsp;</td>";
+				print "</tr>\n";
+				$familyheadershown = 1;
+			}
+			$keysinkeylist{$key} = 1;
+			my $ver = $1;
+			my $p   = '&nbsp;';
+			if ($total_h) {
+				$p =
+				  int( $_browser_h{$key} / $total_h * 1000 ) / 10;
+				$p = "$p %";
+			}
+			print "<tr>";
+			print "<td"
+			  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
+			  . "><img src=\"$DirIcons\/browser\/$family.png\""
+			  . AltTitle("")
+			  . " /></td>";
+			print "<td class=\"aws\">"
+			  . ucfirst($family) . " "
+			  . ( $ver ? "$ver" : "?" ) . "</td>";
+			print "<td>"
+			  . (
+				$BrowsersHereAreGrabbers{$family}
+				? "<b>$Message[112]</b>"
+				: "$Message[113]"
+			  )
+			  . "</td>";
+			my $bredde_h = 0;
+			if ( $max_h > 0 ) {
+				$bredde_h =
+				  int( $BarWidth * ( $_browser_h{$key} || 0 ) /
+					  $max_h ) + 1;
+			}
+			if ( ( $bredde_h == 1 ) && $_browser_h{$key} ) {
+				$bredde_h = 2;
+			}
+			print "<td>".Format_Number($_browser_h{$key})."</td><td>$p</td>";
+			print "<td class=\"aws\">";
+
+			# alt and title are not provided to reduce page size
+			if ($ShowBrowsersStats) {
+				print
+"<img src=\"$DirIcons\/other\/$BarPng{'hh'}\" width=\"$bredde_h\" height=\"5\" /><br />";
+				}
+				print "</td>";
+				print "</tr>\n";
+				$count++;
+			}
+		}
+	}
+
+	# Write other records
+	my $familyheadershown = 0;
+	foreach my $key (@keylist) {
+		if ( $keysinkeylist{$key} ) { next; }
+		if ( !$familyheadershown )  {
+			my $p = '&nbsp;';
+			if ($total_h) {
+				$p =
+				  int( ( $total_h - $TotalFamily ) / $total_h * 1000 ) /
+				  10;
+				$p = "$p %";
+			}
+			print
+"<tr bgcolor=\"#F6F6F6\"><td class=\"aws\" colspan=\"2\"><b>$Message[2]</b></td>";
+			print "<td>&nbsp;</td><td><b>"
+			  . Format_Number(( $total_h - $TotalFamily ))
+			  . "</b></td><td><b>$p</b></td><td>&nbsp;</td>";
+			print "</tr>\n";
+			$familyheadershown = 1;
+		}
+		my $p = '&nbsp;';
+		if ($total_h) {
+			$p = int( $_browser_h{$key} / $total_h * 1000 ) / 10;
+			$p = "$p %";
+		}
+		print "<tr>";
+		if ( $key eq 'Unknown' ) {
+			print "<td"
+			  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
+			  . "><img src=\"$DirIcons\/browser\/unknown.png\""
+			  . AltTitle("")
+			  . " /></td><td class=\"aws\"><span style=\"color: #$color_other\">$Message[0]</span></td><td width=\"80\">?</td>";
+		}
+		else {
+			my $keywithoutcumul = $key;
+			$keywithoutcumul =~ s/cumul$//i;
+			my $libbrowser = $BrowsersHashIDLib{$keywithoutcumul}
+			  || $keywithoutcumul;
+			my $nameicon = $BrowsersHashIcon{$keywithoutcumul}
+			  || "notavailable";
+			print "<td"
+			  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
+			  . "><img src=\"$DirIcons\/browser\/$nameicon.png\""
+			  . AltTitle("")
+			  . " /></td><td class=\"aws\">$libbrowser</td><td>"
+			  . (
+				$BrowsersHereAreGrabbers{$key}
+				? "<b>$Message[112]</b>"
+				: "$Message[113]"
+			  )
+			  . "</td>";
+		}
+		my $bredde_h = 0;
+		if ( $max_h > 0 ) {
+			$bredde_h =
+			  int( $BarWidth * ( $_browser_h{$key} || 0 ) / $max_h ) +
+			  1;
+		}
+		if ( ( $bredde_h == 1 ) && $_browser_h{$key} ) {
+			$bredde_h = 2;
+		}
+		print "<td>".Format_Number($_browser_h{$key})."</td><td>$p</td>";
+		print "<td class=\"aws\">";
+
+		# alt and title are not provided to reduce page size
+		if ($ShowBrowsersStats) {
+			print
+"<img src=\"$DirIcons\/other\/$BarPng{'hh'}\" width=\"$bredde_h\" height=\"5\" /><br />";
+		}
+		print "</td>";
+		print "</tr>\n";
+	}
+	&tab_end();
+	&html_end(1);
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the Unknown Browser Detail frame or static page
+# Parameters:   _
+# Input:        _
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLShowBrowserUnknown{
+	print "$Center<a name=\"unknownbrowser\">&nbsp;</a><br />\n";
+	my $title = "$Message[50]";
+	&tab_head( "$title", 19, 0, 'unknownbrowser' );
+	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>User agent ("
+	  . ( scalar keys %_unknownrefererbrowser_l )
+	  . ")</th><th>$Message[9]</th></tr>\n";
+	my $total_l = 0;
+	my $count = 0;
+	&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_unknownrefererbrowser_l,
+		\%_unknownrefererbrowser_l );
+	foreach my $key (@keylist) {
+		my $useragent = XMLEncode( CleanXSS($key) );
+		print
+		  "<tr><td class=\"aws\">$useragent</td><td nowrap=\"nowrap\">"
+		  . Format_Date( $_unknownrefererbrowser_l{$key}, 1 )
+		  . "</td></tr>\n";
+		$total_l += 1;
+		$count++;
+	}
+	my $rest_l = ( scalar keys %_unknownrefererbrowser_l ) - $total_l;
+	if ( $rest_l > 0 ) {
+		print
+"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
+		print "<td>-</td>";
+		print "</tr>\n";
+	}
+	&tab_end();
+	&html_end(1);
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the OS Detail frame or static page
+# Parameters:   _
+# Input:        _
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLShowOSDetail{
+	# Show os versions
+	print "$Center<a name=\"osversions\">&nbsp;</a><br />";
+	my $title = "$Message[59]";
+	&tab_head( "$title", 19, 0, 'osversions' );
+	print
+"<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[58]</th>";
+	print
+"<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th>";
+	print "<th>&nbsp;</th>";
+	print "</tr>\n";
+	my $total_h = 0;
+	my $count = 0;
+	&BuildKeyList( MinimumButNoZero( scalar keys %_os_h, 500 ),
+		1, \%_os_h, \%_os_h );
+	my %keysinkeylist = ();
+	my $max_h = 1;
+
+	# Count total by family
+	my %totalfamily_h = ();
+	my $TotalFamily   = 0;
+  OSLOOP: foreach my $key (@keylist) {
+		$total_h += $_os_h{$key};
+		if ( $_os_h{$key} > $max_h ) { $max_h = $_os_h{$key}; }
+		foreach my $family ( keys %OSFamily ) {
+			if ( $key =~ /^$family/i ) {
+				$totalfamily_h{$family} += $_os_h{$key};
+				$TotalFamily            += $_os_h{$key};
+				next OSLOOP;
+			}
+		}
+	}
+
+	# Write records grouped in a browser family
+	foreach my $family ( keys %OSFamily ) {
+		my $p = '&nbsp;';
+		if ($total_h) {
+			$p = int( $totalfamily_h{$family} / $total_h * 1000 ) / 10;
+			$p = "$p %";
+		}
+		my $familyheadershown = 0;
+		foreach my $key ( reverse sort keys %_os_h ) {
+			if ( $key =~ /^$family(.*)/i ) {
+				if ( !$familyheadershown ) {
+					my $family_name = '';
+					if ( $OSFamily{$family} ) {
+						$family_name = $OSFamily{$family};
+					}
+					print
+"<tr bgcolor=\"#F6F6F6\"><td class=\"aws\" colspan=\"2\"><b>$family_name</b></td>";
+					print "<td><b>"
+					  . Format_Number(int( $totalfamily_h{$family} ))
+					  . "</b></td><td><b>$p</b></td><td>&nbsp;</td>";
+					print "</tr>\n";
+					$familyheadershown = 1;
+				}
+				$keysinkeylist{$key} = 1;
+				my $ver = $1;
+				my $p   = '&nbsp;';
+				if ($total_h) {
+					$p = int( $_os_h{$key} / $total_h * 1000 ) / 10;
+					$p = "$p %";
+				}
+				print "<tr>";
+				print "<td"
+				  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
+				  . "><img src=\"$DirIcons\/os\/$key.png\""
+				  . AltTitle("")
+				  . " /></td>";
+
+				print "<td class=\"aws\">$OSHashLib{$key}</td>";
+				my $bredde_h = 0;
+				if ( $max_h > 0 ) {
+					$bredde_h =
+					  int( $BarWidth * ( $_os_h{$key} || 0 ) / $max_h )
+					  + 1;
+				}
+				if ( ( $bredde_h == 1 ) && $_os_h{$key} ) {
+					$bredde_h = 2;
+				}
+				print "<td>".Format_Number($_os_h{$key})."</td><td>$p</td>";
+				print "<td class=\"aws\">";
+
+				# alt and title are not provided to reduce page size
+				if ($ShowOSStats) {
+					print
+"<img src=\"$DirIcons\/other\/$BarPng{'hh'}\" width=\"$bredde_h\" height=\"5\" /><br />";
+				}
+				print "</td>";
+				print "</tr>\n";
+				$count++;
+			}
+		}
+	}
+
+	# Write other records
+	my $familyheadershown = 0;
+	foreach my $key (@keylist) {
+		if ( $keysinkeylist{$key} ) { next; }
+		if ( !$familyheadershown )  {
+			my $p = '&nbsp;';
+			if ($total_h) {
+				$p =
+				  int( ( $total_h - $TotalFamily ) / $total_h * 1000 ) /
+				  10;
+				$p = "$p %";
+			}
+			print
+"<tr bgcolor=\"#F6F6F6\"><td class=\"aws\" colspan=\"2\"><b>$Message[2]</b></td>";
+			print "<td><b>"
+			  . Format_Number(( $total_h - $TotalFamily ))
+			  . "</b></td><td><b>$p</b></td><td>&nbsp;</td>";
+			print "</tr>\n";
+			$familyheadershown = 1;
+		}
+		my $p = '&nbsp;';
+		if ($total_h) {
+			$p = int( $_os_h{$key} / $total_h * 1000 ) / 10;
+			$p = "$p %";
+		}
+		print "<tr>";
+		if ( $key eq 'Unknown' ) {
+			print "<td"
+			  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
+			  . "><img src=\"$DirIcons\/browser\/unknown.png\""
+			  . AltTitle("")
+			  . " /></td><td class=\"aws\"><span style=\"color: #$color_other\">$Message[0]</span></td>";
+		}
+		else {
+			my $keywithoutcumul = $key;
+			$keywithoutcumul =~ s/cumul$//i;
+			my $libos = $OSHashLib{$keywithoutcumul}
+			  || $keywithoutcumul;
+			my $nameicon = $keywithoutcumul;
+			$nameicon =~ s/[^\w]//g;
+			print "<td"
+			  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
+			  . "><img src=\"$DirIcons\/os\/$nameicon.png\""
+			  . AltTitle("")
+			  . " /></td><td class=\"aws\">$libos</td>";
+		}
+		my $bredde_h = 0;
+		if ( $max_h > 0 ) {
+			$bredde_h =
+			  int( $BarWidth * ( $_os_h{$key} || 0 ) / $max_h ) + 1;
+		}
+		if ( ( $bredde_h == 1 ) && $_os_h{$key} ) { $bredde_h = 2; }
+		print "<td>".Format_Number($_os_h{$key})."</td><td>$p</td>";
+		print "<td class=\"aws\">";
+
+		# alt and title are not provided to reduce page size
+		if ($ShowOSStats) {
+			print
+"<img src=\"$DirIcons\/other\/$BarPng{'hh'}\" width=\"$bredde_h\" height=\"5\" /><br />";
+		}
+		print "</td>";
+		print "</tr>\n";
+	}
+	&tab_end();
+	&html_end(1);
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the Unkown OS Detail frame or static page
+# Parameters:   _
+# Input:        _
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLShowOSUnknown{
+	print "$Center<a name=\"unknownos\">&nbsp;</a><br />\n";
+	my $title = "$Message[46]";
+	&tab_head( "$title", 19, 0, 'unknownos' );
+	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>User agent ("
+	  . ( scalar keys %_unknownreferer_l )
+	  . ")</th><th>$Message[9]</th></tr>\n";
+	my $total_l = 0;
+	my $count = 0;
+	&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_unknownreferer_l,
+		\%_unknownreferer_l );
+	foreach my $key (@keylist) {
+		my $useragent = XMLEncode( CleanXSS($key) );
+		print "<tr><td class=\"aws\">$useragent</td>";
+		print "<td nowrap=\"nowrap\">"
+		  . Format_Date( $_unknownreferer_l{$key}, 1 ) . "</td>";
+		print "</tr>\n";
+		$total_l += 1;
+		$count++;
+	}
+	my $rest_l = ( scalar keys %_unknownreferer_l ) - $total_l;
+	if ( $rest_l > 0 ) {
+		print
+"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
+		print "<td>-</td>";
+		print "</tr>\n";
+	}
+	&tab_end();
+	&html_end(1);
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the Referers frame or static page
+# Parameters:   _
+# Input:        _
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLShowReferers{
+	print "$Center<a name=\"refererse\">&nbsp;</a><br />\n";
+	my $title = "$Message[40]";
+	&tab_head( "$title", 19, 0, 'refererse' );
+	print
+"<tr bgcolor=\"#$color_TableBGRowTitle\"><th>".Format_Number($TotalDifferentSearchEngines)." $Message[122]</th>";
+	print
+"<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th><th bgcolor=\"#$color_p\" width=\"80\">$Message[15]</th>";
+	print
+"<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th>";
+	print "</tr>\n";
+	my $total_s = 0;
+	my $total_p = 0;
+	my $total_h = 0;
+	my $rest_p = 0;
+	my $rest_h = 0;
+	my $count = 0;
+	&BuildKeyList(
+		$MaxRowsInHTMLOutput,
+		$MinHit{'Refer'},
+		\%_se_referrals_h,
+		(
+			( scalar keys %_se_referrals_p )
+			? \%_se_referrals_p
+			: \%_se_referrals_h
+		)
+	);    # before 5.4 only hits were recorded
+
+	foreach my $key (@keylist) {
+		my $newreferer = $SearchEnginesHashLib{$key} || CleanXSS($key);
+		my $p_p;
+		my $p_h;
+		if ($TotalSearchEnginesPages) {
+			$p_p =
+			  int( $_se_referrals_p{$key} / $TotalSearchEnginesPages *
+				  1000 ) / 10;
+		}
+		if ($TotalSearchEnginesHits) {
+			$p_h =
+			  int( $_se_referrals_h{$key} / $TotalSearchEnginesHits *
+				  1000 ) / 10;
+		}
+		print "<tr><td class=\"aws\">$newreferer</td>";
+		print "<td>"
+		  . (
+			$_se_referrals_p{$key} ? $_se_referrals_p{$key} : '&nbsp;' )
+		  . "</td>";
+		print "<td>"
+		  . ( $_se_referrals_p{$key} ? "$p_p %" : '&nbsp;' ) . "</td>";
+		print "<td>".Format_Number($_se_referrals_h{$key})."</td>";
+		print "<td>$p_h %</td>";
+		print "</tr>\n";
+		$total_p += $_se_referrals_p{$key};
+		$total_h += $_se_referrals_h{$key};
+		$count++;
+	}
+	if ($Debug) {
+		debug(
+"Total real / shown : $TotalSearchEnginesPages / $total_p - $TotalSearchEnginesHits / $total_h",
+			2
+		);
+	}
+	$rest_p = $TotalSearchEnginesPages - $total_p;
+	$rest_h = $TotalSearchEnginesHits - $total_h;
+	if ( $rest_p > 0 || $rest_h > 0 ) {
+		my $p_p;
+		my $p_h;
+		if ($TotalSearchEnginesPages) {
+			$p_p =
+			  int( $rest_p / $TotalSearchEnginesPages * 1000 ) / 10;
+		}
+		if ($TotalSearchEnginesHits) {
+			$p_h = int( $rest_h / $TotalSearchEnginesHits * 1000 ) / 10;
+		}
+		print
+"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
+		print "<td>" . ( $rest_p ? Format_Number($rest_p)  : '&nbsp;' ) . "</td>";
+		print "<td>" . ( $rest_p ? "$p_p %" : '&nbsp;' ) . "</td>";
+		print "<td>".Format_Number($rest_h)."</td>";
+		print "<td>$p_h %</td>";
+		print "</tr>\n";
+	}
+	&tab_end();
+	&html_end(1);
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the Referer Pages frame or static page
+# Parameters:   _
+# Input:        _
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLShowRefererPages{
+	print "$Center<a name=\"refererpages\">&nbsp;</a><br />\n";
+	my $total_p = 0;
+	my $total_h = 0;
+	my $rest_p = 0;
+	my $rest_h = 0;
+
+	# Show filter form
+	&HTMLShowFormFilter(
+		"refererpagesfilter",
+		$FilterIn{'refererpages'},
+		$FilterEx{'refererpages'}
+	);
+	my $title = "$Message[41]";
+	my $cpt   = 0;
+	$cpt = ( scalar keys %_pagesrefs_h );
+	&tab_head( "$title", 19, 0, 'refererpages' );
+	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>";
+	if ( $FilterIn{'refererpages'} || $FilterEx{'refererpages'} ) {
+
+		if ( $FilterIn{'refererpages'} ) {
+			print "$Message[79] <b>$FilterIn{'refererpages'}</b>";
+		}
+		if ( $FilterIn{'refererpages'} && $FilterEx{'refererpages'} ) {
+			print " - ";
+		}
+		if ( $FilterEx{'refererpages'} ) {
+			print
+			  "Exclude $Message[79] <b>$FilterEx{'refererpages'}</b>";
+		}
+		if ( $FilterIn{'refererpages'} || $FilterEx{'refererpages'} ) {
+			print ": ";
+		}
+		print "$cpt $Message[28]";
+
+		#if ($MonthRequired ne 'all') {
+		#	if ($HTMLOutput{'refererpages'}) { print "<br />$Message[102]: $TotalDifferentPages $Message[28]"; }
+		#}
+	}
+	else { print "$Message[102]: ".Format_Number($cpt)." $Message[28]"; }
+	print "</th>";
+	print
+"<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th><th bgcolor=\"#$color_p\" width=\"80\">$Message[15]</th>";
+	print
+"<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th>";
+	print "</tr>\n";
+	my $total_s = 0;
+	my $count = 0;
+	&BuildKeyList(
+		$MaxRowsInHTMLOutput,
+		$MinHit{'Refer'},
+		\%_pagesrefs_h,
+		(
+			( scalar keys %_pagesrefs_p )
+			? \%_pagesrefs_p
+			: \%_pagesrefs_h
+		)
+	);
+
+	foreach my $key (@keylist) {
+		my $nompage = CleanXSS($key);
+		if ( length($nompage) > $MaxLengthOfShownURL ) {
+			$nompage =
+			  substr( $nompage, 0, $MaxLengthOfShownURL ) . "...";
+		}
+		my $p_p;
+		my $p_h;
+		if ($TotalRefererPages) {
+			$p_p =
+			  int( $_pagesrefs_p{$key} / $TotalRefererPages * 1000 ) /
+			  10;
+		}
+		if ($TotalRefererHits) {
+			$p_h =
+			  int( $_pagesrefs_h{$key} / $TotalRefererHits * 1000 ) /
+			  10;
+		}
+		print "<tr><td class=\"aws\">";
+		&HTMLShowURLInfo($key);
+		print "</td>";
+		print "<td>"
+		  . ( $_pagesrefs_p{$key} ? Format_Number($_pagesrefs_p{$key}) : '&nbsp;' )
+		  . "</td><td>"
+		  . ( $_pagesrefs_p{$key} ? "$p_p %" : '&nbsp;' ) . "</td>";
+		print "<td>"
+		  . ( $_pagesrefs_h{$key} ? Format_Number($_pagesrefs_h{$key}) : '&nbsp;' )
+		  . "</td><td>"
+		  . ( $_pagesrefs_h{$key} ? "$p_h %" : '&nbsp;' ) . "</td>";
+		print "</tr>\n";
+		$total_p += $_pagesrefs_p{$key};
+		$total_h += $_pagesrefs_h{$key};
+		$count++;
+	}
+	if ($Debug) {
+		debug(
+"Total real / shown : $TotalRefererPages / $total_p - $TotalRefererHits / $total_h",
+			2
+		);
+	}
+	$rest_p = $TotalRefererPages - $total_p;
+	$rest_h = $TotalRefererHits - $total_h;
+	if ( $rest_p > 0 || $rest_h > 0 ) {
+		my $p_p;
+		my $p_h;
+		if ($TotalRefererPages) {
+			$p_p = int( $rest_p / $TotalRefererPages * 1000 ) / 10;
+		}
+		if ($TotalRefererHits) {
+			$p_h = int( $rest_h / $TotalRefererHits * 1000 ) / 10;
+		}
+		print
+"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
+		print "<td>" . ( $rest_p ? Format_Number($rest_p)  : '&nbsp;' ) . "</td>";
+		print "<td>" . ( $rest_p ? "$p_p %" : '&nbsp;' ) . "</td>";
+		print "<td>".Format_Number($rest_h)."</td>";
+		print "<td>$p_h %</td>";
+		print "</tr>\n";
+	}
+	&tab_end();
+	&html_end(1);
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the Key Phrases frame or static page
+# Parameters:   _
+# Input:        _
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLShowKeyPhrases{
+	print "$Center<a name=\"keyphrases\">&nbsp;</a><br />\n";
+	&tab_head( $Message[43], 19, 0, 'keyphrases' );
+	print "<tr bgcolor=\"#$color_TableBGRowTitle\""
+	  . Tooltip(15)
+	  . "><th>".Format_Number($TotalDifferentKeyphrases)." $Message[103]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[14]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
+	my $total_s = 0;
+	my $count = 0;
+	&BuildKeyList(
+		$MaxRowsInHTMLOutput, $MinHit{'Keyphrase'},
+		\%_keyphrases,        \%_keyphrases
+	);
+	foreach my $key (@keylist) {
+		my $mot;
+  		# Convert coded keywords (utf8,...) to be correctly reported in HTML page.
+		if ( $PluginsLoaded{'DecodeKey'}{'decodeutfkeys'} ) {
+			$mot = CleanXSS(
+				DecodeKey_decodeutfkeys(
+					$key, $PageCode || 'iso-8859-1'
+				)
+			);
+		}
+		else { $mot = CleanXSS( DecodeEncodedString($key) ); }
+		my $p;
+		if ($TotalKeyphrases) {
+			$p =
+			  int( $_keyphrases{$key} / $TotalKeyphrases * 1000 ) / 10;
+		}
+		print "<tr><td class=\"aws\">"
+		  . XMLEncode($mot)
+		  . "</td><td>$_keyphrases{$key}</td><td>$p %</td></tr>\n";
+		$total_s += $_keyphrases{$key};
+		$count++;
+	}
+	if ($Debug) {
+		debug( "Total real / shown : $TotalKeyphrases / $total_s", 2 );
+	}
+	my $rest_s = $TotalKeyphrases - $total_s;
+	if ( $rest_s > 0 ) {
+		my $p;
+		if ($TotalKeyphrases) {
+			$p = int( $rest_s / $TotalKeyphrases * 1000 ) / 10;
+		}
+		print
+"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[124]</span></td><td>".Format_Number($rest_s)."</td>";
+				print "<td>$p %</td></tr>\n";
+	}
+	&tab_end();
+	&html_end(1);
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the Keywords frame or static page
+# Parameters:   _
+# Input:        _
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLShowKeywords{
+	print "$Center<a name=\"keywords\">&nbsp;</a><br />\n";
+	&tab_head( $Message[44], 19, 0, 'keywords' );
+	print "<tr bgcolor=\"#$color_TableBGRowTitle\""
+	  . Tooltip(15)
+	  . "><th>".Format_Number($TotalDifferentKeywords)." $Message[13]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[14]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
+	my $total_s = 0;
+	my $count = 0;
+	&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Keyword'},
+		\%_keywords, \%_keywords );
+	foreach my $key (@keylist) {
+		my $mot;
+  		# Convert coded keywords (utf8,...) to be correctly reported in HTML page.
+		if ( $PluginsLoaded{'DecodeKey'}{'decodeutfkeys'} ) {
+			$mot = CleanXSS(
+				DecodeKey_decodeutfkeys(
+					$key, $PageCode || 'iso-8859-1'
+				)
+			);
+		}
+		else { $mot = CleanXSS( DecodeEncodedString($key) ); }
+		my $p;
+		if ($TotalKeywords) {
+			$p = int( $_keywords{$key} / $TotalKeywords * 1000 ) / 10;
+		}
+		print "<tr><td class=\"aws\">"
+		  . XMLEncode($mot)
+		  . "</td><td>$_keywords{$key}</td><td>$p %</td></tr>\n";
+		$total_s += $_keywords{$key};
+		$count++;
+	}
+	if ($Debug) {
+		debug( "Total real / shown : $TotalKeywords / $total_s", 2 );
+	}
+	my $rest_s = $TotalKeywords - $total_s;
+	if ( $rest_s > 0 ) {
+		my $p;
+		if ($TotalKeywords) {
+			$p = int( $rest_s / $TotalKeywords * 1000 ) / 10;
+		}
+		print
+"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[30]</span></td><td>".Format_Number($rest_s)."</td>";
+		print "<td>$p %</td></tr>\n";
+	}
+	&tab_end();
+	&html_end(1);
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the HTTP Error code frame or static page
+# Parameters:   $code - the error code we're printing
+# Input:        _
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLShowErrorCodes{
+	my $code = shift;
+	print "$Center<a name=\"errors$code\">&nbsp;</a><br />\n";
+	&tab_head( $Message[47], 19, 0, "errors$code" );
+	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>URL ("
+	  . Format_Number(( scalar keys %_sider404_h ))
+	  . ")</th><th bgcolor=\"#$color_h\">$Message[49]</th><th>$Message[23]</th></tr>\n";
+	my $total_h = 0;
+	my $count = 0;
+	&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_sider404_h,
+		\%_sider404_h );
+	foreach my $key (@keylist) {
+		my $nompage = XMLEncode( CleanXSS($key) );
+
+		#if (length($nompage)>$MaxLengthOfShownURL) { $nompage=substr($nompage,0,$MaxLengthOfShownURL)."..."; }
+		my $referer = XMLEncode( CleanXSS( $_referer404_h{$key} ) );
+		print "<tr><td class=\"aws\">$nompage</td>";
+		print "<td>".Format_Number($_sider404_h{$key})."</td>";
+		print "<td class=\"aws\">"
+		  . ( $referer ? "$referer" : "&nbsp;" ) . "</td>";
+		print "</tr>\n";
+		my $total_s += $_sider404_h{$key};
+		$count++;
+	}
+
+# TODO Build TotalErrorHits
+#			if ($Debug) { debug("Total real / shown : $TotalErrorHits / $total_h",2); }
+#			$rest_h=$TotalErrorHits-$total_h;
+#			if ($rest_h > 0) {
+#				my $p;
+#				if ($TotalErrorHits) { $p=int($rest_h/$TotalErrorHits*1000)/10; }
+#				print "<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[30]</span></td>";
+#				print "<td>$rest_h</td>";
+#				print "<td>...</td>";
+#				print "</tr>\n";
+#			}
+	&tab_end();
+	&html_end(1);
+}
+
+#------------------------------------------------------------------------------
+# Function:     Loops through any defined extra sections and dumps the info to HTML
+# Parameters:   _
+# Input:        _
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLShowExtraSections{
+	foreach my $extranum ( 1 .. @ExtraName - 1 ) {
+		my $total_p = 0;
+		my $total_h = 0;
+		my $total_k = 0;
+		
+		if ( $HTMLOutput{"allextra$extranum"} ) {
+			if ($Debug) { debug( "ExtraName$extranum", 2 ); }
+			print "$Center<a name=\"extra$extranum\">&nbsp;</a><br />";
+			my $title = $ExtraName[$extranum];
+			&tab_head( "$title", 19, 0, "extra$extranum" );
+			print "<tr bgcolor=\"#$color_TableBGRowTitle\">";
+			print "<th>" . $ExtraFirstColumnTitle[$extranum] . "</th>";
+
+			if ( $ExtraStatTypes[$extranum] =~ m/P/i ) {
+				print
+"<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th>";
+			}
+			if ( $ExtraStatTypes[$extranum] =~ m/H/i ) {
+				print
+"<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>";
+			}
+			if ( $ExtraStatTypes[$extranum] =~ m/B/i ) {
+				print
+"<th class=\"datasize\" bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
+			}
+			if ( $ExtraStatTypes[$extranum] =~ m/L/i ) {
+				print "<th width=\"120\">$Message[9]</th>";
+			}
+			print "</tr>\n";
+			$total_p = $total_h = $total_k = 0;
+
+ #$max_h=1; foreach (values %_login_h) { if ($_ > $max_h) { $max_h = $_; } }
+ #$max_k=1; foreach (values %_login_k) { if ($_ > $max_k) { $max_k = $_; } }
+			my $count = 0;
+			if ( $ExtraStatTypes[$extranum] =~ m/P/i ) {
+				&BuildKeyList(
+					$MaxRowsInHTMLOutput,
+					$MinHitExtra[$extranum],
+					\%{ '_section_' . $extranum . '_h' },
+					\%{ '_section_' . $extranum . '_p' }
+				);
+			}
+			else {
+				&BuildKeyList(
+					$MaxRowsInHTMLOutput,
+					$MinHitExtra[$extranum],
+					\%{ '_section_' . $extranum . '_h' },
+					\%{ '_section_' . $extranum . '_h' }
+				);
+			}
+			my %keysinkeylist = ();
+			foreach my $key (@keylist) {
+				$keysinkeylist{$key} = 1;
+				my $firstcol = CleanXSS( DecodeEncodedString($key) );
+				$total_p += ${ '_section_' . $extranum . '_p' }{$key};
+				$total_h += ${ '_section_' . $extranum . '_h' }{$key};
+				$total_k += ${ '_section_' . $extranum . '_k' }{$key};
+				print "<tr>";
+				printf(
+"<td class=\"aws\">$ExtraFirstColumnFormat[$extranum]</td>",
+					$firstcol, $firstcol, $firstcol, $firstcol, $firstcol );
+				if ( $ExtraStatTypes[$extranum] =~ m/P/i ) {
+					print "<td>"
+					  . ${ '_section_' . $extranum . '_p' }{$key} . "</td>";
+				}
+				if ( $ExtraStatTypes[$extranum] =~ m/H/i ) {
+					print "<td>"
+					  . ${ '_section_' . $extranum . '_h' }{$key} . "</td>";
+				}
+				if ( $ExtraStatTypes[$extranum] =~ m/B/i ) {
+					print "<td>"
+					  . Format_Bytes(
+						${ '_section_' . $extranum . '_k' }{$key} )
+					  . "</td>";
+				}
+				if ( $ExtraStatTypes[$extranum] =~ m/L/i ) {
+					print "<td>"
+					  . (
+						${ '_section_' . $extranum . '_l' }{$key}
+						? Format_Date(
+							${ '_section_' . $extranum . '_l' }{$key}, 1 )
+						: '-'
+					  )
+					  . "</td>";
+				}
+				print "</tr>\n";
+				$count++;
+			}
+
+			# If we ask average or sum, we loop on all other records
+			if (   $ExtraAddAverageRow[$extranum]
+				|| $ExtraAddSumRow[$extranum] )
+			{
+				foreach ( keys %{ '_section_' . $extranum . '_h' } ) {
+					if ( $keysinkeylist{$_} ) { next; }
+					$total_p += ${ '_section_' . $extranum . '_p' }{$_};
+					$total_h += ${ '_section_' . $extranum . '_h' }{$_};
+					$total_k += ${ '_section_' . $extranum . '_k' }{$_};
+					$count++;
+				}
+			}
+
+			# Add average row
+			if ( $ExtraAddAverageRow[$extranum] ) {
+				print "<tr>";
+				print "<td class=\"aws\"><b>$Message[96]</b></td>";
+				if ( $ExtraStatTypes[$extranum] =~ m/P/i ) {
+					print "<td>"
+					  . ( $count ? Format_Number(( $total_p / $count )) : "&nbsp;" )
+					  . "</td>";
+				}
+				if ( $ExtraStatTypes[$extranum] =~ m/H/i ) {
+					print "<td>"
+					  . ( $count ? Format_Number(( $total_h / $count )) : "&nbsp;" )
+					  . "</td>";
+				}
+				if ( $ExtraStatTypes[$extranum] =~ m/B/i ) {
+					print "<td>"
+					  . (
+						$count
+						? Format_Bytes( $total_k / $count )
+						: "&nbsp;"
+					  )
+					  . "</td>";
+				}
+				if ( $ExtraStatTypes[$extranum] =~ m/L/i ) {
+					print "<td>&nbsp;</td>";
+				}
+				print "</tr>\n";
+			}
+
+			# Add sum row
+			if ( $ExtraAddSumRow[$extranum] ) {
+				print "<tr>";
+				print "<td class=\"aws\"><b>$Message[102]</b></td>";
+				if ( $ExtraStatTypes[$extranum] =~ m/P/i ) {
+					print "<td>" . ($total_p) . "</td>";
+				}
+				if ( $ExtraStatTypes[$extranum] =~ m/H/i ) {
+					print "<td>" . ($total_h) . "</td>";
+				}
+				if ( $ExtraStatTypes[$extranum] =~ m/B/i ) {
+					print "<td>" . Format_Bytes($total_k) . "</td>";
+				}
+				if ( $ExtraStatTypes[$extranum] =~ m/L/i ) {
+					print "<td>&nbsp;</td>";
+				}
+				print "</tr>\n";
+			}
+			&tab_end();
+			&html_end(1);
+		}
+	}
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the Robot details frame or static page
+# Parameters:   _
+# Input:        _
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLShowRobots{
+	my $total_p = 0;
+	my $total_h = 0;
+	my $total_k = 0;
+	my $total_r = 0;
+	my $rest_p = 0;
+	my $rest_h = 0;
+	my $rest_k = 0;
+	my $rest_r = 0;
+	
+	print "$Center<a name=\"robots\">&nbsp;</a><br />\n";
+	my $title = '';
+	if ( $HTMLOutput{'allrobots'} )  { $title .= "$Message[53]"; }
+	if ( $HTMLOutput{'lastrobots'} ) { $title .= "$Message[9]"; }
+	&tab_head( "$title", 19, 0, 'robots' );
+	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>"
+	  . Format_Number(( scalar keys %_robot_h ))
+	  . " $Message[51]</th>";
+	if ( $ShowRobotsStats =~ /H/i ) {
+		print
+		  "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>";
+	}
+	if ( $ShowRobotsStats =~ /B/i ) {
+		print
+"<th class=\"datasize\" bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
+	}
+	if ( $ShowRobotsStats =~ /L/i ) {
+		print "<th width=\"120\">$Message[9]</th>";
+	}
+	print "</tr>\n";
+	$total_p = $total_h = $total_k = $total_r = 0;
+	my $count = 0;
+	if ( $HTMLOutput{'allrobots'} ) {
+		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Robot'},
+			\%_robot_h, \%_robot_h );
+	}
+	if ( $HTMLOutput{'lastrobots'} ) {
+		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Robot'},
+			\%_robot_h, \%_robot_l );
+	}
+	foreach my $key (@keylist) {
+		print "<tr><td class=\"aws\">"
+		  . ( $RobotsHashIDLib{$key} ? $RobotsHashIDLib{$key} : $key )
+		  . "</td>";
+		if ( $ShowRobotsStats =~ /H/i ) {
+			print "<td>"
+			  . Format_Number(( $_robot_h{$key} - $_robot_r{$key} ))
+			  . ( $_robot_r{$key} ? "+$_robot_r{$key}" : "" ) . "</td>";
+		}
+		if ( $ShowRobotsStats =~ /B/i ) {
+			print "<td>" . Format_Bytes( $_robot_k{$key} ) . "</td>";
+		}
+		if ( $ShowRobotsStats =~ /L/i ) {
+			print "<td>"
+			  . (
+				$_robot_l{$key}
+				? Format_Date( $_robot_l{$key}, 1 )
+				: '-'
+			  )
+			  . "</td>";
+		}
+		print "</tr>\n";
+
+		#$total_p += $_robot_p{$key}||0;
+		$total_h += $_robot_h{$key};
+		$total_k += $_robot_k{$key} || 0;
+		$total_r += $_robot_r{$key} || 0;
+		$count++;
+	}
+
+	# For bots we need to count Totals
+	my $TotalPagesRobots =
+	  0;    #foreach (values %_robot_p) { $TotalPagesRobots+=$_; }
+	my $TotalHitsRobots = 0;
+	foreach ( values %_robot_h ) { $TotalHitsRobots += $_; }
+	my $TotalBytesRobots = 0;
+	foreach ( values %_robot_k ) { $TotalBytesRobots += $_; }
+	my $TotalRRobots = 0;
+	foreach ( values %_robot_r ) { $TotalRRobots += $_; }
+	$rest_p = 0;    #$rest_p=$TotalPagesRobots-$total_p;
+	$rest_h = $TotalHitsRobots - $total_h;
+	$rest_k = $TotalBytesRobots - $total_k;
+	$rest_r = $TotalRRobots - $total_r;
+
+	if ($Debug) {
+		debug(
+"Total real / shown : $TotalPagesRobots / $total_p - $TotalHitsRobots / $total_h - $TotalBytesRobots / $total_k",
+			2
+		);
+	}
+	if ( $rest_p > 0 || $rest_h > 0 || $rest_k > 0 || $rest_r > 0 )
+	{               # All other robots
+		print
+"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
+		if ( $ShowRobotsStats =~ /H/i ) { print "<td>".Format_Number($rest_h)."</td>"; }
+		if ( $ShowRobotsStats =~ /B/i ) {
+			print "<td>" . ( Format_Bytes($rest_k) ) . "</td>";
+		}
+		if ( $ShowRobotsStats =~ /L/i ) { print "<td>&nbsp;</td>"; }
+		print "</tr>\n";
+	}
+	&tab_end(
+		"* $Message[156]" . ( $TotalRRobots ? " $Message[157]" : "" ) );
+	&html_end(1);
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the URL, Entry or Exit details frame or static page
+# Parameters:   _
+# Input:        _
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLShowURLDetail{
+	my $total_p = 0;
+	my $total_e = 0;
+	my $total_k = 0;
+	my $total_x = 0;
+	# Call to plugins' function ShowPagesFilter
+	foreach
+	  my $pluginname ( keys %{ $PluginsLoaded{'ShowPagesFilter'} } )
+	{
+		my $function = "ShowPagesFilter_$pluginname";
+		&$function();
+	}
+	print "$Center<a name=\"urls\">&nbsp;</a><br />\n";
+
+	# Show filter form
+	&HTMLShowFormFilter( "urlfilter", $FilterIn{'url'}, $FilterEx{'url'} );
+
+	# Show URL list
+	my $title = '';
+	my $cpt   = 0;
+	if ( $HTMLOutput{'urldetail'} ) {
+		$title = $Message[19];
+		$cpt   = ( scalar keys %_url_p );
+	}
+	if ( $HTMLOutput{'urlentry'} ) {
+		$title = $Message[104];
+		$cpt   = ( scalar keys %_url_e );
+	}
+	if ( $HTMLOutput{'urlexit'} ) {
+		$title = $Message[116];
+		$cpt   = ( scalar keys %_url_x );
+	}
+	&tab_head( "$title", 19, 0, 'urls' );
+	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>";
+	if ( $FilterIn{'url'} || $FilterEx{'url'} ) {
+		if ( $FilterIn{'url'} ) {
+			print "$Message[79] <b>$FilterIn{'url'}</b>";
+		}
+		if ( $FilterIn{'url'} && $FilterEx{'url'} ) { print " - "; }
+		if ( $FilterEx{'url'} ) {
+			print "Exclude $Message[79] <b>$FilterEx{'url'}</b>";
+		}
+		if ( $FilterIn{'url'} || $FilterEx{'url'} ) { print ": "; }
+		print Format_Number($cpt)." $Message[28]";
+		if ( $MonthRequired ne 'all' ) {
+			if ( $HTMLOutput{'urldetail'} ) {
+				print
+"<br />$Message[102]: ".Format_Number($TotalDifferentPages)." $Message[28]";
+			}
+		}
+	}
+	else { print "$Message[102]: ".Format_Number($cpt)." $Message[28]"; }
+	print "</th>";
+	if ( $ShowPagesStats =~ /P/i ) {
+		print
+		  "<th bgcolor=\"#$color_p\" width=\"80\">$Message[29]</th>";
+	}
+	if ( $ShowPagesStats =~ /B/i ) {
+		print
+"<th class=\"datasize\" bgcolor=\"#$color_k\" width=\"80\">$Message[106]</th>";
+	}
+	if ( $ShowPagesStats =~ /E/i ) {
+		print
+		  "<th bgcolor=\"#$color_e\" width=\"80\">$Message[104]</th>";
+	}
+	if ( $ShowPagesStats =~ /X/i ) {
+		print
+		  "<th bgcolor=\"#$color_x\" width=\"80\">$Message[116]</th>";
+	}
+
+	# Call to plugins' function ShowPagesAddField
+	foreach
+	  my $pluginname ( keys %{ $PluginsLoaded{'ShowPagesAddField'} } )
+	{
+
+		#    			my $function="ShowPagesAddField_$pluginname('title')";
+		#    			eval("$function");
+		my $function = "ShowPagesAddField_$pluginname";
+		&$function('title');
+	}
+	print "<th>&nbsp;</th></tr>\n";
+	$total_p = $total_k = $total_e = $total_x = 0;
+	my $count = 0;
+	if ( $HTMLOutput{'urlentry'} ) {
+		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'File'}, \%_url_e,
+			\%_url_e );
+	}
+	elsif ( $HTMLOutput{'urlexit'} ) {
+		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'File'}, \%_url_x,
+			\%_url_x );
+	}
+	else {
+		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'File'}, \%_url_p,
+			\%_url_p );
+	}
+	my $max_p = 1;
+	my $max_k = 1;
+	foreach my $key (@keylist) {
+		if ( $_url_p{$key} > $max_p ) { $max_p = $_url_p{$key}; }
+		if ( $_url_k{$key} / ( $_url_p{$key} || 1 ) > $max_k ) {
+			$max_k = $_url_k{$key} / ( $_url_p{$key} || 1 );
+		}
+	}
+	foreach my $key (@keylist) {
+		print "<tr><td class=\"aws\">";
+		&HTMLShowURLInfo($key);
+		print "</td>";
+		my $bredde_p = 0;
+		my $bredde_e = 0;
+		my $bredde_x = 0;
+		my $bredde_k = 0;
+		if ( $max_p > 0 ) {
+			$bredde_p =
+			  int( $BarWidth * ( $_url_p{$key} || 0 ) / $max_p ) + 1;
+		}
+		if ( ( $bredde_p == 1 ) && $_url_p{$key} ) { $bredde_p = 2; }
+		if ( $max_p > 0 ) {
+			$bredde_e =
+			  int( $BarWidth * ( $_url_e{$key} || 0 ) / $max_p ) + 1;
+		}
+		if ( ( $bredde_e == 1 ) && $_url_e{$key} ) { $bredde_e = 2; }
+		if ( $max_p > 0 ) {
+			$bredde_x =
+			  int( $BarWidth * ( $_url_x{$key} || 0 ) / $max_p ) + 1;
+		}
+		if ( ( $bredde_x == 1 ) && $_url_x{$key} ) { $bredde_x = 2; }
+		if ( $max_k > 0 ) {
+			$bredde_k =
+			  int( $BarWidth *
+				  ( ( $_url_k{$key} || 0 ) / ( $_url_p{$key} || 1 ) ) /
+				  $max_k ) + 1;
+		}
+		if ( ( $bredde_k == 1 ) && $_url_k{$key} ) { $bredde_k = 2; }
+		if ( $ShowPagesStats =~ /P/i ) {
+			print "<td>".Format_Number($_url_p{$key})."</td>";
+		}
+		if ( $ShowPagesStats =~ /B/i ) {
+			print "<td>"
+			  . (
+				$_url_k{$key}
+				? Format_Bytes(
+					$_url_k{$key} / ( $_url_p{$key} || 1 )
+				  )
+				: "&nbsp;"
+			  )
+			  . "</td>";
+		}
+		if ( $ShowPagesStats =~ /E/i ) {
+			print "<td>"
+			  . ( $_url_e{$key} ? Format_Number($_url_e{$key}) : "&nbsp;" ) . "</td>";
+		}
+		if ( $ShowPagesStats =~ /X/i ) {
+			print "<td>"
+			  . ( $_url_x{$key} ? Format_Number($_url_x{$key}) : "&nbsp;" ) . "</td>";
+		}
+
+		# Call to plugins' function ShowPagesAddField
+		foreach my $pluginname (
+			keys %{ $PluginsLoaded{'ShowPagesAddField'} } )
+		{
+
+		  #    				my $function="ShowPagesAddField_$pluginname('$key')";
+		  #    				eval("$function");
+			my $function = "ShowPagesAddField_$pluginname";
+			&$function($key);
+		}
+		print "<td class=\"aws\">";
+
+		# alt and title are not provided to reduce page size
+		if ( $ShowPagesStats =~ /P/i ) {
+			print
+"<img src=\"$DirIcons\/other\/$BarPng{'hp'}\" width=\"$bredde_p\" height=\"4\" /><br />";
+		}
+		if ( $ShowPagesStats =~ /B/i ) {
+			print
+"<img src=\"$DirIcons\/other\/$BarPng{'hk'}\" width=\"$bredde_k\" height=\"4\" /><br />";
+		}
+		if ( $ShowPagesStats =~ /E/i ) {
+			print
+"<img src=\"$DirIcons\/other\/$BarPng{'he'}\" width=\"$bredde_e\" height=\"4\" /><br />";
+		}
+		if ( $ShowPagesStats =~ /X/i ) {
+			print
+"<img src=\"$DirIcons\/other\/$BarPng{'hx'}\" width=\"$bredde_x\" height=\"4\" />";
+		}
+		print "</td></tr>\n";
+		$total_p += $_url_p{$key};
+		$total_e += $_url_e{$key};
+		$total_x += $_url_x{$key};
+		$total_k += $_url_k{$key};
+		$count++;
+	}
+	if ($Debug) {
+		debug(
+"Total real / shown : $TotalPages / $total_p - $TotalEntries / $total_e - $TotalExits / $total_x - $TotalBytesPages / $total_k",
+			2
+		);
+	}
+	my $rest_p = $TotalPages - $total_p;
+	my $rest_k = $TotalBytesPages - $total_k;
+	my $rest_e = $TotalEntries - $total_e;
+	my $rest_x = $TotalExits - $total_x;
+	if ( $rest_p > 0 || $rest_e > 0 || $rest_k > 0 ) {
+		print
+"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
+		if ( $ShowPagesStats =~ /P/i ) {
+			print "<td>" . ( $rest_p ? Format_Number($rest_p) : "&nbsp;" ) . "</td>";
+		}
+		if ( $ShowPagesStats =~ /B/i ) {
+			print "<td>"
+			  . (
+				$rest_k
+				? Format_Bytes( $rest_k / ( $rest_p || 1 ) )
+				: "&nbsp;"
+			  )
+			  . "</td>";
+		}
+		if ( $ShowPagesStats =~ /E/i ) {
+			print "<td>" . ( $rest_e ? Format_Number($rest_e) : "&nbsp;" ) . "</td>";
+		}
+		if ( $ShowPagesStats =~ /X/i ) {
+			print "<td>" . ( $rest_x ? Format_Number($rest_x) : "&nbsp;" ) . "</td>";
+		}
+
+		# Call to plugins' function ShowPagesAddField
+		foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowPagesAddField'} } )
+		{
+			my $function = "ShowPagesAddField_$pluginname";
+			&$function('');
+		}
+		print "<td>&nbsp;</td></tr>\n";
+	}
+	&tab_end();
+	&html_end(1);
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the Login details frame or static page
+# Parameters:   _
+# Input:        _
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLShowLogins{
+	my $total_p = 0;
+	my $total_h = 0;
+	my $total_k = 0;
+	my $rest_p = 0;
+	my $rest_h = 0;
+	my $rest_k = 0;
+	print "$Center<a name=\"logins\">&nbsp;</a><br />\n";
+	my $title = '';
+	if ( $HTMLOutput{'alllogins'} )  { $title .= "$Message[94]"; }
+	if ( $HTMLOutput{'lastlogins'} ) { $title .= "$Message[9]"; }
+	&tab_head( "$title", 19, 0, 'logins' );
+	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$Message[94] : "
+	  . Format_Number(( scalar keys %_login_h )) . "</th>";
+	&HTMLShowUserInfo('__title__');
+	if ( $ShowAuthenticatedUsers =~ /P/i ) {
+		print
+		  "<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th>";
+	}
+	if ( $ShowAuthenticatedUsers =~ /H/i ) {
+		print
+		  "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>";
+	}
+	if ( $ShowAuthenticatedUsers =~ /B/i ) {
+		print
+"<th class=\"datasize\" bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
+	}
+	if ( $ShowAuthenticatedUsers =~ /L/i ) {
+		print "<th width=\"120\">$Message[9]</th>";
+	}
+	print "</tr>\n";
+	$total_p = $total_h = $total_k = 0;
+	my $count = 0;
+	if ( $HTMLOutput{'alllogins'} ) {
+		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Host'},
+			\%_login_h, \%_login_p );
+	}
+	if ( $HTMLOutput{'lastlogins'} ) {
+		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Host'},
+			\%_login_h, \%_login_l );
+	}
+	foreach my $key (@keylist) {
+		print "<tr><td class=\"aws\">$key</td>";
+		&HTMLShowUserInfo($key);
+		if ( $ShowAuthenticatedUsers =~ /P/i ) {
+			print "<td>"
+			  . ( $_login_p{$key} ? Format_Number($_login_p{$key}) : "&nbsp;" )
+			  . "</td>";
+		}
+		if ( $ShowAuthenticatedUsers =~ /H/i ) {
+			print "<td>".Format_Number($_login_h{$key})."</td>";
+		}
+		if ( $ShowAuthenticatedUsers =~ /B/i ) {
+			print "<td>" . Format_Bytes( $_login_k{$key} ) . "</td>";
+		}
+		if ( $ShowAuthenticatedUsers =~ /L/i ) {
+			print "<td>"
+			  . (
+				$_login_l{$key}
+				? Format_Date( $_login_l{$key}, 1 )
+				: '-'
+			  )
+			  . "</td>";
+		}
+		print "</tr>\n";
+		$total_p += $_login_p{$key} || 0;
+		$total_h += $_login_h{$key};
+		$total_k += $_login_k{$key} || 0;
+		$count++;
+	}
+	if ($Debug) {
+		debug(
+"Total real / shown : $TotalPages / $total_p - $TotalHits / $total_h - $TotalBytes / $total_h",
+			2
+		);
+	}
+	$rest_p = $TotalPages - $total_p;
+	$rest_h = $TotalHits - $total_h;
+	$rest_k = $TotalBytes - $total_k;
+	if ( $rest_p > 0 || $rest_h > 0 || $rest_k > 0 )
+	{    # All other logins and/or anonymous
+		print
+"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[125]</span></td>";
+		&HTMLShowUserInfo('');
+		if ( $ShowAuthenticatedUsers =~ /P/i ) {
+			print "<td>" . ( $rest_p ? Format_Number($rest_p) : "&nbsp;" ) . "</td>";
+		}
+		if ( $ShowAuthenticatedUsers =~ /H/i ) {
+			print "<td>".Format_Number($rest_h)."</td>";
+		}
+		if ( $ShowAuthenticatedUsers =~ /B/i ) {
+			print "<td>" . Format_Bytes($rest_k) . "</td>";
+		}
+		if ( $ShowAuthenticatedUsers =~ /L/i ) {
+			print "<td>&nbsp;</td>";
+		}
+		print "</tr>\n";
+	}
+	&tab_end();
+	&html_end(1);
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the Unknown IP/Host details frame or static page
+# Parameters:   _
+# Input:        _
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLShowHostsUnknown{
+	my $total_p = 0;
+	my $total_h = 0;
+	my $total_k = 0;
+	my $rest_p = 0;
+	my $rest_h = 0;
+	my $rest_k = 0;
+	print "$Center<a name=\"unknownip\">&nbsp;</a><br />\n";
+	&tab_head( "$Message[45]", 19, 0, 'unknownwip' );
+	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>"
+	  . Format_Number(( scalar keys %_host_h ))
+	  . " $Message[1]</th>";
+	&HTMLShowHostInfo('__title__');
+	if ( $ShowHostsStats =~ /P/i ) {
+		print
+		  "<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th>";
+	}
+	if ( $ShowHostsStats =~ /H/i ) {
+		print
+		  "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>";
+	}
+	if ( $ShowHostsStats =~ /B/i ) {
+		print
+"<th class=\"datasize\" bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
+	}
+	if ( $ShowHostsStats =~ /L/i ) {
+		print "<th width=\"120\">$Message[9]</th>";
+	}
+	print "</tr>\n";
+	$total_p = $total_h = $total_k = 0;
+	my $count = 0;
+	&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Host'}, \%_host_h,
+		\%_host_p );
+	foreach my $key (@keylist) {
+		my $host = CleanXSS($key);
+		print "<tr><td class=\"aws\">$host</td>";
+		&HTMLShowHostInfo($key);
+		if ( $ShowHostsStats =~ /P/i ) {
+			print "<td>"
+			  . ( $_host_p{$key} ? Format_Number($_host_p{$key}) : "&nbsp;" )
+			  . "</td>";
+		}
+		if ( $ShowHostsStats =~ /H/i ) {
+			print "<td>".Format_Number($_host_h{$key})."</td>";
+		}
+		if ( $ShowHostsStats =~ /B/i ) {
+			print "<td>" . Format_Bytes( $_host_k{$key} ) . "</td>";
+		}
+		if ( $ShowHostsStats =~ /L/i ) {
+			print "<td>"
+			  . (
+				$_host_l{$key}
+				? Format_Date( $_host_l{$key}, 1 )
+				: '-'
+			  )
+			  . "</td>";
+		}
+		print "</tr>\n";
+		$total_p += $_host_p{$key};
+		$total_h += $_host_h{$key};
+		$total_k += $_host_k{$key} || 0;
+		$count++;
+	}
+	if ($Debug) {
+		debug(
+"Total real / shown : $TotalPages / $total_p - $TotalHits / $total_h - $TotalBytes / $total_h",
+			2
+		);
+	}
+	$rest_p = $TotalPages - $total_p;
+	$rest_h = $TotalHits - $total_h;
+	$rest_k = $TotalBytes - $total_k;
+	if ( $rest_p > 0 || $rest_h > 0 || $rest_k > 0 )
+	{    # All other visitors (known or not)
+		print
+"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[82]</span></td>";
+		&HTMLShowHostInfo('');
+		if ( $ShowHostsStats =~ /P/i ) {
+			print "<td>" . ( $rest_p ? Format_Number($rest_p) : "&nbsp;" ) . "</td>";
+		}
+		if ( $ShowHostsStats =~ /H/i ) { print "<td>".Format_Number($rest_h)."</td>"; }
+		if ( $ShowHostsStats =~ /B/i ) {
+			print "<td>" . Format_Bytes($rest_k) . "</td>";
+		}
+		if ( $ShowHostsStats =~ /L/i ) { print "<td>&nbsp;</td>"; }
+		print "</tr>\n";
+	}
+	&tab_end();
+	&html_end(1);
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the Host details frame or static page
+# Parameters:   _
+# Input:        _
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLShowHosts{
+	my $total_p = 0;
+	my $total_h = 0;
+	my $total_k = 0;
+	my $rest_p = 0;
+	my $rest_h = 0;
+	my $rest_k = 0;
+	print "$Center<a name=\"hosts\">&nbsp;</a><br />\n";
+
+	# Show filter form
+	&HTMLShowFormFilter( "hostfilter", $FilterIn{'host'},
+		$FilterEx{'host'} );
+
+	# Show hosts list
+	my $title = '';
+	my $cpt   = 0;
+	if ( $HTMLOutput{'allhosts'} ) {
+		$title .= "$Message[81]";
+		$cpt = ( scalar keys %_host_h );
+	}
+	if ( $HTMLOutput{'lasthosts'} ) {
+		$title .= "$Message[9]";
+		$cpt = ( scalar keys %_host_h );
+	}
+	&tab_head( "$title", 19, 0, 'hosts' );
+	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>";
+	if ( $FilterIn{'host'} || $FilterEx{'host'} ) {    # With filter
+		if ( $FilterIn{'host'} ) {
+			print "$Message[79] '<b>$FilterIn{'host'}</b>'";
+		}
+		if ( $FilterIn{'host'} && $FilterEx{'host'} ) { print " - "; }
+		if ( $FilterEx{'host'} ) {
+			print " Exlude $Message[79] '<b>$FilterEx{'host'}</b>'";
+		}
+		if ( $FilterIn{'host'} || $FilterEx{'host'} ) { print ": "; }
+		print "$cpt $Message[81]";
+		if ( $MonthRequired ne 'all' ) {
+			if ( $HTMLOutput{'allhosts'} || $HTMLOutput{'lasthosts'} ) {
+				print
+"<br />$Message[102]: ".Format_Number($TotalHostsKnown)." $Message[82], ".Format_Number($TotalHostsUnknown)." $Message[1] - ".Format_Number($TotalUnique)." $Message[11]";
+			}
+		}
+	}
+	else {    # Without filter
+		if ( $MonthRequired ne 'all' ) {
+			print
+"$Message[102] : ".Format_Number($TotalHostsKnown)." $Message[82], ".Format_Number($TotalHostsUnknown)." $Message[1] - ".Format_Number($TotalUnique)." $Message[11]";
+		}
+		else { print "$Message[102] : " . Format_Number(( scalar keys %_host_h )); }
+	}
+	print "</th>";
+	&HTMLShowHostInfo('__title__');
+	if ( $ShowHostsStats =~ /P/i ) {
+		print
+		  "<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th>";
+	}
+	if ( $ShowHostsStats =~ /H/i ) {
+		print
+		  "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>";
+	}
+	if ( $ShowHostsStats =~ /B/i ) {
+		print
+"<th class=\"datasize\" bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
+	}
+	if ( $ShowHostsStats =~ /L/i ) {
+		print "<th width=\"120\">$Message[9]</th>";
+	}
+	print "</tr>\n";
+	$total_p = $total_h = $total_k = 0;
+	my $count = 0;
+	if ( $HTMLOutput{'allhosts'} ) {
+		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Host'}, \%_host_h,
+			\%_host_p );
+	}
+	if ( $HTMLOutput{'lasthosts'} ) {
+		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Host'}, \%_host_h,
+			\%_host_l );
+	}
+	foreach my $key (@keylist) {
+		my $host = CleanXSS($key);
+		print "<tr><td class=\"aws\">"
+		  . ( $_robot_l{$key} ? '<b>'  : '' ) . "$host"
+		  . ( $_robot_l{$key} ? '</b>' : '' ) . "</td>";
+		&HTMLShowHostInfo($key);
+		if ( $ShowHostsStats =~ /P/i ) {
+			print "<td>"
+			  . ( $_host_p{$key} ? Format_Number($_host_p{$key}) : "&nbsp;" )
+			  . "</td>";
+		}
+		if ( $ShowHostsStats =~ /H/i ) {
+			print "<td>".Format_Number($_host_h{$key})."</td>";
+		}
+		if ( $ShowHostsStats =~ /B/i ) {
+			print "<td>" . Format_Bytes( $_host_k{$key} ) . "</td>";
+		}
+		if ( $ShowHostsStats =~ /L/i ) {
+			print "<td>"
+			  . (
+				$_host_l{$key}
+				? Format_Date( $_host_l{$key}, 1 )
+				: '-'
+			  )
+			  . "</td>";
+		}
+		print "</tr>\n";
+		$total_p += $_host_p{$key};
+		$total_h += $_host_h{$key};
+		$total_k += $_host_k{$key} || 0;
+		$count++;
+	}
+	if ($Debug) {
+		debug(
+"Total real / shown : $TotalPages / $total_p - $TotalHits / $total_h - $TotalBytes / $total_h",
+			2
+		);
+	}
+	$rest_p = $TotalPages - $total_p;
+	$rest_h = $TotalHits - $total_h;
+	$rest_k = $TotalBytes - $total_k;
+	if ( $rest_p > 0 || $rest_h > 0 || $rest_k > 0 )
+	{    # All other visitors (known or not)
+		print
+"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
+		&HTMLShowHostInfo('');
+		if ( $ShowHostsStats =~ /P/i ) {
+			print "<td>" . ( $rest_p ? Format_Number($rest_p) : "&nbsp;" ) . "</td>";
+		}
+		if ( $ShowHostsStats =~ /H/i ) { print "<td>".Format_Number($rest_h)."</td>"; }
+		if ( $ShowHostsStats =~ /B/i ) {
+			print "<td>" . Format_Bytes($rest_k) . "</td>";
+		}
+		if ( $ShowHostsStats =~ /L/i ) { print "<td>&nbsp;</td>"; }
+		print "</tr>\n";
+	}
+	&tab_end();
+	&html_end(1);
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the Domains details frame or static page
+# Parameters:   _
+# Input:        _
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLShowDomains{
+	my $total_p = 0;
+	my $total_h = 0;
+	my $total_k = 0;
+	my $total_v = 0;
+	my $total_u = 0;
+	my $rest_p = 0;
+	my $rest_h = 0;
+	my $rest_k = 0;
+	my $rest_v = 0;
+	my $rest_u = 0;
+	print "$Center<a name=\"domains\">&nbsp;</a><br />\n";
+
+	# Show domains list
+	my $title = '';
+	my $cpt   = 0;
+	if ( $HTMLOutput{'alldomains'} ) {
+		$title .= "$Message[25]";
+		$cpt = ( scalar keys %_domener_h );
+	}
+	&tab_head( "$title", 19, 0, 'domains' );
+	print
+"<tr bgcolor=\"#$color_TableBGRowTitle\"><th width=\"$WIDTHCOLICON\">&nbsp;</th><th colspan=\"2\">$Message[17]</th>";
+	if ( $ShowDomainsStats =~ /U/i ) {
+		print
+		  "<th bgcolor=\"#$color_u\" width=\"80\">$Message[11]</th>";
+	}
+	if ( $ShowDomainsStats =~ /V/i ) {
+		print
+		  "<th bgcolor=\"#$color_v\" width=\"80\">$Message[10]</th>";
+	}
+	if ( $ShowDomainsStats =~ /P/i ) {
+		print
+		  "<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th>";
+	}
+	if ( $ShowDomainsStats =~ /H/i ) {
+		print
+		  "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>";
+	}
+	if ( $ShowDomainsStats =~ /B/i ) {
+		print
+"<th class=\"datasize\" bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
+	}
+	print "<th>&nbsp;</th>";
+	print "</tr>\n";
+	$total_u = $total_v = $total_p = $total_h = $total_k = 0;
+	my $max_h = 1;
+	foreach ( values %_domener_h ) {
+		if ( $_ > $max_h ) { $max_h = $_; }
+	}
+	my $max_k = 1;
+	foreach ( values %_domener_k ) {
+		if ( $_ > $max_k ) { $max_k = $_; }
+	}
+	my $count = 0;
+	&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_domener_h,
+		\%_domener_p );
+	foreach my $key (@keylist) {
+		my ( $_domener_u, $_domener_v );
+		my $bredde_p = 0;
+		my $bredde_h = 0;
+		my $bredde_k = 0;
+		if ( $max_h > 0 ) {
+			$bredde_p =
+			  int( $BarWidth * $_domener_p{$key} / $max_h ) + 1;
+		}    # use max_h to enable to compare pages with hits
+		if ( $_domener_p{$key} && $bredde_p == 1 ) { $bredde_p = 2; }
+		if ( $max_h > 0 ) {
+			$bredde_h =
+			  int( $BarWidth * $_domener_h{$key} / $max_h ) + 1;
+		}
+		if ( $_domener_h{$key} && $bredde_h == 1 ) { $bredde_h = 2; }
+		if ( $max_k > 0 ) {
+			$bredde_k =
+			  int( $BarWidth * ( $_domener_k{$key} || 0 ) / $max_k ) +
+			  1;
+		}
+		if ( $_domener_k{$key} && $bredde_k == 1 ) { $bredde_k = 2; }
+		my $newkey = lc($key);
+		if ( $newkey eq 'ip' || !$DomainsHashIDLib{$newkey} ) {
+			print
+"<tr><td width=\"$WIDTHCOLICON\"><img src=\"$DirIcons\/flags\/ip.png\" height=\"14\""
+			  . AltTitle("$Message[0]")
+			  . " /></td><td class=\"aws\">$Message[0]</td><td>$newkey</td>";
+		}
+		else {
+			print
+"<tr><td width=\"$WIDTHCOLICON\"><img src=\"$DirIcons\/flags\/$newkey.png\" height=\"14\""
+			  . AltTitle("$newkey")
+			  . " /></td><td class=\"aws\">$DomainsHashIDLib{$newkey}</td><td>$newkey</td>";
+		}
+		## to add unique visitors and number of visits, by Josep Ruano @ CAPSiDE
+		if ( $ShowDomainsStats =~ /U/i ) {
+			$_domener_u = (
+				  $_domener_p{$key}
+				? $_domener_p{$key} / $TotalPages
+				: 0
+			);
+			$_domener_u += ( $_domener_h{$key} / $TotalHits );
+			$_domener_u =
+			  sprintf( "%.0f", ( $_domener_u * $TotalUnique ) / 2 );
+			print "<td>".Format_Number($_domener_u)." ("
+			  . sprintf( "%.1f%", 100 * $_domener_u / $TotalUnique )
+			  . ")</td>";
+		}
+		if ( $ShowDomainsStats =~ /V/i ) {
+			$_domener_v = (
+				  $_domener_p{$key}
+				? $_domener_p{$key} / $TotalPages
+				: 0
+			);
+			$_domener_v += ( $_domener_h{$key} / $TotalHits );
+			$_domener_v =
+			  sprintf( "%.0f", ( $_domener_v * $TotalVisits ) / 2 );
+			print "<td>".Format_Number($_domener_v)." ("
+			  . sprintf( "%.1f%", 100 * $_domener_v / $TotalVisits )
+			  . ")</td>";
+		}
+		if ( $ShowDomainsStats =~ /P/i ) {
+			print "<td>".Format_Number($_domener_p{$key})."</td>";
+		}
+		if ( $ShowDomainsStats =~ /H/i ) {
+			print "<td>".Format_Number($_domener_h{$key})."</td>";
+		}
+		if ( $ShowDomainsStats =~ /B/i ) {
+			print "<td>" . Format_Bytes( $_domener_k{$key} ) . "</td>";
+		}
+		print "<td class=\"aws\">";
+		if ( $ShowDomainsStats =~ /P/i ) {
+			print
+"<img src=\"$DirIcons\/other\/$BarPng{'hp'}\" width=\"$bredde_p\" height=\"5\""
+			  . AltTitle( "$Message[56]: " . int( $_domener_p{$key} ) )
+			  . " /><br />\n";
+		}
+		if ( $ShowDomainsStats =~ /H/i ) {
+			print
+"<img src=\"$DirIcons\/other\/$BarPng{'hh'}\" width=\"$bredde_h\" height=\"5\""
+			  . AltTitle( "$Message[57]: " . int( $_domener_h{$key} ) )
+			  . " /><br />\n";
+		}
+		if ( $ShowDomainsStats =~ /B/i ) {
+			print
+"<img src=\"$DirIcons\/other\/$BarPng{'hk'}\" width=\"$bredde_k\" height=\"5\""
+			  . AltTitle(
+				"$Message[75]: " . Format_Bytes( $_domener_k{$key} ) )
+			  . " />";
+		}
+		print "</td>";
+		print "</tr>\n";
+		$total_u += $_domener_u;
+		$total_v += $_domener_v;
+		$total_p += $_domener_p{$key};
+		$total_h += $_domener_h{$key};
+		$total_k += $_domener_k{$key} || 0;
+		$count++;
+	}
+	my $rest_u = $TotalUnique - $total_u;
+	my $rest_v = $TotalVisits - $total_v;
+	$rest_p = $TotalPages - $total_p;
+	$rest_h = $TotalHits - $total_h;
+	$rest_k = $TotalBytes - $total_k;
+	if (   $rest_u > 0
+		|| $rest_v > 0
+		|| $rest_p > 0
+		|| $rest_h > 0
+		|| $rest_k > 0 )
+	{    # All other domains (known or not)
+		print
+"<tr><td width=\"$WIDTHCOLICON\">&nbsp;</td><td colspan=\"2\" class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
+		if ( $ShowDomainsStats =~ /U/i ) { print "<td>$rest_u</td>"; }
+		if ( $ShowDomainsStats =~ /V/i ) { print "<td>$rest_v</td>"; }
+		if ( $ShowDomainsStats =~ /P/i ) { print "<td>$rest_p</td>"; }
+		if ( $ShowDomainsStats =~ /H/i ) { print "<td>$rest_h</td>"; }
+		if ( $ShowDomainsStats =~ /B/i ) {
+			print "<td>" . Format_Bytes($rest_k) . "</td>";
+		}
+		print "<td class=\"aws\">&nbsp;</td>";
+		print "</tr>\n";
+	}
+	&tab_end();
+	&html_end(1);
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the Summary section at the top of the main page
+# Parameters:   _
+# Input:        _
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLMainSummary{
+	if ($Debug) { debug( "ShowSummary", 2 ); }
+	# FirstTime LastTime
+	my $FirstTime = 0;
+	my $LastTime  = 0;
+	foreach my $key ( keys %FirstTime ) {
+		my $keyqualified = 0;
+		if ( $MonthRequired eq 'all' ) { $keyqualified = 1; }
+		if ( $key =~ /^$YearRequired$MonthRequired/ ) { $keyqualified = 1; }
+		if ($keyqualified) {
+			if ( $FirstTime{$key}
+				&& ( $FirstTime == 0 || $FirstTime > $FirstTime{$key} ) )
+			{
+				$FirstTime = $FirstTime{$key};
+			}
+			if ( $LastTime < ( $LastTime{$key} || 0 ) ) {
+				$LastTime = $LastTime{$key};
+			}
+		}
+	}
+			
+	#print "$Center<a name=\"summary\">&nbsp;</a><br />\n";
+	my $title = "$Message[128]";
+	&tab_head( "$title", 0, 0, 'month' );
+
+	my $NewLinkParams = ${QueryString};
+	$NewLinkParams =~ s/(^|&|&amp;)update(=\w*|$)//i;
+	$NewLinkParams =~ s/(^|&|&amp;)staticlinks(=\w*|$)//i;
+	$NewLinkParams =~ s/(^|&|&amp;)year=[^&]*//i;
+	$NewLinkParams =~ s/(^|&|&amp;)month=[^&]*//i;
+	$NewLinkParams =~ s/(^|&|&amp;)framename=[^&]*//i;
+	$NewLinkParams =~ s/(&amp;|&)+/&amp;/i;
+	$NewLinkParams =~ s/^&amp;//;
+	$NewLinkParams =~ s/&amp;$//;
+	if ($NewLinkParams) { $NewLinkParams = "${NewLinkParams}&amp;"; }
+	my $NewLinkTarget = '';
+
+	if ( $FrameName eq 'mainright' ) {
+		$NewLinkTarget = " target=\"_parent\"";
+	}
+
+	# Ratio
+	my $RatioVisits = 0;
+	my $RatioPages  = 0;
+	my $RatioHits   = 0;
+	my $RatioBytes  = 0;
+	if ( $TotalUnique > 0 ) {
+		$RatioVisits = int( $TotalVisits / $TotalUnique * 100 ) / 100;
+	}
+	if ( $TotalVisits > 0 ) {
+		$RatioPages = int( $TotalPages / $TotalVisits * 100 ) / 100;
+	}
+	if ( $TotalVisits > 0 ) {
+		$RatioHits = int( $TotalHits / $TotalVisits * 100 ) / 100;
+	}
+	if ( $TotalVisits > 0 ) {
+		$RatioBytes =
+		  int( ( $TotalBytes / 1024 ) * 100 /
+			  ( $LogType eq 'M' ? $TotalHits : $TotalVisits ) ) / 100;
+	}
+
+	my $colspan = 5;
+	my $w       = '20';
+	if ( $LogType eq 'W' || $LogType eq 'S' ) {
+		$w       = '17';
+		$colspan = 6;
+	}
+
+	# Show first/last
+	print "<tr bgcolor=\"#$color_TableBGRowTitle\">";
+	print
+"<td class=\"aws\"><b>$Message[133]</b></td><td class=\"aws\" colspan=\""
+	  . ( $colspan - 1 ) . "\">\n";
+	print( $MonthRequired eq 'all'
+		? "$Message[6] $YearRequired"
+		: "$Message[5] "
+		  . $MonthNumLib{$MonthRequired}
+		  . " $YearRequired"
+	);
+	print "</td></tr>\n";
+	print "<tr bgcolor=\"#$color_TableBGRowTitle\">";
+	print "<td class=\"aws\"><b>$Message[8]</b></td>\n";
+	print "<td class=\"aws\" colspan=\""
+	  . ( $colspan - 1 ) . "\">"
+	  . ( $FirstTime ? Format_Date( $FirstTime, 0 ) : "NA" ) . "</td>";
+	print "</tr>\n";
+	print "<tr bgcolor=\"#$color_TableBGRowTitle\">";
+	print "<td class=\"aws\"><b>$Message[9]</b></td>\n";
+	print "<td class=\"aws\" colspan=\""
+	  . ( $colspan - 1 ) . "\">"
+	  . ( $LastTime ? Format_Date( $LastTime, 0 ) : "NA" )
+	  . "</td>\n";
+	print "</tr>\n";
+
+	# Show main indicators title row
+	print "<tr>";
+	if ( $LogType eq 'W' || $LogType eq 'S' ) {
+		print "<td bgcolor=\"#$color_TableBGTitle\">&nbsp;</td>";
+	}
+	if ( $ShowSummary =~ /U/i ) {
+		print "<td width=\"$w%\" bgcolor=\"#$color_u\""
+		  . Tooltip(2)
+		  . ">$Message[11]</td>";
+	}
+	else {
+		print
+"<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>";
+	}
+	if ( $ShowSummary =~ /V/i ) {
+		print "<td width=\"$w%\" bgcolor=\"#$color_v\""
+		  . Tooltip(1)
+		  . ">$Message[10]</td>";
+	}
+	else {
+		print
+"<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>";
+	}
+	if ( $ShowSummary =~ /P/i ) {
+		print "<td width=\"$w%\" bgcolor=\"#$color_p\""
+		  . Tooltip(3)
+		  . ">$Message[56]</td>";
+	}
+	else {
+		print
+"<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>";
+	}
+	if ( $ShowSummary =~ /H/i ) {
+		print "<td width=\"$w%\" bgcolor=\"#$color_h\""
+		  . Tooltip(4)
+		  . ">$Message[57]</td>";
+	}
+	else {
+		print
+"<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>";
+	}
+	if ( $ShowSummary =~ /B/i ) {
+		print "<td width=\"$w%\" bgcolor=\"#$color_k\""
+		  . Tooltip(5)
+		  . ">$Message[75]</td>";
+	}
+	else {
+		print
+"<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>";
+	}
+	print "</tr>\n";
+
+	# Show main indicators values for viewed traffic
+	print "<tr>";
+	if ( $LogType eq 'M' ) {
+		print "<td class=\"aws\">$Message[165]</td>";
+		print "<td>&nbsp;<br />&nbsp;</td>\n";
+		print "<td>&nbsp;<br />&nbsp;</td>\n";
+		if ( $ShowSummary =~ /H/i ) {
+			print "<td><b>".Format_Number($TotalHits)."</b>"
+			  . (
+				$LogType eq 'M'
+				? ""
+				: "<br />($RatioHits&nbsp;"
+				  . lc( $Message[57] . "/" . $Message[12] ) . ")"
+			  )
+			  . "</td>";
+		}
+		else { print "<td>&nbsp;</td>"; }
+		if ( $ShowSummary =~ /B/i ) {
+			print "<td><b>"
+			  . Format_Bytes( int($TotalBytes) )
+			  . "</b><br />($RatioBytes&nbsp;$Message[108]/"
+			  . $Message[ ( $LogType eq 'M' ? 149 : 12 ) ]
+			  . ")</td>";
+		}
+		else { print "<td>&nbsp;</td>"; }
+	}
+	else {
+		if ( $LogType eq 'W' || $LogType eq 'S' ) {
+			print "<td class=\"aws\">$Message[160]&nbsp;*</td>";
+		}
+		if ( $ShowSummary =~ /U/i ) {
+			print "<td>"
+			  . (
+				$MonthRequired eq 'all'
+				? "<b>&lt;= ".Format_Number($TotalUnique)."</b><br />$Message[129]"
+				: "<b>".Format_Number($TotalUnique)."</b><br />&nbsp;"
+			  )
+			  . "</td>";
+		}
+		else { print "<td>&nbsp;</td>"; }
+		if ( $ShowSummary =~ /V/i ) {
+			print
+"<td><b>".Format_Number($TotalVisits)."</b><br />($RatioVisits&nbsp;$Message[52])</td>";
+		}
+		else { print "<td>&nbsp;</td>"; }
+		if ( $ShowSummary =~ /P/i ) {
+			print "<td><b>".Format_Number($TotalPages)."</b><br />($RatioPages&nbsp;"
+			  . $Message[56] . "/"
+			  . $Message[12]
+			  . ")</td>";
+		}
+		else { print "<td>&nbsp;</td>"; }
+		if ( $ShowSummary =~ /H/i ) {
+			print "<td><b>".Format_Number($TotalHits)."</b>"
+			  . (
+				$LogType eq 'M'
+				? ""
+				: "<br />($RatioHits&nbsp;"
+				  . $Message[57] . "/"
+				  . $Message[12] . ")"
+			  )
+			  . "</td>";
+		}
+		else { print "<td>&nbsp;</td>"; }
+		if ( $ShowSummary =~ /B/i ) {
+			print "<td><b>"
+			  . Format_Bytes( int($TotalBytes) )
+			  . "</b><br />($RatioBytes&nbsp;$Message[108]/"
+			  . $Message[ ( $LogType eq 'M' ? 149 : 12 ) ]
+			  . ")</td>";
+		}
+		else { print "<td>&nbsp;</td>"; }
+	}
+	print "</tr>\n";
+
+	# Show main indicators values for not viewed traffic values
+	if ( $LogType eq 'M' || $LogType eq 'W' || $LogType eq 'S' ) {
+		print "<tr>";
+		if ( $LogType eq 'M' ) {
+			print "<td class=\"aws\">$Message[166]</td>";
+			print "<td>&nbsp;<br />&nbsp;</td>\n";
+			print "<td>&nbsp;<br />&nbsp;</td>\n";
+			if ( $ShowSummary =~ /H/i ) {
+				print "<td><b>".Format_Number($TotalNotViewedHits)."</b></td>";
+			}
+			else { print "<td>&nbsp;</td>"; }
+			if ( $ShowSummary =~ /B/i ) {
+				print "<td><b>"
+				  . Format_Bytes( int($TotalNotViewedBytes) )
+				  . "</b></td>";
+			}
+			else { print "<td>&nbsp;</td>"; }
+		}
+		else {
+			if ( $LogType eq 'W' || $LogType eq 'S' ) {
+				print "<td class=\"aws\">$Message[161]&nbsp;*</td>";
+			}
+			print "<td colspan=\"2\">&nbsp;<br />&nbsp;</td>\n";
+			if ( $ShowSummary =~ /P/i ) {
+				print "<td><b>".Format_Number($TotalNotViewedPages)."</b></td>";
+			}
+			else { print "<td>&nbsp;</td>"; }
+			if ( $ShowSummary =~ /H/i ) {
+				print "<td><b>".Format_Number($TotalNotViewedHits)."</b></td>";
+			}
+			else { print "<td>&nbsp;</td>"; }
+			if ( $ShowSummary =~ /B/i ) {
+				print "<td><b>"
+				  . Format_Bytes( int($TotalNotViewedBytes) )
+				  . "</b></td>";
+			}
+			else { print "<td>&nbsp;</td>"; }
+		}
+		print "</tr>\n";
+	}
+	&tab_end($LogType eq 'W'
+		  || $LogType eq 'S' ? "* $Message[159]" : "" );
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the Monthly section on the main page
+# Parameters:   _
+# Input:        _
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLMainMonthly{
+	if ($Debug) { debug( "ShowMonthStats", 2 ); }
+	print "$Center<a name=\"month\">&nbsp;</a><br />\n";
+	my $title = "$Message[162]";
+	&tab_head( "$title", 0, 0, 'month' );
+	print "<tr><td align=\"center\">\n";
+	print "<center>\n";
+
+	my $average_nb = my $average_u = my $average_v = my $average_p = 0;
+	my $average_h = my $average_k = 0;
+	my $total_u = my $total_v = my $total_p = my $total_h = my $total_k = 0;
+	my $max_v = my $max_p = my $max_h = my $max_k = 1;
+
+	# Define total and max
+	for ( my $ix = 1 ; $ix <= 12 ; $ix++ ) {
+		my $monthix = sprintf( "%02s", $ix );
+		$total_u += $MonthUnique{ $YearRequired . $monthix } || 0;
+		$total_v += $MonthVisits{ $YearRequired . $monthix } || 0;
+		$total_p += $MonthPages{ $YearRequired . $monthix }  || 0;
+		$total_h += $MonthHits{ $YearRequired . $monthix }   || 0;
+		$total_k += $MonthBytes{ $YearRequired . $monthix }  || 0;
+
+#if (($MonthUnique{$YearRequired.$monthix}||0) > $max_v) { $max_v=$MonthUnique{$YearRequired.$monthix}; }
+		if (
+			( $MonthVisits{ $YearRequired . $monthix } || 0 ) > $max_v )
+		{
+			$max_v = $MonthVisits{ $YearRequired . $monthix };
+		}
+
+#if (($MonthPages{$YearRequired.$monthix}||0) > $max_p)  { $max_p=$MonthPages{$YearRequired.$monthix}; }
+		if ( ( $MonthHits{ $YearRequired . $monthix } || 0 ) > $max_h )
+		{
+			$max_h = $MonthHits{ $YearRequired . $monthix };
+		}
+		if ( ( $MonthBytes{ $YearRequired . $monthix } || 0 ) > $max_k )
+		{
+			$max_k = $MonthBytes{ $YearRequired . $monthix };
+		}
+	}
+
+	# Define average
+	# TODO
+
+	# Show bars for month
+	my $graphdone=0;
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
+	{
+		my @blocklabel = ();
+		for ( my $ix = 1 ; $ix <= 12 ; $ix++ ) {
+			my $monthix = sprintf( "%02s", $ix );
+			push @blocklabel,
+			  "$MonthNumLib{$monthix}\n$YearRequired";
+		}
+		my @vallabel = (
+			"$Message[11]", "$Message[10]",
+			"$Message[56]", "$Message[57]",
+			"$Message[75]"
+		);
+		my @valcolor =
+		  ( "$color_u", "$color_v", "$color_p", "$color_h",
+			"$color_k" );
+		my @valmax = ( $max_v, $max_v, $max_h, $max_h, $max_k );
+		my @valtotal =
+		  ( $total_u, $total_v, $total_p, $total_h, $total_k );
+		my @valaverage = ();
+
+		#my @valaverage=($average_v,$average_p,$average_h,$average_k);
+		my @valdata = ();
+		my $xx      = 0;
+		for ( my $ix = 1 ; $ix <= 12 ; $ix++ ) {
+			my $monthix = sprintf( "%02s", $ix );
+			$valdata[ $xx++ ] = $MonthUnique{ $YearRequired . $monthix }
+			  || 0;
+			$valdata[ $xx++ ] = $MonthVisits{ $YearRequired . $monthix }
+			  || 0;
+			$valdata[ $xx++ ] = $MonthPages{ $YearRequired . $monthix }
+			  || 0;
+			$valdata[ $xx++ ] = $MonthHits{ $YearRequired . $monthix }
+			  || 0;
+			$valdata[ $xx++ ] = $MonthBytes{ $YearRequired . $monthix }
+			  || 0;
+		}
+		
+		my $function = "ShowGraph_$pluginname";
+		&$function(
+			"$title",        "month",
+			$ShowMonthStats, \@blocklabel,
+			\@vallabel,      \@valcolor,
+			\@valmax,        \@valtotal,
+			\@valaverage,    \@valdata
+		);
+		$graphdone=1;
+	}
+	if (! $graphdone)
+	{
+		print "<table>\n";
+		print "<tr valign=\"bottom\">";
+		print "<td>&nbsp;</td>\n";
+		for ( my $ix = 1 ; $ix <= 12 ; $ix++ ) {
+			my $monthix  = sprintf( "%02s", $ix );
+			my $bredde_u = 0;
+			my $bredde_v = 0;
+			my $bredde_p = 0;
+			my $bredde_h = 0;
+			my $bredde_k = 0;
+			if ( $max_v > 0 ) {
+				$bredde_u =
+				  int(
+					( $MonthUnique{ $YearRequired . $monthix } || 0 ) /
+					  $max_v * $BarHeight ) + 1;
+			}
+			if ( $max_v > 0 ) {
+				$bredde_v =
+				  int(
+					( $MonthVisits{ $YearRequired . $monthix } || 0 ) /
+					  $max_v * $BarHeight ) + 1;
+			}
+			if ( $max_h > 0 ) {
+				$bredde_p =
+				  int(
+					( $MonthPages{ $YearRequired . $monthix } || 0 ) /
+					  $max_h * $BarHeight ) + 1;
+			}
+			if ( $max_h > 0 ) {
+				$bredde_h =
+				  int( ( $MonthHits{ $YearRequired . $monthix } || 0 ) /
+					  $max_h * $BarHeight ) + 1;
+			}
+			if ( $max_k > 0 ) {
+				$bredde_k =
+				  int(
+					( $MonthBytes{ $YearRequired . $monthix } || 0 ) /
+					  $max_k * $BarHeight ) + 1;
+			}
+			print "<td>";
+			if ( $ShowMonthStats =~ /U/i ) {
+				print
+"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vu'}\" height=\"$bredde_u\" width=\"6\""
+				  . AltTitle( "$Message[11]: "
+					  . ( $MonthUnique{ $YearRequired . $monthix }
+						  || 0 ) )
+				  . " />";
+			}
+			if ( $ShowMonthStats =~ /V/i ) {
+				print
+"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vv'}\" height=\"$bredde_v\" width=\"6\""
+				  . AltTitle( "$Message[10]: "
+					  . ( $MonthVisits{ $YearRequired . $monthix }
+						  || 0 ) )
+				  . " />";
+			}
+			if ( $ShowMonthStats =~ /P/i ) {
+				print
+"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"6\""
+				  . AltTitle( "$Message[56]: "
+					  . ( $MonthPages{ $YearRequired . $monthix } || 0 )
+				  )
+				  . " />";
+			}
+			if ( $ShowMonthStats =~ /H/i ) {
+				print
+"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"6\""
+				  . AltTitle( "$Message[57]: "
+					  . ( $MonthHits{ $YearRequired . $monthix } || 0 )
+				  )
+				  . " />";
+			}
+			if ( $ShowMonthStats =~ /B/i ) {
+				print
+"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"6\""
+					  . AltTitle(
+					"$Message[75]: "
+					  . Format_Bytes(
+						$MonthBytes{ $YearRequired . $monthix }
+					  )
+				  )
+				  . " />";
+			}
+			print "</td>\n";
+		}
+		print "<td>&nbsp;</td>";
+		print "</tr>\n";
+
+		# Show lib for month
+		print "<tr valign=\"middle\">";
+
+		#if (!$StaticLinks) {
+		#	print "<td><a href=\"".XMLEncode("$AWScript?${NewLinkParams}month=12&year=".($YearRequired-1))."\">&lt;&lt;</a></td>";
+		#}
+		#else {
+		print "<td>&nbsp;</td>";
+
+		#				}
+		for ( my $ix = 1 ; $ix <= 12 ; $ix++ ) {
+			my $monthix = sprintf( "%02s", $ix );
+
+#			if (!$StaticLinks) {
+#				print "<td><a href=\"".XMLEncode("$AWScript?${NewLinkParams}month=$monthix&year=$YearRequired")."\">$MonthNumLib{$monthix}<br />$YearRequired</a></td>";
+#			}
+#			else {
+			print "<td>"
+			  . (
+				!$StaticLinks
+				  && $monthix == $nowmonth
+				  && $YearRequired == $nowyear
+				? '<font class="currentday">'
+				: ''
+			  );
+			print "$MonthNumLib{$monthix}<br />$YearRequired";
+			print(   !$StaticLinks
+				  && $monthix == $nowmonth
+				  && $YearRequired == $nowyear ? '</font>' : '' );
+			print "</td>";
+
+			#					}
+		}
+
+#		if (!$StaticLinks) {
+#			print "<td><a href=\"".XMLEncode("$AWScript?${NewLinkParams}month=1&year=".($YearRequired+1))."\">&gt;&gt;</a></td>";
+#		}
+#		else {
+		print "<td>&nbsp;</td>";
+
+		#				}
+		print "</tr>\n";
+		print "</table>\n";
+	}
+	print "<br />\n";
+
+	# Show data array for month
+	if ($AddDataArrayMonthStats) {
+		print "<table>\n";
+		print
+"<tr><td width=\"80\" bgcolor=\"#$color_TableBGRowTitle\">$Message[5]</td>";
+		if ( $ShowMonthStats =~ /U/i ) {
+			print "<td width=\"80\" bgcolor=\"#$color_u\""
+			  . Tooltip(2)
+			  . ">$Message[11]</td>";
+		}
+		if ( $ShowMonthStats =~ /V/i ) {
+			print "<td width=\"80\" bgcolor=\"#$color_v\""
+			  . Tooltip(1)
+			  . ">$Message[10]</td>";
+		}
+		if ( $ShowMonthStats =~ /P/i ) {
+			print "<td width=\"80\" bgcolor=\"#$color_p\""
+			  . Tooltip(3)
+			  . ">$Message[56]</td>";
+		}
+		if ( $ShowMonthStats =~ /H/i ) {
+			print "<td width=\"80\" bgcolor=\"#$color_h\""
+			  . Tooltip(4)
+			  . ">$Message[57]</td>";
+		}
+		if ( $ShowMonthStats =~ /B/i ) {
+			print "<td width=\"80\" bgcolor=\"#$color_k\""
+			  . Tooltip(5)
+			  . ">$Message[75]</td>";
+		}
+		print "</tr>\n";
+		for ( my $ix = 1 ; $ix <= 12 ; $ix++ ) {
+			my $monthix = sprintf( "%02s", $ix );
+			print "<tr>";
+			print "<td>"
+			  . (
+				!$StaticLinks
+				  && $monthix == $nowmonth
+				  && $YearRequired == $nowyear
+				? '<font class="currentday">'
+				: ''
+			  );
+			print "$MonthNumLib{$monthix} $YearRequired";
+			print(   !$StaticLinks
+				  && $monthix == $nowmonth
+				  && $YearRequired == $nowyear ? '</font>' : '' );
+			print "</td>";
+			if ( $ShowMonthStats =~ /U/i ) {
+				print "<td>",
+				  Format_Number($MonthUnique{ $YearRequired . $monthix }
+				  ? $MonthUnique{ $YearRequired . $monthix }
+				  : "0"), "</td>";
+			}
+			if ( $ShowMonthStats =~ /V/i ) {
+				print "<td>",
+				  Format_Number($MonthVisits{ $YearRequired . $monthix }
+				  ? $MonthVisits{ $YearRequired . $monthix }
+				  : "0"), "</td>";
+			}
+			if ( $ShowMonthStats =~ /P/i ) {
+				print "<td>",
+				  Format_Number($MonthPages{ $YearRequired . $monthix }
+				  ? $MonthPages{ $YearRequired . $monthix }
+				  : "0"), "</td>";
+			}
+			if ( $ShowMonthStats =~ /H/i ) {
+				print "<td>",
+				  Format_Number($MonthHits{ $YearRequired . $monthix }
+				  ? $MonthHits{ $YearRequired . $monthix }
+				  : "0"), "</td>";
+			}
+			if ( $ShowMonthStats =~ /B/i ) {
+				print "<td>",
+				  Format_Bytes(
+					int( $MonthBytes{ $YearRequired . $monthix } || 0 )
+				  ), "</td>";
+			}
+			print "</tr>\n";
+		}
+
+		# Average row
+		# TODO
+		# Total row
+		print
+"<tr><td bgcolor=\"#$color_TableBGRowTitle\">$Message[102]</td>";
+		if ( $ShowMonthStats =~ /U/i ) {
+			print
+			  "<td bgcolor=\"#$color_TableBGRowTitle\">".Format_Number($total_u)."</td>";
+		}
+		if ( $ShowMonthStats =~ /V/i ) {
+			print
+			  "<td bgcolor=\"#$color_TableBGRowTitle\">".Format_Number($total_v)."</td>";
+		}
+		if ( $ShowMonthStats =~ /P/i ) {
+			print
+			  "<td bgcolor=\"#$color_TableBGRowTitle\">".Format_Number($total_p)."</td>";
+		}
+		if ( $ShowMonthStats =~ /H/i ) {
+			print
+			  "<td bgcolor=\"#$color_TableBGRowTitle\">".Format_Number($total_h)."</td>";
+		}
+		if ( $ShowMonthStats =~ /B/i ) {
+			print "<td bgcolor=\"#$color_TableBGRowTitle\">"
+			  . Format_Bytes($total_k) . "</td>";
+		}
+		print "</tr>\n";
+		print "</table>\n<br />\n";
+	}
+
+	print "</center>\n";
+	print "</td></tr>\n";
+	&tab_end();
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the Daily section on the main page
+# Parameters:   $firstdaytocountaverage, $lastdaytocountaverage
+#				$firstdaytoshowtime, $lastdaytoshowtime
+# Input:        _
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLMainDaily{
+	my $firstdaytocountaverage = shift;
+	my $lastdaytocountaverage = shift;
+	my $firstdaytoshowtime = shift;
+	my $lastdaytoshowtime = shift;
+	
+	if ($Debug) { debug( "ShowDaysOfMonthStats", 2 ); }
+	print "$Center<a name=\"daysofmonth\">&nbsp;</a><br />\n";
+	my $title = "$Message[138]";
+	&tab_head( "$title", 0, 0, 'daysofmonth' );
+	print "<tr>";
+	print "<td align=\"center\">\n";
+	print "<center>\n";
+
+	my $NewLinkParams = ${QueryString};
+	$NewLinkParams =~ s/(^|&|&amp;)update(=\w*|$)//i;
+	$NewLinkParams =~ s/(^|&|&amp;)staticlinks(=\w*|$)//i;
+	$NewLinkParams =~ s/(^|&|&amp;)year=[^&]*//i;
+	$NewLinkParams =~ s/(^|&|&amp;)month=[^&]*//i;
+	$NewLinkParams =~ s/(^|&|&amp;)framename=[^&]*//i;
+	$NewLinkParams =~ s/(&amp;|&)+/&amp;/i;
+	$NewLinkParams =~ s/^&amp;//;
+	$NewLinkParams =~ s/&amp;$//;
+	if ($NewLinkParams) { $NewLinkParams = "${NewLinkParams}&amp;"; }
+	my $NewLinkTarget = '';
+
+	if ( $FrameName eq 'mainright' ) {
+		$NewLinkTarget = " target=\"_parent\"";
+	}
+
+	my $average_v = my $average_p = 0;
+	my $average_h = my $average_k = 0;
+	my $total_u = my $total_v = my $total_p = my $total_h = my $total_k = 0;
+	my $max_v = my $max_h = my $max_k = 0;    # Start from 0 because can be lower than 1
+	foreach my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )
+	{
+		$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
+		my $year  = $1;
+		my $month = $2;
+		my $day   = $3;
+		if ( !DateIsValid( $day, $month, $year ) ) {
+			next;
+		}    # If not an existing day, go to next
+		$total_v += $DayVisits{ $year . $month . $day } || 0;
+		$total_p += $DayPages{ $year . $month . $day }  || 0;
+		$total_h += $DayHits{ $year . $month . $day }   || 0;
+		$total_k += $DayBytes{ $year . $month . $day }  || 0;
+		if ( ( $DayVisits{ $year . $month . $day } || 0 ) > $max_v ) {
+			$max_v = $DayVisits{ $year . $month . $day };
+		}
+
+#if (($DayPages{$year.$month.$day}||0) > $max_p)  { $max_p=$DayPages{$year.$month.$day}; }
+		if ( ( $DayHits{ $year . $month . $day } || 0 ) > $max_h ) {
+			$max_h = $DayHits{ $year . $month . $day };
+		}
+		if ( ( $DayBytes{ $year . $month . $day } || 0 ) > $max_k ) {
+			$max_k = $DayBytes{ $year . $month . $day };
+		}
+	}
+
+	# Show bars for day
+	my $graphdone=0;
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
+	{
+		my @blocklabel = ();
+		foreach
+		  my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )
+		{
+			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
+			my $year  = $1;
+			my $month = $2;
+			my $day   = $3;
+			if ( !DateIsValid( $day, $month, $year ) ) {
+				next;
+			}    # If not an existing day, go to next
+			my $bold =
+			  (      $day == $nowday
+				  && $month == $nowmonth
+				  && $year == $nowyear ? ':' : '' );
+			my $weekend =
+			  ( DayOfWeek( $day, $month, $year ) =~ /[06]/ ? '!' : '' );
+			push @blocklabel,
+			  "$day\n$MonthNumLib{$month}$weekend$bold";
+		}
+		my @vallabel = (
+			"$Message[10]", "$Message[56]",
+			"$Message[57]", "$Message[75]"
+		);
+		my @valcolor =
+		  ( "$color_v", "$color_p", "$color_h", "$color_k" );
+		my @valmax   = ( $max_v,   $max_h,   $max_h,   $max_k );
+		my @valtotal = ( $total_v, $total_p, $total_h, $total_k );
+		$average_v = sprintf( "%.2f", $AverageVisits );
+		$average_p = sprintf( "%.2f", $AveragePages );
+		$average_h = sprintf( "%.2f", $AverageHits );
+		$average_k = (
+			int($average_k)
+			? Format_Bytes( sprintf( "%.2f", $AverageBytes ) )
+			: "0.00"
+		);
+		my @valaverage =
+		  ( $average_v, $average_p, $average_h, $average_k );
+		my @valdata = ();
+		my $xx      = 0;
+
+		foreach
+		  my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )
+		{
+			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
+			my $year  = $1;
+			my $month = $2;
+			my $day   = $3;
+			if ( !DateIsValid( $day, $month, $year ) ) {
+				next;
+			}    # If not an existing day, go to next
+			$valdata[ $xx++ ] = $DayVisits{ $year . $month . $day }
+			  || 0;
+			$valdata[ $xx++ ] = $DayPages{ $year . $month . $day } || 0;
+			$valdata[ $xx++ ] = $DayHits{ $year . $month . $day }  || 0;
+			$valdata[ $xx++ ] = $DayBytes{ $year . $month . $day } || 0;
+		}
+		my $function = "ShowGraph_$pluginname";
+		&$function(
+			"$title",              "daysofmonth",
+			$ShowDaysOfMonthStats, \@blocklabel,
+			\@vallabel,            \@valcolor,
+			\@valmax,              \@valtotal,
+			\@valaverage,          \@valdata
+		);
+		$graphdone=1;
+	}
+	if (! $graphdone) {
+		print "<table>\n";
+		print "<tr valign=\"bottom\">\n";
+		foreach
+		  my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )
+		{
+			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
+			my $year  = $1;
+			my $month = $2;
+			my $day   = $3;
+			if ( !DateIsValid( $day, $month, $year ) ) {
+				next;
+			}    # If not an existing day, go to next
+			my $bredde_v = 0;
+			my $bredde_p = 0;
+			my $bredde_h = 0;
+			my $bredde_k = 0;
+			if ( $max_v > 0 ) {
+				$bredde_v =
+				  int( ( $DayVisits{ $year . $month . $day } || 0 ) /
+					  $max_v * $BarHeight ) + 1;
+			}
+			if ( $max_h > 0 ) {
+				$bredde_p =
+				  int( ( $DayPages{ $year . $month . $day } || 0 ) /
+					  $max_h * $BarHeight ) + 1;
+			}
+			if ( $max_h > 0 ) {
+				$bredde_h =
+				  int( ( $DayHits{ $year . $month . $day } || 0 ) /
+					  $max_h * $BarHeight ) + 1;
+			}
+			if ( $max_k > 0 ) {
+				$bredde_k =
+				  int( ( $DayBytes{ $year . $month . $day } || 0 ) /
+					  $max_k * $BarHeight ) + 1;
+			}
+			print "<td>";
+			if ( $ShowDaysOfMonthStats =~ /V/i ) {
+				print
+"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vv'}\" height=\"$bredde_v\" width=\"4\""
+				  . AltTitle( "$Message[10]: "
+					  . int( $DayVisits{ $year . $month . $day } || 0 )
+				  )
+				  . " />";
+			}
+			if ( $ShowDaysOfMonthStats =~ /P/i ) {
+				print
+"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"4\""
+				  . AltTitle( "$Message[56]: "
+					  . int( $DayPages{ $year . $month . $day } || 0 ) )
+				  . " />";
+			}
+			if ( $ShowDaysOfMonthStats =~ /H/i ) {
+				print
+"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"4\""
+				  . AltTitle( "$Message[57]: "
+					  . int( $DayHits{ $year . $month . $day } || 0 ) )
+				  . " />";
+			}
+			if ( $ShowDaysOfMonthStats =~ /B/i ) {
+				print
+"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"4\""
+				  . AltTitle(
+					"$Message[75]: "
+					  . Format_Bytes(
+						$DayBytes{ $year . $month . $day }
+					  )
+				  )
+				  . " />";
+			}
+			print "</td>\n";
+		}
+		print "<td>&nbsp;</td>";
+
+		# Show average value cell
+		print "<td>";
+		my $bredde_v = 0;
+		my $bredde_p = 0;
+		my $bredde_h = 0;
+		my $bredde_k = 0;
+		if ( $max_v > 0 ) {
+			$bredde_v = int( $average_v / $max_v * $BarHeight ) + 1;
+		}
+		if ( $max_h > 0 ) {
+			$bredde_p = int( $average_p / $max_h * $BarHeight ) + 1;
+		}
+		if ( $max_h > 0 ) {
+			$bredde_h = int( $average_h / $max_h * $BarHeight ) + 1;
+		}
+		if ( $max_k > 0 ) {
+			$bredde_k = int( $average_k / $max_k * $BarHeight ) + 1;
+		}
+		$average_v = sprintf( "%.2f", $average_v );
+		$average_p = sprintf( "%.2f", $average_p );
+		$average_h = sprintf( "%.2f", $average_h );
+		$average_k = (
+			int($average_k)
+			? Format_Bytes( sprintf( "%.2f", $average_k ) )
+			: "0.00"
+		);
+		if ( $ShowDaysOfMonthStats =~ /V/i ) {
+			print
+"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vv'}\" height=\"$bredde_v\" width=\"4\""
+			  . AltTitle("$Message[10]: $average_v") . " />";
+		}
+		if ( $ShowDaysOfMonthStats =~ /P/i ) {
+			print
+"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"4\""
+			  . AltTitle("$Message[56]: $average_p") . " />";
+		}
+		if ( $ShowDaysOfMonthStats =~ /H/i ) {
+			print
+"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"4\""
+			  . AltTitle("$Message[57]: $average_h") . " />";
+		}
+		if ( $ShowDaysOfMonthStats =~ /B/i ) {
+			print
+"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"4\""
+			  . AltTitle("$Message[75]: $average_k") . " />";
+		}
+		print "</td>\n";
+		print "</tr>\n";
+
+		# Show lib for day
+		print "<tr valign=\"middle\">";
+		foreach
+		  my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )
+		{
+			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
+			my $year  = $1;
+			my $month = $2;
+			my $day   = $3;
+			if ( !DateIsValid( $day, $month, $year ) ) {
+				next;
+			}    # If not an existing day, go to next
+			my $dayofweekcursor = DayOfWeek( $day, $month, $year );
+			print "<td"
+			  . (
+				$dayofweekcursor =~ /[06]/
+				? " bgcolor=\"#$color_weekend\""
+				: ""
+			  )
+			  . ">";
+			print(
+				!$StaticLinks
+				  && $day == $nowday
+				  && $month == $nowmonth
+				  && $year == $nowyear
+				? '<font class="currentday">'
+				: ''
+			);
+			print "$day<br /><span style=\"font-size: "
+			  . (    $FrameName ne 'mainright'
+				  && $QueryString !~ /buildpdf/i ? "9" : "8" )
+			  . "px;\">"
+			  . $MonthNumLib{$month}
+			  . "</span>";
+			print(   !$StaticLinks
+				  && $day == $nowday
+				  && $month == $nowmonth
+				  && $year == $nowyear ? '</font>' : '' );
+			print "</td>\n";
+		}
+		print "<td>&nbsp;</td>";
+		print "<td valign=\"middle\""
+		  . Tooltip(18)
+		  . ">$Message[96]</td>\n";
+		print "</tr>\n";
+		print "</table>\n";
+	}
+	print "<br />\n";
+
+	# Show data array for days
+	if ($AddDataArrayShowDaysOfMonthStats) {
+		print "<table>\n";
+		print
+"<tr><td width=\"80\" bgcolor=\"#$color_TableBGRowTitle\">$Message[4]</td>";
+		if ( $ShowDaysOfMonthStats =~ /V/i ) {
+			print "<td width=\"80\" bgcolor=\"#$color_v\""
+			  . Tooltip(1)
+			  . ">$Message[10]</td>";
+		}
+		if ( $ShowDaysOfMonthStats =~ /P/i ) {
+			print "<td width=\"80\" bgcolor=\"#$color_p\""
+			  . Tooltip(3)
+			  . ">$Message[56]</td>";
+		}
+		if ( $ShowDaysOfMonthStats =~ /H/i ) {
+			print "<td width=\"80\" bgcolor=\"#$color_h\""
+			  . Tooltip(4)
+			  . ">$Message[57]</td>";
+		}
+		if ( $ShowDaysOfMonthStats =~ /B/i ) {
+			print "<td width=\"80\" bgcolor=\"#$color_k\""
+			  . Tooltip(5)
+			  . ">$Message[75]</td>";
+		}
+		print "</tr>";
+		foreach
+		  my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )
+		{
+			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
+			my $year  = $1;
+			my $month = $2;
+			my $day   = $3;
+			if ( !DateIsValid( $day, $month, $year ) ) {
+				next;
+			}    # If not an existing day, go to next
+			my $dayofweekcursor = DayOfWeek( $day, $month, $year );
+			print "<tr"
+			  . (
+				$dayofweekcursor =~ /[06]/
+				? " bgcolor=\"#$color_weekend\""
+				: ""
+			  )
+			  . ">";
+			print "<td>"
+			  . (
+				!$StaticLinks
+				  && $day == $nowday
+				  && $month == $nowmonth
+				  && $year == $nowyear
+				? '<font class="currentday">'
+				: ''
+			  );
+			print Format_Date( "$year$month$day" . "000000", 2 );
+			print(   !$StaticLinks
+				  && $day == $nowday
+				  && $month == $nowmonth
+				  && $year == $nowyear ? '</font>' : '' );
+			print "</td>";
+			if ( $ShowDaysOfMonthStats =~ /V/i ) {
+				print "<td>",
+				  Format_Number($DayVisits{ $year . $month . $day }
+				  ? $DayVisits{ $year . $month . $day }
+				  : "0"), "</td>";
+			}
+			if ( $ShowDaysOfMonthStats =~ /P/i ) {
+				print "<td>",
+				  Format_Number($DayPages{ $year . $month . $day }
+				  ? $DayPages{ $year . $month . $day }
+				  : "0"), "</td>";
+			}
+			if ( $ShowDaysOfMonthStats =~ /H/i ) {
+				print "<td>",
+				  Format_Number($DayHits{ $year . $month . $day }
+				  ? $DayHits{ $year . $month . $day }
+				  : "0"), "</td>";
+			}
+			if ( $ShowDaysOfMonthStats =~ /B/i ) {
+				print "<td>",
+				  Format_Bytes(
+					int( $DayBytes{ $year . $month . $day } || 0 ) ),
+				  "</td>";
+			}
+			print "</tr>\n";
+		}
+
+		# Average row
+		print
+"<tr bgcolor=\"#$color_TableBGRowTitle\"><td>$Message[96]</td>";
+		if ( $ShowDaysOfMonthStats =~ /V/i ) {
+			print "<td>".Format_Number($average_v)."</td>";
+		}
+		if ( $ShowDaysOfMonthStats =~ /P/i ) {
+			print "<td>".Format_Number($average_p)."</td>";
+		}
+		if ( $ShowDaysOfMonthStats =~ /H/i ) {
+			print "<td>".Format_Number($average_h)."</td>";
+		}
+		if ( $ShowDaysOfMonthStats =~ /B/i ) {
+			print "<td>".Format_Number($average_k)."</td>";
+		}
+		print "</tr>\n";
+
+		# Total row
+		print
+"<tr bgcolor=\"#$color_TableBGRowTitle\"><td>$Message[102]</td>";
+		if ( $ShowDaysOfMonthStats =~ /V/i ) {
+			print "<td>".Format_Number($total_v)."</td>";
+		}
+		if ( $ShowDaysOfMonthStats =~ /P/i ) {
+			print "<td>".Format_Number($total_p)."</td>";
+		}
+		if ( $ShowDaysOfMonthStats =~ /H/i ) {
+			print "<td>".Format_Number($total_h)."</td>";
+		}
+		if ( $ShowDaysOfMonthStats =~ /B/i ) {
+			print "<td>" . Format_Bytes($total_k) . "</td>";
+		}
+		print "</tr>\n";
+		print "</table>\n<br />";
+	}
+
+	print "</center>\n";
+	print "</td></tr>\n";
+	&tab_end();
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the Days of the Week section on the main page
+# Parameters:   $firstdaytocountaverage, $lastdaytocountaverage
+# Input:        _
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLMainDaysofWeek{
+	my $firstdaytocountaverage = shift;
+	my $lastdaytocountaverage = shift;
+	if ($Debug) { debug( "ShowDaysOfWeekStats", 2 ); }
+			print "$Center<a name=\"daysofweek\">&nbsp;</a><br />\n";
+			my $title = "$Message[91]";
+			&tab_head( "$title", 18, 0, 'daysofweek' );
+			print "<tr>";
+			print "<td align=\"center\">";
+			print "<center>\n";
+
+			my $max_h = my $max_k = 0;    # Start from 0 because can be lower than 1
+			                        # Get average value for day of week
+			my @avg_dayofweek_nb = ();
+			my @avg_dayofweek_p  = ();
+			my @avg_dayofweek_h  = ();
+			my @avg_dayofweek_k  = ();
+			foreach my $daycursor (
+				$firstdaytocountaverage .. $lastdaytocountaverage )
+			{
+				$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
+				my $year  = $1;
+				my $month = $2;
+				my $day   = $3;
+				if ( !DateIsValid( $day, $month, $year ) ) {
+					next;
+				}    # If not an existing day, go to next
+				my $dayofweekcursor = DayOfWeek( $day, $month, $year );
+				$avg_dayofweek_nb[$dayofweekcursor]
+				  ++; # Increase number of day used to count for this day of week
+				$avg_dayofweek_p[$dayofweekcursor] +=
+				  ( $DayPages{$daycursor} || 0 );
+				$avg_dayofweek_h[$dayofweekcursor] +=
+				  ( $DayHits{$daycursor} || 0 );
+				$avg_dayofweek_k[$dayofweekcursor] +=
+				  ( $DayBytes{$daycursor} || 0 );
+			}
+			for (@DOWIndex) {
+				if ( $avg_dayofweek_nb[$_] ) {
+					$avg_dayofweek_p[$_] =
+					  $avg_dayofweek_p[$_] / $avg_dayofweek_nb[$_];
+					$avg_dayofweek_h[$_] =
+					  $avg_dayofweek_h[$_] / $avg_dayofweek_nb[$_];
+					$avg_dayofweek_k[$_] =
+					  $avg_dayofweek_k[$_] / $avg_dayofweek_nb[$_];
+
+		  #if ($avg_dayofweek_p[$_] > $max_p) { $max_p = $avg_dayofweek_p[$_]; }
+					if ( $avg_dayofweek_h[$_] > $max_h ) {
+						$max_h = $avg_dayofweek_h[$_];
+					}
+					if ( $avg_dayofweek_k[$_] > $max_k ) {
+						$max_k = $avg_dayofweek_k[$_];
+					}
+				}
+				else {
+					$avg_dayofweek_p[$_] = "?";
+					$avg_dayofweek_h[$_] = "?";
+					$avg_dayofweek_k[$_] = "?";
+				}
+			}
+
+			# Show bars for days of week
+			my $graphdone=0;
+			foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
+			{
+				my @blocklabel = ();
+				for (@DOWIndex) {
+					push @blocklabel,
+					  ( $Message[ $_ + 84 ] . ( $_ =~ /[06]/ ? "!" : "" ) );
+				}
+				my @vallabel =
+				  ( "$Message[56]", "$Message[57]", "$Message[75]" );
+				my @valcolor = ( "$color_p", "$color_h", "$color_k" );
+				my @valmax = ( int($max_h), int($max_h), int($max_k) );
+				my @valtotal = ( $TotalPages, $TotalHits, $TotalBytes );
+				# TEMP
+				my $average_p = my $average_h = my $average_k = 0;
+				$average_p = sprintf( "%.2f", $AveragePages );
+				$average_h = sprintf( "%.2f", $AverageHits );
+				$average_k = (
+					int($average_k)
+					? Format_Bytes( sprintf( "%.2f", $AverageBytes ) )
+					: "0.00"
+				);
+				my @valaverage = ( $average_p, $average_h, $average_k );
+				my @valdata    = ();
+				my $xx         = 0;
+
+				for (@DOWIndex) {
+					$valdata[ $xx++ ] = $avg_dayofweek_p[$_] || 0;
+					$valdata[ $xx++ ] = $avg_dayofweek_h[$_] || 0;
+					$valdata[ $xx++ ] = $avg_dayofweek_k[$_] || 0;
+
+					# Round to be ready to show array
+					$avg_dayofweek_p[$_] =
+					  sprintf( "%.2f", $avg_dayofweek_p[$_] );
+					$avg_dayofweek_h[$_] =
+					  sprintf( "%.2f", $avg_dayofweek_h[$_] );
+					$avg_dayofweek_k[$_] =
+					  sprintf( "%.2f", $avg_dayofweek_k[$_] );
+
+					# Remove decimal part that are .0
+					if ( $avg_dayofweek_p[$_] == int( $avg_dayofweek_p[$_] ) ) {
+						$avg_dayofweek_p[$_] = int( $avg_dayofweek_p[$_] );
+					}
+					if ( $avg_dayofweek_h[$_] == int( $avg_dayofweek_h[$_] ) ) {
+						$avg_dayofweek_h[$_] = int( $avg_dayofweek_h[$_] );
+					}
+				}
+				my $function = "ShowGraph_$pluginname";
+				&$function(
+					"$title",             "daysofweek",
+					$ShowDaysOfWeekStats, \@blocklabel,
+					\@vallabel,           \@valcolor,
+					\@valmax,             \@valtotal,
+					\@valaverage,         \@valdata
+				);
+				$graphdone=1;
+			}
+			if (! $graphdone) 
+			{
+				print "<table>\n";
+				print "<tr valign=\"bottom\">\n";
+				for (@DOWIndex) {
+					my $bredde_p = 0;
+					my $bredde_h = 0;
+					my $bredde_k = 0;
+					if ( $max_h > 0 ) {
+						$bredde_p = int(
+							(
+								  $avg_dayofweek_p[$_] ne '?'
+								? $avg_dayofweek_p[$_]
+								: 0
+							) / $max_h * $BarHeight
+						) + 1;
+					}
+					if ( $max_h > 0 ) {
+						$bredde_h = int(
+							(
+								  $avg_dayofweek_h[$_] ne '?'
+								? $avg_dayofweek_h[$_]
+								: 0
+							) / $max_h * $BarHeight
+						) + 1;
+					}
+					if ( $max_k > 0 ) {
+						$bredde_k = int(
+							(
+								  $avg_dayofweek_k[$_] ne '?'
+								? $avg_dayofweek_k[$_]
+								: 0
+							) / $max_k * $BarHeight
+						) + 1;
+					}
+					$avg_dayofweek_p[$_] = sprintf(
+						"%.2f",
+						(
+							  $avg_dayofweek_p[$_] ne '?'
+							? $avg_dayofweek_p[$_]
+							: 0
+						)
+					);
+					$avg_dayofweek_h[$_] = sprintf(
+						"%.2f",
+						(
+							  $avg_dayofweek_h[$_] ne '?'
+							? $avg_dayofweek_h[$_]
+							: 0
+						)
+					);
+					$avg_dayofweek_k[$_] = sprintf(
+						"%.2f",
+						(
+							  $avg_dayofweek_k[$_] ne '?'
+							? $avg_dayofweek_k[$_]
+							: 0
+						)
+					);
+
+					# Remove decimal part that are .0
+					if ( $avg_dayofweek_p[$_] == int( $avg_dayofweek_p[$_] ) ) {
+						$avg_dayofweek_p[$_] = int( $avg_dayofweek_p[$_] );
+					}
+					if ( $avg_dayofweek_h[$_] == int( $avg_dayofweek_h[$_] ) ) {
+						$avg_dayofweek_h[$_] = int( $avg_dayofweek_h[$_] );
+					}
+					print "<td valign=\"bottom\">";
+					if ( $ShowDaysOfWeekStats =~ /P/i ) {
+						print
+"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"6\""
+						  . AltTitle("$Message[56]: $avg_dayofweek_p[$_]")
+						  . " />";
+					}
+					if ( $ShowDaysOfWeekStats =~ /H/i ) {
+						print
+"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"6\""
+						  . AltTitle("$Message[57]: $avg_dayofweek_h[$_]")
+						  . " />";
+					}
+					if ( $ShowDaysOfWeekStats =~ /B/i ) {
+						print
+"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"6\""
+						  . AltTitle( "$Message[75]: "
+							  . Format_Bytes( $avg_dayofweek_k[$_] ) )
+						  . " />";
+					}
+					print "</td>\n";
+				}
+				print "</tr>\n";
+				print "<tr" . Tooltip(17) . ">\n";
+				for (@DOWIndex) {
+					print "<td"
+					  . ( $_ =~ /[06]/ ? " bgcolor=\"#$color_weekend\"" : "" )
+					  . ">"
+					  . (
+						!$StaticLinks
+						  && $_ == ( $nowwday - 1 )
+						  && $MonthRequired == $nowmonth
+						  && $YearRequired == $nowyear
+						? '<font class="currentday">'
+						: ''
+					  );
+					print $Message[ $_ + 84 ];
+					print(   !$StaticLinks
+						  && $_ == ( $nowwday - 1 )
+						  && $MonthRequired == $nowmonth
+						  && $YearRequired == $nowyear ? '</font>' : '' );
+					print "</td>";
+				}
+				print "</tr>\n</table>\n";
+			}
+			print "<br />\n";
+
+			# Show data array for days of week
+			if ($AddDataArrayShowDaysOfWeekStats) {
+				print "<table>\n";
+				print
+"<tr><td width=\"80\" bgcolor=\"#$color_TableBGRowTitle\">$Message[4]</td>";
+				if ( $ShowDaysOfWeekStats =~ /P/i ) {
+					print "<td width=\"80\" bgcolor=\"#$color_p\""
+					  . Tooltip(3)
+					  . ">$Message[56]</td>";
+				}
+				if ( $ShowDaysOfWeekStats =~ /H/i ) {
+					print "<td width=\"80\" bgcolor=\"#$color_h\""
+					  . Tooltip(4)
+					  . ">$Message[57]</td>";
+				}
+				if ( $ShowDaysOfWeekStats =~ /B/i ) {
+					print "<td width=\"80\" bgcolor=\"#$color_k\""
+					  . Tooltip(5)
+					  . ">$Message[75]</td></tr>";
+				}
+				for (@DOWIndex) {
+					print "<tr"
+					  . ( $_ =~ /[06]/ ? " bgcolor=\"#$color_weekend\"" : "" )
+					  . ">";
+					print "<td>"
+					  . (
+						!$StaticLinks
+						  && $_ == ( $nowwday - 1 )
+						  && $MonthRequired == $nowmonth
+						  && $YearRequired == $nowyear
+						? '<font class="currentday">'
+						: ''
+					  );
+					print $Message[ $_ + 84 ];
+					print(   !$StaticLinks
+						  && $_ == ( $nowwday - 1 )
+						  && $MonthRequired == $nowmonth
+						  && $YearRequired == $nowyear ? '</font>' : '' );
+					print "</td>";
+					if ( $ShowDaysOfWeekStats =~ /P/i ) {
+						print "<td>", Format_Number($avg_dayofweek_p[$_]), "</td>";
+					}
+					if ( $ShowDaysOfWeekStats =~ /H/i ) {
+						print "<td>", Format_Number($avg_dayofweek_h[$_]), "</td>";
+					}
+					if ( $ShowDaysOfWeekStats =~ /B/i ) {
+						print "<td>", Format_Bytes( $avg_dayofweek_k[$_] ),
+						  "</td>";
+					}
+					print "</tr>\n";
+				}
+				print "</table>\n<br />\n";
+			}
+
+			print "</center></td>";
+			print "</tr>\n";
+			&tab_end();
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the hours chart and table
+# Parameters:   -
+# Input:        -
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLMainHours{
+	if ($Debug) { debug( "ShowHoursStats", 2 ); }
+	print "$Center<a name=\"hours\">&nbsp;</a><br />\n";
+	my $title = "$Message[20]";
+	if ( $PluginsLoaded{'GetTimeZoneTitle'}{'timezone'} ) {
+		$title .= " (GMT "
+		  . ( GetTimeZoneTitle_timezone() >= 0 ? "+" : "" )
+		  . int( GetTimeZoneTitle_timezone() ) . ")";
+	}
+	&tab_head( "$title", 19, 0, 'hours' );
+	print "<tr><td align=\"center\">\n";
+	print "<center>\n";
+
+	my $max_h = my $max_k = 1;
+	for ( my $ix = 0 ; $ix <= 23 ; $ix++ ) {
+
+		#if ($_time_p[$ix]>$max_p) { $max_p=$_time_p[$ix]; }
+		if ( $_time_h[$ix] > $max_h ) { $max_h = $_time_h[$ix]; }
+		if ( $_time_k[$ix] > $max_k ) { $max_k = $_time_k[$ix]; }
+	}
+
+	# Show bars for hour
+	my $graphdone=0;
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
+	{
+		my @blocklabel = ( 0 .. 23 );
+		my @vallabel   =
+		  ( "$Message[56]", "$Message[57]", "$Message[75]" );
+		my @valcolor = ( "$color_p", "$color_h", "$color_k" );
+		my @valmax = ( int($max_h), int($max_h), int($max_k) );
+		my @valtotal   = ( $TotalPages,   $TotalHits,   $TotalBytes );
+		my @valaverage = ( $AveragePages, $AverageHits, $AverageBytes );
+		my @valdata    = ();
+		my $xx         = 0;
+		for ( 0 .. 23 ) {
+			$valdata[ $xx++ ] = $_time_p[$_] || 0;
+			$valdata[ $xx++ ] = $_time_h[$_] || 0;
+			$valdata[ $xx++ ] = $_time_k[$_] || 0;
+		}
+		my $function = "ShowGraph_$pluginname";
+		&$function(
+			"$title",        "hours",
+			$ShowHoursStats, \@blocklabel,
+			\@vallabel,      \@valcolor,
+			\@valmax,        \@valtotal,
+			\@valaverage,    \@valdata
+		);
+		$graphdone=1;
+	}
+	if (! $graphdone) 
+	{
+		print "<table>\n";
+		print "<tr valign=\"bottom\">\n";
+		for ( my $ix = 0 ; $ix <= 23 ; $ix++ ) {
+			my $bredde_p = 0;
+			my $bredde_h = 0;
+			my $bredde_k = 0;
+			if ( $max_h > 0 ) {
+				$bredde_p =
+				  int( $BarHeight * $_time_p[$ix] / $max_h ) + 1;
+			}
+			if ( $max_h > 0 ) {
+				$bredde_h =
+				  int( $BarHeight * $_time_h[$ix] / $max_h ) + 1;
+			}
+			if ( $max_k > 0 ) {
+				$bredde_k =
+				  int( $BarHeight * $_time_k[$ix] / $max_k ) + 1;
+			}
+			print "<td>";
+			if ( $ShowHoursStats =~ /P/i ) {
+				print
+"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"6\""
+				  . AltTitle( "$Message[56]: " . int( $_time_p[$ix] ) )
+				  . " />";
+			}
+			if ( $ShowHoursStats =~ /H/i ) {
+				print
+"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"6\""
+				  . AltTitle( "$Message[57]: " . int( $_time_h[$ix] ) )
+				  . " />";
+			}
+			if ( $ShowHoursStats =~ /B/i ) {
+				print
+"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"6\""
+				  . AltTitle(
+					"$Message[75]: " . Format_Bytes( $_time_k[$ix] ) )
+				  . " />";
+			}
+			print "</td>\n";
+		}
+		print "</tr>\n";
+
+		# Show hour lib
+		print "<tr" . Tooltip(17) . ">";
+		for ( my $ix = 0 ; $ix <= 23 ; $ix++ ) {
+			print "<th width=\"19\">$ix</th>\n"
+			  ;   # width=19 instead of 18 to avoid a MacOS browser bug.
+		}
+		print "</tr>\n";
+
+		# Show clock icon
+		print "<tr" . Tooltip(17) . ">\n";
+		for ( my $ix = 0 ; $ix <= 23 ; $ix++ ) {
+			my $hrs = ( $ix >= 12 ? $ix - 12 : $ix );
+			my $hre = ( $ix >= 12 ? $ix - 11 : $ix + 1 );
+			my $apm = ( $ix >= 12 ? "pm"     : "am" );
+			print
+"<td><img src=\"$DirIcons\/clock\/hr$hre.png\" width=\"12\" alt=\"$hrs:00 - $hre:00 $apm\" /></td>\n";
+		}
+		print "</tr>\n";
+		print "</table>\n";
+	}
+	print "<br />\n";
+
+	# Show data array for hours
+	if ($AddDataArrayShowHoursStats) {
+		print "<table width=\"650\"><tr>\n";
+		print "<td align=\"center\"><center>\n";
+
+		print "<table>\n";
+		print
+"<tr><td width=\"80\" bgcolor=\"#$color_TableBGRowTitle\">$Message[20]</td>";
+		if ( $ShowHoursStats =~ /P/i ) {
+			print "<td width=\"80\" bgcolor=\"#$color_p\""
+			  . Tooltip(3)
+			  . ">$Message[56]</td>";
+		}
+		if ( $ShowHoursStats =~ /H/i ) {
+			print "<td width=\"80\" bgcolor=\"#$color_h\""
+			  . Tooltip(4)
+			  . ">$Message[57]</td>";
+		}
+		if ( $ShowHoursStats =~ /B/i ) {
+			print "<td width=\"80\" bgcolor=\"#$color_k\""
+			  . Tooltip(5)
+			  . ">$Message[75]</td>";
+		}
+		print "</tr>";
+		for ( my $ix = 0 ; $ix <= 11 ; $ix++ ) {
+			my $monthix = ( $ix < 10 ? "0$ix" : "$ix" );
+			print "<tr>";
+			print "<td>$monthix</td>";
+			if ( $ShowHoursStats =~ /P/i ) {
+				print "<td>",
+				  Format_Number($_time_p[$monthix] ? $_time_p[$monthix] : "0"),
+				  "</td>";
+			}
+			if ( $ShowHoursStats =~ /H/i ) {
+				print "<td>",
+				  Format_Number($_time_h[$monthix] ? $_time_h[$monthix] : "0"),
+				  "</td>";
+			}
+			if ( $ShowHoursStats =~ /B/i ) {
+				print "<td>", Format_Bytes( int( $_time_k[$monthix] ) ),
+				  "</td>";
+			}
+			print "</tr>\n";
+		}
+		print "</table>\n";
+
+		print "</center></td>";
+		print "<td width=\"10\">&nbsp;</td>";
+		print "<td align=\"center\"><center>\n";
+
+		print "<table>\n";
+		print
+"<tr><td width=\"80\" bgcolor=\"#$color_TableBGRowTitle\">$Message[20]</td>";
+		if ( $ShowHoursStats =~ /P/i ) {
+			print "<td width=\"80\" bgcolor=\"#$color_p\""
+			  . Tooltip(3)
+			  . ">$Message[56]</td>";
+		}
+		if ( $ShowHoursStats =~ /H/i ) {
+			print "<td width=\"80\" bgcolor=\"#$color_h\""
+			  . Tooltip(4)
+			  . ">$Message[57]</td>";
+		}
+		if ( $ShowHoursStats =~ /B/i ) {
+			print "<td width=\"80\" bgcolor=\"#$color_k\""
+			  . Tooltip(5)
+			  . ">$Message[75]</td>";
+		}
+		print "</tr>\n";
+		for ( my $ix = 12 ; $ix <= 23 ; $ix++ ) {
+			my $monthix = ( $ix < 10 ? "0$ix" : "$ix" );
+			print "<tr>";
+			print "<td>$monthix</td>";
+			if ( $ShowHoursStats =~ /P/i ) {
+				print "<td>",
+				  Format_Number($_time_p[$monthix] ? $_time_p[$monthix] : "0"),
+				  "</td>";
+			}
+			if ( $ShowHoursStats =~ /H/i ) {
+				print "<td>",
+				  Format_Number($_time_h[$monthix] ? $_time_h[$monthix] : "0"),
+				  "</td>";
+			}
+			if ( $ShowHoursStats =~ /B/i ) {
+				print "<td>", Format_Bytes( int( $_time_k[$monthix] ) ),
+				  "</td>";
+			}
+			print "</tr>\n";
+		}
+		print "</table>\n";
+
+		print "</center></td></tr></table>\n";
+		print "<br />\n";
+	}
+
+	print "</center></td></tr>\n";
+	&tab_end();
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the countries chart and table
+# Parameters:   $NewLinkParams, $NewLinkTarget
+# Input:        -
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLMainCountries{
+	my $NewLinkParams = shift;
+	my $NewLinkTarget = shift;
+	
+	if ($Debug) { debug( "ShowDomainsStats", 2 ); }
+	print "$Center<a name=\"countries\">&nbsp;</a><br />\n";
+	my $title =
+"$Message[25] ($Message[77] $MaxNbOf{'Domain'}) &nbsp; - &nbsp; <a href=\""
+	  . (
+		$ENV{'GATEWAY_INTERFACE'}
+		  || !$StaticLinks
+		? XMLEncode("$AWScript?${NewLinkParams}output=alldomains")
+		: "$StaticLinks.alldomains.$StaticExt"
+	  )
+	  . "\"$NewLinkTarget>$Message[80]</a>";
+	&tab_head( "$title", 19, 0, 'countries' );
+	
+	my $total_u = my $total_v = my $total_p = my $total_h = my $total_k = 0;
+	my $max_h = 1;
+	foreach ( values %_domener_h ) {
+		if ( $_ > $max_h ) { $max_h = $_; }
+	}
+	my $max_k = 1;
+	foreach ( values %_domener_k ) {
+		if ( $_ > $max_k ) { $max_k = $_; }
+	}
+	my $count = 0;
+	
+	&BuildKeyList(
+		$MaxNbOf{'Domain'}, $MinHit{'Domain'},
+		\%_domener_h,       \%_domener_p
+	);
+	
+	# print the map
+	if (scalar @keylist > 1){
+		foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
+		{
+			my @blocklabel = ();
+			my @valdata = ();
+			my $cnt = 0;
+			foreach my $key (@keylist) {
+				push @valdata, int( $_domener_h{$key} );
+				push @blocklabel, $DomainsHashIDLib{$key};
+				$cnt++;
+				if ($cnt > 99) { last; }
+			}
+			print "<tr><td colspan=\"7\">";
+			my $function = "ShowGraph_$pluginname";
+			&$function(
+				"AWStatsCountryMap",              "countries_map",
+				0, 						\@blocklabel,
+				0,           			0,
+				0,              		0,
+				0,          			\@valdata
+			);
+			print "</td></tr>";
+		}
+	}
+	
+	print
+"<tr bgcolor=\"#$color_TableBGRowTitle\"><th width=\"$WIDTHCOLICON\">&nbsp;</th><th colspan=\"2\">$Message[17]</th>";
+
+	## to add unique visitors and number of visits by calculation of average of the relation with total
+	## pages and total hits, and total visits and total unique
+	## by Josep Ruano @ CAPSiDE
+	if ( $ShowDomainsStats =~ /U/i ) {
+		print "<th bgcolor=\"#$color_u\" width=\"80\""
+		  . Tooltip(2)
+		  . ">$Message[11]</th>";
+	}
+	if ( $ShowDomainsStats =~ /V/i ) {
+		print "<th bgcolor=\"#$color_v\" width=\"80\""
+		  . Tooltip(1)
+		  . ">$Message[10]</th>";
+	}
+	if ( $ShowDomainsStats =~ /P/i ) {
+		print "<th bgcolor=\"#$color_p\" width=\"80\""
+		  . Tooltip(3)
+		  . ">$Message[56]</th>";
+	}
+	if ( $ShowDomainsStats =~ /H/i ) {
+		print "<th bgcolor=\"#$color_h\" width=\"80\""
+		  . Tooltip(4)
+		  . ">$Message[57]</th>";
+	}
+	if ( $ShowDomainsStats =~ /B/i ) {
+		print "<th bgcolor=\"#$color_k\" width=\"80\""
+		  . Tooltip(5)
+		  . ">$Message[75]</th>";
+	}
+	print "<th>&nbsp;</th>";
+	print "</tr>\n";
+	
+	foreach my $key (@keylist) {
+		my ( $_domener_u, $_domener_v );
+		my $bredde_p = 0;
+		my $bredde_h = 0;
+		my $bredde_k = 0;
+		my $bredde_u = 0;
+		my $bredde_v = 0;
+		if ( $max_h > 0 ) {
+			$bredde_p =
+			  int( $BarWidth * $_domener_p{$key} / $max_h ) + 1;
+		}    # use max_h to enable to compare pages with hits
+		if ( $_domener_p{$key} && $bredde_p == 1 ) { $bredde_p = 2; }
+		if ( $max_h > 0 ) {
+			$bredde_h =
+			  int( $BarWidth * $_domener_h{$key} / $max_h ) + 1;
+		}
+		if ( $_domener_h{$key} && $bredde_h == 1 ) { $bredde_h = 2; }
+		if ( $max_k > 0 ) {
+			$bredde_k =
+			  int( $BarWidth * ( $_domener_k{$key} || 0 ) / $max_k ) +
+			  1;
+		}
+		if ( $_domener_k{$key} && $bredde_k == 1 ) { $bredde_k = 2; }
+		my $newkey = lc($key);
+		if ( $newkey eq 'ip' || !$DomainsHashIDLib{$newkey} ) {
+			print
+"<tr><td width=\"$WIDTHCOLICON\"><img src=\"$DirIcons\/flags\/ip.png\" height=\"14\""
+			  . AltTitle("$Message[0]")
+			  . " /></td><td class=\"aws\">$Message[0]</td><td>$newkey</td>";
+		}
+		else {
+			print
+"<tr><td width=\"$WIDTHCOLICON\"><img src=\"$DirIcons\/flags\/$newkey.png\" height=\"14\""
+			  . AltTitle("$newkey")
+			  . " /></td><td class=\"aws\">$DomainsHashIDLib{$newkey}</td><td>$newkey</td>";
+		}
+		## to add unique visitors and number of visits, by Josep Ruano @ CAPSiDE
+		if ( $ShowDomainsStats =~ /U/i ) {
+			$_domener_u = (
+				  $_domener_p{$key}
+				? $_domener_p{$key} / $TotalPages
+				: 0
+			);
+			$_domener_u += ( $_domener_h{$key} / $TotalHits );
+			$_domener_u =
+			  sprintf( "%.0f", ( $_domener_u * $TotalUnique ) / 2 );
+			print "<td>".Format_Number($_domener_u)." ("
+			  . sprintf( "%.1f%", 100 * $_domener_u / $TotalUnique )
+			  . ")</td>";
+		}
+		if ( $ShowDomainsStats =~ /V/i ) {
+			$_domener_v = (
+				  $_domener_p{$key}
+				? $_domener_p{$key} / $TotalPages
+				: 0
+			);
+			$_domener_v += ( $_domener_h{$key} / $TotalHits );
+			$_domener_v =
+			  sprintf( "%.0f", ( $_domener_v * $TotalVisits ) / 2 );
+			print "<td>".Format_Number($_domener_v)." ("
+			  . sprintf( "%.1f%", 100 * $_domener_v / $TotalVisits )
+			  . ")</td>";
+		}
+
+		if ( $ShowDomainsStats =~ /P/i ) {
+			print "<td>"
+			  . ( $_domener_p{$key} ? Format_Number($_domener_p{$key}) : '&nbsp;' )
+			  . "</td>";
+		}
+		if ( $ShowDomainsStats =~ /H/i ) {
+			print "<td>".Format_Number($_domener_h{$key})."</td>";
+		}
+		if ( $ShowDomainsStats =~ /B/i ) {
+			print "<td>" . Format_Bytes( $_domener_k{$key} ) . "</td>";
+		}
+		print "<td class=\"aws\">";
+
+		if ( $ShowDomainsStats =~ /P/i ) {
+			print
+"<img src=\"$DirIcons\/other\/$BarPng{'hp'}\" width=\"$bredde_p\" height=\"5\""
+			  . AltTitle("")
+			  . " /><br />\n";
+		}
+		if ( $ShowDomainsStats =~ /H/i ) {
+			print
+"<img src=\"$DirIcons\/other\/$BarPng{'hh'}\" width=\"$bredde_h\" height=\"5\""
+			  . AltTitle("")
+			  . " /><br />\n";
+		}
+		if ( $ShowDomainsStats =~ /B/i ) {
+			print
+"<img src=\"$DirIcons\/other\/$BarPng{'hk'}\" width=\"$bredde_k\" height=\"5\""
+			  . AltTitle("") . " />";
+		}
+		print "</td>";
+		print "</tr>\n";
+
+		$total_u += $_domener_u;
+		$total_v += $_domener_v;
+		$total_p += $_domener_p{$key};
+		$total_h += $_domener_h{$key};
+		$total_k += $_domener_k{$key} || 0;
+		$count++;
+	}
+	my $rest_u = $TotalUnique - $total_u;
+	my $rest_v = $TotalVisits - $total_v;
+	my $rest_p = $TotalPages - $total_p;
+	my $rest_h = $TotalHits - $total_h;
+	my $rest_k = $TotalBytes - $total_k;
+	if (   $rest_u > 0
+		|| $rest_v > 0
+		|| $rest_p > 0
+		|| $rest_h > 0
+		|| $rest_k > 0 )
+	{    # All other domains (known or not)
+		print
+"<tr><td width=\"$WIDTHCOLICON\">&nbsp;</td><td colspan=\"2\" class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
+		if ( $ShowDomainsStats =~ /U/i ) { print "<td>$rest_u</td>"; }
+		if ( $ShowDomainsStats =~ /V/i ) { print "<td>$rest_v</td>"; }
+		if ( $ShowDomainsStats =~ /P/i ) { print "<td>$rest_p</td>"; }
+		if ( $ShowDomainsStats =~ /H/i ) { print "<td>$rest_h</td>"; }
+		if ( $ShowDomainsStats =~ /B/i ) {
+			print "<td>" . Format_Bytes($rest_k) . "</td>";
+		}
+		print "<td class=\"aws\">&nbsp;</td>";
+		print "</tr>\n";
+	}
+	&tab_end();
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the hosts chart and table
+# Parameters:   $NewLinkParams, $NewLinkTarget
+# Input:        -
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLMainHosts{
+	my $NewLinkParams = shift;
+	my $NewLinkTarget = shift;
+	
+	if ($Debug) { debug( "ShowHostsStats", 2 ); }
+	print "$Center<a name=\"visitors\">&nbsp;</a><br />\n";
+	my $title =
+"$Message[81] ($Message[77] $MaxNbOf{'HostsShown'}) &nbsp; - &nbsp; <a href=\""
+	  . (
+		$ENV{'GATEWAY_INTERFACE'}
+		  || !$StaticLinks
+		? XMLEncode("$AWScript?${NewLinkParams}output=allhosts")
+		: "$StaticLinks.allhosts.$StaticExt"
+	  )
+	  . "\"$NewLinkTarget>$Message[80]</a> &nbsp; - &nbsp; <a href=\""
+	  . (
+		$ENV{'GATEWAY_INTERFACE'}
+		  || !$StaticLinks
+		? XMLEncode("$AWScript?${NewLinkParams}output=lasthosts")
+		: "$StaticLinks.lasthosts.$StaticExt"
+	  )
+	  . "\"$NewLinkTarget>$Message[9]</a> &nbsp; - &nbsp; <a href=\""
+	  . (
+		$ENV{'GATEWAY_INTERFACE'}
+		  || !$StaticLinks
+		? XMLEncode("$AWScript?${NewLinkParams}output=unknownip")
+		: "$StaticLinks.unknownip.$StaticExt"
+	  )
+	  . "\"$NewLinkTarget>$Message[45]</a>";
+	&tab_head( "$title", 19, 0, 'visitors' );
+	
+	&BuildKeyList( $MaxNbOf{'HostsShown'}, $MinHit{'Host'}, \%_host_h,
+		\%_host_p );
+		
+	# Graph the top five in a pie chart
+	if (scalar @keylist > 1){
+		foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
+		{
+			my @blocklabel = ();
+			my @valdata = ();
+			my @valcolor = ($color_p);
+			my $cnt = 0;
+			foreach my $key (@keylist) {
+				push @valdata, int( $_host_h{$key} / $TotalHits * 1000 ) / 10;
+				push @blocklabel, "$key";
+				$cnt++;
+				if ($cnt > 4) { last; }
+			}
+			print "<tr><td colspan=\"7\">";
+			my $function = "ShowGraph_$pluginname";
+			&$function(
+				"Hosts",              "hosts",
+				0, 						\@blocklabel,
+				0,           			\@valcolor,
+				0,              		0,
+				0,          			\@valdata
+			);
+			print "</td></tr>";
+		}
+	}
+	
+	print "<tr bgcolor=\"#$color_TableBGRowTitle\">";
+	print "<th>";
+	if ( $MonthRequired ne 'all' ) {
+		print
+"$Message[81] : ".Format_Number($TotalHostsKnown)." $Message[82], ".Format_Number($TotalHostsUnknown)." $Message[1]<br />".Format_Number($TotalUnique)." $Message[11]</th>";
+	}
+	else {
+		print "$Message[81] : " . ( scalar keys %_host_h ) . "</th>";
+	}
+	&HTMLShowHostInfo('__title__');
+	if ( $ShowHostsStats =~ /P/i ) {
+		print "<th bgcolor=\"#$color_p\" width=\"80\""
+		  . Tooltip(3)
+		  . ">$Message[56]</th>";
+	}
+	if ( $ShowHostsStats =~ /H/i ) {
+		print "<th bgcolor=\"#$color_h\" width=\"80\""
+		  . Tooltip(4)
+		  . ">$Message[57]</th>";
+	}
+	if ( $ShowHostsStats =~ /B/i ) {
+		print "<th bgcolor=\"#$color_k\" width=\"80\""
+		  . Tooltip(5)
+		  . ">$Message[75]</th>";
+	}
+	if ( $ShowHostsStats =~ /L/i ) {
+		print "<th width=\"120\">$Message[9]</th>";
+	}
+	print "</tr>\n";
+	my $total_p = my $total_h = my $total_k = 0;
+	my $count = 0;
+	
+	foreach my $key (@keylist) {
+		print "<tr>";
+		print "<td class=\"aws\">$key</td>";
+		&HTMLShowHostInfo($key);
+		if ( $ShowHostsStats =~ /P/i ) {
+			print '<td>' . ( Format_Number($_host_p{$key}) || "&nbsp;" ) . '</td>';
+		}
+		if ( $ShowHostsStats =~ /H/i ) {
+			print "<td>".Format_Number($_host_h{$key})."</td>";
+		}
+		if ( $ShowHostsStats =~ /B/i ) {
+			print '<td>' . Format_Bytes( $_host_k{$key} ) . '</td>';
+		}
+		if ( $ShowHostsStats =~ /L/i ) {
+			print '<td nowrap="nowrap">'
+			  . (
+				$_host_l{$key}
+				? Format_Date( $_host_l{$key}, 1 )
+				: '-'
+			  )
+			  . '</td>';
+		}
+		print "</tr>\n";
+		$total_p += $_host_p{$key};
+		$total_h += $_host_h{$key};
+		$total_k += $_host_k{$key} || 0;
+		$count++;
+	}
+	my $rest_p = $TotalPages - $total_p;
+	my $rest_h = $TotalHits - $total_h;
+	my $rest_k = $TotalBytes - $total_k;
+	if ( $rest_p > 0 || $rest_h > 0 || $rest_k > 0 )
+	{    # All other visitors (known or not)
+		print "<tr>";
+		print
+"<td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
+		&HTMLShowHostInfo('');
+		if ( $ShowHostsStats =~ /P/i ) { print "<td>".Format_Number($rest_p)."</td>"; }
+		if ( $ShowHostsStats =~ /H/i ) { print "<td>".Format_Number($rest_h)."</td>"; }
+		if ( $ShowHostsStats =~ /B/i ) {
+			print "<td>" . Format_Bytes($rest_k) . "</td>";
+		}
+		if ( $ShowHostsStats =~ /L/i ) { print "<td>&nbsp;</td>"; }
+		print "</tr>\n";
+	}
+	&tab_end();
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the logins chart and table
+# Parameters:   $NewLinkParams, $NewLinkTarget
+# Input:        -
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLMainLogins{
+	my $NewLinkParams = shift;
+	my $NewLinkTarget = shift;
+	
+	if ($Debug) { debug( "ShowAuthenticatedUsers", 2 ); }
+	print "$Center<a name=\"logins\">&nbsp;</a><br />\n";
+	my $title =
+"$Message[94] ($Message[77] $MaxNbOf{'LoginShown'}) &nbsp; - &nbsp; <a href=\""
+	  . (
+		$ENV{'GATEWAY_INTERFACE'}
+		  || !$StaticLinks
+		? XMLEncode("$AWScript?${NewLinkParams}output=alllogins")
+		: "$StaticLinks.alllogins.$StaticExt"
+	  )
+	  . "\"$NewLinkTarget>$Message[80]</a>";
+	if ( $ShowAuthenticatedUsers =~ /L/i ) {
+		$title .= " &nbsp; - &nbsp; <a href=\""
+		  . (
+			$ENV{'GATEWAY_INTERFACE'}
+			  || !$StaticLinks
+			? XMLEncode("$AWScript?${NewLinkParams}output=lastlogins")
+			: "$StaticLinks.lastlogins.$StaticExt"
+		  )
+		  . "\"$NewLinkTarget>$Message[9]</a>";
+	}
+	&tab_head( "$title", 19, 0, 'logins' );
+	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$Message[94] : "
+	  . Format_Number(( scalar keys %_login_h )) . "</th>";
+	&HTMLShowUserInfo('__title__');
+	if ( $ShowAuthenticatedUsers =~ /P/i ) {
+		print "<th bgcolor=\"#$color_p\" width=\"80\""
+		  . Tooltip(3)
+		  . ">$Message[56]</th>";
+	}
+	if ( $ShowAuthenticatedUsers =~ /H/i ) {
+		print "<th bgcolor=\"#$color_h\" width=\"80\""
+		  . Tooltip(4)
+		  . ">$Message[57]</th>";
+	}
+	if ( $ShowAuthenticatedUsers =~ /B/i ) {
+		print "<th bgcolor=\"#$color_k\" width=\"80\""
+		  . Tooltip(5)
+		  . ">$Message[75]</th>";
+	}
+	if ( $ShowAuthenticatedUsers =~ /L/i ) {
+		print "<th width=\"120\">$Message[9]</th>";
+	}
+	print "</tr>\n";
+	my $total_p = my $total_h = my $total_k = 0;
+	my $max_h = 1;
+	foreach ( values %_login_h ) {
+		if ( $_ > $max_h ) { $max_h = $_; }
+	}
+	my $max_k = 1;
+	foreach ( values %_login_k ) {
+		if ( $_ > $max_k ) { $max_k = $_; }
+	}
+	my $count = 0;
+	&BuildKeyList( $MaxNbOf{'LoginShown'}, $MinHit{'Login'}, \%_login_h,
+		\%_login_p );
+	foreach my $key (@keylist) {
+		my $bredde_p = 0;
+		my $bredde_h = 0;
+		my $bredde_k = 0;
+		if ( $max_h > 0 ) {
+			$bredde_p = int( $BarWidth * $_login_p{$key} / $max_h ) + 1;
+		}    # use max_h to enable to compare pages with hits
+		if ( $max_h > 0 ) {
+			$bredde_h = int( $BarWidth * $_login_h{$key} / $max_h ) + 1;
+		}
+		if ( $max_k > 0 ) {
+			$bredde_k = int( $BarWidth * $_login_k{$key} / $max_k ) + 1;
+		}
+		print "<tr><td class=\"aws\">$key</td>";
+		&HTMLShowUserInfo($key);
+		if ( $ShowAuthenticatedUsers =~ /P/i ) {
+			print "<td>"
+			  . ( $_login_p{$key} ? Format_Number($_login_p{$key}) : "&nbsp;" )
+			  . "</td>";
+		}
+		if ( $ShowAuthenticatedUsers =~ /H/i ) {
+			print "<td>".Format_Number($_login_h{$key})."</td>";
+		}
+		if ( $ShowAuthenticatedUsers =~ /B/i ) {
+			print "<td>" . Format_Bytes( $_login_k{$key} ) . "</td>";
+		}
+		if ( $ShowAuthenticatedUsers =~ /L/i ) {
+			print "<td>"
+			  . (
+				$_login_l{$key}
+				? Format_Date( $_login_l{$key}, 1 )
+				: '-'
+			  )
+			  . "</td>";
+		}
+		print "</tr>\n";
+		$total_p += $_login_p{$key};
+		$total_h += $_login_h{$key};
+		$total_k += $_login_k{$key};
+		$count++;
+	}
+	my $rest_p = $TotalPages - $total_p;
+	my $rest_h = $TotalHits - $total_h;
+	my $rest_k = $TotalBytes - $total_k;
+	if ( $rest_p > 0 || $rest_h > 0 || $rest_k > 0 )
+	{    # All other logins
+		print
+		  "<tr><td class=\"aws\"><span style=\"color: #$color_other\">"
+		  . ( $PageDir eq 'rtl' ? "<span dir=\"ltr\">" : "" )
+		  . "$Message[125]"
+		  . ( $PageDir eq 'rtl' ? "</span>" : "" )
+		  . "</span></td>";
+		&HTMLShowUserInfo('');
+		if ( $ShowAuthenticatedUsers =~ /P/i ) {
+			print "<td>" . ( $rest_p ? Format_Number($rest_p) : "&nbsp;" ) . "</td>";
+		}
+		if ( $ShowAuthenticatedUsers =~ /H/i ) {
+			print "<td>".Format_Number($rest_h)."</td>";
+		}
+		if ( $ShowAuthenticatedUsers =~ /B/i ) {
+			print "<td>" . Format_Bytes($rest_k) . "</td>";
+		}
+		if ( $ShowAuthenticatedUsers =~ /L/i ) {
+			print "<td>&nbsp;</td>";
+		}
+		print "</tr>\n";
+	}
+	&tab_end();
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the robots chart and table
+# Parameters:   $NewLinkParams, $NewLinkTarget
+# Input:        -
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLMainRobots{
+	my $NewLinkParams = shift;
+	my $NewLinkTarget = shift;
+	
+	if ($Debug) { debug( "ShowRobotStats", 2 ); }
+	print "$Center<a name=\"robots\">&nbsp;</a><br />\n";
+	&tab_head(
+"$Message[53] ($Message[77] $MaxNbOf{'RobotShown'}) &nbsp; - &nbsp; <a href=\""
+		  . (
+			$ENV{'GATEWAY_INTERFACE'}
+			  || !$StaticLinks
+			? XMLEncode("$AWScript?${NewLinkParams}output=allrobots")
+			: "$StaticLinks.allrobots.$StaticExt"
+		  )
+		  . "\"$NewLinkTarget>$Message[80]</a> &nbsp; - &nbsp; <a href=\""
+		  . (
+			$ENV{'GATEWAY_INTERFACE'}
+			  || !$StaticLinks
+			? XMLEncode("$AWScript?${NewLinkParams}output=lastrobots")
+			: "$StaticLinks.lastrobots.$StaticExt"
+		  )
+		  . "\"$NewLinkTarget>$Message[9]</a>",
+		19, 0, 'robots'
+	);
+	print "<tr bgcolor=\"#$color_TableBGRowTitle\""
+	  . Tooltip(16) . "><th>"
+	  . Format_Number(( scalar keys %_robot_h ))
+	  . " $Message[51]*</th>";
+	if ( $ShowRobotsStats =~ /H/i ) {
+		print
+		  "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>";
+	}
+	if ( $ShowRobotsStats =~ /B/i ) {
+		print
+		  "<th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
+	}
+	if ( $ShowRobotsStats =~ /L/i ) {
+		print "<th width=\"120\">$Message[9]</th>";
+	}
+	print "</tr>\n";
+	my $total_p = my $total_h = my $total_k = my $total_r = 0;
+	my $count = 0;
+	&BuildKeyList( $MaxNbOf{'RobotShown'}, $MinHit{'Robot'}, \%_robot_h,
+		\%_robot_h );
+	foreach my $key (@keylist) {
+		print "<tr><td class=\"aws\">"
+		  . ( $PageDir eq 'rtl' ? "<span dir=\"ltr\">" : "" )
+		  . ( $RobotsHashIDLib{$key} ? $RobotsHashIDLib{$key} : $key )
+		  . ( $PageDir eq 'rtl' ? "</span>" : "" ) . "</td>";
+		if ( $ShowRobotsStats =~ /H/i ) {
+			print "<td>"
+			  . Format_Number(( $_robot_h{$key} - $_robot_r{$key} ))
+			  . ( $_robot_r{$key} ? "+$_robot_r{$key}" : "" ) . "</td>";
+		}
+		if ( $ShowRobotsStats =~ /B/i ) {
+			print "<td>" . Format_Bytes( $_robot_k{$key} ) . "</td>";
+		}
+		if ( $ShowRobotsStats =~ /L/i ) {
+			print "<td>"
+			  . (
+				$_robot_l{$key}
+				? Format_Date( $_robot_l{$key}, 1 )
+				: '-'
+			  )
+			  . "</td>";
+		}
+		print "</tr>\n";
+
+		#$total_p += $_robot_p{$key};
+		$total_h += $_robot_h{$key};
+		$total_k += $_robot_k{$key} || 0;
+		$total_r += $_robot_r{$key} || 0;
+		$count++;
+	}
+
+	# For bots we need to count Totals
+	my $TotalPagesRobots =
+	  0;    #foreach (values %_robot_p) { $TotalPagesRobots+=$_; }
+	my $TotalHitsRobots = 0;
+	foreach ( values %_robot_h ) { $TotalHitsRobots += $_; }
+	my $TotalBytesRobots = 0;
+	foreach ( values %_robot_k ) { $TotalBytesRobots += $_; }
+	my $TotalRRobots = 0;
+	foreach ( values %_robot_r ) { $TotalRRobots += $_; }
+	my $rest_p = 0;    #$rest_p=$TotalPagesRobots-$total_p;
+	my $rest_h = $TotalHitsRobots - $total_h;
+	my $rest_k = $TotalBytesRobots - $total_k;
+	my $rest_r = $TotalRRobots - $total_r;
+
+	if ( $rest_p > 0 || $rest_h > 0 || $rest_k > 0 || $rest_r > 0 )
+	{               # All other robots
+		print
+"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
+		if ( $ShowRobotsStats =~ /H/i ) {
+			print "<td>"
+			  . Format_Number(( $rest_h - $rest_r ))
+			  . ( $rest_r ? "+$rest_r" : "" ) . "</td>";
+		}
+		if ( $ShowRobotsStats =~ /B/i ) {
+			print "<td>" . ( Format_Bytes($rest_k) ) . "</td>";
+		}
+		if ( $ShowRobotsStats =~ /L/i ) { print "<td>&nbsp;</td>"; }
+		print "</tr>\n";
+	}
+	&tab_end(
+		"* $Message[156]" . ( $TotalRRobots ? " $Message[157]" : "" ) );
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the worms chart and table
+# Parameters:   -
+# Input:        -
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLMainWorms{
+	if ($Debug) { debug( "ShowWormsStats", 2 ); }
+	print "$Center<a name=\"worms\">&nbsp;</a><br />\n";
+	&tab_head( "$Message[163] ($Message[77] $MaxNbOf{'WormsShown'})",
+		19, 0, 'worms' );
+	print "<tr bgcolor=\"#$color_TableBGRowTitle\"" . Tooltip(21) . ">";
+	print "<th>" . Format_Number(( scalar keys %_worm_h )) . " $Message[164]*</th>";
+	print "<th>$Message[167]</th>";
+	if ( $ShowWormsStats =~ /H/i ) {
+		print
+		  "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>";
+	}
+	if ( $ShowWormsStats =~ /B/i ) {
+		print
+		  "<th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
+	}
+	if ( $ShowWormsStats =~ /L/i ) {
+		print "<th width=\"120\">$Message[9]</th>";
+	}
+	print "</tr>\n";
+	my $total_p = my $total_h = my $total_k = 0;
+	my $count = 0;
+	&BuildKeyList( $MaxNbOf{'WormsShown'}, $MinHit{'Worm'}, \%_worm_h,
+		\%_worm_h );
+	foreach my $key (@keylist) {
+		print "<tr>";
+		print "<td class=\"aws\">"
+		  . ( $PageDir eq 'rtl' ? "<span dir=\"ltr\">" : "" )
+		  . ( $WormsHashLib{$key} ? $WormsHashLib{$key} : $key )
+		  . ( $PageDir eq 'rtl' ? "</span>" : "" ) . "</td>";
+		print "<td class=\"aws\">"
+		  . ( $PageDir eq 'rtl' ? "<span dir=\"ltr\">" : "" )
+		  . ( $WormsHashTarget{$key} ? $WormsHashTarget{$key} : $key )
+		  . ( $PageDir eq 'rtl' ? "</span>" : "" ) . "</td>";
+		if ( $ShowWormsStats =~ /H/i ) {
+			print "<td>" . Format_Number($_worm_h{$key}) . "</td>";
+		}
+		if ( $ShowWormsStats =~ /B/i ) {
+			print "<td>" . Format_Bytes( $_worm_k{$key} ) . "</td>";
+		}
+		if ( $ShowWormsStats =~ /L/i ) {
+			print "<td>"
+			  . (
+				$_worm_l{$key}
+				? Format_Date( $_worm_l{$key}, 1 )
+				: '-'
+			  )
+			  . "</td>";
+		}
+		print "</tr>\n";
+
+		#$total_p += $_worm_p{$key};
+		$total_h += $_worm_h{$key};
+		$total_k += $_worm_k{$key} || 0;
+		$count++;
+	}
+
+	# For worms we need to count Totals
+	my $TotalPagesWorms =
+	  0;    #foreach (values %_worm_p) { $TotalPagesWorms+=$_; }
+	my $TotalHitsWorms = 0;
+	foreach ( values %_worm_h ) { $TotalHitsWorms += $_; }
+	my $TotalBytesWorms = 0;
+	foreach ( values %_worm_k ) { $TotalBytesWorms += $_; }
+	my $rest_p = 0;    #$rest_p=$TotalPagesRobots-$total_p;
+	my $rest_h = $TotalHitsWorms - $total_h;
+	my $rest_k = $TotalBytesWorms - $total_k;
+
+	if ( $rest_p > 0 || $rest_h > 0 || $rest_k > 0 ) { # All other worms
+		print "<tr>";
+		print
+"<td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
+		print "<td class=\"aws\">-</td>";
+		if ( $ShowWormsStats =~ /H/i ) {
+			print "<td>" . Format_Number(($rest_h)) . "</td>";
+		}
+		if ( $ShowWormsStats =~ /B/i ) {
+			print "<td>" . ( Format_Bytes($rest_k) ) . "</td>";
+		}
+		if ( $ShowWormsStats =~ /L/i ) { print "<td>&nbsp;</td>"; }
+		print "</tr>\n";
+	}
+	&tab_end("* $Message[158]");
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the sessions chart and table
+# Parameters:   -
+# Input:        -
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLMainSessions{
+	if ($Debug) { debug( "ShowSessionsStats", 2 ); }
+	print "$Center<a name=\"sessions\">&nbsp;</a><br />\n";
+	my $title = "$Message[117]";
+	&tab_head( $title, 19, 0, 'sessions' );
+	my $Totals = 0;
+	my $average_s = 0;
+	foreach (@SessionsRange) {
+		$average_s += ( $_session{$_} || 0 ) * $SessionsAverage{$_};
+		$Totals += $_session{$_} || 0;
+	}
+	if ($Totals) { $average_s = int( $average_s / $Totals ); }
+	else { $average_s = '?'; }
+	print "<tr bgcolor=\"#$color_TableBGRowTitle\""
+	  . Tooltip(1)
+	  . "><th>$Message[10]: ".Format_Number($TotalVisits)." - $Message[96]: ".Format_Number($average_s)." s</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[10]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
+	$average_s = 0;
+	my $total_s   = 0;
+	my $count = 0;
+	foreach my $key (@SessionsRange) {
+		my $p = 0;
+		if ($TotalVisits) {
+			$p = int( $_session{$key} / $TotalVisits * 1000 ) / 10;
+		}
+		$total_s += $_session{$key} || 0;
+		print "<tr><td class=\"aws\">$key</td>";
+		print "<td>"
+		  . ( $_session{$key} ? Format_Number($_session{$key}) : "&nbsp;" ) . "</td>";
+		print "<td>"
+		  . ( $_session{$key} ? "$p %" : "&nbsp;" ) . "</td>";
+		print "</tr>\n";
+		$count++;
+	}
+	my $rest_s = $TotalVisits - $total_s;
+	if ( $rest_s > 0 ) {    # All others sessions
+		my $p = 0;
+		if ($TotalVisits) {
+			$p = int( $rest_s / $TotalVisits * 1000 ) / 10;
+		}
+		print "<tr"
+		  . Tooltip(20)
+		  . "><td class=\"aws\"><span style=\"color: #$color_other\">$Message[0]</span></td>";
+		print "<td>".Format_Number($rest_s)."</td>";
+		print "<td>" . ( $rest_s ? "$p %" : "&nbsp;" ) . "</td>";
+		print "</tr>\n";
+	}
+	&tab_end();
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the pages chart and table
+# Parameters:   $NewLinkParams, $NewLinkTarget
+# Input:        -
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLMainPages{
+	my $NewLinkParams = shift;
+	my $NewLinkTarget = shift;
+	
+	if ($Debug) {
+		debug(
+"ShowPagesStats (MaxNbOf{'PageShown'}=$MaxNbOf{'PageShown'} TotalDifferentPages=$TotalDifferentPages)",
+			2
+		);
+	}
+	print
+"$Center<a name=\"urls\">&nbsp;</a><a name=\"entry\">&nbsp;</a><a name=\"exit\">&nbsp;</a><br />\n";
+	my $title =
+"$Message[19] ($Message[77] $MaxNbOf{'PageShown'}) &nbsp; - &nbsp; <a href=\""
+	  . (
+		$ENV{'GATEWAY_INTERFACE'}
+		  || !$StaticLinks
+		? XMLEncode("$AWScript?${NewLinkParams}output=urldetail")
+		: "$StaticLinks.urldetail.$StaticExt"
+	  )
+	  . "\"$NewLinkTarget>$Message[80]</a>";
+	if ( $ShowPagesStats =~ /E/i ) {
+		$title .= " &nbsp; - &nbsp; <a href=\""
+		  . (
+			$ENV{'GATEWAY_INTERFACE'}
+			  || !$StaticLinks
+			? XMLEncode("$AWScript?${NewLinkParams}output=urlentry")
+			: "$StaticLinks.urlentry.$StaticExt"
+		  )
+		  . "\"$NewLinkTarget>$Message[104]</a>";
+	}
+	if ( $ShowPagesStats =~ /X/i ) {
+		$title .= " &nbsp; - &nbsp; <a href=\""
+		  . (
+			$ENV{'GATEWAY_INTERFACE'}
+			  || !$StaticLinks
+			? XMLEncode("$AWScript?${NewLinkParams}output=urlexit")
+			: "$StaticLinks.urlexit.$StaticExt"
+		  )
+		  . "\"$NewLinkTarget>$Message[116]</a>";
+	}
+	&tab_head( "$title", 19, 0, 'urls' );
+	print
+"<tr bgcolor=\"#$color_TableBGRowTitle\"><th>".Format_Number($TotalDifferentPages)." $Message[28]</th>";
+	if ( $ShowPagesStats =~ /P/i && $LogType ne 'F' ) {
+		print
+		  "<th bgcolor=\"#$color_p\" width=\"80\">$Message[29]</th>";
+	}
+	if ( $ShowPagesStats =~ /[PH]/i && $LogType eq 'F' ) {
+		print
+		  "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>";
+	}
+	if ( $ShowPagesStats =~ /B/i ) {
+		print
+		  "<th bgcolor=\"#$color_k\" width=\"80\">$Message[106]</th>";
+	}
+	if ( $ShowPagesStats =~ /E/i ) {
+		print
+		  "<th bgcolor=\"#$color_e\" width=\"80\">$Message[104]</th>";
+	}
+	if ( $ShowPagesStats =~ /X/i ) {
+		print
+		  "<th bgcolor=\"#$color_x\" width=\"80\">$Message[116]</th>";
+	}
+
+	# Call to plugins' function ShowPagesAddField
+	foreach
+	  my $pluginname ( keys %{ $PluginsLoaded{'ShowPagesAddField'} } )
+	{
+
+		#				my $function="ShowPagesAddField_$pluginname('title')";
+		#				eval("$function");
+		my $function = "ShowPagesAddField_$pluginname";
+		&$function('title');
+	}
+	print "<th>&nbsp;</th></tr>\n";
+	my $total_p = my $total_e = my $total_x = my $total_k = 0;
+	my $max_p   = 1;
+	my $max_k   = 1;
+	my $count = 0;
+	&BuildKeyList( $MaxNbOf{'PageShown'}, $MinHit{'File'}, \%_url_p,
+		\%_url_p );
+	foreach my $key (@keylist) {
+		if ( $_url_p{$key} > $max_p ) { $max_p = $_url_p{$key}; }
+		if ( $_url_k{$key} / ( $_url_p{$key} || 1 ) > $max_k ) {
+			$max_k = $_url_k{$key} / ( $_url_p{$key} || 1 );
+		}
+	}
+	foreach my $key (@keylist) {
+		print "<tr><td class=\"aws\">";
+		&HTMLShowURLInfo($key);
+		print "</td>";
+		my $bredde_p = 0;
+		my $bredde_e = 0;
+		my $bredde_x = 0;
+		my $bredde_k = 0;
+		if ( $max_p > 0 ) {
+			$bredde_p =
+			  int( $BarWidth * ( $_url_p{$key} || 0 ) / $max_p ) + 1;
+		}
+		if ( ( $bredde_p == 1 ) && $_url_p{$key} ) { $bredde_p = 2; }
+		if ( $max_p > 0 ) {
+			$bredde_e =
+			  int( $BarWidth * ( $_url_e{$key} || 0 ) / $max_p ) + 1;
+		}
+		if ( ( $bredde_e == 1 ) && $_url_e{$key} ) { $bredde_e = 2; }
+		if ( $max_p > 0 ) {
+			$bredde_x =
+			  int( $BarWidth * ( $_url_x{$key} || 0 ) / $max_p ) + 1;
+		}
+		if ( ( $bredde_x == 1 ) && $_url_x{$key} ) { $bredde_x = 2; }
+		if ( $max_k > 0 ) {
+			$bredde_k =
+			  int( $BarWidth *
+				  ( ( $_url_k{$key} || 0 ) / ( $_url_p{$key} || 1 ) ) /
+				  $max_k ) + 1;
+		}
+		if ( ( $bredde_k == 1 ) && $_url_k{$key} ) { $bredde_k = 2; }
+		if ( $ShowPagesStats =~ /P/i && $LogType ne 'F' ) {
+			print "<td>".Format_Number($_url_p{$key})."</td>";
+		}
+		if ( $ShowPagesStats =~ /[PH]/i && $LogType eq 'F' ) {
+			print "<td>".Format_Number($_url_p{$key})."</td>";
+		}
+		if ( $ShowPagesStats =~ /B/i ) {
+			print "<td>"
+			  . (
+				$_url_k{$key}
+				? Format_Bytes(
+					$_url_k{$key} / ( $_url_p{$key} || 1 )
+				  )
+				: "&nbsp;"
+			  )
+			  . "</td>";
+		}
+		if ( $ShowPagesStats =~ /E/i ) {
+			print "<td>"
+			  . ( $_url_e{$key} ? Format_Number($_url_e{$key}) : "&nbsp;" ) . "</td>";
+		}
+		if ( $ShowPagesStats =~ /X/i ) {
+			print "<td>"
+			  . ( $_url_x{$key} ? Format_Number($_url_x{$key}) : "&nbsp;" ) . "</td>";
+		}
+
+		# Call to plugins' function ShowPagesAddField
+		foreach my $pluginname (
+			keys %{ $PluginsLoaded{'ShowPagesAddField'} } )
+		{
+
+			#					my $function="ShowPagesAddField_$pluginname('$key')";
+			#					eval("$function");
+			my $function = "ShowPagesAddField_$pluginname";
+			&$function($key);
+		}
+		print "<td class=\"aws\">";
+		if ( $ShowPagesStats =~ /P/i && $LogType ne 'F' ) {
+			print
+"<img src=\"$DirIcons\/other\/$BarPng{'hp'}\" width=\"$bredde_p\" height=\"4\""
+			  . AltTitle("")
+			  . " /><br />";
+		}
+		if ( $ShowPagesStats =~ /[PH]/i && $LogType eq 'F' ) {
+			print
+"<img src=\"$DirIcons\/other\/$BarPng{'hh'}\" width=\"$bredde_p\" height=\"4\""
+			  . AltTitle("")
+			  . " /><br />";
+		}
+		if ( $ShowPagesStats =~ /B/i ) {
+			print
+"<img src=\"$DirIcons\/other\/$BarPng{'hk'}\" width=\"$bredde_k\" height=\"4\""
+			  . AltTitle("")
+			  . " /><br />";
+		}
+		if ( $ShowPagesStats =~ /E/i ) {
+			print
+"<img src=\"$DirIcons\/other\/$BarPng{'he'}\" width=\"$bredde_e\" height=\"4\""
+			  . AltTitle("")
+			  . " /><br />";
+		}
+		if ( $ShowPagesStats =~ /X/i ) {
+			print
+"<img src=\"$DirIcons\/other\/$BarPng{'hx'}\" width=\"$bredde_x\" height=\"4\""
+			  . AltTitle("") . " />";
+		}
+		print "</td></tr>\n";
+		$total_p += $_url_p{$key} || 0;
+		$total_e += $_url_e{$key} || 0;
+		$total_x += $_url_x{$key} || 0;
+		$total_k += $_url_k{$key} || 0;
+		$count++;
+	}
+	my $rest_p = $TotalPages - $total_p;
+	my $rest_e = $TotalEntries - $total_e;
+	my $rest_x = $TotalExits - $total_x;
+	my $rest_k = $TotalBytesPages - $total_k;
+	if ( $rest_p > 0 || $rest_k > 0 || $rest_e > 0 || $rest_x > 0 )
+	{    # All other urls
+		print
+"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
+		if ( $ShowPagesStats =~ /P/i && $LogType ne 'F' ) {
+			print "<td>".Format_Number($rest_p)."</td>";
+		}
+		if ( $ShowPagesStats =~ /[PH]/i && $LogType eq 'F' ) {
+			print "<td>".Format_Number($rest_p)."</td>";
+		}
+		if ( $ShowPagesStats =~ /B/i ) {
+			print "<td>"
+			  . (
+				$rest_k
+				? Format_Bytes( $rest_k / ( $rest_p || 1 ) )
+				: "&nbsp;"
+			  )
+			  . "</td>";
+		}
+		if ( $ShowPagesStats =~ /E/i ) {
+			print "<td>" . ( $rest_e ? Format_Number($rest_e) : "&nbsp;" ) . "</td>";
+		}
+		if ( $ShowPagesStats =~ /X/i ) {
+			print "<td>" . ( $rest_x ? Format_Number($rest_x) : "&nbsp;" ) . "</td>";
+		}
+
+		# Call to plugins' function ShowPagesAddField
+		foreach my $pluginname (
+			keys %{ $PluginsLoaded{'ShowPagesAddField'} } )
+		{
+
+			#					my $function="ShowPagesAddField_$pluginname('')";
+			#					eval("$function");
+			my $function = "ShowPagesAddField_$pluginname";
+			&$function('');
+		}
+		print "<td>&nbsp;</td></tr>\n";
+	}
+	&tab_end();
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the OS chart and table
+# Parameters:   $NewLinkParams, $NewLinkTarget
+# Input:        -
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLMainOS{
+	my $NewLinkParams = shift;
+	my $NewLinkTarget = shift;
+
+	if ($Debug) { debug( "ShowOSStats", 2 ); }
+	print "$Center<a name=\"os\">&nbsp;</a><br />\n";
+	my $Totalh   = 0;
+	my %new_os_h = ();
+  OSLOOP: foreach my $key ( keys %_os_h ) {
+		$Totalh += $_os_h{$key};
+		foreach my $family ( keys %OSFamily ) {
+			if ( $key =~ /^$family/i ) {
+				$new_os_h{"${family}cumul"} += $_os_h{$key};
+				next OSLOOP;
+			}
+		}
+		$new_os_h{$key} += $_os_h{$key};
+	}
+	my $title =
+"$Message[59] ($Message[77] $MaxNbOf{'OsShown'}) &nbsp; - &nbsp; <a href=\""
+	  . (
+		$ENV{'GATEWAY_INTERFACE'}
+		  || !$StaticLinks
+		? XMLEncode("$AWScript?${NewLinkParams}output=osdetail")
+		: "$StaticLinks.osdetail.$StaticExt"
+	  )
+	  . "\"$NewLinkTarget>$Message[80]/$Message[58]</a> &nbsp; - &nbsp; <a href=\""
+	  . (
+		$ENV{'GATEWAY_INTERFACE'}
+		  || !$StaticLinks
+		? XMLEncode("$AWScript?${NewLinkParams}output=unknownos")
+		: "$StaticLinks.unknownos.$StaticExt"
+	  )
+	  . "\"$NewLinkTarget>$Message[0]</a>";
+	&tab_head( "$title", 19, 0, 'os' );
+	
+	&BuildKeyList( $MaxNbOf{'OsShown'}, $MinHit{'Os'}, \%new_os_h,
+		\%new_os_h );
+		
+	# Graph the top five in a pie chart
+	if (scalar %BrowsersFamily > 1){
+		foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
+		{
+			my @blocklabel = ();
+			my @valdata = ();
+			my @valcolor = ($color_p);
+			my $cnt = 0;
+			foreach my $key (@keylist) {
+				push @valdata, int(  $new_os_h{$key} / $Totalh * 1000 ) / 10;
+				if ($key eq 'Unknown'){push @blocklabel, "$key"; }
+				else{
+					my $keywithoutcumul = $key;
+					$keywithoutcumul =~ s/cumul$//i;
+					my $libos = $OSHashLib{$keywithoutcumul}
+					  || $keywithoutcumul;
+					my $nameicon = $keywithoutcumul;
+					$nameicon =~ s/[^\w]//g;
+					if ( $OSFamily{$keywithoutcumul} ) {
+						$libos = $OSFamily{$keywithoutcumul};
+					}
+					push @blocklabel, "$libos";
+				}
+				$cnt++;
+				if ($cnt > 4) { last; }
+			}
+			print "<tr><td colspan=\"5\">";
+			my $function = "ShowGraph_$pluginname";
+			&$function(
+				"Top 5 Operating Systems",       "oss",
+				0, 						\@blocklabel,
+				0,           			\@valcolor,
+				0,              		0,
+				0,          			\@valdata
+			);
+			print "</td></tr>";
+		}
+	}
+	
+	print
+"<tr bgcolor=\"#$color_TableBGRowTitle\"><th width=\"$WIDTHCOLICON\">&nbsp;</th><th>$Message[59]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th></tr>\n";
+	my $total_h = 0;
+	my $count = 0;
+	
+	foreach my $key (@keylist) {
+		my $p = '&nbsp;';
+		if ($Totalh) {
+			$p = int( $new_os_h{$key} / $Totalh * 1000 ) / 10;
+			$p = "$p %";
+		}
+		if ( $key eq 'Unknown' ) {
+			print "<tr><td"
+			  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
+			  . "><img src=\"$DirIcons\/os\/unknown.png\""
+			  . AltTitle("")
+			  . " /></td><td class=\"aws\"><span style=\"color: #$color_other\">$Message[0]</span></td><td>".Format_Number($_os_h{$key})."</td><td>$p</td></tr>\n";
+		}
+		else {
+			my $keywithoutcumul = $key;
+			$keywithoutcumul =~ s/cumul$//i;
+			my $libos = $OSHashLib{$keywithoutcumul}
+			  || $keywithoutcumul;
+			my $nameicon = $keywithoutcumul;
+			$nameicon =~ s/[^\w]//g;
+			if ( $OSFamily{$keywithoutcumul} ) {
+				$libos = "<b>" . $OSFamily{$keywithoutcumul} . "</b>";
+			}
+			print "<tr><td"
+			  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
+			  . "><img src=\"$DirIcons\/os\/$nameicon.png\""
+			  . AltTitle("")
+			  . " /></td><td class=\"aws\">$libos</td><td>".Format_Number($new_os_h{$key})."</td><td>$p</td></tr>\n";
+		}
+		$total_h += $new_os_h{$key};
+		$count++;
+	}
+	if ($Debug) {
+		debug( "Total real / shown : $Totalh / $total_h", 2 );
+	}
+	my $rest_h = $Totalh - $total_h;
+	if ( $rest_h > 0 ) {
+		my $p;
+		if ($Totalh) { $p = int( $rest_h / $Totalh * 1000 ) / 10; }
+		print "<tr>";
+		print "<td>&nbsp;</td>";
+		print
+"<td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td><td>".Format_Number($rest_h)."</td>";
+		print "<td>$p %</td></tr>\n";
+	}
+	&tab_end();
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the Browsers chart and table
+# Parameters:   $NewLinkParams, $NewLinkTarget
+# Input:        -
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLMainBrowsers{
+	my $NewLinkParams = shift;
+	my $NewLinkTarget = shift;
+	
+	if ($Debug) { debug( "ShowBrowsersStats", 2 ); }
+	print "$Center<a name=\"browsers\">&nbsp;</a><br />\n";
+	my $Totalh        = 0;
+	my %new_browser_h = ();
+  BROWSERLOOP: foreach my $key ( keys %_browser_h ) {
+		$Totalh += $_browser_h{$key};
+		foreach my $family ( keys %BrowsersFamily ) {
+			if ( $key =~ /^$family/i ) {
+				$new_browser_h{"${family}cumul"} += $_browser_h{$key};
+				next BROWSERLOOP;
+			}
+		}
+		$new_browser_h{$key} += $_browser_h{$key};
+	}
+	my $title =
+"$Message[21] ($Message[77] $MaxNbOf{'BrowsersShown'}) &nbsp; - &nbsp; <a href=\""
+	  . (
+		$ENV{'GATEWAY_INTERFACE'}
+		  || !$StaticLinks
+		? XMLEncode("$AWScript?${NewLinkParams}output=browserdetail")
+		: "$StaticLinks.browserdetail.$StaticExt"
+	  )
+	  . "\"$NewLinkTarget>$Message[80]/$Message[58]</a> &nbsp; - &nbsp; <a href=\""
+	  . (
+		$ENV{'GATEWAY_INTERFACE'}
+		  || !$StaticLinks
+		? XMLEncode("$AWScript?${NewLinkParams}output=unknownbrowser")
+		: "$StaticLinks.unknownbrowser.$StaticExt"
+	  )
+	  . "\"$NewLinkTarget>$Message[0]</a>";
+	&tab_head( "$title", 19, 0, 'browsers' );
+	
+	&BuildKeyList(
+		$MaxNbOf{'BrowsersShown'}, $MinHit{'Browser'},
+		\%new_browser_h,           \%new_browser_h
+	);
+	
+	# Graph the top five in a pie chart
+	if (scalar %BrowsersFamily > 1){
+		foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
+		{
+			my @blocklabel = ();
+			my @valdata = ();
+			my @valcolor = ($color_p);
+			my $cnt = 0;
+			foreach my $key (@keylist) {
+				push @valdata, int(  $new_browser_h{$key} / $TotalHits * 1000 ) / 10;
+				if ($key eq 'Unknown'){push @blocklabel, "$key"; }
+				else{
+					my $keywithoutcumul = $key;
+					$keywithoutcumul =~ s/cumul$//i;
+					my $libbrowser = $BrowsersHashIDLib{$keywithoutcumul}
+					  || $keywithoutcumul;
+					my $nameicon = $BrowsersHashIcon{$keywithoutcumul}
+					  || "notavailable";
+					if ( $BrowsersFamily{$keywithoutcumul} ) {
+						$libbrowser = "$libbrowser";
+					}
+					push @blocklabel, "$libbrowser";
+				}
+				$cnt++;
+				if ($cnt > 4) { last; }
+			}
+			print "<tr><td colspan=\"5\">";
+			my $function = "ShowGraph_$pluginname";
+			&$function(
+				"Top 5 Browsers",       "browsers",
+				0, 						\@blocklabel,
+				0,           			\@valcolor,
+				0,              		0,
+				0,          			\@valdata
+			);
+			print "</td></tr>";
+		}
+	}
+	print
+"<tr bgcolor=\"#$color_TableBGRowTitle\"><th width=\"$WIDTHCOLICON\">&nbsp;</th><th>$Message[21]</th><th width=\"80\">$Message[111]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th></tr>\n";
+	my $total_h = 0;
+	my $count = 0;
+	foreach my $key (@keylist) {
+		my $p = '&nbsp;';
+		if ($Totalh) {
+			$p = int( $new_browser_h{$key} / $Totalh * 1000 ) / 10;
+			$p = "$p %";
+		}
+		if ( $key eq 'Unknown' ) {
+			print "<tr><td"
+			  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
+			  . "><img src=\"$DirIcons\/browser\/unknown.png\""
+			  . AltTitle("")
+			  . " /></td><td class=\"aws\"><span style=\"color: #$color_other\">$Message[0]</span></td><td width=\"80\">?</td><td>".Format_Number($_browser_h{$key})."</td><td>$p</td></tr>\n";
+		}
+		else {
+			my $keywithoutcumul = $key;
+			$keywithoutcumul =~ s/cumul$//i;
+			my $libbrowser = $BrowsersHashIDLib{$keywithoutcumul}
+			  || $keywithoutcumul;
+			my $nameicon = $BrowsersHashIcon{$keywithoutcumul}
+			  || "notavailable";
+			if ( $BrowsersFamily{$keywithoutcumul} ) {
+				$libbrowser = "<b>$libbrowser</b>";
+			}
+			print "<tr><td"
+			  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
+			  . "><img src=\"$DirIcons\/browser\/$nameicon.png\""
+			  . AltTitle("")
+			  . " /></td><td class=\"aws\">"
+			  . ( $PageDir eq 'rtl' ? "<span dir=\"ltr\">" : "" )
+			  . "$libbrowser"
+			  . ( $PageDir eq 'rtl' ? "</span>" : "" )
+			  . "</td><td>"
+			  . (
+				$BrowsersHereAreGrabbers{$key}
+				? "<b>$Message[112]</b>"
+				: "$Message[113]"
+			  )
+			  . "</td><td>".Format_Number($new_browser_h{$key})."</td><td>$p</td></tr>\n";
+		}
+		$total_h += $new_browser_h{$key};
+		$count++;
+	}
+	if ($Debug) {
+		debug( "Total real / shown : $Totalh / $total_h", 2 );
+	}
+	my $rest_h = $Totalh - $total_h;
+	if ( $rest_h > 0 ) {
+		my $p;
+		if ($Totalh) { $p = int( $rest_h / $Totalh * 1000 ) / 10; }
+		print "<tr>";
+		print "<td>&nbsp;</td>";
+		print
+"<td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td><td>&nbsp;</td><td>$rest_h</td>";
+			print "<td>$p %</td></tr>\n";
+		}
+		&tab_end();
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the ScreenSize chart and table
+# Parameters:   -
+# Input:        -
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLMainScreenSize{
+	if ($Debug) { debug( "ShowScreenSizeStats", 2 ); }
+	print "$Center<a name=\"screensizes\">&nbsp;</a><br />\n";
+	my $Totalh = 0;
+	foreach ( keys %_screensize_h ) { $Totalh += $_screensize_h{$_}; }
+	my $title =
+	  "$Message[135] ($Message[77] $MaxNbOf{'ScreenSizesShown'})";
+	&tab_head( "$title", 0, 0, 'screensizes' );
+	print
+"<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$Message[135]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th></tr>\n";
+	my $total_h = 0;
+	my $count   = 0;
+	&BuildKeyList( $MaxNbOf{'ScreenSizesShown'},
+		$MinHit{'ScreenSize'}, \%_screensize_h, \%_screensize_h );
+
+	foreach my $key (@keylist) {
+		my $p = '&nbsp;';
+		if ($Totalh) {
+			$p = int( $_screensize_h{$key} / $Totalh * 1000 ) / 10;
+			$p = "$p %";
+		}
+		$total_h += $_screensize_h{$key} || 0;
+		print "<tr>";
+		if ( $key eq 'Unknown' ) {
+			print
+"<td class=\"aws\"><span style=\"color: #$color_other\">$Message[0]</span></td>";
+			print "<td>$p</td>";
+		}
+		else {
+			my $screensize = $key;
+			print "<td class=\"aws\">$screensize</td>";
+			print "<td>$p</td>";
+		}
+		print "</tr>\n";
+		$count++;
+	}
+	my $rest_h = $Totalh - $total_h;
+	if ( $rest_h > 0 ) {    # All others sessions
+		my $p = 0;
+		if ($Totalh) { $p = int( $rest_h / $Totalh * 1000 ) / 10; }
+		print
+"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
+		print "<td>" . ( $rest_h ? "$p %" : "&nbsp;" ) . "</td>";
+		print "</tr>\n";
+	}
+	&tab_end();
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the Referrers chart and table
+# Parameters:   $NewLinkParams, $NewLinkTarget
+# Input:        -
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLMainReferrers{
+	my $NewLinkParams = shift;
+	my $NewLinkTarget = shift;
+	
+	if ($Debug) { debug( "ShowOriginStats", 2 ); }
+	print "$Center<a name=\"referer\">&nbsp;</a><br />\n";
+	my $Totalp = 0;
+	foreach ( 0 .. 5 ) {
+		$Totalp +=
+		  ( $_ != 4 || $IncludeInternalLinksInOriginSection )
+		  ? $_from_p[$_]
+		  : 0;
+	}
+	my $Totalh = 0;
+	foreach ( 0 .. 5 ) {
+		$Totalh +=
+		  ( $_ != 4 || $IncludeInternalLinksInOriginSection )
+		  ? $_from_h[$_]
+		  : 0;
+	}
+	&tab_head( $Message[36], 19, 0, 'referer' );
+	my @p_p = ( 0, 0, 0, 0, 0, 0 );
+	if ( $Totalp > 0 ) {
+		$p_p[0] = int( $_from_p[0] / $Totalp * 1000 ) / 10;
+		$p_p[1] = int( $_from_p[1] / $Totalp * 1000 ) / 10;
+		$p_p[2] = int( $_from_p[2] / $Totalp * 1000 ) / 10;
+		$p_p[3] = int( $_from_p[3] / $Totalp * 1000 ) / 10;
+		$p_p[4] = int( $_from_p[4] / $Totalp * 1000 ) / 10;
+		$p_p[5] = int( $_from_p[5] / $Totalp * 1000 ) / 10;
+	}
+	my @p_h = ( 0, 0, 0, 0, 0, 0 );
+	if ( $Totalh > 0 ) {
+		$p_h[0] = int( $_from_h[0] / $Totalh * 1000 ) / 10;
+		$p_h[1] = int( $_from_h[1] / $Totalh * 1000 ) / 10;
+		$p_h[2] = int( $_from_h[2] / $Totalh * 1000 ) / 10;
+		$p_h[3] = int( $_from_h[3] / $Totalh * 1000 ) / 10;
+		$p_h[4] = int( $_from_h[4] / $Totalh * 1000 ) / 10;
+		$p_h[5] = int( $_from_h[5] / $Totalh * 1000 ) / 10;
+	}
+	print
+	  "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$Message[37]</th>";
+	if ( $ShowOriginStats =~ /P/i ) {
+		print
+"<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th><th bgcolor=\"#$color_p\" width=\"80\">$Message[15]</th>";
+	}
+	if ( $ShowOriginStats =~ /H/i ) {
+		print
+"<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th>";
+	}
+	print "</tr>\n";
+
+	#------- Referrals by direct address/bookmark/link in email/etc...
+	print "<tr><td class=\"aws\"><b>$Message[38]</b></td>";
+	if ( $ShowOriginStats =~ /P/i ) {
+		print "<td>"
+		  . ( $_from_p[0] ? Format_Number($_from_p[0]) : "&nbsp;" )
+		  . "</td><td>"
+		  . ( $_from_p[0] ? "$p_p[0] %" : "&nbsp;" ) . "</td>";
+	}
+	if ( $ShowOriginStats =~ /H/i ) {
+		print "<td>"
+		  . ( $_from_h[0] ? Format_Number($_from_h[0]) : "&nbsp;" )
+		  . "</td><td>"
+		  . ( $_from_h[0] ? "$p_h[0] %" : "&nbsp;" ) . "</td>";
+	}
+	print "</tr>\n";
+
+	#------- Referrals by search engines
+	print "<tr"
+	  . Tooltip(13)
+	  . "><td class=\"aws\"><b>$Message[40]</b> - <a href=\""
+	  . (
+		$ENV{'GATEWAY_INTERFACE'}
+		  || !$StaticLinks
+		? XMLEncode("$AWScript?${NewLinkParams}output=refererse")
+		: "$StaticLinks.refererse.$StaticExt"
+	  )
+	  . "\"$NewLinkTarget>$Message[80]</a><br />\n";
+	if ( scalar keys %_se_referrals_h ) {
+		print "<table>\n";
+		my $total_p = 0;
+		my $total_h = 0;
+		my $count = 0;
+		&BuildKeyList(
+			$MaxNbOf{'RefererShown'},
+			$MinHit{'Refer'},
+			\%_se_referrals_h,
+			(
+				( scalar keys %_se_referrals_p )
+				? \%_se_referrals_p
+				: \%_se_referrals_h
+			)
+		);
+		foreach my $key (@keylist) {
+			my $newreferer = $SearchEnginesHashLib{$key}
+			  || CleanXSS($key);
+			print "<tr><td class=\"aws\">- $newreferer</td>";
+			print "<td>"
+			  . (
+				Format_Number($_se_referrals_p{$key} ? $_se_referrals_p{$key} : '0' ))
+			  . "</td>";
+			print "<td> / ".Format_Number($_se_referrals_h{$key})."</td>";
+			print "</tr>\n";
+			$total_p += $_se_referrals_p{$key};
+			$total_h += $_se_referrals_h{$key};
+			$count++;
+		}
+		if ($Debug) {
+			debug(
+"Total real / shown : $TotalSearchEnginesPages / $total_p -  $TotalSearchEnginesHits / $total_h",
+				2
+			);
+		}
+		my $rest_p = $TotalSearchEnginesPages - $total_p;
+		my $rest_h = $TotalSearchEnginesHits - $total_h;
+		if ( $rest_p > 0 || $rest_h > 0 ) {
+			print
+"<tr><td class=\"aws\"><span style=\"color: #$color_other\">- $Message[2]</span></td>";
+			print "<td>".Format_Number($rest_p)."</td>";
+			print "<td> / ".Format_Number($rest_h)."</td>";
+			print "</tr>\n";
+		}
+		print "</table>";
+	}
+	print "</td>\n";
+	if ( $ShowOriginStats =~ /P/i ) {
+		print "<td valign=\"top\">"
+		  . ( $_from_p[2] ? Format_Number($_from_p[2]) : "&nbsp;" )
+		  . "</td><td valign=\"top\">"
+		  . ( $_from_p[2] ? "$p_p[2] %" : "&nbsp;" ) . "</td>";
+	}
+	if ( $ShowOriginStats =~ /H/i ) {
+		print "<td valign=\"top\">"
+		  . ( $_from_h[2] ? Format_Number($_from_h[2]) : "&nbsp;" )
+		  . "</td><td valign=\"top\">"
+		  . ( $_from_h[2] ? "$p_h[2] %" : "&nbsp;" ) . "</td>";
+	}
+	print "</tr>\n";
+
+	#------- Referrals by external HTML link
+	print "<tr"
+	  . Tooltip(14)
+	  . "><td class=\"aws\"><b>$Message[41]</b> - <a href=\""
+	  . (
+		$ENV{'GATEWAY_INTERFACE'}
+		  || !$StaticLinks
+		? XMLEncode("$AWScript?${NewLinkParams}output=refererpages")
+		: "$StaticLinks.refererpages.$StaticExt"
+	  )
+	  . "\"$NewLinkTarget>$Message[80]</a><br />\n";
+	if ( scalar keys %_pagesrefs_h ) {
+		print "<table>\n";
+		my $total_p = 0;
+		my $total_h = 0;
+		my $count = 0;
+		&BuildKeyList(
+			$MaxNbOf{'RefererShown'},
+			$MinHit{'Refer'},
+			\%_pagesrefs_h,
+			(
+				( scalar keys %_pagesrefs_p )
+				? \%_pagesrefs_p
+				: \%_pagesrefs_h
+			)
+		);
+		foreach my $key (@keylist) {
+			print "<tr><td class=\"aws\">- ";
+			&HTMLShowURLInfo($key);
+			print "</td>";
+			print "<td>"
+			  . Format_Number(( $_pagesrefs_p{$key} ? $_pagesrefs_p{$key} : '0' ))
+			  . "</td>";
+			print "<td>".Format_Number($_pagesrefs_h{$key})."</td>";
+			print "</tr>\n";
+			$total_p += $_pagesrefs_p{$key};
+			$total_h += $_pagesrefs_h{$key};
+			$count++;
+		}
+		if ($Debug) {
+			debug(
+"Total real / shown : $TotalRefererPages / $total_p - $TotalRefererHits / $total_h",
+				2
+			);
+		}
+		my $rest_p = $TotalRefererPages - $total_p;
+		my $rest_h = $TotalRefererHits - $total_h;
+		if ( $rest_p > 0 || $rest_h > 0 ) {
+			print
+"<tr><td class=\"aws\"><span style=\"color: #$color_other\">- $Message[2]</span></td>";
+			print "<td>".Format_Number($rest_p)."</td>";
+			print "<td>".Format_Number($rest_h)."</td>";
+			print "</tr>\n";
+		}
+		print "</table>";
+	}
+	print "</td>\n";
+	if ( $ShowOriginStats =~ /P/i ) {
+		print "<td valign=\"top\">"
+		  . ( $_from_p[3] ? Format_Number($_from_p[3]) : "&nbsp;" )
+		  . "</td><td valign=\"top\">"
+		  . ( $_from_p[3] ? "$p_p[3] %" : "&nbsp;" ) . "</td>";
+	}
+	if ( $ShowOriginStats =~ /H/i ) {
+		print "<td valign=\"top\">"
+		  . ( $_from_h[3] ? Format_Number($_from_h[3]) : "&nbsp;" )
+		  . "</td><td valign=\"top\">"
+		  . ( $_from_h[3] ? "$p_h[3] %" : "&nbsp;" ) . "</td>";
+	}
+	print "</tr>\n";
+
+	#------- Referrals by internal HTML link
+	if ($IncludeInternalLinksInOriginSection) {
+		print "<tr><td class=\"aws\"><b>$Message[42]</b></td>";
+		if ( $ShowOriginStats =~ /P/i ) {
+			print "<td>"
+			  . ( $_from_p[4] ? Format_Number($_from_p[4]) : "&nbsp;" )
+			  . "</td><td>"
+			  . ( $_from_p[4] ? "$p_p[4] %" : "&nbsp;" ) . "</td>";
+		}
+		if ( $ShowOriginStats =~ /H/i ) {
+			print "<td>"
+			  . ( $_from_h[4] ? Format_Number($_from_h[4]) : "&nbsp;" )
+			  . "</td><td>"
+			  . ( $_from_h[4] ? "$p_h[4] %" : "&nbsp;" ) . "</td>";
+		}
+		print "</tr>\n";
+	}
+
+	#------- Referrals by news group
+	#print "<tr><td class=\"aws\"><b>$Message[107]</b></td>";
+	#if ($ShowOriginStats =~ /P/i) { print "<td>".($_from_p[5]?$_from_p[5]:"&nbsp;")."</td><td>".($_from_p[5]?"$p_p[5] %":"&nbsp;")."</td>"; }
+	#if ($ShowOriginStats =~ /H/i) { print "<td>".($_from_h[5]?$_from_h[5]:"&nbsp;")."</td><td>".($_from_h[5]?"$p_h[5] %":"&nbsp;")."</td>"; }
+	#print "</tr>\n";
+	
+	#------- Unknown origin
+	print "<tr><td class=\"aws\"><b>$Message[39]</b></td>";
+	if ( $ShowOriginStats =~ /P/i ) {
+		print "<td>"
+		  . ( $_from_p[1] ? Format_Number($_from_p[1]) : "&nbsp;" )
+		  . "</td><td>"
+		  . ( $_from_p[1] ? "$p_p[1] %" : "&nbsp;" ) . "</td>";
+	}
+	if ( $ShowOriginStats =~ /H/i ) {
+		print "<td>"
+		  . ( $_from_h[1] ? Format_Number($_from_h[1]) : "&nbsp;" )
+		  . "</td><td>"
+		  . ( $_from_h[1] ? "$p_h[1] %" : "&nbsp;" ) . "</td>";
+	}
+	print "</tr>\n";
+	&tab_end();
+
+	# 0: Direct
+	# 1: Unknown
+	# 2: SE
+	# 3: External link
+	# 4: Internal link
+	# 5: Newsgroup (deprecated)
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the Key Phrases and Keywords chart and table
+# Parameters:   $NewLinkParams, $NewLinkTarget
+# Input:        -
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLMainKeys{
+	my $NewLinkParams = shift;
+	my $NewLinkTarget = shift;
+	
+	if ($ShowKeyphrasesStats) {
+		print "$Center<a name=\"keyphrases\">&nbsp;</a>";
+	}
+	if ($ShowKeywordsStats) {
+		print "$Center<a name=\"keywords\">&nbsp;</a>";
+	}
+	if ( $ShowKeyphrasesStats || $ShowKeywordsStats ) { print "<br />\n"; }
+	if ( $ShowKeyphrasesStats && $ShowKeywordsStats ) {
+		print
+		  "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\"><tr>";
+	}
+	if ($ShowKeyphrasesStats) {
+		
+		# By Keyphrases
+		if ( $ShowKeyphrasesStats && $ShowKeywordsStats ) {
+			print "<td width=\"50%\" valign=\"top\">\n";
+		}
+		if ($Debug) { debug( "ShowKeyphrasesStats", 2 ); }
+		&tab_head(
+"$Message[120] ($Message[77] $MaxNbOf{'KeyphrasesShown'})<br /><a href=\""
+			  . (
+				$ENV{'GATEWAY_INTERFACE'}
+				  || !$StaticLinks
+				? XMLEncode("$AWScript?${NewLinkParams}output=keyphrases")
+				: "$StaticLinks.keyphrases.$StaticExt"
+			  )
+			  . "\"$NewLinkTarget>$Message[80]</a>",
+			19,
+			( $ShowKeyphrasesStats && $ShowKeywordsStats ) ? 95 : 70,
+			'keyphrases'
+		);
+		print "<tr bgcolor=\"#$color_TableBGRowTitle\""
+		  . Tooltip(15)
+		  . "><th>$TotalDifferentKeyphrases $Message[103]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[14]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
+		my $total_s = 0;
+		my $count = 0;
+		&BuildKeyList( $MaxNbOf{'KeyphrasesShown'},
+			$MinHit{'Keyphrase'}, \%_keyphrases, \%_keyphrases );
+		foreach my $key (@keylist) {
+			my $mot;
+
+  # Convert coded keywords (utf8,...) to be correctly reported in HTML page.
+			if ( $PluginsLoaded{'DecodeKey'}{'decodeutfkeys'} ) {
+				$mot = CleanXSS(
+					DecodeKey_decodeutfkeys(
+						$key, $PageCode || 'iso-8859-1'
+					)
+				);
+			}
+			else { $mot = CleanXSS( DecodeEncodedString($key) ); }
+			my $p;
+			if ($TotalKeyphrases) {
+				$p =
+				  int( $_keyphrases{$key} / $TotalKeyphrases * 1000 ) / 10;
+			}
+			print "<tr><td class=\"aws\">"
+			  . XMLEncode($mot)
+			  . "</td><td>$_keyphrases{$key}</td><td>$p %</td></tr>\n";
+			$total_s += $_keyphrases{$key};
+			$count++;
+		}
+		if ($Debug) {
+			debug( "Total real / shown : $TotalKeyphrases / $total_s", 2 );
+		}
+		my $rest_s = $TotalKeyphrases - $total_s;
+		if ( $rest_s > 0 ) {
+			my $p;
+			if ($TotalKeyphrases) {
+				$p = int( $rest_s / $TotalKeyphrases * 1000 ) / 10;
+			}
+			print
+"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[124]</span></td><td>$rest_s</td>";
+			print "<td>$p&nbsp;%</td></tr>\n";
+		}
+		&tab_end();
+		if ( $ShowKeyphrasesStats && $ShowKeywordsStats ) {
+			print "</td>\n";
+		}
+	}
+	if ( $ShowKeyphrasesStats && $ShowKeywordsStats ) {
+		print "<td> &nbsp; </td>";
+	}
+	if ($ShowKeywordsStats) {
+
+		# By Keywords
+		if ( $ShowKeyphrasesStats && $ShowKeywordsStats ) {
+			print "<td width=\"50%\" valign=\"top\">\n";
+		}
+		if ($Debug) { debug( "ShowKeywordsStats", 2 ); }
+		&tab_head(
+"$Message[121] ($Message[77] $MaxNbOf{'KeywordsShown'})<br /><a href=\""
+			  . (
+				$ENV{'GATEWAY_INTERFACE'}
+				  || !$StaticLinks
+				? XMLEncode("$AWScript?${NewLinkParams}output=keywords")
+				: "$StaticLinks.keywords.$StaticExt"
+			  )
+			  . "\"$NewLinkTarget>$Message[80]</a>",
+			19,
+			( $ShowKeyphrasesStats && $ShowKeywordsStats ) ? 95 : 70,
+			'keywords'
+		);
+		print "<tr bgcolor=\"#$color_TableBGRowTitle\""
+		  . Tooltip(15)
+		  . "><th>$TotalDifferentKeywords $Message[13]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[14]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
+		my $total_s = 0;
+		my $count = 0;
+		&BuildKeyList( $MaxNbOf{'KeywordsShown'},
+			$MinHit{'Keyword'}, \%_keywords, \%_keywords );
+		foreach my $key (@keylist) {
+			my $mot;
+
+  # Convert coded keywords (utf8,...) to be correctly reported in HTML page.
+			if ( $PluginsLoaded{'DecodeKey'}{'decodeutfkeys'} ) {
+				$mot = CleanXSS(
+					DecodeKey_decodeutfkeys(
+						$key, $PageCode || 'iso-8859-1'
+					)
+				);
+			}
+			else { $mot = CleanXSS( DecodeEncodedString($key) ); }
+			my $p;
+			if ($TotalKeywords) {
+				$p = int( $_keywords{$key} / $TotalKeywords * 1000 ) / 10;
+			}
+			print "<tr><td class=\"aws\">"
+			  . XMLEncode($mot)
+			  . "</td><td>$_keywords{$key}</td><td>$p %</td></tr>\n";
+			$total_s += $_keywords{$key};
+			$count++;
+		}
+		if ($Debug) {
+			debug( "Total real / shown : $TotalKeywords / $total_s", 2 );
+		}
+		my $rest_s = $TotalKeywords - $total_s;
+		if ( $rest_s > 0 ) {
+			my $p;
+			if ($TotalKeywords) {
+				$p = int( $rest_s / $TotalKeywords * 1000 ) / 10;
+			}
+			print
+"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[30]</span></td><td>$rest_s</td>";
+			print "<td>$p %</td></tr>\n";
+		}
+		&tab_end();
+		if ( $ShowKeyphrasesStats && $ShowKeywordsStats ) {
+			print "</td>\n";
+		}
+	}
+	if ( $ShowKeyphrasesStats && $ShowKeywordsStats ) {
+		print "</tr></table>\n";
+	}
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the miscellaneous table
+# Parameters:   -
+# Input:        -
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLMainMisc{
+	if ($Debug) { debug( "ShowMiscStats", 2 ); }
+	print "$Center<a name=\"misc\">&nbsp;</a><br />\n";
+	my $title = "$Message[139]";
+	&tab_head( "$title", 19, 0, 'misc' );
+	print
+	  "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$Message[139]</th>";
+	print "<th width=\"100\">&nbsp;</th>";
+	print "<th width=\"100\">&nbsp;</th>";
+	print "</tr>\n";
+	my %label = (
+		'AddToFavourites'           => $Message[137],
+		'JavascriptDisabled'        => $Message[168],
+		'JavaEnabled'               => $Message[140],
+		'DirectorSupport'           => $Message[141],
+		'FlashSupport'              => $Message[142],
+		'RealPlayerSupport'         => $Message[143],
+		'QuickTimeSupport'          => $Message[144],
+		'WindowsMediaPlayerSupport' => $Message[145],
+		'PDFSupport'                => $Message[146]
+	);
+
+	foreach my $key (@MiscListOrder) {
+		my $mischar = substr( $key, 0, 1 );
+		if ( $ShowMiscStats !~ /$mischar/i ) { next; }
+		my $total = 0;
+		my $p;
+		if ( $MiscListCalc{$key} eq 'v' ) { $total = $TotalVisits; }
+		if ( $MiscListCalc{$key} eq 'u' ) { $total = $TotalUnique; }
+		if ( $MiscListCalc{$key} eq 'hm' ) {
+			$total = $_misc_h{'TotalMisc'} || 0;
+		}
+		if ($total) {
+			$p =
+			  int( ( $_misc_h{$key} ? $_misc_h{$key} : 0 ) / $total *
+				  1000 ) / 10;
+		}
+		print "<tr>";
+		print "<td class=\"aws\">"
+		  . ( $PageDir eq 'rtl' ? "<span dir=\"ltr\">" : "" )
+		  . $label{$key}
+		  . ( $PageDir eq 'rtl' ? "</span>" : "" ) . "</td>";
+		if ( $MiscListCalc{$key} eq 'v' ) {
+			print "<td>"
+			  . Format_Number(( $_misc_h{$key} || 0 ))
+			  . " / ".Format_Number($total)." $Message[12]</td>";
+		}
+		if ( $MiscListCalc{$key} eq 'u' ) {
+			print "<td>"
+			  . Format_Number(( $_misc_h{$key} || 0 ))
+			  . " / ".Format_Number($total)." $Message[18]</td>";
+		}
+		if ( $MiscListCalc{$key} eq 'hm' ) { print "<td>-</td>"; }
+		print "<td>" . ( $total ? "$p %" : "&nbsp;" ) . "</td>";
+		print "</tr>\n";
+	}
+	&tab_end();
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the Status codes chart and table
+# Parameters:   $NewLinkParams, $NewLinkTarget
+# Input:        -
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLMainHTTPStatus{
+	my $NewLinkParams = shift;
+	my $NewLinkTarget = shift;
+	
+	if ($Debug) { debug( "ShowHTTPErrorsStats", 2 ); }
+	print "$Center<a name=\"errors\">&nbsp;</a><br />\n";
+	my $title = "$Message[32]";
+	&tab_head( "$title", 19, 0, 'errors' );
+	
+	&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_errors_h, \%_errors_h );
+		
+	# Graph the top five in a pie chart
+	if (scalar @keylist > 1){
+		foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
+		{
+			my @blocklabel = ();
+			my @valdata = ();
+			my @valcolor = ($color_p);
+			my $cnt = 0;
+			foreach my $key (@keylist) {
+				push @valdata, int( $_errors_h{$key} / $TotalHitsErrors * 1000 ) / 10;
+				push @blocklabel, "$key";
+				$cnt++;
+				if ($cnt > 4) { last; }
+			}
+			print "<tr><td colspan=\"5\">";
+			my $function = "ShowGraph_$pluginname";
+			&$function(
+				"$title",              "httpstatus",
+				0, 						\@blocklabel,
+				0,           			\@valcolor,
+				0,              		0,
+				0,          			\@valdata
+			);
+			print "</td></tr>";
+		}
+	}
+	
+	print
+"<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[32]*</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th><th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th></tr>\n";
+	my $total_h = 0;
+	my $count = 0;
+	foreach my $key (@keylist) {
+		my $p = int( $_errors_h{$key} / $TotalHitsErrors * 1000 ) / 10;
+		print "<tr" . Tooltip( $key, $key ) . ">";
+		if ( $TrapInfosForHTTPErrorCodes{$key} ) {
+			print "<td><a href=\""
+			  . (
+				$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
+				? XMLEncode(
+					"$AWScript?${NewLinkParams}output=errors$key")
+				: "$StaticLinks.errors$key.$StaticExt"
+			  )
+			  . "\"$NewLinkTarget>$key</a></td>";
+		}
+		else { print "<td valign=\"top\">$key</td>"; }
+		print "<td class=\"aws\">"
+		  . (
+			$httpcodelib{$key} ? $httpcodelib{$key} : 'Unknown error' )
+		  . "</td><td>".Format_Number($_errors_h{$key})."</td><td>$p %</td><td>"
+		  . Format_Bytes( $_errors_k{$key} ) . "</td>";
+		print "</tr>\n";
+		$total_h += $_errors_h{$key};
+		$count++;
+	}
+	&tab_end("* $Message[154]");
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the Status codes chart and table
+# Parameters:   $NewLinkParams, $NewLinkTarget
+# Input:        -
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLMainSMTPStatus{
+	my $NewLinkParams = shift;
+	my $NewLinkTarget = shift;
+	
+	if ($Debug) { debug( "ShowSMTPErrorsStats", 2 ); }
+	print "$Center<a name=\"errors\">&nbsp;</a><br />\n";
+	my $title = "$Message[147]";
+	&tab_head( "$title", 19, 0, 'errors' );
+	print
+"<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[147]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th><th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th></tr>\n";
+	my $total_h = 0;
+	my $count = 0;
+	&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_errors_h, \%_errors_h );
+
+	foreach my $key (@keylist) {
+		my $p = int( $_errors_h{$key} / $TotalHitsErrors * 1000 ) / 10;
+		print "<tr" . Tooltip( $key, $key ) . ">";
+		print "<td valign=\"top\">$key</td>";
+		print "<td class=\"aws\">"
+		  . (
+			$smtpcodelib{$key} ? $smtpcodelib{$key} : 'Unknown error' )
+		  . "</td><td>".Format_Number($_errors_h{$key})."</td><td>$p %</td><td>"
+		  . Format_Bytes( $_errors_k{$key} ) . "</td>";
+		print "</tr>\n";
+		$total_h += $_errors_h{$key};
+		$count++;
+	}
+	&tab_end();
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the cluster information chart and table
+# Parameters:   $NewLinkParams, $NewLinkTarget
+# Input:        -
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLMainCluster{
+	my $NewLinkParams = shift;
+	my $NewLinkTarget = shift;
+	
+	if ($Debug) { debug( "ShowClusterStats", 2 ); }
+	print "$Center<a name=\"clusters\">&nbsp;</a><br />\n";
+	my $title = "$Message[155]";
+	&tab_head( "$title", 19, 0, 'clusters' );
+	
+	&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_cluster_p, \%_cluster_p );
+	
+	# Graph the top five in a pie chart
+	if (scalar @keylist > 1){
+		foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
+		{
+			my @blocklabel = ();
+			my @valdata = ();
+			my @valcolor = ($color_p);
+			my $cnt = 0;
+			foreach my $key (@keylist) {
+				push @valdata, int( $_cluster_p{$key} / $TotalHits * 1000 ) / 10;
+				push @blocklabel, "$key";
+				$cnt++;
+				if ($cnt > 4) { last; }
+			}
+			print "<tr><td colspan=\"7\">";
+			my $function = "ShowGraph_$pluginname";
+			&$function(
+				"$title",              "cluster",
+				0, 						\@blocklabel,
+				0,           			\@valcolor,
+				0,              		0,
+				0,          			\@valdata
+			);
+			print "</td></tr>";
+		}
+	}
+	
+	print
+	  "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$Message[155]</th>";
+	&HTMLShowClusterInfo('__title__');
+	if ( $ShowClusterStats =~ /P/i ) {
+		print
+"<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th><th bgcolor=\"#$color_p\" width=\"80\">$Message[15]</th>";
+	}
+	if ( $ShowClusterStats =~ /H/i ) {
+		print
+"<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th>";
+	}
+	if ( $ShowClusterStats =~ /B/i ) {
+		print
+"<th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th><th bgcolor=\"#$color_k\" width=\"80\">$Message[15]</th>";
+	}
+	print "</tr>\n";
+	my $total_p = my $total_h = my $total_k = 0;
+
+# Cluster feature might have been enable in middle of month so we recalculate
+# total for cluster section only, to calculate ratio, instead of using global total
+	foreach my $key (@keylist) {
+		$total_p += int( $_cluster_p{$key} || 0 );
+		$total_h += int( $_cluster_h{$key} || 0 );
+		$total_k += int( $_cluster_k{$key} || 0 );
+	}
+	my $count = 0;
+	foreach my $key (@keylist) {
+		my $p_p = int( $_cluster_p{$key} / $total_p * 1000 ) / 10;
+		my $p_h = int( $_cluster_h{$key} / $total_h * 1000 ) / 10;
+		my $p_k = int( $_cluster_k{$key} / $total_k * 1000 ) / 10;
+		print "<tr>";
+		print "<td class=\"aws\">Computer $key</td>";
+		&HTMLShowClusterInfo($key);
+		if ( $ShowClusterStats =~ /P/i ) {
+			print "<td>"
+			  . ( $_cluster_p{$key} ? Format_Number($_cluster_p{$key}) : "&nbsp;" )
+			  . "</td><td>$p_p %</td>";
+		}
+		if ( $ShowClusterStats =~ /H/i ) {
+			print "<td>".Format_Number($_cluster_h{$key})."</td><td>$p_h %</td>";
+		}
+		if ( $ShowClusterStats =~ /B/i ) {
+			print "<td>"
+			  . Format_Bytes( $_cluster_k{$key} )
+			  . "</td><td>$p_k %</td>";
+		}
+		print "</tr>\n";
+		$count++;
+	}
+	&tab_end();
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints a chart or table for each extra section
+# Parameters:   $NewLinkParams, $NewLinkTarget, $extranum
+# Input:        -
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLMainExtra{
+	my $NewLinkParams = shift;
+	my $NewLinkTarget = shift;
+	my $extranum = shift;
+	
+	if ($Debug) { debug( "ExtraName$extranum", 2 ); }
+	print "$Center<a name=\"extra$extranum\">&nbsp;</a><br />";
+	my $title = $ExtraName[$extranum];
+	&tab_head( "$title", 19, 0, "extra$extranum" );
+	print "<tr bgcolor=\"#$color_TableBGRowTitle\">";
+	print "<th>" . $ExtraFirstColumnTitle[$extranum];
+	print "&nbsp; - &nbsp; <a href=\""
+	  . (
+		$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
+		? XMLEncode(
+			"$AWScript?${NewLinkParams}output=allextra$extranum")
+		: "$StaticLinks.allextra$extranum.$StaticExt"
+	  )
+	  . "\"$NewLinkTarget>$Message[80]</a>";
+	print "</th>";
+
+	if ( $ExtraStatTypes[$extranum] =~ m/P/i ) {
+		print
+		  "<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th>";
+	}
+	if ( $ExtraStatTypes[$extranum] =~ m/H/i ) {
+		print
+		  "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>";
+	}
+	if ( $ExtraStatTypes[$extranum] =~ m/B/i ) {
+		print
+		  "<th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
+	}
+	if ( $ExtraStatTypes[$extranum] =~ m/L/i ) {
+		print "<th width=\"120\">$Message[9]</th>";
+	}
+	print "</tr>\n";
+	my $total_p = my $total_h = my $total_k = 0;
+
+	 #$max_h=1; foreach (values %_login_h) { if ($_ > $max_h) { $max_h = $_; } }
+	 #$max_k=1; foreach (values %_login_k) { if ($_ > $max_k) { $max_k = $_; } }
+	my $count = 0;
+	if ( $MaxNbOfExtra[$extranum] ) {
+		if ( $ExtraStatTypes[$extranum] =~ m/P/i ) {
+			&BuildKeyList(
+				$MaxNbOfExtra[$extranum],
+				$MinHitExtra[$extranum],
+				\%{ '_section_' . $extranum . '_h' },
+				\%{ '_section_' . $extranum . '_p' }
+			);
+		}
+		else {
+			&BuildKeyList(
+				$MaxNbOfExtra[$extranum],
+				$MinHitExtra[$extranum],
+				\%{ '_section_' . $extranum . '_h' },
+				\%{ '_section_' . $extranum . '_h' }
+			);
+		}
+	}
+	else {
+		@keylist = ();
+	}
+	my %keysinkeylist = ();
+	foreach my $key (@keylist) {
+		$keysinkeylist{$key} = 1;
+		my $firstcol = CleanXSS( DecodeEncodedString($key) );
+		$total_p += ${ '_section_' . $extranum . '_p' }{$key};
+		$total_h += ${ '_section_' . $extranum . '_h' }{$key};
+		$total_k += ${ '_section_' . $extranum . '_k' }{$key};
+		print "<tr>";
+		printf(
+			"<td class=\"aws\">$ExtraFirstColumnFormat[$extranum]</td>",
+			$firstcol, $firstcol, $firstcol, $firstcol, $firstcol );
+		if ( $ExtraStatTypes[$extranum] =~ m/P/i ) {
+			print "<td>"
+			  . ${ '_section_' . $extranum . '_p' }{$key} . "</td>";
+		}
+		if ( $ExtraStatTypes[$extranum] =~ m/H/i ) {
+			print "<td>"
+			  . ${ '_section_' . $extranum . '_h' }{$key} . "</td>";
+		}
+		if ( $ExtraStatTypes[$extranum] =~ m/B/i ) {
+			print "<td>"
+			  . Format_Bytes(
+				${ '_section_' . $extranum . '_k' }{$key} )
+			  . "</td>";
+		}
+		if ( $ExtraStatTypes[$extranum] =~ m/L/i ) {
+			print "<td>"
+			  . (
+				${ '_section_' . $extranum . '_l' }{$key}
+				? Format_Date(
+					${ '_section_' . $extranum . '_l' }{$key}, 1 )
+				: '-'
+			  )
+			  . "</td>";
+		}
+		print "</tr>\n";
+		$count++;
+	}
+
+	# If we ask average or sum, we loop on all other records
+	if ( $ExtraAddAverageRow[$extranum] || $ExtraAddSumRow[$extranum] )
+	{
+		foreach ( keys %{ '_section_' . $extranum . '_h' } ) {
+			if ( $keysinkeylist{$_} ) { next; }
+			$total_p += ${ '_section_' . $extranum . '_p' }{$_};
+			$total_h += ${ '_section_' . $extranum . '_h' }{$_};
+			$total_k += ${ '_section_' . $extranum . '_k' }{$_};
+			$count++;
+		}
+	}
+
+	# Add average row
+	if ( $ExtraAddAverageRow[$extranum] ) {
+		print "<tr>";
+		print "<td class=\"aws\"><b>$Message[96]</b></td>";
+		if ( $ExtraStatTypes[$extranum] =~ m/P/i ) {
+			print "<td>"
+			  . ( $count ? Format_Number(( $total_p / $count )) : "&nbsp;" ) . "</td>";
+		}
+		if ( $ExtraStatTypes[$extranum] =~ m/H/i ) {
+			print "<td>"
+			  . ( $count ? Format_Number(( $total_h / $count )) : "&nbsp;" ) . "</td>";
+		}
+		if ( $ExtraStatTypes[$extranum] =~ m/B/i ) {
+			print "<td>"
+			  . (
+				$count ? Format_Bytes( $total_k / $count ) : "&nbsp;" )
+			  . "</td>";
+		}
+		if ( $ExtraStatTypes[$extranum] =~ m/L/i ) {
+			print "<td>&nbsp;</td>";
+		}
+		print "</tr>\n";
+	}
+
+	# Add sum row
+	if ( $ExtraAddSumRow[$extranum] ) {
+		print "<tr>";
+		print "<td class=\"aws\"><b>$Message[102]</b></td>";
+		if ( $ExtraStatTypes[$extranum] =~ m/P/i ) {
+			print "<td>" . Format_Number(($total_p)) . "</td>";
+		}
+		if ( $ExtraStatTypes[$extranum] =~ m/H/i ) {
+			print "<td>" . Format_Number(($total_h)) . "</td>";
+		}
+		if ( $ExtraStatTypes[$extranum] =~ m/B/i ) {
+			print "<td>" . Format_Bytes($total_k) . "</td>";
+		}
+		if ( $ExtraStatTypes[$extranum] =~ m/L/i ) {
+			print "<td>&nbsp;</td>";
+		}
 		print "</tr>\n";
 	}
 	&tab_end();
@@ -9803,162 +16545,9 @@ if ( $ENV{'AWSTATS_FORCE_CONFIG'} ) {
 	$SiteConfig = &Sanitize( $ENV{'AWSTATS_FORCE_CONFIG'} );
 }
 
+# Display help information
 if ( ( !$ENV{'GATEWAY_INTERFACE'} ) && ( !$SiteConfig ) ) {
-	&Read_Ref_Data(
-		'browsers',       'domains', 'operating_systems', 'robots',
-		'search_engines', 'worms'
-	);
-	print "----- $PROG $VERSION (c) 2000-2010 Laurent Destailleur -----\n";
-	print
-"AWStats is a free web server logfile analyzer to show you advanced web\n";
-	print "statistics.\n";
-	print
-"AWStats comes with ABSOLUTELY NO WARRANTY. It's a free software distributed\n";
-	print "with a GNU General Public License (See LICENSE file for details).\n";
-	print "\n";
-	print "Syntax: $PROG.$Extension -config=virtualhostname [options]\n";
-	print "\n";
-	print
-"  This runs $PROG in command line to update statistics (-update option) of a\n";
-	print
-"   web site, from the log file defined in AWStats config file, or build a HTML\n";
-	print "   report (-output option).\n";
-	print
-"  First, $PROG tries to read $PROG.virtualhostname.conf as the config file.\n";
-	print "  If not found, $PROG tries to read $PROG.conf, and finally the full path passed to -config=\n";
-	print
-"  Note 1: Config files ($PROG.virtualhostname.conf or $PROG.conf) must be\n";
-	print
-"   in /etc/awstats, /usr/local/etc/awstats, /etc or same directory than\n";
-	print "   awstats.pl script file.\n";
-	print
-"  Note 2: If AWSTATS_FORCE_CONFIG environment variable is defined, AWStats will\n";
-	print
-"   use it as the \"config\" value, whatever is the value on command line or URL.\n";
-	print "   See AWStats documentation for all setup instrutions.\n";
-	print "\n";
-	print "Options to update statistics:\n";
-	print "  -update        to update statistics (default)\n";
-	print
-"  -showsteps     to add benchmark information every $NBOFLINESFORBENCHMARK lines processed\n";
-	print
-"  -showcorrupted to add output for each corrupted lines found, with reason\n";
-	print
-"  -showdropped   to add output for each dropped lines found, with reason\n";
-	print "  -showunknownorigin  to output referer when it can't be parsed\n";
-	print
-"  -showdirectorigin   to output log line when origin is a direct access\n";
-	print "  -updatefor=n   to stop the update process after parsing n lines\n";
-	print
-"  -LogFile=x     to change log to analyze whatever is 'LogFile' in config file\n";
-	print
-"  Be care to process log files in chronological order when updating statistics.\n";
-	print "\n";
-	print "Options to show statistics:\n";
-	print
-"  -output      to output main HTML report (no update made except with -update)\n";
-	print "  -output=x    to output other report pages where x is:\n";
-	print
-"               alldomains       to build page of all domains/countries\n";
-	print "               allhosts         to build page of all hosts\n";
-	print
-	  "               lasthosts        to build page of last hits for hosts\n";
-	print
-	  "               unknownip        to build page of all unresolved IP\n";
-	print
-"               allemails        to build page of all email senders (maillog)\n";
-	print
-"               lastemails       to build page of last email senders (maillog)\n";
-	print
-"               allemailr        to build page of all email receivers (maillog)\n";
-	print
-"               lastemailr       to build page of last email receivers (maillog)\n";
-	print "               alllogins        to build page of all logins used\n";
-	print
-	  "               lastlogins       to build page of last hits for logins\n";
-	print
-"               allrobots        to build page of all robots/spider visits\n";
-	print
-	  "               lastrobots       to build page of last hits for robots\n";
-	print "               urldetail        to list most often viewed pages \n";
-	print
-"               urldetail:filter to list most often viewed pages matching filter\n";
-	print "               urlentry         to list entry pages\n";
-	print
-	  "               urlentry:filter  to list entry pages matching filter\n";
-	print "               urlexit          to list exit pages\n";
-	print
-	  "               urlexit:filter   to list exit pages matching filter\n";
-	print
-"               osdetail         to build page with os detailed versions\n";
-	print
-"               browserdetail    to build page with browsers detailed versions\n";
-	print
-"               unknownbrowser   to list 'User Agents' with unknown browser\n";
-	print
-	  "               unknownos        to list 'User Agents' with unknown OS\n";
-	print
-"               refererse        to build page of all refering search engines\n";
-	print
-	  "               refererpages     to build page of all refering pages\n";
-
- #print "               referersites     to build page of all refering sites\n";
-	print
-"               keyphrases       to list all keyphrases used on search engines\n";
-	print
-"               keywords         to list all keywords used on search engines\n";
-	print "               errors404        to list 'Referers' for 404 errors\n";
-	print
-"               allextraX        to build page of all values for ExtraSection X\n";
-	print "  -staticlinks           to have static links in HTML report page\n";
-	print "  -staticlinksext=xxx    to have static links with .xxx extension instead of .html\n";
-	print
-"  -lang=LL     to output a HTML report in language LL (en,de,es,fr,it,nl,...)\n";
-	print "  -month=MM    to output a HTML report for an old month MM\n";
-	print "  -year=YYYY   to output a HTML report for an old year YYYY\n";
-	print
-"  The 'date' options doesn't allow you to process old log file. They only\n";
-	print
-"  allow you to see a past report for a chosen month/year period instead of\n";
-	print "  current month/year.\n";
-	print "\n";
-	print "Other options:\n";
-	print
-"  -debug=X     to add debug informations lesser than level X (speed reduced)\n";
-	print "\n";
-	print "Now supports/detects:\n";
-	print
-"  Web/Ftp/Mail/streaming server log analyzis (and load balanced log files)\n";
-	print "  Reverse DNS lookup (IPv4 and IPv6) and GeoIP lookup\n";
-	print "  Number of visits, number of unique visitors\n";
-	print "  Visits duration and list of last visits\n";
-	print "  Authenticated users\n";
-	print "  Days of week and rush hours\n";
-	print "  Hosts list and unresolved IP addresses list\n";
-	print "  Most viewed, entry and exit pages\n";
-	print "  Files type and Web compression (mod_gzip, mod_deflate stats)\n";
-	print "  Screen size\n";
-	print "  Ratio of Browsers with support of: Java, Flash, RealG2 reader,\n";
-	print "                        Quicktime reader, WMA reader, PDF reader\n";
-	print "  Configurable personalized reports\n";
-	print "  " . ( scalar keys %DomainsHashIDLib ) . " domains/countries\n";
-	print "  " . ( scalar keys %RobotsHashIDLib ) . " robots\n";
-	print "  " . ( scalar keys %WormsHashLib ) . " worm's families\n";
-	print "  " . ( scalar keys %OSHashLib ) . " operating systems\n";
-	print "  " . ( scalar keys %BrowsersHashIDLib ) . " browsers";
-	&Read_Ref_Data('browsers_phone');
-	print " ("
-	  . ( scalar keys %BrowsersHashIDLib )
-	  . " with phone browsers database)\n";
-	print "  "
-	  . ( scalar keys %SearchEnginesHashLib )
-	  . " search engines (and keyphrases/keywords used from them)\n";
-	print "  All HTTP errors with last referrer\n";
-	print "  Report by day/month/year\n";
-	print "  Dynamic or static HTML or XHTML reports, static PDF reports\n";
-	print "  Indexed text or XML monthly database\n";
-	print "  And a lot of other advanced features and options...\n";
-	print "New versions and FAQ at http://awstats.sourceforge.net\n";
+	&PrintCLIHelp();
 	exit 2;
 }
 $SiteConfig ||= &Sanitize( $ENV{'SERVER_NAME'} );
@@ -13175,36 +19764,6 @@ if ( scalar keys %HTMLOutput ) {
 	debug( "YearRequired=$YearRequired, MonthRequired=$MonthRequired", 2 );
 	debug( "DayRequired=$DayRequired, HourRequired=$HourRequired",     2 );
 
-	my $max_p;
-	my $max_h;
-	my $max_k;
-	my $max_v;
-	my $total_u;
-	my $total_v;
-	my $total_p;
-	my $total_h;
-	my $total_k;
-	my $total_e;
-	my $total_x;
-	my $total_s;
-	my $total_l;
-	my $total_r;
-	my $average_u;
-	my $average_v;
-	my $average_p;
-	my $average_h;
-	my $average_k;
-	my $average_s;
-	my $rest_p;
-	my $rest_h;
-	my $rest_k;
-	my $rest_e;
-	my $rest_x;
-	my $rest_s;
-	my $rest_l;
-	my $rest_r;
-	my $average_nb;
-
 	# Define the NewLinkParams for main chart
 	my $NewLinkParams = ${QueryString};
 	$NewLinkParams =~ s/(^|&|&amp;)update(=\w*|$)//i;
@@ -13232,7 +19791,7 @@ if ( scalar keys %HTMLOutput ) {
 		#-------------
 		&Init_HashArray();
 
-		# Lecture des fichiers history
+		# Lecture des fichiers history / reading history file
 		if ( $DatabaseBreak eq 'month' ) {
 			for ( my $ix = 12 ; $ix >= 1 ; $ix-- ) {
 				my $stringforload = '';
@@ -13248,7 +19807,7 @@ if ( scalar keys %HTMLOutput ) {
 				}
 				if ($stringforload) {
 
-					# On charge fichier
+					# On charge fichier / file is loaded
 					&Read_History_With_TmpUpdate( $YearRequired, $monthix, '',
 						'', 0, 0, $stringforload );
 				}
@@ -13283,9 +19842,6 @@ if ( scalar keys %HTMLOutput ) {
 
 	# Call to plugins' function AddHTMLBodyHeader
 	foreach my $pluginname ( keys %{ $PluginsLoaded{'AddHTMLBodyHeader'} } ) {
-
-		#		my $function="AddHTMLBodyHeader_$pluginname()";
-		#		eval("$function");
 		my $function = "AddHTMLBodyHeader_$pluginname";
 		&$function();
 	}
@@ -13295,233 +19851,11 @@ if ( scalar keys %HTMLOutput ) {
 	# TOP BAN
 	#---------------------------------------------------------------------
 	if ( $ShowMenu || $FrameName eq 'mainleft' ) {
-		my $frame = ( $FrameName eq 'mainleft' );
-
-		if ($Debug) { debug( "ShowTopBan", 2 ); }
-		print "$Center<a name=\"menu\">&nbsp;</a>\n";
-
-		if ( $FrameName ne 'mainleft' ) {
-			my $NewLinkParams = ${QueryString};
-			$NewLinkParams =~ s/(^|&|&amp;)update(=\w*|$)//i;
-			$NewLinkParams =~ s/(^|&|&amp;)staticlinks(=\w*|$)//i;
-			$NewLinkParams =~ s/(^|&|&amp;)year=[^&]*//i;
-			$NewLinkParams =~ s/(^|&|&amp;)month=[^&]*//i;
-			$NewLinkParams =~ s/(^|&|&amp;)framename=[^&]*//i;
-			$NewLinkParams =~ s/(&amp;|&)+/&amp;/i;
-			$NewLinkParams =~ s/^&amp;//;
-			$NewLinkParams =~ s/&amp;$//;
-			my $NewLinkTarget = '';
-
-			if ( $FrameName eq 'mainright' ) {
-				$NewLinkTarget = " target=\"_parent\"";
-			}
-			print "<form name=\"FormDateFilter\" action=\""
-			  . XMLEncode("$AWScript?${NewLinkParams}")
-			  . "\" style=\"padding: 0px 0px 0px 0px; margin-top: 0\"$NewLinkTarget>\n";
-		}
-
-		if ( $QueryString !~ /buildpdf/i ) {
-			print
-"<table class=\"aws_border\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\" width=\"100%\">\n";
-			print "<tr><td>\n";
-			print
-"<table class=\"aws_data sortable\" border=\"0\" cellpadding=\"1\" cellspacing=\"0\" width=\"100%\">\n";
-		}
-		else {
-			print "<table width=\"100%\">\n";
-		}
-
-		if ( $FrameName ne 'mainright' ) {
-
-			# Print Statistics Of
-			if ( $FrameName eq 'mainleft' ) {
-				my $shortSiteDomain = $SiteDomain;
-				if ( length($SiteDomain) > 30 ) {
-					$shortSiteDomain =
-					    substr( $SiteDomain, 0, 20 ) . "..."
-					  . substr( $SiteDomain, length($SiteDomain) - 5, 5 );
-				}
-				print
-"<tr><td class=\"awsm\"><b>$Message[7]:</b></td></tr><tr><td class=\"aws\"><span style=\"font-size: 12px;\">$shortSiteDomain</span></td>";
-			}
-			else {
-				print
-"<tr><td class=\"aws\" valign=\"middle\"><b>$Message[7]:</b>&nbsp;</td><td class=\"aws\" valign=\"middle\"><span style=\"font-size: 14px;\">$SiteDomain</span></td>";
-			}
-
-			# Logo and flags
-			if ( $FrameName ne 'mainleft' ) {
-				if ( $LogoLink =~ "http://awstats.sourceforge.net" ) {
-					print "<td align=\"right\" rowspan=\"3\"><a href=\""
-					  . XMLEncode($LogoLink)
-					  . "\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=\"0\""
-					  . AltTitle( ucfirst($PROG) . " Web Site" )
-					  . " /></a>";
-				}
-				else {
-					print "<td align=\"right\" rowspan=\"3\"><a href=\""
-					  . XMLEncode($LogoLink)
-					  . "\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=\"0\" /></a>";
-				}
-				if ( !$StaticLinks ) { print "<br />"; Show_Flag_Links($Lang); }
-				print "</td>";
-			}
-			print "</tr>\n";
-		}
-		if ( $FrameName ne 'mainleft' ) {
-
-			# Print Last Update
-			print
-"<tr valign=\"middle\"><td class=\"aws\" valign=\"middle\" width=\"$WIDTHMENU1\"><b>$Message[35]:</b>&nbsp;</td>";
-			print
-"<td class=\"aws\" valign=\"middle\"><span style=\"font-size: 12px;\">";
-			if ($LastUpdate) { print Format_Date( $LastUpdate, 0 ); }
-			else {
-
-				# Here NbOfOldLines = 0 (because LastUpdate is not defined)
-				if ( !$UpdateStats ) {
-					print "<span style=\"color: #880000\">$Message[24]</span>";
-				}
-				else {
-					print
-"<span style=\"color: #880000\">No qualified records found in log ($NbOfLinesCorrupted corrupted, $NbOfLinesDropped dropped)</span>";
-				}
-
-			}
-			print "</span>";
-
-			# Print Update Now link
-			if ( $AllowToUpdateStatsFromBrowser && !$StaticLinks ) {
-				my $NewLinkParams = ${QueryString};
-				$NewLinkParams =~ s/(^|&|&amp;)update(=\w*|$)//i;
-				$NewLinkParams =~ s/(^|&|&amp;)staticlinks(=\w*|$)//i;
-				$NewLinkParams =~ s/(^|&|&amp;)framename=[^&]*//i;
-				if ( $FrameName eq 'mainright' ) {
-					$NewLinkParams .= "&amp;framename=mainright";
-				}
-				$NewLinkParams =~ s/(&amp;|&)+/&amp;/i;
-				$NewLinkParams =~ s/^&amp;//;
-				$NewLinkParams =~ s/&amp;$//;
-				if ($NewLinkParams) {
-					$NewLinkParams = "${NewLinkParams}&amp;";
-				}
-				print "&nbsp; &nbsp; &nbsp; &nbsp;";
-				print "<a href=\""
-				  . XMLEncode("$AWScript?${NewLinkParams}update=1")
-				  . "\">$Message[74]</a>";
-			}
-			print "</td>";
-
-			# Logo and flags
-			if ( $FrameName eq 'mainright' ) {
-				if ( $LogoLink =~ "http://awstats.sourceforge.net" ) {
-					print "<td align=\"right\" rowspan=\"2\"><a href=\""
-					  . XMLEncode($LogoLink)
-					  . "\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=\"0\""
-					  . AltTitle( ucfirst($PROG) . " Web Site" )
-					  . " /></a>\n";
-				}
-				else {
-					print "<td align=\"right\" rowspan=\"2\"><a href=\""
-					  . XMLEncode($LogoLink)
-					  . "\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=\"0\" /></a>\n";
-				}
-				if ( !$StaticLinks ) { print "<br />"; Show_Flag_Links($Lang); }
-				print "</td>";
-			}
-
-			print "</tr>\n";
-
-			# Print selected period of analysis (month and year required)
-			print
-"<tr><td class=\"aws\" valign=\"middle\"><b>$Message[133]:</b></td>";
-			print "<td class=\"aws\" valign=\"middle\">";
-			if ( $ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ) {
-				print "<select class=\"aws_formfield\" name=\"month\">\n";
-				foreach ( 1 .. 12 ) {
-					my $monthix = sprintf( "%02s", $_ );
-					print "<option"
-					  . (
-						  "$MonthRequired" eq "$monthix"
-						? " selected=\"true\""
-						: ""
-					  )
-					  . " value=\"$monthix\">$MonthNumLib{$monthix}</option>\n";
-				}
-				if ( $AllowFullYearView >= 2 ) {
-					print "<option"
-					  . ( $MonthRequired eq 'all' ? " selected=\"true\"" : "" )
-					  . " value=\"all\">- $Message[6] -</option>\n";
-				}
-				print "</select>\n";
-				print "<select class=\"aws_formfield\" name=\"year\">\n";
-
-				# Add YearRequired in list if not in ListOfYears
-				$ListOfYears{$YearRequired} ||= $MonthRequired;
-				foreach ( sort keys %ListOfYears ) {
-					print "<option"
-					  . ( $YearRequired eq "$_" ? " selected=\"true\"" : "" )
-					  . " value=\"$_\">$_</option>\n";
-				}
-				print "</select>\n";
-				print "<input type=\"hidden\" name=\"output\" value=\""
-				  . join( ',', keys %HTMLOutput )
-				  . "\" />\n";
-				if ($SiteConfig) {
-					print
-"<input type=\"hidden\" name=\"config\" value=\"$SiteConfig\" />\n";
-				}
-				if ($DirConfig) {
-					print
-"<input type=\"hidden\" name=\"configdir\" value=\"$DirConfig\" />\n";
-				}
-				if ( $QueryString =~ /lang=(\w+)/i ) {
-					print
-					  "<input type=\"hidden\" name=\"lang\" value=\"$1\" />\n";
-				}
-				if ( $QueryString =~ /debug=(\d+)/i ) {
-					print
-					  "<input type=\"hidden\" name=\"debug\" value=\"$1\" />\n";
-				}
-				if ( $FrameName eq 'mainright' ) {
-					print
-"<input type=\"hidden\" name=\"framename\" value=\"index\" />\n";
-				}
-				print
-"<input type=\"submit\" value=\" $Message[115] \" class=\"aws_button\" />";
-			}
-			else {
-				print "<span style=\"font-size: 14px;\">";
-				if ($DayRequired) { print "$Message[4] $DayRequired - "; }
-				if ( $MonthRequired eq 'all' ) {
-					print "$Message[6] $YearRequired";
-				}
-				else {
-					print
-					  "$Message[5] $MonthNumLib{$MonthRequired} $YearRequired";
-				}
-				print "</span>";
-			}
-			print "</td></tr>\n";
-		}
-		if ( $QueryString !~ /buildpdf/i ) {
-			print "</table>\n";
-			print "</td></tr></table>\n";
-		}
-		else {
-			print "</table>\n";
-		}
-
-		if ( $FrameName ne 'mainleft' ) { print "</form>\n"; }
-		else { print "<br />\n"; }
-		print "\n";
+		HTMLTopBanner($WIDTHMENU1);
 	}
 
 	# Call to plugins' function AddHTMLMenuHeader
 	foreach my $pluginname ( keys %{ $PluginsLoaded{'AddHTMLMenuHeader'} } ) {
-
-		#		my $function="AddHTMLMenuHeader_$pluginname()";
-		#		eval("$function");
 		my $function = "AddHTMLMenuHeader_$pluginname";
 		&$function();
 	}
@@ -13529,457 +19863,11 @@ if ( scalar keys %HTMLOutput ) {
 	# MENU (ON LEFT IF FRAME OR TOP)
 	#---------------------------------------------------------------------
 	if ( $ShowMenu || $FrameName eq 'mainleft' ) {
-		my $frame = ( $FrameName eq 'mainleft' );
-
-		if ($Debug) { debug( "ShowMenu", 2 ); }
-
-		# Print menu links
-		if ( ( $HTMLOutput{'main'} && $FrameName ne 'mainright' )
-			|| $FrameName eq 'mainleft' )
-		{    # If main page asked
-			    # Define link anchor
-			my $linkanchor =
-			  ( $FrameName eq 'mainleft' ? "$AWScript?${NewLinkParams}" : "" );
-			if ( $linkanchor && ( $linkanchor !~ /framename=mainright/ ) ) {
-				$linkanchor .= "framename=mainright";
-			}
-			$linkanchor =~ s/(&|&amp;)$//;
-			$linkanchor = XMLEncode("$linkanchor");
-
-			# Define target
-			my $targetpage =
-			  ( $FrameName eq 'mainleft' ? " target=\"mainright\"" : "" );
-
-			# Print Menu
-			my $linetitle;    # TODO a virer
-			if ( !$PluginsLoaded{'ShowMenu'}{'menuapplet'} ) {
-				my $menuicon = 0;    # TODO a virer
-				                     # Menu HTML
-				print "<table"
-				  . (
-					$frame
-					? " cellspacing=\"0\" cellpadding=\"0\" border=\"0\""
-					: ""
-				  )
-				  . ">\n";
-				if ( $FrameName eq 'mainleft' && $ShowMonthStats ) {
-					print( $frame? "<tr><td class=\"awsm\">" : "" );
-					print
-"<a href=\"$linkanchor#top\"$targetpage>$Message[128]</a>";
-					print( $frame? "</td></tr>\n" : " &nbsp; " );
-				}
-				my %menu     = ();
-				my %menulink = ();
-				my %menutext = ();
-
-				# When
-				%menu = (
-					'month'       => $ShowMonthStats       ? 1 : 0,
-					'daysofmonth' => $ShowDaysOfMonthStats ? 2 : 0,
-					'daysofweek'  => $ShowDaysOfWeekStats  ? 3 : 0,
-					'hours'       => $ShowHoursStats       ? 4 : 0
-				);
-				%menulink = (
-					'month'       => 1,
-					'daysofmonth' => 1,
-					'daysofweek'  => 1,
-					'hours'       => 1
-				);
-				%menutext = (
-					'month'       => $Message[162],
-					'daysofmonth' => $Message[138],
-					'daysofweek'  => $Message[91],
-					'hours'       => $Message[20]
-				);
-				ShowMenuCateg(
-					'when',         $Message[93],
-					'menu4.png',    $frame,
-					$targetpage,    $linkanchor,
-					$NewLinkParams, $NewLinkTarget,
-					\%menu,         \%menulink,
-					\%menutext
-				);
-
-				# Who
-				%menu = (
-					'countries'  => $ShowDomainsStats ? 1 : 0,
-					'alldomains' => $ShowDomainsStats ? 2 : 0,
-					'visitors'   => $ShowHostsStats   ? 3 : 0,
-					'allhosts'   => $ShowHostsStats   ? 4 : 0,
-					'lasthosts' => ( $ShowHostsStats =~ /L/i ) ? 5 : 0,
-					'unknownip' => $ShowHostsStats         ? 6 : 0,
-					'logins'    => $ShowAuthenticatedUsers ? 7 : 0,
-					'alllogins' => $ShowAuthenticatedUsers ? 8 : 0,
-					'lastlogins' => ( $ShowAuthenticatedUsers =~ /L/i ) ? 9 : 0,
-					'emailsenders' => $ShowEMailSenders ? 10 : 0,
-					'allemails'    => $ShowEMailSenders ? 11 : 0,
-					'lastemails' => ( $ShowEMailSenders =~ /L/i ) ? 12 : 0,
-					'emailreceivers' => $ShowEMailReceivers ? 13 : 0,
-					'allemailr'      => $ShowEMailReceivers ? 14 : 0,
-					'lastemailr' => ( $ShowEMailReceivers =~ /L/i ) ? 15 : 0,
-					'robots'    => $ShowRobotsStats ? 16 : 0,
-					'allrobots' => $ShowRobotsStats ? 17 : 0,
-					'lastrobots' => ( $ShowRobotsStats =~ /L/i ) ? 18 : 0,
-					'worms' => $ShowWormsStats ? 19 : 0
-				);
-				%menulink = (
-					'countries'      => 1,
-					'alldomains'     => 2,
-					'visitors'       => 1,
-					'allhosts'       => 2,
-					'lasthosts'      => 2,
-					'unknownip'      => 2,
-					'logins'         => 1,
-					'alllogins'      => 2,
-					'lastlogins'     => 2,
-					'emailsenders'   => 1,
-					'allemails'      => 2,
-					'lastemails'     => 2,
-					'emailreceivers' => 1,
-					'allemailr'      => 2,
-					'lastemailr'     => 2,
-					'robots'         => 1,
-					'allrobots'      => 2,
-					'lastrobots'     => 2,
-					'worms'          => 1
-				);
-				%menutext = (
-					'countries'      => $Message[148],
-					'alldomains'     => $Message[80],
-					'visitors'       => $Message[81],
-					'allhosts'       => $Message[80],
-					'lasthosts'      => $Message[9],
-					'unknownip'      => $Message[45],
-					'logins'         => $Message[94],
-					'alllogins'      => $Message[80],
-					'lastlogins'     => $Message[9],
-					'emailsenders'   => $Message[131],
-					'allemails'      => $Message[80],
-					'lastemails'     => $Message[9],
-					'emailreceivers' => $Message[132],
-					'allemailr'      => $Message[80],
-					'lastemailr'     => $Message[9],
-					'robots'         => $Message[53],
-					'allrobots'      => $Message[80],
-					'lastrobots'     => $Message[9],
-					'worms'          => $Message[136]
-				);
-				ShowMenuCateg(
-					'who',          $Message[92],
-					'menu5.png',    $frame,
-					$targetpage,    $linkanchor,
-					$NewLinkParams, $NewLinkTarget,
-					\%menu,         \%menulink,
-					\%menutext
-				);
-
-				# Navigation
-				$linetitle = &AtLeastOneNotNull(
-					$ShowSessionsStats,  $ShowPagesStats,
-					$ShowFileTypesStats, $ShowFileSizesStats,
-					$ShowOSStats,        $ShowBrowsersStats,
-					$ShowScreenSizeStats
-				);
-				if ($linetitle) {
-					print "<tr><td class=\"awsm\""
-					  . ( $frame ? "" : " valign=\"top\"" ) . ">"
-					  . (
-						$menuicon
-						? "<img src=\"$DirIcons/other/menu2.png\" />&nbsp;"
-						: ""
-					  )
-					  . "<b>$Message[72]:</b></td>\n";
-				}
-				if ($linetitle) {
-					print( $frame? "</tr>\n" : "<td class=\"awsm\">" );
-				}
-				if ($ShowSessionsStats) {
-					print( $frame? "<tr><td class=\"awsm\">" : "" );
-					print
-"<a href=\"$linkanchor#sessions\"$targetpage>$Message[117]</a>";
-					print( $frame? "</td></tr>\n" : " &nbsp; " );
-				}
-				if ($ShowFileTypesStats) {
-					print( $frame? "<tr><td class=\"awsm\">" : "" );
-					print
-"<a href=\"$linkanchor#filetypes\"$targetpage>$Message[73]</a>";
-					print( $frame? "</td></tr>\n" : " &nbsp; " );
-				}
-				if ($ShowPagesStats) {
-					print( $frame? "<tr><td class=\"awsm\">" : "" );
-					print
-"<a href=\"$linkanchor#urls\"$targetpage>$Message[29]</a>\n";
-					print( $frame? "</td></tr>\n" : " &nbsp; " );
-				}
-				if ($ShowPagesStats) {
-					print( $frame
-						? "<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> "
-						: ""
-					);
-					print "<a href=\""
-					  . (
-						$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
-						? XMLEncode(
-							"$AWScript?${NewLinkParams}output=urldetail")
-						: "$StaticLinks.urldetail.$StaticExt"
-					  )
-					  . "\"$NewLinkTarget>$Message[80]</a>\n";
-					print( $frame? "</td></tr>\n" : " &nbsp; " );
-				}
-				if ( $ShowPagesStats =~ /E/i ) {
-					print( $frame
-						? "<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> "
-						: ""
-					);
-					print "<a href=\""
-					  . (
-						$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
-						? XMLEncode(
-							"$AWScript?${NewLinkParams}output=urlentry")
-						: "$StaticLinks.urlentry.$StaticExt"
-					  )
-					  . "\"$NewLinkTarget>$Message[104]</a>\n";
-					print( $frame? "</td></tr>\n" : " &nbsp; " );
-				}
-				if ( $ShowPagesStats =~ /X/i ) {
-					print( $frame
-						? "<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> "
-						: ""
-					);
-					print "<a href=\""
-					  . (
-						$ENV{'GATEWAY_INTERFACE'}
-						  || !$StaticLinks
-						? XMLEncode("$AWScript?${NewLinkParams}output=urlexit")
-						: "$StaticLinks.urlexit.$StaticExt"
-					  )
-					  . "\"$NewLinkTarget>$Message[116]</a>\n";
-					print( $frame? "</td></tr>\n" : " &nbsp; " );
-				}
-				if ($ShowOSStats) {
-					print( $frame? "<tr><td class=\"awsm\">" : "" );
-					print
-					  "<a href=\"$linkanchor#os\"$targetpage>$Message[59]</a>";
-					print( $frame? "</td></tr>\n" : " &nbsp; " );
-				}
-				if ($ShowOSStats) {
-					print( $frame
-						? "<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> "
-						: ""
-					);
-					print "<a href=\""
-					  . (
-						$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
-						? XMLEncode(
-							"$AWScript?${NewLinkParams}output=osdetail")
-						: "$StaticLinks.osdetail.$StaticExt"
-					  )
-					  . "\"$NewLinkTarget>$Message[58]</a>\n";
-					print( $frame? "</td></tr>\n" : " &nbsp; " );
-				}
-				if ($ShowOSStats) {
-					print( $frame
-						? "<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> "
-						: ""
-					);
-					print "<a href=\""
-					  . (
-						$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
-						? XMLEncode(
-							"$AWScript?${NewLinkParams}output=unknownos")
-						: "$StaticLinks.unknownos.$StaticExt"
-					  )
-					  . "\"$NewLinkTarget>$Message[0]</a>\n";
-					print( $frame? "</td></tr>\n" : " &nbsp; " );
-				}
-				if ($ShowBrowsersStats) {
-					print( $frame? "<tr><td class=\"awsm\">" : "" );
-					print
-"<a href=\"$linkanchor#browsers\"$targetpage>$Message[21]</a>";
-					print( $frame? "</td></tr>\n" : " &nbsp; " );
-				}
-				if ($ShowBrowsersStats) {
-					print( $frame
-						? "<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> "
-						: ""
-					);
-					print "<a href=\""
-					  . (
-						$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
-						? XMLEncode(
-							"$AWScript?${NewLinkParams}output=browserdetail")
-						: "$StaticLinks.browserdetail.$StaticExt"
-					  )
-					  . "\"$NewLinkTarget>$Message[58]</a>\n";
-					print( $frame? "</td></tr>\n" : " &nbsp; " );
-				}
-				if ($ShowBrowsersStats) {
-					print( $frame
-						? "<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> "
-						: ""
-					);
-					print "<a href=\""
-					  . (
-						$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
-						? XMLEncode(
-							"$AWScript?${NewLinkParams}output=unknownbrowser")
-						: "$StaticLinks.unknownbrowser.$StaticExt"
-					  )
-					  . "\"$NewLinkTarget>$Message[0]</a>\n";
-					print( $frame? "</td></tr>\n" : " &nbsp; " );
-				}
-				if ($ShowScreenSizeStats) {
-					print( $frame? "<tr><td class=\"awsm\">" : "" );
-					print
-"<a href=\"$linkanchor#screensizes\"$targetpage>$Message[135]</a>";
-					print( $frame? "</td></tr>\n" : " &nbsp; " );
-				}
-				if ($linetitle) { print( $frame? "" : "</td></tr>\n" ); }
-
-				# Referers
-				%menu = (
-					'referer'      => $ShowOriginStats ? 1 : 0,
-					'refererse'    => $ShowOriginStats ? 2 : 0,
-					'refererpages' => $ShowOriginStats ? 3 : 0,
-					'keys' => ( $ShowKeyphrasesStats || $ShowKeywordsStats )
-					? 4
-					: 0,
-					'keyphrases' => $ShowKeyphrasesStats ? 5 : 0,
-					'keywords'   => $ShowKeywordsStats   ? 6 : 0
-				);
-				%menulink = (
-					'referer'      => 1,
-					'refererse'    => 2,
-					'refererpages' => 2,
-					'keys'         => 1,
-					'keyphrases'   => 2,
-					'keywords'     => 2
-				);
-				%menutext = (
-					'referer'      => $Message[37],
-					'refererse'    => $Message[126],
-					'refererpages' => $Message[127],
-					'keys'         => $Message[14],
-					'keyphrases'   => $Message[120],
-					'keywords'     => $Message[121]
-				);
-				ShowMenuCateg(
-					'referers',     $Message[23],
-					'menu7.png',    $frame,
-					$targetpage,    $linkanchor,
-					$NewLinkParams, $NewLinkTarget,
-					\%menu,         \%menulink,
-					\%menutext
-				);
-
-				# Others
-				%menu = (
-					'filetypes' => ( $ShowFileTypesStats =~ /C/i ) ? 1 : 0,
-					'misc' => $ShowMiscStats ? 2 : 0,
-					'errors' => ( $ShowHTTPErrorsStats || $ShowSMTPErrorsStats )
-					? 3
-					: 0,
-					'clusters' => $ShowClusterStats ? 5 : 0
-				);
-				%menulink = (
-					'filetypes' => 1,
-					'misc'      => 1,
-					'errors'    => 1,
-					'clusters'  => 1
-				);
-				%menutext = (
-					'filetypes' => $Message[98],
-					'misc'      => $Message[139],
-					'errors'    =>
-					  ( $ShowSMTPErrorsStats ? $Message[147] : $Message[32] ),
-					'clusters' => $Message[155]
-				);
-				foreach ( keys %TrapInfosForHTTPErrorCodes ) {
-					$menu{"errors$_"}     = $ShowHTTPErrorsStats ? 4 : 0;
-					$menulink{"errors$_"} = 2;
-					$menutext{"errors$_"} = $Message[31];
-				}
-				ShowMenuCateg(
-					'others',       $Message[2],
-					'menu8.png',    $frame,
-					$targetpage,    $linkanchor,
-					$NewLinkParams, $NewLinkTarget,
-					\%menu,         \%menulink,
-					\%menutext
-				);
-
-				# Extra/Marketing
-				%menu     = ();
-				%menulink = ();
-				%menutext = ();
-				my $i = 1;
-				foreach ( 1 .. @ExtraName - 1 ) {
-					$menu{"extra$_"}        = $i++;
-					$menulink{"extra$_"}    = 1;
-					$menutext{"extra$_"}    = $ExtraName[$_];
-					$menu{"allextra$_"}     = $i++;
-					$menulink{"allextra$_"} = 2;
-					$menutext{"allextra$_"} = $Message[80];
-				}
-				ShowMenuCateg(
-					'extra',        $Message[134],
-					'',             $frame,
-					$targetpage,    $linkanchor,
-					$NewLinkParams, $NewLinkTarget,
-					\%menu,         \%menulink,
-					\%menutext
-				);
-				print "</table>\n";
-			}
-			else {
-
-				# Menu Applet
-				if ($frame) { }
-				else { }
-			}
-
-			#print ($frame?"":"<br />\n");
-			print "<br />\n";
-		}
-
-		# Print Back link
-		elsif ( !$HTMLOutput{'main'} ) {
-			print "<table>\n";
-			$NewLinkParams =~ s/(^|&|&amp;)hostfilter=[^&]*//i;
-			$NewLinkParams =~ s/(^|&|&amp;)urlfilter=[^&]*//i;
-			$NewLinkParams =~ s/(^|&|&amp;)refererpagesfilter=[^&]*//i;
-			$NewLinkParams =~ s/(&amp;|&)+/&amp;/i;
-			$NewLinkParams =~ s/^&amp;//;
-			$NewLinkParams =~ s/&amp;$//;
-			if (   !$DetailedReportsOnNewWindows
-				|| $FrameName eq 'mainright'
-				|| $QueryString =~ /buildpdf/i )
-			{
-				print "<tr><td class=\"aws\"><a href=\""
-				  . (
-					$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
-					? XMLEncode(
-						"$AWScript"
-						  . ( ${NewLinkParams} ? "?${NewLinkParams}" : "" )
-					  )
-					: "$StaticLinks.$StaticExt"
-				  )
-				  . "\">$Message[76]</a></td></tr>\n";
-			}
-			else {
-				print
-"<tr><td class=\"aws\"><a href=\"javascript:parent.window.close();\">$Message[118]</a></td></tr>\n";
-			}
-			print "</table>\n";
-			print "\n";
-		}
+		HTMLMenu($NewLinkParams, $NewLinkTarget);
 	}
 
 	# Call to plugins' function AddHTMLMenuFooter
 	foreach my $pluginname ( keys %{ $PluginsLoaded{'AddHTMLMenuFooter'} } ) {
-
-		#		my $function="AddHTMLMenuFooter_$pluginname()";
-		#		eval("$function");
 		my $function = "AddHTMLMenuFooter_$pluginname";
 		&$function();
 	}
@@ -13990,24 +19878,7 @@ if ( scalar keys %HTMLOutput ) {
 		exit 0;
 	}
 
-	# FirstTime LastTime
-	my $FirstTime = 0;
-	my $LastTime  = 0;
-	foreach my $key ( keys %FirstTime ) {
-		my $keyqualified = 0;
-		if ( $MonthRequired eq 'all' ) { $keyqualified = 1; }
-		if ( $key =~ /^$YearRequired$MonthRequired/ ) { $keyqualified = 1; }
-		if ($keyqualified) {
-			if ( $FirstTime{$key}
-				&& ( $FirstTime == 0 || $FirstTime > $FirstTime{$key} ) )
-			{
-				$FirstTime = $FirstTime{$key};
-			}
-			if ( $LastTime < ( $LastTime{$key} || 0 ) ) {
-				$LastTime = $LastTime{$key};
-			}
-		}
-	}
+	
 
 # TotalVisits TotalUnique TotalPages TotalHits TotalBytes TotalHostsKnown TotalHostsUnknown
 	$TotalUnique = $TotalVisits = $TotalPages = $TotalHits = $TotalBytes = 0;
@@ -14038,7 +19909,7 @@ if ( scalar keys %HTMLOutput ) {
 	}
 
 	# TotalHitsErrors TotalBytesErrors
-	my $TotalHitsErrors  = 0;
+	$TotalHitsErrors  = 0;
 	my $TotalBytesErrors = 0;
 	foreach ( keys %_errors_h ) {
 
@@ -14179,9 +20050,6 @@ if ( scalar keys %HTMLOutput ) {
 	# Call to plugins' function AddHTMLContentHeader
 	foreach my $pluginname ( keys %{ $PluginsLoaded{'AddHTMLContentHeader'} } )
 	{
-
-		#		my $function="AddHTMLContentHeader_$pluginname()";
-		#		eval("$function");
 		# to add unique visitors & number of visits, by J Ruano @ CAPSiDE
 		if ( $ShowDomainsStats =~ /U/i ) {
 			print "<th bgcolor=\"#$color_u\" width=\"80\">$Message[11]</th>";
@@ -14194,1746 +20062,86 @@ if ( scalar keys %HTMLOutput ) {
 		&$function();
 	}
 
-	# Output particular part
+	# Output individual frames or static pages for specific sections
 	#-----------------------
 	if ( scalar keys %HTMLOutput == 1 ) {
 
 		if ( $HTMLOutput{'alldomains'} ) {
-			print "$Center<a name=\"domains\">&nbsp;</a><br />\n";
-
-			# Show domains list
-			my $title = '';
-			my $cpt   = 0;
-			if ( $HTMLOutput{'alldomains'} ) {
-				$title .= "$Message[25]";
-				$cpt = ( scalar keys %_domener_h );
-			}
-			&tab_head( "$title", 19, 0, 'domains' );
-			print
-"<tr bgcolor=\"#$color_TableBGRowTitle\"><th width=\"$WIDTHCOLICON\">&nbsp;</th><th colspan=\"2\">$Message[17]</th>";
-			if ( $ShowDomainsStats =~ /U/i ) {
-				print
-				  "<th bgcolor=\"#$color_u\" width=\"80\">$Message[11]</th>";
-			}
-			if ( $ShowDomainsStats =~ /V/i ) {
-				print
-				  "<th bgcolor=\"#$color_v\" width=\"80\">$Message[10]</th>";
-			}
-			if ( $ShowDomainsStats =~ /P/i ) {
-				print
-				  "<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th>";
-			}
-			if ( $ShowDomainsStats =~ /H/i ) {
-				print
-				  "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>";
-			}
-			if ( $ShowDomainsStats =~ /B/i ) {
-				print
-"<th class=\"datasize\" bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
-			}
-			print "<th>&nbsp;</th>";
-			print "</tr>\n";
-			$total_u = $total_v = $total_p = $total_h = $total_k = 0;
-			$max_h = 1;
-			foreach ( values %_domener_h ) {
-				if ( $_ > $max_h ) { $max_h = $_; }
-			}
-			$max_k = 1;
-			foreach ( values %_domener_k ) {
-				if ( $_ > $max_k ) { $max_k = $_; }
-			}
-			my $count = 0;
-			&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_domener_h,
-				\%_domener_p );
-			foreach my $key (@keylist) {
-				my ( $_domener_u, $_domener_v );
-				my $bredde_p = 0;
-				my $bredde_h = 0;
-				my $bredde_k = 0;
-				if ( $max_h > 0 ) {
-					$bredde_p =
-					  int( $BarWidth * $_domener_p{$key} / $max_h ) + 1;
-				}    # use max_h to enable to compare pages with hits
-				if ( $_domener_p{$key} && $bredde_p == 1 ) { $bredde_p = 2; }
-				if ( $max_h > 0 ) {
-					$bredde_h =
-					  int( $BarWidth * $_domener_h{$key} / $max_h ) + 1;
-				}
-				if ( $_domener_h{$key} && $bredde_h == 1 ) { $bredde_h = 2; }
-				if ( $max_k > 0 ) {
-					$bredde_k =
-					  int( $BarWidth * ( $_domener_k{$key} || 0 ) / $max_k ) +
-					  1;
-				}
-				if ( $_domener_k{$key} && $bredde_k == 1 ) { $bredde_k = 2; }
-				my $newkey = lc($key);
-				if ( $newkey eq 'ip' || !$DomainsHashIDLib{$newkey} ) {
-					print
-"<tr><td width=\"$WIDTHCOLICON\"><img src=\"$DirIcons\/flags\/ip.png\" height=\"14\""
-					  . AltTitle("$Message[0]")
-					  . " /></td><td class=\"aws\">$Message[0]</td><td>$newkey</td>";
-				}
-				else {
-					print
-"<tr><td width=\"$WIDTHCOLICON\"><img src=\"$DirIcons\/flags\/$newkey.png\" height=\"14\""
-					  . AltTitle("$newkey")
-					  . " /></td><td class=\"aws\">$DomainsHashIDLib{$newkey}</td><td>$newkey</td>";
-				}
-				## to add unique visitors and number of visits, by Josep Ruano @ CAPSiDE
-				if ( $ShowDomainsStats =~ /U/i ) {
-					$_domener_u = (
-						  $_domener_p{$key}
-						? $_domener_p{$key} / $TotalPages
-						: 0
-					);
-					$_domener_u += ( $_domener_h{$key} / $TotalHits );
-					$_domener_u =
-					  sprintf( "%.0f", ( $_domener_u * $TotalUnique ) / 2 );
-					print "<td>".Format_Number($_domener_u)." ("
-					  . sprintf( "%.1f%", 100 * $_domener_u / $TotalUnique )
-					  . ")</td>";
-				}
-				if ( $ShowDomainsStats =~ /V/i ) {
-					$_domener_v = (
-						  $_domener_p{$key}
-						? $_domener_p{$key} / $TotalPages
-						: 0
-					);
-					$_domener_v += ( $_domener_h{$key} / $TotalHits );
-					$_domener_v =
-					  sprintf( "%.0f", ( $_domener_v * $TotalVisits ) / 2 );
-					print "<td>".Format_Number($_domener_v)." ("
-					  . sprintf( "%.1f%", 100 * $_domener_v / $TotalVisits )
-					  . ")</td>";
-				}
-				if ( $ShowDomainsStats =~ /P/i ) {
-					print "<td>".Format_Number($_domener_p{$key})."</td>";
-				}
-				if ( $ShowDomainsStats =~ /H/i ) {
-					print "<td>".Format_Number($_domener_h{$key})."</td>";
-				}
-				if ( $ShowDomainsStats =~ /B/i ) {
-					print "<td>" . Format_Bytes( $_domener_k{$key} ) . "</td>";
-				}
-				print "<td class=\"aws\">";
-				if ( $ShowDomainsStats =~ /P/i ) {
-					print
-"<img src=\"$DirIcons\/other\/$BarPng{'hp'}\" width=\"$bredde_p\" height=\"5\""
-					  . AltTitle( "$Message[56]: " . int( $_domener_p{$key} ) )
-					  . " /><br />\n";
-				}
-				if ( $ShowDomainsStats =~ /H/i ) {
-					print
-"<img src=\"$DirIcons\/other\/$BarPng{'hh'}\" width=\"$bredde_h\" height=\"5\""
-					  . AltTitle( "$Message[57]: " . int( $_domener_h{$key} ) )
-					  . " /><br />\n";
-				}
-				if ( $ShowDomainsStats =~ /B/i ) {
-					print
-"<img src=\"$DirIcons\/other\/$BarPng{'hk'}\" width=\"$bredde_k\" height=\"5\""
-					  . AltTitle(
-						"$Message[75]: " . Format_Bytes( $_domener_k{$key} ) )
-					  . " />";
-				}
-				print "</td>";
-				print "</tr>\n";
-				$total_u += $_domener_u;
-				$total_v += $_domener_v;
-				$total_p += $_domener_p{$key};
-				$total_h += $_domener_h{$key};
-				$total_k += $_domener_k{$key} || 0;
-				$count++;
-			}
-			my $rest_u = $TotalUnique - $total_u;
-			my $rest_v = $TotalVisits - $total_v;
-			$rest_p = $TotalPages - $total_p;
-			$rest_h = $TotalHits - $total_h;
-			$rest_k = $TotalBytes - $total_k;
-			if (   $rest_u > 0
-				|| $rest_v > 0
-				|| $rest_p > 0
-				|| $rest_h > 0
-				|| $rest_k > 0 )
-			{    # All other domains (known or not)
-				print
-"<tr><td width=\"$WIDTHCOLICON\">&nbsp;</td><td colspan=\"2\" class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
-				if ( $ShowDomainsStats =~ /U/i ) { print "<td>$rest_u</td>"; }
-				if ( $ShowDomainsStats =~ /V/i ) { print "<td>$rest_v</td>"; }
-				if ( $ShowDomainsStats =~ /P/i ) { print "<td>$rest_p</td>"; }
-				if ( $ShowDomainsStats =~ /H/i ) { print "<td>$rest_h</td>"; }
-				if ( $ShowDomainsStats =~ /B/i ) {
-					print "<td>" . Format_Bytes($rest_k) . "</td>";
-				}
-				print "<td class=\"aws\">&nbsp;</td>";
-				print "</tr>\n";
-			}
-			&tab_end();
-			&html_end(1);
+			&HTMLShowDomains();
 		}
 		if ( $HTMLOutput{'allhosts'} || $HTMLOutput{'lasthosts'} ) {
-			print "$Center<a name=\"hosts\">&nbsp;</a><br />\n";
-
-			# Show filter form
-			&ShowFormFilter( "hostfilter", $FilterIn{'host'},
-				$FilterEx{'host'} );
-
-			# Show hosts list
-			my $title = '';
-			my $cpt   = 0;
-			if ( $HTMLOutput{'allhosts'} ) {
-				$title .= "$Message[81]";
-				$cpt = ( scalar keys %_host_h );
-			}
-			if ( $HTMLOutput{'lasthosts'} ) {
-				$title .= "$Message[9]";
-				$cpt = ( scalar keys %_host_h );
-			}
-			&tab_head( "$title", 19, 0, 'hosts' );
-			print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>";
-			if ( $FilterIn{'host'} || $FilterEx{'host'} ) {    # With filter
-				if ( $FilterIn{'host'} ) {
-					print "$Message[79] '<b>$FilterIn{'host'}</b>'";
-				}
-				if ( $FilterIn{'host'} && $FilterEx{'host'} ) { print " - "; }
-				if ( $FilterEx{'host'} ) {
-					print " Exlude $Message[79] '<b>$FilterEx{'host'}</b>'";
-				}
-				if ( $FilterIn{'host'} || $FilterEx{'host'} ) { print ": "; }
-				print "$cpt $Message[81]";
-				if ( $MonthRequired ne 'all' ) {
-					if ( $HTMLOutput{'allhosts'} || $HTMLOutput{'lasthosts'} ) {
-						print
-"<br />$Message[102]: ".Format_Number($TotalHostsKnown)." $Message[82], ".Format_Number($TotalHostsUnknown)." $Message[1] - ".Format_Number($TotalUnique)." $Message[11]";
-					}
-				}
-			}
-			else {    # Without filter
-				if ( $MonthRequired ne 'all' ) {
-					print
-"$Message[102] : ".Format_Number($TotalHostsKnown)." $Message[82], ".Format_Number($TotalHostsUnknown)." $Message[1] - ".Format_Number($TotalUnique)." $Message[11]";
-				}
-				else { print "$Message[102] : " . Format_Number(( scalar keys %_host_h )); }
-			}
-			print "</th>";
-			&ShowHostInfo('__title__');
-			if ( $ShowHostsStats =~ /P/i ) {
-				print
-				  "<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th>";
-			}
-			if ( $ShowHostsStats =~ /H/i ) {
-				print
-				  "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>";
-			}
-			if ( $ShowHostsStats =~ /B/i ) {
-				print
-"<th class=\"datasize\" bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
-			}
-			if ( $ShowHostsStats =~ /L/i ) {
-				print "<th width=\"120\">$Message[9]</th>";
-			}
-			print "</tr>\n";
-			$total_p = $total_h = $total_k = 0;
-			my $count = 0;
-			if ( $HTMLOutput{'allhosts'} ) {
-				&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Host'}, \%_host_h,
-					\%_host_p );
-			}
-			if ( $HTMLOutput{'lasthosts'} ) {
-				&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Host'}, \%_host_h,
-					\%_host_l );
-			}
-			foreach my $key (@keylist) {
-				my $host = CleanXSS($key);
-				print "<tr><td class=\"aws\">"
-				  . ( $_robot_l{$key} ? '<b>'  : '' ) . "$host"
-				  . ( $_robot_l{$key} ? '</b>' : '' ) . "</td>";
-				&ShowHostInfo($key);
-				if ( $ShowHostsStats =~ /P/i ) {
-					print "<td>"
-					  . ( $_host_p{$key} ? Format_Number($_host_p{$key}) : "&nbsp;" )
-					  . "</td>";
-				}
-				if ( $ShowHostsStats =~ /H/i ) {
-					print "<td>".Format_Number($_host_h{$key})."</td>";
-				}
-				if ( $ShowHostsStats =~ /B/i ) {
-					print "<td>" . Format_Bytes( $_host_k{$key} ) . "</td>";
-				}
-				if ( $ShowHostsStats =~ /L/i ) {
-					print "<td>"
-					  . (
-						$_host_l{$key}
-						? Format_Date( $_host_l{$key}, 1 )
-						: '-'
-					  )
-					  . "</td>";
-				}
-				print "</tr>\n";
-				$total_p += $_host_p{$key};
-				$total_h += $_host_h{$key};
-				$total_k += $_host_k{$key} || 0;
-				$count++;
-			}
-			if ($Debug) {
-				debug(
-"Total real / shown : $TotalPages / $total_p - $TotalHits / $total_h - $TotalBytes / $total_h",
-					2
-				);
-			}
-			$rest_p = $TotalPages - $total_p;
-			$rest_h = $TotalHits - $total_h;
-			$rest_k = $TotalBytes - $total_k;
-			if ( $rest_p > 0 || $rest_h > 0 || $rest_k > 0 )
-			{    # All other visitors (known or not)
-				print
-"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
-				&ShowHostInfo('');
-				if ( $ShowHostsStats =~ /P/i ) {
-					print "<td>" . ( $rest_p ? Format_Number($rest_p) : "&nbsp;" ) . "</td>";
-				}
-				if ( $ShowHostsStats =~ /H/i ) { print "<td>".Format_Number($rest_h)."</td>"; }
-				if ( $ShowHostsStats =~ /B/i ) {
-					print "<td>" . Format_Bytes($rest_k) . "</td>";
-				}
-				if ( $ShowHostsStats =~ /L/i ) { print "<td>&nbsp;</td>"; }
-				print "</tr>\n";
-			}
-			&tab_end();
-			&html_end(1);
+			&HTMLShowHosts();
 		}
 		if ( $HTMLOutput{'unknownip'} ) {
-			print "$Center<a name=\"unknownip\">&nbsp;</a><br />\n";
-			&tab_head( "$Message[45]", 19, 0, 'unknownwip' );
-			print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>"
-			  . Format_Number(( scalar keys %_host_h ))
-			  . " $Message[1]</th>";
-			&ShowHostInfo('__title__');
-			if ( $ShowHostsStats =~ /P/i ) {
-				print
-				  "<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th>";
-			}
-			if ( $ShowHostsStats =~ /H/i ) {
-				print
-				  "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>";
-			}
-			if ( $ShowHostsStats =~ /B/i ) {
-				print
-"<th class=\"datasize\" bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
-			}
-			if ( $ShowHostsStats =~ /L/i ) {
-				print "<th width=\"120\">$Message[9]</th>";
-			}
-			print "</tr>\n";
-			$total_p = $total_h = $total_k = 0;
-			my $count = 0;
-			&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Host'}, \%_host_h,
-				\%_host_p );
-			foreach my $key (@keylist) {
-				my $host = CleanXSS($key);
-				print "<tr><td class=\"aws\">$host</td>";
-				&ShowHostInfo($key);
-				if ( $ShowHostsStats =~ /P/i ) {
-					print "<td>"
-					  . ( $_host_p{$key} ? Format_Number($_host_p{$key}) : "&nbsp;" )
-					  . "</td>";
-				}
-				if ( $ShowHostsStats =~ /H/i ) {
-					print "<td>".Format_Number($_host_h{$key})."</td>";
-				}
-				if ( $ShowHostsStats =~ /B/i ) {
-					print "<td>" . Format_Bytes( $_host_k{$key} ) . "</td>";
-				}
-				if ( $ShowHostsStats =~ /L/i ) {
-					print "<td>"
-					  . (
-						$_host_l{$key}
-						? Format_Date( $_host_l{$key}, 1 )
-						: '-'
-					  )
-					  . "</td>";
-				}
-				print "</tr>\n";
-				$total_p += $_host_p{$key};
-				$total_h += $_host_h{$key};
-				$total_k += $_host_k{$key} || 0;
-				$count++;
-			}
-			if ($Debug) {
-				debug(
-"Total real / shown : $TotalPages / $total_p - $TotalHits / $total_h - $TotalBytes / $total_h",
-					2
-				);
-			}
-			$rest_p = $TotalPages - $total_p;
-			$rest_h = $TotalHits - $total_h;
-			$rest_k = $TotalBytes - $total_k;
-			if ( $rest_p > 0 || $rest_h > 0 || $rest_k > 0 )
-			{    # All other visitors (known or not)
-				print
-"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[82]</span></td>";
-				&ShowHostInfo('');
-				if ( $ShowHostsStats =~ /P/i ) {
-					print "<td>" . ( $rest_p ? Format_Number($rest_p) : "&nbsp;" ) . "</td>";
-				}
-				if ( $ShowHostsStats =~ /H/i ) { print "<td>".Format_Number($rest_h)."</td>"; }
-				if ( $ShowHostsStats =~ /B/i ) {
-					print "<td>" . Format_Bytes($rest_k) . "</td>";
-				}
-				if ( $ShowHostsStats =~ /L/i ) { print "<td>&nbsp;</td>"; }
-				print "</tr>\n";
-			}
-			&tab_end();
-			&html_end(1);
+			&HTMLShowHostsUnknown();
 		}
 		if ( $HTMLOutput{'allemails'} || $HTMLOutput{'lastemails'} ) {
-			&ShowEmailSendersChart( $NewLinkParams, $NewLinkTarget );
+			&HTMLShowEmailSendersChart( $NewLinkParams, $NewLinkTarget );
 			&html_end(1);
 		}
 		if ( $HTMLOutput{'allemailr'} || $HTMLOutput{'lastemailr'} ) {
-			&ShowEmailReceiversChart( $NewLinkParams, $NewLinkTarget );
+			&HTMLShowEmailReceiversChart( $NewLinkParams, $NewLinkTarget );
 			&html_end(1);
 		}
 		if ( $HTMLOutput{'alllogins'} || $HTMLOutput{'lastlogins'} ) {
-			print "$Center<a name=\"logins\">&nbsp;</a><br />\n";
-			my $title = '';
-			if ( $HTMLOutput{'alllogins'} )  { $title .= "$Message[94]"; }
-			if ( $HTMLOutput{'lastlogins'} ) { $title .= "$Message[9]"; }
-			&tab_head( "$title", 19, 0, 'logins' );
-			print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$Message[94] : "
-			  . Format_Number(( scalar keys %_login_h )) . "</th>";
-			&ShowUserInfo('__title__');
-			if ( $ShowAuthenticatedUsers =~ /P/i ) {
-				print
-				  "<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th>";
-			}
-			if ( $ShowAuthenticatedUsers =~ /H/i ) {
-				print
-				  "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>";
-			}
-			if ( $ShowAuthenticatedUsers =~ /B/i ) {
-				print
-"<th class=\"datasize\" bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
-			}
-			if ( $ShowAuthenticatedUsers =~ /L/i ) {
-				print "<th width=\"120\">$Message[9]</th>";
-			}
-			print "</tr>\n";
-			$total_p = $total_h = $total_k = 0;
-			my $count = 0;
-			if ( $HTMLOutput{'alllogins'} ) {
-				&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Host'},
-					\%_login_h, \%_login_p );
-			}
-			if ( $HTMLOutput{'lastlogins'} ) {
-				&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Host'},
-					\%_login_h, \%_login_l );
-			}
-			foreach my $key (@keylist) {
-				print "<tr><td class=\"aws\">$key</td>";
-				&ShowUserInfo($key);
-				if ( $ShowAuthenticatedUsers =~ /P/i ) {
-					print "<td>"
-					  . ( $_login_p{$key} ? Format_Number($_login_p{$key}) : "&nbsp;" )
-					  . "</td>";
-				}
-				if ( $ShowAuthenticatedUsers =~ /H/i ) {
-					print "<td>".Format_Number($_login_h{$key})."</td>";
-				}
-				if ( $ShowAuthenticatedUsers =~ /B/i ) {
-					print "<td>" . Format_Bytes( $_login_k{$key} ) . "</td>";
-				}
-				if ( $ShowAuthenticatedUsers =~ /L/i ) {
-					print "<td>"
-					  . (
-						$_login_l{$key}
-						? Format_Date( $_login_l{$key}, 1 )
-						: '-'
-					  )
-					  . "</td>";
-				}
-				print "</tr>\n";
-				$total_p += $_login_p{$key} || 0;
-				$total_h += $_login_h{$key};
-				$total_k += $_login_k{$key} || 0;
-				$count++;
-			}
-			if ($Debug) {
-				debug(
-"Total real / shown : $TotalPages / $total_p - $TotalHits / $total_h - $TotalBytes / $total_h",
-					2
-				);
-			}
-			$rest_p = $TotalPages - $total_p;
-			$rest_h = $TotalHits - $total_h;
-			$rest_k = $TotalBytes - $total_k;
-			if ( $rest_p > 0 || $rest_h > 0 || $rest_k > 0 )
-			{    # All other logins and/or anonymous
-				print
-"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[125]</span></td>";
-				&ShowUserInfo('');
-				if ( $ShowAuthenticatedUsers =~ /P/i ) {
-					print "<td>" . ( $rest_p ? Format_Number($rest_p) : "&nbsp;" ) . "</td>";
-				}
-				if ( $ShowAuthenticatedUsers =~ /H/i ) {
-					print "<td>".Format_Number($rest_h)."</td>";
-				}
-				if ( $ShowAuthenticatedUsers =~ /B/i ) {
-					print "<td>" . Format_Bytes($rest_k) . "</td>";
-				}
-				if ( $ShowAuthenticatedUsers =~ /L/i ) {
-					print "<td>&nbsp;</td>";
-				}
-				print "</tr>\n";
-			}
-			&tab_end();
-			&html_end(1);
+			&HTMLShowLogins();
 		}
 		if ( $HTMLOutput{'allrobots'} || $HTMLOutput{'lastrobots'} ) {
-			print "$Center<a name=\"robots\">&nbsp;</a><br />\n";
-			my $title = '';
-			if ( $HTMLOutput{'allrobots'} )  { $title .= "$Message[53]"; }
-			if ( $HTMLOutput{'lastrobots'} ) { $title .= "$Message[9]"; }
-			&tab_head( "$title", 19, 0, 'robots' );
-			print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>"
-			  . Format_Number(( scalar keys %_robot_h ))
-			  . " $Message[51]</th>";
-			if ( $ShowRobotsStats =~ /H/i ) {
-				print
-				  "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>";
-			}
-			if ( $ShowRobotsStats =~ /B/i ) {
-				print
-"<th class=\"datasize\" bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
-			}
-			if ( $ShowRobotsStats =~ /L/i ) {
-				print "<th width=\"120\">$Message[9]</th>";
-			}
-			print "</tr>\n";
-			$total_p = $total_h = $total_k = $total_r = 0;
-			my $count = 0;
-			if ( $HTMLOutput{'allrobots'} ) {
-				&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Robot'},
-					\%_robot_h, \%_robot_h );
-			}
-			if ( $HTMLOutput{'lastrobots'} ) {
-				&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Robot'},
-					\%_robot_h, \%_robot_l );
-			}
-			foreach my $key (@keylist) {
-				print "<tr><td class=\"aws\">"
-				  . ( $RobotsHashIDLib{$key} ? $RobotsHashIDLib{$key} : $key )
-				  . "</td>";
-				if ( $ShowRobotsStats =~ /H/i ) {
-					print "<td>"
-					  . Format_Number(( $_robot_h{$key} - $_robot_r{$key} ))
-					  . ( $_robot_r{$key} ? "+$_robot_r{$key}" : "" ) . "</td>";
-				}
-				if ( $ShowRobotsStats =~ /B/i ) {
-					print "<td>" . Format_Bytes( $_robot_k{$key} ) . "</td>";
-				}
-				if ( $ShowRobotsStats =~ /L/i ) {
-					print "<td>"
-					  . (
-						$_robot_l{$key}
-						? Format_Date( $_robot_l{$key}, 1 )
-						: '-'
-					  )
-					  . "</td>";
-				}
-				print "</tr>\n";
-
-				#$total_p += $_robot_p{$key}||0;
-				$total_h += $_robot_h{$key};
-				$total_k += $_robot_k{$key} || 0;
-				$total_r += $_robot_r{$key} || 0;
-				$count++;
-			}
-
-			# For bots we need to count Totals
-			my $TotalPagesRobots =
-			  0;    #foreach (values %_robot_p) { $TotalPagesRobots+=$_; }
-			my $TotalHitsRobots = 0;
-			foreach ( values %_robot_h ) { $TotalHitsRobots += $_; }
-			my $TotalBytesRobots = 0;
-			foreach ( values %_robot_k ) { $TotalBytesRobots += $_; }
-			my $TotalRRobots = 0;
-			foreach ( values %_robot_r ) { $TotalRRobots += $_; }
-			$rest_p = 0;    #$rest_p=$TotalPagesRobots-$total_p;
-			$rest_h = $TotalHitsRobots - $total_h;
-			$rest_k = $TotalBytesRobots - $total_k;
-			$rest_r = $TotalRRobots - $total_r;
-
-			if ($Debug) {
-				debug(
-"Total real / shown : $TotalPagesRobots / $total_p - $TotalHitsRobots / $total_h - $TotalBytesRobots / $total_k",
-					2
-				);
-			}
-			if ( $rest_p > 0 || $rest_h > 0 || $rest_k > 0 || $rest_r > 0 )
-			{               # All other robots
-				print
-"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
-				if ( $ShowRobotsStats =~ /H/i ) { print "<td>".Format_Number($rest_h)."</td>"; }
-				if ( $ShowRobotsStats =~ /B/i ) {
-					print "<td>" . ( Format_Bytes($rest_k) ) . "</td>";
-				}
-				if ( $ShowRobotsStats =~ /L/i ) { print "<td>&nbsp;</td>"; }
-				print "</tr>\n";
-			}
-			&tab_end(
-				"* $Message[156]" . ( $TotalRRobots ? " $Message[157]" : "" ) );
-			&html_end(1);
+			&HTMLShowRobots();
 		}
 		if (   $HTMLOutput{'urldetail'}
 			|| $HTMLOutput{'urlentry'}
 			|| $HTMLOutput{'urlexit'} )
 		{
-
-			# Call to plugins' function ShowPagesFilter
-			foreach
-			  my $pluginname ( keys %{ $PluginsLoaded{'ShowPagesFilter'} } )
-			{
-
-				#    			my $function="ShowPagesFilter_$pluginname()";
-				#    			eval("$function");
-				my $function = "ShowPagesFilter_$pluginname";
-				&$function();
-			}
-			print "$Center<a name=\"urls\">&nbsp;</a><br />\n";
-
-			# Show filter form
-			&ShowFormFilter( "urlfilter", $FilterIn{'url'}, $FilterEx{'url'} );
-
-			# Show URL list
-			my $title = '';
-			my $cpt   = 0;
-			if ( $HTMLOutput{'urldetail'} ) {
-				$title = $Message[19];
-				$cpt   = ( scalar keys %_url_p );
-			}
-			if ( $HTMLOutput{'urlentry'} ) {
-				$title = $Message[104];
-				$cpt   = ( scalar keys %_url_e );
-			}
-			if ( $HTMLOutput{'urlexit'} ) {
-				$title = $Message[116];
-				$cpt   = ( scalar keys %_url_x );
-			}
-			&tab_head( "$title", 19, 0, 'urls' );
-			print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>";
-			if ( $FilterIn{'url'} || $FilterEx{'url'} ) {
-				if ( $FilterIn{'url'} ) {
-					print "$Message[79] <b>$FilterIn{'url'}</b>";
-				}
-				if ( $FilterIn{'url'} && $FilterEx{'url'} ) { print " - "; }
-				if ( $FilterEx{'url'} ) {
-					print "Exclude $Message[79] <b>$FilterEx{'url'}</b>";
-				}
-				if ( $FilterIn{'url'} || $FilterEx{'url'} ) { print ": "; }
-				print Format_Number($cpt)." $Message[28]";
-				if ( $MonthRequired ne 'all' ) {
-					if ( $HTMLOutput{'urldetail'} ) {
-						print
-"<br />$Message[102]: ".Format_Number($TotalDifferentPages)." $Message[28]";
-					}
-				}
-			}
-			else { print "$Message[102]: ".Format_Number($cpt)." $Message[28]"; }
-			print "</th>";
-			if ( $ShowPagesStats =~ /P/i ) {
-				print
-				  "<th bgcolor=\"#$color_p\" width=\"80\">$Message[29]</th>";
-			}
-			if ( $ShowPagesStats =~ /B/i ) {
-				print
-"<th class=\"datasize\" bgcolor=\"#$color_k\" width=\"80\">$Message[106]</th>";
-			}
-			if ( $ShowPagesStats =~ /E/i ) {
-				print
-				  "<th bgcolor=\"#$color_e\" width=\"80\">$Message[104]</th>";
-			}
-			if ( $ShowPagesStats =~ /X/i ) {
-				print
-				  "<th bgcolor=\"#$color_x\" width=\"80\">$Message[116]</th>";
-			}
-
-			# Call to plugins' function ShowPagesAddField
-			foreach
-			  my $pluginname ( keys %{ $PluginsLoaded{'ShowPagesAddField'} } )
-			{
-
-				#    			my $function="ShowPagesAddField_$pluginname('title')";
-				#    			eval("$function");
-				my $function = "ShowPagesAddField_$pluginname";
-				&$function('title');
-			}
-			print "<th>&nbsp;</th></tr>\n";
-			$total_p = $total_k = $total_e = $total_x = 0;
-			my $count = 0;
-			if ( $HTMLOutput{'urlentry'} ) {
-				&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'File'}, \%_url_e,
-					\%_url_e );
-			}
-			elsif ( $HTMLOutput{'urlexit'} ) {
-				&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'File'}, \%_url_x,
-					\%_url_x );
-			}
-			else {
-				&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'File'}, \%_url_p,
-					\%_url_p );
-			}
-			$max_p = 1;
-			$max_k = 1;
-			foreach my $key (@keylist) {
-				if ( $_url_p{$key} > $max_p ) { $max_p = $_url_p{$key}; }
-				if ( $_url_k{$key} / ( $_url_p{$key} || 1 ) > $max_k ) {
-					$max_k = $_url_k{$key} / ( $_url_p{$key} || 1 );
-				}
-			}
-			foreach my $key (@keylist) {
-				print "<tr><td class=\"aws\">";
-				&ShowURLInfo($key);
-				print "</td>";
-				my $bredde_p = 0;
-				my $bredde_e = 0;
-				my $bredde_x = 0;
-				my $bredde_k = 0;
-				if ( $max_p > 0 ) {
-					$bredde_p =
-					  int( $BarWidth * ( $_url_p{$key} || 0 ) / $max_p ) + 1;
-				}
-				if ( ( $bredde_p == 1 ) && $_url_p{$key} ) { $bredde_p = 2; }
-				if ( $max_p > 0 ) {
-					$bredde_e =
-					  int( $BarWidth * ( $_url_e{$key} || 0 ) / $max_p ) + 1;
-				}
-				if ( ( $bredde_e == 1 ) && $_url_e{$key} ) { $bredde_e = 2; }
-				if ( $max_p > 0 ) {
-					$bredde_x =
-					  int( $BarWidth * ( $_url_x{$key} || 0 ) / $max_p ) + 1;
-				}
-				if ( ( $bredde_x == 1 ) && $_url_x{$key} ) { $bredde_x = 2; }
-				if ( $max_k > 0 ) {
-					$bredde_k =
-					  int( $BarWidth *
-						  ( ( $_url_k{$key} || 0 ) / ( $_url_p{$key} || 1 ) ) /
-						  $max_k ) + 1;
-				}
-				if ( ( $bredde_k == 1 ) && $_url_k{$key} ) { $bredde_k = 2; }
-				if ( $ShowPagesStats =~ /P/i ) {
-					print "<td>".Format_Number($_url_p{$key})."</td>";
-				}
-				if ( $ShowPagesStats =~ /B/i ) {
-					print "<td>"
-					  . (
-						$_url_k{$key}
-						? Format_Bytes(
-							$_url_k{$key} / ( $_url_p{$key} || 1 )
-						  )
-						: "&nbsp;"
-					  )
-					  . "</td>";
-				}
-				if ( $ShowPagesStats =~ /E/i ) {
-					print "<td>"
-					  . ( $_url_e{$key} ? Format_Number($_url_e{$key}) : "&nbsp;" ) . "</td>";
-				}
-				if ( $ShowPagesStats =~ /X/i ) {
-					print "<td>"
-					  . ( $_url_x{$key} ? Format_Number($_url_x{$key}) : "&nbsp;" ) . "</td>";
-				}
-
-				# Call to plugins' function ShowPagesAddField
-				foreach my $pluginname (
-					keys %{ $PluginsLoaded{'ShowPagesAddField'} } )
-				{
-
-				  #    				my $function="ShowPagesAddField_$pluginname('$key')";
-				  #    				eval("$function");
-					my $function = "ShowPagesAddField_$pluginname";
-					&$function($key);
-				}
-				print "<td class=\"aws\">";
-
-				# alt and title are not provided to reduce page size
-				if ( $ShowPagesStats =~ /P/i ) {
-					print
-"<img src=\"$DirIcons\/other\/$BarPng{'hp'}\" width=\"$bredde_p\" height=\"4\" /><br />";
-				}
-				if ( $ShowPagesStats =~ /B/i ) {
-					print
-"<img src=\"$DirIcons\/other\/$BarPng{'hk'}\" width=\"$bredde_k\" height=\"4\" /><br />";
-				}
-				if ( $ShowPagesStats =~ /E/i ) {
-					print
-"<img src=\"$DirIcons\/other\/$BarPng{'he'}\" width=\"$bredde_e\" height=\"4\" /><br />";
-				}
-				if ( $ShowPagesStats =~ /X/i ) {
-					print
-"<img src=\"$DirIcons\/other\/$BarPng{'hx'}\" width=\"$bredde_x\" height=\"4\" />";
-				}
-				print "</td></tr>\n";
-				$total_p += $_url_p{$key};
-				$total_e += $_url_e{$key};
-				$total_x += $_url_x{$key};
-				$total_k += $_url_k{$key};
-				$count++;
-			}
-			if ($Debug) {
-				debug(
-"Total real / shown : $TotalPages / $total_p - $TotalEntries / $total_e - $TotalExits / $total_x - $TotalBytesPages / $total_k",
-					2
-				);
-			}
-			$rest_p = $TotalPages - $total_p;
-			$rest_k = $TotalBytesPages - $total_k;
-			$rest_e = $TotalEntries - $total_e;
-			$rest_x = $TotalExits - $total_x;
-			if ( $rest_p > 0 || $rest_e > 0 || $rest_k > 0 ) {
-				print
-"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
-				if ( $ShowPagesStats =~ /P/i ) {
-					print "<td>" . ( $rest_p ? Format_Number($rest_p) : "&nbsp;" ) . "</td>";
-				}
-				if ( $ShowPagesStats =~ /B/i ) {
-					print "<td>"
-					  . (
-						$rest_k
-						? Format_Bytes( $rest_k / ( $rest_p || 1 ) )
-						: "&nbsp;"
-					  )
-					  . "</td>";
-				}
-				if ( $ShowPagesStats =~ /E/i ) {
-					print "<td>" . ( $rest_e ? Format_Number($rest_e) : "&nbsp;" ) . "</td>";
-				}
-				if ( $ShowPagesStats =~ /X/i ) {
-					print "<td>" . ( $rest_x ? Format_Number($rest_x) : "&nbsp;" ) . "</td>";
-				}
-
-				# Call to plugins' function ShowPagesAddField
-				foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowPagesAddField'} } )
-				{
-					my $function = "ShowPagesAddField_$pluginname";
-					&$function('');
-				}
-				print "<td>&nbsp;</td></tr>\n";
-			}
-			&tab_end();
-			&html_end(1);
+			&HTMLShowURLDetail();
 		}
 		if ( $HTMLOutput{'unknownos'} ) {
-			print "$Center<a name=\"unknownos\">&nbsp;</a><br />\n";
-			my $title = "$Message[46]";
-			&tab_head( "$title", 19, 0, 'unknownos' );
-			print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>User agent ("
-			  . ( scalar keys %_unknownreferer_l )
-			  . ")</th><th>$Message[9]</th></tr>\n";
-			$total_l = 0;
-			my $count = 0;
-			&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_unknownreferer_l,
-				\%_unknownreferer_l );
-			foreach my $key (@keylist) {
-				my $useragent = XMLEncode( CleanXSS($key) );
-				print "<tr><td class=\"aws\">$useragent</td>";
-				print "<td nowrap=\"nowrap\">"
-				  . Format_Date( $_unknownreferer_l{$key}, 1 ) . "</td>";
-				print "</tr>\n";
-				$total_l += 1;
-				$count++;
-			}
-			$rest_l = ( scalar keys %_unknownreferer_l ) - $total_l;
-			if ( $rest_l > 0 ) {
-				print
-"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
-				print "<td>-</td>";
-				print "</tr>\n";
-			}
-			&tab_end();
-			&html_end(1);
+			&HTMLShowOSUnknown();
 		}
 		if ( $HTMLOutput{'unknownbrowser'} ) {
-			print "$Center<a name=\"unknownbrowser\">&nbsp;</a><br />\n";
-			my $title = "$Message[50]";
-			&tab_head( "$title", 19, 0, 'unknownbrowser' );
-			print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>User agent ("
-			  . ( scalar keys %_unknownrefererbrowser_l )
-			  . ")</th><th>$Message[9]</th></tr>\n";
-			$total_l = 0;
-			my $count = 0;
-			&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_unknownrefererbrowser_l,
-				\%_unknownrefererbrowser_l );
-			foreach my $key (@keylist) {
-				my $useragent = XMLEncode( CleanXSS($key) );
-				print
-				  "<tr><td class=\"aws\">$useragent</td><td nowrap=\"nowrap\">"
-				  . Format_Date( $_unknownrefererbrowser_l{$key}, 1 )
-				  . "</td></tr>\n";
-				$total_l += 1;
-				$count++;
-			}
-			$rest_l = ( scalar keys %_unknownrefererbrowser_l ) - $total_l;
-			if ( $rest_l > 0 ) {
-				print
-"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
-				print "<td>-</td>";
-				print "</tr>\n";
-			}
-			&tab_end();
-			&html_end(1);
+			&HTMLShowBrowserUnknown();
 		}
 		if ( $HTMLOutput{'osdetail'} ) {
-
-			# Show os versions
-			print "$Center<a name=\"osversions\">&nbsp;</a><br />";
-			my $title = "$Message[59]";
-			&tab_head( "$title", 19, 0, 'osversions' );
-			print
-"<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[58]</th>";
-			print
-"<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th>";
-			print "<th>&nbsp;</th>";
-			print "</tr>\n";
-			$total_h = 0;
-			my $count = 0;
-			&BuildKeyList( MinimumButNoZero( scalar keys %_os_h, 500 ),
-				1, \%_os_h, \%_os_h );
-			my %keysinkeylist = ();
-			$max_h = 1;
-
-			# Count total by family
-			my %totalfamily_h = ();
-			my $TotalFamily   = 0;
-		  OSLOOP: foreach my $key (@keylist) {
-				$total_h += $_os_h{$key};
-				if ( $_os_h{$key} > $max_h ) { $max_h = $_os_h{$key}; }
-				foreach my $family ( keys %OSFamily ) {
-					if ( $key =~ /^$family/i ) {
-						$totalfamily_h{$family} += $_os_h{$key};
-						$TotalFamily            += $_os_h{$key};
-						next OSLOOP;
-					}
-				}
-			}
-
-			# Write records grouped in a browser family
-			foreach my $family ( keys %OSFamily ) {
-				my $p = '&nbsp;';
-				if ($total_h) {
-					$p = int( $totalfamily_h{$family} / $total_h * 1000 ) / 10;
-					$p = "$p %";
-				}
-				my $familyheadershown = 0;
-				foreach my $key ( reverse sort keys %_os_h ) {
-					if ( $key =~ /^$family(.*)/i ) {
-						if ( !$familyheadershown ) {
-							my $family_name = '';
-							if ( $OSFamily{$family} ) {
-								$family_name = $OSFamily{$family};
-							}
-							print
-"<tr bgcolor=\"#F6F6F6\"><td class=\"aws\" colspan=\"2\"><b>$family_name</b></td>";
-							print "<td><b>"
-							  . Format_Number(int( $totalfamily_h{$family} ))
-							  . "</b></td><td><b>$p</b></td><td>&nbsp;</td>";
-							print "</tr>\n";
-							$familyheadershown = 1;
-						}
-						$keysinkeylist{$key} = 1;
-						my $ver = $1;
-						my $p   = '&nbsp;';
-						if ($total_h) {
-							$p = int( $_os_h{$key} / $total_h * 1000 ) / 10;
-							$p = "$p %";
-						}
-						print "<tr>";
-						print "<td"
-						  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
-						  . "><img src=\"$DirIcons\/os\/$key.png\""
-						  . AltTitle("")
-						  . " /></td>";
-
-						print "<td class=\"aws\">$OSHashLib{$key}</td>";
-						my $bredde_h = 0;
-						if ( $max_h > 0 ) {
-							$bredde_h =
-							  int( $BarWidth * ( $_os_h{$key} || 0 ) / $max_h )
-							  + 1;
-						}
-						if ( ( $bredde_h == 1 ) && $_os_h{$key} ) {
-							$bredde_h = 2;
-						}
-						print "<td>".Format_Number($_os_h{$key})."</td><td>$p</td>";
-						print "<td class=\"aws\">";
-
-						# alt and title are not provided to reduce page size
-						if ($ShowOSStats) {
-							print
-"<img src=\"$DirIcons\/other\/$BarPng{'hh'}\" width=\"$bredde_h\" height=\"5\" /><br />";
-						}
-						print "</td>";
-						print "</tr>\n";
-						$count++;
-					}
-				}
-			}
-
-			# Write other records
-			my $familyheadershown = 0;
-			foreach my $key (@keylist) {
-				if ( $keysinkeylist{$key} ) { next; }
-				if ( !$familyheadershown )  {
-					my $p = '&nbsp;';
-					if ($total_h) {
-						$p =
-						  int( ( $total_h - $TotalFamily ) / $total_h * 1000 ) /
-						  10;
-						$p = "$p %";
-					}
-					print
-"<tr bgcolor=\"#F6F6F6\"><td class=\"aws\" colspan=\"2\"><b>$Message[2]</b></td>";
-					print "<td><b>"
-					  . Format_Number(( $total_h - $TotalFamily ))
-					  . "</b></td><td><b>$p</b></td><td>&nbsp;</td>";
-					print "</tr>\n";
-					$familyheadershown = 1;
-				}
-				my $p = '&nbsp;';
-				if ($total_h) {
-					$p = int( $_os_h{$key} / $total_h * 1000 ) / 10;
-					$p = "$p %";
-				}
-				print "<tr>";
-				if ( $key eq 'Unknown' ) {
-					print "<td"
-					  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
-					  . "><img src=\"$DirIcons\/browser\/unknown.png\""
-					  . AltTitle("")
-					  . " /></td><td class=\"aws\"><span style=\"color: #$color_other\">$Message[0]</span></td>";
-				}
-				else {
-					my $keywithoutcumul = $key;
-					$keywithoutcumul =~ s/cumul$//i;
-					my $libos = $OSHashLib{$keywithoutcumul}
-					  || $keywithoutcumul;
-					my $nameicon = $keywithoutcumul;
-					$nameicon =~ s/[^\w]//g;
-					print "<td"
-					  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
-					  . "><img src=\"$DirIcons\/os\/$nameicon.png\""
-					  . AltTitle("")
-					  . " /></td><td class=\"aws\">$libos</td>";
-				}
-				my $bredde_h = 0;
-				if ( $max_h > 0 ) {
-					$bredde_h =
-					  int( $BarWidth * ( $_os_h{$key} || 0 ) / $max_h ) + 1;
-				}
-				if ( ( $bredde_h == 1 ) && $_os_h{$key} ) { $bredde_h = 2; }
-				print "<td>".Format_Number($_os_h{$key})."</td><td>$p</td>";
-				print "<td class=\"aws\">";
-
-				# alt and title are not provided to reduce page size
-				if ($ShowOSStats) {
-					print
-"<img src=\"$DirIcons\/other\/$BarPng{'hh'}\" width=\"$bredde_h\" height=\"5\" /><br />";
-				}
-				print "</td>";
-				print "</tr>\n";
-			}
-			&tab_end();
-			&html_end(1);
+			&HTMLShowOSDetail();
 		}
 		if ( $HTMLOutput{'browserdetail'} ) {
-
-			# Show browsers versions
-			print "$Center<a name=\"browsersversions\">&nbsp;</a><br />";
-			my $title = "$Message[21]";
-			&tab_head( "$title", 19, 0, 'browsersversions' );
-			print
-"<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[58]</th>";
-			print
-"<th width=\"80\">$Message[111]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th>";
-			print "<th>&nbsp;</th>";
-			print "</tr>\n";
-			$total_h = 0;
-			my $count = 0;
-			&BuildKeyList( MinimumButNoZero( scalar keys %_browser_h, 500 ),
-				1, \%_browser_h, \%_browser_h );
-			my %keysinkeylist = ();
-			$max_h = 1;
-
-			# Count total by family
-			my %totalfamily_h = ();
-			my $TotalFamily   = 0;
-		  BROWSERLOOP: foreach my $key (@keylist) {
-				$total_h += $_browser_h{$key};
-				if ( $_browser_h{$key} > $max_h ) {
-					$max_h = $_browser_h{$key};
-				}
-				foreach my $family ( keys %BrowsersFamily ) {
-					if ( $key =~ /^$family/i ) {
-						$totalfamily_h{$family} += $_browser_h{$key};
-						$TotalFamily            += $_browser_h{$key};
-						next BROWSERLOOP;
-					}
-				}
-			}
-
-			# Write records grouped in a browser family
-			foreach my $family (
-				sort { $BrowsersFamily{$a} <=> $BrowsersFamily{$b} }
-				keys %BrowsersFamily
-			  )
-			{
-				my $p = '&nbsp;';
-				if ($total_h) {
-					$p = int( $totalfamily_h{$family} / $total_h * 1000 ) / 10;
-					$p = "$p %";
-				}
-				my $familyheadershown = 0;
-
-				#foreach my $key ( reverse sort keys %_browser_h ) {
-				foreach my $key ( reverse sort SortBrowsers keys %_browser_h ) {
-					if ( $key =~ /^$family(.*)/i ) {
-						if ( !$familyheadershown ) {
-							print
-"<tr bgcolor=\"#F6F6F6\"><td class=\"aws\" colspan=\"2\"><b>"
-							  . uc($family)
-							  . "</b></td>";
-							print "<td>&nbsp;</td><td><b>"
-							  . Format_Number(int( $totalfamily_h{$family} ))
-							  . "</b></td><td><b>$p</b></td><td>&nbsp;</td>";
-							print "</tr>\n";
-							$familyheadershown = 1;
-						}
-						$keysinkeylist{$key} = 1;
-						my $ver = $1;
-						my $p   = '&nbsp;';
-						if ($total_h) {
-							$p =
-							  int( $_browser_h{$key} / $total_h * 1000 ) / 10;
-							$p = "$p %";
-						}
-						print "<tr>";
-						print "<td"
-						  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
-						  . "><img src=\"$DirIcons\/browser\/$family.png\""
-						  . AltTitle("")
-						  . " /></td>";
-						print "<td class=\"aws\">"
-						  . ucfirst($family) . " "
-						  . ( $ver ? "$ver" : "?" ) . "</td>";
-						print "<td>"
-						  . (
-							$BrowsersHereAreGrabbers{$family}
-							? "<b>$Message[112]</b>"
-							: "$Message[113]"
-						  )
-						  . "</td>";
-						my $bredde_h = 0;
-						if ( $max_h > 0 ) {
-							$bredde_h =
-							  int( $BarWidth * ( $_browser_h{$key} || 0 ) /
-								  $max_h ) + 1;
-						}
-						if ( ( $bredde_h == 1 ) && $_browser_h{$key} ) {
-							$bredde_h = 2;
-						}
-						print "<td>".Format_Number($_browser_h{$key})."</td><td>$p</td>";
-						print "<td class=\"aws\">";
-
-						# alt and title are not provided to reduce page size
-						if ($ShowBrowsersStats) {
-							print
-"<img src=\"$DirIcons\/other\/$BarPng{'hh'}\" width=\"$bredde_h\" height=\"5\" /><br />";
-						}
-						print "</td>";
-						print "</tr>\n";
-						$count++;
-					}
-				}
-			}
-
-			# Write other records
-			my $familyheadershown = 0;
-			foreach my $key (@keylist) {
-				if ( $keysinkeylist{$key} ) { next; }
-				if ( !$familyheadershown )  {
-					my $p = '&nbsp;';
-					if ($total_h) {
-						$p =
-						  int( ( $total_h - $TotalFamily ) / $total_h * 1000 ) /
-						  10;
-						$p = "$p %";
-					}
-					print
-"<tr bgcolor=\"#F6F6F6\"><td class=\"aws\" colspan=\"2\"><b>$Message[2]</b></td>";
-					print "<td>&nbsp;</td><td><b>"
-					  . Format_Number(( $total_h - $TotalFamily ))
-					  . "</b></td><td><b>$p</b></td><td>&nbsp;</td>";
-					print "</tr>\n";
-					$familyheadershown = 1;
-				}
-				my $p = '&nbsp;';
-				if ($total_h) {
-					$p = int( $_browser_h{$key} / $total_h * 1000 ) / 10;
-					$p = "$p %";
-				}
-				print "<tr>";
-				if ( $key eq 'Unknown' ) {
-					print "<td"
-					  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
-					  . "><img src=\"$DirIcons\/browser\/unknown.png\""
-					  . AltTitle("")
-					  . " /></td><td class=\"aws\"><span style=\"color: #$color_other\">$Message[0]</span></td><td width=\"80\">?</td>";
-				}
-				else {
-					my $keywithoutcumul = $key;
-					$keywithoutcumul =~ s/cumul$//i;
-					my $libbrowser = $BrowsersHashIDLib{$keywithoutcumul}
-					  || $keywithoutcumul;
-					my $nameicon = $BrowsersHashIcon{$keywithoutcumul}
-					  || "notavailable";
-					print "<td"
-					  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
-					  . "><img src=\"$DirIcons\/browser\/$nameicon.png\""
-					  . AltTitle("")
-					  . " /></td><td class=\"aws\">$libbrowser</td><td>"
-					  . (
-						$BrowsersHereAreGrabbers{$key}
-						? "<b>$Message[112]</b>"
-						: "$Message[113]"
-					  )
-					  . "</td>";
-				}
-				my $bredde_h = 0;
-				if ( $max_h > 0 ) {
-					$bredde_h =
-					  int( $BarWidth * ( $_browser_h{$key} || 0 ) / $max_h ) +
-					  1;
-				}
-				if ( ( $bredde_h == 1 ) && $_browser_h{$key} ) {
-					$bredde_h = 2;
-				}
-				print "<td>".Format_Number($_browser_h{$key})."</td><td>$p</td>";
-				print "<td class=\"aws\">";
-
-				# alt and title are not provided to reduce page size
-				if ($ShowBrowsersStats) {
-					print
-"<img src=\"$DirIcons\/other\/$BarPng{'hh'}\" width=\"$bredde_h\" height=\"5\" /><br />";
-				}
-				print "</td>";
-				print "</tr>\n";
-			}
-			&tab_end();
-			&html_end(1);
+			&HTMLShowBrowserDetail();
 		}
 		if ( $HTMLOutput{'refererse'} ) {
-			print "$Center<a name=\"refererse\">&nbsp;</a><br />\n";
-			my $title = "$Message[40]";
-			&tab_head( "$title", 19, 0, 'refererse' );
-			print
-"<tr bgcolor=\"#$color_TableBGRowTitle\"><th>".Format_Number($TotalDifferentSearchEngines)." $Message[122]</th>";
-			print
-"<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th><th bgcolor=\"#$color_p\" width=\"80\">$Message[15]</th>";
-			print
-"<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th>";
-			print "</tr>\n";
-			$total_s = 0;
-			my $count = 0;
-			&BuildKeyList(
-				$MaxRowsInHTMLOutput,
-				$MinHit{'Refer'},
-				\%_se_referrals_h,
-				(
-					( scalar keys %_se_referrals_p )
-					? \%_se_referrals_p
-					: \%_se_referrals_h
-				)
-			);    # before 5.4 only hits were recorded
-
-			foreach my $key (@keylist) {
-				my $newreferer = $SearchEnginesHashLib{$key} || CleanXSS($key);
-				my $p_p;
-				my $p_h;
-				if ($TotalSearchEnginesPages) {
-					$p_p =
-					  int( $_se_referrals_p{$key} / $TotalSearchEnginesPages *
-						  1000 ) / 10;
-				}
-				if ($TotalSearchEnginesHits) {
-					$p_h =
-					  int( $_se_referrals_h{$key} / $TotalSearchEnginesHits *
-						  1000 ) / 10;
-				}
-				print "<tr><td class=\"aws\">$newreferer</td>";
-				print "<td>"
-				  . (
-					$_se_referrals_p{$key} ? $_se_referrals_p{$key} : '&nbsp;' )
-				  . "</td>";
-				print "<td>"
-				  . ( $_se_referrals_p{$key} ? "$p_p %" : '&nbsp;' ) . "</td>";
-				print "<td>".Format_Number($_se_referrals_h{$key})."</td>";
-				print "<td>$p_h %</td>";
-				print "</tr>\n";
-				$total_p += $_se_referrals_p{$key};
-				$total_h += $_se_referrals_h{$key};
-				$count++;
-			}
-			if ($Debug) {
-				debug(
-"Total real / shown : $TotalSearchEnginesPages / $total_p - $TotalSearchEnginesHits / $total_h",
-					2
-				);
-			}
-			$rest_p = $TotalSearchEnginesPages - $total_p;
-			$rest_h = $TotalSearchEnginesHits - $total_h;
-			if ( $rest_p > 0 || $rest_h > 0 ) {
-				my $p_p;
-				my $p_h;
-				if ($TotalSearchEnginesPages) {
-					$p_p =
-					  int( $rest_p / $TotalSearchEnginesPages * 1000 ) / 10;
-				}
-				if ($TotalSearchEnginesHits) {
-					$p_h = int( $rest_h / $TotalSearchEnginesHits * 1000 ) / 10;
-				}
-				print
-"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
-				print "<td>" . ( $rest_p ? Format_Number($rest_p)  : '&nbsp;' ) . "</td>";
-				print "<td>" . ( $rest_p ? "$p_p %" : '&nbsp;' ) . "</td>";
-				print "<td>".Format_Number($rest_h)."</td>";
-				print "<td>$p_h %</td>";
-				print "</tr>\n";
-			}
-			&tab_end();
-			&html_end(1);
+			&HTMLShowReferers();
 		}
 		if ( $HTMLOutput{'refererpages'} ) {
-			print "$Center<a name=\"refererpages\">&nbsp;</a><br />\n";
-
-			# Show filter form
-			&ShowFormFilter(
-				"refererpagesfilter",
-				$FilterIn{'refererpages'},
-				$FilterEx{'refererpages'}
-			);
-			my $title = "$Message[41]";
-			my $cpt   = 0;
-			$cpt = ( scalar keys %_pagesrefs_h );
-			&tab_head( "$title", 19, 0, 'refererpages' );
-			print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>";
-			if ( $FilterIn{'refererpages'} || $FilterEx{'refererpages'} ) {
-
-				if ( $FilterIn{'refererpages'} ) {
-					print "$Message[79] <b>$FilterIn{'refererpages'}</b>";
-				}
-				if ( $FilterIn{'refererpages'} && $FilterEx{'refererpages'} ) {
-					print " - ";
-				}
-				if ( $FilterEx{'refererpages'} ) {
-					print
-					  "Exclude $Message[79] <b>$FilterEx{'refererpages'}</b>";
-				}
-				if ( $FilterIn{'refererpages'} || $FilterEx{'refererpages'} ) {
-					print ": ";
-				}
-				print "$cpt $Message[28]";
-
-#if ($MonthRequired ne 'all') {
-#	if ($HTMLOutput{'refererpages'}) { print "<br />$Message[102]: $TotalDifferentPages $Message[28]"; }
-#}
-			}
-			else { print "$Message[102]: ".Format_Number($cpt)." $Message[28]"; }
-			print "</th>";
-			print
-"<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th><th bgcolor=\"#$color_p\" width=\"80\">$Message[15]</th>";
-			print
-"<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th>";
-			print "</tr>\n";
-			$total_s = 0;
-			my $count = 0;
-			&BuildKeyList(
-				$MaxRowsInHTMLOutput,
-				$MinHit{'Refer'},
-				\%_pagesrefs_h,
-				(
-					( scalar keys %_pagesrefs_p )
-					? \%_pagesrefs_p
-					: \%_pagesrefs_h
-				)
-			);
-
-			foreach my $key (@keylist) {
-				my $nompage = CleanXSS($key);
-				if ( length($nompage) > $MaxLengthOfShownURL ) {
-					$nompage =
-					  substr( $nompage, 0, $MaxLengthOfShownURL ) . "...";
-				}
-				my $p_p;
-				my $p_h;
-				if ($TotalRefererPages) {
-					$p_p =
-					  int( $_pagesrefs_p{$key} / $TotalRefererPages * 1000 ) /
-					  10;
-				}
-				if ($TotalRefererHits) {
-					$p_h =
-					  int( $_pagesrefs_h{$key} / $TotalRefererHits * 1000 ) /
-					  10;
-				}
-				print "<tr><td class=\"aws\">";
-				&ShowURLInfo($key);
-				print "</td>";
-				print "<td>"
-				  . ( $_pagesrefs_p{$key} ? Format_Number($_pagesrefs_p{$key}) : '&nbsp;' )
-				  . "</td><td>"
-				  . ( $_pagesrefs_p{$key} ? "$p_p %" : '&nbsp;' ) . "</td>";
-				print "<td>"
-				  . ( $_pagesrefs_h{$key} ? Format_Number($_pagesrefs_h{$key}) : '&nbsp;' )
-				  . "</td><td>"
-				  . ( $_pagesrefs_h{$key} ? "$p_h %" : '&nbsp;' ) . "</td>";
-				print "</tr>\n";
-				$total_p += $_pagesrefs_p{$key};
-				$total_h += $_pagesrefs_h{$key};
-				$count++;
-			}
-			if ($Debug) {
-				debug(
-"Total real / shown : $TotalRefererPages / $total_p - $TotalRefererHits / $total_h",
-					2
-				);
-			}
-			$rest_p = $TotalRefererPages - $total_p;
-			$rest_h = $TotalRefererHits - $total_h;
-			if ( $rest_p > 0 || $rest_h > 0 ) {
-				my $p_p;
-				my $p_h;
-				if ($TotalRefererPages) {
-					$p_p = int( $rest_p / $TotalRefererPages * 1000 ) / 10;
-				}
-				if ($TotalRefererHits) {
-					$p_h = int( $rest_h / $TotalRefererHits * 1000 ) / 10;
-				}
-				print
-"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
-				print "<td>" . ( $rest_p ? Format_Number($rest_p)  : '&nbsp;' ) . "</td>";
-				print "<td>" . ( $rest_p ? "$p_p %" : '&nbsp;' ) . "</td>";
-				print "<td>".Format_Number($rest_h)."</td>";
-				print "<td>$p_h %</td>";
-				print "</tr>\n";
-			}
-			&tab_end();
-			&html_end(1);
+			&HTMLShowRefererPages();
 		}
 		if ( $HTMLOutput{'keyphrases'} ) {
-			print "$Center<a name=\"keyphrases\">&nbsp;</a><br />\n";
-			&tab_head( $Message[43], 19, 0, 'keyphrases' );
-			print "<tr bgcolor=\"#$color_TableBGRowTitle\""
-			  . Tooltip(15)
-			  . "><th>".Format_Number($TotalDifferentKeyphrases)." $Message[103]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[14]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
-			$total_s = 0;
-			my $count = 0;
-			&BuildKeyList(
-				$MaxRowsInHTMLOutput, $MinHit{'Keyphrase'},
-				\%_keyphrases,        \%_keyphrases
-			);
-			foreach my $key (@keylist) {
-				my $mot;
-
-	  # Convert coded keywords (utf8,...) to be correctly reported in HTML page.
-				if ( $PluginsLoaded{'DecodeKey'}{'decodeutfkeys'} ) {
-					$mot = CleanXSS(
-						DecodeKey_decodeutfkeys(
-							$key, $PageCode || 'iso-8859-1'
-						)
-					);
-				}
-				else { $mot = CleanXSS( DecodeEncodedString($key) ); }
-				my $p;
-				if ($TotalKeyphrases) {
-					$p =
-					  int( $_keyphrases{$key} / $TotalKeyphrases * 1000 ) / 10;
-				}
-				print "<tr><td class=\"aws\">"
-				  . XMLEncode($mot)
-				  . "</td><td>$_keyphrases{$key}</td><td>$p %</td></tr>\n";
-				$total_s += $_keyphrases{$key};
-				$count++;
-			}
-			if ($Debug) {
-				debug( "Total real / shown : $TotalKeyphrases / $total_s", 2 );
-			}
-			$rest_s = $TotalKeyphrases - $total_s;
-			if ( $rest_s > 0 ) {
-				my $p;
-				if ($TotalKeyphrases) {
-					$p = int( $rest_s / $TotalKeyphrases * 1000 ) / 10;
-				}
-				print
-"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[124]</span></td><td>".Format_Number($rest_s)."</td>";
-				print "<td>$p %</td></tr>\n";
-			}
-			&tab_end();
-			&html_end(1);
+			&HTMLShowKeyPhrases();
 		}
 		if ( $HTMLOutput{'keywords'} ) {
-			print "$Center<a name=\"keywords\">&nbsp;</a><br />\n";
-			&tab_head( $Message[44], 19, 0, 'keywords' );
-			print "<tr bgcolor=\"#$color_TableBGRowTitle\""
-			  . Tooltip(15)
-			  . "><th>".Format_Number($TotalDifferentKeywords)." $Message[13]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[14]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
-			$total_s = 0;
-			my $count = 0;
-			&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Keyword'},
-				\%_keywords, \%_keywords );
-			foreach my $key (@keylist) {
-				my $mot;
-
-	  # Convert coded keywords (utf8,...) to be correctly reported in HTML page.
-				if ( $PluginsLoaded{'DecodeKey'}{'decodeutfkeys'} ) {
-					$mot = CleanXSS(
-						DecodeKey_decodeutfkeys(
-							$key, $PageCode || 'iso-8859-1'
-						)
-					);
-				}
-				else { $mot = CleanXSS( DecodeEncodedString($key) ); }
-				my $p;
-				if ($TotalKeywords) {
-					$p = int( $_keywords{$key} / $TotalKeywords * 1000 ) / 10;
-				}
-				print "<tr><td class=\"aws\">"
-				  . XMLEncode($mot)
-				  . "</td><td>$_keywords{$key}</td><td>$p %</td></tr>\n";
-				$total_s += $_keywords{$key};
-				$count++;
-			}
-			if ($Debug) {
-				debug( "Total real / shown : $TotalKeywords / $total_s", 2 );
-			}
-			$rest_s = $TotalKeywords - $total_s;
-			if ( $rest_s > 0 ) {
-				my $p;
-				if ($TotalKeywords) {
-					$p = int( $rest_s / $TotalKeywords * 1000 ) / 10;
-				}
-				print
-"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[30]</span></td><td>".Format_Number($rest_s)."</td>";
-				print "<td>$p %</td></tr>\n";
-			}
-			&tab_end();
-			&html_end(1);
+			&HTMLShowKeywords();
 		}
 		foreach my $code ( keys %TrapInfosForHTTPErrorCodes ) {
 			if ( $HTMLOutput{"errors$code"} ) {
-				print "$Center<a name=\"errors$code\">&nbsp;</a><br />\n";
-				&tab_head( $Message[47], 19, 0, "errors$code" );
-				print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>URL ("
-				  . Format_Number(( scalar keys %_sider404_h ))
-				  . ")</th><th bgcolor=\"#$color_h\">$Message[49]</th><th>$Message[23]</th></tr>\n";
-				$total_h = 0;
-				my $count = 0;
-				&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_sider404_h,
-					\%_sider404_h );
-				foreach my $key (@keylist) {
-					my $nompage = XMLEncode( CleanXSS($key) );
-
-#if (length($nompage)>$MaxLengthOfShownURL) { $nompage=substr($nompage,0,$MaxLengthOfShownURL)."..."; }
-					my $referer = XMLEncode( CleanXSS( $_referer404_h{$key} ) );
-					print "<tr><td class=\"aws\">$nompage</td>";
-					print "<td>".Format_Number($_sider404_h{$key})."</td>";
-					print "<td class=\"aws\">"
-					  . ( $referer ? "$referer" : "&nbsp;" ) . "</td>";
-					print "</tr>\n";
-					$total_s += $_sider404_h{$key};
-					$count++;
-				}
-
-# TODO Build TotalErrorHits
-#			if ($Debug) { debug("Total real / shown : $TotalErrorHits / $total_h",2); }
-#			$rest_h=$TotalErrorHits-$total_h;
-#			if ($rest_h > 0) {
-#				my $p;
-#				if ($TotalErrorHits) { $p=int($rest_h/$TotalErrorHits*1000)/10; }
-#				print "<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[30]</span></td>";
-#				print "<td>$rest_h</td>";
-#				print "<td>...</td>";
-#				print "</tr>\n";
-#			}
-				&tab_end();
-				&html_end(1);
+				&HTMLShowErrorCodes($code);
 			}
 		}
 
 		# BY EXTRA SECTIONS
 		#----------------------------
-		foreach my $extranum ( 1 .. @ExtraName - 1 ) {
-			if ( $HTMLOutput{"allextra$extranum"} ) {
-				if ($Debug) { debug( "ExtraName$extranum", 2 ); }
-				print "$Center<a name=\"extra$extranum\">&nbsp;</a><br />";
-				my $title = $ExtraName[$extranum];
-				&tab_head( "$title", 19, 0, "extra$extranum" );
-				print "<tr bgcolor=\"#$color_TableBGRowTitle\">";
-				print "<th>" . $ExtraFirstColumnTitle[$extranum] . "</th>";
-
-				if ( $ExtraStatTypes[$extranum] =~ m/P/i ) {
-					print
-"<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th>";
-				}
-				if ( $ExtraStatTypes[$extranum] =~ m/H/i ) {
-					print
-"<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>";
-				}
-				if ( $ExtraStatTypes[$extranum] =~ m/B/i ) {
-					print
-"<th class=\"datasize\" bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
-				}
-				if ( $ExtraStatTypes[$extranum] =~ m/L/i ) {
-					print "<th width=\"120\">$Message[9]</th>";
-				}
-				print "</tr>\n";
-				$total_p = $total_h = $total_k = 0;
-
-	 #$max_h=1; foreach (values %_login_h) { if ($_ > $max_h) { $max_h = $_; } }
-	 #$max_k=1; foreach (values %_login_k) { if ($_ > $max_k) { $max_k = $_; } }
-				my $count = 0;
-				if ( $ExtraStatTypes[$extranum] =~ m/P/i ) {
-					&BuildKeyList(
-						$MaxRowsInHTMLOutput,
-						$MinHitExtra[$extranum],
-						\%{ '_section_' . $extranum . '_h' },
-						\%{ '_section_' . $extranum . '_p' }
-					);
-				}
-				else {
-					&BuildKeyList(
-						$MaxRowsInHTMLOutput,
-						$MinHitExtra[$extranum],
-						\%{ '_section_' . $extranum . '_h' },
-						\%{ '_section_' . $extranum . '_h' }
-					);
-				}
-				my %keysinkeylist = ();
-				foreach my $key (@keylist) {
-					$keysinkeylist{$key} = 1;
-					my $firstcol = CleanXSS( DecodeEncodedString($key) );
-					$total_p += ${ '_section_' . $extranum . '_p' }{$key};
-					$total_h += ${ '_section_' . $extranum . '_h' }{$key};
-					$total_k += ${ '_section_' . $extranum . '_k' }{$key};
-					print "<tr>";
-					printf(
-"<td class=\"aws\">$ExtraFirstColumnFormat[$extranum]</td>",
-						$firstcol, $firstcol, $firstcol, $firstcol, $firstcol );
-					if ( $ExtraStatTypes[$extranum] =~ m/P/i ) {
-						print "<td>"
-						  . ${ '_section_' . $extranum . '_p' }{$key} . "</td>";
-					}
-					if ( $ExtraStatTypes[$extranum] =~ m/H/i ) {
-						print "<td>"
-						  . ${ '_section_' . $extranum . '_h' }{$key} . "</td>";
-					}
-					if ( $ExtraStatTypes[$extranum] =~ m/B/i ) {
-						print "<td>"
-						  . Format_Bytes(
-							${ '_section_' . $extranum . '_k' }{$key} )
-						  . "</td>";
-					}
-					if ( $ExtraStatTypes[$extranum] =~ m/L/i ) {
-						print "<td>"
-						  . (
-							${ '_section_' . $extranum . '_l' }{$key}
-							? Format_Date(
-								${ '_section_' . $extranum . '_l' }{$key}, 1 )
-							: '-'
-						  )
-						  . "</td>";
-					}
-					print "</tr>\n";
-					$count++;
-				}
-
-				# If we ask average or sum, we loop on all other records
-				if (   $ExtraAddAverageRow[$extranum]
-					|| $ExtraAddSumRow[$extranum] )
-				{
-					foreach ( keys %{ '_section_' . $extranum . '_h' } ) {
-						if ( $keysinkeylist{$_} ) { next; }
-						$total_p += ${ '_section_' . $extranum . '_p' }{$_};
-						$total_h += ${ '_section_' . $extranum . '_h' }{$_};
-						$total_k += ${ '_section_' . $extranum . '_k' }{$_};
-						$count++;
-					}
-				}
-
-				# Add average row
-				if ( $ExtraAddAverageRow[$extranum] ) {
-					print "<tr>";
-					print "<td class=\"aws\"><b>$Message[96]</b></td>";
-					if ( $ExtraStatTypes[$extranum] =~ m/P/i ) {
-						print "<td>"
-						  . ( $count ? Format_Number(( $total_p / $count )) : "&nbsp;" )
-						  . "</td>";
-					}
-					if ( $ExtraStatTypes[$extranum] =~ m/H/i ) {
-						print "<td>"
-						  . ( $count ? Format_Number(( $total_h / $count )) : "&nbsp;" )
-						  . "</td>";
-					}
-					if ( $ExtraStatTypes[$extranum] =~ m/B/i ) {
-						print "<td>"
-						  . (
-							$count
-							? Format_Bytes( $total_k / $count )
-							: "&nbsp;"
-						  )
-						  . "</td>";
-					}
-					if ( $ExtraStatTypes[$extranum] =~ m/L/i ) {
-						print "<td>&nbsp;</td>";
-					}
-					print "</tr>\n";
-				}
-
-				# Add sum row
-				if ( $ExtraAddSumRow[$extranum] ) {
-					print "<tr>";
-					print "<td class=\"aws\"><b>$Message[102]</b></td>";
-					if ( $ExtraStatTypes[$extranum] =~ m/P/i ) {
-						print "<td>" . ($total_p) . "</td>";
-					}
-					if ( $ExtraStatTypes[$extranum] =~ m/H/i ) {
-						print "<td>" . ($total_h) . "</td>";
-					}
-					if ( $ExtraStatTypes[$extranum] =~ m/B/i ) {
-						print "<td>" . Format_Bytes($total_k) . "</td>";
-					}
-					if ( $ExtraStatTypes[$extranum] =~ m/L/i ) {
-						print "<td>&nbsp;</td>";
-					}
-					print "</tr>\n";
-				}
-				&tab_end();
-				&html_end(1);
-			}
-		}
+		HTMLShowExtraSections();
+		
 		if ( $HTMLOutput{'info'} ) {
-
-			# Not yet available
+			# TODO Not yet available
 			print "$Center<a name=\"info\">&nbsp;</a><br />";
 			&html_end(1);
 		}
 
+		# Print any plugins that have individual pages
+		# TODO - change name, graph isn't so descriptive
 		my $htmloutput = '';
 		foreach my $key ( keys %HTMLOutput ) { $htmloutput = $key; }
 		if ( $htmloutput =~ /^plugin_(\w+)$/ ) {
 			my $pluginname = $1;
 			print "$Center<a name=\"plugin_$pluginname\">&nbsp;</a><br />";
-
-			#       		my $function="AddHTMLGraph_$pluginname()";
-			#       		eval("$function");
 			my $function = "AddHTMLGraph_$pluginname";
 			&$function();
 			&html_end(1);
@@ -15942,603 +20150,57 @@ if ( scalar keys %HTMLOutput ) {
 
 	# Output main page
 	#-----------------
-
 	if ( $HTMLOutput{'main'} ) {
+		
+		# Calculate averages
+		my $max_p = 0;
+		my $max_h = 0;
+		my $max_k = 0;
+		my $max_v = 0;
+		my $average_nb = 0;
+		foreach my $daycursor (
+			$firstdaytocountaverage .. $lastdaytocountaverage )
+		{
+			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
+			my $year  = $1;
+			my $month = $2;
+			my $day   = $3;
+			if ( !DateIsValid( $day, $month, $year ) ) {
+				next;
+			}                 # If not an existing day, go to next
+			$average_nb++;    # Increase number of day used to count
+			$AverageVisits += ( $DayVisits{$daycursor} || 0 );
+			$AveragePages += ( $DayPages{$daycursor}  || 0 );
+			$AverageHits += ( $DayHits{$daycursor}   || 0 );
+			$AverageBytes += ( $DayBytes{$daycursor}  || 0 );
+		}
+		if ($average_nb) {
+			$AverageVisits = $AverageVisits / $average_nb;
+			$AveragePages = $AveragePages / $average_nb;
+			$AverageHits = $AverageHits / $average_nb;
+			$AverageBytes = $AverageBytes / $average_nb;
+			if ( $AverageVisits > $max_v ) { $max_v = $AverageVisits; }
+			#if ($average_p > $max_p) { $max_p=$average_p; }
+			if ( $AverageHits > $max_h ) { $max_h = $AverageHits; }
+			if ( $AverageBytes > $max_k ) { $max_k = $AverageBytes; }
+		}
+		else {
+			$AverageVisits = "?";
+			$AveragePages = "?";
+			$AverageHits = "?";
+			$AverageBytes = "?";
+		}
 
 		# SUMMARY
 		#---------------------------------------------------------------------
 		if ($ShowSummary) {
-			if ($Debug) { debug( "ShowSummary", 2 ); }
-
-			#print "$Center<a name=\"summary\">&nbsp;</a><br />\n";
-			my $title = "$Message[128]";
-			&tab_head( "$title", 0, 0, 'month' );
-
-			my $NewLinkParams = ${QueryString};
-			$NewLinkParams =~ s/(^|&|&amp;)update(=\w*|$)//i;
-			$NewLinkParams =~ s/(^|&|&amp;)staticlinks(=\w*|$)//i;
-			$NewLinkParams =~ s/(^|&|&amp;)year=[^&]*//i;
-			$NewLinkParams =~ s/(^|&|&amp;)month=[^&]*//i;
-			$NewLinkParams =~ s/(^|&|&amp;)framename=[^&]*//i;
-			$NewLinkParams =~ s/(&amp;|&)+/&amp;/i;
-			$NewLinkParams =~ s/^&amp;//;
-			$NewLinkParams =~ s/&amp;$//;
-			if ($NewLinkParams) { $NewLinkParams = "${NewLinkParams}&amp;"; }
-			my $NewLinkTarget = '';
-
-			if ( $FrameName eq 'mainright' ) {
-				$NewLinkTarget = " target=\"_parent\"";
-			}
-
-			# Ratio
-			my $RatioVisits = 0;
-			my $RatioPages  = 0;
-			my $RatioHits   = 0;
-			my $RatioBytes  = 0;
-			if ( $TotalUnique > 0 ) {
-				$RatioVisits = int( $TotalVisits / $TotalUnique * 100 ) / 100;
-			}
-			if ( $TotalVisits > 0 ) {
-				$RatioPages = int( $TotalPages / $TotalVisits * 100 ) / 100;
-			}
-			if ( $TotalVisits > 0 ) {
-				$RatioHits = int( $TotalHits / $TotalVisits * 100 ) / 100;
-			}
-			if ( $TotalVisits > 0 ) {
-				$RatioBytes =
-				  int( ( $TotalBytes / 1024 ) * 100 /
-					  ( $LogType eq 'M' ? $TotalHits : $TotalVisits ) ) / 100;
-			}
-
-			my $colspan = 5;
-			my $w       = '20';
-			if ( $LogType eq 'W' || $LogType eq 'S' ) {
-				$w       = '17';
-				$colspan = 6;
-			}
-
-			# Show first/last
-			print "<tr bgcolor=\"#$color_TableBGRowTitle\">";
-			print
-"<td class=\"aws\"><b>$Message[133]</b></td><td class=\"aws\" colspan=\""
-			  . ( $colspan - 1 ) . "\">\n";
-			print( $MonthRequired eq 'all'
-				? "$Message[6] $YearRequired"
-				: "$Message[5] "
-				  . $MonthNumLib{$MonthRequired}
-				  . " $YearRequired"
-			);
-			print "</td></tr>\n";
-			print "<tr bgcolor=\"#$color_TableBGRowTitle\">";
-			print "<td class=\"aws\"><b>$Message[8]</b></td>\n";
-			print "<td class=\"aws\" colspan=\""
-			  . ( $colspan - 1 ) . "\">"
-			  . ( $FirstTime ? Format_Date( $FirstTime, 0 ) : "NA" ) . "</td>";
-			print "</tr>\n";
-			print "<tr bgcolor=\"#$color_TableBGRowTitle\">";
-			print "<td class=\"aws\"><b>$Message[9]</b></td>\n";
-			print "<td class=\"aws\" colspan=\""
-			  . ( $colspan - 1 ) . "\">"
-			  . ( $LastTime ? Format_Date( $LastTime, 0 ) : "NA" )
-			  . "</td>\n";
-			print "</tr>\n";
-
-			# Show main indicators title row
-			print "<tr>";
-			if ( $LogType eq 'W' || $LogType eq 'S' ) {
-				print "<td bgcolor=\"#$color_TableBGTitle\">&nbsp;</td>";
-			}
-			if ( $ShowSummary =~ /U/i ) {
-				print "<td width=\"$w%\" bgcolor=\"#$color_u\""
-				  . Tooltip(2)
-				  . ">$Message[11]</td>";
-			}
-			else {
-				print
-"<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>";
-			}
-			if ( $ShowSummary =~ /V/i ) {
-				print "<td width=\"$w%\" bgcolor=\"#$color_v\""
-				  . Tooltip(1)
-				  . ">$Message[10]</td>";
-			}
-			else {
-				print
-"<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>";
-			}
-			if ( $ShowSummary =~ /P/i ) {
-				print "<td width=\"$w%\" bgcolor=\"#$color_p\""
-				  . Tooltip(3)
-				  . ">$Message[56]</td>";
-			}
-			else {
-				print
-"<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>";
-			}
-			if ( $ShowSummary =~ /H/i ) {
-				print "<td width=\"$w%\" bgcolor=\"#$color_h\""
-				  . Tooltip(4)
-				  . ">$Message[57]</td>";
-			}
-			else {
-				print
-"<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>";
-			}
-			if ( $ShowSummary =~ /B/i ) {
-				print "<td width=\"$w%\" bgcolor=\"#$color_k\""
-				  . Tooltip(5)
-				  . ">$Message[75]</td>";
-			}
-			else {
-				print
-"<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>";
-			}
-			print "</tr>\n";
-
-			# Show main indicators values for viewed traffic
-			print "<tr>";
-			if ( $LogType eq 'M' ) {
-				print "<td class=\"aws\">$Message[165]</td>";
-				print "<td>&nbsp;<br />&nbsp;</td>\n";
-				print "<td>&nbsp;<br />&nbsp;</td>\n";
-				if ( $ShowSummary =~ /H/i ) {
-					print "<td><b>".Format_Number($TotalHits)."</b>"
-					  . (
-						$LogType eq 'M'
-						? ""
-						: "<br />($RatioHits&nbsp;"
-						  . lc( $Message[57] . "/" . $Message[12] ) . ")"
-					  )
-					  . "</td>";
-				}
-				else { print "<td>&nbsp;</td>"; }
-				if ( $ShowSummary =~ /B/i ) {
-					print "<td><b>"
-					  . Format_Bytes( int($TotalBytes) )
-					  . "</b><br />($RatioBytes&nbsp;$Message[108]/"
-					  . $Message[ ( $LogType eq 'M' ? 149 : 12 ) ]
-					  . ")</td>";
-				}
-				else { print "<td>&nbsp;</td>"; }
-			}
-			else {
-				if ( $LogType eq 'W' || $LogType eq 'S' ) {
-					print "<td class=\"aws\">$Message[160]&nbsp;*</td>";
-				}
-				if ( $ShowSummary =~ /U/i ) {
-					print "<td>"
-					  . (
-						$MonthRequired eq 'all'
-						? "<b>&lt;= ".Format_Number($TotalUnique)."</b><br />$Message[129]"
-						: "<b>".Format_Number($TotalUnique)."</b><br />&nbsp;"
-					  )
-					  . "</td>";
-				}
-				else { print "<td>&nbsp;</td>"; }
-				if ( $ShowSummary =~ /V/i ) {
-					print
-"<td><b>".Format_Number($TotalVisits)."</b><br />($RatioVisits&nbsp;$Message[52])</td>";
-				}
-				else { print "<td>&nbsp;</td>"; }
-				if ( $ShowSummary =~ /P/i ) {
-					print "<td><b>".Format_Number($TotalPages)."</b><br />($RatioPages&nbsp;"
-					  . $Message[56] . "/"
-					  . $Message[12]
-					  . ")</td>";
-				}
-				else { print "<td>&nbsp;</td>"; }
-				if ( $ShowSummary =~ /H/i ) {
-					print "<td><b>".Format_Number($TotalHits)."</b>"
-					  . (
-						$LogType eq 'M'
-						? ""
-						: "<br />($RatioHits&nbsp;"
-						  . $Message[57] . "/"
-						  . $Message[12] . ")"
-					  )
-					  . "</td>";
-				}
-				else { print "<td>&nbsp;</td>"; }
-				if ( $ShowSummary =~ /B/i ) {
-					print "<td><b>"
-					  . Format_Bytes( int($TotalBytes) )
-					  . "</b><br />($RatioBytes&nbsp;$Message[108]/"
-					  . $Message[ ( $LogType eq 'M' ? 149 : 12 ) ]
-					  . ")</td>";
-				}
-				else { print "<td>&nbsp;</td>"; }
-			}
-			print "</tr>\n";
-
-			# Show main indicators values for not viewed traffic values
-			if ( $LogType eq 'M' || $LogType eq 'W' || $LogType eq 'S' ) {
-				print "<tr>";
-				if ( $LogType eq 'M' ) {
-					print "<td class=\"aws\">$Message[166]</td>";
-					print "<td>&nbsp;<br />&nbsp;</td>\n";
-					print "<td>&nbsp;<br />&nbsp;</td>\n";
-					if ( $ShowSummary =~ /H/i ) {
-						print "<td><b>".Format_Number($TotalNotViewedHits)."</b></td>";
-					}
-					else { print "<td>&nbsp;</td>"; }
-					if ( $ShowSummary =~ /B/i ) {
-						print "<td><b>"
-						  . Format_Bytes( int($TotalNotViewedBytes) )
-						  . "</b></td>";
-					}
-					else { print "<td>&nbsp;</td>"; }
-				}
-				else {
-					if ( $LogType eq 'W' || $LogType eq 'S' ) {
-						print "<td class=\"aws\">$Message[161]&nbsp;*</td>";
-					}
-					print "<td colspan=\"2\">&nbsp;<br />&nbsp;</td>\n";
-					if ( $ShowSummary =~ /P/i ) {
-						print "<td><b>".Format_Number($TotalNotViewedPages)."</b></td>";
-					}
-					else { print "<td>&nbsp;</td>"; }
-					if ( $ShowSummary =~ /H/i ) {
-						print "<td><b>".Format_Number($TotalNotViewedHits)."</b></td>";
-					}
-					else { print "<td>&nbsp;</td>"; }
-					if ( $ShowSummary =~ /B/i ) {
-						print "<td><b>"
-						  . Format_Bytes( int($TotalNotViewedBytes) )
-						  . "</b></td>";
-					}
-					else { print "<td>&nbsp;</td>"; }
-				}
-				print "</tr>\n";
-			}
-			&tab_end($LogType eq 'W'
-				  || $LogType eq 'S' ? "* $Message[159]" : "" );
+			&HTMLMainSummary();
 		}
 
 		# BY MONTH
 		#---------------------------------------------------------------------
 		if ($ShowMonthStats) {
-
-			if ($Debug) { debug( "ShowMonthStats", 2 ); }
-			print "$Center<a name=\"month\">&nbsp;</a><br />\n";
-			my $title = "$Message[162]";
-			&tab_head( "$title", 0, 0, 'month' );
-			print "<tr><td align=\"center\">\n";
-			print "<center>\n";
-
-			$average_nb = $average_u = $average_v = $average_p = $average_h =
-			  $average_k = 0;
-			$total_u     = $total_v = $total_p = $total_h = $total_k = 0;
-
-			$max_v = $max_p = $max_h = $max_k = 1;
-
-			# Define total and max
-			for ( my $ix = 1 ; $ix <= 12 ; $ix++ ) {
-				my $monthix = sprintf( "%02s", $ix );
-				$total_u += $MonthUnique{ $YearRequired . $monthix } || 0;
-				$total_v += $MonthVisits{ $YearRequired . $monthix } || 0;
-				$total_p += $MonthPages{ $YearRequired . $monthix }  || 0;
-				$total_h += $MonthHits{ $YearRequired . $monthix }   || 0;
-				$total_k += $MonthBytes{ $YearRequired . $monthix }  || 0;
-
-#if (($MonthUnique{$YearRequired.$monthix}||0) > $max_v) { $max_v=$MonthUnique{$YearRequired.$monthix}; }
-				if (
-					( $MonthVisits{ $YearRequired . $monthix } || 0 ) > $max_v )
-				{
-					$max_v = $MonthVisits{ $YearRequired . $monthix };
-				}
-
-#if (($MonthPages{$YearRequired.$monthix}||0) > $max_p)  { $max_p=$MonthPages{$YearRequired.$monthix}; }
-				if ( ( $MonthHits{ $YearRequired . $monthix } || 0 ) > $max_h )
-				{
-					$max_h = $MonthHits{ $YearRequired . $monthix };
-				}
-				if ( ( $MonthBytes{ $YearRequired . $monthix } || 0 ) > $max_k )
-				{
-					$max_k = $MonthBytes{ $YearRequired . $monthix };
-				}
-			}
-
-			# Define average
-			# TODO
-
-			# Show bars for month
-			my $graphdone=0;
-			foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
-			{
-				my @blocklabel = ();
-				for ( my $ix = 1 ; $ix <= 12 ; $ix++ ) {
-					my $monthix = sprintf( "%02s", $ix );
-					push @blocklabel,
-					  "$MonthNumLib{$monthix}\n$YearRequired";
-				}
-				my @vallabel = (
-					"$Message[11]", "$Message[10]",
-					"$Message[56]", "$Message[57]",
-					"$Message[75]"
-				);
-				my @valcolor =
-				  ( "$color_u", "$color_v", "$color_p", "$color_h",
-					"$color_k" );
-				my @valmax = ( $max_v, $max_v, $max_h, $max_h, $max_k );
-				my @valtotal =
-				  ( $total_u, $total_v, $total_p, $total_h, $total_k );
-				my @valaverage = ();
-
-				#my @valaverage=($average_v,$average_p,$average_h,$average_k);
-				my @valdata = ();
-				my $xx      = 0;
-				for ( my $ix = 1 ; $ix <= 12 ; $ix++ ) {
-					my $monthix = sprintf( "%02s", $ix );
-					$valdata[ $xx++ ] = $MonthUnique{ $YearRequired . $monthix }
-					  || 0;
-					$valdata[ $xx++ ] = $MonthVisits{ $YearRequired . $monthix }
-					  || 0;
-					$valdata[ $xx++ ] = $MonthPages{ $YearRequired . $monthix }
-					  || 0;
-					$valdata[ $xx++ ] = $MonthHits{ $YearRequired . $monthix }
-					  || 0;
-					$valdata[ $xx++ ] = $MonthBytes{ $YearRequired . $monthix }
-					  || 0;
-				}
-				
-				my $function = "ShowGraph_$pluginname";
-				&$function(
-					"$title",        "month",
-					$ShowMonthStats, \@blocklabel,
-					\@vallabel,      \@valcolor,
-					\@valmax,        \@valtotal,
-					\@valaverage,    \@valdata
-				);
-				$graphdone=1;
-			}
-			if (! $graphdone)
-			{
-				print "<table>\n";
-				print "<tr valign=\"bottom\">";
-				print "<td>&nbsp;</td>\n";
-				for ( my $ix = 1 ; $ix <= 12 ; $ix++ ) {
-					my $monthix  = sprintf( "%02s", $ix );
-					my $bredde_u = 0;
-					my $bredde_v = 0;
-					my $bredde_p = 0;
-					my $bredde_h = 0;
-					my $bredde_k = 0;
-					if ( $max_v > 0 ) {
-						$bredde_u =
-						  int(
-							( $MonthUnique{ $YearRequired . $monthix } || 0 ) /
-							  $max_v * $BarHeight ) + 1;
-					}
-					if ( $max_v > 0 ) {
-						$bredde_v =
-						  int(
-							( $MonthVisits{ $YearRequired . $monthix } || 0 ) /
-							  $max_v * $BarHeight ) + 1;
-					}
-					if ( $max_h > 0 ) {
-						$bredde_p =
-						  int(
-							( $MonthPages{ $YearRequired . $monthix } || 0 ) /
-							  $max_h * $BarHeight ) + 1;
-					}
-					if ( $max_h > 0 ) {
-						$bredde_h =
-						  int( ( $MonthHits{ $YearRequired . $monthix } || 0 ) /
-							  $max_h * $BarHeight ) + 1;
-					}
-					if ( $max_k > 0 ) {
-						$bredde_k =
-						  int(
-							( $MonthBytes{ $YearRequired . $monthix } || 0 ) /
-							  $max_k * $BarHeight ) + 1;
-					}
-					print "<td>";
-					if ( $ShowMonthStats =~ /U/i ) {
-						print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vu'}\" height=\"$bredde_u\" width=\"6\""
-						  . AltTitle( "$Message[11]: "
-							  . ( $MonthUnique{ $YearRequired . $monthix }
-								  || 0 ) )
-						  . " />";
-					}
-					if ( $ShowMonthStats =~ /V/i ) {
-						print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vv'}\" height=\"$bredde_v\" width=\"6\""
-						  . AltTitle( "$Message[10]: "
-							  . ( $MonthVisits{ $YearRequired . $monthix }
-								  || 0 ) )
-						  . " />";
-					}
-					if ( $ShowMonthStats =~ /P/i ) {
-						print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"6\""
-						  . AltTitle( "$Message[56]: "
-							  . ( $MonthPages{ $YearRequired . $monthix } || 0 )
-						  )
-						  . " />";
-					}
-					if ( $ShowMonthStats =~ /H/i ) {
-						print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"6\""
-						  . AltTitle( "$Message[57]: "
-							  . ( $MonthHits{ $YearRequired . $monthix } || 0 )
-						  )
-						  . " />";
-					}
-					if ( $ShowMonthStats =~ /B/i ) {
-						print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"6\""
-						  . AltTitle(
-							"$Message[75]: "
-							  . Format_Bytes(
-								$MonthBytes{ $YearRequired . $monthix }
-							  )
-						  )
-						  . " />";
-					}
-					print "</td>\n";
-				}
-				print "<td>&nbsp;</td>";
-				print "</tr>\n";
-
-				# Show lib for month
-				print "<tr valign=\"middle\">";
-
-#				if (!$StaticLinks) {
-#					print "<td><a href=\"".XMLEncode("$AWScript?${NewLinkParams}month=12&year=".($YearRequired-1))."\">&lt;&lt;</a></td>";
-#				}
-#				else {
-				print "<td>&nbsp;</td>";
-
-				#				}
-				for ( my $ix = 1 ; $ix <= 12 ; $ix++ ) {
-					my $monthix = sprintf( "%02s", $ix );
-
-#					if (!$StaticLinks) {
-#						print "<td><a href=\"".XMLEncode("$AWScript?${NewLinkParams}month=$monthix&year=$YearRequired")."\">$MonthNumLib{$monthix}<br />$YearRequired</a></td>";
-#					}
-#					else {
-					print "<td>"
-					  . (
-						!$StaticLinks
-						  && $monthix == $nowmonth
-						  && $YearRequired == $nowyear
-						? '<font class="currentday">'
-						: ''
-					  );
-					print "$MonthNumLib{$monthix}<br />$YearRequired";
-					print(   !$StaticLinks
-						  && $monthix == $nowmonth
-						  && $YearRequired == $nowyear ? '</font>' : '' );
-					print "</td>";
-
-					#					}
-				}
-
-#				if (!$StaticLinks) {
-#					print "<td><a href=\"".XMLEncode("$AWScript?${NewLinkParams}month=1&year=".($YearRequired+1))."\">&gt;&gt;</a></td>";
-#				}
-#				else {
-				print "<td>&nbsp;</td>";
-
-				#				}
-				print "</tr>\n";
-				print "</table>\n";
-			}
-			print "<br />\n";
-
-			# Show data array for month
-			if ($AddDataArrayMonthStats) {
-				print "<table>\n";
-				print
-"<tr><td width=\"80\" bgcolor=\"#$color_TableBGRowTitle\">$Message[5]</td>";
-				if ( $ShowMonthStats =~ /U/i ) {
-					print "<td width=\"80\" bgcolor=\"#$color_u\""
-					  . Tooltip(2)
-					  . ">$Message[11]</td>";
-				}
-				if ( $ShowMonthStats =~ /V/i ) {
-					print "<td width=\"80\" bgcolor=\"#$color_v\""
-					  . Tooltip(1)
-					  . ">$Message[10]</td>";
-				}
-				if ( $ShowMonthStats =~ /P/i ) {
-					print "<td width=\"80\" bgcolor=\"#$color_p\""
-					  . Tooltip(3)
-					  . ">$Message[56]</td>";
-				}
-				if ( $ShowMonthStats =~ /H/i ) {
-					print "<td width=\"80\" bgcolor=\"#$color_h\""
-					  . Tooltip(4)
-					  . ">$Message[57]</td>";
-				}
-				if ( $ShowMonthStats =~ /B/i ) {
-					print "<td width=\"80\" bgcolor=\"#$color_k\""
-					  . Tooltip(5)
-					  . ">$Message[75]</td>";
-				}
-				print "</tr>\n";
-				for ( my $ix = 1 ; $ix <= 12 ; $ix++ ) {
-					my $monthix = sprintf( "%02s", $ix );
-					print "<tr>";
-					print "<td>"
-					  . (
-						!$StaticLinks
-						  && $monthix == $nowmonth
-						  && $YearRequired == $nowyear
-						? '<font class="currentday">'
-						: ''
-					  );
-					print "$MonthNumLib{$monthix} $YearRequired";
-					print(   !$StaticLinks
-						  && $monthix == $nowmonth
-						  && $YearRequired == $nowyear ? '</font>' : '' );
-					print "</td>";
-					if ( $ShowMonthStats =~ /U/i ) {
-						print "<td>",
-						  Format_Number($MonthUnique{ $YearRequired . $monthix }
-						  ? $MonthUnique{ $YearRequired . $monthix }
-						  : "0"), "</td>";
-					}
-					if ( $ShowMonthStats =~ /V/i ) {
-						print "<td>",
-						  Format_Number($MonthVisits{ $YearRequired . $monthix }
-						  ? $MonthVisits{ $YearRequired . $monthix }
-						  : "0"), "</td>";
-					}
-					if ( $ShowMonthStats =~ /P/i ) {
-						print "<td>",
-						  Format_Number($MonthPages{ $YearRequired . $monthix }
-						  ? $MonthPages{ $YearRequired . $monthix }
-						  : "0"), "</td>";
-					}
-					if ( $ShowMonthStats =~ /H/i ) {
-						print "<td>",
-						  Format_Number($MonthHits{ $YearRequired . $monthix }
-						  ? $MonthHits{ $YearRequired . $monthix }
-						  : "0"), "</td>";
-					}
-					if ( $ShowMonthStats =~ /B/i ) {
-						print "<td>",
-						  Format_Bytes(
-							int( $MonthBytes{ $YearRequired . $monthix } || 0 )
-						  ), "</td>";
-					}
-					print "</tr>\n";
-				}
-
-				# Average row
-				# TODO
-				# Total row
-				print
-"<tr><td bgcolor=\"#$color_TableBGRowTitle\">$Message[102]</td>";
-				if ( $ShowMonthStats =~ /U/i ) {
-					print
-					  "<td bgcolor=\"#$color_TableBGRowTitle\">".Format_Number($total_u)."</td>";
-				}
-				if ( $ShowMonthStats =~ /V/i ) {
-					print
-					  "<td bgcolor=\"#$color_TableBGRowTitle\">".Format_Number($total_v)."</td>";
-				}
-				if ( $ShowMonthStats =~ /P/i ) {
-					print
-					  "<td bgcolor=\"#$color_TableBGRowTitle\">".Format_Number($total_p)."</td>";
-				}
-				if ( $ShowMonthStats =~ /H/i ) {
-					print
-					  "<td bgcolor=\"#$color_TableBGRowTitle\">".Format_Number($total_h)."</td>";
-				}
-				if ( $ShowMonthStats =~ /B/i ) {
-					print "<td bgcolor=\"#$color_TableBGRowTitle\">"
-					  . Format_Bytes($total_k) . "</td>";
-				}
-				print "</tr>\n";
-				print "</table>\n<br />\n";
-			}
-
-			print "</center>\n";
-			print "</td></tr>\n";
-			&tab_end();
+			&HTMLMainMonthly();
 		}
 
 		print "\n<a name=\"when\">&nbsp;</a>\n\n";
@@ -16546,973 +20208,20 @@ if ( scalar keys %HTMLOutput ) {
 		# BY DAY OF MONTH
 		#---------------------------------------------------------------------
 		if ($ShowDaysOfMonthStats) {
-			if ($Debug) { debug( "ShowDaysOfMonthStats", 2 ); }
-			print "$Center<a name=\"daysofmonth\">&nbsp;</a><br />\n";
-			my $title = "$Message[138]";
-			&tab_head( "$title", 0, 0, 'daysofmonth' );
-			print "<tr>";
-			print "<td align=\"center\">\n";
-			print "<center>\n";
-
-			my $NewLinkParams = ${QueryString};
-			$NewLinkParams =~ s/(^|&|&amp;)update(=\w*|$)//i;
-			$NewLinkParams =~ s/(^|&|&amp;)staticlinks(=\w*|$)//i;
-			$NewLinkParams =~ s/(^|&|&amp;)year=[^&]*//i;
-			$NewLinkParams =~ s/(^|&|&amp;)month=[^&]*//i;
-			$NewLinkParams =~ s/(^|&|&amp;)framename=[^&]*//i;
-			$NewLinkParams =~ s/(&amp;|&)+/&amp;/i;
-			$NewLinkParams =~ s/^&amp;//;
-			$NewLinkParams =~ s/&amp;$//;
-			if ($NewLinkParams) { $NewLinkParams = "${NewLinkParams}&amp;"; }
-			my $NewLinkTarget = '';
-
-			if ( $FrameName eq 'mainright' ) {
-				$NewLinkTarget = " target=\"_parent\"";
-			}
-
-			$average_nb = $average_u = $average_v = $average_p = $average_h =
-			  $average_k = 0;
-			$total_u     = $total_v = $total_p = $total_h = $total_k = 0;
-
-			# Define total and max
-			$max_v = $max_h = $max_k =
-			  0;    # Start from 0 because can be lower than 1
-			foreach my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )
-			{
-				$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
-				my $year  = $1;
-				my $month = $2;
-				my $day   = $3;
-				if ( !DateIsValid( $day, $month, $year ) ) {
-					next;
-				}    # If not an existing day, go to next
-				$total_v += $DayVisits{ $year . $month . $day } || 0;
-				$total_p += $DayPages{ $year . $month . $day }  || 0;
-				$total_h += $DayHits{ $year . $month . $day }   || 0;
-				$total_k += $DayBytes{ $year . $month . $day }  || 0;
-				if ( ( $DayVisits{ $year . $month . $day } || 0 ) > $max_v ) {
-					$max_v = $DayVisits{ $year . $month . $day };
-				}
-
-#if (($DayPages{$year.$month.$day}||0) > $max_p)  { $max_p=$DayPages{$year.$month.$day}; }
-				if ( ( $DayHits{ $year . $month . $day } || 0 ) > $max_h ) {
-					$max_h = $DayHits{ $year . $month . $day };
-				}
-				if ( ( $DayBytes{ $year . $month . $day } || 0 ) > $max_k ) {
-					$max_k = $DayBytes{ $year . $month . $day };
-				}
-			}
-
-			# Define average
-			foreach my $daycursor (
-				$firstdaytocountaverage .. $lastdaytocountaverage )
-			{
-				$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
-				my $year  = $1;
-				my $month = $2;
-				my $day   = $3;
-				if ( !DateIsValid( $day, $month, $year ) ) {
-					next;
-				}                 # If not an existing day, go to next
-				$average_nb++;    # Increase number of day used to count
-				$average_v += ( $DayVisits{$daycursor} || 0 );
-				$average_p += ( $DayPages{$daycursor}  || 0 );
-				$average_h += ( $DayHits{$daycursor}   || 0 );
-				$average_k += ( $DayBytes{$daycursor}  || 0 );
-			}
-			if ($average_nb) {
-				$average_v = $average_v / $average_nb;
-				$average_p = $average_p / $average_nb;
-				$average_h = $average_h / $average_nb;
-				$average_k = $average_k / $average_nb;
-				if ( $average_v > $max_v ) { $max_v = $average_v; }
-
-				#if ($average_p > $max_p) { $max_p=$average_p; }
-				if ( $average_h > $max_h ) { $max_h = $average_h; }
-				if ( $average_k > $max_k ) { $max_k = $average_k; }
-			}
-			else {
-				$average_v = "?";
-				$average_p = "?";
-				$average_h = "?";
-				$average_k = "?";
-			}
-
-			# Show bars for day
-			my $graphdone=0;
-			foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
-			{
-				my @blocklabel = ();
-				foreach
-				  my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )
-				{
-					$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
-					my $year  = $1;
-					my $month = $2;
-					my $day   = $3;
-					if ( !DateIsValid( $day, $month, $year ) ) {
-						next;
-					}    # If not an existing day, go to next
-					my $bold =
-					  (      $day == $nowday
-						  && $month == $nowmonth
-						  && $year == $nowyear ? ':' : '' );
-					my $weekend =
-					  ( DayOfWeek( $day, $month, $year ) =~ /[06]/ ? '!' : '' );
-					push @blocklabel,
-					  "$day\n$MonthNumLib{$month}$weekend$bold";
-				}
-				my @vallabel = (
-					"$Message[10]", "$Message[56]",
-					"$Message[57]", "$Message[75]"
-				);
-				my @valcolor =
-				  ( "$color_v", "$color_p", "$color_h", "$color_k" );
-				my @valmax   = ( $max_v,   $max_h,   $max_h,   $max_k );
-				my @valtotal = ( $total_v, $total_p, $total_h, $total_k );
-				$average_v = sprintf( "%.2f", $average_v );
-				$average_p = sprintf( "%.2f", $average_p );
-				$average_h = sprintf( "%.2f", $average_h );
-				$average_k = (
-					int($average_k)
-					? Format_Bytes( sprintf( "%.2f", $average_k ) )
-					: "0.00"
-				);
-				my @valaverage =
-				  ( $average_v, $average_p, $average_h, $average_k );
-				my @valdata = ();
-				my $xx      = 0;
-
-				foreach
-				  my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )
-				{
-					$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
-					my $year  = $1;
-					my $month = $2;
-					my $day   = $3;
-					if ( !DateIsValid( $day, $month, $year ) ) {
-						next;
-					}    # If not an existing day, go to next
-					$valdata[ $xx++ ] = $DayVisits{ $year . $month . $day }
-					  || 0;
-					$valdata[ $xx++ ] = $DayPages{ $year . $month . $day } || 0;
-					$valdata[ $xx++ ] = $DayHits{ $year . $month . $day }  || 0;
-					$valdata[ $xx++ ] = $DayBytes{ $year . $month . $day } || 0;
-				}
-				my $function = "ShowGraph_$pluginname";
-				&$function(
-					"$title",              "daysofmonth",
-					$ShowDaysOfMonthStats, \@blocklabel,
-					\@vallabel,            \@valcolor,
-					\@valmax,              \@valtotal,
-					\@valaverage,          \@valdata
-				);
-				$graphdone=1;
-			}
-			if (! $graphdone) {
-				print "<table>\n";
-				print "<tr valign=\"bottom\">\n";
-				foreach
-				  my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )
-				{
-					$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
-					my $year  = $1;
-					my $month = $2;
-					my $day   = $3;
-					if ( !DateIsValid( $day, $month, $year ) ) {
-						next;
-					}    # If not an existing day, go to next
-					my $bredde_v = 0;
-					my $bredde_p = 0;
-					my $bredde_h = 0;
-					my $bredde_k = 0;
-					if ( $max_v > 0 ) {
-						$bredde_v =
-						  int( ( $DayVisits{ $year . $month . $day } || 0 ) /
-							  $max_v * $BarHeight ) + 1;
-					}
-					if ( $max_h > 0 ) {
-						$bredde_p =
-						  int( ( $DayPages{ $year . $month . $day } || 0 ) /
-							  $max_h * $BarHeight ) + 1;
-					}
-					if ( $max_h > 0 ) {
-						$bredde_h =
-						  int( ( $DayHits{ $year . $month . $day } || 0 ) /
-							  $max_h * $BarHeight ) + 1;
-					}
-					if ( $max_k > 0 ) {
-						$bredde_k =
-						  int( ( $DayBytes{ $year . $month . $day } || 0 ) /
-							  $max_k * $BarHeight ) + 1;
-					}
-					print "<td>";
-					if ( $ShowDaysOfMonthStats =~ /V/i ) {
-						print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vv'}\" height=\"$bredde_v\" width=\"4\""
-						  . AltTitle( "$Message[10]: "
-							  . int( $DayVisits{ $year . $month . $day } || 0 )
-						  )
-						  . " />";
-					}
-					if ( $ShowDaysOfMonthStats =~ /P/i ) {
-						print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"4\""
-						  . AltTitle( "$Message[56]: "
-							  . int( $DayPages{ $year . $month . $day } || 0 ) )
-						  . " />";
-					}
-					if ( $ShowDaysOfMonthStats =~ /H/i ) {
-						print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"4\""
-						  . AltTitle( "$Message[57]: "
-							  . int( $DayHits{ $year . $month . $day } || 0 ) )
-						  . " />";
-					}
-					if ( $ShowDaysOfMonthStats =~ /B/i ) {
-						print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"4\""
-						  . AltTitle(
-							"$Message[75]: "
-							  . Format_Bytes(
-								$DayBytes{ $year . $month . $day }
-							  )
-						  )
-						  . " />";
-					}
-					print "</td>\n";
-				}
-				print "<td>&nbsp;</td>";
-
-				# Show average value cell
-				print "<td>";
-				my $bredde_v = 0;
-				my $bredde_p = 0;
-				my $bredde_h = 0;
-				my $bredde_k = 0;
-				if ( $max_v > 0 ) {
-					$bredde_v = int( $average_v / $max_v * $BarHeight ) + 1;
-				}
-				if ( $max_h > 0 ) {
-					$bredde_p = int( $average_p / $max_h * $BarHeight ) + 1;
-				}
-				if ( $max_h > 0 ) {
-					$bredde_h = int( $average_h / $max_h * $BarHeight ) + 1;
-				}
-				if ( $max_k > 0 ) {
-					$bredde_k = int( $average_k / $max_k * $BarHeight ) + 1;
-				}
-				$average_v = sprintf( "%.2f", $average_v );
-				$average_p = sprintf( "%.2f", $average_p );
-				$average_h = sprintf( "%.2f", $average_h );
-				$average_k = (
-					int($average_k)
-					? Format_Bytes( sprintf( "%.2f", $average_k ) )
-					: "0.00"
-				);
-				if ( $ShowDaysOfMonthStats =~ /V/i ) {
-					print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vv'}\" height=\"$bredde_v\" width=\"4\""
-					  . AltTitle("$Message[10]: $average_v") . " />";
-				}
-				if ( $ShowDaysOfMonthStats =~ /P/i ) {
-					print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"4\""
-					  . AltTitle("$Message[56]: $average_p") . " />";
-				}
-				if ( $ShowDaysOfMonthStats =~ /H/i ) {
-					print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"4\""
-					  . AltTitle("$Message[57]: $average_h") . " />";
-				}
-				if ( $ShowDaysOfMonthStats =~ /B/i ) {
-					print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"4\""
-					  . AltTitle("$Message[75]: $average_k") . " />";
-				}
-				print "</td>\n";
-				print "</tr>\n";
-
-				# Show lib for day
-				print "<tr valign=\"middle\">";
-				foreach
-				  my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )
-				{
-					$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
-					my $year  = $1;
-					my $month = $2;
-					my $day   = $3;
-					if ( !DateIsValid( $day, $month, $year ) ) {
-						next;
-					}    # If not an existing day, go to next
-					my $dayofweekcursor = DayOfWeek( $day, $month, $year );
-					print "<td"
-					  . (
-						$dayofweekcursor =~ /[06]/
-						? " bgcolor=\"#$color_weekend\""
-						: ""
-					  )
-					  . ">";
-					print(
-						!$StaticLinks
-						  && $day == $nowday
-						  && $month == $nowmonth
-						  && $year == $nowyear
-						? '<font class="currentday">'
-						: ''
-					);
-					print "$day<br /><span style=\"font-size: "
-					  . (    $FrameName ne 'mainright'
-						  && $QueryString !~ /buildpdf/i ? "9" : "8" )
-					  . "px;\">"
-					  . $MonthNumLib{$month}
-					  . "</span>";
-					print(   !$StaticLinks
-						  && $day == $nowday
-						  && $month == $nowmonth
-						  && $year == $nowyear ? '</font>' : '' );
-					print "</td>\n";
-				}
-				print "<td>&nbsp;</td>";
-				print "<td valign=\"middle\""
-				  . Tooltip(18)
-				  . ">$Message[96]</td>\n";
-				print "</tr>\n";
-				print "</table>\n";
-			}
-			print "<br />\n";
-
-			# Show data array for days
-			if ($AddDataArrayShowDaysOfMonthStats) {
-				print "<table>\n";
-				print
-"<tr><td width=\"80\" bgcolor=\"#$color_TableBGRowTitle\">$Message[4]</td>";
-				if ( $ShowDaysOfMonthStats =~ /V/i ) {
-					print "<td width=\"80\" bgcolor=\"#$color_v\""
-					  . Tooltip(1)
-					  . ">$Message[10]</td>";
-				}
-				if ( $ShowDaysOfMonthStats =~ /P/i ) {
-					print "<td width=\"80\" bgcolor=\"#$color_p\""
-					  . Tooltip(3)
-					  . ">$Message[56]</td>";
-				}
-				if ( $ShowDaysOfMonthStats =~ /H/i ) {
-					print "<td width=\"80\" bgcolor=\"#$color_h\""
-					  . Tooltip(4)
-					  . ">$Message[57]</td>";
-				}
-				if ( $ShowDaysOfMonthStats =~ /B/i ) {
-					print "<td width=\"80\" bgcolor=\"#$color_k\""
-					  . Tooltip(5)
-					  . ">$Message[75]</td>";
-				}
-				print "</tr>";
-				foreach
-				  my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )
-				{
-					$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
-					my $year  = $1;
-					my $month = $2;
-					my $day   = $3;
-					if ( !DateIsValid( $day, $month, $year ) ) {
-						next;
-					}    # If not an existing day, go to next
-					my $dayofweekcursor = DayOfWeek( $day, $month, $year );
-					print "<tr"
-					  . (
-						$dayofweekcursor =~ /[06]/
-						? " bgcolor=\"#$color_weekend\""
-						: ""
-					  )
-					  . ">";
-					print "<td>"
-					  . (
-						!$StaticLinks
-						  && $day == $nowday
-						  && $month == $nowmonth
-						  && $year == $nowyear
-						? '<font class="currentday">'
-						: ''
-					  );
-					print Format_Date( "$year$month$day" . "000000", 2 );
-					print(   !$StaticLinks
-						  && $day == $nowday
-						  && $month == $nowmonth
-						  && $year == $nowyear ? '</font>' : '' );
-					print "</td>";
-					if ( $ShowDaysOfMonthStats =~ /V/i ) {
-						print "<td>",
-						  Format_Number($DayVisits{ $year . $month . $day }
-						  ? $DayVisits{ $year . $month . $day }
-						  : "0"), "</td>";
-					}
-					if ( $ShowDaysOfMonthStats =~ /P/i ) {
-						print "<td>",
-						  Format_Number($DayPages{ $year . $month . $day }
-						  ? $DayPages{ $year . $month . $day }
-						  : "0"), "</td>";
-					}
-					if ( $ShowDaysOfMonthStats =~ /H/i ) {
-						print "<td>",
-						  Format_Number($DayHits{ $year . $month . $day }
-						  ? $DayHits{ $year . $month . $day }
-						  : "0"), "</td>";
-					}
-					if ( $ShowDaysOfMonthStats =~ /B/i ) {
-						print "<td>",
-						  Format_Bytes(
-							int( $DayBytes{ $year . $month . $day } || 0 ) ),
-						  "</td>";
-					}
-					print "</tr>\n";
-				}
-
-				# Average row
-				print
-"<tr bgcolor=\"#$color_TableBGRowTitle\"><td>$Message[96]</td>";
-				if ( $ShowDaysOfMonthStats =~ /V/i ) {
-					print "<td>".Format_Number($average_v)."</td>";
-				}
-				if ( $ShowDaysOfMonthStats =~ /P/i ) {
-					print "<td>".Format_Number($average_p)."</td>";
-				}
-				if ( $ShowDaysOfMonthStats =~ /H/i ) {
-					print "<td>".Format_Number($average_h)."</td>";
-				}
-				if ( $ShowDaysOfMonthStats =~ /B/i ) {
-					print "<td>".Format_Number($average_k)."</td>";
-				}
-				print "</tr>\n";
-
-				# Total row
-				print
-"<tr bgcolor=\"#$color_TableBGRowTitle\"><td>$Message[102]</td>";
-				if ( $ShowDaysOfMonthStats =~ /V/i ) {
-					print "<td>".Format_Number($total_v)."</td>";
-				}
-				if ( $ShowDaysOfMonthStats =~ /P/i ) {
-					print "<td>".Format_Number($total_p)."</td>";
-				}
-				if ( $ShowDaysOfMonthStats =~ /H/i ) {
-					print "<td>".Format_Number($total_h)."</td>";
-				}
-				if ( $ShowDaysOfMonthStats =~ /B/i ) {
-					print "<td>" . Format_Bytes($total_k) . "</td>";
-				}
-				print "</tr>\n";
-				print "</table>\n<br />";
-			}
-
-			print "</center>\n";
-			print "</td></tr>\n";
-			&tab_end();
+			&HTMLMainDaily($firstdaytocountaverage, $lastdaytocountaverage,
+						  $firstdaytoshowtime, $lastdaytoshowtime);
 		}
 
 		# BY DAY OF WEEK
 		#-------------------------
 		if ($ShowDaysOfWeekStats) {
-			if ($Debug) { debug( "ShowDaysOfWeekStats", 2 ); }
-			print "$Center<a name=\"daysofweek\">&nbsp;</a><br />\n";
-			my $title = "$Message[91]";
-			&tab_head( "$title", 18, 0, 'daysofweek' );
-			print "<tr>";
-			print "<td align=\"center\">";
-			print "<center>\n";
-
-			$max_h = $max_k = 0;    # Start from 0 because can be lower than 1
-			                        # Get average value for day of week
-			my @avg_dayofweek_nb = ();
-			my @avg_dayofweek_p  = ();
-			my @avg_dayofweek_h  = ();
-			my @avg_dayofweek_k  = ();
-			foreach my $daycursor (
-				$firstdaytocountaverage .. $lastdaytocountaverage )
-			{
-				$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
-				my $year  = $1;
-				my $month = $2;
-				my $day   = $3;
-				if ( !DateIsValid( $day, $month, $year ) ) {
-					next;
-				}    # If not an existing day, go to next
-				my $dayofweekcursor = DayOfWeek( $day, $month, $year );
-				$avg_dayofweek_nb[$dayofweekcursor]
-				  ++; # Increase number of day used to count for this day of week
-				$avg_dayofweek_p[$dayofweekcursor] +=
-				  ( $DayPages{$daycursor} || 0 );
-				$avg_dayofweek_h[$dayofweekcursor] +=
-				  ( $DayHits{$daycursor} || 0 );
-				$avg_dayofweek_k[$dayofweekcursor] +=
-				  ( $DayBytes{$daycursor} || 0 );
-			}
-			for (@DOWIndex) {
-				if ( $avg_dayofweek_nb[$_] ) {
-					$avg_dayofweek_p[$_] =
-					  $avg_dayofweek_p[$_] / $avg_dayofweek_nb[$_];
-					$avg_dayofweek_h[$_] =
-					  $avg_dayofweek_h[$_] / $avg_dayofweek_nb[$_];
-					$avg_dayofweek_k[$_] =
-					  $avg_dayofweek_k[$_] / $avg_dayofweek_nb[$_];
-
-		  #if ($avg_dayofweek_p[$_] > $max_p) { $max_p = $avg_dayofweek_p[$_]; }
-					if ( $avg_dayofweek_h[$_] > $max_h ) {
-						$max_h = $avg_dayofweek_h[$_];
-					}
-					if ( $avg_dayofweek_k[$_] > $max_k ) {
-						$max_k = $avg_dayofweek_k[$_];
-					}
-				}
-				else {
-					$avg_dayofweek_p[$_] = "?";
-					$avg_dayofweek_h[$_] = "?";
-					$avg_dayofweek_k[$_] = "?";
-				}
-			}
-
-			# Show bars for days of week
-			my $graphdone=0;
-			foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
-			{
-				my @blocklabel = ();
-				for (@DOWIndex) {
-					push @blocklabel,
-					  ( $Message[ $_ + 84 ] . ( $_ =~ /[06]/ ? "!" : "" ) );
-				}
-				my @vallabel =
-				  ( "$Message[56]", "$Message[57]", "$Message[75]" );
-				my @valcolor = ( "$color_p", "$color_h", "$color_k" );
-				my @valmax = ( int($max_h), int($max_h), int($max_k) );
-				my @valtotal = ( $total_p, $total_h, $total_k );
-				$average_p = sprintf( "%.2f", $average_p );
-				$average_h = sprintf( "%.2f", $average_h );
-				$average_k = (
-					int($average_k)
-					? Format_Bytes( sprintf( "%.2f", $average_k ) )
-					: "0.00"
-				);
-				my @valaverage = ( $average_p, $average_h, $average_k );
-				my @valdata    = ();
-				my $xx         = 0;
-
-				for (@DOWIndex) {
-					$valdata[ $xx++ ] = $avg_dayofweek_p[$_] || 0;
-					$valdata[ $xx++ ] = $avg_dayofweek_h[$_] || 0;
-					$valdata[ $xx++ ] = $avg_dayofweek_k[$_] || 0;
-
-					# Round to be ready to show array
-					$avg_dayofweek_p[$_] =
-					  sprintf( "%.2f", $avg_dayofweek_p[$_] );
-					$avg_dayofweek_h[$_] =
-					  sprintf( "%.2f", $avg_dayofweek_h[$_] );
-					$avg_dayofweek_k[$_] =
-					  sprintf( "%.2f", $avg_dayofweek_k[$_] );
-
-					# Remove decimal part that are .0
-					if ( $avg_dayofweek_p[$_] == int( $avg_dayofweek_p[$_] ) ) {
-						$avg_dayofweek_p[$_] = int( $avg_dayofweek_p[$_] );
-					}
-					if ( $avg_dayofweek_h[$_] == int( $avg_dayofweek_h[$_] ) ) {
-						$avg_dayofweek_h[$_] = int( $avg_dayofweek_h[$_] );
-					}
-				}
-				my $function = "ShowGraph_$pluginname";
-				&$function(
-					"$title",             "daysofweek",
-					$ShowDaysOfWeekStats, \@blocklabel,
-					\@vallabel,           \@valcolor,
-					\@valmax,             \@valtotal,
-					\@valaverage,         \@valdata
-				);
-				$graphdone=1;
-			}
-			if (! $graphdone) 
-			{
-				print "<table>\n";
-				print "<tr valign=\"bottom\">\n";
-				for (@DOWIndex) {
-					my $bredde_p = 0;
-					my $bredde_h = 0;
-					my $bredde_k = 0;
-					if ( $max_h > 0 ) {
-						$bredde_p = int(
-							(
-								  $avg_dayofweek_p[$_] ne '?'
-								? $avg_dayofweek_p[$_]
-								: 0
-							) / $max_h * $BarHeight
-						) + 1;
-					}
-					if ( $max_h > 0 ) {
-						$bredde_h = int(
-							(
-								  $avg_dayofweek_h[$_] ne '?'
-								? $avg_dayofweek_h[$_]
-								: 0
-							) / $max_h * $BarHeight
-						) + 1;
-					}
-					if ( $max_k > 0 ) {
-						$bredde_k = int(
-							(
-								  $avg_dayofweek_k[$_] ne '?'
-								? $avg_dayofweek_k[$_]
-								: 0
-							) / $max_k * $BarHeight
-						) + 1;
-					}
-					$avg_dayofweek_p[$_] = sprintf(
-						"%.2f",
-						(
-							  $avg_dayofweek_p[$_] ne '?'
-							? $avg_dayofweek_p[$_]
-							: 0
-						)
-					);
-					$avg_dayofweek_h[$_] = sprintf(
-						"%.2f",
-						(
-							  $avg_dayofweek_h[$_] ne '?'
-							? $avg_dayofweek_h[$_]
-							: 0
-						)
-					);
-					$avg_dayofweek_k[$_] = sprintf(
-						"%.2f",
-						(
-							  $avg_dayofweek_k[$_] ne '?'
-							? $avg_dayofweek_k[$_]
-							: 0
-						)
-					);
-
-					# Remove decimal part that are .0
-					if ( $avg_dayofweek_p[$_] == int( $avg_dayofweek_p[$_] ) ) {
-						$avg_dayofweek_p[$_] = int( $avg_dayofweek_p[$_] );
-					}
-					if ( $avg_dayofweek_h[$_] == int( $avg_dayofweek_h[$_] ) ) {
-						$avg_dayofweek_h[$_] = int( $avg_dayofweek_h[$_] );
-					}
-					print "<td valign=\"bottom\">";
-					if ( $ShowDaysOfWeekStats =~ /P/i ) {
-						print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"6\""
-						  . AltTitle("$Message[56]: $avg_dayofweek_p[$_]")
-						  . " />";
-					}
-					if ( $ShowDaysOfWeekStats =~ /H/i ) {
-						print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"6\""
-						  . AltTitle("$Message[57]: $avg_dayofweek_h[$_]")
-						  . " />";
-					}
-					if ( $ShowDaysOfWeekStats =~ /B/i ) {
-						print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"6\""
-						  . AltTitle( "$Message[75]: "
-							  . Format_Bytes( $avg_dayofweek_k[$_] ) )
-						  . " />";
-					}
-					print "</td>\n";
-				}
-				print "</tr>\n";
-				print "<tr" . Tooltip(17) . ">\n";
-				for (@DOWIndex) {
-					print "<td"
-					  . ( $_ =~ /[06]/ ? " bgcolor=\"#$color_weekend\"" : "" )
-					  . ">"
-					  . (
-						!$StaticLinks
-						  && $_ == ( $nowwday - 1 )
-						  && $MonthRequired == $nowmonth
-						  && $YearRequired == $nowyear
-						? '<font class="currentday">'
-						: ''
-					  );
-					print $Message[ $_ + 84 ];
-					print(   !$StaticLinks
-						  && $_ == ( $nowwday - 1 )
-						  && $MonthRequired == $nowmonth
-						  && $YearRequired == $nowyear ? '</font>' : '' );
-					print "</td>";
-				}
-				print "</tr>\n</table>\n";
-			}
-			print "<br />\n";
-
-			# Show data array for days of week
-			if ($AddDataArrayShowDaysOfWeekStats) {
-				print "<table>\n";
-				print
-"<tr><td width=\"80\" bgcolor=\"#$color_TableBGRowTitle\">$Message[4]</td>";
-				if ( $ShowDaysOfWeekStats =~ /P/i ) {
-					print "<td width=\"80\" bgcolor=\"#$color_p\""
-					  . Tooltip(3)
-					  . ">$Message[56]</td>";
-				}
-				if ( $ShowDaysOfWeekStats =~ /H/i ) {
-					print "<td width=\"80\" bgcolor=\"#$color_h\""
-					  . Tooltip(4)
-					  . ">$Message[57]</td>";
-				}
-				if ( $ShowDaysOfWeekStats =~ /B/i ) {
-					print "<td width=\"80\" bgcolor=\"#$color_k\""
-					  . Tooltip(5)
-					  . ">$Message[75]</td></tr>";
-				}
-				for (@DOWIndex) {
-					print "<tr"
-					  . ( $_ =~ /[06]/ ? " bgcolor=\"#$color_weekend\"" : "" )
-					  . ">";
-					print "<td>"
-					  . (
-						!$StaticLinks
-						  && $_ == ( $nowwday - 1 )
-						  && $MonthRequired == $nowmonth
-						  && $YearRequired == $nowyear
-						? '<font class="currentday">'
-						: ''
-					  );
-					print $Message[ $_ + 84 ];
-					print(   !$StaticLinks
-						  && $_ == ( $nowwday - 1 )
-						  && $MonthRequired == $nowmonth
-						  && $YearRequired == $nowyear ? '</font>' : '' );
-					print "</td>";
-					if ( $ShowDaysOfWeekStats =~ /P/i ) {
-						print "<td>", Format_Number($avg_dayofweek_p[$_]), "</td>";
-					}
-					if ( $ShowDaysOfWeekStats =~ /H/i ) {
-						print "<td>", Format_Number($avg_dayofweek_h[$_]), "</td>";
-					}
-					if ( $ShowDaysOfWeekStats =~ /B/i ) {
-						print "<td>", Format_Bytes( $avg_dayofweek_k[$_] ),
-						  "</td>";
-					}
-					print "</tr>\n";
-				}
-				print "</table>\n<br />\n";
-			}
-
-			print "</center></td>";
-			print "</tr>\n";
-			&tab_end();
+			&HTMLMainDaysofWeek($firstdaytocountaverage, $lastdaytocountaverage);
 		}
 
 		# BY HOUR
 		#----------------------------
 		if ($ShowHoursStats) {
-			if ($Debug) { debug( "ShowHoursStats", 2 ); }
-			print "$Center<a name=\"hours\">&nbsp;</a><br />\n";
-			my $title = "$Message[20]";
-			if ( $PluginsLoaded{'GetTimeZoneTitle'}{'timezone'} ) {
-				$title .= " (GMT "
-				  . ( GetTimeZoneTitle_timezone() >= 0 ? "+" : "" )
-				  . int( GetTimeZoneTitle_timezone() ) . ")";
-			}
-			&tab_head( "$title", 19, 0, 'hours' );
-			print "<tr><td align=\"center\">\n";
-			print "<center>\n";
-
-			$max_h = $max_k = 1;
-			for ( my $ix = 0 ; $ix <= 23 ; $ix++ ) {
-
-				#if ($_time_p[$ix]>$max_p) { $max_p=$_time_p[$ix]; }
-				if ( $_time_h[$ix] > $max_h ) { $max_h = $_time_h[$ix]; }
-				if ( $_time_k[$ix] > $max_k ) { $max_k = $_time_k[$ix]; }
-			}
-
-			# Show bars for hour
-			my $graphdone=0;
-			foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
-			{
-				my @blocklabel = ( 0 .. 23 );
-				my @vallabel   =
-				  ( "$Message[56]", "$Message[57]", "$Message[75]" );
-				my @valcolor = ( "$color_p", "$color_h", "$color_k" );
-				my @valmax = ( int($max_h), int($max_h), int($max_k) );
-				my @valtotal   = ( $total_p,   $total_h,   $total_k );
-				my @valaverage = ( $average_p, $average_h, $average_k );
-				my @valdata    = ();
-				my $xx         = 0;
-				for ( 0 .. 23 ) {
-					$valdata[ $xx++ ] = $_time_p[$_] || 0;
-					$valdata[ $xx++ ] = $_time_h[$_] || 0;
-					$valdata[ $xx++ ] = $_time_k[$_] || 0;
-				}
-				my $function = "ShowGraph_$pluginname";
-				&$function(
-					"$title",        "hours",
-					$ShowHoursStats, \@blocklabel,
-					\@vallabel,      \@valcolor,
-					\@valmax,        \@valtotal,
-					\@valaverage,    \@valdata
-				);
-				$graphdone=1;
-			}
-			if (! $graphdone) 
-			{
-				print "<table>\n";
-				print "<tr valign=\"bottom\">\n";
-				for ( my $ix = 0 ; $ix <= 23 ; $ix++ ) {
-					my $bredde_p = 0;
-					my $bredde_h = 0;
-					my $bredde_k = 0;
-					if ( $max_h > 0 ) {
-						$bredde_p =
-						  int( $BarHeight * $_time_p[$ix] / $max_h ) + 1;
-					}
-					if ( $max_h > 0 ) {
-						$bredde_h =
-						  int( $BarHeight * $_time_h[$ix] / $max_h ) + 1;
-					}
-					if ( $max_k > 0 ) {
-						$bredde_k =
-						  int( $BarHeight * $_time_k[$ix] / $max_k ) + 1;
-					}
-					print "<td>";
-					if ( $ShowHoursStats =~ /P/i ) {
-						print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"6\""
-						  . AltTitle( "$Message[56]: " . int( $_time_p[$ix] ) )
-						  . " />";
-					}
-					if ( $ShowHoursStats =~ /H/i ) {
-						print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"6\""
-						  . AltTitle( "$Message[57]: " . int( $_time_h[$ix] ) )
-						  . " />";
-					}
-					if ( $ShowHoursStats =~ /B/i ) {
-						print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"6\""
-						  . AltTitle(
-							"$Message[75]: " . Format_Bytes( $_time_k[$ix] ) )
-						  . " />";
-					}
-					print "</td>\n";
-				}
-				print "</tr>\n";
-
-				# Show hour lib
-				print "<tr" . Tooltip(17) . ">";
-				for ( my $ix = 0 ; $ix <= 23 ; $ix++ ) {
-					print "<th width=\"19\">$ix</th>\n"
-					  ;   # width=19 instead of 18 to avoid a MacOS browser bug.
-				}
-				print "</tr>\n";
-
-				# Show clock icon
-				print "<tr" . Tooltip(17) . ">\n";
-				for ( my $ix = 0 ; $ix <= 23 ; $ix++ ) {
-					my $hrs = ( $ix >= 12 ? $ix - 12 : $ix );
-					my $hre = ( $ix >= 12 ? $ix - 11 : $ix + 1 );
-					my $apm = ( $ix >= 12 ? "pm"     : "am" );
-					print
-"<td><img src=\"$DirIcons\/clock\/hr$hre.png\" width=\"12\" alt=\"$hrs:00 - $hre:00 $apm\" /></td>\n";
-				}
-				print "</tr>\n";
-				print "</table>\n";
-			}
-			print "<br />\n";
-
-			# Show data array for hours
-			if ($AddDataArrayShowHoursStats) {
-				print "<table width=\"650\"><tr>\n";
-				print "<td align=\"center\"><center>\n";
-
-				print "<table>\n";
-				print
-"<tr><td width=\"80\" bgcolor=\"#$color_TableBGRowTitle\">$Message[20]</td>";
-				if ( $ShowHoursStats =~ /P/i ) {
-					print "<td width=\"80\" bgcolor=\"#$color_p\""
-					  . Tooltip(3)
-					  . ">$Message[56]</td>";
-				}
-				if ( $ShowHoursStats =~ /H/i ) {
-					print "<td width=\"80\" bgcolor=\"#$color_h\""
-					  . Tooltip(4)
-					  . ">$Message[57]</td>";
-				}
-				if ( $ShowHoursStats =~ /B/i ) {
-					print "<td width=\"80\" bgcolor=\"#$color_k\""
-					  . Tooltip(5)
-					  . ">$Message[75]</td>";
-				}
-				print "</tr>";
-				for ( my $ix = 0 ; $ix <= 11 ; $ix++ ) {
-					my $monthix = ( $ix < 10 ? "0$ix" : "$ix" );
-					print "<tr>";
-					print "<td>$monthix</td>";
-					if ( $ShowHoursStats =~ /P/i ) {
-						print "<td>",
-						  Format_Number($_time_p[$monthix] ? $_time_p[$monthix] : "0"),
-						  "</td>";
-					}
-					if ( $ShowHoursStats =~ /H/i ) {
-						print "<td>",
-						  Format_Number($_time_h[$monthix] ? $_time_h[$monthix] : "0"),
-						  "</td>";
-					}
-					if ( $ShowHoursStats =~ /B/i ) {
-						print "<td>", Format_Bytes( int( $_time_k[$monthix] ) ),
-						  "</td>";
-					}
-					print "</tr>\n";
-				}
-				print "</table>\n";
-
-				print "</center></td>";
-				print "<td width=\"10\">&nbsp;</td>";
-				print "<td align=\"center\"><center>\n";
-
-				print "<table>\n";
-				print
-"<tr><td width=\"80\" bgcolor=\"#$color_TableBGRowTitle\">$Message[20]</td>";
-				if ( $ShowHoursStats =~ /P/i ) {
-					print "<td width=\"80\" bgcolor=\"#$color_p\""
-					  . Tooltip(3)
-					  . ">$Message[56]</td>";
-				}
-				if ( $ShowHoursStats =~ /H/i ) {
-					print "<td width=\"80\" bgcolor=\"#$color_h\""
-					  . Tooltip(4)
-					  . ">$Message[57]</td>";
-				}
-				if ( $ShowHoursStats =~ /B/i ) {
-					print "<td width=\"80\" bgcolor=\"#$color_k\""
-					  . Tooltip(5)
-					  . ">$Message[75]</td>";
-				}
-				print "</tr>\n";
-				for ( my $ix = 12 ; $ix <= 23 ; $ix++ ) {
-					my $monthix = ( $ix < 10 ? "0$ix" : "$ix" );
-					print "<tr>";
-					print "<td>$monthix</td>";
-					if ( $ShowHoursStats =~ /P/i ) {
-						print "<td>",
-						  Format_Number($_time_p[$monthix] ? $_time_p[$monthix] : "0"),
-						  "</td>";
-					}
-					if ( $ShowHoursStats =~ /H/i ) {
-						print "<td>",
-						  Format_Number($_time_h[$monthix] ? $_time_h[$monthix] : "0"),
-						  "</td>";
-					}
-					if ( $ShowHoursStats =~ /B/i ) {
-						print "<td>", Format_Bytes( int( $_time_k[$monthix] ) ),
-						  "</td>";
-					}
-					print "</tr>\n";
-				}
-				print "</table>\n";
-
-				print "</center></td></tr></table>\n";
-				print "<br />\n";
-			}
-
-			print "</center></td></tr>\n";
-			&tab_end();
+			&HTMLMainHours();
 		}
 
 		print "\n<a name=\"who\">&nbsp;</a>\n\n";
@@ -17520,638 +20229,43 @@ if ( scalar keys %HTMLOutput ) {
 		# BY COUNTRY/DOMAIN
 		#---------------------------
 		if ($ShowDomainsStats) {
-			if ($Debug) { debug( "ShowDomainsStats", 2 ); }
-			print "$Center<a name=\"countries\">&nbsp;</a><br />\n";
-			my $title =
-"$Message[25] ($Message[77] $MaxNbOf{'Domain'}) &nbsp; - &nbsp; <a href=\""
-			  . (
-				$ENV{'GATEWAY_INTERFACE'}
-				  || !$StaticLinks
-				? XMLEncode("$AWScript?${NewLinkParams}output=alldomains")
-				: "$StaticLinks.alldomains.$StaticExt"
-			  )
-			  . "\"$NewLinkTarget>$Message[80]</a>";
-			&tab_head( "$title", 19, 0, 'countries' );
-			print
-"<tr bgcolor=\"#$color_TableBGRowTitle\"><th width=\"$WIDTHCOLICON\">&nbsp;</th><th colspan=\"2\">$Message[17]</th>";
-
-			## to add unique visitors and number of visits by calculation of average of the relation with total
-			## pages and total hits, and total visits and total unique
-			## by Josep Ruano @ CAPSiDE
-			if ( $ShowDomainsStats =~ /U/i ) {
-				print "<th bgcolor=\"#$color_u\" width=\"80\""
-				  . Tooltip(2)
-				  . ">$Message[11]</th>";
-			}
-			if ( $ShowDomainsStats =~ /V/i ) {
-				print "<th bgcolor=\"#$color_v\" width=\"80\""
-				  . Tooltip(1)
-				  . ">$Message[10]</th>";
-			}
-			if ( $ShowDomainsStats =~ /P/i ) {
-				print "<th bgcolor=\"#$color_p\" width=\"80\""
-				  . Tooltip(3)
-				  . ">$Message[56]</th>";
-			}
-			if ( $ShowDomainsStats =~ /H/i ) {
-				print "<th bgcolor=\"#$color_h\" width=\"80\""
-				  . Tooltip(4)
-				  . ">$Message[57]</th>";
-			}
-			if ( $ShowDomainsStats =~ /B/i ) {
-				print "<th bgcolor=\"#$color_k\" width=\"80\""
-				  . Tooltip(5)
-				  . ">$Message[75]</th>";
-			}
-			print "<th>&nbsp;</th>";
-			print "</tr>\n";
-			$total_u = $total_v = $total_p = $total_h = $total_k = 0;
-			$max_h = 1;
-			foreach ( values %_domener_h ) {
-				if ( $_ > $max_h ) { $max_h = $_; }
-			}
-			$max_k = 1;
-			foreach ( values %_domener_k ) {
-				if ( $_ > $max_k ) { $max_k = $_; }
-			}
-			my $count = 0;
-			&BuildKeyList(
-				$MaxNbOf{'Domain'}, $MinHit{'Domain'},
-				\%_domener_h,       \%_domener_p
-			);
-			foreach my $key (@keylist) {
-				my ( $_domener_u, $_domener_v );
-				my $bredde_p = 0;
-				my $bredde_h = 0;
-				my $bredde_k = 0;
-				my $bredde_u = 0;
-				my $bredde_v = 0;
-				if ( $max_h > 0 ) {
-					$bredde_p =
-					  int( $BarWidth * $_domener_p{$key} / $max_h ) + 1;
-				}    # use max_h to enable to compare pages with hits
-				if ( $_domener_p{$key} && $bredde_p == 1 ) { $bredde_p = 2; }
-				if ( $max_h > 0 ) {
-					$bredde_h =
-					  int( $BarWidth * $_domener_h{$key} / $max_h ) + 1;
-				}
-				if ( $_domener_h{$key} && $bredde_h == 1 ) { $bredde_h = 2; }
-				if ( $max_k > 0 ) {
-					$bredde_k =
-					  int( $BarWidth * ( $_domener_k{$key} || 0 ) / $max_k ) +
-					  1;
-				}
-				if ( $_domener_k{$key} && $bredde_k == 1 ) { $bredde_k = 2; }
-				my $newkey = lc($key);
-				if ( $newkey eq 'ip' || !$DomainsHashIDLib{$newkey} ) {
-					print
-"<tr><td width=\"$WIDTHCOLICON\"><img src=\"$DirIcons\/flags\/ip.png\" height=\"14\""
-					  . AltTitle("$Message[0]")
-					  . " /></td><td class=\"aws\">$Message[0]</td><td>$newkey</td>";
-				}
-				else {
-					print
-"<tr><td width=\"$WIDTHCOLICON\"><img src=\"$DirIcons\/flags\/$newkey.png\" height=\"14\""
-					  . AltTitle("$newkey")
-					  . " /></td><td class=\"aws\">$DomainsHashIDLib{$newkey}</td><td>$newkey</td>";
-				}
-				## to add unique visitors and number of visits, by Josep Ruano @ CAPSiDE
-				if ( $ShowDomainsStats =~ /U/i ) {
-					$_domener_u = (
-						  $_domener_p{$key}
-						? $_domener_p{$key} / $TotalPages
-						: 0
-					);
-					$_domener_u += ( $_domener_h{$key} / $TotalHits );
-					$_domener_u =
-					  sprintf( "%.0f", ( $_domener_u * $TotalUnique ) / 2 );
-					print "<td>".Format_Number($_domener_u)." ("
-					  . sprintf( "%.1f%", 100 * $_domener_u / $TotalUnique )
-					  . ")</td>";
-				}
-				if ( $ShowDomainsStats =~ /V/i ) {
-					$_domener_v = (
-						  $_domener_p{$key}
-						? $_domener_p{$key} / $TotalPages
-						: 0
-					);
-					$_domener_v += ( $_domener_h{$key} / $TotalHits );
-					$_domener_v =
-					  sprintf( "%.0f", ( $_domener_v * $TotalVisits ) / 2 );
-					print "<td>".Format_Number($_domener_v)." ("
-					  . sprintf( "%.1f%", 100 * $_domener_v / $TotalVisits )
-					  . ")</td>";
-				}
-
-				if ( $ShowDomainsStats =~ /P/i ) {
-					print "<td>"
-					  . ( $_domener_p{$key} ? Format_Number($_domener_p{$key}) : '&nbsp;' )
-					  . "</td>";
-				}
-				if ( $ShowDomainsStats =~ /H/i ) {
-					print "<td>".Format_Number($_domener_h{$key})."</td>";
-				}
-				if ( $ShowDomainsStats =~ /B/i ) {
-					print "<td>" . Format_Bytes( $_domener_k{$key} ) . "</td>";
-				}
-				print "<td class=\"aws\">";
-
-				if ( $ShowDomainsStats =~ /P/i ) {
-					print
-"<img src=\"$DirIcons\/other\/$BarPng{'hp'}\" width=\"$bredde_p\" height=\"5\""
-					  . AltTitle("")
-					  . " /><br />\n";
-				}
-				if ( $ShowDomainsStats =~ /H/i ) {
-					print
-"<img src=\"$DirIcons\/other\/$BarPng{'hh'}\" width=\"$bredde_h\" height=\"5\""
-					  . AltTitle("")
-					  . " /><br />\n";
-				}
-				if ( $ShowDomainsStats =~ /B/i ) {
-					print
-"<img src=\"$DirIcons\/other\/$BarPng{'hk'}\" width=\"$bredde_k\" height=\"5\""
-					  . AltTitle("") . " />";
-				}
-				print "</td>";
-				print "</tr>\n";
-
-				$total_u += $_domener_u;
-				$total_v += $_domener_v;
-				$total_p += $_domener_p{$key};
-				$total_h += $_domener_h{$key};
-				$total_k += $_domener_k{$key} || 0;
-				$count++;
-			}
-			my $rest_u = $TotalUnique - $total_u;
-			my $rest_v = $TotalVisits - $total_v;
-			$rest_p = $TotalPages - $total_p;
-			$rest_h = $TotalHits - $total_h;
-			$rest_k = $TotalBytes - $total_k;
-			if (   $rest_u > 0
-				|| $rest_v > 0
-				|| $rest_p > 0
-				|| $rest_h > 0
-				|| $rest_k > 0 )
-			{    # All other domains (known or not)
-				print
-"<tr><td width=\"$WIDTHCOLICON\">&nbsp;</td><td colspan=\"2\" class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
-				if ( $ShowDomainsStats =~ /U/i ) { print "<td>$rest_u</td>"; }
-				if ( $ShowDomainsStats =~ /V/i ) { print "<td>$rest_v</td>"; }
-				if ( $ShowDomainsStats =~ /P/i ) { print "<td>$rest_p</td>"; }
-				if ( $ShowDomainsStats =~ /H/i ) { print "<td>$rest_h</td>"; }
-				if ( $ShowDomainsStats =~ /B/i ) {
-					print "<td>" . Format_Bytes($rest_k) . "</td>";
-				}
-				print "<td class=\"aws\">&nbsp;</td>";
-				print "</tr>\n";
-			}
-			&tab_end();
+			&HTMLMainCountries($NewLinkParams, $NewLinkTarget);
 		}
 
 		# BY HOST/VISITOR
 		#--------------------------
 		if ($ShowHostsStats) {
-			if ($Debug) { debug( "ShowHostsStats", 2 ); }
-			print "$Center<a name=\"visitors\">&nbsp;</a><br />\n";
-			my $title =
-"$Message[81] ($Message[77] $MaxNbOf{'HostsShown'}) &nbsp; - &nbsp; <a href=\""
-			  . (
-				$ENV{'GATEWAY_INTERFACE'}
-				  || !$StaticLinks
-				? XMLEncode("$AWScript?${NewLinkParams}output=allhosts")
-				: "$StaticLinks.allhosts.$StaticExt"
-			  )
-			  . "\"$NewLinkTarget>$Message[80]</a> &nbsp; - &nbsp; <a href=\""
-			  . (
-				$ENV{'GATEWAY_INTERFACE'}
-				  || !$StaticLinks
-				? XMLEncode("$AWScript?${NewLinkParams}output=lasthosts")
-				: "$StaticLinks.lasthosts.$StaticExt"
-			  )
-			  . "\"$NewLinkTarget>$Message[9]</a> &nbsp; - &nbsp; <a href=\""
-			  . (
-				$ENV{'GATEWAY_INTERFACE'}
-				  || !$StaticLinks
-				? XMLEncode("$AWScript?${NewLinkParams}output=unknownip")
-				: "$StaticLinks.unknownip.$StaticExt"
-			  )
-			  . "\"$NewLinkTarget>$Message[45]</a>";
-			&tab_head( "$title", 19, 0, 'visitors' );
-			print "<tr bgcolor=\"#$color_TableBGRowTitle\">";
-			print "<th>";
-			if ( $MonthRequired ne 'all' ) {
-				print
-"$Message[81] : ".Format_Number($TotalHostsKnown)." $Message[82], ".Format_Number($TotalHostsUnknown)." $Message[1]<br />".Format_Number($TotalUnique)." $Message[11]</th>";
-			}
-			else {
-				print "$Message[81] : " . ( scalar keys %_host_h ) . "</th>";
-			}
-			&ShowHostInfo('__title__');
-			if ( $ShowHostsStats =~ /P/i ) {
-				print "<th bgcolor=\"#$color_p\" width=\"80\""
-				  . Tooltip(3)
-				  . ">$Message[56]</th>";
-			}
-			if ( $ShowHostsStats =~ /H/i ) {
-				print "<th bgcolor=\"#$color_h\" width=\"80\""
-				  . Tooltip(4)
-				  . ">$Message[57]</th>";
-			}
-			if ( $ShowHostsStats =~ /B/i ) {
-				print "<th bgcolor=\"#$color_k\" width=\"80\""
-				  . Tooltip(5)
-				  . ">$Message[75]</th>";
-			}
-			if ( $ShowHostsStats =~ /L/i ) {
-				print "<th width=\"120\">$Message[9]</th>";
-			}
-			print "</tr>\n";
-			$total_p = $total_h = $total_k = 0;
-			my $count = 0;
-			&BuildKeyList( $MaxNbOf{'HostsShown'}, $MinHit{'Host'}, \%_host_h,
-				\%_host_p );
-			foreach my $key (@keylist) {
-				print "<tr>";
-				print "<td class=\"aws\">$key</td>";
-				&ShowHostInfo($key);
-				if ( $ShowHostsStats =~ /P/i ) {
-					print '<td>' . ( Format_Number($_host_p{$key}) || "&nbsp;" ) . '</td>';
-				}
-				if ( $ShowHostsStats =~ /H/i ) {
-					print "<td>".Format_Number($_host_h{$key})."</td>";
-				}
-				if ( $ShowHostsStats =~ /B/i ) {
-					print '<td>' . Format_Bytes( $_host_k{$key} ) . '</td>';
-				}
-				if ( $ShowHostsStats =~ /L/i ) {
-					print '<td nowrap="nowrap">'
-					  . (
-						$_host_l{$key}
-						? Format_Date( $_host_l{$key}, 1 )
-						: '-'
-					  )
-					  . '</td>';
-				}
-				print "</tr>\n";
-				$total_p += $_host_p{$key};
-				$total_h += $_host_h{$key};
-				$total_k += $_host_k{$key} || 0;
-				$count++;
-			}
-			$rest_p = $TotalPages - $total_p;
-			$rest_h = $TotalHits - $total_h;
-			$rest_k = $TotalBytes - $total_k;
-			if ( $rest_p > 0 || $rest_h > 0 || $rest_k > 0 )
-			{    # All other visitors (known or not)
-				print "<tr>";
-				print
-"<td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
-				&ShowHostInfo('');
-				if ( $ShowHostsStats =~ /P/i ) { print "<td>".Format_Number($rest_p)."</td>"; }
-				if ( $ShowHostsStats =~ /H/i ) { print "<td>".Format_Number($rest_h)."</td>"; }
-				if ( $ShowHostsStats =~ /B/i ) {
-					print "<td>" . Format_Bytes($rest_k) . "</td>";
-				}
-				if ( $ShowHostsStats =~ /L/i ) { print "<td>&nbsp;</td>"; }
-				print "</tr>\n";
-			}
-			&tab_end();
+			&HTMLMainHosts($NewLinkParams, $NewLinkTarget);
 		}
 
 		# BY SENDER EMAIL
 		#----------------------------
 		if ($ShowEMailSenders) {
-			&ShowEmailSendersChart( $NewLinkParams, $NewLinkTarget );
+			&HTMLShowEmailSendersChart( $NewLinkParams, $NewLinkTarget );
 		}
 
 		# BY RECEIVER EMAIL
 		#----------------------------
 		if ($ShowEMailReceivers) {
-			&ShowEmailReceiversChart( $NewLinkParams, $NewLinkTarget );
+			&HTMLShowEmailReceiversChart( $NewLinkParams, $NewLinkTarget );
 		}
 
 		# BY LOGIN
 		#----------------------------
 		if ($ShowAuthenticatedUsers) {
-			if ($Debug) { debug( "ShowAuthenticatedUsers", 2 ); }
-			print "$Center<a name=\"logins\">&nbsp;</a><br />\n";
-			my $title =
-"$Message[94] ($Message[77] $MaxNbOf{'LoginShown'}) &nbsp; - &nbsp; <a href=\""
-			  . (
-				$ENV{'GATEWAY_INTERFACE'}
-				  || !$StaticLinks
-				? XMLEncode("$AWScript?${NewLinkParams}output=alllogins")
-				: "$StaticLinks.alllogins.$StaticExt"
-			  )
-			  . "\"$NewLinkTarget>$Message[80]</a>";
-			if ( $ShowAuthenticatedUsers =~ /L/i ) {
-				$title .= " &nbsp; - &nbsp; <a href=\""
-				  . (
-					$ENV{'GATEWAY_INTERFACE'}
-					  || !$StaticLinks
-					? XMLEncode("$AWScript?${NewLinkParams}output=lastlogins")
-					: "$StaticLinks.lastlogins.$StaticExt"
-				  )
-				  . "\"$NewLinkTarget>$Message[9]</a>";
-			}
-			&tab_head( "$title", 19, 0, 'logins' );
-			print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$Message[94] : "
-			  . Format_Number(( scalar keys %_login_h )) . "</th>";
-			&ShowUserInfo('__title__');
-			if ( $ShowAuthenticatedUsers =~ /P/i ) {
-				print "<th bgcolor=\"#$color_p\" width=\"80\""
-				  . Tooltip(3)
-				  . ">$Message[56]</th>";
-			}
-			if ( $ShowAuthenticatedUsers =~ /H/i ) {
-				print "<th bgcolor=\"#$color_h\" width=\"80\""
-				  . Tooltip(4)
-				  . ">$Message[57]</th>";
-			}
-			if ( $ShowAuthenticatedUsers =~ /B/i ) {
-				print "<th bgcolor=\"#$color_k\" width=\"80\""
-				  . Tooltip(5)
-				  . ">$Message[75]</th>";
-			}
-			if ( $ShowAuthenticatedUsers =~ /L/i ) {
-				print "<th width=\"120\">$Message[9]</th>";
-			}
-			print "</tr>\n";
-			$total_p = $total_h = $total_k = 0;
-			$max_h = 1;
-			foreach ( values %_login_h ) {
-				if ( $_ > $max_h ) { $max_h = $_; }
-			}
-			$max_k = 1;
-			foreach ( values %_login_k ) {
-				if ( $_ > $max_k ) { $max_k = $_; }
-			}
-			my $count = 0;
-			&BuildKeyList( $MaxNbOf{'LoginShown'}, $MinHit{'Login'}, \%_login_h,
-				\%_login_p );
-			foreach my $key (@keylist) {
-				my $bredde_p = 0;
-				my $bredde_h = 0;
-				my $bredde_k = 0;
-				if ( $max_h > 0 ) {
-					$bredde_p = int( $BarWidth * $_login_p{$key} / $max_h ) + 1;
-				}    # use max_h to enable to compare pages with hits
-				if ( $max_h > 0 ) {
-					$bredde_h = int( $BarWidth * $_login_h{$key} / $max_h ) + 1;
-				}
-				if ( $max_k > 0 ) {
-					$bredde_k = int( $BarWidth * $_login_k{$key} / $max_k ) + 1;
-				}
-				print "<tr><td class=\"aws\">$key</td>";
-				&ShowUserInfo($key);
-				if ( $ShowAuthenticatedUsers =~ /P/i ) {
-					print "<td>"
-					  . ( $_login_p{$key} ? Format_Number($_login_p{$key}) : "&nbsp;" )
-					  . "</td>";
-				}
-				if ( $ShowAuthenticatedUsers =~ /H/i ) {
-					print "<td>".Format_Number($_login_h{$key})."</td>";
-				}
-				if ( $ShowAuthenticatedUsers =~ /B/i ) {
-					print "<td>" . Format_Bytes( $_login_k{$key} ) . "</td>";
-				}
-				if ( $ShowAuthenticatedUsers =~ /L/i ) {
-					print "<td>"
-					  . (
-						$_login_l{$key}
-						? Format_Date( $_login_l{$key}, 1 )
-						: '-'
-					  )
-					  . "</td>";
-				}
-				print "</tr>\n";
-				$total_p += $_login_p{$key};
-				$total_h += $_login_h{$key};
-				$total_k += $_login_k{$key};
-				$count++;
-			}
-			$rest_p = $TotalPages - $total_p;
-			$rest_h = $TotalHits - $total_h;
-			$rest_k = $TotalBytes - $total_k;
-			if ( $rest_p > 0 || $rest_h > 0 || $rest_k > 0 )
-			{    # All other logins
-				print
-				  "<tr><td class=\"aws\"><span style=\"color: #$color_other\">"
-				  . ( $PageDir eq 'rtl' ? "<span dir=\"ltr\">" : "" )
-				  . "$Message[125]"
-				  . ( $PageDir eq 'rtl' ? "</span>" : "" )
-				  . "</span></td>";
-				&ShowUserInfo('');
-				if ( $ShowAuthenticatedUsers =~ /P/i ) {
-					print "<td>" . ( $rest_p ? Format_Number($rest_p) : "&nbsp;" ) . "</td>";
-				}
-				if ( $ShowAuthenticatedUsers =~ /H/i ) {
-					print "<td>".Format_Number($rest_h)."</td>";
-				}
-				if ( $ShowAuthenticatedUsers =~ /B/i ) {
-					print "<td>" . Format_Bytes($rest_k) . "</td>";
-				}
-				if ( $ShowAuthenticatedUsers =~ /L/i ) {
-					print "<td>&nbsp;</td>";
-				}
-				print "</tr>\n";
-			}
-			&tab_end();
+			&HTMLMainLogins($NewLinkParams, $NewLinkTarget);
 		}
 
 		# BY ROBOTS
 		#----------------------------
 		if ($ShowRobotsStats) {
-			if ($Debug) { debug( "ShowRobotStats", 2 ); }
-			print "$Center<a name=\"robots\">&nbsp;</a><br />\n";
-			&tab_head(
-"$Message[53] ($Message[77] $MaxNbOf{'RobotShown'}) &nbsp; - &nbsp; <a href=\""
-				  . (
-					$ENV{'GATEWAY_INTERFACE'}
-					  || !$StaticLinks
-					? XMLEncode("$AWScript?${NewLinkParams}output=allrobots")
-					: "$StaticLinks.allrobots.$StaticExt"
-				  )
-				  . "\"$NewLinkTarget>$Message[80]</a> &nbsp; - &nbsp; <a href=\""
-				  . (
-					$ENV{'GATEWAY_INTERFACE'}
-					  || !$StaticLinks
-					? XMLEncode("$AWScript?${NewLinkParams}output=lastrobots")
-					: "$StaticLinks.lastrobots.$StaticExt"
-				  )
-				  . "\"$NewLinkTarget>$Message[9]</a>",
-				19, 0, 'robots'
-			);
-			print "<tr bgcolor=\"#$color_TableBGRowTitle\""
-			  . Tooltip(16) . "><th>"
-			  . Format_Number(( scalar keys %_robot_h ))
-			  . " $Message[51]*</th>";
-			if ( $ShowRobotsStats =~ /H/i ) {
-				print
-				  "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>";
-			}
-			if ( $ShowRobotsStats =~ /B/i ) {
-				print
-				  "<th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
-			}
-			if ( $ShowRobotsStats =~ /L/i ) {
-				print "<th width=\"120\">$Message[9]</th>";
-			}
-			print "</tr>\n";
-			$total_p = $total_h = $total_k = $total_r = 0;
-			my $count = 0;
-			&BuildKeyList( $MaxNbOf{'RobotShown'}, $MinHit{'Robot'}, \%_robot_h,
-				\%_robot_h );
-			foreach my $key (@keylist) {
-				print "<tr><td class=\"aws\">"
-				  . ( $PageDir eq 'rtl' ? "<span dir=\"ltr\">" : "" )
-				  . ( $RobotsHashIDLib{$key} ? $RobotsHashIDLib{$key} : $key )
-				  . ( $PageDir eq 'rtl' ? "</span>" : "" ) . "</td>";
-				if ( $ShowRobotsStats =~ /H/i ) {
-					print "<td>"
-					  . Format_Number(( $_robot_h{$key} - $_robot_r{$key} ))
-					  . ( $_robot_r{$key} ? "+$_robot_r{$key}" : "" ) . "</td>";
-				}
-				if ( $ShowRobotsStats =~ /B/i ) {
-					print "<td>" . Format_Bytes( $_robot_k{$key} ) . "</td>";
-				}
-				if ( $ShowRobotsStats =~ /L/i ) {
-					print "<td>"
-					  . (
-						$_robot_l{$key}
-						? Format_Date( $_robot_l{$key}, 1 )
-						: '-'
-					  )
-					  . "</td>";
-				}
-				print "</tr>\n";
-
-				#$total_p += $_robot_p{$key};
-				$total_h += $_robot_h{$key};
-				$total_k += $_robot_k{$key} || 0;
-				$total_r += $_robot_r{$key} || 0;
-				$count++;
-			}
-
-			# For bots we need to count Totals
-			my $TotalPagesRobots =
-			  0;    #foreach (values %_robot_p) { $TotalPagesRobots+=$_; }
-			my $TotalHitsRobots = 0;
-			foreach ( values %_robot_h ) { $TotalHitsRobots += $_; }
-			my $TotalBytesRobots = 0;
-			foreach ( values %_robot_k ) { $TotalBytesRobots += $_; }
-			my $TotalRRobots = 0;
-			foreach ( values %_robot_r ) { $TotalRRobots += $_; }
-			$rest_p = 0;    #$rest_p=$TotalPagesRobots-$total_p;
-			$rest_h = $TotalHitsRobots - $total_h;
-			$rest_k = $TotalBytesRobots - $total_k;
-			$rest_r = $TotalRRobots - $total_r;
-
-			if ( $rest_p > 0 || $rest_h > 0 || $rest_k > 0 || $rest_r > 0 )
-			{               # All other robots
-				print
-"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
-				if ( $ShowRobotsStats =~ /H/i ) {
-					print "<td>"
-					  . Format_Number(( $rest_h - $rest_r ))
-					  . ( $rest_r ? "+$rest_r" : "" ) . "</td>";
-				}
-				if ( $ShowRobotsStats =~ /B/i ) {
-					print "<td>" . ( Format_Bytes($rest_k) ) . "</td>";
-				}
-				if ( $ShowRobotsStats =~ /L/i ) { print "<td>&nbsp;</td>"; }
-				print "</tr>\n";
-			}
-			&tab_end(
-				"* $Message[156]" . ( $TotalRRobots ? " $Message[157]" : "" ) );
+			&HTMLMainRobots($NewLinkParams, $NewLinkTarget);
 		}
 
 		# BY WORMS
 		#----------------------------
 		if ($ShowWormsStats) {
-			if ($Debug) { debug( "ShowWormsStats", 2 ); }
-			print "$Center<a name=\"worms\">&nbsp;</a><br />\n";
-			&tab_head( "$Message[163] ($Message[77] $MaxNbOf{'WormsShown'})",
-				19, 0, 'worms' );
-			print "<tr bgcolor=\"#$color_TableBGRowTitle\"" . Tooltip(21) . ">";
-			print "<th>" . Format_Number(( scalar keys %_worm_h )) . " $Message[164]*</th>";
-			print "<th>$Message[167]</th>";
-			if ( $ShowWormsStats =~ /H/i ) {
-				print
-				  "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>";
-			}
-			if ( $ShowWormsStats =~ /B/i ) {
-				print
-				  "<th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
-			}
-			if ( $ShowWormsStats =~ /L/i ) {
-				print "<th width=\"120\">$Message[9]</th>";
-			}
-			print "</tr>\n";
-			$total_p = $total_h = $total_k = 0;
-			my $count = 0;
-			&BuildKeyList( $MaxNbOf{'WormsShown'}, $MinHit{'Worm'}, \%_worm_h,
-				\%_worm_h );
-			foreach my $key (@keylist) {
-				print "<tr>";
-				print "<td class=\"aws\">"
-				  . ( $PageDir eq 'rtl' ? "<span dir=\"ltr\">" : "" )
-				  . ( $WormsHashLib{$key} ? $WormsHashLib{$key} : $key )
-				  . ( $PageDir eq 'rtl' ? "</span>" : "" ) . "</td>";
-				print "<td class=\"aws\">"
-				  . ( $PageDir eq 'rtl' ? "<span dir=\"ltr\">" : "" )
-				  . ( $WormsHashTarget{$key} ? $WormsHashTarget{$key} : $key )
-				  . ( $PageDir eq 'rtl' ? "</span>" : "" ) . "</td>";
-				if ( $ShowWormsStats =~ /H/i ) {
-					print "<td>" . Format_Number($_worm_h{$key}) . "</td>";
-				}
-				if ( $ShowWormsStats =~ /B/i ) {
-					print "<td>" . Format_Bytes( $_worm_k{$key} ) . "</td>";
-				}
-				if ( $ShowWormsStats =~ /L/i ) {
-					print "<td>"
-					  . (
-						$_worm_l{$key}
-						? Format_Date( $_worm_l{$key}, 1 )
-						: '-'
-					  )
-					  . "</td>";
-				}
-				print "</tr>\n";
-
-				#$total_p += $_worm_p{$key};
-				$total_h += $_worm_h{$key};
-				$total_k += $_worm_k{$key} || 0;
-				$count++;
-			}
-
-			# For worms we need to count Totals
-			my $TotalPagesWorms =
-			  0;    #foreach (values %_worm_p) { $TotalPagesWorms+=$_; }
-			my $TotalHitsWorms = 0;
-			foreach ( values %_worm_h ) { $TotalHitsWorms += $_; }
-			my $TotalBytesWorms = 0;
-			foreach ( values %_worm_k ) { $TotalBytesWorms += $_; }
-			$rest_p = 0;    #$rest_p=$TotalPagesRobots-$total_p;
-			$rest_h = $TotalHitsWorms - $total_h;
-			$rest_k = $TotalBytesWorms - $total_k;
-
-			if ( $rest_p > 0 || $rest_h > 0 || $rest_k > 0 ) { # All other worms
-				print "<tr>";
-				print
-"<td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
-				print "<td class=\"aws\">-</td>";
-				if ( $ShowWormsStats =~ /H/i ) {
-					print "<td>" . Format_Number(($rest_h)) . "</td>";
-				}
-				if ( $ShowWormsStats =~ /B/i ) {
-					print "<td>" . ( Format_Bytes($rest_k) ) . "</td>";
-				}
-				if ( $ShowWormsStats =~ /L/i ) { print "<td>&nbsp;</td>"; }
-				print "</tr>\n";
-			}
-			&tab_end("* $Message[158]");
+			&HTMLMainWorms();
 		}
 
 		print "\n<a name=\"how\">&nbsp;</a>\n\n";
@@ -18159,660 +20273,43 @@ if ( scalar keys %HTMLOutput ) {
 		# BY SESSION
 		#----------------------------
 		if ($ShowSessionsStats) {
-			if ($Debug) { debug( "ShowSessionsStats", 2 ); }
-			print "$Center<a name=\"sessions\">&nbsp;</a><br />\n";
-			my $title = "$Message[117]";
-			&tab_head( $title, 19, 0, 'sessions' );
-			my $Totals = 0;
-			foreach (@SessionsRange) {
-				$average_s += ( $_session{$_} || 0 ) * $SessionsAverage{$_};
-				$Totals += $_session{$_} || 0;
-			}
-			if ($Totals) { $average_s = int( $average_s / $Totals ); }
-			else { $average_s = '?'; }
-			print "<tr bgcolor=\"#$color_TableBGRowTitle\""
-			  . Tooltip(1)
-			  . "><th>$Message[10]: ".Format_Number($TotalVisits)." - $Message[96]: ".Format_Number($average_s)." s</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[10]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
-			$average_s = 0;
-			$total_s   = 0;
-			my $count = 0;
-			foreach my $key (@SessionsRange) {
-				my $p = 0;
-				if ($TotalVisits) {
-					$p = int( $_session{$key} / $TotalVisits * 1000 ) / 10;
-				}
-				$total_s += $_session{$key} || 0;
-				print "<tr><td class=\"aws\">$key</td>";
-				print "<td>"
-				  . ( $_session{$key} ? Format_Number($_session{$key}) : "&nbsp;" ) . "</td>";
-				print "<td>"
-				  . ( $_session{$key} ? "$p %" : "&nbsp;" ) . "</td>";
-				print "</tr>\n";
-				$count++;
-			}
-			$rest_s = $TotalVisits - $total_s;
-			if ( $rest_s > 0 ) {    # All others sessions
-				my $p = 0;
-				if ($TotalVisits) {
-					$p = int( $rest_s / $TotalVisits * 1000 ) / 10;
-				}
-				print "<tr"
-				  . Tooltip(20)
-				  . "><td class=\"aws\"><span style=\"color: #$color_other\">$Message[0]</span></td>";
-				print "<td>".Format_Number($rest_s)."</td>";
-				print "<td>" . ( $rest_s ? "$p %" : "&nbsp;" ) . "</td>";
-				print "</tr>\n";
-			}
-			&tab_end();
+			&HTMLMainSessions();
 		}
 
 		# BY FILE TYPE
 		#-------------------------
 		if ($ShowFileTypesStats) {
-			if ($Debug) { debug( "ShowFileTypesStatsCompressionStats", 2 ); }
-			print "$Center<a name=\"filetypes\">&nbsp;</a><br />\n";
-			my $Totalh = 0;
-			foreach ( keys %_filetypes_h ) { $Totalh += $_filetypes_h{$_}; }
-			my $Totalk = 0;
-			foreach ( keys %_filetypes_k ) { $Totalk += $_filetypes_k{$_}; }
-			my $title = "$Message[73]";
-			if ( $ShowFileTypesStats =~ /C/i ) { $title .= " - $Message[98]"; }
-			&tab_head( "$title", 19, 0, 'filetypes' );
-			print
-"<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"3\">$Message[73]</th>";
-
-			if ( $ShowFileTypesStats =~ /H/i ) {
-				print "<th bgcolor=\"#$color_h\" width=\"80\""
-				  . Tooltip(4)
-				  . ">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th>";
-			}
-			if ( $ShowFileTypesStats =~ /B/i ) {
-				print "<th bgcolor=\"#$color_k\" width=\"80\""
-				  . Tooltip(5)
-				  . ">$Message[75]</th><th bgcolor=\"#$color_k\" width=\"80\">$Message[15]</th>";
-			}
-			if ( $ShowFileTypesStats =~ /C/i ) {
-				print
-"<th bgcolor=\"#$color_k\" width=\"100\">$Message[100]</th><th bgcolor=\"#$color_k\" width=\"100\">$Message[101]</th><th bgcolor=\"#$color_k\" width=\"100\">$Message[99]</th>";
-			}
-			print "</tr>\n";
-			my $total_con = 0;
-			my $total_cre = 0;
-			my $count     = 0;
-			&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_filetypes_h,
-				\%_filetypes_h );
-			foreach my $key (@keylist) {
-				my $p_h = '&nbsp;';
-				my $p_k = '&nbsp;';
-				if ($Totalh) {
-					$p_h = int( $_filetypes_h{$key} / $Totalh * 1000 ) / 10;
-					$p_h = "$p_h %";
-				}
-				if ($Totalk) {
-					$p_k = int( $_filetypes_k{$key} / $Totalk * 1000 ) / 10;
-					$p_k = "$p_k %";
-				}
-				if ( $key eq 'Unknown' ) {
-					print "<tr><td"
-					  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
-					  . "><img src=\"$DirIcons\/mime\/unknown.png\""
-					  . AltTitle("")
-					  . " /></td><td class=\"aws\" colspan=\"2\"><span style=\"color: #$color_other\">$Message[0]</span></td>";
-				}
-				else {
-					my $nameicon = $MimeHashIcon{$key} || "notavailable";
-					my $nametype =
-					  $MimeHashLib{ $MimeHashFamily{$key} || "" } || "&nbsp;";
-					print "<tr><td"
-					  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
-					  . "><img src=\"$DirIcons\/mime\/$nameicon.png\""
-					  . AltTitle("")
-					  . " /></td><td class=\"aws\">$key</td>";
-					print "<td class=\"aws\">$nametype</td>";
-				}
-				if ( $ShowFileTypesStats =~ /H/i ) {
-					print "<td>".Format_Number($_filetypes_h{$key})."</td><td>$p_h</td>";
-				}
-				if ( $ShowFileTypesStats =~ /B/i ) {
-					print '<td nowrap="nowrap">'
-					  . Format_Bytes( $_filetypes_k{$key} )
-					  . "</td><td>$p_k</td>";
-				}
-				if ( $ShowFileTypesStats =~ /C/i ) {
-					if ( $_filetypes_gz_in{$key} ) {
-						my $percent = int(
-							100 * (
-								1 - $_filetypes_gz_out{$key} /
-								  $_filetypes_gz_in{$key}
-							)
-						);
-						printf(
-							"<td>%s</td><td>%s</td><td>%s (%s%)</td>",
-							Format_Bytes( $_filetypes_gz_in{$key} ),
-							Format_Bytes( $_filetypes_gz_out{$key} ),
-							Format_Bytes(
-								$_filetypes_gz_in{$key} -
-								  $_filetypes_gz_out{$key}
-							),
-							$percent
-						);
-						$total_con += $_filetypes_gz_in{$key};
-						$total_cre += $_filetypes_gz_out{$key};
-					}
-					else {
-						print "<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>";
-					}
-				}
-				print "</tr>\n";
-				$count++;
-			}
-
-			# Add total (only usefull if compression is enabled)
-			if ( $ShowFileTypesStats =~ /C/i ) {
-				my $colspan = 3;
-				if ( $ShowFileTypesStats =~ /H/i ) { $colspan += 2; }
-				if ( $ShowFileTypesStats =~ /B/i ) { $colspan += 2; }
-				print "<tr>";
-				print
-"<td class=\"aws\" colspan=\"$colspan\"><b>$Message[98]</b></td>";
-				if ( $ShowFileTypesStats =~ /C/i ) {
-					if ($total_con) {
-						my $percent =
-						  int( 100 * ( 1 - $total_cre / $total_con ) );
-						printf(
-							"<td>%s</td><td>%s</td><td>%s (%s%)</td>",
-							Format_Bytes($total_con),
-							Format_Bytes($total_cre),
-							Format_Bytes( $total_con - $total_cre ),
-							$percent
-						);
-					}
-					else {
-						print "<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>";
-					}
-				}
-				print "</tr>\n";
-			}
-			&tab_end();
+			&HTMLMainFileType();
 		}
 
 		# BY FILE SIZE
 		#-------------------------
 		if ($ShowFileSizesStats) {
-
+			# TODO
 		}
 
-		# BY FILE/URL
+		# BY PAGE
 		#-------------------------
 		if ($ShowPagesStats) {
-			if ($Debug) {
-				debug(
-"ShowPagesStats (MaxNbOf{'PageShown'}=$MaxNbOf{'PageShown'} TotalDifferentPages=$TotalDifferentPages)",
-					2
-				);
-			}
-			print
-"$Center<a name=\"urls\">&nbsp;</a><a name=\"entry\">&nbsp;</a><a name=\"exit\">&nbsp;</a><br />\n";
-			my $title =
-"$Message[19] ($Message[77] $MaxNbOf{'PageShown'}) &nbsp; - &nbsp; <a href=\""
-			  . (
-				$ENV{'GATEWAY_INTERFACE'}
-				  || !$StaticLinks
-				? XMLEncode("$AWScript?${NewLinkParams}output=urldetail")
-				: "$StaticLinks.urldetail.$StaticExt"
-			  )
-			  . "\"$NewLinkTarget>$Message[80]</a>";
-			if ( $ShowPagesStats =~ /E/i ) {
-				$title .= " &nbsp; - &nbsp; <a href=\""
-				  . (
-					$ENV{'GATEWAY_INTERFACE'}
-					  || !$StaticLinks
-					? XMLEncode("$AWScript?${NewLinkParams}output=urlentry")
-					: "$StaticLinks.urlentry.$StaticExt"
-				  )
-				  . "\"$NewLinkTarget>$Message[104]</a>";
-			}
-			if ( $ShowPagesStats =~ /X/i ) {
-				$title .= " &nbsp; - &nbsp; <a href=\""
-				  . (
-					$ENV{'GATEWAY_INTERFACE'}
-					  || !$StaticLinks
-					? XMLEncode("$AWScript?${NewLinkParams}output=urlexit")
-					: "$StaticLinks.urlexit.$StaticExt"
-				  )
-				  . "\"$NewLinkTarget>$Message[116]</a>";
-			}
-			&tab_head( "$title", 19, 0, 'urls' );
-			print
-"<tr bgcolor=\"#$color_TableBGRowTitle\"><th>".Format_Number($TotalDifferentPages)." $Message[28]</th>";
-			if ( $ShowPagesStats =~ /P/i && $LogType ne 'F' ) {
-				print
-				  "<th bgcolor=\"#$color_p\" width=\"80\">$Message[29]</th>";
-			}
-			if ( $ShowPagesStats =~ /[PH]/i && $LogType eq 'F' ) {
-				print
-				  "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>";
-			}
-			if ( $ShowPagesStats =~ /B/i ) {
-				print
-				  "<th bgcolor=\"#$color_k\" width=\"80\">$Message[106]</th>";
-			}
-			if ( $ShowPagesStats =~ /E/i ) {
-				print
-				  "<th bgcolor=\"#$color_e\" width=\"80\">$Message[104]</th>";
-			}
-			if ( $ShowPagesStats =~ /X/i ) {
-				print
-				  "<th bgcolor=\"#$color_x\" width=\"80\">$Message[116]</th>";
-			}
-
-			# Call to plugins' function ShowPagesAddField
-			foreach
-			  my $pluginname ( keys %{ $PluginsLoaded{'ShowPagesAddField'} } )
-			{
-
-				#				my $function="ShowPagesAddField_$pluginname('title')";
-				#				eval("$function");
-				my $function = "ShowPagesAddField_$pluginname";
-				&$function('title');
-			}
-			print "<th>&nbsp;</th></tr>\n";
-			$total_p = $total_e = $total_x = $total_k = 0;
-			$max_p   = 1;
-			$max_k   = 1;
-			my $count = 0;
-			&BuildKeyList( $MaxNbOf{'PageShown'}, $MinHit{'File'}, \%_url_p,
-				\%_url_p );
-			foreach my $key (@keylist) {
-				if ( $_url_p{$key} > $max_p ) { $max_p = $_url_p{$key}; }
-				if ( $_url_k{$key} / ( $_url_p{$key} || 1 ) > $max_k ) {
-					$max_k = $_url_k{$key} / ( $_url_p{$key} || 1 );
-				}
-			}
-			foreach my $key (@keylist) {
-				print "<tr><td class=\"aws\">";
-				&ShowURLInfo($key);
-				print "</td>";
-				my $bredde_p = 0;
-				my $bredde_e = 0;
-				my $bredde_x = 0;
-				my $bredde_k = 0;
-				if ( $max_p > 0 ) {
-					$bredde_p =
-					  int( $BarWidth * ( $_url_p{$key} || 0 ) / $max_p ) + 1;
-				}
-				if ( ( $bredde_p == 1 ) && $_url_p{$key} ) { $bredde_p = 2; }
-				if ( $max_p > 0 ) {
-					$bredde_e =
-					  int( $BarWidth * ( $_url_e{$key} || 0 ) / $max_p ) + 1;
-				}
-				if ( ( $bredde_e == 1 ) && $_url_e{$key} ) { $bredde_e = 2; }
-				if ( $max_p > 0 ) {
-					$bredde_x =
-					  int( $BarWidth * ( $_url_x{$key} || 0 ) / $max_p ) + 1;
-				}
-				if ( ( $bredde_x == 1 ) && $_url_x{$key} ) { $bredde_x = 2; }
-				if ( $max_k > 0 ) {
-					$bredde_k =
-					  int( $BarWidth *
-						  ( ( $_url_k{$key} || 0 ) / ( $_url_p{$key} || 1 ) ) /
-						  $max_k ) + 1;
-				}
-				if ( ( $bredde_k == 1 ) && $_url_k{$key} ) { $bredde_k = 2; }
-				if ( $ShowPagesStats =~ /P/i && $LogType ne 'F' ) {
-					print "<td>".Format_Number($_url_p{$key})."</td>";
-				}
-				if ( $ShowPagesStats =~ /[PH]/i && $LogType eq 'F' ) {
-					print "<td>".Format_Number($_url_p{$key})."</td>";
-				}
-				if ( $ShowPagesStats =~ /B/i ) {
-					print "<td>"
-					  . (
-						$_url_k{$key}
-						? Format_Bytes(
-							$_url_k{$key} / ( $_url_p{$key} || 1 )
-						  )
-						: "&nbsp;"
-					  )
-					  . "</td>";
-				}
-				if ( $ShowPagesStats =~ /E/i ) {
-					print "<td>"
-					  . ( $_url_e{$key} ? Format_Number($_url_e{$key}) : "&nbsp;" ) . "</td>";
-				}
-				if ( $ShowPagesStats =~ /X/i ) {
-					print "<td>"
-					  . ( $_url_x{$key} ? Format_Number($_url_x{$key}) : "&nbsp;" ) . "</td>";
-				}
-
-				# Call to plugins' function ShowPagesAddField
-				foreach my $pluginname (
-					keys %{ $PluginsLoaded{'ShowPagesAddField'} } )
-				{
-
-					#					my $function="ShowPagesAddField_$pluginname('$key')";
-					#					eval("$function");
-					my $function = "ShowPagesAddField_$pluginname";
-					&$function($key);
-				}
-				print "<td class=\"aws\">";
-				if ( $ShowPagesStats =~ /P/i && $LogType ne 'F' ) {
-					print
-"<img src=\"$DirIcons\/other\/$BarPng{'hp'}\" width=\"$bredde_p\" height=\"4\""
-					  . AltTitle("")
-					  . " /><br />";
-				}
-				if ( $ShowPagesStats =~ /[PH]/i && $LogType eq 'F' ) {
-					print
-"<img src=\"$DirIcons\/other\/$BarPng{'hh'}\" width=\"$bredde_p\" height=\"4\""
-					  . AltTitle("")
-					  . " /><br />";
-				}
-				if ( $ShowPagesStats =~ /B/i ) {
-					print
-"<img src=\"$DirIcons\/other\/$BarPng{'hk'}\" width=\"$bredde_k\" height=\"4\""
-					  . AltTitle("")
-					  . " /><br />";
-				}
-				if ( $ShowPagesStats =~ /E/i ) {
-					print
-"<img src=\"$DirIcons\/other\/$BarPng{'he'}\" width=\"$bredde_e\" height=\"4\""
-					  . AltTitle("")
-					  . " /><br />";
-				}
-				if ( $ShowPagesStats =~ /X/i ) {
-					print
-"<img src=\"$DirIcons\/other\/$BarPng{'hx'}\" width=\"$bredde_x\" height=\"4\""
-					  . AltTitle("") . " />";
-				}
-				print "</td></tr>\n";
-				$total_p += $_url_p{$key} || 0;
-				$total_e += $_url_e{$key} || 0;
-				$total_x += $_url_x{$key} || 0;
-				$total_k += $_url_k{$key} || 0;
-				$count++;
-			}
-			$rest_p = $TotalPages - $total_p;
-			$rest_e = $TotalEntries - $total_e;
-			$rest_x = $TotalExits - $total_x;
-			$rest_k = $TotalBytesPages - $total_k;
-			if ( $rest_p > 0 || $rest_k > 0 || $rest_e > 0 || $rest_x > 0 )
-			{    # All other urls
-				print
-"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
-				if ( $ShowPagesStats =~ /P/i && $LogType ne 'F' ) {
-					print "<td>".Format_Number($rest_p)."</td>";
-				}
-				if ( $ShowPagesStats =~ /[PH]/i && $LogType eq 'F' ) {
-					print "<td>".Format_Number($rest_p)."</td>";
-				}
-				if ( $ShowPagesStats =~ /B/i ) {
-					print "<td>"
-					  . (
-						$rest_k
-						? Format_Bytes( $rest_k / ( $rest_p || 1 ) )
-						: "&nbsp;"
-					  )
-					  . "</td>";
-				}
-				if ( $ShowPagesStats =~ /E/i ) {
-					print "<td>" . ( $rest_e ? Format_Number($rest_e) : "&nbsp;" ) . "</td>";
-				}
-				if ( $ShowPagesStats =~ /X/i ) {
-					print "<td>" . ( $rest_x ? Format_Number($rest_x) : "&nbsp;" ) . "</td>";
-				}
-
-				# Call to plugins' function ShowPagesAddField
-				foreach my $pluginname (
-					keys %{ $PluginsLoaded{'ShowPagesAddField'} } )
-				{
-
-					#					my $function="ShowPagesAddField_$pluginname('')";
-					#					eval("$function");
-					my $function = "ShowPagesAddField_$pluginname";
-					&$function('');
-				}
-				print "<td>&nbsp;</td></tr>\n";
-			}
-			&tab_end();
+			&HTMLMainPages($NewLinkParams, $NewLinkTarget);
 		}
 
 		# BY OS
 		#----------------------------
 		if ($ShowOSStats) {
-			if ($Debug) { debug( "ShowOSStats", 2 ); }
-			print "$Center<a name=\"os\">&nbsp;</a><br />\n";
-			my $Totalh   = 0;
-			my %new_os_h = ();
-		  OSLOOP: foreach my $key ( keys %_os_h ) {
-				$Totalh += $_os_h{$key};
-				foreach my $family ( keys %OSFamily ) {
-					if ( $key =~ /^$family/i ) {
-						$new_os_h{"${family}cumul"} += $_os_h{$key};
-						next OSLOOP;
-					}
-				}
-				$new_os_h{$key} += $_os_h{$key};
-			}
-			my $title =
-"$Message[59] ($Message[77] $MaxNbOf{'OsShown'}) &nbsp; - &nbsp; <a href=\""
-			  . (
-				$ENV{'GATEWAY_INTERFACE'}
-				  || !$StaticLinks
-				? XMLEncode("$AWScript?${NewLinkParams}output=osdetail")
-				: "$StaticLinks.osdetail.$StaticExt"
-			  )
-			  . "\"$NewLinkTarget>$Message[80]/$Message[58]</a> &nbsp; - &nbsp; <a href=\""
-			  . (
-				$ENV{'GATEWAY_INTERFACE'}
-				  || !$StaticLinks
-				? XMLEncode("$AWScript?${NewLinkParams}output=unknownos")
-				: "$StaticLinks.unknownos.$StaticExt"
-			  )
-			  . "\"$NewLinkTarget>$Message[0]</a>";
-			&tab_head( "$title", 19, 0, 'os' );
-			print
-"<tr bgcolor=\"#$color_TableBGRowTitle\"><th width=\"$WIDTHCOLICON\">&nbsp;</th><th>$Message[59]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th></tr>\n";
-			$total_h = 0;
-			my $count = 0;
-			&BuildKeyList( $MaxNbOf{'OsShown'}, $MinHit{'Os'}, \%new_os_h,
-				\%new_os_h );
-			foreach my $key (@keylist) {
-				my $p = '&nbsp;';
-				if ($Totalh) {
-					$p = int( $new_os_h{$key} / $Totalh * 1000 ) / 10;
-					$p = "$p %";
-				}
-				if ( $key eq 'Unknown' ) {
-					print "<tr><td"
-					  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
-					  . "><img src=\"$DirIcons\/os\/unknown.png\""
-					  . AltTitle("")
-					  . " /></td><td class=\"aws\"><span style=\"color: #$color_other\">$Message[0]</span></td><td>".Format_Number($_os_h{$key})."</td><td>$p</td></tr>\n";
-				}
-				else {
-					my $keywithoutcumul = $key;
-					$keywithoutcumul =~ s/cumul$//i;
-					my $libos = $OSHashLib{$keywithoutcumul}
-					  || $keywithoutcumul;
-					my $nameicon = $keywithoutcumul;
-					$nameicon =~ s/[^\w]//g;
-					if ( $OSFamily{$keywithoutcumul} ) {
-						$libos = "<b>" . $OSFamily{$keywithoutcumul} . "</b>";
-					}
-					print "<tr><td"
-					  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
-					  . "><img src=\"$DirIcons\/os\/$nameicon.png\""
-					  . AltTitle("")
-					  . " /></td><td class=\"aws\">$libos</td><td>".Format_Number($new_os_h{$key})."</td><td>$p</td></tr>\n";
-				}
-				$total_h += $new_os_h{$key};
-				$count++;
-			}
-			if ($Debug) {
-				debug( "Total real / shown : $Totalh / $total_h", 2 );
-			}
-			$rest_h = $Totalh - $total_h;
-			if ( $rest_h > 0 ) {
-				my $p;
-				if ($Totalh) { $p = int( $rest_h / $Totalh * 1000 ) / 10; }
-				print "<tr>";
-				print "<td>&nbsp;</td>";
-				print
-"<td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td><td>".Format_Number($rest_h)."</td>";
-				print "<td>$p %</td></tr>\n";
-			}
-			&tab_end();
+			&HTMLMainOS($NewLinkParams, $NewLinkTarget);
 		}
 
 		# BY BROWSER
 		#----------------------------
 		if ($ShowBrowsersStats) {
-			if ($Debug) { debug( "ShowBrowsersStats", 2 ); }
-			print "$Center<a name=\"browsers\">&nbsp;</a><br />\n";
-			my $Totalh        = 0;
-			my %new_browser_h = ();
-		  BROWSERLOOP: foreach my $key ( keys %_browser_h ) {
-				$Totalh += $_browser_h{$key};
-				foreach my $family ( keys %BrowsersFamily ) {
-					if ( $key =~ /^$family/i ) {
-						$new_browser_h{"${family}cumul"} += $_browser_h{$key};
-						next BROWSERLOOP;
-					}
-				}
-				$new_browser_h{$key} += $_browser_h{$key};
-			}
-			my $title =
-"$Message[21] ($Message[77] $MaxNbOf{'BrowsersShown'}) &nbsp; - &nbsp; <a href=\""
-			  . (
-				$ENV{'GATEWAY_INTERFACE'}
-				  || !$StaticLinks
-				? XMLEncode("$AWScript?${NewLinkParams}output=browserdetail")
-				: "$StaticLinks.browserdetail.$StaticExt"
-			  )
-			  . "\"$NewLinkTarget>$Message[80]/$Message[58]</a> &nbsp; - &nbsp; <a href=\""
-			  . (
-				$ENV{'GATEWAY_INTERFACE'}
-				  || !$StaticLinks
-				? XMLEncode("$AWScript?${NewLinkParams}output=unknownbrowser")
-				: "$StaticLinks.unknownbrowser.$StaticExt"
-			  )
-			  . "\"$NewLinkTarget>$Message[0]</a>";
-			&tab_head( "$title", 19, 0, 'browsers' );
-			print
-"<tr bgcolor=\"#$color_TableBGRowTitle\"><th width=\"$WIDTHCOLICON\">&nbsp;</th><th>$Message[21]</th><th width=\"80\">$Message[111]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th></tr>\n";
-			$total_h = 0;
-			my $count = 0;
-			&BuildKeyList(
-				$MaxNbOf{'BrowsersShown'}, $MinHit{'Browser'},
-				\%new_browser_h,           \%new_browser_h
-			);
-			foreach my $key (@keylist) {
-				my $p = '&nbsp;';
-				if ($Totalh) {
-					$p = int( $new_browser_h{$key} / $Totalh * 1000 ) / 10;
-					$p = "$p %";
-				}
-				if ( $key eq 'Unknown' ) {
-					print "<tr><td"
-					  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
-					  . "><img src=\"$DirIcons\/browser\/unknown.png\""
-					  . AltTitle("")
-					  . " /></td><td class=\"aws\"><span style=\"color: #$color_other\">$Message[0]</span></td><td width=\"80\">?</td><td>".Format_Number($_browser_h{$key})."</td><td>$p</td></tr>\n";
-				}
-				else {
-					my $keywithoutcumul = $key;
-					$keywithoutcumul =~ s/cumul$//i;
-					my $libbrowser = $BrowsersHashIDLib{$keywithoutcumul}
-					  || $keywithoutcumul;
-					my $nameicon = $BrowsersHashIcon{$keywithoutcumul}
-					  || "notavailable";
-					if ( $BrowsersFamily{$keywithoutcumul} ) {
-						$libbrowser = "<b>$libbrowser</b>";
-					}
-					print "<tr><td"
-					  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
-					  . "><img src=\"$DirIcons\/browser\/$nameicon.png\""
-					  . AltTitle("")
-					  . " /></td><td class=\"aws\">"
-					  . ( $PageDir eq 'rtl' ? "<span dir=\"ltr\">" : "" )
-					  . "$libbrowser"
-					  . ( $PageDir eq 'rtl' ? "</span>" : "" )
-					  . "</td><td>"
-					  . (
-						$BrowsersHereAreGrabbers{$key}
-						? "<b>$Message[112]</b>"
-						: "$Message[113]"
-					  )
-					  . "</td><td>".Format_Number($new_browser_h{$key})."</td><td>$p</td></tr>\n";
-				}
-				$total_h += $new_browser_h{$key};
-				$count++;
-			}
-			if ($Debug) {
-				debug( "Total real / shown : $Totalh / $total_h", 2 );
-			}
-			$rest_h = $Totalh - $total_h;
-			if ( $rest_h > 0 ) {
-				my $p;
-				if ($Totalh) { $p = int( $rest_h / $Totalh * 1000 ) / 10; }
-				print "<tr>";
-				print "<td>&nbsp;</td>";
-				print
-"<td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td><td>&nbsp;</td><td>$rest_h</td>";
-				print "<td>$p %</td></tr>\n";
-			}
-			&tab_end();
+			&HTMLMainBrowsers($NewLinkParams, $NewLinkTarget);
 		}
 
 		# BY SCREEN SIZE
 		#----------------------------
 		if ($ShowScreenSizeStats) {
-			if ($Debug) { debug( "ShowScreenSizeStats", 2 ); }
-			print "$Center<a name=\"screensizes\">&nbsp;</a><br />\n";
-			my $Totalh = 0;
-			foreach ( keys %_screensize_h ) { $Totalh += $_screensize_h{$_}; }
-			my $title =
-			  "$Message[135] ($Message[77] $MaxNbOf{'ScreenSizesShown'})";
-			&tab_head( "$title", 0, 0, 'screensizes' );
-			print
-"<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$Message[135]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th></tr>\n";
-			my $total_h = 0;
-			my $count   = 0;
-			&BuildKeyList( $MaxNbOf{'ScreenSizesShown'},
-				$MinHit{'ScreenSize'}, \%_screensize_h, \%_screensize_h );
-
-			foreach my $key (@keylist) {
-				my $p = '&nbsp;';
-				if ($Totalh) {
-					$p = int( $_screensize_h{$key} / $Totalh * 1000 ) / 10;
-					$p = "$p %";
-				}
-				$total_h += $_screensize_h{$key} || 0;
-				print "<tr>";
-				if ( $key eq 'Unknown' ) {
-					print
-"<td class=\"aws\"><span style=\"color: #$color_other\">$Message[0]</span></td>";
-					print "<td>$p</td>";
-				}
-				else {
-					my $screensize = $key;
-					print "<td class=\"aws\">$screensize</td>";
-					print "<td>$p</td>";
-				}
-				print "</tr>\n";
-				$count++;
-			}
-			$rest_h = $Totalh - $total_h;
-			if ( $rest_h > 0 ) {    # All others sessions
-				my $p = 0;
-				if ($Totalh) { $p = int( $rest_h / $Totalh * 1000 ) / 10; }
-				print
-"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
-				print "<td>" . ( $rest_h ? "$p %" : "&nbsp;" ) . "</td>";
-				print "</tr>\n";
-			}
-			&tab_end();
+			&HTMLMainScreenSize();
 		}
 
 		print "\n<a name=\"refering\">&nbsp;</a>\n\n";
@@ -18820,764 +20317,50 @@ if ( scalar keys %HTMLOutput ) {
 		# BY REFERENCE
 		#---------------------------
 		if ($ShowOriginStats) {
-			if ($Debug) { debug( "ShowOriginStats", 2 ); }
-			print "$Center<a name=\"referer\">&nbsp;</a><br />\n";
-			my $Totalp = 0;
-			foreach ( 0 .. 5 ) {
-				$Totalp +=
-				  ( $_ != 4 || $IncludeInternalLinksInOriginSection )
-				  ? $_from_p[$_]
-				  : 0;
-			}
-			my $Totalh = 0;
-			foreach ( 0 .. 5 ) {
-				$Totalh +=
-				  ( $_ != 4 || $IncludeInternalLinksInOriginSection )
-				  ? $_from_h[$_]
-				  : 0;
-			}
-			&tab_head( $Message[36], 19, 0, 'referer' );
-			my @p_p = ( 0, 0, 0, 0, 0, 0 );
-			if ( $Totalp > 0 ) {
-				$p_p[0] = int( $_from_p[0] / $Totalp * 1000 ) / 10;
-				$p_p[1] = int( $_from_p[1] / $Totalp * 1000 ) / 10;
-				$p_p[2] = int( $_from_p[2] / $Totalp * 1000 ) / 10;
-				$p_p[3] = int( $_from_p[3] / $Totalp * 1000 ) / 10;
-				$p_p[4] = int( $_from_p[4] / $Totalp * 1000 ) / 10;
-				$p_p[5] = int( $_from_p[5] / $Totalp * 1000 ) / 10;
-			}
-			my @p_h = ( 0, 0, 0, 0, 0, 0 );
-			if ( $Totalh > 0 ) {
-				$p_h[0] = int( $_from_h[0] / $Totalh * 1000 ) / 10;
-				$p_h[1] = int( $_from_h[1] / $Totalh * 1000 ) / 10;
-				$p_h[2] = int( $_from_h[2] / $Totalh * 1000 ) / 10;
-				$p_h[3] = int( $_from_h[3] / $Totalh * 1000 ) / 10;
-				$p_h[4] = int( $_from_h[4] / $Totalh * 1000 ) / 10;
-				$p_h[5] = int( $_from_h[5] / $Totalh * 1000 ) / 10;
-			}
-			print
-			  "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$Message[37]</th>";
-			if ( $ShowOriginStats =~ /P/i ) {
-				print
-"<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th><th bgcolor=\"#$color_p\" width=\"80\">$Message[15]</th>";
-			}
-			if ( $ShowOriginStats =~ /H/i ) {
-				print
-"<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th>";
-			}
-			print "</tr>\n";
-
-			#------- Referrals by direct address/bookmark/link in email/etc...
-			print "<tr><td class=\"aws\"><b>$Message[38]</b></td>";
-			if ( $ShowOriginStats =~ /P/i ) {
-				print "<td>"
-				  . ( $_from_p[0] ? Format_Number($_from_p[0]) : "&nbsp;" )
-				  . "</td><td>"
-				  . ( $_from_p[0] ? "$p_p[0] %" : "&nbsp;" ) . "</td>";
-			}
-			if ( $ShowOriginStats =~ /H/i ) {
-				print "<td>"
-				  . ( $_from_h[0] ? Format_Number($_from_h[0]) : "&nbsp;" )
-				  . "</td><td>"
-				  . ( $_from_h[0] ? "$p_h[0] %" : "&nbsp;" ) . "</td>";
-			}
-			print "</tr>\n";
-
-			#------- Referrals by search engines
-			print "<tr"
-			  . Tooltip(13)
-			  . "><td class=\"aws\"><b>$Message[40]</b> - <a href=\""
-			  . (
-				$ENV{'GATEWAY_INTERFACE'}
-				  || !$StaticLinks
-				? XMLEncode("$AWScript?${NewLinkParams}output=refererse")
-				: "$StaticLinks.refererse.$StaticExt"
-			  )
-			  . "\"$NewLinkTarget>$Message[80]</a><br />\n";
-			if ( scalar keys %_se_referrals_h ) {
-				print "<table>\n";
-				$total_p = 0;
-				$total_h = 0;
-				my $count = 0;
-				&BuildKeyList(
-					$MaxNbOf{'RefererShown'},
-					$MinHit{'Refer'},
-					\%_se_referrals_h,
-					(
-						( scalar keys %_se_referrals_p )
-						? \%_se_referrals_p
-						: \%_se_referrals_h
-					)
-				);
-				foreach my $key (@keylist) {
-					my $newreferer = $SearchEnginesHashLib{$key}
-					  || CleanXSS($key);
-					print "<tr><td class=\"aws\">- $newreferer</td>";
-					print "<td>"
-					  . (
-						Format_Number($_se_referrals_p{$key} ? $_se_referrals_p{$key} : '0' ))
-					  . "</td>";
-					print "<td> / ".Format_Number($_se_referrals_h{$key})."</td>";
-					print "</tr>\n";
-					$total_p += $_se_referrals_p{$key};
-					$total_h += $_se_referrals_h{$key};
-					$count++;
-				}
-				if ($Debug) {
-					debug(
-"Total real / shown : $TotalSearchEnginesPages / $total_p -  $TotalSearchEnginesHits / $total_h",
-						2
-					);
-				}
-				$rest_p = $TotalSearchEnginesPages - $total_p;
-				$rest_h = $TotalSearchEnginesHits - $total_h;
-				if ( $rest_p > 0 || $rest_h > 0 ) {
-					print
-"<tr><td class=\"aws\"><span style=\"color: #$color_other\">- $Message[2]</span></td>";
-					print "<td>".Format_Number($rest_p)."</td>";
-					print "<td> / ".Format_Number($rest_h)."</td>";
-					print "</tr>\n";
-				}
-				print "</table>";
-			}
-			print "</td>\n";
-			if ( $ShowOriginStats =~ /P/i ) {
-				print "<td valign=\"top\">"
-				  . ( $_from_p[2] ? Format_Number($_from_p[2]) : "&nbsp;" )
-				  . "</td><td valign=\"top\">"
-				  . ( $_from_p[2] ? "$p_p[2] %" : "&nbsp;" ) . "</td>";
-			}
-			if ( $ShowOriginStats =~ /H/i ) {
-				print "<td valign=\"top\">"
-				  . ( $_from_h[2] ? Format_Number($_from_h[2]) : "&nbsp;" )
-				  . "</td><td valign=\"top\">"
-				  . ( $_from_h[2] ? "$p_h[2] %" : "&nbsp;" ) . "</td>";
-			}
-			print "</tr>\n";
-
-			#------- Referrals by external HTML link
-			print "<tr"
-			  . Tooltip(14)
-			  . "><td class=\"aws\"><b>$Message[41]</b> - <a href=\""
-			  . (
-				$ENV{'GATEWAY_INTERFACE'}
-				  || !$StaticLinks
-				? XMLEncode("$AWScript?${NewLinkParams}output=refererpages")
-				: "$StaticLinks.refererpages.$StaticExt"
-			  )
-			  . "\"$NewLinkTarget>$Message[80]</a><br />\n";
-			if ( scalar keys %_pagesrefs_h ) {
-				print "<table>\n";
-				$total_p = 0;
-				$total_h = 0;
-				my $count = 0;
-				&BuildKeyList(
-					$MaxNbOf{'RefererShown'},
-					$MinHit{'Refer'},
-					\%_pagesrefs_h,
-					(
-						( scalar keys %_pagesrefs_p )
-						? \%_pagesrefs_p
-						: \%_pagesrefs_h
-					)
-				);
-				foreach my $key (@keylist) {
-					print "<tr><td class=\"aws\">- ";
-					&ShowURLInfo($key);
-					print "</td>";
-					print "<td>"
-					  . Format_Number(( $_pagesrefs_p{$key} ? $_pagesrefs_p{$key} : '0' ))
-					  . "</td>";
-					print "<td>".Format_Number($_pagesrefs_h{$key})."</td>";
-					print "</tr>\n";
-					$total_p += $_pagesrefs_p{$key};
-					$total_h += $_pagesrefs_h{$key};
-					$count++;
-				}
-				if ($Debug) {
-					debug(
-"Total real / shown : $TotalRefererPages / $total_p - $TotalRefererHits / $total_h",
-						2
-					);
-				}
-				$rest_p = $TotalRefererPages - $total_p;
-				$rest_h = $TotalRefererHits - $total_h;
-				if ( $rest_p > 0 || $rest_h > 0 ) {
-					print
-"<tr><td class=\"aws\"><span style=\"color: #$color_other\">- $Message[2]</span></td>";
-					print "<td>".Format_Number($rest_p)."</td>";
-					print "<td>".Format_Number($rest_h)."</td>";
-					print "</tr>\n";
-				}
-				print "</table>";
-			}
-			print "</td>\n";
-			if ( $ShowOriginStats =~ /P/i ) {
-				print "<td valign=\"top\">"
-				  . ( $_from_p[3] ? Format_Number($_from_p[3]) : "&nbsp;" )
-				  . "</td><td valign=\"top\">"
-				  . ( $_from_p[3] ? "$p_p[3] %" : "&nbsp;" ) . "</td>";
-			}
-			if ( $ShowOriginStats =~ /H/i ) {
-				print "<td valign=\"top\">"
-				  . ( $_from_h[3] ? Format_Number($_from_h[3]) : "&nbsp;" )
-				  . "</td><td valign=\"top\">"
-				  . ( $_from_h[3] ? "$p_h[3] %" : "&nbsp;" ) . "</td>";
-			}
-			print "</tr>\n";
-
-			#------- Referrals by internal HTML link
-			if ($IncludeInternalLinksInOriginSection) {
-				print "<tr><td class=\"aws\"><b>$Message[42]</b></td>";
-				if ( $ShowOriginStats =~ /P/i ) {
-					print "<td>"
-					  . ( $_from_p[4] ? Format_Number($_from_p[4]) : "&nbsp;" )
-					  . "</td><td>"
-					  . ( $_from_p[4] ? "$p_p[4] %" : "&nbsp;" ) . "</td>";
-				}
-				if ( $ShowOriginStats =~ /H/i ) {
-					print "<td>"
-					  . ( $_from_h[4] ? Format_Number($_from_h[4]) : "&nbsp;" )
-					  . "</td><td>"
-					  . ( $_from_h[4] ? "$p_h[4] %" : "&nbsp;" ) . "</td>";
-				}
-				print "</tr>\n";
-			}
-
-#------- Referrals by news group
-#print "<tr><td class=\"aws\"><b>$Message[107]</b></td>";
-#if ($ShowOriginStats =~ /P/i) { print "<td>".($_from_p[5]?$_from_p[5]:"&nbsp;")."</td><td>".($_from_p[5]?"$p_p[5] %":"&nbsp;")."</td>"; }
-#if ($ShowOriginStats =~ /H/i) { print "<td>".($_from_h[5]?$_from_h[5]:"&nbsp;")."</td><td>".($_from_h[5]?"$p_h[5] %":"&nbsp;")."</td>"; }
-#print "</tr>\n";
-#------- Unknown origin
-			print "<tr><td class=\"aws\"><b>$Message[39]</b></td>";
-			if ( $ShowOriginStats =~ /P/i ) {
-				print "<td>"
-				  . ( $_from_p[1] ? Format_Number($_from_p[1]) : "&nbsp;" )
-				  . "</td><td>"
-				  . ( $_from_p[1] ? "$p_p[1] %" : "&nbsp;" ) . "</td>";
-			}
-			if ( $ShowOriginStats =~ /H/i ) {
-				print "<td>"
-				  . ( $_from_h[1] ? Format_Number($_from_h[1]) : "&nbsp;" )
-				  . "</td><td>"
-				  . ( $_from_h[1] ? "$p_h[1] %" : "&nbsp;" ) . "</td>";
-			}
-			print "</tr>\n";
-			&tab_end();
-
-			# 0: Direct
-			# 1: Unknown
-			# 2: SE
-			# 3: External link
-			# 4: Internal link
-			# 5: Newsgroup (deprecated)
+			&HTMLMainReferrers($NewLinkParams, $NewLinkTarget);
 		}
 
 		print "\n<a name=\"keys\">&nbsp;</a>\n\n";
 
 		# BY SEARCH KEYWORDS AND/OR KEYPHRASES
 		#-------------------------------------
-		if ($ShowKeyphrasesStats) {
-			print "$Center<a name=\"keyphrases\">&nbsp;</a>";
-		}
-		if ($ShowKeywordsStats) {
-			print "$Center<a name=\"keywords\">&nbsp;</a>";
-		}
-		if ( $ShowKeyphrasesStats || $ShowKeywordsStats ) { print "<br />\n"; }
-		if ( $ShowKeyphrasesStats && $ShowKeywordsStats ) {
-			print
-			  "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\"><tr>";
-		}
-		if ($ShowKeyphrasesStats) {
-
-			# By Keyphrases
-			if ( $ShowKeyphrasesStats && $ShowKeywordsStats ) {
-				print "<td width=\"50%\" valign=\"top\">\n";
-			}
-			if ($Debug) { debug( "ShowKeyphrasesStats", 2 ); }
-			&tab_head(
-"$Message[120] ($Message[77] $MaxNbOf{'KeyphrasesShown'})<br /><a href=\""
-				  . (
-					$ENV{'GATEWAY_INTERFACE'}
-					  || !$StaticLinks
-					? XMLEncode("$AWScript?${NewLinkParams}output=keyphrases")
-					: "$StaticLinks.keyphrases.$StaticExt"
-				  )
-				  . "\"$NewLinkTarget>$Message[80]</a>",
-				19,
-				( $ShowKeyphrasesStats && $ShowKeywordsStats ) ? 95 : 70,
-				'keyphrases'
-			);
-			print "<tr bgcolor=\"#$color_TableBGRowTitle\""
-			  . Tooltip(15)
-			  . "><th>$TotalDifferentKeyphrases $Message[103]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[14]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
-			$total_s = 0;
-			my $count = 0;
-			&BuildKeyList( $MaxNbOf{'KeyphrasesShown'},
-				$MinHit{'Keyphrase'}, \%_keyphrases, \%_keyphrases );
-			foreach my $key (@keylist) {
-				my $mot;
-
-	  # Convert coded keywords (utf8,...) to be correctly reported in HTML page.
-				if ( $PluginsLoaded{'DecodeKey'}{'decodeutfkeys'} ) {
-					$mot = CleanXSS(
-						DecodeKey_decodeutfkeys(
-							$key, $PageCode || 'iso-8859-1'
-						)
-					);
-				}
-				else { $mot = CleanXSS( DecodeEncodedString($key) ); }
-				my $p;
-				if ($TotalKeyphrases) {
-					$p =
-					  int( $_keyphrases{$key} / $TotalKeyphrases * 1000 ) / 10;
-				}
-				print "<tr><td class=\"aws\">"
-				  . XMLEncode($mot)
-				  . "</td><td>$_keyphrases{$key}</td><td>$p %</td></tr>\n";
-				$total_s += $_keyphrases{$key};
-				$count++;
-			}
-			if ($Debug) {
-				debug( "Total real / shown : $TotalKeyphrases / $total_s", 2 );
-			}
-			$rest_s = $TotalKeyphrases - $total_s;
-			if ( $rest_s > 0 ) {
-				my $p;
-				if ($TotalKeyphrases) {
-					$p = int( $rest_s / $TotalKeyphrases * 1000 ) / 10;
-				}
-				print
-"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[124]</span></td><td>$rest_s</td>";
-				print "<td>$p&nbsp;%</td></tr>\n";
-			}
-			&tab_end();
-			if ( $ShowKeyphrasesStats && $ShowKeywordsStats ) {
-				print "</td>\n";
-			}
-		}
-		if ( $ShowKeyphrasesStats && $ShowKeywordsStats ) {
-			print "<td> &nbsp; </td>";
-		}
-		if ($ShowKeywordsStats) {
-
-			# By Keywords
-			if ( $ShowKeyphrasesStats && $ShowKeywordsStats ) {
-				print "<td width=\"50%\" valign=\"top\">\n";
-			}
-			if ($Debug) { debug( "ShowKeywordsStats", 2 ); }
-			&tab_head(
-"$Message[121] ($Message[77] $MaxNbOf{'KeywordsShown'})<br /><a href=\""
-				  . (
-					$ENV{'GATEWAY_INTERFACE'}
-					  || !$StaticLinks
-					? XMLEncode("$AWScript?${NewLinkParams}output=keywords")
-					: "$StaticLinks.keywords.$StaticExt"
-				  )
-				  . "\"$NewLinkTarget>$Message[80]</a>",
-				19,
-				( $ShowKeyphrasesStats && $ShowKeywordsStats ) ? 95 : 70,
-				'keywords'
-			);
-			print "<tr bgcolor=\"#$color_TableBGRowTitle\""
-			  . Tooltip(15)
-			  . "><th>$TotalDifferentKeywords $Message[13]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[14]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
-			$total_s = 0;
-			my $count = 0;
-			&BuildKeyList( $MaxNbOf{'KeywordsShown'},
-				$MinHit{'Keyword'}, \%_keywords, \%_keywords );
-			foreach my $key (@keylist) {
-				my $mot;
-
-	  # Convert coded keywords (utf8,...) to be correctly reported in HTML page.
-				if ( $PluginsLoaded{'DecodeKey'}{'decodeutfkeys'} ) {
-					$mot = CleanXSS(
-						DecodeKey_decodeutfkeys(
-							$key, $PageCode || 'iso-8859-1'
-						)
-					);
-				}
-				else { $mot = CleanXSS( DecodeEncodedString($key) ); }
-				my $p;
-				if ($TotalKeywords) {
-					$p = int( $_keywords{$key} / $TotalKeywords * 1000 ) / 10;
-				}
-				print "<tr><td class=\"aws\">"
-				  . XMLEncode($mot)
-				  . "</td><td>$_keywords{$key}</td><td>$p %</td></tr>\n";
-				$total_s += $_keywords{$key};
-				$count++;
-			}
-			if ($Debug) {
-				debug( "Total real / shown : $TotalKeywords / $total_s", 2 );
-			}
-			$rest_s = $TotalKeywords - $total_s;
-			if ( $rest_s > 0 ) {
-				my $p;
-				if ($TotalKeywords) {
-					$p = int( $rest_s / $TotalKeywords * 1000 ) / 10;
-				}
-				print
-"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[30]</span></td><td>$rest_s</td>";
-				print "<td>$p %</td></tr>\n";
-			}
-			&tab_end();
-			if ( $ShowKeyphrasesStats && $ShowKeywordsStats ) {
-				print "</td>\n";
-			}
-		}
-		if ( $ShowKeyphrasesStats && $ShowKeywordsStats ) {
-			print "</tr></table>\n";
-		}
+		if ($ShowKeyphrasesStats || $ShowKeywordsStats){
+			&HTMLMainKeys($NewLinkParams, $NewLinkTarget);
+		}	
 
 		print "\n<a name=\"other\">&nbsp;</a>\n\n";
 
 		# BY MISC
 		#----------------------------
 		if ($ShowMiscStats) {
-			if ($Debug) { debug( "ShowMiscStats", 2 ); }
-			print "$Center<a name=\"misc\">&nbsp;</a><br />\n";
-			my $title = "$Message[139]";
-			&tab_head( "$title", 19, 0, 'misc' );
-			print
-			  "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$Message[139]</th>";
-			print "<th width=\"100\">&nbsp;</th>";
-			print "<th width=\"100\">&nbsp;</th>";
-			print "</tr>\n";
-			my %label = (
-				'AddToFavourites'           => $Message[137],
-				'JavascriptDisabled'        => $Message[168],
-				'JavaEnabled'               => $Message[140],
-				'DirectorSupport'           => $Message[141],
-				'FlashSupport'              => $Message[142],
-				'RealPlayerSupport'         => $Message[143],
-				'QuickTimeSupport'          => $Message[144],
-				'WindowsMediaPlayerSupport' => $Message[145],
-				'PDFSupport'                => $Message[146]
-			);
-
-			foreach my $key (@MiscListOrder) {
-				my $mischar = substr( $key, 0, 1 );
-				if ( $ShowMiscStats !~ /$mischar/i ) { next; }
-				my $total = 0;
-				my $p;
-				if ( $MiscListCalc{$key} eq 'v' ) { $total = $TotalVisits; }
-				if ( $MiscListCalc{$key} eq 'u' ) { $total = $TotalUnique; }
-				if ( $MiscListCalc{$key} eq 'hm' ) {
-					$total = $_misc_h{'TotalMisc'} || 0;
-				}
-				if ($total) {
-					$p =
-					  int( ( $_misc_h{$key} ? $_misc_h{$key} : 0 ) / $total *
-						  1000 ) / 10;
-				}
-				print "<tr>";
-				print "<td class=\"aws\">"
-				  . ( $PageDir eq 'rtl' ? "<span dir=\"ltr\">" : "" )
-				  . $label{$key}
-				  . ( $PageDir eq 'rtl' ? "</span>" : "" ) . "</td>";
-				if ( $MiscListCalc{$key} eq 'v' ) {
-					print "<td>"
-					  . Format_Number(( $_misc_h{$key} || 0 ))
-					  . " / ".Format_Number($total)." $Message[12]</td>";
-				}
-				if ( $MiscListCalc{$key} eq 'u' ) {
-					print "<td>"
-					  . Format_Number(( $_misc_h{$key} || 0 ))
-					  . " / ".Format_Number($total)." $Message[18]</td>";
-				}
-				if ( $MiscListCalc{$key} eq 'hm' ) { print "<td>-</td>"; }
-				print "<td>" . ( $total ? "$p %" : "&nbsp;" ) . "</td>";
-				print "</tr>\n";
-			}
-			&tab_end();
+			&HTMLMainMisc();
 		}
 
 		# BY HTTP STATUS
 		#----------------------------
 		if ($ShowHTTPErrorsStats) {
-			if ($Debug) { debug( "ShowHTTPErrorsStats", 2 ); }
-			print "$Center<a name=\"errors\">&nbsp;</a><br />\n";
-			my $title = "$Message[32]";
-			&tab_head( "$title", 19, 0, 'errors' );
-			print
-"<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[32]*</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th><th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th></tr>\n";
-			$total_h = 0;
-			my $count = 0;
-			&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_errors_h, \%_errors_h );
-
-			foreach my $key (@keylist) {
-				my $p = int( $_errors_h{$key} / $TotalHitsErrors * 1000 ) / 10;
-				print "<tr" . Tooltip( $key, $key ) . ">";
-				if ( $TrapInfosForHTTPErrorCodes{$key} ) {
-					print "<td><a href=\""
-					  . (
-						$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
-						? XMLEncode(
-							"$AWScript?${NewLinkParams}output=errors$key")
-						: "$StaticLinks.errors$key.$StaticExt"
-					  )
-					  . "\"$NewLinkTarget>$key</a></td>";
-				}
-				else { print "<td valign=\"top\">$key</td>"; }
-				print "<td class=\"aws\">"
-				  . (
-					$httpcodelib{$key} ? $httpcodelib{$key} : 'Unknown error' )
-				  . "</td><td>".Format_Number($_errors_h{$key})."</td><td>$p %</td><td>"
-				  . Format_Bytes( $_errors_k{$key} ) . "</td>";
-				print "</tr>\n";
-				$total_h += $_errors_h{$key};
-				$count++;
-			}
-			&tab_end("* $Message[154]");
+			&HTMLMainHTTPStatus($NewLinkParams, $NewLinkTarget);
 		}
 
 		# BY SMTP STATUS
 		#----------------------------
 		if ($ShowSMTPErrorsStats) {
-			if ($Debug) { debug( "ShowSMTPErrorsStats", 2 ); }
-			print "$Center<a name=\"errors\">&nbsp;</a><br />\n";
-			my $title = "$Message[147]";
-			&tab_head( "$title", 19, 0, 'errors' );
-			print
-"<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[147]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th><th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th></tr>\n";
-			$total_h = 0;
-			my $count = 0;
-			&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_errors_h, \%_errors_h );
-
-			foreach my $key (@keylist) {
-				my $p = int( $_errors_h{$key} / $TotalHitsErrors * 1000 ) / 10;
-				print "<tr" . Tooltip( $key, $key ) . ">";
-				print "<td valign=\"top\">$key</td>";
-				print "<td class=\"aws\">"
-				  . (
-					$smtpcodelib{$key} ? $smtpcodelib{$key} : 'Unknown error' )
-				  . "</td><td>".Format_Number($_errors_h{$key})."</td><td>$p %</td><td>"
-				  . Format_Bytes( $_errors_k{$key} ) . "</td>";
-				print "</tr>\n";
-				$total_h += $_errors_h{$key};
-				$count++;
-			}
-			&tab_end();
+			&HTMLMainSMTPStatus($NewLinkParams, $NewLinkTarget);
 		}
 
 		# BY CLUSTER
 		#----------------------------
 		if ($ShowClusterStats) {
-			if ($Debug) { debug( "ShowClusterStats", 2 ); }
-			print "$Center<a name=\"clusters\">&nbsp;</a><br />\n";
-			my $title = "$Message[155]";
-			&tab_head( "$title", 19, 0, 'clusters' );
-			print
-			  "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$Message[155]</th>";
-			&ShowClusterInfo('__title__');
-			if ( $ShowClusterStats =~ /P/i ) {
-				print
-"<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th><th bgcolor=\"#$color_p\" width=\"80\">$Message[15]</th>";
-			}
-			if ( $ShowClusterStats =~ /H/i ) {
-				print
-"<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th>";
-			}
-			if ( $ShowClusterStats =~ /B/i ) {
-				print
-"<th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th><th bgcolor=\"#$color_k\" width=\"80\">$Message[15]</th>";
-			}
-			print "</tr>\n";
-			$total_p = $total_h = $total_k = 0;
-
-# Cluster feature might have been enable in middle of month so we recalculate
-# total for cluster section only, to calculate ratio, instead of using global total
-			foreach my $key ( keys %_cluster_h ) {
-				$total_p += int( $_cluster_p{$key} || 0 );
-				$total_h += int( $_cluster_h{$key} || 0 );
-				$total_k += int( $_cluster_k{$key} || 0 );
-			}
-			my $count = 0;
-			foreach my $key ( keys %_cluster_h ) {
-				my $p_p = int( $_cluster_p{$key} / $total_p * 1000 ) / 10;
-				my $p_h = int( $_cluster_h{$key} / $total_h * 1000 ) / 10;
-				my $p_k = int( $_cluster_k{$key} / $total_k * 1000 ) / 10;
-				print "<tr>";
-				print "<td class=\"aws\">Computer $key</td>";
-				&ShowClusterInfo($key);
-				if ( $ShowClusterStats =~ /P/i ) {
-					print "<td>"
-					  . ( $_cluster_p{$key} ? Format_Number($_cluster_p{$key}) : "&nbsp;" )
-					  . "</td><td>$p_p %</td>";
-				}
-				if ( $ShowClusterStats =~ /H/i ) {
-					print "<td>".Format_Number($_cluster_h{$key})."</td><td>$p_h %</td>";
-				}
-				if ( $ShowClusterStats =~ /B/i ) {
-					print "<td>"
-					  . Format_Bytes( $_cluster_k{$key} )
-					  . "</td><td>$p_k %</td>";
-				}
-				print "</tr>\n";
-				$count++;
-			}
-			&tab_end();
+			&HTMLMainCluster($NewLinkParams, $NewLinkTarget);
 		}
 
 		# BY EXTRA SECTIONS
 		#----------------------------
 		foreach my $extranum ( 1 .. @ExtraName - 1 ) {
-			if ($Debug) { debug( "ExtraName$extranum", 2 ); }
-			print "$Center<a name=\"extra$extranum\">&nbsp;</a><br />";
-			my $title = $ExtraName[$extranum];
-			&tab_head( "$title", 19, 0, "extra$extranum" );
-			print "<tr bgcolor=\"#$color_TableBGRowTitle\">";
-			print "<th>" . $ExtraFirstColumnTitle[$extranum];
-			print "&nbsp; - &nbsp; <a href=\""
-			  . (
-				$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
-				? XMLEncode(
-					"$AWScript?${NewLinkParams}output=allextra$extranum")
-				: "$StaticLinks.allextra$extranum.$StaticExt"
-			  )
-			  . "\"$NewLinkTarget>$Message[80]</a>";
-			print "</th>";
-
-			if ( $ExtraStatTypes[$extranum] =~ m/P/i ) {
-				print
-				  "<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th>";
-			}
-			if ( $ExtraStatTypes[$extranum] =~ m/H/i ) {
-				print
-				  "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>";
-			}
-			if ( $ExtraStatTypes[$extranum] =~ m/B/i ) {
-				print
-				  "<th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
-			}
-			if ( $ExtraStatTypes[$extranum] =~ m/L/i ) {
-				print "<th width=\"120\">$Message[9]</th>";
-			}
-			print "</tr>\n";
-			$total_p = $total_h = $total_k = 0;
-
-	 #$max_h=1; foreach (values %_login_h) { if ($_ > $max_h) { $max_h = $_; } }
-	 #$max_k=1; foreach (values %_login_k) { if ($_ > $max_k) { $max_k = $_; } }
-			my $count = 0;
-			if ( $MaxNbOfExtra[$extranum] ) {
-				if ( $ExtraStatTypes[$extranum] =~ m/P/i ) {
-					&BuildKeyList(
-						$MaxNbOfExtra[$extranum],
-						$MinHitExtra[$extranum],
-						\%{ '_section_' . $extranum . '_h' },
-						\%{ '_section_' . $extranum . '_p' }
-					);
-				}
-				else {
-					&BuildKeyList(
-						$MaxNbOfExtra[$extranum],
-						$MinHitExtra[$extranum],
-						\%{ '_section_' . $extranum . '_h' },
-						\%{ '_section_' . $extranum . '_h' }
-					);
-				}
-			}
-			else {
-				@keylist = ();
-			}
-			my %keysinkeylist = ();
-			foreach my $key (@keylist) {
-				$keysinkeylist{$key} = 1;
-				my $firstcol = CleanXSS( DecodeEncodedString($key) );
-				$total_p += ${ '_section_' . $extranum . '_p' }{$key};
-				$total_h += ${ '_section_' . $extranum . '_h' }{$key};
-				$total_k += ${ '_section_' . $extranum . '_k' }{$key};
-				print "<tr>";
-				printf(
-					"<td class=\"aws\">$ExtraFirstColumnFormat[$extranum]</td>",
-					$firstcol, $firstcol, $firstcol, $firstcol, $firstcol );
-				if ( $ExtraStatTypes[$extranum] =~ m/P/i ) {
-					print "<td>"
-					  . ${ '_section_' . $extranum . '_p' }{$key} . "</td>";
-				}
-				if ( $ExtraStatTypes[$extranum] =~ m/H/i ) {
-					print "<td>"
-					  . ${ '_section_' . $extranum . '_h' }{$key} . "</td>";
-				}
-				if ( $ExtraStatTypes[$extranum] =~ m/B/i ) {
-					print "<td>"
-					  . Format_Bytes(
-						${ '_section_' . $extranum . '_k' }{$key} )
-					  . "</td>";
-				}
-				if ( $ExtraStatTypes[$extranum] =~ m/L/i ) {
-					print "<td>"
-					  . (
-						${ '_section_' . $extranum . '_l' }{$key}
-						? Format_Date(
-							${ '_section_' . $extranum . '_l' }{$key}, 1 )
-						: '-'
-					  )
-					  . "</td>";
-				}
-				print "</tr>\n";
-				$count++;
-			}
-
-			# If we ask average or sum, we loop on all other records
-			if ( $ExtraAddAverageRow[$extranum] || $ExtraAddSumRow[$extranum] )
-			{
-				foreach ( keys %{ '_section_' . $extranum . '_h' } ) {
-					if ( $keysinkeylist{$_} ) { next; }
-					$total_p += ${ '_section_' . $extranum . '_p' }{$_};
-					$total_h += ${ '_section_' . $extranum . '_h' }{$_};
-					$total_k += ${ '_section_' . $extranum . '_k' }{$_};
-					$count++;
-				}
-			}
-
-			# Add average row
-			if ( $ExtraAddAverageRow[$extranum] ) {
-				print "<tr>";
-				print "<td class=\"aws\"><b>$Message[96]</b></td>";
-				if ( $ExtraStatTypes[$extranum] =~ m/P/i ) {
-					print "<td>"
-					  . ( $count ? Format_Number(( $total_p / $count )) : "&nbsp;" ) . "</td>";
-				}
-				if ( $ExtraStatTypes[$extranum] =~ m/H/i ) {
-					print "<td>"
-					  . ( $count ? Format_Number(( $total_h / $count )) : "&nbsp;" ) . "</td>";
-				}
-				if ( $ExtraStatTypes[$extranum] =~ m/B/i ) {
-					print "<td>"
-					  . (
-						$count ? Format_Bytes( $total_k / $count ) : "&nbsp;" )
-					  . "</td>";
-				}
-				if ( $ExtraStatTypes[$extranum] =~ m/L/i ) {
-					print "<td>&nbsp;</td>";
-				}
-				print "</tr>\n";
-			}
-
-			# Add sum row
-			if ( $ExtraAddSumRow[$extranum] ) {
-				print "<tr>";
-				print "<td class=\"aws\"><b>$Message[102]</b></td>";
-				if ( $ExtraStatTypes[$extranum] =~ m/P/i ) {
-					print "<td>" . Format_Number(($total_p)) . "</td>";
-				}
-				if ( $ExtraStatTypes[$extranum] =~ m/H/i ) {
-					print "<td>" . Format_Number(($total_h)) . "</td>";
-				}
-				if ( $ExtraStatTypes[$extranum] =~ m/B/i ) {
-					print "<td>" . Format_Bytes($total_k) . "</td>";
-				}
-				if ( $ExtraStatTypes[$extranum] =~ m/L/i ) {
-					print "<td>&nbsp;</td>";
-				}
-				print "</tr>\n";
-			}
-			&tab_end();
+			&HTMLMainExtra($NewLinkParams, $NewLinkTarget, $extranum);
 		}
 
+		# close the HTML page
 		&html_end(1);
 	}
 }
