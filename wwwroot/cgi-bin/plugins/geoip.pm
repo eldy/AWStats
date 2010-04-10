@@ -39,12 +39,15 @@ no strict "refs";
 # AND THE NAME OF ALL FUNCTIONS THE PLUGIN MANAGE.
 my $PluginNeedAWStatsVersion="5.4";
 my $PluginHooksFunctions="GetCountryCodeByAddr GetCountryCodeByName ShowInfoHost";
+my $PluginName = "geoip";
+my $LoadedOverride=0;
+my $OverrideFile="";
+my %TmpDomainLookup;
 # ----->
 
 # <-----
 # IF YOUR PLUGIN NEED GLOBAL VARIABLES, THEY MUST BE DECLARED HERE.
 use vars qw/
-%TmpDomainLookup
 $gi
 /;
 # ----->
@@ -59,9 +62,9 @@ sub Init_geoip {
 
 	# <-----
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
-	debug(" Plugin geoip: InitParams=$InitParams",1);
-   	my ($mode,$datafile)=split(/\s+/,$InitParams,2);
-   	if (! $datafile) { $datafile="GeoIP.dat"; }
+	debug(" Plugin $PluginName: InitParams=$InitParams",1);
+   	my ($mode,$datafile,$override)=split(/\s+/,$InitParams,3);
+   	if (! $datafile) { $datafile="$PluginName.dat"; }
 	if ($type eq 'geoippureperl') {
 		if ($mode eq '' || $mode eq 'GEOIP_MEMORY_CACHE')  { $mode=Geo::IP::PurePerl::GEOIP_MEMORY_CACHE(); }
 		else { $mode=Geo::IP::PurePerl::GEOIP_STANDARD(); }
@@ -69,13 +72,15 @@ sub Init_geoip {
 		if ($mode eq '' || $mode eq 'GEOIP_MEMORY_CACHE')  { $mode=Geo::IP::GEOIP_MEMORY_CACHE(); }
 		else { $mode=Geo::IP::GEOIP_STANDARD(); }
 	}
+	if ($override){$OverrideFile=$override;}
 	%TmpDomainLookup=();
-	debug(" Plugin geoip: GeoIP initialized type=$type mode=$mode",1);
+	debug(" Plugin $PluginName: GeoIP initialized type=$type mode=$mode override=$override",1);
 	if ($type eq 'geoippureperl') {
 		$gi = Geo::IP::PurePerl->open($datafile, $mode);
 	} else {
 		$gi = Geo::IP->open($datafile, $mode);
 	}
+
 # Fails on some GeoIP version
 # 	debug(" Plugin geoip: GeoIP initialized database_info=".$gi->database_info());
 	# ----->
@@ -93,13 +98,14 @@ sub GetCountryCodeByAddr_geoip {
     my $param="$_[0]";
 	# <-----
 	if (! $param) { return ''; }
+	if (!$LoadedOverride){&LoadOverrideFile_geoip();}
 	my $res=$TmpDomainLookup{$param}||'';
 	if (! $res) {
 		$res=lc($gi->country_code_by_addr($param)) || 'unknown';
 		$TmpDomainLookup{$param}=$res;
-		if ($Debug) { debug("  Plugin geoip: GetCountryCodeByAddr for $param: [$res]",5); }
+		if ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByAddr for $param: [$res]",5); }
 	}
-	elsif ($Debug) { debug("  Plugin geoip: GetCountryCodeByAddr for $param: Already resolved to [$res]",5); }
+	elsif ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByAddr for $param: Already resolved to [$res]",5); }
 	# ----->
 	return $res;
 }
@@ -114,13 +120,14 @@ sub GetCountryCodeByName_geoip {
     my $param="$_[0]";
 	# <-----
 	if (! $param) { return ''; }
+	if (!$LoadedOverride){&LoadOverrideFile_geoip();}
 	my $res=$TmpDomainLookup{$param}||'';
 	if (! $res) {
 		$res=lc($gi->country_code_by_name($param)) || 'unknown';
 		$TmpDomainLookup{$param}=$res;
-		if ($Debug) { debug("  Plugin geoip: GetCountryCodeByName for $param: [$res]",5); }
+		if ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByName for $param: [$res]",5); }
 	}
-	elsif ($Debug) { debug("  Plugin geoip: GetCountryCodeByName for $param: Already resolved to [$res]",5); }
+	elsif ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByName for $param: Already resolved to [$res]",5); }
 	# ----->
 	return $res;
 }
@@ -158,6 +165,8 @@ sub ShowInfoHost_geoip {
         print "</th>";
 	}
 	elsif ($param) {
+		# try loading our override file if we haven't yet
+		if (!$LoadedOverride){&LoadOverrideFile_geoip();}
         my $ip=0;
 		my $key;
 		if ($param =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {	# IPv4 address
@@ -170,8 +179,9 @@ sub ShowInfoHost_geoip {
 		}
 		print "<td>";
 		if ($key && $ip==4) {
-        	my $res=lc($gi->country_code_by_addr($param)) if $gi;
-        	if ($Debug) { debug("  Plugin geoip: GetCountryByIp for $param: [$res]",5); }
+			my $res = $TmpDomainLookup{$param}||'';
+        	if (!$res){$res=lc($gi->country_code_by_addr($param)) if $gi;}
+        	if ($Debug) { debug("  Plugin $PluginName: GetCountryByIp for $param: [$res]",5); }
 		    if ($res) { print $DomainsHashIDLib{$res}?$DomainsHashIDLib{$res}:"<span style=\"color: #$color_other\">$Message[0]</span>"; }
 		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
 		}
@@ -179,8 +189,9 @@ sub ShowInfoHost_geoip {
 		    print "<span style=\"color: #$color_other\">$Message[0]</span>";
 		}
 		if (! $key) {
-        	my $res=lc($gi->country_code_by_name($param)) if $gi;
-        	if ($Debug) { debug("  Plugin geoip: GetCountryByHostname for $param: [$res]",5); }
+        	my $res = $TmpDomainLookup{$param}||'';
+        	if (!$res){$res=lc($gi->country_code_by_addr($param)) if $gi;}
+        	if ($Debug) { debug("  Plugin $PluginName: GetCountryByHostname for $param: [$res]",5); }
 		    if ($res) { print $DomainsHashIDLib{$res}?$DomainsHashIDLib{$res}:"<span style=\"color: #$color_other\">$Message[0]</span>"; }
 		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
 		}
@@ -193,5 +204,39 @@ sub ShowInfoHost_geoip {
 	# ----->
 }
 
+#-----------------------------------------------------------------------------
+# PLUGIN FUNCTION: LoadOverrideFile
+# Attempts to load a comma delimited file that will override the GeoIP database
+# Useful for Intranet records
+# CSV format: IP,2-char Country code
+#-----------------------------------------------------------------------------
+sub LoadOverrideFile_geoip{
+	my $filetoload="";
+	if ($OverrideFile){
+		if (!open(GEOIPFILE, $OverrideFile)){
+			debug("Plugin $PluginName: Unable to open override file: $OverrideFile");
+			$LoadedOverride = 1;
+			return;
+		}
+	}else{
+		my $conf = (exists(&Get_Config_Name) ? Get_Config_Name() : $SiteConfig);
+		if ($conf && open(GEOIPFILE,"$DirData/$PluginName.$conf.txt"))	{ $filetoload="$DirData/$PluginName.$conf.txt"; }
+		elsif (open(GEOIPFILE,"$DirData/$PluginName.txt"))	{ $filetoload="$DirData/$PluginName.txt"; }
+		else { debug("Did not find $PluginName file \"$DirData/$PluginName.txt\": $!"); }
+	}
+	# This is the fastest way to load with regexp that I know
+	while (<GEOIPFILE>){
+		chomp $_;
+		s/\r//;
+		my @record = split(",", $_);
+		# replace quotes if they were used in the file
+		foreach (@record){ $_ =~ s/"//g; }
+		# store in hash
+		$TmpDomainLookup{$record[0]} = $record[1];
+	}
+	close GEOIPFILE;
+	$LoadedOverride = 1;
+	debug(" Plugin $PluginName: Overload file loaded: ".(scalar keys %TmpDomainLookup)." entries found.");
+}
 
 1;	# Do not remove this line

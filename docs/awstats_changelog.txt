@@ -9,7 +9,14 @@ New features/improvements:
 - Detect Windows 7.
 - Can format numbers according to language.
 - More mime types.
-
+- Added geoip_asn_maxmind plugin.
+- Geoip Maxmind city plugin have now override file capabilities to complete
+  missing entries in geoip maxmin database. 
+- Added graphgooglechartapi to use online Google char api to build graph.
+- Can show map of country to report countries when using graphgooglechartapi.
+- Part of codes was change ot use more functions and have a cleaner code.
+Thanks to Chris Larsen (author of most thoses changes).
+ 
 
 ***** 6.95 *****
 

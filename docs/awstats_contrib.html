@@ -1,37 +1,33 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
-<head>
+<html><head>
 <meta name="description" content="AWStats Documentation - Contrib and resource page">
 <meta name="keywords" content="awstats, awstat, log, file, analyzer, contrib, plugins, resources, maxmind, geoipfree, geoip, cities, regions, countries, frontend">
 <meta name="robots" content="index,follow">
 <meta name="title" content="AWStats Documentation - Contrib and resource page">
-<title>AWStats Documentation - Contrib and resource page</title>
-<link rel="stylesheet" href="styles.css" type="text/css">
-<!-- $Revision$ - $Author$ - $Date$ -->
-</head>
 
-<body topmargin=10 leftmargin=5>
+<title>AWStats Documentation - Contrib and resource page</title><link rel="stylesheet" href="styles.css" type="text/css"><!-- $Revision$ - $Author$ - $Date$ --></head>
+<body topmargin="10" leftmargin="5">
 
 
-<table style="font: 10pt arial,helvetica,verdana" cellpadding=0 cellspacing=0 border=0 bgcolor=#FFFFFF width=100%>
+<table style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10pt; line-height: normal; font-size-adjust: none; font-stretch: normal;" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" width="100%">
 
 <!-- Large -->
-<tr style="font: 10pt arial,helvetica,verdana">
-<td bgcolor=#9999cc align=center><a href="/"><img src="images/awstats_logo1.png" border=0></a></td>
-<td bgcolor=#9999cc align=center>
+<tbody><tr style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">
+<td align="center" bgcolor="#9999cc"><a href="/"><img src="images/awstats_logo1.png" border="0"></a></td>
+<td align="center" bgcolor="#9999cc">
 <br>
-<font style="font: 16pt arial,helvetica,sans-serif" color=#EEEEFF><b>AWStats logfile analyzer 6.95 Documentation</b></font><br>
+<font style="font-family: arial,helvetica,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 16pt; line-height: normal; font-size-adjust: none; font-stretch: normal;" color="#eeeeff"><b>AWStats logfile analyzer 6.95 Documentation</b></font><br>
 <br>
 </td>
-<td bgcolor=#9999cc align=center>
+<td align="center" bgcolor="#9999cc">
 &nbsp;
 </td>
 </tr>
 
-</table>
+</tbody></table>
 
 
-<br><br><H1 style="font: 26px arial,helvetica,sanserif">Plugins, contribs and related programs</H1>
+<br><br><h1 style="font-family: arial,helvetica,sanserif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 26px; line-height: normal; font-size-adjust: none; font-stretch: normal;">Plugins, contribs and related programs</h1>
 
 You will find here description for different kinds of ressource files :<br>
 - <a href="#PLUGINS">AWStats plugins</a><br>
@@ -42,18 +38,17 @@ You will find here description for different kinds of ressource files :<br>
 
 
 <br><a name="PLUGINS"></a><br>
-<font size=3 color=#665544><b>AWStats plugins</b></font><br>
+<font color="#665544" size="3"><b>AWStats plugins</b></font><br>
 <hr>
 Plugins are .pm files you can put in your AWStats plugins directory to add new features.<br>
 Note that you must enable the plugin by adding a new line in your config files to make
 it works (See <a href="awstats_config.html#LoadPlugin">LoadPlugin</a> parameter).<br>
 <br>
 
-<a href="#plugin_standards">Standard free plugins</a> : <b>tooltips, decodeutfkeys, ipv6, hashfiles,
-geoip, geoipcity, userinfo, hostinfo, clusterinfo, urlalias, timehires, timezone, rawlog,
-graphapplet</b><br>
-<a href="#plugin_others">Other plugins</a> (require other licensed product to work) :
-<b>geoip_region_maxmind</b>,
+<a href="#plugin_standards">Standard free plugins</a> : <b>tooltips, decodeutfkeys, ipv6, hashfiles,&nbsp; userinfo, hostinfo, clusterinfo, urlalias, timehires, timezone, rawlog,
+graphapplet, graphgooglechartsapi </b><b>geoipfree</b><br>
+<a href="#plugin_others">GeoIP Plugins</a> (may require other licensed product to work) :
+<b>geoip,</b><b> geoip_city_maxmind, geoip_asn_maxmind, </b><b>geoip_region_maxmind</b>,
 <b>geoip_isp_maxmind</b>,
 <b>geoip_org_maxmind</b>,
 <br>
@@ -62,298 +57,247 @@ graphapplet</b><br>
 <br><a name="plugin_standards"><b>List of standard plugins</b></a> (Provided with AWStats) :
 <br>
 
-<br># Plugin: Tooltips
-<br># Perl modules required: None
-<br># Add some tooltips help on HTML report pages.
-<br># Note that enabled this kind of help will increased HTML report pages size,
-<br># so server load and bandwidth.
-
-<br>Plugin provided with AWStats (5.4+).
+<br><span style="font-weight: bold;">Tooltips
+</span><br><span style="font-style: italic;">Required Modules:</span> None
+<br><span style="font-style: italic;">Parameters:</span> None<br><span style="font-style: italic;">Description</span>: Add&nbsp;tooltips pop-up help boxes to HTML report pages.
+&nbsp;<br>Provided with AWStats (5.4+).
 
 <br>
 
-<br># Plugin: DecodeUTFKeys
-<br># Perl modules required: Encode and URI::Escape
-<br># Allow AWStats to show correctly (in language charset) keywords/keyphrases
-<br># strings even if they were UTF8 coded by the referer search engine.
-<br>#
-<br>#LoadPlugin="decodeutfkeys"
-
+<br><span style="font-weight: bold;">DecodeUTFKeys
+</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;Encode and URI::Escape
+<br><span style="font-style: italic;">Parameters:</span> None<br><span style="font-style: italic;">Description:</span> Allow AWStats to show correctly (in language charset) keywords/keyphrases
+strings even if they were UTF8 coded by the referer search engine.
 <br>Plugin provided with AWStats (6.0+).
 
 <br>
 
-<br># Plugin: IPv6
-<br># Perl modules required: Net::IP and Net::DNS
-<br># This plugin gives AWStats capability to make reverse DNS lookup on IPv6
-<br># addresses.
-<br># Note: If you are interesting in having country report, you should use the
-<br># geoipfree (or geoip) plugin instead of enabled reverse DNS lookup.
-
-<br>Plugin provided with AWStats (5.5+)
+<br><span style="font-weight: bold;">IPv6
+</span><br><span style="font-style: italic;">Required Modules: </span>Net::IP and Net::DNS
+<br><span style="font-style: italic;">Parameters:</span> None<br><span style="font-style: italic;">Description:</span> This plugin gives AWStats capability to make reverse DNS lookup on IPv6&nbsp;addresses.
+<br>Note: IPv6 addresses are currently incompatible with the GeoIP databases<br>Plugin provided with AWStats (5.5+)
 
 <br>
 
-<br># Plugin: HashFiles
-<br># Perl modules required: Storable
-<br># AWStats DNS cache files are read/saved as native hash files. This increase
-<br># cache file loading speed, above all for very large web sites.
+<br><span style="font-weight: bold;">HashFiles
+</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;Storable
+<br><span style="font-style: italic;">Parameters:</span> None<br><span style="font-style: italic;">Description:</span> AWStats DNS cache files are read/saved as native hash files. This improves
+cache file loading speed, especially for very large web sites.
 
 <br>Plugin provided with AWStats (5.1+)
 
-<br>
-
-<a name="geoip">&nbsp;</a>
-<br># Plugin: GeoIP
-<br># Perl modules required: Geo::IP or Geo::IP::PurePerl (from Maxmind)
-<br># Country chart is built from an Internet IP-Country database.
-<br># This plugin is useless for intranet only log files.
-<br># Note: You must choose between using this plugin (need Perl Geo::IP module 
-<br># from Maxmind, database is free and up to date) or the GeoIPfree plugin
-<br># (need Perl Geo::IPfree module, database is free but not up to date).
-<br># This plugin reduces AWStats speed of 8% !
-<br>#
-<br>#LoadPlugin="geoip GEOIP_STANDARD /pathto/GeoIP.dat"
-
-<br><u>Install:</u>
-<br>This plugin need AWStats 5.2 or higher and need Geo::IP Perl Module AND the Country database.
-<br>You can find Geo::IP Perl Module and get the free Country database or purchase the
-<br>Country licensed database, including updates, on <a href="http://www.maxmind.com/app/perl?rId=awstats" target=_new>Maxmind web site</a>.
-<br>This plugin is provided since AWStats 5.2 standard distribution. If requirements
-are ok, just add the following line to your AWStats configuration file:<br>
-<i>LoadPlugin="geoip GEOIP_STANDARD /pathto/GeoIP.dat"</i><br>
-Where <i>/pathto/GeoIP.dat</i> is the full path where you stored your Country Database file.
-<br><u>Note:</u>
-<br>Plugins for Maxmind <a href="#geoipcity">GeoIP City</a> is also available (with free database).
-<br>Plugins for Maxmind <a href="#geoipregion">GeoIP Region</a>, <a href="#geoipisp">GeoIP ISP</a> and <a href="#geoiporg">GeoIP Organization</a> are
-also available (but databases are not free).
-
-<br>
-
-<br># Plugin: GeoIPfree
-<br># Perl modules required: Geo::IPfree version 0.2+ (from Graciliano M.P.)
-<br># Country chart is built from an Internet IP-Country database.
-<br># This plugin is useless for intranet only log files.
-<br># Note: You must choose between using this plugin (need Perl Geo::IPfree
-<br># module, database is free but not up to date) or the GeoIP plugin (need
-<br># Perl Geo::IP module from Maxmind, database is also free and up to date).
-<br># Note: Activestate provide a corrupted version of Geo::IPfree 0.2 Perl
-<br># module, so install it from elsewhere (from www.cpan.org for example).
-<br># This plugin reduces AWStats speed of 10% !
-<br>#
-<br>#LoadPlugin="geoipfree"
-
-<br>Plugin provided with AWStats (5.5+).
-<br>You can find Geo::IPfree Perl Module on :
-<br>- All OS: <a href="http://www.cpan.org">CPAN site</a>
-<br>- RPM compatible OS (RedHat, Mandrake...): <a href="http://www.lafraia.com/RPM/">Lafraia rpm</a>
-<br>- ActiveState: GeoIPfree module provided by Activestate is not working correctly so I removed
-the link. You can follow the following setup instead: Download from <a href="http://www.cpan.org">CPAN site</a>
-and copy 'Geo' directory (found in 'lib') into AWStats plugins directory.
-This is a fast tip to install Geo-IPfree perl module to be used by AWStats geoipfree plugin.
-<br>Note: The Geo::IPfree database has not been updated since a long time, so using
-the <a href="#geoip">geoip</a> plugin (using the Geo::IP Perl module, now free for countries) is highly recommanded.
-<br>You can use the following tool to test your geoipfree setup: <a href="/files/testgeoipfree.pl">testgeoipfree.pl</a>. Just
-put this file into your plugins directory and run it.
-
-<br>
-
-<a name="geoipcity">&nbsp;</a>
-<br># Plugin: GeoIP_City_Maxmind
-<br># Perl modules required: Geo::IP (from Maxmind)
-<br># This plugin add a chart of hits by cities (with country and regions
-<br># informations for major countries).
-<br># Note: This plugin need Maxmind GeoIP Perl module AND the city database.
-<br># Note: I get some problem with Maxmind Geo::IP Perl module with ActiveState
-<br># on Windows but it works great on Linux with default Perl.
-<br># You can get a free version or purchase a license from Maxmind to get/use the
-<br># full version including updates.
-<br># This plugin reduces AWStats speed.
-<br>#
-<br>#LoadPlugin="geoip_city_maxmind GEOIP_STANDARD /pathto/GeoIPCity.dat"
-
-<br><u>Install:</u>
-<br>This plugin need AWStats 6.2 or higher and need Geo::IP Perl Module AND the City database.
-<br>You can find Geo::IP Perl Module and get the free City database or purchase the
-<br>City licensed database, including updates, on <a href="http://www.maxmind.com/app/perl?rId=awstats" target=_new>Maxmind web site</a>.
-<br>This plugin is provided since AWStats 6.2 standard distribution. If requirements
-are ok, just add the following line to your AWStats configuration file:<br>
-<i>LoadPlugin="geoip_city_maxmind GEOIP_STANDARD /pathto/GeoIPCity.dat"</i><br>
-Where <i>/pathto/GeoIPCity.dat</i> is the full path where you stored your City Database file.
-By enabled this plugin, you will see a new link called 'Cities' on reports menu. For
-the moment this link works only when AWStats reports are build as CGI (static built not yet
-supported).
-
-<br>
-
-<br># Plugin: UserInfo
-<br># Perl modules required: None
-<br># Add a text (Firtname, Lastname, Office Department, ...) in authenticated user
-<br># reports for each login value.
-<br># A text file called userinfo.myconfig.txt, with two fields (first is login,
-<br># second is text to show, separated by a tab char) must be created in DirData
-<br># directory.
+<br><br><span style="font-weight: bold;">UserInfo
+</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;None
+<br><span style="font-style: italic;">Parameters:</span> None<br><span style="font-style: italic;">Description:&nbsp;</span> Add&nbsp;text (Firtname, Lastname, Office Department, ...) to authenticated user&nbsp;reports for each login value.
+A text file called userinfo.myconfig.txt, with two fields (first is login,
+second is text to show, separated by a tab char) must be created in DirData&nbsp;directory.
 
 <br>Plugin provided with AWStats (5.5+)
 
 <br>
 
-<br># Plugin: ClusterInfo
-<br># Perl modules required: None
-<br># Add a text (for example a full hostname) in cluster reports for each cluster
-<br># number.
-<br># A text file called clusterinfo.myconfig.txt, with two fields (first is
-<br># cluster number, second is text to show) separated by a tab char. must be
-<br># created into DirData directory.
-<br># Note this plugin is useless if ShowClusterStats is set to 0 or if you don't
-<br># use a personalized log format that contains %cluster tag.
+<br><span style="font-weight: bold;">ClusterInfo
+</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;None
+<br><span style="font-style: italic;">Parameters:</span> None<br><span style="font-style: italic;">Description:</span>
+Add text (for example a full hostname) to cluster reports for each
+cluster
+number.&nbsp;A text file called clusterinfo.myconfig.txt, with two
+fields (first is&nbsp;cluster number, second is text to show) separated
+by a tab character must be&nbsp;created in DirData directory. <br>Note: This plugin is useless if ShowClusterStats is set to 0 or if you don't&nbsp;use a personalized log format that contains <span style="font-style: italic;">%cluster</span> tag.
 
 <br>Plugin provided with AWStats (6.2+)
 
 <br>
 
-<br># Plugin: HostInfo
-<br># Perl modules required: Net::XWhois
-<br># Add a column into host chart with a link to open a popup window that shows
-<br># info on host (like whois records).
+<br><span style="font-weight: bold;">HostInfo
+</span><br><span style="font-style: italic;">Required Modules:</span> Net::XWhois
+<br><span style="font-style: italic;">Parameters:</span> None<br><span style="font-style: italic;">Description:</span>&nbsp;Add a column into host chart with a link to open a popup window that shows&nbsp;info on host (like whois records).
 
 <br>Plugin provided with AWStats (6.0+)
 
 <br>
 
-<br># Plugin: UrlAliases
-<br># Perl modules required: None
-<br># Add a text (Page title, description...) in URL reports before URL value.
-<br># A text file called urlalias.myconfig.txt, with two fields (first is URL,
-<br># second is text to show, separated by a tab char) must be created in DirData
-<br># directory.
-
-<br>Plugin provided with AWStats (5.2+)
+<br><span style="font-weight: bold;">UrlAliases
+</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;None
+<br><span style="font-style: italic;">Parameters:</span> None<br><span style="font-style: italic;">Description:</span>&nbsp;Add&nbsp;text
+(Page title, description...) to URL reports before URL value.&nbsp;A
+text file called urlalias.myconfig.txt, with two fields (first is
+URL,&nbsp;second is text to show, separated by a tab char) must be
+created in DirData&nbsp;directory.
 <br>You can build your urlalias file manually or use <a href="awstats_tools.html#urlaliasbuilder">urlaliasbuilder.pl</a> tool (provided with 5.4+)
 
+<br>Plugin provided with AWStats (5.2+)
 <br>
 
-<br># Plugin: TimeHiRes
-<br># Perl modules required: Time::HiRes
-<br># Time reported by -showsteps option is in millisecond. For debug purpose.
+<br><span style="font-weight: bold;">TimeHiRes
+</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;Time::HiRes
+<br><span style="font-style: italic;">Parameters:</span> None<br><span style="font-style: italic;">Description:</span>&nbsp;Time reported by -showsteps option is in millisecond. For debug purpose.
 
 <br>Plugin provided with AWStats (5.1+)
 
 <br>
 
-<br># Plugin: TimeZone
-<br># Perl modules required: Time::Local
-<br># Allow AWStats to correct a bad timezone for user of some IIS that use
-<br># GMT date in its log instead of local server time.
-<br># This module is useless for Apache and most IIS version.
-<br># This plugin reduces AWStats speed of 40% !!!!!!!
-
-<br>Plugin provided with AWStats (5.1+)
+<br><span style="font-weight: bold;">TimeZone
+</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;Time::Local
+<br><span style="font-style: italic;">Parameters:</span> &lt;offset or local timezone&gt;<br><span style="font-style: italic;">Description:</span>
+Converts the timezone of log files before processing using the offset
+provided in the parameters. This is useful for some IIS users if logs
+are stored in GMT or for users who have servers in a different
+timezone. You must provide either the abreviated name of the timezone
+you wish to convert to or the offset value in hours. For example<br><span style="font-style: italic;">LoadPlugin="timezone +2"</span> &nbsp;would add two hours to the log timestamps<br><span style="font-style: italic;">LoadPlugin="timezone CET"</span> &nbsp;would convert the log from GMT to CET<br>Note: This plugin reduces AWStats speed by about 40%!<br>Plugin provided with AWStats (5.1+)
 
 <br>
 
-<br># Plugin: Rawlog
-<br># Perl modules required: None
-<br># This plugin adds a form in AWStats main page to allow users to see raw
-<br># content of current log files. A filter is also available.
-
+<br><span style="font-weight: bold;">Rawlog
+</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;None
+<br><span style="font-style: italic;">Parameters:</span> None<br><span style="font-style: italic;">Description: </span>This
+plugin adds a form in AWStats main page to allow users to see
+raw&nbsp;content of current log files. A display filter will also be
+displayed.
 <br>Plugin provided with AWStats (5.7+)
 
 <br>
 
-<br># Plugin: GraphApplet
-<br># Perl modules required: None
-<br># Supported charts are built by a 3D graphic applet.
-<br>#
-<br>#LoadPlugin="graphapplet"				# EXPERIMENTAL FEATURE
+<br><span style="font-weight: bold;">GraphApplet
+</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;None
+<br><span style="font-style: italic;">Parameters:</span> None<br><span style="font-style: italic;">Description:</span>&nbsp;Supported charts are built by a 3D graphic applet.
+<br>LoadPlugin="graphapplet"				# EXPERIMENTAL FEATURE
 
 <br>Plugin provided with AWStats (6.0+)
 
+<br><br><span style="font-weight: bold;">GraphGoogleChartAPI</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;None
+<br><span style="font-style: italic;">Parameters:</span> None<br><span style="font-style: italic;">Description:</span>
+Replaces the standard charts with free Google API generated images in
+HTML reports. If country data is available and more than one country
+has hits, a map will be generated using Google Visualizations.<br>Note:
+The machine where reports are displayed must have Internet access for
+the charts to be generated. The only data sent to Google includes the
+statistic numbers, legend names and country names. <br>Plugin provided with AWStats (6.0+)
+
+<br><br><span style="font-weight: bold;">GeoIPfree
+</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;Geo::IPfree version 0.2+ (from Graciliano M.P.)
+<br><span style="font-style: italic;">Parameters:</span> None<br><span style="font-style: italic;">Description:</span>&nbsp;Country
+chart is built from an Internet IP-Country database.&nbsp;This plugin
+is useless for intranet only log files.&nbsp; <br>Note: You must
+choose between using this plugin (need Perl Geo::IPfree&nbsp;module,
+database is free but not up to date) or the GeoIP plugin
+(need&nbsp;Perl Geo::IP module from Maxmind, database is also free and
+up to date). <br>Note: Activestate provide a corrupted version of Geo::IPfree 0.2 Perl&nbsp;module, so install it from elsewhere (from <a href="http://www.cpan.org/">www.cpan.org</a> for example).
+<br>This plugin reduces AWStats speed by about 10% !
+<br>Plugin provided with AWStats (5.5+).
+<br>You can find Geo::IPfree Perl Module on :
+<br>- All OS: <a href="http://www.cpan.org/">CPAN site</a>
+<br>- RPM compatible OS (RedHat, Mandrake...): <a href="http://www.lafraia.com/RPM/">Lafraia rpm</a>
+<br>- ActiveState: GeoIPfree module provided by Activestate is not working correctly so I removed
+the link. You can follow the following setup instead: Download from <a href="http://www.cpan.org/">CPAN site</a>
+and copy 'Geo' directory (found in 'lib') into AWStats plugins directory.
+This is a fast tip to install Geo-IPfree perl module to be used by AWStats geoipfree plugin.
+<br>Note: The Geo::IPfree database has not been updated in a long time, so using
+the <a href="awstats_contrib.html#geoip">geoip</a> plugin (using the Geo::IP Perl module, now free for countries) is highly recommended.
+<br>You can use the following tool to test your geoipfree setup: <a href="file:///files/testgeoipfree.pl">testgeoipfree.pl</a>. Just
+put this file into your plugins directory and run it.
+
+<br><br>
+
+<a name="geoip">&nbsp;</a>
+<br><span style="font-weight: bold;">Maxmind GeoIP Plugin Notes</span><br>Maxmind
+is a company that sells geolocation technology that matches IP
+addresses to countries, regions, cities and ISPs. All of their databses
+are available for an initial fee and a monthly update subscription and
+include greater accuracy and a higher frequency of updating. Some
+databases are available for free but they are not updated as often and
+may not be as accurate.<br><br><span style="text-decoration: underline;">Install:</span><br>First choose a database. When downloading a database for AWStats, please download the <span style="font-style: italic;">Binary Format</span> version. Current databases AWStats supports are:<br><span style="font-style: italic;"><br>Commercial</span>: <a href="http://www.maxmind.com/app/country?rId=awstats">Country</a>, <a href="http://www.maxmind.com/app/region?rId=awstats">Region</a>, <a href="http://www.maxmind.com/app/city?rId=awstats">City</a>, <a href="http://www.maxmind.com/app/organization?rId=awstats">Organization</a>, <a href="http://www.maxmind.com/app/isp?rId=awstats">ISP</a><br><span style="font-style: italic;">Open Source</span> <a href="http://www.maxmind.com/app/geolitecountry?rId=awstats">Country</a>, <a href="http://www.maxmind.com/app/geolitecity?rId=awstats">City</a>, <a href="http://www.maxmind.com/app/asnum?rId=awstats">ASN</a><br><br>If you choose to purchase a commercial database for country
+information, you only need to purchase the one with the greatest level
+of detail you want to appear in your report. For example, if you only
+want country information, you can purchase just the Country database.
+If you want City detail, you do <span style="font-style: italic;">not</span>
+need to purcahse the Country and Region databases, just the City
+database. (Organization and ISP databases do not include country or
+region info so you must purchase those in addition to Country, Region
+or City if you desire more information)<br><br>Next, install the
+Geo::IP Perl module. Then choose a Maxmind API to access the databse.
+Maxmind also has two Perl API's available for interacting with their
+databases. There is a a C/Perl library that will run&nbsp; quickly and
+there is a pure Perl API that is a little slower but does not require
+any C depdencies. Choose <a href="http://www.maxmind.com/app/perl?rId=awstats">one of the API</a>s and install it on your machine.<br><br><span style="font-style: italic;">Parameters</span>:
+Each GeoIP database can be loaded entirely into memory or lookups can
+scan through the file. When editing your AWStats configuration, you
+have to specify if you want to use memory or file lookups. Specify
+GEOIP_STANDARD for file lookups or GEOIP_MEMORY_CACHE for memory
+loading. Please note that the memory method may crash on some Linux
+distributions so if that happens, try the standard method. Also, using
+the C API with Activestate Perl may crash on Windows machines, so use
+the PurePerl module instead.<br><br>You may also override some
+databases by generating a comma seperated text file with IP addresses
+and associated data. This is useful if you are reporting on an Intranet
+site, have a mixture of internal and external users or the data for a
+specific IP is incorrect in the database. You can use the included
+geoip_generator tool to create override files.<br><br>Note: AWStats
+does not currently support IPv6 for GeoIP lookups as Maxmind only
+offers the country DB with IPv6 at this time. As Maxmind includes IPv6
+support in more DBs, we will update AWStats.<br>Enabling GeoIP plugins will reduce the speed of AWStats processing.<br><br><span style="font-weight: bold;">GeoIP
+</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;Geo::IP or Geo::IP::PurePerl (from Maxmind)
+<br><span style="font-style: italic;">Parameters:</span> [GEOIP_STANDARD | GEOIP_MEMORY_CACHE] [/pathto/geoip.dat] &lt;/pathto/override.txt&gt;<br><span style="font-style: italic;">Description:</span> Country chart is built from an Internet IP-Country database.
+<br>Note: You must choose between using this plugin&nbsp;or the
+GeoIPfree plugin&nbsp;(need Perl Geo::IPfree module, database is free
+but not up to date).
+<br>Example <span style="font-style: italic;">LoadPlugin="geoip GEOIP_STANDARD /usr/local/geoip.dat /usr/local/geoip_override.txt"
+
+</span><br>Plugin provided with AWStats (5.2+)
+
+<br><br><span style="font-weight: bold;">GeoIP_City_Maxmind
+</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;Geo::IP or Geo::IP::PurePerl (from Maxmind)
+<br><span style="font-style: italic;">Parameters:</span> [GEOIP_STANDARD | GEOIP_MEMORY_CACHE] [/pathto/GeoIPCity.dat] &lt;/pathto/override.txt&gt;<br><span style="font-style: italic;">Description: </span>This plugin adds a chart of hits by cities (with country and regions&nbsp;informations for major countries).
 <br>
+By enabling this plugin, you will see a new link called 'Cities' on 
+reports menu.<br>Example <span style="font-style: italic;">LoadPlugin="geoip_city_maxmind GEOIP_STANDARD /usr/local/geoip.dat /usr/local/GeoIPCity_override.txt"
 
-<br><a name="plugin_others"><b>List of other plugins</b></a> (Plugins are free but
-need a not free third product to work)
-<br>
+</span><br>Plugin provided with AWStats (6.2+)
 
-<a name="geoipregion">&nbsp;</a>
-<br># Plugin: GeoIP_Region_Maxmind
-<br># Perl modules required: Geo::IP (from Maxmind)
-<br># This plugin add a chart of hits by regions. Only regions for US and 
-<br># Canada can be detected.
-<br># Note: This plugin need Maxmind GeoIP Perl module AND the region database.
-<br># Note: I get some problem with Maxmind Geo::IP Perl module with ActiveState
-<br># on Windows but it works great on Linux with default Perl.
-<br># You need to purchase a license from Maxmind to get/use the Region database.
-<br># This plugin reduces AWStats speed.
-<br>#
-<br>#LoadPlugin="geoip_region_maxmind GEOIP_STANDARD /pathto/GeoIPRegion.dat"
+<br><br><span style="font-weight: bold;">GeoIP_ASN_Maxmind</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;Geo::IP or Geo::IP::PurePerl (from Maxmind)
+<br><span style="font-style: italic;">Parameters:</span> [GEOIP_STANDARD | GEOIP_MEMORY_CACHE] [/pathto/GeoIPASN.dat] &lt;/pathto/override.txt&gt; &lt;link to AS lookup&gt;<br><span style="font-style: italic;">Description: </span>This
+plugin adds a chart of AS numbers where the host IP address is
+registered. This plugin can display some ISP information if included in
+the database. You can also provide a link that will be used to lookup
+additional registration data. Put the link at the end of the parameter
+string and the report page will include the link with the full AS
+number at the end.<br>Example <span style="font-style: italic;">LoadPlugin="geoip_asn_maxmind
+GEOIP_STANDARD /usr/local/geoip.dat /usr/local/GeoIPASN_override.txt
+http://enc.com.au/itools/aut-num.php?autnum="
+</span><br>Plugin provided with AWStats (6.9+)
 
-<br><u>Install:</u>
-<br>This plugin need AWStats 6.2 or higher and need Geo::IP Perl Module AND the Region database.
-<br>You can find Geo::IP Perl Module and purchase the Region licensed database and updates
-<br>on <a href="http://www.maxmind.com/app/perl?rId=awstats" target=_new>Maxmind web site</a>.
-<br>This plugin is provided with AWStats 6.2 standard distribution. If requirements
-are ok, just add the following line to your AWStats configuration file:<br>
-<i>LoadPlugin="geoip_region_maxmind GEOIP_STANDARD /pathto/GeoIPRegion.dat"</i><br>
-Where <i>/pathto/GeoIPRegion.dat</i> is the full path where you stored your Region Database file.
-By enabled this plugin, you will see a new link called 'Regions' on reports menu. For
+<br><br><span style="font-weight: bold;">GeoIP_Region_Maxmind
+(Commercial Only)</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;Geo::IP or Geo::IP::PurePerl (from Maxmind)
+<br><span style="font-style: italic;">Parameters:</span> [GEOIP_STANDARD | GEOIP_MEMORY_CACHE] [/pathto/GeoIPRegion.dat]<br><span style="font-style: italic;">Description: </span>This plugin add a chart of hits by regions. Only regions for US and&nbsp;Canada can be detected at this time.
+<br>By enabling this plugin, you will see a new link called 'Regions' on reports menu. For
 the moment this link works only when AWStats reports are build as CGI (static built not yet
 supported).
-<br>
+<br>Example <span style="font-style: italic;">LoadPlugin="geoip_region_maxmind GEOIP_STANDARD /usr/local/GeoIPRegion.dat /usr/local/geoip_override.txt"
 
-<a name="geoipisp">&nbsp;</a>
-<br># Plugin: GeoIP_ISP_Maxmind
-<br># Perl modules required: Geo::IP (from Maxmind)
-<br># This plugin add a chart of hits by ISP.
-<br># Note: This plugin need Maxmind GeoIP Perl module AND the ISP database.
-<br># Note: I get some problem with Maxmind Geo::IP Perl module with ActiveState
-<br># on Windows but it works great on Linux with default Perl.
-<br># You need to purchase a license from Maxmind to get/use the ISP database.
-<br># This plugin reduces AWStats speed.
-<br>#
-<br>#LoadPlugin="geoip_isp_maxmind GEOIP_STANDARD /pathto/GeoIPISP.dat"
+</span><br>Plugin provided with AWStats (6.2+)
 
-<br><u>Install:</u>
-<br>This plugin need AWStats 6.3 or higher and need Geo::IP Perl Module AND the ISP database.
-<br>You can find Geo::IP Perl Module and purchase the ISP licensed database and updates
-<br>on <a href="http://www.maxmind.com/app/perl?rId=awstats" target=_new>Maxmind web site</a>.
-<br>This plugin is provided with AWStats 6.3 standard distribution. If requirements
-are ok, just add the following line to your AWStats configuration file:<br>
-<i>LoadPlugin="geoip_isp_maxmind GEOIP_STANDARD /pathto/GeoIPISP.dat"</i><br>
-Where <i>/pathto/GeoIPISP.dat</i> is the full path where you stored your ISP Database file.
-By enabled this plugin, you will see a new link called 'ISP' on reports menu. For
+<br><br><span style="font-weight: bold;">GeoIP_ISP_Maxmind
+(Commercial Only)</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;Geo::IP or Geo::IP::PurePerl (from Maxmind)
+<br><span style="font-style: italic;">Parameters:</span> [GEOIP_STANDARD | GEOIP_MEMORY_CACHE] [/pathto/GeoIPISP.dat]<br><span style="font-style: italic;">Description:</span>&nbsp;This plugin adds a chart of hits by ISP.
+<br>By enabling this plugin, you will see a new link called 'ISP' on reports menu. For
 the moment this link works only when AWStats reports are build as CGI (static built not yet
 supported).
-<br>
+<br>Example <span style="font-style: italic;">LoadPlugin="geoip_isp_maxmind GEOIP_STANDARD /usr/local/GeoIPISP.dat"
 
-<a name="geoiporg">&nbsp;</a>
-<br># Plugin: GeoIP_Org_Maxmind
-<br># Perl modules required: Geo::IP (from Maxmind)
-<br># This plugin add a chart of hits by Organization names.
-<br># Note: This plugin need Maxmind GeoIP Perl module AND the Org database.
-<br># Note: I get some problem with Maxmind Geo::IP Perl module with ActiveState
-<br># on Windows but it works great on Linux with default Perl.
-<br># You need to purchase a license from Maxmind to get/use the Org database.
-<br># This plugin reduces AWStats speed.
-<br>#
-<br>#LoadPlugin="geoip_org_maxmind GEOIP_STANDARD /pathto/GeoIPOrg.dat"
+</span><br>Plugin provided with AWStats (6.3+)
 
-<br><u>Install:</u>
-<br>This plugin need AWStats 6.3 or higher and need Geo::IP Perl Module AND the Org database.
-<br>You can find Geo::IP Perl Module and purchase Org licensed database and updates
-<br>on <a href="http://www.maxmind.com/app/perl?rId=awstats" target=_new>Maxmind web site</a>.
-<br>This plugin is provided with AWStats 6.3 standard distribution. If requirements
-are ok, just add the following line to your AWStats configuration file:<br>
-<i>LoadPlugin="geoip_org_maxmind GEOIP_STANDARD /pathto/GeoIPOrg.dat"</i><br>
-Where <i>/pathto/GeoIPOrg.dat</i> is the full path where you stored your Org Database file.
-By enabled this plugin, you will see a new link called 'Organizations' on reports menu. For
+<br><br><span style="font-weight: bold;">GeoIP_Org_Maxmind
+(Commercial Only)</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;Geo::IP or Geo::IP::PurePerl (from Maxmind)
+<br><span style="font-style: italic;">Parameters:</span> [GEOIP_STANDARD | GEOIP_MEMORY_CACHE] [/pathto/GeoIPOrg.dat]<br><span style="font-style: italic;">Description:</span>&nbsp;This plugin adds a chart of hits by Organization names.
+<br>By enabling this plugin, you will see a new link called 'Organizations' on reports menu. For
 the moment this link works only when AWStats reports are build as CGI (static built not yet
 supported).
-<br>
+<br>Example <span style="font-style: italic;">LoadPlugin="geoip_org_maxmind GEOIP_STANDARD /usr/local/GeoIPOrg.dat"
 
+</span><br>Plugin provided with AWStats (6.3+)
 
 <br><br><a name="CONTRIB"></a><br>
-<font size=3 color=#665544><b>Other AWStats contribs/tools/package</b></font><br>
+<font color="#665544" size="3"><b>Other AWStats contribs/tools/package</b></font><br>
 <hr>
 
 <br>
@@ -378,14 +322,14 @@ They can enhance AWStats use or save you time giving you a start for a new devel
 
 <a href="http://betterawstats.com">BetterAWStats</a> is a PHP Frontend to show you AWStats data file differently.<br>
 
-<a href="http://phpnuke.org/modules.php?name=News&file=article&sid=7041" target=_new>AWStats PhpNuke module</a> is a module for the open source CMS PHP Nuke.<br>
+<a href="http://phpnuke.org/modules.php?name=News&amp;file=article&amp;sid=7041" target="_new">AWStats PhpNuke module</a> is a module for the open source CMS PHP Nuke.<br>
 
-<a href="http://www.ravencore.com/" target=_new>Ravencore</a> is an Open Source Hosting Control Panel that include AWStats as part of its statistics solutions.<br>
+<a href="http://www.ravencore.com/" target="_new">Ravencore</a> is an Open Source Hosting Control Panel that include AWStats as part of its statistics solutions.<br>
 
-<a href="/files/summary4severaldomains.pl" target=_new>summary4severaldomains.pl</a> is a small perl script that build an index.html page
+<a href="/files/summary4severaldomains.pl" target="_new">summary4severaldomains.pl</a> is a small perl script that build an index.html page
 with AWStats txt summary information for each domains on same page (number of pages, hits and bandwith for month).<br>
 
-<a href="http://www.telartis.nl/xcms/awstats" target=_new>AWStats Totals</a> is a php page
+<a href="http://www.telartis.nl/xcms/awstats" target="_new">AWStats Totals</a> is a php page
 that use AWStats database to show a summary for several config files, on the same page.<br>
 
 <br>
@@ -400,21 +344,21 @@ to add tags required by AWStats to report the "miscellanous chart".<br>
 <a href="http://www.digievo.co.uk/software.asp?category=2">Logprocess</a> automate the collection, merging, processing and archiving of IIS 
 log files in a hosting (mult-domain) environment using AWStats to generate and manage stats/reports.<br>
 
-<a href="http://www.xlenc.com/portfolio.do" target=_new>XlencArlm</a> is a tool to enhance use of AWStats with IIS (Catching log files from FTP,
+<a href="http://www.xlenc.com/portfolio.do" target="_new">XlencArlm</a> is a tool to enhance use of AWStats with IIS (Catching log files from FTP,
 doing GMT correction on log files, ...). Don't know if it works correctly but seems to be interesting.<br>
 
-<a href="/files/configurador.tgz" target=_new>Configurador</a> is a piece of CGI perl scripts to allow you to edit an AWStats config file from
+<a href="/files/configurador.tgz" target="_new">Configurador</a> is a piece of CGI perl scripts to allow you to edit an AWStats config file from
 the web. Code comments are in Spanish but it may be a goo start to develop your own tool.
 <i>Hector Garcia Alvarez</i><br>
 
-<a href="/files/logtrans.py" target=_new>logtrans.py</a> is a python small example on how to convert an old
+<a href="/files/logtrans.py" target="_new">logtrans.py</a> is a python small example on how to convert an old
 log file from IIS4.0 to a new format compatible with AWStats. Don't know if it works, just here
 to provide you a code sample if you like python.<br>
 
-<a href="/files/isa2w3c.pl" target=_new>isa2w3c.pl</a>, is a convertor to have a more standard
+<a href="/files/isa2w3c.pl" target="_new">isa2w3c.pl</a>, is a convertor to have a more standard
 log file from an ISA log file.<br>
 
-<a href="http://www.ruwenzori.net/code/go_awstats/"target=_new>go_awstats</a>, is a tool to automate build of
+<a href="http://www.ruwenzori.net/code/go_awstats/" target="_new">go_awstats</a>, is a tool to automate build of
 AWStats statics reports for all config files but also for all month.<br>
 
 <a href="http://forum.topflood.com/referencement/logiciel-stat-5015.html">Stats Letter</a>, is a Perl tool to
@@ -422,38 +366,38 @@ send AWStats reports to one or several user for one or several reports. Document
 
 
 <br><a name="RELATED"></a><br>
-<font size=3 color=#665544><b>Other Non AWStats contribs/tools (not related to AWStats but related to log analysis)</b></font><br>
+<font color="#665544" size="3"><b>Other Non AWStats contribs/tools (not related to AWStats but related to log analysis)</b></font><br>
 <hr>
 
-<a href="/files/maillog2commonlog.pl" target=_new>maillog2commonlog.pl</a> converts mail logs in
+<a href="/files/maillog2commonlog.pl" target="_new">maillog2commonlog.pl</a> converts mail logs in
 smail or qmail format to the common log format.
 Note that if you want to analyze, with AWStats, mail log files from postfix, sendmail or qmail,
 a better solution is to use instead maillogconvert.pl preprocessor (See AWStats
 <a href="awstats_faq.html#MAIL">F.A.Q</a> about analyzing mail logs).<br>
 <i>Joey Hess, freeware.</i><br>
 
-<a href="http://www.kristoffersen.us/software/" target=_new>maillogconv.pl</a> is another mail log processor that
+<a href="http://www.kristoffersen.us/software/" target="_new">maillogconv.pl</a> is another mail log processor that
 can be used to change mail log files into a log file that AWStats can understand.<br>
 Note that a derivated and enhanced tool called maillogconvert.pl is provided with AWStats
 since 5.7. See <a href="awstats_faq.html#MAIL">F.A.Q</a> about analyzing mail logs to know
 how to setup AWStats with maillogconv.pl or maillogconvert.pl to analyze
 Postfix, Sendmail, Qmail or MDaemon log files.<br>
 
-<a href="http://mlc.anzac.at " target=_new>mlc</a> is another postfix mail logs converter (written in C).
+<a href="http://mlc.anzac.at%20" target="_new">mlc</a> is another postfix mail logs converter (written in C).
 Try it if the maillogconvert.pl tool provided with AWStats does not work on your postfix log file.<br>
 
-<a href="/files/access_referer_agent2combined.pl" target=_new>access_referer_agent2combined.pl</a> is a perl script that converts a
+<a href="/files/access_referer_agent2combined.pl" target="_new">access_referer_agent2combined.pl</a> is a perl script that converts a
 directory of common log format (CLF) access-files, referer-files and agent-files to a single combined.log
 This is usefull if you have seperate access/referer/agent logfiles and want to use all features of a loganalyzer
 that require a combined log file.<br>
-<a href="http://anonlog.sourceforge.net/" target=_new>anonlog</a> "anonymizes" your logfile by encoding sensitive information.<br>
+<a href="http://anonlog.sourceforge.net/" target="_new">anonlog</a> "anonymizes" your logfile by encoding sensitive information.<br>
 <i>Stephen Turner, freeware.</i><br> 
 
 <br>
 <u>If you don't like AWStats, you can try thoose other popular similar tools :</u><br>
-<a href="http://www.analog.cx/" target=_new>Analog</a>. A very old log analyzer (written in C).<br>
+<a href="http://www.analog.cx/" target="_new">Analog</a>. A very old log analyzer (written in C).<br>
 <i>Stephen Turner, free software.</i><br> 
-<a href="http://www.mrunix.net/webalizer/" target=_new>Webalizer</a>. Another very old log analyzer (written in C).<br>
+<a href="http://www.mrunix.net/webalizer/" target="_new">Webalizer</a>. Another very old log analyzer (written in C).<br>
 <br>
 There is also commercial products you can find doing a search on 'log file analyzer' with <a href="http://www.google.com">Google</a>.<br>
 <br>
@@ -461,17 +405,17 @@ There is also commercial products you can find doing a search on 'log file analy
 
 
 <br><a name="DOC"></a><br>
-<font size=3 color=#665544><b>Documents on AWStats or related to log analysis</b></font><br>
+<font color="#665544" size="3"><b>Documents on AWStats or related to log analysis</b></font><br>
 <hr>
 <!--<img src="/images/us.png">-->AWStats official documentation for last version can be found here: <a href="index.html">HTML On line</a> or <a href="awstats.pdf">PDF file</a><br>
 <br>
 <a href="http://www.antezeta.com/awstats.html" title="Contains installation and usage tips, additional ExtraSection examples, patches and other resources">Additional resources for AWStats</a> provided by Antezeta (<a href="http://www.antezeta.it/awstats.html" title="Contiene suggerimenti per l'installazione ed utilizzo; esempi di ExtraSection, patch ed altri risorse" lang="it">or in Italian</a>)<br>
 An intro and install doc 'Using AWStats on GNU/Linux or Windows' in <a href="http://www.chedong.com/tech/awstats.html">Chinese</a><br>
-A setup tutorial in <a href="http://www.showsource.dk/artikler/vis_artikel.php?id=1065375981" target=_new>Danish</a><br>
-A setup tutorial in <a href="http://www.funix.org/fr/linux/main-linux.php3?ref=logapache&page=menu" target=_doc>French from Funix: How to install AWStats and Webalizer</a><br>
-A setup tutorial in <a href="http://www.baudelet.net/awstats.htm" target=_doc>French for Windows users</a><br>
-A setup tutorial in <a href="http://www.fpoeserv.com/?Select=Awstats" target=_new>French from Fpoeserv</a><br>
-A setup tutorial for debian users with a logrotate tool in <a href="http://amaris.cybernd.at/awstats.html" target=_new>German</a><br>
+A setup tutorial in <a href="http://www.showsource.dk/artikler/vis_artikel.php?id=1065375981" target="_new">Danish</a><br>
+A setup tutorial in <a href="http://www.funix.org/fr/linux/main-linux.php3?ref=logapache&amp;page=menu" target="_doc">French from Funix: How to install AWStats and Webalizer</a><br>
+A setup tutorial in <a href="http://www.baudelet.net/awstats.htm" target="_doc">French for Windows users</a><br>
+A setup tutorial in <a href="http://www.fpoeserv.com/?Select=Awstats" target="_new">French from Fpoeserv</a><br>
+A setup tutorial for debian users with a logrotate tool in <a href="http://amaris.cybernd.at/awstats.html" target="_new">German</a><br>
 Another way to explain <a href="http://www.raoul.shacknet.nu/2005/11/29/configure-awstats/">AWStats setup</a><br>
 <br>
 
@@ -479,7 +423,7 @@ Another way to explain <a href="http://www.raoul.shacknet.nu/2005/11/29/configur
 <br>
 <hr>
 
-<script language=javascript>
+<script language="javascript">
 	var lastmod = new Date(document.lastModified);
 	if (lastmod.getDate() > 0) {
 		if (lastmod.getDate()<10) zerod="0"
@@ -502,8 +446,7 @@ if (doc.match(/^http/i)!=null) {
 }
 </script>
 
-<a href="http://www.chiensderace.com">&nbsp</a>
-<a href="http://www.chatsderace.com">&nbsp</a>
+<a href="http://www.chiensderace.com">&nbsp;</a>
+<a href="http://www.chatsderace.com">&nbsp;</a>
 
-</body>
-</html>
+</body></html>
