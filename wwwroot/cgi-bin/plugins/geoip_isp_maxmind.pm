@@ -37,6 +37,10 @@ no strict "refs";
 # AND THE NAME OF ALL FUNCTIONS THE PLUGIN MANAGE.
 my $PluginNeedAWStatsVersion="6.2";
 my $PluginHooksFunctions="AddHTMLMenuLink AddHTMLGraph ShowInfoHost SectionInitHashArray SectionProcessIp SectionProcessHostname SectionReadHistory SectionWriteHistory";
+my $PluginName="geoip_isp_maxmind";
+my $LoadedOverride=0;
+my $OverrideFile="";
+my %TmpDomainLookup; 
 # ----->
 
 # <-----
@@ -64,8 +68,8 @@ sub Init_geoip_isp_maxmind {
 
 	# <-----
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
-	debug(" Plugin geoip_isp_maxmind: InitParams=$InitParams",1);
-   	my ($mode,$datafile)=split(/\s+/,$InitParams,2);
+	debug(" Plugin $PluginName: InitParams=$InitParams",1);
+   	my ($mode,$datafile,$override)=split(/\s+/,$InitParams,3);
    	if (! $datafile) { $datafile="GeoIPIsp.dat"; }
 	if ($type eq 'geoippureperl') {
 		# With pureperl with always use GEOIP_STANDARD.
@@ -76,12 +80,15 @@ sub Init_geoip_isp_maxmind {
 		if ($mode eq '' || $mode eq 'GEOIP_MEMORY_CACHE')  { $mode=Geo::IP::GEOIP_MEMORY_CACHE(); }
 		else { $mode=Geo::IP::GEOIP_STANDARD(); }
 	}
-	debug(" Plugin geoip_isp_maxmind: GeoIP initialized type=$type mode=$mode",1);
+	if ($override){$OverrideFile=$override;}
+	%TmpDomainLookup=();
+	debug(" Plugin $PluginName: GeoIP initialized type=$type mode=$mode",1);
 	if ($type eq 'geoippureperl') {
 		$geoip_isp_maxmind = Geo::IP::PurePerl->open($datafile, $mode);
 	} else {
 		$geoip_isp_maxmind = Geo::IP->open($datafile, $mode);
 	}
+	$LoadedOverride=0;
 # Fails on some GeoIP version
 # 	debug(" Plugin geoip_isp_maxmind: GeoIP initialized database_info=".$geoip_isp_maxmind->database_info());
 	# ----->
@@ -100,11 +107,11 @@ sub AddHTMLMenuLink_geoip_isp_maxmind {
     my $menulink=$_[2];
     my $menutext=$_[3];
 	# <-----
-	if ($Debug) { debug(" Plugin geoip_isp_maxmind: AddHTMLMenuLink"); }
+	if ($Debug) { debug(" Plugin $PluginName: AddHTMLMenuLink"); }
     if ($categ eq 'who') {
-        $menu->{'plugin_geoip_isp_maxmind'}=0.6;              # Pos
-        $menulink->{'plugin_geoip_isp_maxmind'}=2;          # Type of link
-        $menutext->{'plugin_geoip_isp_maxmind'}="ISP";      # Text
+        $menu->{"plugin_$PluginName"}=0.6;              # Pos
+        $menulink->{"plugin_$PluginName"}=2;          # Type of link
+        $menutext->{"plugin_$PluginName"}="ISP";      # Text
     }
 	# ----->
 	return 0;
@@ -126,7 +133,7 @@ sub AddHTMLGraph_geoip_isp_maxmind {
 	my $total_p; my $total_h; my $total_k;
 	my $rest_p; my $rest_h; my $rest_k;
 
-	if ($Debug) { debug(" Plugin geoip_isp_maxmind: AddHTMLGraph $categ $menu $menulink $menutext"); }
+	if ($Debug) { debug(" Plugin $PluginName: AddHTMLGraph $categ $menu $menulink $menutext"); }
 	my $title='ISP';
 	&tab_head("$title",19,0,'isp');
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>ISP : ".((scalar keys %_isp_h)-($_isp_h{'unknown'}?1:0))."</th>";
@@ -148,9 +155,9 @@ sub AddHTMLGraph_geoip_isp_maxmind {
    		    print "<tr>";
    		    my $isp=$key; $isp =~ s/_/ /g;
    		    print "<td class=\"aws\">".ucfirst($isp)."</td>";
-    		if ($ShowISP =~ /P/i) { print "<td>".($_isp_p{$key}?$_isp_p{$key}:"&nbsp;")."</td>"; }
+    		if ($ShowISP =~ /P/i) { print "<td>".($_isp_p{$key}?Format_Number($_isp_p{$key}):"&nbsp;")."</td>"; }
     		if ($ShowISP =~ /P/i) { print "<td>".($_isp_p{$key}?"$p_p %":'&nbsp;')."</td>"; }
-    		if ($ShowISP =~ /H/i) { print "<td>".($_isp_h{$key}?$_isp_h{$key}:"&nbsp;")."</td>"; }
+    		if ($ShowISP =~ /H/i) { print "<td>".($_isp_h{$key}?Format_Number($_isp_h{$key}):"&nbsp;")."</td>"; }
     		if ($ShowISP =~ /H/i) { print "<td>".($_isp_h{$key}?"$p_h %":'&nbsp;')."</td>"; }
     		if ($ShowISP =~ /B/i) { print "<td>".Format_Bytes($_isp_k{$key})."</td>"; }
     		if ($ShowISP =~ /L/i) { print "<td>".($_isp_p{$key}?Format_Date($_isp_l{$key},1):'-')."</td>"; }
@@ -180,9 +187,9 @@ sub AddHTMLGraph_geoip_isp_maxmind {
 		if ($TotalHits)  { $p_h=int($rest_h/$TotalHits*1000)/10; }
 		print "<tr>";
 		print "<td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]/$Message[0]</span></td>";
-		if ($ShowISP =~ /P/i) { print "<td>".($rest_p?$rest_p:"&nbsp;")."</td>"; }
+		if ($ShowISP =~ /P/i) { print "<td>".($rest_p?Format_Number($rest_p):"&nbsp;")."</td>"; }
    		if ($ShowISP =~ /P/i) { print "<td>".($rest_p?"$p_p %":'&nbsp;')."</td>"; }
-		if ($ShowISP =~ /H/i) { print "<td>".($rest_h?$rest_h:"&nbsp;")."</td>"; }
+		if ($ShowISP =~ /H/i) { print "<td>".($rest_h?Format_Number($rest_h):"&nbsp;")."</td>"; }
    		if ($ShowISP =~ /H/i) { print "<td>".($rest_h?"$p_h %":'&nbsp;')."</td>"; }
 		if ($ShowISP =~ /B/i) { print "<td>".Format_Bytes($rest_k)."</td>"; }
 		if ($ShowISP =~ /L/i) { print "<td>&nbsp;</td>"; }
@@ -224,10 +231,12 @@ sub ShowInfoHost_geoip_isp_maxmind {
     	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 
 		print "<th width=\"80\">";
-        print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=plugin_geoip_isp_maxmind"):"$PROG$StaticLinks.plugin_geoip_isp_maxmind.$StaticExt")."\"$NewLinkTarget>GeoIP<br />ISP</a>";
+        print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=plugin_$PluginName"):"$StaticLinks.plugin_$PluginName.$StaticExt")."\"$NewLinkTarget>GeoIP<br />ISP</a>";
         print "</th>";
 	}
 	elsif ($param) {
+		# try loading our override file if we haven't yet
+		if (!$LoadedOverride){&LoadOverrideFile_geoip_isp_maxmind();}
         my $ip=0;
 		my $key;
 		if ($param =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {	# IPv4 address
@@ -241,17 +250,19 @@ sub ShowInfoHost_geoip_isp_maxmind {
 		print "<td>";
 		if ($key && $ip==4) {
         	my $isp;
-        	if ($type eq 'geoippureperl')
+    		if ($geoip_isp_maxmind){$isp = $TmpDomainLookup{$geoip_isp_maxmind->get_ip_address($param)};}
+    		else {$isp = $TmpDomainLookup{$param};}
+        	if (!$isp && $type eq 'geoippureperl')
 			{
         		# Function isp_by_addr does not exists in PurePerl but isp_by_name do same
         		$isp=$geoip_isp_maxmind->isp_by_name($param) if $geoip_isp_maxmind;
         	}
-        	else
+        	elsif (!$isp)
         	{
         		# Function isp_by_addr does not exits, so we use org_by_addr
         		$isp=$geoip_isp_maxmind->org_by_addr($param) if $geoip_isp_maxmind;
         	}
-        	if ($Debug) { debug("  Plugin geoip_isp_maxmind: GetIspByIp for $param: [$isp]",5); }
+        	if ($Debug) { debug("  Plugin $PluginName: GetIspByIp for $param: [$isp]",5); }
 		    if ($isp) {
 		        if (length($isp) <= $MAXLENGTH) {
 		            print "$isp";
@@ -267,15 +278,17 @@ sub ShowInfoHost_geoip_isp_maxmind {
 		}
 		if (! $key) {
         	my $isp;
-        	if ($type eq 'geoippureperl')
+    		if ($geoip_isp_maxmind){$isp = $TmpDomainLookup{$geoip_isp_maxmind->get_ip_address($param)};}
+    		else {$isp = $TmpDomainLookup{$param};}
+        	if (!$isp && $type eq 'geoippureperl')
 			{
         		$isp=$geoip_isp_maxmind->isp_by_name($param) if $geoip_isp_maxmind;
         	}
-        	else
+        	elsif (!$isp)
         	{
         		$isp=$geoip_isp_maxmind->isp_by_name($param) if $geoip_isp_maxmind;
         	}
-        	if ($Debug) { debug("  Plugin geoip_isp_maxmind: GetIspByHostname for $param: [$isp]",5); }
+        	if ($Debug) { debug("  Plugin $PluginName: GetIspByHostname for $param: [$isp]",5); }
 		    if ($isp) {
 		        if (length($isp) <= $MAXLENGTH) {
 		            print "$isp";
@@ -303,7 +316,7 @@ sub ShowInfoHost_geoip_isp_maxmind {
 sub SectionInitHashArray_geoip_isp_maxmind {
 #    my $param="$_[0]";
 	# <-----
-	if ($Debug) { debug(" Plugin geoip_isp_maxmind: Init_HashArray"); }
+	if ($Debug) { debug(" Plugin $PluginName: Init_HashArray"); }
 	%_isp_p = %_isp_h = %_isp_k = %_isp_l =();
 	# ----->
 	return 0;
@@ -317,18 +330,21 @@ sub SectionInitHashArray_geoip_isp_maxmind {
 sub SectionProcessIp_geoip_isp_maxmind {
     my $param="$_[0]";      # Param must be an IP
 	# <-----
+	if (!$LoadedOverride){&LoadOverrideFile_geoip_isp_maxmind();}
 	my $isp;
-	if ($type eq 'geoippureperl')
+    if ($geoip_isp_maxmind){$isp = $TmpDomainLookup{$geoip_isp_maxmind->get_ip_address($param)};}
+    else {$isp = $TmpDomainLookup{$param};}
+	if (!$isp && $type eq 'geoippureperl')
 	{
 		# Function isp_by_addr does not exists in PurePerl but isp_by_name do same
 		$isp=$geoip_isp_maxmind->isp_by_name($param) if $geoip_isp_maxmind;
 	}
-	else
+	elsif(!$isp)
 	{
         # Function isp_by_addr does not exits, so we use org_by_addr
 		$isp=$geoip_isp_maxmind->org_by_addr($param) if $geoip_isp_maxmind;
 	}
-	if ($Debug) { debug("  Plugin geoip_isp_maxmind: GetIspByIp for $param: [$isp]",5); }
+	if ($Debug) { debug("  Plugin $PluginName: GetIspByIp for $param: [$isp]",5); }
     if ($isp) {
         $isp =~ s/\s/_/g;
         $_isp_h{$isp}++;
@@ -348,16 +364,19 @@ sub SectionProcessIp_geoip_isp_maxmind {
 sub SectionProcessHostname_geoip_isp_maxmind {
     my $param="$_[0]";      # Param must be an IP
 	# <-----
+	if (!$LoadedOverride){&LoadOverrideFile_geoip_isp_maxmind();}
 	my $isp;
-	if ($type eq 'geoippureperl')
+    if ($geoip_isp_maxmind){$isp = $TmpDomainLookup{$geoip_isp_maxmind->get_ip_address($param)};}
+    else {$isp = $TmpDomainLookup{$param};}
+	if (!$isp && $type eq 'geoippureperl')
 	{
 		$isp=$geoip_isp_maxmind->isp_by_name($param) if $geoip_isp_maxmind;
 	}
-	else
+	elsif(!$isp)
 	{
 		$isp=$geoip_isp_maxmind->isp_by_name($param) if $geoip_isp_maxmind;
 	}
-	if ($Debug) { debug("  Plugin geoip_isp_maxmind: GetIspByHostname for $param: [$isp]",5); }
+	if ($Debug) { debug("  Plugin $PluginName: GetIspByHostname for $param: [$isp]",5); }
     if ($isp) {
         $isp =~ s/\s/_/g;
         $_isp_h{$isp}++;
@@ -380,7 +399,7 @@ sub SectionReadHistory_geoip_isp_maxmind {
     my $xmleb=shift;
 	my $countlines=shift;
 	# <-----
-	if ($Debug) { debug(" Plugin geoip_isp_maxmind: Begin of PLUGIN_geoip_isp_maxmind section"); }
+	if ($Debug) { debug(" Plugin $PluginName: Begin of PLUGIN_$PluginName section"); }
 	my @field=();
 	my $count=0;my $countloaded=0;
 	do {
@@ -396,9 +415,9 @@ sub SectionReadHistory_geoip_isp_maxmind {
 		@field=split(/\s+/,($xmlold?XMLDecodeFromHisto($_):$_));
 		$countlines++;
 	}
-	until ($field[0] eq 'END_PLUGIN_geoip_isp_maxmind' || $field[0] eq "${xmleb}END_PLUGIN_geoip_isp_maxmind" || ! $_);
-	if ($field[0] ne 'END_PLUGIN_geoip_isp_maxmind' && $field[0] ne "${xmleb}END_PLUGIN_geoip_isp_maxmind") { error("History file is corrupted (End of section PLUGIN not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
-	if ($Debug) { debug(" Plugin geoip_isp_maxmind: End of PLUGIN_geoip_isp_maxmind section ($count entries, $countloaded loaded)"); }
+	until ($field[0] eq "END_PLUGIN_$PluginName" || $field[0] eq "${xmleb}END_PLUGIN_$PluginName" || ! $_);
+	if ($field[0] ne "END_PLUGIN_$PluginName" && $field[0] ne "${xmleb}END_PLUGIN_$PluginName") { error("History file is corrupted (End of section PLUGIN not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
+	if ($Debug) { debug(" Plugin $PluginName: End of PLUGIN_$PluginName ($count entries, $countloaded loaded)"); }
 	# ----->
 	return 0;
 }
@@ -409,14 +428,14 @@ sub SectionReadHistory_geoip_isp_maxmind {
 #-----------------------------------------------------------------------------
 sub SectionWriteHistory_geoip_isp_maxmind {
     my ($xml,$xmlbb,$xmlbs,$xmlbe,$xmlrb,$xmlrs,$xmlre,$xmleb,$xmlee)=(shift,shift,shift,shift,shift,shift,shift,shift,shift);
-    if ($Debug) { debug(" Plugin geoip_isp_maxmind: SectionWriteHistory_geoip_isp_maxmind start - ".(scalar keys %_isp_h)); }
+    if ($Debug) { debug(" Plugin $PluginName: SectionWriteHistory_$PluginName start - ".(scalar keys %_isp_h)); }
 	# <-----
 	print HISTORYTMP "\n";
-	if ($xml) { print HISTORYTMP "<section id='plugin_geoip_isp_maxmind'><sortfor>$MAXNBOFSECTIONGIR</sortfor><comment>\n"; }
+	if ($xml) { print HISTORYTMP "<section id='plugin_$PluginName'><sortfor>$MAXNBOFSECTIONGIR</sortfor><comment>\n"; }
 	print HISTORYTMP "# Plugin key - Pages - Hits - Bandwidth - Last access\n";
 	#print HISTORYTMP "# The $MaxNbOfExtra[$extranum] first number of hits are first\n";
-	$ValueInFile{'plugin_geoip_isp_maxmind'}=tell HISTORYTMP;
-	print HISTORYTMP "${xmlbb}BEGIN_PLUGIN_geoip_isp_maxmind${xmlbs}".(scalar keys %_isp_h)."${xmlbe}\n";
+	$ValueInFile{"plugin_$PluginName"}=tell HISTORYTMP;
+	print HISTORYTMP "${xmlbb}BEGIN_PLUGIN_$PluginName${xmlbs}".(scalar keys %_isp_h)."${xmlbe}\n";
 	&BuildKeyList($MAXNBOFSECTIONGIR,1,\%_isp_h,\%_isp_h);
 	my %keysinkeylist=();
 	foreach (@keylist) {
@@ -433,11 +452,45 @@ sub SectionWriteHistory_geoip_isp_maxmind {
 		#my $lastaccess=$_isp_l{$_}||'';
 		print HISTORYTMP "${xmlrb}$_${xmlrs}0${xmlrs}", $_isp_h{$_}, "${xmlrs}0${xmlrs}0${xmlre}\n"; next;
 	}
-	print HISTORYTMP "${xmleb}END_PLUGIN_geoip_isp_maxmind${xmlee}\n";
+	print HISTORYTMP "${xmleb}END_PLUGIN_$PluginName${xmlee}\n";
 	# ----->
 	return 0;
 }
 
-
+#-----------------------------------------------------------------------------
+# PLUGIN FUNCTION: LoadOverrideFile
+# Attempts to load a comma delimited file that will override the GeoIP database
+# Useful for Intranet records
+# CSV format: IP,"isp"
+#-----------------------------------------------------------------------------
+sub LoadOverrideFile_geoip_isp_maxmind{
+	my $filetoload="";
+	if ($OverrideFile){
+		if (!open(GEOIPFILE, $OverrideFile)){
+			debug("Plugin $PluginName: Unable to open override file: $OverrideFile");
+			$LoadedOverride = 1;
+			return;
+		}
+	}else{
+		my $conf = (exists(&Get_Config_Name) ? Get_Config_Name() : $SiteConfig);
+		if ($conf && open(GEOIPFILE,"$DirData/$PluginName.$conf.txt"))	{ $filetoload="$DirData/$PluginName.$conf.txt"; }
+		elsif (open(GEOIPFILE,"$DirData/$PluginName.txt"))	{ $filetoload="$DirData/$PluginName.txt"; }
+		else { debug("Did not find $PluginName file \"$DirData/$PluginName.txt\": $!"); }
+	}
+	# This is the fastest way to load with regexp that I know
+	while (<GEOIPFILE>){
+		chomp $_;
+		s/\r//;
+		my @record = split(",", $_);
+		# replace quotes if they were used in the file
+		foreach (@record){ $_ =~ s/"//g; }
+		# store in hash
+		$TmpDomainLookup{$record[0]} = $record[1];
+	}
+	close GEOIPFILE;
+	$LoadedOverride = 1;
+	debug(" Plugin $PluginName: Overload file loaded: ".(scalar keys %TmpDomainLookup)." entries found.");
+	return;
+}
 
 1;	# Do not remove this line

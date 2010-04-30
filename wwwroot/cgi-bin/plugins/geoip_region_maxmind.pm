@@ -38,6 +38,9 @@ no strict "refs";
 # AND THE NAME OF ALL FUNCTIONS THE PLUGIN MANAGE.
 my $PluginNeedAWStatsVersion="6.5";
 my $PluginHooksFunctions="AddHTMLMenuLink AddHTMLGraph ShowInfoHost SectionInitHashArray SectionProcessIp SectionProcessHostname SectionReadHistory SectionWriteHistory";
+my $PluginName="geoip_region_maxmind";
+my $LoadedOverride=0;
+my $OverrideFile=""; 
 # ----->
 
 # <-----
@@ -150,8 +153,8 @@ sub Init_geoip_region_maxmind {
     
 	# <-----
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
-	debug(" Plugin geoip_region_maxmind: InitParams=$InitParams",1);
-   	my ($mode,$datafile)=split(/\s+/,$InitParams,2);
+	debug(" Plugin $PluginName: InitParams=$InitParams",1);
+   	my ($mode,$datafile,$override)=split(/\s+/,$InitParams,3);
    	if (! $datafile) { $datafile="GeoIPRegion.dat"; }
 	if ($type eq 'geoippureperl') {
 		# With pureperl with always use GEOIP_STANDARD.
@@ -162,13 +165,15 @@ sub Init_geoip_region_maxmind {
 		if ($mode eq '' || $mode eq 'GEOIP_MEMORY_CACHE')  { $mode=Geo::IP::GEOIP_MEMORY_CACHE(); }
 		else { $mode=Geo::IP::GEOIP_STANDARD(); }
 	}
+	if ($override){$OverrideFile=$override;}
 	%TmpDomainLookup=();
-	debug(" Plugin geoip_region_maxmind: GeoIP initialized type=$type mode=$mode",1);
+	debug(" Plugin $PluginName: GeoIP initialized type=$type mode=$mode",1);
 	if ($type eq 'geoippureperl') {
 		$geoip_region_maxmind = Geo::IP::PurePerl->open($datafile, $mode);
 	} else {
 		$geoip_region_maxmind = Geo::IP->open($datafile, $mode);
 	}
+	$LoadedOverride=0;
 # Fails with some geoip versions
 # 	debug(" Plugin geoip_region_maxmind: GeoIP initialized database_info=".$geoip_region_maxmind->database_info());
  	# ----->
@@ -187,11 +192,11 @@ sub AddHTMLMenuLink_geoip_region_maxmind {
     my $menulink=$_[2];
     my $menutext=$_[3];
 	# <-----
-	if ($Debug) { debug(" Plugin geoip_region_maxmind: AddHTMLMenuLink"); }
+	if ($Debug) { debug(" Plugin $PluginName: AddHTMLMenuLink"); }
     if ($categ eq 'who') {
-        $menu->{'plugin_geoip_region_maxmind'}=2.1;             # Pos
-        $menulink->{'plugin_geoip_region_maxmind'}=2;           # Type of link
-        $menutext->{'plugin_geoip_region_maxmind'}="Regions";   # Text
+        $menu->{"plugin_$PluginName"}=2.1;             # Pos
+        $menulink->{"plugin_$PluginName"}=2;           # Type of link
+        $menutext->{"plugin_$PluginName"}="Regions";   # Text
     }
 	# ----->
 	return 0;
@@ -213,7 +218,7 @@ sub AddHTMLGraph_geoip_region_maxmind {
 	my $total_p; my $total_h; my $total_k;
 	my $rest_p; my $rest_h; my $rest_k;
 
-	if ($Debug) { debug(" Plugin geoip_region_maxmind: AddHTMLGraph"); }
+	if ($Debug) { debug(" Plugin $PluginName: AddHTMLGraph"); }
 	my $title='Regions';
 	&tab_head("$title",19,0,'regions');
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>US and CA Regions : ".((scalar keys %_region_h)-($_region_h{'unknown'}?1:0))."</th>";
@@ -246,9 +251,9 @@ sub AddHTMLGraph_geoip_region_maxmind {
    			if ($TotalPages) { $p_p=int($_region_p{$key}/$TotalPages*1000)/10; }
    			if ($TotalHits)  { $p_h=int($_region_h{$key}/$TotalHits*1000)/10; }
    		    print "<tr><td class=\"aws\">".$region{$countrycode}{uc($regioncode)}." ($regioncode)</td>";
-    		if ($ShowRegions =~ /P/i) { print "<td>".($_region_p{$key}?$_region_p{$key}:"&nbsp;")."</td>"; }
+    		if ($ShowRegions =~ /P/i) { print "<td>".($_region_p{$key}?Format_Number($_region_p{$key}):"&nbsp;")."</td>"; }
     		if ($ShowRegions =~ /P/i) { print "<td>".($_region_p{$key}?"$p_p %":'&nbsp;')."</td>"; }
-    		if ($ShowRegions =~ /H/i) { print "<td>".($_region_h{$key}?$_region_h{$key}:"&nbsp;")."</td>"; }
+    		if ($ShowRegions =~ /H/i) { print "<td>".($_region_h{$key}?Format_Number($_region_h{$key}):"&nbsp;")."</td>"; }
     		if ($ShowRegions =~ /H/i) { print "<td>".($_region_h{$key}?"$p_h %":'&nbsp;')."</td>"; }
     		if ($ShowRegions =~ /B/i) { print "<td>".Format_Bytes($_region_k{$key})."</td>"; }
     		if ($ShowRegions =~ /L/i) { print "<td>".($_region_p{$key}?Format_Date($_region_l{$key},1):'-')."</td>"; }
@@ -277,9 +282,9 @@ sub AddHTMLGraph_geoip_region_maxmind {
 		if ($TotalPages) { $p_p=int($rest_p/$TotalPages*1000)/10; }
 		if ($TotalHits)  { $p_h=int($rest_h/$TotalHits*1000)/10; }
 		print "<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]/$Message[0]</span></td>";
-		if ($ShowRegions =~ /P/i) { print "<td>".($rest_p?$rest_p:"&nbsp;")."</td>"; }
+		if ($ShowRegions =~ /P/i) { print "<td>".($rest_p?Format_Number($rest_p):"&nbsp;")."</td>"; }
    		if ($ShowRegions =~ /P/i) { print "<td>".($rest_p?"$p_p %":'&nbsp;')."</td>"; }
-		if ($ShowRegions =~ /H/i) { print "<td>".($rest_h?$rest_h:"&nbsp;")."</td>"; }
+		if ($ShowRegions =~ /H/i) { print "<td>".($rest_h?Format_Number($rest_h):"&nbsp;")."</td>"; }
    		if ($ShowRegions =~ /H/i) { print "<td>".($rest_h?"$p_h %":'&nbsp;')."</td>"; }
 		if ($ShowRegions =~ /B/i) { print "<td>".Format_Bytes($rest_k)."</td>"; }
 		if ($ShowRegions =~ /L/i) { print "<td>&nbsp;</td>"; }
@@ -301,15 +306,16 @@ sub AddHTMLGraph_geoip_region_maxmind {
 sub GetCountryCodeByAddr_geoip_region_maxmind {
     my $param="$_[0]";
 	# <-----
+	if (!$LoadedOverride){&LoadOverrideFile_geoip_region_maxmind();}
 	my $res=$TmpDomainLookup{$param}||'';
 	if (! $res) {
     	my ($res1,$res2,$countryregion)=();
     	($res1,$res2)=$geoip_region_maxmind->region_by_name($param) if $geoip_region_maxmind;
     	$res=lc($res1) || 'unknown';
 		$TmpDomainLookup{$param}=$res;
-    	if ($Debug) { debug("  Plugin geoip_region_maxmind: GetCountryCodeByAddr for $param: [$res]",5); }
+    	if ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByAddr for $param: [$res]",5); }
 	}
-	elsif ($Debug) { debug("  Plugin geoip_region_maxmind: GetCountryCodeByAddr for $param: Already resolved to [$res]",5); }
+	elsif ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByAddr for $param: Already resolved to [$res]",5); }
 	# ----->
 	return $res;
 }
@@ -324,15 +330,16 @@ sub GetCountryCodeByAddr_geoip_region_maxmind {
 sub GetCountryCodeByName_geoip_region_maxmind {
     my $param="$_[0]";
 	# <-----
+	if (!$LoadedOverride){&LoadOverrideFile_geoip_region_maxmind();}
 	my $res=$TmpDomainLookup{$param}||'';
 	if (! $res) {
     	my ($res1,$res2,$countryregion)=();
     	($res1,$res2)=$geoip_region_maxmind->region_by_name($param) if $geoip_region_maxmind;
     	$res=lc($res1) || 'unknown';
 		$TmpDomainLookup{$param}=$res;
-    	if ($Debug) { debug("  Plugin geoip_region_maxmind: GetCountryCodeByName for $param: [$res]",5); }
+    	if ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByName for $param: [$res]",5); }
 	}
-	elsif ($Debug) { debug("  Plugin geoip_region_maxmind: GetCountryCodeByName for $param: Already resolved to [$res]",5); }
+	elsif ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByName for $param: Already resolved to [$res]",5); }
 	# ----->
 	return $res;
 }
@@ -367,10 +374,12 @@ sub ShowInfoHost_geoip_region_maxmind {
     	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 
 		print "<th width=\"80\">";
-        print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=plugin_geoip_region_maxmind"):"$PROG$StaticLinks.plugin_geoip_region_maxmind.$StaticExt")."\"$NewLinkTarget>GeoIP<br />Region</a>";
+        print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=plugin_$PluginName"):"$StaticLinks.plugin_$PluginName.$StaticExt")."\"$NewLinkTarget>GeoIP<br />Region</a>";
         print "</th>";
 	}
 	elsif ($param) {
+		# try loading our override file if we haven't yet
+		if (!$LoadedOverride){&LoadOverrideFile_geoip_region_maxmind();}
         my $ip=0;
 		my $key;
 		if ($param =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {	# IPv4 address
@@ -384,8 +393,16 @@ sub ShowInfoHost_geoip_region_maxmind {
 		print "<td>";
 		if ($key && $ip==4) {
         	my ($res1,$res2,$countryregion)=();
-        	($res1,$res2)=$geoip_region_maxmind->region_by_name($param) if $geoip_region_maxmind;
-        	if ($Debug) { debug("  Plugin geoip_region_maxmind: GetRegionByIp for $param: [${res1}_${res2}]",5); }
+        	my @res;
+        	if ($geoip_region_maxmind){@res = @{$TmpDomainLookup{$geoip_region_maxmind->get_ip_address($param)}};}
+        	else {@res = @{$TmpDomainLookup{$param}};}
+	        if (@res){
+	        	$res1 = $res[0];
+	        	$res2 = $res[1];
+	        }else{
+        		($res1,$res2)=$geoip_region_maxmind->region_by_name($param) if $geoip_region_maxmind;
+	        }
+        	if ($Debug) { debug("  Plugin $PluginName: GetRegionByIp for $param: [${res1}_${res2}]",5); }
             if (! $PluginsLoaded{'init'}{'geoip'}) {
                 # Show country
                 if ($res1 =~ /\w\w/) { print $DomainsHashIDLib{lc($res1)}||uc($res1); }
@@ -410,8 +427,16 @@ sub ShowInfoHost_geoip_region_maxmind {
         }
 		if (! $key) {
         	my ($res1,$res2,$countryregion)=();
-        	($res1,$res2)=$geoip_region_maxmind->region_by_name($param) if $geoip_region_maxmind;
-        	if ($Debug) { debug("  Plugin geoip_region_maxmind: GetRegionByName for $param: [${res1}_${res2}]",5); }
+        	my @res;
+        	if ($geoip_region_maxmind){@res = @{$TmpDomainLookup{$geoip_region_maxmind->get_ip_address($param)}};}
+        	else {@res = @{$TmpDomainLookup{$param}};}
+	        if (@res){
+	        	$res1 = $res[0];
+	        	$res2 = $res[1];
+	        }else{
+        		($res1,$res2)=$geoip_region_maxmind->region_by_name($param) if $geoip_region_maxmind;
+	        }
+        	if ($Debug) { debug("  Plugin $PluginName: GetRegionByName for $param: [${res1}_${res2}]",5); }
             if (! $PluginsLoaded{'init'}{'geoip'}) {
                 # Show country
                 if ($res1 =~ /\w\w/) { print $DomainsHashIDLib{lc($res1)}||uc($res1); }
@@ -448,7 +473,7 @@ sub ShowInfoHost_geoip_region_maxmind {
 sub SectionInitHashArray_geoip_region_maxmind {
 #    my $param="$_[0]";
 	# <-----
-	if ($Debug) { debug(" Plugin geoip_region_maxmind: Init_HashArray"); }
+	if ($Debug) { debug(" Plugin $PluginName: Init_HashArray"); }
 	%_region_p = %_region_h = %_region_k = %_region_l =();
 	# ----->
 	return 0;
@@ -462,9 +487,18 @@ sub SectionInitHashArray_geoip_region_maxmind {
 sub SectionProcessIp_geoip_region_maxmind {
     my $param="$_[0]";      # Param must be an IP
 	# <-----
+	if (!$LoadedOverride){&LoadOverrideFile_geoip_region_maxmind();}
 	my ($res1,$res2,$countryregion)=();
-	($res1,$res2)=$geoip_region_maxmind->region_by_name($param) if $geoip_region_maxmind;
-	if ($Debug) { debug("  Plugin geoip_region_maxmind: GetRegionByIp for $param: [${res1}_${res2}]",5); }
+	my @res;
+    if ($geoip_region_maxmind){@res = @{$TmpDomainLookup{$geoip_region_maxmind->get_ip_address($param)}};}
+    else {@res = @{$TmpDomainLookup{$param}};}
+    if (@res){
+      	$res1 = $res[0];
+       	$res2 = $res[1];
+    }else{
+		($res1,$res2)=$geoip_region_maxmind->region_by_name($param) if $geoip_region_maxmind;
+    }
+	if ($Debug) { debug("  Plugin $PluginName: GetRegionByIp for $param: [${res1}_${res2}]",5); }
     if ($res2 =~ /\w\w/) { $countryregion=lc("${res1}_${res2}"); }
     else { $countryregion='unknown'; }
 #	if ($PageBool) { $_region_p{$countryregion}++; }
@@ -481,9 +515,18 @@ sub SectionProcessIp_geoip_region_maxmind {
 sub SectionProcessHostname_geoip_region_maxmind {
     my $param="$_[0]";      # Param must be a hostname
 	# <-----
+	if (!$LoadedOverride){&LoadOverrideFile_geoip_region_maxmind();}
 	my ($res1,$res2,$countryregion)=();
-	($res1,$res2)=$geoip_region_maxmind->region_by_name($param) if $geoip_region_maxmind;
-	if ($Debug) { debug("  Plugin geoip_region_maxmind: GetRegionByName for $param: [${res1}_${res2}]",5); }
+	my @res;
+    if ($geoip_region_maxmind){@res = @{$TmpDomainLookup{$geoip_region_maxmind->get_ip_address($param)}};}
+    else {@res = @{$TmpDomainLookup{$param}};}
+    if (@res){
+      	$res1 = $res[0];
+       	$res2 = $res[1];
+    }else{
+		($res1,$res2)=$geoip_region_maxmind->region_by_name($param) if $geoip_region_maxmind;
+    }
+	if ($Debug) { debug("  Plugin $PluginName: GetRegionByName for $param: [${res1}_${res2}]",5); }
     if ($res2 =~ /\w\w/) { $countryregion=lc("${res1}_${res2}"); }
     else { $countryregion='unknown'; }
 #	if ($PageBool) { $_region_p{$countryregion}++; }
@@ -504,7 +547,7 @@ sub SectionReadHistory_geoip_region_maxmind {
     my $xmleb=shift;
 	my $countlines=shift;
 	# <-----
-	if ($Debug) { debug(" Plugin geoip_region_maxmind: Begin of PLUGIN_geoip_region_maxmind section"); }
+	if ($Debug) { debug(" Plugin $PluginName: Begin of PLUGIN_$PluginName"); }
 	my @field=();
 	my $count=0;my $countloaded=0;
 	do {
@@ -520,9 +563,9 @@ sub SectionReadHistory_geoip_region_maxmind {
 		@field=split(/\s+/,($xmlold?XMLDecodeFromHisto($_):$_));
 		$countlines++;
 	}
-	until ($field[0] eq 'END_PLUGIN_geoip_region_maxmind' || $field[0] eq "${xmleb}END_PLUGIN_geoip_region_maxmind" || ! $_);
-	if ($field[0] ne 'END_PLUGIN_geoip_region_maxmind' && $field[0] ne "${xmleb}END_PLUGIN_geoip_region_maxmind") { error("History file is corrupted (End of section PLUGIN not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
-	if ($Debug) { debug(" Plugin geoip_region_maxmind: End of PLUGIN_geoip_region_maxmind section ($count entries, $countloaded loaded)"); }
+	until ($field[0] eq "END_PLUGIN_$PluginName" || $field[0] eq "${xmleb}END_PLUGIN_$PluginName" || ! $_);
+	if ($field[0] ne "END_PLUGIN_$PluginName" && $field[0] ne "${xmleb}END_PLUGIN_$PluginName") { error("History file is corrupted (End of section PLUGIN not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
+	if ($Debug) { debug(" Plugin $PluginName: End of PLUGIN_$PluginName section ($count entries, $countloaded loaded)"); }
 	# ----->
 	return 0;
 }
@@ -533,14 +576,14 @@ sub SectionReadHistory_geoip_region_maxmind {
 #-----------------------------------------------------------------------------
 sub SectionWriteHistory_geoip_region_maxmind {
     my ($xml,$xmlbb,$xmlbs,$xmlbe,$xmlrb,$xmlrs,$xmlre,$xmleb,$xmlee)=(shift,shift,shift,shift,shift,shift,shift,shift,shift);
-    if ($Debug) { debug(" Plugin geoip_region_maxmind: SectionWriteHistory_geoip_region_maxmind start - ".(scalar keys %_region_h)); }
+    if ($Debug) { debug(" Plugin $PluginName: SectionWriteHistory_$PluginName start - ".(scalar keys %_region_h)); }
 	# <-----
 	print HISTORYTMP "\n";
-	if ($xml) { print HISTORYTMP "<section id='plugin_geoip_region_maxmind'><sortfor>$MAXNBOFSECTIONGIR</sortfor><comment>\n"; }
+	if ($xml) { print HISTORYTMP "<section id='plugin_$PluginName'><sortfor>$MAXNBOFSECTIONGIR</sortfor><comment>\n"; }
 	print HISTORYTMP "# Plugin key - Pages - Hits - Bandwidth - Last access\n";
 	#print HISTORYTMP "# The $MaxNbOfExtra[$extranum] first number of hits are first\n";
-	$ValueInFile{'plugin_geoip_region_maxmind'}=tell HISTORYTMP;
-	print HISTORYTMP "${xmlbb}BEGIN_PLUGIN_geoip_region_maxmind${xmlbs}".(scalar keys %_region_h)."${xmlbe}\n";
+	$ValueInFile{"plugin_$PluginName"}=tell HISTORYTMP;
+	print HISTORYTMP "${xmlbb}BEGIN_PLUGIN_$PluginName${xmlbs}".(scalar keys %_region_h)."${xmlbe}\n";
 	&BuildKeyList($MAXNBOFSECTIONGIR,1,\%_region_h,\%_region_h);
 	my %keysinkeylist=();
 	foreach (@keylist) {
@@ -557,11 +600,49 @@ sub SectionWriteHistory_geoip_region_maxmind {
 		#my $lastaccess=$_region_l{$_}||'';
 		print HISTORYTMP "${xmlrb}$_${xmlrs}0${xmlrs}", $_region_h{$_}, "${xmlrs}0${xmlrs}0${xmlre}\n"; next;
 	}
-	print HISTORYTMP "${xmleb}END_PLUGIN_geoip_region_maxmind${xmlee}\n";
+	print HISTORYTMP "${xmleb}END_PLUGIN_$PluginName${xmlee}\n";
 	# ----->
 	return 0;
 }
 
-
+#-----------------------------------------------------------------------------
+# PLUGIN FUNCTION: LoadOverrideFile
+# Attempts to load a comma delimited file that will override the GeoIP database
+# Useful for Intranet records
+# CSV format: IP,2-char Country code, region
+#-----------------------------------------------------------------------------
+sub LoadOverrideFile_geoip_region_maxmind{
+	my $filetoload="";
+	if ($OverrideFile){
+		if (!open(GEOIPFILE, $OverrideFile)){
+			debug("Plugin $PluginName: Unable to open override file: $OverrideFile");
+			$LoadedOverride = 1;
+			return;
+		}
+	}else{
+		my $conf = (exists(&Get_Config_Name) ? Get_Config_Name() : $SiteConfig);
+		if ($conf && open(GEOIPFILE,"$DirData/$PluginName.$conf.txt"))	{ $filetoload="$DirData/$PluginName.$conf.txt"; }
+		elsif (open(GEOIPFILE,"$DirData/$PluginName.txt"))	{ $filetoload="$DirData/$PluginName.txt"; }
+		else { debug("Did not find $PluginName file \"$DirData/$PluginName.txt\": $!"); }
+	}
+	# This is the fastest way to load with regexp that I know
+	while (<GEOIPFILE>){
+		chomp $_;
+		s/\r//;
+		my @record = split(",", $_);
+		# replace quotes if they were used in the file
+		foreach (@record){ $_ =~ s/"//g; }
+		# now we need to copy our file values in the order to mimic the lookup values
+		my @res = ();
+		$res[0] = $record[1];	# country code
+		$res[1] = $record[2];	# region code
+		# store in hash
+		$TmpDomainLookup{$record[0]} = [@res];
+	}
+	close GEOIPFILE;
+	$LoadedOverride = 1;
+	debug(" Plugin $PluginName: Overload file loaded: ".(scalar keys %TmpDomainLookup)." entries found.");
+	return;
+}
 
 1;	# Do not remove this line

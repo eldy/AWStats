@@ -4578,7 +4578,9 @@ sub ShowInfoHost_geoip_city_maxmind {
 		if ($key && $ip==4) {
 	        my $country;
 	        my $city;
-	        my @res = @{$TmpDomainLookup{$param}};
+	        my @res;
+        	if ($geoip_city_maxmind){@res = @{$TmpDomainLookup{$geoip_city_maxmind->get_ip_address($param)}};}
+        	else {@res = @{$TmpDomainLookup{$param}};}
 	        if (@res){
 	        	$country = $res[0];
 	        	$city = $res[4];
@@ -4617,7 +4619,9 @@ sub ShowInfoHost_geoip_city_maxmind {
 		if (! $key) {
 	        my $country;
 	        my $city;
-	        my @res = @{$TmpDomainLookup{$param}};
+	        my @res;
+        	if ($geoip_city_maxmind){@res = @{$TmpDomainLookup{$geoip_city_maxmind->get_ip_address($param)}};}
+        	else {@res = @{$TmpDomainLookup{$param}};}
 	        if (@res){
 	        	$country = $res[0];
 	        	$city = $res[4];
@@ -4679,9 +4683,10 @@ sub SectionProcessIp_geoip_city_maxmind {
 	if (!$LoadedOverride){&LoadOverrideFile_geoip_city_maxmind();}
 	if ($type eq 'geoippureperl') {
 		my @record = ();
-		if ($TmpDomainLookup{$param}){
-			@record = @{$TmpDomainLookup{$param}};
-		}else{
+		my @res;
+        if ($geoip_city_maxmind){@res = @{$TmpDomainLookup{$geoip_city_maxmind->get_ip_address($param)}};}
+        else {@res = @{$TmpDomainLookup{$param}};}
+		if (!@res){
 			@record=$geoip_city_maxmind->get_city_record($param) if $geoip_city_maxmind;
 		}
 		if ($Debug) { debug("  Plugin $PluginName: GetCityByName for $param: [@record]",5); }
@@ -4741,9 +4746,10 @@ sub SectionProcessHostname_geoip_city_maxmind {
 	if (!$LoadedOverride){&LoadOverrideFile_geoip_city_maxmind();}
 	if ($type eq 'geoippureperl') {
 		my @record = ();
-		if ($TmpDomainLookup{$param}){
-			@record = @{$TmpDomainLookup{$param}};
-		}else{
+		my @res;
+        if ($geoip_city_maxmind){@res = @{$TmpDomainLookup{$geoip_city_maxmind->get_ip_address($param)}};}
+        else {@res = @{$TmpDomainLookup{$param}};}
+		if (!@res){
 			@record=$geoip_city_maxmind->get_city_record($param) if $geoip_city_maxmind;
 		}
 		if ($Debug) { debug("  Plugin $PluginName: GetCityByName for $param: [@record]",5); }

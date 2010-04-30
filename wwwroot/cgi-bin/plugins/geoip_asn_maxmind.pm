@@ -49,11 +49,11 @@ my $OverrideFile="";
 # <-----
 # IF YOUR PLUGIN NEED GLOBAL VARIABLES, THEY MUST BE DECLARED HERE.
 use vars qw/
-$geoip_org_maxmind
-%_org_p
-%_org_h
-%_org_k
-%_org_l
+$geoip_asn_maxmind
+%_asn_p
+%_asn_h
+%_asn_k
+%_asn_l
 $MAXNBOFSECTIONGIR
 $MAXLENGTH
 /;
@@ -96,12 +96,12 @@ sub Init_geoip_asn_maxmind {
 	if ($link){$LookupLink=$link;}
 	debug(" Plugin $PluginName: GeoIP initialized type=$type mode=$mode, link=$link",1);
 	if ($type eq 'geoippureperl') {
-		$geoip_org_maxmind = Geo::IP::PurePerl->open($datafile, $mode);
+		$geoip_asn_maxmind = Geo::IP::PurePerl->open($datafile, $mode);
 	} else {
-		$geoip_org_maxmind = Geo::IP->open($datafile, $mode);
+		$geoip_asn_maxmind = Geo::IP->open($datafile, $mode);
 	}
 # Fails on some GeoIP version
-# 	debug(" Plugin geoip_org_maxmind: GeoIP initialized database_info=".$geoip_org_maxmind->database_info());
+# 	debug(" Plugin geoip_org_maxmind: GeoIP initialized database_info=".$geoip_asn_maxmind->database_info());
 	# ----->
 
 	return ($checkversion?$checkversion:"$PluginHooksFunctions");
@@ -120,9 +120,9 @@ sub AddHTMLMenuLink_geoip_asn_maxmind {
 	# <-----
 	if ($Debug) { debug(" Plugin $PluginName: AddHTMLMenuLink"); }
     if ($categ eq 'who') {
-        $menu->{$PluginName}=0.5;               # Pos
-        $menulink->{$PluginName}=2;           # Type of link
-        $menutext->{$PluginName}="Organizations";    # Text
+        $menu->{"plugin_$PluginName"}=0.7;               # Pos
+        $menulink->{"plugin_$PluginName"}=2;           # Type of link
+        $menutext->{"plugin_$PluginName"}="ASNs";    # Text
     }
 	# ----->
 	return 0;
@@ -147,7 +147,7 @@ sub AddHTMLGraph_geoip_asn_maxmind {
 	if ($Debug) { debug(" Plugin $PluginName: AddHTMLGraph $categ $menu $menulink $menutext"); }
 	my $title='AS Numbers';
 	&tab_head("$title",19,0,'org');
-	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>AS Numbers: ".((scalar keys %_org_h)-($_org_h{'unknown'}?1:0))."</th>";
+	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>AS Numbers: ".((scalar keys %_asn_h)-($_asn_h{'unknown'}?1:0))."</th>";
 	print "<th>ISP</th>\n";
 	if ($ShowISP =~ /P/i) { print "<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th>"; }
 	if ($ShowISP =~ /P/i) { print "<th bgcolor=\"#$color_p\" width=\"80\">$Message[15]</th>"; }
@@ -158,35 +158,35 @@ sub AddHTMLGraph_geoip_asn_maxmind {
 	print "</tr>\n";
 	$total_p=$total_h=$total_k=0;
 	my $count=0;
-	&BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'Org'},\%_org_h,\%_org_h);
+	&BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'Org'},\%_asn_h,\%_asn_h);
     	foreach my $key (@keylist) {
             if ($key eq 'unknown') { next; }
    			my $p_p; my $p_h;
-   			if ($TotalPages) { $p_p=int($_org_p{$key}/$TotalPages*1000)/10; }
-   			if ($TotalHits)  { $p_h=int($_org_h{$key}/$TotalHits*1000)/10; }
+   			if ($TotalPages) { $p_p=int($_asn_p{$key}/$TotalPages*1000)/10; }
+   			if ($TotalHits)  { $p_h=int($_asn_h{$key}/$TotalHits*1000)/10; }
    		    print "<tr>";
-   		    my $org=$key; $org =~ s/_/ /g;
-   		    my $idx = index($org, ' ');
+   		    my $asn=$key; $asn =~ s/_/ /g;
+   		    my $idx = index($asn, ' ');
    		    # get lookup link
    		    my $link = '';
    		    if ($LookupLink){
-	   		    if ($idx < 0 && $org =~ m/^A/){ $link .= $LookupLink.$org; }
-	   		    elsif (substr($org, 0, $idx) =~ m/^A/){$link .= $LookupLink.substr($org, 0, $idx); }
+	   		    if ($idx < 0 && $asn =~ m/^A/){ $link .= $LookupLink.$asn; }
+	   		    elsif (substr($asn, 0, $idx) =~ m/^A/){$link .= $LookupLink.substr($asn, 0, $idx); }
 	   		    if ($link){ $link = "<a target=\"_blank\" href=\"".$link."\">";}
    		    }
-   		    print "<td class=\"aws\">".$link.ucfirst(($idx > -1 ? substr($org, 0, $idx) : $org));
+   		    print "<td class=\"aws\">".$link.ucfirst(($idx > -1 ? substr($asn, 0, $idx) : $asn));
    		    print ($link ? "</a>" : "")."</td>";
-   		    print "<td class=\"aws\">".($idx > -1 ? substr($org, $idx+1) : "&nbsp;")."</td>\n";
-    		if ($ShowISP =~ /P/i) { print "<td>".($_org_p{$key}?Format_Number($_org_p{$key}):"&nbsp;")."</td>"; }
-    		if ($ShowISP =~ /P/i) { print "<td>".($_org_p{$key}?"$p_p %":'&nbsp;')."</td>"; }
-    		if ($ShowISP =~ /H/i) { print "<td>".($_org_h{$key}?Format_Number($_org_h{$key}):"&nbsp;")."</td>"; }
-    		if ($ShowISP =~ /H/i) { print "<td>".($_org_h{$key}?"$p_h %":'&nbsp;')."</td>"; }
-    		if ($ShowISP =~ /B/i) { print "<td>".Format_Bytes($_org_k{$key})."</td>"; }
-    		if ($ShowISP =~ /L/i) { print "<td>".($_org_p{$key}?Format_Date($_org_l{$key},1):'-')."</td>"; }
+   		    print "<td class=\"aws\">".($idx > -1 ? substr($asn, $idx+1) : "&nbsp;")."</td>\n";
+    		if ($ShowISP =~ /P/i) { print "<td>".($_asn_p{$key}?Format_Number($_asn_p{$key}):"&nbsp;")."</td>"; }
+    		if ($ShowISP =~ /P/i) { print "<td>".($_asn_p{$key}?"$p_p %":'&nbsp;')."</td>"; }
+    		if ($ShowISP =~ /H/i) { print "<td>".($_asn_h{$key}?Format_Number($_asn_h{$key}):"&nbsp;")."</td>"; }
+    		if ($ShowISP =~ /H/i) { print "<td>".($_asn_h{$key}?"$p_h %":'&nbsp;')."</td>"; }
+    		if ($ShowISP =~ /B/i) { print "<td>".Format_Bytes($_asn_k{$key})."</td>"; }
+    		if ($ShowISP =~ /L/i) { print "<td>".($_asn_p{$key}?Format_Date($_asn_l{$key},1):'-')."</td>"; }
     		print "</tr>\n";
-    		$total_p += $_org_p{$key}||0;
-    		$total_h += $_org_h{$key};
-    		$total_k += $_org_k{$key}||0;
+    		$total_p += $_asn_p{$key}||0;
+    		$total_h += $_asn_h{$key};
+    		$total_k += $_asn_k{$key}||0;
     		$count++;
     	}
 	if ($Debug) { debug("Total real / shown : $TotalPages / $total_p - $TotalHits / $total_h - $TotalBytes / $total_h",2); }
@@ -210,9 +210,9 @@ sub AddHTMLGraph_geoip_asn_maxmind {
 		print "<tr>";
 		print "<td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]/$Message[0]</span></td>";
 		print "<td class=\"aws\">&nbsp;</td>\n";
-		if ($ShowISP =~ /P/i) { print "<td>".($rest_p?$rest_p:"&nbsp;")."</td>"; }
+		if ($ShowISP =~ /P/i) { print "<td>".($rest_p?Format_Number($rest_p):"&nbsp;")."</td>"; }
    		if ($ShowISP =~ /P/i) { print "<td>".($rest_p?"$p_p %":'&nbsp;')."</td>"; }
-		if ($ShowISP =~ /H/i) { print "<td>".($rest_h?$rest_h:"&nbsp;")."</td>"; }
+		if ($ShowISP =~ /H/i) { print "<td>".($rest_h?Format_Number($rest_h):"&nbsp;")."</td>"; }
    		if ($ShowISP =~ /H/i) { print "<td>".($rest_h?"$p_h %":'&nbsp;')."</td>"; }
 		if ($ShowISP =~ /B/i) { print "<td>".Format_Bytes($rest_k)."</td>"; }
 		if ($ShowISP =~ /L/i) { print "<td>&nbsp;</td>"; }
@@ -271,49 +271,51 @@ sub ShowInfoHost_geoip_asn_maxmind {
 			$key=$param;
 		}
 		print "<td>";
-		my $org;
+		my $asn = 0;
 		if ($key && $ip==4) {
-        	$org = $TmpLookup{$param}||'';
-        	if (!$org && $type eq 'geoippureperl')
+        	if ($geoip_asn_maxmind){$asn = $TmpLookup{$geoip_asn_maxmind->get_ip_address($param)};}
+        	else {$asn = $TmpLookup{$param};}
+        	if (!$asn && $type eq 'geoippureperl')
 			{
         		# Function org_by_addr does not exists in PurePerl but org_by_name do same
-        		$org=$geoip_org_maxmind->org_by_name($param) if $geoip_org_maxmind;
+        		$asn=$geoip_asn_maxmind->org_by_name($param) if $geoip_asn_maxmind;
         	}
-        	elsif (!$org)
+        	elsif (!$asn)
         	{
-        		$org=$geoip_org_maxmind->org_by_addr($param) if $geoip_org_maxmind;
+        		$asn=$geoip_asn_maxmind->org_by_addr($param) if $geoip_asn_maxmind;
         	}
-        	if ($Debug) { debug("  Plugin $PluginName: GetASNByIp for $param: [$org]",5); }
+        	if ($Debug) { debug("  Plugin $PluginName: GetASNByIp for $param: [$asn]",5); }
 		}
 		if ($key && $ip==6) {
-		    debug("  Plugin $PlugiName: IPv6 not supported by MaxMind Free DBs: $key",3);
+		    debug("  Plugin $PluginName: IPv6 not supported by MaxMind Free DBs: $key",3);
 		}
 		if (! $key) {
-        	$org = $TmpLookup{$param}||'';
-        	if (!$org && $type eq 'geoippureperl')
+        	if ($geoip_asn_maxmind){$asn = $TmpLookup{$geoip_asn_maxmind->get_ip_address($param)};}
+        	else {$asn = $TmpLookup{$param};}
+        	if (!$asn && $type eq 'geoippureperl')
 			{
-        		$org=$geoip_org_maxmind->org_by_name($param) if $geoip_org_maxmind;
+        		$asn=$geoip_asn_maxmind->org_by_name($param) if $geoip_asn_maxmind;
         	}
-        	elsif (!$org)
+        	elsif (!$asn)
         	{
-        		$org=$geoip_org_maxmind->org_by_name($param) if $geoip_org_maxmind;
+        		$asn=$geoip_asn_maxmind->org_by_name($param) if $geoip_asn_maxmind;
         	}
-        	if ($Debug) { debug("  Plugin $PluginName: GetOrgByHostname for $param: [$org]",5); }
+        	if ($Debug) { debug("  Plugin $PluginName: GetOrgByHostname for $param: [$asn]",5); }
 		}
-		if ($org) {
+		if (length($asn)>0) {
 	    	my $link = '';
-	    	my $idx = index(trim($org), ' ');
+	    	my $idx = index(trim($asn), ' ');
 	    	if ($LookupLink){
-	   		    if ($idx < 0 && $org =~ m/^A/){ $link .= $LookupLink.$org; }
-	   		    elsif (substr($org, 0, $idx) =~ m/^A/){$link .= $LookupLink.substr($org, 0, $idx); }
+	   		    if ($idx < 0 && $asn =~ m/^A/){ $link .= $LookupLink.$asn; }
+	   		    elsif (substr($asn, 0, $idx) =~ m/^A/){$link .= $LookupLink.substr($asn, 0, $idx); }
 	    	}
    		    if ($link){ $link = "<a target=\"_blank\" href=\"".$link."\">";}
-	    	if ($idx > -1 ) {$org = substr(trim($org), $idx+1);}	    
-	        if (length($org) <= $MAXLENGTH) {
-	            print "$link$org".($link ? "</a>" : "");
+	    	if ($idx > -1 ) {$asn = substr(trim($asn), $idx+1);}	    
+	        if (length($asn) <= $MAXLENGTH) {
+	            print "$link$asn".($link ? "</a>" : "");
 	        }
 	        else {
-	            print $link.substr($org,0,$MAXLENGTH).'...'.($link ? "</a>" : "");
+	            print $link.substr($asn,0,$MAXLENGTH).'...'.($link ? "</a>" : "");
 	        }
 	    }
 	    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
@@ -335,7 +337,7 @@ sub SectionInitHashArray_geoip_asn_maxmind {
 #    my $param="$_[0]";
 	# <-----
 	if ($Debug) { debug(" Plugin $PluginName: Init_HashArray"); }
-	%_org_p = %_org_h = %_org_k = %_org_l =();
+	%_asn_p = %_asn_h = %_asn_k = %_asn_l =();
 	# ----->
 	return 0;
 }
@@ -348,26 +350,27 @@ sub SectionInitHashArray_geoip_asn_maxmind {
 sub SectionProcessIp_geoip_asn_maxmind {
     my $param="$_[0]";      # Param must be an IP
 	# <-----
-	my $org;
+	my $asn = 0;
 	if (!$LoadedOverride){&LoadOverrideFile_geoip_asn_maxmind();}
-	my $org = $TmpLookup{$param}||'';
-	if (!$org && $type eq 'geoippureperl')
+	if ($geoip_asn_maxmind){$asn = $TmpLookup{$geoip_asn_maxmind->get_ip_address($param)};}
+        	else {$asn = $TmpLookup{$param};}
+	if (!$asn && $type eq 'geoippureperl')
 	{
 		# Function org_by_addr does not exists in PurePerl but org_by_name do same
-		$org=$geoip_org_maxmind->org_by_name($param) if $geoip_org_maxmind;
+		$asn=$geoip_asn_maxmind->org_by_name($param) if $geoip_asn_maxmind;
 	}
-	elsif (!$org)
+	elsif (!$asn)
 	{
-		$org=$geoip_org_maxmind->org_by_addr($param) if $geoip_org_maxmind;
+		$asn=$geoip_asn_maxmind->org_by_addr($param) if $geoip_asn_maxmind;
 	}
-	if ($Debug) { debug("  Plugin $PluginName: GetASNByIp for $param: [$org]",5); }
-    if ($org) {
-        $org =~ s/\s/_/g;
-        $_org_h{$org}++;
+	if ($Debug) { debug("  Plugin $PluginName: GetASNByIp for $param: [$asn]",5); }
+    if ($asn) {
+        $asn =~ s/\s/_/g;
+        $_asn_h{$asn}++;
     } else {
-        $_org_h{'unknown'}++;
+        $_asn_h{'unknown'}++;
     }
-#	if ($timerecord > $_org_l{$city}) { $_org_l{$city}=$timerecord; }
+#	if ($timerecord > $_asn_l{$city}) { $_asn_l{$city}=$timerecord; }
 	# ----->
 	return;
 }
@@ -380,24 +383,25 @@ sub SectionProcessIp_geoip_asn_maxmind {
 sub SectionProcessHostname_geoip_asn_maxmind {
     my $param="$_[0]";      # Param must be an IP
 	# <-----
-	my $org;
-	my $org = $TmpLookup{$param}||'';
-	if (!$org && $type eq 'geoippureperl')
+	my $asn=0;
+	if ($geoip_asn_maxmind){$asn = $TmpLookup{$geoip_asn_maxmind->get_ip_address($param)};}
+    else {$asn = $TmpLookup{$param};}
+	if (!$asn && $type eq 'geoippureperl')
 	{
-		$org=$geoip_org_maxmind->org_by_name($param) if $geoip_org_maxmind;
+		$asn=$geoip_asn_maxmind->org_by_name($param) if $geoip_asn_maxmind;
 	}
-	elsif (!$org)
+	elsif (!$asn)
 	{
-		$org=$geoip_org_maxmind->org_by_name($param) if $geoip_org_maxmind;
+		$asn=$geoip_asn_maxmind->org_by_name($param) if $geoip_asn_maxmind;
 	}
-	if ($Debug) { debug("  Plugin $PluginName: GetOrgByHostname for $param: [$org]",5); }
-    if ($org) {
-        $org =~ s/\s/_/g;
-        $_org_h{$org}++;
+	if ($Debug) { debug("  Plugin $PluginName: GetOrgByHostname for $param: [$asn]",5); }
+    if ($asn) {
+        $asn =~ s/\s/_/g;
+        $_asn_h{$asn}++;
     } else {
-        $_org_h{'unknown'}++;
+        $_asn_h{'unknown'}++;
     }
-#	if ($timerecord > $_org_l{$city}) { $_org_l{$city}=$timerecord; }
+#	if ($timerecord > $_asn_l{$city}) { $_asn_l{$city}=$timerecord; }
 	# ----->
 	return;
 }
@@ -421,7 +425,7 @@ sub SectionReadHistory_geoip_asn_maxmind {
 			$count++;
 			if ($issectiontoload) {
 				$countloaded++;
-				if ($field[2]) { $_org_h{$field[0]}+=$field[2]; }
+				if ($field[2]) { $_asn_h{$field[0]}+=$field[2]; }
 			}
 		}
 		$_=<HISTORY>;
@@ -442,29 +446,29 @@ sub SectionReadHistory_geoip_asn_maxmind {
 #-----------------------------------------------------------------------------
 sub SectionWriteHistory_geoip_asn_maxmind {
     my ($xml,$xmlbb,$xmlbs,$xmlbe,$xmlrb,$xmlrs,$xmlre,$xmleb,$xmlee)=(shift,shift,shift,shift,shift,shift,shift,shift,shift);
-    if ($Debug) { debug(" Plugin $PluginName: SectionWriteHistory_$PluginName start - ".(scalar keys %_org_h)); }
+    if ($Debug) { debug(" Plugin $PluginName: SectionWriteHistory_$PluginName start - ".(scalar keys %_asn_h)); }
 	# <-----
 	print HISTORYTMP "\n";
 	if ($xml) { print HISTORYTMP "<section id='plugin_$PluginName'><sortfor>$MAXNBOFSECTIONGIR</sortfor><comment>\n"; }
 	print HISTORYTMP "# Plugin key - Pages - Hits - Bandwidth - Last access\n";
 	#print HISTORYTMP "# The $MaxNbOfExtra[$extranum] first number of hits are first\n";
 	$ValueInFile{'plugin_$PluginName'}=tell HISTORYTMP;
-	print HISTORYTMP "${xmlbb}BEGIN_PLUGIN_$PluginName${xmlbs}".(scalar keys %_org_h)."${xmlbe}\n";
-	&BuildKeyList($MAXNBOFSECTIONGIR,1,\%_org_h,\%_org_h);
+	print HISTORYTMP "${xmlbb}BEGIN_PLUGIN_$PluginName${xmlbs}".(scalar keys %_asn_h)."${xmlbe}\n";
+	&BuildKeyList($MAXNBOFSECTIONGIR,1,\%_asn_h,\%_asn_h);
 	my %keysinkeylist=();
 	foreach (@keylist) {
 		$keysinkeylist{$_}=1;
-		#my $page=$_org_p{$_}||0;
-		#my $bytes=$_org_k{$_}||0;
-		#my $lastaccess=$_org_l{$_}||'';
-		print HISTORYTMP "${xmlrb}$_${xmlrs}0${xmlrs}", $_org_h{$_}, "${xmlrs}0${xmlrs}0${xmlre}\n"; next;
+		#my $page=$_asn_p{$_}||0;
+		#my $bytes=$_asn_k{$_}||0;
+		#my $lastaccess=$_asn_l{$_}||'';
+		print HISTORYTMP "${xmlrb}$_${xmlrs}0${xmlrs}", $_asn_h{$_}, "${xmlrs}0${xmlrs}0${xmlre}\n"; next;
 	}
-	foreach (keys %_org_h) {
+	foreach (keys %_asn_h) {
 		if ($keysinkeylist{$_}) { next; }
-		#my $page=$_org_p{$_}||0;
-		#my $bytes=$_org_k{$_}||0;
-		#my $lastaccess=$_org_l{$_}||'';
-		print HISTORYTMP "${xmlrb}$_${xmlrs}0${xmlrs}", $_org_h{$_}, "${xmlrs}0${xmlrs}0${xmlre}\n"; next;
+		#my $page=$_asn_p{$_}||0;
+		#my $bytes=$_asn_k{$_}||0;
+		#my $lastaccess=$_asn_l{$_}||'';
+		print HISTORYTMP "${xmlrb}$_${xmlrs}0${xmlrs}", $_asn_h{$_}, "${xmlrs}0${xmlrs}0${xmlre}\n"; next;
 	}
 	print HISTORYTMP "${xmleb}END_PLUGIN_$PluginName${xmlee}\n";
 	# ----->
