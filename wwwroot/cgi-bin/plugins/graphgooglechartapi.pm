@@ -6,13 +6,12 @@
 # Perl Required Modules: None
 #-----------------------------------------------------------------------------
 # $Revision$ - $Author$ - $Date$
-# $Revision$ - $Author$ - $Date$
 # 
 # Changelog
 #
-# 1.0 - Initial release
+# 1.0 - Initial release by george@dynapres.nl
 # 1.1 - Changed scaling: making it independent of chart series
-# 1.6 - Added pie charts, visualization hook, map and axis labels
+# 1.2 - Added pie charts, visualization hook, map and axis labels by Chris Larsen
 
 # <-----
 # ENTER HERE THE USE COMMAND FOR ALL REQUIRED PERL MODULES
