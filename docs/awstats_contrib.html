@@ -232,10 +232,16 @@ databases by generating a comma seperated text file with IP addresses
 and associated data. This is useful if you are reporting on an Intranet
 site, have a mixture of internal and external users or the data for a
 specific IP is incorrect in the database. You can use the included
-geoip_generator tool to create override files.<br><br>Note: AWStats
+geoip_generator tool to create override files. (Overrides only available in AWStats version 6.96 and later)<br><b>Override Formats:</b><br><i>GeoIP</i>
+ - ip_address,"countrycode"<br><i>GeoIP City</i> - 
+ip_address,"countrycode","regioncode","cityname","postalcode",latitude,longitude,"metrocode","areacode"<br><i>GeoIP
+ ASN</i> - ip_address,"asn ispname"<br><i>GeoIP Region - </i>ip_address,"countrycode","regioncode"<br><i>GeoIP
+ Org</i> - ip_address,"organisation"<i><br></i><i>GeoIP ISP</i> - 
+ip_address,"ISP"<br><br>Note: AWStats
 does not currently support IPv6 for GeoIP lookups as Maxmind only
 offers the country DB with IPv6 at this time. As Maxmind includes IPv6
-support in more DBs, we will update AWStats.<br>Enabling GeoIP plugins will reduce the speed of AWStats processing.<br><br><span style="font-weight: bold;">GeoIP
+support in more DBs, we will update AWStats.<br>Enabling GeoIP plugins 
+will reduce the speed of AWStats processing.<br><br><span style="font-weight: bold;">GeoIP
 </span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;Geo::IP or Geo::IP::PurePerl (from Maxmind)
 <br><span style="font-style: italic;">Parameters:</span> [GEOIP_STANDARD | GEOIP_MEMORY_CACHE] [/pathto/geoip.dat] &lt;/pathto/override.txt&gt;<br><span style="font-style: italic;">Description:</span> Country chart is built from an Internet IP-Country database.
 <br>Note: You must choose between using this plugin&nbsp;or the
@@ -268,7 +274,7 @@ http://enc.com.au/itools/aut-num.php?autnum="
 
 <br><br><span style="font-weight: bold;">GeoIP_Region_Maxmind
 (Commercial Only)</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;Geo::IP or Geo::IP::PurePerl (from Maxmind)
-<br><span style="font-style: italic;">Parameters:</span> [GEOIP_STANDARD | GEOIP_MEMORY_CACHE] [/pathto/GeoIPRegion.dat]<br><span style="font-style: italic;">Description: </span>This plugin add a chart of hits by regions. Only regions for US and&nbsp;Canada can be detected at this time.
+<br><span style="font-style: italic;">Parameters:</span> [GEOIP_STANDARD | GEOIP_MEMORY_CACHE] [/pathto/GeoIPRegion.dat] &lt;/pathto/override.txt&gt;<br><span style="font-style: italic;">Description: </span>This plugin adds a chart of hits by regions. Only regions for US and&nbsp;Canada can be detected at this time.
 <br>By enabling this plugin, you will see a new link called 'Regions' on reports menu. For
 the moment this link works only when AWStats reports are build as CGI (static built not yet
 supported).
@@ -278,23 +284,19 @@ supported).
 
 <br><br><span style="font-weight: bold;">GeoIP_ISP_Maxmind
 (Commercial Only)</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;Geo::IP or Geo::IP::PurePerl (from Maxmind)
-<br><span style="font-style: italic;">Parameters:</span> [GEOIP_STANDARD | GEOIP_MEMORY_CACHE] [/pathto/GeoIPISP.dat]<br><span style="font-style: italic;">Description:</span>&nbsp;This plugin adds a chart of hits by ISP.
+<br><span style="font-style: italic;">Parameters:</span> [GEOIP_STANDARD | GEOIP_MEMORY_CACHE] [/pathto/GeoIPISP.dat] &lt;/pathto/override.txt&gt;<br><span style="font-style: italic;">Description:</span>&nbsp;This plugin adds a chart of hits by ISP.
 <br>By enabling this plugin, you will see a new link called 'ISP' on reports menu. For
 the moment this link works only when AWStats reports are build as CGI (static built not yet
 supported).
-<br>Example <span style="font-style: italic;">LoadPlugin="geoip_isp_maxmind GEOIP_STANDARD /usr/local/GeoIPISP.dat"
-
-</span><br>Plugin provided with AWStats (6.3+)
+<br>Example <span style="font-style: italic;">LoadPlugin="geoip_isp_maxmind GEOIP_STANDARD /usr/local/GeoIPISP.dat </span><span style="font-style: italic;">/usr/local/geoip_override.txt"</span><br>Plugin provided with AWStats (6.3+)
 
 <br><br><span style="font-weight: bold;">GeoIP_Org_Maxmind
 (Commercial Only)</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;Geo::IP or Geo::IP::PurePerl (from Maxmind)
-<br><span style="font-style: italic;">Parameters:</span> [GEOIP_STANDARD | GEOIP_MEMORY_CACHE] [/pathto/GeoIPOrg.dat]<br><span style="font-style: italic;">Description:</span>&nbsp;This plugin adds a chart of hits by Organization names.
+<br><span style="font-style: italic;">Parameters:</span> [GEOIP_STANDARD | GEOIP_MEMORY_CACHE] [/pathto/GeoIPOrg.dat] &lt;/pathto/override.txt&gt;<br><span style="font-style: italic;">Description:</span>&nbsp;This plugin adds a chart of hits by Organization names.
 <br>By enabling this plugin, you will see a new link called 'Organizations' on reports menu. For
 the moment this link works only when AWStats reports are build as CGI (static built not yet
 supported).
-<br>Example <span style="font-style: italic;">LoadPlugin="geoip_org_maxmind GEOIP_STANDARD /usr/local/GeoIPOrg.dat"
-
-</span><br>Plugin provided with AWStats (6.3+)
+<br>Example <span style="font-style: italic;">LoadPlugin="geoip_org_maxmind GEOIP_STANDARD /usr/local/GeoIPOrg.dat </span><span style="font-style: italic;">/usr/local/geoip_override.txt"</span><br>Plugin provided with AWStats (6.3+)
 
 <br><br><a name="CONTRIB"></a><br>
 <font color="#665544" size="3"><b>Other AWStats contribs/tools/package</b></font><br>
