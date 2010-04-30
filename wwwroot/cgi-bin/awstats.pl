@@ -8636,7 +8636,7 @@ sub HTMLShowUserInfo {
 # Return:       None
 #------------------------------------------------------------------------------
 sub HTMLShowClusterInfo {
-	my $user = shift;
+	my $cluster = shift;
 
 	# Call to plugins' function ShowInfoCluster
 	foreach my $pluginname ( sort keys %{ $PluginsLoaded{'ShowInfoCluster'} } )
@@ -8645,7 +8645,7 @@ sub HTMLShowClusterInfo {
 		#		my $function="ShowInfoCluster_$pluginname('$user')";
 		#		eval("$function");
 		my $function = "ShowInfoCluster_$pluginname";
-		&$function($user);
+		&$function($cluster);
 	}
 }
 
@@ -13080,11 +13080,7 @@ sub HTMLMainDaily{
 		$average_v = sprintf( "%.2f", $AverageVisits );
 		$average_p = sprintf( "%.2f", $AveragePages );
 		$average_h = sprintf( "%.2f", $AverageHits );
-		$average_k = (
-			int($average_k)
-			? Format_Bytes( sprintf( "%.2f", $AverageBytes ) )
-			: "0.00"
-		);
+		$average_k = sprintf( "%.2f", $AverageBytes );
 		my @valaverage =
 		  ( $average_v, $average_p, $average_h, $average_k );
 		my @valdata = ();
@@ -13212,11 +13208,7 @@ sub HTMLMainDaily{
 		$average_v = sprintf( "%.2f", $average_v );
 		$average_p = sprintf( "%.2f", $average_p );
 		$average_h = sprintf( "%.2f", $average_h );
-		$average_k = (
-			int($average_k)
-			? Format_Bytes( sprintf( "%.2f", $average_k ) )
-			: "0.00"
-		);
+		$average_k = sprintf( "%.2f", $average_k );
 		if ( $ShowDaysOfMonthStats =~ /V/i ) {
 			print
 "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vv'}\" height=\"$bredde_v\" width=\"4\""
@@ -13379,16 +13371,16 @@ sub HTMLMainDaily{
 		print
 "<tr bgcolor=\"#$color_TableBGRowTitle\"><td>$Message[96]</td>";
 		if ( $ShowDaysOfMonthStats =~ /V/i ) {
-			print "<td>".Format_Number($average_v)."</td>";
+			print "<td>".Format_Number(int($average_v))."</td>";
 		}
 		if ( $ShowDaysOfMonthStats =~ /P/i ) {
-			print "<td>".Format_Number($average_p)."</td>";
+			print "<td>".Format_Number(int($average_p))."</td>";
 		}
 		if ( $ShowDaysOfMonthStats =~ /H/i ) {
-			print "<td>".Format_Number($average_h)."</td>";
+			print "<td>".Format_Number(int($average_h))."</td>";
 		}
 		if ( $ShowDaysOfMonthStats =~ /B/i ) {
-			print "<td>".Format_Number($average_k)."</td>";
+			print "<td>".Format_Bytes(int($average_k))."</td>";
 		}
 		print "</tr>\n";
 
@@ -13696,13 +13688,13 @@ sub HTMLMainDaysofWeek{
 						  && $YearRequired == $nowyear ? '</font>' : '' );
 					print "</td>";
 					if ( $ShowDaysOfWeekStats =~ /P/i ) {
-						print "<td>", Format_Number($avg_dayofweek_p[$_]), "</td>";
+						print "<td>", Format_Number(int($avg_dayofweek_p[$_])), "</td>";
 					}
 					if ( $ShowDaysOfWeekStats =~ /H/i ) {
-						print "<td>", Format_Number($avg_dayofweek_h[$_]), "</td>";
+						print "<td>", Format_Number(int($avg_dayofweek_h[$_])), "</td>";
 					}
 					if ( $ShowDaysOfWeekStats =~ /B/i ) {
-						print "<td>", Format_Bytes( $avg_dayofweek_k[$_] ),
+						print "<td>", Format_Bytes(int($avg_dayofweek_k[$_])),
 						  "</td>";
 					}
 					print "</tr>\n";
