@@ -46,7 +46,7 @@ use vars qw/
 $DIR $PROG $Extension
 $Debug $ShowSteps $AddFileNum $AddFileName $LastLogNum $PrintFields
 $MaxNbOfThread $DNSLookup $DNSCache $DirCgi $DirData $DNSLookupAlreadyDone
-$NbOfLinesShowsteps $AFINET $QueueCursor $StopOnFirstEof
+$NbOfLinesShowsteps $AFINET $QueueCursor $StopOnFirstEof $IgnoreMissing
 /;
 $DIR='';
 $PROG='';
@@ -66,6 +66,7 @@ $DNSLookupAlreadyDone=0;
 $NbOfLinesShowsteps=0;
 $AFINET='';
 $StopOnFirstEof=0;
+$IgnoreMissing=0;
 
 # ---------- Init arrays --------
 use vars qw/
@@ -270,6 +271,7 @@ for (0..@ARGV-1) {
 		elsif ($ARGV[$_] =~ /addfilename/i) { $AddFileName=1; }
 		elsif ($ARGV[$_] =~ /stoponfirsteof/i) { $StopOnFirstEof=1; }
 		elsif ($ARGV[$_] =~ /printfields/i) { $PrintFields=1; }
+		elsif ($ARGV[$_] =~ /ignoremissing/i) { $IgnoreMissing=1; }
 		else { print "Unknown argument $ARGV[$_] ignored\n"; }
 	}
 	else {
@@ -329,6 +331,7 @@ if (scalar @ParamFile == 0) {
 	print "                  the currentlog file when switching between log file entries\n";
 	print "                  so that the parsercan automatically determine which fields\n";
 	print "                  are avaiable.\n";
+	print "  -ignoremissing  will not fail if a log file is missing\n";
 	print "\n";
 	
 	print "This runs $PROG in command line to open one or several\n";
@@ -491,7 +494,14 @@ if (scalar keys %LogFileToDo == 0) {
 if ($Debug) { debug("Start of processing ".(scalar keys %LogFileToDo)." log file(s), $MaxNbOfThread threads max"); }
 foreach my $logfilenb (keys %LogFileToDo) {
 	if ($Debug) { debug("Open log file number $logfilenb: \"$LogFileToDo{$logfilenb}\""); }
-	open("LOG$logfilenb","$LogFileToDo{$logfilenb}") || error("Couldn't open log file \"$LogFileToDo{$logfilenb}\" : $!");
+	if ($IgnoreMissing){
+		if (!open("LOG$logfilenb","$LogFileToDo{$logfilenb}")){
+			debug("Couldn't open log file \"$LogFileToDo{$logfilenb}\" : $!");
+			delete $LogFileToDo{$logfilenb};
+		}
+	}else{
+		open("LOG$logfilenb","$LogFileToDo{$logfilenb}") || error("Couldn't open log file \"$LogFileToDo{$logfilenb}\" : $!");
+	}
 	binmode "LOG$logfilenb";	# To avoid pb of corrupted text log files with binary chars.
 }
 
