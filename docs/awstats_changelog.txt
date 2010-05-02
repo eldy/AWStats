@@ -14,9 +14,13 @@ New features/improvements:
   missing entries in geoip maxmin database. 
 - Added graphgooglechartapi to use online Google char api to build graph.
 - Can show map of country to report countries when using graphgooglechartapi.
-- Part of codes was change ot use more functions and have a cleaner code.
+- Part of codes was change to use more functions and have a cleaner code.
+- Added parameter to ignore missing log files when merging for a site on 
+  multiple servers where a single server may not have created a log for a given day.
+- Update robots database.
+
 Thanks to Chris Larsen (author of most thoses changes).
- 
+
 
 ***** 6.95 *****
 
