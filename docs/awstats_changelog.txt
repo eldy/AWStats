@@ -3,7 +3,7 @@ AWStats Changelog
 $Revision$ - $Author$ - $Date$
 
 
-***** 6.96 *****
+***** 7.0 *****
 
 New features/improvements:
 - Detect Windows 7.
