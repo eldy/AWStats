@@ -1769,10 +1769,13 @@ sub Read_Config {
 		}
 	}
 	if ( !$FileConfig ) {
+		if ($DEBUGFORCED || !$ENV{'GATEWAY_INTERFACE'}){
 		error(
 "Couldn't open config file \"$PROG.$SiteConfig.conf\" nor \"$PROG.conf\" after searching in path \""
-			  . join( ',', @PossibleConfigDir )
+			  . join( ', ', @PossibleConfigDir )
 			  . "\": $!" );
+		}else{error("Couldn't open config file \"$PROG.$SiteConfig.conf\" nor \"$PROG.conf\". 
+		Please read the documentation for directories where the configuration file should be located."); }
 	}
 
 	# Analyze config file content and close it
@@ -14996,7 +14999,7 @@ sub HTMLMainOS{
 		\%new_os_h );
 		
 	# Graph the top five in a pie chart
-	if (scalar %BrowsersFamily > 1){
+	if (scalar @keylist > 1){
 		foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
 		{
 			my @blocklabel = ();
@@ -15136,7 +15139,7 @@ sub HTMLMainBrowsers{
 	);
 	
 	# Graph the top five in a pie chart
-	if (scalar %BrowsersFamily > 1){
+	if (scalar @keylist > 1){
 		foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
 		{
 			my @blocklabel = ();
