@@ -1,37 +1,34 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
-<head>
+<html><head>
 <meta name="description" content="AWStats Documentation - Other tools">
 <meta name="keywords" content="awstats, awstat, tools, utilities, awstats_buildstaticpages, logresolvemerge, common2combined">
 <meta name="robots" content="index,follow">
 <meta name="title" content="AWStats Documentation - Other tools">
-<title>AWStats Documentation - Other tools</title>
-<link rel="stylesheet" href="styles.css" type="text/css">
-<!-- $Revision$ - $Author$ - $Date$ -->
-</head>
 
-<body topmargin=10 leftmargin=5>
+<title>AWStats Documentation - Other tools</title><link rel="stylesheet" href="styles.css" type="text/css"><!-- $Revision$ - $Author$ - $Date$ --></head>
+
+<body topmargin="10" leftmargin="5">
 
 
-<table style="font: 10pt arial,helvetica,verdana" cellpadding=0 cellspacing=0 border=0 bgcolor=#FFFFFF width=100%>
+<table style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10pt; line-height: normal; font-size-adjust: none; font-stretch: normal;" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" width="100%">
 
 <!-- Large -->
-<tr style="font: 10pt arial,helvetica,verdana">
-<td bgcolor=#9999cc align=center><a href="/"><img src="images/awstats_logo4.png" border=0></a></td>
-<td bgcolor=#9999cc align=center>
+<tbody><tr style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">
+<td align="center" bgcolor="#9999cc"><a href="/"><img src="images/awstats_logo4.png" border="0"></a></td>
+<td align="center" bgcolor="#9999cc">
 <br>
-<font style="font: 16pt arial,helvetica,sans-serif" color=#EEEEFF><b>AWStats logfile analyzer 6.95 Documentation</b></font><br>
+<font style="font-family: arial,helvetica,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 16pt; line-height: normal; font-size-adjust: none; font-stretch: normal;" color="#eeeeff"><b>AWStats logfile analyzer 6.95 Documentation</b></font><br>
 <br>
 </td>
-<td bgcolor=#9999cc align=center>
+<td align="center" bgcolor="#9999cc">
 &nbsp;
 </td>
 </tr>
 
-</table>
+</tbody></table>
 
 
-<br><br><H1 style="font: 26px arial,helvetica,sans-serif">Other utilities</H1>
+<br><br><h1 style="font-family: arial,helvetica,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 26px; line-height: normal; font-size-adjust: none; font-stretch: normal;">Other utilities</h1>
 
 <br>
 This is a list of other tools provided with AWStats.<br>
@@ -51,7 +48,7 @@ All those tools are available in <b>tools</b> directory of AWStats distribution.
 -->
 
 <br>
-<br><a name="awstats_updateall"><H2 style="font: 18px arial,helvetica,sans-serif color: #606060"><u>awstats_updateall.pl</u></H2></a>
+<br><a name="awstats_updateall"><h2 style=""><u>awstats_updateall.pl</u></h2></a>
 <br>awstats_updateall launches update process for all AWStats config files (except
 <br>awstats.model.conf) found in a particular directory, so you can easily setup a
 <br>cron/scheduler job. The scanned directory is by default /etc/awstats.
@@ -66,7 +63,7 @@ All those tools are available in <b>tools</b> directory of AWStats distribution.
 <br>
 
 <br>
-<br><a name="awstats_buildstaticpages"><H2 style="font: 18px arial,helvetica,sans-serif color: #606060"><u>awstats_buildstaticpages.pl</u></H2></a>
+<br><a name="awstats_buildstaticpages"><h2 style=""><u>awstats_buildstaticpages.pl</u></h2></a>
 <br>awstats_buildstaticpages allows you to launch AWStats with -staticlinks option
 <br>to build all possible pages allowed by AWStats -output option.
 <br>
@@ -95,73 +92,22 @@ All those tools are available in <b>tools</b> directory of AWStats distribution.
 <br>
 
 <br>
-<br><a name="logresolvemerge"><H2 style="font: 18px arial,helvetica,sans-serif color: #606060"><u>logresolvemerge.pl</u></H2></a>
-<br>logresolvemerge allows you to merge several log files into one output,
-<br>sorted on date. It also makes a fast reverse DNS lookup to replace
-<br>all IP addresses into host names in resulting log file.
-<br>logresolvemerge comes with ABSOLUTELY NO WARRANTY. It's a free software
-<br>distributed with a GNU General Public License (See COPYING.txt file).
-<br>logresolvemerge is part of AWStats but can be used alone as a log merger
-<br>or resolver before using any other log analyzer.
-<br>
-<br>Usage:
-<br>  logresolvemerge.pl [options] file
-<br>  logresolvemerge.pl [options] file1 ... filen
-<br>  logresolvemerge.pl [options] *.*
-<br>Options:
-<br>  -dnslookup     make a reverse DNS lookup on IP adresses
-<br>  -dnscache=file make DNS lookup from cache file first before network lookup
-<br>  -showsteps     print on stderr benchmark information every 8192 lines
-<br>  -addfilenum    if used with several files, file number can be added in first
-<br>                 field of output file.
-<br>
-<br>This runs logresolvemerge in command line to open one or several web
-<br>server log files to merge them (sorted on date) and/or to make a reverse
-<br>DNS lookup (if wanted). The result log file is sent on standard output.
-<br>Note: logresolvemerge is not a 'sort' tool to sort one file. It's a
-<br>software able to output sorted log records (with a reverse DNS lookup
-<br>included or not) even if log records are dispatched in several files.
-<br>Each of thoose files must be already independently sorted itself
-<br>(but that is the case in all web server log files). So you can use it
-<br>for load balanced log files or to process several old log files.
-<br>
-<br>Don't forget that the main goal of logresolvemerge is to send log records to
-<br>a log analyzer in a sorted order without merging files on disk (NO NEED
-<br>OF DISK SPACE AT ALL) and without loading files into memory (NO NEED
-<br>OF MORE MEMORY). Choose of output records is done on the fly.
-<br>
-<br>So logresolvemerge is particularly useful when you want to output several
-<br>and/or large log files in a fast process, with no use of disk or
-<br>more memory and in a chronological order through a pipe (to be used by a log
-<br>analyzer.
-<br>
-<br>Note: If input records are not 'exactly' sorted but 'nearly' sorted (this
-<br>occurs with heavy servers), this is not a problem, the output will also
-<br>be 'nearly' sorted but a few log analyzers (like AWStats) knowns how to deal
-<br>with such logs.
-<br>
-<br>WARNING: If log files are old MAC text files (lines ended with CR char), you
-<br>can't run this tool on Win or Unix platforms.
-<br>
-<br>WARNING: Because of important memory holes in ActiveState Perl version, use
-<br>another Perl interpreter if you need to process large log files.
-<br>
-<br>Now supports/detects:
-<br>  Automatic detection of log format
-<br>  Files can be .gz/.bz2 files if zcat/bzcat tools are available in PATH.
-<br>New versions and FAQ at http://awstats.sourceforge.net
-
-<br>
+<br><a name="logresolvemerge"><h2 style=""><u>logresolvemerge.pl</u></h2></a>
+logresolvemerge allows you to get one unique output log file, sorted on date,<br>built from particular sources:<br>&nbsp;- It can read several input log files,<br>&nbsp;- It can read .gz/.bz2 log files,<br>&nbsp;- It can also makes a fast reverse DNS lookup to replace<br>&nbsp;&nbsp; all IP addresses into host names in resulting log file.<br>logresolvemerge comes with ABSOLUTELY NO WARRANTY. It's a free software<br>distributed with a GNU General Public License (See COPYING.txt file).<br>logresolvemerge is part of AWStats but can be used alone as a log merger<br>or resolver before using any other log analyzer.<br><br>Usage:<br>&nbsp; logresolvemerge.pl [options] file<br>&nbsp; logresolvemerge.pl [options] file1 ... filen<br>&nbsp; logresolvemerge.pl [options] *.*<br>&nbsp; perl logresolvemerge.pl [options] *.* &gt; newfile<br>Options:<br>&nbsp; -dnslookup&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; make a reverse DNS lookup on IP adresses<br>&nbsp; -dnslookup=n&nbsp;&nbsp;&nbsp; same with a n parallel threads instead of serial requests<br>&nbsp; -dnscache=file&nbsp; make DNS lookup from cache file first before network lookup<br>&nbsp; -showsteps&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print on stderr benchmark information every 8192 lines<br>&nbsp; -addfilenum&nbsp;&nbsp;&nbsp;&nbsp; if used with several files, file number can be added in first<br>&nbsp; -addfilename&nbsp;&nbsp;&nbsp; if used with several files, file name can be added in first<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+field of output file. This can be used to add a cluster id<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+when log files come from several load balanced computers.<br>&nbsp; -stoponfirsteof Stop processing when any logfile reaches end-of-file.<br>&nbsp; -printfields&nbsp;&nbsp;&nbsp; For IIS or W3C logs, prints the latest field header for<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+the currentlog file when switching between log file entries<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+so that the parsercan automatically determine which fields<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; are avaiable.<br>&nbsp; -ignoremissing&nbsp; will not fail if a log file is missing<br><br>This runs logresolvemerge in command line to open one or several<br>server log files to merge them (sorted on date) and/or to make a reverse<br>DNS lookup (if asked). The result log file is sent on standard output.<br>Note: logresolvemerge is not a 'sort' tool to sort one file. It's a<br>software able to output sorted log records (with a reverse DNS lookup<br>included or not) even if log records are dispatched in several files.<br>Each of thoose files must be already independently sorted itself<br>(but that is the case in all web server log files). So you can use it<br>for load balanced log files or to group several old log files.<br><br>Don't forget that the main goal of logresolvemerge is to send log records to<br>a log analyzer in a sorted order without merging files on disk (NO NEED<br>OF DISK SPACE AT ALL) and without loading files into memory (NO NEED<br>OF MORE MEMORY). Choose of output records is done on the fly.<br><br>So logresolvemerge is particularly usefull when you want to output several<br>and/or large log files in a fast process, with no use of disk or<br>more memory, and in a chronological order through a pipe (to be used by a log<br>analyzer).<br><br>Note: If input records are not 'exactly' sorted but 'nearly' sorted (this<br>occurs with heavy servers), this is not a problem, the output will also<br>be 'nearly' sorted but a few log analyzers (like AWStats) knowns how to deal<br>with such logs.<br><br>WARNING: If log files are old MAC text files (lines ended with CR char), you<br>can't run this tool on Win or Unix platforms.<br><br>WARNING: Because of memory holes in ActiveState Perl version, use another<br>Perl interpreter if you need to process large log files.<br><br>Now supports/detects:<br>&nbsp; Automatic detection of log format<br>&nbsp; Files can be .gz/.bz2 files if zcat/bzcat tools are available in PATH.<br>&nbsp; Multithreaded reverse DNS lookup (several parallel requests) with Perl 5.8+.<br>New versions and FAQ at http://awstats.sourceforge.net<br>
 <br>
 
 <br>
-<br><a name="maillogconvert"><H2 style="font: 18px arial,helvetica,sans-serif color: #606060"><u>maillogconvert.pl</u></H2></a>
+<br><a name="maillogconvert"><h2 style=""><u>maillogconvert.pl</u></h2></a>
 <br>maillogconvert is mail log preprocessor that convert a mail log file (from
 <br>postfix, sendmail or qmail servers) into a human readable format.
 <br>The output format is also ready to be used by a log analyzer, like AWStats.
 <br>
 <br>Usage:
-<br>  perl maillogconvert.pl [standard|vadmin] [year] < logfile > output
+<br>  perl maillogconvert.pl [standard|vadmin] [year] &lt; logfile &gt; output
 <br>
 <br>The first parameter specifies what format the mail logfile is :
 <br>  standard - logfile is standard postfix,sendmail,qmail or mdaemon log format
@@ -176,34 +122,35 @@ All those tools are available in <b>tools</b> directory of AWStats distribution.
 <br>For example, the following sample from postfix mail log server:
 <br>
 <i>
-<br># 1 Mail fromuser@aol.com -> touser@toserver.com, forward touser@toserver.com -> touser@mainserver.com
+<br># 1 Mail fromuser@aol.com -&gt; touser@toserver.com, forward touser@toserver.com -&gt; touser@mainserver.com
 <br>Jan 01 07:27:31 apollon postfix/smtpd[1684]: connect from remt30.cluster1.charter.net[209.225.8.40]
 <br>Jan 01 07:27:32 apollon postfix/smtpd[1684]: 2BC793B8A4: client=remt30.cluster1.charter.net[209.225.8.40]
-<br>Jan 01 07:27:32 apollon postfix/cleanup[1687]: 2BC793B8A4: message-id=<36027278@vneka>
-<br>Jan 01 07:27:32 apollon postfix/qmgr[13860]: 2BC793B8A4: from=<fromuser@aol.com>, size=2130, nrcpt=1 (queue active)
+<br>Jan 01 07:27:32 apollon postfix/cleanup[1687]: 2BC793B8A4: message-id=&lt;36027278@vneka&gt;
+<br>Jan 01 07:27:32 apollon postfix/qmgr[13860]: 2BC793B8A4: from=<fromuser @aol.com="">, size=2130, nrcpt=1 (queue active)
 <br>Jan 01 07:27:32 apollon postfix/smtpd[1684]: disconnect from remt30.cluster1.charter.net[209.225.8.40]
-<br>Jan 01 07:27:38 apollon postfix/local[1689]: 2BC793B8A4: to=<touser@mainserver.com>, orig_to=<touser@toserver.com>, relay=local, delay=6, status=sent ("|/usr/bin/procmail")
+<br>Jan 01 07:27:38 apollon postfix/local[1689]: 2BC793B8A4: to=<touser @mainserver.com="">, orig_to=<touser @toserver.com="">, relay=local, delay=6, status=sent ("|/usr/bin/procmail")
 <br># 2 Reject: 450
 <br>Jan 01 14:05:44 apollon postfix/smtpd[2114]: connect from baby.mainframe.nl[81.29.4.2]
 <br>Jan 01 14:05:44 apollon postfix/smtpd[2114]: E0C9D3BD9A: client=baby.mainframe.nl[81.29.4.2]
-<br>Jan 01 14:05:44 apollon postfix/smtpd[2114]: E0C9D3BD9A: reject: RCPT from baby.mainframe.nl[81.29.4.2]: 450 <touser2@toserver.com>: User unknown in local recipient table; from=<> to=<touser2@toserver.com> proto=ESMTP helo=<baby.mainframe.nl>
-<br>Jan 01 14:10:16 juni postfix/smtpd[2568]: C34ED1432B: reject: RCPT from relay2.tp2rc.edu.tw[163.28.32.177]: 450 <unknownuser@unknownserver.com>: User unknown in local recipient table; from=<> proto=ESMTP helo=<rmail.nccu.edu.tw>
+<br>Jan 01 14:05:44 apollon postfix/smtpd[2114]: E0C9D3BD9A: reject: RCPT from baby.mainframe.nl[81.29.4.2]: 450 <touser2 @toserver.com="">: User unknown in local recipient table; from=&lt;&gt; to=<touser2 @toserver.com=""> proto=ESMTP helo=<baby.mainframe.nl>
+<br>Jan 01 14:10:16 juni postfix/smtpd[2568]: C34ED1432B: reject: RCPT from relay2.tp2rc.edu.tw[163.28.32.177]: 450 <unknownuser @unknownserver.com="">: User unknown in local recipient table; from=&lt;&gt; proto=ESMTP helo=<rmail.nccu.edu.tw>
 <br># 1 From unknown
 <br>Jan 01 15:17:05 apollon postfix/smtpd[29866]: connect from tomts12.bellnexxia.net[209.226.175.56]
 <br>Jan 01 15:17:05 apollon postfix/smtpd[29866]: 578093B8B5: client=tomts12.bellnexxia.net[209.226.175.56]
-<br>Jan 01 15:17:05 apollon postfix/cleanup[28931]: 578093B8B5: message-id=<20030905131913.EOVH11393.tomts12-srv.bellnexxia.net@tomts12-srv>
-<br>Jan 01 15:17:06 apollon postfix/qmgr[965]: 578093B8B5: from=<>, size=109367, nrcpt=1 (queue active)
-<br>Jan 01 15:17:06 apollon postfix/local[32432]: 578093B8B5: to=<touser@mainserver.com>, orig_to=<touser@toserver.com>, relay=local, delay=1, status=sent ("|/usr/bin/procmail")
+<br>Jan 01 15:17:05 apollon postfix/cleanup[28931]: 578093B8B5:
+message-id=&lt;20030905131913.EOVH11393.tomts12-srv.bellnexxia.net@tomts12-srv&gt;
+<br>Jan 01 15:17:06 apollon postfix/qmgr[965]: 578093B8B5: from=&lt;&gt;, size=109367, nrcpt=1 (queue active)
+<br>Jan 01 15:17:06 apollon postfix/local[32432]: 578093B8B5: to=<touser @mainserver.com="">, orig_to=<touser @toserver.com="">, relay=local, delay=1, status=sent ("|/usr/bin/procmail")
 <br>Jan 01 15:17:06 apollon postfix/smtpd[29866]: disconnect from tomts12.bellnexxia.net[209.226.175.56]
-</i>
+</touser></touser></rmail.nccu.edu.tw></unknownuser></baby.mainframe.nl></touser2></touser2></touser></touser></fromuser></i>
 <br>
 <br>will give a file that looks like this:
 <br>
 <i>
 <br>2004-01-01 07:27:38 fromuser@aol.com touser@toserver.com remt30.cluster1.charter.net localhost SMTP - 1 2130
-<br>2004-01-01 14:05:44 <> touser2@toserver.com baby.mainframe.nl - SMTP - 450 0
-<br>2004-01-01 14:10:16 <> unknownuser@unknownserver.com relay2.tp2rc.edu.tw - SMTP - 450 0
-<br>2004-01-01 15:17:06 <> touser@toserver.com tomts12.bellnexxia.net localhost SMTP - 1 109367
+<br>2004-01-01 14:05:44 &lt;&gt; touser2@toserver.com baby.mainframe.nl - SMTP - 450 0
+<br>2004-01-01 14:10:16 &lt;&gt; unknownuser@unknownserver.com relay2.tp2rc.edu.tw - SMTP - 450 0
+<br>2004-01-01 15:17:06 &lt;&gt; touser@toserver.com tomts12.bellnexxia.net localhost SMTP - 1 109367
 </i>
 <br>
 <br>See <a href="awstats_faq.html#MAIL">FAQ-COM100</a> to see how to use maillogconvert.pl with AWStats to analyze mail log files.
@@ -213,7 +160,7 @@ All those tools are available in <b>tools</b> directory of AWStats distribution.
 <br>
 
 <br>
-<br><a name="urlaliasbuilder"><H2 style="font: 18px arial,helvetica,sans-serif color: #606060"><u>urlaliasbuilder.pl</u></H2></a>
+<br><a name="urlaliasbuilder"><h2 style=""><u>urlaliasbuilder.pl</u></h2></a>
 <br>Urlaliasbuilder generates an 'urlalias' file from an input file (an urlalias file
 <br>is a file with two columns: url and clear title of url).
 <br>The input file must contain a list of URLs (It can be an AWStats history file).
@@ -246,10 +193,9 @@ All those tools are available in <b>tools</b> directory of AWStats distribution.
 <br>
 <hr>
 
-<script language=javascript>
+<script language="javascript">
 	var date='$Date$';
 	document.writeln("Last revision: "+date);
 </script>
 
-</body>
-</html>
+</body></html>
