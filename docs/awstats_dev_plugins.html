@@ -1,0 +1,177 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<meta content="AWStats Documentation - Contrib and resource page" name="description">
+<meta content="awstats, awstat, log, file, analyzer, contrib, plugins, resources, maxmind, geoipfree, geoip, cities, regions, countries, frontend" name="keywords">
+<meta content="index,follow" name="robots">
+<meta content="AWStats Documentation - Plugins Development" name="title"><title>AWStats Documentation - Plugins Development</title>
+
+<link type="text/css" href="styles.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="scripts/prettify.css">
+<script type="text/javascript" src="scripts/prettify.js"></script><!-- $Revision$ - $Author$ - $Date$ -->
+</head>
+<body onload="prettyPrint()">
+<table style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10pt; line-height: normal; font-size-adjust: none; font-stretch: normal;" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" width="100%">
+<!-- Large -->
+<tbody>
+<tr style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">
+<td align="center" bgcolor="#9999cc"><a href="/"><img src="images/awstats_logo1.png" border="0"></a></td>
+<td align="center" bgcolor="#9999cc">
+<br>
+<font style="font-family: arial,helvetica,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 16pt; line-height: normal; font-size-adjust: none; font-stretch: normal;" color="#eeeeff"><b>AWStats logfile analyzer 6.95
+Documentation</b></font><br>
+<br>
+</td>
+<td align="center" bgcolor="#9999cc">
+&nbsp;
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+<br>
+<h1 style="font-family: arial,helvetica,sanserif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 26px; line-height: normal; font-size-adjust: none; font-stretch: normal;">Plugin
+Development</h1>
+AWStats has a very flexible plugin architecture that is easy to use and
+allows for powerful extensibility. Here is the information you need to
+get&nbsp;started rolling your own. In this documentation, the terms
+plugin and module will be used interchangeably. <br>
+<br>
+<ul>
+<li><a href="#Plugin_Files_Location">Plugin Files,
+Location</a></li>
+<li><a href="#Hooks">Hooks</a></li>
+<li><a href="#Required_Variables">Required
+Variables</a></li>
+<li><a href="#Accessible_Variables">Accessible
+Variables</a></li>
+<li><a href="#Accessible_Functions">Accessible
+Functions</a></li>
+<li><a href="awstats_dev_plugins_hooks.html">Available
+Hooks</a></li>
+</ul>
+<br>
+<a name="Plugin_Files_Location"></a><font color="#665544" size="3"><b>Plugin Files,
+Location</b></font><br>
+<hr>AWStats plugins are implemented as Perl modules with a file
+extension of .pm. Every time you run AWStats, either in update mode or
+HTML output mode, the configuration file will be parsed for the names
+of plugins to load. Then AWStats will scan the plugins folder for
+matching modules and load them into memory, executing hooks at the
+appropriate time during a run. Thus, when you create a plugin, you have
+to store the file in the plugins directory under the folder where
+awstats.pl resides. <br>
+<br>
+<font color="#665544" size="3"><b><a name="Hooks"></a>Hooks</b></font><br>
+<hr>In order to be useful, your&nbsp;plugin must implement
+any number
+of different "hooks" that will be called at various points during the
+AWStats run. A hook is simply a Perl sub routine that will receive
+various parameters, perform whatever actions you desire such as
+calculations, modifications or output, and optionally return a value. <br>
+<span style="font-weight: bold;">Note:</span> all
+plugins MUST implement the <span style="font-style: italic;">Init_</span>
+hook to initialize the module and determine if the plugin will run
+under the current version of AWStats.<br>
+For information on the available hooks, <a href="awstats_dev_plugins_hooks.html">view the Hooks
+document.</a><br>
+<a name="Required_Variables"></a><br>
+<font color="#665544" size="3"><b>Required
+Variables</b></font><br>
+<hr>Each plugin must implement three required, local variables
+including the name, hooks, implements and required AWStats Version.
+Typically you implement these at the top of your plugin file as in this
+example code:<br>
+<br>
+<code class="prettyprint">#-----------------------------------------------------------------------------<br>
+# PLUGIN VARIABLES<br>
+#-----------------------------------------------------------------------------<br>
+# &lt;-----<br>
+# ENTER HERE THE MINIMUM AWSTATS VERSION REQUIRED BY YOUR PLUGIN<br>
+# AND THE NAME OF ALL FUNCTIONS THE PLUGIN MANAGE.<br>
+my $PluginNeedAWStatsVersion="5.5";<br>
+my $PluginHooksFunctions="GetCountryCodeByAddr GetCountryCodeByName
+ShowInfoHost";<br>
+my $PluginName = "geoipfree";<br>
+my $PluginImplements = "mou";<br>
+# -----&gt;</code><br>
+<br>
+The <span style="font-weight: bold;">$PluginNeedAWStatsVersion</span>
+indicates the minimum version of AWStats that your plugin requires to
+run properly. If a user attempts to implement your plugin with an older
+version of the program, the plugin will not load.<br>
+<br>
+<span style="font-weight: bold;">$PluginHooksFunctions</span>
+is a space delimited list of the different hooks that your plugin will
+implement. This list should only include names defined in the <a href="awstats_dev_plugins_hooks.html">hooks&nbsp;list</a>.
+You should not list any private module functions or
+the <span style="font-style: italic;">Init_</span>
+hook in this list. The naming convention for all hooks is <span style="font-style: italic;">HookName_PluginName</span>.
+The hooks like only includes the hook name without the underscore.<br>
+<br>
+<span style="font-weight: bold;">$PluginName</span>
+is simply the name of your plugin, exactly as it appears in the hooks
+and file name. This will be used by AWStats on load.<br>
+<br>
+<span style="font-weight: bold;">$PluginImplements</span>
+is a list of letter codes mapped to operations that your plugin
+performs. Without at least one of these letter codes, your plugin will
+never run. The codes are:<br>
+<ul>
+<li>"m" - a Menu Handler plugin that
+provides links to navigate around reports. The plugin will be called
+any time a menu is displayed, such as in the left frame in cgi mode or
+top navigation in static mode.&nbsp;</li>
+<li>"o" - an Output plugin that will be loaded when AWStats is
+generating a report via dynamic CGI or static HTML</li>
+<li>"u" - an Update plugin that will process data and is run
+when AWStats is parsing log files and updating the history data files.</li>
+</ul>
+<font color="#665544" size="3"><b><a name="Accessible_Variables"></a>Accessible Variables</b></font><br>
+<hr>Your plugin has access to all of the global variables
+declared at
+the top of the AWStats.pl program. While you can write to these
+variables, it's best to only read them as another plugin may make
+unexpected modifications. However you can declare global variables
+within your own plugin and share those across other plugins. Just
+declare them inside the normal <span style="font-style: italic;">use
+vars qw/ ... /</span> block within your own module.<br>
+<br>
+Thus you can (and should) use settings from the configuration file and
+determine the debug level.<br>
+<br>
+<font color="#665544" size="3"><b><a name="Accessible_Functions"></a>Accessible Functions</b></font><br>
+<hr>Plugins have access to all of the functions declared in the
+main
+AWStats.pl file. For debugging and error handling, you should use the <span style="font-style: italic;">debug</span> and <span style="font-style: italic;">error</span> functions.
+Below are some common functions that plugins take advantage of
+(remember you don't have to re-invent the wheel):<br>
+<br>
+<span style="font-weight: bold;">debug("<span style="font-style: italic;">debug message</span>", <span style="font-style: italic;">debug_level</span>)</span>
+- Writes the "debug message" to the standard output if the (integer)
+debug_level is lower or equal to that set by the user at runtime. The
+higher the debug level, the less important or more informational the
+message. After outputting the message, the program continues running.<br>
+<br>
+<span style="font-weight: bold;">error("<span style="font-style: italic;">error message</span>")</span>
+- Writes the "error message" to the standard output and halts program
+execution. <br>
+<br>
+<span style="font-weight: bold;">Format_Bytes(<span style="font-style: italic;">bytes</span>)</span>
+- Converts the incoming decimal value to Kilobytes, Megabytes,
+Gigabytes and so forth. So if you put in 1024.5 it will spit out "1 KB"<br>
+<br>
+<span style="font-weight: bold;">Format_Date(<span style="font-style: italic;">YYYYMMDDHHMMSS</span>)</span>
+- Converts the incoming timestamps to something like 30 Apr 2010 - 16:55<br>
+<br>
+<span style="font-weight: bold;">Format_Number(<span style="font-style: italic;">number</span>) -</span>
+Adds commas or a user defined character where appropriate to separate
+numbers for easier reading.<br>
+<br>
+<hr>
+<script language="javascript">
+var date='$Date$';
+document.writeln("Last revision: "+date);
+</script><!--
+First version of this tool was designed to analyze folowing web sites:
+--><br>
+</body></html>

@@ -1,0 +1,386 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<meta name="description" content="AWStats Documentation - Contrib and resource page">
+<meta name="keywords" content="awstats, awstat, log, file, analyzer, contrib, plugins, resources, maxmind, geoipfree, geoip, cities, regions, countries, frontend">
+<meta name="robots" content="index,follow">
+<meta name="title" content="AWStats Documentation - Plugins Development - Hooks"><title>AWStats Documentation - Plugins Development - Hooks</title>
+
+<link rel="stylesheet" href="styles.css" type="text/css">
+<link href="scripts/prettify.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="scripts/prettify.js"></script><!-- $Revision$ - $Author$ - $Date$ -->
+</head>
+<body onload="prettyPrint()">
+<table style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10pt; line-height: normal; font-size-adjust: none; font-stretch: normal;" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" width="100%">
+<!-- Large -->
+<tbody>
+<tr style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">
+<td align="center" bgcolor="#9999cc"><a href="/"><img src="images/awstats_logo1.png" border="0"></a></td>
+<td align="center" bgcolor="#9999cc">
+<br>
+<font style="font-family: arial,helvetica,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 16pt; line-height: normal; font-size-adjust: none; font-stretch: normal;" color="#eeeeff"><b>AWStats logfile analyzer 6.95
+Documentation</b></font><br>
+<br>
+</td>
+<td align="center" bgcolor="#9999cc">
+&nbsp;
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+<br>
+<h1 style="font-family: arial,helvetica,sanserif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 26px; line-height: normal; font-size-adjust: none; font-stretch: normal;">Plugin
+Hooks</h1>
+The following is a list of hooks available to plugin
+developers. At various steps in the reporting or parsing process,
+AWStats will scan the plugin list for any matching hooks and execute
+them. All hooks start with the name of the hook, an underscore and then
+the plugin name. So for example, if I was creating a plugin called
+"mypluginname" then the initialization hook would look like:<br>
+<br>
+<code class="prettyprint">sub Init_mypluginname()</code><br>
+<br>
+If you need a hook that isn't listed, please contact the developers
+through Source Forge and place a request.<br>
+<ul>
+<li><a href="#Required_Hooks">Required Hooks</a></li>
+<li><a href="#Common_Hooks_">Common Hooks</a></li>
+<li><a href="#ProcessingUpdate_Hooks">Processing/Update
+Hooks</a></li>
+<li><a href="#OutputHTML_Hooks_">Output/HTML Hooks</a><br>
+</li>
+</ul>
+<font color="#665544" size="3"><b><a name="Required_Hooks"></a>Required Hooks</b></font><br>
+<hr><span style="font-weight: bold;">Init_<span style="font-style: italic;">pluginname</span><br>
+</span><span style="font-style: italic;">Type:</span>
+All<span style="font-style: italic;"></span><br>
+<span style="font-style: italic;">Parameters:</span>
+Any parameters passed from the configuration file<br>
+<span style="font-style: italic;">Called:</span>
+After loading configuration file and parsing plugins. Before parsing or
+HTML output<br>
+<span style="font-style: italic;">Description:</span>
+The initialization hook is used to load parameters from the
+configuration file and initialize variables used in your plugin before
+any other hooks are called. This is a good place to initialize any hash
+tables you need or open data files. <br>
+<span style="font-weight: bold;">Note:</span> <span style="font-style: italic;">Init_</span> must return a
+list of hooks that your plugin implements in order for it to be used by
+AWStats. For example:<br>
+<br>
+<code class="prettyprint">sub Init_geoip_region_maxmind {<br>
+my
+$checkversion=&amp;Check_Plugin_Version($PluginNeedAWStatsVersion);<br>
+return ($checkversion?$checkversion:"$PluginHooksFunctions");<br>
+}</code><br>
+<br>
+If your plugin will accept a number of parameters, insert a line
+similar to the following:<br>
+<br>
+<code class="prettyprint">my $InitParams=shift;<br>
+my ($mode,$datafile,$override)=split(/\s+/,$InitParams,3);</code><br>
+<br>
+Be sure to perform validation on the local variables and change the
+number of splits to the number of parameters you expect to read.<span style="font-weight: bold;"><br>
+</span>
+<h2><a name="Common_Hooks_"></a><font color="#665544" size="3"><b><a name="Common_Hooks"></a>Common Hooks</b></font><br>
+</h2>
+<hr><span style="font-weight: bold;">SectionInitHashArray_<span style="font-style: italic;">pluginname</span><br>
+</span><span style="font-style: italic;">Type:</span>
+All<span style="font-style: italic;"></span><br>
+<span style="font-style: italic;">Parameters:</span>
+None<br>
+<span style="font-style: italic;">Called:</span>
+When AWStats InitHash is called, such as at startup, when purging a
+history file or when a new month begins during processing.<br>
+<span style="font-style: italic;">Description:</span>
+Use to initialize or clear any hash variables local to your plugin<br>
+<h2><font color="#665544" size="3"><b><a name="ProcessingUpdate_Hooks"></a>Processing/Update
+Hooks</b></font><br>
+</h2>
+<hr><span style="font-weight: bold;"></span><span style="font-weight: bold;">SectionWriteHistory_<span style="font-style: italic;">pluginname</span><br>
+</span><span style="font-style: italic;">Type:</span>
+Update<span style="font-style: italic;"></span><br>
+<span style="font-style: italic;">Parameters:</span>
+$xml,&nbsp;&nbsp; $xmlbb, $xmlbs, $xmlbe, $xmlrb,&nbsp;
+$xmlrs, $xmlre, $xmleb, $xmlee<br>
+<span style="font-style: italic;">Called:</span>
+Whenever the history file is written in AWStats<br>
+<span style="font-style: italic;">Description:</span>
+Lets your plugin
+write a section to the history file. Please note that if your plugin
+stores a lot of data, it could greatly increase the history file size
+and slow down loading and processing. In such a situation, you may want
+to use this as a trigger to write to a separate history file and use
+the <span style="font-style: italic;">SectionReadHistory_</span>
+hook as a trigger to read that data.<br>
+XML parameters are the pre-defined XML tags the history file is using<br>
+<br>
+<span style="font-weight: bold;">SectionReadHistory_<span style="font-style: italic;">pluginname</span><br>
+</span><span style="font-style: italic;">Type:</span>
+Update, Output<span style="font-style: italic;"></span><br>
+<span style="font-style: italic;">Parameters:</span>
+$issectiontoload, $readxml, $xmleb,&nbsp; $countlines<br>
+<span style="font-style: italic;">Called:</span>
+Whenever the history file is loaded in AWStats<br>
+<span style="font-style: italic;">Description:</span>
+Lets your plugin read a section that it had written to the history
+file. The history log is always loaded before parsing log entries and
+before outputing HTML. <br>
+$issectiontoload - the name of the plugin section found in the history
+file. If this is true, then the plugin should process the field data<br>
+$readxml - True if the history file is in XML format<br>
+$xmleb - XML element opening tag<br>
+$countlines - how many lines have been read from the history file so far<br>
+<span style="font-weight: bold;"><br>
+SectionProcessHostname_<span style="font-style: italic;">pluginname</span><br>
+</span><span style="font-style: italic;">Type:</span>
+Update<br>
+<span style="font-style: italic;">Required:</span> No<br>
+<span style="font-style: italic;">Parameters:</span>
+Resolved hostname<br>
+<span style="font-style: italic;">Called:</span> On
+each line of a log file IF the hostname was resolved<br>
+<span style="font-style: italic;">Description:</span>
+Processes a resolved host name, i.e. <span style="font-style: italic;">www.google.com</span> and
+is useful for counting hits to the host or looking up additional
+information.<br>
+<br>
+<span style="font-weight: bold;">SectionProcessIP_<span style="font-style: italic;">pluginname</span><br>
+</span><span style="font-style: italic;">Type:</span>
+Update<span style="font-style: italic;"></span><br>
+<span style="font-style: italic;">Parameters:</span>
+$Host<br>
+<span style="font-style: italic;">Called:</span> On
+each line of a log file IF DNS resolution is turned off or a host was
+not resolved<br>
+<span style="font-style: italic;">Description:</span>
+Processes an IP address i.e. <span style="font-style: italic;">192.168.1.1&nbsp;</span>and
+is useful for counting hits to the host or looking up additional
+information.<br>
+<h2><a name="OutputHTML_Hooks_"></a><font color="#665544" size="3"><b><a name="OutputHTML_Hooks"></a>Output/HTML Hooks</b></font><br>
+</h2>
+<hr><span style="font-weight: bold;">AddHTMLMenuLink_<span style="font-style: italic;">pluginname</span><br>
+</span><span style="font-style: italic;">Type:</span>
+Output<span style="font-style: italic;"></span><br>
+<span style="font-style: italic;">Parameters:</span>
+$categ, $menu, $menulink, $menutext<br>
+<span style="font-style: italic;">Called:</span>
+Each time a new menu category is printed in the navigation frame or
+section<br>
+<span style="font-style: italic;">Description:</span>
+Inserts a menu item into the navigation area that will link back to the
+<span style="font-style: italic;">AddHTMLGraph_</span>
+hook defined in your plugin. If that hook is undefined, the user will
+experience an error. Requires <span style="font-style: italic;">AddHTMLGraph_</span>
+hook<br>
+<span class="highlighted">$categ</span> - name of
+the main navigation category such as 'who' or 'hosts'<br>
+$menu - passback where you assign the position your link should appear
+in the menu<br>
+$menulink - passback declaring the type of link<br>
+$menutext - passback of the text to be displayed to the user<br>
+<br>
+<span style="font-weight: bold;">AddHTMLGraph_<span style="font-style: italic;">pluginname</span><br>
+</span><span style="font-style: italic;">Type:</span>
+Output<span style="font-style: italic;"></span><br>
+<span style="font-style: italic;">Parameters:</span>None<br>
+<span style="font-style: italic;">Called:</span>
+When the <span style="font-style: italic;">AddHTMLMenuLink_</span>
+created link is clicked, after HTML headers are sent and before HTML
+footers are sent<br>
+<span style="font-style: italic;">Description:</span>
+Used to generate a dedicated report page with information specific to
+your plugin such as the Hosts report or Regions page. You are only
+responsible for the HTML between the standard AWStats header and footer.<span style="font-weight: bold;"></span><br>
+<br>
+<span style="font-weight: bold;">AddHTMLStyles_pluginname<br>
+</span><span style="font-style: italic;">Type:</span>
+Output<span style="font-style: italic;"></span><br>
+<span style="font-style: italic;">Parameters:</span>
+None<br>
+<span style="font-style: italic;">Called:</span>
+Whenever HTML headers are printed IF the configuration file does not
+define a specific style sheet URL.<br>
+<span style="font-style: italic;">Description:</span>
+Use this section to output style&nbsp;information to the HTML
+header. Only print the individual style definitions, not the beginning
+or ending style tags (i.e. <span style="font-style: italic;">&lt;style&gt;&lt;/style&gt;)</span><br>
+<br>
+<span style="font-weight: bold;">AddHTMLHeader_pluginname<br>
+</span><span style="font-style: italic;">Type:</span>
+Output<span style="font-style: italic;"></span><br>
+<span style="font-style: italic;">Parameters:</span>
+None<br>
+<span style="font-style: italic;">Called:</span>
+When HTML headers are printed, just before the closing <span style="font-style: italic;">&lt;/head&gt;</span>
+tag<br>
+<span style="font-style: italic;">Description:</span>
+If your plugin requires extra HTML header information such as java
+script includes or meta tags, print them within this hook.<br>
+<br>
+<span style="font-weight: bold;">AddHTMLFooter_pluginname<br>
+</span><span style="font-style: italic;">Type:</span>
+Output<span style="font-style: italic;"></span><br>
+<span style="font-style: italic;">Parameters:</span>
+None<br>
+<span style="font-style: italic;">Called:</span>
+When HTML footers are printed<br>
+<span style="font-style: italic;">Description:</span>
+Prints footer HTML code before the AWStats copyright and closing <span style="font-style: italic;">&lt;/html&gt;</span>
+tag. Useful if you need to output tracking code or banner ads<br>
+<br>
+<span style="font-weight: bold;">AddHTMLBodyHeader_<span style="font-style: italic;">pluginname</span><br>
+</span><span style="font-style: italic;">Type:</span>
+Output<span style="font-style: italic;"></span><br>
+<span style="font-style: italic;">Parameters:</span>
+None<br>
+<span style="font-style: italic;">Called:</span>
+After the HTML header is printed<br>
+<span style="font-style: italic;">Description: </span>Used
+to print information to the main HTML body before the banner or any
+other information is printed<br>
+<br>
+<span style="font-weight: bold;">AddHTMLMenuHeader_<span style="font-style: italic;">pluginname</span><br>
+</span><span style="font-style: italic;">Type:</span>
+Output<span style="font-style: italic;"></span><br>
+<span style="font-style: italic;">Parameters:</span>
+None<br>
+<span style="font-style: italic;">Called:</span>
+After the HTML header and HTML body header<br>
+<span style="font-style: italic;">Description: </span>Used
+to print a header for the navigation menu whether it's inline on the
+page or in the navigation frame.<br>
+<br>
+<span style="font-weight: bold;">AddHTMLMenuFooter_<span style="font-style: italic;">pluginname</span><br>
+</span><span style="font-style: italic;">Type:</span>
+Output<span style="font-style: italic;"></span><br>
+<span style="font-style: italic;">Parameters:</span>
+None<br>
+<span style="font-style: italic;">Called:</span>
+After the HTML navigation menu is printed<br>
+<span style="font-style: italic;">Description: </span>Used
+to print a footer for the navigation menu whether it's inline on the
+page or in the navigation frame.<br>
+<br>
+<span style="font-weight: bold;">AddHTMLContentHeader_<span style="font-style: italic;">pluginname</span><br>
+</span><span style="font-style: italic;">Type:</span>
+Output<span style="font-style: italic;"></span><br>
+<span style="font-style: italic;">Parameters:</span>
+None<br>
+<span style="font-style: italic;">Called:</span>
+After the HTML navigation menu is printed<br>
+<span style="font-style: italic;">Description: </span>Outputs
+after the navigation menu but before any of the content tables in the
+report pages. <br>
+<br>
+<span style="font-weight: bold;">TabHeadHTML_pluginname<br>
+</span><span style="font-style: italic;">Type:</span>
+Output<span style="font-style: italic;"></span><br>
+<span style="font-style: italic;">Parameters:</span>
+$title<br>
+<span style="font-style: italic;">Called:</span>
+When a new content table is beggining<br>
+<span style="font-style: italic;">Description:</span>
+Lets your plugin override the default table header style. Generally not
+used.<br>
+$title - title to display to the user<br>
+<br>
+<span style="font-weight: bold;">ShowInfoHost_<span style="font-style: italic;">pluginname</span><br>
+</span><span style="font-style: italic;">Type:</span>
+Output<span style="font-style: italic;"></span><br>
+<span style="font-style: italic;">Parameters:</span>
+$host<br>
+<span style="font-style: italic;">Called:</span>
+Each time a new host row is displayed, such as the main page host
+section or the full host list page.<br>
+<span style="font-style: italic;">Description:</span>
+Used to display a table column with detailed information about the
+host. The incoming parameter can be one of three values:<br>
+'__title__' - literal value that indicates we're printing a column
+header<br>
+$Resolved Hostname - name of the host<br>
+$IP Address - an unresolved dotted decimal IP<br>
+<br>
+<span style="font-weight: bold;">ShowInfoUser_<span style="font-style: italic;">pluginname</span><br>
+</span><span style="font-style: italic;">Type:</span>
+Output<span style="font-style: italic;"></span><br>
+<span style="font-style: italic;">Parameters:</span>
+$user<br>
+<span style="font-style: italic;">Called:</span>
+Each time a new authenticated user row is displayed<br>
+<span style="font-style: italic;">Description:</span>
+Used to display a table column with detailed information about the
+user. The incoming parameter can have one of two values: <br>
+'__title__' - literal value that indicates we're printing a column
+header<br>
+<span style="font-style: italic;">$user </span>-
+the authenticated user name<br>
+<br>
+<span style="font-weight: bold;">ShowInfoCluster_<span style="font-style: italic;">pluginname</span><br>
+</span><span style="font-style: italic;">Type:</span>
+Output<span style="font-style: italic;"></span><br>
+<span style="font-style: italic;">Parameters:</span>
+$cluster<br>
+<span style="font-style: italic;">Called:</span>
+Each time a new cluster row is displayed<br>
+<span style="font-style: italic;">Description:</span>
+Used to display a table column with cluster information. The incoming
+parameter can have one of two values: <br>
+'__title__' - literal value that indicates we're printing a column
+header<br>
+$cluster - the cluster name<br>
+<br>
+<span style="font-weight: bold;">ShowInfoURL_<span style="font-style: italic;">pluginname</span><br>
+</span><span style="font-style: italic;">Type:</span>
+Output<span style="font-style: italic;"></span><br>
+<span style="font-style: italic;">Parameters:</span>
+$url<br>
+<span style="font-style: italic;">Called:</span>
+Each time a new page URL or referrer URL row is displayed<br>
+<span style="font-style: italic;">Description:</span>
+Used to display a table column with additional url information. The
+incoming parameter can have one of two values: <br>
+'__title__' - literal value that indicates we're printing a column
+header<br>
+url - the page or referrer URL<br>
+<br>
+<span style="font-weight: bold;">ShowInfoGraph_<span style="font-style: italic;">pluginname</span><br>
+</span><span style="font-style: italic;">Type:</span>
+Output<span style="font-style: italic;"></span><br>
+<span style="font-style: italic;">Parameters: </span>$title,
+$type,&nbsp;$display,&nbsp;@blocklabel,&nbsp;@vallabel,&nbsp;@valcolor,&nbsp;@valmax,&nbsp;@valtotal,&nbsp;@valaverage,&nbsp;@valdata<br>
+<span style="font-style: italic;">Called:</span> Any
+time a graph, chart or map is output to HTML<br>
+<span style="font-style: italic;">Description:</span>
+Used to display charts or graphs. AWstats will generate arrays of data,
+colors and labels that your graphing plugin should be able to handle.
+For more information, <a href="awstats_dev_plugins_graphs.html">see
+the graph plugin page</a><br>
+<br>
+<span style="font-weight: bold;">ShowPagesAddField_<span style="font-style: italic;">pluginname</span><br>
+</span><span style="font-style: italic;">Type:</span>
+Output<span style="font-style: italic;"></span><br>
+<span style="font-style: italic;">Parameters:</span>
+$key<br>
+<span style="font-style: italic;">Called:</span>
+Each time a new page URL row is displayed on detailed URL pages and
+main summary<br>
+<span style="font-style: italic;">Description:</span>
+Used to display a table column with additional url information. The
+incoming parameter can have one of three values: <br>
+'title' - literal value that indicates we're printing a column header<br>
+<span style="font-weight: bold;"></span>$key - URL
+key to lookup in your hash<br>
+'' - empty literal indicated the final row. Useful if you want to show
+total or averages<br>
+<br>
+<br>
+<hr>
+<script language="javascript">
+var date='$Date$';
+document.writeln("Last revision: "+date);
+</script><!--
+First version of this tool was designed to analyze folowing web sites:
+-->
+</body></html>
