@@ -9215,11 +9215,11 @@ sub DefinePerlParsingFormat {
 "Your personalized LogFormat does not include all fields required by AWStats (Add \%code in your LogFormat string)."
 		);
 	}
-	if ( $pos_size < 0 ) {
-		error(
-"Your personalized LogFormat does not include all fields required by AWStats (Add \%bytesd in your LogFormat string)."
-		);
-	}
+#	if ( $pos_size < 0 ) {
+#		error(
+#"Your personalized LogFormat does not include all fields required by AWStats (Add \%bytesd in your LogFormat string)."
+#		);
+#	}
 	$PerlParsingFormat = qr/^$PerlParsingFormat/;
 	if ($Debug) { debug(" PerlParsingFormat is $PerlParsingFormat"); }
 }
@@ -18003,7 +18003,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 			$countedtraffic =
 			  1;    # favicon is a case that must not be counted anywhere else
 			$_time_nv_h[$hourrecord]++;
-			if ( $field[$pos_code] != 404 ) {
+			if ( $field[$pos_code] != 404 && $pos_size>0) {
 				$_time_nv_k[$hourrecord] += int( $field[$pos_size] );
 			}
 		}
@@ -18025,12 +18025,12 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 						}
 						$worm = $WormsHashID{$worm} || 'unknown';
 						$_worm_h{$worm}++;
-						$_worm_k{$worm} += int( $field[$pos_size] );
+						if ($pos_size>0){$_worm_k{$worm} += int( $field[$pos_size] );}
 						$_worm_l{$worm} = $timerecord;
 						$countedtraffic = 2;
 						if ($PageBool) { $_time_nv_p[$hourrecord]++; }
 						$_time_nv_h[$hourrecord]++;
-						$_time_nv_k[$hourrecord] += int( $field[$pos_size] );
+						if ($pos_size>0){$_time_nv_k[$hourrecord] += int( $field[$pos_size] );}
 						last;
 					}
 				}
@@ -18043,14 +18043,14 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 			if ( $LogType eq 'W' || $LogType eq 'S' )
 			{    # HTTP record or Stream record
 				if ( $ValidHTTPCodes{ $field[$pos_code] } ) {    # Code is valid
-					if ( $field[$pos_code] == 304 ) { $field[$pos_size] = 0; }
+					if ( $field[$pos_code] == 304 && $pos_size>0) { $field[$pos_size] = 0; }
 				}
 				else {    # Code is not valid
 					if ( $field[$pos_code] !~ /^\d\d\d$/ ) {
 						$field[$pos_code] = 999;
 					}
 					$_errors_h{ $field[$pos_code] }++;
-					$_errors_k{ $field[$pos_code] } += int( $field[$pos_size] );
+					if ($pos_size>0){$_errors_k{ $field[$pos_code] } += int( $field[$pos_size] );}
 					foreach my $code ( keys %TrapInfosForHTTPErrorCodes ) {
 						if ( $field[$pos_code] == $code ) {
 
@@ -18079,14 +18079,14 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 					$countedtraffic = 3;
 					if ($PageBool) { $_time_nv_p[$hourrecord]++; }
 					$_time_nv_h[$hourrecord]++;
-					$_time_nv_k[$hourrecord] += int( $field[$pos_size] );
+					if ($pos_size>0){$_time_nv_k[$hourrecord] += int( $field[$pos_size] );}
 				}
 			}
 			elsif ( $LogType eq 'M' ) {    # Mail record
 				if ( !$ValidSMTPCodes{ $field[$pos_code] } )
 				{                          # Code is not valid
 					$_errors_h{ $field[$pos_code] }++;
-					if ( $field[$pos_size] ne '-' ) {
+					if ( $field[$pos_size] ne '-' && $pos_size>0) {
 						$_errors_k{ $field[$pos_code] } +=
 						  int( $field[$pos_size] );
 					}
@@ -18099,7 +18099,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 					$countedtraffic = 3;
 					if ($PageBool) { $_time_nv_p[$hourrecord]++; }
 					$_time_nv_h[$hourrecord]++;
-					if ( $field[$pos_size] ne '-' ) {
+					if ( $field[$pos_size] ne '-' && $pos_size>0) {
 						$_time_nv_k[$hourrecord] += int( $field[$pos_size] );
 					}
 				}
@@ -18154,7 +18154,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 								);
 							}
 							$_robot_h{$uarobot}++;
-							if ( $field[$pos_size] ne '-' ) {
+							if ( $field[$pos_size] ne '-' && $pos_size>0) {
 								$_robot_k{$uarobot} += int( $field[$pos_size] );
 							}
 							$_robot_l{$uarobot} = $timerecord;
@@ -18164,7 +18164,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 							$countedtraffic = 4;
 							if ($PageBool) { $_time_nv_p[$hourrecord]++; }
 							$_time_nv_h[$hourrecord]++;
-							if ( $field[$pos_size] ne '-' ) {
+							if ( $field[$pos_size] ne '-' && $pos_size>0) {
 								$_time_nv_k[$hourrecord] +=
 								  int( $field[$pos_size] );
 							}
@@ -18181,7 +18181,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 							);
 						}
 						$_robot_h{$uarobot}++;
-						$_robot_k{$uarobot} += int( $field[$pos_size] );
+						if ($pos_size>0){$_robot_k{$uarobot} += int( $field[$pos_size] );}
 						$_robot_l{$uarobot} = $timerecord;
 						if ( $urlwithnoquery =~ /$regrobot/o ) {
 							$_robot_r{$uarobot}++;
@@ -18189,7 +18189,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 						$countedtraffic = 4;
 						if ($PageBool) { $_time_nv_p[$hourrecord]++; }
 						$_time_nv_h[$hourrecord]++;
-						$_time_nv_k[$hourrecord] += int( $field[$pos_size] );
+						if ($pos_size>0){$_time_nv_k[$hourrecord] += int( $field[$pos_size] );}
 					}
 				}
 			}
@@ -18201,13 +18201,13 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 			if ( $urlwithnoquery =~ /$regrobot/o ) {
 				if ($Debug) { debug( "  It's an unknown robot", 2 ); }
 				$_robot_h{'unknown'}++;
-				$_robot_k{'unknown'} += int( $field[$pos_size] );
+				if ($pos_size>0){$_robot_k{'unknown'} += int( $field[$pos_size] );}
 				$_robot_l{'unknown'} = $timerecord;
 				$_robot_r{'unknown'}++;
 				$countedtraffic = 5;    # Must not be counted somewhere else
 				if ($PageBool) { $_time_nv_p[$hourrecord]++; }
 				$_time_nv_h[$hourrecord]++;
-				$_time_nv_k[$hourrecord] += int( $field[$pos_size] );
+				if ($pos_size>0){$_time_nv_k[$hourrecord] += int( $field[$pos_size] );}
 			}
 		}
 
@@ -18216,7 +18216,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 		if ( !$countedtraffic ) {
 			if ($LevelForFileTypesDetection) {
 				$_filetypes_h{$extension}++;
-				if ( $field[$pos_size] ne '-' ) {
+				if ( $field[$pos_size] ne '-' && $pos_size>0) {
 					$_filetypes_k{$extension} += int( $field[$pos_size] );
 				}
 
@@ -18247,7 +18247,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 						$_filetypes_gz_in{$extension} +=
 						  int( $field[$pos_size] * 100 / ( $1 || 1 ) );
 					}
-					$_filetypes_gz_out{$extension} += int( $field[$pos_size] );
+					if ($pos_size>0){$_filetypes_gz_out{$extension} += int( $field[$pos_size] );}
 				}
 			}
 
@@ -18268,7 +18268,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 				$LastTime{$lastprocesseddate} = $timerecord;
 				$DayPages{$yearmonthdayrecord}++;
 				$_url_p{ $field[$pos_url] }++;   #Count accesses for page (page)
-				if ( $field[$pos_size] ne '-' ) {
+				if ( $field[$pos_size] ne '-' && $pos_size>0) {
 					$_url_k{ $field[$pos_url] } += int( $field[$pos_size] );
 				}
 				$_time_p[$hourrecord]++;    #Count accesses for hour (page)
@@ -18277,7 +18277,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 			}
 			$_time_h[$hourrecord]++;
 			$DayHits{$yearmonthdayrecord}++;    #Count accesses for hour (hit)
-			if ( $field[$pos_size] ne '-' ) {
+			if ( $field[$pos_size] ne '-' && $pos_size>0) {
 				$_time_k[$hourrecord]          += int( $field[$pos_size] );
 				$DayBytes{$yearmonthdayrecord} +=
 				  int( $field[$pos_size] );     #Count accesses for hour (kb)
@@ -18305,8 +18305,8 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 				}             #Count accesses for page (page)
 				$_login_h{ $field[$pos_logname] }
 				  ++;         #Count accesses for page (hit)
-				$_login_k{ $field[$pos_logname] } +=
-				  int( $field[$pos_size] );    #Count accesses for page (kb)
+				if ($pos_size>0){$_login_k{ $field[$pos_logname] } +=
+				  int( $field[$pos_size] );}    #Count accesses for page (kb)
 				$_login_l{ $field[$pos_logname] } = $timerecord;
 			}
 		}
@@ -18545,7 +18545,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 			# Store country
 			if ($PageBool) { $_domener_p{$Domain}++; }
 			$_domener_h{$Domain}++;
-			if ( $field[$pos_size] ne '-' ) {
+			if ( $field[$pos_size] ne '-' && $pos_size>0) {
 				$_domener_k{$Domain} += int( $field[$pos_size] );
 			}
 
@@ -18681,7 +18681,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 				$_host_p{$HostResolved}++;
 			}
 			$_host_h{$HostResolved}++;
-			if ( $field[$pos_size] ne '-' ) {
+			if ( $field[$pos_size] ne '-' && $pos_size>0) {
 				$_host_k{$HostResolved} += int( $field[$pos_size] );
 			}
 
@@ -19151,9 +19151,9 @@ s/^(cache|related):[^\+]+//
 				}
 				$_emails_h{ lc( $field[$pos_emails] ) }
 				  ++;    #Count accesses for sender email (hit)
-				$_emails_k{ lc( $field[$pos_emails] ) } +=
+				if ($pos_size>0){$_emails_k{ lc( $field[$pos_emails] ) } +=
 				  int( $field[$pos_size] )
-				  ;      #Count accesses for sender email (kb)
+				  ;}      #Count accesses for sender email (kb)
 				$_emails_l{ lc( $field[$pos_emails] ) } = $timerecord;
 			}
 			if ( $pos_emailr >= 0 && $field[$pos_emailr] ) {
@@ -19162,9 +19162,9 @@ s/^(cache|related):[^\+]+//
 				}
 				$_emailr_h{ lc( $field[$pos_emailr] ) }
 				  ++;    #Count accesses for receiver email (hit)
-				$_emailr_k{ lc( $field[$pos_emailr] ) } +=
+				if ($pos_size>0){$_emailr_k{ lc( $field[$pos_emailr] ) } +=
 				  int( $field[$pos_size] )
-				  ;      #Count accesses for receiver email (kb)
+				  ;}      #Count accesses for receiver email (kb)
 				$_emailr_l{ lc( $field[$pos_emailr] ) } = $timerecord;
 			}
 		}
@@ -19177,8 +19177,8 @@ s/^(cache|related):[^\+]+//
 			}    #Count accesses for page (page)
 			$_cluster_h{ $field[$pos_cluster] }
 			  ++;    #Count accesses for page (hit)
-			$_cluster_k{ $field[$pos_cluster] } +=
-			  int( $field[$pos_size] );    #Count accesses for page (kb)
+			if ($pos_size>0){$_cluster_k{ $field[$pos_cluster] } +=
+			  int( $field[$pos_size] );}    #Count accesses for page (kb)
 		}
 
 		# Analyze: Extra
@@ -19453,7 +19453,7 @@ s/^(cache|related):[^\+]+//
 				${ '_section_' . $extranum . '_p' }{$rowkeyval}++;
 			}
 			${ '_section_' . $extranum . '_h' }{$rowkeyval}++;    # Must be set
-			if ( $ExtraStatTypes[$extranum] =~ /B/i ) {
+			if ( $ExtraStatTypes[$extranum] =~ /B/i && $pos_size>0) {
 				${ '_section_' . $extranum . '_k' }{$rowkeyval} +=
 				  int( $field[$pos_size] );
 			}
