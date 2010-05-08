@@ -11,8 +11,8 @@ New features/improvements:
 - More mime types.
 - Added geoip_asn_maxmind plugin.
 - Geoip Maxmind city plugin have now override file capabilities to complete
-  missing entries in geoip maxmin database. 
-- Added graphgooglechartapi to use online Google char api to build graph.
+  missing entries in geoip maxmind database. 
+- Added graphgooglechartapi to use online Google chart api to build graph.
 - Can show map of country to report countries when using graphgooglechartapi.
 - Part of codes was change to use more functions and have a cleaner code.
 - Added parameter to ignore missing log files when merging for a site on 
