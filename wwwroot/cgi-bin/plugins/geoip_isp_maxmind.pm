@@ -235,8 +235,6 @@ sub ShowInfoHost_geoip_isp_maxmind {
         print "</th>";
 	}
 	elsif ($param) {
-		# try loading our override file if we haven't yet
-		if (!$LoadedOverride){&LoadOverrideFile_geoip_isp_maxmind();}
         my $ip=0;
 		my $key;
 		if ($param =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {	# IPv4 address
@@ -249,9 +247,7 @@ sub ShowInfoHost_geoip_isp_maxmind {
 		}
 		print "<td>";
 		if ($key && $ip==4) {
-        	my $isp;
-    		if ($geoip_isp_maxmind){$isp = $TmpDomainLookup{$geoip_isp_maxmind->get_ip_address($param)};}
-    		else {$isp = $TmpDomainLookup{$param};}
+        	my $isp = TmpLookup_geoip_isp_maxmind($param);
         	if (!$isp && $type eq 'geoippureperl')
 			{
         		# Function isp_by_addr does not exists in PurePerl but isp_by_name do same
@@ -277,9 +273,7 @@ sub ShowInfoHost_geoip_isp_maxmind {
 		    print "<span style=\"color: #$color_other\">$Message[0]</span>";
 		}
 		if (! $key) {
-        	my $isp;
-    		if ($geoip_isp_maxmind){$isp = $TmpDomainLookup{$geoip_isp_maxmind->get_ip_address($param)};}
-    		else {$isp = $TmpDomainLookup{$param};}
+        	my $isp = TmpLookup_geoip_isp_maxmind($param);
         	if (!$isp && $type eq 'geoippureperl')
 			{
         		$isp=$geoip_isp_maxmind->isp_by_name($param) if $geoip_isp_maxmind;
@@ -330,10 +324,7 @@ sub SectionInitHashArray_geoip_isp_maxmind {
 sub SectionProcessIp_geoip_isp_maxmind {
     my $param="$_[0]";      # Param must be an IP
 	# <-----
-	if (!$LoadedOverride){&LoadOverrideFile_geoip_isp_maxmind();}
-	my $isp;
-    if ($geoip_isp_maxmind){$isp = $TmpDomainLookup{$geoip_isp_maxmind->get_ip_address($param)};}
-    else {$isp = $TmpDomainLookup{$param};}
+	my $isp = TmpLookup_geoip_isp_maxmind($param);
 	if (!$isp && $type eq 'geoippureperl')
 	{
 		# Function isp_by_addr does not exists in PurePerl but isp_by_name do same
@@ -364,10 +355,7 @@ sub SectionProcessIp_geoip_isp_maxmind {
 sub SectionProcessHostname_geoip_isp_maxmind {
     my $param="$_[0]";      # Param must be an IP
 	# <-----
-	if (!$LoadedOverride){&LoadOverrideFile_geoip_isp_maxmind();}
-	my $isp;
-    if ($geoip_isp_maxmind){$isp = $TmpDomainLookup{$geoip_isp_maxmind->get_ip_address($param)};}
-    else {$isp = $TmpDomainLookup{$param};}
+	my $isp = TmpLookup_geoip_isp_maxmind($param);
 	if (!$isp && $type eq 'geoippureperl')
 	{
 		$isp=$geoip_isp_maxmind->isp_by_name($param) if $geoip_isp_maxmind;
@@ -491,6 +479,24 @@ sub LoadOverrideFile_geoip_isp_maxmind{
 	$LoadedOverride = 1;
 	debug(" Plugin $PluginName: Overload file loaded: ".(scalar keys %TmpDomainLookup)." entries found.");
 	return;
+}
+
+#-----------------------------------------------------------------------------
+# PLUGIN FUNCTION: TmpLookup
+# Searches the temporary hash for the parameter value and returns the corresponding
+# GEOIP entry
+#-----------------------------------------------------------------------------
+sub TmpLookup_geoip_isp_maxmind(){
+	$param = shift;
+	if (!$LoadedOverride){&LoadOverrideFile_geoip_isp_maxmind();}
+	my $val;
+	if ($geoip_isp_maxmind &&
+	(($type eq 'geoip' && $geoip_isp_maxmind->VERSION >= 1.30) || 
+	  $type eq 'geoippureperl' && $geoip_isp_maxmind->VERSION >= 1.17)){
+		$val = $TmpDomainLookup{$geoip_isp_maxmind->get_ip_address($param)};
+	}
+    else {$val = $TmpDomainLookup{$param};}
+    return $val || '';
 }
 
 1;	# Do not remove this line

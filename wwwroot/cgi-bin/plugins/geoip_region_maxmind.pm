@@ -393,9 +393,7 @@ sub ShowInfoHost_geoip_region_maxmind {
 		print "<td>";
 		if ($key && $ip==4) {
         	my ($res1,$res2,$countryregion)=();
-        	my @res;
-        	if ($geoip_region_maxmind){@res = @{$TmpDomainLookup{$geoip_region_maxmind->get_ip_address($param)}};}
-        	else {@res = @{$TmpDomainLookup{$param}};}
+        	my @res = TmpLookup_geoip_region_maxmind($param);
 	        if (@res){
 	        	$res1 = $res[0];
 	        	$res2 = $res[1];
@@ -427,9 +425,7 @@ sub ShowInfoHost_geoip_region_maxmind {
         }
 		if (! $key) {
         	my ($res1,$res2,$countryregion)=();
-        	my @res;
-        	if ($geoip_region_maxmind){@res = @{$TmpDomainLookup{$geoip_region_maxmind->get_ip_address($param)}};}
-        	else {@res = @{$TmpDomainLookup{$param}};}
+        	my @res = TmpLookup_geoip_region_maxmind($param);
 	        if (@res){
 	        	$res1 = $res[0];
 	        	$res2 = $res[1];
@@ -487,11 +483,8 @@ sub SectionInitHashArray_geoip_region_maxmind {
 sub SectionProcessIp_geoip_region_maxmind {
     my $param="$_[0]";      # Param must be an IP
 	# <-----
-	if (!$LoadedOverride){&LoadOverrideFile_geoip_region_maxmind();}
 	my ($res1,$res2,$countryregion)=();
-	my @res;
-    if ($geoip_region_maxmind){@res = @{$TmpDomainLookup{$geoip_region_maxmind->get_ip_address($param)}};}
-    else {@res = @{$TmpDomainLookup{$param}};}
+	my @res = TmpLookup_geoip_region_maxmind($param);
     if (@res){
       	$res1 = $res[0];
        	$res2 = $res[1];
@@ -515,11 +508,8 @@ sub SectionProcessIp_geoip_region_maxmind {
 sub SectionProcessHostname_geoip_region_maxmind {
     my $param="$_[0]";      # Param must be a hostname
 	# <-----
-	if (!$LoadedOverride){&LoadOverrideFile_geoip_region_maxmind();}
 	my ($res1,$res2,$countryregion)=();
-	my @res;
-    if ($geoip_region_maxmind){@res = @{$TmpDomainLookup{$geoip_region_maxmind->get_ip_address($param)}};}
-    else {@res = @{$TmpDomainLookup{$param}};}
+	my @res = TmpLookup_geoip_region_maxmind($param);
     if (@res){
       	$res1 = $res[0];
        	$res2 = $res[1];
@@ -643,6 +633,24 @@ sub LoadOverrideFile_geoip_region_maxmind{
 	$LoadedOverride = 1;
 	debug(" Plugin $PluginName: Overload file loaded: ".(scalar keys %TmpDomainLookup)." entries found.");
 	return;
+}
+
+#-----------------------------------------------------------------------------
+# PLUGIN FUNCTION: TmpLookup
+# Searches the temporary hash for the parameter value and returns the corresponding
+# GEOIP entry
+#-----------------------------------------------------------------------------
+sub TmpLookup_geoip_region_maxmind(){
+	$param = shift;
+	if (!$LoadedOverride){&LoadOverrideFile_geoip_region_maxmind();}
+	my @val = ();
+	if ($geoip_region_maxmind &&
+	(($type eq 'geoip' && $geoip_region_maxmind->VERSION >= 1.30) || 
+	  $type eq 'geoippureperl' && $geoip_region_maxmind->VERSION >= 1.17)){
+		@val = @{$TmpDomainLookup{$geoip_region_maxmind->get_ip_address($param)}};
+	}
+    else {@val = @{$TmpDomainLookup{$param};}}
+    return @val;
 }
 
 1;	# Do not remove this line

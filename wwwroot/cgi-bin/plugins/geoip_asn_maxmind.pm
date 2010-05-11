@@ -258,8 +258,6 @@ sub ShowInfoHost_geoip_asn_maxmind {
         print "</th>";
 	}
 	elsif ($param) {
-		# try loading our override file if we haven't yet
-		if (!$LoadedOverride){&LoadOverrideFile_geoip_asn_maxmind();}
         my $ip=0;
 		my $key;
 		if ($param =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {	# IPv4 address
@@ -273,8 +271,7 @@ sub ShowInfoHost_geoip_asn_maxmind {
 		print "<td>";
 		my $asn = 0;
 		if ($key && $ip==4) {
-        	if ($geoip_asn_maxmind){$asn = $TmpLookup{$geoip_asn_maxmind->get_ip_address($param)};}
-        	else {$asn = $TmpLookup{$param};}
+        	$asn = TmpLookup_geoip_asn_maxmind($param);
         	if (!$asn && $type eq 'geoippureperl')
 			{
         		# Function org_by_addr does not exists in PurePerl but org_by_name do same
@@ -290,8 +287,7 @@ sub ShowInfoHost_geoip_asn_maxmind {
 		    debug("  Plugin $PluginName: IPv6 not supported by MaxMind Free DBs: $key",3);
 		}
 		if (! $key) {
-        	if ($geoip_asn_maxmind){$asn = $TmpLookup{$geoip_asn_maxmind->get_ip_address($param)};}
-        	else {$asn = $TmpLookup{$param};}
+        	$asn = TmpLookup_geoip_asn_maxmind($param);
         	if (!$asn && $type eq 'geoippureperl')
 			{
         		$asn=$geoip_asn_maxmind->org_by_name($param) if $geoip_asn_maxmind;
@@ -350,10 +346,7 @@ sub SectionInitHashArray_geoip_asn_maxmind {
 sub SectionProcessIp_geoip_asn_maxmind {
     my $param="$_[0]";      # Param must be an IP
 	# <-----
-	my $asn = 0;
-	if (!$LoadedOverride){&LoadOverrideFile_geoip_asn_maxmind();}
-	if ($geoip_asn_maxmind){$asn = $TmpLookup{$geoip_asn_maxmind->get_ip_address($param)};}
-        	else {$asn = $TmpLookup{$param};}
+	my $asn = TmpLookup_geoip_asn_maxmind($param);
 	if (!$asn && $type eq 'geoippureperl')
 	{
 		# Function org_by_addr does not exists in PurePerl but org_by_name do same
@@ -383,9 +376,7 @@ sub SectionProcessIp_geoip_asn_maxmind {
 sub SectionProcessHostname_geoip_asn_maxmind {
     my $param="$_[0]";      # Param must be an IP
 	# <-----
-	my $asn=0;
-	if ($geoip_asn_maxmind){$asn = $TmpLookup{$geoip_asn_maxmind->get_ip_address($param)};}
-    else {$asn = $TmpLookup{$param};}
+	my $asn = TmpLookup_geoip_asn_maxmind($param);
 	if (!$asn && $type eq 'geoippureperl')
 	{
 		$asn=$geoip_asn_maxmind->org_by_name($param) if $geoip_asn_maxmind;
@@ -517,5 +508,24 @@ sub trim($)
 	$string =~ s/\s+$//;
 	return $string;
 }
+
+#-----------------------------------------------------------------------------
+# PLUGIN FUNCTION: TmpLookup
+# Searches the temporary hash for the parameter value and returns the corresponding
+# GEOIP entry
+#-----------------------------------------------------------------------------
+sub TmpLookup_geoip_asn_maxmind(){
+	$param = shift;
+	if (!$LoadedOverride){&LoadOverrideFile_geoip_asn_maxmind();}
+	my $val;
+	if ($geoip_asn_maxmind && 
+	(($type eq 'geoip' && $geoip_asn_maxmind->VERSION >= 1.30) || 
+	  $type eq 'geoippureperl' && $geoip_asn_maxmind->VERSION >= 1.17)){
+		$val = $TmpLookup{$geoip_asn_maxmind->get_ip_address($param)};
+	}
+    else {$val = $TmpLookup{$param};}
+    return $val || '';
+}
+
 
 1;	# Do not remove this line

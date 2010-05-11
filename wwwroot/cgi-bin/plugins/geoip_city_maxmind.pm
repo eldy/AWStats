@@ -4452,8 +4452,7 @@ sub AddHTMLGraph_geoip_city_maxmind {
 sub GetCountryCodeByAddr_geoip_city_maxmind {
     my $param="$_[0]";
 	# <-----
-	if (!$LoadedOverride){&LoadOverrideFile_geoip_city_maxmind();}
-	my $res=$TmpDomainLookup{$param}||'';
+	my $res = TmpLookup_geoip_city_maxmind($param);
 	if ($type eq 'geoippureperl') {
 		if (! $res) {
 			my @record = ();
@@ -4493,8 +4492,7 @@ sub GetCountryCodeByAddr_geoip_city_maxmind {
 sub GetCountryCodeByName_geoip_city_maxmind {
     my $param="$_[0]";
 	# <-----
-	if (!$LoadedOverride){&LoadOverrideFile_geoip_city_maxmind();}
-	my $res=$TmpDomainLookup{$param}||'';
+	my $res = TmpLookup_geoip_city_maxmind($param);
 	if ($type eq 'geoippureperl') {
 		if (! $res) {
 			my @record = ();
@@ -4564,7 +4562,6 @@ sub ShowInfoHost_geoip_city_maxmind {
 	elsif ($param)
 	{
 		# try loading our override file if we haven't yet
-		if (!$LoadedOverride){&LoadOverrideFile_geoip_city_maxmind();}
         my $ip=0;
 		my $key;
 		if ($param =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {	# IPv4 address
@@ -4578,9 +4575,10 @@ sub ShowInfoHost_geoip_city_maxmind {
 		if ($key && $ip==4) {
 	        my $country;
 	        my $city;
-	        my @res;
-        	if ($geoip_city_maxmind){@res = @{$TmpDomainLookup{$geoip_city_maxmind->get_ip_address($param)}};}
-        	else {@res = @{$TmpDomainLookup{$param}};}
+	        my @res = TmpLookup_geoip_city_maxmind($param);
+			if (!@res){
+				@res=$geoip_city_maxmind->get_city_record($param) if $geoip_city_maxmind;
+			}
 	        if (@res){
 	        	$country = $res[0];
 	        	$city = $res[4];
@@ -4619,9 +4617,10 @@ sub ShowInfoHost_geoip_city_maxmind {
 		if (! $key) {
 	        my $country;
 	        my $city;
-	        my @res;
-        	if ($geoip_city_maxmind){@res = @{$TmpDomainLookup{$geoip_city_maxmind->get_ip_address($param)}};}
-        	else {@res = @{$TmpDomainLookup{$param}};}
+	        my @res = TmpLookup_geoip_city_maxmind($param);
+			if (!@res){
+				@res=$geoip_city_maxmind->get_city_record($param) if $geoip_city_maxmind;
+			}
 	        if (@res){
 	        	$country = $res[0];
 	        	$city = $res[4];
@@ -4680,13 +4679,9 @@ sub SectionInitHashArray_geoip_city_maxmind {
 sub SectionProcessIp_geoip_city_maxmind {
     my $param="$_[0]";      # Param must be an IP
 	# <-----
-	if (!$LoadedOverride){&LoadOverrideFile_geoip_city_maxmind();}
 	if ($type eq 'geoippureperl') {
-		my @record = ();
-		my @res;
-        if ($geoip_city_maxmind){@res = @{$TmpDomainLookup{$geoip_city_maxmind->get_ip_address($param)}};}
-        else {@res = @{$TmpDomainLookup{$param}};}
-		if (!@res){
+		my @record = TmpLookup_geoip_city_maxmind($param);
+		if (!@record){
 			@record=$geoip_city_maxmind->get_city_record($param) if $geoip_city_maxmind;
 		}
 		if ($Debug) { debug("  Plugin $PluginName: GetCityByName for $param: [@record]",5); }
@@ -4707,19 +4702,27 @@ sub SectionProcessIp_geoip_city_maxmind {
 	else
 	{
 		my $record=();
-		if ($TmpDomainLookup{$param}){
-			@record = $TmpDomainLookup{$param};
+		my $city, $countrycity, $region;
+		my @rec = TmpLookup_geoip_city_maxmind($param);
+		if (@rec){
+			$city = $rec[4];
+			$countrycity = $rec[3];
+			$region = $rec[0];
 		}else{
 			$record=$geoip_city_maxmind->record_by_addr($param) if $geoip_city_maxmind;
+			if ($record){
+				$city = $record->city;
+				$countrycity = $record->country_code;
+				$region = $record->region;
+			}
 		}
-		if ($Debug) { debug("  Plugin $PluginName: GetCityByIp for $param: [$record]",5); }
-	    if ($record) {
-	        my $city=$record->city;
+		if ($Debug) { debug("  Plugin $PluginName: GetCityByIp for $param: [$city]",5); }
+	    if ($city) {
 	#   	if ($PageBool) { $_city_p{$city}++; }
 	        if ($city) {
-	            my $countrycity=($record->country_code).'_'.$city;
+	            my $countrycity=$countrycity.'_'.$city;
 	            $countrycity=~s/ /%20/g;
-	            if ($record->region) { $countrycity.='_'.$record->region; }
+	            if ($region) { $countrycity.='_'.$region; }
 	            $_city_h{lc($countrycity)}++;
 	        } else {
 	            $_city_h{'unknown'}++;
@@ -4740,16 +4743,9 @@ sub SectionProcessIp_geoip_city_maxmind {
 #-----------------------------------------------------------------------------
 sub SectionProcessHostname_geoip_city_maxmind {
     my $param="$_[0]";      # Param must be an IP
-	# <-----
-	# if the record is already in our temp array, then return
-	#if ($TmpDomainLookup{$param}){ return; }
-	if (!$LoadedOverride){&LoadOverrideFile_geoip_city_maxmind();}
 	if ($type eq 'geoippureperl') {
-		my @record = ();
-		my @res;
-        if ($geoip_city_maxmind){@res = @{$TmpDomainLookup{$geoip_city_maxmind->get_ip_address($param)}};}
-        else {@res = @{$TmpDomainLookup{$param}};}
-		if (!@res){
+		my @record = TmpLookup_geoip_city_maxmind($param);
+		if (!@record){
 			@record=$geoip_city_maxmind->get_city_record($param) if $geoip_city_maxmind;
 		}
 		if ($Debug) { debug("  Plugin $PluginName: GetCityByName for $param: [@record]",5); }
@@ -4770,8 +4766,11 @@ sub SectionProcessHostname_geoip_city_maxmind {
 	else
 	{
 		my $record=();
-		if ($TmpDomainLookup{$param}){
-			@record = $TmpDomainLookup{$param};
+		my @rec = TmpLookup_geoip_city_maxmind($param);
+		if (@rec){
+			$record->city = $rec[4];
+			$record->region = $rec[3];
+			$record->country_code = $rec[0];
 		}else{
 			$record=$geoip_city_maxmind->record_by_name($param) if $geoip_city_maxmind;
 		}
@@ -4911,5 +4910,24 @@ sub LoadOverrideFile_geoip_city_maxmind{
 	debug(" Plugin $PluginName: Overload file loaded: ".(scalar keys %TmpDomainLookup)." entries found.");
 	return;
 }
+
+#-----------------------------------------------------------------------------
+# PLUGIN FUNCTION: TmpLookup
+# Searches the temporary hash for the parameter value and returns the corresponding
+# GEOIP entry
+#-----------------------------------------------------------------------------
+sub TmpLookup_geoip_city_maxmind(){
+	$param = shift;
+	if (!$LoadedOverride){&LoadOverrideFile_geoip_city_maxmind();}
+	my @val = ();
+	if ($geoip_city_maxmind &&
+	(($type eq 'geoip' && $geoip_city_maxmind->VERSION >= 1.30) || 
+	  $type eq 'geoippureperl' && $geoip_city_maxmind->VERSION >= 1.17)){
+		@val = @{$TmpDomainLookup{$geoip_city_maxmind->get_ip_address($param)}};
+	}
+    else {@val = @{$TmpDomainLookup{$param};}}
+    return @val;
+}
+
 
 1;	# Do not remove this line

@@ -98,8 +98,7 @@ sub GetCountryCodeByAddr_geoip {
     my $param="$_[0]";
 	# <-----
 	if (! $param) { return ''; }
-	if (!$LoadedOverride){&LoadOverrideFile_geoip();}
-	my $res=$TmpDomainLookup{$param}||'';
+	my $res= TmpLookup_geoip($param);
 	if (! $res) {
 		$res=lc($gi->country_code_by_addr($param)) || 'unknown';
 		$TmpDomainLookup{$param}=$res;
@@ -120,8 +119,7 @@ sub GetCountryCodeByName_geoip {
     my $param="$_[0]";
 	# <-----
 	if (! $param) { return ''; }
-	if (!$LoadedOverride){&LoadOverrideFile_geoip();}
-	my $res=$TmpDomainLookup{$param}||'';
+	my $res = TmpLookup_geoip($param);
 	if (! $res) {
 		$res=lc($gi->country_code_by_name($param)) || 'unknown';
 		$TmpDomainLookup{$param}=$res;
@@ -165,8 +163,6 @@ sub ShowInfoHost_geoip {
         print "</th>";
 	}
 	elsif ($param) {
-		# try loading our override file if we haven't yet
-		if (!$LoadedOverride){&LoadOverrideFile_geoip();}
         my $ip=0;
 		my $key;
 		if ($param =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {	# IPv4 address
@@ -179,9 +175,7 @@ sub ShowInfoHost_geoip {
 		}
 		print "<td>";
 		if ($key && $ip==4) {
-			my $res;
-			if ($gi){ $res = $TmpDomainLookup{$gi->get_ip_address($param)}||''; }
-			else { $res = $TmpDomainLookup{$param}||''; }
+			my $res = TmpLookup_geoip($param);
         	if (!$res){$res=lc($gi->country_code_by_addr($param)) if $gi;}
         	if ($Debug) { debug("  Plugin $PluginName: GetCountryByIp for $param: [$res]",5); }
 		    if ($res) { print $DomainsHashIDLib{$res}?$DomainsHashIDLib{$res}:"<span style=\"color: #$color_other\">$Message[0]</span>"; }
@@ -191,9 +185,7 @@ sub ShowInfoHost_geoip {
 		    print "<span style=\"color: #$color_other\">$Message[0]</span>";
 		}
 		if (! $key) {
-			my $res;
-			if ($gi){ $res = $TmpDomainLookup{$gi->get_ip_address($param)}||''; }
-			else { $res = $TmpDomainLookup{$param}||''; }
+			my $res = TmpLookup_geoip($param);
         	if (!$res){$res=lc($gi->country_code_by_addr($param)) if $gi;}
         	if ($Debug) { debug("  Plugin $PluginName: GetCountryByHostname for $param: [$res]",5); }
 		    if ($res) { print $DomainsHashIDLib{$res}?$DomainsHashIDLib{$res}:"<span style=\"color: #$color_other\">$Message[0]</span>"; }
@@ -241,6 +233,24 @@ sub LoadOverrideFile_geoip{
 	close GEOIPFILE;
 	$LoadedOverride = 1;
 	debug(" Plugin $PluginName: Overload file loaded: ".(scalar keys %TmpDomainLookup)." entries found.");
+}
+
+#-----------------------------------------------------------------------------
+# PLUGIN FUNCTION: TmpLookup
+# Searches the temporary hash for the parameter value and returns the corresponding
+# GEOIP entry
+#-----------------------------------------------------------------------------
+sub TmpLookup_geoip(){
+	$param = shift;
+	if (!$LoadedOverride){&LoadOverrideFile_geoip();}
+	my $val;
+	if ($gi &&
+	(($type eq 'geoip' && $gi->VERSION >= 1.30) || 
+	  $type eq 'geoippureperl' && $gi->VERSION >= 1.17)){
+		$val = $TmpDomainLookup{$gi->get_ip_address($param)};
+	}
+    else {$val = $TmpDomainLookup{$param};}
+    return $val || '';
 }
 
 1;	# Do not remove this line
