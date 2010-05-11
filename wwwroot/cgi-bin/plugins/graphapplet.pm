@@ -83,7 +83,7 @@ sub ShowGraph_graphapplet() {
 	elsif ($type eq 'daysofmonth')  { $graphwidth=640; $graphheight=160; $blockspacing=3; $valspacing=0; $valwidth=4; $barsize=$BarHeight; $blockfontsize=9; }
 	elsif ($type eq 'daysofweek') 	{ $graphwidth=300; $graphheight=160; $blockspacing=10; $valspacing=0; $valwidth=6; $barsize=$BarHeight; $blockfontsize=10; }
 	elsif ($type eq 'hours') 		{ $graphwidth=600; $graphheight=160; $blockspacing=4; $valspacing=0; $valwidth=6; $barsize=$BarHeight; $blockfontsize=11; }
-	else { error("Unknown type parameter in ShowGraph_graphapplet function"); }
+	else { debug("Unknown type parameter in ShowGraph_graphapplet function: $type", 1); return 0; }
 
 #	print "<applet code=\"AWGraphApplet.class\" codebase=\"/classes\" width=\"$graphwidth\" height=\"$graphheight\">\n";
 	print "<applet name=\"$type\" archive=\"awgraphapplet.jar\" code=\"AWGraphApplet.class\" codebase=\"".($DirClasses||"/")."\" width=\"$graphwidth\" height=\"$graphheight\" alt= \"Your browser does not support Java correctly. Change browser or disable AWStats graphapplet plugin.\">\n";
