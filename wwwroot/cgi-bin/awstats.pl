@@ -9788,7 +9788,7 @@ sub HTMLTopBanner{
 			}
 			if ( $AllowFullYearView >= 2 ) {
 				print "<option"
-				  . ( $MonthRequired eq 'all' ? " selected=\"true\"" : "" )
+				  . ( $MonthRequired eq 'all' ? " selected=\"selected\"" : "" )
 				  . " value=\"all\">- $Message[6] -</option>\n";
 			}
 			print "</select>\n";
@@ -9798,7 +9798,7 @@ sub HTMLTopBanner{
 			$ListOfYears{$YearRequired} ||= $MonthRequired;
 			foreach ( sort keys %ListOfYears ) {
 				print "<option"
-				  . ( $YearRequired eq "$_" ? " selected=\"true\"" : "" )
+				  . ( $YearRequired eq "$_" ? " selected=\"selected\"" : "" )
 				  . " value=\"$_\">$_</option>\n";
 			}
 			print "</select>\n";
