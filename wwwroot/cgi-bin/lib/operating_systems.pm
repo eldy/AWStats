@@ -13,6 +13,13 @@
 
 #package AWSOS;
 
+# Relocated from main file for easier editing
+%OSFamily = (
+	'win'   => 'Windows',
+	'mac'   => 'Macintosh',
+	'linux' => 'Linux',
+	'bsd'   => 'BSD'
+);
 
 # OSSearchIDOrder
 # This list is used to know in which order to search Operating System IDs

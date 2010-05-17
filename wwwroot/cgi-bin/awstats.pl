@@ -355,7 +355,7 @@ use vars qw/
 use vars qw/
   @MiscListOrder %MiscListCalc
   %OSFamily %BrowsersFamily @SessionsRange %SessionsAverage
-  %LangBrowserToLangAwstats %LangAWStatsToFlagAwstats %SafariBuildToVersion
+  %LangBrowserToLangAwstats %LangAWStatsToFlagAwstats %BrowsersSafariBuildToVersionHash
   @HostAliases @AllowAccessFromWebToFollowingAuthenticatedUsers
   @DefaultFile @SkipDNSLookupFor
   @SkipHosts @SkipUserAgents @SkipFiles @SkipReferrers @NotPageFiles
@@ -386,22 +386,6 @@ use vars qw/
 	'QuickTimeSupport'          => 'hm',
 	'WindowsMediaPlayerSupport' => 'hm',
 	'PDFSupport'                => 'hm'
-);
-%OSFamily = (
-	'win'   => 'Windows',
-	'mac'   => 'Macintosh',
-	'linux' => 'Linux',
-	'bsd'   => 'BSD'
-);
-%BrowsersFamily = (
-	'msie'      => 1,
-	'firefox'   => 2,
-	'netscape'  => 3,
-	'svn'       => 4,
-	'opera'     => 5,
-	'safari'    => 6,
-	'chrome'    => 7,
-	'konqueror' => 8
 );
 @SessionsRange =
   ( '0s-30s', '30s-2mn', '2mn-5mn', '5mn-15mn', '15mn-30mn', '30mn-1h', '1h+' );
@@ -470,54 +454,6 @@ use vars qw/
 	'sr' => 'cs'
   );
 
-# TODO Remove this old array for an old way to detect Safari version
-%SafariBuildToVersion = (
-	'85'        => '1.0',
-	'85.5'      => '1.0',
-	'85.7'      => '1.0.2',
-	'85.8'      => '1.0.3',
-	'85.8.1'    => '1.0.3',
-	'100'       => '1.1',
-	'100.1'     => '1.1.1',
-	'125.7'     => '1.2.2',
-	'125.8'     => '1.2.2',
-	'125.9'     => '1.2.3',
-	'125.11'    => '1.2.4',
-	'125.12'    => '1.2.4',
-	'312'       => '1.3',
-	'312.3'     => '1.3.1',
-	'312.3.1'   => '1.3.1',
-	'312.5'     => '1.3.2',
-	'312.6'     => '1.3.2',
-	'412'       => '2.0',
-	'412.2'     => '2.0',
-	'412.2.2'   => '2.0',
-	'412.5'     => '2.0.1',
-	'413'       => '2.0.1',
-	'416.12'    => '2.0.2',
-	'416.13'    => '2.0.2',
-	'417.8'     => '2.0.3',
-	'417.9.2'   => '2.0.3',
-	'417.9.3'   => '2.0.3',
-	'419.3'     => '2.0.4',
-	'522.11.3'  => '3.0',
-	'522.12'    => '3.0.2',
-	'523.10'    => '3.0.4',
-	'523.12'    => '3.0.4',
-	'525.13'    => '3.1',
-	'525.17'    => '3.1.1',
-	'525.20'    => '3.1.1',
-	'525.20.1'  => '3.1.2',
-	'525.21'    => '3.1.2',
-	'525.22'    => '3.1.2',
-	'525.26'    => '3.2',
-	'525.26.13' => '3.2',
-	'525.27'    => '3.2.1',
-	'525.27.1'  => '3.2.1',
-	'526.11.2'  => '4.0',
-	'528.1'     => '4.0',
-	'528.16'    => '4.0'
-);
 @HostAliases = @AllowAccessFromWebToFollowingAuthenticatedUsers = ();
 @DefaultFile = @SkipDNSLookupFor = ();
 @SkipHosts = @SkipUserAgents = @NotPageFiles = @SkipFiles = @SkipReferrers = ();
@@ -18721,7 +18657,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 						elsif ($UserAgent =~ /$regversafari/o
 							&& $UserAgent !~ /$regnotsafari/o )
 						{
-							my $safariver = $SafariBuildToVersion{$1};
+							my $safariver = $BrowsersSafariBuildToVersionHash{$1};
 							if ( $UserAgent =~ /$regversafariver/o ) {
 								$safariver = $1;
 							}
