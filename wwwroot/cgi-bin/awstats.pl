@@ -173,7 +173,7 @@ $DatabaseBreak         = 'month';
 use vars qw/
   $DebugMessages $AllowToUpdateStatsFromBrowser $EnableLockForUpdate $DNSLookup $AllowAccessFromWebToAuthenticatedUsersOnly
   $BarHeight $BarWidth $CreateDirDataIfNotExists $KeepBackupOfHistoricFiles
-  $NbOfLinesParsed $NbOfLinesDropped $NbOfLinesCorrupted $NbOfOldLines $NbOfNewLines
+  $NbOfLinesParsed $NbOfLinesDropped $NbOfLinesCorrupted $NbOfLinesComment $NbOfLinesBlank $NbOfOldLines $NbOfNewLines
   $NbOfLinesShowsteps $NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile $ArchiveLogRecords
   $ShowDropped $ShowCorrupted $ShowUnknownOrigin $ShowDirectOrigin $ShowLinksToWhoIs
   $ShowAuthenticatedUsers $ShowFileSizesStats $ShowScreenSizeStats $ShowSMTPErrorsStats
@@ -196,6 +196,8 @@ use vars qw/
 	$NbOfLinesParsed,
 	$NbOfLinesDropped,
 	$NbOfLinesCorrupted,
+	$NbOfLinesComment,
+	$NbOfLinesBlank,
 	$NbOfOldLines,
 	$NbOfNewLines,
 	$NbOfLinesShowsteps,
@@ -1690,19 +1692,22 @@ sub Read_Config {
 		if ( open( CONFIG, "$searchdir$PROG.$SiteConfig.conf" ) ) {
 			$FileConfig = "$searchdir$PROG.$SiteConfig.conf";
 			$FileSuffix = ".$SiteConfig";
+			if ($Debug){debug("Opened config: $searchdir$PROG.$SiteConfig.conf", 2);}
 			last;
-		}
+		}else{if ($Debug){debug("Unable to open config file: $searchdir$PROG.$SiteConfig.conf", 2);}}
 		if ( open( CONFIG, "$searchdir$PROG.conf" ) ) {
 			$FileConfig = "$searchdir$PROG.conf";
 			$FileSuffix = '';
+			if ($Debug){debug("Opened config: $searchdir$PROG.$SiteConfig.conf", 2);}
 			last;
-		}
+		}else{if ($Debug){debug("Unable to open config file: $searchdir$PROG.conf", 2);}}
 		#CL - Added to open config if full path is passed to awstats 
 		if ( open( CONFIG, "$SiteConfig" ) ) {
 			$FileConfig = "$SiteConfig";
 			$FileSuffix = '';
+			if ($Debug){debug("Opened config: $SiteConfig", 2);}
 			last;
-		}
+		}else{if ($Debug){debug("Unable to open config file: $SiteConfig", 2);}}
 	}
 	if ( !$FileConfig ) {
 		if ($DEBUGFORCED || !$ENV{'GATEWAY_INTERFACE'}){
@@ -9658,9 +9663,10 @@ sub HTMLTopBanner{
 			}
 			else {
 				print
-"<span style=\"color: #880000\">No qualified records found in log ($NbOfLinesCorrupted corrupted, $NbOfLinesDropped dropped)</span>";
+ "<span style=\"color: #880000\">No qualified records found in log 
+ ($NbOfLinesCorrupted corrupted, $NbOfLinesComment comments, $NbOfLinesBlank Blank, 
+ $NbOfLinesDropped dropped)</span>";
 			}
-
 		}
 		print "</span>";
 
@@ -17308,26 +17314,32 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 
 		# Parse line record to get all required fields
 		if ( !( @field = map( /$PerlParsingFormat/, $line ) ) ) {
-			$NbOfLinesCorrupted++;
-			if ($ShowCorrupted) {
-				if ( $line =~ /^#/ || $line =~ /^!/ ) {
-					print "Corrupted record line "
+			# see if the line is a comment, blank or corrupted
+ 			if ( $line =~ /^#/ || $line =~ /^!/ ) {
+				$NbOfLinesComment++;
+				if ($ShowCorrupted){
+					print "Comment record line "
 					  . ( $lastlinenb + $NbOfLinesParsed )
-					  . " (comment line): $line\n";
+					  . ": $line\n";
 				}
-				elsif ( $line =~ /^\s*$/ ) {
-					print "Corrupted record line "
+ 			}
+ 			elsif ( $line =~ /^\s*$/ ) {
+ 				$NbOfLinesBlank++;
+				if ($ShowCorrupted){
+					print "Blank record line "
 					  . ( $lastlinenb + $NbOfLinesParsed )
-					  . " (blank line)\n";
+					  . "\n";
 				}
-				else {
-					print "Corrupted record line "
-					  . ( $lastlinenb + $NbOfLinesParsed )
-					  . " (record format does not match LogFormat parameter): $line\n";
-				}
+ 			}else{
+ 				$NbOfLinesCorrupted++;
+ 				if ($ShowCorrupted){
+ 				print "Corrupted record line "
+  					  . ( $lastlinenb + $NbOfLinesParsed )
+  					  . " (record format does not match LogFormat parameter): $line\n";
+  				}
 			}
 			if (   $NbOfLinesParsed >= $NbOfLinesForCorruptedLog
-				&& $NbOfLinesParsed == $NbOfLinesCorrupted )
+				&& $NbOfLinesParsed == ($NbOfLinesCorrupted + $NbOfLinesComment + $NbOfLinesBlank))
 			{
 				error( "Format error", $line, $LogFile );
 			}    # Exit with format error
@@ -17401,11 +17413,11 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 		}
 		elsif (
 			( $LogType eq 'W' || $LogType eq 'S' )
-			&& (   $field[$pos_method] eq 'GET'
-				|| $field[$pos_method] eq 'mms'
-				|| $field[$pos_method] eq 'rtsp'
-				|| $field[$pos_method] eq 'http'
-				|| $field[$pos_method] eq 'RTP' )
+			&& (   uc($field[$pos_method]) eq 'GET'
+				|| uc($field[$pos_method]) eq 'MMS'
+				|| uc($field[$pos_method]) eq 'RTSP'
+				|| uc($field[$pos_method]) eq 'HTTP'
+				|| uc($field[$pos_method]) eq 'RTP' )
 		  )
 		{
 
@@ -17435,7 +17447,11 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 
 			# FTP SENT request
 		}
-		else {
+		elsif($line =~ m/#Fields:/){
+ 			# log #fields as comment
+ 			$NbOfLinesComment++;
+ 			next;			
+ 		}else{
 			$NbOfLinesDropped++;
 			if ($ShowDropped) {
 				print
@@ -20300,6 +20316,8 @@ else {
 	if ($lastlinenb) { print " Found $lastlinenb already parsed records.\n"; }
 	print "Parsed lines in file: $NbOfLinesParsed\n";
 	print " Found $NbOfLinesDropped dropped records,\n";
+	print " Found $NbOfLinesComment comments,\n";
+ 	print " Found $NbOfLinesBlank blank records,\n";
 	print " Found $NbOfLinesCorrupted corrupted records,\n";
 	print " Found $NbOfOldLines old records,\n";
 	print " Found $NbOfNewLines new qualified records.\n";
