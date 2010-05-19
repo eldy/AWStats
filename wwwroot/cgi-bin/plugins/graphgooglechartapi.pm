@@ -132,6 +132,14 @@ sub ShowGraph_graphgooglechartapi() {
 		$labellength=32;
 		print Get_Img_Tag(Graph_Pie(), $title);
 	}
+	elsif ($type eq 'downloads'){
+		$labellength=32;
+		print Get_Img_Tag(Graph_Pie(), $title);
+	}
+	elsif ($type eq 'pages'){
+		$labellength=32;
+		print Get_Img_Tag(Graph_Pie(), $title);
+	}
 	elsif ($type eq 'oss'){
 		$labellength=32;
 		print Get_Img_Tag(Graph_Pie(), $title);
@@ -548,6 +556,7 @@ sub Get_Labels(){
 		}
 		$chxl .= "$temp|";
 	}
+	$chxl =~ s/&//;
 	return $chxl;
 }
 
