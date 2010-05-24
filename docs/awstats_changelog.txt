@@ -21,6 +21,10 @@ New features/improvements:
 
 Thanks to Chris Larsen (author of most thoses changes).
 
+Fixes: 
+- Webmin module works with new version of webmin.
+- Security fix.
+
 
 ***** 6.95 *****
 

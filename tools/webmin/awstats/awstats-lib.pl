@@ -1,8 +1,8 @@
 # awstats-lib.pl
 # Common functions for editing the awstats config file
 
-do '../web-lib.pl';
-require '../javascript-lib.pl';
+BEGIN { push(@INC, ".."); };
+use WebminCore;
 &init_config();
 
 #$config{'awstats'}||='/usr/local/awstats/wwwroot/cgi-bin/awstats.pl';
