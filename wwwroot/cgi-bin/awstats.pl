@@ -1667,7 +1667,7 @@ sub Read_Config {
 		# If from CGI, overwriting of configdir is only possible if AWSTATS_ENABLE_CONFIG_DIR defined
 		if ($ENV{'GATEWAY_INTERFACE'} && ! $ENV{"AWSTATS_ENABLE_CONFIG_DIR"})
 		{
-			error("Sorry, to allow overwriting of configdir parameter from an AWStats CGI usage, environment variable AWSTATS_ENABLE_CONFIG_DIR must be set to 1");
+			error("Sorry, to allow overwriting of configdir parameter from an AWStats CGI usage, environment variable AWSTATS_ENABLE_CONFIG_DIR must be set to 1. For example, by adding the line 'SetEnv AWSTATS_ENABLE_CONFIG_DIR 1' in your Apache config file or into a .htaccess file.");
 		}
 		else
 		{
