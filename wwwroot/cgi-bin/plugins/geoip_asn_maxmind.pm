@@ -81,6 +81,7 @@ sub Init_geoip_asn_maxmind {
 	debug(" Plugin $PluginName: InitParams=$InitParams",1);
    	my ($mode,$datafile,$override,$link)=split(/\s+/,$InitParams,4);
    	if (! $datafile) { $datafile="GeoIPASNum.dat"; }
+   	else { $datafile =~ s/%20/ /g; }
 	if ($type eq 'geoippureperl') {
 		# With pureperl with always use GEOIP_STANDARD.
 		# GEOIP_MEMORY_CACHE seems to fail with ActiveState
@@ -91,8 +92,8 @@ sub Init_geoip_asn_maxmind {
 		else { $mode=Geo::IP::GEOIP_STANDARD(); }
 	}
 	# if there is a url in the override field, move it to link
-	if (lc($override) =~ m/^http/){$link = $override;}
-	else{$OverrideFile = $override;}
+	if (lc($override) =~ m/^http/) { $link = $override; }
+	elsif ($override) { $override =~ s/%20/ /g; $OverrideFile=$override; }
 	if ($link){$LookupLink=$link;}
 	debug(" Plugin $PluginName: GeoIP initialized type=$type mode=$mode, link=$link",1);
 	if ($type eq 'geoippureperl') {

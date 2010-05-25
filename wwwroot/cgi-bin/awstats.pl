@@ -1661,25 +1661,23 @@ sub Read_Config {
 	# Other possible directories :				"/usr/local/etc/awstats", "/etc"
 	# FHS standard, Suse package : 				"/etc/opt/awstats"
 	my $configdir         = shift;
-	my @PossibleConfigDir = ();
+	my @PossibleConfigDir = (
+			"$DIR",
+			"/etc/awstats",
+			"/usr/local/etc/awstats", "/etc",
+			"/etc/opt/awstats"
+		); 
 
 	if ($configdir) {
 		# If from CGI, overwriting of configdir is only possible if AWSTATS_ENABLE_CONFIG_DIR defined
 		if ($ENV{'GATEWAY_INTERFACE'} && ! $ENV{"AWSTATS_ENABLE_CONFIG_DIR"})
 		{
-			error("Sorry, to allow overwriting of configdir parameter from an AWStats CGI usage, environment variable AWSTATS_ENABLE_CONFIG_DIR must be set to 1. For example, by adding the line 'SetEnv AWSTATS_ENABLE_CONFIG_DIR 1' in your Apache config file or into a .htaccess file.");
+			error("Sorry, to allow overwriting of configdir parameter, from an AWStats CGI page, with a non default value, environment variable AWSTATS_ENABLE_CONFIG_DIR must be set to 1. For example, by adding the line 'SetEnv AWSTATS_ENABLE_CONFIG_DIR 1' in your Apache config file or into a .htaccess file.");
 		}
 		else
 		{
 			@PossibleConfigDir = ("$configdir");
 		}
-	}
-	else {
-		@PossibleConfigDir = (
-			"$DIR",                   "/etc/awstats",
-			"/usr/local/etc/awstats", "/etc",
-			"/etc/opt/awstats"
-		);
 	}
 
 	# Open config file
