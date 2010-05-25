@@ -1669,15 +1669,20 @@ sub Read_Config {
 		); 
 
 	if ($configdir) {
-		# If from CGI, overwriting of configdir is only possible if AWSTATS_ENABLE_CONFIG_DIR defined
-		if ($ENV{'GATEWAY_INTERFACE'} && ! $ENV{"AWSTATS_ENABLE_CONFIG_DIR"})
+		# Check if configdir is outside default values.
+		my $outsidedefaultvalue=1;
+		foreach (@PossibleConfigDir) {
+			if ($_ eq $configdir) { $outsidedefaultvalue=0; last; }
+		}
+
+		# If from CGI, overwriting of configdir with a value that differs from a defautl value
+		# is only possible if AWSTATS_ENABLE_CONFIG_DIR defined
+		if ($ENV{'GATEWAY_INTERFACE'} && $outsidedefaultvalue && ! $ENV{"AWSTATS_ENABLE_CONFIG_DIR"})
 		{
 			error("Sorry, to allow overwriting of configdir parameter, from an AWStats CGI page, with a non default value, environment variable AWSTATS_ENABLE_CONFIG_DIR must be set to 1. For example, by adding the line 'SetEnv AWSTATS_ENABLE_CONFIG_DIR 1' in your Apache config file or into a .htaccess file.");
 		}
-		else
-		{
-			@PossibleConfigDir = ("$configdir");
-		}
+
+		@PossibleConfigDir = ("$configdir");
 	}
 
 	# Open config file
