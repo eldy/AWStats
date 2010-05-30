@@ -1026,8 +1026,8 @@
 # Minor finnish search engines
 'haku','Ihmemaa',										
 # Minor french search engines
-'aolfr','AOL (fr)', 'ctrouve','C\'est trouvé', 'francite','Francité', 'lbb', 'LBB', 'libertysurf', 'Libertysurf', 'free', 'Free.fr', 'clubinternet', 'Club-internet',
-'toile', 'Toile du Québec',
+'aolfr','AOL (fr)', 'ctrouve','C\'est trouve', 'francite','Francite', 'lbb', 'LBB', 'libertysurf', 'Libertysurf', 'free', 'Free.fr', 'clubinternet', 'Club-internet',
+'toile', 'Toile du Quebec',
 'biglotron','<a href="http://www.biglotron.com/" title="Search Engine Home Page [new window]" target="_blank">Biglotron</a>',
 'mozbot','<a href="http://www.mozbot.fr/" title="Search Engine Home Page [new window]" target="_blank">Mozbot</a>',
 # Minor German search engines
@@ -1041,7 +1041,7 @@
 'netluchs','<a href="http://www.netluchs.de/" title="Search Engine Home Page [new window]" target="_blank">Netluchs</a>',
 'schoenerbrausen','<a href="http://www.schoenerbrausen.de/" title="Search Engine Home Page [new window]" target="_blank">Schoenerbrausen/</a>',
 # Minor hungarian search engines
-'heureka','Heureka', 'origo','Origo-Vizsla', 'lapkereso','Startlapkeresõ', 'goliat','Góliát', 'indexhu','Index', 'wahoo','Wahoo', 'webmania','webmania.hu', 'internetto','Internetto Keresõ',
+'heureka','Heureka', 'origo','Origo-Vizsla', 'lapkereso','Startlapkereso', 'goliat','Goliat', 'indexhu','Index', 'wahoo','Wahoo', 'webmania','webmania.hu', 'internetto','Internetto Kereso',
 'tango_hu','<a href="http://tango.hu/" title="Search Engine Home Page [new window]" target="_blank">Tango</a>',
 'keresolap_hu','<a href="http://keresolap.hu/" title="Search Engine Home Page [new window]" target="_blank">Tango keresolap</a>',
 'polymeta_hu','<a href="http://www.polymeta.hu/" title="Search Engine Home Page [new window]" target="_blank">Polymeta</a>',
