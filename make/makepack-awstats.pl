@@ -351,6 +351,8 @@ foreach my $target (keys %CHOOSEDTARGET) {
     }
 }
 
+$btach=0;
+
 if (! $btach) {
 	print "\nPress key to finish...";
 	my $WAITKEY=<STDIN>;
