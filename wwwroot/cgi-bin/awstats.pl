@@ -8848,6 +8848,12 @@ sub DefinePerlParsingFormat {
 		$LogFormatString =~ s/s-object-source/%other/g;
 		$LogFormatString =~ s/s-cache-info/%other/g;
 		$LogFormatString =~ s/cluster-node/%cluster/g;
+		$LogFormatString =~ s/s-sitename/%other/g;
+ 		$LogFormatString =~ s/s-ip/%other/g;
+ 		$LogFormatString =~ s/s-port/%other/g;
+ 		$LogFormatString =~ s/cs\(Cookie\)/%other/g;
+ 		$LogFormatString =~ s/sc-substatus/%other/g;
+ 		$LogFormatString =~ s/sc-win32-status/%other/g;
 
 		# Added for MMS
 		$LogFormatString =~
