@@ -1,37 +1,34 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
-<head>
+<html><head>
 <meta name="description" content="AWStats Documentation - Configuration directives and parameters">
 <meta name="keywords" content="awstats, awstat, config, parameters, configuration, conf">
 <meta name="robots" content="index,follow">
 <meta name="title" content="AWStats Documentation - Configuration directives and parameters">
-<title>AWStats Documentation - Configuration directives and parameters</title>
-<link rel="stylesheet" href="styles.css" type="text/css">
-<!-- $Revision$ - $Author$ - $Date$ -->
-</head>
 
-<body topmargin=10 leftmargin=5>
+<title>AWStats Documentation - Configuration directives and parameters</title><link rel="stylesheet" href="styles.css" type="text/css"><!-- $Revision$ - $Author$ - $Date$ --></head>
+
+<body topmargin="10" leftmargin="5">
 
 
-<table style="font: 10pt arial,helvetica,verdana" cellpadding=0 cellspacing=0 border=0 bgcolor=#FFFFFF width=100%>
+<table style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10pt; line-height: normal; font-size-adjust: none; font-stretch: normal;" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" width="100%">
 
 <!-- Large -->
-<tr style="font: 10pt arial,helvetica,verdana">
-<td bgcolor=#9999cc align=center><a href="/"><img src="images/awstats_logo4.png" border=0></a></td>
-<td bgcolor=#9999cc align=center>
+<tbody><tr style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">
+<td align="center" bgcolor="#9999cc"><a href="/"><img src="images/awstats_logo4.png" border="0"></a></td>
+<td align="center" bgcolor="#9999cc">
 <br>
-<font style="font: 16pt arial,helvetica,sans-serif" color=#EEEEFF><b>AWStats logfile analyzer 6.95 Documentation</b></font><br>
+<font style="font-family: arial,helvetica,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 16pt; line-height: normal; font-size-adjust: none; font-stretch: normal;" color="#eeeeff"><b>AWStats logfile analyzer 6.95 Documentation</b></font><br>
 <br>
 </td>
-<td bgcolor=#9999cc align=center>
+<td align="center" bgcolor="#9999cc">
 &nbsp;
 </td>
 </tr>
 
-</table>
+</tbody></table>
 
 
-<br><br><H1 style="font: 26px arial,helvetica,sans-serif">AWStats configuration directives/options</H1>
+<br><br><h1 style="font-family: arial,helvetica,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 26px; line-height: normal; font-size-adjust: none; font-stretch: normal;">AWStats configuration directives/options</h1>
 <!-- -------------------------------------------------------------------------------------- -->
 
 <br>Each directive available in the AWStats config file (.conf) is listed here (with examples and default values).<br>
@@ -46,200 +43,198 @@ when reading it), follow the example:<br>
 <br><b>DIRECTIVES IN MAIN SETUP SECTION (Required to make AWStats work)</b><br>
 <ul>
 <li><a href="#LogFile">LogFile</a>
-<li><a href="#LogType">LogType</a>
-<li><a href="#LogFormat">LogFormat</a>
-<li><a href="#LogSeparator">LogSeparator</a>
-<li><a href="#DNSLookup">DNSLookup</a>
-<li><a href="#DirData">DirData</a>
-<li><a href="#DirCgi">DirCgi</a>
-<li><a href="#DirIcons">DirIcons</a>
-<li><a href="#SiteDomain">SiteDomain</a>
-<li><a href="#HostAliases">HostAliases</a>
-<li><a href="#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a>
-<li><a href="#AllowFullYearView">AllowFullYearView</a>
-</ul>
+</li><li><a href="#LogType">LogType</a>
+</li><li><a href="#LogFormat">LogFormat</a>
+</li><li><a href="#LogSeparator">LogSeparator</a>
+</li><li><a href="#DNSLookup">DNSLookup</a>
+</li><li><a href="#DirData">DirData</a>
+</li><li><a href="#DirCgi">DirCgi</a>
+</li><li><a href="#DirIcons">DirIcons</a>
+</li><li><a href="#SiteDomain">SiteDomain</a>
+</li><li><a href="#HostAliases">HostAliases</a>
+</li><li><a href="#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a>
+</li><li><a href="#AllowFullYearView">AllowFullYearView</a>
+</li></ul>
 
 
 <br><b>DIRECTIVES IN OPTIONAL SETUP SECTION (Not required but increase AWStats features)</b><br>
 <ul>
 <li><a href="#EnableLockForUpdate">EnableLockForUpdate</a>
-<li><a href="#DNSStaticCacheFile">DNSStaticCacheFile</a>
-<li><a href="#DNSLastUpdateCacheFile">DNSLastUpdateCacheFile</a>
-<li><a href="#SkipDNSLookupFor">SkipDNSLookupFor</a>
-<li><a href="#AllowAccessFromWebToAuthenticatedUsersOnly">AllowAccessFromWebToAuthenticatedUsersOnly</a>
-<li><a href="#AllowAccessFromWebToFollowingAuthenticatedUsers">AllowAccessFromWebToFollowingAuthenticatedUsers</a>
-<li><a href="#AllowAccessFromWebToFollowingIPAddresses">AllowAccessFromWebToFollowingIPAddresses</a>
-<li><a href="#CreateDirDataIfNotExists">CreateDirDataIfNotExists</a>
-<li><a href="#BuildHistoryFormat">BuildHistoryFormat</a>
-<li><a href="#BuildReportFormat">BuildReportFormat</a>
-<li><a href="#SaveDatabaseFilesWithPermissionsForEveryone">SaveDatabaseFilesWithPermissionsForEveryone</a>
-<li><a href="#PurgeLogFile">PurgeLogFile</a>
-<li><a href="#ArchiveLogRecords">ArchiveLogRecords</a>
-<li><a href="#KeepBackupOfHistoricFiles">KeepBackupOfHistoricFiles</a>
-<li><a href="#DefaultFile">DefaultFile</a>
-<li><a href="#SkipHosts">SkipHosts</a>
-<li><a href="#SkipUserAgents">SkipUserAgents</a>
-<li><a href="#SkipFiles">SkipFiles</a>
-<li><a href="#OnlyHosts">OnlyHosts</a>
-<li><a href="#OnlyUserAgents">OnlyUserAgents</a>
-<li><a href="#OnlyUsers">OnlyUsers</a>
-<li><a href="#OnlyFiles">OnlyFiles</a>
-<li><a href="#NotPageList">NotPageList</a>
-<li><a href="#ValidHTTPCodes">ValidHTTPCodes</a>
-<li><a href="#ValidSMTPCodes">ValidSMTPCodes</a>
-<li><a href="#AuthenticatedUsersNotCaseSensitive">AuthenticatedUsersNotCaseSensitive</a>
-<li><a href="#URLNotCaseSensitive">URLNotCaseSensitive</a>
-<li><a href="#URLWithAnchor">URLWithAnchor</a>
-<li><a href="#URLQuerySeparators">URLQuerySeparators</a>
-<li><a href="#URLWithQuery">URLWithQuery</a>
-<li><a href="#URLWithQueryWithOnlyFollowingParameters">URLWithQueryWithOnlyFollowingParameters</a>
-<li><a href="#URLWithQueryWithoutFollowingParameters">URLWithQueryWithoutFollowingParameters</a>
-<li><a href="#URLReferrerWithQuery">URLReferrerWithQuery</a>
-<li><a href="#WarningMessages">WarningMessages</a>
-<li><a href="#ErrorMessages">ErrorMessages</a>
-<li><a href="#DebugMessages">DebugMessages</a>
-<li><a href="#NbOfLinesForCorruptedLog">NbOfLinesForCorruptedLog</a>
-<li><a href="#SplitSearchString">SplitSearchString</a>
-<li><a href="#WrapperScript">WrapperScript</a>
-<li><a href="#DecodeUA">DecodeUA</a>
-<li><a href="#MiscTrackerUrl">MiscTrackerUrl</a>
-</ul>
+</li><li><a href="#DNSStaticCacheFile">DNSStaticCacheFile</a>
+</li><li><a href="#DNSLastUpdateCacheFile">DNSLastUpdateCacheFile</a>
+</li><li><a href="#SkipDNSLookupFor">SkipDNSLookupFor</a>
+</li><li><a href="#AllowAccessFromWebToAuthenticatedUsersOnly">AllowAccessFromWebToAuthenticatedUsersOnly</a>
+</li><li><a href="#AllowAccessFromWebToFollowingAuthenticatedUsers">AllowAccessFromWebToFollowingAuthenticatedUsers</a>
+</li><li><a href="#AllowAccessFromWebToFollowingIPAddresses">AllowAccessFromWebToFollowingIPAddresses</a>
+</li><li><a href="#CreateDirDataIfNotExists">CreateDirDataIfNotExists</a>
+</li><li><a href="#BuildHistoryFormat">BuildHistoryFormat</a>
+</li><li><a href="#BuildReportFormat">BuildReportFormat</a>
+</li><li><a href="#SaveDatabaseFilesWithPermissionsForEveryone">SaveDatabaseFilesWithPermissionsForEveryone</a>
+</li><li><a href="#PurgeLogFile">PurgeLogFile</a>
+</li><li><a href="#ArchiveLogRecords">ArchiveLogRecords</a>
+</li><li><a href="#KeepBackupOfHistoricFiles">KeepBackupOfHistoricFiles</a>
+</li><li><a href="#DefaultFile">DefaultFile</a>
+</li><li><a href="#SkipHosts">SkipHosts</a>
+</li><li><a href="#SkipUserAgents">SkipUserAgents</a>
+</li><li><a href="#SkipFiles">SkipFiles</a>
+</li><li><a href="#OnlyHosts">OnlyHosts</a>
+</li><li><a href="#OnlyUserAgents">OnlyUserAgents</a>
+</li><li><a href="#OnlyUsers">OnlyUsers</a>
+</li><li><a href="#OnlyFiles">OnlyFiles</a>
+</li><li><a href="#NotPageList">NotPageList</a>
+</li><li><a href="#ValidHTTPCodes">ValidHTTPCodes</a>
+</li><li><a href="#ValidSMTPCodes">ValidSMTPCodes</a>
+</li><li><a href="#AuthenticatedUsersNotCaseSensitive">AuthenticatedUsersNotCaseSensitive</a>
+</li><li><a href="#URLNotCaseSensitive">URLNotCaseSensitive</a>
+</li><li><a href="#URLWithAnchor">URLWithAnchor</a>
+</li><li><a href="#URLQuerySeparators">URLQuerySeparators</a>
+</li><li><a href="#URLWithQuery">URLWithQuery</a>
+</li><li><a href="#URLWithQueryWithOnlyFollowingParameters">URLWithQueryWithOnlyFollowingParameters</a>
+</li><li><a href="#URLWithQueryWithoutFollowingParameters">URLWithQueryWithoutFollowingParameters</a>
+</li><li><a href="#URLReferrerWithQuery">URLReferrerWithQuery</a>
+</li><li><a href="#WarningMessages">WarningMessages</a>
+</li><li><a href="#ErrorMessages">ErrorMessages</a>
+</li><li><a href="#DebugMessages">DebugMessages</a>
+</li><li><a href="#NbOfLinesForCorruptedLog">NbOfLinesForCorruptedLog</a>
+</li><li><a href="#SplitSearchString">SplitSearchString</a>
+</li><li><a href="#WrapperScript">WrapperScript</a>
+</li><li><a href="#DecodeUA">DecodeUA</a>
+</li><li><a href="#MiscTrackerUrl">MiscTrackerUrl</a>
+</li></ul>
 
 <br><b>DIRECTIVES IN OPTIONAL ACCURACY SETUP SECTION (Not required but increase AWStats features)</b><br>
 <ul>
 <li><a href="#LevelFor">LevelForBrowsersDetection</a>
-<li><a href="#LevelFor">LevelForOSDetection</a>
-<li><a href="#LevelFor">LevelForRefererAnalyze</a>
-<li><a href="#LevelFor">LevelForRobotsDetection</a>
-<li><a href="#LevelFor">LevelForSearchEnginesDetection</a>
-<li><a href="#LevelFor">LevelForKeywordsDetection</a>
-<li><a href="#LevelFor">LevelForFileTypesDetection</a>
-<li><a href="#LevelFor">LevelForWormsDetection</a>
+</li><li><a href="#LevelFor">LevelForOSDetection</a>
+</li><li><a href="#LevelFor">LevelForRefererAnalyze</a>
+</li><li><a href="#LevelFor">LevelForRobotsDetection</a>
+</li><li><a href="#LevelFor">LevelForSearchEnginesDetection</a>
+</li><li><a href="#LevelFor">LevelForKeywordsDetection</a>
+</li><li><a href="#LevelFor">LevelForFileTypesDetection</a>
+</li><li><a href="#LevelFor">LevelForWormsDetection</a>
 
-</ul>
+</li></ul>
 
 <br><b>DIRECTIVES IN OPTIONAL APPEARANCE SETUP SECTION (Not required but increase AWStats features)</b><br>
 <ul>
 <li><a href="#UseFramesWhenCGI">UseFramesWhenCGI</a>
-<li><a href="#DetailedReportsOnNewWindows">DetailedReportsOnNewWindows</a>
-<li><a href="#Expires">Expires</a>
-<li><a href="#MaxRowsInHTMLOutput">MaxRowsInHTMLOutput</a>
-<li><a href="#Lang">Lang</a>
-<li><a href="#DirLang">DirLang</a>
-<li><a href="#Show">ShowHeader</a>
-<li><a href="#Show">ShowMenu</a>
-<li><a href="#Show">ShowSummary</a>
-<li><a href="#Show">ShowMonthStats</a>
-<li><a href="#Show">ShowDaysOfMonthStats</a>
-<li><a href="#Show">ShowDaysOfWeekStats</a>
-<li><a href="#Show">ShowHoursStats</a>
-<li><a href="#Show">ShowDomainsStats</a>
-<li><a href="#Show">ShowHostsStats</a>
-<li><a href="#Show">ShowAuthenticatedUsers</a>
-<li><a href="#Show">ShowRobotsStats</a>
-<li><a href="#Show">ShowWormsStats</a>
-<li><a href="#Show">ShowSessionsStats</a>
-<li><a href="#Show">ShowPagesStats</a>
-<li><a href="#Show">ShowCompressionStats</a>
-<li><a href="#Show">ShowFileTypesStats</a>
-<li><a href="#Show">ShowFileSizesStats</a>
-<li><a href="#Show">ShowOSStats</a>
-<li><a href="#Show">ShowBrowsersStats</a>
-<li><a href="#Show">ShowScreenSizeStats</a>
-<li><a href="#Show">ShowOriginStats</a>
-<li><a href="#Show">ShowKeyphrasesStats</a>
-<li><a href="#Show">ShowKeywordsStats</a>
-<li><a href="#Show">ShowMiscStats</a>
-<li><a href="#Show">ShowHTTPErrorsStats</a>
-<li><a href="#Show">ShowSMTPErrorsStats</a>
-<li><a href="#Show">ShowClusterStats</a>
-<li><a href="#AddDataArray">AddDataArrayMonthStats</a>
-<li><a href="#AddDataArray">AddDataArrayShowDaysOfMonthStats</a>
-<li><a href="#AddDataArray">AddDataArrayShowDaysOfWeekStats</a>
-<li><a href="#AddDataArray">AddDataArrayShowHoursStats</a>
-<li><a href="#IncludeInternalLinksInOriginSection">IncludeInternalLinksInOriginSection</a>
-<li><a href="#Max">MaxNbOfDomain</a>
-<li><a href="#Max">MinHitDomain</a>
-<li><a href="#Max">MaxNbOfHostsShown</a>
-<li><a href="#Max">MinHitHost</a>
-<li><a href="#Max">MaxNbOfLoginShown</a>
-<li><a href="#Max">MinHitLogin</a>
-<li><a href="#Max">MaxNbOfRobotShown</a>
-<li><a href="#Max">MinHitRobot</a>
-<li><a href="#Max">MaxNbOfPageShown</a>
-<li><a href="#Max">MaxNbOfOsShown</a>
-<li><a href="#Max">MinHitOs</a>
-<li><a href="#Max">MaxNbOfBrowsersShown</a>
-<li><a href="#Max">MinHitBrowser</a>
-<li><a href="#Max">MinHitFile</a>
-<li><a href="#Max">MaxNbOfScreenSizesShown</a>
-<li><a href="#Max">MinHitScreenSize</a>
-<li><a href="#Max">MaxNbOfRefererShown</a>
-<li><a href="#Max">MinHitRefer</a>
-<li><a href="#Max">MaxNbOfKeywordsShown</a>
-<li><a href="#Max">MinHitKeyword</a>
-<li><a href="#FirstDayOfWeek">FirstDayOfWeek</a>
-<li><a href="#ShowFlagLinks">ShowFlagLinks</a>
-<li><a href="#ShowLinksOnUrl">ShowLinksOnUrl</a>
-<li><a href="#MaxLengthOfURL">MaxLengthOfURL</a>
-<li><a href="#ShowLinksToWhoIs">ShowLinksToWhoIs</a>
-<li><a href="#UseHTTPSLinksForUrl">UseHTTPSLinksForUrl</a>
-<li><a href="#LinksToWhoIs">LinksToWhoIs</a>
-<li><a href="#LinksToIPWhoIs">LinksToIPWhoIs</a>
-<li><a href="#HTMLHeadSection">HTMLHeadSection</a>
-<li><a href="#HTMLEndSection">HTMLEndSection</a>
-<li><a href="#Bar">BarWidth</a>
-<li><a href="#Bar">BarHeight</a>
-<li><a href="#Logo">Logo</a>
-<li><a href="#Logo">LogoLink</a>
-<li><a href="#StyleSheet">StyleSheet</a>
-<li><a href="#color_">color_Background</a>
-<li><a href="#color_">color_TableBGTitle</a>
-<li><a href="#color_">color_TableTitle</a>
-<li><a href="#color_">color_TableBG</a>
-<li><a href="#color_">color_TableRowTitle</a>
-<li><a href="#color_">color_TableBGRowTitle</a>
-<li><a href="#color_">color_TableBorder</a>
-<li><a href="#color_">color_text</a>
-<li><a href="#color_">color_titletext</a>
-<li><a href="#color_">color_weekend</a>
-<li><a href="#color_">color_link</a>
-<li><a href="#color_">color_hover</a>
-<li><a href="#color_">color_u</a>
-<li><a href="#color_">color_v</a>
-<li><a href="#color_">color_p</a>
-<li><a href="#color_">color_h</a>
-<li><a href="#color_">color_k</a>
-<li><a href="#color_">color_s</a>
-<li><a href="#color_">color_e</a>
-<li><a href="#color_">color_x</a>
-</ul>
+</li><li><a href="#DetailedReportsOnNewWindows">DetailedReportsOnNewWindows</a>
+</li><li><a href="#Expires">Expires</a>
+</li><li><a href="#MaxRowsInHTMLOutput">MaxRowsInHTMLOutput</a>
+</li><li><a href="#Lang">Lang</a>
+</li><li><a href="#DirLang">DirLang</a>
+</li><li><a href="#Show">ShowHeader</a>
+</li><li><a href="#Show">ShowMenu</a>
+</li><li><a href="#Show">ShowSummary</a>
+</li><li><a href="#Show">ShowMonthStats</a>
+</li><li><a href="#Show">ShowDaysOfMonthStats</a>
+</li><li><a href="#Show">ShowDaysOfWeekStats</a>
+</li><li><a href="#Show">ShowHoursStats</a>
+</li><li><a href="#Show">ShowDomainsStats</a>
+</li><li><a href="#Show">ShowHostsStats</a>
+</li><li><a href="#Show">ShowAuthenticatedUsers</a>
+</li><li><a href="#Show">ShowRobotsStats</a>
+</li><li><a href="#Show">ShowWormsStats</a>
+</li><li><a href="#Show">ShowSessionsStats</a>
+</li><li><a href="#Show">ShowPagesStats</a>
+</li><li><a href="#Show">ShowCompressionStats</a>
+</li><li><a href="#Show">ShowFileTypesStats</a>
+</li><li><a href="#Show">ShowFileSizesStats</a></li><li><a href="#Show">ShowDownloadsStats</a></li><li><a href="#Show">ShowOSStats</a>
+</li><li><a href="#Show">ShowBrowsersStats</a>
+</li><li><a href="#Show">ShowScreenSizeStats</a>
+</li><li><a href="#Show">ShowOriginStats</a>
+</li><li><a href="#Show">ShowKeyphrasesStats</a>
+</li><li><a href="#Show">ShowKeywordsStats</a>
+</li><li><a href="#Show">ShowMiscStats</a>
+</li><li><a href="#Show">ShowHTTPErrorsStats</a>
+</li><li><a href="#Show">ShowSMTPErrorsStats</a>
+</li><li><a href="#Show">ShowClusterStats</a>
+</li><li><a href="#AddDataArray">AddDataArrayMonthStats</a>
+</li><li><a href="#AddDataArray">AddDataArrayShowDaysOfMonthStats</a>
+</li><li><a href="#AddDataArray">AddDataArrayShowDaysOfWeekStats</a>
+</li><li><a href="#AddDataArray">AddDataArrayShowHoursStats</a>
+</li><li><a href="#IncludeInternalLinksInOriginSection">IncludeInternalLinksInOriginSection</a>
+</li><li><a href="#Max">MaxNbOfDomain</a>
+</li><li><a href="#Max">MinHitDomain</a>
+</li><li><a href="#Max">MaxNbOfHostsShown</a>
+</li><li><a href="#Max">MinHitHost</a>
+</li><li><a href="#Max">MaxNbOfLoginShown</a>
+</li><li><a href="#Max">MinHitLogin</a>
+</li><li><a href="#Max">MaxNbOfRobotShown</a>
+</li><li><a href="#Max">MinHitRobot</a></li><li><a href="#Max">MaxNbOfDownloadsShown</a></li><li><a href="#Max">MinHitDownloads</a></li><li><a href="#Max">MaxNbOfPageShown</a>
+</li><li><a href="#Max">MaxNbOfOsShown</a>
+</li><li><a href="#Max">MinHitOs</a>
+</li><li><a href="#Max">MaxNbOfBrowsersShown</a>
+</li><li><a href="#Max">MinHitBrowser</a>
+</li><li><a href="#Max">MinHitFile</a>
+</li><li><a href="#Max">MaxNbOfScreenSizesShown</a>
+</li><li><a href="#Max">MinHitScreenSize</a>
+</li><li><a href="#Max">MaxNbOfRefererShown</a>
+</li><li><a href="#Max">MinHitRefer</a>
+</li><li><a href="#Max">MaxNbOfKeywordsShown</a>
+</li><li><a href="#Max">MinHitKeyword</a>
+</li><li><a href="#FirstDayOfWeek">FirstDayOfWeek</a>
+</li><li><a href="#ShowFlagLinks">ShowFlagLinks</a>
+</li><li><a href="#ShowLinksOnUrl">ShowLinksOnUrl</a>
+</li><li><a href="#MaxLengthOfURL">MaxLengthOfURL</a>
+</li><li><a href="#ShowLinksToWhoIs">ShowLinksToWhoIs</a>
+</li><li><a href="#UseHTTPSLinksForUrl">UseHTTPSLinksForUrl</a>
+</li><li><a href="#LinksToWhoIs">LinksToWhoIs</a>
+</li><li><a href="#LinksToIPWhoIs">LinksToIPWhoIs</a>
+</li><li><a href="#HTMLHeadSection">HTMLHeadSection</a>
+</li><li><a href="#HTMLEndSection">HTMLEndSection</a>
+</li><li><a href="#Bar">BarWidth</a>
+</li><li><a href="#Bar">BarHeight</a>
+</li><li><a href="#Logo">Logo</a>
+</li><li><a href="#Logo">LogoLink</a>
+</li><li><a href="#StyleSheet">StyleSheet</a>
+</li><li><a href="#color_">color_Background</a>
+</li><li><a href="#color_">color_TableBGTitle</a>
+</li><li><a href="#color_">color_TableTitle</a>
+</li><li><a href="#color_">color_TableBG</a>
+</li><li><a href="#color_">color_TableRowTitle</a>
+</li><li><a href="#color_">color_TableBGRowTitle</a>
+</li><li><a href="#color_">color_TableBorder</a>
+</li><li><a href="#color_">color_text</a>
+</li><li><a href="#color_">color_titletext</a>
+</li><li><a href="#color_">color_weekend</a>
+</li><li><a href="#color_">color_link</a>
+</li><li><a href="#color_">color_hover</a>
+</li><li><a href="#color_">color_u</a>
+</li><li><a href="#color_">color_v</a>
+</li><li><a href="#color_">color_p</a>
+</li><li><a href="#color_">color_h</a>
+</li><li><a href="#color_">color_k</a>
+</li><li><a href="#color_">color_s</a>
+</li><li><a href="#color_">color_e</a>
+</li><li><a href="#color_">color_x</a>
+</li></ul>
 
 <br><b>DIRECTIVES FOR PLUGINS</b><br>
 <ul>
 <li><a href="#LoadPlugin">LoadPlugin</a>
-</ul>
+</li></ul>
 
 <br><b>DIRECTIVES IN EXTRA SECTIONS</b><br>
 <ul>
 <li><a href="#Extra">ExtraSectionNameX</a>
-<li><a href="#Extra">ExtraSectionCodeFilterX</a>
-<li><a href="#Extra">ExtraSectionConditionX</a>
-<li><a href="#Extra">ExtraSectionFirstColumnTitleX</a>
-<li><a href="#Extra">ExtraSectionFirstColumnValuesX</a>
-<li><a href="#Extra">ExtraSectionFirstColumnFormatX</a>
-<li><a href="#Extra">ExtraSectionStatTypesX</a>
-<li><a href="#Extra">ExtraSectionAddAverageRowX</a>
-<li><a href="#Extra">ExtraSectionAddSumRowX</a>
-<li><a href="#Extra">MaxNbOfExtraX</a>
-<li><a href="#Extra">MinHitExtraX</a>       
-<li><a href="#ExtraTrackedRowsLimit">ExtraTrackedRowsLimit</a>
-</ul>
+</li><li><a href="#Extra">ExtraSectionCodeFilterX</a>
+</li><li><a href="#Extra">ExtraSectionConditionX</a>
+</li><li><a href="#Extra">ExtraSectionFirstColumnTitleX</a>
+</li><li><a href="#Extra">ExtraSectionFirstColumnValuesX</a>
+</li><li><a href="#Extra">ExtraSectionFirstColumnFormatX</a>
+</li><li><a href="#Extra">ExtraSectionStatTypesX</a>
+</li><li><a href="#Extra">ExtraSectionAddAverageRowX</a>
+</li><li><a href="#Extra">ExtraSectionAddSumRowX</a>
+</li><li><a href="#Extra">MaxNbOfExtraX</a>
+</li><li><a href="#Extra">MinHitExtraX</a>       
+</li><li><a href="#ExtraTrackedRowsLimit">ExtraTrackedRowsLimit</a>
+</li></ul>
 
 <br><b>INCLUDES</b><br>
 <ul>
 <li><a href="#Include">Include</a>
-</ul>
+</li></ul>
 
 
 
@@ -343,7 +338,7 @@ when reading it), follow the example:<br>
 <br>#   %uaquot           User agent with format: "Mozilla/4.0 (compatible, ...)"
 <br>#   %ua               User agent with format: Mozilla/4.0_(compatible...)
 <br>#   %gzipin           mod_gzip compression input bytes: In:XXX
-<br>#   %gzipout          mod_gzip compression output bytes & ratio: Out:YYY:ZZpct.
+<br>#   %gzipout          mod_gzip compression output bytes &amp; ratio: Out:YYY:ZZpct.
 <br>#   %gzipratio        mod_gzip compression ratio: ZZpct.
 <br>#   %deflateratio     mod_deflate compression ratio with format: (ZZ)
 <br>#   %email            EMail sender (for mail log)
@@ -439,7 +434,7 @@ when reading it), follow the example:<br>
 <a name="DirIcons"><b>DirIcons</b></a><br>
 <b>Version : </b>1.0+<br>
 <br># Relative or absolute web URL of your awstats icon directory.
-<br># If you build static reports ("... -output > outputpath/output.html"), enter
+<br># If you build static reports ("... -output &gt; outputpath/output.html"), enter
 <br># path of icon directory relative to the output directory 'outputpath'.
 <br># Example: "/awstatsicons"
 <br># Example: "../icon"
@@ -1055,7 +1050,7 @@ when reading it), follow the example:<br>
 <br># the next parameter URLWithQueryWithoutFollowingParameters.
 <br># Possible values:
 <br># 0 - URLs are cleaned from the query string (ie: "/mypage.html")
-<br># 1 - Full URL with query string is used     (ie: "/mypage.html?p=x&q=y")
+<br># 1 - Full URL with query string is used     (ie: "/mypage.html?p=x&amp;q=y")
 <br># Default: 0
 <br># 
 <br>URLWithQuery=0
@@ -1071,7 +1066,7 @@ when reading it), follow the example:<br>
 <br># such cases, it is higly recommanded to ask AWStats to keep only parameters
 <br># you need (if you know them) before counting, manipulating and storing URL.
 <br># Enter here list of wanted parameters. For example, with "param", one hit on
-<br># /mypage.cgi?param=abc&id=Yo4UomP9d  and  /mypage.cgi?param=abc&id=Mu8fdxl3r
+<br># /mypage.cgi?param=abc&amp;id=Yo4UomP9d  and  /mypage.cgi?param=abc&amp;id=Mu8fdxl3r
 <br># will be reported as 2 hits on /mypage.cgi?param=abc
 <br># This parameter is not used when URLWithQuery is 0 and can't be used with
 <br># URLWithQueryWithoutFollowingParameters.
@@ -1092,7 +1087,7 @@ when reading it), follow the example:<br>
 <br># such cases, it is higly recommanded to ask AWStats to remove such parameters
 <br># from the URL before counting, manipulating and storing URL. Enter here list
 <br># of all non wanted parameters. For example, if you enter "id", one hit on
-<br># /mypage.cgi?param=abc&id=Yo4UomP9d  and  /mypage.cgi?param=abc&id=Mu8fdxl3r
+<br># /mypage.cgi?param=abc&amp;id=Yo4UomP9d  and  /mypage.cgi?param=abc&amp;id=Mu8fdxl3r
 <br># will be reported as 2 hits on /mypage.cgi?param=abc
 <br># This parameter is not used when URLWithQuery is 0 and can't be used with
 <br># URLWithQueryWithOnlyFollowingParameters.
@@ -1112,7 +1107,7 @@ when reading it), follow the example:<br>
 <br># are counted as two different referrer pages.
 <br># Possible values:
 <br># 0 - Referrer URLs are cleaned from the query string (ie: "/mypage.html")
-<br># 1 - Full URL with query string is used      (ie: "/mypage.html?p=x&q=y")
+<br># 1 - Full URL with query string is used      (ie: "/mypage.html?p=x&amp;q=y")
 <br># Default: 0
 <br># 
 <br>URLReferrerWithQuery=0
@@ -1220,7 +1215,7 @@ AWStats 4.1+ supports both keywords AND keyphrases by default with no need of an
 <br># To enable all this features, you must copy the awstats_misc_tracker.js file
 <br># into a /js/ directory stored in your web document root and add the following
 <br># HTML code at the end of your index page (before &lt;/BODY&gt;) :
-<br># <i>&lt;script language=javascript src="/js/awstats_misc_tracker.js"&gt;&lt/script&gt</i>
+<br># <i>&lt;script language=javascript src="/js/awstats_misc_tracker.js"&gt;&lt;/script&gt;</i>
 <br># If code is not added in index page, all this detection capabilities will be
 <br># disabled. You must also check that ShowScreenSizeStats and ShowMiscStats
 <br># parameters are set to 1 to make results appear in report page.
@@ -1358,7 +1353,7 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 5.6+ for ShowMiscStats,ShowSTMPErrorsStats<br>
 5.8+ for ShowClusterStats<br>
 6.0+ for ShowWormsStats<br>
-6.4+ for ShowSummary<br>
+6.4+ for ShowSummary<br>7.0+ for ShowDownloadsStats<br>
 <br># You choose here which reports you want to see in the main page and what you
 <br># want to see in those reports.
 <br># Possible values:
@@ -1463,7 +1458,7 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br># Context: Web, Streaming, Mail, Ftp
 <br># Default: 1, Possible column codes: None
 <br>ShowFileSizesStats=0		
-<br>
+<br><br># Show downloads chart.<br># Context: Web, Streaming, Ftp<br># Default: HB, Possible column codes: HB<br>ShowDownloadsStats=HB&nbsp;&nbsp;&nbsp; <br>
 <br># Show operating systems chart
 <br># Context: Web, Streaming, Ftp
 <br># Default: 1, Possible column codes: None
@@ -1565,7 +1560,7 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br># Stats by robots
 <br>MaxNbOfRobotShown = 10
 <br>MinHitRobot   = 1
-<br># Stats by pages
+<br># Stats for Downloads<br>MaxNbOfDownloadsShown = 10<br>MinHitDownloads = 1<br># Stats by pages
 <br>MaxNbOfPageShown = 10
 <br>MinHitFile    = 1
 <br># Stats by OS
@@ -1826,10 +1821,9 @@ all ExtraSection...X directives and how to use them.
 
 <br><br><hr>
 
-<script language=javascript>
+<script language="javascript">
 	var date='$Date$';
 	document.writeln("Last revision: "+date);
 </script>
 
-</body>
-</html>
+</body></html>

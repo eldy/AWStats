@@ -238,7 +238,7 @@ use vars qw/
   $WarningMessages $ShowLinksOnUrl $UseFramesWhenCGI
   $ShowMenu $ShowSummary $ShowMonthStats $ShowDaysOfMonthStats $ShowDaysOfWeekStats
   $ShowHoursStats $ShowDomainsStats $ShowHostsStats
-  $ShowRobotsStats $ShowSessionsStats $ShowPagesStats $ShowFileTypesStats
+  $ShowRobotsStats $ShowSessionsStats $ShowPagesStats $ShowFileTypesStats $ShowDownloadsStats
   $ShowOSStats $ShowBrowsersStats $ShowOriginStats
   $ShowKeyphrasesStats $ShowKeywordsStats $ShowMiscStats $ShowHTTPErrorsStats
   $AddDataArrayMonthStats $AddDataArrayShowDaysOfMonthStats $AddDataArrayShowDaysOfWeekStats $AddDataArrayShowHoursStats
@@ -263,6 +263,7 @@ use vars qw/
 	$ShowSessionsStats,
 	$ShowPagesStats,
 	$ShowFileTypesStats,
+	$ShowDownloadsStats,
 	$ShowOSStats,
 	$ShowBrowsersStats,
 	$ShowOriginStats,
@@ -474,7 +475,7 @@ use vars qw/
 use vars qw/
   %BrowsersHashIDLib %BrowsersHashIcon %BrowsersHereAreGrabbers
   %DomainsHashIDLib
-  %MimeHashLib %MimeHashIcon %MimeHashFamily
+  %MimeHashLib %MimeHashFamily
   %OSHashID %OSHashLib
   %RobotsHashIDLib %RobotsAffiliateLib
   %SearchEnginesHashID %SearchEnginesHashLib %SearchEnginesWithKeysNotInQuery %SearchEnginesKnownUrl %NotSearchEnginesKeys
@@ -520,6 +521,7 @@ use vars qw/
   %_misc_p %_misc_h %_misc_k
   %_cluster_p %_cluster_h %_cluster_k
   %_se_referrals_p %_se_referrals_h %_sider404_h %_referer404_h %_url_p %_url_k %_url_e %_url_x
+  %_downloads
   %_unknownreferer_l %_unknownrefererbrowser_l
   %_emails_h %_emails_k %_emails_l %_emailr_h %_emailr_k %_emailr_l
   /;
@@ -721,7 +723,8 @@ use vars qw/ @Message /;
 	'Safari versions',
 	'Chrome versions',
 	'Konqueror versions',
-	' '
+	',',
+ 	'Downloads',
 );
 
 #------------------------------------------------------------------------------
@@ -1594,6 +1597,52 @@ sub GetSessionRange {
 	if ( $delay <= 1800 ) { return $SessionsRange[4]; }
 	if ( $delay <= 3600 ) { return $SessionsRange[5]; }
 	return $SessionsRange[6];
+}
+
+#------------------------------------------------------------------------------
+# Function:     Return string with just the extension of a file in the URL
+# Parameters:	$regext, $url without query string
+# Input:        None
+# Output:		None
+# Return:		A lowercase string with the name of the extension, e.g. "html"
+#------------------------------------------------------------------------------
+sub Get_Extension{
+	my $extension;
+	my $regext = shift;
+	my $urlwithnoquery = shift;
+	if ( $urlwithnoquery =~ /$regext/o
+		|| ( $urlwithnoquery =~ /[\\\/]$/ && $DefaultFile[0] =~ /$regext/o )
+	  )
+	{
+		$extension =
+		  ( $LevelForFileTypesDetection >= 2 || $MimeHashLib{$1} )
+		  ? lc($1)
+		  : 'Unknown';
+	}
+	else {
+		$extension = 'Unknown';
+	}	
+	return $extension;
+}
+
+#------------------------------------------------------------------------------
+# Function:     Returns just the file of the url
+# Parameters:	-
+# Input:        $url
+# Output:		String with the file name
+# Return:		-
+#------------------------------------------------------------------------------
+sub Get_Filename{
+	my $temp = shift;
+	my $idx = -1;
+	# check for slash
+	$idx = rindex($temp, "/");
+	if ($idx > -1){ $temp = substr($temp, $idx+1);}
+	else{ 
+		$idx = rindex($temp, "\\");
+		if ($idx > -1){ $temp = substr($temp, $idx+1);}
+	}
+	return $temp;
 }
 
 #------------------------------------------------------------------------------
@@ -2666,6 +2715,7 @@ sub Check_Config {
 	if ( $ShowSessionsStats !~ /[01]/ )      { $ShowSessionsStats   = 1; }
 	if ( $ShowPagesStats !~ /[01PBEX]/i )    { $ShowPagesStats      = 'PBEX'; }
 	if ( $ShowFileTypesStats !~ /[01HBC]/ )  { $ShowFileTypesStats  = 'HB'; }
+	if ( $ShowDownloadsStats !~ /[01HB]/ )   { $ShowDownloadsStats  = 'HB';}
 	if ( $ShowFileSizesStats !~ /[01]/ )     { $ShowFileSizesStats  = 1; }
 	if ( $ShowOSStats !~ /[01]/ )            { $ShowOSStats         = 1; }
 	if ( $ShowBrowsersStats !~ /[01]/ )      { $ShowBrowsersStats   = 1; }
@@ -2695,7 +2745,7 @@ sub Check_Config {
 		'OsShown',          'BrowsersShown',
 		'ScreenSizesShown', 'RefererShown',
 		'KeyphrasesShown',  'KeywordsShown',
-		'EMailsShown'
+		'EMailsShown',		'DownloadsShown'
 	);
 	my @maxnboflistdefaultval =
 	  ( 10, 10, 10, 10, 5, 10, 10, 10, 5, 10, 10, 10, 20 );
@@ -2711,7 +2761,7 @@ sub Check_Config {
 		'Domain',     'Host',  'Login',     'Robot',
 		'Worm',       'File',  'Os',        'Browser',
 		'ScreenSize', 'Refer', 'Keyphrase', 'Keyword',
-		'EMail'
+		'EMail',	  'Downloads'
 	);
 	my @minhitlistdefaultval = ( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 );
 	foreach my $i ( 0 .. ( @minhitlist - 1 ) ) {
@@ -2811,6 +2861,7 @@ sub Check_Config {
 	if ( $ShowWormsStats         eq '1' ) { $ShowWormsStats         = 'HBL'; }
 	if ( $ShowPagesStats         eq '1' ) { $ShowPagesStats         = 'PBEX'; }
 	if ( $ShowFileTypesStats     eq '1' ) { $ShowFileTypesStats     = 'HB'; }
+	if ( $ShowDownloadsStats     eq '1' ) { $ShowDownloadsStats     = 'HB';}
 	if ( $ShowOriginStats        eq '1' ) { $ShowOriginStats        = 'PH'; }
 	if ( $ShowClusterStats       eq '1' ) { $ShowClusterStats       = 'PHB'; }
 	if ( $ShowMiscStats eq '1' ) { $ShowMiscStats = 'anjdfrqwp'; }
@@ -3276,17 +3327,18 @@ sub Read_History_With_TmpUpdate {
 		'session'               => 13,
 		'sider'                 => 14,
 		'filetypes'             => 15,
-		'os'                    => 16,
-		'browser'               => 17,
-		'screensize'            => 18,
-		'unknownreferer'        => 19,
-		'unknownrefererbrowser' => 20,
-		'origin'                => 21,
-		'sereferrals'           => 22,
-		'pagerefs'              => 23,
-		'searchwords'           => 24,
-		'keywords'              => 25,
-		'errors'                => 26
+		'downloads'				=> 16,
+		'os'                    => 17,
+		'browser'               => 18,
+		'screensize'            => 19,
+		'unknownreferer'        => 20,
+		'unknownrefererbrowser' => 21,
+		'origin'                => 22,
+		'sereferrals'           => 23,
+		'pagerefs'              => 24,
+		'searchwords'           => 25,
+		'keywords'              => 26,
+		'errors'                => 27,
 	);
 
 	my $order = ( scalar keys %allsections ) + 1;
@@ -3410,6 +3462,14 @@ sub Read_History_With_TmpUpdate {
 			|| $HTMLOutput{'filetypes'} )
 		{
 			$SectionsToLoad{'filetypes'} = $order++;
+		}
+		
+		if ( $UpdateStats 
+		    || $MigrateStats 
+		    || ($HTMLOutput{'main'} && $ShowDownloadsStats )
+		    || $HTMLOutput{'downloads'} )
+		{
+			$SectionsToLoad{'downloads'} = $order++;
 		}
 		if (   $UpdateStats
 			|| $MigrateStats
@@ -5259,6 +5319,62 @@ sub Read_History_With_TmpUpdate {
 				next;
 			}
 
+			# BEGIN_DOWNLOADS
+			if ( $field[0] eq 'BEGIN_DOWNLOADS' ) {
+				if ($Debug) {
+					debug(" Begin of DOWNLOADS section");
+				}
+				$field[0] = '';
+				my $count       = 0;
+				my $counttoload = int($field[1]);
+				my $countloaded = 0;
+				do {
+					if ( $field[0] ) {
+						$count++;
+						if ( $SectionsToLoad{'downloads'}) {
+							$countloaded++;
+							$_downloads{$field[0]}->{'AWSTATS_HITS'} += int( $field[1] );
+							$_downloads{$field[0]}->{'AWSTATS_206'} += int( $field[2] );
+							$_downloads{$field[0]}->{'AWSTATS_SIZE'} += int( $field[3] );	
+						}
+					}
+					$_ = <HISTORY>;
+					chomp $_;
+					s/\r//;
+					@field =
+					  split( /\s+/,
+						( $readxml ? XMLDecodeFromHisto($_) : $_ ) );
+					$countlines++;
+				  } until ( $field[0] eq 'END_DOWNLOADS'
+					  || $field[0] eq "${xmleb}END_DOWNLOADS"
+					  || !$_ );
+				if (   $field[0] ne 'END_DOWNLOADS'
+					&& $field[0] ne "${xmleb}END_DOWNLOADS" )
+				{
+					error(
+"History file \"$filetoread\" is corrupted (End of section DOWNLOADS not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).",
+						"", "", 1
+					);
+				}
+				if ($Debug) {
+					debug(
+" End of DOWNLOADS section ($count entries, $countloaded loaded)"
+					);
+				}
+				delete $SectionsToLoad{'downloads'};
+				if ( $SectionsToSave{'downloads'} ) {
+					Save_History( 'downloads',
+						$year, $month, $date );
+					delete $SectionsToSave{'downloads'};
+					if ($withpurge) { %_downloads = (); }
+				}
+				if ( !scalar %SectionsToLoad ) {
+					debug(" Stop reading history file. Got all we need.");
+					last;
+				}
+				next;
+			}
+
 			# BEGIN_SEREFERRALS
 			if ( $field[0] eq 'BEGIN_SEREFERRALS' ) {
 				if ($Debug) { debug(" Begin of SEREFERRALS section"); }
@@ -6166,6 +6282,9 @@ sub Save_History {
 		print HISTORYTMP "${xmlrb}POS_FILETYPES${xmlrs}";
 		$PosInFile{"filetypes"} = tell HISTORYTMP;
 		print HISTORYTMP "$spacebar${xmlre}\n";
+		print HISTORYTMP "${xmlrb}POS_DOWNLOADS${xmlrs}";
+		$PosInFile{'downloads'} = tell HISTORYTMP;
+		print HISTORYTMP "$spacebar${xmlre}\n";
 		print HISTORYTMP "${xmlrb}POS_OS${xmlrs}";
 		$PosInFile{"os"} = tell HISTORYTMP;
 		print HISTORYTMP "$spacebar${xmlre}\n";
@@ -6762,6 +6881,30 @@ sub Save_History {
 "${xmlrb}$_${xmlrs}$hits${xmlrs}$bytes${xmlrs}$bytesbefore${xmlrs}$bytesafter${xmlre}\n";
 		}
 		print HISTORYTMP "${xmleb}END_FILETYPES${xmlee}\n";
+	}
+	if ( $sectiontosave eq 'downloads' ) {
+		print HISTORYTMP "\n";
+		if ($xml) {
+			print HISTORYTMP "<section id='$sectiontosave'><comment>\n";
+		}
+		print HISTORYTMP "# Downloads - Hits - Bandwidth\n";
+		$ValueInFile{$sectiontosave} = tell HISTORYTMP;
+		print HISTORYTMP "${xmlbb}BEGIN_DOWNLOADS${xmlbs}"
+		  . ( scalar keys %_downloads )
+		  . "${xmlbe}\n";
+		for my $u (sort {$_downloads{$b}->{'AWSTATS_HITS'} <=> $_downloads{$a}->{'AWSTATS_HITS'}}(keys %_downloads) ){
+			#if (!$_downloads{$u}->{'AWSTATS_HITS'}){next;} # TODO - fix some strange bug where other files are getting in to the hash 
+			print HISTORYTMP "${xmlrb}"
+			  . XMLEncodeForHisto($u)
+			  . "${xmlrs}"
+			  . XMLEncodeForHisto($_downloads{$u}->{'AWSTATS_HITS'} || 0)
+			  . "${xmlrs}"
+			  . XMLEncodeForHisto($_downloads{$u}->{'AWSTATS_206'} || 0)
+			  ."${xmlrs}"
+			  . XMLEncodeForHisto($_downloads{$u}->{'AWSTATS_SIZE'} || 0)
+			  ."${xmlre}\n";
+		}
+		print HISTORYTMP "${xmleb}END_DOWNLOADS${xmlee}\n";
 	}
 	if ( $sectiontosave eq 'os' ) {
 		print HISTORYTMP "\n";
@@ -7542,6 +7685,7 @@ sub Init_HashArray {
 	%_cluster_p      = %_cluster_h      = %_cluster_k = ();
 	%_se_referrals_p = %_se_referrals_h = %_sider404_h = %_referer404_h =
 	  %_url_p        = %_url_k          = %_url_e = %_url_x = ();
+	%_downloads = ();
 	%_unknownreferer_l = %_unknownrefererbrowser_l = ();
 	%_emails_h = %_emails_k = %_emails_l = %_emailr_h = %_emailr_k =
 	  %_emailr_l = ();
@@ -8849,11 +8993,12 @@ sub DefinePerlParsingFormat {
 		$LogFormatString =~ s/s-cache-info/%other/g;
 		$LogFormatString =~ s/cluster-node/%cluster/g;
 		$LogFormatString =~ s/s-sitename/%other/g;
- 		$LogFormatString =~ s/s-ip/%other/g;
- 		$LogFormatString =~ s/s-port/%other/g;
- 		$LogFormatString =~ s/cs\(Cookie\)/%other/g;
- 		$LogFormatString =~ s/sc-substatus/%other/g;
- 		$LogFormatString =~ s/sc-win32-status/%other/g;
+		$LogFormatString =~ s/s-ip/%other/g;
+		$LogFormatString =~ s/s-port/%other/g;
+		$LogFormatString =~ s/cs\(Cookie\)/%other/g;
+		$LogFormatString =~ s/sc-substatus/%other/g;
+		$LogFormatString =~ s/sc-win32-status/%other/g;
+
 
 		# Added for MMS
 		$LogFormatString =~
@@ -9963,7 +10108,7 @@ sub HTMLMenu{
 				$ShowSessionsStats,  $ShowPagesStats,
 				$ShowFileTypesStats, $ShowFileSizesStats,
 				$ShowOSStats,        $ShowBrowsersStats,
-				$ShowScreenSizeStats
+				$ShowScreenSizeStats, $ShowDownloadsStats
 			);
 			if ($linetitle) {
 				print "<tr><td class=\"awsm\""
@@ -9984,10 +10129,29 @@ sub HTMLMenu{
 "<a href=\"$linkanchor#sessions\"$targetpage>$Message[117]</a>";
 				print( $frame? "</td></tr>\n" : " &nbsp; " );
 			}
-			if ($ShowFileTypesStats) {
+			if ($ShowFileTypesStats && $LevelForFileTypesDetection > 0) {
 				print( $frame? "<tr><td class=\"awsm\">" : "" );
 				print
 "<a href=\"$linkanchor#filetypes\"$targetpage>$Message[73]</a>";
+				print( $frame? "</td></tr>\n" : " &nbsp; " );
+			}
+			if ($ShowDownloadsStats && $LevelForFileTypesDetection > 0) {
+				print( $frame? "<tr><td class=\"awsm\">" : "" );
+				print
+"<a href=\"$linkanchor#downloads\"$targetpage>$Message[178]</a>";
+				print( $frame? "</td></tr>\n" : " &nbsp; " );
+				print( $frame
+					? "<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> "
+					: ""
+				);
+				print "<a href=\""
+				  . (
+					$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
+					? XMLEncode(
+						"$AWScript?${NewLinkParams}output=downloads")
+					: "$StaticLinks.downloads.$StaticExt"
+				  )
+				  . "\"$NewLinkTarget>$Message[80]</a>\n";
 				print( $frame? "</td></tr>\n" : " &nbsp; " );
 			}
 			if ($ShowPagesStats) {
@@ -10268,6 +10432,7 @@ sub HTMLMenu{
 # Return:       -
 #------------------------------------------------------------------------------
 sub HTMLMainFileType{
+	if (!$LevelForFileTypesDetection > 0){return;}
 	if ($Debug) { debug( "ShowFileTypesStatsCompressionStats", 2 ); }
 	print "$Center<a name=\"filetypes\">&nbsp;</a><br />\n";
 	my $Totalh = 0;
@@ -10350,9 +10515,8 @@ sub HTMLMainFileType{
 			  . " /></td><td class=\"aws\" colspan=\"2\"><span style=\"color: #$color_other\">$Message[0]</span></td>";
 		}
 		else {
-			my $nameicon = $MimeHashIcon{$key} || "notavailable";
-			my $nametype =
-			  $MimeHashLib{ $MimeHashFamily{$key} || "" } || "&nbsp;";
+			my $nameicon = $MimeHashLib{$key}[0] || "notavailable";
+			my $nametype = $MimeHashFamily{$MimeHashLib{$key}[0]} || "&nbsp;";
 			print "<tr><td"
 			  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
 			  . "><img src=\"$DirIcons\/mime\/$nameicon.png\""
@@ -12308,6 +12472,65 @@ sub HTMLShowDomains{
 }
 
 #------------------------------------------------------------------------------
+# Function:     Prints the Downloads code frame or static page
+# Parameters:   _
+# Input:        _
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLShowDownloads{
+	my $regext         = qr/\.(\w{1,6})$/;
+	print "$Center<a name=\"downloads\">&nbsp;</a><br />\n";
+	&tab_head( $Message[178], 19, 0, "downloads" );
+	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[178]</th>";
+	if ( $ShowFileTypesStats =~ /H/i ){print "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>"
+		."<th bgcolor=\"#$color_h\" width=\"80\">206 $Message[57]</th>"; }
+	if ( $ShowFileTypesStats =~ /B/i ){
+		print "<th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
+		print "<th bgcolor=\"#$color_k\" width=\"80\">$Message[106]</th>";
+	}
+	print "</tr>\n";
+	my $count = 0;
+	for my $u (sort {$_downloads{$b}->{'AWSTATS_HITS'} <=> $_downloads{$a}->{'AWSTATS_HITS'}}(keys %_downloads) ){
+		print "<tr>";
+		my $ext = Get_Extension($regext, $u);
+		if ( !$ext) {
+			print "<td"
+			  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
+			  . "><img src=\"$DirIcons\/mime\/unknown.png\""
+			  . AltTitle("")
+			  . " /></td>";
+		}
+		else {
+			my $nameicon = $MimeHashLib{$ext}[0] || "notavailable";
+			my $nametype = $MimeHashFamily{$MimeHashLib{$ext}[0]} || "&nbsp;";
+			print "<td"
+			  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
+			  . "><img src=\"$DirIcons\/mime\/$nameicon.png\""
+			  . AltTitle("")
+			  . " /></td>";
+		}
+		print "<td class=\"aws\">";
+		&HTMLShowURLInfo($u);
+		print "</td>";
+		if ( $ShowFileTypesStats =~ /H/i ){
+			print "<td>".Format_Number($_downloads{$u}->{'AWSTATS_HITS'})."</td>";
+			print "<td>".Format_Number($_downloads{$u}->{'AWSTATS_206'})."</td>";
+		}
+		if ( $ShowFileTypesStats =~ /B/i ){
+			print "<td>".Format_Bytes($_downloads{$u}->{'AWSTATS_SIZE'})."</td>";
+			print "<td>".Format_Bytes(($_downloads{$u}->{'AWSTATS_SIZE'}/
+					($_downloads{$u}->{'AWSTATS_HITS'} + $_downloads{$u}->{'AWSTATS_206'})))."</td>";
+		}
+		print "</tr>\n";
+		$count++;
+		if ($count >= $MaxRowsInHTMLOutput){last;}
+	}
+	&tab_end();
+	&html_end(1);
+}
+
+#------------------------------------------------------------------------------
 # Function:     Prints the Summary section at the top of the main page
 # Parameters:   _
 # Input:        _
@@ -13660,6 +13883,116 @@ sub HTMLMainDaysofWeek{
 }
 
 #------------------------------------------------------------------------------
+# Function:     Prints the Downloads chart and table
+# Parameters:   -
+# Input:        -
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLMainDownloads{
+	my $NewLinkParams = shift;
+	my $NewLinkTarget = shift;
+	if (!$LevelForFileTypesDetection > 0){return;}
+	if ($Debug) { debug( "ShowDownloadStats", 2 ); }
+	my $regext         = qr/\.(\w{1,6})$/;
+	print "$Center<a name=\"downloads\">&nbsp;</a><br />\n";
+	my $Totalh = 0;
+	if ($MaxNbOf{'DownloadsShown'} < 1){$MaxNbOf{'DownloadsShown'} = 10;}	# default if undefined
+	my $title =
+	  "$Message[178] ($Message[77] $MaxNbOf{'DownloadsShown'}) &nbsp; - &nbsp; <a href=\""
+	  . (
+		$ENV{'GATEWAY_INTERFACE'}
+		  || !$StaticLinks
+		? XMLEncode("$AWScript?${NewLinkParams}output=downloads")
+		: "$StaticLinks.downloads.$StaticExt"
+	  )
+	  . "\"$NewLinkTarget>$Message[80]</a>";
+	&tab_head( "$title", 0, 0, 'downloads' );
+	my $cnt=0;
+	for my $u (sort {$_downloads{$b}->{'AWSTATS_HITS'} <=> $_downloads{$a}->{'AWSTATS_HITS'}}(keys %_downloads) ){
+		$Totalh += $_downloads{$u}->{'AWSTATS_HITS'};
+		$cnt++;
+		if ($cnt > 4){last;}
+	}
+	# Graph the top five in a pie chart
+	if (scalar keys %_downloads > 1){
+		foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
+		{
+			my @blocklabel = ();
+			my @valdata = ();
+			my @valcolor = ($color_p);
+			my $cnt = 0;
+			for my $u (sort {$_downloads{$b}->{'AWSTATS_HITS'} <=> $_downloads{$a}->{'AWSTATS_HITS'}}(keys %_downloads) ){
+				push @valdata, ($_downloads{$u}->{'AWSTATS_HITS'} / $Totalh * 1000 ) / 10;
+				push @blocklabel, Get_Filename($u);
+				$cnt++;
+				if ($cnt > 4) { last; }
+			}
+			my $columns = 2;
+			if ($ShowDownloadsStats =~ /H/i){$columns += length($ShowDownloadsStats)+1;}
+			else{$columns += length($ShowDownloadsStats);}
+			print "<tr><td colspan=\"$columns\">";
+			my $function = "ShowGraph_$pluginname";
+			&$function(
+				"$Message[80]",              "downloads",
+				0, 						\@blocklabel,
+				0,           			\@valcolor,
+				0,              		0,
+				0,          			\@valdata
+			);
+			print "</td></tr>";
+		}
+	}
+	
+	my $total_dls = scalar keys %_downloads;
+	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[178]: $total_dls</th>";
+	if ( $ShowDownloadsStats =~ /H/i ){print "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>"
+		."<th bgcolor=\"#$color_h\" width=\"80\">206 $Message[57]</th>"; }
+	if ( $ShowDownloadsStats =~ /B/i ){
+		print "<th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
+		print "<th bgcolor=\"#$color_k\" width=\"80\">$Message[106]</th>"; 
+	}
+	print "</tr>\n";
+	my $count   = 0;
+	for my $u (sort {$_downloads{$b}->{'AWSTATS_HITS'} <=> $_downloads{$a}->{'AWSTATS_HITS'}}(keys %_downloads) ){
+		print "<tr>";
+		my $ext = Get_Extension($regext, $u);
+		if ( !$ext) {
+			print "<td"
+			  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
+			  . "><img src=\"$DirIcons\/mime\/unknown.png\""
+			  . AltTitle("")
+			  . " /></td>";
+		}
+		else {
+			my $nameicon = $MimeHashLib{$ext}[0] || "notavailable";
+			my $nametype = $MimeHashFamily{$MimeHashLib{$ext}[0]} || "&nbsp;";
+			print "<td"
+			  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
+			  . "><img src=\"$DirIcons\/mime\/$nameicon.png\""
+			  . AltTitle("")
+			  . " /></td>";
+		}
+		print "<td class=\"aws\">";
+		&HTMLShowURLInfo($u);
+		print "</td>";
+		if ( $ShowDownloadsStats =~ /H/i ){
+			print "<td>".Format_Number($_downloads{$u}->{'AWSTATS_HITS'})."</td>";
+			print "<td>".Format_Number($_downloads{$u}->{'AWSTATS_206'})."</td>";
+		}
+		if ( $ShowDownloadsStats =~ /B/i ){
+			print "<td>".Format_Bytes($_downloads{$u}->{'AWSTATS_SIZE'})."</td>";
+			print "<td>".Format_Bytes(($_downloads{$u}->{'AWSTATS_SIZE'}/
+					($_downloads{$u}->{'AWSTATS_HITS'} + $_downloads{$u}->{'AWSTATS_206'})))."</td>";
+		}
+		print "</tr>\n";
+		$count++;
+		if ($count >= $MaxNbOf{'DownloadsShown'}){last;}
+	}
+	&tab_end();
+}
+
+#------------------------------------------------------------------------------
 # Function:     Prints the hours chart and table
 # Parameters:   -
 # Input:        -
@@ -14675,6 +15008,7 @@ sub HTMLMainPages{
 			2
 		);
 	}
+	my $regext         = qr/\.(\w{1,6})$/;
 	print
 "$Center<a name=\"urls\">&nbsp;</a><a name=\"entry\">&nbsp;</a><a name=\"exit\">&nbsp;</a><br />\n";
 	my $title =
@@ -16584,7 +16918,7 @@ if ( $FrameName ne 'index' ) {
 			$filebrowser = 'browsers_phone';
 		}
 		if ($UpdateStats) {    # If update
-			if ( $LevelForFileTypesDetection < 2 ) {
+			if ($LevelForFileTypesDetection) {
 				$datatoload{$filemime} = 1;
 			}                  # Only if need to filter on known extensions
 			if ($LevelForRobotsDetection) {
@@ -16934,7 +17268,6 @@ if ($Debug) {
 my $lastlinenb         = 0;
 my $lastlineoffset     = 0;
 my $lastlineoffsetnext = 0;
-
 if ($Debug) { debug( "UpdateStats is $UpdateStats", 2 ); }
 if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 {    # Update only on index page or when not framed to avoid update twice
@@ -17874,24 +18207,10 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 		my $PageBool = 1;
 
 		# Extension
-		my $extension;
-		if ( $urlwithnoquery =~ /$regext/o
-			|| ( $urlwithnoquery =~ /[\\\/]$/ && $DefaultFile[0] =~ /$regext/o )
-		  )
-		{
-			$extension =
-			  ( $LevelForFileTypesDetection >= 2 || $MimeHashFamily{$1} )
-			  ? lc($1)
-			  : 'Unknown';
-			if ( $NotPageList{$extension} ) { $PageBool = 0; }
-		}
-		else {
-			$extension = 'Unknown';
-		}
-
-		if ( @NotPageFiles && &NotPageFile( $field[$pos_url] ) ) {
-			$PageBool = 0;
-		}
+		my $extension = Get_Extension($regext, $urlwithnoquery);
+		if ( $NotPageList{$extension} || 
+		($MimeHashLib{$extension}[1]) && $MimeHashLib{$extension}[1] ne 'p') { $PageBool = 0;}
+		if ( @NotPageFiles && &NotPageFile( $field[$pos_url] ) ) { $PageBool = 0; }
 
 		# Analyze: misc tracker (must be before return code)
 		#---------------------------------------------------
@@ -18006,9 +18325,32 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 			if ( $LogType eq 'W' || $LogType eq 'S' )
 			{    # HTTP record or Stream record
 				if ( $ValidHTTPCodes{ $field[$pos_code] } ) {    # Code is valid
-					if ( $field[$pos_code] == 304 && $pos_size>0) { $field[$pos_size] = 0; }
-				}
-				else {    # Code is not valid
+					if ( int($field[$pos_code]) == 304 && $pos_size>0) { $field[$pos_size] = 0; }
+					# track downloads
+					if (int($field[$pos_code]) == 200 && $MimeHashLib{$extension}[1] eq 'd'){
+						$_downloads{$urlwithnoquery}->{'AWSTATS_HITS'}++;
+						$_downloads{$urlwithnoquery}->{'AWSTATS_SIZE'} += ($pos_size>0 ? int($field[$pos_size]) : 0);
+						# TODO - debug this - tracking by host this way corrupts and allows other mimes in, may be array related
+						#$_downloads{$urlwithnoquery}->{$field[$pos_host]}[0] = $timerecord;
+						#$_downloads{$urlwithnoquery}->{$field[$pos_host]}[1] = $timerecord;
+						#if ($pos_size>0){$_downloads{$urlwithnoquery}->{$field[$pos_host]}[2] = int($field[$pos_size]);}
+						if ($Debug) { debug( " New download detected: '$urlwithnoquery'", 2 ); }
+					}
+				# handle 206 download continuation message IF we had a successful 200 before, otherwise it goes in errors
+				}elsif(int($field[$pos_code]) == 206 
+					#&& $_downloads{$urlwithnoquery}->{$field[$pos_host]}[0] > 0 
+					&& ($MimeHashLib{$extension}[1] eq 'd')){
+					$_downloads{$urlwithnoquery}->{'AWSTATS_SIZE'} += ($pos_size>0 ? int($field[$pos_size]) : 0);
+					$_downloads{$urlwithnoquery}->{'AWSTATS_206'}++;
+					#$_downloads{$urlwithnoquery}->{$field[$pos_host]}[1] = $timerecord;
+					if ($pos_size>0){
+						#$_downloads{$urlwithnoquery}->{$field[$pos_host]}[2] = int($field[$pos_size]);
+						$DayBytes{$yearmonthdayrecord} += int($field[$pos_size]);
+						$_time_k[$hourrecord] += int($field[$pos_size]);
+					}
+					$countedtraffic = 6; # 206 continued download, so we track bandwidth but not pages or hits
+					if ($Debug) { debug( " Download continuation detected: '$urlwithnoquery'", 2 ); }
+  				}else {    # Code is not valid
 					if ( $field[$pos_code] !~ /^\d\d\d$/ ) {
 						$field[$pos_code] = 999;
 					}
@@ -18176,9 +18518,9 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 
 		# Analyze: File type - Compression
 		#---------------------------------
-		if ( !$countedtraffic ) {
+		if ( !$countedtraffic || $countedtraffic == 6) {
 			if ($LevelForFileTypesDetection) {
-				$_filetypes_h{$extension}++;
+				if ($countedtraffic != 6){$_filetypes_h{$extension}++;}
 				if ( $field[$pos_size] ne '-' && $pos_size>0) {
 					$_filetypes_k{$extension} += int( $field[$pos_size] );
 				}
@@ -18238,13 +18580,12 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 				                            # TODO Use an id for hash key of url
 				                            # $_url_t{$_url_id}
 			}
-			$_time_h[$hourrecord]++;
-			$DayHits{$yearmonthdayrecord}++;    #Count accesses for hour (hit)
-			if ( $field[$pos_size] ne '-' && $pos_size>0) {
-				$_time_k[$hourrecord]          += int( $field[$pos_size] );
-				$DayBytes{$yearmonthdayrecord} +=
-				  int( $field[$pos_size] );     #Count accesses for hour (kb)
-			}
+			if ($countedtraffic != 6){$_time_h[$hourrecord]++;}
+ 			if ($countedtraffic != 6){$DayHits{$yearmonthdayrecord}++;}    #Count accesses for hour (hit)
+  			if ( $field[$pos_size] ne '-' && $pos_size>0) {
+  				$_time_k[$hourrecord]          += int( $field[$pos_size] );
+ 				$DayBytes{$yearmonthdayrecord} += int( $field[$pos_size] );     #Count accesses for hour (kb)
+  			}
 
 			# Analyze: Login
 			#---------------
@@ -18266,8 +18607,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 				if ($PageBool) {
 					$_login_p{ $field[$pos_logname] }++;
 				}             #Count accesses for page (page)
-				$_login_h{ $field[$pos_logname] }
-				  ++;         #Count accesses for page (hit)
+				if ($countedtraffic != 6){$_login_h{$field[$pos_logname]}++;}         #Count accesses for page (hit)
 				if ($pos_size>0){$_login_k{ $field[$pos_logname] } +=
 				  int( $field[$pos_size] );}    #Count accesses for page (kb)
 				$_login_l{ $field[$pos_logname] } = $timerecord;
@@ -18280,7 +18620,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 		my $HostResolved = ''
 		  ; # HostResolved will be defined in next paragraf if countedtraffic is true
 
-		if ( !$countedtraffic ) {
+		if ( !$countedtraffic || $countedtraffic == 6) {
 			my $ip = 0;
 			if ($DNSLookup) {    # DNS lookup is 1 or 2
 				if ( $Host =~ /$regipv4l/o ) {    # IPv4 lighttpd
@@ -18507,7 +18847,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 
 			# Store country
 			if ($PageBool) { $_domener_p{$Domain}++; }
-			$_domener_h{$Domain}++;
+			if ($countedtraffic != 6){$_domener_h{$Domain}++;}
 			if ( $field[$pos_size] ne '-' && $pos_size>0) {
 				$_domener_k{$Domain} += int( $field[$pos_size] );
 			}
@@ -20077,6 +20417,9 @@ if ( scalar keys %HTMLOutput ) {
 		if ( $HTMLOutput{'keywords'} ) {
 			&HTMLShowKeywords();
 		}
+		if ( $HTMLOutput{'downloads'} ) {
+			&HTMLShowDownloads();
+		}
 		foreach my $code ( keys %TrapInfosForHTTPErrorCodes ) {
 			if ( $HTMLOutput{"errors$code"} ) {
 				&HTMLShowErrorCodes($code);
@@ -20244,6 +20587,12 @@ if ( scalar keys %HTMLOutput ) {
 		#-------------------------
 		if ($ShowFileSizesStats) {
 			# TODO
+		}
+		
+		# BY DOWNLOADS
+		#-------------------------
+		if ($ShowDownloadsStats) {
+			&HTMLMainDownloads($NewLinkParams, $NewLinkTarget);
 		}
 
 		# BY PAGE

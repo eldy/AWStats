@@ -48,6 +48,7 @@ I - 1) Features
 	* OS used (pages, hits, KB for each OS)
 	* Robot visits
 	* Worm attacks
+	* Download and continuation detection
 	* Search engines, keyphrases and keywords used to find your site
 	* HTTP errors (Page not found with last referer, etc,)
 	* Screen size report

@@ -18,6 +18,8 @@ New features/improvements:
 - Added parameter to ignore missing log files when merging for a site on 
   multiple servers where a single server may not have created a log for a given day.
 - Update robots database.
+- Added Download tracking where certain mime types are defined as downloads
+  and HTTP status 206 is tracked as download continuation
 
 Thanks to Chris Larsen (author of most thoses changes).
 
