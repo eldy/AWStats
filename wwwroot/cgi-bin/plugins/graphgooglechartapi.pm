@@ -26,7 +26,7 @@ no strict "refs";
 # <-----
 # ENTER HERE THE MINIMUM AWSTATS VERSION REQUIRED BY YOUR PLUGIN
 # AND THE NAME OF ALL FUNCTIONS THE PLUGIN MANAGE.
-my $PluginNeedAWStatsVersion = "6.95";
+my $PluginNeedAWStatsVersion = "7.0";
 my $PluginHooksFunctions = "Init ShowGraph AddHTMLHeader";
 my $PluginName = "graphgooglechartapi";
 my $ChartProtocol = "http://";

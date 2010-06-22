@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <PADGEN_PML>
-	<AppVerInfo>PADGen 3.0.1.38</AppVerInfo>
+	<AppVerInfo>PADGen 3.1.0.41</AppVerInfo>
 	<CompanyName />
 	<Program_Info>
 		<Program_Name>AWStats</Program_Name>
-		<Program_Version>6.95</Program_Version>
-		<Program_Release_Month>10</Program_Release_Month>
-		<Program_Release_Day>25</Program_Release_Day>
-		<Program_Release_Year>2009</Program_Release_Year>
+		<Program_Version>7.0</Program_Version>
+		<Program_Release_Month>06</Program_Release_Month>
+		<Program_Release_Day>22</Program_Release_Day>
+		<Program_Release_Year>2010</Program_Release_Year>
 		<Program_Cost_Dollars />
 		<Program_Cost_Other_Code />
 		<Program_Cost_Other />
 		<Program_Type>Freeware</Program_Type>
-		<Program_Release_Status>Minor Update</Program_Release_Status>
+		<Program_Release_Status>Major Update</Program_Release_Status>
 		<Program_Install_Support>No Install Support</Program_Install_Support>
-		<Program_OS_Support>Windows2000,WinXP,Windows2003,Windows Vista Starter,Windows Vista Home Basic,Windows Vista Home Premium,Windows Vista Business,Windows Vista Enterprise,Windows Vista Ultimate,Windows Vista Home Basic x64,Windows Vista Home Premium x64,Windows Vista Business x64,Windows Vista Enterprise x64,Windows Vista Ultimate x64,Unix,Linux,Linux GPL,Linux Open Source,OS/2,OS/2 Warp,OS/2 Warp 4,Mac PPC,Mac OS X,Mac Other,OpenVMS</Program_OS_Support>
-		<Program_Language>English,Arabic,Armenian,Bulgarian,Catalan,Chinese,ChineseSimplified,ChineseTraditional,Croatian,Czech,Danish,Dutch,Estonian,Finnish,French,Galician,German,Greek,Hebrew,Hungarian,Icelandic,Indonesian,Italian,Japanese,Korean,Latvian,Norwegian,Other,Polish,Portuguese,Romanian,Russian,Serbian,Slovak,Slovenian,Spanish,Swedish,Thai,Turkish,Ukrainian,Welsh</Program_Language>
+		<Program_OS_Support>Linux,Linux GPL,Linux Open Source,Mac OS X,Mac Other,OpenVMS,Unix,Win2000,Win7 x32,Win7 x64,WinServer,WinVista,WinVista x64,WinXP,Other</Program_OS_Support>
+		<Program_Language>English,Arabic,Armenian,Breton,Bulgarian,Catalan,Chinese,ChineseSimplified,ChineseTraditional,Croatian,Czech,Danish,Dutch,Estonian,Finnish,French,Galician,German,Greek,Hebrew,Hungarian,Icelandic,Indonesian,Italian,Japanese,Korean,Latvian,Norwegian,Other,Polish,Portuguese,Romanian,Russian,Serbian,Slovak,Slovenian,Spanish,Swedish,Thai,Turkish,Ukrainian,Welsh</Program_Language>
 		<Program_Change_Info />
 		<Program_Specific_Category>Development Tools</Program_Specific_Category>
 		<Program_Category_Class>Web Development::Log Analysers</Program_Category_Class>
@@ -49,30 +49,6 @@ It uses a partial information file to be able to process large log files, often 
 It can analyze log files from IIS (W3C log format), Apache log files (NCSA combined/XLF/ELF log format or common/CLF log format), WebStar and most of all web, proxy, wap, streaming servers (and ftp servers or mail logs).
 The program also supports virtual servers, plugins and a lot of features.</Char_Desc_2000>
 		</English>
-		<French>
-			<Keywords>awstats,opensource,log,logs,analyseur,analyse,webalyzer,analog,apache,iis,open,source,libre,perl,mail,web,ftp,streaming,serveur,combined,fichier,webmin</Keywords>
-			<Char_Desc_45>Analyseur de log libre</Char_Desc_45>
-			<Char_Desc_80>Analyseur de log libre pour statistiques avancées</Char_Desc_80>
-			<Char_Desc_250>Analyseur de log libre pour statistiques avancées</Char_Desc_250>
-			<Char_Desc_450>AWStats est un analyseur de log synthétisant graphiquement toutes vos statistiques d'accès à vos serveurs web comme les visites, visiteurs uniques, pages, hits, heures de pointes, moteurs de recherche, mot clés, liens invalides et des fonctions inédites comme la détection des visites de robots indexeurs, le plus grand nombre de moteurs de recherche détéctés parmi les produits de sa catégorie, etc... Fonctionne avec les log de tout serveur Web.</Char_Desc_450>
-			<Char_Desc_2000>AWStats est un outils pour générer des statistiques avancés d'un serveur web (mais aussi ftp ou mail) de manière graphique.
-Cet analyseur de log fonctionne en CGI ou en ligne de commande et syntétise toutes les informations que vos logs contiennent en
-quelques pages comme les visites, visiteurs uniques, logins, pages vues, domaines/pays, heures de pointes, visites des robots, 
-type de fichiers, moteurs de recherche, mots et phrases clés, durée des visites, répartition clusters, erreurs HTTP mais aussi
-support java,flash,etc des navigateurs, résolution d'écran, estimation des ajouts aux favoris, etc...
-Les statistiques peuvent etre mise à jour par un navigateur ou un séquenceur.
-AWStats génère un fichier d'informations consolidés pour pouvoir traiter de large sites souvent et rapidement.
-Il peut analyser des logs IIS (W3C log format), fichier log Apache (format NCSA combined/XLF/ELF ou format common/CLF), WebStar et la plupart des logs de serveur web, proxy, wap, streaming serveurs (et aussi serveurs ftp et de mails).
-Ce programme supporte de plus les serveurs virtuels, des plugins et de nombreuses fonctionalités.</Char_Desc_2000>
-		</French>
-		<Spanish>
-			<Keywords />
-			<Char_Desc_45 />
-			<Char_Desc_80 />
-			<Char_Desc_250 />
-			<Char_Desc_450 />
-			<Char_Desc_2000 />
-		</Spanish>
 	</Program_Descriptions>
 	<Web_Info>
 		<Application_URLs>
@@ -84,7 +60,7 @@ Ce programme supporte de plus les serveurs virtuels, des plugins et de nombreuse
 		</Application_URLs>
 		<Download_URLs>
 			<Primary_Download_URL>http://awstats.sourceforge.net/files/awstats.zip</Primary_Download_URL>
-			<Secondary_Download_URL>http://downloads.sourceforge.net/awstats/awstats-6.95.tar.gz</Secondary_Download_URL>
+			<Secondary_Download_URL>http://downloads.sourceforge.net/awstats/awstats-7.0.tar.gz</Secondary_Download_URL>
 			<Additional_Download_URL_1 />
 			<Additional_Download_URL_2 />
 		</Download_URLs>
@@ -93,11 +69,6 @@ Ce programme supporte de plus les serveurs virtuels, des plugins et de nombreuse
 		<Distribution_Permissions />
 		<EULA />
 	</Permissions>
-	<ASP>
-		<ASP_FORM>Y</ASP_FORM>
-		<ASP_Member>N</ASP_Member>
-		<ASP_Member_Number />
-	</ASP>
 	<Affiliates>
 		<Affiliates_FORM>Y</Affiliates_FORM>
 		<Affiliates_VERSION>1.4</Affiliates_VERSION>
@@ -204,4 +175,9 @@ Ce programme supporte de plus les serveurs virtuels, des plugins et de nombreuse
 		<Affiliates_Yaskifo_Product_ID />
 		<Affiliates_Yaskifo_Maximum_Commission_Rate />
 	</Affiliates>
+	<ASP>
+		<ASP_FORM>Y</ASP_FORM>
+		<ASP_Member>N</ASP_Member>
+		<ASP_Member_Number />
+	</ASP>
 </PADGEN_PML>
