@@ -1,4 +1,4 @@
-: Nullsoft Scriptable Install System
+; Nullsoft Scriptable Install System
 ; AWStats.nsi
 ;
 
