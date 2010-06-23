@@ -32,6 +32,8 @@ $FILENAMEZIP="$PROJECT-$MAJOR.$MINOR";
 $FILENAMERPM="$PROJECT-$MAJOR.$MINOR-$RPMSUBVERSION";
 $FILENAMEDEB="$PROJECT-$MAJOR.$MINOR";
 $FILENAMEEXE="$PROJECT-$MAJOR.$MINOR";
+# ubuntu
+$RPMDIR="./../../../rpmbuild";
 if (-d "/usr/src/redhat") {
     # redhat
     $RPMDIR="/usr/src/redhat";
@@ -39,10 +41,6 @@ if (-d "/usr/src/redhat") {
 if (-d "/usr/src/RPM") {
     # mandrake
     $RPMDIR="/usr/src/RPM";
-}
-if (-d "/usr/src/rpm") {
-    # ubuntu
-    $RPMDIR="/usr/src/rpm";
 }
 use vars qw/ $REVISION $VERSION /;
 $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
@@ -296,10 +294,12 @@ rename("$BUILDROOT/$PROJECT","$BUILDROOT/$FILENAMETGZ");
     	if ($target eq 'RPM') {                 # Linux only
     		$BUILDFIC="$FILENAME.spec";
     		unlink $FILENAMETGZ.tgz;
-    		print "Compress $FILENAMETGZ into $FILENAMETGZ.tgz...\n";
-    		$ret=`tar --exclude-from "$SOURCE/make/tgz/tar.exclude" --directory "$BUILDROOT" -czvf "$BUILDROOT/$FILENAMETGZ.tgz" $FILENAMETGZ`;
-
-    		print "Move $FILENAMETGZ.tgz to $RPMDIR/SOURCES/$FILENAMETGZ.tgz\n";
+    		print "Compress $FILENAMETGZ into $FILENAMETGZ.tgz for RPM build...\n";
+    		$cmd="tar --exclude-from \"$SOURCE/make/tgz/tar.exclude\" --directory \"$BUILDROOT\" -czvf \"$BUILDROOT/$FILENAMETGZ.tgz\" $FILENAMETGZ";
+    		print $cmd."\n";
+			$ret=`$cmd`;
+		
+    		print "Move $BUILDROOT/$FILENAMETGZ.tgz to $RPMDIR/SOURCES/$FILENAMETGZ.tgz\n";
     		$cmd="mv \"$BUILDROOT/$FILENAMETGZ.tgz\" \"$RPMDIR/SOURCES/$FILENAMETGZ.tgz\"";
             $ret=`$cmd`;
 
