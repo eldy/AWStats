@@ -90,7 +90,7 @@ The program also supports virtual servers, plugins and a lot of features.</Char_
 		</Application_URLs>
 		<Download_URLs>
 			<Primary_Download_URL>http://awstats.sourceforge.net/files/awstats.zip</Primary_Download_URL>
-			<Secondary_Download_URL>http://downloads.sourceforge.net/awstats/awstats-7.0.tar.gz</Secondary_Download_URL>
+			<Secondary_Download_URL>http://downloads.sourceforge.net/project/awstats/AWStats/7.0/awstats-7.0.tar.gz</Secondary_Download_URL>
 			<Additional_Download_URL_1 />
 			<Additional_Download_URL_2 />
 		</Download_URLs>
