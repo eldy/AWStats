@@ -4577,9 +4577,6 @@ sub ShowInfoHost_geoip_city_maxmind {
 	        my $country;
 	        my $city;
 	        my @res = TmpLookup_geoip_city_maxmind($param);
-			if (!@res){
-				@res=$geoip_city_maxmind->get_city_record($param) if $geoip_city_maxmind;
-			}
 	        if (@res){
 	        	$country = $res[0];
 	        	$city = $res[4];
@@ -4619,9 +4616,6 @@ sub ShowInfoHost_geoip_city_maxmind {
 	        my $country;
 	        my $city;
 	        my @res = TmpLookup_geoip_city_maxmind($param);
-			if (!@res){
-				@res=$geoip_city_maxmind->get_city_record($param) if $geoip_city_maxmind;
-			}
 	        if (@res){
 	        	$country = $res[0];
 	        	$city = $res[4];
