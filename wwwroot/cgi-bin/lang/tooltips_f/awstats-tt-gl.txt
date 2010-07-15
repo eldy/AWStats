@@ -1,0 +1,34 @@
+<!-- Galician tooltips message file by Ignacio Agulló (agullo@ati.es) -->
+<!-- $Revision$ - $Date$ -->
+<div class="CTooltip" id="tt1">
+</div>
+<div class="CTooltip" id="tt2">
+N&uacute;mero de m&aacute;quinas cliente (<b>enderezos IP</b>) usados para conectarse.
+</div>
+<div class="CTooltip" id="tt3">
+</div>
+<div class="CTooltip" id="tt4">
+</div>
+<div class="CTooltip" id="tt5">
+Esta &eacute; a cantidade total de datos transferidos por descargas ftp.<br />
+As unidades est&aacute;n en KB, MB ou GB (Kilooctetos, Megaoctetos ou Gigaoctetos)
+</div>
+<div class="CTooltip" id="tt13">
+</div>
+<div class="CTooltip" id="tt14">
+</div>
+<div class="CTooltip" id="tt15">
+</div>
+<div class="CTooltip" id="tt16">
+</div>
+<div class="CTooltip" id="tt17">
+T&oacute;dalas estat&iacute;sticas relacionadas co tempo bas&eacute;anse na hora do servidor.<br />
+</div>
+<div class="CTooltip" id="tt18">
+Aqu&iacute;, os datos expostos son <b>valores medios</b> (calculados a partir de t&oacute;dolos datos entre o primeiro e derradeiro correo electr&oacute;nico no rango analizado)
+</div>
+<div class="CTooltip" id="tt19">
+Aqu&iacute;, os datos expostos son <b>sumas acumulativas</b> (calculados a partir de t&oacute;dolos datos entre o primeiro e o derradeiro correo electr&oacute;nico no rango analizado)
+</div>
+<div class="CTooltip" id="tt20">
+</div>

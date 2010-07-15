@@ -1,0 +1,63 @@
+<!-- Galician tooltips message file by Ignacio Agulló (agullo@ati.es) -->
+<!-- $Revision$ - $Date$ -->
+<div class="CTooltip" id="tt1">
+</div>
+<div class="CTooltip" id="tt2">
+N&uacute;mero de m&aacute;quinas cliente (<b>enderezos IP</b>) que env&iacute;an correos electr&oacute;nicos.
+</div>
+<div class="CTooltip" id="tt3">
+</div>
+<div class="CTooltip" id="tt4">
+N&uacute;mero de veces que un <b>correo electr&oacute;nico</b> foi transferido con &eacute;xito.<br />
+</div>
+<div class="CTooltip" id="tt5">
+Esta &eacute; a cantidade total de datos transferidos por correo electr&oacute;nico.<br />
+As unidades est&aacute;n en KB, MB ou GB (Kilooctetos, Megaoctetos ou Gigaoctetos)
+</div>
+<div class="CTooltip" id="tt13">
+</div>
+<div class="CTooltip" id="tt14">
+</div>
+<div class="CTooltip" id="tt15">
+</div>
+<div class="CTooltip" id="tt16">
+</div>
+<div class="CTooltip" id="tt17">
+T&oacute;dalas estat&iacute;sticas relacionadas co tempo bas&eacute;anse na hora do servidor.<br />
+</div>
+<div class="CTooltip" id="tt18">
+Aqu&iacute;, os datos expostos son <b>valores medios</b> (calculados a partir de t&oacute;dolos datos entre o primeiro e derradeiro correo electr&oacute;nico no rango analizado)
+</div>
+<div class="CTooltip" id="tt19">
+Aqu&iacute;, os datos expostos son <b>sumas acumulativas</b> (calculados a partir de t&oacute;dolos datos entre a primeiro e o derradeiro correo electr&oacute;nico no rango analizado)
+</div>
+<div class="CTooltip" id="tt20">
+</div>
+<div class="CTooltip" id="tt200"><b>&Eacute;xito:</b> Resposta non est&aacute;ndar de &eacute;xito</div>
+<div class="CTooltip" id="tt211"><b>&Eacute;xito:</b> Estado do sistema, ou axuda do sistema</div>
+<div class="CTooltip" id="tt214"><b>&Eacute;xito:</b> Mensaxe de axuda</div>
+<div class="CTooltip" id="tt220"><b>&Eacute;xito:</b> <domain> Servizo listo</div>
+<div class="CTooltip" id="tt221"><b>&Eacute;xito:</b> <domain> Servizo pechando canal de transmisi&oacute;n</div>
+<div class="CTooltip" id="tt250"><b>&Eacute;xito:</b> O servidor de correo do seu ISP executou un mandato con &eacute;xito e o DNS informa dunha entrega positiva</div>
+<div class="CTooltip" id="tt251"><b>&Eacute;xito:</b> A s&uacute;a mensaxe para un enderezo de correo electr&oacute;nico especificado non &eacute; local para o servidor de correo, pero aceptar&aacute; e reenviar&aacute; a mensaxe a un enderezo de correo electr&oacute;nico de un recipiente diferente</div>
+<div class="CTooltip" id="tt252"><b>&Eacute;xito:</b> O Recipiente non se pode verificar pero o servidor de correo acepta a mensaxe e intenta a entrega</div>
+<div class="CTooltip" id="tt354"><b>&Eacute;xito:</b> Indica que o servidor de correo est&aacute; listo para aceptar a mensaxe ou indicar ao seu cliente de correo que env&iacute;e o corpo da mensaxe despois de que o servidor de correo reciba as cabeceiras da mensaxe.</div>
+<div class="CTooltip" id="tt421"><b>Erro temporal:</b> Esta pode ser unha resposta a calquera mandato se o servizo sabe que debe pecharse.</div>
+<div class="CTooltip" id="tt450"><b>Erro temporal:</b> O servidor de correo do seu ISP indica que un enderezo de correo electr&oacute;nico non existe, a caixa do correo est&aacute; ocupada ou o correo temporalmente rexeitado. Poder&iacute;a ser que a conexi&oacute;n de rede fallara durante o env&iacute;o, ou tam&eacute;n poder&iacute;a ocorrer se o servidor remoto de correo non quere aceptar correo de vostede por algunha raz&oacute;n (enderezo IP, enderezo Desde, Recipiente, etc.)</div>
+<div class="CTooltip" id="tt451"><b>Erro temporal:</b> O servidor de correo do seu ISP indica que o env&iacute;o foi interrumpido, usualmente debido a sobrecarga por demasiadas mensaxes ou fallo de transmisi&oacute;n no que a mensaxe enviada &eacute; v&aacute;lida, pero alg&uacute;n evento temporal evita o env&iacute;o con &eacute;xito da mensaxe. Enviala no futuro pode ter &eacute;xito</div>
+<div class="CTooltip" id="tt452"><b>Erro temporal:</b> O servidor de correo do seu ISP indica, probable sobrecarga por exceso de mensaxes e enviar no futuro pode ter &eacute;xito</div>
+<div class="CTooltip" id="tt453"><b>Erro temporal:</b> Alg&uacute;ns servidores de correo te&ntilde;en a opci&oacute;n de reducir o n&uacute;mero de conexi&oacute;ns concurrentes e tam&eacute;n o n&uacute;mero de mensaxes enviadas por conexi&oacute;n. Se ten un mont&oacute;n de mensaxes para enviar poder&iacute;ase superar o n&uacute;mero m&aacute;ximo de mensaxes por conexi&oacute;n. Para ver se este &eacute; o caso pode tentar de enviar soamente unhas poucas mensaxes a ese dominio por vez e ent&oacute;n seguir incrementando o n&uacute;mero ata que atope o n&uacute;mero m&aacute;ximo aceptado polo servidor</div>
+<div class="CTooltip" id="tt500"><b>Erro permanente:</b> Erro de sintaxe, mandato non reco&ntilde;ecido ou li&ntilde;a de mandato demasiado longa</div>
+<div class="CTooltip" id="tt501"><b>Erro permanente:</b> Erro de sintaxe en par&aacute;metros ou argumentos</div>
+<div class="CTooltip" id="tt502"><b>Erro permanente:</b> Mandato non implementado</div>
+<div class="CTooltip" id="tt503"><b>Erro permanente:</b> O servidor atopou unha mala secuencia de mandatos</div>
+<div class="CTooltip" id="tt504"><b>Erro permanente:</b> Par&aacute;metro de mandato non implementado</div>
+<div class="CTooltip" id="tt521"><b>Erro permanente:</b> Debe estar pop-autenticado antes de poder usar este servidor SMTP e debe usar o seu enderezo de correo no campo Remitente/Desde.</div>
+<div class="CTooltip" id="tt530"><b>Erro permanente:</b> Acceso denegado. &iquest;Unha routada do sendmail?</div>
+<div class="CTooltip" id="tt550"><b>Erro permanente:</b> Enviar un correo electr&oacute;nico a recipientes fora do seu dominio non est&aacute; permitido ou o seu servidor de correo non sabe que vostede ten acceso para usalo para despachar mensaxes e se require autenticaci&oacute;n. Ou para evitar o env&iacute;o de SPAM alg&uacute;ns servidores de correo non permitir&aacute;n (despachar) enviar correo a calquera correo electr&oacute;nico usando a rede e recursos computativos de outra compa&ntilde;&iacute;a.</div>
+<div class="CTooltip" id="tt551"><b>Erro permanente:</b> Usuario non local: por favor probe <forward-path> ou Invalid Address: Relay request denied</div>
+<div class="CTooltip" id="tt552"><b>Erro permanente:</b> A acci&oacute;n de correo requirida foi abortada: excedeuse a capacidade de almacenamento. O servidor de correo do ISP indica, probable sobrecarga por exceso de mensaxes.</div>
+<div class="CTooltip" id="tt553"><b>Erro permanente:</b> A acci&oacute;n de correo requirida non se fixo: o nome da caixa de correo non est&aacute; permitido. Alg&uacute;ns servidores de correo te&ntilde;en a opci&oacute;n de reducir o n&uacute;mero de conexi&oacute;ns concurrentes e tam&eacute;n o n&uacute;mero de mensaxes enviadas por conexi&oacute;n. Se ten un mont&oacute;n de mensaxes para enviar para un dominio, poder&iacute;ase superar o n&uacute;mero m&aacute;ximo de mensaxes por conexi&oacute;n e/ou alg&uacute;n cambio &aacute; mensaxe e/ou destino debe facerse para unha entrega con &eacute;xito.</div>
+<div class="CTooltip" id="tt554"><b>Erro permanente:</b> A acci&oacute;n de correo requirida foi rexeitada: acceso denegado</div>
+<div class="CTooltip" id="tt557"><b>Erro permanente:</b> Demasiadas mensaxes duplicadas. Recurso temporalmente non disp&ntilde;ible indica (probablemente) que hai algunha clase de sistema anti-spam no servidor de correo.</div>
+<div class="CTooltip" id="tt999">&Eacute;ste &eacute; un erro desco&ntilde;ecido. Tal erro non &eacute; indicado polo servidor de correo sen&oacute;n pola ferramenta maillogconvert.pl cando detecta no rexistro que o env&iacute;o non tivo &eacute;xito e o rexistro non cont&eacute;n ningunha explicaci&oacute;n do erro.</div>
