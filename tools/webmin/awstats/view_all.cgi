@@ -133,7 +133,7 @@ my $max_k=0;
 my $nomax_p=0;
 my $nomax_h=0;
 my $nomax_k=0;
-my %ListOfYears=($nowyear=>1);
+my %ListOfYears=(($nowyear-4)=>1,($nowyear-3)=>1,($nowyear-2)=>1,($nowyear-1)=>1,$nowyear=>1);
 # If required year not in list, we add it
 $ListOfYears{$YearRequired}||=$MonthRequired;
 
