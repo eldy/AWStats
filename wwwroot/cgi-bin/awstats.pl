@@ -1846,8 +1846,7 @@ sub Parse_Config {
 				$includeFile =~ s/__${var}__/$ENV{$var}/g;
 			}
 			if ($Debug) { debug( "Found an include : $includeFile", 2 ); }
-			if ( $includeFile !~ /^[\\\/]/ ) {
-
+			if ( $includeFile !~ /^([a-zA-Z]:)?[\\\/]/ ) {
 				# Correct relative include files
 				if ( $FileConfig =~ /^(.*[\\\/])[^\\\/]*$/ ) {
 					$includeFile = "$1$includeFile";
