@@ -16981,6 +16981,15 @@ else { @DOWIndex = ( 0, 1, 2, 3, 4, 5, 6 ); }
 
 # Should we link to ourselves or to a wrapper script
 $AWScript = ( $WrapperScript ? "$WrapperScript" : "$DirCgi$PROG.$Extension" );
+if (index($AWScript,'?')>-1) 
+{
+    $AWScript .= '&amp;';   # $AWScript contains URL parameters
+}
+else 
+{
+    $AWScript .= '?';
+}
+
 
 # Print html header (Need HTMLOutput,Expires,Lang,StyleSheet,HTMLHeadSectionExpires defined by Read_Config, PageCode defined by Read_Language_Data)
 if ( !$HeaderHTMLSent ) { &html_head; }
