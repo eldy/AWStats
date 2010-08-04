@@ -1859,6 +1859,7 @@ sub Parse_Config {
 				);
 				next;
 			}
+            local( *CONFIG_INCLUDE );   # To avoid having parent file closed when include file is closed
 			if ( open( CONFIG_INCLUDE, $includeFile ) ) {
 				&Parse_Config( *CONFIG_INCLUDE, $level + 1, $includeFile );
 				close(CONFIG_INCLUDE);

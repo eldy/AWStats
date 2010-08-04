@@ -196,6 +196,7 @@ sub Parse_Config {
 				warning("Warning: Perl versions before 5.6 cannot handle nested includes");
 				next;
 			}
+            local( *CONFIG_INCLUDE );   # To avoid having parent file closed when include file is closed
 		    if ( open( CONFIG_INCLUDE, $includeFile ) ) {
 				&Parse_Config( *CONFIG_INCLUDE , $level+1, $includeFile);
 				close( CONFIG_INCLUDE );
