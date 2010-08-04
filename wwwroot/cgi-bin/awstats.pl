@@ -17207,7 +17207,12 @@ if ($Debug) {
 "Scan for last history files into DirData='$DirData' with mask='$datemask'"
 	);
 }
-opendir( DIR, "$DirData" );
+
+my $retval = opendir( DIR, "$DirData" );
+if(! $retval) 
+{
+    error( "Failed to open directory $DirData : $!");
+}
 my $regfilesuffix = quotemeta($FileSuffix);
 foreach ( grep /^$PROG$datemask$regfilesuffix\.txt(|\.gz)$/i,
 	file_filt sort readdir DIR )
