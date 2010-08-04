@@ -69,7 +69,8 @@ sub Init_geoip_org_maxmind {
 	# <-----
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
 	debug(" Plugin $PluginName: InitParams=$InitParams",1);
-   	my ($mode,$datafile,$override)=split(/\s+/,$InitParams,3);
+    my ($mode,$tmpdatafile)=split(/\s+/,$InitParams,2);
+    my ($datafile,$override)=split(/\+/,$tmpdatafile,2);
    	if (! $datafile) { $datafile="GeoIPOrg.dat"; }
    	else { $datafile =~ s/%20/ /g; }
 	if ($type eq 'geoippureperl') {
@@ -462,21 +463,24 @@ sub LoadOverrideFile_geoip_org_maxmind{
 		my $conf = (exists(&Get_Config_Name) ? Get_Config_Name() : $SiteConfig);
 		if ($conf && open(GEOIPFILE,"$DirData/$PluginName.$conf.txt"))	{ $filetoload="$DirData/$PluginName.$conf.txt"; }
 		elsif (open(GEOIPFILE,"$DirData/$PluginName.txt"))	{ $filetoload="$DirData/$PluginName.txt"; }
-		else { debug("Did not find $PluginName file \"$DirData/$PluginName.txt\": $!"); }
+		else { debug("No override file \"$DirData/$PluginName.txt\": $!"); }
 	}
-	# This is the fastest way to load with regexp that I know
-	while (<GEOIPFILE>){
-		chomp $_;
-		s/\r//;
-		my @record = split(",", $_);
-		# replace quotes if they were used in the file
-		foreach (@record){ $_ =~ s/"//g; }
-		# store in hash
-		$TmpDomainLookup{$record[0]} = $record[1];
+	if ($filetoload)
+	{
+		# This is the fastest way to load with regexp that I know
+		while (<GEOIPFILE>){
+			chomp $_;
+			s/\r//;
+			my @record = split(",", $_);
+			# replace quotes if they were used in the file
+			foreach (@record){ $_ =~ s/"//g; }
+			# store in hash
+			$TmpDomainLookup{$record[0]} = $record[1];
+		}
+		close GEOIPFILE;
+        debug(" Plugin $PluginName: Overload file loaded: ".(scalar keys %TmpDomainLookup)." entries found.");
 	}
-	close GEOIPFILE;
 	$LoadedOverride = 1;
-	debug(" Plugin $PluginName: Overload file loaded: ".(scalar keys %TmpDomainLookup)." entries found.");
 	return;
 }
 
@@ -488,14 +492,15 @@ sub LoadOverrideFile_geoip_org_maxmind{
 sub TmpLookup_geoip_org_maxmind(){
 	$param = shift;
 	if (!$LoadedOverride){&LoadOverrideFile_geoip_org_maxmind();}
-	my $val;
-	if ($geoip_org_maxmind && 
-	(($type eq 'geoip' && $geoip_org_maxmind->VERSION >= 1.30) || 
-	  $type eq 'geoippureperl' && $geoip_org_maxmind->VERSION >= 1.17)){
-		$val = $TmpDomainLookup{$geoip_org_maxmind->get_ip_address($param)};
-	}
-    else {$val = $TmpDomainLookup{$param};}
-    return $val || '';
+	#my $val;
+	#if ($geoip_org_maxmind && 
+	#(($type eq 'geoip' && $geoip_org_maxmind->VERSION >= 1.30) || 
+	#  $type eq 'geoippureperl' && $geoip_org_maxmind->VERSION >= 1.17)){
+	#	$val = $TmpDomainLookup{$geoip_org_maxmind->get_ip_address($param)};
+	#}
+    #else {$val = $TmpDomainLookup{$param};}
+    #return $val || '';
+    return $TmpDomainLookup{$param};
 }
 
 1;	# Do not remove this line

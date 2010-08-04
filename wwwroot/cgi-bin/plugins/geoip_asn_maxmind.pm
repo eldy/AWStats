@@ -79,7 +79,8 @@ sub Init_geoip_asn_maxmind {
 	# <-----
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
 	debug(" Plugin $PluginName: InitParams=$InitParams",1);
-   	my ($mode,$datafile,$override,$link)=split(/\s+/,$InitParams,4);
+    my ($mode,$tmpdatafile)=split(/\s+/,$InitParams,2);
+    my ($datafile,$override,$link)=split(/\+/,$tmpdatafile,3);
    	if (! $datafile) { $datafile="GeoIPASNum.dat"; }
    	else { $datafile =~ s/%20/ /g; }
 	if ($type eq 'geoippureperl') {
@@ -485,21 +486,25 @@ sub LoadOverrideFile_geoip_asn_maxmind{
 		my $conf = (exists(&Get_Config_Name) ? Get_Config_Name() : $SiteConfig);
 		if ($conf && open(GEOIPFILE,"$DirData/$PluginName.$conf.txt"))	{ $filetoload="$DirData/$PluginName.$conf.txt"; }
 		elsif (open(GEOIPFILE,"$DirData/$PluginName.txt"))	{ $filetoload="$DirData/$PluginName.txt"; }
-		else { debug("Did not find $PluginName file \"$DirData/$PluginName.txt\": $!"); }
+		else { debug("No override file \"$DirData/$PluginName.txt\": $!"); }
 	}
-	# This is the fastest way to load with regexp that I know
-	while (<GEOIPFILE>){
-		chomp $_;
-		s/\r//;
-		my @record = split(",", $_);
-		# replace quotes if they were used in the file
-		foreach (@record){ $_ =~ s/"//g; }
-		# store in hash
-		$TmpLookup{$record[0]} = $record[1];
+	if ($filetoload)
+	{
+		# This is the fastest way to load with regexp that I know
+		while (<GEOIPFILE>){
+			chomp $_;
+			s/\r//;
+			my @record = split(",", $_);
+			# replace quotes if they were used in the file
+			foreach (@record){ $_ =~ s/"//g; }
+			# store in hash
+			$TmpLookup{$record[0]} = $record[1];
+		}
+		close GEOIPFILE;
+        debug(" Plugin $PluginName: Overload file loaded: ".(scalar keys %TmpLookup)." entries found.");
 	}
-	close GEOIPFILE;
 	$LoadedOverride = 1;
-	debug(" Plugin $PluginName: Overload file loaded: ".(scalar keys %TmpLookup)." entries found.");
+	return;
 }
 
 sub trim($)
@@ -518,14 +523,16 @@ sub trim($)
 sub TmpLookup_geoip_asn_maxmind(){
 	$param = shift;
 	if (!$LoadedOverride){&LoadOverrideFile_geoip_asn_maxmind();}
-	my $val;
-	if ($geoip_asn_maxmind && 
-	(($type eq 'geoip' && $geoip_asn_maxmind->VERSION >= 1.30) || 
-	  $type eq 'geoippureperl' && $geoip_asn_maxmind->VERSION >= 1.17)){
-		$val = $TmpLookup{$geoip_asn_maxmind->get_ip_address($param)};
-	}
-    else {$val = $TmpLookup{$param};}
-    return $val || '';
+#	my $val;
+#	if ($geoip_asn_maxmind && 
+#	(($type eq 'geoip' && $geoip_asn_maxmind->VERSION >= 1.30) || 
+#	  $type eq 'geoippureperl' && $geoip_asn_maxmind->VERSION >= 1.17)){
+#		$val = $TmpLookup{$geoip_asn_maxmind->get_ip_address($param)};
+#	}
+#    else {$val = $TmpLookup{$param};}
+#    return $val || '';
+    return $TmpLookup{$param}||'';
+    
 }
 
 

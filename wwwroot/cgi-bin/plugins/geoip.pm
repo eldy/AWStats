@@ -63,8 +63,10 @@ sub Init_geoip {
 	# <-----
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
 	debug(" Plugin $PluginName: InitParams=$InitParams",1);
-   	my ($mode,$datafile,$override)=split(/\s+/,$InitParams,3);
+   	my ($mode,$tmpdatafile)=split(/\s+/,$InitParams,2);
+   	my ($datafile,$override)=split(/\+/,$tmpdatafile,2);
    	if (! $datafile) { $datafile="$PluginName.dat"; }
+    else { $datafile =~ s/%20/ /g; }
 	if ($type eq 'geoippureperl') {
 		if ($mode eq '' || $mode eq 'GEOIP_MEMORY_CACHE')  { $mode=Geo::IP::PurePerl::GEOIP_MEMORY_CACHE(); }
 		else { $mode=Geo::IP::PurePerl::GEOIP_STANDARD(); }
@@ -218,21 +220,25 @@ sub LoadOverrideFile_geoip{
 		my $conf = (exists(&Get_Config_Name) ? Get_Config_Name() : $SiteConfig);
 		if ($conf && open(GEOIPFILE,"$DirData/$PluginName.$conf.txt"))	{ $filetoload="$DirData/$PluginName.$conf.txt"; }
 		elsif (open(GEOIPFILE,"$DirData/$PluginName.txt"))	{ $filetoload="$DirData/$PluginName.txt"; }
-		else { debug("Did not find $PluginName file \"$DirData/$PluginName.txt\": $!"); }
+		else { debug("No override file \"$DirData/$PluginName.txt\": $!"); }
 	}
-	# This is the fastest way to load with regexp that I know
-	while (<GEOIPFILE>){
-		chomp $_;
-		s/\r//;
-		my @record = split(",", $_);
-		# replace quotes if they were used in the file
-		foreach (@record){ $_ =~ s/"//g; }
-		# store in hash
-		$TmpDomainLookup{$record[0]} = $record[1];
+	if ($filetoload)
+	{
+		# This is the fastest way to load with regexp that I know
+		while (<GEOIPFILE>){
+			chomp $_;
+			s/\r//;
+			my @record = split(",", $_);
+			# replace quotes if they were used in the file
+			foreach (@record){ $_ =~ s/"//g; }
+			# store in hash
+			$TmpDomainLookup{$record[0]} = $record[1];
+		}
+		close GEOIPFILE;
+        debug(" Plugin $PluginName: Overload file loaded: ".(scalar keys %TmpDomainLookup)." entries found.");
 	}
-	close GEOIPFILE;
 	$LoadedOverride = 1;
-	debug(" Plugin $PluginName: Overload file loaded: ".(scalar keys %TmpDomainLookup)." entries found.");
+	return;
 }
 
 #-----------------------------------------------------------------------------
@@ -243,14 +249,15 @@ sub LoadOverrideFile_geoip{
 sub TmpLookup_geoip(){
 	$param = shift;
 	if (!$LoadedOverride){&LoadOverrideFile_geoip();}
-	my $val;
-	if ($gi &&
-	(($type eq 'geoip' && $gi->VERSION >= 1.30) || 
-	  $type eq 'geoippureperl' && $gi->VERSION >= 1.17)){
-		$val = $TmpDomainLookup{$gi->get_ip_address($param)};
-	}
-    else {$val = $TmpDomainLookup{$param};}
-    return $val || '';
+	#my $val;
+	#if ($gi &&
+	#(($type eq 'geoip' && $gi->VERSION >= 1.30) || 
+	#  $type eq 'geoippureperl' && $gi->VERSION >= 1.17)){
+	#	$val = $TmpDomainLookup{$gi->get_ip_address($param)};
+	#}
+    #else {$val = $TmpDomainLookup{$param};}
+    #return $val || '';
+    return $TmpDomainLookup{$param}||'';
 }
 
 1;	# Do not remove this line
