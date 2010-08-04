@@ -20,12 +20,15 @@ New features/improvements:
 - Update robots database.
 - Added Download tracking where certain mime types are defined as downloads
   and HTTP status 206 is tracked as download continuation
+- Can use wrapper with parameters in WrapperScript parameter.
 
 Thanks to Chris Larsen (author of most thoses changes).
 
 Fixes: 
 - Webmin module works with new version of webmin.
-- Security fix.
+- Security fix (Traverse directory of LoadPlugin)
+- Security fix (Limit config to defined directory to avoid access to external
+  config file via a nfs or webdav link).
 
 
 ***** 6.95 *****
