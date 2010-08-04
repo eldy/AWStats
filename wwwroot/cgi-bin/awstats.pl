@@ -3065,10 +3065,10 @@ sub Read_Plugins {
 		my ( $pluginfile, $pluginparam ) = split( /\s+/, $plugininfo, 2 );
 		$pluginparam ||=
 		  "";    # If split has only on part, pluginparam is not initialized
-		$pluginfile =~ s/\.pm$//i;
+        $pluginfile =~ s/\.pm$//i;
 		$pluginfile =~ /([^\/\\]+)$/;
-		my $pluginname = $1;    # pluginname is pluginfile without any path
-		                        # Check if plugin is not disabled
+		$pluginfile = Sanitize($1);     # pluginfile is cleaned from any path for security reasons and from .pm
+		my $pluginname = $pluginfile;
 		if ( $NoLoadPlugin{$pluginname} && $NoLoadPlugin{$pluginname} > 0 ) {
 			if ($Debug) {
 				debug(
@@ -7826,10 +7826,10 @@ sub Sanitize {
 	my $stringtoclean = shift;
 	my $full = shift || 0;
 	if ($full) {
-		$stringtoclean =~ s/[^\w]//g;
+		$stringtoclean =~ s/[^\w\d]//g;
 	}
 	else {
-		$stringtoclean =~ s/[^\w\-\\\/\.:\s]//g;
+		$stringtoclean =~ s/[^\w\d\-\\\/\.:\s]//g;
 	}
 	return $stringtoclean;
 }
