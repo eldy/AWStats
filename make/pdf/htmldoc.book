@@ -8,13 +8,14 @@
 ../../docs/awstats_extra.html
 ../../docs/awstats_contrib.html
 ../../docs/awstats_tools.html
-../../docs/awstats_webmin.html
 ../../docs/awstats_glossary.html
 ../../docs/awstats_compare.html
 ../../docs/awstats_benchmark.html
 ../../docs/awstats_security.html
 ../../docs/awstats_faq.html
-../../docs/awstats_license.html
+../../docs/awstats_dolibarr.html
 ../../docs/awstats_dev_plugins.html
 ../../docs/awstats_dev_plugins_graphs.html
 ../../docs/awstats_dev_plugins_hooks.html
+../../docs/awstats_webmin.html
+../../docs/awstats_license.html
