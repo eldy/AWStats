@@ -7982,7 +7982,7 @@ sub Show_Flag_Links {
 				: $lng
 			);
 			print "<a href=\""
-			  . XMLEncode("$AWScript?${NewLinkParams}lang=$lng")
+			  . XMLEncode("$AWScript${NewLinkParams}lang=$lng")
 			  . "\"$NewLinkTarget><img src=\"$DirIcons\/flags\/$flag.png\" height=\"14\" border=\"0\""
 			  . AltTitle("$lngtitle")
 			  . " /></a>&nbsp;\n";
@@ -8646,7 +8646,7 @@ sub HTMLShowFormFilter {
 		$NewLinkParams =~ s/&amp;$//;
 		if ($NewLinkParams) { $NewLinkParams = "${NewLinkParams}&amp;"; }
 		print "\n<form name=\"FormFilter\" action=\""
-		  . XMLEncode("$AWScript?${NewLinkParams}")
+		  . XMLEncode("$AWScript${NewLinkParams}")
 		  . "\" class=\"aws_border\">\n";
 		print
 "<table valign=\"middle\" width=\"99%\" border=\"0\" cellspacing=\"0\" cellpadding=\"2\"><tr>\n";
@@ -9370,7 +9370,7 @@ sub HTMLShowMenuCateg {
 			  . (
 				$ENV{'GATEWAY_INTERFACE'}
 				  || !$StaticLinks
-				? XMLEncode("$AWScript?${NewLinkParams}output=$key")
+				? XMLEncode("$AWScript${NewLinkParams}output=$key")
 				: "$StaticLinks.$key.$StaticExt"
 			  )
 			  . "\"$NewLinkTarget>$menutext->{$key}</a>\n";
@@ -9417,7 +9417,7 @@ sub HTMLShowEmailSendersChart {
 		  . (
 			$ENV{'GATEWAY_INTERFACE'}
 			  || !$StaticLinks
-			? XMLEncode("$AWScript?${NewLinkParams}output=allemails")
+			? XMLEncode("$AWScript${NewLinkParams}output=allemails")
 			: "$StaticLinks.allemails.$StaticExt"
 		  )
 		  . "\"$NewLinkTarget>$Message[80]</a>";
@@ -9426,7 +9426,7 @@ sub HTMLShowEmailSendersChart {
 			  . (
 				$ENV{'GATEWAY_INTERFACE'}
 				  || !$StaticLinks
-				? XMLEncode("$AWScript?${NewLinkParams}output=lastemails")
+				? XMLEncode("$AWScript${NewLinkParams}output=lastemails")
 				: "$StaticLinks.lastemails.$StaticExt"
 			  )
 			  . "\"$NewLinkTarget>$Message[9]</a>";
@@ -9584,7 +9584,7 @@ sub HTMLShowEmailReceiversChart {
 		  . (
 			$ENV{'GATEWAY_INTERFACE'}
 			  || !$StaticLinks
-			? XMLEncode("$AWScript?${NewLinkParams}output=allemailr")
+			? XMLEncode("$AWScript${NewLinkParams}output=allemailr")
 			: "$StaticLinks.allemailr.$StaticExt"
 		  )
 		  . "\"$NewLinkTarget>$Message[80]</a>";
@@ -9593,7 +9593,7 @@ sub HTMLShowEmailReceiversChart {
 			  . (
 				$ENV{'GATEWAY_INTERFACE'}
 				  || !$StaticLinks
-				? XMLEncode("$AWScript?${NewLinkParams}output=lastemailr")
+				? XMLEncode("$AWScript${NewLinkParams}output=lastemailr")
 				: "$StaticLinks.lastemailr.$StaticExt"
 			  )
 			  . "\"$NewLinkTarget>$Message[9]</a>";
@@ -9747,7 +9747,7 @@ sub HTMLTopBanner{
 			$NewLinkTarget = " target=\"_parent\"";
 		}
 		print "<form name=\"FormDateFilter\" action=\""
-		  . XMLEncode("$AWScript?${NewLinkParams}")
+		  . XMLEncode("$AWScript${NewLinkParams}")
 		  . "\" style=\"padding: 0px 0px 0px 0px; margin-top: 0\"$NewLinkTarget>\n";
 	}
 
@@ -9839,7 +9839,7 @@ sub HTMLTopBanner{
 			}
 			print "&nbsp; &nbsp; &nbsp; &nbsp;";
 			print "<a href=\""
-			  . XMLEncode("$AWScript?${NewLinkParams}update=1")
+			  . XMLEncode("$AWScript${NewLinkParams}update=1")
 			  . "\">$Message[74]</a>";
 		}
 		print "</td>";
@@ -9969,7 +9969,7 @@ sub HTMLMenu{
 	{    # If main page asked
 		    # Define link anchor
 		my $linkanchor =
-		  ( $FrameName eq 'mainleft' ? "$AWScript?${NewLinkParams}" : "" );
+		  ( $FrameName eq 'mainleft' ? "$AWScript${NewLinkParams}" : "" );
 		if ( $linkanchor && ( $linkanchor !~ /framename=mainright/ ) ) {
 			$linkanchor .= "framename=mainright";
 		}
@@ -10148,7 +10148,7 @@ sub HTMLMenu{
 				  . (
 					$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
 					? XMLEncode(
-						"$AWScript?${NewLinkParams}output=downloads")
+						"$AWScript${NewLinkParams}output=downloads")
 					: "$StaticLinks.downloads.$StaticExt"
 				  )
 				  . "\"$NewLinkTarget>$Message[80]</a>\n";
@@ -10169,7 +10169,7 @@ sub HTMLMenu{
 				  . (
 					$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
 					? XMLEncode(
-						"$AWScript?${NewLinkParams}output=urldetail")
+						"$AWScript${NewLinkParams}output=urldetail")
 					: "$StaticLinks.urldetail.$StaticExt"
 				  )
 				  . "\"$NewLinkTarget>$Message[80]</a>\n";
@@ -10184,7 +10184,7 @@ sub HTMLMenu{
 				  . (
 					$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
 					? XMLEncode(
-						"$AWScript?${NewLinkParams}output=urlentry")
+						"$AWScript${NewLinkParams}output=urlentry")
 					: "$StaticLinks.urlentry.$StaticExt"
 				  )
 				  . "\"$NewLinkTarget>$Message[104]</a>\n";
@@ -10199,7 +10199,7 @@ sub HTMLMenu{
 				  . (
 					$ENV{'GATEWAY_INTERFACE'}
 					  || !$StaticLinks
-					? XMLEncode("$AWScript?${NewLinkParams}output=urlexit")
+					? XMLEncode("$AWScript${NewLinkParams}output=urlexit")
 					: "$StaticLinks.urlexit.$StaticExt"
 				  )
 				  . "\"$NewLinkTarget>$Message[116]</a>\n";
@@ -10220,7 +10220,7 @@ sub HTMLMenu{
 				  . (
 					$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
 					? XMLEncode(
-						"$AWScript?${NewLinkParams}output=osdetail")
+						"$AWScript${NewLinkParams}output=osdetail")
 					: "$StaticLinks.osdetail.$StaticExt"
 				  )
 				  . "\"$NewLinkTarget>$Message[58]</a>\n";
@@ -10235,7 +10235,7 @@ sub HTMLMenu{
 				  . (
 					$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
 					? XMLEncode(
-						"$AWScript?${NewLinkParams}output=unknownos")
+						"$AWScript${NewLinkParams}output=unknownos")
 					: "$StaticLinks.unknownos.$StaticExt"
 				  )
 				  . "\"$NewLinkTarget>$Message[0]</a>\n";
@@ -10256,7 +10256,7 @@ sub HTMLMenu{
 				  . (
 					$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
 					? XMLEncode(
-						"$AWScript?${NewLinkParams}output=browserdetail")
+						"$AWScript${NewLinkParams}output=browserdetail")
 					: "$StaticLinks.browserdetail.$StaticExt"
 				  )
 				  . "\"$NewLinkTarget>$Message[58]</a>\n";
@@ -10271,7 +10271,7 @@ sub HTMLMenu{
 				  . (
 					$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
 					? XMLEncode(
-						"$AWScript?${NewLinkParams}output=unknownbrowser")
+						"$AWScript${NewLinkParams}output=unknownbrowser")
 					: "$StaticLinks.unknownbrowser.$StaticExt"
 				  )
 				  . "\"$NewLinkTarget>$Message[0]</a>\n";
@@ -10407,10 +10407,7 @@ sub HTMLMenu{
 			print "<tr><td class=\"aws\"><a href=\""
 			  . (
 				$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
-				? XMLEncode(
-					"$AWScript"
-					  . ( ${NewLinkParams} ? "?${NewLinkParams}" : "" )
-				  )
+				? XMLEncode("$AWScript${NewLinkParams}")
 				: "$StaticLinks.$StaticExt"
 			  )
 			  . "\">$Message[76]</a></td></tr>\n";
@@ -12996,7 +12993,7 @@ sub HTMLMainMonthly{
 		print "<tr valign=\"middle\">";
 
 		#if (!$StaticLinks) {
-		#	print "<td><a href=\"".XMLEncode("$AWScript?${NewLinkParams}month=12&year=".($YearRequired-1))."\">&lt;&lt;</a></td>";
+		#	print "<td><a href=\"".XMLEncode("$AWScript${NewLinkParams}month=12&year=".($YearRequired-1))."\">&lt;&lt;</a></td>";
 		#}
 		#else {
 		print "<td>&nbsp;</td>";
@@ -13006,7 +13003,7 @@ sub HTMLMainMonthly{
 			my $monthix = sprintf( "%02s", $ix );
 
 #			if (!$StaticLinks) {
-#				print "<td><a href=\"".XMLEncode("$AWScript?${NewLinkParams}month=$monthix&year=$YearRequired")."\">$MonthNumLib{$monthix}<br />$YearRequired</a></td>";
+#				print "<td><a href=\"".XMLEncode("$AWScript${NewLinkParams}month=$monthix&year=$YearRequired")."\">$MonthNumLib{$monthix}<br />$YearRequired</a></td>";
 #			}
 #			else {
 			print "<td>"
@@ -13027,7 +13024,7 @@ sub HTMLMainMonthly{
 		}
 
 #		if (!$StaticLinks) {
-#			print "<td><a href=\"".XMLEncode("$AWScript?${NewLinkParams}month=1&year=".($YearRequired+1))."\">&gt;&gt;</a></td>";
+#			print "<td><a href=\"".XMLEncode("$AWScript${NewLinkParams}month=1&year=".($YearRequired+1))."\">&gt;&gt;</a></td>";
 #		}
 #		else {
 		print "<td>&nbsp;</td>";
@@ -13903,7 +13900,7 @@ sub HTMLMainDownloads{
 	  . (
 		$ENV{'GATEWAY_INTERFACE'}
 		  || !$StaticLinks
-		? XMLEncode("$AWScript?${NewLinkParams}output=downloads")
+		? XMLEncode("$AWScript${NewLinkParams}output=downloads")
 		: "$StaticLinks.downloads.$StaticExt"
 	  )
 	  . "\"$NewLinkTarget>$Message[80]</a>";
@@ -14231,7 +14228,7 @@ sub HTMLMainCountries{
 	  . (
 		$ENV{'GATEWAY_INTERFACE'}
 		  || !$StaticLinks
-		? XMLEncode("$AWScript?${NewLinkParams}output=alldomains")
+		? XMLEncode("$AWScript${NewLinkParams}output=alldomains")
 		: "$StaticLinks.alldomains.$StaticExt"
 	  )
 	  . "\"$NewLinkTarget>$Message[80]</a>";
@@ -14461,21 +14458,21 @@ sub HTMLMainHosts{
 	  . (
 		$ENV{'GATEWAY_INTERFACE'}
 		  || !$StaticLinks
-		? XMLEncode("$AWScript?${NewLinkParams}output=allhosts")
+		? XMLEncode("$AWScript${NewLinkParams}output=allhosts")
 		: "$StaticLinks.allhosts.$StaticExt"
 	  )
 	  . "\"$NewLinkTarget>$Message[80]</a> &nbsp; - &nbsp; <a href=\""
 	  . (
 		$ENV{'GATEWAY_INTERFACE'}
 		  || !$StaticLinks
-		? XMLEncode("$AWScript?${NewLinkParams}output=lasthosts")
+		? XMLEncode("$AWScript${NewLinkParams}output=lasthosts")
 		: "$StaticLinks.lasthosts.$StaticExt"
 	  )
 	  . "\"$NewLinkTarget>$Message[9]</a> &nbsp; - &nbsp; <a href=\""
 	  . (
 		$ENV{'GATEWAY_INTERFACE'}
 		  || !$StaticLinks
-		? XMLEncode("$AWScript?${NewLinkParams}output=unknownip")
+		? XMLEncode("$AWScript${NewLinkParams}output=unknownip")
 		: "$StaticLinks.unknownip.$StaticExt"
 	  )
 	  . "\"$NewLinkTarget>$Message[45]</a>";
@@ -14609,7 +14606,7 @@ sub HTMLMainLogins{
 	  . (
 		$ENV{'GATEWAY_INTERFACE'}
 		  || !$StaticLinks
-		? XMLEncode("$AWScript?${NewLinkParams}output=alllogins")
+		? XMLEncode("$AWScript${NewLinkParams}output=alllogins")
 		: "$StaticLinks.alllogins.$StaticExt"
 	  )
 	  . "\"$NewLinkTarget>$Message[80]</a>";
@@ -14618,7 +14615,7 @@ sub HTMLMainLogins{
 		  . (
 			$ENV{'GATEWAY_INTERFACE'}
 			  || !$StaticLinks
-			? XMLEncode("$AWScript?${NewLinkParams}output=lastlogins")
+			? XMLEncode("$AWScript${NewLinkParams}output=lastlogins")
 			: "$StaticLinks.lastlogins.$StaticExt"
 		  )
 		  . "\"$NewLinkTarget>$Message[9]</a>";
@@ -14746,14 +14743,14 @@ sub HTMLMainRobots{
 		  . (
 			$ENV{'GATEWAY_INTERFACE'}
 			  || !$StaticLinks
-			? XMLEncode("$AWScript?${NewLinkParams}output=allrobots")
+			? XMLEncode("$AWScript${NewLinkParams}output=allrobots")
 			: "$StaticLinks.allrobots.$StaticExt"
 		  )
 		  . "\"$NewLinkTarget>$Message[80]</a> &nbsp; - &nbsp; <a href=\""
 		  . (
 			$ENV{'GATEWAY_INTERFACE'}
 			  || !$StaticLinks
-			? XMLEncode("$AWScript?${NewLinkParams}output=lastrobots")
+			? XMLEncode("$AWScript${NewLinkParams}output=lastrobots")
 			: "$StaticLinks.lastrobots.$StaticExt"
 		  )
 		  . "\"$NewLinkTarget>$Message[9]</a>",
@@ -15016,7 +15013,7 @@ sub HTMLMainPages{
 	  . (
 		$ENV{'GATEWAY_INTERFACE'}
 		  || !$StaticLinks
-		? XMLEncode("$AWScript?${NewLinkParams}output=urldetail")
+		? XMLEncode("$AWScript${NewLinkParams}output=urldetail")
 		: "$StaticLinks.urldetail.$StaticExt"
 	  )
 	  . "\"$NewLinkTarget>$Message[80]</a>";
@@ -15025,7 +15022,7 @@ sub HTMLMainPages{
 		  . (
 			$ENV{'GATEWAY_INTERFACE'}
 			  || !$StaticLinks
-			? XMLEncode("$AWScript?${NewLinkParams}output=urlentry")
+			? XMLEncode("$AWScript${NewLinkParams}output=urlentry")
 			: "$StaticLinks.urlentry.$StaticExt"
 		  )
 		  . "\"$NewLinkTarget>$Message[104]</a>";
@@ -15035,7 +15032,7 @@ sub HTMLMainPages{
 		  . (
 			$ENV{'GATEWAY_INTERFACE'}
 			  || !$StaticLinks
-			? XMLEncode("$AWScript?${NewLinkParams}output=urlexit")
+			? XMLEncode("$AWScript${NewLinkParams}output=urlexit")
 			: "$StaticLinks.urlexit.$StaticExt"
 		  )
 		  . "\"$NewLinkTarget>$Message[116]</a>";
@@ -15265,14 +15262,14 @@ sub HTMLMainOS{
 	  . (
 		$ENV{'GATEWAY_INTERFACE'}
 		  || !$StaticLinks
-		? XMLEncode("$AWScript?${NewLinkParams}output=osdetail")
+		? XMLEncode("$AWScript${NewLinkParams}output=osdetail")
 		: "$StaticLinks.osdetail.$StaticExt"
 	  )
 	  . "\"$NewLinkTarget>$Message[80]/$Message[58]</a> &nbsp; - &nbsp; <a href=\""
 	  . (
 		$ENV{'GATEWAY_INTERFACE'}
 		  || !$StaticLinks
-		? XMLEncode("$AWScript?${NewLinkParams}output=unknownos")
+		? XMLEncode("$AWScript${NewLinkParams}output=unknownos")
 		: "$StaticLinks.unknownos.$StaticExt"
 	  )
 	  . "\"$NewLinkTarget>$Message[0]</a>";
@@ -15403,14 +15400,14 @@ sub HTMLMainBrowsers{
 	  . (
 		$ENV{'GATEWAY_INTERFACE'}
 		  || !$StaticLinks
-		? XMLEncode("$AWScript?${NewLinkParams}output=browserdetail")
+		? XMLEncode("$AWScript${NewLinkParams}output=browserdetail")
 		: "$StaticLinks.browserdetail.$StaticExt"
 	  )
 	  . "\"$NewLinkTarget>$Message[80]/$Message[58]</a> &nbsp; - &nbsp; <a href=\""
 	  . (
 		$ENV{'GATEWAY_INTERFACE'}
 		  || !$StaticLinks
-		? XMLEncode("$AWScript?${NewLinkParams}output=unknownbrowser")
+		? XMLEncode("$AWScript${NewLinkParams}output=unknownbrowser")
 		: "$StaticLinks.unknownbrowser.$StaticExt"
 	  )
 	  . "\"$NewLinkTarget>$Message[0]</a>";
@@ -15657,7 +15654,7 @@ sub HTMLMainReferrers{
 	  . (
 		$ENV{'GATEWAY_INTERFACE'}
 		  || !$StaticLinks
-		? XMLEncode("$AWScript?${NewLinkParams}output=refererse")
+		? XMLEncode("$AWScript${NewLinkParams}output=refererse")
 		: "$StaticLinks.refererse.$StaticExt"
 	  )
 	  . "\"$NewLinkTarget>$Message[80]</a><br />\n";
@@ -15729,7 +15726,7 @@ sub HTMLMainReferrers{
 	  . (
 		$ENV{'GATEWAY_INTERFACE'}
 		  || !$StaticLinks
-		? XMLEncode("$AWScript?${NewLinkParams}output=refererpages")
+		? XMLEncode("$AWScript${NewLinkParams}output=refererpages")
 		: "$StaticLinks.refererpages.$StaticExt"
 	  )
 	  . "\"$NewLinkTarget>$Message[80]</a><br />\n";
@@ -15876,7 +15873,7 @@ sub HTMLMainKeys{
 			  . (
 				$ENV{'GATEWAY_INTERFACE'}
 				  || !$StaticLinks
-				? XMLEncode("$AWScript?${NewLinkParams}output=keyphrases")
+				? XMLEncode("$AWScript${NewLinkParams}output=keyphrases")
 				: "$StaticLinks.keyphrases.$StaticExt"
 			  )
 			  . "\"$NewLinkTarget>$Message[80]</a>",
@@ -15947,7 +15944,7 @@ sub HTMLMainKeys{
 			  . (
 				$ENV{'GATEWAY_INTERFACE'}
 				  || !$StaticLinks
-				? XMLEncode("$AWScript?${NewLinkParams}output=keywords")
+				? XMLEncode("$AWScript${NewLinkParams}output=keywords")
 				: "$StaticLinks.keywords.$StaticExt"
 			  )
 			  . "\"$NewLinkTarget>$Message[80]</a>",
@@ -16130,7 +16127,7 @@ sub HTMLMainHTTPStatus{
 			  . (
 				$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
 				? XMLEncode(
-					"$AWScript?${NewLinkParams}output=errors$key")
+					"$AWScript${NewLinkParams}output=errors$key")
 				: "$StaticLinks.errors$key.$StaticExt"
 			  )
 			  . "\"$NewLinkTarget>$key</a></td>";
@@ -16304,7 +16301,7 @@ sub HTMLMainExtra{
 	  . (
 		$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
 		? XMLEncode(
-			"$AWScript?${NewLinkParams}output=allextra$extranum")
+			"$AWScript${NewLinkParams}output=allextra$extranum")
 		: "$StaticLinks.allextra$extranum.$StaticExt"
 	  )
 	  . "\"$NewLinkTarget>$Message[80]</a>";
@@ -17174,10 +17171,10 @@ if ( $FrameName eq 'index' ) {
 	# Exit if main frame
 	print "<frameset cols=\"$FRAMEWIDTH,*\">\n";
 	print "<frame name=\"mainleft\" src=\""
-	  . XMLEncode("$AWScript?${NewLinkParams}framename=mainleft")
+	  . XMLEncode("$AWScript${NewLinkParams}framename=mainleft")
 	  . "\" noresize=\"noresize\" frameborder=\"0\" />\n";
 	print "<frame name=\"mainright\" src=\""
-	  . XMLEncode("$AWScript?${NewLinkParams}framename=mainright")
+	  . XMLEncode("$AWScript${NewLinkParams}framename=mainright")
 	  . "\" noresize=\"noresize\" scrolling=\"yes\" frameborder=\"0\" />\n";
 	print "<noframes><body>";
 	print "Your browser does not support frames.<br />\n";
