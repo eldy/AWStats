@@ -4920,7 +4920,8 @@ sub TmpLookup_geoip_city_maxmind(){
 #	}
 #    else {@val = @{$TmpDomainLookup{$param};}}
 #    return @val;
-    return @{$TmpDomainLookup{$param};}||'';
+    if ($TmpDomainLookup{$param}) { return @{$TmpDomainLookup{$param};} }  
+    else { return; }
 }
 
 
