@@ -184,3 +184,5 @@ message173=Versioni di Opera
 message174=Versioni di Safari
 message175=Versioni di Chrome
 message176=Versioni di Konqueror
+message177=.
+message178=File scaricati
