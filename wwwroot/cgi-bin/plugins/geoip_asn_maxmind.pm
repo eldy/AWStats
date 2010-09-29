@@ -93,10 +93,10 @@ sub Init_geoip_asn_maxmind {
 		else { $mode=Geo::IP::GEOIP_STANDARD(); }
 	}
 	# if there is a url in the override field, move it to link
-	if (lc($override) =~ m/^http/) { $link = $override; }
+	if (lc($override) =~ m/^http/) { $link = $override; $override = ''; }
 	elsif ($override) { $override =~ s/%20/ /g; $OverrideFile=$override; }
 	if ($link){$LookupLink=$link;}
-	debug(" Plugin $PluginName: GeoIP initialized type=$type mode=$mode, link=$link",1);
+	debug(" Plugin $PluginName: GeoIP initialized type=$type mode=$mode, override=$override, link=$link",1);
 	if ($type eq 'geoippureperl') {
 		$geoip_asn_maxmind = Geo::IP::PurePerl->open($datafile, $mode);
 	} else {
