@@ -6893,7 +6893,6 @@ sub Save_History {
 		  . ( scalar keys %_downloads )
 		  . "${xmlbe}\n";
 		for my $u (sort {$_downloads{$b}->{'AWSTATS_HITS'} <=> $_downloads{$a}->{'AWSTATS_HITS'}}(keys %_downloads) ){
-			#if (!$_downloads{$u}->{'AWSTATS_HITS'}){next;} # TODO - fix some strange bug where other files are getting in to the hash 
 			print HISTORYTMP "${xmlrb}"
 			  . XMLEncodeForHisto($u)
 			  . "${xmlrs}"
@@ -13216,14 +13215,17 @@ sub HTMLMainDaily{
 			$max_k = $DayBytes{ $year . $month . $day };
 		}
 	}
+    $average_v = sprintf( "%.2f", $AverageVisits );
+    $average_p = sprintf( "%.2f", $AveragePages );
+    $average_h = sprintf( "%.2f", $AverageHits );
+    $average_k = sprintf( "%.2f", $AverageBytes );
 
 	# Show bars for day
 	my $graphdone=0;
 	foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
 	{
 		my @blocklabel = ();
-		foreach
-		  my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )
+		foreach my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )
 		{
 			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
 			my $year  = $1;
@@ -13249,17 +13251,12 @@ sub HTMLMainDaily{
 		  ( "$color_v", "$color_p", "$color_h", "$color_k" );
 		my @valmax   = ( $max_v,   $max_h,   $max_h,   $max_k );
 		my @valtotal = ( $total_v, $total_p, $total_h, $total_k );
-		$average_v = sprintf( "%.2f", $AverageVisits );
-		$average_p = sprintf( "%.2f", $AveragePages );
-		$average_h = sprintf( "%.2f", $AverageHits );
-		$average_k = sprintf( "%.2f", $AverageBytes );
 		my @valaverage =
 		  ( $average_v, $average_p, $average_h, $average_k );
 		my @valdata = ();
 		my $xx      = 0;
 
-		foreach
-		  my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )
+		foreach my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )
 		{
 			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
 			my $year  = $1;
@@ -13284,11 +13281,11 @@ sub HTMLMainDaily{
 		);
 		$graphdone=1;
 	}
+	# If graph was not printed by a plugin
 	if (! $graphdone) {
 		print "<table>\n";
 		print "<tr valign=\"bottom\">\n";
-		foreach
-		  my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )
+		foreach my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )
 		{
 			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
 			my $year  = $1;
@@ -13359,7 +13356,7 @@ sub HTMLMainDaily{
 		}
 		print "<td>&nbsp;</td>";
 
-		# Show average value cell
+		# Show average value bars
 		print "<td>";
 		my $bredde_v = 0;
 		my $bredde_p = 0;
@@ -18341,10 +18338,6 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 					if (int($field[$pos_code]) == 200 && $MimeHashLib{$extension}[1] eq 'd'){
 						$_downloads{$urlwithnoquery}->{'AWSTATS_HITS'}++;
 						$_downloads{$urlwithnoquery}->{'AWSTATS_SIZE'} += ($pos_size>0 ? int($field[$pos_size]) : 0);
-						# TODO - debug this - tracking by host this way corrupts and allows other mimes in, may be array related
-						#$_downloads{$urlwithnoquery}->{$field[$pos_host]}[0] = $timerecord;
-						#$_downloads{$urlwithnoquery}->{$field[$pos_host]}[1] = $timerecord;
-						#if ($pos_size>0){$_downloads{$urlwithnoquery}->{$field[$pos_host]}[2] = int($field[$pos_size]);}
 						if ($Debug) { debug( " New download detected: '$urlwithnoquery'", 2 ); }
 					}
 				# handle 206 download continuation message IF we had a successful 200 before, otherwise it goes in errors
@@ -19937,15 +19930,16 @@ END_ERROR_TEXT
 # Save current processed break section
 # If lastprocesseddate > 0 means there is at least one approved new record in log or at least one existing history file
 	if ( $lastprocesseddate > 0 )
-	{    # TODO: Do not save if we are sure a flush was just already done
-		    # Get last line
+	{
+	    # TODO: Do not save if we are sure a flush was just already done
+		# Get last line
 		seek( LOG, $lastlineoffset, 0 );
 		my $line = <LOG>;
 		chomp $line;
 		$line =~ s/\r$//;
-		if ( !$NbOfLinesParsed ) {
-
-# TODO If there was no lines parsed (log was empty), we only update LastUpdate line with YYYYMMDDHHMMSS 0 0 0 0 0
+		if ( !$NbOfLinesParsed ) 
+		{
+            # TODO If there was no lines parsed (log was empty), we only update LastUpdate line with YYYYMMDDHHMMSS 0 0 0 0 0
 			&Read_History_With_TmpUpdate(
 				$lastprocessedyear, $lastprocessedmonth,
 				$lastprocessedday,  $lastprocessedhour,
@@ -20470,8 +20464,7 @@ if ( scalar keys %HTMLOutput ) {
 		my $max_k = 0;
 		my $max_v = 0;
 		my $average_nb = 0;
-		foreach my $daycursor (
-			$firstdaytocountaverage .. $lastdaytocountaverage )
+		foreach my $daycursor ($firstdaytocountaverage .. $lastdaytocountaverage )
 		{
 			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
 			my $year  = $1;
