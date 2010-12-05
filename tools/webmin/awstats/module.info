@@ -7,4 +7,4 @@ depends=webmin 1.510
 depends=cron 1.000
 depends=logrotate 1.131
 desc_fr=Analyseur de Logs AWStats
-long_desc_fr=Génération et analyse graphique de statistiques à partir des logs de server web, ftp ou mail
+long_desc_fr=Generation et analyse graphique de statistiques a partir des logs de server web, ftp ou mail
