@@ -1,9 +1,9 @@
 <?xml version="1.0" ?>
 <XML_DIZ_INFO>
 	<MASTER_PAD_VERSION_INFO>
-		<MASTER_PAD_VERSION>3.10</MASTER_PAD_VERSION>
-		<MASTER_PAD_EDITOR>PADGen 3.1.0.41 http://www.padgen.org</MASTER_PAD_EDITOR>
-		<MASTER_PAD_INFO>Portable Application Description, or PAD for short, is a data set that is used by shareware authors to disseminate information to anyone interested in their software products. To find out more go to http://www.asp-shareware.org/pad</MASTER_PAD_INFO>
+		<MASTER_PAD_VERSION>3.11</MASTER_PAD_VERSION>
+		<MASTER_PAD_EDITOR>PADGen 3.1.1.47 http://www.padgen.org</MASTER_PAD_EDITOR>
+		<MASTER_PAD_INFO>Portable Application Description, or PAD for short, is a data set that is used by shareware authors to disseminate information to anyone interested in their software products. To find out more go to http://pad.asp-software.org</MASTER_PAD_INFO>
 	</MASTER_PAD_VERSION_INFO>
 	<Company_Info>
 		<Company_Name>Laurent Destailleur</Company_Name>
@@ -35,8 +35,8 @@
 	<Program_Info>
 		<Program_Name>AWStats</Program_Name>
 		<Program_Version>7.0</Program_Version>
-		<Program_Release_Month>06</Program_Release_Month>
-		<Program_Release_Day>22</Program_Release_Day>
+		<Program_Release_Month>12</Program_Release_Month>
+		<Program_Release_Day>06</Program_Release_Day>
 		<Program_Release_Year>2010</Program_Release_Year>
 		<Program_Cost_Dollars />
 		<Program_Cost_Other_Code />
@@ -72,11 +72,16 @@
 			<Char_Desc_80>AWStats - Free log file analyzer for advanced web statistics (GNU GPL)</Char_Desc_80>
 			<Char_Desc_250>AWStats is a free powerful and featureful server logfile analyzer that shows you</Char_Desc_250>
 			<Char_Desc_450>AWStats is a free powerful and featureful web server logfile analyzer (Perl script) that shows you all your Web statistics including visits, unique visitors, pages, hits, rush hours, os, browser's versions, search engines, keywords, robots visits, broken links and more... Works with all major web, wap, proxy servers and some mail and ftp servers. Works as a CGI and/or from command line. Distributed under GNU General Public License.</Char_Desc_450>
-			<Char_Desc_2000>AWStats is a free powerful and featureful tool that generates advanced web (but also ftp or mail) server
-statistics, graphically. This log analyzer works as a CGI or from command line and shows you all possible information your log contains, in few graphical web pages like visits, unique vistors, authenticated users, pages, domains/countries, OS busiest times, robot visits, type of files, search engines/keywords used, visits duration, screen size, HTTP errors and more...
-Statistics can be updated from a browser or your scheduler.
-It uses a partial information file to be able to process large log files, often and quickly.
-It can analyze log files from IIS (W3C log format), Apache log files (NCSA combined/XLF/ELF log format or common/CLF log format), WebStar and most of all web, proxy, wap, streaming servers (and ftp servers or mail logs).
+			<Char_Desc_2000>AWStats is a free powerful and featureful tool that generates advanced web (but also ftp or mail) server
+
+statistics, graphically. This log analyzer works as a CGI or from command line and shows you all possible information your log contains, in few graphical web pages like visits, unique vistors, authenticated users, pages, domains/countries, OS busiest times, robot visits, type of files, search engines/keywords used, visits duration, screen size, HTTP errors and more...
+
+Statistics can be updated from a browser or your scheduler.
+
+It uses a partial information file to be able to process large log files, often and quickly.
+
+It can analyze log files from IIS (W3C log format), Apache log files (NCSA combined/XLF/ELF log format or common/CLF log format), WebStar and most of all web, proxy, wap, streaming servers (and ftp servers or mail logs).
+
 The program also supports virtual servers, plugins and a lot of features.</Char_Desc_2000>
 		</English>
 	</Program_Descriptions>
@@ -99,10 +104,15 @@ The program also supports virtual servers, plugins and a lot of features.</Char_
 		<Distribution_Permissions />
 		<EULA />
 	</Permissions>
+	<ASP>
+		<ASP_FORM>Y</ASP_FORM>
+		<ASP_Member>N</ASP_Member>
+		<ASP_Member_Number />
+	</ASP>
 	<Affiliates>
 		<Affiliates_FORM>Y</Affiliates_FORM>
 		<Affiliates_VERSION>1.4</Affiliates_VERSION>
-		<Affiliates_URL>http://www.asp-shareware.org/pad/extensions/Affiliates.htm</Affiliates_URL>
+		<Affiliates_URL>http://pad.asp-software.org/extensions/Affiliates.htm</Affiliates_URL>
 		<Affiliates_Information_Page />
 		<Affiliates_Avangate_Order_Page />
 		<Affiliates_Avangate_Vendor_ID />
@@ -205,9 +215,4 @@ The program also supports virtual servers, plugins and a lot of features.</Char_
 		<Affiliates_Yaskifo_Product_ID />
 		<Affiliates_Yaskifo_Maximum_Commission_Rate />
 	</Affiliates>
-	<ASP>
-		<ASP_FORM>Y</ASP_FORM>
-		<ASP_Member>N</ASP_Member>
-		<ASP_Member_Number />
-	</ASP>
 </XML_DIZ_INFO>
