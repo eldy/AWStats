@@ -42,6 +42,10 @@ if (-d "/usr/src/RPM") {
     # mandrake
     $RPMDIR="/usr/src/RPM";
 }
+if (-d "/home/ldestail/rpmbuild") {
+    # debian
+    $RPMDIR="/home/ldestail/rpmbuild";
+}
 use vars qw/ $REVISION $VERSION /;
 $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
 $VERSION="1.0 (build $REVISION)";
@@ -120,7 +124,7 @@ while (! $found) {
 		printf(" %d - %3s    (%s)\n",$cpt,$target,"Need ".$REQUIREMENTTARGET{$target});
 	}
 
-	# On demande de choisir le fichier � passer
+	# On demande de choisir le fichier a passer
 	print "Choose one package number or several separated with space: ";
 	$NUM_SCRIPT=<STDIN>; 
 	chomp($NUM_SCRIPT);
