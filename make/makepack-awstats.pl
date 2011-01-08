@@ -332,13 +332,14 @@ rename("$BUILDROOT/$PROJECT","$BUILDROOT/$FILENAMETGZ");
     }
     
 	if ($target eq 'EXE') {
-    		unlink "$FILENAMEEXE.exe";
-    		print "Compress into $FILENAMEEXE.exe by $FILENAME.nsi...\n";
-    		$command="\"$REQUIREMENTTARGET{$target}\" /DMUI_VERSION_DOT=$MAJOR.$MINOR /X\"SetCompressor bzip2\" \"$SOURCE\\make\\exe\\$FILENAME.nsi\"";
+    	unlink "$FILENAMEEXE.exe";
+    	print "Compress into $FILENAMEEXE.exe by $FILENAME.nsi...\n";
+    	$command="\"$REQUIREMENTTARGET{$target}\" /DMUI_VERSION_DOT=$MAJOR.$MINOR /X\"SetCompressor bzip2\" \"$SOURCE\\make\\exe\\$FILENAME.nsi\"";
         print "$command\n";
 		$ret=`$command`;
-		print "Move $FILENAMEEXE.exe to $DESTI\n";
-		rename("$SOURCE\\make\\exe\\$FILENAMEEXE.exe","$DESTI/$FILENAMEEXE.exe");
+		print "Move $SOURCE\\make\\exe\\$FILENAMEEXE.exe to $DESTI\n";
+		rename("$SOURCE/make/exe/$FILENAMEEXE.exe","$DESTI/$FILENAMEEXE.exe");
+#		rename("$SOURCE\\make\\exe\\$FILENAMEEXE.exe","$DESTI\\$FILENAMEEXE.exe");
 		next;
 	}
 

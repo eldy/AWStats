@@ -103,7 +103,7 @@
   LangString SETUP_SUBTITLE ${LANG_ENGLISH} "Building AWStats config files"
 
   LangString PERLCHECK_TITLE ${LANG_FRENCH} "Verification Perl"
-  LangString PERLCHECK_SUBTITLE ${LANG_FRENCH} "Verifie sur une interpreteur Perl operationnel peut etre trouve"
+  LangString PERLCHECK_SUBTITLE ${LANG_FRENCH} "Verifie si un interpreteur Perl operationnel peut etre trouve"
   LangString SETUP_TITLE ${LANG_FRENCH} "Configuration"
   LangString SETUP_SUBTITLE ${LANG_FRENCH} "Construction des fichiers de configuration AWStats"
 
