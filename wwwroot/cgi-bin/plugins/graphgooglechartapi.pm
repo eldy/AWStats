@@ -484,6 +484,9 @@ sub Chart_Map(){
 	# loop and dump
     my $i = 0;
     for ($i .. (scalar @$blocklabel - 1)) {
+		# fix case of uk
+        if (@$blocklabel[$i] eq 'Great Britain'){ @$blocklabel[$i] =
+'United Kingdom'; }
     	print "\tdata.setValue($i, 0, \"".@$blocklabel[$i]."\");\n";
     	print "\tdata.setValue($i, 1, ".@$valdata[$i].");\n";
     	$i++;
