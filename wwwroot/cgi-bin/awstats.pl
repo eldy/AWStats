@@ -8787,7 +8787,7 @@ sub HTMLShowURLInfo {
 			{    # URL seems to be extracted from a proxy log file
 				print "<a href=\""
 				  . XMLEncode("$newkey")
-				  . "\" target=\"url\">"
+				  . "\" target=\"url\" rel=\"nofollow\">"
 				  . XMLEncode($nompage) . "</a>";
 			}
 			elsif ( $newkey =~ /^\// )
@@ -8802,7 +8802,7 @@ sub HTMLShowURLInfo {
 				}
 				print "<a href=\""
 				  . XMLEncode("$urlprot://$SiteDomain$newkey")
-				  . "\" target=\"url\">"
+				  . "\" target=\"url\" rel=\"nofollow\">"
 				  . XMLEncode($nompage) . "</a>";
 			}
 			else {
