@@ -1022,10 +1022,6 @@ a "Page" (but only like a "Hit") if CGI prog does not end with a defined extensi
 correctly in their statistics. AWStats use on oposite policy, assuming a file is a page except if 
 type is in a list (See <a href="awstats_config.html#NotPageList">NotPageList</a> parameter). Error rate
 with a such policy is lower.<br>
-<li> AWStats is able to detect robots visits. Most analyzers think robots visits are human visitors.
-This error make them to report more visits and visitors than reality.
-When AWStats reports a "1 visitor", it means "1 human visitor" (even if it's not posible to detect
-all robots, most of them are detected). "Robots visitors" are reported separately in the "Robots/Spiders visitors" chart.<br>
 <li> Some log analyzers use the "Hits" to count visitors. This is a very bad way of working :
 Some visitors use a lot of proxy servers to surf (ie: AOL users), this means it's possible that several
 hosts (with several IP addresses) are used to reach your site for only one visitor (ie: one proxy server download
@@ -1040,12 +1036,24 @@ visits, entry and exit pages. But there is nothing that guaranties this and some
 are only "nearly" sorted, above all log files on highly loaded servers.
 AWStats has an advanced parsing algorithm that is able to count 
 correctly visits, entry and exit pages even if log file is only "nearly" sorted.<br>
+<li>AWStats does not count twice (with default setup) redirects made by server "rewrite rules". Such rule makes two hits into
+log files, so most log analyzer count them twice, but only one page were "viewed".<br>
 <li> Then, there is internal bugs in log analyzers that make reports wrong.
 For example, a lot of users have reported that Webalizer "doubles" the number of visits or visitors
 in some circumstances.<br>
-<b>There is also other reasons, however those points explains only small differences:</b><br>
-<li> To differenciate new visits of a same visitor, log analyers uses a visit time-out. If value differs,
-then results differ (on visit count and entry and exit pages).
+<li> AWStats is able to detect robots visits. Most analyzers think robots visits are human visitors.
+This error make them to report more visits and visitors than reality.
+When AWStats reports a "1 visitor", it means "1 human visitor" (even if it's not posible to detect
+all robots, most of them are detected). "Robots visitors" are reported separately in the "Robots/Spiders visitors" chart.
+AWStats is a log analyzer with one of the most important robot database. In fact, a lot of other log analyzer
+uses an update copy of the AWStats robot database for their own use.
+However, even if a robot database is up to date, there is still some robot hits that are not possible to detect
+using log analyzing. For this reason, AWStats still report 10% more visits than reality because of such robots.
+This is the major reason that create differences between a log analyzer and a HTML tagger system like Google Analytics.<br>
+<b>Now let see other minor reasons. However those points explains only very small differences (<1%. See all previous points
+if you have more important difference):</b><br>
+<li> To differenciate new visits from same visitor, log analysers uses a visit time-out. If value differs,
+then result differs (for visit count and entry and exit pages).
 A such time-out is a fixed value (For example 60 minutes) meaning if a visitor make a hit
 59 minutes after downloading the previous page, it's the same visits, if he make it 61 minutes after, it's a new visit.
 Of course, there is no realy difference between 59 and 61, but couting visits without
@@ -1059,8 +1067,6 @@ but nearly value defined).<br>
 AWStats has a larger browsers, os', search engines and robots database, so reports concerning this are more accurate.<br>
 AWStats has url syntax rules to find keywords or keyphrases used to find your site, but AWStats has also
 an algorithm to detect keywords of unknown search engines with unknown url syntax rule.<br>
-AWStats does not count twice (by default) redirects made by rewrite rules that makes two hits into
-log files but that are only one page "viewed".<br>
 Etc...<br>
 <br>
 If you want to check how serious your log analyzer is, try to parse the following log file.
@@ -1128,7 +1134,7 @@ all commercial products):<br>
 80.8.55.5 - - [01/Jan/2001:12:02:05 +0200] "GET /pagefromabot5.html HTTP/1.0" 200 7009 "-" "wget"
 80.8.55.5 - - [01/Jan/2001:12:02:05 +0200] "GET /pagefromabot6.html HTTP/1.0" 200 7009 "-" "libwww"
 
-80.8.55.6 - john [01/Jan/2001:13:00:00 +0100] "GET /cgi-bin/order.cgi?x=a&family=a&productId=998&titi=i&y=b&y=b HTTP/1.0" 200 7009 "http://www.google.com/search?sourceid=navclient&ie=utf-8&oe=utf-8&q=ma%C3%AEtre+élève" "SAGEM-myX-5m/1.0_UP.Browser/6.1.0.6.1.103_(GUI)_MMP/1.0_(Google_WAP_Proxy/1.0)"
+80.8.55.6 - john [01/Jan/2001:13:00:00 +0100] "GET /cgi-bin/order.cgi?x=a&family=a&productId=998&titi=i&y=b&y=b HTTP/1.0" 200 7009 "http://www.google.com/search?sourceid=navclient&ie=utf-8&oe=utf-8&q=ma%C3%AEtre+ï¿½lï¿½ve" "SAGEM-myX-5m/1.0_UP.Browser/6.1.0.6.1.103_(GUI)_MMP/1.0_(Google_WAP_Proxy/1.0)"
 80.8.55.6 - john [01/Jan/2001:13:00:00 +0100] "GET /images/image1.gif HTTP/1.0" 200 364 "http://www.google.fr/search?q=cache:dccTQ_Zn4isJ:www.chiensderace.com/cgi-bin/liste_annonces.pl%3FTYPE%3D5%26ORIGINE%3Dchiensderace+labrador+chiensderace&hl=en&lr=lang_en|lang_fr&ie=UTF-8" "SAGEM-myX-5m/1.0_UP.Browser/6.1.0.6.1.103_(GUI)_MMP/1.0_(Google_WAP_Proxy/1.0)"
 80.8.55.6 - john [01/Jan/2001:13:00:00 +0100] "GET /images/image2.gif HTTP/1.0" 200 364 "http://www.google.fr/search?q=cache:dccTQ_Zn4isJ:www.chiensderace.com/cgi-bin/liste_annonces.pl%3FTYPE%3D5%26ORIGINE%3Dchiensderace+labrador+chiensderace&hl=en&lr=lang_en|lang_fr&ie=UTF-8" "SAGEM-myX-5m/1.0_UP.Browser/6.1.0.6.1.103_(GUI)_MMP/1.0_(Google_WAP_Proxy/1.0)"
 80.8.55.6 - john [01/Jan/2001:13:00:00 +0100] "GET /images/image3.gif HTTP/1.0" 200 364 "http://www.google.fr/search?q=cache:dccTQ_Zn4isJ:www.chiensderace.com/cgi-bin/liste_annonces.pl%3FTYPE%3D5%26ORIGINE%3Dchiensderace+labrador+chiensderace&hl=en&lr=lang_en|lang_fr&ie=UTF-8" "SAGEM-myX-5m/1.0_UP.Browser/6.1.0.6.1.103_(GUI)_MMP/1.0_(Google_WAP_Proxy/1.0)"
