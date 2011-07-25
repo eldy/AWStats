@@ -795,7 +795,7 @@ sub html_head {
 			else { print "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?>\n"; }
 			if ( $FrameName ne 'index' ) {
 				print
-"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n";
+"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n";
 			}
 			else {
 				print
@@ -807,11 +807,11 @@ sub html_head {
 		else {
 			if ( $FrameName ne 'index' ) {
 				print
-"<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n";
+"<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n";
 			}
 			else {
 				print
-"<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Frameset//EN\">\n";
+"<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Frameset//EN\" \"http://www.w3.org/TR/html4/frameset.dtd\">\n";
 			}
 			print '<html lang="' . $Lang . '"'
 			  . ( $PageDir ? ' dir="rtl"' : '' ) . ">\n";
@@ -885,14 +885,6 @@ sub html_head {
 
 # A STYLE section must be in head section. Do not use " for number in a style section
 			print "<style type=\"text/css\">\n";
-			if ( $BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml' )
-			{
-				print( $ENV{'HTTP_USER_AGENT'} =~ /Firebird/i
-					? "<!--\n"
-					: "<![CDATA[\n"
-				);
-			}
-			else { print "<!--\n"; }
 
 			if ( !$StyleSheet ) {
 				print
@@ -943,14 +935,6 @@ EOF
 				&$function();
 			}
 
-			if ( $BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml' )
-			{
-				print( $ENV{'HTTP_USER_AGENT'} =~ /Firebird/i
-					? "//-->\n"
-					: "]]>\n"
-				);
-			}
-			else { print "//-->\n"; }
 			print "</style>\n";
 		}
 
@@ -9874,7 +9858,7 @@ sub HTMLTopBanner{
 				print "<option"
 				  . (
 					  "$MonthRequired" eq "$monthix"
-					? " selected=\"true\""
+					? " selected=\"selected\""
 					: ""
 				  )
 				  . " value=\"$monthix\">$MonthNumLib{$monthix}</option>\n";
@@ -13010,13 +12994,13 @@ sub HTMLMainMonthly{
 				!$StaticLinks
 				  && $monthix == $nowmonth
 				  && $YearRequired == $nowyear
-				? '<font class="currentday">'
+				? '<span class="currentday">'
 				: ''
 			  );
 			print "$MonthNumLib{$monthix}<br />$YearRequired";
 			print(   !$StaticLinks
 				  && $monthix == $nowmonth
-				  && $YearRequired == $nowyear ? '</font>' : '' );
+				  && $YearRequired == $nowyear ? '</span>' : '' );
 			print "</td>";
 
 			#					}
@@ -13073,13 +13057,13 @@ sub HTMLMainMonthly{
 				!$StaticLinks
 				  && $monthix == $nowmonth
 				  && $YearRequired == $nowyear
-				? '<font class="currentday">'
+				? '<span class="currentday">'
 				: ''
 			  );
 			print "$MonthNumLib{$monthix} $YearRequired";
 			print(   !$StaticLinks
 				  && $monthix == $nowmonth
-				  && $YearRequired == $nowyear ? '</font>' : '' );
+				  && $YearRequired == $nowyear ? '</span>' : '' );
 			print "</td>";
 			if ( $ShowMonthStats =~ /U/i ) {
 				print "<td>",
@@ -13426,7 +13410,7 @@ sub HTMLMainDaily{
 				  && $day == $nowday
 				  && $month == $nowmonth
 				  && $year == $nowyear
-				? '<font class="currentday">'
+				? '<span class="currentday">'
 				: ''
 			);
 			print "$day<br /><span style=\"font-size: "
@@ -13438,7 +13422,7 @@ sub HTMLMainDaily{
 			print(   !$StaticLinks
 				  && $day == $nowday
 				  && $month == $nowmonth
-				  && $year == $nowyear ? '</font>' : '' );
+				  && $year == $nowyear ? '</span>' : '' );
 			print "</td>\n";
 		}
 		print "<td>&nbsp;</td>";
@@ -13500,7 +13484,7 @@ sub HTMLMainDaily{
 				  && $day == $nowday
 				  && $month == $nowmonth
 				  && $year == $nowyear
-				? '<font class="currentday">'
+				? '<span class="currentday">'
 				: ''
 			  );
 			print Format_Date( "$year$month$day" . "000000", 2 );
@@ -13803,7 +13787,7 @@ sub HTMLMainDaysofWeek{
 						  && $_ == ( $nowwday - 1 )
 						  && $MonthRequired == $nowmonth
 						  && $YearRequired == $nowyear
-						? '<font class="currentday">'
+						? '<span class="currentday">'
 						: ''
 					  );
 					print $Message[ $_ + 84 ];
@@ -13847,14 +13831,14 @@ sub HTMLMainDaysofWeek{
 						  && $_ == ( $nowwday - 1 )
 						  && $MonthRequired == $nowmonth
 						  && $YearRequired == $nowyear
-						? '<font class="currentday">'
+						? '<span class="currentday">'
 						: ''
 					  );
 					print $Message[ $_ + 84 ];
 					print(   !$StaticLinks
 						  && $_ == ( $nowwday - 1 )
 						  && $MonthRequired == $nowmonth
-						  && $YearRequired == $nowyear ? '</font>' : '' );
+						  && $YearRequired == $nowyear ? '</span>' : '' );
 					print "</td>";
 					if ( $ShowDaysOfWeekStats =~ /P/i ) {
 						print "<td>", Format_Number(int($avg_dayofweek_p[$_])), "</td>";
