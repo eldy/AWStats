@@ -825,7 +825,7 @@ sub html_head {
 
 		# Affiche tag meta generator
 		print
-"<meta name=\"generator\" content=\"AWStats $VERSION from config file awstats.$SiteConfig.conf (http://awstats.sourceforge.net)\"$endtag\n";
+"<meta name=\"generator\" content=\"AWStats $VERSION from config file awstats.$SiteConfig.conf (http://www.awstats.org)\"$endtag\n";
 
 		# Affiche tag meta robots
 		if ($MetaRobot) {
@@ -986,7 +986,7 @@ sub html_end {
 			print
 "<span dir=\"ltr\" style=\"font: 11px verdana, arial, helvetica; color: #$color_text;\">";
 			print
-"<b>Advanced Web Statistics $VERSION</b> - <a href=\"http://awstats.sourceforge.net\" target=\"awstatshome\">";
+"<b>Advanced Web Statistics $VERSION</b> - <a href=\"http://www.awstats.org\" target=\"awstatshome\">";
 			print $Message[169] . " $PROG";
 			if ($listplugins) {
 				my $atleastoneplugin = 0;
@@ -2767,7 +2767,7 @@ sub Check_Config {
 	}
 	if ( $ShowLinksToWhoIs !~ /[01]/ ) { $ShowLinksToWhoIs = 0; }
 	$Logo     ||= 'awstats_logo6.png';
-	$LogoLink ||= 'http://awstats.sourceforge.net';
+	$LogoLink ||= 'http://www.awstats.org';
 	if ( $BarWidth !~ /^\d+/  || $BarWidth < 1 )  { $BarWidth  = 260; }
 	if ( $BarHeight !~ /^\d+/ || $BarHeight < 1 ) { $BarHeight = 90; }
 	$color_Background =~ s/#//g;
@@ -3636,7 +3636,7 @@ sub Read_History_With_TmpUpdate {
 		binmode HISTORYTMP;
 		if ($xml) {
 			print HISTORYTMP
-'<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://awstats.sourceforge.net/files/awstats.xsd">'
+'<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.awstats.org/files/awstats.xsd">'
 			  . "\n\n";
 		}
 		Save_History( "header", $year, $month, $date );
@@ -8589,7 +8589,7 @@ sub PrintCLIHelp{
 	print "  Dynamic or static HTML or XHTML reports, static PDF reports\n";
 	print "  Indexed text or XML monthly database\n";
 	print "  And a lot of other advanced features and options...\n";
-	print "New versions and FAQ at http://awstats.sourceforge.net\n";
+	print "New versions and FAQ at http://www.awstats.org\n";
 }
 
 #------------------------------------------------------------------------------
@@ -9765,7 +9765,7 @@ sub HTMLTopBanner{
 
 		# Logo and flags
 		if ( $FrameName ne 'mainleft' ) {
-			if ( $LogoLink =~ "http://awstats.sourceforge.net" ) {
+			if ( $LogoLink =~ "http://www.awstats.org" ) {
 				print "<td align=\"right\" rowspan=\"3\"><a href=\""
 				  . XMLEncode($LogoLink)
 				  . "\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=\"0\""
@@ -9829,7 +9829,7 @@ sub HTMLTopBanner{
 
 		# Logo and flags
 		if ( $FrameName eq 'mainright' ) {
-			if ( $LogoLink =~ "http://awstats.sourceforge.net" ) {
+			if ( $LogoLink =~ "http://www.awstats.org" ) {
 				print "<td align=\"right\" rowspan=\"2\"><a href=\""
 				  . XMLEncode($LogoLink)
 				  . "\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=\"0\""

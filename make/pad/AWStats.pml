@@ -42,24 +42,29 @@
 			<Char_Desc_80>AWStats - Free log file analyzer for advanced web statistics (GNU GPL)</Char_Desc_80>
 			<Char_Desc_250>AWStats is a free powerful and featureful server logfile analyzer that shows you</Char_Desc_250>
 			<Char_Desc_450>AWStats is a free powerful and featureful web server logfile analyzer (Perl script) that shows you all your Web statistics including visits, unique visitors, pages, hits, rush hours, os, browser's versions, search engines, keywords, robots visits, broken links and more... Works with all major web, wap, proxy servers and some mail and ftp servers. Works as a CGI and/or from command line. Distributed under GNU General Public License.</Char_Desc_450>
-			<Char_Desc_2000>AWStats is a free powerful and featureful tool that generates advanced web (but also ftp or mail) server
-statistics, graphically. This log analyzer works as a CGI or from command line and shows you all possible information your log contains, in few graphical web pages like visits, unique vistors, authenticated users, pages, domains/countries, OS busiest times, robot visits, type of files, search engines/keywords used, visits duration, screen size, HTTP errors and more...
-Statistics can be updated from a browser or your scheduler.
-It uses a partial information file to be able to process large log files, often and quickly.
-It can analyze log files from IIS (W3C log format), Apache log files (NCSA combined/XLF/ELF log format or common/CLF log format), WebStar and most of all web, proxy, wap, streaming servers (and ftp servers or mail logs).
+			<Char_Desc_2000>AWStats is a free powerful and featureful tool that generates advanced web (but also ftp or mail) server
+
+statistics, graphically. This log analyzer works as a CGI or from command line and shows you all possible information your log contains, in few graphical web pages like visits, unique vistors, authenticated users, pages, domains/countries, OS busiest times, robot visits, type of files, search engines/keywords used, visits duration, screen size, HTTP errors and more...
+
+Statistics can be updated from a browser or your scheduler.
+
+It uses a partial information file to be able to process large log files, often and quickly.
+
+It can analyze log files from IIS (W3C log format), Apache log files (NCSA combined/XLF/ELF log format or common/CLF log format), WebStar and most of all web, proxy, wap, streaming servers (and ftp servers or mail logs).
+
 The program also supports virtual servers, plugins and a lot of features.</Char_Desc_2000>
 		</English>
 	</Program_Descriptions>
 	<Web_Info>
 		<Application_URLs>
-			<Application_Info_URL>http://awstats.sourceforge.net</Application_Info_URL>
-			<Application_Order_URL>http://awstats.sourceforge.net</Application_Order_URL>
-			<Application_Screenshot_URL>http://awstats.sourceforge.net/docs/images/screen_shot_1.png</Application_Screenshot_URL>
-			<Application_Icon_URL>http://awstats.sourceforge.net/docs/images/awstats.gif</Application_Icon_URL>
-			<Application_XML_File_URL>http://awstats.sourceforge.net/docs/pad_awstats.xml</Application_XML_File_URL>
+			<Application_Info_URL>http://www.awstats.org</Application_Info_URL>
+			<Application_Order_URL>http://www.awstats.org</Application_Order_URL>
+			<Application_Screenshot_URL>http://www.awstats.org/docs/images/screen_shot_1.png</Application_Screenshot_URL>
+			<Application_Icon_URL>http://www.awstats.org/docs/images/awstats.gif</Application_Icon_URL>
+			<Application_XML_File_URL>http://www.awstats.org/docs/pad_awstats.xml</Application_XML_File_URL>
 		</Application_URLs>
 		<Download_URLs>
-			<Primary_Download_URL>http://awstats.sourceforge.net/files/awstats.zip</Primary_Download_URL>
+			<Primary_Download_URL>http://www.awstats.org/files/awstats.zip</Primary_Download_URL>
 			<Secondary_Download_URL>http://downloads.sourceforge.net/project/awstats/AWStats/7.0/awstats-7.0.tar.gz</Secondary_Download_URL>
 			<Additional_Download_URL_1 />
 			<Additional_Download_URL_2 />

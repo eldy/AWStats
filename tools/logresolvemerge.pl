@@ -369,7 +369,7 @@ if (scalar @ParamFile == 0) {
 	print "  Automatic detection of log format\n";
 	print "  Files can be .gz/.bz2 files if zcat/bzcat tools are available in PATH.\n";
 	print "  Multithreaded reverse DNS lookup (several parallel requests) with Perl 5.8+.\n";
-	print "New versions and FAQ at http://awstats.sourceforge.net\n";
+	print "New versions and FAQ at http://www.awstats.org\n";
 	exit 0;
 }
 

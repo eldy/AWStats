@@ -297,7 +297,7 @@ if (! $SiteConfig) {
 	print "                                 Output directory must contains icon directory\n";
 	print "                                 when this option is used (need 'htmldoc')\n";
 	print "\n";
-	print "New versions and FAQ at http://awstats.sourceforge.net\n";
+	print "New versions and FAQ at http://www.awstats.org\n";
 	exit 0;
 }
 

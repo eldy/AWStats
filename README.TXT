@@ -17,7 +17,7 @@ Version: 7.0
 Release date: December 2010
 Platforms: All (Linux, NT, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 Author: Laurent Destailleur <eldy@users.sourceforge.net>
-AWStats official web site and latest version: http://awstats.sourceforge.net
+AWStats official web site and latest version: http://www.awstats.org
 
 I   - Features and requirements of AWStats
 	  I - 1) Features, what AWStats can show you
