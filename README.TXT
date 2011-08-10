@@ -136,7 +136,7 @@ The documentation available for this release in HTML format is
 in the docs/ directory.
 
 You can find a most up-to-date documentation at:
-http://awstats.sourceforge.net
+http://www.awstats.org
 
 
 
