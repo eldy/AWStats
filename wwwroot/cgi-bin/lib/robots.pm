@@ -1882,19 +1882,19 @@
 'yahoo!_mindset'=>'Yahoo',
 'zyborg'=>'Looksmart',
 'cfetch'=>'Kosmix',
-+'^voyager\/'=>'Kosmix',
-+# Additional bots found by Sussex.
-+'feedfetcher\-google'=>'Google',
-+'bingbot'=>'MSN',
-+'twitterbot'=>'Twitter',
-+'twitterfeed'=>'Twitter',
-+'yahoo! slurp'=>'Yahoo',
-+'yahoo pipes'=>'Yahoo',
-+'yahoo-newscrawler'=>'Yahoo',
-+'yahoocachesystem'=>'Yahoo',
-+'yahooexternalcache'=>'Yahoo',
-+'yahoo! searchmonkey'=>'Yahoo',
-+'yahooysmcm'=>'Yahoo',
+'^voyager\/'=>'Kosmix',
+# Additional bots found by Sussex.
+'feedfetcher\-google'=>'Google',
+'bingbot'=>'MSN',
+'twitterbot'=>'Twitter',
+'twitterfeed'=>'Twitter',
+'yahoo! slurp'=>'Yahoo',
+'yahoo pipes'=>'Yahoo',
+'yahoo-newscrawler'=>'Yahoo',
+'yahoocachesystem'=>'Yahoo',
+'yahooexternalcache'=>'Yahoo',
+'yahoo! searchmonkey'=>'Yahoo',
+'yahooysmcm'=>'Yahoo'
 );
 
 1;
