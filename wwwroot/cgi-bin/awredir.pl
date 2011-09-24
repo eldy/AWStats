@@ -76,6 +76,27 @@ sub DecodeEncodedString {
 	return $stringtodecode;
 }
 
+#------------------------------------------------------------------------------
+# Function:     Clean a string of HTML tags to avoid 'Cross Site Scripting attacks'
+#               and clean | char.
+# Parameters:   stringtoclean
+# Input:        None
+# Output:       None
+# Return:		cleanedstring
+#------------------------------------------------------------------------------
+sub CleanXSS {
+	my $stringtoclean = shift;
+
+	# To avoid html tags and javascript
+	$stringtoclean =~ s/</&lt;/g;
+	$stringtoclean =~ s/>/&gt;/g;
+	$stringtoclean =~ s/|//g;
+
+	# To avoid onload="
+	$stringtoclean =~ s/onload//g;
+	return $stringtoclean;
+}
+
 
 #-------------------------------------------------------
 # MAIN
@@ -126,6 +147,12 @@ if ($Url =~ /url=\"([^\"]+)\"/) { $Url=$1; }
 elsif ($Url =~ /url=(.+)$/) { $Url=$1; }
 $Url = DecodeEncodedString($Url);
 $UrlParam=$Url;
+
+# Sanitize parameters
+$Tag=CleanXSS($Tag);
+$Key=CleanXSS($Key);
+$UrlParam=CleanXSS($UrlParam);
+
 
 if (! $UrlParam) {
         error("Error: Bad use of $PROG. To redirect an URL with $PROG, use the following syntax:<br><i>/cgi-bin/$PROG.pl?url=http://urltogo</i>");
