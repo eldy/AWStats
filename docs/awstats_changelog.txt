@@ -3,6 +3,22 @@ AWStats Changelog
 $Revision$ - $Author$ - $Date$
 
 
+***** 7.1 *****
+
+New features/improvements:
+- Update translations.
+- Add example of nginx setup.
+- Add some patches from debian package.
+- Rename domain name into documentation to awstats.org
+- Can allow urls with awredir without using md5 key parameter.
+- Usage of databasebreak option possible with awstats_buildstaticpages.
+- Add rel=nofollow on links.
+
+Fixes:
+- Security fix into awredir.pl
+- Fix: Case of uk in googlechart api 
+
+
 ***** 7.0 *****
 
 New features/improvements:
