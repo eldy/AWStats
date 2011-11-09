@@ -278,9 +278,9 @@ rename("$BUILDROOT/$PROJECT","$BUILDROOT/$FILENAMETGZ");
     		print "Compress $FILENAMETGZ into $FILENAMETGZ.tar.gz\n";
     		$ret=`tar --exclude-from "$SOURCE/make/tgz/tar.exclude" --directory="$BUILDROOT" --mode=go-w -czvf $FILENAMETGZ.tar.gz $FILENAMETGZ`;
     		print "Move $FILENAMETGZ.tar.gz to $DESTI\n";
-    		rename("$FILENAMETGZ.tar.gz","$DESTI/$FILENAMETGZ.tar.gz");
+    		$ret=`mv "$FILENAMETGZ.tar.gz" "$DESTI/$FILENAMETGZ.tar.gz"`;
     		next;
-    	}	
+    	}
     
     	if ($target eq 'ZIP') {
 			unlink $FILENAMEZIP.zip;
@@ -291,7 +291,7 @@ rename("$BUILDROOT/$PROJECT","$BUILDROOT/$FILENAMETGZ");
     		print "7z a -r -tzip -mx $BUILDROOT/$FILENAMEZIP.zip $FILENAMETGZ/*\n";
     		$ret=`7z a -r -tzip -mx $BUILDROOT/$FILENAMEZIP.zip $FILENAMETGZ/*`;
     		print "Move $FILENAMEZIP.zip to $DESTI\n";
-    		rename("$BUILDROOT/$FILENAMEZIP.zip","$DESTI/$FILENAMEZIP.zip");
+    		$ret=`mv "$BUILDROOT/$FILENAMEZIP.zip" "$DESTI/$FILENAMEZIP.zip"`;
     		next;
     	}
 
