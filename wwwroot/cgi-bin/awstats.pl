@@ -7786,7 +7786,7 @@ sub DecodeEncodedString {
 }
 
 #------------------------------------------------------------------------------
-# Function:     Decode an precompiled regex value to a common regex value
+# Function:     Decode a precompiled regex value to a common regex value
 # Parameters:   compiledregextodecode
 # Input:        None
 # Output:       None
