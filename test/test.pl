@@ -146,7 +146,7 @@ while(1==1)
 		# Compare html file
 		
 	
-		print "Test $test terminé avec succès.\n";
+		print "Test $test finished success.\n";
 	}
 	
 	sleep 5;
