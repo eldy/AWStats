@@ -1,5 +1,5 @@
 #!/usr/bin/perl -w
-use Test::Simple tests => 1;
+use Test::Simple tests => 2;
 
 
 # Functions to tests (copy paste from awstats.pl)
