@@ -5,6 +5,19 @@
 # necessary from your scheduler to update your statistics and from command
 # line or a browser to read report results.
 # See AWStats documentation (in docs/ directory) for all setup instructions.
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------
 # $Revision$ - $Author$ - $Date$
 require 5.007;
@@ -298,6 +311,7 @@ use vars qw/
   $AllowAccessFromWebToFollowingIPAddresses $HTMLHeadSection $HTMLEndSection $LinksToWhoIs $LinksToIPWhoIs
   $LogFile $LogType $LogFormat $LogSeparator $Logo $LogoLink $StyleSheet $WrapperScript $SiteDomain
   $UseHTTPSLinkForUrl $URLQuerySeparators $URLWithAnchor $ErrorMessages $ShowFlagLinks
+  $AddLinkToExternalCGIWrapper
   /;
 (
 	$DirLock,                                  $DirCgi,
@@ -313,11 +327,11 @@ use vars qw/
 	$WrapperScript,                            $SiteDomain,
 	$UseHTTPSLinkForUrl,                       $URLQuerySeparators,
 	$URLWithAnchor,                            $ErrorMessages,
-	$ShowFlagLinks
+	$ShowFlagLinks,                            $AddLinkToExternalCGIWrapper
   )
   = (
 	'', '', '', '', '', '', '', '', '', '', '', '', '', '',
-	'', '', '', '', '', '', '', '', '', '', '', '', ''
+	'', '', '', '', '', '', '', '', '', '', '', '', '', '', ''
   );
 use vars qw/
   $color_Background $color_TableBG $color_TableBGRowTitle
@@ -725,6 +739,7 @@ use vars qw/ @Message /;
 	'Konqueror versions',
 	',',
  	'Downloads',
+ 	'Export CSV'
 );
 
 #------------------------------------------------------------------------------
@@ -1905,6 +1920,12 @@ sub Parse_Config {
 			$SiteDomain = $value;
 			next;
 		}
+		if ( $param =~ /^AddLinkToExternalCGIWrapper/ ) {
+
+			# No regex test as AddLinkToExternalCGIWrapper is always exact value
+			$AddLinkToExternalCGIWrapper = $value;
+			next;
+        }
 		if ( $param =~ /^HostAliases/ ) {
 			@HostAliases = ();
 			foreach my $elem ( split( /\s+/, $value ) ) {
@@ -8439,7 +8460,7 @@ sub PrintCLIHelp{
 		'browsers',       'domains', 'operating_systems', 'robots',
 		'search_engines', 'worms'
 	);
-	print "----- $PROG $VERSION (c) 2000-2011 Laurent Destailleur -----\n";
+	print "----- $PROG $VERSION (c) 2000-2012 Laurent Destailleur -----\n";
 	print
 "AWStats is a free web server logfile analyzer to show you advanced web\n";
 	print "statistics.\n";
@@ -10407,11 +10428,13 @@ sub HTMLMenu{
 #------------------------------------------------------------------------------
 # Function:     Prints the File Type table
 # Parameters:   _
-# Input:        _
+# Input:        $NewLinkParams, $NewLinkTargets
 # Output:       HTML
 # Return:       -
 #------------------------------------------------------------------------------
 sub HTMLMainFileType{
+    my $NewLinkParams = shift;
+    my $NewLinkTarget = shift;
 	if (!$LevelForFileTypesDetection > 0){return;}
 	if ($Debug) { debug( "ShowFileTypesStatsCompressionStats", 2 ); }
 	print "$Center<a name=\"filetypes\">&nbsp;</a><br />\n";
@@ -10420,6 +10443,15 @@ sub HTMLMainFileType{
 	my $Totalk = 0;
 	foreach ( keys %_filetypes_k ) { $Totalk += $_filetypes_k{$_}; }
 	my $title = "$Message[73]";
+    if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
+        # extend the title to include the added link 
+        $title = "$title &nbsp; - &nbsp; <a href=\"" . (XMLEncode(
+           "$AddLinkToExternalCGIWrapper" . "?section=FILETYPES&baseName=$DirData/$PROG"
+           . "&month=$MonthRequired&year=$YearRequired&day=$DayRequired"
+           . "&siteConfig=$SiteConfig" )
+           . "\"$NewLinkTarget>$Message[179]</a>");
+    } 
+
 	if ( $ShowFileTypesStats =~ /C/i ) { $title .= " - $Message[98]"; }
 	
 	# build keylist at top
@@ -10765,14 +10797,23 @@ sub HTMLShowBrowserDetail{
 
 #------------------------------------------------------------------------------
 # Function:     Prints the Unknown Browser Detail frame or static page
-# Parameters:   _
+# Parameters:   $NewLinkTarget
 # Input:        _
 # Output:       HTML
 # Return:       -
 #------------------------------------------------------------------------------
 sub HTMLShowBrowserUnknown{
+    my $NewLinkTarget = shift;
 	print "$Center<a name=\"unknownbrowser\">&nbsp;</a><br />\n";
 	my $title = "$Message[50]";
+    if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
+       # extend the title to include the added link 
+           $title = "$title &nbsp; - &nbsp; <a href=\"" . (XMLEncode(
+               "$AddLinkToExternalCGIWrapper" . "?section=UNKNOWNREFERERBROWSER&baseName=$DirData/$PROG"
+           . "&month=$MonthRequired&year=$YearRequired&day=$DayRequired"
+           . "&siteConfig=$SiteConfig" )
+           . "\"$NewLinkTarget>$Message[179]</a>");
+    } 
 	&tab_head( "$title", 19, 0, 'unknownbrowser' );
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>User agent ("
 	  . ( scalar keys %_unknownrefererbrowser_l )
@@ -10972,15 +11013,24 @@ sub HTMLShowOSDetail{
 
 #------------------------------------------------------------------------------
 # Function:     Prints the Unkown OS Detail frame or static page
-# Parameters:   _
+# Parameters:   $NewLinkTarget
 # Input:        _
 # Output:       HTML
 # Return:       -
 #------------------------------------------------------------------------------
 sub HTMLShowOSUnknown{
+    my $NewLinkTarget = shift;
 	print "$Center<a name=\"unknownos\">&nbsp;</a><br />\n";
 	my $title = "$Message[46]";
-	&tab_head( "$title", 19, 0, 'unknownos' );
+    if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
+       # extend the title to include the added link 
+           $title = "$title &nbsp; - &nbsp; <a href=\"" . (XMLEncode(
+               "$AddLinkToExternalCGIWrapper" . "?section=UNKNOWNREFERER&baseName=$DirData/$PROG"
+           . "&month=$MonthRequired&year=$YearRequired&day=$DayRequired"
+           . "&siteConfig=$SiteConfig" )
+           . "\"$NewLinkTarget>$Message[179]</a>");
+    } 
+    &tab_head( "$title", 19, 0, 'unknownos' );
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>User agent ("
 	  . ( scalar keys %_unknownreferer_l )
 	  . ")</th><th>$Message[9]</th></tr>\n";
@@ -11010,15 +11060,24 @@ sub HTMLShowOSUnknown{
 
 #------------------------------------------------------------------------------
 # Function:     Prints the Referers frame or static page
-# Parameters:   _
+# Parameters:   $NewLinkTarget
 # Input:        _
 # Output:       HTML
 # Return:       -
 #------------------------------------------------------------------------------
 sub HTMLShowReferers{
+    my $NewLinkTarget = shift;
 	print "$Center<a name=\"refererse\">&nbsp;</a><br />\n";
 	my $title = "$Message[40]";
-	&tab_head( "$title", 19, 0, 'refererse' );
+    if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
+       # extend the title to include the added link 
+           $title = "$title &nbsp; - &nbsp; <a href=\"" . (XMLEncode(
+               "$AddLinkToExternalCGIWrapper" . "?section=SEREFERRALS&baseName=$DirData/$PROG"
+           . "&month=$MonthRequired&year=$YearRequired&day=$DayRequired"
+           . "&siteConfig=$SiteConfig" )
+           . "\"$NewLinkTarget>$Message[179]</a>");
+    } 
+    &tab_head( $title, 19, 0, 'refererse' );
 	print
 "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>".Format_Number($TotalDifferentSearchEngines)." $Message[122]</th>";
 	print
@@ -11103,12 +11162,13 @@ sub HTMLShowReferers{
 
 #------------------------------------------------------------------------------
 # Function:     Prints the Referer Pages frame or static page
-# Parameters:   _
+# Parameters:   $NewLinkTarget
 # Input:        _
 # Output:       HTML
 # Return:       -
 #------------------------------------------------------------------------------
 sub HTMLShowRefererPages{
+    my $NewLinkTarget = shift;
 	print "$Center<a name=\"refererpages\">&nbsp;</a><br />\n";
 	my $total_p = 0;
 	my $total_h = 0;
@@ -11122,7 +11182,15 @@ sub HTMLShowRefererPages{
 		$FilterEx{'refererpages'}
 	);
 	my $title = "$Message[41]";
-	my $cpt   = 0;
+    if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
+       # extend the title to include the added link 
+           $title = "$title &nbsp; - &nbsp; <a href=\"" . (XMLEncode(
+               "$AddLinkToExternalCGIWrapper" . "?section=PAGEREFS&baseName=$DirData/$PROG"
+           . "&month=$MonthRequired&year=$YearRequired&day=$DayRequired"
+           . "&siteConfig=$SiteConfig" )
+           . "\"$NewLinkTarget>$Message[179]</a>");
+    }
+    my $cpt   = 0;
 	$cpt = ( scalar keys %_pagesrefs_h );
 	&tab_head( "$title", 19, 0, 'refererpages' );
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>";
@@ -11232,14 +11300,24 @@ sub HTMLShowRefererPages{
 
 #------------------------------------------------------------------------------
 # Function:     Prints the Key Phrases frame or static page
-# Parameters:   _
+# Parameters:   $NewLinkTarget
 # Input:        _
 # Output:       HTML
 # Return:       -
 #------------------------------------------------------------------------------
 sub HTMLShowKeyPhrases{
+	my $NewLinkTarget = shift;
 	print "$Center<a name=\"keyphrases\">&nbsp;</a><br />\n";
-	&tab_head( $Message[43], 19, 0, 'keyphrases' );
+    my $title = "$Message[43]";
+    if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
+       # extend the title to include the added link 
+           $title = "$title &nbsp; - &nbsp; <a href=\"" . (XMLEncode(
+               "$AddLinkToExternalCGIWrapper" . "?section=SEARCHWORDS&baseName=$DirData/$PROG"
+           . "&month=$MonthRequired&year=$YearRequired&day=$DayRequired"
+           . "&siteConfig=$SiteConfig" )
+           . "\"$NewLinkTarget>$Message[179]</a>");
+    } 
+	&tab_head( $title, 19, 0, 'keyphrases' );
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\""
 	  . Tooltip(15)
 	  . "><th>".Format_Number($TotalDifferentKeyphrases)." $Message[103]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[14]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
@@ -11290,14 +11368,24 @@ sub HTMLShowKeyPhrases{
 
 #------------------------------------------------------------------------------
 # Function:     Prints the Keywords frame or static page
-# Parameters:   _
+# Parameters:   $NewLinkTarget
 # Input:        _
 # Output:       HTML
 # Return:       -
 #------------------------------------------------------------------------------
 sub HTMLShowKeywords{
+	my $NewLinkTarget = shift;
 	print "$Center<a name=\"keywords\">&nbsp;</a><br />\n";
-	&tab_head( $Message[44], 19, 0, 'keywords' );
+	my $title = "$Message[44]";
+    if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
+       # extend the title to include the added link 
+           $title = "$title &nbsp; - &nbsp; <a href=\"" . (XMLEncode(
+               "$AddLinkToExternalCGIWrapper" . "?section=KEYWORDS&baseName=$DirData/$PROG"
+           . "&month=$MonthRequired&year=$YearRequired&day=$DayRequired"
+           . "&siteConfig=$SiteConfig" )
+           . "\"$NewLinkTarget>$Message[179]</a>");
+    } 
+	&tab_head( $title, 19, 0, 'keywords' );
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\""
 	  . Tooltip(15)
 	  . "><th>".Format_Number($TotalDifferentKeywords)." $Message[13]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[14]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
@@ -13148,11 +13236,6 @@ sub HTMLMainDaily{
 	
 	if ($Debug) { debug( "ShowDaysOfMonthStats", 2 ); }
 	print "$Center<a name=\"daysofmonth\">&nbsp;</a><br />\n";
-	my $title = "$Message[138]";
-	&tab_head( "$title", 0, 0, 'daysofmonth' );
-	print "<tr>";
-	print "<td align=\"center\">\n";
-	print "<center>\n";
 
 	my $NewLinkParams = ${QueryString};
 	$NewLinkParams =~ s/(^|&|&amp;)update(=\w*|$)//i;
@@ -13170,6 +13253,22 @@ sub HTMLMainDaily{
 		$NewLinkTarget = " target=\"_parent\"";
 	}
 
+	my $title = "$Message[138]";
+
+    if ($AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
+        # extend the title to include the added link
+            $title = "$title &nbsp; - &nbsp; <a href=\"".(XMLEncode(
+                "$AddLinkToExternalCGIWrapper". "?section=DAY&baseName=$DirData/$PROG"
+           . "&month=$MonthRequired&year=$YearRequired&day=$DayRequired"
+           . "&siteConfig=$SiteConfig" )
+           . "\"$NewLinkTarget>$Message[179]</a>");
+    }
+
+	&tab_head( "$title", 0, 0, 'daysofmonth' );
+	print "<tr>";
+	print "<td align=\"center\">\n";
+	print "<center>\n";
+	
 	my $average_v = my $average_p = 0;
 	my $average_h = my $average_k = 0;
 	my $total_u = my $total_v = my $total_p = my $total_h = my $total_k = 0;
@@ -13571,6 +13670,9 @@ sub HTMLMainDaily{
 sub HTMLMainDaysofWeek{
 	my $firstdaytocountaverage = shift;
 	my $lastdaytocountaverage = shift;
+    my $NewLinkParams = shift;
+    my $NewLinkTarget = shift;	
+    
 	if ($Debug) { debug( "ShowDaysOfWeekStats", 2 ); }
 			print "$Center<a name=\"daysofweek\">&nbsp;</a><br />\n";
 			my $title = "$Message[91]";
@@ -13863,7 +13965,7 @@ sub HTMLMainDaysofWeek{
 #------------------------------------------------------------------------------
 # Function:     Prints the Downloads chart and table
 # Parameters:   -
-# Input:        -
+# Input:        $NewLinkParams, $NewLinkTarget
 # Output:       HTML
 # Return:       -
 #------------------------------------------------------------------------------
@@ -13885,6 +13987,16 @@ sub HTMLMainDownloads{
 		: "$StaticLinks.downloads.$StaticExt"
 	  )
 	  . "\"$NewLinkTarget>$Message[80]</a>";
+
+    if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
+        # extend the title to include the added link
+            $title = "$title &nbsp; - &nbsp; <a href=\"" . (XMLEncode(
+                "$AddLinkToExternalCGIWrapper" . "?section=DOWNLOADS&baseName=$DirData/$PROG"
+            . "&month=$MonthRequired&year=$YearRequired&day=$DayRequired"
+            . "&siteConfig=$SiteConfig" )
+            . "\"$NewLinkTarget>$Message[179]</a>");
+    }
+	  
 	&tab_head( "$title", 0, 0, 'downloads' );
 	my $cnt=0;
 	for my $u (sort {$_downloads{$b}->{'AWSTATS_HITS'} <=> $_downloads{$a}->{'AWSTATS_HITS'}}(keys %_downloads) ){
@@ -13972,15 +14084,28 @@ sub HTMLMainDownloads{
 
 #------------------------------------------------------------------------------
 # Function:     Prints the hours chart and table
-# Parameters:   -
+# Parameters:   $NewLinkParams, $NewLinkTarget
 # Input:        -
 # Output:       HTML
 # Return:       -
 #------------------------------------------------------------------------------
 sub HTMLMainHours{
-	if ($Debug) { debug( "ShowHoursStats", 2 ); }
+    my $NewLinkParams = shift;
+    my $NewLinkTarget = shift;
+        
+    if ($Debug) { debug( "ShowHoursStats", 2 ); }
 	print "$Center<a name=\"hours\">&nbsp;</a><br />\n";
 	my $title = "$Message[20]";
+	
+    if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
+       # extend the title to include the added link 
+           $title = "$title &nbsp; - &nbsp; <a href=\"" . (XMLEncode(
+               "$AddLinkToExternalCGIWrapper" . "?section=TIME&baseName=$DirData/$PROG"
+           . "&month=$MonthRequired&year=$YearRequired&day=$DayRequired"
+           . "&siteConfig=$SiteConfig" )
+           . "\"$NewLinkTarget>$Message[179]</a>");
+    } 
+	
 	if ( $PluginsLoaded{'GetTimeZoneTitle'}{'timezone'} ) {
 		$title .= " (GMT "
 		  . ( GetTimeZoneTitle_timezone() >= 0 ? "+" : "" )
@@ -14213,6 +14338,17 @@ sub HTMLMainCountries{
 		: "$StaticLinks.alldomains.$StaticExt"
 	  )
 	  . "\"$NewLinkTarget>$Message[80]</a>";
+	  
+
+    if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
+       # extend the title to include the added link
+           $title = "$title &nbsp; - &nbsp; <a href=\"" . (XMLEncode(
+               "$AddLinkToExternalCGIWrapper" . "?section=DOMAIN&baseName=$DirData/$PROG"
+           . "&month=$MonthRequired&year=$YearRequired&day=$DayRequired"
+           . "&siteConfig=$SiteConfig" )
+           . "\"$NewLinkTarget>$Message[179]</a>");
+    }
+        	  
 	&tab_head( "$title", 19, 0, 'countries' );
 	
 	my $total_u = my $total_v = my $total_p = my $total_h = my $total_k = 0;
@@ -14457,6 +14593,16 @@ sub HTMLMainHosts{
 		: "$StaticLinks.unknownip.$StaticExt"
 	  )
 	  . "\"$NewLinkTarget>$Message[45]</a>";
+	  
+    if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
+       # extend the title to include the added link
+           $title = "$title &nbsp; - &nbsp; <a href=\"" . (XMLEncode(
+               "$AddLinkToExternalCGIWrapper" . "?section=VISITOR&baseName=$DirData/$PROG"
+           . "&month=$MonthRequired&year=$YearRequired&day=$DayRequired"
+           . "&siteConfig=$SiteConfig" )
+           . "\"$NewLinkTarget>$Message[179]</a>");
+    }
+	  
 	&tab_head( "$title", 19, 0, 'visitors' );
 	
 	&BuildKeyList( $MaxNbOf{'HostsShown'}, $MinHit{'Host'}, \%_host_h,
@@ -14719,8 +14865,8 @@ sub HTMLMainRobots{
 	
 	if ($Debug) { debug( "ShowRobotStats", 2 ); }
 	print "$Center<a name=\"robots\">&nbsp;</a><br />\n";
-	&tab_head(
-"$Message[53] ($Message[77] $MaxNbOf{'RobotShown'}) &nbsp; - &nbsp; <a href=\""
+
+	my $title = "$Message[53] ($Message[77] $MaxNbOf{'RobotShown'}) &nbsp; - &nbsp; <a href=\""
 		  . (
 			$ENV{'GATEWAY_INTERFACE'}
 			  || !$StaticLinks
@@ -14734,10 +14880,20 @@ sub HTMLMainRobots{
 			? XMLEncode("$AWScript${NewLinkParams}output=lastrobots")
 			: "$StaticLinks.lastrobots.$StaticExt"
 		  )
-		  . "\"$NewLinkTarget>$Message[9]</a>",
-		19, 0, 'robots'
-	);
-	print "<tr bgcolor=\"#$color_TableBGRowTitle\""
+		  . "\"$NewLinkTarget>$Message[9]</a>";
+
+    if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
+       # extend the title to include the added link
+           $title = "$title &nbsp; - &nbsp; <a href=\"" . (XMLEncode(
+               "$AddLinkToExternalCGIWrapper" . "?section=ROBOT&baseName=$DirData/$PROG"
+           . "&month=$MonthRequired&year=$YearRequired&day=$DayRequired"
+           . "&siteConfig=$SiteConfig" )
+           . "\"$NewLinkTarget>$Message[179]</a>");
+    }
+        
+    &tab_head( "$title", 19, 0, 'robots');
+        
+    print "<tr bgcolor=\"#$color_TableBGRowTitle\""
 	  . Tooltip(16) . "><th>"
 	  . Format_Number(( scalar keys %_robot_h ))
 	  . " $Message[51]*</th>";
@@ -15018,6 +15174,16 @@ sub HTMLMainPages{
 		  )
 		  . "\"$NewLinkTarget>$Message[116]</a>";
 	}
+	
+    if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
+       # extend the title to include the added link
+           $title .= " &nbsp; - &nbsp; <a href=\"" . (XMLEncode(
+               "$AddLinkToExternalCGIWrapper" . "?section=SIDER&baseName=$DirData/$PROG"
+           . "&month=$MonthRequired&year=$YearRequired&day=$DayRequired"
+           . "&siteConfig=$SiteConfig" )
+           . "\"$NewLinkTarget>$Message[179]</a>");
+    }
+        	
 	&tab_head( "$title", 19, 0, 'urls' );
 	print
 "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>".Format_Number($TotalDifferentPages)." $Message[28]</th>";
@@ -15254,6 +15420,16 @@ sub HTMLMainOS{
 		: "$StaticLinks.unknownos.$StaticExt"
 	  )
 	  . "\"$NewLinkTarget>$Message[0]</a>";
+	  
+    if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
+       # extend the title to include the added link
+           $title .= " &nbsp; - &nbsp; <a href=\"" . (XMLEncode(
+               "$AddLinkToExternalCGIWrapper" . "?section=OS&baseName=$DirData/$PROG"
+           . "&month=$MonthRequired&year=$YearRequired&day=$DayRequired"
+           . "&siteConfig=$SiteConfig" )
+           . "\"$NewLinkTarget>$Message[179]</a>");
+    }
+        	  
 	&tab_head( "$title", 19, 0, 'os' );
 	
 	&BuildKeyList( $MaxNbOf{'OsShown'}, $MinHit{'Os'}, \%new_os_h,
@@ -15392,6 +15568,17 @@ sub HTMLMainBrowsers{
 		: "$StaticLinks.unknownbrowser.$StaticExt"
 	  )
 	  . "\"$NewLinkTarget>$Message[0]</a>";
+	  
+
+    if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
+       # extend the title to include the added link
+           $title .= " &nbsp; - &nbsp; <a href=\"" . (XMLEncode(
+               "$AddLinkToExternalCGIWrapper" . "?section=BROWSER&baseName=$DirData/$PROG"
+           . "&month=$MonthRequired&year=$YearRequired&day=$DayRequired"
+           . "&siteConfig=$SiteConfig" )
+           . "\"$NewLinkTarget>$Message[179]</a>");
+    }
+        	  
 	&tab_head( "$title", 19, 0, 'browsers' );
 	
 	&BuildKeyList(
@@ -15581,7 +15768,19 @@ sub HTMLMainReferrers{
 		  ? $_from_h[$_]
 		  : 0;
 	}
-	&tab_head( $Message[36], 19, 0, 'referer' );
+
+    my $title = "$Message[36]";
+
+    if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
+       # extend the title to include the added link
+           $title .= " &nbsp; - &nbsp; <a href=\"" . (XMLEncode(
+               "$AddLinkToExternalCGIWrapper" . "?section=ORIGIN&baseName=$DirData/$PROG"
+           . "&month=$MonthRequired&year=$YearRequired&day=$DayRequired"
+           . "&siteConfig=$SiteConfig" )
+           . "\"$NewLinkTarget>$Message[179]</a>");
+    }
+        
+	&tab_head( $title, 19, 0, 'referer' );
 	my @p_p = ( 0, 0, 0, 0, 0, 0 );
 	if ( $Totalp > 0 ) {
 		$p_p[0] = int( $_from_p[0] / $Totalp * 1000 ) / 10;
@@ -16065,6 +16264,16 @@ sub HTMLMainHTTPStatus{
 	if ($Debug) { debug( "ShowHTTPErrorsStats", 2 ); }
 	print "$Center<a name=\"errors\">&nbsp;</a><br />\n";
 	my $title = "$Message[32]";
+	
+    if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
+       # extend the title to include the added link
+           $title .= " &nbsp; - &nbsp; <a href=\"" . (XMLEncode(
+               "$AddLinkToExternalCGIWrapper" . "?section=ERRORS&baseName=$DirData/$PROG"
+           . "&month=$MonthRequired&year=$YearRequired&day=$DayRequired"
+           . "&siteConfig=$SiteConfig" )
+           . "\"$NewLinkTarget>$Message[179]</a>");
+    }
+        	
 	&tab_head( "$title", 19, 0, 'errors' );
 	
 	&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_errors_h, \%_errors_h );
@@ -16177,6 +16386,16 @@ sub HTMLMainCluster{
 	if ($Debug) { debug( "ShowClusterStats", 2 ); }
 	print "$Center<a name=\"clusters\">&nbsp;</a><br />\n";
 	my $title = "$Message[155]";
+	
+    if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
+       # extend the title to include the added link
+           $title .= " &nbsp; - &nbsp; <a href=\"" . (XMLEncode(
+               "$AddLinkToExternalCGIWrapper" . "?section=CLUSTER&baseName=$DirData/$PROG"
+           . "&month=$MonthRequired&year=$YearRequired&day=$DayRequired"
+           . "&siteConfig=$SiteConfig" )
+           . "\"$NewLinkTarget>$Message[179]</a>");
+    }
+        	
 	&tab_head( "$title", 19, 0, 'clusters' );
 	
 	&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_cluster_p, \%_cluster_p );
@@ -16286,6 +16505,16 @@ sub HTMLMainExtra{
 		: "$StaticLinks.allextra$extranum.$StaticExt"
 	  )
 	  . "\"$NewLinkTarget>$Message[80]</a>";
+	  
+    if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
+        print "&nbsp; - &nbsp; <a href=\""
+          . (XMLEncode(
+               "$AddLinkToExternalCGIWrapper" . "?section=EXTRA_$extranum&baseName=$DirData/$PROG"
+            . "&month=$MonthRequired&year=$YearRequired&day=$DayRequired"
+            . "&sectionTitle=$ExtraName[$extranum]&siteConfig=$SiteConfig" )
+            . "\"$NewLinkTarget>$Message[179]</a>");
+    }
+  
 	print "</th>";
 
 	if ( $ExtraStatTypes[$extranum] =~ m/P/i ) {
@@ -20383,10 +20612,10 @@ if ( scalar keys %HTMLOutput ) {
 			&HTMLShowURLDetail();
 		}
 		if ( $HTMLOutput{'unknownos'} ) {
-			&HTMLShowOSUnknown();
+			&HTMLShowOSUnknown($NewLinkTarget);
 		}
 		if ( $HTMLOutput{'unknownbrowser'} ) {
-			&HTMLShowBrowserUnknown();
+			&HTMLShowBrowserUnknown($NewLinkTarget);
 		}
 		if ( $HTMLOutput{'osdetail'} ) {
 			&HTMLShowOSDetail();
@@ -20395,16 +20624,16 @@ if ( scalar keys %HTMLOutput ) {
 			&HTMLShowBrowserDetail();
 		}
 		if ( $HTMLOutput{'refererse'} ) {
-			&HTMLShowReferers();
+			&HTMLShowReferers($NewLinkTarget);
 		}
 		if ( $HTMLOutput{'refererpages'} ) {
-			&HTMLShowRefererPages();
+			&HTMLShowRefererPages($NewLinkTarget);
 		}
 		if ( $HTMLOutput{'keyphrases'} ) {
-			&HTMLShowKeyPhrases();
+			&HTMLShowKeyPhrases($NewLinkTarget);
 		}
 		if ( $HTMLOutput{'keywords'} ) {
-			&HTMLShowKeywords();
+			&HTMLShowKeywords($NewLinkTarget);
 		}
 		if ( $HTMLOutput{'downloads'} ) {
 			&HTMLShowDownloads();
@@ -20504,13 +20733,13 @@ if ( scalar keys %HTMLOutput ) {
 		# BY DAY OF WEEK
 		#-------------------------
 		if ($ShowDaysOfWeekStats) {
-			&HTMLMainDaysofWeek($firstdaytocountaverage, $lastdaytocountaverage);
+			&HTMLMainDaysofWeek($firstdaytocountaverage, $lastdaytocountaverage, $NewLinkParams, $NewLinkTarget);
 		}
 
 		# BY HOUR
 		#----------------------------
 		if ($ShowHoursStats) {
-			&HTMLMainHours();
+			&HTMLMainHours($NewLinkParams, $NewLinkTarget);
 		}
 
 		print "\n<a name=\"who\">&nbsp;</a>\n\n";
@@ -20568,7 +20797,7 @@ if ( scalar keys %HTMLOutput ) {
 		# BY FILE TYPE
 		#-------------------------
 		if ($ShowFileTypesStats) {
-			&HTMLMainFileType();
+			&HTMLMainFileType($NewLinkParams, $NewLinkTarget);
 		}
 
 		# BY FILE SIZE

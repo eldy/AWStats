@@ -13,6 +13,9 @@ New features/improvements:
 - Can allow urls with awredir without using md5 key parameter.
 - Usage of databasebreak option possible with awstats_buildstaticpages.
 - Add rel=nofollow on links.
+- Add option AddLinkToExternalCGIWrapper to add link to a wrapper script
+  into each title of Dolibarr reports. This can be used to add a wrapper
+  to download data into a CSV file for example.
 
 Fixes:
 - Security fix into awredir.pl
