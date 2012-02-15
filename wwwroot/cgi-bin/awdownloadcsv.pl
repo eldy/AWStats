@@ -21,6 +21,16 @@
 #------------------------------------------------------------------------------
 use CGI qw(:standard);
 
+my $ALLOWDOWNLOAD=0;
+
+# Disabled by default for security reason
+if (! $ALLOWDOWNLOAD) 
+{
+	print("Error: You must first edit script to change ALLOWDOWNLOAD to 1 to allow usage of this script.\n");
+	print("Reason is that enabling this script may be a security hole as it allows someone to download/view details of your awstats data files.\n");
+	exit;
+}
+
 my $q               = new CGI;
 my $outputFile      = "";   # used to write the output to a file
 my $inputFile       = "";   # the fully qualified path to the input log database file
