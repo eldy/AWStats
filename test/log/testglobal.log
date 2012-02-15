@@ -5,7 +5,7 @@
 # This sample log file contains 12 differents IPs that are :
 # Viewed traffic: 7 different true human visitors making 8 human visits
 # 23 hits on pages and 15 hits not pages (38 hits)
-# Not viewed traffic: 13 pages, 15 hits
+# Not viewed traffic: 11 pages (7 from 80.8.55.5, 1 worm, 3 special status code) , 15 hits
 # ----------------------------------------------------------------------------
 # 80.8.55.1  2 visits (start at 00:00:00 and at 12:00:00 with both entry page on /)
 #            And 2 hits to add favourites but first is non root hit with error meaning it's same "add"
@@ -60,7 +60,7 @@
 80.8.55.5 - - [01/Jan/2001:12:02:05 +0200] "GET /pagefromabot5.html HTTP/1.0" 200 7009 "-" "wget"
 80.8.55.5 - - [01/Jan/2001:12:02:05 +0200] "GET /pagefromabot6.html HTTP/1.0" 200 7009 "-" "libwww"
 
-80.8.55.6 - john [01/Jan/2001:13:00:00 +0100] "GET /cgi-bin/order.cgi?x=a&family=a&productId=998&titi=i&y=b&y=b HTTP/1.0" 200 7009 "http://www.google.com/search?sourceid=navclient&ie=utf-8&oe=utf-8&q=ma%C3%AEtre+élève" "SAGEM-myX-5m/1.0_UP.Browser/6.1.0.6.1.103_(GUI)_MMP/1.0_(Google_WAP_Proxy/1.0)"
+80.8.55.6 - john [01/Jan/2001:13:00:00 +0100] "GET /cgi-bin/order.cgi?x=a&family=a&productId=998&titi=i&y=b&y=b HTTP/1.0" 200 7009 "http://www.google.com/search?sourceid=navclient&ie=utf-8&oe=utf-8&q=ma%C3%AEtre+ï¿½lï¿½ve" "SAGEM-myX-5m/1.0_UP.Browser/6.1.0.6.1.103_(GUI)_MMP/1.0_(Google_WAP_Proxy/1.0)"
 80.8.55.6 - john [01/Jan/2001:13:00:00 +0100] "GET /images/image1.gif HTTP/1.0" 200 364 "http://www.google.fr/search?q=cache:dccTQ_Zn4isJ:www.chiensderace.com/cgi-bin/liste_annonces.pl%3FTYPE%3D5%26ORIGINE%3Dchiensderace+labrador+chiensderace&hl=en&lr=lang_en|lang_fr&ie=UTF-8" "SAGEM-myX-5m/1.0_UP.Browser/6.1.0.6.1.103_(GUI)_MMP/1.0_(Google_WAP_Proxy/1.0)"
 80.8.55.6 - john [01/Jan/2001:13:00:00 +0100] "GET /images/image2.gif HTTP/1.0" 200 364 "http://www.google.fr/search?q=cache:dccTQ_Zn4isJ:www.chiensderace.com/cgi-bin/liste_annonces.pl%3FTYPE%3D5%26ORIGINE%3Dchiensderace+labrador+chiensderace&hl=en&lr=lang_en|lang_fr&ie=UTF-8" "SAGEM-myX-5m/1.0_UP.Browser/6.1.0.6.1.103_(GUI)_MMP/1.0_(Google_WAP_Proxy/1.0)"
 80.8.55.6 - john [01/Jan/2001:13:00:00 +0100] "GET /images/image3.gif HTTP/1.0" 200 364 "http://www.google.fr/search?q=cache:dccTQ_Zn4isJ:www.chiensderace.com/cgi-bin/liste_annonces.pl%3FTYPE%3D5%26ORIGINE%3Dchiensderace+labrador+chiensderace&hl=en&lr=lang_en|lang_fr&ie=UTF-8" "SAGEM-myX-5m/1.0_UP.Browser/6.1.0.6.1.103_(GUI)_MMP/1.0_(Google_WAP_Proxy/1.0)"

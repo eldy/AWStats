@@ -4,12 +4,12 @@
 #-----------------------------------------------------------------------------
 
 
-$DIRAWSTATS="d:/Mes Developpements/awstats/wwwroot/cgi-bin";
-$DIRCONF="d:/Mes Developpements/awstats/test/awstats/conf";
-$DIRRESULT="d:/Mes Developpements/awstats/test/awstats/result";
-$TEMP="c:/temp";
+$DIRAWSTATS="/media/DATA/Mes Developpements/awstats/wwwroot/cgi-bin";
+$DIRCONF="/media/DATA/Mes Developpements/awstats/test/awstats/conf";
+$DIRRESULT="/media/DATA/Mes Developpements/awstats/test/awstats/result";
+$TEMP="/temp";
 #$PERL="\"c:\\Program files\\cygwin\\bin\\perl.exe\"";
-$PERL="perl.exe";
+$PERL="perl";
 
 @TESTLIST=(
 "testglobal",
