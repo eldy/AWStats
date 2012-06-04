@@ -125,6 +125,7 @@
 'webvcr',
 'qnx\svoyager',
 # Site grabbers
+'grabber',
 'teleport',
 'webcapture',
 'webcopier',
@@ -351,6 +352,7 @@
 'webvcr','WebVCR',
 'qnx\svoyager','QNX Voyager',
 # Site grabbers
+'grabber','Grabber',
 'teleport','TelePort Pro',
 'webcapture','Acrobat Webcapture',
 'webcopier', 'WebCopier',
@@ -488,6 +490,7 @@
 # browsers.
 #---------------------------------------------------------------------------
 %BrowsersHereAreGrabbers = (
+'grabber','1',
 'teleport','1',
 'webcapture','1',
 'webcopier','1',
@@ -571,6 +574,7 @@
 'netpositive','netpositive',
 'phoenix','phoenix',
 # Site grabbers
+'grabber','grabber',
 'teleport','teleport',
 'webcapture','adobe',
 'webcopier','webcopier',

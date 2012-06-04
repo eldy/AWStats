@@ -7,6 +7,7 @@ $Revision$ - $Author$ - $Date$
 
 New features/improvements:
 - Update translations.
+- Update browsers list.
 - Add example of nginx setup.
 - Add some patches from debian package.
 - Rename domain name into documentation to awstats.org
