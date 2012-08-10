@@ -42,6 +42,12 @@
 'win(.*)16','windows[_+ ]3',					# This works for windows_31 and windows_3.1
 'win(.*)ce',
 # Macintosh OS family
+'mac[_+ ]os[_+ ]x[_+ ]10[_\.]9',
+'mac[_+ ]os[_+ ]x[_+ ]10[_\.]8',
+'mac[_+ ]os[_+ ]x[_+ ]10[_\.]7',
+'mac[_+ ]os[_+ ]x[_+ ]10[_\.]6',
+'mac[_+ ]os[_+ ]x[_+ ]10[_\.]5',
+'mac[_+ ]os[_+ ]x[_+ ]10[_\.]4',
 'mac[_+ ]os[_+ ]x',
 'mac[_+ ]?p',									# This works for macppc and mac_ppc and mac_powerpc
 'mac[_+ ]68',									# This works for mac_6800 and mac_68k
@@ -143,6 +149,12 @@
 'msie[_+ ]','winunknown',
 'ms[_+ ]frontpage','winunknown',
 # Macintosh OS family
+'mac[_+ ]os[_+ ]x[_+ ]10[_\.]9','macosx9',
+'mac[_+ ]os[_+ ]x[_+ ]10[_\.]8','macosx8',
+'mac[_+ ]os[_+ ]x[_+ ]10[_\.]7','macosx7',
+'mac[_+ ]os[_+ ]x[_+ ]10[_\.]6','macosx6',
+'mac[_+ ]os[_+ ]x[_+ ]10[_\.]5','macosx5',
+'mac[_+ ]os[_+ ]x[_+ ]10[_\.]4','macosx4',
 'mac[_+ ]os[_+ ]x','macosx', 'vienna', 'macosx', 'newsfire', 'macosx', 'applesyndication', 'macosx',
 'mac[_+ ]?p','macintosh','mac[_+ ]68','macintosh','macweb','macintosh','macintosh','macintosh',
 # Linux family (linuxyyy)
@@ -231,7 +243,13 @@
 'winunknown','Windows (unknown version)',
 'winxbox','<a href="http://www.xbox.com/" title="Microsoft XBOX home page [new window]" target="_blank">Microsoft XBOX</a>',
 # Macintosh OS
-'macosx','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank">Mac OS X</a>',
+'macosx9','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank">Mac OS X 10.9</a>',
+'macosx8','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank">Mac OS X 10.8 Mountain Lion</a>',
+'macosx7','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank">Mac OS X 10.7 Lion</a>',
+'macosx6','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank">Mac OS X 10.6 Snow Leopard</a>',
+'macosx5','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank">Mac OS X 10.5 Leopard</a>',
+'macosx4','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank">Mac OS X 10.4 Tiger</a>',
+'macosx','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank">Mac OS X others</a>',
 'macintosh','<a href="http://www.apple.com/" title="Mac OS home page [new window]" target="_blank">Mac OS</a>',
 # Linux
 'linuxandroid','<a href="http://code.google.com/android/" title="Google Android home page [new window]" target="_blank">Google Android</a>',
@@ -253,7 +271,7 @@
 'linux','<a href="http://www.distrowatch.com/" title="Linux DistroWatch home page. Useful if you find the associated user agent string in your logs. [new window]" target="_blank">Linux (Unknown/unspecified)</a>',
 'linux','GNU Linux (Unknown or unspecified distribution)',
 # Hurd
-'gnu','<a href="www.gnu.org/software/hurd/hurd.html" title="GNU Hurd home page [new window]" target="_blank">GNU Hurd</a>',
+'gnu','<a href="http://www.gnu.org/software/hurd/hurd.html" title="GNU Hurd home page [new window]" target="_blank">GNU Hurd</a>',
 # BSDs
 'bsdi','<a href="http://en.wikipedia.org/wiki/BSDi" title="BSDi home page [new window]" target="_blank">BSDi</a>',
 'bsdkfreebsd','<a href="http://www.debian.org/ports/kfreebsd-gnu/" title="Debian GNU/kFreeBSD" target="_blank">GNU/kFreeBSD</a>',
