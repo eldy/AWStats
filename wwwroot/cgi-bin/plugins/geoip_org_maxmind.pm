@@ -64,7 +64,7 @@ sub Init_geoip_org_maxmind {
 	my $InitParams=shift;
 	my $checkversion=&Check_Plugin_Version($PluginNeedAWStatsVersion);
     $MAXNBOFSECTIONGIR=10;
-    $MAXLENGTH=20;
+    $MAXLENGTH=50;
     
 	# <-----
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
