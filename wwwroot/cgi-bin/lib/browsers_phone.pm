@@ -25,6 +25,17 @@
 		
 #package AWSUA;
 
+# Relocated from main file for easier editing
+%BrowsersFamily = (
+    'msie'      => 1,
+    'firefox'   => 2,
+    'netscape'  => 3,
+    'svn'       => 4,
+    'opera'     => 5,
+    'safari'    => 6,
+    'chrome'    => 7,
+    'konqueror' => 8
+);
 
 # BrowsersSearchIDOrder
 # This list is used to know in which order to search Browsers IDs (Most
