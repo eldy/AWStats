@@ -6,10 +6,10 @@
 
 
 !define MUI_PROD "AWStats" ;Define your own software name here
-#!define MUI_VERSION_DOT "7.0" ;Define your own software version here
+#!define MUI_VERSION_DOT "7.1" ;Define your own software version here
 !define MUI_PUBLISHER "Laurent Destailleur"
 !define MUI_URL "http://www.awstats.org"
-!define MUI_COMMENTS "copyright 2000/2010 Laurent Destailleur"
+!define MUI_COMMENTS "copyright 2000/2012 Laurent Destailleur"
 !define MUI_HELPLINK "http://www.awstats.org/docs/index.html"
 !define MUI_URLUPDATE "http://www.awstats.org"
 

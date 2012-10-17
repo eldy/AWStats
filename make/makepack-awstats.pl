@@ -3,7 +3,7 @@
 # \file         make/makepack-awstats.pl
 # \brief        Package builder (tgz, zip, rpm, deb, exe)
 # \version      $Revision$
-# \author       (c)2004-2011 Laurent Destailleur  <eldy@users.sourceforge.net>
+# \author       (c)2004-2012 Laurent Destailleur  <eldy@users.sourceforge.net>
 #----------------------------------------------------------------------------
 
 use Cwd;
