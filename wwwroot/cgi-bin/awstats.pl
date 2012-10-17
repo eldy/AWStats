@@ -13,7 +13,6 @@
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
@@ -18548,7 +18547,8 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 				if ( $ValidHTTPCodes{ $field[$pos_code] } ) {    # Code is valid
 					if ( int($field[$pos_code]) == 304 && $pos_size>0) { $field[$pos_size] = 0; }
 					# track downloads
-					if (int($field[$pos_code]) == 200 && $MimeHashLib{$extension}[1] eq 'd'){
+					if (int($field[$pos_code]) == 200 && $MimeHashLib{$extension}[1] eq 'd' && $urlwithnoquery !~ /robots.txt$/ )  # We track download if $MimeHashLib{$extension}[1] = 'd'
+					{
 						$_downloads{$urlwithnoquery}->{'AWSTATS_HITS'}++;
 						$_downloads{$urlwithnoquery}->{'AWSTATS_SIZE'} += ($pos_size>0 ? int($field[$pos_size]) : 0);
 						if ($Debug) { debug( " New download detected: '$urlwithnoquery'", 2 ); }

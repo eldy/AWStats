@@ -51,7 +51,7 @@ $ShowEMailSenders $ShowEMailReceivers $ShowWormsStats $ShowClusterStats
 $ShowMenu $ShowMonthStats $ShowDaysOfMonthStats $ShowDaysOfWeekStats
 $ShowHoursStats $ShowDomainsStats $ShowHostsStats
 $ShowRobotsStats $ShowSessionsStats $ShowPagesStats $ShowFileTypesStats
-$ShowOSStats $ShowBrowsersStats $ShowOriginStats
+$ShowOSStats $ShowBrowsersStats $ShowDownloadsStats $ShowOriginStats
 $ShowKeyphrasesStats $ShowKeywordsStats $ShowMiscStats $ShowHTTPErrorsStats
 $BuildReportFormat
 @ExtraName
@@ -354,6 +354,7 @@ if ($ShowPagesStats) { push @OutputList,'urldetail'; push @OutputList,'urlentry'
 #if ($ShowFileTypesStats) { push @OutputList,'filetypes'; }	# There is dedicated page for filetypes
 if ($ShowOSStats) { push @OutputList,'osdetail'; push @OutputList,'unknownos'; }
 if ($ShowBrowsersStats) { push @OutputList,'browserdetail'; push @OutputList,'unknownbrowser'; }
+if ($ShowDownloadsStats) { push @OutputList,'downloads'; }
 if ($ShowScreenSizeStats) { push @OutputList,'screensize'; }
 if ($ShowOriginStats) { push @OutputList,'refererse'; push @OutputList,'refererpages'; }
 if ($ShowKeyphrasesStats) { push @OutputList,'keyphrases'; }
