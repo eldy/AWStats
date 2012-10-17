@@ -524,12 +524,12 @@ use vars qw/
   %MonthUnique %MonthVisits
   %MonthPages %MonthHits %MonthBytes
   %MonthNotViewedPages %MonthNotViewedHits %MonthNotViewedBytes
-  %_session %_browser_h
+  %_session %_browser_h %_browser_p
   %_domener_p %_domener_h %_domener_k %_errors_h %_errors_k
   %_filetypes_h %_filetypes_k %_filetypes_gz_in %_filetypes_gz_out
   %_host_p %_host_h %_host_k %_host_l %_host_s %_host_u
   %_waithost_e %_waithost_l %_waithost_s %_waithost_u
-  %_keyphrases %_keywords %_os_h %_pagesrefs_p %_pagesrefs_h %_robot_h %_robot_k %_robot_l %_robot_r
+  %_keyphrases %_keywords %_os_h %_os_p %_pagesrefs_p %_pagesrefs_h %_robot_h %_robot_k %_robot_l %_robot_r
   %_worm_h %_worm_k %_worm_l %_login_h %_login_p %_login_k %_login_l %_screensize_h
   %_misc_p %_misc_h %_misc_k
   %_cluster_p %_cluster_h %_cluster_k
@@ -1343,7 +1343,7 @@ sub debug {
 }
 
 #------------------------------------------------------------------------------
-# Function:     Optimize an array removing duplicate entries
+# Function:     Optimize an array of precompiled regex by removing duplicate entries
 # Parameters:	@Array notcasesensitive=0|1
 # Input:        None
 # Output:		None
@@ -4633,6 +4633,7 @@ sub Read_History_With_TmpUpdate {
 							$countloaded++;
 							if ( $field[1] ) {
 								$_os_h{ $field[0] } += $field[1];
+								$_os_p{ $field[0] } += $field[2];
 							}
 						}
 					}
@@ -4661,7 +4662,7 @@ sub Read_History_With_TmpUpdate {
 				if ( $SectionsToSave{'os'} ) {
 					Save_History( 'os', $year, $month, $date );
 					delete $SectionsToSave{'os'};
-					if ($withpurge) { %_os_h = (); }
+					if ($withpurge) { %_os_h = (); %_os_p = (); }
 				}
 				if ( !scalar %SectionsToLoad ) {
 					debug(" Stop reading history file. Got all we need.");
@@ -4683,6 +4684,7 @@ sub Read_History_With_TmpUpdate {
 							$countloaded++;
 							if ( $field[1] ) {
 								$_browser_h{ $field[0] } += $field[1];
+								$_browser_p{ $field[0] } += $field[2];
 							}
 						}
 					}
@@ -4713,7 +4715,7 @@ sub Read_History_With_TmpUpdate {
 				if ( $SectionsToSave{'browser'} ) {
 					Save_History( 'browser', $year, $month, $date );
 					delete $SectionsToSave{'browser'};
-					if ($withpurge) { %_browser_h = (); }
+					if ($withpurge) { %_browser_h = (); %_browser_p = (); }
 				}
 				if ( !scalar %SectionsToLoad ) {
 					debug(" Stop reading history file. Got all we need.");
@@ -6914,11 +6916,13 @@ sub Save_History {
 		}
 		print HISTORYTMP "# OS ID - Hits\n";
 		$ValueInFile{$sectiontosave} = tell HISTORYTMP;
-		print HISTORYTMP "${xmlbb}BEGIN_OS${xmlbs}"
+		print HISTORYTMP "${xmlbb}BEGIN_OS ID - Hits - Pages${xmlbs}"
 		  . ( scalar keys %_os_h )
 		  . "${xmlbe}\n";
 		foreach ( keys %_os_h ) {
-			print HISTORYTMP "${xmlrb}$_${xmlrs}$_os_h{$_}${xmlre}\n";
+			my $hits        = $_os_h{$_}      || 0;
+			my $pages       = $_os_p{$_}      || 0;
+			print HISTORYTMP "${xmlrb}$_${xmlrs}$hits${xmlrs}$pages${xmlre}\n";
 		}
 		print HISTORYTMP "${xmleb}END_OS${xmlee}\n";
 	}
@@ -6927,13 +6931,15 @@ sub Save_History {
 		if ($xml) {
 			print HISTORYTMP "<section id='$sectiontosave'><comment>\n";
 		}
-		print HISTORYTMP "# Browser ID - Hits\n";
+		print HISTORYTMP "# Browser ID - Hits - Pages\n";
 		$ValueInFile{$sectiontosave} = tell HISTORYTMP;
 		print HISTORYTMP "${xmlbb}BEGIN_BROWSER${xmlbs}"
 		  . ( scalar keys %_browser_h )
 		  . "${xmlbe}\n";
 		foreach ( keys %_browser_h ) {
-			print HISTORYTMP "${xmlrb}$_${xmlrs}$_browser_h{$_}${xmlre}\n";
+			my $hits        = $_browser_h{$_}      || 0;
+			my $pages       = $_browser_p{$_}      || 0;
+			print HISTORYTMP "${xmlrb}$_${xmlrs}$hits${xmlrs}$pages${xmlre}\n";
 		}
 		print HISTORYTMP "${xmleb}END_BROWSER${xmlee}\n";
 	}
@@ -7673,12 +7679,12 @@ sub Init_HashArray {
 	}
 
 	# Reset all hash arrays with name beginning by _
-	%_session     = %_browser_h   = ();
+	%_session     = %_browser_h   = %_browser_p   = ();
 	%_domener_p   = %_domener_h   = %_domener_k = %_errors_h = %_errors_k = ();
 	%_filetypes_h = %_filetypes_k = %_filetypes_gz_in = %_filetypes_gz_out = ();
 	%_host_p = %_host_h = %_host_k = %_host_l = %_host_s = %_host_u = ();
 	%_waithost_e = %_waithost_l = %_waithost_s = %_waithost_u = ();
-	%_keyphrases = %_keywords   = %_os_h = %_pagesrefs_p = %_pagesrefs_h =
+	%_keyphrases = %_keywords   = %_os_h = %_os_p = %_pagesrefs_p = %_pagesrefs_h =
 	  %_robot_h  = %_robot_k    = %_robot_l = %_robot_r = ();
 	%_worm_h = %_worm_k = %_worm_l = %_login_p = %_login_h = %_login_k =
 	  %_login_l      = %_screensize_h   = ();
@@ -7811,8 +7817,7 @@ sub DecodeEncodedString {
 # Return:		standardregex
 #------------------------------------------------------------------------------
 sub UnCompileRegex {
-	shift =~ /\(\?[-^\w]*:(.*)\)/;         # Works with all perl
-	# shift =~ /\(\?[-\w]*:(.*)\)/;        < perl 5.14
+	shift =~ /\(\?[-\w]*:(.*)\)/;
 	return $1;
 }
 
@@ -10615,28 +10620,40 @@ sub HTMLShowBrowserDetail{
 	print
 "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[58]</th>";
 	print
-"<th width=\"80\">$Message[111]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th>";
+"<th width=\"80\">$Message[111]</th><th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th><th bgcolor=\"#$color_p\" width=\"80\">$Message[15]</th>";
+	print
+"<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th>";
 	print "<th>&nbsp;</th>";
 	print "</tr>\n";
 	my $total_h = 0;
+	my $total_p = 0;
 	my $count = 0;
 	&BuildKeyList( MinimumButNoZero( scalar keys %_browser_h, 500 ),
-		1, \%_browser_h, \%_browser_h );
+		1, \%_browser_h, \%_browser_p );
 	my %keysinkeylist = ();
 	my $max_h = 1;
+	my $max_p = 1;
 
 	# Count total by family
 	my %totalfamily_h = ();
-	my $TotalFamily   = 0;
+	my %totalfamily_p = ();
+	my $TotalFamily_h = 0;
+	my $TotalFamily_p = 0;
   BROWSERLOOP: foreach my $key (@keylist) {
 		$total_h += $_browser_h{$key};
 		if ( $_browser_h{$key} > $max_h ) {
 			$max_h = $_browser_h{$key};
 		}
+		$total_p += $_browser_p{$key};
+		if ( $_browser_p{$key} > $max_p ) {
+			$max_p = $_browser_p{$key};
+		}
 		foreach my $family ( keys %BrowsersFamily ) {
 			if ( $key =~ /^$family/i ) {
 				$totalfamily_h{$family} += $_browser_h{$key};
-				$TotalFamily            += $_browser_h{$key};
+				$totalfamily_p{$family} += $_browser_p{$key};
+				$TotalFamily_h          += $_browser_h{$key};
+				$TotalFamily_p          += $_browser_p{$key};
 				next BROWSERLOOP;
 			}
 		}
@@ -10648,10 +10665,15 @@ sub HTMLShowBrowserDetail{
 		keys %BrowsersFamily
 	  )
 	{
-		my $p = '&nbsp;';
+		my $p_h = '&nbsp;';
+		my $p_p = '&nbsp;';
 		if ($total_h) {
-			$p = int( $totalfamily_h{$family} / $total_h * 1000 ) / 10;
-			$p = "$p %";
+			$p_h = int( $totalfamily_h{$family} / $total_h * 1000 ) / 10;
+			$p_h = "$p_h %";
+		}
+		if ($total_p) {
+			$p_p = int( $totalfamily_p{$family} / $total_p * 1000 ) / 10;
+			$p_p = "$p_p %";
 		}
 		my $familyheadershown = 0;
 
@@ -10664,18 +10686,27 @@ sub HTMLShowBrowserDetail{
 				  . uc($family)
 				  . "</b></td>";
 				print "<td>&nbsp;</td><td><b>"
+				  . Format_Number(int( $totalfamily_p{$family} ))
+				  . "</b></td><td><b>$p_p</b></td>";
+				print "<td><b>"
 				  . Format_Number(int( $totalfamily_h{$family} ))
-				  . "</b></td><td><b>$p</b></td><td>&nbsp;</td>";
+				  . "</b></td><td><b>$p_h</b></td><td>&nbsp;</td>";
 				print "</tr>\n";
 				$familyheadershown = 1;
 			}
 			$keysinkeylist{$key} = 1;
 			my $ver = $1;
-			my $p   = '&nbsp;';
+			my $p_h = '&nbsp;';
+			my $p_p = '&nbsp;';
 			if ($total_h) {
-				$p =
+				$p_h = 
 				  int( $_browser_h{$key} / $total_h * 1000 ) / 10;
-				$p = "$p %";
+				$p_h = "$p_h %";
+			}
+			if ($total_p) {
+				$p_p =
+				  int( $_browser_p{$key} / $total_p * 1000 ) / 10;
+				$p_p = "$p_p %";
 			}
 			print "<tr>";
 			print "<td"
@@ -10694,6 +10725,7 @@ sub HTMLShowBrowserDetail{
 			  )
 			  . "</td>";
 			my $bredde_h = 0;
+			my $bredde_p = 0;
 			if ( $max_h > 0 ) {
 				$bredde_h =
 				  int( $BarWidth * ( $_browser_h{$key} || 0 ) /
@@ -10702,11 +10734,22 @@ sub HTMLShowBrowserDetail{
 			if ( ( $bredde_h == 1 ) && $_browser_h{$key} ) {
 				$bredde_h = 2;
 			}
-			print "<td>".Format_Number($_browser_h{$key})."</td><td>$p</td>";
+			if ( $max_p > 0 ) {
+				$bredde_p =
+				  int( $BarWidth * ( $_browser_p{$key} || 0 ) /
+					  $max_p ) + 1;
+			}
+			if ( ( $bredde_p == 1 ) && $_browser_p{$key} ) {
+				$bredde_p = 2;
+			}
+			print "<td>".Format_Number($_browser_p{$key})."</td><td>$p_p</td>";
+			print "<td>".Format_Number($_browser_h{$key})."</td><td>$p_h</td>";
 			print "<td class=\"aws\">";
 
 			# alt and title are not provided to reduce page size
 			if ($ShowBrowsersStats) {
+				print
+"<img src=\"$DirIcons\/other\/$BarPng{'hp'}\" width=\"$bredde_p\" height=\"5\" /><br />";
 				print
 "<img src=\"$DirIcons\/other\/$BarPng{'hh'}\" width=\"$bredde_h\" height=\"5\" /><br />";
 				}
@@ -10722,25 +10765,40 @@ sub HTMLShowBrowserDetail{
 	foreach my $key (@keylist) {
 		if ( $keysinkeylist{$key} ) { next; }
 		if ( !$familyheadershown )  {
-			my $p = '&nbsp;';
-			if ($total_h) {
-				$p =
-				  int( ( $total_h - $TotalFamily ) / $total_h * 1000 ) /
+			my $p_h = '&nbsp;';
+			my $p_p = '&nbsp;';
+			if ($total_p) {
+				$p_p =
+				  int( ( $total_p - $TotalFamily_p ) / $total_p * 1000 ) /
 				  10;
-				$p = "$p %";
+				$p_p = "$p_p %";
+			}
+			if ($total_h) {
+				$p_h =
+				  int( ( $total_h - $TotalFamily_h ) / $total_h * 1000 ) /
+				  10;
+				$p_h = "$p_h %";
 			}
 			print
 "<tr bgcolor=\"#F6F6F6\"><td class=\"aws\" colspan=\"2\"><b>$Message[2]</b></td>";
 			print "<td>&nbsp;</td><td><b>"
-			  . Format_Number(( $total_h - $TotalFamily ))
-			  . "</b></td><td><b>$p</b></td><td>&nbsp;</td>";
+			  . Format_Number(( $total_p - $TotalFamily_p ))
+			  . "</b></td><td><b>$p_p</b></td>";
+			print "<td><b>"
+			  . Format_Number(( $total_h - $TotalFamily_h ))
+			  . "</b></td><td><b>$p_h</b></td><td>&nbsp;</td>";
 			print "</tr>\n";
 			$familyheadershown = 1;
 		}
-		my $p = '&nbsp;';
+		my $p_h = '&nbsp;';
+		my $p_p = '&nbsp;';
 		if ($total_h) {
-			$p = int( $_browser_h{$key} / $total_h * 1000 ) / 10;
-			$p = "$p %";
+			$p_h = int( $_browser_h{$key} / $total_h * 1000 ) / 10;
+			$p_h = "$p_h %";
+		}
+		if ($total_p) {
+			$p_p = int( $_browser_p{$key} / $total_p * 1000 ) / 10;
+			$p_p = "$p_p %";
 		}
 		print "<tr>";
 		if ( $key eq 'Unknown' ) {
@@ -10770,19 +10828,31 @@ sub HTMLShowBrowserDetail{
 			  . "</td>";
 		}
 		my $bredde_h = 0;
+		my $bredde_p = 0;
 		if ( $max_h > 0 ) {
 			$bredde_h =
 			  int( $BarWidth * ( $_browser_h{$key} || 0 ) / $max_h ) +
 			  1;
 		}
+		if ( $max_p > 0 ) {
+			$bredde_p =
+			  int( $BarWidth * ( $_browser_p{$key} || 0 ) / $max_p ) +
+			  1;
+		}
 		if ( ( $bredde_h == 1 ) && $_browser_h{$key} ) {
 			$bredde_h = 2;
 		}
-		print "<td>".Format_Number($_browser_h{$key})."</td><td>$p</td>";
+		if ( ( $bredde_p == 1 ) && $_browser_p{$key} ) {
+			$bredde_p = 2;
+		}
+		print "<td>".Format_Number($_browser_p{$key})."</td><td>$p_p</td>";
+		print "<td>".Format_Number($_browser_h{$key})."</td><td>$p_h</td>";
 		print "<td class=\"aws\">";
 
 		# alt and title are not provided to reduce page size
 		if ($ShowBrowsersStats) {
+			print
+"<img src=\"$DirIcons\/other\/$BarPng{'hp'}\" width=\"$bredde_p\" height=\"5\" /><br />";
 			print
 "<img src=\"$DirIcons\/other\/$BarPng{'hh'}\" width=\"$bredde_h\" height=\"5\" /><br />";
 		}
@@ -10855,26 +10925,35 @@ sub HTMLShowOSDetail{
 	print
 "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[58]</th>";
 	print
+"<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th><th bgcolor=\"#$color_p\" width=\"80\">$Message[15]</th>";
+	print
 "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th>";
-	print "<th>&nbsp;</th>";
 	print "</tr>\n";
 	my $total_h = 0;
+	my $total_p = 0;
 	my $count = 0;
 	&BuildKeyList( MinimumButNoZero( scalar keys %_os_h, 500 ),
-		1, \%_os_h, \%_os_h );
+		1, \%_os_h, \%_os_p );
 	my %keysinkeylist = ();
 	my $max_h = 1;
+	my $max_p = 1;
 
 	# Count total by family
 	my %totalfamily_h = ();
-	my $TotalFamily   = 0;
+	my %totalfamily_p = ();
+	my $TotalFamily_h = 0;
+	my $TotalFamily_p = 0;
   OSLOOP: foreach my $key (@keylist) {
 		$total_h += $_os_h{$key};
+		$total_p += $_os_p{$key};
 		if ( $_os_h{$key} > $max_h ) { $max_h = $_os_h{$key}; }
+		if ( $_os_p{$key} > $max_p ) { $max_p = $_os_p{$key}; }
 		foreach my $family ( keys %OSFamily ) {
 			if ( $key =~ /^$family/i ) {
 				$totalfamily_h{$family} += $_os_h{$key};
-				$TotalFamily            += $_os_h{$key};
+				$totalfamily_p{$family} += $_os_p{$key};
+				$TotalFamily_h          += $_os_h{$key};
+				$TotalFamily_p          += $_os_p{$key};
 				next OSLOOP;
 			}
 		}
@@ -10882,10 +10961,15 @@ sub HTMLShowOSDetail{
 
 	# Write records grouped in a browser family
 	foreach my $family ( keys %OSFamily ) {
-		my $p = '&nbsp;';
+		my $p_h = '&nbsp;';
+		my $p_p = '&nbsp;';
 		if ($total_h) {
-			$p = int( $totalfamily_h{$family} / $total_h * 1000 ) / 10;
-			$p = "$p %";
+			$p_h = int( $totalfamily_h{$family} / $total_h * 1000 ) / 10;
+			$p_h = "$p_h %";
+		}
+		if ($total_p) {
+			$p_p = int( $totalfamily_p{$family} / $total_p * 1000 ) / 10;
+			$p_p = "$p_p %";
 		}
 		my $familyheadershown = 0;
 		foreach my $key ( reverse sort keys %_os_h ) {
@@ -10898,17 +10982,25 @@ sub HTMLShowOSDetail{
 					print
 "<tr bgcolor=\"#F6F6F6\"><td class=\"aws\" colspan=\"2\"><b>$family_name</b></td>";
 					print "<td><b>"
+					  . Format_Number(int( $totalfamily_p{$family} ))
+					  . "</b></td><td><b>$p_p</b></td>";
+					print "<td><b>"
 					  . Format_Number(int( $totalfamily_h{$family} ))
-					  . "</b></td><td><b>$p</b></td><td>&nbsp;</td>";
+					  . "</b></td><td><b>$p_h</b></td><td>&nbsp;</td>";
 					print "</tr>\n";
 					$familyheadershown = 1;
 				}
 				$keysinkeylist{$key} = 1;
 				my $ver = $1;
-				my $p   = '&nbsp;';
+				my $p_h = '&nbsp;';
+				my $p_p = '&nbsp;';
 				if ($total_h) {
-					$p = int( $_os_h{$key} / $total_h * 1000 ) / 10;
-					$p = "$p %";
+					$p_h = int( $_os_h{$key} / $total_h * 1000 ) / 10;
+					$p_h = "$p_h %";
+				}
+				if ($total_p) {
+					$p_p = int( $_os_p{$key} / $total_p * 1000 ) / 10;
+					$p_p = "$p_p %";
 				}
 				print "<tr>";
 				print "<td"
@@ -10919,6 +11011,7 @@ sub HTMLShowOSDetail{
 
 				print "<td class=\"aws\">$OSHashLib{$key}</td>";
 				my $bredde_h = 0;
+				my $bredde_p = 0;
 				if ( $max_h > 0 ) {
 					$bredde_h =
 					  int( $BarWidth * ( $_os_h{$key} || 0 ) / $max_h )
@@ -10927,11 +11020,22 @@ sub HTMLShowOSDetail{
 				if ( ( $bredde_h == 1 ) && $_os_h{$key} ) {
 					$bredde_h = 2;
 				}
-				print "<td>".Format_Number($_os_h{$key})."</td><td>$p</td>";
+				if ( $max_p > 0 ) {
+					$bredde_p =
+					  int( $BarWidth * ( $_os_p{$key} || 0 ) / $max_p )
+					  + 1;
+				}
+				if ( ( $bredde_p == 1 ) && $_os_p{$key} ) {
+					$bredde_p = 2;
+				}
+				print "<td>".Format_Number($_os_p{$key})."</td><td>$p_p</td>";
+				print "<td>".Format_Number($_os_h{$key})."</td><td>$p_h</td>";
 				print "<td class=\"aws\">";
 
 				# alt and title are not provided to reduce page size
 				if ($ShowOSStats) {
+					print
+"<img src=\"$DirIcons\/other\/$BarPng{'hp'}\" width=\"$bredde_p\" height=\"5\" /><br />";
 					print
 "<img src=\"$DirIcons\/other\/$BarPng{'hh'}\" width=\"$bredde_h\" height=\"5\" /><br />";
 				}
@@ -10947,25 +11051,40 @@ sub HTMLShowOSDetail{
 	foreach my $key (@keylist) {
 		if ( $keysinkeylist{$key} ) { next; }
 		if ( !$familyheadershown )  {
-			my $p = '&nbsp;';
+			my $p_h = '&nbsp;';
+			my $p_p = '&nbsp;';
 			if ($total_h) {
-				$p =
-				  int( ( $total_h - $TotalFamily ) / $total_h * 1000 ) /
+				$p_h =
+				  int( ( $total_h - $TotalFamily_h ) / $total_h * 1000 ) /
 				  10;
-				$p = "$p %";
+				$p_h = "$p_h %";
+			}
+			if ($total_p) {
+				$p_p =
+				  int( ( $total_p - $TotalFamily_p ) / $total_p * 1000 ) /
+				  10;
+				$p_p = "$p_p %";
 			}
 			print
 "<tr bgcolor=\"#F6F6F6\"><td class=\"aws\" colspan=\"2\"><b>$Message[2]</b></td>";
 			print "<td><b>"
-			  . Format_Number(( $total_h - $TotalFamily ))
-			  . "</b></td><td><b>$p</b></td><td>&nbsp;</td>";
+			  . Format_Number(( $total_p - $TotalFamily_p ))
+			  . "</b></td><td><b>$p_p</b></td>";
+			print "<td><b>"
+			  . Format_Number(( $total_h - $TotalFamily_h ))
+			  . "</b></td><td><b>$p_h</b></td><td>&nbsp;</td>";
 			print "</tr>\n";
 			$familyheadershown = 1;
 		}
-		my $p = '&nbsp;';
+		my $p_h = '&nbsp;';
+		my $p_p = '&nbsp;';
 		if ($total_h) {
-			$p = int( $_os_h{$key} / $total_h * 1000 ) / 10;
-			$p = "$p %";
+			$p_h = int( $_os_h{$key} / $total_h * 1000 ) / 10;
+			$p_h = "$p_h %";
+		}
+		if ($total_p) {
+			$p_p = int( $_os_p{$key} / $total_p * 1000 ) / 10;
+			$p_p = "$p_p %";
 		}
 		print "<tr>";
 		if ( $key eq 'Unknown' ) {
@@ -10989,16 +11108,25 @@ sub HTMLShowOSDetail{
 			  . " /></td><td class=\"aws\">$libos</td>";
 		}
 		my $bredde_h = 0;
+		my $bredde_p = 0;
 		if ( $max_h > 0 ) {
 			$bredde_h =
 			  int( $BarWidth * ( $_os_h{$key} || 0 ) / $max_h ) + 1;
 		}
 		if ( ( $bredde_h == 1 ) && $_os_h{$key} ) { $bredde_h = 2; }
-		print "<td>".Format_Number($_os_h{$key})."</td><td>$p</td>";
+		if ( $max_p > 0 ) {
+			$bredde_p =
+			  int( $BarWidth * ( $_os_p{$key} || 0 ) / $max_p ) + 1;
+		}
+		if ( ( $bredde_p == 1 ) && $_os_p{$key} ) { $bredde_p = 2; }
+		print "<td>".Format_Number($_os_p{$key})."</td><td>$p_p</td>";
+		print "<td>".Format_Number($_os_h{$key})."</td><td>$p_h</td>";
 		print "<td class=\"aws\">";
 
 		# alt and title are not provided to reduce page size
 		if ($ShowOSStats) {
+			print
+"<img src=\"$DirIcons\/other\/$BarPng{'hp'}\" width=\"$bredde_p\" height=\"5\" /><br />";
 			print
 "<img src=\"$DirIcons\/other\/$BarPng{'hh'}\" width=\"$bredde_h\" height=\"5\" /><br />";
 		}
@@ -15391,16 +15519,21 @@ sub HTMLMainOS{
 	if ($Debug) { debug( "ShowOSStats", 2 ); }
 	print "$Center<a name=\"os\">&nbsp;</a><br />\n";
 	my $Totalh   = 0;
+	my $Totalp   = 0;
 	my %new_os_h = ();
+	my %new_os_p = ();
   OSLOOP: foreach my $key ( keys %_os_h ) {
 		$Totalh += $_os_h{$key};
+		$Totalp += $_os_p{$key};
 		foreach my $family ( keys %OSFamily ) {
 			if ( $key =~ /^$family/i ) {
 				$new_os_h{"${family}cumul"} += $_os_h{$key};
+				$new_os_p{"${family}cumul"} += $_os_p{$key};
 				next OSLOOP;
 			}
 		}
 		$new_os_h{$key} += $_os_h{$key};
+		$new_os_p{$key} += $_os_p{$key};
 	}
 	my $title =
 "$Message[59] ($Message[77] $MaxNbOf{'OsShown'}) &nbsp; - &nbsp; <a href=\""
@@ -15431,7 +15564,7 @@ sub HTMLMainOS{
 	&tab_head( "$title", 19, 0, 'os' );
 	
 	&BuildKeyList( $MaxNbOf{'OsShown'}, $MinHit{'Os'}, \%new_os_h,
-		\%new_os_h );
+		\%new_os_p );
 		
 	# Graph the top five in a pie chart
 	if (scalar @keylist > 1){
@@ -15473,22 +15606,33 @@ sub HTMLMainOS{
 	}
 	
 	print
-"<tr bgcolor=\"#$color_TableBGRowTitle\"><th width=\"$WIDTHCOLICON\">&nbsp;</th><th>$Message[59]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th></tr>\n";
+"<tr bgcolor=\"#$color_TableBGRowTitle\"><th width=\"$WIDTHCOLICON\">&nbsp;</th><th>$Message[59]</th>";
+	print
+"<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th><th bgcolor=\"#$color_p\" width=\"80\">$Message[15]</th>";
+	print
+"<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th></tr>\n";
 	my $total_h = 0;
+	my $total_p = 0;
 	my $count = 0;
 	
 	foreach my $key (@keylist) {
-		my $p = '&nbsp;';
+		my $p_h = '&nbsp;';
+		my $p_p = '&nbsp;';
 		if ($Totalh) {
-			$p = int( $new_os_h{$key} / $Totalh * 1000 ) / 10;
-			$p = "$p %";
+			$p_h = int( $new_os_h{$key} / $Totalh * 1000 ) / 10;
+			$p_h = "$p_h %";
+		}
+		if ($Totalp) {
+			$p_p = int( $new_os_p{$key} / $Totalp * 1000 ) / 10;
+			$p_p = "$p_p %";
 		}
 		if ( $key eq 'Unknown' ) {
 			print "<tr><td"
 			  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
 			  . "><img src=\"$DirIcons\/os\/unknown.png\""
 			  . AltTitle("")
-			  . " /></td><td class=\"aws\"><span style=\"color: #$color_other\">$Message[0]</span></td><td>".Format_Number($_os_h{$key})."</td><td>$p</td></tr>\n";
+			  . " /></td><td class=\"aws\"><span style=\"color: #$color_other\">$Message[0]</span></td>"
+			  . "<td>".Format_Number($_os_p{$key})."</td><td>$p_p</td><td>".Format_Number($_os_h{$key})."</td><td>$p_h</td></tr>\n";
 		}
 		else {
 			my $keywithoutcumul = $key;
@@ -15504,23 +15648,27 @@ sub HTMLMainOS{
 			  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
 			  . "><img src=\"$DirIcons\/os\/$nameicon.png\""
 			  . AltTitle("")
-			  . " /></td><td class=\"aws\">$libos</td><td>".Format_Number($new_os_h{$key})."</td><td>$p</td></tr>\n";
+			  . " /></td><td class=\"aws\">$libos</td><td>".Format_Number($new_os_p{$key})."</td><td>$p_p</td><td>".Format_Number($new_os_h{$key})."</td><td>$p_h</td></tr>\n";
 		}
 		$total_h += $new_os_h{$key};
+		$total_p += $new_os_p{$key};
 		$count++;
 	}
 	if ($Debug) {
 		debug( "Total real / shown : $Totalh / $total_h", 2 );
 	}
 	my $rest_h = $Totalh - $total_h;
+	my $rest_p = $Totalp - $total_p;
 	if ( $rest_h > 0 ) {
-		my $p;
-		if ($Totalh) { $p = int( $rest_h / $Totalh * 1000 ) / 10; }
+		my $p_p;
+		my $p_h;
+		if ($Totalh) { $p_h = int( $rest_h / $Totalh * 1000 ) / 10; }
+		if ($Totalp) { $p_p = int( $rest_p / $Totalp * 1000 ) / 10; }
 		print "<tr>";
 		print "<td>&nbsp;</td>";
 		print
-"<td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td><td>".Format_Number($rest_h)."</td>";
-		print "<td>$p %</td></tr>\n";
+"<td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td><td>".Format_Number($rest_p)."</td>";
+		print "<td>$p_p %</td><td>".Format_Number($rest_h)."</td><td>$p_h %</td></tr>\n";
 	}
 	&tab_end();
 }
@@ -15539,16 +15687,21 @@ sub HTMLMainBrowsers{
 	if ($Debug) { debug( "ShowBrowsersStats", 2 ); }
 	print "$Center<a name=\"browsers\">&nbsp;</a><br />\n";
 	my $Totalh        = 0;
+	my $Totalp        = 0;
 	my %new_browser_h = ();
+	my %new_browser_p = ();
   BROWSERLOOP: foreach my $key ( keys %_browser_h ) {
 		$Totalh += $_browser_h{$key};
+		$Totalp += $_browser_p{$key};
 		foreach my $family ( keys %BrowsersFamily ) {
 			if ( $key =~ /^$family/i ) {
 				$new_browser_h{"${family}cumul"} += $_browser_h{$key};
+				$new_browser_p{"${family}cumul"} += $_browser_p{$key};
 				next BROWSERLOOP;
 			}
 		}
 		$new_browser_h{$key} += $_browser_h{$key};
+		$new_browser_p{$key} += $_browser_p{$key};
 	}
 	my $title =
 "$Message[21] ($Message[77] $MaxNbOf{'BrowsersShown'}) &nbsp; - &nbsp; <a href=\""
@@ -15581,7 +15734,7 @@ sub HTMLMainBrowsers{
 	
 	&BuildKeyList(
 		$MaxNbOf{'BrowsersShown'}, $MinHit{'Browser'},
-		\%new_browser_h,           \%new_browser_h
+		\%new_browser_h,           \%new_browser_p
 	);
 	
 	# Graph the top five in a pie chart
@@ -15623,21 +15776,29 @@ sub HTMLMainBrowsers{
 		}
 	}
 	print
-"<tr bgcolor=\"#$color_TableBGRowTitle\"><th width=\"$WIDTHCOLICON\">&nbsp;</th><th>$Message[21]</th><th width=\"80\">$Message[111]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th></tr>\n";
+"<tr bgcolor=\"#$color_TableBGRowTitle\"><th width=\"$WIDTHCOLICON\">&nbsp;</th><th>$Message[21]</th><th width=\"80\">$Message[111]</th><th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th><th bgcolor=\"#$color_p\" width=\"80\">$Message[15]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th></tr>\n";
 	my $total_h = 0;
+	my $total_p = 0;
 	my $count = 0;
 	foreach my $key (@keylist) {
-		my $p = '&nbsp;';
+		my $p_h = '&nbsp;';
+		my $p_p = '&nbsp;';
 		if ($Totalh) {
-			$p = int( $new_browser_h{$key} / $Totalh * 1000 ) / 10;
-			$p = "$p %";
+			$p_h = int( $new_browser_h{$key} / $Totalh * 1000 ) / 10;
+			$p_h = "$p_h %";
+		}
+		if ($Totalp) {
+			$p_p = int( $new_browser_p{$key} / $Totalp * 1000 ) / 10;
+			$p_p = "$p_p %";
 		}
 		if ( $key eq 'Unknown' ) {
 			print "<tr><td"
 			  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
 			  . "><img src=\"$DirIcons\/browser\/unknown.png\""
 			  . AltTitle("")
-			  . " /></td><td class=\"aws\"><span style=\"color: #$color_other\">$Message[0]</span></td><td width=\"80\">?</td><td>".Format_Number($_browser_h{$key})."</td><td>$p</td></tr>\n";
+			  . " /></td><td class=\"aws\"><span style=\"color: #$color_other\">$Message[0]</span></td><td width=\"80\">?</td>"
+			  . "<td>".Format_Number($_browser_p{$key})."</td><td>$p_p</td>"
+			  . "<td>".Format_Number($_browser_h{$key})."</td><td>$p_h</td></tr>\n";
 		}
 		else {
 			my $keywithoutcumul = $key;
@@ -15663,25 +15824,29 @@ sub HTMLMainBrowsers{
 				? "<b>$Message[112]</b>"
 				: "$Message[113]"
 			  )
-			  . "</td><td>".Format_Number($new_browser_h{$key})."</td><td>$p</td></tr>\n";
+			  . "</td><td>".Format_Number($new_browser_p{$key})."</td><td>$p_p</td><td>".Format_Number($new_browser_h{$key})."</td><td>$p_h</td></tr>\n";
 		}
 		$total_h += $new_browser_h{$key};
+		$total_p += $new_browser_p{$key};
 		$count++;
 	}
 	if ($Debug) {
 		debug( "Total real / shown : $Totalh / $total_h", 2 );
 	}
 	my $rest_h = $Totalh - $total_h;
+	my $rest_p = $Totalp - $total_p;
 	if ( $rest_h > 0 ) {
-		my $p;
-		if ($Totalh) { $p = int( $rest_h / $Totalh * 1000 ) / 10; }
+		my $p_p = 0.0;
+		my $p_h;
+		if ($Totalh) { $p_h = int( $rest_h / $Totalh * 1000 ) / 10; }
+		if ($Totalp) { $p_p = int( $rest_p / $Totalp * 1000 ) / 10; }
 		print "<tr>";
 		print "<td>&nbsp;</td>";
 		print
-"<td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td><td>&nbsp;</td><td>$rest_h</td>";
-			print "<td>$p %</td></tr>\n";
-		}
-		&tab_end();
+"<td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td><td>&nbsp;</td><td>$rest_p</td>";
+		print "<td>$p_p %</td><td>$rest_h</td><td>$p_h %</td></tr>\n";
+	}
+	&tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -19221,18 +19386,21 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 							&& $UserAgent !~ /$regnotfirefox/o )
 						{
 							$_browser_h{"firefox$1"}++;
+							if ($PageBool) { $_browser_p{"firefox$1"}++; }
 							$TmpBrowser{$UserAgent} = "firefox$1";
 						}
 
 						# Opera ?
 						elsif ( $UserAgent =~ /$regveropera/o ) {
 							$_browser_h{"opera$1"}++;
+							if ($PageBool) { $_browser_p{"opera$1"}++; }
 							$TmpBrowser{$UserAgent} = "opera$1";
 						}
 
 						# Chrome ?
 						elsif ( $UserAgent =~ /$regverchrome/o ) {
 							$_browser_h{"chrome$1"}++;
+							if ($PageBool) { $_browser_p{"chrome$1"}++; }
 							$TmpBrowser{$UserAgent} = "chrome$1";
 						}
 
@@ -19245,18 +19413,21 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 								$safariver = $1;
 							}
 							$_browser_h{"safari$safariver"}++;
+							if ($PageBool) { $_browser_p{"safari$safariver"}++; }
 							$TmpBrowser{$UserAgent} = "safari$safariver";
 						}
 
 						# Konqueror ?
 						elsif ( $UserAgent =~ /$regverkonqueror/o ) {
 							$_browser_h{"konqueror$1"}++;
+							if ($PageBool) { $_browser_p{"konqueror$1"}++; }
 							$TmpBrowser{$UserAgent} = "konqueror$1";
 						}
 
 						# Subversion ?
 						elsif ( $UserAgent =~ /$regversvn/o ) {
 							$_browser_h{"svn$1"}++;
+							if ($PageBool) { $_browser_p{"svn$1"}++; }
 							$TmpBrowser{$UserAgent} = "svn$1";
 						}
 
@@ -19265,12 +19436,14 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 							&& $UserAgent !~ /$regnotie/o )
 						{
 							$_browser_h{"msie$2"}++;
+							if ($PageBool) { $_browser_p{"msie$2"}++; }
 							$TmpBrowser{$UserAgent} = "msie$2";
 						}
 
 						# Netscape 6.x, 7.x ... ? (must be at end of test)
 						elsif ( $UserAgent =~ /$regvernetscape/o ) {
 							$_browser_h{"netscape$1"}++;
+							if ($PageBool) { $_browser_p{"netscape$1"}++; }
 							$TmpBrowser{$UserAgent} = "netscape$1";
 						}
 
@@ -19279,6 +19452,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 							&& $UserAgent !~ /$regnotnetscape/o )
 						{
 							$_browser_h{"netscape$2"}++;
+							if ($PageBool) { $_browser_p{"netscape$2"}++; }
 							$TmpBrowser{$UserAgent} = "netscape$2";
 						}
 
@@ -19292,6 +19466,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 
 								   # TODO If browser is in a family, use version
 									$_browser_h{"$browser"}++;
+									if ($PageBool) { $_browser_p{"$browser"}++; }
 									$TmpBrowser{$UserAgent} = "$browser";
 									$found = 1;
 									last;
@@ -19302,6 +19477,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 						# Unknown browser ?
 						if ( !$found ) {
 							$_browser_h{'Unknown'}++;
+							if ($PageBool) { $_browser_p{'Unknown'}++; }
 							$TmpBrowser{$UserAgent} = 'Unknown';
 							my $newua = $UserAgent;
 							$newua =~ tr/\+ /__/;
@@ -19310,6 +19486,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 					}
 					else {
 						$_browser_h{$uabrowser}++;
+						if ($PageBool) { $_browser_p{$uabrowser}++; }
 						if ( $uabrowser eq 'Unknown' ) {
 							my $newua = $UserAgent;
 							$newua =~ tr/\+ /__/;
@@ -19333,6 +19510,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 							if ( $UserAgent =~ /$_/ ) {
 								my $osid = $OSHashID{ &UnCompileRegex($_) };
 								$_os_h{"$osid"}++;
+								if ($PageBool) { $_os_p{"$osid"}++; }
 								$TmpOS{$UserAgent} = "$osid";
 								$found = 1;
 								last;
@@ -19342,6 +19520,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 						# Unknown OS ?
 						if ( !$found ) {
 							$_os_h{'Unknown'}++;
+							if ($PageBool) { $_os_p{'Unknown'}++; }
 							$TmpOS{$UserAgent} = 'Unknown';
 							my $newua = $UserAgent;
 							$newua =~ tr/\+ /__/;
@@ -19350,6 +19529,9 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 					}
 					else {
 						$_os_h{$uaos}++;
+						if ($PageBool) {
+							$_os_p{$uaos}++;
+						}
 						if ( $uaos eq 'Unknown' ) {
 							my $newua = $UserAgent;
 							$newua =~ tr/\+ /__/;
@@ -19363,6 +19545,10 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 			else {
 				$_browser_h{'Unknown'}++;
 				$_os_h{'Unknown'}++;
+				if ($PageBool) {
+					$_browser_p{'Unknown'}++;
+					$_os_p{'Unknown'}++;
+				}
 			}
 
 			# Analyze: Referer
