@@ -76,9 +76,8 @@ $PERL="perl";
 #@TESTLIST=("testpostfix4");
 #@TESTLIST=("testexchange");
 #@TESTLIST=("testwebstar");
-$OPTION="-staticlinks";
-$OPTION="-staticlinks -showdropped -showcorrupted -debug=1";
-#$OPTION="-staticlinks -showdropped -showcorrupted";
+$OPTIONNODEBUG="-staticlinks -showdropped -showcorrupted -debug=0";
+$OPTIONDEBUG="-staticlinks -showdropped -showcorrupted -debug=4";
 $YEARMONTH="-month=01 -year=2001";
 #$YEARMONTH="-month=12 -year=2003";
 
@@ -130,14 +129,22 @@ while(1==1)
 		foreach (grep /^awstats\d\d\d\d\d\d\.$test\.txt$/, sort readdir DIR) { unlink "$DIRRESULT/$_"; }
 		closedir(DIR);
 	
-		$command="$PERL \"$DIRAWSTATS/awstats.pl\" $OPTION -config=$test > \"$DIRRESULT/result_${test}_update.html\"";
+		$command="$PERL \"$DIRAWSTATS/awstats.pl\" $OPTIONDEBUG -config=$test > \"$DIRRESULT/result_${test}_update_debug.html\"";
 		print "$command 2>&1\n";
 		$ret=`$command  2>&1`;
 	#	print "$ret\n";
-		$command="$PERL \"$DIRAWSTATS/awstats.pl\" $OPTION -config=$test $YEARMONTH -output".($OPTIONOUTPUT?"=$OPTIONOUTPUT":"")." > \"$DIRRESULT/result_${test}.html\"";
+        $command="$PERL \"$DIRAWSTATS/awstats.pl\" $OPTIONNODEBUG -config=$test > \"$DIRRESULT/result_${test}_update.html\"";
+        print "$command 2>&1\n";
+        $ret=`$command  2>&1`;
+    #   print "$ret\n";
+		$command="$PERL \"$DIRAWSTATS/awstats.pl\" $OPTIONDEBUG -config=$test $YEARMONTH -output".($OPTIONOUTPUT?"=$OPTIONOUTPUT":"")." > \"$DIRRESULT/result_${test}_debug.html\"";
 		print "$command 2>&1\n";
 		$ret=`$command`;
 	#	print "$ret\n";
+        $command="$PERL \"$DIRAWSTATS/awstats.pl\" $OPTIONNODEBUG -config=$test $YEARMONTH -output".($OPTIONOUTPUT?"=$OPTIONOUTPUT":"")." > \"$DIRRESULT/result_${test}.html\"";
+        print "$command 2>&1\n";
+        $ret=`$command`;
+    #   print "$ret\n";
 	
 		`rm "$DIRAWSTATS/awstats.$test.conf"`;
 	

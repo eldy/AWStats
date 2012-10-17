@@ -1351,9 +1351,7 @@ sub debug {
 #------------------------------------------------------------------------------
 sub OptimizeArray {
 	my $array = shift;
-	my @arrayunreg = map {
-		if (/\(\?[-\w]*:(.*)\)/) { $1 }
-	} @$array;
+	my @arrayunreg = map { UnCompileRegex($_) } @$array;
 	my $notcasesensitive = shift;
 	my $searchlist       = 0;
 	if ($Debug) {
@@ -7813,7 +7811,8 @@ sub DecodeEncodedString {
 # Return:		standardregex
 #------------------------------------------------------------------------------
 sub UnCompileRegex {
-	shift =~ /\(\?[-\w]*:(.*)\)/;
+	shift =~ /\(\?[-^\w]*:(.*)\)/;         # Works with all perl
+	# shift =~ /\(\?[-\w]*:(.*)\)/;        < perl 5.14
 	return $1;
 }
 
