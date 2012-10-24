@@ -9951,7 +9951,7 @@ sub HTMLTopBanner{
 		print "</table>\n";
 	}
 
-	if ( $FrameName ne 'mainleft' ) { print "</form>\n"; }
+	if ( $FrameName ne 'mainleft' ) { print "</form><br />\n"; }
 	else { print "<br />\n"; }
 	print "\n";
 }
