@@ -21,7 +21,7 @@
 #				Potu Rss-Reader http://www.potu.com/
 #				OSSProxy http://www.marketscore.com/FAQ.Aspx
 
-		
+
 #package AWSUA;
 
 # Relocated from main file for easier editing
@@ -125,6 +125,7 @@
 'webvcr',
 'qnx\svoyager',
 # Site grabbers
+'cloudflare',
 'grabber',
 'teleport',
 'webcapture',
@@ -352,6 +353,7 @@
 'webvcr','WebVCR',
 'qnx\svoyager','QNX Voyager',
 # Site grabbers
+'cloudflare','CloudFlare',
 'grabber','Grabber',
 'teleport','TelePort Pro',
 'webcapture','Acrobat Webcapture',
@@ -490,6 +492,7 @@
 # browsers.
 #---------------------------------------------------------------------------
 %BrowsersHereAreGrabbers = (
+'cloudflare','1',
 'grabber','1',
 'teleport','1',
 'webcapture','1',
