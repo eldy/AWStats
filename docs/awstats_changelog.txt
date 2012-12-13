@@ -20,7 +20,8 @@ New features/improvements:
 
 Fixes:
 - Security fix into awredir.pl
-- Fix: Case of uk in googlechart api 
+- Fix: Case of uk in googlechart api.
+- Fix: Compatibility with recent perl version.
 
 
 ***** 7.0 *****
