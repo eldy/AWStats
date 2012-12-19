@@ -13716,7 +13716,7 @@ sub HTMLMainDaily{
 			print(   !$StaticLinks
 				  && $day == $nowday
 				  && $month == $nowmonth
-				  && $year == $nowyear ? '</font>' : '' );
+				  && $year == $nowyear ? '</span>' : '' );
 			print "</td>";
 			if ( $ShowDaysOfMonthStats =~ /V/i ) {
 				print "<td>",
@@ -14022,7 +14022,7 @@ sub HTMLMainDaysofWeek{
 					print(   !$StaticLinks
 						  && $_ == ( $nowwday - 1 )
 						  && $MonthRequired == $nowmonth
-						  && $YearRequired == $nowyear ? '</font>' : '' );
+						  && $YearRequired == $nowyear ? '</span>' : '' );
 					print "</td>";
 				}
 				print "</tr>\n</table>\n";
