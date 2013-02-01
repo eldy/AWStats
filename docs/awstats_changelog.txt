@@ -3,6 +3,13 @@ AWStats Changelog
 $Revision$ - $Author$ - $Date$
 
 
+***** 7.2 *****
+
+New features:
+- Add windows 8 detection
+
+
+
 ***** 7.1 *****
 
 New features/improvements:
