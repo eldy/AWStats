@@ -7,7 +7,7 @@ $Revision$ - $Author$ - $Date$
 
 New features:
 - Add windows 8 detection
-
+- Add support of %time5 for iso date times.
 
 
 ***** 7.1 *****

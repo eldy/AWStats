@@ -9075,6 +9075,16 @@ sub DefinePerlParsingFormat {
 				push @fieldlib, 'date';
 				$PerlParsingFormat .= "(\\d+)";
 			}
+			elsif ( $f =~ /%time5$/ ) {    # yyyy-mm-ddThh:mm:ss+00:00 (iso format)
+				$pos_date = $i;
+				$i++;
+				push @fieldlib, 'date';
+				$pos_tz = $i;
+				$i++;
+				push @fieldlib, 'tz';
+				$PerlParsingFormat .=
+"([^$LogSeparatorWithoutStar]+)\\+([^$LogSeparatorWithoutStar]+)";
+			}
 
 			# Special for methodurl and methodurlnoprot
 			elsif ( $f =~ /%methodurl$/ ) {
@@ -18189,12 +18199,13 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 		}
 
 		$field[$pos_date] =~
-		  tr/,-\/ \t/:::::/s;  # " \t" is used instead of "\s" not known with tr
+		  tr/,-\/ \tT/::::::/s;  # " \t" is used instead of "\s" not known with tr
 		my @dateparts =
-		  split( /:/, $field[$pos_date] )
-		  ; # tr and split faster than @dateparts=split(/[\/\-:\s]/,$field[$pos_date])
-		 # Detected date format: dddddddddd, YYYY-MM-DD HH:MM:SS (IIS), MM/DD/YY\tHH:MM:SS,
-		 # DD/Month/YYYY:HH:MM:SS (Apache), DD/MM/YYYY HH:MM:SS, Mon DD HH:MM:SS
+		  split( /:/, $field[$pos_date] ); # tr and split faster than @dateparts=split(/[\/\-:\s]/,$field[$pos_date])
+		 # Detected date format: 
+		 # dddddddddd, YYYY-MM-DD HH:MM:SS (IIS), MM/DD/YY\tHH:MM:SS,
+		 # DD/Month/YYYY:HH:MM:SS (Apache), DD/MM/YYYY HH:MM:SS, Mon DD HH:MM:SS,
+		 # YYYY-MM-DDTHH:MM:SS (iso)
 		if ( !$dateparts[1] ) {    # Unix timestamp
 			(
 				$dateparts[5], $dateparts[4], $dateparts[3],
