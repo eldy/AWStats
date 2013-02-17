@@ -1188,12 +1188,12 @@ sub error {
 			if ( $LogFormat == 4 ) {
 				print
 "${tagbold}\"common log format\"${tagunbold} like this:${tagbr}\n";
-				print( scalar keys %HTMLOutput ? "$tagfontgrey<i>" : "" );
+				print( scalar keys %HTMLOutput ? "$tagfontgrey<i><pre>" : "" );
 				print
 "111.22.33.44 - - [10/Jan/2001:02:14:14 +0200] \"GET / HTTP/1.1\" 200 1234\n";
 				print(
 					scalar keys %HTMLOutput
-					? "</i>$tagunfont${tagbr}${tagbr}\n"
+					? "</pre></i>$tagunfont${tagbr}${tagbr}\n"
 					: ""
 				);
 			}
