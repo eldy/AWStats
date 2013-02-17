@@ -9083,7 +9083,7 @@ sub DefinePerlParsingFormat {
 				$i++;
 				push @fieldlib, 'tz';
 				$PerlParsingFormat .=
-"([^$LogSeparatorWithoutStar]+)\\+([^$LogSeparatorWithoutStar]+)";
+"([^$LogSeparatorWithoutStar]+T[^$LogSeparatorWithoutStar]+)([-+]\d\d:\d\d)";
 			}
 
 			# Special for methodurl and methodurlnoprot
