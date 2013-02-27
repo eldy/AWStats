@@ -10490,7 +10490,7 @@ sub HTMLMainFileType{
 			print "<tr><td colspan=\"7\">";
 			my $function = "ShowGraph_$pluginname";
 			&$function(
-				"$title",              "filetypes",
+				"$Message[73]",              "filetypes",
 				0, 						\@blocklabel,
 				0,           			\@valcolor,
 				0,              		0,
