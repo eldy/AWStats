@@ -38,7 +38,7 @@ use vars qw/ $REVISION $VERSION /;
 $REVISION = '$Revision$';
 $REVISION =~ /\s(.*)\s/;
 $REVISION = $1;
-$VERSION  = "7.1 (build $REVISION)";
+$VERSION  = "7.1.1 (build $REVISION)";
 
 # ----- Constants -----
 use vars qw/

@@ -3,11 +3,12 @@ AWStats Changelog
 $Revision$ - $Author$ - $Date$
 
 
-***** 7.2 *****
+***** 7.1.1 *****
 
 New features:
 - Add windows 8 detection
 - Add support of %time5 for iso date times.
+- Fix problems with Perl 5.14
 
 
 ***** 7.1 *****
