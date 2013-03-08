@@ -7817,7 +7817,8 @@ sub DecodeEncodedString {
 # Return:		standardregex
 #------------------------------------------------------------------------------
 sub UnCompileRegex {
-	shift =~ /\(\?[-\w]*:(.*)\)/;
+	shift =~ /\(\?[-^\w]*:(.*)\)/;         # Works with all perl
+	# shift =~ /\(\?[-\w]*:(.*)\)/;        < perl 5.14
 	return $1;
 }
 
