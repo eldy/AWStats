@@ -26,7 +26,7 @@ sub hblink
 {
     my $t=shift;
     my $url=shift;
-    print "<a href=\"javascript:neww('$url');\">$t</a>";
+    return "<a href=\"javascript:neww('$url');\">$t</a>";
 }
 
 
