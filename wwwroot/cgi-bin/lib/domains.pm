@@ -36,7 +36,7 @@
 'cf','Central African Republic','cg','Congo','ch','Switzerland',
 'ci','Ivory Coast (Cote D\'Ivoire)','ck','Cook Islands','cl','Chile','cm','Cameroon',
 'cn','China','co','Colombia','com','Commercial','coop','Coop domains','cr','Costa Rica',
-'cs','Former Czechoslovakia','cu','Cuba','cv','Cape Verde',
+'cs','Former Czechoslovakia','cu','Cuba','cv','Cape Verde','cw','Curacao',
 'cx','Christmas Island','cy','Cyprus','cz','Czech Republic','de','Germany',
 'dj','Djibouti','dk','Denmark','dm','Dominica','do','Dominican Republic',
 'dz','Algeria','ec','Ecuador','edu','USA Educational','ee','Estonia',
