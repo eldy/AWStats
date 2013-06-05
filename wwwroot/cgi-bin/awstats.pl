@@ -30,6 +30,8 @@ use Time::Local
   ; # use Time::Local 'timelocal_nocheck' is faster but not supported by all Time::Local modules
 use Socket;
 use Encode;
+use File::Spec;
+
 
 #------------------------------------------------------------------------------
 # Defines
@@ -1735,32 +1737,49 @@ sub Read_Config {
 	foreach (@PossibleConfigDir) {
 		my $searchdir = $_;
 		if ( $searchdir && $searchdir !~ /[\\\/]$/ ) { $searchdir .= "/"; }
-		if ( open( CONFIG, "$searchdir$PROG.$SiteConfig.conf" ) ) {
+		
+		if ( -f $searchdir.$PROG.".".$SiteConfig.".conf" &&  open( CONFIG, "$searchdir$PROG.$SiteConfig.conf" ) ) {
 			$FileConfig = "$searchdir$PROG.$SiteConfig.conf";
 			$FileSuffix = ".$SiteConfig";
 			if ($Debug){debug("Opened config: $searchdir$PROG.$SiteConfig.conf", 2);}
 			last;
 		}else{if ($Debug){debug("Unable to open config file: $searchdir$PROG.$SiteConfig.conf", 2);}}
-		if ( open( CONFIG, "$searchdir$PROG.conf" ) ) {
+		
+		if ( -f $searchdir.$PROG.".conf" &&  open( CONFIG, "$searchdir$PROG.conf" ) ) {
 			$FileConfig = "$searchdir$PROG.conf";
 			$FileSuffix = '';
-			if ($Debug){debug("Opened config: $searchdir$PROG.$SiteConfig.conf", 2);}
+			if ($Debug){debug("Opened config: $searchdir$PROG.conf", 2);}
 			last;
 		}else{if ($Debug){debug("Unable to open config file: $searchdir$PROG.conf", 2);}}
+		
+		# Added to open config if file name is passed to awstats 
+		if ( -f $searchdir.$SiteConfig && open( CONFIG, "$searchdir$SiteConfig" ) ) {
+			$FileConfig = "$searchdir$SiteConfig";
+			$FileSuffix = '';
+			if ($Debug){debug("Opened config: $searchdir$SiteConfig", 2);}
+			last;
+		}else{if ($Debug){debug("Unable to open config file: $searchdir$SiteConfig", 2);}}
+	}
+	
 		#CL - Added to open config if full path is passed to awstats 
-		if ( open( CONFIG, "$SiteConfig" ) ) {
+	if ( !$FileConfig ) {
+	
+		$SiteConfig = File::Spec->rel2abs($SiteConfig);
+		debug("Finally, try to open an absolute path : $SiteConfig", 2);
+	
+		if ( -f $SiteConfig && open( CONFIG, "$SiteConfig" ) ) {
 			$FileConfig = "$SiteConfig";
 			$FileSuffix = '';
 			if ($Debug){debug("Opened config: $SiteConfig", 2);}
-			last;
 		}else{if ($Debug){debug("Unable to open config file: $SiteConfig", 2);}}
 	}
+	
 	if ( !$FileConfig ) {
 		if ($DEBUGFORCED || !$ENV{'GATEWAY_INTERFACE'}){
 		error(
-"Couldn't open config file \"$PROG.$SiteConfig.conf\" nor \"$PROG.conf\" after searching in path \""
+"Couldn't open config file \"$PROG.$SiteConfig.conf\", nor \"$PROG.conf\", nor \"$SiteConfig\" after searching in path \""
 			  . join( ', ', @PossibleConfigDir )
-			  . "\": $!" );
+			  . ", $SiteConfig\": $!" );
 		}else{error("Couldn't open config file \"$PROG.$SiteConfig.conf\" nor \"$PROG.conf\". 
 		Please read the documentation for directories where the configuration file should be located."); }
 	}
