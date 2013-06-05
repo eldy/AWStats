@@ -1874,7 +1874,7 @@
 'fast\-webcrawler'=>'AllTheWeb',
 'googlebot'=>'Google',
 'google\-sitemap'=>'Google',
-'google[_+ ]web[_+ ]preview',=>'Google',
+'google[_+ ]web[_+ ]preview'=>'Google',
 'msnbot'=>'MSN',
 'nutch'=>'Looksmart',
 'scooter'=>'AltaVista',
