@@ -9,8 +9,8 @@
 use Cwd;
 
 $PROJECT="awstats";
-$MAJOR="1";
-$MINOR="9";
+$MAJOR="2";
+$MINOR="0";
 @LISTETARGET=("WBM");   # Possible packages
 %REQUIREMENTTARGET=(                            # Tool requirement for each package
 "WBM"=>"tar",
@@ -111,7 +111,7 @@ while (! $found) {
 		printf(" %d - %3s    (%s)\n",$cpt,$target,"Need ".$REQUIREMENTTARGET{$target});
 	}
 
-	# On demande de choisir le fichier � passer
+	# On demande de choisir le fichier a passer
 	print "Choose one package number or several separated with space: ";
 	$NUM_SCRIPT=<STDIN>; 
 	chomp($NUM_SCRIPT);
