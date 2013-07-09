@@ -3,14 +3,14 @@
 # \file         make/makepack-awstats.pl
 # \brief        Package builder (tgz, zip, rpm, deb, exe)
 # \version      $Revision$
-# \author       (c)2004-2012 Laurent Destailleur  <eldy@users.sourceforge.net>
+# \author       (c)2004-2013 Laurent Destailleur  <eldy@users.sourceforge.net>
 #----------------------------------------------------------------------------
 
 use Cwd;
 
 $PROJECT="awstats";
 $MAJOR="7";
-$MINOR="1.1";
+$MINOR="2";
 $RPMSUBVERSION="1";
 
 @LISTETARGET=("TGZ","ZIP","RPM","DEB","EXE");   # Possible packages

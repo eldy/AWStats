@@ -3,7 +3,7 @@
 # \file         make/makepack-awstats_webmin.pl
 # \brief        Package builder (tgz, zip, rpm, deb, exe)
 # \version      $Revision$
-# \author       (c)2004-2005 Laurent Destailleur  <eldy@users.sourceforge.net>
+# \author       (c)2004-2013 Laurent Destailleur  <eldy@users.sourceforge.net>
 #----------------------------------------------------------------------------
 
 use Cwd;
