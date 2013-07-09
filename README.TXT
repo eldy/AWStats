@@ -11,10 +11,10 @@ links, robots and many more...
 It works with IIS 5.0+, Apache and all major web, wap, proxy, streaming
 server log files (and even ftp servers or mail logs) on all Operating Systems.
 
-License: GNU GPL (GNU General Public License. See LICENSE file),
+License: GNU GPL v3+ (GNU General Public License. See LICENSE file),
          OSI Certified Open Source Software license.
-Version: 7.1.1
-Release date: March 2013
+Version: 7.2
+Release date: June 2013
 Platforms: All (Linux, NT, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 Author: Laurent Destailleur <eldy@users.sourceforge.net>
 AWStats official web site and latest version: http://www.awstats.org
@@ -149,17 +149,17 @@ Tests and results are available in AWStats documentation, in docs/ directory.
 
 IV - ABOUT THE AUTHOR, LICENSE AND SUPPORT
 -----------------------------------------
-Copyright (C) 2000-2011 - Laurent Destailleur - eldy@users.sourceforge.net
+Copyright (C) 2000-2013 - Laurent Destailleur - eldy@users.sourceforge.net
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-version 2 as published by the Free Software Foundation.
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details, in COPYING.TXT file.
+GNU General Public License for more details.
 
-If you have not received a copy of this file along with this program, write to
-the Free Software Foundation, Inc.,
-59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.

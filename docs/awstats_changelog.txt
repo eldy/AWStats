@@ -6,7 +6,8 @@ $Revision$ - $Author$ - $Date$
 ***** 7.2 *****
 
 New features:
-- None
+- Upgrade licence to GPL v3+.
+- Update documentation.
 
 Fixes:
 - Since updating Webmin to 1.53, the Add New Config File screen layout is
