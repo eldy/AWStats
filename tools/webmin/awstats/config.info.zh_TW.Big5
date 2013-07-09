@@ -1,8 +1,8 @@
-awstats=§ó·s AWStats ¬ö¿ýªº§¹¾ãÀÉ®×¸ô®|©M«ü¥O<br>(¨Ò¦p:/usr/local/awstats/wwwroot/cgi-bin/awstats.pl),0
-awstats_cgi=AWStats CGI ªº URL µ´¹ï©ÎªÌ¬O¬Û¹ï¸ô®|<br>(¨Ò¦p:/awstats/awstats.pl),0
-alt_conf=AWStats ³]©wÀÉ¼Ë¥»,3,/etc/awstats/awstats.model.conf
-plugin_1_geoip=<a href="http://www.maxmind.com/app/perl?rId=awstats">Maxmind GeoIP °ê®a¸ê®Æ®wÀÉ®×</a> ¸ô®|<br><small>(¦pªG AWStats geoip ÂX¥R®M¥ó©l±Ò°Êªº±¡ªp¤U)</small>,3,/usr/local/share/GeoIP/GeoIP.dat
-plugin_2_geoip_region_maxmind=<a href="http://www.maxmind.com/app/perl?rId=awstats">Maxmind GeoIP °Ï°ì¸ê®Æ®wÀÉ®×</a> ¸ô®|<br><small>(¦pªG AWStats geoip_region_maxmind ÂX¥R®M¥ó©l±Ò°Êªº±¡ªp¤U)</small>,3,/usr/local/share/GeoIP/GeoIPRegion.dat
-plugin_3_geoip_city_maxmind=<a href="http://www.maxmind.com/app/perl?rId=awstats">Maxmind GeoIP µ{¦¡¸ê®Æ®wÀÉ®×</a> ¸ô®|<br><small>(¦pªG AWStats geoip_city_maxmind ÂX¥R®M¥ó©l±Ò°Êªº±¡ªp¤U)</small>,3,/usr/local/share/GeoIP/GeoIPCity.dat
-plugin_4_geoip_isp_maxmind=<a href="http://www.maxmind.com/app/perl?rId=awstats">Maxmind GeoIP isp ¸ê®Æ®wÀÉ®×</a> ¸ô®|<br><small>(¦pªG AWStats geoip_isp_maxmind ÂX¥R®M¥ó©l±Ò°Êªº±¡ªp¤U)</small>,3,/usr/local/share/GeoIP/GeoIPISP.dat
-plugin_5_geoip_org_maxmind=<a href="http://www.maxmind.com/app/perl?rId=awstats">Maxmind GeoIP org ¸ê®Æ®wÀÉ®×</a> ¸ô®|<br><small>(¦pªG AWStats geoip_org_maxmind ÂX¥R®M¥ó©l±Ò°Êªº±¡ªp¤U)</small>,3,/usr/local/share/GeoIP/GeoIPOrg.dat
+awstats=ï¿½ï¿½s AWStats ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É®×¸ï¿½ï¿½|ï¿½Mï¿½ï¿½O<br>(ï¿½Ò¦p:/usr/local/awstats/wwwroot/cgi-bin/awstats.pl),0
+awstats_cgi=AWStats CGI ï¿½ï¿½ URL ï¿½ï¿½ï¿½ï¿½ÎªÌ¬Oï¿½Û¹ï¿½ï¿½ï¿½|<br>(ï¿½Ò¦p:/awstats/awstats.pl),0
+alt_conf=AWStats ï¿½]ï¿½wï¿½É¼Ë¥ï¿½,3,/etc/awstats/awstats.model.conf
+plugin_1_geoip=<a href="http://www.maxmind.com/en/city?rId=awstats">Maxmind GeoIP ï¿½ï¿½aï¿½ï¿½Æ®wï¿½É®ï¿½</a> ï¿½ï¿½ï¿½|<br><small>(ï¿½pï¿½G AWStats geoip ï¿½Xï¿½Rï¿½Mï¿½ï¿½lï¿½Ò°Êªï¿½ï¿½ï¿½ï¿½pï¿½U)</small>,3,/usr/local/share/GeoIP/GeoIP.dat
+plugin_2_geoip_region_maxmind=<a href="http://www.maxmind.com/en/city?rId=awstats">Maxmind GeoIP ï¿½Ï°ï¿½ï¿½Æ®wï¿½É®ï¿½</a> ï¿½ï¿½ï¿½|<br><small>(ï¿½pï¿½G AWStats geoip_region_maxmind ï¿½Xï¿½Rï¿½Mï¿½ï¿½lï¿½Ò°Êªï¿½ï¿½ï¿½ï¿½pï¿½U)</small>,3,/usr/local/share/GeoIP/GeoIPRegion.dat
+plugin_3_geoip_city_maxmind=<a href="http://www.maxmind.com/en/city?rId=awstats">Maxmind GeoIP ï¿½{ï¿½ï¿½ï¿½ï¿½Æ®wï¿½É®ï¿½</a> ï¿½ï¿½ï¿½|<br><small>(ï¿½pï¿½G AWStats geoip_city_maxmind ï¿½Xï¿½Rï¿½Mï¿½ï¿½lï¿½Ò°Êªï¿½ï¿½ï¿½ï¿½pï¿½U)</small>,3,/usr/local/share/GeoIP/GeoIPCity.dat
+plugin_4_geoip_isp_maxmind=<a href="http://www.maxmind.com/en/city?rId=awstats">Maxmind GeoIP isp ï¿½ï¿½Æ®wï¿½É®ï¿½</a> ï¿½ï¿½ï¿½|<br><small>(ï¿½pï¿½G AWStats geoip_isp_maxmind ï¿½Xï¿½Rï¿½Mï¿½ï¿½lï¿½Ò°Êªï¿½ï¿½ï¿½ï¿½pï¿½U)</small>,3,/usr/local/share/GeoIP/GeoIPISP.dat
+plugin_5_geoip_org_maxmind=<a href="http://www.maxmind.com/en/city?rId=awstats">Maxmind GeoIP org ï¿½ï¿½Æ®wï¿½É®ï¿½</a> ï¿½ï¿½ï¿½|<br><small>(ï¿½pï¿½G AWStats geoip_org_maxmind ï¿½Xï¿½Rï¿½Mï¿½ï¿½lï¿½Ò°Êªï¿½ï¿½ï¿½ï¿½pï¿½U)</small>,3,/usr/local/share/GeoIP/GeoIPOrg.dat

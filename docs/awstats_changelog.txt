@@ -11,6 +11,7 @@ New features:
 Fixes:
 - Since updating Webmin to 1.53, the Add New Config File screen layout is
   totally messed up and unusable.
+- Update broken links to maxmind.
 
 
 ***** 7.1.1 *****

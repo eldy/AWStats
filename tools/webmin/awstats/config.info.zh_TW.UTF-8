@@ -1,8 +1,8 @@
 awstats=更新 AWStats 紀錄的完整檔案路徑和指令<br>(例如:/usr/local/awstats/wwwroot/cgi-bin/awstats.pl),0
 awstats_cgi=AWStats CGI 的 URL 絕對或者是相對路徑<br>(例如:/awstats/awstats.pl),0
 alt_conf=AWStats 設定檔樣本,3,/etc/awstats/awstats.model.conf
-plugin_1_geoip=<a href="http://www.maxmind.com/app/perl?rId=awstats">Maxmind GeoIP 國家資料庫檔案</a> 路徑<br><small>(如果 AWStats geoip 擴充套件始啟動的情況下)</small>,3,/usr/local/share/GeoIP/GeoIP.dat
-plugin_2_geoip_region_maxmind=<a href="http://www.maxmind.com/app/perl?rId=awstats">Maxmind GeoIP 區域資料庫檔案</a> 路徑<br><small>(如果 AWStats geoip_region_maxmind 擴充套件始啟動的情況下)</small>,3,/usr/local/share/GeoIP/GeoIPRegion.dat
-plugin_3_geoip_city_maxmind=<a href="http://www.maxmind.com/app/perl?rId=awstats">Maxmind GeoIP 程式資料庫檔案</a> 路徑<br><small>(如果 AWStats geoip_city_maxmind 擴充套件始啟動的情況下)</small>,3,/usr/local/share/GeoIP/GeoIPCity.dat
-plugin_4_geoip_isp_maxmind=<a href="http://www.maxmind.com/app/perl?rId=awstats">Maxmind GeoIP isp 資料庫檔案</a> 路徑<br><small>(如果 AWStats geoip_isp_maxmind 擴充套件始啟動的情況下)</small>,3,/usr/local/share/GeoIP/GeoIPISP.dat
-plugin_5_geoip_org_maxmind=<a href="http://www.maxmind.com/app/perl?rId=awstats">Maxmind GeoIP org 資料庫檔案</a> 路徑<br><small>(如果 AWStats geoip_org_maxmind 擴充套件始啟動的情況下)</small>,3,/usr/local/share/GeoIP/GeoIPOrg.dat
+plugin_1_geoip=<a href="http://www.maxmind.com/en/city?rId=awstats">Maxmind GeoIP 國家資料庫檔案</a> 路徑<br><small>(如果 AWStats geoip 擴充套件始啟動的情況下)</small>,3,/usr/local/share/GeoIP/GeoIP.dat
+plugin_2_geoip_region_maxmind=<a href="http://www.maxmind.com/en/city?rId=awstats">Maxmind GeoIP 區域資料庫檔案</a> 路徑<br><small>(如果 AWStats geoip_region_maxmind 擴充套件始啟動的情況下)</small>,3,/usr/local/share/GeoIP/GeoIPRegion.dat
+plugin_3_geoip_city_maxmind=<a href="http://www.maxmind.com/en/city?rId=awstats">Maxmind GeoIP 程式資料庫檔案</a> 路徑<br><small>(如果 AWStats geoip_city_maxmind 擴充套件始啟動的情況下)</small>,3,/usr/local/share/GeoIP/GeoIPCity.dat
+plugin_4_geoip_isp_maxmind=<a href="http://www.maxmind.com/en/city?rId=awstats">Maxmind GeoIP isp 資料庫檔案</a> 路徑<br><small>(如果 AWStats geoip_isp_maxmind 擴充套件始啟動的情況下)</small>,3,/usr/local/share/GeoIP/GeoIPISP.dat
+plugin_5_geoip_org_maxmind=<a href="http://www.maxmind.com/en/city?rId=awstats">Maxmind GeoIP org 資料庫檔案</a> 路徑<br><small>(如果 AWStats geoip_org_maxmind 擴充套件始啟動的情況下)</small>,3,/usr/local/share/GeoIP/GeoIPOrg.dat
