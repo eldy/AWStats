@@ -212,6 +212,7 @@ if ($nboftargetok) {
     	if ($target eq 'WBM') {
     		unlink $FILENAMEWBM.wbm;
     		print "Creation archive $FILENAMEWBM.wbm of $PROJECT\n";
+    		print "tar --directory=\"$BUILDROOT\" -cvf $FILENAMEWBM.wbm $PROJECT";
     		$ret=`tar --directory="$BUILDROOT" -cvf $FILENAMEWBM.wbm $PROJECT`;
     		print "Move file $FILENAMEWBM.wbm into $SOURCE/$FILENAMEWBM.wbm\n";
     		rename("$FILENAMEWBM.wbm","$SOURCE/$FILENAMEWBM.wbm");
