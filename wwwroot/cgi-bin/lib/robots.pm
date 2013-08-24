@@ -39,10 +39,10 @@
 #		updated YahooSeeker description (blog crawler)
 # 2005-09-16	added link for http://linkchecker.sourceforge.net
 # 		added ConveraCrawler/0.9d ( http://www.authoritativeweb.com/crawl)
-#		added Blogslive  info@blogslive.com intelliseek.com 
+#		added Blogslive  info@blogslive.com intelliseek.com
 #		added BlogPulse (ISSpider-3.0) intelliseek.com
 # 2005-09-26	added Feedfetcher-Google (http://www.google.com/feedfetcher.html)
-#		added EverbeeCrawler	
+#		added EverbeeCrawler
 #		added Yahoo-Blogs http://help.yahoo.com/help/us/ysearch/crawling/crawling-02.html
 #		added link for Bloglines http://www.bloglines.com
 # 2005-10-19	fixed Feedfetcher-Google (http://www.google.com/feedfetcher.html)
@@ -91,11 +91,11 @@
 #		added EARTHCOM.info www.earthcom.info
 #		added HTTrack off-line browser 'httrack','HTTrack', http://www.httrack.com/ [Moizes Gabor]
 #		added KummHttp http://www.psychedelix.com/cgi-bin/csv2html.pl?data=allagents.csv&template=detail.html&match=\bid_g_l_301105_2\b [Moizes Gabor]
-# 2006-01-01	
+# 2006-01-01
 #		added Dulance http://www.dulance.com/bot.jsp
 #		added MojeekBot http://www.mojeek.com/bot.html
 #		added nicebot http://www.egghelp.org/setup.htm ?
-#		added Snappy http://www.urltrends.com/faq.php 
+#		added Snappy http://www.urltrends.com/faq.php
 #		added sohu agent
 #		added VORTEX http://marty.anstey.ca/robots/vortex/ [matthys70 users.sourceforge.net]
 #		added zspider http://feedback.redkolibri.com/
@@ -111,63 +111,63 @@
 #		added LetsCrawl.com http://letscrawl.com
 #		added ichiro http://help.goo.ne.jp/door/crawlerE.html
 # 2006-01-27    additional 22 robots from a list provided by Moizes Gabor
-#		added ALeadSoftbot	http://www.aleadsoft.com/bot.htm	
-#		added CipinetBot	http://www.cipinet.com/bot.html	
-#		added Cuasarbot	http://www.cuasar.com/	
-#		added Dumbot	http://www.dumbfind.com/	
-#		added Extreme_Picture_Finder	http://www.exisoftware.com/	
-#		added Fooky.com/ScorpionBot/ScoutOut	http://www.fooky.com/scorpionbots	
+#		added ALeadSoftbot	http://www.aleadsoft.com/bot.htm
+#		added CipinetBot	http://www.cipinet.com/bot.html
+#		added Cuasarbot	http://www.cuasar.com/
+#		added Dumbot	http://www.dumbfind.com/
+#		added Extreme_Picture_Finder	http://www.exisoftware.com/
+#		added Fooky.com/ScorpionBot/ScoutOut	http://www.fooky.com/scorpionbots
 #		added IlTrovatore-Setaccio	http://www.iltrovatore.it/aiuto/motore_di_ricerca.html	bot@iltrovatore.it
-#		added InsurancoBot	http://www.fastspywareremoval.com/	
+#		added InsurancoBot	http://www.fastspywareremoval.com/
 #		added InternetArchive	http://lucene.apache.org/nutch/bot.html 	nutch-agent@lucene.apache.org
-#		added KazoomBot	http://www.kazoom.ca/bot.html	kazoombot@kazoom.ca 
+#		added KazoomBot	http://www.kazoom.ca/bot.html	kazoombot@kazoom.ca
 #		added Kurzor	http://www.easymail.hu/	cursor@easymail.hu
 #		added NutchCVS	http://lucene.apache.org/nutch/bot.html	nutch-agent@lucene.apache.org
 #		added NutchOSU-VLIB	http://lucene.apache.org/nutch/bot.html	nutch-agent@lucene.apache.org
-#		added Orbiter	http://www.dailyorbit.com/bot.htm	
-#		added PHP_version_tracker	http://www.nexen.net/phpversion/bot.php	
-#		added SuperBot	http://www.sparkleware.com/superbot/	
+#		added Orbiter	http://www.dailyorbit.com/bot.htm
+#		added PHP_version_tracker	http://www.nexen.net/phpversion/bot.php
+#		added SuperBot	http://www.sparkleware.com/superbot/
 #		added SynooBot	http://www.synoo.de/bot.html	webmaster@synoo.com
-#		added TestBot	http://www.agbrain.com/	
-#		added TutorGigBot	http://www.tutorgig.info/	
-#		added WebIndexer	mailto://webindexerv1@yahoo.com	
+#		added TestBot	http://www.agbrain.com/
+#		added TutorGigBot	http://www.tutorgig.info/
+#		added WebIndexer	mailto://webindexerv1@yahoo.com
 #		added WebMiner	http://64.124.122.252/feedback.html
-# 2006-02-01    
+# 2006-02-01
 #		added heritrix https://sourceforge.net/forum/message.php?msg_id=3550202
 #		added Zeus Webster Pro https://sourceforge.net/forum/message.php?msg_id=3141164
 #               additional robots from a list provided by Moizes Gabor [ mojzi -a-t- free mail hu ]
 #		added Candlelight_Favorites_Inspector
-#		added DomainChecker 
-#		added EasyDL 
-#		added FavOrg  
+#		added DomainChecker
+#		added EasyDL
+#		added FavOrg
 #		added Favorites_Sweeper
 #		added Html_Link_Validator
-#		added Internet_Ninja  
+#		added Internet_Ninja
 #		added JRTwine_Software_Check_Favorites_Utility
 #		fixed Microsoft_URL_Control
-#		added miniRank 
+#		added miniRank
 #		added Missigua_Locator
-#		added NPBot 
-#		added Ocelli 
-#		added Onet.pl_SA 
-#		added proodleBot 
-#		added SearchGuild_DMOZ_Experiment 
-#		added Susie 
+#		added NPBot
+#		added Ocelli
+#		added Onet.pl_SA
+#		added proodleBot
+#		added SearchGuild_DMOZ_Experiment
+#		added Susie
 #		added Website_Monitoring_Bot
 #		added Xenu_Link_Sleuth
 # 2006-05-15
 #		added ASPseek http://www.aspseek.org/
-#		added AdamM Bot http://home.blic.net/adamm/  
+#		added AdamM Bot http://home.blic.net/adamm/
 #		added archive.org_bot http://crawls.archive.org/collections/bncf/crawl.html
 #		added arianna.libero.it (Italian Portal/search engine)
 #		added Biz360 spider http://www.biz360.com
 #		added BlogBridge Service http://www.blogbridge.com/
-#		added BlogSearch http://www.icerocket.com/ 
+#		added BlogSearch http://www.icerocket.com/
 #		added libcrawl
 #		added edgeio-relanshanbottriever http://www.edgeio.com
 #		added FeedFlow http://feedflow.com/about
 #		added Biblioteca Nazionale Centrale di Firenze (Italian National Archive) http://www.bncf.firenze.sbn.it/raccolta.txt
-#		added Java catchall - used by many spam bots 
+#		added Java catchall - used by many spam bots
 #		added lanshanbot http://www.psychedelix.com/cgi-bin/csv2html.pl?data=allagents.csv&amp;template=detail.html&amp;match=%5Cbid_g_l_140406_1%5Cb
 #		added msnbot-media http://search.msn.com/msnbot.htm
 #		added MT::Telegraph::Agent
@@ -197,7 +197,7 @@
 #		added ActiveBookmark http://www.libmaster.com/active_bookmark.php
 #		added BIGLOTRON http://www.biglotron.com/robot.html
 #		added Bookmark-Manager http://bkm.sourceforge.net/
-#		added cbn00glebot 
+#		added cbn00glebot
 #		added Cerberian Drtrs http://www.pgts.com.au/cgi-bin/psql?robot_info=25240
 #		added CFNetwork http://www.cocoadev.com/index.pl?CFNetwork
 #		added CheckWeb link validator http://p.duby.free.fr/chkweb.htm
@@ -205,9 +205,9 @@
 #		added ConveraCrawler http://www.authoritativeweb.com/crawl/
 #		added ConveraMultiMediaCrawler http://www.authoritativeweb.com/crawl/
 #		added CSE HTML Validator Lite Online http://online.htmlvalidator.com/php/onlinevallite.php
-#		added Cursor http://adcenter.hu/docs/en/bot.html 
+#		added Cursor http://adcenter.hu/docs/en/bot.html
 #		added Custo http://www.netwu.com/custo/
-#		added DataFountains/DMOZ Downloader http://infomine.ucr.edu/ 
+#		added DataFountains/DMOZ Downloader http://infomine.ucr.edu/
 #		added Deepindex http://www.deepindex.net/faq.php
 #		added DNSGroup http://www.dnsgroup.com/
 #		added DoCoMo http://www.nttdocomo.co.jp/
@@ -219,13 +219,13 @@
 #		added FAST Enterprise Crawler * T-Info_BI_cluster crawleradmin.t-info@telekom.de http://www.telekom.de/
 #		added FeedValidator http://feedvalidator.org/
 #		added FilmkameraBot http://www.filmkamera.at/bot.html
-#		added Findexa Crawler http://www.findexa.no/gulesider/article26548.ece 
+#		added Findexa Crawler http://www.findexa.no/gulesider/article26548.ece
 #		added Global Fetch http://www.wesonet.com/
 #		added GOFORITBOT http://www.goforit.com/about/
 #		added GoForIt.com http://www.goforit.com/about/
 #		added GPU p2p crawler http://gpu.sourceforge.net/search_engine.php
 #		added HooWWWer http://cosco.hiit.fi/search/hoowwwer/
-#		added HPPrint 
+#		added HPPrint
 #		added HTMLParser http://htmlparser.sourceforge.net/
 #		added Hundesuche.com-Bot http://www.hundesuche.com/
 #		added InfoBot http://www.infobot.org/
@@ -247,10 +247,10 @@
 #		added Matrix S.p.A. - FAST Enterprise Crawler http://tin.virgilio.it/
 #		added Megite http://www.megite.com/
 #		added Metaspinner http://index.meta-spinner.de/
-#		added Mini-reptile 
+#		added Mini-reptile
 #		added Misterbot http://www.misterbot.fr/
 #		added Miva http://www.miva.com/
-#		added Mizzu Labs http://www.psychedelix.com/cgi-bin/csv2html.pl?data=allagents.csv&amp;template=detail.html&amp;match=\bid_m_141105_2\b 
+#		added Mizzu Labs http://www.psychedelix.com/cgi-bin/csv2html.pl?data=allagents.csv&amp;template=detail.html&amp;match=\bid_m_141105_2\b
 #		added MSRBOT http://research.microsoft.com/research/sv/msrbot/
 #		added MS SharePoint Portal Server - MS Search 4.0 Robot http://support.microsoft.com/default.aspx?scid=kb;en-us;284022
 #		added Mydoyouhike http://www.doyouhike.net/my
@@ -267,14 +267,14 @@
 #		added PictureOfInternet http://malfunction.org/poi/
 #		added plinki http://www.plinki.com/
 #		added Port Huron Labs http://www.psychedelix.com/cgi-bin/csv2html.pl?data=allagents.csv&amp;template=detail.html&amp;match=\bid_n_s_1133\b
-#		added PostFavorites http://www.psychedelix.com/cgi-bin/csv2html.pl?data=allagents.csv&amp;template=detail.html&amp;match=\bid_n_s_1135\b 
-#		added ProjectWF-java-test-crawler 
+#		added PostFavorites http://www.psychedelix.com/cgi-bin/csv2html.pl?data=allagents.csv&amp;template=detail.html&amp;match=\bid_n_s_1135\b
+#		added ProjectWF-java-test-crawler
 #		added PyQuery http://sourceforge.net/projects/pyquery/
-#		added Schizozilla http://spamhuntress.com/2005/03/18/gizmo/ 
+#		added Schizozilla http://spamhuntress.com/2005/03/18/gizmo/
 #		added Scumbot
 #		added Sensis Web Crawler http://www.sensis.com.au/
 #		added snap.com beta crawler http://www.snap.com/
-#		added Steeler http://www.tkl.iis.u-tokyo.ac.jp/~crawler/ 
+#		added Steeler http://www.tkl.iis.u-tokyo.ac.jp/~crawler/
 #		added STEROID  Download http://faqs.org.ru/progr/pascal/delphi_internet2.htm
 #		added Suchfin-Bot http://www.suchfin.de/
 #		added Sunrise http://www.sunrisexp.com/
@@ -287,15 +287,15 @@
 #		added UniversalFeedParser http://feedparser.org/ (seen from md301000.inktomisearch.com)
 #		added updated http://www.updated.com/
 #		added Vermut http://vermut.aol.com
-#		added versus crawler from eda.baykan@epfl.ch http://www.epfl.ch/Eindex.html  
+#		added versus crawler from eda.baykan@epfl.ch http://www.epfl.ch/Eindex.html
 #		added Vespa Crawler (Yahoo Norway?) http://www.psychedelix.com/cgi-bin/csv2html.pl?data=allagents.csv&template=detail.html&match=%5Cbid_t_z_030406_1%5Cb
 #		added VSE http://www.vivisimo.com/
 #		added webcrawl.net http://www.webcrawl.net/
 #		added Web Downloader http://www.krasu.ru/soft/chuchelo/
 #		added Webdup http://www.webdup.com/en/index.html
-#		added Wells Search http://www.psychedelix.com/cgi-bin/csv2html.pl?data=allagents.csv&amp;template=detail.html&amp;match=\bid_t_z_1484\b 
+#		added Wells Search http://www.psychedelix.com/cgi-bin/csv2html.pl?data=allagents.csv&amp;template=detail.html&amp;match=\bid_t_z_1484\b
 #		added WordPress http://wordpress.org/
-#		added wume crawler http://wume.cse.lehigh.edu/~xiq204/crawler/ 
+#		added wume crawler http://wume.cse.lehigh.edu/~xiq204/crawler/
 #		added Xenu's Link Sleuth (with ')
 #		added xirq http://www.xirq.com/
 #		added yoogliFetchAgent http://www.yoogli.com/
@@ -306,6 +306,8 @@
 #		changed favorites_sweeper -> favorites_sweeper
 #		-- updates
 #		updated AskJeeves to Ask
+# 2012-06-05 Albrecht Mueller
+#              added Grabber from SDSC (San Diego Supercomputer Center).
 
 # to do  MS Search 4.0 Robot
 
@@ -313,7 +315,7 @@
 
 
 # Robots list was found at http://www.robotstxt.org/wc/active/all.txt
-# Other robots can be found at http://www.jafsoft.com/searchengines/webbots.html 
+# Other robots can be found at http://www.jafsoft.com/searchengines/webbots.html
 # Rem: To avoid bad detection, some robot's ids were removed from this list:
 #      - Robots with ID of 3 letters only
 #      - Robots called 'webs' and 'tcl'
@@ -341,6 +343,7 @@
 'ferret',
 'googlebot',
 'google\-sitemaps',
+'grabber',
 'google[_+ ]web[_+ ]preview',
 'gulliver',
 'virus[_+ ]detector',		# Must be before harvest
@@ -378,13 +381,14 @@
 'webbase',
 'webcollage',
 'cfetch',
-'zyborg',	# Must be before wisenut 
+'zyborg',	# Must be before wisenut
 'wisenutbot'
 );
 @RobotsSearchIDOrder_list2 = (
 # Less common robots (In robot file)
 '[^a]fish',
 'abcdatos',
+'abonti\.com',
 'acme\.spider',
 'ahoythehomepagefinder',
 'alkaline',
@@ -475,6 +479,7 @@
 'iaskspider',
 'hl_ftien_spider',
 'sogou',
+'icjobs\.de',
 'iconoclast',
 'ilse',
 'imagelock',
@@ -777,6 +782,7 @@
 'internetarchive',
 'internetseer',
 'internetsupervision',
+'ips\-agent',
 'irlbot',
 'isearch2006',
 'iupui_research_bot',
@@ -799,6 +805,7 @@
 'letscrawl\.com',
 'libcrawl',
 'linkbot',
+'linkdex\.com',
 'link_valet_online',
 'metager\-linkchecker',	# Must be before linkchecker
 'linkchecker',
@@ -883,6 +890,7 @@
 'seznambot',
 'shim\-crawler',
 'shoutcast',
+'siteexplorer\.info',
 'slysearch',
 'snap\.com_beta_crawler',
 'sohu\-search',
@@ -1009,7 +1017,7 @@
 '^motorola$',
 'movabletype',
 # These appear to be bots trying to hide. All of the usual architecture data is missing.
-'^mozilla\/3\.0 \(compatible$', 
+'^mozilla\/3\.0 \(compatible$',
 '^mozilla\/4\.0$',
 '^mozilla\/4\.0 \(compatible;\)$',
 '^mozilla\/5\.0$',
@@ -1113,6 +1121,7 @@
 'contentmatch','<a href="http://p4p.cn.yahoo.com">Yahoo!China ContentMatch Crawler</a>',
 'googlebot','<a href="http://www.google.com/bot.html" title="Bot home page [new window]" target="_blank">Googlebot</a>',
 'google\-sitemaps', 'Google Sitemaps',
+'grabber', '<a href="http://www.sdsc.edu/" title="Seltsame Aktivitaeten vom San Diego Supercomputer Center [new window]" target="_blank">Grabber (SDSC)</a>',
 'google[_+ ]web[_+ ]preview', 'Google Web Preview',
 'gulliver','Northern Light Gulliver',
 'virus[_+ ]detector','<a href="http://www.securecomputing.com/" title="virus_harvester@securecomputing.com; Bot home page [new window]" target="_blank">virus_detector</a>',
@@ -1154,6 +1163,7 @@
 # Less common robots (In robot file)
 '[^a]fish','Fish search',
 'abcdatos','ABCdatos BotLink',
+'abonti\.com','<a href="http://www.abonti.com/" title="Abonti WebSearch [new window]" target="_blank">Abonti WebSearch</a>',
 'acme\.spider','Acme.Spider',
 'ahoythehomepagefinder','Ahoy! The Homepage Finder',
 'alkaline','Alkaline',
@@ -1218,7 +1228,7 @@
 'felix','Felix IDE',
 'fetchrover','FetchRover',
 'fido','fido',
-'finnish','H���ki',
+'finnish','Finnish',
 'fireball','KIT-Fireball',
 'fouineur','Fouineur',
 'francoroute','Robot Francoroute',
@@ -1244,6 +1254,11 @@
 'iaskspider','<a href="http://www.iask.com/" target="_blank">Sina Iask Spider</a>',
 'hl_ftien_spider','<a href="http://www.hylanda.com/" target="_blank">Hylanda</a>',
 'sogou','<a href="http://www.sogou.com/" target="_blank">Sogou Spider</a>',
+'icjobs\.de', '<a href="http://www.icjobs.de/" target="_blank">iCjobs Spider (only hits on robots.txt counted!)</a>',
+#The user agent string of the icjobs-spider seems to contain the
+#identifying string only when it accesses the robots.txt file.
+#When it accesses the actual content it does not identify itself as
+#a spider. Thus traffic of this spider is counted as user traffic.
 'iconoclast','Popular Iconoclast',
 'ilse','Ingrid',
 'imagelock','Imagelock',
@@ -1254,6 +1269,7 @@
 'infospider','InfoSpiders',
 'inspectorwww','Inspector Web',
 'intelliagent','IntelliAgent',
+'ips\-agent', 'ips-agent Verisign(?) - no reliable information found.',
 'irobot','I, Robot',
 'iron33','Iron33',
 'israelisearch','Israeli-search',
@@ -1431,7 +1447,7 @@
 'activebookmark','<a href="http://www.libmaster.com/active_bookmark.php" title="ActiveBookmark home page [new window]" target="_blank">ActiveBookmark</a>',
 'adamm_bot','<a href="http://home.blic.net/adamm/" title="Bot home page [new window]" target="_blank">AdamM Bot</a>',
 'almaden','<a href="http://www.almaden.ibm.com/cs/crawler" title="IBM Almaden Research Center WebFountain&trade; Bot home page [new window]" target="_blank">IBM Almaden</a> Research Center WebFountain&trade;',
-'aipbot','<a href="http://www.aipbot.com/" title="aipbot@aipbot.com Bot home page [new window]" target="_blank">aipbot</a>',  
+'aipbot','<a href="http://www.aipbot.com/" title="aipbot@aipbot.com Bot home page [new window]" target="_blank">aipbot</a>',
 'aleadsoftbot','<a href="http://www.aleadsoft.com/bot.htm" title="ALeadSoftbot home page [new window]" target="_blank">ALeadSoftbot</a>',
 'alpha_search_agent','Alpha Search Agent',
 'allrati','Allrati',
@@ -1468,7 +1484,7 @@
 'cfnetwork','<a href="http://www.cocoadev.com/index.pl?CFNetwork" title="CFNetwork home page [new window]" target="_blank">CFNetwork</a>',
 'cipinetbot','<a href="http://www.cipinet.com/bot.html" title="CipinetBot home page [new window]" target="_blank">CipinetBot</a>',
 'checkweb_link_validator','<a href="http://p.duby.free.fr/chkweb.htm" title="CheckWeb link validator home page [new window]" target="_blank">CheckWeb link validator</a>',
-'commons\-httpclient','<a href="http://jakarta.apache.org/commons/httpclient/" title="Bot home page [new window]" target="_blank">Jakarta commons-httpclient</a>', 
+'commons\-httpclient','<a href="http://jakarta.apache.org/commons/httpclient/" title="Bot home page [new window]" target="_blank">Jakarta commons-httpclient</a>',
 'computer_and_automation_research_institute_crawler','<a href="http://www.ilab.sztaki.hu/~stamas/publications/p184-benczur.html" title="Computer and Automation Research Institute Crawler home page [new window]" target="_blank">Computer and Automation Research Institute Crawler</a>',
 'converamultimediacrawler','<a href="http://www.authoritativeweb.com/crawl/" title="ConveraMultiMediaCrawler home page [new window]" target="_blank">ConveraMultiMediaCrawler</a>',
 'converacrawler','<a href="http://www.authoritativeweb.com/crawl/" title="ConveraCrawler home page [new window]" target="_blank">ConveraCrawler</a>',
@@ -1571,6 +1587,7 @@
 'libcrawl','Crawl libcrawl',
 'link_valet_online','<a href="http://www.htmlhelp.com/tools/valet/" title="Link Valet Online home page [new window]" target="_blank">Link Valet Online</a>',
 'linkbot','LinkBot',
+'linkdex\.com', '<a href="http://www.linkdex.com/about/bots/" title="Bot home page [new window]" target="_blank">Linkdex</a>',
 'linkchecker','<a href="http://linkchecker.sourceforge.net" title="Bot home page [new window]" target="_blank">LinkChecker</a>',
 'livejournal\.com', 'LiveJournal.com',
 'magpierss', 'MagpieRSS',
@@ -1652,10 +1669,11 @@
 'seznambot','<a href="http://fulltext.seznam.cz/" title="Bot home page [new window]" target="_blank">SeznamBot</a>',
 'shim\-crawler','<a href="http://www.logos.ic.i.u-tokyo.ac.jp/crawler/" title="crawl@logos.ic.i.u-tokyo.ac.jp Bot home page [new window]" target="_blank">Shim-Crawler</a>',
 'shoutcast','Shoutcast Directory Service',
+'siteexplorer\.info', '<a href="http://siteexplorer.info/" title="Site Explorer home page [new window]" target="_blank">Site Explorer</a>',
 'slysearch','SlySearch',
 'snap\.com_beta_crawler','<a href="http://www.snap.com/" title="snap.com beta crawler home page [new window]" target="_blank">snap.com beta crawler</a>',
 'sohu\-search','<a href="http://corp.sohu.com/" title="Bot home page [new window]" target="_blank">sohu-search</a>',
-'sohu','<a href="http://corp.sohu.com/" title="Bot home page [new window]" target="_blank">sohu agent</a>', 
+'sohu','<a href="http://corp.sohu.com/" title="Bot home page [new window]" target="_blank">sohu agent</a>',
 'snappy','<a href="http://www.urltrends.com/faq.php" title="Bot home page [new window]" target="_blank">Snappy</a>',
 'sphere_scout','<a href="http://www.sphere.com/" title="Bot home page [new window]" target="_blank">Sphere Scout</a>',
 'spip','<a href="http://www.spip.net" title="SPIP home page [new window]" target="_blank">SPIP</a>',
@@ -1686,7 +1704,7 @@
 'unchaos_bot_hybrid_web_search_engine','<a href="http://www.unchaos.com/" title="UnChaos Bot Hybrid Web Search Engine home page [new window]" target="_blank">UnChaos Bot Hybrid Web Search Engine</a>',
 'unido\-bot','<a href="http://www.unchina.org/unido/unido/our_projects/3_3.html" title="unido-bot home page [new window]" target="_blank">unido-bot</a>',
 'updated','<a href="http://www.updated.com/" title="updated home page [new window]" target="_blank">updated</a>',
-'ustc\-semantic\-group','<a href="http://ai.ustc.edu.cn/mas/en/research/index.php" title="Bot home page [new window]" target="_blank">USTC-Semantic-Group</a>',  
+'ustc\-semantic\-group','<a href="http://ai.ustc.edu.cn/mas/en/research/index.php" title="Bot home page [new window]" target="_blank">USTC-Semantic-Group</a>',
 'vagabondo\-wap','<a href="http://www.wise-guys.nl/Contact/index.php?botselected=webagents&amp;lang=uk" title="Bot home page [new window]" target="_blank">Vagabondo-WAP</a>',
 'vagabondo','<a href="http://www.wise-guys.nl/Contact/index.php?botselected=webagents&amp;lang=uk" title="Bot home page [new window]" target="_blank">Vagabondo</a>',
 'vermut','<a href="http://vermut.aol.com/" title="Bot home page [new window]" target="_blank">Vermut</a>',
@@ -1753,98 +1771,98 @@
 'bot[\s_+:,\.\;\/\\\-]','Unknown robot (identified by \'bot*\')',
 '[\s_+:,\.\;\/\\\-]bot','Unknown robot (identified by \'*bot\')',
 'curl', 'Common *nix tool for automating web document retireval. Most likely a bot.',
-'php', 'A PHP script', 
-'ruby\/', 'Ruby script', 
+'php', 'A PHP script',
+'ruby\/', 'Ruby script',
 # Additional bots found by Sussex.
 '^[1-3]$', 'Generic bot identified as "1", "2" or "3"',
 'alltop', 'alltop',
-'applesyndication', 'applesyndication', 
-'asynchttpclient', 'asynchttpclient', 
-'bingbot', 'bingbot', 
-'blogged_crawl', 'blogged_crawl', 
+'applesyndication', 'applesyndication',
+'asynchttpclient', 'asynchttpclient',
+'bingbot', 'bingbot',
+'blogged_crawl', 'blogged_crawl',
 'bloglovin', 'bloglovin',
 'butterfly', 'butterfly',
-'buzztracker', 'buzztracker', 
+'buzztracker', 'buzztracker',
 'carpathia', 'carpathia',
-'catbot', 'catbot', 
-'chattertrap', 'chattertrap', 
-'check_http', 'check_http (nagios)', 
-'coldfusion', 'coldfusion', 
+'catbot', 'catbot',
+'chattertrap', 'chattertrap',
+'check_http', 'check_http (nagios)',
+'coldfusion', 'coldfusion',
 'covario', 'covario',
-'daylifefeedfetcher', 'daylifefeedfetcher', 
-'discobot', 'discobot', 
+'daylifefeedfetcher', 'daylifefeedfetcher',
+'discobot', 'discobot',
 'dlvr\.it', 'dlvr.it',
 'dreamwidth', 'dreamwidth',
-'drupal', 'Drupal Site', 
+'drupal', 'Drupal Site',
 'ezoom', 'ezoom',
-'feedmyinbox', 'feedmyinbox', 
+'feedmyinbox', 'feedmyinbox',
 'feedroll\.com', 'feedroll.com',
 'feedzira', 'feedzira',
-'fever\/', '<a href="http://feedafever.com">Feed a Fever</a>', 
-'freenews', 'freenews', 
+'fever\/', '<a href="http://feedafever.com">Feed a Fever</a>',
+'freenews', 'freenews',
 'geohasher', 'geohasher',
-'hanrss', 'hanrss', 
-'inagist', 'inagist', 
-'jacobin club', 'jacobin club', 
+'hanrss', 'hanrss',
+'inagist', 'inagist',
+'jacobin club', 'jacobin club',
 'jakarta', 'jakarta',
-'js\-kit', 'js-kit', 
-'largesmall crawler', 'largesmall crawler', 
-'linkedinbot', 'linkedinbot', 
-'longurl', 'longurl', 
-'metauri', 'metauri', 
-'microsoft\-webdav\-miniredir', 'microsoft-webdav-miniredir', 
+'js\-kit', 'js-kit',
+'largesmall crawler', 'largesmall crawler',
+'linkedinbot', 'linkedinbot',
+'longurl', 'longurl',
+'metauri', 'metauri',
+'microsoft\-webdav\-miniredir', 'microsoft-webdav-miniredir',
 '^motorola$', 'Suspected Bot masquerading as "Motorola"',
-'movabletype', 'movabletype', 
-'^mozilla\/3\.0 \(compatible$', 'Suspected bot masqurading as Mozilla', 
-'^mozilla\/4\.0$', 'Suspected bot masqurading as Mozilla', 
-'^mozilla\/4\.0 \(compatible;\)$', 'Suspected bot masqurading as Mozilla', 
-'^mozilla\/5\.0$', 'Suspected bot masqurading as Mozilla', 
-'^mozilla\/5\.0 \(compatible;$', 'Suspected bot masqurading as Mozilla', 
-'^mozilla\/5\.0 \(en\-us\)$', 'Suspected bot masqurading as Mozilla', 
-'^mozilla\/5\.0 firefox\/3\.0\.5$', 'Suspected bot masqurading as Mozilla', 
-'^msie', 'Suspected bot masquerading as M$ IE', 
+'movabletype', 'movabletype',
+'^mozilla\/3\.0 \(compatible$', 'Suspected bot masqurading as Mozilla',
+'^mozilla\/4\.0$', 'Suspected bot masqurading as Mozilla',
+'^mozilla\/4\.0 \(compatible;\)$', 'Suspected bot masqurading as Mozilla',
+'^mozilla\/5\.0$', 'Suspected bot masqurading as Mozilla',
+'^mozilla\/5\.0 \(compatible;$', 'Suspected bot masqurading as Mozilla',
+'^mozilla\/5\.0 \(en\-us\)$', 'Suspected bot masqurading as Mozilla',
+'^mozilla\/5\.0 firefox\/3\.0\.5$', 'Suspected bot masqurading as Mozilla',
+'^msie', 'Suspected bot masquerading as M$ IE',
 'netnewswire', 'netnewswire',
 ' netseer ', '<a href="http://www.netseer.com/crawler.html">Net Seer</a>',
-'netvibes', 'netvibes', 
+'netvibes', 'netvibes',
 'newrelicpinger', 'newrelicpinger',
 'newsfox', 'Fox News',
-'nextgensearchbot', 'nextgensearchbot', 
-'ning', 'ning', 
-'pingdom', 'pingdom', 
-'pita', 'pita (pain in the ass?)', 
-'postpost', 'postpost', 
+'nextgensearchbot', 'nextgensearchbot',
+'ning', 'ning',
+'pingdom', 'pingdom',
+'pita', 'pita (pain in the ass?)',
+'postpost', 'postpost',
 'postrank', 'postrank',
-'printfulbot', 'printfulbot', 
-'protopage', 'protopage', 
-'proximic', 'proximic', 
-'quipply', 'quipply', 
+'printfulbot', 'printfulbot',
+'protopage', 'protopage',
+'proximic', 'proximic',
+'quipply', 'quipply',
 'r6\_', '<a href="http://www.radian6.com/crawler">Radian 6 Crawler</a>',
-'ratingburner', 'ratingburner', 
-'regator', 'regator', 
-'rome client', 'rome client', 
-'rpt\-httpclient', 'rpt-httpclient', 
-'rssgraffiti', 'rssgraffiti', 
+'ratingburner', 'ratingburner',
+'regator', 'regator',
+'rome client', 'rome client',
+'rpt\-httpclient', 'rpt-httpclient',
+'rssgraffiti', 'rssgraffiti',
 'sage\+\+', 'sage++',
 'scoutjet', '<a href="http://wwww.scoutjet.com/" target="_blank">ScoutJet</a> crawler for <a href="http://blekko.com/" target="_blank">Blekko</a>.',
-'simplepie', 'simplepie', 
-'sitebot', 'sitebot', 
-'summify\.com', '<a href="http://summify.com/">summify.com</a>', 
-'superfeedr', 'superfeedr', 
-'synthesio', 'synthesio', 
+'simplepie', 'simplepie',
+'sitebot', 'sitebot',
+'summify\.com', '<a href="http://summify.com/">summify.com</a>',
+'superfeedr', 'superfeedr',
+'synthesio', 'synthesio',
 'teoma', 'teoma',
-'topblogsinfo', 'topblogsinfo', 
-'topix\.net', 'topix.net', 
-'trapit', 'trapit', 
-'trileet', 'trileet', 
+'topblogsinfo', 'topblogsinfo',
+'topix\.net', 'topix.net',
+'trapit', 'trapit',
+'trileet', 'trileet',
 'tweetedtimes', '<a href="http://tweetedtimes.com">The Tweeted Times</a>',
-'twisted pagegetter', 'twisted pagegetter', 
-'twitterbot', 'twitterbot', 
-'twitterfeed', 'twitterfeed', 
-'unwindfetchor', 'unwindfetchor', 
-'wazzup', 'wazzup', 
+'twisted pagegetter', 'twisted pagegetter',
+'twitterbot', 'twitterbot',
+'twitterfeed', 'twitterfeed',
+'unwindfetchor', 'unwindfetchor',
+'wazzup', 'wazzup',
 'windows\-rss\-platform', 'windows-rss-platform',
 'wiumi', 'wiumi',
-'xydo', 'xydo', 
+'xydo', 'xydo',
 'yahoo! slurp', 'Additional Yahoo bots.',
 'yahoo pipes', 'Additional Yahoo bots.',
 'yahoo\-newscrawler', 'Additional Yahoo bots.',
@@ -1852,13 +1870,13 @@
 'yahooexternalcache', 'Additional Yahoo bots.',
 'yahoo! searchmonkey', 'Additional Yahoo bots.',
 'yahooysmcm', 'Additional Yahoo bots.',
-'yammer', 'yammer', 
-'yandexbot', 'yandexbot', 
-'yeti', 'yeti', 
+'yammer', 'yammer',
+'yandexbot', 'yandexbot',
+'yeti', 'yeti',
 'yie8', 'yie8',
-'youdao', 'youdao', 
-'yourls', 'yourls', 
-'zemanta', 'zemanta', 
+'youdao', 'youdao',
+'yourls', 'yourls',
+'zemanta', 'zemanta',
 'zend_http_client', 'Zend Http Client',
 'no_user_agent','Unknown robot (identified by empty user agent string)',
 # Unknown robots identified by hit on robots.txt

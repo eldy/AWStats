@@ -8,6 +8,7 @@ $Revision$ - $Author$ - $Date$
 New features:
 - #877 Windows 8 + iOS Support in AWStats
 - Add command line option -version
+- Update robot, search engines database.
 
 
 ***** 7.2 *****
