@@ -3,6 +3,13 @@ AWStats Changelog
 $Revision$ - $Author$ - $Date$
 
 
+***** 7.3 *****
+
+New features:
+- #877 Windows 8 + iOS Support in AWStats
+- Add command line option -version
+
+
 ***** 7.2 *****
 
 New features:

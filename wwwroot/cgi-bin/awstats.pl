@@ -17227,6 +17227,11 @@ if ( $ENV{'AWSTATS_FORCE_CONFIG'} ) {
 	$SiteConfig = &Sanitize( $ENV{'AWSTATS_FORCE_CONFIG'} );
 }
 
+# Display version information
+if ( $QueryString =~ /(^|&|&amp;)version/i ) {
+	print "$PROG $VERSION\n";
+	exit 0;
+}
 # Display help information
 if ( ( !$ENV{'GATEWAY_INTERFACE'} ) && ( !$SiteConfig ) ) {
 	&PrintCLIHelp();
@@ -17664,8 +17669,7 @@ if ( $QueryString =~ /lastline=(\d{14})/i ) {
 	$LastLine = $1;
 }
 if ($Debug) {
-	debug(
-		"Last year=$lastyearbeforeupdate - Last month=$lastmonthbeforeupdate");
+	debug("Last year=$lastyearbeforeupdate - Last month=$lastmonthbeforeupdate");
 	debug("Last day=$lastdaybeforeupdate - Last hour=$lasthourbeforeupdate");
 	debug("LastLine=$LastLine");
 	debug("LastLineNumber=$LastLineNumber");
