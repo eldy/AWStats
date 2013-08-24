@@ -40,7 +40,7 @@ use vars qw/ $REVISION $VERSION /;
 $REVISION = '$Revision$';
 $REVISION =~ /\s(.*)\s/;
 $REVISION = $1;
-$VERSION  = "7.2 (build $REVISION)";
+$VERSION  = "7.3 (build $REVISION)";
 
 # ----- Constants -----
 use vars qw/
@@ -8600,6 +8600,8 @@ sub PrintCLIHelp{
 	print "Other options:\n";
 	print
 "  -debug=X     to add debug informations lesser than level X (speed reduced)\n";
+	print
+"  -version     show AWStats version\n";
 	print "\n";
 	print "Now supports/detects:\n";
 	print
