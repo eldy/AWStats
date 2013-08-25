@@ -10,6 +10,10 @@ New features:
 - Add command line option -version
 - Update robot, search engines database.
 
+Fixes:
+- When using builddate option of script awstats_buildstaticpages,
+  static link is wrong.
+  
 
 ***** 7.2 *****
 
