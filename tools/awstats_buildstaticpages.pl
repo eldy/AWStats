@@ -425,7 +425,7 @@ if ($BuildDate) {
 my $cpt=0;
 my $NoLoadPlugin="";
 if ($BuildPDF) { $NoLoadPlugin.="tooltips,rawlog,hostinfo"; }
-my $smallcommand="\"$Awstats\" -config=$SiteConfig".($BuildPDF?" -buildpdf":"").($NoLoadPlugin?" -noloadplugin=$NoLoadPlugin":"").($DatabaseBreak?" -databasebreak=$DatabaseBreak":"")." -staticlinks".($OutputSuffix ne $SiteConfig?"=$OutputSuffix":"");
+my $smallcommand="\"$Awstats\" -config=$SiteConfig".($BuildPDF?" -buildpdf":"").($NoLoadPlugin?" -noloadplugin=$NoLoadPlugin":"").($DatabaseBreak?" -databasebreak=$DatabaseBreak":"")." -staticlinks".($OutputSuffix ne $SiteConfig?"=awstats.$OutputSuffix":"");
 if ($StaticExt && $StaticExt ne 'html')     { $smallcommand.=" -staticlinksext=$StaticExt"; }
 if ($DirIcons)      { $smallcommand.=" -diricons=$DirIcons"; }
 if ($DirConfig)     { $smallcommand.=" -configdir=$DirConfig"; }
