@@ -1256,11 +1256,13 @@
 'iaskspider','<a href="http://www.iask.com/" target="_blank">Sina Iask Spider</a>',
 'hl_ftien_spider','<a href="http://www.hylanda.com/" target="_blank">Hylanda</a>',
 'sogou','<a href="http://www.sogou.com/" target="_blank">Sogou Spider</a>',
-'icjobs\.de', '<a href="http://www.icjobs.de/" target="_blank">iCjobs Spider (only hits on robots.txt counted!)</a>',
-#The user agent string of the icjobs-spider seems to contain the
-#identifying string only when it accesses the robots.txt file.
-#When it accesses the actual content it does not identify itself as
-#a spider. Thus traffic of this spider is counted as user traffic.
+'icjobs\.de', '<a href="http://www.icjobs.de/" target="_blank">iCjobs Spider</a>',
+#20130805 The user agent string of the icjobs-spider contained the
+#identifying string only when it accessed the robots.txt file.
+#When it accessed the actual content it did not identify itself as
+#a spider. Thus traffic of this spider was counted as user traffic.
+#The behavious seems to have changed now - the spider identifies itself
+#when it accesses content pages.
 'iconoclast','Popular Iconoclast',
 'ilse','Ingrid',
 'imagelock','Imagelock',

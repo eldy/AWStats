@@ -311,6 +311,8 @@
 'search\.certified-toolbar\.com',
 'search\.sweetim\.com',
 'search\.searchcompletion\.com',
+'en\.eazel\.com',
+'sr\.searchfunmoods\.com',
 # Chello Portals
 'chello\.at',
 'chello\.be',
@@ -403,10 +405,12 @@
 'www\.vlips\.de',
 'www\.metager\.de',
 'search\.1und1\.de',
+'sm\.de',
 # Minor Hungarian search engines
 'heureka\.hu','vizsla\.origo\.hu','lapkereso\.hu','goliat\.hu','index\.hu','wahoo\.hu','webmania\.hu','search\.internetto\.hu',
 'tango\.hu',
 'keresolap\.hu',
+'kereso\.startlap\.hu',
 'polymeta\.hu',
 # Minor Indian search engines
 'sify\.com',
@@ -423,6 +427,7 @@
 'szukaj\.wp\.pl','szukaj\.onet\.pl','dodaj\.pl','gazeta\.pl','gery\.pl','hoga\.pl','netsprint\.pl','interia\.pl','katalog\.onet\.pl','o2\.pl','polska\.pl','szukacz\.pl','wow\.pl',
 # Minor russian search engines
 'ya(ndex)?\.ru', 'aport\.ru', 'rambler\.ru', 'turtle\.ru', 'metabot\.ru',
+'go\.mail\.ru',
 # Minor Swedish search engines
 'evreka\.passagen\.se','eniro\.se',
 # Minor Slovak search engines
@@ -562,6 +567,8 @@
 'search\.certified-toolbar\.com', 'certifiedtoolbarsearch',
 'search\.sweetim\.com', 'sweetim',
 'search\.searchcompletion\.com', 'searchcompletion',
+'en\.eazel\.com','eazelsearch',
+'sr\.searchfunmoods\.com', 'searchfunmoods',
 # Chello Portals
 'chello\.at','chelloat',
 'chello\.be','chellobe',
@@ -693,6 +700,7 @@
 'www\.vlips\.de', 'vlips_de',
 'www\.metager\.de', 'metager',
 'search\.1und1\.de', 'search_1und1_de',
+'sm\.de', 'smde',
 # Minor Hungarian search engines
 'heureka\.hu','heureka',
 'vizsla\.origo\.hu','origo',
@@ -704,6 +712,7 @@
 'search\.internetto\.hu','internetto',
 'tango\.hu','tango_hu',
 'keresolap\.hu','keresolap_hu',
+'kereso\.startlap\.hu', 'startlap_hu',
 'polymeta\.hu','polymeta_hu',
 # Minor Indian search engines
 'sify\.com','sify',
@@ -746,6 +755,7 @@
 'rambler\.ru','rambler',
 'turtle\.ru','turtle',
 'metabot\.ru','metabot',
+'go\.mail\.ru', 'mailru',
 # Minor Swedish search engines
 'evreka\.passagen\.se','passagen',
 'eniro\.se','enirose',
@@ -866,6 +876,8 @@
 'certifiedtoolbarsearch', 'q=',
 'sweetim', 'q=',
 'searchcompletion', 'q=',
+'eazelsearch', 'q=',
+'searchfunmoods', 'q=',
 # Chello Portals
 'chelloat','q1=',
 'chellobe','q1=',
@@ -960,9 +972,11 @@
 'vlips_de', 'q=',
 'metager', 'eingabe=',
 'search_1und1_de', 'q=',
+'smde', 'q=',
 # Minor Hungarian search engines
 'heureka','heureka=', 'origo','(q|search)=', 'goliat','KERESES=', 'wahoo','q=', 'internetto','searchstr=',
 'keresolap_hu','q=',
+'startlap_hu', 'q=',
 'tango_hu','q=',
 'polymeta_hu','',
 # Minor Indian search engines
@@ -1002,6 +1016,7 @@
 'wowpl','q=',
 # Minor russian search engines
 'yandex', 'text=', 'rambler','words=', 'aport', 'r=', 'metabot', 'st=',
+'mailru', 'q=',
 # Minor swedish search engines
 'passagen','q=',
 'enirose','q=',
@@ -1131,6 +1146,8 @@
 'certifiedtoolbarsearch', '<a href="http://search.certified-toolbar.com/" rel="nofollow" title="Certified-Toolbar Search [new window]" target="_blank">Certified-Toolbar Search</a>',
 'sweetim', '<a href="http://search.sweetim.com/" rel="nofollow" title="SweetIM Search [new window]" target="_blank">SweetIM Search</a>',
 'searchcompletion', '<a href="http://search.searchcompletion.com/" rel="nofollow" title="SearchCompletion Search [new window]" target="_blank">SearchCompletion Search</a>',
+'eazelsearch', '<a href="http://en.eazel.com/" rel="nofollow" title="Eazel Search [new window]" target="_blank">Eazel Search</a>',
+'searchfunmoods', '<a href="http://sr.searchfunmoods.com/" rel="nofollow" title="Funmoods [new window]" target="_blank">Funmoods</a>',
 # Chello Portals
 'chelloat','<a href="http://www.chello.at/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Chello Austria</a>',
 'chellobe','<a href="http://www.chello.be/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Chello Belgium</a>',
@@ -1227,10 +1244,12 @@
 'vlips_de', '<a href="http://www.vlips.de/semags_proxy.php" rel="nofollow" title="vlips Proxy Page (Homepage not yet ready?) [new window]" target="_blank">vlips.de</a>',
 'metager', '<a href="http://www.metager.de" rel="nofollow" title="MetaGer Home Page [new window]" target="_blank">MetaGer</a>',
 'search_1und1_de', '<a href="http://search.1und1.de/" rel="nofollow" title="1&1 Suche [new window]" target="_blank">1&1 Suche</a>',
+'smde', '<a href="http://www.sm.de/" rel="nofollow" title="SM.de - Die SuchMaschine [new window]" target="_blank">SM.de - Die SuchMaschine</a>',
 # Minor hungarian search engines
 'heureka','Heureka', 'origo','Origo-Vizsla', 'lapkereso','Startlapkereso', 'goliat','Goliat', 'indexhu','Index', 'wahoo','Wahoo', 'webmania','webmania.hu', 'internetto','Internetto Kereso',
 'tango_hu','<a href="http://tango.hu/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Tango</a>',
 'keresolap_hu','<a href="http://keresolap.hu/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Tango keresolap</a>',
+'startlap_hu','<a href="http://kereso.startlap.hu/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Startlab Kereso</a>',
 'polymeta_hu','<a href="http://www.polymeta.hu/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Polymeta</a>',
 # Minor Indian search engines
 'sify','<a href="http://search.sify.com/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Sify</a>',
@@ -1269,6 +1288,7 @@
 'wowpl','<a href="http://szukaj.wow.pl/" rel="nofollow" title="Wow.pl home page [new window]" target="_blank">Wow.pl</a>',
 # Minor russian search engines
 'yandex', 'Yandex', 'aport', 'Aport', 'rambler', 'Rambler', 'turtle', 'Turtle', 'metabot', 'MetaBot',
+'mailru','<a href="http://go.mail.ru/" rel="nofollow" title="Mail.Ru home page [new window]" target="_blank">Mail.Ru</a>',
 # Minor Swedish search engines
 'passagen','Evreka',
 'enirose','<a href="http://www.eniro.se/" rel="nofollow" title="Eniro Sverige home page [new window]" target="_blank">Eniro Sverige</a>',
