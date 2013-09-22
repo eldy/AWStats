@@ -453,6 +453,7 @@
 'altavista\.'=>'babelfish\.altavista\.',
 'google\.'=>'mail\.google\.',
 'google\.'=>'translate\.google\.',
+'google\.'=>'code\.google\.',
 'msn\.'=>'hotmail\.msn\.',
 'tiscali\.'=>'mail\.tiscali\.',
 'yahoo\.'=>'mail\.yahoo\.',
