@@ -9787,7 +9787,7 @@ sub HTMLTopBanner{
 		}
 		print "<form name=\"FormDateFilter\" action=\""
 		  . XMLEncode("$AWScript${NewLinkParams}")
-		  . "\" style=\"padding: 0px 0px 0px 0px; margin-top: 0\"$NewLinkTarget>\n";
+		  . "\" style=\"padding: 0px 0px 20px 0px; margin-top: 0\"$NewLinkTarget>\n";
 	}
 
 	if ( $QueryString !~ /buildpdf/i ) {
