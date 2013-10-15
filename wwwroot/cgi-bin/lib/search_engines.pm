@@ -313,6 +313,10 @@
 'search\.searchcompletion\.com',
 'en\.eazel\.com',
 'sr\.searchfunmoods\.com',
+'173\.194\.35\.177',
+'dalesearch\.com',
+'sweetpacks-search\.com',
+'searchgol\.com',
 # Chello Portals
 'chello\.at',
 'chello\.be',
@@ -378,6 +382,7 @@
 '(^|\.)ask\.co\.uk','bbc\.co\.uk/cgi-bin/search','ifind\.freeserve','looksmart\.co\.uk','splut\.','spotjockey\.','ukdirectory\.','ukindex\.co\.uk','ukplus\.','searchy\.co\.uk',
 'search\.fbdownloader\.com',
 'search\.babylon\.com',
+'my\.allgameshome\.com',
 # Minor finnish search engines
 'haku\.www\.fi',
 # Minor french search engines
@@ -395,6 +400,7 @@
 'netluchs\.de',
 'schoenerbrausen\.de',
 'suche\.gmx\.net',
+'suche\.gmx\.at',
 'ecosia\.org',
 'de\.aolsearch\.com',
 'suche\.aol\.de',
@@ -406,6 +412,8 @@
 'www\.metager\.de',
 'search\.1und1\.de',
 'sm\.de',
+'sumaja\.de',
+'navigationshilfe\.t-online\.de',
 # Minor Hungarian search engines
 'heureka\.hu','vizsla\.origo\.hu','lapkereso\.hu','goliat\.hu','index\.hu','wahoo\.hu','webmania\.hu','search\.internetto\.hu',
 'tango\.hu',
@@ -570,6 +578,10 @@
 'search\.searchcompletion\.com', 'searchcompletion',
 'en\.eazel\.com','eazelsearch',
 'sr\.searchfunmoods\.com', 'searchfunmoods',
+'173\.194\.35\.177', 'googleByIP',
+'dalesearch\.com', 'dalesearch',
+'sweetpacks-search\.com', 'sweetpacks',
+'searchgol\.com', 'searchgol',
 # Chello Portals
 'chello\.at','chelloat',
 'chello\.be','chellobe',
@@ -661,6 +673,7 @@
 'searchy\.co\.uk','searchy',
 'search\.fbdownloader\.com','fbdownloader',
 'search\.babylon\.com', 'babylon',
+'my\.allgameshome\.com', 'allgameshome',
 # Minor finnish search engines
 'haku\.www\.fi','haku',
 # Minor french search engines
@@ -691,6 +704,7 @@
 'netluchs\.de','netluchs',
 'schoenerbrausen\.de','schoenerbrausen',
 'suche\.gmx\.net', 'gmxsuche',
+'suche\.gmx\.at', 'gmxsuche_at',
 'ecosia\.org', 'ecosiasearch',
 'de\.aolsearch\.com', 'aolsearch',
 'suche\.aol\.de', 'aolsuche',
@@ -702,6 +716,8 @@
 'www\.metager\.de', 'metager',
 'search\.1und1\.de', 'search_1und1_de',
 'sm\.de', 'smde',
+'sumaja\.de', 'sumaja',
+'navigationshilfe\.t-online\.de', 'navigationshilfe',
 # Minor Hungarian search engines
 'heureka\.hu','heureka',
 'vizsla\.origo\.hu','origo',
@@ -879,6 +895,10 @@
 'searchcompletion', 'q=',
 'eazelsearch', 'q=',
 'searchfunmoods', 'q=',
+'googleByIP', 'q=',
+'dalesearch',  'q=',
+'sweetpacks', 'q=',
+'searchgol', 'q=',
 # Chello Portals
 'chelloat','q1=',
 'chellobe','q1=',
@@ -945,6 +965,7 @@
 'splut','pattern=', 'spotjockey','Search_Keyword=', 'ukindex', 'stext=', 'ukdirectory','k=', 'ukplus','search=', 'searchy', 'search_term=',
 'fbdownloader','q=',
 'babylon','q=',
+'allgameshome', 's=',
 # Minor finnish search engines
 'haku','w=',
 # Minor french search engines
@@ -963,6 +984,7 @@
 'netluchs','query=',
 'schoenerbrausen','q=',
 'gmxsuche', 'q=',
+'gmxsuche_at', 'q=',
 'ecosiasearch', 'q=',
 'aolsearch', 'q=',
 'aolsuche', 'q=',
@@ -974,6 +996,8 @@
 'metager', 'eingabe=',
 'search_1und1_de', 'q=',
 'smde', 'q=',
+#'sumaja', 'no query string available', #There is no query string in the referrer url
+'navigationshilfe', 'q=',
 # Minor Hungarian search engines
 'heureka','heureka=', 'origo','(q|search)=', 'goliat','KERESES=', 'wahoo','q=', 'internetto','searchstr=',
 'keresolap_hu','q=',
@@ -1149,6 +1173,10 @@
 'searchcompletion', '<a href="http://search.searchcompletion.com/" rel="nofollow" title="SearchCompletion Search [new window]" target="_blank">SearchCompletion Search</a>',
 'eazelsearch', '<a href="http://en.eazel.com/" rel="nofollow" title="Eazel Search [new window]" target="_blank">Eazel Search</a>',
 'searchfunmoods', '<a href="http://sr.searchfunmoods.com/" rel="nofollow" title="Funmoods [new window]" target="_blank">Funmoods</a>',
+'googleByIP', '<a href="http://173.194.35.177/" rel="nofollow" title="Google (Access by IP-Address) [new window]" target="_blank">Google (Access by IP-Address)</a>',
+'dalesearch',  '<a href="http://www.dalesearch.com/" rel="nofollow" title="Dale Search [new window]" target="_blank">Dale Search</a>',
+'sweetpacks', '<a href="http://www.sweetpacks-search.com/" rel="nofollow" title="Sweetpacks [new window]" target="_blank">Sweetpacks</a>',
+'searchgol', '<a href="http://www.searchgol.com/" rel="nofollow" title="Search-Gol [new window]" target="_blank">Search-Gol</a>',
 # Chello Portals
 'chelloat','<a href="http://www.chello.at/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Chello Austria</a>',
 'chellobe','<a href="http://www.chello.be/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Chello Belgium</a>',
@@ -1216,6 +1244,7 @@
 'splut','Splut', 'spotjockey','Spotjockey', 'ukdirectory','UK Directory', 'ukindex','UKIndex', 'ukplus','UK Plus', 'searchy','searchy.co.uk',
 'fbdownloader','<a href="http://search.fbdownloader.com/" rel="nofollow" title="FBDownloader Home Page [new window]" target="_blank">FBDownloader</a>',
 'babylon','<a href="http://search.babylon.com/" rel="nofollow" title="Babylon Home Page [new window]" target="_blank">Babylon</a>',
+'allgameshome', '<a href="http://my.allgameshome.com/" rel="nofollow" title="AllGamesHome [new window]" target="_blank">AllGamesHome</a>',
 # Minor finnish search engines
 'haku','Ihmemaa',
 # Minor french search engines
@@ -1235,6 +1264,7 @@
 'netluchs','<a href="http://www.netluchs.de/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Netluchs</a>',
 'schoenerbrausen','<a href="http://www.schoenerbrausen.de/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Schoenerbrausen/</a>',
 'gmxsuche', '<a href="http://suche.gmx.net/" rel="nofollow" title="GMX Suche Home Page [new window]" target="_blank">GMX Suche</a>',
+'gmxsuche_at', '<a href="http://suche.gmx.at/" rel="nofollow" title="GMX Suche Österreich Home Page [new window]" target="_blank">GMX Suche Österreich</a>',
 'ecosiasearch', '<a href="http://ecosia.org" rel="nofollow" title="Ecosia Search Home Page [new window]" target="_blank">Ecosia Search</a>',
 'aolsearch', '<a href="http://de.aolsearch.com/" rel="nofollow" title="AOL Search Home Page [new window]" target="_blank">AOL Search</a>',
 'aolsuche', '<a href="http://suche.aol.de/" rel="nofollow" title="AOL Suche Home Page [new window]" target="_blank">AOL Suche</a>',
@@ -1246,6 +1276,8 @@
 'metager', '<a href="http://www.metager.de" rel="nofollow" title="MetaGer Home Page [new window]" target="_blank">MetaGer</a>',
 'search_1und1_de', '<a href="http://search.1und1.de/" rel="nofollow" title="1&1 Suche [new window]" target="_blank">1&1 Suche</a>',
 'smde', '<a href="http://www.sm.de/" rel="nofollow" title="SM.de - Die SuchMaschine [new window]" target="_blank">SM.de - Die SuchMaschine</a>',
+'sumaja',  '<a href="http://www.sumaja.de/" rel="nofollow" title="Sumaja [new window]" target="_blank">Sumaja</a>',
+'navigationshilfe', '<a href="http://navigationshilfe.t-online.de/" rel="nofollow" title="T-Online Navigationshilfe [new window]" target="_blank">T-Online Navigationshilfe</a>',
 # Minor hungarian search engines
 'heureka','Heureka', 'origo','Origo-Vizsla', 'lapkereso','Startlapkereso', 'goliat','Goliat', 'indexhu','Index', 'wahoo','Wahoo', 'webmania','webmania.hu', 'internetto','Internetto Kereso',
 'tango_hu','<a href="http://tango.hu/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Tango</a>',
