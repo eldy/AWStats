@@ -17879,7 +17879,11 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 	my $regvermsie        = qr/msie([+_ ]|)([\d\.]*)/i;
 	my $regvernetscape    = qr/netscape.?\/([\d\.]*)/i;
 	my $regverfirefox     = qr/firefox\/([\d\.]*)/i;
-	my $regveropera       = qr/opera\/([\d\.]*)/i;
+	# For Opera:
+	# OPR/15.0.1266 means Opera 15 
+	# Opera/9.80 ...... Version/12.16 means Opera 12.16
+	# Mozilla/5.0 .... Opera 11.51 means Opera 11.51
+	my $regveropera = qr/opera\/9\.80\s.+\sversion\/([\d\.]+)|ope?ra?[\/\s]([\d\.]+)/i;
 	my $regversafari      = qr/safari\/([\d\.]*)/i;
 	my $regversafariver   = qr/version\/([\d\.]*)/i;
 	my $regverchrome      = qr/chrome\/([\d\.]*)/i;
@@ -19418,20 +19422,20 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 					if ( !$uabrowser ) {
 						my $found = 1;
 
-						# Firefox ?
-						if (   $UserAgent =~ /$regverfirefox/o
-							&& $UserAgent !~ /$regnotfirefox/o )
-						{
-							$_browser_h{"firefox$1"}++;
-							if ($PageBool) { $_browser_p{"firefox$1"}++; }
-							$TmpBrowser{$UserAgent} = "firefox$1";
-						}
-
 						# Opera ?
-						elsif ( $UserAgent =~ /$regveropera/o ) {
-							$_browser_h{"opera$1"}++;
-							if ($PageBool) { $_browser_p{"opera$1"}++; }
-							$TmpBrowser{$UserAgent} = "opera$1";
+						if ( $UserAgent =~ /$regveropera/o ) {	# !!!! version number in in regex $1 or $2 !!!
+						    $_browser_h{"opera".($1||$2)}++;
+						    if ($PageBool) { $_browser_p{"opera".($1||$2)}++; }
+						    $TmpBrowser{$UserAgent} = "opera".($1||$2);
+						}
+						
+						# Firefox ?
+						elsif ( $UserAgent =~ /$regverfirefox/o
+						    && $UserAgent !~ /$regnotfirefox/o )
+						{
+						    $_browser_h{"firefox$1"}++;
+						    if ($PageBool) { $_browser_p{"firefox$1"}++; }
+						    $TmpBrowser{$UserAgent} = "firefox$1";
 						}
 
 						# Chrome ?
