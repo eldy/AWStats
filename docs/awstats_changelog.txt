@@ -13,7 +13,7 @@ New features:
 Fixes:
 - When using builddate option of script awstats_buildstaticpages,
   static link is wrong.
-- Resotre detection of Opera browsers versions.
+- Restore detection of Opera browsers versions.
   
 
 ***** 7.2 *****
