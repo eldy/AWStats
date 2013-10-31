@@ -8,7 +8,7 @@ $Revision$ - $Author$ - $Date$
 New features:
 - #877 Windows 8 + iOS Support in AWStats
 - Add command line option -version
-- Update robot, search engines database.
+- Update domains, robots and search engines database.
 
 Fixes:
 - When using builddate option of script awstats_buildstaticpages,
