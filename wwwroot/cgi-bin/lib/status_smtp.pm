@@ -3,7 +3,6 @@
 # If you want to add a SMTP status code, you must add
 # an entry in smtpcodelib.
 #-------------------------------------------------------
-# $Revision$ - $Author$ - $Date$
 
 
 #package AWSSMTPCODES;
@@ -43,7 +42,7 @@
 '504'=>'Command parameter not implemented',
 '521'=>'<domain> does not accept mail or closing transmission channel', # You must be pop-authenticated before you can use this SMTP server and you must use your mail address for the Sender/From field.
 '530'=>'Access denied', # a Sendmailism ?
-'550'=>'Requested mail action not taken: relaying not allowed, unknown recipient user, ...',	# Sending an email to recipients outside of your domain are not allowed or your mail server does not know that you have access to use it for relaying messages and authentication is required. Or to prevent the sending of SPAM some mail servers will not allow (relay) send mail to any e-mail using another company’s network and computer resources.
+'550'=>'Requested mail action not taken: relaying not allowed, unknown recipient user, ...',	# Sending an email to recipients outside of your domain are not allowed or your mail server does not know that you have access to use it for relaying messages and authentication is required. Or to prevent the sending of SPAM some mail servers will not allow (relay) send mail to any e-mail using another companyï¿½s network and computer resources.
 '551'=>'User not local: please try <forward-path> or Invalid Address: Relay request denied',
 '552'=>'Requested mail action aborted: exceeded storage allocation',	# ISP mail server indicates, probable overloading from too many messages.
 '553'=>'Requested mail action not taken: mailbox name not allowed',	# Some mail servers have the option to reduce the number of concurrent connection and also the number of messages sent per connection. If you have a lot of messages queued up (being sent) for a domain, it could go over the maximum number of messages per connection and/or some change to the message and/or destination must be made for successful delivery.

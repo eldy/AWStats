@@ -57,7 +57,6 @@
 # - If the HTML-Fragment (d) is syntactically incorrect.
 #
 #------------------------------------------------------------------------------
-# $Revision$ - $Author$ - $Date$
 
 # 2005-08-19 Sean Carlos http://www.antezeta.com/awstats.html
 #            added minor italian search engines
@@ -317,6 +316,9 @@
 'dalesearch\.com',
 'sweetpacks-search\.com',
 'searchgol\.com',
+'duckduckgo\.com',
+'sr\.facemoods\.com',
+'shoppstop\.com',
 # Chello Portals
 'chello\.at',
 'chello\.be',
@@ -409,11 +411,12 @@
 'www\.amazon\.de.*search', #Just as a reminder, probably will not work as AWstats seem to consider the host part of an URL only
 'de\.wow\.com',
 'www\.vlips\.de',
-'www\.metager\.de',
+'metager\.de',
 'search\.1und1\.de',
 'sm\.de',
 'sumaja\.de',
 'navigationshilfe\.t-online\.de',
+'umfis\.de',
 # Minor Hungarian search engines
 'heureka\.hu','vizsla\.origo\.hu','lapkereso\.hu','goliat\.hu','index\.hu','wahoo\.hu','webmania\.hu','search\.internetto\.hu',
 'tango\.hu',
@@ -582,6 +585,9 @@
 'dalesearch\.com', 'dalesearch',
 'sweetpacks-search\.com', 'sweetpacks',
 'searchgol\.com', 'searchgol',
+'duckduckgo\.com', 'duckduckgo',
+'sr\.facemoods\.com', 'facemoods',
+'shoppstop\.com', 'shoppstop',
 # Chello Portals
 'chello\.at','chelloat',
 'chello\.be','chellobe',
@@ -713,11 +719,12 @@
 'www\.amazon\.de.*search', 'amazonsearch', #Not clear if this matches amazon searches only
 'de\.wow\.com', 'wowsearch',
 'www\.vlips\.de', 'vlips_de',
-'www\.metager\.de', 'metager',
+'metager\.de', 'metager',
 'search\.1und1\.de', 'search_1und1_de',
 'sm\.de', 'smde',
 'sumaja\.de', 'sumaja',
 'navigationshilfe\.t-online\.de', 'navigationshilfe',
+'umfis\.de', 'umfis',
 # Minor Hungarian search engines
 'heureka\.hu','heureka',
 'vizsla\.origo\.hu','origo',
@@ -899,6 +906,9 @@
 'dalesearch',  'q=',
 'sweetpacks', 'q=',
 'searchgol', 'q=',
+'duckduckgo', 'uddg=',
+'facemoods', 'q=',
+'shoppstop', 'keywords=',
 # Chello Portals
 'chelloat','q1=',
 'chellobe','q1=',
@@ -998,6 +1008,7 @@
 'smde', 'q=',
 #'sumaja', 'no query string available', #There is no query string in the referrer url
 'navigationshilfe', 'q=',
+'umfis', 'suchbegriff=',
 # Minor Hungarian search engines
 'heureka','heureka=', 'origo','(q|search)=', 'goliat','KERESES=', 'wahoo','q=', 'internetto','searchstr=',
 'keresolap_hu','q=',
@@ -1044,7 +1055,7 @@
 'mailru', 'q=',
 # Minor swedish search engines
 'passagen','q=',
-'enirose','q=',
+'enirose', 'hitta:', #Not sure if this works, as the keywords are part of the URL, and therefore the URL does not contain a question mark.
 # Minor swiss search engines
 'searchch', 'q=', 'bluewin', 'qry=',
 # Minor Croatian, Serbian, Macedonian, Bosnian and Herzegovinian search engines
@@ -1177,6 +1188,9 @@
 'dalesearch',  '<a href="http://www.dalesearch.com/" rel="nofollow" title="Dale Search [new window]" target="_blank">Dale Search</a>',
 'sweetpacks', '<a href="http://www.sweetpacks-search.com/" rel="nofollow" title="Sweetpacks [new window]" target="_blank">Sweetpacks</a>',
 'searchgol', '<a href="http://www.searchgol.com/" rel="nofollow" title="Search-Gol [new window]" target="_blank">Search-Gol</a>',
+'duckduckgo',  '<a href="http://r.duckduckgo.com/" rel="nofollow" title="DuckDuckGo Home Page [new window]" target="_blank">DuckDuckGo (Does not provide search keyphrases, using found page instead)</a>',
+'facemoods', '<a href="http://sr.facemoods.com/" title="Facemoods Search [new window]" target="_blank">Facemoods Search</a>',
+'shoppstop', '<a href="http://www.shoppstop.com/" title="ShoppStop [new window]" target="_blank">ShoppStop</a>',
 # Chello Portals
 'chelloat','<a href="http://www.chello.at/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Chello Austria</a>',
 'chellobe','<a href="http://www.chello.be/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Chello Belgium</a>',
@@ -1264,7 +1278,7 @@
 'netluchs','<a href="http://www.netluchs.de/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Netluchs</a>',
 'schoenerbrausen','<a href="http://www.schoenerbrausen.de/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Schoenerbrausen/</a>',
 'gmxsuche', '<a href="http://suche.gmx.net/" rel="nofollow" title="GMX Suche Home Page [new window]" target="_blank">GMX Suche</a>',
-'gmxsuche_at', '<a href="http://suche.gmx.at/" rel="nofollow" title="GMX Suche Österreich Home Page [new window]" target="_blank">GMX Suche Österreich</a>',
+'gmxsuche_at', '<a href="http://suche.gmx.at/" rel="nofollow" title="GMX Suche ï¿½sterreich Home Page [new window]" target="_blank">GMX Suche ï¿½sterreich</a>',
 'ecosiasearch', '<a href="http://ecosia.org" rel="nofollow" title="Ecosia Search Home Page [new window]" target="_blank">Ecosia Search</a>',
 'aolsearch', '<a href="http://de.aolsearch.com/" rel="nofollow" title="AOL Search Home Page [new window]" target="_blank">AOL Search</a>',
 'aolsuche', '<a href="http://suche.aol.de/" rel="nofollow" title="AOL Suche Home Page [new window]" target="_blank">AOL Suche</a>',
@@ -1278,6 +1292,7 @@
 'smde', '<a href="http://www.sm.de/" rel="nofollow" title="SM.de - Die SuchMaschine [new window]" target="_blank">SM.de - Die SuchMaschine</a>',
 'sumaja',  '<a href="http://www.sumaja.de/" rel="nofollow" title="Sumaja [new window]" target="_blank">Sumaja</a>',
 'navigationshilfe', '<a href="http://navigationshilfe.t-online.de/" rel="nofollow" title="T-Online Navigationshilfe [new window]" target="_blank">T-Online Navigationshilfe</a>',
+'umfis', '<a href="http://www.umfis.de/" title="UMFIS-Online Das Umweltfirmen-Informationssystem der IHKs in Deutschland [new window]" target="_blank">UMFIS-Online Das Umweltfirmen-Informationssystem der IHKs in Deutschland</a>',
 # Minor hungarian search engines
 'heureka','Heureka', 'origo','Origo-Vizsla', 'lapkereso','Startlapkereso', 'goliat','Goliat', 'indexhu','Index', 'wahoo','Wahoo', 'webmania','webmania.hu', 'internetto','Internetto Kereso',
 'tango_hu','<a href="http://tango.hu/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Tango</a>',

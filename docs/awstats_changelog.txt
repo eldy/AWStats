@@ -15,6 +15,9 @@ Fixes:
   static link is wrong.
 - Restore detection of Opera browsers versions.
   
+Other:
+- Move version system to sourceforge Git instead of CVS.
+
 
 ***** 7.2 *****
 
