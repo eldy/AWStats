@@ -76,15 +76,17 @@ sub Init_geoip {
 	}
 	if ($override){$OverrideFile=$override;}
 	%TmpDomainLookup=();
-	debug(" Plugin $PluginName: GeoIP initialized type=$type mode=$mode override=$override",1);
+	debug(" Plugin $PluginName: GeoIP try to initialize type=$type mode=$mode override=$override datafile=$datafile",1);
 	if ($type eq 'geoippureperl') {
 		$gi = Geo::IP::PurePerl->open($datafile, $mode);
 	} else {
 		$gi = Geo::IP->open($datafile, $mode);
 	}
 
-# Fails on some GeoIP version
-# 	debug(" Plugin geoip: GeoIP initialized database_info=".$gi->database_info());
+	# Fails on some GeoIP version
+	# debug(" Plugin $PluginName: GeoIP initialized database_info=".$gi->database_info());
+	if ($gi) { debug(" Plugin $PluginName: GeoIP plugin and gi object initialized",1); }
+	else { return "Error: Failed to create gi object for datafile=".$datafile; }
 	# ----->
 
 	return ($checkversion?$checkversion:"$PluginHooksFunctions");

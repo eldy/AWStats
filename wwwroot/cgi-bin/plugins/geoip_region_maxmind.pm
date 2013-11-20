@@ -176,8 +176,10 @@ sub Init_geoip_region_maxmind {
 		$geoip_region_maxmind = Geo::IP->open($datafile, $mode);
 	}
 	$LoadedOverride=0;
-# Fails with some geoip versions
-# 	debug(" Plugin geoip_region_maxmind: GeoIP initialized database_info=".$geoip_region_maxmind->database_info());
+	# Fails with some geoip versions
+	# debug(" Plugin geoip_region_maxmind: GeoIP initialized database_info=".$geoip_region_maxmind->database_info());
+	if ($geoip_region_maxmind) { debug(" Plugin $PluginName: GeoIP plugin and gi object initialized",1); }
+	else { return "Error: Failed to create gi object for datafile=".$datafile; }
  	# ----->
 
 	return ($checkversion?$checkversion:"$PluginHooksFunctions");

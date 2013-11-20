@@ -102,8 +102,10 @@ sub Init_geoip_asn_maxmind {
 	} else {
 		$geoip_asn_maxmind = Geo::IP->open($datafile, $mode);
 	}
-# Fails on some GeoIP version
-# 	debug(" Plugin geoip_org_maxmind: GeoIP initialized database_info=".$geoip_asn_maxmind->database_info());
+	# Fails on some GeoIP version
+	# debug(" Plugin geoip_org_maxmind: GeoIP initialized database_info=".$geoip_asn_maxmind->database_info());
+	if ($geoip_asn_maxmind) { debug(" Plugin $PluginName: GeoIP plugin and gi object initialized",1); }
+	else { return "Error: Failed to create gi object for datafile=".$datafile; }
 	# ----->
 
 	return ($checkversion?$checkversion:"$PluginHooksFunctions");

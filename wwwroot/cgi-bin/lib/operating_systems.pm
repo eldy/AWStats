@@ -34,7 +34,8 @@
 # Windows OS family
 'windows[_+ ]?2005', 'windows[_+ ]nt[_+ ]6\.0',
 'windows[_+ ]?2008', 'windows[_+ ]nt[_+ ]6\.1', # Must be before windows_nt_6
-'windows[_+ ]?2012', 'windows[_+ ]nt[_+ ]6\.2', # Must be before windows_nt_6
+'windows[_+ ]?2012', 'windows[_+ ]nt[_+ ]6\.2', # Must be before windows_nt_6 = windows 8
+'windows[_+ ]nt[_+ ]6\.3', # Must be before windows_nt_6 = windows 8.1 
 'windows[_+ ]?vista', 'windows[_+ ]nt[_+ ]6',
 'windows[_+ ]?2003','windows[_+ ]nt[_+ ]5\.2',	# Must be before windows_nt_5
 'windows[_+ ]xp','windows[_+ ]nt[_+ ]5\.1',		# Must be before windows_nt_5
@@ -147,6 +148,7 @@
 'windows[_+ ]?2005','winlong','windows[_+ ]nt[_+ ]6\.0','winlong',
 'windows[_+ ]?2008','win2008','windows[_+ ]nt[_+ ]6\.1','win7',
 'windows[_+ ]?2012','win2012','windows[_+ ]nt[_+ ]6\.2','win8',
+'windows[_+ ]nt[_+ ]6\.3','win8.1',
 'windows[_+ ]?vista','winvista','windows[_+ ]nt[_+ ]6','winvista',
 'windows[_+ ]?2003','win2003','windows[_+ ]nt[_+ ]5\.2','win2003',
 'windows[_+ ]xp','winxp','windows[_+ ]nt[_+ ]5\.1','winxp', 'syndirella', 'winxp',
@@ -246,6 +248,7 @@
 #-----------------------------------------------------------
 %OSHashLib      = (
 # Windows family OS
+'win8.1','<a href="http://www.microsoft.com/windows8/" title="Windows 8.1 home page [new window]" target="_blank">Windows 8.1</a>',
 'win8','<a href="http://www.microsoft.com/windows8/" title="Windows 8 home page [new window]" target="_blank">Windows 8</a>',
 'win7','<a href="http://windows.microsoft.com/en-US/windows7/products/home/" title="Windows 7 home page [new window]" target="_blank">Windows 7</a>',
 'winlong','<a href="http://www.microsoft.com/windows/" title="Windows Vista home page [new window]" target="_blank">Windows Vista (LongHorn)</a>',
