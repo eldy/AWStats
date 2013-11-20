@@ -1763,15 +1763,19 @@ sub Read_Config {
 	
 		#CL - Added to open config if full path is passed to awstats 
 	if ( !$FileConfig ) {
+		
+		my $SiteConfigBis = File::Spec->rel2abs($SiteConfig);
+		debug("Finally, try to open an absolute path : $SiteConfigBis", 2);
 	
-		$SiteConfig = File::Spec->rel2abs($SiteConfig);
-		debug("Finally, try to open an absolute path : $SiteConfig", 2);
-	
-		if ( -f $SiteConfig && open( CONFIG, "$SiteConfig" ) ) {
-			$FileConfig = "$SiteConfig";
+		if ( -f $SiteConfigBis && open(CONFIG, "$SiteConfigBis")) {
+			$FileConfig = "$SiteConfigBis";
 			$FileSuffix = '';
-			if ($Debug){debug("Opened config: $SiteConfig", 2);}
-		}else{if ($Debug){debug("Unable to open config file: $SiteConfig", 2);}}
+			if ($Debug){debug("Opened config: $SiteConfigBis", 2);}
+			$SiteConfig=$SiteConfigBis;
+		}
+		else {
+			if ($Debug){debug("Unable to open config file: $SiteConfigBis", 2);}
+		}
 	}
 	
 	if ( !$FileConfig ) {
@@ -19472,13 +19476,21 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 							$TmpBrowser{$UserAgent} = "svn$1";
 						}
 
-						# IE ? (must be at end of test)
+						# IE < 11 ? (must be at end of test)
 						elsif ($UserAgent =~ /$regvermsie/o
 							&& $UserAgent !~ /$regnotie/o )
 						{
 							$_browser_h{"msie$2"}++;
 							if ($PageBool) { $_browser_p{"msie$2"}++; }
 							$TmpBrowser{$UserAgent} = "msie$2";
+						}
+						
+						# IE 11
+						elsif ($UserAgent eq "Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko")
+						{
+							$_browser_h{"msie11"}++;
+							if ($PageBool) { $_browser_p{"msie11"}++; }
+							$TmpBrowser{$UserAgent} = "msie11";
 						}
 
 						# Netscape 6.x, 7.x ... ? (must be at end of test)
