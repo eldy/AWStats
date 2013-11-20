@@ -3,7 +3,6 @@
 # If you want to add worms to extend AWStats database detection capabilities,
 # you must add an entry in WormsSearchIDOrder, WormsHashID and WormsHashLib.
 #-----------------------------------------------------------------------------
-# $Revision$ - $Author$ - $Date$
 
 
 #package AWSWORMS;

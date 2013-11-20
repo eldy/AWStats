@@ -3,7 +3,6 @@
 # If you want to add a new domain to extend AWStats database detection capabilities,
 # you must add an entry in DomainsHashIDLib.
 #-------------------------------------------------------
-# $Revision$ - $Author$ - $Date$
 
 
 #package AWSDOM;
