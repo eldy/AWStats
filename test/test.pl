@@ -4,9 +4,9 @@
 #-----------------------------------------------------------------------------
 
 
-$DIRAWSTATS="/media/HDDATA1_LD/Mes Developpements/awstats/wwwroot/cgi-bin";
-$DIRCONF="/media/HDDATA1_LD/Mes Developpements/awstats/test/awstats/conf";
-$DIRRESULT="/media/HDDATA1_LD/Mes Developpements/awstats/test/awstats/result";
+$DIRAWSTATS="/home/ldestailleur/git/awstats/wwwroot/cgi-bin";
+$DIRCONF="/home/ldestailleur/git/awstats/test/awstats/conf";
+$DIRRESULT="/home/ldestailleur/git/awstats/test/awstats/result";
 $TEMP="/temp";
 #$PERL="\"c:\\Program files\\cygwin\\bin\\perl.exe\"";
 $PERL="perl";
@@ -106,7 +106,7 @@ while(1==1)
 	else { push @choosed, $TESTLIST[$bidon-1]; }
 	
 	# Option output
-	print "Choose output option (browserdetail)...\n";
+	print "Choose output option (browserdetail, osdetail, ...)\n";
 	$bidon='';
 	print "Your choice : ";
 	$bidon=<STDIN>;
