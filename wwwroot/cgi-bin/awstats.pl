@@ -18411,6 +18411,12 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 				4 );
 		}
 
+		# Check if there's a CloudFlare Visitor IP in the query string
+		# If it does, replace the ip
+		if ( $pos_query >= 0 && $field[$pos_query] && $field[$pos_query] =~ /\[CloudFlare_Visitor_IP[:](\d+[.]\d+[.]\d+[.]\d+)\]/ ) {
+			$field[$pos_host] = "$1";
+		}	
+
 		# We found a new line
 		#----------------------------------------
 		if ( $timerecord > $LastLine ) {
