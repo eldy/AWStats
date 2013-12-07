@@ -14,6 +14,7 @@ Fixes:
 - When using builddate option of script awstats_buildstaticpages,
   static link is wrong.
 - Restore detection of Opera browsers versions.
+- #838 GeoIP Cities page doesnt work
   
 Other:
 - Move version system to sourceforge Git instead of CVS.
