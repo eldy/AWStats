@@ -4710,11 +4710,12 @@ sub SectionProcessIp_geoip_city_maxmind {
 		}
 		if ($Debug) { debug("  Plugin $PluginName: GetCityByIp for $param: [$record]",5); }
 	    if ($record) {
+	        my $city=$record->city;
 	#   	if ($PageBool) { $_city_p{$city}++; }
 	        if ($city) {
 	            my $countrycity=$record->country_code.'_'.$record->city;
 	            $countrycity=~s/ /%20/g;
-	            if ($region) { $countrycity.='_'.$record->region; }
+	            if ($record->region) { $countrycity.='_'.$record->region; }
 	            $_city_h{lc($countrycity)}++;
 	        } else {
 	            $_city_h{'unknown'}++;
