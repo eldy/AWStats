@@ -6,16 +6,19 @@ $Revision$ - $Author$ - $Date$
 ***** 7.3 *****
 
 New features:
-- #877 Windows 8 + iOS Support in AWStats
 - Add command line option -version
-- Update domains, robots and search engines database.
+- Better error management of geoip modules.
+- Update domains, robots and search engines database:
+- #877 Windows 8 + iOS Support in AWStats
+- Detection of 8.1 and IE11.
 
 Fixes:
 - When using builddate option of script awstats_buildstaticpages,
   static link is wrong.
 - Restore detection of Opera browsers versions.
-- #838 GeoIP Cities page doesnt work
-  
+- #838 GeoIP Cities page doesnt work.
+- Add missing icons.
+
 Other:
 - Move version system to sourceforge Git instead of CVS.
 
@@ -25,6 +28,7 @@ Other:
 New features:
 - Upgrade licence to GPL v3+.
 - Update documentation.
+- Support modCloudFlareIIS.
 
 Fixes:
 - Since updating Webmin to 1.53, the Add New Config File screen layout is
