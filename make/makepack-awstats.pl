@@ -10,8 +10,10 @@ use Cwd;
 
 $PROJECT="awstats";
 $MAJOR="7";
-$MINOR="2";
+$MINOR="3";
 $RPMSUBVERSION="1";
+
+$WBMVERSION="2.0";
 
 @LISTETARGET=("TGZ","ZIP","RPM","DEB","EXE");   # Possible packages
 %REQUIREMENTTARGET=(                            # Tool requirement for each package
@@ -177,7 +179,7 @@ foreach my $target (keys %CHOOSEDTARGET) {
             last;
         } else {
             # Pas erreur ou erreur autre que programme absent
-            print " Found ".$REQUIREMENTTARGET{$target}."\n";
+            print " Found ".$req."\n";
         }
     }
 }
@@ -265,6 +267,15 @@ $ret=`rm -fr $BUILDROOT/$PROJECT/Thumbs.db $BUILDROOT/$PROJECT/*/Thumbs.db $BUIL
 $ret=`rm -fr $BUILDROOT/$PROJECT/CVS* $BUILDROOT/$PROJECT/*/CVS* $BUILDROOT/$PROJECT/*/*/CVS* $BUILDROOT/$PROJECT/*/*/*/CVS* $BUILDROOT/$PROJECT/*/*/*/*/CVS* $BUILDROOT/$PROJECT/*/*/*/*/*/CVS*`;
 
 rename("$BUILDROOT/$PROJECT","$BUILDROOT/$FILENAMETGZ");
+
+
+# Check WBM file was generated and stored into webmin directory
+if (! -f "$BUILDROOT/$FILENAMETGZ/tools/webmin/awstats-".$WBMVERSION.".wbm")
+{
+	print "Error: You must generate wbm file with makepack-awstats_webmin.pl first.";
+	exit 0;	
+}
+
 
 # Build package for each target
 #------------------------------
