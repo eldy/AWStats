@@ -2,11 +2,17 @@
 # This script must be ran from a CVS repository
 
 
+# Update CVS repository
 cvs update
 #cvs udpate -C
 
-export LASTINCLUDEDID=6ddc897cd021ad61cc5661297abe61d04e8c9520
+
+# Set here id of last commit
+export LASTINCLUDEDID=eea6adb633b5b055b663bafcfef6e8482aeedad4
+# Set here where is store git repository
 export GIT_DIR=/home/ldestailleur/git/awstats/.git
 
-git cherry $LASTINCLUDEDID HEAD | sed -n 's/^+ //p' | xargs -l1 git cvsexportcommit -c -p -v
+
+# Commit 5 commits at once after last commit
+git cherry $LASTINCLUDEDID HEAD | sed -n 's/^+ //p' | head -n 5 | xargs -l1 git cvsexportcommit -c -p -v
 
