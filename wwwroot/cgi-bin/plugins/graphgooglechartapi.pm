@@ -30,7 +30,7 @@ my $PluginNeedAWStatsVersion = "7.0";
 my $PluginHooksFunctions = "Init ShowGraph AddHTMLHeader";
 my $PluginName = "graphgooglechartapi";
 my $ChartProtocol = "https://";
-my $ChartURI = "chart.apis.google.com/chart?";	# Don't put the HTTP part here!
+my $ChartURI = "chart.googleapis.com/chart?";	# Don't put the HTTP part here!
 my $ChartIndex = 0;
 my $title;
 my $type;
