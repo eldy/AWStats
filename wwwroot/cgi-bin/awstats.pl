@@ -512,7 +512,6 @@ use vars qw/
 %MonthNumLib                = ();
 %ValidHTTPCodes             = %ValidSMTPCodes = ();
 %TrapInfosForHTTPErrorCodes = ();
-$TrapInfosForHTTPErrorCodes{404} = 1;    # TODO Add this in config file
 %NotPageList = ();
 %DayBytes    = %DayHits               = %DayPages  = %DayVisits   = ();
 %MaxNbOf     = %MinHit                = ();
@@ -535,7 +534,7 @@ use vars qw/
   %_worm_h %_worm_k %_worm_l %_login_h %_login_p %_login_k %_login_l %_screensize_h
   %_misc_p %_misc_h %_misc_k
   %_cluster_p %_cluster_h %_cluster_k
-  %_se_referrals_p %_se_referrals_h %_sider404_h %_referer404_h %_url_p %_url_k %_url_e %_url_x
+  %_se_referrals_p %_se_referrals_h %_sider_h %_referer_h %_url_p %_url_k %_url_e %_url_x
   %_downloads
   %_unknownreferer_l %_unknownrefererbrowser_l
   %_emails_h %_emails_k %_emails_l %_emailr_h %_emailr_k %_emailr_l
@@ -1813,6 +1812,11 @@ sub Read_Config {
 	if ( !scalar keys %ValidSMTPCodes ) {
 		$ValidSMTPCodes{"1"} = $ValidSMTPCodes{"250"} = 1;
 	}
+
+	# If parameter TrapInfosForHTTPErrorCodes empty, init to default
+	if ( !scalar keys %TrapInfosForHTTPErrorCodes ) {
+		$TrapInfosForHTTPErrorCodes{"404"} = 1;
+	}
 }
 
 #------------------------------------------------------------------------------
@@ -2090,6 +2094,11 @@ sub Parse_Config {
 		if ( $param =~ /^ValidSMTPCodes/ ) {
 			%ValidSMTPCodes = ();
 			foreach ( split( /\s+/, $value ) ) { $ValidSMTPCodes{$_} = 1; }
+			next;
+		}
+		if ( $param =~ /^TrapInfosForHTTPErrorCodes/ ) {
+			%TrapInfosForHTTPErrorCodes = ();
+			foreach ( split( /\s+/, $value ) ) { $TrapInfosForHTTPErrorCodes{$_} = 1; }
 			next;
 		}
 		if ( $param =~ /^URLWithQueryWithOnlyFollowingParameters$/ ) {
@@ -5822,12 +5831,12 @@ sub Read_History_With_TmpUpdate {
 							if ( $SectionsToLoad{"sider_$code"} ) {
 								$countloaded++;
 								if ( $field[1] ) {
-									$_sider404_h{ $field[0] } += $field[1];
+									$_sider_h{$code}{$field[0]} += $field[1];
 								}
 								if ( $withupdate || $HTMLOutput{"errors$code"} )
 								{
 									if ( $field[2] ) {
-										$_referer404_h{ $field[0] } = $field[2];
+										$_referer_h{$code}{$field[0]} = $field[2];
 									}
 								}
 							}
@@ -5865,8 +5874,8 @@ sub Read_History_With_TmpUpdate {
 						Save_History( "sider_$code", $year, $month, $date );
 						delete $SectionsToSave{"sider_$code"};
 						if ($withpurge) {
-							%_sider404_h   = ();
-							%_referer404_h = ();
+							%_sider_h   = ();
+							%_referer_h = ();
 						}
 					}
 					if ( !scalar %SectionsToLoad ) {
@@ -7277,14 +7286,14 @@ sub Save_History {
 			  "# URL with $code errors - Hits - Last URL referer\n";
 			$ValueInFile{$sectiontosave} = tell HISTORYTMP;
 			print HISTORYTMP "${xmlbb}BEGIN_SIDER_$code${xmlbs}"
-			  . ( scalar keys %_sider404_h )
+			  . ( scalar keys %{$_sider_h{$code}} )
 			  . "${xmlbe}\n";
-			foreach ( keys %_sider404_h ) {
+			foreach ( keys %{$_sider_h{$code}} ) {
 				my $newkey = $_;
-				my $newreferer = $_referer404_h{$_} || '';
+				my $newreferer = $_referer_h{$code}{$_} || '';
 				print HISTORYTMP "${xmlrb}"
 				  . XMLEncodeForHisto($newkey)
-				  . "${xmlrs}$_sider404_h{$_}${xmlrs}"
+				  . "${xmlrs}$_sider_h{ $code }{$_}${xmlrs}"
 				  . XMLEncodeForHisto($newreferer)
 				  . "${xmlre}\n";
 			}
@@ -7709,7 +7718,7 @@ sub Init_HashArray {
 	  %_login_l      = %_screensize_h   = ();
 	%_misc_p         = %_misc_h         = %_misc_k = ();
 	%_cluster_p      = %_cluster_h      = %_cluster_k = ();
-	%_se_referrals_p = %_se_referrals_h = %_sider404_h = %_referer404_h =
+	%_se_referrals_p = %_se_referrals_h = %_sider_h = %_referer_h =
 	  %_url_p        = %_url_k          = %_url_e = %_url_x = ();
 	%_downloads = ();
 	%_unknownreferer_l = %_unknownrefererbrowser_l = ();
@@ -10382,10 +10391,12 @@ sub HTMLMenu{
 				  ( $ShowSMTPErrorsStats ? $Message[147] : $Message[32] ),
 				'clusters' => $Message[155]
 			);
-			foreach ( keys %TrapInfosForHTTPErrorCodes ) {
-				$menu{"errors$_"}     = $ShowHTTPErrorsStats ? 4 : 0;
+			my $idx = 0;
+			foreach ( sort keys %TrapInfosForHTTPErrorCodes ) {
+				$menu{"errors$_"}     = $ShowHTTPErrorsStats ? 4+$idx : 0;
 				$menulink{"errors$_"} = 2;
-				$menutext{"errors$_"} = $Message[31];
+				$menutext{"errors$_"} = $Message[49] . ' (' . $_ . ')';
+				$idx++;
 			}
 			HTMLShowMenuCateg(
 				'others',       $Message[2],
@@ -11598,26 +11609,31 @@ sub HTMLShowKeywords{
 #------------------------------------------------------------------------------
 sub HTMLShowErrorCodes{
 	my $code = shift;
+	my $title;
+	my %customtitles = ( "404", "$Message[47]" );
+	$title = $customtitles{$code} ? $customtitles{$code} :
+	           (join(' ', ( ($httpcodelib{$code} ? $httpcodelib{$code} :
+	           'Unknown error'), "urls (HTTP code " . $code . ")" )));
 	print "$Center<a name=\"errors$code\">&nbsp;</a><br />\n";
-	&tab_head( $Message[47], 19, 0, "errors$code" );
+	&tab_head( $title, 19, 0, "errors$code" );
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>URL ("
-	  . Format_Number(( scalar keys %_sider404_h ))
+	  . Format_Number(( scalar keys %{$_sider_h{$code}} ))
 	  . ")</th><th bgcolor=\"#$color_h\">$Message[49]</th><th>$Message[23]</th></tr>\n";
 	my $total_h = 0;
 	my $count = 0;
-	&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_sider404_h,
-		\%_sider404_h );
+	&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%{$_sider_h{$code}},
+		\%{$_sider_h{$code}} );
 	foreach my $key (@keylist) {
 		my $nompage = XMLEncode( CleanXSS($key) );
 
 		#if (length($nompage)>$MaxLengthOfShownURL) { $nompage=substr($nompage,0,$MaxLengthOfShownURL)."..."; }
-		my $referer = XMLEncode( CleanXSS( $_referer404_h{$key} ) );
+		my $referer = XMLEncode( CleanXSS( $_referer_h{$code}{$key} ) );
 		print "<tr><td class=\"aws\">$nompage</td>";
-		print "<td>".Format_Number($_sider404_h{$key})."</td>";
+		print "<td>".Format_Number($_sider_h{$code}{$key})."</td>";
 		print "<td class=\"aws\">"
 		  . ( $referer ? "$referer" : "&nbsp;" ) . "</td>";
 		print "</tr>\n";
-		my $total_s += $_sider404_h{$key};
+		my $total_s += $_sider_h{$code}{$key};
 		$count++;
 	}
 
@@ -18786,13 +18802,13 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 							  substr( $field[$pos_url], 0,
 								$MaxLengthOfStoredURL );
 							$newurl =~ s/[$URLQuerySeparators].*$//;
-							$_sider404_h{$newurl}++;
+							$_sider_h{$code}{$newurl}++;
 							if ( $pos_referer >= 0 ) {
 								my $newreferer = $field[$pos_referer];
 								if ( !$URLReferrerWithQuery ) {
 									$newreferer =~ s/[$URLQuerySeparators].*$//;
 								}
-								$_referer404_h{$newurl} = $newreferer;
+								$_referer_h{$code}{$newurl} = $newreferer;
 								last;
 							}
 						}
