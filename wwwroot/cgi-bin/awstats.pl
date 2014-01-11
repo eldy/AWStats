@@ -254,7 +254,7 @@ use vars qw/
   $ShowHoursStats $ShowDomainsStats $ShowHostsStats
   $ShowRobotsStats $ShowSessionsStats $ShowPagesStats $ShowFileTypesStats $ShowDownloadsStats
   $ShowOSStats $ShowBrowsersStats $ShowOriginStats
-  $ShowKeyphrasesStats $ShowKeywordsStats $ShowMiscStats $ShowHTTPErrorsStats
+  $ShowKeyphrasesStats $ShowKeywordsStats $ShowMiscStats $ShowHTTPErrorsStats $ShowHTTPErrorsPageDetail
   $AddDataArrayMonthStats $AddDataArrayShowDaysOfMonthStats $AddDataArrayShowDaysOfWeekStats $AddDataArrayShowHoursStats
   /;
 (
@@ -285,6 +285,7 @@ use vars qw/
 	$ShowKeywordsStats,
 	$ShowMiscStats,
 	$ShowHTTPErrorsStats,
+	$ShowHTTPErrorsPageDetail,
 	$AddDataArrayMonthStats,
 	$AddDataArrayShowDaysOfMonthStats,
 	$AddDataArrayShowDaysOfWeekStats,
@@ -534,7 +535,7 @@ use vars qw/
   %_worm_h %_worm_k %_worm_l %_login_h %_login_p %_login_k %_login_l %_screensize_h
   %_misc_p %_misc_h %_misc_k
   %_cluster_p %_cluster_h %_cluster_k
-  %_se_referrals_p %_se_referrals_h %_sider_h %_referer_h %_url_p %_url_k %_url_e %_url_x
+  %_se_referrals_p %_se_referrals_h %_sider_h %_referer_h %_err_host_h %_url_p %_url_k %_url_e %_url_x
   %_downloads
   %_unknownreferer_l %_unknownrefererbrowser_l
   %_emails_h %_emails_k %_emails_l %_emailr_h %_emailr_k %_emailr_l
@@ -2756,6 +2757,7 @@ sub Check_Config {
 	if ( $ShowClusterStats !~ /[01PHB]/ )    { $ShowClusterStats    = 0; }
 	if ( $ShowMiscStats !~ /[01anjdfrqwp]/ ) { $ShowMiscStats       = 'a'; }
 	if ( $ShowHTTPErrorsStats !~ /[01]/ )    { $ShowHTTPErrorsStats = 1; }
+	if ( $ShowHTTPErrorsPageDetail !~ /[RH]/ ) { $ShowHTTPErrorsPageDetail = 'R'; }
 	if ( $ShowSMTPErrorsStats !~ /[01]/ )    { $ShowSMTPErrorsStats = 0; }
 	if ( $AddDataArrayMonthStats !~ /[01]/ ) { $AddDataArrayMonthStats = 1; }
 
@@ -5835,8 +5837,15 @@ sub Read_History_With_TmpUpdate {
 								}
 								if ( $withupdate || $HTMLOutput{"errors$code"} )
 								{
-									if ( $field[2] ) {
-										$_referer_h{$code}{$field[0]} = $field[2];
+									my $fieldidx = 2;
+									foreach (split(//, $ShowHTTPErrorsPageDetail)) {
+										last if (! $field[$fieldidx] );
+										if ( $_ =~ /R/i ) {
+											$_referer_h{$code}{$field[0]} = $field[2];
+										} elsif ( $_ =~ /H/i ) {
+											$_err_host_h{$code}{$field[0]} = $field[$fieldidx];
+										}
+										$fieldidx++;
 									}
 								}
 							}
@@ -5876,6 +5885,7 @@ sub Read_History_With_TmpUpdate {
 						if ($withpurge) {
 							%_sider_h   = ();
 							%_referer_h = ();
+							%_err_host_h = ();
 						}
 					}
 					if ( !scalar %SectionsToLoad ) {
@@ -7283,7 +7293,11 @@ sub Save_History {
 				print HISTORYTMP "<section id='$sectiontosave'><comment>\n";
 			}
 			print HISTORYTMP
-			  "# URL with $code errors - Hits - Last URL referer\n";
+			  "# URL with $code errors - Hits"
+			  . ($ShowHTTPErrorsPageDetail =~ /R/i ? " - Last URL referrer" : '')
+			  . ($ShowHTTPErrorsPageDetail =~ /H/i ? " - Host" : '')
+			  . "\n";
+
 			$ValueInFile{$sectiontosave} = tell HISTORYTMP;
 			print HISTORYTMP "${xmlbb}BEGIN_SIDER_$code${xmlbs}"
 			  . ( scalar keys %{$_sider_h{$code}} )
@@ -7291,10 +7305,12 @@ sub Save_History {
 			foreach ( keys %{$_sider_h{$code}} ) {
 				my $newkey = $_;
 				my $newreferer = $_referer_h{$code}{$_} || '';
+				my $newhost = $_err_host_h{$code}{$_} || '';
 				print HISTORYTMP "${xmlrb}"
 				  . XMLEncodeForHisto($newkey)
-				  . "${xmlrs}$_sider_h{ $code }{$_}${xmlrs}"
-				  . XMLEncodeForHisto($newreferer)
+				  . "${xmlrs}$_sider_h{ $code }{$_}"
+				  . ($ShowHTTPErrorsPageDetail =~ /R/i ? "${xmlrs}" . XMLEncodeForHisto($newreferer) : '')
+				  . ($ShowHTTPErrorsPageDetail =~ /H/i ? "${xmlrs}" . XMLEncodeForHisto($newhost) : '')
 				  . "${xmlre}\n";
 			}
 			print HISTORYTMP "${xmleb}END_SIDER_$code${xmlee}\n";
@@ -7718,7 +7734,7 @@ sub Init_HashArray {
 	  %_login_l      = %_screensize_h   = ();
 	%_misc_p         = %_misc_h         = %_misc_k = ();
 	%_cluster_p      = %_cluster_h      = %_cluster_k = ();
-	%_se_referrals_p = %_se_referrals_h = %_sider_h = %_referer_h =
+	%_se_referrals_p = %_se_referrals_h = %_sider_h = %_referer_h = %_err_host_h =
 	  %_url_p        = %_url_k          = %_url_e = %_url_x = ();
 	%_downloads = ();
 	%_unknownreferer_l = %_unknownrefererbrowser_l = ();
@@ -11618,7 +11634,15 @@ sub HTMLShowErrorCodes{
 	&tab_head( $title, 19, 0, "errors$code" );
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>URL ("
 	  . Format_Number(( scalar keys %{$_sider_h{$code}} ))
-	  . ")</th><th bgcolor=\"#$color_h\">$Message[49]</th><th>$Message[23]</th></tr>\n";
+	  . ")</th><th bgcolor=\"#$color_h\">$Message[49]</th>";
+	foreach (split(//, $ShowHTTPErrorsPageDetail)) {
+		if ( $_ =~ /R/i ) {
+			print "<th bgcolor=\"#$color_p\" width=\"80\">$Message[23]</th>";
+		} elsif ( $_ =~ /H/i ) {
+			print "<th bgcolor=\"#$color_p\" width=\"80\">$Message[81]</th>";
+		}
+	}
+	print "</tr>\n";
 	my $total_h = 0;
 	my $count = 0;
 	&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%{$_sider_h{$code}},
@@ -11628,10 +11652,16 @@ sub HTMLShowErrorCodes{
 
 		#if (length($nompage)>$MaxLengthOfShownURL) { $nompage=substr($nompage,0,$MaxLengthOfShownURL)."..."; }
 		my $referer = XMLEncode( CleanXSS( $_referer_h{$code}{$key} ) );
+		my $host = XMLEncode( CleanXSS( $_err_host_h{$code}{$key} ) );
 		print "<tr><td class=\"aws\">$nompage</td>";
 		print "<td>".Format_Number($_sider_h{$code}{$key})."</td>";
-		print "<td class=\"aws\">"
-		  . ( $referer ? "$referer" : "&nbsp;" ) . "</td>";
+		foreach (split(//, $ShowHTTPErrorsPageDetail)) {
+			if ( $_ =~ /R/i ) {
+				print "<td class=\"aws\">" . ( $referer ? "$referer" : "&nbsp;" ) . "</td>";
+			} elsif ( $_ =~ /H/i ) {
+				print "<td class=\"aws\">" . ( $host ? "$host" : "&nbsp;" ) . "</td>";
+			}
+		}
 		print "</tr>\n";
 		my $total_s += $_sider_h{$code}{$key};
 		$count++;
@@ -18797,18 +18827,25 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 					foreach my $code ( keys %TrapInfosForHTTPErrorCodes ) {
 						if ( $field[$pos_code] == $code ) {
 
-					   # This is an error code which referrer need to be tracked
+							# This is an error code which referrer need to be tracked
 							my $newurl =
 							  substr( $field[$pos_url], 0,
 								$MaxLengthOfStoredURL );
 							$newurl =~ s/[$URLQuerySeparators].*$//;
 							$_sider_h{$code}{$newurl}++;
-							if ( $pos_referer >= 0 ) {
+							if ( $pos_referer >= 0 && $ShowHTTPErrorsPageDetail =~ /R/i  ) {
 								my $newreferer = $field[$pos_referer];
 								if ( !$URLReferrerWithQuery ) {
 									$newreferer =~ s/[$URLQuerySeparators].*$//;
 								}
 								$_referer_h{$code}{$newurl} = $newreferer;
+							}
+							if ( $pos_host >= 0 && $ShowHTTPErrorsPageDetail =~ /H/i ) {
+								my $newhost = $field[$pos_host];
+								if ( !$URLReferrerWithQuery ) {
+									$newhost =~ s/[$URLQuerySeparators].*$//;
+								}
+								$_err_host_h{$code}{$newurl} = $newhost;
 								last;
 							}
 						}
