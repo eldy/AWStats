@@ -12200,11 +12200,11 @@ sub HTMLShowLogins{
 	$total_p = $total_h = $total_k = 0;
 	my $count = 0;
 	if ( $HTMLOutput{'alllogins'} ) {
-		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Host'},
+		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Login'},
 			\%_login_h, \%_login_p );
 	}
 	if ( $HTMLOutput{'lastlogins'} ) {
-		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Host'},
+		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Login'},
 			\%_login_h, \%_login_l );
 	}
 	foreach my $key (@keylist) {

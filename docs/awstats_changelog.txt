@@ -19,6 +19,7 @@ Fixes:
 - #838 GeoIP Cities page doesnt work.
 - Add missing icons.
 - #881 Avoid warning mixed http/https with module graphgooglechartapi.
+- #918 $MinHit{'Host'} rather than $MinHit{'Login'} used in sub HTMLShowLogins.
  
 Other:
 - Move version system to sourceforge Git instead of CVS.
