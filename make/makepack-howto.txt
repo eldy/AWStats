@@ -8,7 +8,7 @@
 - Update version number and copyright year in awstats.pl file
 - Build PAD files
 - Build PDF
-- Tagger CVS  (AWSTATS_x_x_BETA or AWSTATS_x_x)
+- Tagger Git (AWSTATS_x_x_BETA or AWSTATS_x_x)
 
 - makepack sur webmin
 - makepack sur awstats (If on linux copy awstats_logo1.gif into $RPMDIR/SOURCES)

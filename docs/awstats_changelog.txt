@@ -1,6 +1,5 @@
 AWStats Changelog
 -----------------
-$Revision$ - $Author$ - $Date$
 
 
 ***** 7.3 *****
