@@ -17880,6 +17880,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 	my $regipv4l          = qr/^::ffff:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
 	my $regipv6           = qr/^[0-9A-F]*:/i;
 	my $regvermsie        = qr/msie([+_ ]|)([\d\.]*)/i;
+	my $regvermsie11      = qr/trident\/7\.\d*\;([+_ ]|)rv:([\d\.]*)/i;
 	my $regvernetscape    = qr/netscape.?\/([\d\.]*)/i;
 	my $regverfirefox     = qr/firefox\/([\d\.]*)/i;
 	# For Opera:
@@ -19490,12 +19491,12 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 							$TmpBrowser{$UserAgent} = "msie$2";
 						}
 						
-						# IE 11
-						elsif ($UserAgent eq "Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko")
+						# IE >= 11
+                        elsif ($UserAgent =~ /$regvermsie11/o && $UserAgent !~ /$regnotie/o)
 						{
-							$_browser_h{"msie11"}++;
-							if ($PageBool) { $_browser_p{"msie11"}++; }
-							$TmpBrowser{$UserAgent} = "msie11";
+                            $_browser_h{"msie$2"}++;
+                            if ($PageBool) { $_browser_p{"msie$2"}++; }
+                            $TmpBrowser{$UserAgent} = "msie$2";
 						}
 
 						# Netscape 6.x, 7.x ... ? (must be at end of test)
