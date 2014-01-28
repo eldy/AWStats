@@ -335,33 +335,33 @@ if (! -f "$BUILDROOT/$FILENAMETGZ/tools/webmin/awstats-".$WBMVERSION.".wbm")
    		    print "Move $RPMDIR/RPMS/noarch/${FILENAMERPM}.noarch.rpm into $DESTI/${FILENAMERPM}.noarch.rpm\n";
    		    $cmd="mv \"$RPMDIR/RPMS/noarch/${FILENAMERPM}.noarch.rpm\" \"$DESTI/${FILENAMERPM}.noarch.rpm\"";
     		$ret=`$cmd`;
-		next;
-	}
+			next;
+		}
 	
-	if ($target eq 'DEB') {
-        print "Automatic build for DEB is not yet supported.\n";
-    }
-    
-	if ($target eq 'EXE') {
-    	unlink "$FILENAMEEXE.exe";
-    	print "Compress into $FILENAMEEXE.exe by $FILENAME.nsi...\n";
-    	$command="\"$REQUIREMENTTARGET{$target}\" /DMUI_VERSION_DOT=$MAJOR.$MINOR /X\"SetCompressor bzip2\" \"$SOURCE\\make\\exe\\$FILENAME.nsi\"";
-        print "$command\n";
-		$ret=`$command`;
-		print "Move $SOURCE\\make\\exe\\$FILENAMEEXE.exe to $DESTI\n";
-		rename("$SOURCE/make/exe/$FILENAMEEXE.exe","$DESTI/$FILENAMEEXE.exe");
-#		rename("$SOURCE\\make\\exe\\$FILENAMEEXE.exe","$DESTI\\$FILENAMEEXE.exe");
-		next;
+		if ($target eq 'DEB') {
+	        print "Automatic build for DEB is not yet supported.\n";
+	        $CHOOSEDTARGET{$target}=-1;
+	    }
+
+		if ($target eq 'EXE') {
+	    	unlink "$FILENAMEEXE.exe";
+	    	print "Compress into $FILENAMEEXE.exe by $FILENAME.nsi...\n";
+	    	$command="\"$REQUIREMENTTARGET{$target}\" /DMUI_VERSION_DOT=$MAJOR.$MINOR /X\"SetCompressor bzip2\" \"$SOURCE\\make\\exe\\$FILENAME.nsi\"";
+	        print "$command\n";
+			$ret=`$command`;
+			print "Move $SOURCE\\make\\exe\\$FILENAMEEXE.exe to $DESTI\n";
+			rename("$SOURCE/make/exe/$FILENAMEEXE.exe","$DESTI/$FILENAMEEXE.exe");
+	#		rename("$SOURCE\\make\\exe\\$FILENAMEEXE.exe","$DESTI\\$FILENAMEEXE.exe");
+			next;
+		}
+	
 	}
-
-}
-
 }
 
 print "\n----- Summary -----\n";
 foreach my $target (keys %CHOOSEDTARGET) {
     if ($CHOOSEDTARGET{$target} < 0) {
-        print "Package $target not built (bad requirement).\n";
+        print "Package $target not built (bad requirement or not yet supported).\n";
     } else {
         print "Package $target built succeessfully in $DESTI\n";
     }
