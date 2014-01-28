@@ -1,6 +1,13 @@
 AWStats-Webmin module Changelog
 -------------------------------
-$Revision$ - $Author$ - $Date$ 
+
+2.0
+
+Just minor bug fixes.
+
+1.9
+
+Just minor bug fixes.
 
 1.800
 
@@ -14,7 +21,7 @@ Just minor bug fixes.
 1.600
 
 New features/improvements:
-- Added Spanish translation by Patricio Martínez Ros
+- Added Spanish translation by Patricio Martï¿½nez Ros
 
 Fixes:
 - Update version of webmin module
