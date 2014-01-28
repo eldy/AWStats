@@ -3,7 +3,6 @@
 # Launch awstats with -staticlinks option to build all static pages.
 # See COPYING.TXT file about AWStats GNU General Public License.
 #------------------------------------------------------------------------------
-# $Revision$ - $Author$ - $Date$
 
 #$|=1;
 #use warnings;		# Must be used in test mode only. This reduce a little process speed

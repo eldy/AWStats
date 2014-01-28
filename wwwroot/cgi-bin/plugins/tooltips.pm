@@ -7,7 +7,6 @@
 #-----------------------------------------------------------------------------
 # Perl Required Modules: None
 #-----------------------------------------------------------------------------
-# $Revision$ - $Author$ - $Date$
 
 
 # <-----
@@ -122,7 +121,7 @@ function ShowTip(fArg)
 			tooltipTop = ($doctop>=0?$doctop+10:event.clientY+10);
 			tooltipTop = (document.body.scrollTop>=0?document.body.scrollTop+10:event.clientY+10);
 EOF
-		# Seul IE en HTML a besoin de code supplémentaire. IE en xhtml est OK
+		# Seul IE en HTML a besoin de code supplï¿½mentaire. IE en xhtml est OK
 		if ($BuildReportFormat ne 'xhtml' && $BuildReportFormat ne 'xml') {
 print <<EOF;
 			if ((event.clientX > tooltipLft) && (event.clientY < (tooltipOBJ.scrollHeight?tooltipOBJ.scrollHeight:tooltipOBJ.style.pixelHeight) + 10)) {

@@ -5,7 +5,6 @@
 # alone for any other log analyzer.
 # See COPYING.TXT file about AWStats GNU General Public License.
 #-----------------------------------------------------------------------------
-# $Revision$ - $Author$ - $Date$
 
 use strict; no strict "refs";
 use Switch;

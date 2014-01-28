@@ -1,7 +1,6 @@
 #!/usr/bin/perl
 # index.cgi
 # Display available config files
-# $Revision$ - $Author$ - $Date$
 
 require './awstats-lib.pl';
 

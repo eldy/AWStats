@@ -1,6 +1,5 @@
 /*
  * @(#)AWGraphApplet.java
- * $Revision$ - $Author$ - $Date$
  *
  */
 

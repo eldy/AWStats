@@ -8,7 +8,6 @@
 # - Create AWStats config file
 # See COPYING.TXT file about AWStats GNU General Public License.
 #-------------------------------------------------------
-# $Revision$ - $Author$ - $Date$
 require 5.005;
 
 use strict;

@@ -3,7 +3,6 @@
 # Launch update process for all config files found in a particular directory.
 # See COPYING.TXT file about AWStats GNU General Public License.
 #------------------------------------------------------------------------------
-# $Revision$ - $Author$ - $Date$
 
 
 #------------------------------------------------------------------------------

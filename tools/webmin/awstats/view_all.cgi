@@ -1,7 +1,6 @@
 #!/usr/bin/perl
 # view_all.cgi
 # Display summary of all available config files
-# $Revision$ - $Author$ - $Date$
 
 require './awstats-lib.pl';
 &ReadParse();

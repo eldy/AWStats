@@ -6,7 +6,6 @@
 #-----------------------------------------------------------------------------
 # Perl Required Modules: Geo::IP or Geo::IP::PurePerl
 #-----------------------------------------------------------------------------
-# $Revision$ - $Author$ - $Date$
 # 1.4 - Chris Larsen - added file override capabilities
 
 # <-----

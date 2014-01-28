@@ -1,7 +1,6 @@
 #!/usr/bin/perl
 # update_stats.cgi
 # Run AWStats update process
-# $Revision$ - $Author$ - $Date$
 
 require './awstats-lib.pl';
 &ReadParse();

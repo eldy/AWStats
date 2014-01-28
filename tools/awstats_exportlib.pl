@@ -3,7 +3,6 @@
 # Export lib data values to a text files to allow to use AWStats robots,
 # os, browsers, search_engines database with other log analyzers
 #-----------------------------------------------------------------------------
-# $Revision$ - $Author$ - $Date$
 
 #use warnings;		# Must be used in test mode only. This reduce a little process speed
 #use diagnostics;	# Must be used in test mode only. This reduce a lot of process speed
