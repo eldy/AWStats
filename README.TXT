@@ -157,7 +157,10 @@ Twitter: http://www.twitter.com/awstats_project
 
 V - ABOUT THE AUTHOR, LICENSE AND SUPPORT
 -----------------------------------------
-Copyright (C) 2000-2014 - Laurent Destailleur - eldy@users.sourceforge.net
+Copyright (C) 2000-2014 - Laurent Destailleur - eldy@users.sourceforge.net - [NLTechno] (http://www.nltechno.com)
+
+Laurent Destailleur is also the project leader of [Dolibarr ERP CRM Opensource project] (http://www.dolibarr.org),
+and author of AWBot, CVSChangeLogBuilder, DoliDroid and founder of [DoliCloud SaaS] (http://www.dolicloud.com).
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
