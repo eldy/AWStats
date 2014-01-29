@@ -62,6 +62,7 @@ $DIR||='.'; $DIR =~ s/([^\/\\])[\\\/]+$/$1/;
 
 $SOURCE="$DIR/../../awstats";
 $DESTI="$SOURCE/make";
+$DESTI="/media/HDDATA1_LD/Mes Sites/Web/AWStats/wwwroot/files";
 
 # Detect OS type
 # --------------
@@ -104,7 +105,10 @@ my $batch=0;
 
 print "Makepack version $VERSION\n";
 print "Building package name: $PROJECT\n";
-print "Building package version: $MAJOR.$MINOR\n";
+print "Building package version: $MAJOR.$MINOR.$BUILD\n";
+print "Source directory (SOURCE): $SOURCE\n";
+print "Target directory (DESTI) : $DESTI\n";
+
 
 for (0..@ARGV-1) {
 	if ($ARGV[$_] =~ /^-*target=(\w+)/i)    { $target=$1; $batch=1; }
@@ -285,15 +289,21 @@ if (! -f "$BUILDROOT/$FILENAMETGZ/tools/webmin/awstats-".$WBMVERSION.".wbm")
         print "\nBuild package for target $target\n";
 
     	if ($target eq 'TGZ') {
-    		unlink $FILENAMETGZ.tgz;
-    		print "Compress $FILENAMETGZ into $FILENAMETGZ.tar.gz\n";
-    		$ret=`tar --exclude-from "$SOURCE/make/tgz/tar.exclude" --directory="$BUILDROOT" --mode=go-w -czvf $FILENAMETGZ.tar.gz $FILENAMETGZ`;
-    		print "Move $FILENAMETGZ.tar.gz to $DESTI\n";
-    		$ret=`mv "$FILENAMETGZ.tar.gz" "$DESTI/$FILENAMETGZ.tar.gz"`;
-    		next;
+    		$NEWDESTI=$DESTI;
+    		
+    		unlink $FILENAMETGZ.tar.gz;
+    		print "Compress $FILENAMETGZ into $BUILDROOT/$FILENAMETGZ.tar.gz\n";
+    		$ret=`tar --exclude-from "$SOURCE/make/tgz/tar.exclude" --directory="$BUILDROOT" --mode=go-w -czvf $BUILDROOT/$FILENAMETGZ.tar.gz $FILENAMETGZ`;
+
+    		# Move to final dir
+            print "Move $BUILDROOT/$FILENAMETGZ.tar.gz to $NEWDESTI/$FILENAMETGZ.tar.gz\n";
+            $ret=`mv "$BUILDROOT/$FILENAMETGZ.tar.gz" "$NEWDESTI/$FILENAMETGZ.tar.gz"`;
+            next;
     	}
     
     	if ($target eq 'ZIP') {
+    		$NEWDESTI=$DESTI;
+    		
 			unlink $FILENAMEZIP.zip;
 			print "Compress $FILENAMETGZ into $FILENAMEZIP.zip...\n";
      		chdir("$BUILDROOT");
@@ -301,12 +311,16 @@ if (! -f "$BUILDROOT/$FILENAMETGZ/tools/webmin/awstats-".$WBMVERSION.".wbm")
     		#$ret=`cd $BUILDROOT & 7z a -r -tzip -mx $BUILDROOT/$FILENAMEZIP.zip $FILENAMETGZ\\*.*`;
     		print "7z a -r -tzip -mx $BUILDROOT/$FILENAMEZIP.zip $FILENAMETGZ/*\n";
     		$ret=`7z a -r -tzip -mx $BUILDROOT/$FILENAMEZIP.zip $FILENAMETGZ/*`;
-    		print "Move $FILENAMEZIP.zip to $DESTI\n";
-    		$ret=`mv "$BUILDROOT/$FILENAMEZIP.zip" "$DESTI/$FILENAMEZIP.zip"`;
-    		next;
+
+    		# Move to final dir
+            print "Move $BUILDROOT/$FILENAMEZIP.zip to $NEWDESTI/$FILENAMEZIP.zip\n";
+            $ret=`mv "$BUILDROOT/$FILENAMEZIP.zip" "$NEWDESTI/$FILENAMEZIP.zip"`;
+            next;
     	}
 
     	if ($target eq 'RPM') {                 # Linux only
+			$NEWDESTI=$DESTI;
+			
     		$BUILDFIC="$FILENAME.spec";
     		unlink $FILENAMETGZ.tgz;
     		print "Compress $FILENAMETGZ into $FILENAMETGZ.tgz for RPM build...\n";
@@ -332,26 +346,32 @@ if (! -f "$BUILDROOT/$FILENAMETGZ/tools/webmin/awstats-".$WBMVERSION.".wbm")
     		print "Launch RPM build (rpmbuild --clean -ba $TEMP/${BUILDFIC})\n";
     		$ret=`rpmbuild --clean -ba $TEMP/${BUILDFIC}`;
 
-   		    print "Move $RPMDIR/RPMS/noarch/${FILENAMERPM}.noarch.rpm into $DESTI/${FILENAMERPM}.noarch.rpm\n";
-   		    $cmd="mv \"$RPMDIR/RPMS/noarch/${FILENAMERPM}.noarch.rpm\" \"$DESTI/${FILENAMERPM}.noarch.rpm\"";
+    		# Move to final dir
+   		    print "Move $RPMDIR/RPMS/noarch/${FILENAMERPM}.noarch.rpm into $NEWDESTI/${FILENAMERPM}.noarch.rpm\n";
+   		    $cmd="mv \"$RPMDIR/RPMS/noarch/${FILENAMERPM}.noarch.rpm\" \"$NEWDESTI/${FILENAMERPM}.noarch.rpm\"";
     		$ret=`$cmd`;
 			next;
 		}
 	
 		if ($target eq 'DEB') {
+			$NEWDESTI=$DESTI;
+			
 	        print "Automatic build for DEB is not yet supported.\n";
 	        $CHOOSEDTARGET{$target}=-1;
 	    }
 
 		if ($target eq 'EXE') {
+			$NEWDESTI=$DESTI;
+			
 	    	unlink "$FILENAMEEXE.exe";
 	    	print "Compress into $FILENAMEEXE.exe by $FILENAME.nsi...\n";
 	    	$command="\"$REQUIREMENTTARGET{$target}\" /DMUI_VERSION_DOT=$MAJOR.$MINOR /X\"SetCompressor bzip2\" \"$SOURCE\\make\\exe\\$FILENAME.nsi\"";
 	        print "$command\n";
 			$ret=`$command`;
-			print "Move $SOURCE\\make\\exe\\$FILENAMEEXE.exe to $DESTI\n";
-			rename("$SOURCE/make/exe/$FILENAMEEXE.exe","$DESTI/$FILENAMEEXE.exe");
-	#		rename("$SOURCE\\make\\exe\\$FILENAMEEXE.exe","$DESTI\\$FILENAMEEXE.exe");
+			
+			# Move to finale dir
+			print "Move $SOURCE/make/exe/$FILENAMEEXE.exe to $NEWDESTI/$FILENAMEEXE.exe\n";
+            $ret=`mv "$SOURCE/make/exe/$FILENAMEEXE.exe" "$NEWDESTI/$FILENAMEEXE.exe"`;
 			next;
 		}
 	
