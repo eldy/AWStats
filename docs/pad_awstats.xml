@@ -34,10 +34,10 @@
 	</Company_Info>
 	<Program_Info>
 		<Program_Name>AWStats</Program_Name>
-		<Program_Version>7.2</Program_Version>
-		<Program_Release_Month>07</Program_Release_Month>
-		<Program_Release_Day>07</Program_Release_Day>
-		<Program_Release_Year>2013</Program_Release_Year>
+		<Program_Version>7.3</Program_Version>
+		<Program_Release_Month>01</Program_Release_Month>
+		<Program_Release_Day>26</Program_Release_Day>
+		<Program_Release_Year>2014</Program_Release_Year>
 		<Program_Cost_Dollars />
 		<Program_Cost_Other_Code />
 		<Program_Cost_Other />
@@ -105,7 +105,7 @@ The program also supports virtual servers, plugins and a lot of features.</Char_
 		</Application_URLs>
 		<Download_URLs>
 			<Primary_Download_URL>http://www.awstats.org/files/awstats.zip</Primary_Download_URL>
-			<Secondary_Download_URL>http://downloads.sourceforge.net/project/awstats/AWStats/7.1/awstats-7.1.tar.gz</Secondary_Download_URL>
+			<Secondary_Download_URL>http://downloads.sourceforge.net/project/awstats/AWStats/7.3/awstats-7.3.tar.gz</Secondary_Download_URL>
 			<Additional_Download_URL_1 />
 			<Additional_Download_URL_2 />
 		</Download_URLs>
