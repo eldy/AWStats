@@ -152,6 +152,7 @@ IV - SOCIAL NETWORKS
 Follow AWStats project on
 Facebook: https://www.facebook.com/awstats
 Google+: https://plus.google.com/+AWStatsOrgProject
+Twitter: http://www.twitter.com/awstats_project
 
 
 V - ABOUT THE AUTHOR, LICENSE AND SUPPORT
