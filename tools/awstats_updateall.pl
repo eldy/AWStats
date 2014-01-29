@@ -8,7 +8,8 @@
 #------------------------------------------------------------------------------
 # Defines
 #------------------------------------------------------------------------------
-my $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
+my $REVISION = '20140126';
+$REVISION =~ /\s(.*)\s/; $REVISION=$1;
 my $VERSION="1.0 (build $REVISION)";
 
 # Default value of DIRCONFIG
