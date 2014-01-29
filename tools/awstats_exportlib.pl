@@ -14,9 +14,8 @@ use strict;no strict "refs";
 # Defines
 #-----------------------------------------------------------------------------
 use vars qw/ $REVISION $VERSION /;
-$REVISION = '20140126';
-$REVISION =~ /\s(.*)\s/; $REVISION=$1;
-my $VERSION="5.1 (build $REVISION)";
+$REVISION='20140126';
+$VERSION="5.1 (build $REVISION)";
 
 # ---------- Init variables -------
 # Constants

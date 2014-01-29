@@ -36,7 +36,7 @@ if (-d "/usr/src/RPM") {
     $RPMDIR="/usr/src/RPM";
 }
 use vars qw/ $REVISION $VERSION /;
-$REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
+$REVISION='$REVISION';
 $VERSION="1.0 (build $REVISION)";
 
 

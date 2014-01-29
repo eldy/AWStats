@@ -49,7 +49,7 @@ if (-d "/home/ldestail/rpmbuild") {
     $RPMDIR="/home/ldestail/rpmbuild";
 }
 use vars qw/ $REVISION $VERSION /;
-$REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
+$REVISION='20140126';
 $VERSION="1.0 (build $REVISION)";
 
 

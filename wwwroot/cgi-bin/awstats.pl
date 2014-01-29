@@ -37,8 +37,6 @@ use File::Spec;
 #------------------------------------------------------------------------------
 use vars qw/ $REVISION $VERSION /;
 $REVISION = '20140126';
-$REVISION =~ /\s(.*)\s/;
-$REVISION = $1;
 $VERSION  = "7.3 (build $REVISION)";
 
 # ----- Constants -----
