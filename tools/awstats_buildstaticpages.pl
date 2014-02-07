@@ -303,6 +303,10 @@ elsif (-s "/usr/local/awstats/wwwroot/cgi-bin/awstats.pl") {
 	$Awstats="/usr/local/awstats/wwwroot/cgi-bin/awstats.pl";
 	$AwstatsFound=1;
 }
+elsif (-s "/usr/lib/cgi-bin/awstats.pl") {
+	$Awstats="/usr/lib/cgi-bin/awstats.pl";
+	$AwstatsFound=1;
+}
 if (! $AwstatsFound) {
 	error("Can't find AWStats program ('$Awstats').\nUse -awstatsprog option to solve this");
 	exit 1;

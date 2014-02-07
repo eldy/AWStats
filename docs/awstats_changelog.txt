@@ -8,6 +8,8 @@ Fixes:
 #496 tools scripts should print warnings and errors to STDERR
 #919 Referrals not getting tracked due to improperly getting flagged as a search
 Fixes permission on some .pl scripts.
+Add debian patch 0007_russian_lang.patch.
+Add debian patch 2001_awstatsprog_path.patch.
 
 
 ***** 7.3 *****
