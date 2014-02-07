@@ -1,6 +1,14 @@
 AWStats Changelog
 -----------------
 
+***** 7.4 *****
+
+Fixes:
+#205 GetResolvedIP_ipv6 does not strip trailing dot
+#496 tools scripts should print warnings and errors to STDERR
+#919 Referrals not getting tracked due to improperly getting flagged as a search
+Fixes permission on some .pl scripts.
+
 
 ***** 7.3 *****
 
