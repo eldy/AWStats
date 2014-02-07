@@ -79,7 +79,7 @@ $nowsec $nowmin $nowhour $nowday $nowmonth $nowyear $nowwday $nowyday $nowns
 # Return:		None
 #------------------------------------------------------------------------------
 sub error {
-	print "Error: $_[0].\n";
+	print STDERR "Error: $_[0].\n";
     exit 1;
 }
 
@@ -93,15 +93,7 @@ sub error {
 sub warning {
 	my $messagestring=shift;
 	debug("$messagestring",1);
-#	if ($WarningMessages) {
-#    	if ($HTMLOutput) {
-#    		$messagestring =~ s/\n/\<br \/\>/g;
-#    		print "$messagestring<br />\n";
-#    	}
-#    	else {
-	    	print "$messagestring\n";
-#    	}
-#	}
+   	print STDERR "$messagestring\n";
 }
 
 #------------------------------------------------------------------------------
