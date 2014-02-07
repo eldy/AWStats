@@ -16929,6 +16929,7 @@ my @AllowedCLIArgs = (
 	'showsteps',          'showdropped',
 	'showcorrupted',      'showunknownorigin',
 	'showdirectorigin',   'limitflush',
+    'nboflastupdatelookuptosave',
 	'confdir',            'updatefor',
 	'hostfilter',         'hostfilterex',
 	'urlfilter',          'urlfilterex',
@@ -17144,6 +17145,7 @@ if ( $QueryString =~ /(^|&|&amp;)noloadplugin=([^&]+)/i ) {
 	foreach ( split( /,/, $2 ) ) { $NoLoadPlugin{ &Sanitize( "$_", 1 ) } = 1; }
 }
 if ( $QueryString =~ /(^|&|&amp;)limitflush=(\d+)/i ) { $LIMITFLUSH = $2; }
+if ( $QueryString =~ /(^|&|&amp;)nboflastupdatelookuptosave=(\d+)/i ) { $NBOFLASTUPDATELOOKUPTOSAVE = $2; }
 
 # Get/Define output
 if ( $QueryString =~

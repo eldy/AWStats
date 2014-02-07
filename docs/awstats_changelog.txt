@@ -3,13 +3,17 @@ AWStats Changelog
 
 ***** 7.4 *****
 
+New features:
+- Add debian patch debian-patches-1019_allow_frame_resize.patch to add
+  option nboflastupdatelookuptosave on command line.
+
 Fixes:
-#205 GetResolvedIP_ipv6 does not strip trailing dot
-#496 tools scripts should print warnings and errors to STDERR
-#919 Referrals not getting tracked due to improperly getting flagged as a search
-Fixes permission on some .pl scripts.
-Add debian patch 0007_russian_lang.patch.
-Add debian patch 2001_awstatsprog_path.patch.
+- Fixes permission on some .pl scripts.
+- #205 GetResolvedIP_ipv6 does not strip trailing dot
+- #496 tools scripts should print warnings and errors to STDERR
+- #919 Referrals not getting tracked due to improperly getting flagged as a search
+- Add debian patch 0007_russian_lang.patch.
+- Add debian patch 2001_awstatsprog_path.patch.
 
 
 ***** 7.3 *****
