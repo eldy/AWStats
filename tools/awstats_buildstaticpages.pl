@@ -52,7 +52,7 @@ $ShowHoursStats $ShowDomainsStats $ShowHostsStats
 $ShowRobotsStats $ShowSessionsStats $ShowPagesStats $ShowFileTypesStats
 $ShowOSStats $ShowBrowsersStats $ShowDownloadsStats $ShowOriginStats
 $ShowKeyphrasesStats $ShowKeywordsStats $ShowMiscStats $ShowHTTPErrorsStats
-$BuildReportFormat
+$BuildReportFormat $TrapInfosForHTTPErrorCodes
 @ExtraName
 @PluginsToLoad
 /;
@@ -357,8 +357,11 @@ if ($ShowKeyphrasesStats) { push @OutputList,'keyphrases'; }
 if ($ShowKeywordsStats) { push @OutputList,'keywords'; }
 #if ($ShowMiscStats) { push @OutputList,'misc'; }			# There is no dedicated page for misc
 if ($ShowHTTPErrorsStats) {
-	#push @OutputList,'errors'; 							# There is no dedicated page for errors					
-	push @OutputList,'errors404';		
+	#push @OutputList,'errors'; 							# There is no dedicated page for errors
+	$TrapInfosForHTTPErrorCodes = '404' if ( ! $TrapInfosForHTTPErrorCodes );
+	foreach my $code (split(' ', $TrapInfosForHTTPErrorCodes)) {
+		push @OutputList,"errors$code";
+	}
 }
 #if ($ShowSMTPErrorsStats) { push @OutputList,'errors'; }
 foreach my $extranum (1..@ExtraName-1) {
