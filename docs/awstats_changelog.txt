@@ -6,6 +6,7 @@ AWStats Changelog
 New features:
 - Add debian patch debian-patches-1019_allow_frame_resize.patch to add
   option nboflastupdatelookuptosave on command line.
+- #199 Added geoip6 plugin with support for IPv4 AND IPv6.
 
 Fixes:
 - Fixes permission on some .pl scripts.

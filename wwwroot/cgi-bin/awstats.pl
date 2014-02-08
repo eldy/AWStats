@@ -3118,6 +3118,7 @@ sub Read_Plugins {
 					'hashfiles'            => 'u',
 					'geoipfree'            => 'u',
 					'geoip'                => 'ou',
+					'geoip6'               => 'ou',
 					'geoip_region_maxmind' => 'mou',
 					'geoip_city_maxmind'   => 'mou',
 					'geoip_isp_maxmind'    => 'mou',
@@ -3293,6 +3294,7 @@ sub Read_Plugins {
 
 # In output mode, geo ip plugins are not loaded, so message changes are done here (can't be done in plugin init function)
 	if (   $PluginsLoaded{'init'}{'geoip'}
+		|| $PluginsLoaded{'init'}{'geoip6'}
 		|| $PluginsLoaded{'init'}{'geoipfree'} )
 	{
 		$Message[17] = $Message[25] = $Message[148];
@@ -19248,7 +19250,10 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 				$HostResolved = $Host;
 
 				# Resolve Domain
-				if ( $PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'} ) {
+				if ( $PluginsLoaded{'GetCountryCodeByAddr'}{'geoip6'} ) {
+					$Domain = GetCountryCodeByAddr_geoip6($HostResolved);
+				}
+				elsif ( $PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'} ) {
 					$Domain = GetCountryCodeByAddr_geoip($HostResolved);
 				}
 
@@ -19277,7 +19282,10 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 				# Resolve Domain
 				if ($ip)
 				{    # If we have ip, we use it in priority instead of hostname
-					if ( $PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'} ) {
+					if ( $PluginsLoaded{'GetCountryCodeByAddr'}{'geoip6'} ) {
+						$Domain = GetCountryCodeByAddr_geoip6($Host);
+					}
+					elsif ( $PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'} ) {
 						$Domain = GetCountryCodeByAddr_geoip($Host);
 					}
 
@@ -19303,7 +19311,10 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 					}
 				}
 				else {
-					if ( $PluginsLoaded{'GetCountryCodeByName'}{'geoip'} ) {
+					if ( $PluginsLoaded{'GetCountryCodeByName'}{'geoip6'} ) {
+						$Domain = GetCountryCodeByName_geoip6($HostResolved);
+					}
+					elsif ( $PluginsLoaded{'GetCountryCodeByName'}{'geoip'} ) {
 						$Domain = GetCountryCodeByName_geoip($HostResolved);
 					}
 
