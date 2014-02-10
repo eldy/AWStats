@@ -399,7 +399,7 @@ if ((!$SiteConfig && !$Output) || !$DBType || !$IPStart) {
 	print "   -debug=level        Debug level to print\n";
 	print "   -overwrite          Deletes any entries in the file. Otherwise appends.\n";
 	print "\n";
-	print "Allowable Type Values:  GeoIP | GeoIPFree | GeoCity | GeoCityLite\n";
+	print "Allowable Type Values:  GeoIP | GeoIPFree | GeoIPCity | GeoIPCityLite\n";
 	print "                        GeoIPRegion | GeoIPOrg | GeoIPASN \n";
 	exit 0;
 }
