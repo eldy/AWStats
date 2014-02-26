@@ -85,7 +85,7 @@ sub ShowInfoUser_userinfo {
 		$userinfoloaded=1;
 	}
 	if ($param eq '__title__') {
-		print "<th width=\"80\">$Message[114]</th>";	
+		print "<th>$Message[114]</th>";	
 	}
 	elsif ($param) {
 		print "<td>";
