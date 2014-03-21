@@ -192,7 +192,7 @@ use vars qw/
   $IncludeInternalLinksInOriginSection
   $AuthenticatedUsersNotCaseSensitive
   $Expires $UpdateStats $MigrateStats $URLNotCaseSensitive $URLWithQuery $URLReferrerWithQuery
-  $DecodeUA
+  $DecodeUA $DecodePunycode
   /;
 (
 	$DebugMessages,
@@ -237,11 +237,12 @@ use vars qw/
 	$URLNotCaseSensitive,
 	$URLWithQuery,
 	$URLReferrerWithQuery,
-	$DecodeUA
+	$DecodeUA,
+	$DecodePunycode
   )
   = (
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
   );
 use vars qw/
   $DetailedReportsOnNewWindows
@@ -1935,6 +1936,26 @@ sub Parse_Config {
 
 			# No regex test as SiteDomain is always exact value
 			$SiteDomain = $value;
+
+  			if ($SiteDomain =~ m/xn--/) 
+  			{
+				# TODO Add code to test if IDNA::Punycode module is on
+				#use IDNA::Punycode;
+				$DecodePunycode=0;	# Set to 1 if module is on	
+  				if ($DecodePunycode)
+  				{
+	                idn_prefix(undef);
+	                my @parts = split(/\./, $SiteDomain);
+	                foreach (@parts) {
+	                	if ($_ =~ s/^xn--//) {
+	                    	eval { $_ = decode_punycode($_); };
+	                        if (my $e = $@) { $_ = $e; }
+	                    }
+	                }
+	                $SiteDomain = join('.', @parts);
+  				}
+            }
+                        			
 			next;
 		}
 		if ( $param =~ /^AddLinkToExternalCGIWrapper/ ) {
