@@ -130,7 +130,7 @@ sub addDirectory {
 # Return:		None
 #------------------------------------------------------------------------------
 sub error {
-	print "Error: $_[0].\n";
+	print STDERR "Error: $_[0].\n";
     exit 1;
 }
 
@@ -159,7 +159,7 @@ sub debug {
 sub warning {
 	my $messagestring=shift;
 	if ($Debug) { debug("$messagestring",1); }
-   	print "$messagestring\n";
+   	print STDERR "$messagestring\n";
 }
 
 #-----------------------------------------------------------------------------

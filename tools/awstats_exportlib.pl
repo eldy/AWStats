@@ -92,8 +92,8 @@ sub error {
 	my $thirdmessage=shift||"";
 	my $donotshowsetupinfo=shift||0;
 	if ($Debug) { debug("$message $secondmessage $thirdmessage",1); }
-	print "$message";
-	print "\n";
+	print STDERR "$message";
+	print STDERR "\n";
 	exit 1;
 }
 

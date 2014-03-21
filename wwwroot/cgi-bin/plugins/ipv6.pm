@@ -63,6 +63,7 @@ sub GetResolvedIP_ipv6 {
 	my $query = $resolver->query($reverseip, "PTR");
 	if (! defined($query)) { return; }
 	my @result=split(/\s/, ($query->answer)[0]->string);
+	chop($result[4]); # Remove the trailing dot of the answer.
 	return $result[4];
 	# ----->
 }

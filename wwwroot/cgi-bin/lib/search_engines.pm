@@ -475,7 +475,7 @@
 'google\.'=>'code\.google\.',
 'msn\.'=>'hotmail\.msn\.',
 'tiscali\.'=>'mail\.tiscali\.',
-'yahoo\.'=>'mail\.yahoo\.',
+'yahoo\.'=>'(?:picks|mail)\.yahoo\.|yahoo\.[^/]+/picks',
 'yandex\.'=>'direct\.yandex\.'
 );
 
