@@ -225,7 +225,7 @@ sub Parse_Config {
 		if ( $param =~ /^LoadPlugin/ ) { push @PluginsToLoad, $value; next; }
 
 		# If parameters was not found previously, defined variable with name of param to value
-		print $param."-".$value."\n";
+		if ($Debug) { debug($param."-".$value); }
 		$$param=$value;
 	}
 
