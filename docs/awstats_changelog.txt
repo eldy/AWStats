@@ -16,6 +16,7 @@ Fixes:
 - Add debian patch 0007_russian_lang.patch.
 - Add debian patch 2001_awstatsprog_path.patch.
 - #921 Failure in the help text for geoip_generator.pl
+- #909 awstats_buildstaticpages.pl noisy debug output.
 
 
 ***** 7.3 *****
