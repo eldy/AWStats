@@ -1572,16 +1572,25 @@ sub DateIsValid {
 # Parameters:	$starttime $endtime
 # Input:        None
 # Output:		None
-# Return:		A string that identify the visit duration range
+# Return:		A string from $SessionsRange[0..6] that identify the visit duration range
 #------------------------------------------------------------------------------
 sub GetSessionRange {
-	my $starttime = my $endtime;
-	if ( shift =~ /$regdate/o ) {
-		$starttime = Time::Local::timelocal( $6, $5, $4, $3, $2 - 1, $1 );
-	}
-	if ( shift =~ /$regdate/o ) {
-		$endtime = Time::Local::timelocal( $6, $5, $4, $3, $2 - 1, $1 );
-	}
+	my $param1=shift;
+	my $param2=shift;
+
+	# skip unneeded calculations if its the same
+	if ($param1 == $param2) { return $SessionsRange[0]; }
+
+	my $starttime;
+	my $endtime;
+
+	eval {
+		#safety to prevent Time::Local causing termination on invalid data
+		#Ex: Second '84' out of range 0..59 at /xxx/awstats.pl
+		if ($param1 =~ /$regdate/o) { $starttime = Time::Local::timelocal($6,$5,$4,$3,$2-1,$1); }
+		if ($param2 =~ /$regdate/o) { $endtime = Time::Local::timelocal($6,$5,$4,$3,$2-1,$1); }
+	};
+	
 	my $delay = $endtime - $starttime;
 	if ($Debug) {
 		debug( "GetSessionRange $endtime - $starttime = $delay", 4 );
