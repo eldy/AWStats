@@ -423,7 +423,7 @@ if ($BuildDate) {
 my $cpt=0;
 my $NoLoadPlugin="";
 if ($BuildPDF) { $NoLoadPlugin.="tooltips,rawlog,hostinfo"; }
-my $smallcommand="\"$Awstats\" -config=$SiteConfig".($BuildPDF?" -buildpdf":"").($NoLoadPlugin?" -noloadplugin=$NoLoadPlugin":"").($DatabaseBreak?" -databasebreak=$DatabaseBreak":"")." -staticlinks".($OutputSuffix ne $SiteConfig?"=awstats.$OutputSuffix":"");
+my $smallcommand="\"$Awstats\" -config=$SiteConfig".($BuildPDF?" -buildpdf":"").($NoLoadPlugin?" -noloadplugin=$NoLoadPlugin":"")." -staticlinks".($OutputSuffix ne $SiteConfig?"=awstats.$OutputSuffix":"");
 if ($StaticExt && $StaticExt ne 'html')     { $smallcommand.=" -staticlinksext=$StaticExt"; }
 if ($DirIcons)      { $smallcommand.=" -diricons=$DirIcons"; }
 if ($DirConfig)     { $smallcommand.=" -configdir=$DirConfig"; }
@@ -431,6 +431,7 @@ if ($Lang)          { $smallcommand.=" -lang=$Lang"; }
 if ($DayRequired)   { $smallcommand.=" -day=$DayRequired"; }
 if ($MonthRequired) { $smallcommand.=" -month=$MonthRequired"; }
 if ($YearRequired)  { $smallcommand.=" -year=$YearRequired"; }
+if ($DatabaseBreak) { $smallcommand.=" -databasebreak=$DatabaseBreak"; }
 
 # Launch main awstats output
 my $command="$smallcommand -output";
