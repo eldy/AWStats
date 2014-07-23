@@ -55,38 +55,38 @@ features.
 
 %description -l pl
 awstats (Advanced Web Statistics - zaawansowane statystyki WWW) to
-potê¿ne i bogate w mo¿liwo¶ci narzêdzie generuj±ce zaawansowane
-graficzne statystyki serwera WWW. Ten analizator logów serwera
-dzia³a z linii poleceñ lub jako CGI i pokazuje wszystkie informacje
-zawarte w logu w postaci graficznych stron WWW. Mo¿e analizowaæ logi
-wielu serwerów WWW/WAP/proxy, takich jak Apache, IIS, Weblogic,
-Webstar, Squid... ale tak¿e serwerów pocztowych lub ftp.
+potï¿½ne i bogate w moï¿½liwoï¿½ci narzï¿½dzie generujï¿½ce zaawansowane
+graficzne statystyki serwera WWW. Ten analizator logï¿½w serwera
+dziaï¿½a z linii poleceï¿½ lub jako CGI i pokazuje wszystkie informacje
+zawarte w logu w postaci graficznych stron WWW. Moï¿½e analizowaï¿½ logi
+wielu serwerï¿½w WWW/WAP/proxy, takich jak Apache, IIS, Weblogic,
+Webstar, Squid... ale takï¿½e serwerï¿½w pocztowych lub ftp.
 
-Ten program mo¿e mierzyæ odwiedziny, odwiedzaj±cych, uwierzytelnionych
-u¿ytkowników, strony, domeny/kraje, najbardziej zajête godziny,
-odwiedziny robotów, rodzaje plików, u¿ywane wyszukiwarki i s³owa
-kluczowe, czasy trwania odwiedzin, b³êdy HTTP... a nawet wiêcej.
-Statystyki mog± byæ uaktualniane z przegl±darki lub schedulera.
-Program obs³uguje tak¿e serwery wirtualne, wtyczki i wiele innych
+Ten program moï¿½e mierzyï¿½ odwiedziny, odwiedzajï¿½cych, uwierzytelnionych
+uï¿½ytkownikï¿½w, strony, domeny/kraje, najbardziej zajï¿½te godziny,
+odwiedziny robotï¿½w, rodzaje plikï¿½w, uï¿½ywane wyszukiwarki i sï¿½owa
+kluczowe, czasy trwania odwiedzin, bï¿½ï¿½dy HTTP... a nawet wiï¿½cej.
+Statystyki mogï¿½ byï¿½ uaktualniane z przeglï¿½darki lub schedulera.
+Program obsï¿½uguje takï¿½e serwery wirtualne, wtyczki i wiele innych
 rzeczy.
 
 %description -l fr
-AWStats (Advanced Web Statistics) est un outils pour générer des 
-statistiques avancés d'un serveur web (mais aussi ftp ou mail)
-de manière graphique.
+AWStats (Advanced Web Statistics) est un outils pour gï¿½nï¿½rer des 
+statistiques avancï¿½s d'un serveur web (mais aussi ftp ou mail)
+de maniï¿½re graphique.
 
 Cet analyseur de log fonctionne en CGI ou en ligne de commande
-et syntétise toutes les informations que vos logs contiennent en
+et syntï¿½tise toutes les informations que vos logs contiennent en
 quelques pages comme les visites, visiteurs uniques, logins,
 pages vues, domaines/pays, heures de pointes, visites des robots, 
-type de fichiers, moteurs de recherche, mots et phrases clés,
-durée des visites, répartition clusters, erreurs HTTP mais aussi
-support java,flash,etc des navigateurs, résolution d'écran,
+type de fichiers, moteurs de recherche, mots et phrases clï¿½s,
+durï¿½e des visites, rï¿½partition clusters, erreurs HTTP mais aussi
+support java,flash,etc des navigateurs, rï¿½solution d'ï¿½cran,
 estimation des ajouts aux favoris, etc...
 
-Les statistiques peuvent etre mise à jour par un navigateur ou un
-séquenceur.
-AWStats génère un fichier d'informations consolidés pour pouvoir
+Les statistiques peuvent etre mise ï¿½ jour par un navigateur ou un
+sï¿½quenceur.
+AWStats gï¿½nï¿½re un fichier d'informations consolidï¿½s pour pouvoir
 traiter de large sites souvent et rapidement.
 
 Il peut analyser des logs IIS (W3C log format), fichier log Apache
@@ -94,7 +94,7 @@ Il peut analyser des logs IIS (W3C log format), fichier log Apache
 plupart des logs de serveur web, proxy, wap, streaming serveurs
 (et aussi serveurs ftp et de mails).
 Ce programme supporte de plus les serveurs virtuels, des plugins
-et de nombreuses fonctionalités.
+et de nombreuses fonctionalitï¿½s.
 
 
 
@@ -173,8 +173,8 @@ install -m 444 wwwroot/cgi-bin/lang/tooltips_f/* $RPM_BUILD_ROOT/usr/local/awsta
 install -m 444 wwwroot/cgi-bin/lang/tooltips_m/* $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/cgi-bin/lang/tooltips_m
 install -m 444 wwwroot/cgi-bin/lang/tooltips_w/* $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/cgi-bin/lang/tooltips_w
 install -m 444 wwwroot/cgi-bin/lang/awstats* $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/cgi-bin/lang
-install -m 444 README.TXT  $RPM_BUILD_ROOT/usr/local/awstats/README.TXT
-#install -m 644 README.TXT  $RPM_BUILD_ROOT/usr/share/awstats/man
+install -m 444 README.md  $RPM_BUILD_ROOT/usr/local/awstats/README.md
+#install -m 644 README.md  $RPM_BUILD_ROOT/usr/share/awstats/man
 install -m 444 docs/*.* $RPM_BUILD_ROOT/usr/local/awstats/docs
 install -m 444 docs/images/* $RPM_BUILD_ROOT/usr/local/awstats/docs/images
 
@@ -186,13 +186,13 @@ rm -rf $RPM_BUILD_ROOT
 #---- files
 %files
 %defattr(-,root,root)
-%doc README.TXT
+%doc README.md
 %doc /usr/local/awstats/docs/*
 %config /%{_sysconfdir}/awstats/*
 %dir /usr/local/awstats/wwwroot
 %dir /usr/local/awstats/tools
 
-/usr/local/awstats/README.TXT
+/usr/local/awstats/README.md
 /usr/local/awstats/wwwroot/*
 /usr/local/awstats/tools/*
 

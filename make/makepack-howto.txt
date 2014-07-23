@@ -1,11 +1,11 @@
 ***** Actions to build a beta or release *****
 - Check all files are commited.
 - Update file tools/webmin/awstats/module.info
-- Update file README.txt
+- Update file README.md
 - Update version number in doc files
 - Update version number in nsi file
-- Update version number in makepack file
 - Update version number and copyright year in awstats.pl file
+- Update version number in makepack file
 - Build PAD files
 - Build PDF
 - Tagger Git (AWSTATS_x_x_BETA or AWSTATS_x_x)

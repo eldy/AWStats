@@ -1,6 +1,6 @@
 
 # AWStats - Advanced Web Statistics
-
+-----------------------------------
 
 AWStats (Advanced Web Statistics) is a powerful, full-featured web server
 logfile analyzer which shows you all your Web statistics including: visitors,
@@ -13,9 +13,9 @@ server log files (and even ftp servers or mail logs) on all Operating Systems.
 License: GNU GPL v3+ (GNU General Public License. See LICENSE file),
          OSI Certified Open Source Software license.
 
-Version: 7.3
+Version: 7.4
 
-Release date: January 2014
+Release date: July 2014
 
 Platforms: All (Linux, NT, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 

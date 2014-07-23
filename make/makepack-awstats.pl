@@ -9,9 +9,7 @@
 use Cwd;
 
 $PROJECT="awstats";
-$MAJOR="7";
-$MINOR="3";
-$RPMSUBVERSION="1";
+
 
 $WBMVERSION="2.0";
 
@@ -28,26 +26,6 @@ $WBMVERSION="2.0";
 "makensis.exe"=>"NSIS"
 );
 
-$FILENAME="$PROJECT";
-$FILENAMETGZ="$PROJECT-$MAJOR.$MINOR";
-$FILENAMEZIP="$PROJECT-$MAJOR.$MINOR";
-$FILENAMERPM="$PROJECT-$MAJOR.$MINOR-$RPMSUBVERSION";
-$FILENAMEDEB="$PROJECT-$MAJOR.$MINOR";
-$FILENAMEEXE="$PROJECT-$MAJOR.$MINOR";
-# ubuntu
-$RPMDIR="./../../../rpmbuild";
-if (-d "/usr/src/redhat") {
-    # redhat
-    $RPMDIR="/usr/src/redhat";
-}
-if (-d "/usr/src/RPM") {
-    # mandrake
-    $RPMDIR="/usr/src/RPM";
-}
-if (-d "/home/ldestail/rpmbuild") {
-    # debian
-    $RPMDIR="/home/ldestail/rpmbuild";
-}
 use vars qw/ $REVISION $VERSION /;
 $REVISION='20140126';
 $VERSION="1.0 (build $REVISION)";
@@ -100,12 +78,48 @@ if (! $TEMP || ! -d $TEMP) {
 $BUILDROOT="$TEMP/${PROJECT}-buildroot";
 
 
+
+# Get version $MAJOR, $MINOR and $BUILD
+$result = open( IN, "<" . $SOURCE . "/wwwroot/cgi-bin/awstats.pl" );
+if ( !$result ) { die "Error: Can't open descriptor file " . $SOURCE . "/wwwroot/cgi-bin/awstats.pl\n"; }
+while (<IN>) {
+	if ( $_ =~ /VERSION\s*=\s*\"([\d\.a-z\-]+)/ ) { $PROJVERSION = $1; break; }
+}
+close IN;
+($MAJOR,$MINOR,$BUILD)=split(/\./,$PROJVERSION,3);
+if ($MINOR eq '') { die "Error can't detect version into ".$SOURCE . "/wwwroot/cgi-bin/awstats.pl"; }
+
+$RPMSUBVERSION="1";
+
+
+$FILENAME="$PROJECT";
+$FILENAMETGZ="$PROJECT-$MAJOR.$MINOR";
+$FILENAMEZIP="$PROJECT-$MAJOR.$MINOR";
+$FILENAMERPM="$PROJECT-$MAJOR.$MINOR-$RPMSUBVERSION";
+$FILENAMEDEB="$PROJECT-$MAJOR.$MINOR";
+$FILENAMEEXE="$PROJECT-$MAJOR.$MINOR";
+# ubuntu
+$RPMDIR="./../../../rpmbuild";
+if (-d "/usr/src/redhat") {
+    # redhat
+    $RPMDIR="/usr/src/redhat";
+}
+if (-d "/usr/src/RPM") {
+    # mandrake
+    $RPMDIR="/usr/src/RPM";
+}
+if (-d "/home/ldestail/rpmbuild") {
+    # debian
+    $RPMDIR="/home/ldestail/rpmbuild";
+}
+
+
 my $copyalreadydone=0;
 my $batch=0;
 
 print "Makepack version $VERSION\n";
 print "Building package name: $PROJECT\n";
-print "Building package version: $MAJOR.$MINOR.$BUILD\n";
+print "Building package version: $MAJOR.$MINOR\n";
 print "Source directory (SOURCE): $SOURCE\n";
 print "Target directory (DESTI) : $DESTI\n";
 
@@ -212,8 +226,8 @@ if (! $copyalreadydone) {
 	print "Create directory $BUILDROOT/$PROJECT\n";
 	mkdir "$BUILDROOT/$PROJECT";
 
-	print "Recopie de $SOURCE/README.TXT dans $BUILDROOT/$PROJECT\n";
-	$ret=`cp -p "$SOURCE/README.TXT" "$BUILDROOT/$PROJECT"`;
+	print "Recopie de $SOURCE/README.md dans $BUILDROOT/$PROJECT\n";
+	$ret=`cp -p "$SOURCE/README.md" "$BUILDROOT/$PROJECT"`;
 
 	print "Recopie de $SOURCE/docs dans $BUILDROOT/$PROJECT/docs\n";
 	mkdir "$BUILDROOT/$PROJECT/docs";
