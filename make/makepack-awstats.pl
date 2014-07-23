@@ -2,18 +2,20 @@
 #----------------------------------------------------------------------------
 # \file         make/makepack-awstats.pl
 # \brief        Package builder (tgz, zip, rpm, deb, exe)
-# \version      $Revision$
 # \author       (c)2004-2014 Laurent Destailleur  <eldy@users.sourceforge.net>
 #----------------------------------------------------------------------------
 
 use Cwd;
 
 $PROJECT="awstats";
-
+$RPMSUBVERSION="1";
 
 $WBMVERSION="2.0";
 
 @LISTETARGET=("TGZ","ZIP","RPM","DEB","EXE");   # Possible packages
+%REQUIREMENTPUBLISH=(
+"SF"=>"git ssh rsync"
+);
 %REQUIREMENTTARGET=(                            # Tool requirement for each package
 "TGZ"=>"tar",
 "ZIP"=>"7z",
@@ -41,6 +43,7 @@ $DIR||='.'; $DIR =~ s/([^\/\\])[\\\/]+$/$1/;
 $SOURCE="$DIR/../../awstats";
 $DESTI="$SOURCE/make";
 $DESTI="/media/HDDATA1_LD/Mes Sites/Web/AWStats/wwwroot/files";
+$PUBLISHSTABLE="eldy,awstats\@frs.sourceforge.net:/home/frs/project/awstats";
 
 # Detect OS type
 # --------------
@@ -64,19 +67,17 @@ if ($OS =~ /macos/) {
     $TEMP=$ENV{"TEMP"}||$ENV{"TMP"}||"/tmp";
 }
 if ($OS =~ /windows/) {
-    #$TEMP=$ENV{"TEMP"}||$ENV{"TMP"}||"c:/temp";
-    $TEMP="c:/temp";
+    $TEMP=$ENV{"TEMP"}||$ENV{"TMP"}||"c:/temp";
     $PROGPATH=$ENV{"ProgramFiles"};
 }
 if (! $TEMP || ! -d $TEMP) {
     print "Error: A temporary directory can not be find.\n";
     print "Check that TEMP or TMP environment variable is set correctly.\n";
-	print "makepack-dolibarr.pl aborted.\n";
+	print "$PROG.$Extension aborted.\n";
     sleep 2;
     exit 2;
 } 
 $BUILDROOT="$TEMP/${PROJECT}-buildroot";
-
 
 
 # Get version $MAJOR, $MINOR and $BUILD
@@ -89,9 +90,7 @@ close IN;
 ($MAJOR,$MINOR,$BUILD)=split(/\./,$PROJVERSION,3);
 if ($MINOR eq '') { die "Error can't detect version into ".$SOURCE . "/wwwroot/cgi-bin/awstats.pl"; }
 
-$RPMSUBVERSION="1";
-
-
+# Set vars for packaging
 $FILENAME="$PROJECT";
 $FILENAMETGZ="$PROJECT-$MAJOR.$MINOR";
 $FILENAMEZIP="$PROJECT-$MAJOR.$MINOR";
@@ -132,47 +131,56 @@ for (0..@ARGV-1) {
 #-----------------------
 if ($target) {
     $CHOOSEDTARGET{uc($target)}=1;
+	if ($target ne "ALL" && $target ne "SF") { $CHOOSEDTARGET{uc($target)}=1; }
+	if ($target eq "SF") { $CHOOSEDPUBLISH{"SF"}=1; }
 }
 else {
-my $found=0;
-my $NUM_SCRIPT;
-while (! $found) {
-	my $cpt=0;
-	printf(" %d - %3s    (%s)\n",$cpt,"All","Need ".join(",",values %REQUIREMENTTARGET));
-	foreach my $target (@LISTETARGET) {
-		$cpt++;
-		printf(" %d - %3s    (%s)\n",$cpt,$target,"Need ".$REQUIREMENTTARGET{$target});
+	my $found=0;
+	my $NUM_SCRIPT;
+	while (! $found) {
+		my $cpt=0;
+		printf(" %d - %3s    (%s)\n",$cpt,"All","Need ".join(",",values %REQUIREMENTTARGET));
+		foreach my $target (@LISTETARGET) {
+			$cpt++;
+			printf(" %d - %3s    (%s)\n",$cpt,$target,"Need ".$REQUIREMENTTARGET{$target});
+		}
+    	$cpt=99;
+    	printf(" %2d - %-14s  (%s)\n",$cpt,"SF (publish)","Need ".join(",",values %REQUIREMENTPUBLISH));
+	
+    	# Ask which target to build
+		print "Choose one package number or several separated with space: ";
+		$NUM_SCRIPT=<STDIN>; 
+		chomp($NUM_SCRIPT);
+		if ($NUM_SCRIPT =~ s/-//g) {
+			# Do not do copy	
+			$copyalreadydone=1;
+		}
+		if ($NUM_SCRIPT !~ /^[0-$cpt\s]+$/)
+		{
+			print "This is not a valid package number list.\n";
+			$found = 0;
+		}
+		else
+		{
+			$found = 1;
+		}
 	}
-
-	# On demande de choisir le fichier a passer
-	print "Choose one package number or several separated with space: ";
-	$NUM_SCRIPT=<STDIN>; 
-	chomp($NUM_SCRIPT);
-	if ($NUM_SCRIPT =~ s/-//g) {
-		# Do not do copy	
-		$copyalreadydone=1;
-	}
-	if ($NUM_SCRIPT !~ /^[0-$cpt\s]+$/)
-	{
-		print "This is not a valid package number list.\n";
-		$found = 0;
-	}
-	else
-	{
-		$found = 1;
-	}
-}
-print "\n";
-if ($NUM_SCRIPT) {
-	foreach my $num (split(/\s+/,$NUM_SCRIPT)) {
-		$CHOOSEDTARGET{$LISTETARGET[$num-1]}=1;
-	}
-}
-else {
-	foreach my $key (@LISTETARGET) {
-	    $CHOOSEDTARGET{$key}=1;
+	print "\n";
+   	if ($NUM_SCRIPT eq "99") {
+   		$CHOOSEDPUBLISH{"SF"}=1;
     }
-}
+    else {
+	    if ($NUM_SCRIPT eq "0") {
+	    	foreach my $key (@LISTETARGET) {
+	    		if ($key ne 'SNAPSHOT' && $key ne 'SF') { $CHOOSEDTARGET{$key}=1; }
+	        }
+	    }
+	    else {
+	   		foreach my $num (split(/\s+/,$NUM_SCRIPT)) {
+	   			$CHOOSEDTARGET{$LISTETARGET[$num-1]}=1;
+	   		}
+	    }
+    }
 }
 
 # Test if requirement is ok
@@ -207,98 +215,107 @@ print "\n";
 # Check if there is at least on target to build
 #----------------------------------------------
 $nboftargetok=0;
+$nboftargetneedbuildroot=0;
+$nbofpublishneedtag=0;
 foreach my $target (keys %CHOOSEDTARGET) {
     if ($CHOOSEDTARGET{$target} < 0) { next; }
     $nboftargetok++;
 }
+foreach my $target (keys %CHOOSEDPUBLISH) {
+    if ($CHOOSEDPUBLISH{$target} < 0) { next; }
+	if ($target eq 'ASSO') { $nbofpublishneedtag++; }
+	if ($target eq 'SF') { $nbofpublishneedtag++; }
+	$nboftargetok++;
+}
 
 if ($nboftargetok) {
-
-# Update buildroot
-#-----------------
-if (! $copyalreadydone) {
-	print "Delete directory $BUILDROOT\n";
-	$ret=`rm -fr "$BUILDROOT"`;
-
-	print "Create directory $BUILDROOT\n";
-	mkdir "$BUILDROOT";
-
-	print "Create directory $BUILDROOT/$PROJECT\n";
-	mkdir "$BUILDROOT/$PROJECT";
-
-	print "Recopie de $SOURCE/README.md dans $BUILDROOT/$PROJECT\n";
-	$ret=`cp -p "$SOURCE/README.md" "$BUILDROOT/$PROJECT"`;
-
-	print "Recopie de $SOURCE/docs dans $BUILDROOT/$PROJECT/docs\n";
-	mkdir "$BUILDROOT/$PROJECT/docs";
-	$ret=`cp -pr "$SOURCE/docs" "$BUILDROOT/$PROJECT"`;
-
-	print "Recopie de $SOURCE/tools dans $BUILDROOT/$PROJECT/tools\n";
-	mkdir "$BUILDROOT/$PROJECT/tools";
-	$ret=`cp -pr "$SOURCE/tools" "$BUILDROOT/$PROJECT"`;
-
-	print "Recopie de $SOURCE/wwwroot dans $BUILDROOT/$PROJECT/wwwroot\n";
-	mkdir "$BUILDROOT/$PROJECT/wwwroot";
-	$ret=`cp -pr "$SOURCE/wwwroot" "$BUILDROOT/$PROJECT"`;
-}
-
-print "Nettoyage de $BUILDROOT\n";
-$ret=`rm -f $BUILDROOT/$PROJECT/ChangeLog`;
-$ret=`rm -f $BUILDROOT/$PROJECT/*/.cvsignore`;
-$ret=`rm -f $BUILDROOT/$PROJECT/*/*/.cvsignore`;
-$ret=`rm -f $BUILDROOT/$PROJECT/*/*/*/.cvsignore`;
-$ret=`rm -f $BUILDROOT/$PROJECT/*/*/*/*/.cvsignore`;
-$ret=`rm -f $BUILDROOT/$PROJECT/docs/awstats_loganalysispaper.html`;
-$ret=`rm -f $BUILDROOT/$PROJECT/tools/urlalias.txt`;
-$ret=`rm -f $BUILDROOT/$PROJECT/tools/xferlogconvert.pl`;
-$ret=`rm -f $BUILDROOT/$PROJECT/tools/xslt/awstats*.sps`;
-$ret=`rm -f $BUILDROOT/$PROJECT/tools/xslt/gen*.*`;
-$ret=`rm -fr $BUILDROOT/$PROJECT/tools/webmin/awstats`;
-$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/*.inc`;
-$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/$PROJECT.conf`;
-$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/$PROJECT.demo.conf`;
-$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/$PROJECT.mail.conf`;
-$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/$PROJECT.ftp.conf`;
-$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/$PROJECT.www*.conf`;
-$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/$PROJECT.map24.conf`;
-$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/$PROJECT.common.conf`;
-$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/$PROJECT.test*.conf`;
-$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/$PROJECT.*com.conf`;
-$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/$PROJECT.*net.conf`;
-$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/$PROJECT??????.txt`;
-$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/$PROJECT??.*`;
-$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/$PROJECT*.athena.*`;
-$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/smallprof.*`;
-$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/.smallprof*`;
-$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/plugins/etf1*`;
-$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/plugins/readgz*`;
-$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/plugins/urlalias.txt`;
-$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/plugins/detectrefererspam.pm`;
-$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/plugins/testxxx.pm`;
-$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/classes/src/AWGraphApplet.class`;
-$ret=`rm -fr $BUILDROOT/$PROJECT/wwwroot/cgi-bin/plugins/testgeo*`;
-$ret=`rm -fr $BUILDROOT/$PROJECT/wwwroot/cgi-bin/plugins/Geo`;
-$ret=`rm -fr $BUILDROOT/$PROJECT/wwwroot/php`;
-$ret=`rm -fr $BUILDROOT/$PROJECT/make`;
-$ret=`rm -fr $BUILDROOT/$PROJECT/test`;
-$ret=`rm -fr $BUILDROOT/$PROJECT/Thumbs.db $BUILDROOT/$PROJECT/*/Thumbs.db $BUILDROOT/$PROJECT/*/*/Thumbs.db $BUILDROOT/$PROJECT/*/*/*/Thumbs.db`;
-$ret=`rm -fr $BUILDROOT/$PROJECT/CVS* $BUILDROOT/$PROJECT/*/CVS* $BUILDROOT/$PROJECT/*/*/CVS* $BUILDROOT/$PROJECT/*/*/*/CVS* $BUILDROOT/$PROJECT/*/*/*/*/CVS* $BUILDROOT/$PROJECT/*/*/*/*/*/CVS*`;
-
-rename("$BUILDROOT/$PROJECT","$BUILDROOT/$FILENAMETGZ");
-
-
-# Check WBM file was generated and stored into webmin directory
-if (! -f "$BUILDROOT/$FILENAMETGZ/tools/webmin/awstats-".$WBMVERSION.".wbm")
-{
-	print "Error: You must generate wbm file with makepack-awstats_webmin.pl first.";
-	exit 0;	
-}
-
-
-# Build package for each target
-#------------------------------
-    foreach my $target (keys %CHOOSEDTARGET) {
-    if ($CHOOSEDTARGET{$target} < 0) { next; }
+	
+	# Update buildroot
+	#-----------------
+	if (! $copyalreadydone) {
+		print "Delete directory $BUILDROOT\n";
+		$ret=`rm -fr "$BUILDROOT"`;
+	
+		print "Create directory $BUILDROOT\n";
+		mkdir "$BUILDROOT";
+	
+		print "Create directory $BUILDROOT/$PROJECT\n";
+		mkdir "$BUILDROOT/$PROJECT";
+	
+		print "Recopie de $SOURCE/README.md dans $BUILDROOT/$PROJECT\n";
+		$ret=`cp -p "$SOURCE/README.md" "$BUILDROOT/$PROJECT"`;
+	
+		print "Recopie de $SOURCE/docs dans $BUILDROOT/$PROJECT/docs\n";
+		mkdir "$BUILDROOT/$PROJECT/docs";
+		$ret=`cp -pr "$SOURCE/docs" "$BUILDROOT/$PROJECT"`;
+	
+		print "Recopie de $SOURCE/tools dans $BUILDROOT/$PROJECT/tools\n";
+		mkdir "$BUILDROOT/$PROJECT/tools";
+		$ret=`cp -pr "$SOURCE/tools" "$BUILDROOT/$PROJECT"`;
+	
+		print "Recopie de $SOURCE/wwwroot dans $BUILDROOT/$PROJECT/wwwroot\n";
+		mkdir "$BUILDROOT/$PROJECT/wwwroot";
+		$ret=`cp -pr "$SOURCE/wwwroot" "$BUILDROOT/$PROJECT"`;
+	}
+	
+	print "Nettoyage de $BUILDROOT\n";
+	$ret=`rm -f $BUILDROOT/$PROJECT/ChangeLog`;
+	$ret=`rm -f $BUILDROOT/$PROJECT/*/.cvsignore`;
+	$ret=`rm -f $BUILDROOT/$PROJECT/*/*/.cvsignore`;
+	$ret=`rm -f $BUILDROOT/$PROJECT/*/*/*/.cvsignore`;
+	$ret=`rm -f $BUILDROOT/$PROJECT/*/*/*/*/.cvsignore`;
+	$ret=`rm -f $BUILDROOT/$PROJECT/docs/awstats_loganalysispaper.html`;
+	$ret=`rm -f $BUILDROOT/$PROJECT/tools/urlalias.txt`;
+	$ret=`rm -f $BUILDROOT/$PROJECT/tools/xferlogconvert.pl`;
+	$ret=`rm -f $BUILDROOT/$PROJECT/tools/xslt/awstats*.sps`;
+	$ret=`rm -f $BUILDROOT/$PROJECT/tools/xslt/gen*.*`;
+	$ret=`rm -fr $BUILDROOT/$PROJECT/tools/webmin/awstats`;
+	$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/*.inc`;
+	$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/$PROJECT.conf`;
+	$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/$PROJECT.demo.conf`;
+	$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/$PROJECT.mail.conf`;
+	$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/$PROJECT.ftp.conf`;
+	$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/$PROJECT.www*.conf`;
+	$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/$PROJECT.map24.conf`;
+	$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/$PROJECT.common.conf`;
+	$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/$PROJECT.test*.conf`;
+	$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/$PROJECT.*com.conf`;
+	$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/$PROJECT.*net.conf`;
+	$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/$PROJECT??????.txt`;
+	$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/$PROJECT??.*`;
+	$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/$PROJECT*.athena.*`;
+	$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/smallprof.*`;
+	$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/.smallprof*`;
+	$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/plugins/etf1*`;
+	$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/plugins/readgz*`;
+	$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/plugins/urlalias.txt`;
+	$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/plugins/detectrefererspam.pm`;
+	$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/cgi-bin/plugins/testxxx.pm`;
+	$ret=`rm -f $BUILDROOT/$PROJECT/wwwroot/classes/src/AWGraphApplet.class`;
+	$ret=`rm -fr $BUILDROOT/$PROJECT/wwwroot/cgi-bin/plugins/testgeo*`;
+	$ret=`rm -fr $BUILDROOT/$PROJECT/wwwroot/cgi-bin/plugins/Geo`;
+	$ret=`rm -fr $BUILDROOT/$PROJECT/wwwroot/php`;
+	$ret=`rm -fr $BUILDROOT/$PROJECT/make`;
+	$ret=`rm -fr $BUILDROOT/$PROJECT/test`;
+	$ret=`rm -fr $BUILDROOT/$PROJECT/Thumbs.db $BUILDROOT/$PROJECT/*/Thumbs.db $BUILDROOT/$PROJECT/*/*/Thumbs.db $BUILDROOT/$PROJECT/*/*/*/Thumbs.db`;
+	$ret=`rm -fr $BUILDROOT/$PROJECT/CVS* $BUILDROOT/$PROJECT/*/CVS* $BUILDROOT/$PROJECT/*/*/CVS* $BUILDROOT/$PROJECT/*/*/*/CVS* $BUILDROOT/$PROJECT/*/*/*/*/CVS* $BUILDROOT/$PROJECT/*/*/*/*/*/CVS*`;
+	
+	rename("$BUILDROOT/$PROJECT","$BUILDROOT/$FILENAMETGZ");
+	
+	
+	# Check WBM file was generated and stored into webmin directory
+	if (! -f "$BUILDROOT/$FILENAMETGZ/tools/webmin/awstats-".$WBMVERSION.".wbm")
+	{
+		print "Error: You must generate wbm file with makepack-awstats_webmin.pl first.";
+		exit 0;	
+	}
+	
+	
+	# Build package for each target
+	#------------------------------
+    foreach my $target (keys %CHOOSEDTARGET) 
+    {
+    	if ($CHOOSEDTARGET{$target} < 0) { next; }
 
         print "\nBuild package for target $target\n";
 
@@ -388,8 +405,85 @@ if (! -f "$BUILDROOT/$FILENAMETGZ/tools/webmin/awstats-".$WBMVERSION.".wbm")
             $ret=`mv "$SOURCE/make/exe/$FILENAMEEXE.exe" "$NEWDESTI/$FILENAMEEXE.exe"`;
 			next;
 		}
-	
 	}
+	
+    # Publish package for each target
+    #--------------------------------
+    foreach my $target (keys %CHOOSEDPUBLISH) 
+    {
+        if ($CHOOSEDPUBLISH{$target} < 0) { next; }
+    
+		print "\nList of files to publish\n";
+    	%filestoscansf=(
+    		"$DESTI/$FILENAMERPM.noarch.rpm"=>'AWStats',
+    		"$DESTI/${FILENAMEDEB}_all.deb"=>'AWStats',
+    		"$DESTI/$FILENAMEEXE.exe"=>'AWStats',
+    		"$DESTI/$FILENAMETGZ.tar.gz"=>'AWStats',
+    		"$DESTI/$FILENAMETGZ.zip"=>'AWStats'
+    	);
+    	foreach my $file (sort keys %filestoscansf)
+    	{
+    		$found=0;
+    		my $filesize = -s $file;
+    		print $file." ".($filesize?"(found)":"(not found)");
+    		print ($filesize?" - ".$filesize:"");
+    		print "\n";
+    	}
+
+    	if ($target eq 'SF') 
+    	{
+    		print "\n";
+    		
+    		if ($target eq 'SF') { $PUBLISH = $PUBLISHSTABLE; }
+			
+    		$NEWPUBLISH=$PUBLISH;
+    		print "Publish to target $NEWPUBLISH. Click enter or CTRL+C...\n";
+
+	    	# Ask which target to build
+	    	$NUM_SCRIPT=<STDIN>; 
+	    	chomp($NUM_SCRIPT);
+
+			print "Create empty dir /tmp/emptydir. We need it to create target dir using rsync.\n";
+            $ret=`mkdir -p "/tmp/emptydir/"`;
+            
+            %filestoscan=%filestoscansf;
+            
+	    	foreach my $file (sort keys %filestoscan)
+	    	{
+	    		$found=0;
+	    		my $filesize = -s $file;
+	    		if (! $filesize) { next; }
+
+				print "\n";
+	    		print "Publish file ".$file." to ".$filestoscan{$file}."\n";
+	    		
+	    		$destFolder="$NEWPUBLISH/$filestoscan{$file}/".$MAJOR.'.'.$MINOR.($BUILD?'.'.$BUILD:'');
+
+				# mkdir	   
+				#my $ssh = Net::SSH::Perl->new("frs.sourceforge.net");
+				#$ssh->login("$user","$pass"); 		
+	    		#use String::ShellQuote qw( shell_quote );
+				#$ssh->cmd('mkdir '.shell_quote($destFolder).' && exit');
+
+				#use Net::SFTP::Foreign;
+				#my $sftp = Net::SFTP::Foreign->new($ip, user => $user, password => $pass, autodie => 1);
+				#$sftp->mkdir($destFolder)
+
+				#$command="ssh eldy,dolibarr\@frs.sourceforge.net mkdir -p \"$destFolder\"";
+				#print "$command\n";	
+				#my $ret=`$command 2>&1`;
+
+				$command="rsync -s -e 'ssh' --recursive /tmp/emptydir/ \"".$destFolder."\"";
+				print "$command\n";	
+				my $ret=`$command 2>&1`;
+die();
+				$command="rsync -s $OPTIONUPDATEDIST -e 'ssh' \"$file\" \"".$destFolder."\"";
+				print "$command\n";	
+				my $ret=`$command 2>&1`;
+				print "$ret\n";
+	    	}
+    	}
+    }    
 }
 
 print "\n----- Summary -----\n";
