@@ -5,7 +5,6 @@
 - Update version number in doc files
 - Update version number in nsi file
 - Update version number and copyright year in awstats.pl file
-- Update version number in makepack file
 - Build PAD files
 - Build PDF
 - Tagger Git (AWSTATS_x_x_BETA or AWSTATS_x_x)
