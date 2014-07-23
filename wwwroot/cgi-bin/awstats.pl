@@ -9931,9 +9931,7 @@ sub HTMLTopBanner{
 			$NewLinkParams =~ s/(&amp;|&)+/&amp;/i;
 			$NewLinkParams =~ s/^&amp;//;
 			$NewLinkParams =~ s/&amp;$//;
-			if ($NewLinkParams) {
-				$NewLinkParams = "${NewLinkParams}&amp;";
-			}
+			if ($NewLinkParams) { $NewLinkParams = "${NewLinkParams}&amp;"; }
 			print "&nbsp; &nbsp; &nbsp; &nbsp;";
 			print "<a href=\""
 			  . XMLEncode("$AWScript${NewLinkParams}update=1")

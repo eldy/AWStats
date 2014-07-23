@@ -13,7 +13,7 @@
 - makepack sur webmin
 - makepack sur awstats (If on linux copy awstats_logo1.gif into $RPMDIR/SOURCES)
 - Check content of built packages.
-- Move build files into "files" directory
+- Move build files into "files" directory. Copy them into short name awstats.zip and awstats.tar.gz
 - Update web site page index.php
 - Upload files and web site on web server
 
