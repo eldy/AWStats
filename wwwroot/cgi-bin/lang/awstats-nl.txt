@@ -175,5 +175,10 @@ message169=Gegenereerd door
 message170=Plugins
 message171=Regio&rsquo;s
 message172=Steden
-
+message173=Opera-versies
+message174=Safari-versies
+message175=Chrome-versies
+message176=Konqueror-versies
+message177=.
+message178=Downloads
  	  	 
