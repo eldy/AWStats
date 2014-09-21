@@ -9138,8 +9138,7 @@ sub DefinePerlParsingFormat {
 				$i++;
 				push @fieldlib, 'date';
 				$PerlParsingFormat .=
-"([^$LogSeparatorWithoutStar]+\\s[^$LogSeparatorWithoutStar]+)"
-				  ;                        # Need \s for Exchange log files
+"([^$LogSeparatorWithoutStar]+\\s[^$LogSeparatorWithoutStar]+)";                        # Need \s for Exchange log files
 			}
 			elsif ( $f =~ /%time3$/ )
 			{ # mon d hh:mm:ss  or  mon  d hh:mm:ss  or  mon dd hh:mm:ss yyyy  or  day mon dd hh:mm:ss  or  day mon dd hh:mm:ss yyyy
@@ -9163,7 +9162,7 @@ sub DefinePerlParsingFormat {
 				$i++;
 				push @fieldlib, 'tz';
 				$PerlParsingFormat .=
-"([^$LogSeparatorWithoutStar]+T[^$LogSeparatorWithoutStar]+)([-+]\d\d:\d\d)";
+"([^$LogSeparatorWithoutStar]+T[^$LogSeparatorWithoutStar]+)([-+]\\d\\d(?::?\\d\\d)?)";
 			}
 
 			# Special for methodurl and methodurlnoprot
