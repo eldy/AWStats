@@ -18,6 +18,7 @@ Fixes:
 - #921 Failure in the help text for geoip_generator.pl
 - #909 awstats_buildstaticpages.pl noisy debug output.
 - #680 Invalid data passed to Time::Local causes global destruction.
+- #212 Fix CVE-2006-2237
 
 
 ***** 7.3 *****

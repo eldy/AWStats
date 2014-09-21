@@ -1322,7 +1322,7 @@ sub debug {
 	if ( $level <= $DEBUGFORCED ) {
 		my $debugstring = $_[0];
 		if ( !$DebugResetDone ) {
-			open( DEBUGFORCEDFILE, "debug.log" );
+			open( DEBUGFORCEDFILE, "<debug.log" );
 			close DEBUGFORCEDFILE;
 			chmod 0666, "debug.log";
 			$DebugResetDone = 1;
@@ -1745,7 +1745,7 @@ sub Read_Config {
 		my $searchdir = $_;
 		if ( $searchdir && $searchdir !~ /[\\\/]$/ ) { $searchdir .= "/"; }
 		
-		if ( -f $searchdir.$PROG.".".$SiteConfig.".conf" &&  open( CONFIG, "$searchdir$PROG.$SiteConfig.conf" ) ) {
+		if ( -f $searchdir.$PROG.".".$SiteConfig.".conf" &&  open( CONFIG, "<$searchdir$PROG.$SiteConfig.conf" ) ) {
 			$FileConfig = "$searchdir$PROG.$SiteConfig.conf";
 			$FileSuffix = ".$SiteConfig";
 			if ($Debug){debug("Opened config: $searchdir$PROG.$SiteConfig.conf", 2);}
@@ -1890,7 +1890,7 @@ sub Parse_Config {
 				next;
 			}
             local( *CONFIG_INCLUDE );   # To avoid having parent file closed when include file is closed
-			if ( open( CONFIG_INCLUDE, $includeFile ) ) {
+			if ( open( CONFIG_INCLUDE, "<$includeFile" ) ) {
 				&Parse_Config( *CONFIG_INCLUDE, $level + 1, $includeFile );
 				close(CONFIG_INCLUDE);
 			}
