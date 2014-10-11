@@ -9154,7 +9154,7 @@ sub DefinePerlParsingFormat {
 				push @fieldlib, 'date';
 				$PerlParsingFormat .= "(\\d+)";
 			}
-			elsif ( $f =~ /%time5$/ ) {    # yyyy-mm-ddThh:mm:ss+00:00 (iso format)
+			elsif ( $f =~ /%time5$/ ) {    # yyyy-mm-ddThh:mm:ss+00:00 (iso format) or yyyy-mm-ddThh:mm:ss.000000Z
 				$pos_date = $i;
 				$i++;
 				push @fieldlib, 'date';
@@ -9162,7 +9162,7 @@ sub DefinePerlParsingFormat {
 				$i++;
 				push @fieldlib, 'tz';
 				$PerlParsingFormat .=
-"([^$LogSeparatorWithoutStar]+T[^$LogSeparatorWithoutStar]+)([-+]\\d\\d(?::?\\d\\d)?)";
+"([^$LogSeparatorWithoutStar]+T[^$LogSeparatorWithoutStar]+)([-+\.]\\d\\d[:\\.\\dZ]*)";
 			}
 
 			# Special for methodurl and methodurlnoprot
