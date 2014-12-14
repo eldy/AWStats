@@ -6308,7 +6308,7 @@ sub Save_History {
 "# also remove completely the MAP section (AWStats will rewrite it at next\n";
 		print HISTORYTMP "# update).\n";
 		print HISTORYTMP "${xmlbb}BEGIN_MAP${xmlbs}"
-		  . ( 26 + ( scalar keys %TrapInfosForHTTPErrorCodes ) +
+		  . ( 27 + ( scalar keys %TrapInfosForHTTPErrorCodes ) +
 			  ( scalar @ExtraName ? scalar @ExtraName - 1 : 0 ) +
 			  ( scalar keys %{ $PluginsLoaded{'SectionInitHashArray'} } ) )
 		  . "${xmlbe}\n";
