@@ -1322,7 +1322,7 @@ sub debug {
 	if ( $level <= $DEBUGFORCED ) {
 		my $debugstring = $_[0];
 		if ( !$DebugResetDone ) {
-			open( DEBUGFORCEDFILE, "debug.log" );
+			open( DEBUGFORCEDFILE, "<debug.log" );
 			close DEBUGFORCEDFILE;
 			chmod 0666, "debug.log";
 			$DebugResetDone = 1;
@@ -1745,7 +1745,7 @@ sub Read_Config {
 		my $searchdir = $_;
 		if ( $searchdir && $searchdir !~ /[\\\/]$/ ) { $searchdir .= "/"; }
 		
-		if ( -f $searchdir.$PROG.".".$SiteConfig.".conf" &&  open( CONFIG, "$searchdir$PROG.$SiteConfig.conf" ) ) {
+		if ( -f $searchdir.$PROG.".".$SiteConfig.".conf" &&  open( CONFIG, "<$searchdir$PROG.$SiteConfig.conf" ) ) {
 			$FileConfig = "$searchdir$PROG.$SiteConfig.conf";
 			$FileSuffix = ".$SiteConfig";
 			if ($Debug){debug("Opened config: $searchdir$PROG.$SiteConfig.conf", 2);}
@@ -1890,7 +1890,7 @@ sub Parse_Config {
 				next;
 			}
             local( *CONFIG_INCLUDE );   # To avoid having parent file closed when include file is closed
-			if ( open( CONFIG_INCLUDE, $includeFile ) ) {
+			if ( open( CONFIG_INCLUDE, "<$includeFile" ) ) {
 				&Parse_Config( *CONFIG_INCLUDE, $level + 1, $includeFile );
 				close(CONFIG_INCLUDE);
 			}
@@ -6308,7 +6308,7 @@ sub Save_History {
 "# also remove completely the MAP section (AWStats will rewrite it at next\n";
 		print HISTORYTMP "# update).\n";
 		print HISTORYTMP "${xmlbb}BEGIN_MAP${xmlbs}"
-		  . ( 26 + ( scalar keys %TrapInfosForHTTPErrorCodes ) +
+		  . ( 27 + ( scalar keys %TrapInfosForHTTPErrorCodes ) +
 			  ( scalar @ExtraName ? scalar @ExtraName - 1 : 0 ) +
 			  ( scalar keys %{ $PluginsLoaded{'SectionInitHashArray'} } ) )
 		  . "${xmlbe}\n";
@@ -9138,8 +9138,7 @@ sub DefinePerlParsingFormat {
 				$i++;
 				push @fieldlib, 'date';
 				$PerlParsingFormat .=
-"([^$LogSeparatorWithoutStar]+\\s[^$LogSeparatorWithoutStar]+)"
-				  ;                        # Need \s for Exchange log files
+"([^$LogSeparatorWithoutStar]+\\s[^$LogSeparatorWithoutStar]+)";                        # Need \s for Exchange log files
 			}
 			elsif ( $f =~ /%time3$/ )
 			{ # mon d hh:mm:ss  or  mon  d hh:mm:ss  or  mon dd hh:mm:ss yyyy  or  day mon dd hh:mm:ss  or  day mon dd hh:mm:ss yyyy
@@ -9155,7 +9154,7 @@ sub DefinePerlParsingFormat {
 				push @fieldlib, 'date';
 				$PerlParsingFormat .= "(\\d+)";
 			}
-			elsif ( $f =~ /%time5$/ ) {    # yyyy-mm-ddThh:mm:ss+00:00 (iso format)
+			elsif ( $f =~ /%time5$/ ) {    # yyyy-mm-ddThh:mm:ss+00:00 (iso format) or yyyy-mm-ddThh:mm:ss.000000Z
 				$pos_date = $i;
 				$i++;
 				push @fieldlib, 'date';
@@ -9163,7 +9162,7 @@ sub DefinePerlParsingFormat {
 				$i++;
 				push @fieldlib, 'tz';
 				$PerlParsingFormat .=
-"([^$LogSeparatorWithoutStar]+T[^$LogSeparatorWithoutStar]+)([-+]\d\d:\d\d)";
+"([^$LogSeparatorWithoutStar]+T[^$LogSeparatorWithoutStar]+)([-+\.]\\d\\d[:\\.\\dZ]*)";
 			}
 
 			# Special for methodurl and methodurlnoprot

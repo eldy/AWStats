@@ -7,6 +7,7 @@ New features:
 - Add debian patch debian-patches-1019_allow_frame_resize.patch to add
   option nboflastupdatelookuptosave on command line.
 - #199 Added geoip6 plugin with support for IPv4 AND IPv6.
+- Work with Amazon AWS log files (using %time5 tag). 
 
 Fixes:
 - Fixes permission on some .pl scripts.
@@ -18,6 +19,7 @@ Fixes:
 - #921 Failure in the help text for geoip_generator.pl
 - #909 awstats_buildstaticpages.pl noisy debug output.
 - #680 Invalid data passed to Time::Local causes global destruction.
+- #212 Fix CVE-2006-2237
 
 
 ***** 7.3 *****

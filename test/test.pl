@@ -46,7 +46,7 @@ $PERL="perl";
 "testpostfix4",
 "testexchange");
 
-@TESTLIST=("testglobal","testsmall");
+@TESTLIST=("testglobal","testsmall","testtime5");
 #@TESTLIST=("testlogins");
 #@TESTLIST=("testworms");
 #@TESTLIST=("testipv6");

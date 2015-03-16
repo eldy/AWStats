@@ -1789,7 +1789,7 @@
 'mediapartners\-google','<a href="https://adwords.google.com/" title="Bot home page [new window]" target="_blank">Google AdSense</a>',
 # 'Mediapartners-Google (Feb 12, 2015: no additial information in UA String, seems to use <a href="http://www.gigablast.com/" title="Gigablast Home page [new window]">GigablastOpenSource</a>',
 # Uses UA string "Mediapartners-Google" only, and there were accesses using an UA string "GigablastOpenSource/1.0" from the same IP-Address.
-# Therefore this is probably not related to Google 4.3.2015 Albrecht Müller
+# Therefore this is probably not related to Google 4.3.2015 Albrecht Mï¿½ller
 'megite','<a href="http://www.megite.com/" title="Megite home page [new window]" target="_blank">Megite</a>',
 'memorybot', '<a href="http://archivethe.net/en/index.php/about/internet_memory1" rel="nofollow" title="Archivethe.net Home Page [new window]" target="_blank">Archivethe.net</a>',
 'metager2-verification-bot', '<a href="http://metager2.de/technology.php" rel="nofollow" title="metager2-verification-bot Home Page [new window]" target="_blank">metager2-verification-bot</a>',
