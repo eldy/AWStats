@@ -14,6 +14,8 @@
 #    Maybe use a search string without a slash, and - if necessary -
 #    an entry in %NotSearchEnginesKeys , if this search string
 #    matches entries that are not search engines.
+#    Example of a web address of a Amazon search engine:
+#    http://www.amazon.de/gp/bit/apps/web/SERP/search/ref=bit_bds-p24_serp_cr_de?ie=UTF8tagbase=bds-p24&query=deutsch+8.+klasse+gymnasium+protokoll
 # (b) A unique string to identify the search engine within AWStats
 # (c) A regular expression that finds the start of the query part in the
 #    referrer string
@@ -216,6 +218,7 @@
 'googlecom\.com',
 'goggle\.co\.hu',
 '216\.239\.32\.20',
+'173\.194\.32\.223',
 '216\.239\.(35|37|39|51)\.100',
 '216\.239\.(35|37|39|51)\.101',
 '216\.239\.5[0-9]\.104',
@@ -323,8 +326,24 @@
 'searchya\.com',
 'picsearch\.de',
 'webssearches\.com',
+'airzip\.inspsearch\.com',
 'zapmeta\.de',
 'localmoxie\.com',
+'search-results\.mobi',
+'androidsearch\.com',
+'isearch\.nation\.com',
+'search\.zonealarm\.com',
+'www\.buenosearch\.com',
+'search\.foxtab\.com',
+'searches\.qone8\.com',
+'startpage\.com',
+'www\.qwant\.com',
+'searches\.safehomepage\.com',
+'searches\.vi-view\.com',
+'wow\.utop\.it',
+'windowssearch\.com',
+'www\.wow\.com',
+'searches\.globososo\.com',
 # Chello Portals
 'chello\.at',
 'chello\.be',
@@ -391,6 +410,7 @@
 'search\.fbdownloader\.com',
 'search\.babylon\.com',
 'my\.allgameshome\.com',
+'surfcanyon\.com',
 # Minor finnish search engines
 'haku\.www\.fi',
 # Minor french search engines
@@ -414,7 +434,7 @@
 'suche\.aol\.de',
 'www\.startxxl\.com',
 'www\.benefind\.de',
-'www\.amazon\.de.*search', #Just as a reminder, probably will not work as AWstats seem to consider the host part of an URL only
+'www\.amazon\.de.*search', #Just as a reminder, probably will not work as AWstats seems to consider the host part of an URL only
 'de\.wow\.com',
 'www\.vlips\.de',
 'metager\.de',
@@ -425,6 +445,11 @@
 'umfis\.de',
 'fastbot\.de',
 'tixuma\.de',
+'suche\.freenet\.de',
+'www\.izito\.de',
+'extern\.peoplecheck\.de',
+'www\.oneseek\.de',
+'de\.wiki\.gov\.cn',
 # Minor Hungarian search engines
 'heureka\.hu','vizsla\.origo\.hu','lapkereso\.hu','goliat\.hu','index\.hu','wahoo\.hu','webmania\.hu','search\.internetto\.hu',
 'tango\.hu',
@@ -440,6 +465,7 @@
 'search\.genieo\.com',
 # Minor Japanese search engines
 'ask\.jp','sagool\.jp',
+'websearch\.rakuten\.co\.jp',
 # Minor Norwegian search engines
 'sok\.start\.no', 'eniro\.no',
 # Minor Polish search engines
@@ -455,6 +481,8 @@
 'sapo\.pt',
 # Minor swiss search engines
 'search\.ch', 'search\.bluewin\.ch',
+'www\.zapmeta\.ch',
+'etools\.ch',
 # Minor Croatian, Serbian, Macedonian, Bosnian and Herzegovinian search engines
 'pogodak\.'
 );
@@ -495,6 +523,7 @@
 'googlecom\.com','google',
 'goggle\.co\.hu','google',
 '216\.239\.32\.20', 'google',
+'173\.194\.32\.223', 'google',
 '216\.239\.(35|37|39|51)\.100','google_cache',
 '216\.239\.(35|37|39|51)\.101','google_cache',
 '216\.239\.5[0-9]\.104','google_cache',
@@ -600,8 +629,24 @@
 'searchya\.com', 'searchya',
 'picsearch\.de', 'picsearch',
 'webssearches\.com', 'webssearches',
+'airzip\.inspsearch\.com', 'inspsearch_com',
 'zapmeta\.de', 'zapmeta',
 'localmoxie\.com', 'localmoxie',
+'search-results\.mobi', 'search-results_mobi',
+'androidsearch\.com', 'androidsearch',
+'isearch\.nation\.com', 'isearch_nation_com',
+'search\.zonealarm\.com', 'search_zonealarm_com',
+'www\.buenosearch\.com', 'www_buenosearch_com',
+'search\.foxtab\.com', 'search_foxtab_com',
+'searches\.qone8\.com', 'searches_qone8_com',
+'startpage\.com', 'startpage_com',
+'www\.qwant\.com', 'qwant_com',
+'searches\.safehomepage\.com', 'safehomepage_com',
+'searches\.vi-view\.com', 'vi-view_com',
+'wow\.utop\.it', 'wow_utop_it',
+'windowssearch\.com', 'windowssearch_com',
+'www\.wow\.com', 'www_wow_com',
+'searches\.globososo\.com', 'globososo_com',
 # Chello Portals
 'chello\.at','chelloat',
 'chello\.be','chellobe',
@@ -694,6 +739,7 @@
 'search\.fbdownloader\.com','fbdownloader',
 'search\.babylon\.com', 'babylon',
 'my\.allgameshome\.com', 'allgameshome',
+'surfcanyon\.com', 'surfcanyon_com',
 # Minor finnish search engines
 'haku\.www\.fi','haku',
 # Minor french search engines
@@ -741,6 +787,11 @@
 'umfis\.de', 'umfis',
 'fastbot\.de', 'fastbot_de',
 'tixuma\.de', 'tixuma_de',
+'suche\.freenet\.de', 'freenet_de',
+'www\.izito\.de', 'izito_de',
+'extern\.peoplecheck\.de', 'peoplecheck_de',
+'www\.oneseek\.de', 'oneseek_de',
+'de\.wiki\.gov\.cn', 'de_wiki_gov_cn',
 # Minor Hungarian search engines
 'heureka\.hu','heureka',
 'vizsla\.origo\.hu','origo',
@@ -773,6 +824,7 @@
 # Minor Japanese search engines
 'ask\.jp','askjp',
 'sagool\.jp','sagool',
+'websearch\.rakuten\.co\.jp', 'rakuten',
 # Minor Norwegian search engines
 'sok\.start\.no','start', 'eniro\.no','eniro',
 # Minor Polish search engines
@@ -806,6 +858,8 @@
 # Minor swiss search engines
 'search\.ch','searchch',
 'search\.bluewin\.ch','bluewin',
+'www\.zapmeta\.ch', 'zapmeta_ch',
+'etools\.ch', 'etools_ch',
 # Minor Croatian, Serbian, Macedonian, Bosnian and Herzegovinian search engines
 'pogodak\.','pogodak',
 # Generic search engines
@@ -818,7 +872,8 @@
 #------------------------------------------------------------------------------
 %SearchEnginesWithKeysNotInQuery=(
 'a9',1,    # www.a9.com/searchkey1%20searchkey2
-'iminent',1 #http://start.iminent.com/StartWeb/1031/toolbox/#q=searchkey1%20searchkey2&additional_arguments
+'iminent',1, #http://start.iminent.com/StartWeb/1031/toolbox/#q=searchkey1%20searchkey2&additional_arguments
+'de_wiki_gov_cn',1 #http://de.wiki.gov.cn/s_searchkey1%20searchkey2
 );
 
 # SearchEnginesKnownUrl
@@ -928,8 +983,24 @@
 'searchya', 'q=',
 'picsearch', 'q=',
 'webssearches', 'q=',
+'inspsearch_com', 'q=',
 'zapmeta', 'query=',
 'localmoxie', 'keyword=',
+'search-results_mobi', 'q=',
+'androidsearch', 'q=',
+'isearch_nation_com', 'q=',
+'search_zonealarm_com', 'q=',
+'www_buenosearch_com', 'q=',
+'search_foxtab_com', 'q=',
+'searches_qone8_com', 'q=',
+'startpage_com', 'query=',
+'qwant_com', 'q=',
+'safehomepage_com', 'q=',
+'vi-view_com', 'q=',
+'wow_utop_it', 'q=',
+'windowssearch_com', 'q=',
+'www_wow_com', 'q=',
+'globososo_com', 'q=',
 # Chello Portals
 'chelloat','q1=',
 'chellobe','q1=',
@@ -997,6 +1068,7 @@
 'fbdownloader','q=',
 'babylon','q=',
 'allgameshome', 's=',
+'surfcanyon_com', 'q=',
 # Minor finnish search engines
 'haku','w=',
 # Minor french search engines
@@ -1032,6 +1104,11 @@
 'umfis', 'suchbegriff=',
 'fastbot_de', 'red=[0-9]*\+',
 'tixuma_de', 'sc=',
+'freenet_de', 'query=',
+'izito_de', 'q=',
+'peoplecheck_de', 'q=',
+'oneseek_de', 'q=',
+'de_wiki_gov_cn', 'de\.wiki\.gov\.cn\/s_',
 # Minor Hungarian search engines
 'heureka','heureka=', 'origo','(q|search)=', 'goliat','KERESES=', 'wahoo','q=', 'internetto','searchstr=',
 'keresolap_hu','q=',
@@ -1057,6 +1134,7 @@
 # Minor Japanese search engines
 'askjp','(ask|q)=',
 'sagool','q=',
+'rakuten', 'qt=',
 # Minor Norwegian search engines
 'start','q=', 'eniro','q=',
 # Minor Polish search engines
@@ -1081,6 +1159,8 @@
 'enirose', 'hitta:', #Not sure if this works, as the keywords are part of the URL, and therefore the URL does not contain a question mark.
 # Minor swiss search engines
 'searchch', 'q=', 'bluewin', 'qry=',
+'zapmeta_ch', 'query=',
+'etools_ch', 'query=',
 # Minor Croatian, Serbian, Macedonian, Bosnian and Herzegovinian search engines
 'pogodak', 'q='
 );
@@ -1217,8 +1297,24 @@
 'searchya', '<a href="http://www.searchya.com/" title="Searchya [new window]" target="_blank">Searchya</a>',
 'picsearch', '<a href="http://www.picsearch.de/" title="picsearch [new window]" target="_blank">picsearch</a>',
 'webssearches', '<a href="http://www.webssearches.com/" title="Web Searches [new window]" target="_blank">Web Searches</a>',
+'inspsearch_com',  '<a href="http://airzip.inspsearch.com/" title="airzip.inspsearch.com [new window]" target="_blank">airzip.inspsearch.com</a> (related to <a href="http://www.webssearches.com/" title="www.webssearches.com [new window]" target="_blank">http://www.webssearches.com/</a>?)',
 'zapmeta', '<a href="http://www.zapmeta.de/" title="ZapMeta [new window]" target="_blank">ZapMeta</a>',
 'localmoxie', '<a href="http://www.localmoxie.com/" title="Local Moxie [new window]" target="_blank">Local Moxie</a>',
+'search-results_mobi', '<a href="http://search-results.mobi/" title="search-results.mobi [new window]" target="_blank">search-results.mobi</a>',
+'androidsearch', '<a href="http://www.androidsearch.com/" title="androidsearch.com [new window]" target="_blank">androidsearch.com</a>',
+'isearch_nation_com', '<a href="http://isearch.nation.com/" title="Nation Search [new window]" target="_blank">Nation Search</a>',
+'search_zonealarm_com', '<a href="http://search.zonealarm.com/" title="Zone Alarm Search [new window]" target="_blank">Zone Alarm Search</a>',
+'www_buenosearch_com', '<a href="http://www.buenosearch.com/" title="BuenoSearch [new window]" target="_blank">BuenoSearch</a>',
+'search_foxtab_com',  '<a href="http://search.foxtab.com/" title="Foxtab Search [new window]" target="_blank">Foxtab Search</a>',
+'searches_qone8_com', '<a href="http://searches.qone8.com/" title="Omiga-Plus [new window]" target="_blank">Omiga-Plus</a>',
+'startpage_com', '<a href="http://startpage.com/" title="Startpage [new window]" target="_blank">Startpage</a>',
+'qwant_com', '<a href="https://www.qwant.com/" title="qwant.com [new window]" target="_blank">qwant.com</a>',
+'safehomepage_com', '<a href="http://searches.safehomepage.com/" title="safehomepage.com [new window]" target="_blank">safehomepage.com</a>',
+'vi-view_com', '<a href="http://searches.vi-view.com/" title="vi-view.com [new window]" target="_blank">vi-view.com</a>',
+'wow_utop_it', '<a href="http://wow.utop.it/" title="wow.utop.it [new window]" target="_blank">wow.utop.it</a>',
+'windowssearch_com', '<a href="http://www.windowssearch.com/search?q=AWStats" title="Example page [new window]" target="_blank">windowssearch.com</a>',
+'www_wow_com', '<a href="http://www.wow.com/" title="www.wow.com [new window]" target="_blank">WOW.com</a>',
+'globososo_com', '<a href="http://searches.globososo.com/" title="Globososo (Kingtale Technology) [new window]" target="_blank">Globososo</a>',
 # Chello Portals
 'chelloat','<a href="http://www.chello.at/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Chello Austria</a>',
 'chellobe','<a href="http://www.chello.be/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Chello Belgium</a>',
@@ -1287,6 +1383,7 @@
 'fbdownloader','<a href="http://search.fbdownloader.com/" rel="nofollow" title="FBDownloader Home Page [new window]" target="_blank">FBDownloader</a>',
 'babylon','<a href="http://search.babylon.com/" rel="nofollow" title="Babylon Home Page [new window]" target="_blank">Babylon</a>',
 'allgameshome', '<a href="http://my.allgameshome.com/" rel="nofollow" title="AllGamesHome [new window]" target="_blank">AllGamesHome</a>',
+'surfcanyon_com', '<a href="http://search.surfcanyon.com/" title="SurfCanyon [new window]" target="_blank">SurfCanyon</a>',
 # Minor finnish search engines
 'haku','Ihmemaa',
 # Minor french search engines
@@ -1297,8 +1394,10 @@
 # Minor German search engines
 'aolde','AOL (de)',
 'o2aolde', '<a href="http://o2suche.aol.de/aol/search" rel="nofollow" title="o2 Suche Home Page [new window]" target="_blank">o2 Suche</a>',
-'fireball','Fireball', 'infoseek','Infoseek', 'webde','Web.de',
-'abacho','Abacho', 't-online','T-Online',
+'fireball','Fireball', 'infoseek','Infoseek',
+'webde','<a href="http://suche.web.de" rel="nofollow" title="Web.de Home Page [new window]" target="_blank">Web.de</a>',
+'abacho','Abacho',
+'t-online','T-Online',
 'allesklar','allesklar.de', 'meinestadt','meinestadt.de',
 'metaspinner','metaspinner',
 'metacrawler_de','metacrawler.de',
@@ -1306,7 +1405,7 @@
 'netluchs','<a href="http://www.netluchs.de/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Netluchs</a>',
 'schoenerbrausen','<a href="http://www.schoenerbrausen.de/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Schoenerbrausen/</a>',
 'gmxsuche', '<a href="http://suche.gmx.net/" rel="nofollow" title="GMX Suche Home Page [new window]" target="_blank">GMX Suche</a>',
-'gmxsuche_at', '<a href="http://suche.gmx.at/" rel="nofollow" title="GMX Suche �sterreich Home Page [new window]" target="_blank">GMX Suche �sterreich</a>',
+'gmxsuche_at', '<a href="http://suche.gmx.at/" rel="nofollow" title="GMX Suche Oesterreich Home Page [new window]" target="_blank">GMX Suche Oesterreich</a>',
 'ecosiasearch', '<a href="http://ecosia.org" rel="nofollow" title="Ecosia Search Home Page [new window]" target="_blank">Ecosia Search</a>',
 'aolsearch', '<a href="http://de.aolsearch.com/" rel="nofollow" title="AOL Search Home Page [new window]" target="_blank">AOL Search</a>',
 'aolsuche', '<a href="http://suche.aol.de/" rel="nofollow" title="AOL Suche Home Page [new window]" target="_blank">AOL Suche</a>',
@@ -1323,6 +1422,11 @@
 'umfis', '<a href="http://www.umfis.de/" title="UMFIS-Online Das Umweltfirmen-Informationssystem der IHKs in Deutschland [new window]" target="_blank">UMFIS-Online Das Umweltfirmen-Informationssystem der IHKs in Deutschland</a>',
 'fastbot_de', '<a href="http://fastbot.de/" title="Fastbot.de [new window]" target="_blank">Fastbot.de (Does not provide search keyphrases, using found page instead)</a>',
 'tixuma_de', '<a href="http://www.tixuma.de/" title="Tixuma Deutschland [new window]" target="_blank">Tixuma Deutschland</a>',
+'freenet_de', '<a href="http://suche.freenet.de/" title="suche.freenet.de [new window]" target="_blank">suche.freenet.de</a>',
+'izito_de',  '<a href="http://www.izito.de/" title="iZito Deutschland [new window]" target="_blank">iZito Deutschland</a>',
+'peoplecheck_de', '<a href="http://peoplecheck.de/" title="PeopleCheck.de [new window]" target="_blank">PeopleCheck.de</a>',
+'oneseek_de', '<a href="http://www.oneseek.de" title="Metasuchmaschine OneSeek.de [new window]" target="_blank">Metasuchmaschine OneSeek.de</a>',
+'de_wiki_gov_cn', '<a href="http://de.wiki.gov.cn/" title="Wiki Sucher [new window]" target="_blank">Wiki Sucher</a>',
 # Minor hungarian search engines
 'heureka','Heureka', 'origo','Origo-Vizsla', 'lapkereso','Startlapkereso', 'goliat','Goliat', 'indexhu','Index', 'wahoo','Wahoo', 'webmania','webmania.hu', 'internetto','Internetto Kereso',
 'tango_hu','<a href="http://tango.hu/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Tango</a>',
@@ -1348,6 +1452,7 @@
 # Minor Japanese search engines
 'askjp','<a href="http://www.ask.jp/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Ask Japan</a>',
 'sagool','<a href="http://sagool.jp/" rel="nofollow" title="Sagool home page [new window]" target="_blank">Sagool</a>',
+'rakuten', '<a href="http://websearch.rakuten.co.jp" title="websearch.rakuten.co.jp [new window]" target="_blank">websearch.rakuten.co.jp</a>',
 # Minor Norwegian search engines
 'start','start.no', 'eniro','<a href="http://www.eniro.no/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Eniro</a>',
 # Minor polish search engines
@@ -1376,6 +1481,8 @@
 'sapo','<a href="http://www.sapo.pt/" rel="nofollow" title="Sapo search engine home page [new window]" target="_blank">Sapo</a>',
 # Minor Swiss search engines
 'searchch', 'search.ch', 'bluewin', 'search.bluewin.ch',
+'zapmeta_ch', '<a href="http://www.zapmeta.ch/" title="ZapMeta.ch [new window]" target="_blank">ZapMeta.ch</a>',
+'etools_ch', '<a href="http://www.etools.ch/" title="eTools.ch [new window]" target="_blank">eTools.ch</a>',
 # Minor Croatian, Serbian, Macedonian, Bosnian and Herzegovinian search engines
 'pogodak','<a href="http://www.pogodak.com" rel="nofollow" title="Pogodak search engine home page [new window]" target="_blank">Pogodak.com</a>',
 # Generic search engines
