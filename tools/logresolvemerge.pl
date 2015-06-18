@@ -93,9 +93,11 @@ use vars qw/
 my $zcat = 'gzip -cd';
 my $zcat_file = '\.gz$';
 # For bz2 compression
-my $bzcat = 'bzcat';
+my $bzcat = 'bzip2 -cd';
 my $bzcat_file = '\.bz2$';
-
+# For xz compression
+my $xzcat = 'xz -cd';
+my $xzcat_file = '\.xz$';
 
 
 #-----------------------------------------------------------------------------
@@ -326,7 +328,7 @@ if (scalar @ParamFile == 0) {
 	print "$PROG allows you to get one unique output log file, sorted on date,\n";
 	print "built from particular sources:\n";
 	print " - It can read several input log files,\n";
-	print " - It can read .gz/.bz2 log files,\n";
+	print " - It can read .gz/.bz2/.xz log files,\n";
 	print " - It can also makes a fast reverse DNS lookup to replace\n";
 	print "   all IP addresses into host names in resulting log file.\n";
 	print "$PROG comes with ABSOLUTELY NO WARRANTY. It's a free software\n";
@@ -390,7 +392,7 @@ if (scalar @ParamFile == 0) {
 	print "\n";
 	print "Now supports/detects:\n";
 	print "  Automatic detection of log format\n";
-	print "  Files can be .gz/.bz2 files if zcat/bzcat tools are available in PATH.\n";
+	print "  Files can be .gz/.bz2/.xz files if gzip/bzip2/xz tools are available in PATH.\n";
 	print "  Multithreaded reverse DNS lookup (several parallel requests) with Perl 5.8+.\n";
 	print "New versions and FAQ at http://www.awstats.org\n";
 	exit 0;
@@ -467,6 +469,11 @@ foreach my $key (0..(@ParamFile-1)) {
 			# Modify the name to include the bzcat command
 			$ParamFile[$key] = $bzcat . ' ' . $ParamFile[$key] . ' |';
 		}
+		elsif ($ParamFile[$key] =~ /$xzcat_file/) {
+			if ($Debug) { debug("XZ compression detected for Log file $ParamFile[$key]."); }
+			# Modify the name to include the xzcat command
+			$ParamFile[$key] = $xzcat . ' ' . $ParamFile[$key] . ' |';
+		}
 
 		$LogFileToDo{$cpt}=@ParamFile[$key];
 		$cpt++;
@@ -497,6 +504,11 @@ foreach my $key (0..(@ParamFile-1)) {
                     if ($Debug) { debug("BZ2 compression detected for Log file $filearray[$i]."); }
                     # Modify the name to include the bzcat command
                     $LogFileToDo{$cpt}=$bzcat . ' ' . "$DirFile/$filearray[$i]" . ' |';
+                }
+                elsif ($filearray[$i] =~ /$xzcat_file/) {
+                    if ($Debug) { debug("XZ compression detected for Log file $filearray[$i]."); }
+                    # Modify the name to include the xzcat command
+                    $LogFileToDo{$cpt}=$xzcat . ' ' . "$DirFile/$filearray[$i]" . ' |';
                 }
                 else {
                     $LogFileToDo{$cpt}="$DirFile/$filearray[$i]";
