@@ -421,12 +421,15 @@ if ($nboftargetok) {
     		"$DESTI/$FILENAMETGZ.tar.gz"=>'AWStats',
     		"$DESTI/$FILENAMETGZ.zip"=>'AWStats'
     	);
+    	use POSIX qw/strftime/;
     	foreach my $file (sort keys %filestoscansf)
     	{
     		$found=0;
-    		my $filesize = -s $file;
-    		print $file." ".($filesize?"(found)":"(not found)");
-    		print ($filesize?" - ".$filesize:"");
+			my $filesize = -s $file;
+			my $filedate = (stat $file)[9];
+			print $file." ".($filesize?"(found)":"(not found)");
+			print ($filesize?" - ".$filesize:"");
+			print ($filedate?" - ".strftime("%Y-%m-%d %H:%M:%S",localtime($filedate)):"");
     		print "\n";
     	}
 
