@@ -35,6 +35,7 @@
 'windows[_+ ]?2008', 'windows[_+ ]nt[_+ ]6\.1', # Must be before windows_nt_6
 'windows[_+ ]?2012', 'windows[_+ ]nt[_+ ]6\.2', # Must be before windows_nt_6 = windows 8
 'windows[_+ ]nt[_+ ]6\.3', # Must be before windows_nt_6 = windows 8.1 
+'windows[_+ ]nt[_+ ]10', # Windows 10
 'windows[_+ ]?vista', 'windows[_+ ]nt[_+ ]6',
 'windows[_+ ]?2003','windows[_+ ]nt[_+ ]5\.2',	# Must be before windows_nt_5
 'windows[_+ ]xp','windows[_+ ]nt[_+ ]5\.1',		# Must be before windows_nt_5
@@ -54,6 +55,8 @@
 'ipad',
 'ipod',
 # Macintosh OS family
+'mac[_+ ]os[_+ ]x[_+ ]10[_\.]11',
+'mac[_+ ]os[_+ ]x[_+ ]10[_\.]10',
 'mac[_+ ]os[_+ ]x[_+ ]10[_\.]9',
 'mac[_+ ]os[_+ ]x[_+ ]10[_\.]8',
 'mac[_+ ]os[_+ ]x[_+ ]10[_\.]7',
@@ -148,6 +151,7 @@
 'windows[_+ ]?2008','win2008','windows[_+ ]nt[_+ ]6\.1','win7',
 'windows[_+ ]?2012','win2012','windows[_+ ]nt[_+ ]6\.2','win8',
 'windows[_+ ]nt[_+ ]6\.3','win8.1',
+'windows[_+ ]nt[_+ ]10','win10',
 'windows[_+ ]?vista','winvista','windows[_+ ]nt[_+ ]6','winvista',
 'windows[_+ ]?2003','win2003','windows[_+ ]nt[_+ ]5\.2','win2003',
 'windows[_+ ]xp','winxp','windows[_+ ]nt[_+ ]5\.1','winxp', 'syndirella', 'winxp',
@@ -170,6 +174,8 @@
 'ipad','ios_ipad', #Must be Before Mac OS Family
 'ipod','ios_ipod',  #Must be Before Mac OS Family
 # Macintosh OS family
+'mac[_+ ]os[_+ ]x[_+ ]10[_\.]11','macosx11',
+'mac[_+ ]os[_+ ]x[_+ ]10[_\.]10','macosx10',
 'mac[_+ ]os[_+ ]x[_+ ]10[_\.]9','macosx9',
 'mac[_+ ]os[_+ ]x[_+ ]10[_\.]8','macosx8',
 'mac[_+ ]os[_+ ]x[_+ ]10[_\.]7','macosx7',
@@ -247,6 +253,7 @@
 #-----------------------------------------------------------
 %OSHashLib      = (
 # Windows family OS
+'win10','<a href="http://www.microsoft.com/windows10/" title="Windows 10 home page [new window]" target="_blank">Windows 10</a>',
 'win8.1','<a href="http://www.microsoft.com/windows8/" title="Windows 8.1 home page [new window]" target="_blank">Windows 8.1</a>',
 'win8','<a href="http://www.microsoft.com/windows8/" title="Windows 8 home page [new window]" target="_blank">Windows 8</a>',
 'win7','<a href="http://windows.microsoft.com/en-US/windows7/products/home/" title="Windows 7 home page [new window]" target="_blank">Windows 7</a>',
@@ -267,7 +274,9 @@
 'winunknown','Windows (unknown version)',
 'winxbox','<a href="http://www.xbox.com/" title="Microsoft XBOX home page [new window]" target="_blank">Microsoft XBOX</a>',
 # Macintosh OS
-'macosx9','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank">Mac OS X 10.9</a>',
+'macosx11','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank">Mac OS X 10.11 El Capitan</a>',
+'macosx10','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank">Mac OS X 10.10 Yosemite</a>',
+'macosx9','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank">Mac OS X 10.9 Mavericks</a>',
 'macosx8','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank">Mac OS X 10.8 Mountain Lion</a>',
 'macosx7','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank">Mac OS X 10.7 Lion</a>',
 'macosx6','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank">Mac OS X 10.6 Snow Leopard</a>',
