@@ -50,7 +50,7 @@ it works (See <a href="awstats_config.html#LoadPlugin">LoadPlugin</a> parameter)
 
 <a href="#plugin_standards">Standard free plugins</a> : <b>tooltips, decodeutfkeys, ipv6, hashfiles,&nbsp; userinfo, hostinfo, clusterinfo, urlalias, timehires, timezone, rawlog,
 graphapplet, graphgooglechartsapi </b><b>geoipfree</b><br>
-<a href="#plugin_others">GeoIP Plugins</a> (may require other licensed product to work) :
+<a href="#plugin_geoip">GeoIP Plugins</a> (may require other licensed product to work) :
 <b>geoip,</b><b> geoip_city_maxmind, geoip_asn_maxmind, </b><b>geoip_region_maxmind</b>,
 <b>geoip_isp_maxmind</b>,
 <b>geoip_org_maxmind</b>,
@@ -177,31 +177,9 @@ The machine where reports are displayed must have Internet access for
 the charts to be generated. The only data sent to Google includes the
 statistic numbers, legend names and country names. <br>Plugin provided with AWStats (6.0+)
 
-<br><br><span style="font-weight: bold;">GeoIPfree
-</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;Geo::IPfree version 0.2+ (from Graciliano M.P.)
-<br><span style="font-style: italic;">Parameters:</span> None<br><span style="font-style: italic;">Description:</span>&nbsp;Country
-chart is built from an Internet IP-Country database.&nbsp;This plugin
-is useless for intranet only log files.&nbsp; <br>Note: You must
-choose between using this plugin (need Perl Geo::IPfree&nbsp;module,
-database is free but not up to date) or the GeoIP plugin
-(need&nbsp;Perl Geo::IP module from Maxmind, database is also free and
-up to date). <br>Note: Activestate provide a corrupted version of Geo::IPfree 0.2 Perl&nbsp;module, so install it from elsewhere (from <a href="http://www.cpan.org/">www.cpan.org</a> for example).
-<br>This plugin reduces AWStats speed by about 10% !
-<br>Plugin provided with AWStats (5.5+).
-<br>You can find Geo::IPfree Perl Module on :
-<br>- All OS: <a href="http://www.cpan.org/">CPAN site</a>
-<br>- ActiveState: GeoIPfree module provided by Activestate is not working correctly so I removed
-the link. You can follow the following setup instead: Download from <a href="http://www.cpan.org/">CPAN site</a>
-and copy 'Geo' directory (found in 'lib') into AWStats plugins directory.
-This is a fast tip to install Geo-IPfree perl module to be used by AWStats geoipfree plugin.
-<br>Note: The Geo::IPfree database has not been updated in a long time, so using
-the <a href="awstats_contrib.html#geoip">geoip</a> plugin (using the Geo::IP Perl module, now free for countries) is highly recommended.
-<br>You can use the following tool to test your geoipfree setup: <a href="file:///files/testgeoipfree.pl">testgeoipfree.pl</a>. Just
-put this file into your plugins directory and run it.
-
 <br><br>
 
-<a name="geoip">&nbsp;</a>
+<a name="plugin_geoip">&nbsp;</a>
 <br><span style="font-weight: bold;">Maxmind GeoIP Plugin Notes</span><br>Maxmind
 is a company that sells geolocation technology that matches IP
 addresses to countries, regions, cities and ISPs. All of their databses
@@ -299,6 +277,31 @@ supported).
 the moment this link works only when AWStats reports are build as CGI (static built not yet
 supported).
 <br>Example <span style="font-style: italic;">LoadPlugin="geoip_org_maxmind GEOIP_STANDARD /usr/local/GeoIPOrg.dat </span><span style="font-style: italic;">/usr/local/geoip_override.txt"</span><br>Plugin provided with AWStats (6.3+)
+
+<br><br>
+
+<br><br><span style="font-weight: bold;">GeoIPfree
+</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;Geo::IPfree version 0.2+ (from Graciliano M.P.)
+<br><span style="font-style: italic;">Parameters:</span> None<br><span style="font-style: italic;">Description:</span>&nbsp;Country
+chart is built from an Internet IP-Country database.&nbsp;This plugin
+is useless for intranet only log files.&nbsp; <br>Note: You must
+choose between using this plugin (need Perl Geo::IPfree&nbsp;module,
+database is free but not up to date) or the GeoIP plugin
+(need&nbsp;Perl Geo::IP module from Maxmind, database is also free and
+up to date). <br>Note: Activestate provide a corrupted version of Geo::IPfree 0.2 Perl&nbsp;module, so install it from elsewhere (from <a href="http://www.cpan.org/">www.cpan.org</a> for example).
+<br>This plugin reduces AWStats speed by about 10% !
+<br>Plugin provided with AWStats (5.5+).
+<br>You can find Geo::IPfree Perl Module on :
+<br>- All OS: <a href="http://www.cpan.org/">CPAN site</a>
+<br>- ActiveState: GeoIPfree module provided by Activestate is not working correctly so I removed
+the link. You can follow the following setup instead: Download from <a href="http://www.cpan.org/">CPAN site</a>
+and copy 'Geo' directory (found in 'lib') into AWStats plugins directory.
+This is a fast tip to install Geo-IPfree perl module to be used by AWStats geoipfree plugin.
+<br>Note: The Geo::IPfree database has not been updated in a long time, so using
+the <a href="awstats_contrib.html#geoip">geoip</a> plugin (using the Geo::IP Perl module, now free for countries) is highly recommended.
+<br>You can use the following tool to test your geoipfree setup: <a href="file:///files/testgeoipfree.pl">testgeoipfree.pl</a>. Just
+put this file into your plugins directory and run it.
+
 
 <br><br><a name="CONTRIB"></a><br>
 <font color="#665544" size="3"><b>Other AWStats contribs/tools/package</b></font><br>
