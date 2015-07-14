@@ -12692,7 +12692,7 @@ sub HTMLShowDomains{
 			$_domener_u =
 			  sprintf( "%.0f", ( $_domener_u * $TotalUnique ) / 2 );
 			print "<td>".Format_Number($_domener_u)." ("
-			  . sprintf( "%.1f%", 100 * $_domener_u / $TotalUnique )
+			  . sprintf( "%.1f%", $TotalUnique ? 100 * $_domener_u / $TotalUnique : 0 )
 			  . ")</td>";
 		}
 		if ( $ShowDomainsStats =~ /V/i ) {
@@ -12705,7 +12705,7 @@ sub HTMLShowDomains{
 			$_domener_v =
 			  sprintf( "%.0f", ( $_domener_v * $TotalVisits ) / 2 );
 			print "<td>".Format_Number($_domener_v)." ("
-			  . sprintf( "%.1f%", 100 * $_domener_v / $TotalVisits )
+			  . sprintf( "%.1f%", $TotalVisits ? 100 * $_domener_v / $TotalVisits : 0 )
 			  . ")</td>";
 		}
 		if ( $ShowDomainsStats =~ /P/i ) {
@@ -14708,7 +14708,7 @@ sub HTMLMainCountries{
 			$_domener_u =
 			  sprintf( "%.0f", ( $_domener_u * $TotalUnique ) / 2 );
 			print "<td>".Format_Number($_domener_u)." ("
-			  . sprintf( "%.1f%", 100 * $_domener_u / $TotalUnique )
+			  . sprintf( "%.1f%", $TotalUnique ? 100 * $_domener_u / $TotalUnique : 0 )
 			  . ")</td>";
 		}
 		if ( $ShowDomainsStats =~ /V/i ) {
@@ -14721,7 +14721,7 @@ sub HTMLMainCountries{
 			$_domener_v =
 			  sprintf( "%.0f", ( $_domener_v * $TotalVisits ) / 2 );
 			print "<td>".Format_Number($_domener_v)." ("
-			  . sprintf( "%.1f%", 100 * $_domener_v / $TotalVisits )
+			  . sprintf( "%.1f%", $TotalVisits ? 100 * $_domener_v / $TotalVisits : 0 )
 			  . ")</td>";
 		}
 
