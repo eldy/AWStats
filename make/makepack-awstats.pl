@@ -479,7 +479,7 @@ if ($nboftargetok) {
 				$command="rsync -s -e 'ssh' --recursive /tmp/emptydir/ \"".$destFolder."\"";
 				print "$command\n";	
 				my $ret=`$command 2>&1`;
-die();
+
 				$command="rsync -s $OPTIONUPDATEDIST -e 'ssh' \"$file\" \"".$destFolder."\"";
 				print "$command\n";	
 				my $ret=`$command 2>&1`;

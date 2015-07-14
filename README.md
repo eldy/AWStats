@@ -15,7 +15,7 @@ License: GNU GPL v3+ (GNU General Public License. See LICENSE file),
 
 Version: 7.4
 
-Release date: July 2014
+Release date: July 2015
 
 Platforms: All (Linux, NT, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 
@@ -170,7 +170,7 @@ Twitter: <http://www.twitter.com/awstats_project>
 
 # ABOUT THE AUTHOR, LICENSE AND SUPPORT
 ---------------------------------------
-Copyright (C) 2000-2014 - Laurent Destailleur - eldy@users.sourceforge.net - <http://www.nltechno.com>
+Copyright (C) 2000-2015 - Laurent Destailleur - eldy@users.sourceforge.net - <http://www.nltechno.com>
 
 Laurent Destailleur is also the project leader of [Dolibarr ERP CRM Opensource project] <http://www.dolibarr.org>,
 and author of AWBot, CVSChangeLogBuilder, DoliDroid and founder of DoliCloud SaaS <http://www.dolicloud.com>.
