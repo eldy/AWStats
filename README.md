@@ -15,7 +15,7 @@ License: GNU GPL v3+ (GNU General Public License. See LICENSE file),
 
 Version: 7.4
 
-Release date: July 2014
+Release date: July 2015
 
 Platforms: All (Linux, NT, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 
