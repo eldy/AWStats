@@ -9154,7 +9154,13 @@ sub DefinePerlParsingFormat {
 				push @fieldlib, 'date';
 				$PerlParsingFormat .= "(\\d+)";
 			}
-			elsif ( $f =~ /%time5$/ ) {    # yyyy-mm-ddThh:mm:ss+00:00 (iso format) or yyyy-mm-ddThh:mm:ss.000000Z
+			elsif ( $f =~ /%time5$/ ) {
+				# Supports the following formats:
+				# - yyyy-mm-ddThh:mm:ss           (Incomplete ISO 8601)
+				# - yyyy-mm-ddThh:mm:ssZ          (ISO 8601, zero meridian)
+				# - yyyy-mm-ddThh:mm:ss+00:00     (ISO 8601)
+				# - yyyy-mm-ddThh:mm:ss+0000      (Apache's best approximation to ISO 8601 using "%{%Y-%m-%dT%H:%M:%S%z}t" in LogFormat)
+				# - yyyy-mm-ddThh:mm:ss.000000Z   (Amazon AWS log files)
 				$pos_date = $i;
 				$i++;
 				push @fieldlib, 'date';
@@ -9162,7 +9168,7 @@ sub DefinePerlParsingFormat {
 				$i++;
 				push @fieldlib, 'tz';
 				$PerlParsingFormat .=
-"([^$LogSeparatorWithoutStar]+T[^$LogSeparatorWithoutStar]+)([-+\.]\\d\\d[:\\.\\dZ]*)";
+"([^$LogSeparatorWithoutStar]+T[^$LogSeparatorWithoutStar]+)(Z|[-+\.]\\d\\d[:\\.\\dZ]*)?";
 			}
 
 			# Special for methodurl and methodurlnoprot
