@@ -501,6 +501,7 @@
 'google\.'=>'mail\.google\.',
 'google\.'=>'translate\.google\.',
 'google\.'=>'code\.google\.',
+'google\.'=>'groups\.google\.',
 'msn\.'=>'hotmail\.msn\.',
 'tiscali\.'=>'mail\.tiscali\.',
 'yahoo\.'=>'(?:picks|mail)\.yahoo\.|yahoo\.[^/]+/picks',
