@@ -199,6 +199,9 @@
 # Font
 'ttf',['ttf',''],
 'fon',['fon',''],
+'eot',['fon',''],
+'woff',['fon',''],
+'woff2',['fon',''],
 # Encrypted files
 'pgp',['encrypt',''],
 'gpg',['encrypt',''],
