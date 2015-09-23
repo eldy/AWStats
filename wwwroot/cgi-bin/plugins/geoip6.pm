@@ -104,7 +104,7 @@ sub GetCountryCodeByAddr_geoip6 {
 	if (! $param) { return ''; }
 	my $searchkey;
 	if ($param =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) { # IPv4 address
-	        $searchkey = '::'.$param;
+	        $searchkey = '::ffff:'.$param;
         } else {
                 $searchkey = $param;
         }
@@ -177,7 +177,7 @@ sub ShowInfoHost_geoip6 {
 		my $key;
 		if ($param =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {	# IPv4 address
 		    $ip=4;
-			$key='::'.$param;
+			$key='::ffff:'.$param;
 		}
 		elsif ($param =~ /^[0-9A-F]*:/i) {						# IPv6 address
 		    $ip=6;
