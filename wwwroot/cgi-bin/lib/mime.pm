@@ -111,6 +111,7 @@
 'cdr',['image','d'],
 'ico',['image','i'],
 'svg',['image','i'],
+'svgz',['image','i'],
 # Document
 'ai',['document','d'],
 'doc',['document','d'],
