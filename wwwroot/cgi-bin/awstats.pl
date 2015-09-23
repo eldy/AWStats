@@ -9103,6 +9103,11 @@ sub DefinePerlParsingFormat {
 			# Add separator for next field
 			if ($PerlParsingFormat) { $PerlParsingFormat .= "$LogSeparator"; }
 
+			# If field is prefixed with custom string, just push it to regex literally
+			if ( $f =~ /^([^%]+)%/ ) {
+				$PerlParsingFormat .= "$1"
+                        }
+
 			# Special for logname
 			if ( $f =~ /%lognamequot$/ ) {
 				$pos_logname = $i;

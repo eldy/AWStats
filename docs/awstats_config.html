@@ -355,6 +355,9 @@ when reading it), follow the example:<br>
 <br>#   If your log format has some fields not included in this list, use
 <br>#   %other            Means another field
 <br>#   %otherquot        Means another not used double quoted field
+<br>#   If your log format has some literal strings, which precede data fields, use
+<br>#   status=%code      Means your log files have HTTP status logged as "status=200"
+<br>#   Literal strings that follow data field must be separated from said data fields by space.
 <br>#
 <br># Examples for Apache combined logs (following two examples are equivalent):
 <br># LogFormat = 1
