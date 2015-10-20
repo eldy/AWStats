@@ -149,13 +149,13 @@ if (window.location.search == "" || window.location.search == "?") {
     var imgsrc=imgsrc1+imgsrc2;
 	if( document.createElementNS ) {
     	var l=document.createElementNS("http://www.w3.org/1999/xhtml","img");
+        l.setAttribute("style", "display:none;");
         l.setAttribute("src", imgsrc );
         l.setAttribute("height", "0");
         l.setAttribute("width", "0");
-        l.setAttribute("border", "0");
         document.getElementsByTagName("body")[0].appendChild(l);
 	} else {
-		document.write('<img style="display:none;" src="'+ imgsrc +'" height="0" width="0" border="0" />')
+		document.write('<img style="display:none;" src="'+ imgsrc +'" height="0" width="0">')
 	}
 
 }
