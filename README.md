@@ -161,7 +161,7 @@ Tests and results are available in AWStats documentation, in docs/ directory.
 
 Follow AWStats project on
 
-Facebook: <https://www.facebook.com/awstats>
+Facebook: <https://www.facebook.com/awstats.org>
 
 Google+: <https://plus.google.com/+AWStatsOrgProject>
 
