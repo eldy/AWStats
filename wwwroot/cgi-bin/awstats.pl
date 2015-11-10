@@ -12488,7 +12488,7 @@ sub HTMLShowHosts{
 		}
 		if ( $FilterIn{'host'} && $FilterEx{'host'} ) { print " - "; }
 		if ( $FilterEx{'host'} ) {
-			print " Exlude $Message[79] '<b>$FilterEx{'host'}</b>'";
+			print " Exclude $Message[79] '<b>$FilterEx{'host'}</b>'";
 		}
 		if ( $FilterIn{'host'} || $FilterEx{'host'} ) { print ": "; }
 		print "$cpt $Message[81]";
