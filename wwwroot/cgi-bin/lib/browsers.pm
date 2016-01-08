@@ -44,6 +44,7 @@
 @BrowsersSearchIDOrder = (
 # Most frequent standard web browsers are first in this list except the ones hardcoded in awstats.pl:
 # firefox, opera, chrome, safari, konqueror, svn, msie, netscape
+'edge',
 'elinks',
 'firebird',
 'go!zilla',
@@ -272,6 +273,7 @@
 'msie','MS Internet Explorer',
 'netscape','Netscape',
 
+'edge','Edge',
 'elinks','ELinks',
 'firebird','Firebird (Old Firefox)',
 'go!zilla','Go!Zilla',
@@ -524,6 +526,7 @@
 'msie','msie',
 'netscape','netscape',
 
+'edge','msie',
 'firebird','phoenix',
 'go!zilla','gozilla',
 'icab','icab',
@@ -747,6 +750,9 @@
 
 
 # Browsers examples by engines
+#
+# -- Edge --
+# Mozilla/5.0 (Windows NT 10.0; <64-bit tags>) AppleWebKit/<WebKit Rev> (KHTML, like Gecko) Chrome/<Chrome Rev> Safari/<WebKit Rev> Edge/<EdgeHTML Rev>.<Windows Build>
 #
 # -- Mosaic --
 # MSIE		4.0  	Mozilla/4.0 (compatible; MSIE 5.0; Windows 98; DigExt; KITV4 Wanadoo; KITV5 Wanadoo)
