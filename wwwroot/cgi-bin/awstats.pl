@@ -2306,7 +2306,7 @@ sub Read_Ref_Data {
 		);
 	}
 	if ( ( scalar keys %BrowsersHashIDLib )
-		&& @BrowsersSearchIDOrder != ( scalar keys %BrowsersHashIDLib ) - 8 )
+		&& @BrowsersSearchIDOrder != ( scalar keys %BrowsersHashIDLib ) - ( scalar keys %BrowsersFamily ) )
 	{
 		#foreach (sort keys %BrowsersHashIDLib)
 		#{
@@ -2319,7 +2319,7 @@ sub Read_Ref_Data {
 		error(  "Not same number of records of BrowsersSearchIDOrder ("
 			  . (@BrowsersSearchIDOrder)
 			  . " entries) and BrowsersHashIDLib ("
-			  . ( ( scalar keys %BrowsersHashIDLib ) - 8 )
+			  . ( ( scalar keys %BrowsersHashIDLib ) - ( scalar keys %BrowsersFamily ) )
 			  . " entries without firefox,opera,chrome,safari,konqueror,svn,msie,netscape) in Browsers database. May be you updated AWStats without updating browsers.pm file or you made changed into browsers.pm not correctly. Check your file "
 			  . $FilePath{"browsers.pm"}
 			  . " is up to date." );
@@ -17970,6 +17970,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 	my $regvermsie11      = qr/trident\/7\.\d*\;([a-zA-Z;+_ ]+|)rv:([\d\.]*)/i;
 	my $regvernetscape    = qr/netscape.?\/([\d\.]*)/i;
 	my $regverfirefox     = qr/firefox\/([\d\.]*)/i;
+	my $regveredge        = qr/edge\/([\d\.]+)/i;
 	# For Opera:
 	# OPR/15.0.1266 means Opera 15 
 	# Opera/9.80 ...... Version/12.16 means Opera 12.16
@@ -19549,6 +19550,13 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 						    $_browser_h{"firefox$1"}++;
 						    if ($PageBool) { $_browser_p{"firefox$1"}++; }
 						    $TmpBrowser{$UserAgent} = "firefox$1";
+						}
+
+						# Edge ?
+						elsif ( $UserAgent =~ /$regveredge/o ) {
+						    $_browser_h{"edge$1"}++;
+						    if ($PageBool) { $_browser_p{"edge$1"}++; }
+						    $TmpBrowser{$UserAgent} = "edge$1";
 						}
 
 						# Chrome ?
