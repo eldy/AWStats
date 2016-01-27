@@ -26,13 +26,14 @@
 # Relocated from main file for easier editing
 %BrowsersFamily = (
 	'msie'      => 1,
-	'firefox'   => 2,
-	'netscape'  => 3,
-	'svn'       => 4,
-	'opera'     => 5,
-	'safari'    => 6,
-	'chrome'    => 7,
-	'konqueror' => 8
+	'edge'      => 2,
+	'firefox'   => 3,
+	'netscape'  => 4,
+	'svn'       => 5,
+	'opera'     => 6,
+	'safari'    => 7,
+	'chrome'    => 8,
+	'konqueror' => 9
 );
 
 # BrowsersSearchIDOrder
@@ -44,7 +45,6 @@
 @BrowsersSearchIDOrder = (
 # Most frequent standard web browsers are first in this list except the ones hardcoded in awstats.pl:
 # firefox, opera, chrome, safari, konqueror, svn, msie, netscape
-'edge',
 'elinks',
 'firebird',
 'go!zilla',
@@ -271,9 +271,9 @@
 'konqueror','Konqueror',
 'svn', 'Subversion client', 
 'msie','MS Internet Explorer',
+'edge','Edge',
 'netscape','Netscape',
 
-'edge','Edge',
 'elinks','ELinks',
 'firebird','Firebird (Old Firefox)',
 'go!zilla','Go!Zilla',
@@ -524,9 +524,9 @@
 'konqueror','konqueror',
 'svn','subversion',
 'msie','msie',
+'edge','edge',
 'netscape','netscape',
 
-'edge','msie',
 'firebird','phoenix',
 'go!zilla','gozilla',
 'icab','icab',
