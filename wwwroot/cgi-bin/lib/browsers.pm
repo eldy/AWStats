@@ -32,7 +32,8 @@
 	'opera'     => 5,
 	'safari'    => 6,
 	'chrome'    => 7,
-	'konqueror' => 8
+	'konqueror' => 8,
+	'edge'      => 9
 );
 
 # BrowsersSearchIDOrder
@@ -44,7 +45,6 @@
 @BrowsersSearchIDOrder = (
 # Most frequent standard web browsers are first in this list except the ones hardcoded in awstats.pl:
 # firefox, opera, chrome, safari, konqueror, svn, msie, netscape
-'edge',
 'elinks',
 'firebird',
 'go!zilla',
@@ -272,8 +272,8 @@
 'svn', 'Subversion client', 
 'msie','MS Internet Explorer',
 'netscape','Netscape',
-
 'edge','Edge',
+
 'elinks','ELinks',
 'firebird','Firebird (Old Firefox)',
 'go!zilla','Go!Zilla',
@@ -525,8 +525,8 @@
 'svn','subversion',
 'msie','msie',
 'netscape','netscape',
-
 'edge','msie',
+
 'firebird','phoenix',
 'go!zilla','gozilla',
 'icab','icab',

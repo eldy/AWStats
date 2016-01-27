@@ -2306,7 +2306,7 @@ sub Read_Ref_Data {
 		);
 	}
 	if ( ( scalar keys %BrowsersHashIDLib )
-		&& @BrowsersSearchIDOrder != ( scalar keys %BrowsersHashIDLib ) - 8 )
+		&& @BrowsersSearchIDOrder != ( scalar keys %BrowsersHashIDLib ) - 9 )
 	{
 		#foreach (sort keys %BrowsersHashIDLib)
 		#{
@@ -2319,8 +2319,8 @@ sub Read_Ref_Data {
 		error(  "Not same number of records of BrowsersSearchIDOrder ("
 			  . (@BrowsersSearchIDOrder)
 			  . " entries) and BrowsersHashIDLib ("
-			  . ( ( scalar keys %BrowsersHashIDLib ) - 8 )
-			  . " entries without firefox,opera,chrome,safari,konqueror,svn,msie,netscape) in Browsers database. May be you updated AWStats without updating browsers.pm file or you made changed into browsers.pm not correctly. Check your file "
+			  . ( ( scalar keys %BrowsersHashIDLib ) - 9 )
+			  . " entries without firefox,opera,chrome,safari,konqueror,svn,msie,netscape,edge) in Browsers database. May be you updated AWStats without updating browsers.pm file or you made changed into browsers.pm not correctly. Check your file "
 			  . $FilePath{"browsers.pm"}
 			  . " is up to date." );
 	}
@@ -17965,6 +17965,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 	my $regipv4           = qr/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
 	my $regipv4l          = qr/^::ffff:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
 	my $regipv6           = qr/^[0-9A-F]*:/i;
+	my $regveredge        = qr/edge\//i;
 	my $regvermsie        = qr/msie([+_ ]|)([\d\.]*)/i;
 	#my $regvermsie11      = qr/trident\/7\.\d*\;([+_ ]|)rv:([\d\.]*)/i;
 	my $regvermsie11      = qr/trident\/7\.\d*\;([a-zA-Z;+_ ]+|)rv:([\d\.]*)/i;
@@ -19535,8 +19536,16 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 					if ( !$uabrowser ) {
 						my $found = 1;
 
+						# Edge (must be at beginning)
+						if ($UserAgent =~ /$regveredge/o)
+						{
+							$_browser_h{"edge"}++;
+							if ($PageBool) { $_browser_p{"edge"}++; }
+							$TmpBrowser{$UserAgent} = "edge";
+						}
+						
 						# Opera ?
-						if ( $UserAgent =~ /$regveropera/o ) {	# !!!! version number in in regex $1 or $2 !!!
+						elsif ( $UserAgent =~ /$regveropera/o ) {	# !!!! version number in in regex $1 or $2 !!!
 						    $_browser_h{"opera".($1||$2)}++;
 						    if ($PageBool) { $_browser_p{"opera".($1||$2)}++; }
 						    $TmpBrowser{$UserAgent} = "opera".($1||$2);
