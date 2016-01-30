@@ -358,7 +358,7 @@ use vars qw/
 use vars qw/
   @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_list2 @RobotsSearchIDOrder_listgen
   @SearchEnginesSearchIDOrder_list1 @SearchEnginesSearchIDOrder_list2 @SearchEnginesSearchIDOrder_listgen
-  @BrowsersSearchIDOrder @OSSearchIDOrder @WordsToExtractSearchUrl @WordsToCleanSearchUrl
+  @BrowsersSearchIDOrder @OSSearchIDOrder @WordsToCleanSearchUrl
   @WormsSearchIDOrder
   @RobotsSearchIDOrder @SearchEnginesSearchIDOrder
   @_from_p @_from_h

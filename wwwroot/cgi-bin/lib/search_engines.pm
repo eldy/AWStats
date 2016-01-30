@@ -1216,11 +1216,8 @@
 'msn','origq='
 );
 
-# If no rules are known, WordsToExtractSearchUrl will be used to search keyword parameter
-# Jan 13, 2016, Albrecht Müller: How WordsToExtractSearchUrl works? It is not used in awstats.pl.
-# If no rules are known and search in WordsToExtractSearchUrl failed, this will be used to clean URL of not keyword parameters.
+# If no rules are known, we take first paramater not into WordsToCleanSearchUrl
 #------------------------------------------------------------------------------
-@WordsToExtractSearchUrl= ('tn=','ie=','ask=','claus=','general=','key=','kw=','keyword=','keywords=','MT=','p=','q=','qr=','qt=','query=','s=','search=','searchfor=','searchText=','string=','su=','txtsearch=','w=');
 @WordsToCleanSearchUrl= ('act=','annuaire=','btng=','cat=','categoria=','cfg=','cof=','cou=','count=','cp=','dd=','domain=','dt=','dw=','enc=','exec=','geo=','hc=','height=','hits=','hl=','hq=','hs=','id=','kl=','lang=','loc=','lr=','matchmode=','medor=','message=','meta=','mode=','order=','page=','par=','pays=','pg=','pos=','prg=','qc=','refer=','sa=','safe=','sc=','sort=','src=','start=','style=','stype=','sum=','tag=','temp=','theme=','type=','url=','user=','width=','what=','\\.x=','\\.y=','y=','look=');
 
 # SearchEnginesKnownUTFCoding
