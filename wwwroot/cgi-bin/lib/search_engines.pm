@@ -343,10 +343,15 @@
 'wow\.utop\.it',
 'windowssearch\.com',
 'www\.wow\.com',
-'searches\.globososo\.com',
+'globososo\.',
+'kingtale3\.inspsearch\.com',
 'swisscows\.ch',
-'globososo\.com',
 'preciobarato\.xyz',
+'www\.dregol\.com',
+'search\.socialdownloadr\.com',
+'int\.search\.myway\.com',
+'de\.dolphin\.com',
+'mys\.yoursearch\.me',
 # Chello Portals
 'chello\.at',
 'chello\.be',
@@ -639,7 +644,7 @@
 'searchya\.com', 'searchya',
 'picsearch\.de', 'picsearch',
 'webssearches\.com', 'webssearches',
-'airzip\.inspsearch\.com', 'inspsearch_com',
+'airzip\.inspsearch\.com', 'webssearches',
 'zapmeta\.de', 'zapmeta',
 'localmoxie\.com', 'localmoxie',
 'search-results\.mobi', 'search-results_mobi',
@@ -656,10 +661,15 @@
 'wow\.utop\.it', 'wow_utop_it',
 'windowssearch\.com', 'windowssearch_com',
 'www\.wow\.com', 'www_wow_com',
-'searches\.globososo\.com', 'globososo_com',
+'globososo\.', 'globososo',
+'kingtale3\.inspsearch\.com', 'globososo',
 'swisscows\.ch', 'swisscows_ch',
-'globososo\.com', 'globososo_com',
 'preciobarato\.xyz', 'preciobarato_xyz',
+'www\.dregol\.com', 'www_dregol_com',
+'search\.socialdownloadr\.com', 'search_socialdownloadr_com',
+'int\.search\.myway\.com', 'int_search_myway_com',
+'de\.dolphin\.com', 'de_dolphin_com',
+'mys\.yoursearch\.me', 'mys_yoursearch_me',
 # Chello Portals
 'chello\.at','chelloat',
 'chello\.be','chellobe',
@@ -1004,7 +1014,6 @@
 'searchya', 'q=',
 'picsearch', 'q=',
 'webssearches', 'q=',
-'inspsearch_com', 'q=',
 'zapmeta', 'query=',
 'localmoxie', 'keyword=',
 'search-results_mobi', 'q=',
@@ -1021,10 +1030,14 @@
 'wow_utop_it', 'q=',
 'windowssearch_com', 'q=',
 'www_wow_com', 'q=',
-'globososo_com', 'q=',
+'globososo', 'q=',
 'swisscows_ch', 'query=',
-'globososo_com', 'q=',
 'preciobarato_xyz', 's=',
+'www_dregol_com', 'q=',
+'search_socialdownloadr_com', 'q=',
+'int_search_myway_com', 'searchfor=',
+'de_dolphin_com', 'q=',
+'mys_yoursearch_me', 'q=',
 # Chello Portals
 'chelloat','q1=',
 'chellobe','q1=',
@@ -1204,10 +1217,11 @@
 );
 
 # If no rules are known, WordsToExtractSearchUrl will be used to search keyword parameter
+# Jan 13, 2016, Albrecht Müller: How WordsToExtractSearchUrl works? It is not used in awstats.pl.
 # If no rules are known and search in WordsToExtractSearchUrl failed, this will be used to clean URL of not keyword parameters.
 #------------------------------------------------------------------------------
-@WordsToExtractSearchUrl= ('tn=','ie=','ask=','claus=','general=','key=','kw=','keyword=','keywords=','MT=','p=','q=','qr=','qt=','query=','s=','search=','searchText=','string=','su=','txtsearch=','w=');
-@WordsToCleanSearchUrl= ('act=','annuaire=','btng=','cat=','categoria=','cfg=','channel=','cof=','cou=','count=','cp=','dd=','domain=','dt=','dw=','enc=','exec=','geo=','hc=','height=','hits=','hl=','hq=','hs=','id=','kl=','lang=','loc=','lr=','matchmode=','medor=','message=','meta=','mode=','order=','page=','par=','pays=','pg=','pos=','prg=','qc=','refer=','sa=','safe=','sc=','sort=','src=','start=','style=','stype=','sum=','tag=','temp=','theme=','type=','url=','user=','width=','what=','\\.x=','\\.y=','y=','look=');
+@WordsToExtractSearchUrl= ('tn=','ie=','ask=','claus=','general=','key=','kw=','keyword=','keywords=','MT=','p=','q=','qr=','qt=','query=','s=','search=','searchfor=','searchText=','string=','su=','txtsearch=','w=');
+@WordsToCleanSearchUrl= ('act=','annuaire=','btng=','cat=','categoria=','cfg=','cof=','cou=','count=','cp=','dd=','domain=','dt=','dw=','enc=','exec=','geo=','hc=','height=','hits=','hl=','hq=','hs=','id=','kl=','lang=','loc=','lr=','matchmode=','medor=','message=','meta=','mode=','order=','page=','par=','pays=','pg=','pos=','prg=','qc=','refer=','sa=','safe=','sc=','sort=','src=','start=','style=','stype=','sum=','tag=','temp=','theme=','type=','url=','user=','width=','what=','\\.x=','\\.y=','y=','look=');
 
 # SearchEnginesKnownUTFCoding
 # Known parameter that proves a search engine has coded its parameters in UTF-8
@@ -1326,8 +1340,8 @@
 'shoppstop', '<a href="http://www.shoppstop.com/" rel="nofollow" title="ShoppStop [new window]" target="_blank">ShoppStop</a>',
 'searchya', '<a href="http://www.searchya.com/" rel="nofollow" title="Searchya [new window]" target="_blank">Searchya</a>',
 'picsearch', '<a href="http://www.picsearch.de/" rel="nofollow" title="picsearch [new window]" target="_blank">picsearch</a>',
-'webssearches', '<a href="http://www.webssearches.com/" rel="nofollow" title="Web Searches [new window]" target="_blank">Web Searches</a>',
-'inspsearch_com',  '<a href="http://airzip.inspsearch.com/" rel="nofollow" title="airzip.inspsearch.com [new window]" target="_blank">airzip.inspsearch.com</a> (related to <a href="http://www.webssearches.com/" rel="nofollow" title="www.webssearches.com [new window]" target="_blank">http://www.webssearches.com/</a>?)',
+'webssearches', 'Various variants of Webssearches <a href="http://www.webssearches.com/" rel="nofollow" title="Webssearches [new window]" target="_blank">EMG Technologies</a> and <a href="http://airzip.inspsearch.com/" rel="nofollow" title="airzip.inspsearch.com [new window]" target="_blank">airzip.inspsearch.com</a>',
+#Jan 8, 2016: No genuine inspsearch.com search engine seems so exist, but there is a couple of search engines using subdomains of inspsearch.com. Unclear how these are related to each other.
 'zapmeta', '<a href="http://www.zapmeta.de/" rel="nofollow" title="ZapMeta [new window]" target="_blank">ZapMeta</a>',
 'localmoxie', '<a href="http://www.localmoxie.com/" rel="nofollow" title="Local Moxie [new window]" target="_blank">Local Moxie</a>',
 'search-results_mobi', '<a href="http://search-results.mobi/" rel="nofollow" title="search-results.mobi [new window]" target="_blank">search-results.mobi</a>',
@@ -1344,10 +1358,14 @@
 'wow_utop_it', '<a href="http://wow.utop.it/" rel="nofollow" title="wow.utop.it [new window]" target="_blank">wow.utop.it</a>',
 'windowssearch_com', '<a href="http://www.windowssearch.com/search?q=AWStats" rel="nofollow" title="Example page [new window]" target="_blank">windowssearch.com</a>',
 'www_wow_com', '<a href="http://www.wow.com/" rel="nofollow" title="www.wow.com [new window]" target="_blank">WOW.com</a>',
-'globososo_com', '<a href="http://searches.globososo.com/" rel="nofollow" title="Globososo (Kingtale Technology) [new window]" target="_blank">Globososo</a>',
+'globososo', 'Various variants of Globososo (Kingtale Technology): <a href="http://www.globososo.com/" rel="nofollow" title="Globososo search page [new window]" target="_blank">www</a>, <a href="http://searches.globososo.com/" rel="nofollow" title="searches subdomain of globososo.com [new window]" target="_blank">searches</a>, <a href="http://searches3.globososo.com/" rel="nofollow" title="searches3 subdomain of globososo.com [new window]" target="_blank">searches3</a>, and at inspsearch.com (<a href="http://globososo.inspsearch.com/" rel="nofollow" title="Globososo search page at globososo.inspsearch.com [new window]" target="_blank">globososo</a>, <a href="http://kingtale3.inspsearch.com/" rel="nofollow" title="Globososo search page at kingtale3.inspsearch.com [new window]" target="_blank">kingtale3</a>)',
 'swisscows_ch', '<a href="https://swisscows.ch/" rel="nofollow" title="Swisscows search page [new window]" target="_blank">Swisscows</a>',
-'globososo_com', '<a href="http://searches3.globososo.com/" rel="nofollow" title="Globososo search page [new window]" target="_blank">Globososo</a>',
 'preciobarato_xyz', '<a href="http://preciobarato.xyz/" rel="nofollow" title="preciobarato.xyz offline on Oct 2, 2015 [new window]" target="_blank">Yandex</a>',
+'www_dregol_com', '<a href="http://www.dregol.com/" rel="nofollow" title="Dregol Search [new window]" target="_blank">Dregol Search</a>',
+'search_socialdownloadr_com', '<a href="http://search.socialdownloadr.com/" rel="nofollow" title="Socialdownloadr search page [new window]" target="_blank">Socialdownloadr</a>',
+'int_search_myway_com', '<a href="http://int.search.myway.com/" rel="nofollow" title="MyWay search page [new window]" target="_blank">MyWay</a>',
+'de_dolphin_com', '<a href="http://de.dolphin.com/" rel="nofollow" title="Dolphin Search search page [new window]" target="_blank">Dolphin Search</a>',
+'mys_yoursearch_me', '<a href="http://mys.yoursearch.me/" rel="nofollow" title="Yoursearch.me search page [new window]" target="_blank">Yoursearch.me</a>',
 # Chello Portals
 'chelloat','<a href="http://www.chello.at/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Chello Austria</a>',
 'chellobe','<a href="http://www.chello.be/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Chello Belgium</a>',
