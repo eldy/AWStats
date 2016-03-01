@@ -2,9 +2,15 @@ AWStats Changelog
 -----------------
 
 ***** 7.5 *****
+
 - Compatibility with Perl 5.22
-
-
+- Support detection of Edge browser with detail of version.
+- Update robots database
+- Add eot/woff/woff2 to mime.pm as fonts
+- Add .svgz to image list
+- Exclude groups.google from search engines
+- Add %time5 tag to support log format with iso time with timezone.
+ 
 
 ***** 7.4 *****
 
