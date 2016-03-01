@@ -17965,7 +17965,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 	my $regipv4           = qr/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
 	my $regipv4l          = qr/^::ffff:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
 	my $regipv6           = qr/^[0-9A-F]*:/i;
-	my $regveredge        = qr/edge\//i;
+	my $regveredge        = qr/edge\/([\d]*)/i;
 	my $regvermsie        = qr/msie([+_ ]|)([\d\.]*)/i;
 	#my $regvermsie11      = qr/trident\/7\.\d*\;([+_ ]|)rv:([\d\.]*)/i;
 	my $regvermsie11      = qr/trident\/7\.\d*\;([a-zA-Z;+_ ]+|)rv:([\d\.]*)/i;
@@ -19539,9 +19539,9 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 						# Edge (must be at beginning)
 						if ($UserAgent =~ /$regveredge/o)
 						{
-							$_browser_h{"edge"}++;
-							if ($PageBool) { $_browser_p{"edge"}++; }
-							$TmpBrowser{$UserAgent} = "edge";
+							$_browser_h{"edge$1"}++;
+							if ($PageBool) { $_browser_p{"edge$1"}++; }
+							$TmpBrowser{$UserAgent} = "edge$1";
 						}
 						
 						# Opera ?

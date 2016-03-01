@@ -525,7 +525,7 @@
 'svn','subversion',
 'msie','msie',
 'netscape','netscape',
-'edge','msie',
+'edge','edge',
 
 'firebird','phoenix',
 'go!zilla','gozilla',
