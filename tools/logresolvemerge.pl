@@ -455,7 +455,7 @@ my $starttime=time();
 # Define the LogFileToDo list
 $cpt=1;
 foreach my $key (0..(@ParamFile-1)) {
-	if ($ParamFile[$key] !~ /\*/ && $ParamFile[$key] !~ /\?/) {
+	if (($ParamFile[$key] !~ /\*/ && $ParamFile[$key] !~ /\?/) || $ParamFile[$key] =~ /\|$/) {
 
 		if ($Debug) { debug("DBG1 Log file $ParamFile[$key] is added to LogFileToDo with number $cpt."); }
 		# Check for supported compression 
