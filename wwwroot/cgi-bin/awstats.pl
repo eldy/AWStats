@@ -12536,22 +12536,32 @@ sub HTMLShowHosts{
 			\%_host_l );
 	}
 	my $regipv4=qr/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
+
+	if ( $DynamicDNSLookup == 2 ) {
+		# Use static DNS file
+		&Read_DNS_Cache( \%MyDNSTable, "$DNSStaticCacheFile", "", 1 );
+	}
+
 	foreach my $key (@keylist) {
 		my $host = CleanXSS($key);
 		print "<tr><td class=\"aws\">"
 		  . ( $_robot_l{$key} ? '<b>'  : '' ) . "$host"
 		  . ( $_robot_l{$key} ? '</b>' : '' );
 
-		if ( $DynamicDNSLookup = 1 ) {
-			# Dynamic rverse DNS lookup
+		if ($DynamicDNSLookup) {
+			# Dynamic reverse DNS lookup
         	        if ($host =~ /$regipv4/o) {
                 	        my $lookupresult=lc(gethostbyaddr(pack("C4",split(/\./,$host)),AF_INET));       # This may be slow
                         	if (! $lookupresult || $lookupresult =~ /$regipv4/o || ! IsAscii($lookupresult)) {
-                                	print "";
+					if ( $DynamicDNSLookup == 2 ) {
+						# Check static DNS file
+						$lookupresult = $MyDNSTable{$host};
+						if ($lookupresult) { print " ($lookupresult)"; }
+						else { print ""; }
+					}
+					else { print ""; }
 	                        }
-        	                else {
-                	                print " ($lookupresult)";
-                        	}
+        	                else { print " ($lookupresult)"; }
 	                }
 		}
 
@@ -14928,24 +14938,34 @@ sub HTMLMainHosts{
 	print "</tr>\n";
 	my $total_p = my $total_h = my $total_k = 0;
 	my $count = 0;
-
+	
 	my $regipv4 = qr/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;	
+
+        if ( $DynamicDNSLookup == 2 ) {
+	        # Use static DNS file
+                &Read_DNS_Cache( \%MyDNSTable, "$DNSStaticCacheFile", "", 1 );
+        }
+
 	foreach my $key (@keylist) {
 		print "<tr>";
 		print "<td class=\"aws\">$key";
 
-		if ( $DynamicDNSLookup = 1 ) {
+		if ($DynamicDNSLookup) {
 	                # Dynamic reverse DNS lookup
 	                if ($key =~ /$regipv4/o) {
 		                my $lookupresult=lc(gethostbyaddr(pack("C4",split(/\./,$key)),AF_INET));	# This may be slow
                 	        if (! $lookupresult || $lookupresult =~ /$regipv4/o || ! IsAscii($lookupresult)) {
-	                	        print "";
-	                        }
-        	                else {
-	        	                print " ($lookupresult)";
-				}
-			}
-		}
+                                        if ( $DynamicDNSLookup == 2 ) {
+                                                # Check static DNS file
+                                                $lookupresult = $MyDNSTable{$key};
+                                                if ($lookupresult) { print " ($lookupresult)"; }
+                                                else { print ""; }
+                                        }
+                                        else { print ""; }
+                                }
+                                else { print " ($lookupresult)"; }
+                        }
+                }
 
 		print "</td>";
 		&HTMLShowHostInfo($key);
