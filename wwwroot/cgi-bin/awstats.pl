@@ -182,7 +182,7 @@ $BuildHistoryFormat    = 'text';
 $ExtraTrackedRowsLimit = 500;
 $DatabaseBreak         = 'month';
 use vars qw/
-  $DebugMessages $AllowToUpdateStatsFromBrowser $EnableLockForUpdate $DNSLookup $AllowAccessFromWebToAuthenticatedUsersOnly
+  $DebugMessages $AllowToUpdateStatsFromBrowser $EnableLockForUpdate $DNSLookup $DynamicDNSLookup $AllowAccessFromWebToAuthenticatedUsersOnly
   $BarHeight $BarWidth $CreateDirDataIfNotExists $KeepBackupOfHistoricFiles
   $NbOfLinesParsed $NbOfLinesDropped $NbOfLinesCorrupted $NbOfLinesComment $NbOfLinesBlank $NbOfOldLines $NbOfNewLines
   $NbOfLinesShowsteps $NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile $ArchiveLogRecords
@@ -199,6 +199,7 @@ use vars qw/
 	$AllowToUpdateStatsFromBrowser,
 	$EnableLockForUpdate,
 	$DNSLookup,
+	$DynamicDNSLookup,
 	$AllowAccessFromWebToAuthenticatedUsersOnly,
 	$BarHeight,
 	$BarWidth,
@@ -241,7 +242,7 @@ use vars qw/
 	$DecodePunycode
   )
   = (
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
   );
 use vars qw/
@@ -12534,11 +12535,27 @@ sub HTMLShowHosts{
 		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Host'}, \%_host_h,
 			\%_host_l );
 	}
+	my $regipv4=qr/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
 	foreach my $key (@keylist) {
 		my $host = CleanXSS($key);
 		print "<tr><td class=\"aws\">"
 		  . ( $_robot_l{$key} ? '<b>'  : '' ) . "$host"
-		  . ( $_robot_l{$key} ? '</b>' : '' ) . "</td>";
+		  . ( $_robot_l{$key} ? '</b>' : '' );
+
+		if ( $DynamicDNSLookup = 1 ) {
+			# Dynamic rverse DNS lookup
+        	        if ($host =~ /$regipv4/o) {
+                	        my $lookupresult=lc(gethostbyaddr(pack("C4",split(/\./,$host)),AF_INET));       # This may be slow
+                        	if (! $lookupresult || $lookupresult =~ /$regipv4/o || ! IsAscii($lookupresult)) {
+                                	print "";
+	                        }
+        	                else {
+                	                print " ($lookupresult)";
+                        	}
+	                }
+		}
+
+		print "</td>";
 		&HTMLShowHostInfo($key);
 		if ( $ShowHostsStats =~ /P/i ) {
 			print "<td>"
@@ -14911,10 +14928,26 @@ sub HTMLMainHosts{
 	print "</tr>\n";
 	my $total_p = my $total_h = my $total_k = 0;
 	my $count = 0;
-	
+
+	my $regipv4 = qr/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;	
 	foreach my $key (@keylist) {
 		print "<tr>";
-		print "<td class=\"aws\">$key</td>";
+		print "<td class=\"aws\">$key";
+
+		if ( $DynamicDNSLookup = 1 ) {
+	                # Dynamic reverse DNS lookup
+	                if ($key =~ /$regipv4/o) {
+		                my $lookupresult=lc(gethostbyaddr(pack("C4",split(/\./,$key)),AF_INET));	# This may be slow
+                	        if (! $lookupresult || $lookupresult =~ /$regipv4/o || ! IsAscii($lookupresult)) {
+	                	        print "";
+	                        }
+        	                else {
+	        	                print " ($lookupresult)";
+				}
+			}
+		}
+
+		print "</td>";
 		&HTMLShowHostInfo($key);
 		if ( $ShowHostsStats =~ /P/i ) {
 			print '<td>' . ( Format_Number($_host_p{$key}) || "&nbsp;" ) . '</td>';
