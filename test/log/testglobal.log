@@ -97,5 +97,5 @@
 
 80.8.55.13 - - [01/Jan/2001:21:00:00 -0300] "GET /page1.html HTTP/1.1" 200 70476 "-" "Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko"
 
-80.8.55.14 - - [01/Jan/2001:21:00:00 -0300] "GET /page1.html HTTP/1.1" 200 70476 "-" "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10136"
+80.8.55.14 - - [01/Jan/2001:21:00:00 -0300] "GET /page1.html HTTP/1.1" 200 70476 "-" "Mozilla/5.0 (Windows NT 10.0; abc) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10136"
 
