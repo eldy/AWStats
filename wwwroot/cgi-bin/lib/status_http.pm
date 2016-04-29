@@ -12,6 +12,9 @@
 # This list is used to found description of a HTTP status code
 #-----------------------------------------------------------------
 %httpcodelib = (
+'100'=>'Continue',
+'101'=>'Switching Protocols',
+'102'=>'Processing',
 #[Miscellaneous successes]
 '2xx'=>'[Miscellaneous successes]',
 '200'=>'OK',								# HTTP request OK
