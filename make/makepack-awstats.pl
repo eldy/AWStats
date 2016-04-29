@@ -240,7 +240,7 @@ if ($nboftargetok) {
 		
 		print 'Run git tag -a -m "AWSTATS_'.$MAJOR.'_'.$MINOR.'" "AWSTATS_'.$MAJOR.'_'.$MINOR.'"'."\n";
 		$ret=`git tag -a -m "AWSTATS_${MAJOR}_${MINOR}" "AWSTATS_${MAJOR}_${MINOR}" 2>&1`;
-		if ($ret =~ /already exists/)
+		if ($ret =~ /(already exists|existe déjà)/)
 		{
 			print "WARNING: Tag ".$MAJOR.'.'.$MINOR." already exists. Overwrite (y/N) ? ";
 			$QUESTIONOVERWRITETAG=<STDIN>; 
