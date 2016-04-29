@@ -49,6 +49,7 @@ when reading it), follow the example:<br>
 </li><li><a href="#LogFormat">LogFormat</a>
 </li><li><a href="#LogSeparator">LogSeparator</a>
 </li><li><a href="#DNSLookup">DNSLookup</a>
+</li><li><a href="#DynamicDNSLookup">DynamicDNSLookup</a>
 </li><li><a href="#DirData">DirData</a>
 </li><li><a href="#DirCgi">DirCgi</a>
 </li><li><a href="#DirIcons">DirIcons</a>
@@ -404,6 +405,23 @@ when reading it), follow the example:<br>
 <br># Default: 2
 <br># 
 <br>DNSLookup=2
+
+<br><br><hr>
+
+<a name="DNSLookup"><b>DNSLookup</b></a><br>
+<b>Version : </b>7.5+<br>
+<br># For very large sites, setting DNSLookup to 0 (or 2) might be the only
+<br># reasonable choice. DynamicDNSLookup allows to resolve host names for
+<br># items shown in html tables only, when data is output on reports instead
+<br># of resolving once during log analysis step. 
+<br># Possible values:
+<br># 0 - No dynamic DNS lookup 
+<br># 1 - Dynamic DNS lookup enabled
+<br># 2 - Dynamic DNS lookup enabled (including static DNS cache file as a second
+<br>#     source)
+<br># Default: 0
+<br>#
+<br>DynamicDNSLookup=0
 
 <br><br><hr>
 
