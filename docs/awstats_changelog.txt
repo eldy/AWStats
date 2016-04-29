@@ -10,7 +10,10 @@ AWStats Changelog
 - Add .svgz to image list
 - Exclude groups.google from search engines
 - Add %time5 tag to support log format with iso time with timezone.
- 
+- Add option DynamicDNSLookup to make DNS lookup during output instead
+  of during log analysis processing. 
+- Increase default value for MaxRowsInHTMLOutput
+
 
 ***** 7.4 *****
 
