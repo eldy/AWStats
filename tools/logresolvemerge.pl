@@ -374,7 +374,7 @@ if (scalar @ParamFile == 0) {
 	print "OF DISK SPACE AT ALL) and without loading files into memory (NO NEED\n";
 	print "OF MORE MEMORY). Choose of output records is done on the fly.\n";
 	print "\n";
-	print "So logresolvemerge is particularly usefull when you want to output several\n";
+	print "So logresolvemerge is particularly useful when you want to output several\n";
 	print "and/or large log files in a fast process, with no use of disk or\n";
 	print "more memory, and in a chronological order through a pipe (to be used by a log\n";
 	print "analyzer).\n";
@@ -423,7 +423,7 @@ my $timetomorrow=$tomorrowyear.$tomorrowmonth.$tomorrowday.$tomorrowhour.$tomorr
 $NBOFLINESFORBENCHMARK--;
 if ($ENV{"GATEWAY_INTERFACE"}) { $DirCgi=''; }
 if ($DirCgi && !($DirCgi =~ /\/$/) && !($DirCgi =~ /\\$/)) { $DirCgi .= '/'; }
-if (! $DirData || $DirData eq '.') { $DirData=$DIR; }	# If not defined or choosed to "." value then DirData is current dir
+if (! $DirData || $DirData eq '.') { $DirData=$DIR; }	# If not defined or chosen as "." value then DirData is current dir
 if (! $DirData)  { $DirData='.'; }						# If current dir not defined then we put it to "."
 $DirData =~ s/\/$//;
 
@@ -665,7 +665,7 @@ STOPONFIRSTEOF: while (1 == 1)
 	if(!defined($logfilechosen)) { last; }              # No more record to process 
 	
 	# Record is chosen
-	if ($Debug) { debug(" We choosed to qualify record of file number $logfilechosen",3); }
+	if ($Debug) { debug(" We chose to qualify record of file number $logfilechosen",3); }
 	if ($Debug) { debug("  Record is $linerecord{$logfilechosen}",3); }
 			
 	# Record is approved. We found a new line to parse in file number $logfilechosen

@@ -3,9 +3,10 @@
 # ClusterInfo AWStats plugin
 # This plugin allow you to add information on cluster chart from
 # a text file. Like full cluster hostname.
-# You must create a file called clusterinfo.configvalue.txt wich contains 2
-# columns separated by a tab char, and store it in DirData directory.
-# First column is cluster number and second column is text you want to add.
+# You must create a file called clusterinfo.configvalue.txt which contains 2
+# columns separated by a tab char, and store it in the DirData directory.
+# The first column is the cluster number and the second column is the text
+# you want to add.
 #-----------------------------------------------------------------------------
 # Perl Required Modules: None
 #-----------------------------------------------------------------------------

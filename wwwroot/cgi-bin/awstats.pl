@@ -3254,7 +3254,7 @@ sub Read_Plugins {
 							);
 						}
 
-						# Plugin load and init successfull
+						# Plugin load and init successful
 						foreach my $elem ( split( /\s+/, $initret ) ) {
 
 							# Some functions can only be plugged once
@@ -3596,7 +3596,7 @@ sub Read_History_With_TmpUpdate {
 		}
 		if ( !$withupdate && $HTMLOutput{'main'} && $ShowKeywordsStats ) {
 			$SectionsToLoad{'keywords'} = $order++;
-		}    # If we update, dont need to load
+		}    # If we update, there is no need to load
 		     # Others
 		if (   $UpdateStats
 			|| $MigrateStats
@@ -7929,7 +7929,7 @@ sub Sanitize {
 #				cookie used for AWStats server sessions. Attacker can this way caught this
 #				cookie and used it to go on AWStats server like original visitor. For this
 #				resaon, parameter received by AWStats must be sanitized by this function
-#				before beeing put inside a web page.
+#				before being put inside a web page.
 # Parameters:   stringtoclean
 # Input:        None
 # Output:       None
@@ -7997,7 +7997,7 @@ sub FileCopy {
 # Parameters:   query
 # Input:        None
 # Output:       None
-# Return:		formated query
+# Return:		formatted query
 #------------------------------------------------------------------------------
 # TODO Appeller cette fonction partout ou il y a des NewLinkParams
 sub CleanNewLinkParamsFrom {
@@ -10677,7 +10677,7 @@ sub HTMLMainFileType{
 		$count++;
 	}
 
-	# Add total (only usefull if compression is enabled)
+	# Add total (only useful if compression is enabled)
 	if ( $ShowFileTypesStats =~ /C/i ) {
 		my $colspan = 3;
 		if ( $ShowFileTypesStats =~ /H/i ) { $colspan += 2; }
@@ -11239,7 +11239,7 @@ sub HTMLShowOSDetail{
 }
 
 #------------------------------------------------------------------------------
-# Function:     Prints the Unkown OS Detail frame or static page
+# Function:     Prints the Unknown OS Detail frame or static page
 # Parameters:   $NewLinkTarget
 # Input:        _
 # Output:       HTML

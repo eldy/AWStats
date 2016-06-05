@@ -66,7 +66,7 @@ sub update_config
         $value =~ s/^[\s\'\"]+//; $value =~ s/[\s\'\"]+$//;
 
         if ($param) {
-            # cleanparam is param without begining #
+            # cleanparam is param without its beginning #
             my $cleanparam=$param; my $wascleaned=0;
             if ($cleanparam =~ s/^#//) { $wascleaned=1; }
             if ($cleanparam !~ /LoadPlugin/i && defined($conf->{$cleanparam})) {
@@ -160,7 +160,7 @@ sub get_dirdata
         $value =~ s/^[\s\'\"]+//; $value =~ s/[\s\'\"]+$//;
 
         if ($param) {
-            # cleanparam is param without begining #
+            # cleanparam is param without its beginning #
             my $cleanparam=$param; my $wascleaned=0;
             if ($cleanparam =~ s/^#//) { $wascleaned=1; }
             if ($cleanparam =~ /^DirData/) {

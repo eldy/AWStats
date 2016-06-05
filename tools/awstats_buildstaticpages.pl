@@ -469,7 +469,7 @@ if ($QueryString =~ /(^|-|&)buildpdf/i) {
 	my $exit_value=$? >> 8;
 	if ($? || $retour =~ /error/) {
 		if ($retour) { error("Failed to build PDF file with following error: $retour"); }
-		else { error("Failed to run successfuly htmldoc process: Return code=$exit_value, Killer signal num=$signal_num, Core dump=$dumped_core"); }
+		else { error("Failed to run successfully htmldoc process: Return code=$exit_value, Killer signal num=$signal_num, Core dump=$dumped_core"); }
 	}
 	$cpt++;
 }

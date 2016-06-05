@@ -3,7 +3,7 @@
 # UserInfo AWStats plugin
 # This plugin allow you to add information on authenticated users chart from
 # a text file. Like full user name and lastname.
-# You must create a file called userinfo.configvalue.txt wich contains 2
+# You must create a file called userinfo.configvalue.txt which contains 2
 # columns separated by a tab char, and store it in DirData directory.
 # First column is authenticated user login and second column is text you want
 # to add.

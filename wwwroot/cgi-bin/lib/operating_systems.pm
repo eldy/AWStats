@@ -115,7 +115,7 @@
 'inferno',
 'palmos',
 'syllable',
-# Miscellanous OS
+# Miscellaneous OS
 'blackberry',
 'cp/m',
 'crayos',
@@ -234,7 +234,7 @@
 'inferno','inferno',
 'palmos','palmos',
 'syllable','syllable',
-# Miscellanous OS
+# Miscellaneous OS
 'blackberry','blackberry',
 'cp/m','cp/m',
 'crayos','crayos',
@@ -339,7 +339,7 @@
 'inferno','<a href="http://www.vitanuova.com/inferno/" title="Inferno home page [new window]" target="_blank">Inferno</a>',
 'palmos','<a href="http://www.palm.com/" title="Palm OS home page [new window]" target="_blank">Palm OS</a>',
 'syllable','<a href="http://www.syllable.org/" title="Syllable home page [new window]" target="_blank">Syllable</a>',
-# Miscellanous OS
+# Miscellaneous OS
 'blackberry','BlackBerry',
 'cp/m','<a href="http://www.digitalresearch.biz/CPM.HTM" title="CP/M home page [new window]" target="_blank">CP/M</a>',
 'crayos','<a href="http://www.cray.com/" title="CrayOS home page [new window]" target="_blank">CrayOS</a>',

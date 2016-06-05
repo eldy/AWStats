@@ -37,7 +37,7 @@ statistics, graphically.
 
 This log analyzer works as a CGI or from command line and shows you
 all possible information your log contains, in few graphical web
-pages like visits, unique vistors, authenticated users, pages,
+pages like visits, unique visitors, authenticated users, pages,
 domains/countries, OS busiest times, robot visits, type of files,
 search engines,keywords and keyphrases used, visits duration,
 cluster balancing, HTTP errors and also screen size, web browser
