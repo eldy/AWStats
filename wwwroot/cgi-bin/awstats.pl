@@ -19200,6 +19200,11 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 		my $HostResolved = ''
 		  ; # HostResolved will be defined in next paragraf if countedtraffic is true
 
+		if( $Host =~ /^([^:]+):[0-9]+$/ ){ # Host may sometimes have an ip:port syntax (ex: 54.32.12.12:60321)
+		    $Host = $1;
+		}
+
+
 		if ( !$countedtraffic || $countedtraffic == 6) {
 			my $ip = 0;
 			if ($DNSLookup) {    # DNS lookup is 1 or 2
