@@ -192,7 +192,7 @@ while(<FILE>) {
 	$value =~ s/^[\s\'\"]+//; $value =~ s/[\s\'\"]+$//;
 
 	if ($param) {
-		# cleanparam is param without begining #
+		# cleanparam is param without its beginning #
 		my $cleanparam=$param; my $wascleaned=0;
 		if ($cleanparam =~ s/^#//) { $wascleaned=1; }
 		if (defined($ConfToChange{"$cleanparam"}) && $ConfToChange{"$cleanparam"}) { $savline = ($wascleaned?"#":"")."$cleanparam=\"".$ConfToChange{"$cleanparam"}."\"\n"; }
@@ -383,7 +383,7 @@ if ($OS eq 'linux' || $OS eq 'macosx') {
 if ($OS eq 'windows' && "$^O" !~ /cygwin/i) {
 	$reg->Delimiter("/");
 	if ($tips=$reg->{"LMachine/Software/Apache Group/Apache/"}) {
-		# If Apache registry call successfull
+		# If Apache registry call successful
 		my $found=0;
 		foreach( sort keys %$tips  ) {
 			my $path=$reg->{"LMachine/Software/Apache Group/Apache/$_/ServerRoot"};

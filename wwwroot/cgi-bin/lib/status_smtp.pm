@@ -12,7 +12,7 @@
 # This list is used to found description of a SMTP status code
 #-----------------------------------------------------------------
 %smtpcodelib = (
-#[Successfull code]
+#[A successful code]
 '200'=>'Nonstandard success response',
 '211'=>'System status, or system help reply',
 '214'=>'Help message',

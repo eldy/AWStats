@@ -136,7 +136,7 @@ sub AddHTMLContentHeader_example {
 }
 
 #-----------------------------------------------------------------------------
-# PLUGIN FUNTION: BuildFullHTMLOutput_pluginname
+# PLUGIN FUNCTION: BuildFullHTMLOutput_pluginname
 # UNIQUE: NO (Several plugins using this function can be loaded)
 # Function called to output an HTML page completely built by plugin instead
 # of AWStats output

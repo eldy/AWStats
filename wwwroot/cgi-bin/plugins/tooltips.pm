@@ -70,7 +70,7 @@ sub AddHTMLStyles_tooltips {
 
 
 #-----------------------------------------------------------------------------
-# PLUGIN FUNTION: AddHTMLBodyHeader_pluginname
+# PLUGIN FUNCTION: AddHTMLBodyHeader_pluginname
 # UNIQUE: NO (Several plugins using this function can be loaded)
 # Function called to Add HTML code at beginning of BODY section.
 #-----------------------------------------------------------------------------
