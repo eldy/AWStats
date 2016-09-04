@@ -313,6 +313,7 @@
 '^images\.google\.pl$',
 '^translate\.google\.pl$',
 'google\.pl$',
+
 '^www\.google\.ac$',
 '^images\.google\.ac$',
 '^translate\.google\.ac$',
@@ -1557,9 +1558,11 @@
 'altavista\.'=>'babelfish\.altavista\.',
 'google\.'=>'mail\.google\.',
 'google\.'=>'translate\.google\.',
+'google\.'=>'code\.google\.',
+'google\.'=>'groups\.google\.',
 'msn\.'=>'hotmail\.msn\.',
 'tiscali\.'=>'mail\.tiscali\.',
-'yahoo\.'=>'mail\.yahoo\.',
+'yahoo\.'=>'(?:picks|mail)\.yahoo\.|yahoo\.[^/]+/picks',
 'yandex\.'=>'direct\.yandex\.'
 );
 
@@ -2893,7 +2896,11 @@
 # List of search engines that store keyword as page instead of query parameter
 #------------------------------------------------------------------------------
 %SearchEnginesWithKeysNotInQuery=(
-'a9',1    # www.a9.com/searckey1%20searchkey2
+'a9',1,    # www.a9.com/searchkey1%20searchkey2
+'iminent',1, #http://start.iminent.com/StartWeb/1031/toolbox/#q=searchkey1%20searchkey2&additional_arguments
+'de_wiki_gov_cn',1, #http://de.wiki.gov.cn/s_searchkey1%20searchkey2
+'umuwa_de', 1, #http://umuwa.de/searchkey or http://umuwa.de/searchkey/Images
+'amazonsearch', 1 #http://www.amazon.de/gp/bit/apps/web/SERP/search/ref=bit_bds-p24_serp_cr_de?ie=UTF8tagbase=bds-p24&query=deutsch+8.+klasse+gymnasium+protokoll
 );
 
 # SearchEnginesKnownUrl
@@ -4207,7 +4214,7 @@
 # If no rules are known, WordsToExtractSearchUrl will be used to search keyword parameter
 # If no rules are known and search in WordsToExtractSearchUrl failed, this will be used to clean URL of not keyword parameters.
 #------------------------------------------------------------------------------
-@WordsToExtractSearchUrl= ('all=','as_q=','ask=','claus=','dotaz=','find=','general=','Gw=','heureka=','highlight=','ie=','image keys=','imgurl=','in=','iu=','k=','KERESES=','key=','keyword=','keywords=','kw=','mt=','name=','nusearch_terms=','OVKEY=','p=','p1=','pattern=','q=','q1=','qkw=','qpvt=','qr=','qr=','qry=','qs=','qt=','query=','querytext=','question=','r=','rdata=','req=','s=','search=','search_field=','search_for=','Search_Keyword=','search_term=','searchfor=','searchstr=','searchtext=','searchWord=','Serbian=','slowo=','soegeord=','sp-q=','srch=','st=','stext=','string=','su=','szukaj=','term=','text=','tn=','txtsearch=','uery=','w=','wd=','word=','words=');
+# old and not required @WordsToExtractSearchUrl= ('all=','as_q=','ask=','claus=','dotaz=','find=','general=','Gw=','heureka=','highlight=','ie=','image keys=','imgurl=','in=','iu=','k=','KERESES=','key=','keyword=','keywords=','kw=','mt=','name=','nusearch_terms=','OVKEY=','p=','p1=','pattern=','q=','q1=','qkw=','qpvt=','qr=','qr=','qry=','qs=','qt=','query=','querytext=','question=','r=','rdata=','req=','s=','search=','search_field=','search_for=','Search_Keyword=','search_term=','searchfor=','searchstr=','searchtext=','searchWord=','Serbian=','slowo=','soegeord=','sp-q=','srch=','st=','stext=','string=','su=','szukaj=','term=','text=','tn=','txtsearch=','uery=','w=','wd=','word=','words=');
 @WordsToCleanSearchUrl= ('act=','annuaire=','btng=','cat=','categoria=','cfg=','cof=','cou=','count=','cp=','dd=','domain=','dt=','dw=','enc=','exec=','geo=','hc=','height=','hits=','hl=','hq=','hs=','id=','kl=','lang=','loc=','lr=','matchmode=','medor=','message=','meta=','mode=','order=','page=','par=','pays=','pg=','pos=','prg=','qc=','refer=','sa=','safe=','sc=','sort=','src=','start=','style=','stype=','sum=','tag=','temp=','theme=','type=','url=','user=','width=','what=','\\.x=','\\.y=','y=','look=');
 
 # SearchEnginesKnownUTFCoding
@@ -5503,11 +5510,11 @@
 'yahoo_catchall','Yahoo : ( catchall )',
 
 'yandex','yandex ( catchall )',
-'yandexcom','<a href="http://yandex.com/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Ynndex .com</a>',
-'yandexcomtr','<a href="http://yandex.com.tr/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Ynndex .com.tr</a>',
-'yandexkz','<a href="http://yandex.kz/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Ynndex .kz</a>',
-'yandexru','<a href="http://yandex.ru/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Ynndex .ru</a>',
-'yandexua','<a href="http://yandex.ua/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Ynndex .ua</a>',
+'yandexcom','<a href="http://yandex.com/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Yandex .com</a>',
+'yandexcomtr','<a href="http://yandex.com.tr/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Yandex .com.tr</a>',
+'yandexkz','<a href="http://yandex.kz/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Yandex .kz</a>',
+'yandexru','<a href="http://yandex.ru/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Yandex .ru</a>',
+'yandexua','<a href="http://yandex.ua/" rel="nofollow" title="Search Engine Home Page [new window]" target="_blank">Yandex .ua</a>',
 'yell','<a href="http://www.yell.com/" title="Yell Home Page [new window]" rel="nofollow" target="_blank">Yell</a>',
 'yourbestsearch','<a href="http://yourbestsearch.net/" title="Home Page [new window]" rel="nofollow" target="_blank">YourBest Search</a>',
 'youtube','youtube',
