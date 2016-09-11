@@ -86,6 +86,7 @@
 'linux(.*)white\sbox',
 'linux(.*)zenwalk',
 'linux',
+'android',
 'debian',
 # Hurd family
 'gnu.hurd',
@@ -203,6 +204,7 @@
 'linux(.*)white\sbox','linuxwhitebox',
 'linux(.*)zenwalk','linuxzenwalk',
 'linux','linux',
+'android','linuxandroid',
 'debian','linuxdebian',
 # Hurd family
 'gnu.hurd','gnu',
