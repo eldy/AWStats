@@ -24,7 +24,7 @@ Install package (file .wbm) from webmin menu "Modules".
 ---------------------------------------
 Copyright (C) 2000-2014 - Laurent Destailleur - eldy@users.sourceforge.net - <http://www.nltechno.com>
 
-Laurent Destailleur is also the project leader of Dolibarr ERP CRM Open-Source project] <http://www.dolibarr.org>,
+Laurent Destailleur is also the project leader of Dolibarr ERP CRM Open-Source project] <https://www.dolibarr.org>,
 and author of AWBot, CVSChangeLogBuilder, DoliDroid and founder of DoliCloud SaaS <http://www.dolicloud.com>.
 
 This program is free software; you can redistribute it and/or modify
