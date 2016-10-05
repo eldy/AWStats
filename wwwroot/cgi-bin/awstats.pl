@@ -18343,6 +18343,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 		elsif (
 			$LogType eq 'F'
 			&& (   $field[$pos_method] eq 'RETR'
+				|| $field[$pos_method] eq 'D'
 				|| $field[$pos_method] eq 'o'
 				|| $field[$pos_method] =~ /$regget/o )
 		  )
@@ -18353,6 +18354,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 		elsif (
 			$LogType eq 'F'
 			&& (   $field[$pos_method] eq 'STOR'
+				|| $field[$pos_method] eq 'U'
 				|| $field[$pos_method] eq 'i'
 				|| $field[$pos_method] =~ /$regsent/o )
 		  )
