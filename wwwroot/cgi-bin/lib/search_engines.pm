@@ -219,6 +219,10 @@
 #  p.s. save your current search-engines.pm file before using this one just in case its too slow or you find an error.
 #       I'm bound to have made one or two mistakes but it runs a years worth of log files from one my sites just fine.  
 
+# 2016-10-15 RobC 
+#              Added a few minor search engines and some minor tweaks.
+#
+
 #------------------------------------------------------------------------------
 # SearchEnginesSearchIDOrder
 # It contains all matching criteria to search for in log fields. This list is
@@ -3558,7 +3562,6 @@
 'www_google_kz','(p|q|as_p|as_q)=',
 'images_google_kz','(p|q|as_p|as_q)=',
 'translate_google_kz','(p|q|as_p|as_q)=',
-
 'google_kz','(p|q|as_p|as_q)=',
 'www_google_la','(p|q|as_p|as_q)=',
 'images_google_la','(p|q|as_p|as_q)=',
@@ -5369,8 +5372,6 @@
 'rambler','Rambler',
 'redbox','RedBox.cz',
 'rr','rr',
-
-
 'safehomepage_com','<a href="http://searches.safehomepage.com/" title="Search Engine Home Page [new window]" rel="nofollow" target="_blank">safehomepage.com</a>',
 'sagool','<a href="http://sagool.jp/" title="Search Engine Home Page [new window]" rel="nofollow" target="_blank">Sagool</a>',
 'sapo','<a href="http://www.sapo.pt/" title="Search Engine Home Page [new window]" rel="nofollow" target="_blank">Sapo</a>',

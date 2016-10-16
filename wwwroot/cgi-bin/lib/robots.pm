@@ -43,6 +43,10 @@
 #
 #-------------------------------------------------------
 
+# 2016-10-15 RobC 
+#              Added a few very minor robots. Fixed a few regex (my mistakes) and removed unecessary
+#              escaping of hyphens which improves performance a tad and readability of this file.
+#
 # 2016-09-02 RobC 
 #              Fixed a few errors and added a few missing bots from awstats 7.5 release.
 #
@@ -820,7 +824,7 @@
 'custo',
 'cyberspyder',
 'datafountains/dmoz_downloader',
-'dataprovider\.com',
+'dataprovider/',
 'daumoa',
 'daviesbot',
 'daylifefeedfetcher',
@@ -1480,8 +1484,8 @@
 'spider',
 'sucker',
 'validator',
-'bot[\s_+:,\.\;\/\\-]',
-'[\s_+:,\.\;\/\\-]bot',
+'bot[\s_+:,\.;/\\-]',
+'[\s_+:,\.;/\\-]bot',
 'curl',
 'php',
 'ruby/',
@@ -1915,7 +1919,7 @@
 'custo','custo',
 'cyberspyder','cyberspyder',
 'datafountains/dmoz_downloader','datafountains/dmoz_downloader',
-'dataprovider\.com','dataprovider.com',
+'dataprovider/','dataprovider.com',
 'daumoa','daumoa',
 'daviesbot','daviesbot',
 'daylifefeedfetcher','daylifefeedfetcher',
@@ -2572,8 +2576,8 @@
 'spider','spider',
 'sucker','sucker',
 'validator','validator',
-'bot[\s_+:,\.\;\/\\-]','Unknown robot identified by bot\*',
-'[\s_+:,\.\;\/\\-]bot','Unknown robot identified by \*bot',
+'bot[\s_+:,\.;/\\-]','Unknown robot identified by bot\*',
+'[\s_+:,\.;/\\-]bot','Unknown robot identified by \*bot',
 'curl','Curl',
 'php','A PHP script',
 'ruby/','Ruby script',
