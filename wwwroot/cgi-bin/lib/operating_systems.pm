@@ -86,6 +86,8 @@
 'linux(.*)white\sbox',
 'linux(.*)zenwalk',
 'linux',
+'android',
+'debian',
 # Hurd family
 'gnu.hurd',
 # BSDs family
@@ -201,7 +203,9 @@
 'linux(.*)vine','linuxvine',
 'linux(.*)white\sbox','linuxwhitebox',
 'linux(.*)zenwalk','linuxzenwalk',
-'linux','linux', 'akregator', 'linux',
+'linux','linux',
+'android','linuxandroid',
+'debian','linuxdebian',
 # Hurd family
 'gnu.hurd','gnu',
 # BSDs family (bsdyyy)
@@ -235,6 +239,7 @@
 'palmos','palmos',
 'syllable','syllable',
 # Miscellaneous OS
+'akregator', 'linux',
 'blackberry','blackberry',
 'cp/m','cp/m',
 'crayos','crayos',

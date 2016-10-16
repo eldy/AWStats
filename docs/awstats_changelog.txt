@@ -119,7 +119,7 @@ New features/improvements:
   and HTTP status 206 is tracked as download continuation
 - Can use wrapper with parameters in WrapperScript parameter.
 - Change to allow usage of AWStats inside a plugin
-  for Opensource Dolibarr ERP & CRM software (http://www.dolibarr.org).
+  for Opensource Dolibarr ERP & CRM software (https://www.dolibarr.org).
   
 Thanks to Chris Larsen (author of most thoses changes).
 
