@@ -27,6 +27,7 @@
 'audio',     'Audio file',
 'video',     'Video file',
 'jscript',   'JavaScript file',
+'json',      'JavaScript Object Notation file',
 'vbs',       'Visual Basic script',
 'conf',      'Config file',
 'css',       'Cascading Style Sheet file',
@@ -193,6 +194,7 @@
 'css',['css',''],
 'ini',['conf',''],
 'dtd',['dtd',''],
+'json',['json',''],
 # Program
 'exe',['runtime',''],
 'jnlp',['jnlp',''],
