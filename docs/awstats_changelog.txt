@@ -1,6 +1,20 @@
 AWStats Changelog
 -----------------
 
+***** 7.6 *****
+
+- Security fix: "|" not allowed into DirLang parameter.
+- Security fix: More restrictive rule for using AWSTATS_ENABLE_CONFIG_DIR.
+- Update robots database.
+- Fix OS database.
+- Update/fix of documentation.
+- Add missing country flag for "el".
+- Add partial support for pure-ftpd stats format in method field.
+- Add support for macOS Sierra.
+- Add web fonts to default NotPageList, add support for GPX and JSON files
+- 
+
+
 ***** 7.5 *****
 
 - Compatibility with Perl 5.22
