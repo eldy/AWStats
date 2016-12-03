@@ -55,6 +55,7 @@
 'ipad',
 'ipod',
 # Macintosh OS family
+'mac[_+ ]os[_+ ]x[_+ ]10[_\.]12',
 'mac[_+ ]os[_+ ]x[_+ ]10[_\.]11',
 'mac[_+ ]os[_+ ]x[_+ ]10[_\.]10',
 'mac[_+ ]os[_+ ]x[_+ ]10[_\.]9',
@@ -176,6 +177,7 @@
 'ipad','ios_ipad', #Must be Before Mac OS Family
 'ipod','ios_ipod',  #Must be Before Mac OS Family
 # Macintosh OS family
+'mac[_+ ]os[_+ ]x[_+ ]10[_\.]12','macosx12',
 'mac[_+ ]os[_+ ]x[_+ ]10[_\.]11','macosx11',
 'mac[_+ ]os[_+ ]x[_+ ]10[_\.]10','macosx10',
 'mac[_+ ]os[_+ ]x[_+ ]10[_\.]9','macosx9',
@@ -279,6 +281,7 @@
 'winunknown','Windows (unknown version)',
 'winxbox','<a href="http://www.xbox.com/" title="Microsoft XBOX home page [new window]" target="_blank">Microsoft XBOX</a>',
 # Macintosh OS
+'macosx12','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank">Mac OS X 10.12 Sierra</a>',
 'macosx11','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank">Mac OS X 10.11 El Capitan</a>',
 'macosx10','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank">Mac OS X 10.10 Yosemite</a>',
 'macosx9','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank">Mac OS X 10.9 Mavericks</a>',
