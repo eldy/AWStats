@@ -36,8 +36,8 @@ use File::Spec;
 # Defines
 #------------------------------------------------------------------------------
 use vars qw/ $REVISION $VERSION /;
-$REVISION = '20160301';
-$VERSION  = "7.5 (build $REVISION)";
+$REVISION = '20161204';
+$VERSION  = "7.6 (build $REVISION)";
 
 # ----- Constants -----
 use vars qw/
@@ -1730,11 +1730,22 @@ sub Read_Config {
 			if ($_ eq $configdir) { $outsidedefaultvalue=0; last; }
 		}
 
-		# If from CGI, overwriting of configdir with a value that differs from a defautl value
-		# is only possible if AWSTATS_ENABLE_CONFIG_DIR defined
-		if ($ENV{'GATEWAY_INTERFACE'} && $outsidedefaultvalue && ! $ENV{"AWSTATS_ENABLE_CONFIG_DIR"})
+		# If from CGI, overwriting of configdir with a value that differs from a default value
+		# is only possible if AWSTATS_ENABLE_CONFIG_DIR defined.
+		# AWSTATS_ENABLE_CONFIG_DIR must contains dir allowed
+		if ($ENV{'GATEWAY_INTERFACE'} && $outsidedefaultvalue)
 		{
-			error("Sorry, to allow overwriting of configdir parameter, from an AWStats CGI page, with a non default value, environment variable AWSTATS_ENABLE_CONFIG_DIR must be set to 1. For example, by adding the line 'SetEnv AWSTATS_ENABLE_CONFIG_DIR 1' in your Apache config file or into a .htaccess file.");
+			if (! $ENV{"AWSTATS_ENABLE_CONFIG_DIR"})
+			{
+				error("Sorry, to allow overwriting of configdir parameter, from an AWStats CGI page, with a non default value, environment variable AWSTATS_ENABLE_CONFIG_DIR must be set to full path of allowed directory. For example, by adding the line 'SetEnv AWSTATS_ENABLE_CONFIG_DIR /mydirofconf' in your Apache config file or into a .htaccess file.");
+			}
+			else
+			{
+				if ($configdir !~ $ENV{"AWSTATS_ENABLE_CONFIG_DIR"})
+				{
+					error("Sorry, using configdir parameter from an AWStats CGI page is possible only if parameter configdir is a directory defined into environment variable AWSTATS_ENABLE_CONFIG_DIR");
+				}
+			}
 		}
 
 		@PossibleConfigDir = ("$configdir");
@@ -2356,16 +2367,21 @@ sub Read_Ref_Data {
 #------------------------------------------------------------------------------
 sub Read_Language_Data {
 
-# Check lang files in common possible directories :
-# Windows and standard package:         	"$DIR/lang" (lang in same dir than awstats.pl)
-# Debian package :                    		"/usr/share/awstats/lang"
+	# Check lang files in common possible directories :
+	# Windows and standard package:         	"$DIR/lang" (lang in same dir than awstats.pl)
+	# Debian package :                    		"/usr/share/awstats/lang"
 	my @PossibleLangDir =
 	  ( "$DirLang", "$DIR/lang", "/usr/share/awstats/lang" );
 
 	my $FileLang = '';
 	foreach (@PossibleLangDir) {
 		my $searchdir = $_;
-		if (   $searchdir
+		if ( $searchdir =~ /\|/ )		# We refuse path that contains "|" 
+		{
+			error("DirLang parameter can't contains character |");
+			next;	
+		}
+		if ( $searchdir
 			&& ( !( $searchdir =~ /\/$/ ) )
 			&& ( !( $searchdir =~ /\\$/ ) ) )
 		{
