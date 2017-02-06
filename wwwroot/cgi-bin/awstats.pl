@@ -9193,7 +9193,7 @@ sub DefinePerlParsingFormat {
 "([^$LogSeparatorWithoutStar]+T[^$LogSeparatorWithoutStar]+)(Z|[-+\.]\\d\\d[:\\.\\dZ]*)?";
 			}
 
-			# Special for methodurl and methodurlnoprot
+			# Special for methodurl, methodurlprot and methodurlnoprot
 			elsif ( $f =~ /%methodurl$/ ) {
 				$pos_method = $i;
 				$i++;
@@ -9202,9 +9202,18 @@ sub DefinePerlParsingFormat {
 				$i++;
 				push @fieldlib, 'url';
 				$PerlParsingFormat .=
-
 #"\\\"([^$LogSeparatorWithoutStar]+) ([^$LogSeparatorWithoutStar]+) [^\\\"]+\\\"";
 "\\\"([^$LogSeparatorWithoutStar]+) ([^$LogSeparatorWithoutStar]+)(?: [^\\\"]+|)\\\"";
+			}
+			elsif ( $f =~ /%methodurlprot$/ ) {
+				$pos_method = $i;
+				$i++;
+				push @fieldlib, 'method';
+				$pos_url = $i;
+				$i++;
+				push @fieldlib, 'url';
+				$PerlParsingFormat .=
+"\\\"([^$LogSeparatorWithoutStar]+) ([^\\\"]+) ([^\\\"]+)\\\"";
 			}
 			elsif ( $f =~ /%methodurlnoprot$/ ) {
 				$pos_method = $i;
