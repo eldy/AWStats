@@ -53,7 +53,7 @@ sub Init_hashfiles {
 
 
 #-----------------------------------------------------------------------------
-# PLUGIN FUNTION: SearchFile_pluginname
+# PLUGIN FUNCTION: SearchFile_pluginname
 # UNIQUE: YES (Only one plugin using this function can be loaded)
 #-----------------------------------------------------------------------------
 sub SearchFile_hashfiles {

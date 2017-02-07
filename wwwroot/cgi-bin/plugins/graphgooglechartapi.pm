@@ -100,7 +100,7 @@ sub ShowGraph_graphgooglechartapi() {
 	if ($imagewidth < 1){$imagewidth=640;}
 
 	if ($type eq 'month') {
-		$labellength=3;
+		$labellength=4;
 		print Get_Img_Tag(Graph_Monthly(), $title);
 	}
 	elsif ($type eq 'daysofmonth') {

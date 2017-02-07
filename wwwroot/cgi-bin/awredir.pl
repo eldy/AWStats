@@ -43,9 +43,9 @@ $TXTFILE="awredir.trc";			# Tracking file (if TRACEFILE=1)
 $EXCLUDEIP="127.0.0.1";
 
 # Put here a personalised value.
-# If you dont want to use the security key in link to avoid use of awredir by an external web
-# site you can set this to empty string, but warning this is a security hole as everybody
-# can use awredir on your site to redirect to any web site (even non legal web sites). 
+# If you do not want to use the security key in link to avoid use of awredir by an external web
+# site, you can set this to the empty string, but be warned that this is a security hole as everybody
+# can use awredir on your site to redirect to any web site (including illegal web sites).
 $KEYFORMD5='YOURKEYFORMD5';
 # Put here url pattern you want to allow event if parameter key is not provided.
 $AUTHORIZEDWITHOUTKEY='';

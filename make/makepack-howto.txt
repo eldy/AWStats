@@ -1,5 +1,5 @@
 ***** Actions to build a beta or release *****
-- Check all files are commited.
+- Check all files are committed.
 - Update file tools/webmin/awstats/module.info
 - Update file README.md
 - Update version number in doc files

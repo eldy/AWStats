@@ -53,7 +53,7 @@ New features/improvements:
 - Better description for ACL page.
 
 Fixes:
-- Translation was in french for some texts, whatever was choosed language.
+- Translation was in french for some texts, regardless of the chosen language.
 
 
 
@@ -69,7 +69,7 @@ New features/improvements:
   ShowWormsStats
 - Removed LinkToIPWhoIs and LinkToWhoIs obsolete parameters.
 - Module setup parameter awstats_conf has been removed since now
-  directories into wich you can scan/edit AWStats configuration files
+  directories into which you can scan/edit AWStats configuration files
   are defined in ACL users. Defined to /etc/awstats by default.
   Also added a link the the ACL page to edit this directory listing.
 - Added a streaming server log file type.

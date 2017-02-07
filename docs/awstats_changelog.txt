@@ -1,9 +1,32 @@
 AWStats Changelog
 -----------------
 
-***** 7.5 *****
-- Compatibility with Perl 5.22
+***** 7.6 *****
 
+- Security fix: "|" not allowed into DirLang parameter.
+- Security fix: More restrictive rule for using AWSTATS_ENABLE_CONFIG_DIR.
+- Update robots database.
+- Fix OS database.
+- Update/fix of documentation.
+- Add missing country flag for "el".
+- Add partial support for pure-ftpd stats format in method field.
+- Add support for macOS Sierra.
+- Add web fonts to default NotPageList, add support for GPX and JSON files
+- 
+
+
+***** 7.5 *****
+
+- Compatibility with Perl 5.22
+- Support detection of Edge browser with detail of version.
+- Update robots database
+- Add eot/woff/woff2 to mime.pm as fonts
+- Add .svgz to image list
+- Exclude groups.google from search engines
+- Add %time5 tag to support log format with iso time with timezone.
+- Add option DynamicDNSLookup to make DNS lookup during output instead
+  of during log analysis processing. 
+- Increase default value for MaxRowsInHTMLOutput
 
 
 ***** 7.4 *****
@@ -110,7 +133,7 @@ New features/improvements:
   and HTTP status 206 is tracked as download continuation
 - Can use wrapper with parameters in WrapperScript parameter.
 - Change to allow usage of AWStats inside a plugin
-  for Opensource Dolibarr ERP & CRM software (http://www.dolibarr.org).
+  for Opensource Dolibarr ERP & CRM software (https://www.dolibarr.org).
   
 Thanks to Chris Larsen (author of most thoses changes).
 

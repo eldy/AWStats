@@ -55,6 +55,7 @@
 'ipad',
 'ipod',
 # Macintosh OS family
+'mac[_+ ]os[_+ ]x[_+ ]10[_\.]12',
 'mac[_+ ]os[_+ ]x[_+ ]10[_\.]11',
 'mac[_+ ]os[_+ ]x[_+ ]10[_\.]10',
 'mac[_+ ]os[_+ ]x[_+ ]10[_\.]9',
@@ -86,6 +87,8 @@
 'linux(.*)white\sbox',
 'linux(.*)zenwalk',
 'linux',
+'android',
+'debian',
 # Hurd family
 'gnu.hurd',
 # BSDs family
@@ -115,7 +118,7 @@
 'inferno',
 'palmos',
 'syllable',
-# Miscellanous OS
+# Miscellaneous OS
 'blackberry',
 'cp/m',
 'crayos',
@@ -174,6 +177,7 @@
 'ipad','ios_ipad', #Must be Before Mac OS Family
 'ipod','ios_ipod',  #Must be Before Mac OS Family
 # Macintosh OS family
+'mac[_+ ]os[_+ ]x[_+ ]10[_\.]12','macosx12',
 'mac[_+ ]os[_+ ]x[_+ ]10[_\.]11','macosx11',
 'mac[_+ ]os[_+ ]x[_+ ]10[_\.]10','macosx10',
 'mac[_+ ]os[_+ ]x[_+ ]10[_\.]9','macosx9',
@@ -201,7 +205,9 @@
 'linux(.*)vine','linuxvine',
 'linux(.*)white\sbox','linuxwhitebox',
 'linux(.*)zenwalk','linuxzenwalk',
-'linux','linux', 'akregator', 'linux',
+'linux','linux',
+'android','linuxandroid',
+'debian','linuxdebian',
 # Hurd family
 'gnu.hurd','gnu',
 # BSDs family (bsdyyy)
@@ -234,7 +240,8 @@
 'inferno','inferno',
 'palmos','palmos',
 'syllable','syllable',
-# Miscellanous OS
+# Miscellaneous OS
+'akregator', 'linux',
 'blackberry','blackberry',
 'cp/m','cp/m',
 'crayos','crayos',
@@ -274,6 +281,7 @@
 'winunknown','Windows (unknown version)',
 'winxbox','<a href="http://www.xbox.com/" title="Microsoft XBOX home page [new window]" target="_blank">Microsoft XBOX</a>',
 # Macintosh OS
+'macosx12','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank">Mac OS X 10.12 Sierra</a>',
 'macosx11','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank">Mac OS X 10.11 El Capitan</a>',
 'macosx10','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank">Mac OS X 10.10 Yosemite</a>',
 'macosx9','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank">Mac OS X 10.9 Mavericks</a>',
@@ -339,7 +347,7 @@
 'inferno','<a href="http://www.vitanuova.com/inferno/" title="Inferno home page [new window]" target="_blank">Inferno</a>',
 'palmos','<a href="http://www.palm.com/" title="Palm OS home page [new window]" target="_blank">Palm OS</a>',
 'syllable','<a href="http://www.syllable.org/" title="Syllable home page [new window]" target="_blank">Syllable</a>',
-# Miscellanous OS
+# Miscellaneous OS
 'blackberry','BlackBerry',
 'cp/m','<a href="http://www.digitalresearch.biz/CPM.HTM" title="CP/M home page [new window]" target="_blank">CP/M</a>',
 'crayos','<a href="http://www.cray.com/" title="CrayOS home page [new window]" target="_blank">CrayOS</a>',

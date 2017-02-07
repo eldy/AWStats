@@ -101,9 +101,9 @@ while(1==1)
 	    chomp $bidon;
 	    $bidon =~ s/\r//g;
 	}
-	my @choosed=();
-	if ($bidon eq '0') { @choosed=@TESTLIST; }
-	else { push @choosed, $TESTLIST[$bidon-1]; }
+	my @chosen=();
+	if ($bidon eq '0') { @chosen=@TESTLIST; }
+	else { push @chosen, $TESTLIST[$bidon-1]; }
 	
 	# Option output
 	print "Choose output option (browserdetail, osdetail, ...)\n";
@@ -115,7 +115,7 @@ while(1==1)
 	if ($bidon) { $OPTIONOUTPUT=$bidon; }
 	
 	my $command=my $ret='';
-	foreach my $test (@choosed) {
+	foreach my $test (@chosen) {
 		print "\n----- Lancement du test $test -----\n";
 	
 		unlink("$DIRRESULT/dnscachelastupdate.$test.txt");

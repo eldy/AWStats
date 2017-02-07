@@ -26,13 +26,14 @@
 # Relocated from main file for easier editing
 %BrowsersFamily = (
 	'msie'      => 1,
-	'firefox'   => 2,
-	'netscape'  => 3,
-	'svn'       => 4,
-	'opera'     => 5,
-	'safari'    => 6,
-	'chrome'    => 7,
-	'konqueror' => 8
+	'edge'      => 2,
+	'firefox'   => 3,
+	'netscape'  => 4,
+	'svn'       => 5,
+	'opera'     => 6,
+	'safari'    => 7,
+	'chrome'    => 8,
+	'konqueror' => 9
 );
 
 # BrowsersSearchIDOrder
@@ -270,6 +271,7 @@
 'konqueror','Konqueror',
 'svn', 'Subversion client', 
 'msie','MS Internet Explorer',
+'edge','Edge',
 'netscape','Netscape',
 
 'elinks','ELinks',
@@ -522,6 +524,7 @@
 'konqueror','konqueror',
 'svn','subversion',
 'msie','msie',
+'edge','edge',
 'netscape','netscape',
 
 'firebird','phoenix',
@@ -747,6 +750,9 @@
 
 
 # Browsers examples by engines
+#
+# -- Edge --
+# Mozilla/5.0 (Windows NT 10.0; <64-bit tags>) AppleWebKit/<WebKit Rev> (KHTML, like Gecko) Chrome/<Chrome Rev> Safari/<WebKit Rev> Edge/<EdgeHTML Rev>.<Windows Build>
 #
 # -- Mosaic --
 # MSIE		4.0  	Mozilla/4.0 (compatible; MSIE 5.0; Windows 98; DigExt; KITV4 Wanadoo; KITV5 Wanadoo)

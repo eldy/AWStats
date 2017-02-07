@@ -6,9 +6,9 @@
 # To run test: test.pl
 # To run test: perl '/home/ldestailleur/git/awstats/wwwroot/cgi-bin/awstats.pl' -config=/home/ldestailleur/git/awstats/test/awstats/conf/awstats.testglobal.conf --debug=3
 # ----------------------------------------------------------------------------
-# This sample log file contains 13 different IPs that are :
-# Viewed traffic:     8 different true human visitors making 9 human visits
-#                     24 hits on pages and 15 hits not pages (39 hits)
+# This sample log file contains 14 different IPs that are :
+# Viewed traffic:     9 different true human visitors making 10 human visits
+#                     25 hits on pages and 15 hits not pages (40 hits)
 # Not viewed traffic: 11 pages (7 from 80.8.55.5, 1 worm, 3 special status code), 15 hits
 # ----------------------------------------------------------------------------
 # 80.8.55.1  2 visits (start at 00:00:00 and at 12:00:00 with both entry page on /)
@@ -25,6 +25,7 @@
 # 80.8.55.11 1 visit that come from android phone
 # 80.8.55.12 1 visit that come from air
 # 80.8.55.13 1 visit that come from ie 11
+# 80.8.55.14 1 visit that come from edge
 
 80.8.55.1 - - [01/Jan/2001:00:00:10 +0100] "GET /page1.html HTTP/1.0" 200 7009 "-" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
 80.8.55.1 - - [01/Jan/2001:00:00:00 +0100] "GET / HTTP/1.0" 200 7009 "http://www.sitereferer/cgi-bin/search.pl?q=a" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
@@ -95,3 +96,6 @@
 80.8.55.12 - - [01/Jan/2001:17:20:00 -0300] "GET /page1.html HTTP/1.1" 200 70476 "-" "Mozilla/5.0 (Windows; U; en-US) AppleWebKit/526.9+ (KHTML, like Gecko) AdobeAIR/1.5"
 
 80.8.55.13 - - [01/Jan/2001:21:00:00 -0300] "GET /page1.html HTTP/1.1" 200 70476 "-" "Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko"
+
+80.8.55.14 - - [01/Jan/2001:21:00:00 -0300] "GET /page1.html HTTP/1.1" 200 70476 "-" "Mozilla/5.0 (Windows NT 10.0; abc) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10136"
+

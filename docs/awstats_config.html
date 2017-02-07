@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>AWStats Documentation - Configuration directives and parameters</title>
 <link rel="stylesheet" href="styles.css" type="text/css">
-<link href="https://plus.google.com/+LaurentDestailleur" rel="publisher" />
+<link href="https://plus.google.com/+LaurentDestailleur-Open-Source-Expert" rel="publisher" />
 </head>
 
 <body topmargin="10" leftmargin="5">
@@ -19,7 +19,7 @@
 <td align="center" bgcolor="#9999cc"><a href="/"><img src="images/awstats_logo6.png" border="0"></a></td>
 <td align="center" bgcolor="#9999cc">
 <br>
-<font style="font-family: arial,helvetica,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 16pt; line-height: normal; font-size-adjust: none; font-stretch: normal;" color="#eeeeff"><b>AWStats logfile analyzer 7.5 Documentation</b></font><br>
+<font style="font-family: arial,helvetica,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 16pt; line-height: normal; font-size-adjust: none; font-stretch: normal;" color="#eeeeff"><b>AWStats logfile analyzer 7.6 Documentation</b></font><br>
 <br>
 </td>
 <td align="center" bgcolor="#9999cc">
@@ -49,6 +49,7 @@ when reading it), follow the example:<br>
 </li><li><a href="#LogFormat">LogFormat</a>
 </li><li><a href="#LogSeparator">LogSeparator</a>
 </li><li><a href="#DNSLookup">DNSLookup</a>
+</li><li><a href="#DynamicDNSLookup">DynamicDNSLookup</a>
 </li><li><a href="#DirData">DirData</a>
 </li><li><a href="#DirCgi">DirCgi</a>
 </li><li><a href="#DirIcons">DirIcons</a>
@@ -404,6 +405,23 @@ when reading it), follow the example:<br>
 <br># Default: 2
 <br># 
 <br>DNSLookup=2
+
+<br><br><hr>
+
+<a name="DNSLookup"><b>DNSLookup</b></a><br>
+<b>Version : </b>7.5+<br>
+<br># For very large sites, setting DNSLookup to 0 (or 2) might be the only
+<br># reasonable choice. DynamicDNSLookup allows to resolve host names for
+<br># items shown in html tables only, when data is output on reports instead
+<br># of resolving once during log analysis step. 
+<br># Possible values:
+<br># 0 - No dynamic DNS lookup 
+<br># 1 - Dynamic DNS lookup enabled
+<br># 2 - Dynamic DNS lookup enabled (including static DNS cache file as a second
+<br>#     source)
+<br># Default: 0
+<br>#
+<br>DynamicDNSLookup=0
 
 <br><br><hr>
 
@@ -1831,7 +1849,7 @@ all ExtraSection...X directives and how to use them.
 <!-- BEGIN_SOCIAL_NETWORKS -->
 <div class="htmldoc-ignore">
 <!-- google plus -->
-<span style="color: #bbb; font-weight: normal;">Article written by <a href="https://plus.google.com/+LaurentDestailleur?rel=author" rel="author" style="color: #ccc; font-weight: normal;">Laurent Destailleur</a>.</span><br>
+<span style="color: #bbb; font-weight: normal;">Article written by <a href="https://plus.google.com/+LaurentDestailleur-Open-Source-Expert?rel=author" rel="author" style="color: #ccc; font-weight: normal;">Laurent Destailleur</a>.</span><br>
 <br>
 <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
 <g:plusone></g:plusone>

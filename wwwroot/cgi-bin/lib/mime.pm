@@ -8,16 +8,16 @@
 #package AWSMIME;
 
 # MimeHashFamily
-# This is a hash table of mime groupings and descriptions. 
-# Report icons will appear if names the same as a family, e.g.
-# if you have a "text.png" icon in the icon/mime directory, the
-# report will load the icon
-# Format: 	'family', 'descriptive text',
+# This is a hash table of mime groupings and descriptions.
+# Report icons will appear if file name is the same as a family,
+# e.g. if you have a "text.png" icon in the icon/mime directory,
+# the report will load the icon
+# Format: 'family', 'descriptive text',
 #---------------------------------------------------------------
 %MimeHashFamily = (
 'text',      'Text file',
 'page',      'HTML or XML static page',
-'script',    'Dynamic Html page or Script file',
+'script',    'Dynamic HTML page or Script file',
 'pl',        'Dynamic Perl Script file',
 'php',       'Dynamic PHP Script file',
 'image',     'Image',
@@ -26,7 +26,8 @@
 'archive',   'Archive',
 'audio',     'Audio file',
 'video',     'Video file',
-'jscript',	 'JavaScript file',
+'jscript',   'JavaScript file',
+'json',      'JavaScript Object Notation file',
 'vbs',       'Visual Basic script',
 'conf',      'Config file',
 'css',       'Cascading Style Sheet file',
@@ -45,11 +46,12 @@
 'ttf',       'TrueType scalable font file',
 'fon',       'Font file',
 'pdf',       'Adobe Acrobat file',
-'dotnet',	 'Dot Net Dynamic Script or File',
-'mdb', 		 'MS Database Object',
-'crystal',	 'Crystal Reports data or file',
-'ooffice',	 'Open Office Document',
-'encrypt',	 'Encrypted document',
+'dotnet',    'Dot Net Dynamic Script or File',
+'mdb',       'MS Database Object',
+'crystal',   'Crystal Reports data or file',
+'ooffice',   'Open Office Document',
+'encrypt',   'Encrypted document',
+'gpx',       'GPS Exchange Format file',
 );
 
 # MimeHashLib
@@ -57,11 +59,11 @@
 # and the array is a list of family and file type, e.g. 'd' for download
 # If a file does not have a type defined, it is counted as a page. Each
 # mime entry can have only one type
-# Format:	'extension', ['family', 'type'],
+# Format: 'extension', ['family', 'type'],
 # Valid Types:
-#		i - image
-#		d - download
-#		p - page
+#   i - image
+#   d - download
+#   p - page
 #---------------------------------------------------------------
 %MimeHashLib=(
 # Text file
@@ -82,7 +84,7 @@
 # HTML Dynamic pages or script
 'asp',['script',''],
 'aspx',['dotnet',''],
-'ashx',['dotnet',''], 
+'ashx',['dotnet',''],
 'asmx',['dotnet',''],
 'axd', ['dotnet',''],
 'cfm',['script',''],
@@ -138,6 +140,7 @@
 'lit',['lit','d'],
 'mdb',['mdb',''],
 'rpt',['crystal',''],
+'gpx',['gpx','d'],
 # Package
 'rpm',[($LogType eq 'S'?'audio':'package'),'d'],
 'deb',['package','d'],
@@ -191,6 +194,7 @@
 'css',['css',''],
 'ini',['conf',''],
 'dtd',['dtd',''],
+'json',['json',''],
 # Program
 'exe',['runtime',''],
 'jnlp',['jnlp',''],

@@ -1,4 +1,4 @@
-﻿# Latviešu valodas ziņojumu fails (madmaster@gobbo.caves.lv)
+# Latviešu valodas ziņojumu fails (madmaster@gobbo.caves.lv)
 # Updated by edvinsma@inbox.lv 2004/01/24 00:40:00
 # $Revision$ - $Date$
 PageCode=utf-8

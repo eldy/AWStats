@@ -3,7 +3,7 @@
 -----------------------------------
 
 AWStats (Advanced Web Statistics) module for Dolibarr is an add-on for 
-Dolibarr ERP & CRM web software <http://www.dolibarr.org>
+Dolibarr ERP & CRM web software <https://www.dolibarr.org>
 Once AWStats is installed, if you install this module into Dolibarr, you will
 be able to read AWStats statistcs from your Dolibarr interface. 
 
@@ -26,7 +26,7 @@ Install dwonloaded package (file .zip) by unzipping it into your Dolibarr root d
 ---------------------------------------
 Copyright (C) 2000-2014 - Laurent Destailleur - eldy@users.sourceforge.net - <http://www.nltechno.com>
 
-Laurent Destailleur is also the project leader of Dolibarr ERP CRM Open-Source project <http://www.dolibarr.org>,
+Laurent Destailleur is also the project leader of Dolibarr ERP CRM Open-Source project <https://www.dolibarr.org>,
 and author of AWBot, CVSChangeLogBuilder, DoliDroid and founder of DoliCloud SaaS <http://www.dolicloud.com>.
 
 This program is free software; you can redistribute it and/or modify

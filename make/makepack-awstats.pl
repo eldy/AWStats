@@ -230,6 +230,32 @@ foreach my $target (keys %CHOOSEDPUBLISH) {
 
 if ($nboftargetok) {
 	
+	# Update GIT tag if required
+	#---------------------------
+	if ($nbofpublishneedtag)
+	{
+		print "Go to directory $SOURCE\n";
+		$olddir=getcwd();
+		chdir("$SOURCE");
+		
+		print 'Run git tag -a -m "AWSTATS_'.$MAJOR.'_'.$MINOR.'" "AWSTATS_'.$MAJOR.'_'.$MINOR.'"'."\n";
+		$ret=`git tag -a -m "AWSTATS_${MAJOR}_${MINOR}" "AWSTATS_${MAJOR}_${MINOR}" 2>&1`;
+		if ($ret =~ /(already exists|existe déjà)/)
+		{
+			print "WARNING: Tag ".$MAJOR.'.'.$MINOR." already exists. Overwrite (y/N) ? ";
+			$QUESTIONOVERWRITETAG=<STDIN>; 
+			chomp($QUESTIONOVERWRITETAG);
+			if ($QUESTIONOVERWRITETAG =~ /(o|y)/)
+			{
+				print 'Run git tag -a -f -m "'.$MAJOR.'.'.$MINOR.'" "'.$MAJOR.'.'.$MINOR.'"'."\n";
+				$ret=`git tag -a -f -m "$MAJOR.$MINOR" "$MAJOR.$MINOR"`;
+			}
+		}
+		print 'Run git push --tags'."\n";
+		$ret=`git push --tags`;
+		chdir("$olddir");
+	}
+		
 	# Update buildroot
 	#-----------------
 	if (! $copyalreadydone) {

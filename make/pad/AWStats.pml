@@ -44,7 +44,7 @@
 			<Char_Desc_450>AWStats is a free powerful and featureful web server logfile analyzer (Perl script) that shows you all your Web statistics including visits, unique visitors, pages, hits, rush hours, os, browser's versions, search engines, keywords, robots visits, broken links and more... Works with all major web, wap, proxy servers and some mail and ftp servers. Works as a CGI and/or from command line. Distributed under GNU General Public License.</Char_Desc_450>
 			<Char_Desc_2000>AWStats is a free powerful and featureful tool that generates advanced web (but also ftp or mail) server
 
-statistics, graphically. This log analyzer works as a CGI or from command line and shows you all possible information your log contains, in few graphical web pages like visits, unique vistors, authenticated users, pages, domains/countries, OS busiest times, robot visits, type of files, search engines/keywords used, visits duration, screen size, HTTP errors and more...
+statistics, graphically. This log analyzer works as a CGI or from command line and shows you all possible information your log contains, in few graphical web pages like visits, unique visitors, authenticated users, pages, domains/countries, OS busiest times, robot visits, type of files, search engines/keywords used, visits duration, screen size, HTTP errors and more...
 
 Statistics can be updated from a browser or your scheduler.
 

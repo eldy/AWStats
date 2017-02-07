@@ -36,8 +36,8 @@ use File::Spec;
 # Defines
 #------------------------------------------------------------------------------
 use vars qw/ $REVISION $VERSION /;
-$REVISION = '20150921';
-$VERSION  = "7.5 (build $REVISION)";
+$REVISION = '20161204';
+$VERSION  = "7.7 (build $REVISION)";
 
 # ----- Constants -----
 use vars qw/
@@ -182,7 +182,7 @@ $BuildHistoryFormat    = 'text';
 $ExtraTrackedRowsLimit = 500;
 $DatabaseBreak         = 'month';
 use vars qw/
-  $DebugMessages $AllowToUpdateStatsFromBrowser $EnableLockForUpdate $DNSLookup $AllowAccessFromWebToAuthenticatedUsersOnly
+  $DebugMessages $AllowToUpdateStatsFromBrowser $EnableLockForUpdate $DNSLookup $DynamicDNSLookup $AllowAccessFromWebToAuthenticatedUsersOnly
   $BarHeight $BarWidth $CreateDirDataIfNotExists $KeepBackupOfHistoricFiles
   $NbOfLinesParsed $NbOfLinesDropped $NbOfLinesCorrupted $NbOfLinesComment $NbOfLinesBlank $NbOfOldLines $NbOfNewLines
   $NbOfLinesShowsteps $NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile $ArchiveLogRecords
@@ -199,6 +199,7 @@ use vars qw/
 	$AllowToUpdateStatsFromBrowser,
 	$EnableLockForUpdate,
 	$DNSLookup,
+	$DynamicDNSLookup,
 	$AllowAccessFromWebToAuthenticatedUsersOnly,
 	$BarHeight,
 	$BarWidth,
@@ -241,7 +242,7 @@ use vars qw/
 	$DecodePunycode
   )
   = (
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
   );
 use vars qw/
@@ -358,7 +359,7 @@ use vars qw/
 use vars qw/
   @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_list2 @RobotsSearchIDOrder_listgen
   @SearchEnginesSearchIDOrder_list1 @SearchEnginesSearchIDOrder_list2 @SearchEnginesSearchIDOrder_listgen
-  @BrowsersSearchIDOrder @OSSearchIDOrder @WordsToExtractSearchUrl @WordsToCleanSearchUrl
+  @BrowsersSearchIDOrder @OSSearchIDOrder @WordsToCleanSearchUrl
   @WormsSearchIDOrder
   @RobotsSearchIDOrder @SearchEnginesSearchIDOrder
   @_from_p @_from_h
@@ -1729,11 +1730,22 @@ sub Read_Config {
 			if ($_ eq $configdir) { $outsidedefaultvalue=0; last; }
 		}
 
-		# If from CGI, overwriting of configdir with a value that differs from a defautl value
-		# is only possible if AWSTATS_ENABLE_CONFIG_DIR defined
-		if ($ENV{'GATEWAY_INTERFACE'} && $outsidedefaultvalue && ! $ENV{"AWSTATS_ENABLE_CONFIG_DIR"})
+		# If from CGI, overwriting of configdir with a value that differs from a default value
+		# is only possible if AWSTATS_ENABLE_CONFIG_DIR defined.
+		# AWSTATS_ENABLE_CONFIG_DIR must contains dir allowed
+		if ($ENV{'GATEWAY_INTERFACE'} && $outsidedefaultvalue)
 		{
-			error("Sorry, to allow overwriting of configdir parameter, from an AWStats CGI page, with a non default value, environment variable AWSTATS_ENABLE_CONFIG_DIR must be set to 1. For example, by adding the line 'SetEnv AWSTATS_ENABLE_CONFIG_DIR 1' in your Apache config file or into a .htaccess file.");
+			if (! $ENV{"AWSTATS_ENABLE_CONFIG_DIR"})
+			{
+				error("Sorry, to allow overwriting of configdir parameter, from an AWStats CGI page, with a non default value, environment variable AWSTATS_ENABLE_CONFIG_DIR must be set to full path of allowed directory. For example, by adding the line 'SetEnv AWSTATS_ENABLE_CONFIG_DIR /mydirofconf' in your Apache config file or into a .htaccess file.");
+			}
+			else
+			{
+				if ($configdir !~ $ENV{"AWSTATS_ENABLE_CONFIG_DIR"})
+				{
+					error("Sorry, using configdir parameter from an AWStats CGI page is possible only if parameter configdir is a directory defined into environment variable AWSTATS_ENABLE_CONFIG_DIR");
+				}
+			}
 		}
 
 		@PossibleConfigDir = ("$configdir");
@@ -2306,7 +2318,7 @@ sub Read_Ref_Data {
 		);
 	}
 	if ( ( scalar keys %BrowsersHashIDLib )
-		&& @BrowsersSearchIDOrder != ( scalar keys %BrowsersHashIDLib ) - 8 )
+		&& @BrowsersSearchIDOrder != ( scalar keys %BrowsersHashIDLib ) - ( scalar keys %BrowsersFamily ) )
 	{
 		#foreach (sort keys %BrowsersHashIDLib)
 		#{
@@ -2319,8 +2331,8 @@ sub Read_Ref_Data {
 		error(  "Not same number of records of BrowsersSearchIDOrder ("
 			  . (@BrowsersSearchIDOrder)
 			  . " entries) and BrowsersHashIDLib ("
-			  . ( ( scalar keys %BrowsersHashIDLib ) - 8 )
-			  . " entries without firefox,opera,chrome,safari,konqueror,svn,msie,netscape) in Browsers database. May be you updated AWStats without updating browsers.pm file or you made changed into browsers.pm not correctly. Check your file "
+			  . ( ( scalar keys %BrowsersHashIDLib ) - ( scalar keys %BrowsersFamily ) )
+			  . " entries without firefox,opera,chrome,safari,konqueror,svn,msie,netscape,edge) in Browsers database. May be you updated AWStats without updating browsers.pm file or you made changed into browsers.pm not correctly. Check your file "
 			  . $FilePath{"browsers.pm"}
 			  . " is up to date." );
 	}
@@ -2355,16 +2367,21 @@ sub Read_Ref_Data {
 #------------------------------------------------------------------------------
 sub Read_Language_Data {
 
-# Check lang files in common possible directories :
-# Windows and standard package:         	"$DIR/lang" (lang in same dir than awstats.pl)
-# Debian package :                    		"/usr/share/awstats/lang"
+	# Check lang files in common possible directories :
+	# Windows and standard package:         	"$DIR/lang" (lang in same dir than awstats.pl)
+	# Debian package :                    		"/usr/share/awstats/lang"
 	my @PossibleLangDir =
 	  ( "$DirLang", "$DIR/lang", "/usr/share/awstats/lang" );
 
 	my $FileLang = '';
 	foreach (@PossibleLangDir) {
 		my $searchdir = $_;
-		if (   $searchdir
+		if ( $searchdir =~ /\|/ )		# We refuse path that contains "|" 
+		{
+			error("DirLang parameter can't contains character |");
+			next;	
+		}
+		if ( $searchdir
 			&& ( !( $searchdir =~ /\/$/ ) )
 			&& ( !( $searchdir =~ /\\$/ ) ) )
 		{
@@ -3253,7 +3270,7 @@ sub Read_Plugins {
 							);
 						}
 
-						# Plugin load and init successfull
+						# Plugin load and init successful
 						foreach my $elem ( split( /\s+/, $initret ) ) {
 
 							# Some functions can only be plugged once
@@ -3595,7 +3612,7 @@ sub Read_History_With_TmpUpdate {
 		}
 		if ( !$withupdate && $HTMLOutput{'main'} && $ShowKeywordsStats ) {
 			$SectionsToLoad{'keywords'} = $order++;
-		}    # If we update, dont need to load
+		}    # If we update, there is no need to load
 		     # Others
 		if (   $UpdateStats
 			|| $MigrateStats
@@ -7928,7 +7945,7 @@ sub Sanitize {
 #				cookie used for AWStats server sessions. Attacker can this way caught this
 #				cookie and used it to go on AWStats server like original visitor. For this
 #				resaon, parameter received by AWStats must be sanitized by this function
-#				before beeing put inside a web page.
+#				before being put inside a web page.
 # Parameters:   stringtoclean
 # Input:        None
 # Output:       None
@@ -7996,7 +8013,7 @@ sub FileCopy {
 # Parameters:   query
 # Input:        None
 # Output:       None
-# Return:		formated query
+# Return:		formatted query
 #------------------------------------------------------------------------------
 # TODO Appeller cette fonction partout ou il y a des NewLinkParams
 sub CleanNewLinkParamsFrom {
@@ -8541,7 +8558,7 @@ sub PrintCLIHelp{
 		'browsers',       'domains', 'operating_systems', 'robots',
 		'search_engines', 'worms'
 	);
-	print "----- $PROG $VERSION (c) 2000-2015 Laurent Destailleur -----\n";
+	print "----- $PROG $VERSION (c) 2000-2016 Laurent Destailleur -----\n";
 	print
 "AWStats is a free web server logfile analyzer to show you advanced web\n";
 	print "statistics.\n";
@@ -9176,7 +9193,7 @@ sub DefinePerlParsingFormat {
 "([^$LogSeparatorWithoutStar]+T[^$LogSeparatorWithoutStar]+)(Z|[-+\.]\\d\\d[:\\.\\dZ]*)?";
 			}
 
-			# Special for methodurl and methodurlnoprot
+			# Special for methodurl, methodurlprot and methodurlnoprot
 			elsif ( $f =~ /%methodurl$/ ) {
 				$pos_method = $i;
 				$i++;
@@ -9185,9 +9202,18 @@ sub DefinePerlParsingFormat {
 				$i++;
 				push @fieldlib, 'url';
 				$PerlParsingFormat .=
-
 #"\\\"([^$LogSeparatorWithoutStar]+) ([^$LogSeparatorWithoutStar]+) [^\\\"]+\\\"";
 "\\\"([^$LogSeparatorWithoutStar]+) ([^$LogSeparatorWithoutStar]+)(?: [^\\\"]+|)\\\"";
+			}
+			elsif ( $f =~ /%methodurlprot$/ ) {
+				$pos_method = $i;
+				$i++;
+				push @fieldlib, 'method';
+				$pos_url = $i;
+				$i++;
+				push @fieldlib, 'url';
+				$PerlParsingFormat .=
+"\\\"([^$LogSeparatorWithoutStar]+) ([^\\\"]+) ([^\\\"]+)\\\"";
 			}
 			elsif ( $f =~ /%methodurlnoprot$/ ) {
 				$pos_method = $i;
@@ -10676,7 +10702,7 @@ sub HTMLMainFileType{
 		$count++;
 	}
 
-	# Add total (only usefull if compression is enabled)
+	# Add total (only useful if compression is enabled)
 	if ( $ShowFileTypesStats =~ /C/i ) {
 		my $colspan = 3;
 		if ( $ShowFileTypesStats =~ /H/i ) { $colspan += 2; }
@@ -11238,7 +11264,7 @@ sub HTMLShowOSDetail{
 }
 
 #------------------------------------------------------------------------------
-# Function:     Prints the Unkown OS Detail frame or static page
+# Function:     Prints the Unknown OS Detail frame or static page
 # Parameters:   $NewLinkTarget
 # Input:        _
 # Output:       HTML
@@ -12488,7 +12514,7 @@ sub HTMLShowHosts{
 		}
 		if ( $FilterIn{'host'} && $FilterEx{'host'} ) { print " - "; }
 		if ( $FilterEx{'host'} ) {
-			print " Exlude $Message[79] '<b>$FilterEx{'host'}</b>'";
+			print " Exclude $Message[79] '<b>$FilterEx{'host'}</b>'";
 		}
 		if ( $FilterIn{'host'} || $FilterEx{'host'} ) { print ": "; }
 		print "$cpt $Message[81]";
@@ -12534,11 +12560,37 @@ sub HTMLShowHosts{
 		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Host'}, \%_host_h,
 			\%_host_l );
 	}
+	my $regipv4=qr/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
+
+	if ( $DynamicDNSLookup == 2 ) {
+		# Use static DNS file
+		&Read_DNS_Cache( \%MyDNSTable, "$DNSStaticCacheFile", "", 1 );
+	}
+
 	foreach my $key (@keylist) {
 		my $host = CleanXSS($key);
 		print "<tr><td class=\"aws\">"
 		  . ( $_robot_l{$key} ? '<b>'  : '' ) . "$host"
-		  . ( $_robot_l{$key} ? '</b>' : '' ) . "</td>";
+		  . ( $_robot_l{$key} ? '</b>' : '' );
+
+		if ($DynamicDNSLookup) {
+			# Dynamic reverse DNS lookup
+        	        if ($host =~ /$regipv4/o) {
+                	        my $lookupresult=lc(gethostbyaddr(pack("C4",split(/\./,$host)),AF_INET));       # This may be slow
+                        	if (! $lookupresult || $lookupresult =~ /$regipv4/o || ! IsAscii($lookupresult)) {
+					if ( $DynamicDNSLookup == 2 ) {
+						# Check static DNS file
+						$lookupresult = $MyDNSTable{$host};
+						if ($lookupresult) { print " ($lookupresult)"; }
+						else { print ""; }
+					}
+					else { print ""; }
+	                        }
+        	                else { print " ($lookupresult)"; }
+	                }
+		}
+
+		print "</td>";
 		&HTMLShowHostInfo($key);
 		if ( $ShowHostsStats =~ /P/i ) {
 			print "<td>"
@@ -14912,9 +14964,35 @@ sub HTMLMainHosts{
 	my $total_p = my $total_h = my $total_k = 0;
 	my $count = 0;
 	
+	my $regipv4 = qr/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;	
+
+        if ( $DynamicDNSLookup == 2 ) {
+	        # Use static DNS file
+                &Read_DNS_Cache( \%MyDNSTable, "$DNSStaticCacheFile", "", 1 );
+        }
+
 	foreach my $key (@keylist) {
 		print "<tr>";
-		print "<td class=\"aws\">$key</td>";
+		print "<td class=\"aws\">$key";
+
+		if ($DynamicDNSLookup) {
+	                # Dynamic reverse DNS lookup
+	                if ($key =~ /$regipv4/o) {
+		                my $lookupresult=lc(gethostbyaddr(pack("C4",split(/\./,$key)),AF_INET));	# This may be slow
+                	        if (! $lookupresult || $lookupresult =~ /$regipv4/o || ! IsAscii($lookupresult)) {
+                                        if ( $DynamicDNSLookup == 2 ) {
+                                                # Check static DNS file
+                                                $lookupresult = $MyDNSTable{$key};
+                                                if ($lookupresult) { print " ($lookupresult)"; }
+                                                else { print ""; }
+                                        }
+                                        else { print ""; }
+                                }
+                                else { print " ($lookupresult)"; }
+                        }
+                }
+
+		print "</td>";
 		&HTMLShowHostInfo($key);
 		if ( $ShowHostsStats =~ /P/i ) {
 			print '<td>' . ( Format_Number($_host_p{$key}) || "&nbsp;" ) . '</td>';
@@ -17965,6 +18043,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 	my $regipv4           = qr/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
 	my $regipv4l          = qr/^::ffff:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
 	my $regipv6           = qr/^[0-9A-F]*:/i;
+	my $regveredge        = qr/edge\/([\d]+)/i;
 	my $regvermsie        = qr/msie([+_ ]|)([\d\.]*)/i;
 	#my $regvermsie11      = qr/trident\/7\.\d*\;([+_ ]|)rv:([\d\.]*)/i;
 	my $regvermsie11      = qr/trident\/7\.\d*\;([a-zA-Z;+_ ]+|)rv:([\d\.]*)/i;
@@ -18289,6 +18368,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 		elsif (
 			$LogType eq 'F'
 			&& (   $field[$pos_method] eq 'RETR'
+				|| $field[$pos_method] eq 'D'
 				|| $field[$pos_method] eq 'o'
 				|| $field[$pos_method] =~ /$regget/o )
 		  )
@@ -18299,6 +18379,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 		elsif (
 			$LogType eq 'F'
 			&& (   $field[$pos_method] eq 'STOR'
+				|| $field[$pos_method] eq 'U'
 				|| $field[$pos_method] eq 'i'
 				|| $field[$pos_method] =~ /$regsent/o )
 		  )
@@ -19146,6 +19227,11 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 		my $HostResolved = ''
 		  ; # HostResolved will be defined in next paragraf if countedtraffic is true
 
+		if( $Host =~ /^([^:]+):[0-9]+$/ ){ # Host may sometimes have an ip:port syntax (ex: 54.32.12.12:60321)
+		    $Host = $1;
+		}
+
+
 		if ( !$countedtraffic || $countedtraffic == 6) {
 			my $ip = 0;
 			if ($DNSLookup) {    # DNS lookup is 1 or 2
@@ -19535,8 +19621,16 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 					if ( !$uabrowser ) {
 						my $found = 1;
 
+						# Edge (must be at beginning)
+						if ($UserAgent =~ /$regveredge/o)
+						{
+							$_browser_h{"edge$1"}++;
+							if ($PageBool) { $_browser_p{"edge$1"}++; }
+							$TmpBrowser{$UserAgent} = "edge$1";
+						}
+						
 						# Opera ?
-						if ( $UserAgent =~ /$regveropera/o ) {	# !!!! version number in in regex $1 or $2 !!!
+						elsif ( $UserAgent =~ /$regveropera/o ) {	# !!!! version number in in regex $1 or $2 !!!
 						    $_browser_h{"opera".($1||$2)}++;
 						    if ($PageBool) { $_browser_p{"opera".($1||$2)}++; }
 						    $TmpBrowser{$UserAgent} = "opera".($1||$2);
