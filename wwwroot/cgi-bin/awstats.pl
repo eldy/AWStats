@@ -9021,9 +9021,12 @@ sub DefinePerlParsingFormat {
 			);
 		}
 		elsif ( $LogFormat eq '4' ) {    # Same than "%h %l %u %t \"%r\" %>s %b"
-			 # %u (user) is "(.+)" instead of "[^ ]+" because can contain space (Lotus Notes).
-			$PerlParsingFormat =
-"([^ ]+) [^ ]+ (.+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) ([^ ]+)(?: [^\\\"]+|)\\\" ([\\d|-]+) ([\\d|-]+)";
+			# %u (user) is "(.+)" instead of "[^ ]+" because can contain space (Lotus Notes).
+			# Sample: 10.100.10.45 - BMAA\will.smith [01/Jul/2013:07:17:28 +0200] "GET /Download/__Omnia__Aus- und Weiterbildung__Konsular- und Verwaltungskonferenz, Programm.doc HTTP/1.1" 200 9076810
+#			$PerlParsingFormat = 
+#"([^ ]+) [^ ]+ (.+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) ([^ ]+)(?: [^\\\"]+|)\\\" ([\\d|-]+) ([\\d|-]+)";
+			$PerlParsingFormat = 
+"([^ ]+) [^ ]+ (.+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) (.+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+)";
 			$pos_host    = 0;
 			$pos_logname = 1;
 			$pos_date    = 2;
@@ -9202,6 +9205,7 @@ sub DefinePerlParsingFormat {
 				$i++;
 				push @fieldlib, 'url';
 				$PerlParsingFormat .=
+
 #"\\\"([^$LogSeparatorWithoutStar]+) ([^$LogSeparatorWithoutStar]+) [^\\\"]+\\\"";
 "\\\"([^$LogSeparatorWithoutStar]+) ([^$LogSeparatorWithoutStar]+)(?: [^\\\"]+|)\\\"";
 			}
