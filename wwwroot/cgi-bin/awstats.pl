@@ -19026,7 +19026,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 
 		# Analyze: Robot from robot database (=> countedtraffic=4 if robot)
 		#------------------------------------------------------------------
-		if ( !$countedtraffic ) {
+		if ( !$countedtraffic || $countedtraffic == 6) {
 			if ( $pos_agent >= 0 ) {
 				if ($DecodeUA) {
 					$field[$pos_agent] =~ s/%20/_/g;
