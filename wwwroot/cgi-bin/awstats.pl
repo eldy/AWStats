@@ -14306,7 +14306,7 @@ sub HTMLMainDownloads{
 		if ($cnt > 4){last;}
 	}
 	# Graph the top five in a pie chart
-	if (scalar keys %_downloads > 1){
+	if (($Totalh > 0) and (scalar keys %_downloads > 1)){
 		foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
 		{
 			my @blocklabel = ();
