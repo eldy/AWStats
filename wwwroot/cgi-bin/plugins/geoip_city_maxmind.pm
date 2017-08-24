@@ -70,7 +70,7 @@ my %regca=(
 );
 my %regus=(
 'AA',"Armed Forces Americas",
-'AE',"Armed Forces Europe, Middle East, & Canada",
+'AE',"Armed Forces Europe, Middle East, &amp; Canada",
 'AK',"Alaska",
 'AL',"Alabama",
 'AP',"Armed Forces Pacific",

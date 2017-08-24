@@ -22,6 +22,7 @@ if (!eval ('require "Geo/IP.pm";')) {
 		return $ret;
 	}
 }
+use HTML::Entities;
 # ----->
 #use strict;
 no strict "refs";
@@ -179,7 +180,7 @@ sub AddHTMLGraph_geoip_asn_maxmind {
    		    }
    		    print "<td class=\"aws\">".$link.ucfirst(($idx > -1 ? substr($asn, 0, $idx) : $asn));
    		    print ($link ? "</a>" : "")."</td>";
-   		    print "<td class=\"aws\">".($idx > -1 ? substr($asn, $idx+1) : "&nbsp;")."</td>\n";
+   		    print "<td class=\"aws\">".($idx > -1 ? encode_entities(substr($asn, $idx+1)) : "&nbsp;")."</td>\n";
     		if ($ShowISP =~ /P/i) { print "<td>".($_asn_p{$key}?Format_Number($_asn_p{$key}):"&nbsp;")."</td>"; }
     		if ($ShowISP =~ /P/i) { print "<td>".($_asn_p{$key}?"$p_p %":'&nbsp;')."</td>"; }
     		if ($ShowISP =~ /H/i) { print "<td>".($_asn_h{$key}?Format_Number($_asn_h{$key}):"&nbsp;")."</td>"; }
@@ -311,10 +312,12 @@ sub ShowInfoHost_geoip_asn_maxmind {
    		    if ($link){ $link = "<a target=\"_blank\" href=\"".$link."\">";}
 	    	if ($idx > -1 ) {$asn = substr(trim($asn), $idx+1);}	    
 	        if (length($asn) <= $MAXLENGTH) {
+			$asn = encode_entities($asn);
 	            print "$link$asn".($link ? "</a>" : "");
 	        }
 	        else {
-	            print $link.substr($asn,0,$MAXLENGTH).'...'.($link ? "</a>" : "");
+   		 $asn = encode_entities(substr($asn,0,$MAXLENGTH));
+                     print $link.$asn.'...'.($link ? "</a>" : "");
 	        }
 	    }
 	    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
