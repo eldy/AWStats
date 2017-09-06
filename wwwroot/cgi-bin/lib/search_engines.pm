@@ -3710,7 +3710,7 @@
 
 'google_base','(q|p|as_p|as_q)=',
 'google_translate','q=',
-'googleByIP','googleByIP','q=',
+'googleByIP','q=',
 'google_catchall','(q|p|as_p|as_q)=',
 'google_cache','(p|q|as_p|as_q)=cache:[0-9A-Za-z]{12}:',
 'google_froogle','(q|p|as_p|as_q)=',
@@ -3955,7 +3955,6 @@
 'netsprintpl','q=',
 'netstjernen','q=',
 'netzero','query=',
-'no query string available',
 'northernlight','qr=',
 'nortonsavesearch','q=',
 'nusearch','nusearch_terms=',
