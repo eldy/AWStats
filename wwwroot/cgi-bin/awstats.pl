@@ -1780,7 +1780,7 @@ sub Read_Config {
 		}else{if ($Debug){debug("Unable to open config file: $searchdir$SiteConfig", 2);}}
 	}
 	
-		#CL - Added to open config if full path is passed to awstats 
+	#CL - Added to open config if full path is passed to awstats 
 	if ( !$FileConfig ) {
 		
 		my $SiteConfigBis = File::Spec->rel2abs($SiteConfig);
@@ -2205,7 +2205,10 @@ sub Parse_Config {
 		}
 
 		# Plugins
-		if ( $param =~ /^LoadPlugin/ ) { push @PluginsToLoad, $value; next; }
+		if ( $param =~ /^LoadPlugin/ ) {
+			$value =~ s/[^a-zA-Z0-9_\/\.\+:=\?\s%\-]//g;		# Sanitize plugin name and string param because it is used later in an eval.
+			push @PluginsToLoad, $value; next; 
+		}
 
 	  # Other parameter checks we need to put after MaxNbOfExtra and MinHitExtra
 		if ( $param =~ /^MaxNbOf(\w+)/ ) { $MaxNbOf{$1} = $value; next; }
@@ -3251,7 +3254,7 @@ sub Read_Plugins {
 						}
 						my $ret;    # To get init return
 						my $initfunction =
-						  "\$ret=Init_$pluginname('$pluginparam')";
+						  "\$ret=Init_$pluginname('$pluginparam')";		# Note that pluginname and pluginparam were sanitized when reading cong file entry 'LoadPlugin'
 						my $initret = eval("$initfunction");
 						if ( $initret && $initret eq 'xxx' ) {
 							$initret =
@@ -17140,7 +17143,10 @@ if ( $ENV{'GATEWAY_INTERFACE'} ) {    # Run from a browser as CGI
 	# No update but report by default when run from a browser
 	$UpdateStats = ( $QueryString =~ /update=1/i ? 1 : 0 );
 
-	if ( $QueryString =~ /config=([^&]+)/i ) { $SiteConfig = &Sanitize("$1"); }
+	if ( $QueryString =~ /config=([^&]+)/i ) { 
+		$SiteConfig = &Sanitize("$1");
+		$SiteConfig =~ s/\.\.//g; 		# Avoid directory transversal
+	}
 	if ( $QueryString =~ /diricons=([^&]+)/i ) { $DirIcons = "$1"; }
 	if ( $QueryString =~ /pluginmode=([^&]+)/i ) {
 		$PluginMode = &Sanitize( "$1", 1 );
@@ -17227,7 +17233,10 @@ else {                             # Run from command line
 	# Update with no report by default when run from command line
 	$UpdateStats = 1;
 
-	if ( $QueryString =~ /config=([^&]+)/i ) { $SiteConfig = &Sanitize("$1"); }
+	if ( $QueryString =~ /config=([^&]+)/i ) { 
+		$SiteConfig = &Sanitize("$1"); 
+		$SiteConfig =~ s/\.\.//g; 
+	}
 	if ( $QueryString =~ /diricons=([^&]+)/i ) { $DirIcons = "$1"; }
 	if ( $QueryString =~ /pluginmode=([^&]+)/i ) {
 		$PluginMode = &Sanitize( "$1", 1 );
