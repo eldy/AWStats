@@ -17145,7 +17145,6 @@ if ( $ENV{'GATEWAY_INTERFACE'} ) {    # Run from a browser as CGI
 
 	if ( $QueryString =~ /config=([^&]+)/i ) { 
 		$SiteConfig = &Sanitize("$1");
-		$SiteConfig =~ s/\.\.//g; 		# Avoid directory transversal
 	}
 	if ( $QueryString =~ /diricons=([^&]+)/i ) { $DirIcons = "$1"; }
 	if ( $QueryString =~ /pluginmode=([^&]+)/i ) {
@@ -17191,10 +17190,13 @@ if ( $ENV{'GATEWAY_INTERFACE'} ) {    # Run from a browser as CGI
 	# If migrate
 	if ( $QueryString =~ /(^|-|&|&amp;)migrate=([^&]+)/i ) {
 		$MigrateStats = &Sanitize("$2");
+
 		$MigrateStats =~ /^(.*)$PROG(\d{0,2})(\d\d)(\d\d\d\d)(.*)\.txt$/;
-		$SiteConfig = $5 ? $5 : 'xxx';
+		$SiteConfig = &Sanitize($5 ? $5 : 'xxx');
 		$SiteConfig =~ s/^\.//;    # SiteConfig is used to find config file
 	}
+
+	$SiteConfig =~ s/\.\.//g; 		# Avoid directory transversal
 }
 else {                             # Run from command line
 	$DebugMessages = 1;
@@ -17204,9 +17206,10 @@ else {                             # Run from command line
 
 		# If migrate
 		if ( $ARGV[$_] =~ /(^|-|&|&amp;)migrate=([^&]+)/i ) {
-			$MigrateStats = "$2";
+			$MigrateStats = &Sanitize("$2");
+
 			$MigrateStats =~ /^(.*)$PROG(\d{0,2})(\d\d)(\d\d\d\d)(.*)\.txt$/;
-			$SiteConfig = $5 ? $5 : 'xxx';
+			$SiteConfig = &Sanitize($5 ? $5 : 'xxx');
 			$SiteConfig =~ s/^\.//;    # SiteConfig is used to find config file
 			next;
 		}
@@ -17235,7 +17238,6 @@ else {                             # Run from command line
 
 	if ( $QueryString =~ /config=([^&]+)/i ) { 
 		$SiteConfig = &Sanitize("$1"); 
-		$SiteConfig =~ s/\.\.//g; 
 	}
 	if ( $QueryString =~ /diricons=([^&]+)/i ) { $DirIcons = "$1"; }
 	if ( $QueryString =~ /pluginmode=([^&]+)/i ) {
@@ -17301,6 +17303,8 @@ else {                             # Run from command line
 		$ShowDirectOrigin = 1;
 		$QueryString =~ s/showdirectorigin[^&]*//i;
 	}
+	
+	$SiteConfig =~ s/\.\.//g; 
 }
 if ( $QueryString =~ /(^|&|&amp;)staticlinks/i ) {
 	$StaticLinks = "$PROG.$SiteConfig";
