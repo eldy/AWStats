@@ -1,4 +1,4 @@
-﻿# Spanish message file (Temu-BCN temujinnn@hotmail.com, Sergio Bayarri Gausi euimail@aiind.upv.es)
+# Spanish message file (Temu-BCN temujinnn@hotmail.com, Sergio Bayarri Gausi euimail@aiind.upv.es)
 # $Revision$ - $Date$
 PageCode=utf-8
 message0=Desconocido

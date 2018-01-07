@@ -1,4 +1,4 @@
-﻿<!--SK by lecram@lecram.sk (please contact if something wrong)-->
+<!--SK by lecram@lecram.sk (please contact if something wrong)-->
 <!-- $Revision$ - $Date$ -->
 
 <div class="CTooltip" id="tt1">

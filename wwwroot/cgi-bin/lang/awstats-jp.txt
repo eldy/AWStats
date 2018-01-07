@@ -1,4 +1,4 @@
-﻿# Japanese message file (info@kchosting.jp)
+# Japanese message file (info@kchosting.jp)
 # $Revision$ - $Date$
 PageCode=UTF-8
 message0=不明

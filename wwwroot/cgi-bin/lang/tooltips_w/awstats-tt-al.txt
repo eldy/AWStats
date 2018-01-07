@@ -1,4 +1,4 @@
-﻿<!-- Shpjeguesi Shqip. Ju lutem më kontaktoni për korrigjime (artonberisha@radiokosova.net, http://www.radiokosova.net) -->
+<!-- Shpjeguesi Shqip. Ju lutem më kontaktoni për korrigjime (artonberisha@radiokosova.net, http://www.radiokosova.net) -->
 <!-- $Revision$ - $Date$ -->
 <div class="CTooltip" id="tt1">
 Vizita është përkufizuar si <b>vizitor</b> risi (Shfletimin apo Shiqimin e faqes) të cilët nuk e kan vizituar faqen që nga <b>#VisitTimeOut# min</b>.

@@ -1,4 +1,4 @@
-﻿<!-- Russian tooltips message file -->
+<!-- Russian tooltips message file -->
 <!-- $Revision$ - $Date$ -->
 <div class="CTooltip" id="tt1">
 </div>
