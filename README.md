@@ -13,9 +13,9 @@ server log files (and even ftp servers or mail logs) on all Operating Systems.
 License: GNU GPL v3+ (GNU General Public License. See LICENSE file),
          OSI Certified Open Source Software license.
 
-Version: 7.6
+Version: 7.7
 
-Release date: December 2016
+Release date: January 2018
 
 Platforms: All (Linux, NT, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 
@@ -170,7 +170,7 @@ Twitter: <https://www.twitter.com/awstats_project>
 
 # ABOUT THE AUTHOR, LICENSE AND SUPPORT
 ---------------------------------------
-Copyright (C) 2000-2016 - Laurent Destailleur - eldy@users.sourceforge.net - <http://www.nltechno.com>
+Copyright (C) 2000-2018 - Laurent Destailleur - eldy@users.sourceforge.net - <http://www.nltechno.com>
 
 Laurent Destailleur is also the project leader of [Dolibarr ERP CRM Opensource project] <https://www.dolibarr.org>,
 and author of AWBot, CVSChangeLogBuilder, DoliDroid and founder of DoliCloud SaaS <https://www.dolicloud.com>.

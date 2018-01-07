@@ -36,7 +36,7 @@ use File::Spec;
 # Defines
 #------------------------------------------------------------------------------
 use vars qw/ $REVISION $VERSION /;
-$REVISION = '20161204';
+$REVISION = '20180105';
 $VERSION  = "7.7 (build $REVISION)";
 
 # ----- Constants -----
@@ -8561,7 +8561,7 @@ sub PrintCLIHelp{
 		'browsers',       'domains', 'operating_systems', 'robots',
 		'search_engines', 'worms'
 	);
-	print "----- $PROG $VERSION (c) 2000-2016 Laurent Destailleur -----\n";
+	print "----- $PROG $VERSION (c) 2000-2018 Laurent Destailleur -----\n";
 	print
 "AWStats is a free web server logfile analyzer to show you advanced web\n";
 	print "statistics.\n";
