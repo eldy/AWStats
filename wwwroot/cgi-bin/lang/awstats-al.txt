@@ -1,4 +1,4 @@
-﻿# Vargjet e mesazheve në Shqip. Ju lutem më kontaktoni për korrigjime (artonberisha@radiokosova.net, http://www.radiokosova.net)
+# Vargjet e mesazheve në Shqip. Ju lutem më kontaktoni për korrigjime (artonberisha@radiokosova.net, http://www.radiokosova.net)
 # $Revision$ - $Date$
 PageCode=utf-8
 message0=Panjohur

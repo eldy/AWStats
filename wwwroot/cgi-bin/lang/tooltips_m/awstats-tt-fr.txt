@@ -1,4 +1,4 @@
-﻿<!-- French tooltips message file (eldy@users.sourceforge.net) -->
+<!-- French tooltips message file (eldy@users.sourceforge.net) -->
 <!-- $Revision$ - $Date$ -->
 <div class="CTooltip" id="tt1">
 </div>

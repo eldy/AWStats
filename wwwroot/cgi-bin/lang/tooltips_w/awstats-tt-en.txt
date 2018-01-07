@@ -1,4 +1,4 @@
-﻿<!-- English tooltips message file (eldy@users.sourceforge.net) -->
+<!-- English tooltips message file (eldy@users.sourceforge.net) -->
 <!-- $Revision$ - $Date$ -->
 <div class="CTooltip" id="tt1">
 A new visits is defined as each new <b>incoming visitor</b> (viewing or browsing a page) who was not connected to your site during last <b>#VisitTimeOut# mn</b>.

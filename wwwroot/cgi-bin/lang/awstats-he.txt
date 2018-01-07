@@ -1,4 +1,4 @@
-﻿# Hebrew (Unicode) message file (http://lior.weissbrod.com)
+# Hebrew (Unicode) message file (http://lior.weissbrod.com)
 # $Revision$ - $Date$
 #
 # Originally:

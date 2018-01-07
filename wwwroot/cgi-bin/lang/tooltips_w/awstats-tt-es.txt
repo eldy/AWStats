@@ -1,4 +1,4 @@
-﻿<!-- Spanish tooltips message file (temujinnn@hotmail.com) -->
+<!-- Spanish tooltips message file (temujinnn@hotmail.com) -->
 <!-- $Revision$ - $Date$ -->
 <div class="CTooltip" id="tt1">
 Se considera un nueva vista por <b>cada nuevo visitante</b> que consulta una página y que no haya accedido al sitio en los últimos <b>#VisitTimeOut# mins.</b>.

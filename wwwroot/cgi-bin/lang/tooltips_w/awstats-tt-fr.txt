@@ -1,4 +1,4 @@
-﻿<!-- French tooltips message file (eldy@users.sourceforge.net) -->
+<!-- French tooltips message file (eldy@users.sourceforge.net) -->
 <!-- $Revision$ - $Date$ -->
 <div class="CTooltip" id="tt1">
 On considère une nouvelle visite pour <b>chaque arrivée</b> d'un visiteur consultant une page et ne s'étant pas connecté dans les dernières <b>#VisitTimeOut# mn</b>.
