@@ -1895,7 +1895,7 @@ sub Parse_Config {
 					$includeFile = "$1$includeFile";
 				}
 			}
-			if ( $level > 1 ) {
+			if ( $level > 1 && $^V lt v5.6.0 ) {
 				warning(
 "Warning: Perl versions before 5.6 cannot handle nested includes"
 				);
