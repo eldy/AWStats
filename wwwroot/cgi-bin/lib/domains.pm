@@ -18,7 +18,7 @@
 'i0','Local network host',
 'a1','Satellite access host',
 'a2','Satellite access host',
-'ap','African Regional Property Organization',
+'ap','Asia/Pacific Region',
 
 'ac','Ascension Island','ad','Andorra','ae','United Arab Emirates',
 'aero','Aero/Travel domains','af','Afghanistan',
