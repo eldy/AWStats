@@ -7907,6 +7907,22 @@ sub DecodeEncodedString {
 }
 
 #------------------------------------------------------------------------------
+# Function:     Similar to DecodeEncodedString, but decode only
+#               RFC3986 "unreserved characters"
+# Parameters:   stringtodecode
+# Input:        None
+# Output:       None
+# Return:       decodedstring
+#------------------------------------------------------------------------------
+sub DecodeRFC3986UnreservedString {
+	my $stringtodecode = shift;
+
+	$stringtodecode =~ s/%([46][1-9A-F]|[57][0-9A]|3[0-9]|2D|2E|5F|7E)/pack("C", hex($1))/ieg;
+
+	return $stringtodecode;
+}
+
+#------------------------------------------------------------------------------
 # Function:     Decode a precompiled regex value to a common regex value
 # Parameters:   compiledregextodecode
 # Input:        None
@@ -18718,6 +18734,14 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 	# We keep a clean $field[$pos_url] and
 	# we store original value for urlwithnoquery, tokenquery and standalonequery
 	#---------------------------------------------------------------------------
+
+		# Decode "unreserved characters" - URIs with common ASCII characters
+		# percent-encoded are equivalent to their unencoded versions.
+		#
+		# See section 2.3. of RFC 3986.
+
+		$field[$pos_url] = DecodeRFC3986UnreservedString($field[$pos_url]);
+
 		if ($URLNotCaseSensitive) { $field[$pos_url] = lc( $field[$pos_url] ); }
 
 # Possible URL syntax for $field[$pos_url]: /mydir/mypage.ext?param1=x&param2=y#aaa, /mydir/mypage.ext#aaa, /
