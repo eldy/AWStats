@@ -66,18 +66,11 @@ sub Init_geoip2 {
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
 	debug(" Plugin $PluginName: InitParams=$InitParams",1);
    	my $datafile=$InitParams;
-   	if (! $datafile) { $datafile="$PluginName.dat"; }
+   	if (! $datafile) { $datafile="GeoLite2-Country.mmdb"; }
     else { $datafile =~ s/%20/ /g; }
-	# if ($type eq 'geoippureperl') {
-		# if ($mode eq '' || $mode eq 'GEOIP_MEMORY_CACHE')  { $mode=Geo::IP::PurePerl::GEOIP_MEMORY_CACHE(); }
-		# else { $mode=Geo::IP::PurePerl::GEOIP_STANDARD(); }
-	# } else {
-		# if ($mode eq '' || $mode eq 'GEOIP_MEMORY_CACHE')  { $mode=Geo::IP::GEOIP_MEMORY_CACHE(); }
-		# else { $mode=Geo::IP::GEOIP_STANDARD(); }
-	# }
 	if ($override){$OverrideFile=$override;}
 	%TmpDomainLookup=();
-	debug(" Plugin $PluginName: GeoIP2 try to initialize type=$type mode=$mode override=$override datafile=$datafile",1);
+	debug(" Plugin $PluginName: GeoIP2 try to initialize override=$override datafile=$datafile",1);
 	$reader = GeoIP2::Database::Reader->new(
         file    => $datafile,
         locales => [ 'en', 'de', ]
@@ -104,7 +97,7 @@ sub GetCountryCodeByAddr_geoip2 {
 	if (! $param) { return ''; }
 	my $res= TmpLookup_geoip2($param);
 	if (! $res) {
-		$res=lc($reader->country( ip => $param)->country()->iso_code()) || 'unknown';
+		$res=lc($reader->country( ip => $param )->country()->iso_code()) || 'unknown';
 		$TmpDomainLookup{$param}=$res;
 		if ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByAddr for $param: [$res]",5); }
 	}
@@ -128,7 +121,7 @@ sub GetCountryCodeByName_geoip2 {
         # First resolve the name to an IP
         $address = inet_ntoa(inet_aton($param));
         # Now do the same lookup from the IP
-		$res=lc($reader->country($address)->country()->iso_code()) || 'unknown';
+		$res=lc($reader->country( ip => $address )->country()->iso_code()) || 'unknown';
 		$TmpDomainLookup{$param}=$res;
 		if ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByName for $param: [$res]",5); }
 	}
@@ -183,21 +176,21 @@ sub ShowInfoHost_geoip2 {
 		print "<td>";
 		if ($key && $ip==4) {
 			my $res = TmpLookup_geoip2($param);
-        	if (!$res){$res=lc($reader->country($param)->country()->iso_code()) if $reader;}
+        	if (!$res){$res=lc($reader->country( ip => $param )->country()->iso_code()) if $reader;}
         	if ($Debug) { debug("  Plugin $PluginName: GetCountryByIp for $param: [$res]",5); }
 		    if ($res) { print $DomainsHashIDLib{$res}?$DomainsHashIDLib{$res}:"<span style=\"color: #$color_other\">$Message[0]</span>"; }
 		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
 		}
 		if ($key && $ip==6) {                              # GeoIP2 supports both IPv4 and IPv6
 			my $res = TmpLookup_geoip2($param);
-        	if (!$res){$res=lc($reader->country($param)->country()->iso_code()) if $reader;}
+        	if (!$res){$res=lc($reader->country( ip => $param )->country()->iso_code()) if $reader;}
         	if ($Debug) { debug("  Plugin $PluginName: GetCountryByIp for $param: [$res]",5); }
 		    if ($res) { print $DomainsHashIDLib{$res}?$DomainsHashIDLib{$res}:"<span style=\"color: #$color_other\">$Message[0]</span>"; }
 		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
 		}
 		if (! $key) {
 			my $res = TmpLookup_geoip2($param);
-        	if (!$res){$res=lc($reader->country($param)->country()->iso_code()) if $reader;}
+        	if (!$res){$res=lc($reader->country( ip => $param )->country()->iso_code()) if $reader;}
         	if ($Debug) { debug("  Plugin $PluginName: GetCountryByHostname for $param: [$res]",5); }
 		    if ($res) { print $DomainsHashIDLib{$res}?$DomainsHashIDLib{$res}:"<span style=\"color: #$color_other\">$Message[0]</span>"; }
 		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
