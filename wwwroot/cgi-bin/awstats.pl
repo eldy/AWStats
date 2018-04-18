@@ -3172,6 +3172,7 @@ sub Read_Plugins {
 					'geoip2'               => 'ou',
 					'geoip_region_maxmind' => 'mou',
 					'geoip_city_maxmind'   => 'mou',
+                    'geoip2_city'          => 'mou',
 					'geoip_isp_maxmind'    => 'mou',
 					'geoip_org_maxmind'    => 'mou',
 					'timezone'             => 'ou',
