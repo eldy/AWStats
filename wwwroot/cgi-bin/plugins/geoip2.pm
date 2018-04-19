@@ -97,6 +97,7 @@ sub GetCountryCodeByAddr_geoip2 {
 	if (! $param) { return ''; }
 	my $res= TmpLookup_geoip2($param);
 	if (! $res) {
+		if ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByAddr for $param",5); }
 		$res=lc($reader->country( ip => $param )->country()->iso_code()) || 'unknown';
 		$TmpDomainLookup{$param}=$res;
 		if ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByAddr for $param: [$res]",5); }
@@ -120,6 +121,7 @@ sub GetCountryCodeByName_geoip2 {
 	if (! $res) {
         # First resolve the name to an IP
         $address = inet_ntoa(inet_aton($param));
+		if ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByName $param resolved to $address",5); }
         # Now do the same lookup from the IP
 		$res=lc($reader->country( ip => $address )->country()->iso_code()) || 'unknown';
 		$TmpDomainLookup{$param}=$res;
@@ -175,6 +177,7 @@ sub ShowInfoHost_geoip2 {
 		}
 		print "<td>";
 		if ($key && $ip==4) {
+        	if ($Debug) { debug("  Plugin $PluginName: GetCountryByIp for $param key=$key ip=$ip",5); }
 			my $res = TmpLookup_geoip2($param);
         	if (!$res){$res=lc($reader->country( ip => $param )->country()->iso_code()) if $reader;}
         	if ($Debug) { debug("  Plugin $PluginName: GetCountryByIp for $param: [$res]",5); }
@@ -182,6 +185,7 @@ sub ShowInfoHost_geoip2 {
 		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
 		}
 		if ($key && $ip==6) {                              # GeoIP2 supports both IPv4 and IPv6
+        	if ($Debug) { debug("  Plugin $PluginName: GetCountryByIp for $param key=$key ip=$ip",5); }
 			my $res = TmpLookup_geoip2($param);
         	if (!$res){$res=lc($reader->country( ip => $param )->country()->iso_code()) if $reader;}
         	if ($Debug) { debug("  Plugin $PluginName: GetCountryByIp for $param: [$res]",5); }
@@ -189,8 +193,13 @@ sub ShowInfoHost_geoip2 {
 		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
 		}
 		if (! $key) {
+        	if ($Debug) { debug("  Plugin $PluginName: GetCountryByIp for $param key=$key ip=$ip",5); }
 			my $res = TmpLookup_geoip2($param);
-        	if (!$res){$res=lc($reader->country( ip => $param )->country()->iso_code()) if $reader;}
+            # First resolve the name to an IP
+            $address = inet_ntoa(inet_aton($param));
+            if ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByName $param resolved to $address",5); }
+            # Now do the same lookup from the IP
+        	if (!$res){$res=lc($reader->country( ip => $address )->country()->iso_code()) if $reader;}
         	if ($Debug) { debug("  Plugin $PluginName: GetCountryByHostname for $param: [$res]",5); }
 		    if ($res) { print $DomainsHashIDLib{$res}?$DomainsHashIDLib{$res}:"<span style=\"color: #$color_other\">$Message[0]</span>"; }
 		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
