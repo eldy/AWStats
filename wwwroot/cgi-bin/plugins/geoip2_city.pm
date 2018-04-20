@@ -4378,16 +4378,16 @@ sub AddHTMLGraph_geoip2_city {
 #        print "</tr>\n";
     	foreach my $key (@keylist) {
             if ($key eq 'unknown') { next; }
-   		    my ($countrycode,$city,$regioncode)=split('_',$key,3);
+   		    my ($countrycode,$city,$regionname)=split('_',$key,3);
             $city=~s/%20/ /g;
+            $regionname=~s/%20/ /g;
 #            if ($countrycode ne $country) { next; }
    			my $p_p; my $p_h;
 			if ($TotalPages) { $p_p=int(($_city_p{$key}||0)/$TotalPages*1000)/10; }
    			if ($TotalHits)  { $p_h=int($_city_h{$key}/$TotalHits*1000)/10; }
    		    print "<tr>";
    		    print "<td class=\"aws\">".$DomainsHashIDLib{$countrycode}."</td>";
-   		    my $regionlib=RegionName($countrycode, $regioncode);
-   		    print "<td class=\"aws\">".($regionlib?$regionlib:'&nbsp;')."</td>";
+   		    print "<td class=\"aws\">".ucfirst(EncodeToPageCode($regionname))."</td>";
    		    print "<td class=\"aws\">".ucfirst(EncodeToPageCode($city))."</td>";
     		if ($ShowCities =~ /P/i) { print "<td>".($_city_p{$key}?Format_Number($_city_p{$key}):"&nbsp;")."</td>"; }
     		if ($ShowCities =~ /P/i) { print "<td>".($_city_p{$key}?"$p_p %":'&nbsp;')."</td>"; }
@@ -4587,10 +4587,10 @@ sub ShowInfoHost_geoip2_city {
 			else
 			{
 	        	my $record=();
-	        	$record=$geoip2_city->record_by_name($param) if $geoip2_city;
+	        	$record=$geoip2_city->city(ip=>$param) if $geoip2_city;
 	        	if ($Debug) { debug("  Plugin $PluginName: GetCityByHostname for $param: [$record]",5); }
-	            $country=$record->country_code if $record;
-	            $city=$record->city if $record;
+	            $country=$record->country()->iso_code() if $record;
+	            $city=$record->city()->name() if $record;
 			}
 #			print "<td>";
 #		    if ($country) { print $DomainsHashIDLib{$country}?$DomainsHashIDLib{$country}:"<span style=\"color: #$color_other\">$Message[0]</span>"; }
