@@ -4436,72 +4436,6 @@ sub AddHTMLGraph_geoip2_city {
 	return 0;
 }
 
-
-#-----------------------------------------------------------------------------
-# PLUGIN FUNCTION: GetCountryCodeByAddr_pluginname
-# UNIQUE: YES (Only one plugin using this function can be loaded)
-# GetCountryCodeByAddr is called to translate an ip into a country code in lower case.
-#-----------------------------------------------------------------------------
-# Rem: not used
-sub GetCountryCodeByAddr_geoip2_city {
-    my $param="$_[0]";
-	# <-----
-	my $res = TmpLookup_geoip2_city($param);
-    if (! $res) {
-        my $record=();
-        $record=$geoip2_city->city(ip=>$param) if $geoip2_city;
-        my $country;
-        $country=$record->country()->iso_code() if $record;
-        $res=lc($country) || 'unknown';
-        $TmpDomainLookup{$param}=$res;
-        if ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByAddr for $param: [$res]",5); }
-    }
-    elsif ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByAddr for $param: Already resolved to [$res]",5); }
-	# ----->
-	return $res;
-}
-
-
-#-----------------------------------------------------------------------------
-# PLUGIN FUNCTION: GetCountryCodeByName_pluginname
-# UNIQUE: YES (Only one plugin using this function can be loaded)
-# GetCountryCodeByName is called to translate a host name into a country code in lower case.
-#-----------------------------------------------------------------------------
-# Rem: not used
-sub GetCountryCodeByName_geoip2_city {
-    my $param="$_[0]";
-	# <-----
-	my $res = TmpLookup_geoip2_city($param);
-	if ($type eq 'geoippureperl') {
-		if (! $res) {
-			my @record = ();
-			@record=$geoip2_city->get_city_record($param) if $geoip2_city;
-	        my $country;
-	        $country=$record[0] if @record;
-	    	$res=lc($country) || 'unknown';
-			$TmpDomainLookup{$param}=$res;
-	    	if ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByName for $param: [$res]",5); }
-		}
-		elsif ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByName for $param: Already resolved to [$res]",5); }
-	}
-	else
-	{
-		if (! $res) {
-	    	my $record=();
-	    	$record=$geoip2_city->record_by_name($param) if $geoip2_city;
-	        my $country;
-	        $country=$record->country if $record;
-	    	$res=lc($country) || 'unknown';
-			$TmpDomainLookup{$param}=$res;
-	    	if ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByName for $param: [$res]",5); }
-		}
-		elsif ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByName for $param: Already resolved to [$res]",5); }
-	}
-	# ----->
-	return $res;
-}
-
-
 #-----------------------------------------------------------------------------
 # PLUGIN FUNCTION: ShowInfoHost_pluginname
 # UNIQUE: NO (Several plugins using this function can be loaded)
@@ -4562,8 +4496,9 @@ sub ShowInfoHost_geoip2_city {
 			else
 			{
 	        	my $record=();
+	        	if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2_city for $param",5); }
 	        	$record=$geoip2_city->city(ip=>$param) if $geoip2_city;
-	        	if ($Debug) { debug("  Plugin $PluginName: GetCityByIp for $param: [".$record->city()->name()."]",5); }
+	        	if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2_city for $param: [".$record->city()->name()."]",5); }
 	            $country=$record->country()->iso_code() if $record;
 	            $city=$record->city()->name() if $record;
 			}
@@ -4587,8 +4522,12 @@ sub ShowInfoHost_geoip2_city {
 			else
 			{
 	        	my $record=();
-	        	$record=$geoip2_city->city(ip=>$param) if $geoip2_city;
-	        	if ($Debug) { debug("  Plugin $PluginName: GetCityByHostname for $param: [$record]",5); }
+                # First resolve the name to an IP
+                $address = inet_ntoa(inet_aton($param));
+                if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2_city $param resolved to $address",5); }
+                # Now do the same lookup from the IP
+	        	$record=$geoip2_city->city(ip=>$address) if $geoip2_city;
+	        	if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2_city for $param: [$record]",5); }
 	            $country=$record->country()->iso_code() if $record;
 	            $city=$record->city()->name() if $record;
 			}
@@ -4637,6 +4576,7 @@ sub SectionProcessIp_geoip2_city {
         $record->region = $rec[0];
         $record->country_code = $rec[3];
     }else{
+        if ($Debug) { debug("  Plugin $PluginName: SectionProcessIp_geoip2_city for $param",5); }
         $record=$geoip2_city->city(ip=>$param) if $geoip2_city;
     }
     if ($Debug) { debug("  Plugin $PluginName: GetCityByIp for $param: [".$record->city()->name()."]",5); }
@@ -4673,7 +4613,11 @@ sub SectionProcessHostname_geoip2_city {
         $record->region = $rec[3];
         $record->country_code = $rec[0];
     }else{
-        $record=$geoip2_city->city(ip=>$param) if $geoip2_city;
+        # First resolve the name to an IP
+        $address = inet_ntoa(inet_aton($param));
+		if ($Debug) { debug("  Plugin $PluginName: SectionProcessHostname_geoip2_city $param resolved to $address",5); }
+        # Now do the same lookup from the IP
+        $record=$geoip2_city->city(ip=>$address) if $geoip2_city;
     }
     if ($Debug) { debug("  Plugin $PluginName: GetCityByName for $param: [$record]",5); }
     if ($record) {
