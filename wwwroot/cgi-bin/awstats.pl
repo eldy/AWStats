@@ -5936,9 +5936,9 @@ sub Read_History_With_TmpUpdate {
 						Save_History( "sider_$code", $year, $month, $date );
 						delete $SectionsToSave{"sider_$code"};
 						if ($withpurge) {
-							%_sider_h   = ();
-							%_referer_h = ();
-							%_err_host_h = ();
+							%{$_sider_h{$code}} = ();
+							%{$_referer_h{$code}} = ();
+							%{$_err_host_h{$code}} = ();
 						}
 					}
 					if ( !scalar %SectionsToLoad ) {
