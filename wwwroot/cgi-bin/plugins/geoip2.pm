@@ -52,6 +52,7 @@ my %TmpDomainLookup;
 use vars qw/
 $reader
 /;
+use Data::Validate::IP 0.25 qw( is_private_ip );
 # ----->
 
 
@@ -199,11 +200,13 @@ sub ShowInfoHost_geoip2 {
             $address = inet_ntoa(inet_aton($param));
             if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2 $param resolved to $address",5); }
             # Now do the same lookup from the IP
+            # GeoIP2::Reader doesn't support private IP addresses
+            if (!is_private_ip($address)){
         	if (!$res){$res=lc($reader->country( ip => $address )->country()->iso_code()) if $reader;}
         	if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2 for $param: [$res]",5); }
 		    if ($res) { print $DomainsHashIDLib{$res}?$DomainsHashIDLib{$res}:"<span style=\"color: #$color_other\">$Message[0]</span>"; }
 		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
-		}
+		}}
 		print "</td>";
 	}
 	else {

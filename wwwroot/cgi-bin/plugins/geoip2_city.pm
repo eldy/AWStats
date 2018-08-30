@@ -55,6 +55,7 @@ $geoip2_city
 %_city_l
 $MAXNBOFSECTIONGIR
 /;
+use Data::Validate::IP 0.25 qw( is_private_ip );
 # ----->
 
 
@@ -305,11 +306,13 @@ sub ShowInfoHost_geoip2_city {
                 $address = inet_ntoa(inet_aton($param));
                 if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2_city $param resolved to $address",5); }
                 # Now do the same lookup from the IP
+                # GeoIP2::Reader doesn't support lookups for Private IPs
+                if (!is_private_ip($address)){
 	        	$record=$geoip2_city->city(ip=>$address) if $geoip2_city;
 	        	if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2_city for $param: [$record]",5); }
 	            $country=$record->country()->iso_code() if $record;
 	            $city=$record->city()->name() if $record;
-			}
+			}}
 #			print "<td>";
 #		    if ($country) { print $DomainsHashIDLib{$country}?$DomainsHashIDLib{$country}:"<span style=\"color: #$color_other\">$Message[0]</span>"; }
 #		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
