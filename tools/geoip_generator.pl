@@ -202,7 +202,7 @@ sub Parse_Config {
 			    # Correct relative include files
 				if ($FileConfig =~ /^(.*[\\\/])[^\\\/]*$/) { $includeFile = "$1$includeFile"; }
 			}
-			if ($level > 1) {
+			if ( $level > 1 && $^V lt v5.6.0 ) {
 				warning("Warning: Perl versions before 5.6 cannot handle nested includes");
 				next;
 			}
