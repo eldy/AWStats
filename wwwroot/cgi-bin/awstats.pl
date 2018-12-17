@@ -1351,57 +1351,21 @@ sub debug {
 # Return:		None
 #------------------------------------------------------------------------------
 sub OptimizeArray {
-	my $array = shift;
-	my @arrayunreg = map { UnCompileRegex($_) } @$array;
-	my $notcasesensitive = shift;
-	my $searchlist       = 0;
-	if ($Debug) {
-		debug( "OptimizeArray (notcasesensitive=$notcasesensitive)", 4 );
-	}
-	while ( $searchlist > -1 && @arrayunreg ) {
-		my $elemtoremove = -1;
-	  OPTIMIZELOOP:
-		foreach my $i ( $searchlist .. ( scalar @arrayunreg ) - 1 ) {
+    my ( $array, $notcasesensitive ) = @_;
+    my %seen;
 
-			# Search if $i elem is already treated by another elem
-			foreach my $j ( 0 .. ( scalar @arrayunreg ) - 1 ) {
-				if ( $i == $j ) { next; }
-				my $parami =
-				  $notcasesensitive ? lc( $arrayunreg[$i] ) : $arrayunreg[$i];
-				my $paramj =
-				  $notcasesensitive ? lc( $arrayunreg[$j] ) : $arrayunreg[$j];
-				if ($Debug) {
-					debug( " Compare $i ($parami) to $j ($paramj)", 4 );
-				}
-				if ( index( $parami, $paramj ) > -1 ) {
-					if ($Debug) {
-						debug(
-" Elem $i ($arrayunreg[$i]) already treated with elem $j ($arrayunreg[$j])",
-							4
-						);
-					}
-					$elemtoremove = $i;
-					last OPTIMIZELOOP;
-				}
-			}
-		}
-		if ( $elemtoremove > -1 ) {
-			if ($Debug) {
-				debug(
-					" Remove elem $elemtoremove - $arrayunreg[$elemtoremove]",
-					4 );
-			}
-			splice @arrayunreg, $elemtoremove, 1;
-			$searchlist = $elemtoremove;
-		}
-		else {
-			$searchlist = -1;
-		}
-	}
-	if ($notcasesensitive) {
-		return map { qr/$_/i } @arrayunreg;
-	}
-	return map { qr/$_/ } @arrayunreg;
+    if ($notcasesensitive) {
+
+        # Case insensitive
+        my $uncompiled_regex;
+        return map {
+            $uncompiled_regex = UnCompileRegex($_);
+            !$seen{ lc $uncompiled_regex }++ ? qr/$uncompiled_regex/i : ()
+        } @$array;
+    }
+
+    # Case sensitive
+    return map { !$seen{$_}++ ? $_ : () } @$array;
 }
 
 #------------------------------------------------------------------------------
@@ -1780,22 +1744,24 @@ sub Read_Config {
 		}else{if ($Debug){debug("Unable to open config file: $searchdir$SiteConfig", 2);}}
 	}
 	
-	#CL - Added to open config if full path is passed to awstats 
-	if ( !$FileConfig ) {
-		
-		my $SiteConfigBis = File::Spec->rel2abs($SiteConfig);
-		debug("Finally, try to open an absolute path : $SiteConfigBis", 2);
-	
-		if ( -f $SiteConfigBis && open(CONFIG, "$SiteConfigBis")) {
-			$FileConfig = "$SiteConfigBis";
-			$FileSuffix = '';
-			if ($Debug){debug("Opened config: $SiteConfigBis", 2);}
-			$SiteConfig=$SiteConfigBis;
-		}
-		else {
-			if ($Debug){debug("Unable to open config file: $SiteConfigBis", 2);}
-		}
-	}
+	#CL - Added to open config if full path is passed to awstats
+	# Disabled by LDR for security reason.
+	# If we need to execute config into other dir 
+	#if ( !$FileConfig ) {
+	#	
+	#	my $SiteConfigBis = File::Spec->rel2abs($SiteConfig);
+	#	debug("Finally, try to open an absolute path : $SiteConfigBis", 2);
+	#
+	#	if ( -f $SiteConfigBis && open(CONFIG, "$SiteConfigBis")) {
+	#		$FileConfig = "$SiteConfigBis";
+	#		$FileSuffix = '';
+	#		if ($Debug){debug("Opened config: $SiteConfigBis", 2);}
+	#		$SiteConfig=$SiteConfigBis;
+	#	}
+	#	else {
+	#		if ($Debug){debug("Unable to open config file: $SiteConfigBis", 2);}
+	#	}
+	#}
 	
 	if ( !$FileConfig ) {
 		if ($DEBUGFORCED || !$ENV{'GATEWAY_INTERFACE'}){
@@ -1895,7 +1861,7 @@ sub Parse_Config {
 					$includeFile = "$1$includeFile";
 				}
 			}
-			if ( $level > 1 ) {
+			if ( $level > 1 && $^V lt v5.6.0 ) {
 				warning(
 "Warning: Perl versions before 5.6 cannot handle nested includes"
 				);
@@ -5939,9 +5905,9 @@ sub Read_History_With_TmpUpdate {
 						Save_History( "sider_$code", $year, $month, $date );
 						delete $SectionsToSave{"sider_$code"};
 						if ($withpurge) {
-							%_sider_h   = ();
-							%_referer_h = ();
-							%_err_host_h = ();
+							%{$_sider_h{$code}} = ();
+							%{$_referer_h{$code}} = ();
+							%{$_err_host_h{$code}} = ();
 						}
 					}
 					if ( !scalar %SectionsToLoad ) {
@@ -7910,6 +7876,22 @@ sub DecodeEncodedString {
 }
 
 #------------------------------------------------------------------------------
+# Function:     Similar to DecodeEncodedString, but decode only
+#               RFC3986 "unreserved characters"
+# Parameters:   stringtodecode
+# Input:        None
+# Output:       None
+# Return:       decodedstring
+#------------------------------------------------------------------------------
+sub DecodeRFC3986UnreservedString {
+	my $stringtodecode = shift;
+
+	$stringtodecode =~ s/%([46][1-9A-F]|[57][0-9A]|3[0-9]|2D|2E|5F|7E)/pack("C", hex($1))/ieg;
+
+	return $stringtodecode;
+}
+
+#------------------------------------------------------------------------------
 # Function:     Decode a precompiled regex value to a common regex value
 # Parameters:   compiledregextodecode
 # Input:        None
@@ -8110,6 +8092,9 @@ sub Format_Bytes {
 	my $fudge = 1;
 
 # Do not use exp/log function to calculate 1024power, function make segfault on some unix/perl versions
+	if ( $bytes >= ( $fudge << 40 ) ) {
+		return sprintf( "%.2f", $bytes / 1099511627776 ) . " $Message[179]";
+	}
 	if ( $bytes >= ( $fudge << 30 ) ) {
 		return sprintf( "%.2f", $bytes / 1073741824 ) . " $Message[110]";
 	}
@@ -14312,7 +14297,7 @@ sub HTMLMainDownloads{
 		if ($cnt > 4){last;}
 	}
 	# Graph the top five in a pie chart
-	if (scalar keys %_downloads > 1){
+	if (($Totalh > 0) and (scalar keys %_downloads > 1)){
 		foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
 		{
 			my @blocklabel = ();
@@ -18721,6 +18706,14 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 	# We keep a clean $field[$pos_url] and
 	# we store original value for urlwithnoquery, tokenquery and standalonequery
 	#---------------------------------------------------------------------------
+
+		# Decode "unreserved characters" - URIs with common ASCII characters
+		# percent-encoded are equivalent to their unencoded versions.
+		#
+		# See section 2.3. of RFC 3986.
+
+		$field[$pos_url] = DecodeRFC3986UnreservedString($field[$pos_url]);
+
 		if ($URLNotCaseSensitive) { $field[$pos_url] = lc( $field[$pos_url] ); }
 
 # Possible URL syntax for $field[$pos_url]: /mydir/mypage.ext?param1=x&param2=y#aaa, /mydir/mypage.ext#aaa, /
@@ -20002,7 +19995,7 @@ s/^(cache|related):[^\+]+//
 													$param =~ s/^ +//;
 													$param =~ s/ +$//;    # Trim
 													$param =~ tr/ /\+/s;
-													if ( ( length $param ) > 0 )
+													if ( ( ( length $param ) > 0 ) and ( ( length $param ) < 80 ) )
 													{
 														$_keyphrases{$param}++;
 													}

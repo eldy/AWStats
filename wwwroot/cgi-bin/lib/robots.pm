@@ -562,7 +562,6 @@
 'nutch\-1\.8/',
 'NutchCVS/',
 'o\.uk[\x20]robot',
-'oBot/',
 'ocrawler;',
 'ODP[\x20]link[\x20]checker',
 'Offline[\x20]Explorer/',
@@ -628,6 +627,7 @@
 'TweetmemeBot/',
 'UCY/Nutch',
 'Uptimebot/',
+'UptimeRobot/',
 'URL[\x20]Checker',
 'UXCrawlerBot',
 'Validator\.nu/',
@@ -1474,6 +1474,8 @@
 'curl',
 'php',
 'ruby/',
+# Moving oBot here so it doesn't get assigned for other *obot robots
+'oBot/',
 'no_user_agent'
 );
 
@@ -1649,7 +1651,6 @@
 'nutch\-1\.8/','nutch-1.8',
 'NutchCVS/','NutchCVS',
 'o\.uk[\x20]robot','o uk.robot',
-'oBot/','oBot',
 'ocrawler;','ocrawler;',
 'ODP[\x20]link[\x20]checker','ODP link checker',
 'Offline[\x20]Explorer/','Offline Explorer',
@@ -1715,6 +1716,7 @@
 'TweetmemeBot/','TweetmemeBot',
 'UCY/Nutch','UCY/Nutch',
 'Uptimebot/','Uptimebot',
+'UptimeRobot/','UptimeRobot',
 'URL[\x20]Checker','URL Checker',
 'UXCrawlerBot','UXCrawlerBot',
 'Validator\.nu/','Validator.nu',
@@ -2557,6 +2559,8 @@
 'php','A PHP script',
 'ruby/','Ruby script',
 'no_user_agent','empty user agent string',
+# Moving oBot towards the end so it does not pick up other *obot robots
+'oBot/','oBot',
 # Unknown robots identified by hit on robots.txt
 'unknown','Unknown robot (identified by hit on robots.txt)'
 );
