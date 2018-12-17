@@ -3135,8 +3135,10 @@ sub Read_Plugins {
 					'geoipfree'            => 'u',
 					'geoip'                => 'ou',
 					'geoip6'               => 'ou',
+					'geoip2'               => 'ou',
 					'geoip_region_maxmind' => 'mou',
 					'geoip_city_maxmind'   => 'mou',
+                    'geoip2_city'          => 'mou',
 					'geoip_isp_maxmind'    => 'mou',
 					'geoip_org_maxmind'    => 'mou',
 					'timezone'             => 'ou',
@@ -3311,7 +3313,8 @@ sub Read_Plugins {
 # In output mode, geo ip plugins are not loaded, so message changes are done here (can't be done in plugin init function)
 	if (   $PluginsLoaded{'init'}{'geoip'}
 		|| $PluginsLoaded{'init'}{'geoip6'}
-		|| $PluginsLoaded{'init'}{'geoipfree'} )
+		|| $PluginsLoaded{'init'}{'geoipfree'}
+		|| $PluginsLoaded{'init'}{'geoip2'})
 	{
 		$Message[17] = $Message[25] = $Message[148];
 	}
@@ -19397,6 +19400,9 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 				elsif ( $PluginsLoaded{'GetCountryCodeByAddr'}{'geoipfree'} ) {
 					$Domain = GetCountryCodeByAddr_geoipfree($HostResolved);
 				}
+				elsif ( $PluginsLoaded{'GetCountryCodeByAddr'}{'geoip2'} ) {
+					$Domain = GetCountryCodeByAddr_geoip2($HostResolved);
+				}
 				if ($AtLeastOneSectionPlugin) {
 					foreach my $pluginname (
 						keys %{ $PluginsLoaded{'SectionProcessIp'} } )
@@ -19431,6 +19437,11 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 					{
 						$Domain = GetCountryCodeByAddr_geoipfree($Host);
 					}
+					elsif (
+						$PluginsLoaded{'GetCountryCodeByAddr'}{'geoip2'} )
+					{
+						$Domain = GetCountryCodeByAddr_geoip2($Host);
+					}
 					elsif ( $HostResolved =~ /\.(\w+)$/ ) { $Domain = $1; }
 					if ($AtLeastOneSectionPlugin) {
 						foreach my $pluginname (
@@ -19459,6 +19470,11 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 						$PluginsLoaded{'GetCountryCodeByName'}{'geoipfree'} )
 					{
 						$Domain = GetCountryCodeByName_geoipfree($HostResolved);
+					}
+					elsif (
+						$PluginsLoaded{'GetCountryCodeByName'}{'geoip2'} )
+					{
+						$Domain = GetCountryCodeByName_geoip2($HostResolved);
 					}
 					elsif ( $HostResolved =~ /\.(\w+)$/ ) { $Domain = $1; }
 					if ($AtLeastOneSectionPlugin) {
