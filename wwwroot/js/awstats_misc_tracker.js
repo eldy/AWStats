@@ -31,7 +31,7 @@
 var awstatsmisctrackerurl="/js/awstats_misc_tracker.js";
 
 var TRKresult;
-var TRKscreen, TRKwinsize, TRKcdi, TRKjava, TRKshk, TRKsvg, TRKfla;
+var TRKscreen, TRKdpr, TRKwinsize, TRKcdi, TRKjava, TRKshk, TRKsvg, TRKfla;
 var TRKrp, TRKmov, TRKwma, TRKpdf, TRKpdfver, TRKuserid, TRKsessionid;
 var TRKnow, TRKbegin, TRKend;
 var TRKnse, TRKn;
@@ -82,6 +82,7 @@ if (window.location.search == "" || window.location.search == "?") {
     // If no query string
 	TRKnow = new Date();
 	TRKscreen=screen.width+"x"+screen.height;
+	TRKdpr=window.devicePixelRatio;
 	if (navigator.appName != "Netscape") { TRKcdi=screen.colorDepth; }
 	else {TRKcdi=screen.pixelDepth};
 	TRKjava=navigator.javaEnabled();
@@ -142,7 +143,7 @@ if (window.location.search == "" || window.location.search == "?") {
         TRKpdfver='';
     }
 
-	var imgsrc1 = awstatsmisctrackerurl+'?screen='+TRKscreen+'&win='+TRKwinsize+'&cdi='+TRKcdi+'&java='+TRKjava;
+	var imgsrc1 = awstatsmisctrackerurl+'?dpr='+TRKdpr+'&screen='+TRKscreen+'&win='+TRKwinsize+'&cdi='+TRKcdi+'&java='+TRKjava;
 	var imgsrc2 = '&shk='+TRKshk+'&svg='+TRKsvg+'&fla='+TRKfla+'&rp='+TRKrp+'&mov='+TRKmov+'&wma='+TRKwma+'&pdf='+TRKpdf+'&uid='+TRKuserid+'&sid='+TRKsessionid;
     //alert(imgsrc1);
     //alert(imgsrc2);
