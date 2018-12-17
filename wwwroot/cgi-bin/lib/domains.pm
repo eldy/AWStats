@@ -18,7 +18,7 @@
 'i0','Local network host',
 'a1','Satellite access host',
 'a2','Satellite access host',
-'ap','African Regional Property Organization',
+'ap','Asia/Pacific Region',
 
 'ac','Ascension Island','ad','Andorra','ae','United Arab Emirates',
 'aero','Aero/Travel domains','af','Afghanistan',
@@ -63,7 +63,8 @@
 'ky','Cayman Islands','kz','Kazakhstan','la','Laos','lb','Lebanon','lc','Saint Lucia',
 'li','Liechtenstein','lk','Sri Lanka','lr','Liberia','ls','Lesotho','lt','Lithuania',
 'lu','Luxembourg','lv','Latvia','ly','Libya','ma','Morocco','mc','Monaco',
-'md','Moldova','me','Montenegro','mg','Madagascar','mh','Marshall Islands','mil','USA Military',
+'md','Moldova','me','Montenegro','mf','Saint-Martin (French)','mg','Madagascar',
+'mh','Marshall Islands','mil','USA Military',
 'mk','Macedonia','ml','Mali','mm','Myanmar','mn','Mongolia','mo','Macau',
 'mobi','Mobi domains',
 'mp','Northern Mariana Islands','mq','Martinique (French)','mr','Mauritania',
