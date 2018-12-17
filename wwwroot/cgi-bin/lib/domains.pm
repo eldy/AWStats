@@ -27,7 +27,7 @@
 'aq','Antarctica','ar','Argentina','arpa','Old style Arpanet',
 'as','American Samoa','at','Austria','au','Australia','aw','Aruba',
 'ax','Aland islands',
-'az','Azerbaidjan','ba','Bosnia-Herzegovina','bb','Barbados',
+'az','Azerbaijan','ba','Bosnia-Herzegovina','bb','Barbados',
 'bd','Bangladesh','be','Belgium','bf','Burkina Faso','bg','Bulgaria',
 'bh','Bahrain','bi','Burundi','biz','Biz domains','bj','Benin','bm','Bermuda',
 'bn','Brunei Darussalam','bo','Bolivia','bq','Bonaire, Sint Eustatius And Saba',
