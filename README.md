@@ -134,7 +134,7 @@ IV  - About the author, license and support
 	wwwroot/js                          Javascript sources for "Misc" feature
 	tools/*                             Other provided tools
 	tools/webmin/awstats-x.x.wbm        A Webmin module for AWStats
-	tools/xslt/awstats61.xsd            AWStats XML database schema descriptor
+	tools/xslt/awstats.xsd              AWStats XML database schema descriptor
 	tools/xslt/*                        Demo to manipulate AWStats XML database
 
 
