@@ -20015,7 +20015,7 @@ s/^(cache|related):[^\+]+//
 													$param =~ s/^ +//;
 													$param =~ s/ +$//;    # Trim
 													$param =~ tr/ /\+/s;
-													if ( ( length $param ) > 0 )
+													if ( ( ( length $param ) > 0 ) and ( ( length $param ) < 80 ) )
 													{
 														$_keyphrases{$param}++;
 													}
