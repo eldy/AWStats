@@ -1351,57 +1351,21 @@ sub debug {
 # Return:		None
 #------------------------------------------------------------------------------
 sub OptimizeArray {
-	my $array = shift;
-	my @arrayunreg = map { UnCompileRegex($_) } @$array;
-	my $notcasesensitive = shift;
-	my $searchlist       = 0;
-	if ($Debug) {
-		debug( "OptimizeArray (notcasesensitive=$notcasesensitive)", 4 );
-	}
-	while ( $searchlist > -1 && @arrayunreg ) {
-		my $elemtoremove = -1;
-	  OPTIMIZELOOP:
-		foreach my $i ( $searchlist .. ( scalar @arrayunreg ) - 1 ) {
+    my ( $array, $notcasesensitive ) = @_;
+    my %seen;
 
-			# Search if $i elem is already treated by another elem
-			foreach my $j ( 0 .. ( scalar @arrayunreg ) - 1 ) {
-				if ( $i == $j ) { next; }
-				my $parami =
-				  $notcasesensitive ? lc( $arrayunreg[$i] ) : $arrayunreg[$i];
-				my $paramj =
-				  $notcasesensitive ? lc( $arrayunreg[$j] ) : $arrayunreg[$j];
-				if ($Debug) {
-					debug( " Compare $i ($parami) to $j ($paramj)", 4 );
-				}
-				if ( index( $parami, $paramj ) > -1 ) {
-					if ($Debug) {
-						debug(
-" Elem $i ($arrayunreg[$i]) already treated with elem $j ($arrayunreg[$j])",
-							4
-						);
-					}
-					$elemtoremove = $i;
-					last OPTIMIZELOOP;
-				}
-			}
-		}
-		if ( $elemtoremove > -1 ) {
-			if ($Debug) {
-				debug(
-					" Remove elem $elemtoremove - $arrayunreg[$elemtoremove]",
-					4 );
-			}
-			splice @arrayunreg, $elemtoremove, 1;
-			$searchlist = $elemtoremove;
-		}
-		else {
-			$searchlist = -1;
-		}
-	}
-	if ($notcasesensitive) {
-		return map { qr/$_/i } @arrayunreg;
-	}
-	return map { qr/$_/ } @arrayunreg;
+    if ($notcasesensitive) {
+
+        # Case insensitive
+        my $uncompiled_regex;
+        return map {
+            $uncompiled_regex = UnCompileRegex($_);
+            !$seen{ lc $uncompiled_regex }++ ? qr/$uncompiled_regex/i : ()
+        } @$array;
+    }
+
+    # Case sensitive
+    return map { !$seen{$_}++ ? $_ : () } @$array;
 }
 
 #------------------------------------------------------------------------------
