@@ -1780,22 +1780,24 @@ sub Read_Config {
 		}else{if ($Debug){debug("Unable to open config file: $searchdir$SiteConfig", 2);}}
 	}
 	
-	#CL - Added to open config if full path is passed to awstats 
-	if ( !$FileConfig ) {
-		
-		my $SiteConfigBis = File::Spec->rel2abs($SiteConfig);
-		debug("Finally, try to open an absolute path : $SiteConfigBis", 2);
-	
-		if ( -f $SiteConfigBis && open(CONFIG, "$SiteConfigBis")) {
-			$FileConfig = "$SiteConfigBis";
-			$FileSuffix = '';
-			if ($Debug){debug("Opened config: $SiteConfigBis", 2);}
-			$SiteConfig=$SiteConfigBis;
-		}
-		else {
-			if ($Debug){debug("Unable to open config file: $SiteConfigBis", 2);}
-		}
-	}
+	#CL - Added to open config if full path is passed to awstats
+	# Disabled by LDR for security reason.
+	# If we need to execute config into other dir 
+	#if ( !$FileConfig ) {
+	#	
+	#	my $SiteConfigBis = File::Spec->rel2abs($SiteConfig);
+	#	debug("Finally, try to open an absolute path : $SiteConfigBis", 2);
+	#
+	#	if ( -f $SiteConfigBis && open(CONFIG, "$SiteConfigBis")) {
+	#		$FileConfig = "$SiteConfigBis";
+	#		$FileSuffix = '';
+	#		if ($Debug){debug("Opened config: $SiteConfigBis", 2);}
+	#		$SiteConfig=$SiteConfigBis;
+	#	}
+	#	else {
+	#		if ($Debug){debug("Unable to open config file: $SiteConfigBis", 2);}
+	#	}
+	#}
 	
 	if ( !$FileConfig ) {
 		if ($DEBUGFORCED || !$ENV{'GATEWAY_INTERFACE'}){
