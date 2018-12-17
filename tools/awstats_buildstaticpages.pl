@@ -380,6 +380,7 @@ if ($Update) {
 	$command .= " -databasebreak=$DatabaseBreak" if defined $DatabaseBreak;
 	print "Launch update process : $command\n";
 	$retour=`$command  2>&1`;
+    if ($?) { print $retour; exit $?; }
 }
 
 # Built the OutputSuffix value (used later to build page name)
@@ -437,6 +438,7 @@ if ($DatabaseBreak) { $smallcommand.=" -databasebreak=$DatabaseBreak"; }
 my $command="$smallcommand -output";
 print "Build main page: $command\n";
 $retour=`$command  2>&1`;
+if ($?) { print $retour; exit $?; }
 $OutputFile=($OutputDir?$OutputDir:"")."awstats.$OutputSuffix.$StaticExt";
 open("OUTPUT",">$OutputFile") || error("Couldn't open log file \"$OutputFile\" for writing : $!");
 print OUTPUT $retour;
@@ -449,6 +451,7 @@ for my $output (@OutputList) {
 	my $command="$smallcommand -output=$output";
 	print "Build $output page: $command\n";
 	$retour=`$command  2>&1`;
+    if ($?) { print $retour; exit $?; }
 	$OutputFile=($OutputDir?$OutputDir:"")."awstats.$OutputSuffix.$output.$StaticExt";
 	open("OUTPUT",">$OutputFile") || error("Couldn't open log file \"$OutputFile\" for writing : $!");
 	print OUTPUT $retour;
@@ -464,6 +467,7 @@ if ($QueryString =~ /(^|-|&)buildpdf/i) {
 	my $command="\"$HtmlDoc\" -t pdf --webpage --quiet --no-title --textfont helvetica --left 16 --bottom 8 --top 8 --browserwidth 800 --headfootsize 8.0 --fontsize 7.0 --header xtx --footer xd/ --outfile $OutputFile @pages\n";
 	print "Build PDF file : $command\n";
 	$retour=`$command  2>&1`;
+    if ($?) { print $retour; exit $?; }
     my $signal_num=$? & 127;
 	my $dumped_core=$? & 128;
 	my $exit_value=$? >> 8;
