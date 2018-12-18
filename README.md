@@ -13,9 +13,9 @@ server log files (and even ftp servers or mail logs) on all Operating Systems.
 License: GNU GPL v3+ (GNU General Public License. See LICENSE file),
          OSI Certified Open Source Software license.
 
-Version: 7.7
+Version: 7.8
 
-Release date: January 2018
+Release date: January 2019
 
 Platforms: All (Linux, NT, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 
@@ -134,7 +134,7 @@ IV  - About the author, license and support
 	wwwroot/js                          Javascript sources for "Misc" feature
 	tools/*                             Other provided tools
 	tools/webmin/awstats-x.x.wbm        A Webmin module for AWStats
-	tools/xslt/awstats61.xsd            AWStats XML database schema descriptor
+	tools/xslt/awstats.xsd              AWStats XML database schema descriptor
 	tools/xslt/*                        Demo to manipulate AWStats XML database
 
 
