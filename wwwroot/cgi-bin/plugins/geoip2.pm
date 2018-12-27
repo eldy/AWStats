@@ -196,16 +196,22 @@ sub ShowInfoHost_geoip2 {
 		if (! $key) {
         	if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2 for $param key=$key ip=$ip",5); }
 			my $res = TmpLookup_geoip2($param);
+            if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2 for $param res=$res",5);}
             # First resolve the name to an IP
-            $address = inet_ntoa(inet_aton($param));
-            if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2 $param resolved to $address",5); }
-            # Now do the same lookup from the IP
-            # GeoIP2::Reader doesn't support private IP addresses
-            if (!is_private_ip($address)){
-        	if (!$res){$res=lc($reader->country( ip => $address )->country()->iso_code()) if $reader;}
-        	if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2 for $param: [$res]",5); }
-		    if ($res) { print $DomainsHashIDLib{$res}?$DomainsHashIDLib{$res}:"<span style=\"color: #$color_other\">$Message[0]</span>"; }
-		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
+            $inet_n = inet_aton($param);
+            if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2 for $param inet_n=$inet_n",5);}
+            # Check to see if we resolved the name to number - if not bail
+            if ($inet_n) {
+                $address = inet_ntoa($inet_n);
+                if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2 $param resolved to $address",5); }
+                # Now do the same lookup from the IP
+                # GeoIP2::Reader doesn't support private IP addresses
+                if (!is_private_ip($address)){
+                if (!$res){$res=lc($reader->country( ip => $address )->country()->iso_code()) if $reader;}
+                if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2 for $param: [$res]",5); }
+                if ($res) { print $DomainsHashIDLib{$res}?$DomainsHashIDLib{$res}:"<span style=\"color: #$color_other\">$Message[0]</span>"; }
+                else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
+            }
 		}}
 		print "</td>";
 	}
