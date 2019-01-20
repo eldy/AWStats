@@ -118,7 +118,7 @@ sub GetCountryCodeByName_geoip2 {
     my $param="$_[0]";
 	# <-----
 	if (! $param) { return ''; }
-	my $res = TmpLookup_geoip($param);
+	my $res = TmpLookup_geoip2($param);
 	if (! $res) {
         # First resolve the name to an IP
         $address = inet_ntoa(inet_aton($param));
