@@ -98,14 +98,14 @@ sub GetCountryCodeByAddr_geoip2 {
 	# APM debut ligne d'origine apres eval { et avant 1; , le my devant $res doit etre hors bloc
 	my $res='unknown';
 	eval {
-	#$res= TmpLookup_geoip2($param);
-	#if (! $res) {
-		if ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByAddr_geoip2 for $param",5); }
-		$res=lc($reader->country( ip => $param )->country()->iso_code()) || 'unknown';
-		$TmpDomainLookup{$param}=$res;
-		if ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByAddr_geoip2 for $param: [$res]",5); }
-	#}
-	#elsif ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByAddr_geoip2 for $param: Already resolved to [$res]",5); }
+		$res= TmpLookup_geoip2($param);
+		if (! $res) {
+			if ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByAddr_geoip2 for $param",5); }
+			$res=lc($reader->country( ip => $param )->country()->iso_code()) || 'unknown';
+			$TmpDomainLookup{$param}=$res;
+			if ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByAddr_geoip2 for $param: [$res]",5); }
+		}
+		elsif ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByAddr_geoip2 for $param: Already resolved to [$res]",5); }
 		1;
 	} or do {
 		$res='unknown';
@@ -128,17 +128,17 @@ sub GetCountryCodeByName_geoip2 {
 	# APM debut ligne d'origine apres eval { et avant 1;
 	my $res='unknown';
 	eval {
-	$res = TmpLookup_geoip($param);
-	if (! $res) {
-        # First resolve the name to an IP
-        $address = inet_ntoa(inet_aton($param));
-		if ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByName_geoip2 $param resolved to $address",5); }
-        # Now do the same lookup from the IP
-		$res=lc($reader->country( ip => $address )->country()->iso_code()) || 'unknown';
-		$TmpDomainLookup{$param}=$res;
-		if ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByName_geoip2 for $param: [$res]",5); }
-	}
-	elsif ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByName_geoip2 for $param: Already resolved to [$res]",5); }
+		$res = TmpLookup_geoip($param);
+		if (! $res) {
+			# First resolve the name to an IP
+			$address = inet_ntoa(inet_aton($param));
+			if ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByName_geoip2 $param resolved to $address",5); }
+			# Now do the same lookup from the IP
+			$res=lc($reader->country( ip => $address )->country()->iso_code()) || 'unknown';
+			$TmpDomainLookup{$param}=$res;
+			if ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByName_geoip2 for $param: [$res]",5); }
+		}
+		elsif ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByName_geoip2 for $param: Already resolved to [$res]",5); }
 		1;
 	} or do {
 		$res='unknown';
@@ -197,8 +197,8 @@ sub ShowInfoHost_geoip2 {
 			# APM debut ligne d'origine apres eval { et avant 1;
 			my $res="";
 			eval {
-			#$res = TmpLookup_geoip2($param);
-        	if (!$res){$res=lc($reader->country( ip => $param )->country()->iso_code()) if $reader;}
+				$res = TmpLookup_geoip2($param);
+				if (!$res){$res=lc($reader->country( ip => $param )->country()->iso_code()) if $reader;}
 				1;
 			} or do {
 				$res="";
@@ -213,8 +213,8 @@ sub ShowInfoHost_geoip2 {
 			# APM debut ligne d'origine apres eval { et avant 1;
 			my $res="";
 			eval {
-			#$res = TmpLookup_geoip2($param);
-        	if (!$res){$res=lc($reader->country( ip => $param )->country()->iso_code()) if $reader;}
+				$res = TmpLookup_geoip2($param);
+				if (!$res){$res=lc($reader->country( ip => $param )->country()->iso_code()) if $reader;}
 				1;
 			} or do {
 				$res="";
@@ -229,12 +229,12 @@ sub ShowInfoHost_geoip2 {
 			# APM debut ligne d'origine apres eval { et avant 1;
 			my $res="";
 			eval {
-			$res = TmpLookup_geoip2($param);
-            # First resolve the name to an IP
-            $address = inet_ntoa(inet_aton($param));
-            if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2 $param resolved to $address",5); }
-            # Now do the same lookup from the IP
-        	if (!$res){$res=lc($reader->country( ip => $address )->country()->iso_code()) if $reader;}
+				$res = TmpLookup_geoip2($param);
+				# First resolve the name to an IP
+				$address = inet_ntoa(inet_aton($param));
+				if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2 $param resolved to $address",5); }
+				# Now do the same lookup from the IP
+				if (!$res){$res=lc($reader->country( ip => $address )->country()->iso_code()) if $reader;}
 				1;
 			} or do {
 				$res="";
