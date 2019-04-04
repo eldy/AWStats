@@ -1496,7 +1496,6 @@
 @RobotsSearchIDOrder_listgen = (
 # Generic robot
 'robot',
-'oBot/',
 'blog',
 'checker',
 'crawl',
@@ -2618,7 +2617,6 @@
 
 # Generic robot
 'robot','robot',
-'oBot/','oBot',
 'blog','blog',
 'checker','checker',
 'crawl','crawl',
