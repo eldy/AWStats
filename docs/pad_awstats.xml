@@ -44,7 +44,7 @@
 		<Program_Type>Freeware</Program_Type>
 		<Program_Release_Status>Major Update</Program_Release_Status>
 		<Program_Install_Support>No Install Support</Program_Install_Support>
-		<Program_OS_Support>Linux,Linux GPL,Linux Open Source,Mac OS X,Mac Other,OpenVMS,Unix,Win2000,Win7 x32,Win7 x64,WinServer,WinVista,WinVista x64,WinXP,Other</Program_OS_Support>
+		<Program_OS_Support>Linux,Linux GPL,Linux Open Source,macOS,Mac Other,OpenVMS,Unix,Win2000,Win7 x32,Win7 x64,WinServer,WinVista,WinVista x64,WinXP,Other</Program_OS_Support>
 		<Program_Language>English,Arabic,Armenian,Breton,Bulgarian,Catalan,Chinese,ChineseSimplified,ChineseTraditional,Croatian,Czech,Danish,Dutch,Estonian,Finnish,French,Galician,German,Greek,Hebrew,Hungarian,Icelandic,Indonesian,Italian,Japanese,Korean,Latvian,Norwegian,Other,Polish,Portuguese,Romanian,Russian,Serbian,Slovak,Slovenian,Spanish,Swedish,Thai,Turkish,Ukrainian,Welsh</Program_Language>
 		<Program_Change_Info />
 		<Program_Specific_Category>Development Tools</Program_Specific_Category>

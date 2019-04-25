@@ -177,6 +177,8 @@
 'ipad','ios_ipad', #Must be Before Mac OS Family
 'ipod','ios_ipod',  #Must be Before Mac OS Family
 # Macintosh OS family
+'mac[_+ ]os[_+ ]x[_+ ]10[_\.]14','macosx14',
+'mac[_+ ]os[_+ ]x[_+ ]10[_\.]13','macosx13',
 'mac[_+ ]os[_+ ]x[_+ ]10[_\.]12','macosx12',
 'mac[_+ ]os[_+ ]x[_+ ]10[_\.]11','macosx11',
 'mac[_+ ]os[_+ ]x[_+ ]10[_\.]10','macosx10',
@@ -281,16 +283,18 @@
 'winunknown','Windows (unknown version)',
 'winxbox','<a href="http://www.xbox.com/" title="Microsoft XBOX home page [new window]" target="_blank" rel="noopener noreferrer">Microsoft XBOX</a>',
 # Macintosh OS
-'macosx12','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS X 10.12 Sierra</a>',
-'macosx11','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS X 10.11 El Capitan</a>',
-'macosx10','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS X 10.10 Yosemite</a>',
-'macosx9','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS X 10.9 Mavericks</a>',
-'macosx8','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS X 10.8 Mountain Lion</a>',
-'macosx7','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS X 10.7 Lion</a>',
-'macosx6','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS X 10.6 Snow Leopard</a>',
-'macosx5','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS X 10.5 Leopard</a>',
-'macosx4','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS X 10.4 Tiger</a>',
-'macosx','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS X others</a>',
+'macosx14','<a href="http://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">macOS 10.14 Mojave</a>',
+'macosx13','<a href="http://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">macOS 10.13 High Sierra</a>',
+'macosx12','<a href="http://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">macOS 10.12 Sierra</a>',
+'macosx11','<a href="http://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">OS X 10.11 El Capitan</a>',
+'macosx10','<a href="http://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">OS X 10.10 Yosemite</a>',
+'macosx9','<a href="http://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">OS X 10.9 Mavericks</a>',
+'macosx8','<a href="http://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">OS X 10.8 Mountain Lion</a>',
+'macosx7','<a href="http://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS X 10.7 Lion</a>',
+'macosx6','<a href="http://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS X 10.6 Snow Leopard</a>',
+'macosx5','<a href="http://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS X 10.5 Leopard</a>',
+'macosx4','<a href="http://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS X 10.4 Tiger</a>',
+'macosx','<a href="http://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS X others</a>',
 'macintosh','<a href="http://www.apple.com/" title="Mac OS home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS</a>',
 # Linux
 'linuxandroid','<a href="http://code.google.com/android/" title="Google Android home page [new window]" target="_blank" rel="noopener noreferrer">Google Android</a>',
