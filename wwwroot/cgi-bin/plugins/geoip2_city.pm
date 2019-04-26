@@ -55,7 +55,7 @@ $geoip2_city
 %_city_l
 $MAXNBOFSECTIONGIR
 /;
-use Data::Validate::IP 0.25 qw( is_private_ip );
+use Data::Validate::IP 0.25 qw( is_public_ip );
 # ----->
 
 
@@ -254,74 +254,15 @@ sub ShowInfoHost_geoip2_city {
 	}
 	elsif ($param)
 	{
-		# try loading our override file if we haven't yet
-        my $ip=0;
-		my $key;
-		if ($param =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {	# IPv4 address
-		    $ip=4;
-			$key=$param;
-		}
-		elsif ($param =~ /^[0-9A-F]*:/i) {						# IPv6 address
-		    $ip=6;
-			$key=$param;
-		}
-		if ($key) {
-	        my $country;
-	        my $city;
-	        my @res = TmpLookup_geoip2_city($param);
-	        if (@res){
-	        	$country = $res[0];
-	        	$city = $res[4];
-	        }
-			else
-			{
-	        	my $record=();
-	        	if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2_city for $param",5); }
-	        	$record=$geoip2_city->city(ip=>$param) if $geoip2_city;
-	        	if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2_city for $param: [".$record->city()->name()."]",5); }
-	            $country=$record->country()->iso_code() if $record;
-	            $city=$record->city()->name() if $record;
-			}
-#			print "<td>";
-#		    if ($country) { print $DomainsHashIDLib{$country}?$DomainsHashIDLib{$country}:"<span style=\"color: #$color_other\">$Message[0]</span>"; }
-#		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
-#		    print "</td>";
-			print "<td>";
-		    if ($city) { print EncodeToPageCode($city); }
-		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
-		    print "</td>";
-		}
-		if (! $key) {
-	        my $country;
-	        my $city;
-	        my @res = TmpLookup_geoip2_city($param);
-	        if (@res){
-	        	$country = $res[0];
-	        	$city = $res[4];
-	        }
-			else
-			{
-	        	my $record=();
-                # First resolve the name to an IP
-                $address = inet_ntoa(inet_aton($param));
-                if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2_city $param resolved to $address",5); }
-                # Now do the same lookup from the IP
-                # GeoIP2::Reader doesn't support lookups for Private IPs
-                if (!is_private_ip($address)){
-	        	$record=$geoip2_city->city(ip=>$address) if $geoip2_city;
-	        	if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2_city for $param: [$record]",5); }
-	            $country=$record->country()->iso_code() if $record;
-	            $city=$record->city()->name() if $record;
-			}}
-#			print "<td>";
-#		    if ($country) { print $DomainsHashIDLib{$country}?$DomainsHashIDLib{$country}:"<span style=\"color: #$color_other\">$Message[0]</span>"; }
-#		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
-#		    print "</td>";
-			print "<td>";
-		    if ($city) { print EncodeToPageCode($city); }
-		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
-			print "</td>";
-		}
+		my ($country, $city, $subdivision) = Lookup_geoip2_city($param);
+#		print "<td>";
+#		if ($country) { print $DomainsHashIDLib{$country}?$DomainsHashIDLib{$country}:"<span style=\"color: #$color_other\">$Message[0]</span>"; }
+#		else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
+#		print "</td>";
+		print "<td>";
+		if ($city) { print EncodeToPageCode($city); }
+		else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
+		print "</td>";
 	}
 	else
 	{ print "<td>&nbsp;</td>"; }
@@ -349,35 +290,18 @@ sub SectionInitHashArray_geoip2_city {
 # UNIQUE: NO (Several plugins using this function can be loaded)
 #-----------------------------------------------------------------------------
 sub SectionProcessIp_geoip2_city {
-    my $param="$_[0]";      # Param must be an IP
-	# <-----
-    my $record=();
-    my @rec = TmpLookup_geoip2_city($param);
-    if (@rec){
-        $record->city = $rec[4];
-        $record->region = $rec[0];
-        $record->country_code = $rec[3];
-    }else{
-        if ($Debug) { debug("  Plugin $PluginName: SectionProcessIp_geoip2_city for $param",5); }
-        $record=$geoip2_city->city(ip=>$param) if $geoip2_city;
-    }
-    if ($Debug) { debug("  Plugin $PluginName: GetCityByIp for $param: [".$record->city()->name()."]",5); }
-    if ($record) {
-        my $city=$record->city()->name();
-#   	if ($PageBool) { $_city_p{$city}++; }
-        if ($city) {
-            my $countrycity=$record->country()->iso_code().'_'.$record->city()->name();
-            $countrycity=~s/ /%20/g;
-            if ($record->most_specific_subdivision()->name()) { $countrycity.='_'.$record->most_specific_subdivision()->name(); }
-            $_city_h{lc($countrycity)}++;
-        } else {
-            $_city_h{'unknown'}++;
-        }
-#   	if ($timerecord > $_city_l{$city}) { $_city_l{$city}=$timerecord; }
-    } else {
-        $_city_h{'unknown'}++;
-    }
-	# ----->
+	my $param = shift;
+	my $rec = 'unknown';
+	my ($country, $city, $subdivision) = Lookup_geoip2_city($param);
+	if ($country && $city) {
+			$rec = $country . '_' . $city;
+			$rec .= '_' . $subdivision if ($subdivision);
+			$rec =~ s/ /%20/g;
+			# escape non-latin1 chars
+			$rec =~ s/([^\x00-\x7F])/sprintf "&#x%X;", ord($1)/ge;
+			$rec = lc($rec);
+	}
+	$_city_h{$rec}++;
 	return;
 }
 
@@ -387,38 +311,7 @@ sub SectionProcessIp_geoip2_city {
 # UNIQUE: NO (Several plugins using this function can be loaded)
 #-----------------------------------------------------------------------------
 sub SectionProcessHostname_geoip2_city {
-    my $param="$_[0]";      # Param must be an IP
-    my $record=();
-    my @rec = TmpLookup_geoip2_city($param);
-    if (@rec){
-        $record->city = $rec[4];
-        $record->region = $rec[3];
-        $record->country_code = $rec[0];
-    }else{
-        # First resolve the name to an IP
-        $address = inet_ntoa(inet_aton($param));
-		if ($Debug) { debug("  Plugin $PluginName: SectionProcessHostname_geoip2_city $param resolved to $address",5); }
-        # Now do the same lookup from the IP
-        $record=$geoip2_city->city(ip=>$address) if $geoip2_city;
-    }
-    if ($Debug) { debug("  Plugin $PluginName: GetCityByName for $param: [$record]",5); }
-    if ($record) {
-        my $city=$record->city()->name();
-#	    if ($PageBool) { $_city_p{$city}++; }
-        if ($city) {
-            my $countrycity=($record->country()->iso_code()).'_'.$city;
-            $countrycity=~s/ /%20/g;
-            if ($record->most_specific_subdivision()->name()) { $countrycity.='_'.$record->most_specific_subdivision()->name(); }
-            $_city_h{lc($countrycity)}++;
-        } else {
-            $_city_h{'unknown'}++;
-        }
-#	    if ($timerecord > $_city_l{$city}) { $_city_l{$city}=$timerecord; }
-    } else {
-        $_city_h{'unknown'}++;
-    }
-	# ----->
-	return;
+	return SectionProcessIp_geoip2_city(@_);
 }
 
 
@@ -541,24 +434,41 @@ sub LoadOverrideFile_geoip2_city{
 }
 
 #-----------------------------------------------------------------------------
-# PLUGIN FUNCTION: TmpLookup
-# Searches the temporary hash for the parameter value and returns the corresponding
+# PLUGIN FUNCTION: Lookup
+# Looks up the input parameter (either ip address or dns name) and returns its
+# associated country code, city and subdivision name; or undefined if not available.
 # GEOIP entry
 #-----------------------------------------------------------------------------
-sub TmpLookup_geoip2_city(){
+sub Lookup_geoip2_city {
 	$param = shift;
-	if (!$LoadedOverride){&LoadOverrideFile_geoip2_city();}
-#	my @val = ();
-#	if ($geoip2_city &&
-#	(($type eq 'geoip' && $geoip2_city->VERSION >= 1.30) || 
-#	  $type eq 'geoippureperl' && $geoip2_city->VERSION >= 1.17)){
-#		@val = @{$TmpDomainLookup{$geoip2_city->get_ip_address($param)}};
-#	}
-#    else {@val = @{$TmpDomainLookup{$param};}}
-#    return @val;
-    if ($TmpDomainLookup{$param}) { return @{$TmpDomainLookup{$param};} }  
-    else { return; }
-}
+	if (!$LoadedOverride) { &LoadOverrideFile_geoip2_city(); }
+	if ($Debug) { debug("  Plugin $PluginName: Lookup_geoip2_city for $param",5); }
+	if ($geoip2_city && !exists($TmpDomainLookup{$param})) {
+		$TmpDomainLookup{$param} = [ undef ]; # negative entry to avoid repeated lookups
+		# Resolve the parameter (either a name or an ip address) to a list of network addresses
+		my ($err, @result) = Socket::getaddrinfo($param, undef, { protocol => Socket::IPPROTO_TCP, socktype => Socket::SOCK_STREAM });
+		for (@result) {
+			# Convert the network address to human-readable form
+			my ($err, $address, $servicename) = Socket::getnameinfo($_->{addr}, Socket::NI_NUMERICHOST, Socket::NIx_NOSERV);
+			next if ($err || !is_public_ip($address));
 
+			if ($Debug && $param ne $address) { debug("  Plugin $PluginName: Lookup_geoip2_city $param resolved to $address",5); }
+			eval {
+				my $record = $geoip2_city->city(ip => $address);
+				my $country = $record->country()->iso_code();
+				# FIXME
+				# We strongly discourage you from using a value from any names accessor as a key in a database or hash.
+				# See: https://github.com/maxmind/GeoIP2-perl#values-to-use-for-database-or-hash-keys
+				my $city = $record->city()->name();
+				my $subdivision = $record->most_specific_subdivision()->name();
+				$TmpDomainLookup{$param} = [ $country, $city, $subdivision ];
+				last;
+			}
+		}
+	}
+	my @res = @{ $TmpDomainLookup{$param} };
+	if ($Debug) { debug("  Plugin $PluginName: Lookup_geoip2_city for $param: [@res]",5); }
+	return @res;
+}
 
 1;	# Do not remove this line
