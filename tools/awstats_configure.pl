@@ -74,7 +74,7 @@ $WebServerChanged=0;
 $UseAlias=0;
 %LogFormat=();
 %ConfToChange=();
-%OSLib=('linux'=>'Linux, BSD or Unix','macosx'=>'Mac OS','windows'=>'Windows');
+%OSLib=('linux'=>'Linux, BSD or Unix','macosx'=>'macOS','windows'=>'Windows');
 $Step=0;
 
 
@@ -334,7 +334,7 @@ elsif ($OS eq 'macosx') {
 	$AWSTATS_PATH=~s/tools[\\\/]?$//;
 	$AWSTATS_PATH=~s/[\\\/]$//;
 	if ($AWSTATS_PATH ne '/Library/WebServer/awstats') {
-		print "Warning: AWStats standard directory on Mac OS X is '/Library/WebServer/awstats'.\n";
+		print "Warning: AWStats standard directory on macOS is '/Library/WebServer/awstats'.\n";
 		print "If you want to use standard directory, you should first move all content\n";
 		print "of AWStats distribution from current directory:\n";
 		print "$AWSTATS_PATH\n";
