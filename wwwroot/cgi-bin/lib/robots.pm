@@ -660,6 +660,7 @@
 'Test/Nutch',
 'Test[\x20]Spider',
 'TestCrawler',
+'The[\x20]Knowledge[\x20]AI',
 'TurnitinBot/',
 'TurnitinBot',
 'TweetmemeBot/',
@@ -1496,7 +1497,6 @@
 @RobotsSearchIDOrder_listgen = (
 # Generic robot
 'robot',
-'oBot/',
 'blog',
 'checker',
 'crawl',
@@ -1787,6 +1787,7 @@
 'Test/Nutch','Test/Nutch',
 'Test[\x20]Spider','Test Spider',
 'TestCrawler','TestCrawler',
+'The[\x20]Knowledge[\x20]AI', 'The Knowledge AI',
 'TurnitinBot/','TurnitinBot',
 'TurnitinBot','TurnitinBot',
 'TweetmemeBot/','TweetmemeBot',
@@ -2618,7 +2619,6 @@
 
 # Generic robot
 'robot','robot',
-'oBot/','oBot',
 'blog','blog',
 'checker','checker',
 'crawl','crawl',
