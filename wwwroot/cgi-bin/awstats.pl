@@ -14907,13 +14907,23 @@ sub HTMLMainHosts{
 			my @blocklabel = ();
 			my @valdata = ();
 			my @valcolor = ($color_p);
+
+			my $cnt = 0;
+			my $suma = 0;
+			foreach my $key (@keylist) {
+               $suma=$suma + ( $_host_h{$key});
+               $cnt++;
+               if ($cnt > 4) { last; }
+			}
+			
 			my $cnt = 0;
 			foreach my $key (@keylist) {
-				push @valdata, int( $_host_h{$key} / $TotalHits * 1000 ) / 10;
-				push @blocklabel, "$key";
-				$cnt++;
-				if ($cnt > 4) { last; }
+               push @valdata, int( $_host_h{$key} / $suma * 1000 ) / 10;
+               push @blocklabel, "$key";
+               $cnt++;
+               if ($cnt > 4) { last; }
 			}
+			
 			print "<tr><td colspan=\"7\">";
 			my $function = "ShowGraph_$pluginname";
 			&$function(
