@@ -145,11 +145,13 @@
 'rpm',[($LogType eq 'S'?'audio':'package'),'d'],
 'deb',['package','d'],
 'msi',['package','d'],
+'pkg',['package','d'],
 # Archive
 '7z',['archive','d'],
 'ace',['archive','d'],
 'bz2',['archive','d'],
 'cab',['archive','d'],
+'dmg',['archive','d'],
 'emz',['archive','d'],
 'gz',['archive','d'],
 'jar',['archive','d'],
