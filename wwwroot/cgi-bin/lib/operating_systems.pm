@@ -55,6 +55,8 @@
 'ipad',
 'ipod',
 # Macintosh OS family
+'mac[_+ ]os[_+ ]x[_+ ]10[_\.]14',
+'mac[_+ ]os[_+ ]x[_+ ]10[_\.]13',
 'mac[_+ ]os[_+ ]x[_+ ]10[_\.]12',
 'mac[_+ ]os[_+ ]x[_+ ]10[_\.]11',
 'mac[_+ ]os[_+ ]x[_+ ]10[_\.]10',
@@ -376,3 +378,4 @@
 #  Windows 98 retail, OEM     4.10.1998                    5/11/98
 #  Windows 98 Second Edition  4.10.2222A                   4/23/99
 #  Windows Me                 4.90.3000
+
