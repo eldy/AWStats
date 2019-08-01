@@ -52,7 +52,7 @@ my %TmpDomainLookup;
 use vars qw/
 $reader
 /;
-use Data::Validate::IP 0.25 qw( is_private_ip );
+use Data::Validate::IP 0.25 qw( is_public_ip );
 # ----->
 
 
@@ -93,19 +93,10 @@ sub Init_geoip2 {
 # GetCountryCodeByAddr is called to translate an ip into a country code in lower case.
 #-----------------------------------------------------------------------------
 sub GetCountryCodeByAddr_geoip2 {
-    my $param="$_[0]";
-	# <-----
+	my $param = shift;
 	if (! $param) { return ''; }
-	my $res= TmpLookup_geoip2($param);
-	if (! $res) {
-		if ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByAddr_geoip2 for $param",5); }
-		$res=lc($reader->country( ip => $param )->country()->iso_code()) || 'unknown';
-		$TmpDomainLookup{$param}=$res;
-		if ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByAddr_geoip2 for $param: [$res]",5); }
-	}
-	elsif ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByAddr_geoip2 for $param: Already resolved to [$res]",5); }
-	# ----->
-	return $res;
+	my $res = Lookup_geoip2($param);
+	return ($res) ? lc($res) : 'unknown';
 }
 
 
@@ -115,22 +106,7 @@ sub GetCountryCodeByAddr_geoip2 {
 # GetCountryCodeByName is called to translate a host name into a country code in lower case.
 #-----------------------------------------------------------------------------
 sub GetCountryCodeByName_geoip2 {
-    my $param="$_[0]";
-	# <-----
-	if (! $param) { return ''; }
-	my $res = TmpLookup_geoip($param);
-	if (! $res) {
-        # First resolve the name to an IP
-        $address = inet_ntoa(inet_aton($param));
-		if ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByName_geoip2 $param resolved to $address",5); }
-        # Now do the same lookup from the IP
-		$res=lc($reader->country( ip => $address )->country()->iso_code()) || 'unknown';
-		$TmpDomainLookup{$param}=$res;
-		if ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByName_geoip2 for $param: [$res]",5); }
-	}
-	elsif ($Debug) { debug("  Plugin $PluginName: GetCountryCodeByName_geoip2 for $param: Already resolved to [$res]",5); }
-	# ----->
-	return $res;
+	return GetCountryCodeByAddr_geoip2(@_);
 }
 
 
@@ -166,47 +142,12 @@ sub ShowInfoHost_geoip2 {
         print "</th>";
 	}
 	elsif ($param) {
-        my $ip=0;
-		my $key;
-		if ($param =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {	# IPv4 address
-		    $ip=4;
-			$key=$param;
+		my $res = Lookup_geoip2($param);
+		if ($res) {
+				$res = lc($res);
+				print $DomainsHashIDLib{$res}?$DomainsHashIDLib{$res}:"<span style=\"color: #$color_other\">$Message[0]</span>";
 		}
-		elsif ($param =~ /^[0-9A-F]*:/i) {						# IPv6 address
-		    $ip=6;
-			$key=$param;
-		}
-		print "<td>";
-		if ($key && $ip==4) {
-        	if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2 for $param key=$key ip=$ip",5); }
-			my $res = TmpLookup_geoip2($param);
-        	if (!$res){$res=lc($reader->country( ip => $param )->country()->iso_code()) if $reader;}
-        	if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2 for $param: [$res]",5); }
-		    if ($res) { print $DomainsHashIDLib{$res}?$DomainsHashIDLib{$res}:"<span style=\"color: #$color_other\">$Message[0]</span>"; }
-		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
-		}
-		if ($key && $ip==6) {                              # GeoIP2 supports both IPv4 and IPv6
-        	if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2 for $param key=$key ip=$ip",5); }
-			my $res = TmpLookup_geoip2($param);
-        	if (!$res){$res=lc($reader->country( ip => $param )->country()->iso_code()) if $reader;}
-        	if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2 for $param: [$res]",5); }
-		    if ($res) { print $DomainsHashIDLib{$res}?$DomainsHashIDLib{$res}:"<span style=\"color: #$color_other\">$Message[0]</span>"; }
-		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
-		}
-		if (! $key) {
-        	if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2 for $param key=$key ip=$ip",5); }
-			my $res = TmpLookup_geoip2($param);
-            # First resolve the name to an IP
-            $address = inet_ntoa(inet_aton($param));
-            if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2 $param resolved to $address",5); }
-            # Now do the same lookup from the IP
-            # GeoIP2::Reader doesn't support private IP addresses
-            if (!is_private_ip($address)){
-        	if (!$res){$res=lc($reader->country( ip => $address )->country()->iso_code()) if $reader;}
-        	if ($Debug) { debug("  Plugin $PluginName: ShowInfoHost_geoip2 for $param: [$res]",5); }
-		    if ($res) { print $DomainsHashIDLib{$res}?$DomainsHashIDLib{$res}:"<span style=\"color: #$color_other\">$Message[0]</span>"; }
-		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
-		}}
+		else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
 		print "</td>";
 	}
 	else {
@@ -256,22 +197,35 @@ sub LoadOverrideFile_geoip2{
 }
 
 #-----------------------------------------------------------------------------
-# PLUGIN FUNCTION: TmpLookup
-# Searches the temporary hash for the parameter value and returns the corresponding
+# PLUGIN FUNCTION: Lookup
+# Looks up the input parameter (either ip address or dns name) and returns its
+# associated country code; or undefined if not available.
 # GEOIP entry
 #-----------------------------------------------------------------------------
-sub TmpLookup_geoip2(){
+sub Lookup_geoip2 {
 	$param = shift;
-	if (!$LoadedOverride){&LoadOverrideFile_geoip2();}
-	#my $val;
-	#if ($reader &&
-	#(($type eq 'geoip' && $reader->VERSION >= 1.30) || 
-	#  $type eq 'geoippureperl' && $reader->VERSION >= 1.17)){
-	#	$val = $TmpDomainLookup{$reader->get_ip_address($param)};
-	#}
-    #else {$val = $TmpDomainLookup{$param};}
-    #return $val || '';
-    return $TmpDomainLookup{$param}||'';
+	if (!$LoadedOverride) { &LoadOverrideFile_geoip2(); }
+	if ($Debug) { debug("  Plugin $PluginName: Lookup_geoip2 for $param",5); }
+	if ($reader && !exists($TmpDomainLookup{$param})) {
+		$TmpDomainLookup{$param} = undef; # negative entry to avoid repeated lookups
+		# Resolve the parameter (either a name or an ip address) to a list of network addresses
+		my ($err, @result) = Socket::getaddrinfo($param, undef, { protocol => Socket::IPPROTO_TCP, socktype => Socket::SOCK_STREAM });
+		for (@result) {
+			# Convert the network address to human-readable form
+			my ($err, $address, $servicename) = Socket::getnameinfo($_->{addr}, Socket::NI_NUMERICHOST, Socket::NIx_NOSERV);
+			next if ($err || !is_public_ip($address));
+
+			if ($Debug && $param ne $address) { debug("  Plugin $PluginName: Lookup_geoip2 $param resolved to $address",5); }
+			eval {
+				my $record = $reader->country(ip => $address);
+				$TmpDomainLookup{$param} = $record->country()->iso_code();
+				last;
+			}
+		}
+	}
+	my $res = $TmpDomainLookup{$param};
+	if ($Debug) { debug("  Plugin $PluginName: Lookup_geoip2 for $param: [$res]",5); }
+	return $res;
 }
 
 1;	# Do not remove this line
