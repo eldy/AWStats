@@ -9186,6 +9186,12 @@ sub DefinePerlParsingFormat {
 				$PerlParsingFormat .=
 "([^$LogSeparatorWithoutStar]+T[^$LogSeparatorWithoutStar]+)(Z|[-+\.]\\d\\d[:\\.\\dZ]*)?";
 			}
+			elsif ( $f =~ /%time6$/ ) {	# dd/mm/yyyy, hh:mm:ss - added additional type to format for IIS date -DWG 12/8/2008
+				$pos_date = $i;	
+				$i++; 
+				push @fieldlib, 'date';
+				$PerlParsingFormat .= "([^,]+,[^,]+)";
+			}
 
 			# Special for methodurl, methodurlprot and methodurlnoprot
 			elsif ( $f =~ /%methodurl$/ ) {
@@ -18415,6 +18421,25 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 			next;
 		}
 
+		# Reformat date for IIS date -DWG 12/8/2008
+		if($field[$pos_date] =~ /,/)
+		{
+			$field[$pos_date] =~ s/,//;
+			my @split_date = split(' ',$field[$pos_date]);
+			my @dateparts2= split('/',$split_date[0]);
+			my @timeparts2= split(':',$split_date[1]);
+			#add leading zero
+			for($dateparts2[0],$dateparts2[1], $timeparts2[0], $timeparts2[1],  $timeparts2[2])			{
+				if($_ =~ /^.$/)
+				{
+					$_ = '0'.$_;
+				}
+
+			}
+
+			$field[$pos_date] = "$dateparts2[2]-$dateparts2[0]-$dateparts2[1] $timeparts2[0]:$timeparts2[1]:$timeparts2[2]";
+		}
+		
 		$field[$pos_date] =~
 		  tr/,-\/ \tT/::::::/s;  # " \t" is used instead of "\s" not known with tr
 		my @dateparts =
