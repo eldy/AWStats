@@ -3314,7 +3314,7 @@ sub Read_Plugins {
 	if (   $PluginsLoaded{'init'}{'geoip'}
 		|| $PluginsLoaded{'init'}{'geoip6'}
 		|| $PluginsLoaded{'init'}{'geoipfree'}
-		|| $PluginsLoaded{'init'}{'geoip2'})
+		|| $PluginsLoaded{'init'}{'geoip2_country'})
 	{
 		$Message[17] = $Message[25] = $Message[148];
 	}
@@ -19435,8 +19435,8 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 				elsif ( $PluginsLoaded{'GetCountryCodeByAddr'}{'geoipfree'} ) {
 					$Domain = GetCountryCodeByAddr_geoipfree($HostResolved);
 				}
-				elsif ( $PluginsLoaded{'GetCountryCodeByAddr'}{'geoip2'} ) {
-					$Domain = GetCountryCodeByAddr_geoip2($HostResolved);
+				elsif ( $PluginsLoaded{'GetCountryCodeByAddr'}{'geoip2_country'} ) {
+					$Domain = GetCountryCodeByAddr_geoip2_country($HostResolved);
 				}
 				if ($AtLeastOneSectionPlugin) {
 					foreach my $pluginname (
@@ -19473,9 +19473,9 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 						$Domain = GetCountryCodeByAddr_geoipfree($Host);
 					}
 					elsif (
-						$PluginsLoaded{'GetCountryCodeByAddr'}{'geoip2'} )
+						$PluginsLoaded{'GetCountryCodeByAddr'}{'geoip2_country'} )
 					{
-						$Domain = GetCountryCodeByAddr_geoip2($Host);
+						$Domain = GetCountryCodeByAddr_geoip2_country($Host);
 					}
 					elsif ( $HostResolved =~ /\.(\w+)$/ ) { $Domain = $1; }
 					if ($AtLeastOneSectionPlugin) {
@@ -19507,9 +19507,9 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 						$Domain = GetCountryCodeByName_geoipfree($HostResolved);
 					}
 					elsif (
-						$PluginsLoaded{'GetCountryCodeByName'}{'geoip2'} )
+						$PluginsLoaded{'GetCountryCodeByName'}{'geoip2_country'} )
 					{
-						$Domain = GetCountryCodeByName_geoip2($HostResolved);
+						$Domain = GetCountryCodeByName_geoip2_country($HostResolved);
 					}
 					elsif ( $HostResolved =~ /\.(\w+)$/ ) { $Domain = $1; }
 					if ($AtLeastOneSectionPlugin) {
