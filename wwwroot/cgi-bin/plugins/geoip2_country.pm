@@ -13,7 +13,7 @@
 # <-----
 # ENTER HERE THE USE COMMAND FOR ALL REQUIRED PERL MODULES
 use vars qw/ $type /;
-$type='geoip2';
+$type='geoip2_country';
 if (!eval ('require "GeoIP2/Database/Reader.pm";')) {
 	$error=$@;
     $ret=($error)?"Error:\n$error":"";
@@ -41,7 +41,7 @@ no strict "refs";
 # AND THE NAME OF ALL FUNCTIONS THE PLUGIN MANAGE.
 my $PluginNeedAWStatsVersion="5.4";
 my $PluginHooksFunctions="GetCountryCodeByAddr GetCountryCodeByName ShowInfoHost";
-my $PluginName = "geoip2";
+my $PluginName = "geoip2_country";
 my $LoadedOverride=0;
 my $OverrideFile="";
 my %TmpDomainLookup;
@@ -59,7 +59,7 @@ use Data::Validate::IP 0.25 qw( is_public_ip );
 #-----------------------------------------------------------------------------
 # PLUGIN FUNCTION: Init_pluginname
 #-----------------------------------------------------------------------------
-sub Init_geoip2 {
+sub Init_geoip2_country {
 	my $InitParams=shift;
 	my $checkversion=&Check_Plugin_Version($PluginNeedAWStatsVersion);
 
@@ -92,10 +92,10 @@ sub Init_geoip2 {
 # UNIQUE: YES (Only one plugin using this function can be loaded)
 # GetCountryCodeByAddr is called to translate an ip into a country code in lower case.
 #-----------------------------------------------------------------------------
-sub GetCountryCodeByAddr_geoip2 {
+sub GetCountryCodeByAddr_geoip2_country {
 	my $param = shift;
 	if (! $param) { return ''; }
-	my $res = Lookup_geoip2($param);
+	my $res = Lookup_geoip2_country($param);
 	return ($res) ? lc($res) : 'unknown';
 }
 
@@ -105,8 +105,8 @@ sub GetCountryCodeByAddr_geoip2 {
 # UNIQUE: YES (Only one plugin using this function can be loaded)
 # GetCountryCodeByName is called to translate a host name into a country code in lower case.
 #-----------------------------------------------------------------------------
-sub GetCountryCodeByName_geoip2 {
-	return GetCountryCodeByAddr_geoip2(@_);
+sub GetCountryCodeByName_geoip2_country {
+	return GetCountryCodeByAddr_geoip2_country(@_);
 }
 
 
@@ -119,7 +119,7 @@ sub GetCountryCodeByName_geoip2 {
 #   print "<TD>This is a new cell for $param</TD>";
 # Parameters: Host name or ip
 #-----------------------------------------------------------------------------
-sub ShowInfoHost_geoip2 {
+sub ShowInfoHost_geoip2_country {
     my $param="$_[0]";
 	# <-----
 	if ($param eq '__title__') {
@@ -142,7 +142,7 @@ sub ShowInfoHost_geoip2 {
         print "</th>";
 	}
 	elsif ($param) {
-		my $res = Lookup_geoip2($param);
+		my $res = Lookup_geoip2_country($param);
 		if ($res) {
 				$res = lc($res);
 				print $DomainsHashIDLib{$res}?$DomainsHashIDLib{$res}:"<span style=\"color: #$color_other\">$Message[0]</span>";
@@ -163,7 +163,7 @@ sub ShowInfoHost_geoip2 {
 # Useful for Intranet records
 # CSV format: IP,2-char Country code
 #-----------------------------------------------------------------------------
-sub LoadOverrideFile_geoip2{
+sub LoadOverrideFile_geoip2_country{
 	my $filetoload="";
 	if ($OverrideFile){
 		if (!open(GEOIPFILE, $OverrideFile)){
@@ -202,10 +202,10 @@ sub LoadOverrideFile_geoip2{
 # associated country code; or undefined if not available.
 # GEOIP entry
 #-----------------------------------------------------------------------------
-sub Lookup_geoip2 {
+sub Lookup_geoip2_country {
 	$param = shift;
-	if (!$LoadedOverride) { &LoadOverrideFile_geoip2(); }
-	if ($Debug) { debug("  Plugin $PluginName: Lookup_geoip2 for $param",5); }
+	if (!$LoadedOverride) { &LoadOverrideFile_geoip2_country(); }
+	if ($Debug) { debug("  Plugin $PluginName: Lookup_geoip2_country for $param",5); }
 	if ($reader && !exists($TmpDomainLookup{$param})) {
 		$TmpDomainLookup{$param} = undef; # negative entry to avoid repeated lookups
 		# Resolve the parameter (either a name or an ip address) to a list of network addresses
@@ -215,7 +215,7 @@ sub Lookup_geoip2 {
 			my ($err, $address, $servicename) = Socket::getnameinfo($_->{addr}, Socket::NI_NUMERICHOST, Socket::NIx_NOSERV);
 			next if ($err || !is_public_ip($address));
 
-			if ($Debug && $param ne $address) { debug("  Plugin $PluginName: Lookup_geoip2 $param resolved to $address",5); }
+			if ($Debug && $param ne $address) { debug("  Plugin $PluginName: Lookup_geoip2_country $param resolved to $address",5); }
 			eval {
 				my $record = $reader->country(ip => $address);
 				$TmpDomainLookup{$param} = $record->country()->iso_code();
@@ -224,7 +224,7 @@ sub Lookup_geoip2 {
 		}
 	}
 	my $res = $TmpDomainLookup{$param};
-	if ($Debug) { debug("  Plugin $PluginName: Lookup_geoip2 for $param: [$res]",5); }
+	if ($Debug) { debug("  Plugin $PluginName: Lookup_geoip2_country for $param: [$res]",5); }
 	return $res;
 }
 

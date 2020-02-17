@@ -3135,7 +3135,7 @@ sub Read_Plugins {
 					'geoipfree'            => 'u',
 					'geoip'                => 'ou',
 					'geoip6'               => 'ou',
-					'geoip2'               => 'ou',
+					'geoip2_country'       => 'ou',
 					'geoip_region_maxmind' => 'mou',
 					'geoip_city_maxmind'   => 'mou',
                     'geoip2_city'          => 'mou',
