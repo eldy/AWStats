@@ -50,8 +50,14 @@
 'mdb',       'MS Database Object',
 'crystal',   'Crystal Reports data or file',
 'ooffice',   'Open Office Document',
+'libreoffice',   'LibreOffice Document',
 'encrypt',   'Encrypted document',
 'gpx',       'GPS Exchange Format file',
+'diskimage', 'Disc and media file extensions',
+'vm',        'Virtual Machine image',
+'torrent',   'BitTorrent File',
+'gis',       'GIS File'
+'ebook',     'Ebook File'
 );
 
 # MimeHashLib
@@ -94,11 +100,13 @@
 'cgi',['script',''],
 'ksh',['script',''],
 'php',['php',''],
+'phps',['php',''],
 'php3',['php',''],
 'php4',['php',''],
 'pl',['pl',''],
 'py',['script',''],
 'rss',['rss',''],
+'atom',['rss',''],
 'sh',['script',''],
 'shtml',['script',''],
 'tcl',['script',''],
@@ -114,6 +122,10 @@
 'ico',['image','i'],
 'svg',['image','i'],
 'svgz',['image','i'],
+'webp',['image','i'],
+'heic',['image','i'],
+'tif',['image','i'],
+'tiff',['image','i'],
 # Document
 'ai',['document','d'],
 'doc',['document','d'],
@@ -135,17 +147,38 @@
 'sxd',['ooffice','d'],
 'sxm',['ooffice','d'],
 'sxg',['ooffice','d'],
+'odb',['libreoffice','d'],
+'odf',['libreoffice','d'],
+'odg',['libreoffice','d'],
+'odm',['libreoffice','d'],
+'odp',['libreoffice','d'],
+'ods',['libreoffice','d'],
+'odt',['libreoffice','d'],
+'oth',['libreoffice','d'],
+'otg',['libreoffice','d'],
+'otp',['libreoffice','d'],
+'ots',['libreoffice','d'],
+'ott',['libreoffice','d'],
+'oxt',['libreoffice','d'],
 'csv',['csv','d'],
 'xsl',['xsl','d'],
 'lit',['lit','d'],
-'mdb',['mdb',''],
-'rpt',['crystal',''],
-'gpx',['gpx','d'],
+'mdb',['mdb','d'],
+'rpt',['crystal','d'],
+'epub',['ebook','d'],
+'mobi',['ebook','d'],
+'azw',['ebook','d'],
+'azw3',['ebook','d'],
+# GIS files
+'gpx',['gis','d'],
+'kml',['gis','d'],
+'kmz',['gis','d'],
 # Package
 'rpm',[($LogType eq 'S'?'audio':'package'),'d'],
 'deb',['package','d'],
 'msi',['package','d'],
 'pkg',['package','d'],
+'apk',['package','d'],
 # Archive
 '7z',['archive','d'],
 'ace',['archive','d'],
@@ -160,6 +193,7 @@
 'tar',['archive','d'],
 'tgz',['archive','d'],
 'tbz2',['archive','d'],
+'xz',['archive','d'],
 'z',['archive','d'],
 'zip',['archive','d'],
 # Audio
@@ -179,6 +213,7 @@
 'mp4',['video','d'],
 'm4v',['video','d'],
 'mpeg',['video','d'],
+'mkv',['video','d'],
 'mpg',['video','d'],
 'ogv',['video','d'],
 'ogx',['video','d'],
@@ -190,6 +225,7 @@
 'wmf',['video','d'],
 'mov',['video','d'],
 'qt',['video','d'],
+'webm',['video','d'],
 # Config
 'cf',['conf',''],
 'conf',['conf',''],
@@ -211,6 +247,21 @@
 # Encrypted files
 'pgp',['encrypt',''],
 'gpg',['encrypt',''],
+# Disc and media file extensions
+'bin',['diskimage','d'],
+'dmg',['diskimage','d'],
+'iso',['diskimage','d'],
+'toast',['diskimage','d'],
+'vcd',['diskimage','d'],
+# Virtual Machine images
+'qcow2',['vm','d'],
+'raw',['vm','d'],
+'ovf',['vm','d'],
+'ova',['vm','d'],
+'vmdk',['vm','d'],
+'vdi',['vm','d'],
+'vhdx',['vm','d'],
+'vpc',['vm','d'],
 );
 
 
