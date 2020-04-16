@@ -16,11 +16,12 @@
 
 # Relocated from main file for easier editing
 %OSFamily = (
-	'win'   => 'Windows',
-	'mac'   => 'Macintosh',
-	'ios'   => 'iOS',
-	'linux' => 'Linux',
-	'bsd'   => 'BSD'
+  'win'     => 'Windows',
+  'mac'     => 'Macintosh',
+  'ios'     => 'iOS',
+  'android' => 'Android',
+  'linux'   => 'Linux',
+  'bsd'     => 'BSD'
 );
 
 # OSSearchIDOrder
@@ -71,8 +72,23 @@
 'mac[_+ ]68',									# This works for mac_6800 and mac_68k
 'macweb',
 'macintosh',
-# Linux family
+# Android family
+'android[_+ ]8',        # Oreo
+'android[_+ ]7',        # Nougat
+'android[_+ ]6',        # Marshmallow
+'android[_+ ]5',        # Lollipop
+'android[_+ ]4[_\.]4',  # KitKat
+'android[_+ ]4[_\.]0',  # Ice Cream Sandwich
+'android[_+ ]4',        # Jelly Bean, Must be after K & I
+'android[_+ ]3',        # Honeycomb
+'android[_+ ]2[_\.]3',  # Gingerbread
+'android[_+ ]2[_\.]2',  # Froyo
+'android[_+ ]2',        # Eclair, Must be after F & G
+'android[_+ ]1[_\.]6',  # Donut
+'android[_+ ]1[_\.]5',  # Cupcake
 'linux(.*)android',
+'android',
+# Linux family
 'linux(.*)asplinux',
 'linux(.*)centos',
 'linux(.*)debian',
@@ -89,7 +105,6 @@
 'linux(.*)white\sbox',
 'linux(.*)zenwalk',
 'linux',
-'android',
 'debian',
 # Hurd family
 'gnu.hurd',
@@ -192,8 +207,23 @@
 'mac[_+ ]os[_+ ]x[_+ ]10[_\.]4','macosx4',
 'mac[_+ ]os[_+ ]x','macosx', 'vienna', 'macosx', 'newsfire', 'macosx', 'applesyndication', 'macosx',
 'mac[_+ ]?p','macintosh','mac[_+ ]68','macintosh','macweb','macintosh','macintosh','macintosh',
+# Android family (androidyyy)
+'android[_+ ]8','androidoreo',              # Oreo
+'android[_+ ]7','androidnougat',            # Nougat
+'android[_+ ]6','androidmarshmallow',       # Marshmallow
+'android[_+ ]5','androidlollipop',          # Lollipop
+'android[_+ ]4[_\.]4','androidkitkat',      # KitKat
+'android[_+ ]4[_\.]0','androidics',         # Ice Cream Sandwich
+'android[_+ ]4','androidjellybean',         # Jelly Bean, Must be after K & I
+'android[_+ ]3','androidhoneycomb',         # Honeycomb
+'android[_+ ]2[_\.]3','androidgingerbread', # Gingerbread
+'android[_+ ]2[_\.]2','androidfroyo',       # Froyo
+'android[_+ ]2','androideclair',            # Eclair, Must be after F & G
+'android[_+ ]1[_\.]6','androiddonut',       # Donut
+'android[_+ ]1[_\.]5','androidcupcake',     # Cupcake
+'linux(.*)android','android',
+'android','android',
 # Linux family (linuxyyy)
-'linux(.*)android','linuxandroid',
 'linux(.*)asplinux','linuxasplinux',
 'linux(.*)centos','linuxcentos',
 'linux(.*)debian','linuxdebian',
@@ -210,7 +240,6 @@
 'linux(.*)white\sbox','linuxwhitebox',
 'linux(.*)zenwalk','linuxzenwalk',
 'linux','linux',
-'android','linuxandroid',
 'debian','linuxdebian',
 # Hurd family
 'gnu.hurd','gnu',
@@ -265,21 +294,21 @@
 %OSHashLib      = (
 # Windows family OS
 'win10','<a href="http://www.microsoft.com/windows10/" title="Windows 10 home page [new window]" target="_blank" rel="noopener noreferrer">Windows 10</a>',
-'win8.1','<a href="http://www.microsoft.com/windows8/" title="Windows 8.1 home page [new window]" target="_blank" rel="noopener noreferrer">Windows 8.1</a>',
-'win8','<a href="http://www.microsoft.com/windows8/" title="Windows 8 home page [new window]" target="_blank" rel="noopener noreferrer">Windows 8</a>',
-'win7','<a href="http://windows.microsoft.com/en-US/windows7/products/home/" title="Windows 7 home page [new window]" target="_blank" rel="noopener noreferrer">Windows 7</a>',
-'winlong','<a href="http://www.microsoft.com/windows/" title="Windows Vista home page [new window]" target="_blank" rel="noopener noreferrer">Windows Vista (LongHorn)</a>',
-'win2008','<a href="http://www.microsoft.com/windowsserver2008/" title="Windows 2008 home page [new window]" target="_blank" rel="noopener noreferrer">Windows 2008</a>',
-'win2012','<a href="http://www.microsoft.com/en-us/server-cloud/windows-server/2012-default.aspx/" title="Windows Server 2012 home page [new window]" target="_blank" rel="noopener noreferrer">Windows Server 2012</a>',
-'winvista','<a href="http://www.microsoft.com/windowsvista/" title="Windows Vista home page [new window]" target="_blank" rel="noopener noreferrer">Windows Vista</a>',
-'win2003','<a href="http://www.microsoft.com/windowsserver2003/" title="Windows 2003 home page [new window]" target="_blank" rel="noopener noreferrer">Windows 2003</a>',
-'winxp','<a href="http://www.microsoft.com/windowsxp/" title="Windows XP home page [new window]" target="_blank" rel="noopener noreferrer">Windows XP</a>',
-'winme','<a href="http://support.microsoft.com/ph/6519/" title="Windows ME support page [new window]" target="_blank" rel="noopener noreferrer">Windows ME</a>',
-'win2000','<a href="http://support.microsoft.com/ph/1131" title="Windows 2000 support page [new window]" target="_blank" rel="noopener noreferrer">Windows 2000</a>',
-'winnt','<a href="http://support.microsoft.com/default.aspx?pr=ntw40" title="Windows NT support page [new window]" target="_blank" rel="noopener noreferrer">Windows NT</a>',
-'win98','<a href="http://support.microsoft.com/w98" title="Windows 98 support page [new window]" target="_blank" rel="noopener noreferrer">Windows 98</a>',
-'win95','<a href="http://support.microsoft.com/ph/7864" title="Windows 95 support page [new window]" target="_blank" rel="noopener noreferrer">Windows 95</a>',
-'win16','<a href="http://www.microsoft.com/windows/WinHistoryDesktop.mspx#E1B" title="Windows 3.xx history page [new window]" target="_blank" rel="noopener noreferrer">Windows 3.xx</a>',
+'win8.1','<a href="https://technet.microsoft.com/en-us/library/hh832030(v=ws.11).aspx" title="Windows 8.1 home page [new window]" target="_blank" rel="noopener noreferrer">Windows 8.1</a>',
+'win8','<a href="https://technet.microsoft.com/en-us/library/hh832030(v=ws.11).aspx" title="Windows 8 home page [new window]" target="_blank" rel="noopener noreferrer">Windows 8</a>',
+'win7','<a href="https://technet.microsoft.com/en-us/library/dd349779.aspx" title="Windows 7 home page [new window]" target="_blank" rel="noopener noreferrer">Windows 7</a>',
+'winlong','<a href="https://technet.microsoft.com/en-us/library/cc707009.aspx" title="Windows Vista home page [new window]" target="_blank" rel="noopener noreferrer">Windows Vista (LongHorn)</a>',
+'win2008','<a href="https://technet.microsoft.com/en-us/library/dd349801(v=ws.10).aspx" title="Windows 2008 home page [new window]" target="_blank" rel="noopener noreferrer">Windows 2008</a>',
+'win2012','<a href="https://technet.microsoft.com/en-us/library/hh801901(v=ws.11).aspx" title="Windows Server 2012 home page [new window]" target="_blank" rel="noopener noreferrer">Windows Server 2012</a>',
+'winvista','<a href="https://technet.microsoft.com/en-us/library/cc707009.aspx" title="Windows Vista home page [new window]" target="_blank" rel="noopener noreferrer">Windows Vista</a>',
+'win2003','<a href="https://www.microsoft.com/en-US/download/details.aspx?id=53314" title="Windows 2003 home page [new window]" target="_blank" rel="noopener noreferrer">Windows 2003</a>',
+'winxp','<a href="https://technet.microsoft.com/en-us/library/bb491054.aspx" title="Windows XP home page [new window]" target="_blank" rel="noopener noreferrer">Windows XP</a>',
+'winme','<a href="https://support.microsoft.com/en-us/help/253695/" title="Windows ME support page [new window]" target="_blank" rel="noopener noreferrer">Windows ME</a>',
+'win2000','<a href="https://technet.microsoft.com/en-us/library/hh534433.aspx" title="Windows 2000 support page [new window]" target="_blank" rel="noopener noreferrer">Windows 2000</a>',
+'winnt','<a href="https://technet.microsoft.com/en-us/library/cc767870.aspx" title="Windows NT support page [new window]" target="_blank" rel="noopener noreferrer">Windows NT</a>',
+'win98','<a href="https://support.microsoft.com/en-us/help/234762/" title="Windows 98 support page [new window]" target="_blank" rel="noopener noreferrer">Windows 98</a>',
+'win95','<a href="https://en.wikipedia.org/wiki/Windows_95" title="Windows 95 Wiki Pedia page [new window]" target="_blank" rel="noopener noreferrer">Windows 95</a>',
+'win16','<a href="https://support.microsoft.com/en-us/help/83245" title="Windows 3.xx history page [new window]" target="_blank" rel="noopener noreferrer">Windows 3.xx</a>',
 'wince','<a href="http://www.microsoft.com/windowsmobile/" title="Windows Mobile home page [new window]" target="_blank" rel="noopener noreferrer">Windows Mobile</a>',
 'winphone','<a href="http://www.microsoft.com/windowsphone/" title="Windows Phone home page [new window]" target="_blank" rel="noopener noreferrer">Windows Phone</a>',
 'winunknown','Windows (unknown version)',
@@ -298,8 +327,23 @@
 'macosx4','<a href="http://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS X 10.4 Tiger</a>',
 'macosx','<a href="http://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS X others</a>',
 'macintosh','<a href="http://www.apple.com/" title="Mac OS home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS</a>',
+# Android
+'androidoreo','<a href="https://developer.android.com/about/versions/oreo/" title="Google Android 8.x Oreo home page [new window]" target="_blank" rel="noopener noreferrer">Google Android 8.x Oreo</a>',
+'androidnougat','<a href="https://developer.android.com/about/versions/nougat/" title="Google Android 7.x Nougat home page [new window]" target="_blank" rel="noopener noreferrer">Google Android 7.x Nougat</a>',
+'androidmarshmallow','<a href="https://developer.android.com/about/versions/marshmallow/" title="Google Android 6.x Marshmallow home page [new window]" target="_blank" rel="noopener noreferrer">Google Android 6.x Marshmallow</a>',
+'androidlollipop','<a href="https://developer.android.com/about/versions/lollipop.html" title="Google Android 5.x Lollipop home page [new window]" target="_blank" rel="noopener noreferrer">Google Android 5.x Lollipop</a>',
+'androidkitkat','<a href="https://developer.android.com/about/versions/kitkat.html" title="Google Android 4.4 KitKat home page [new window]" target="_blank" rel="noopener noreferrer">Google Android 4.4 KitKat</a>',
+'androidjellybean','<a href="https://developer.android.com/about/versions/jelly-bean.html" title="Google Android 4.1-4.3 Jelly Bean home page [new window]" target="_blank" rel="noopener noreferrer">Google Android 4.1-4.3 Jelly Bean</a>',
+'androidics','<a href="https://developer.android.com/index.html" title="Google Android home page [new window]" target="_blank" rel="noopener noreferrer">Google Android 4.0 Ice Cream Sandwich</a>',
+'androidhoneycomb','<a href="https://developer.android.com/index.html" title="Google Android home page [new window]" target="_blank" rel="noopener noreferrer">Google Android 3.x Honeycomb</a>',
+'androidgingerbread','<a href="https://developer.android.com/index.html" title="Google Android home page [new window]" target="_blank" rel="noopener noreferrer">Google Android 2.3 Gingerbread</a>',
+'androidfroyo','<a href="https://developer.android.com/index.html" title="Google Android home page [new window]" target="_blank" rel="noopener noreferrer">Google Android 2.2 Froyo</a>',
+'androideclair','<a href="https://developer.android.com/index.html" title="Google Android home page [new window]" target="_blank" rel="noopener noreferrer">Google Android 2.0-2.1 Eclair</a>',
+'androiddonut','<a href="https://developer.android.com/index.html" title="Google Android home page [new window]" target="_blank" rel="noopener noreferrer">Google Android 1.6 Donut</a>',
+'androidcupcake','<a href="https://developer.android.com/index.html" title="Google Android home page [new window]" target="_blank" rel="noopener noreferrer">Google Android 1.5 Cupcake</a>',
+'android','<a href="https://developer.android.com/index.html" title="Google Android home page [new window]" target="_blank" rel="noopener noreferrer">Google Android Unknown</a>',
+'linuxandroid','<a href="https://developer.android.com/index.html" title="Google Android home page [new window]" target="_blank" rel="noopener noreferrer">Google Android Unknown</a>',
 # Linux
-'linuxandroid','<a href="http://code.google.com/android/" title="Google Android home page [new window]" target="_blank" rel="noopener noreferrer">Google Android</a>',
 'linuxasplinux','<a href="http://www.asplinux.ru/" title="ASPLinux home page [new window]" target="_blank" rel="noopener noreferrer">ASPLinux</a>',
 'linuxcentos','<a href="http://www.centos.org/" title="Centos home page [new window]" target="_blank" rel="noopener noreferrer">Centos</a>',
 'linuxdebian','<a href="http://www.debian.org/" title="Debian home page [new window]" target="_blank" rel="noopener noreferrer">Debian</a>',
