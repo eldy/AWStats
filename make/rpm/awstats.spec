@@ -16,7 +16,6 @@ Vendor: Laurent Destailleur
 
 URL: http://%{name}.sourceforge.net
 Source: http://dl.sf.net/awstats/%{name}-%{version}.tgz
-BuildArch: noarch
 BuildArchitectures: noarch
 BuildRoot: /tmp/%{name}-buildroot
 Icon: awstats_logo1.gif

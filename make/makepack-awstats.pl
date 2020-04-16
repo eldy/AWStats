@@ -2,7 +2,7 @@
 #----------------------------------------------------------------------------
 # \file         make/makepack-awstats.pl
 # \brief        Package builder (tgz, zip, rpm, deb, exe)
-# \author       (c)2004-2014 Laurent Destailleur  <eldy@users.sourceforge.net>
+# \author       (c)2004-2020 Laurent Destailleur  <eldy@users.sourceforge.net>
 #----------------------------------------------------------------------------
 
 use Cwd;
@@ -12,7 +12,7 @@ $RPMSUBVERSION="1";
 
 $WBMVERSION="2.0";
 
-@LISTETARGET=("TGZ","ZIP","RPM","DEB","EXE");   # Possible packages
+@LISTETARGET=("TGZ","ZIP","RPM");   # Possible packages
 %REQUIREMENTPUBLISH=(
 "SF"=>"git ssh rsync"
 );
