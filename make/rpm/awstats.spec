@@ -1,7 +1,5 @@
 %define name awstats
 %define version	__VERSION__
-# For Mandrake
-#%define release 1mdk
 # For all other distrib
 %define release 1
 
@@ -20,8 +18,6 @@ BuildArchitectures: noarch
 BuildRoot: /tmp/%{name}-buildroot
 Icon: awstats_logo1.gif
 
-# For Mandrake
-Group: Networking/WWW
 # For all other distrib
 Group: Applications/Internet
 
