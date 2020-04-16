@@ -136,7 +136,7 @@ Follow AWStats project on:
 
 ## ABOUT THE AUTHOR, LICENSE AND SUPPORT
 
-Copyright (C) 2000-2019 - Laurent Destailleur - eldy@users.sourceforge.net - <https://www.nltechno.com>
+Copyright (C) 2000-2020 - Laurent Destailleur - eldy@users.sourceforge.net - <https://www.nltechno.com>
 
 Laurent Destailleur is also the project leader of [Dolibarr ERP CRM Opensource project](https://www.dolibarr.org),
 and author of AWBot, CVSChangeLogBuilder, DoliDroid and founder of DoliCloud SaaS <https://www.dolicloud.com>.
