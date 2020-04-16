@@ -10001,6 +10001,18 @@ sub HTMLTopBanner{
 "<tr><td class=\"aws\" valign=\"middle\"><b>$Message[133]:</b></td>";
 		print "<td class=\"aws\" valign=\"middle\">";
 		if ( $ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ) {
+			print "<select class=\"aws_formfield\" name=\"databasebreak\">\n";
+			print "<option"
+			  . ( $DatabaseBreak eq "month" ? " selected=\"selected\"" : "" )
+			  . " value=\"month\">Monthly</option>\n";
+			print "<option"
+			  . ( $DatabaseBreak eq "day" ? " selected=\"selected\"" : "" )
+			  . " value=\"day\">Daily</option>\n";
+			print "<option"
+			  . ( $DatabaseBreak eq "hour" ? " selected=\"selected\"" : "" )
+			  . " value=\"hour\">Hourly</option>\n";
+			print "</select>\n";
+
 			print "<select class=\"aws_formfield\" name=\"month\">\n";
 			foreach ( 1 .. 12 ) {
 				my $monthix = sprintf( "%02s", $_ );
@@ -10028,6 +10040,34 @@ sub HTMLTopBanner{
 				  . " value=\"$_\">$_</option>\n";
 			}
 			print "</select>\n";
+
+			if (	$DatabaseBreak eq 'day' || 
+					$DatabaseBreak eq 'hour') {
+				if (!$DayRequired) {
+					$DayRequired = $nowday; 
+				}
+				print "<select class=\"aws_formfield\" name=\"day\">\n";
+				foreach ( 1 .. 31 ) {
+					print "<option"
+					  . ( $DayRequired eq "$_" ? " selected=\"selected\"" : "" )
+					  . " value=\"$_\">$_</option>\n";
+				}
+				print "</select>\n";
+			}
+
+			if (	$DatabaseBreak eq 'hour') {
+				if (!$HourRequired) {
+					$HourRequired = $nowhour; 
+				}
+				print "<select class=\"aws_formfield\" name=\"day\">\n";
+				foreach ( 1 .. 31 ) {
+					print "<option"
+					  . ( $HourRequired eq "$_" ? " selected=\"selected\"" : "" )
+					  . " value=\"$_\">$_</option>\n";
+				}
+				print "</select>\n";
+			}
+
 			print "<input type=\"hidden\" name=\"output\" value=\""
 			  . join( ',', keys %HTMLOutput )
 			  . "\" />\n";
