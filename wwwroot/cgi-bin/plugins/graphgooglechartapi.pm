@@ -582,7 +582,7 @@ sub Round_Up(){
 	$i = int(substr($num,0,2))+1;
 	
 	# pad with 0s
-	$l = length($i);
+	$l = 2;
 	while ($l<(length($num))){
 		$i .= "0";
 		$l++;
