@@ -442,8 +442,6 @@ if ($nboftargetok) {
 		print "\nList of files to publish\n";
     	%filestoscansf=(
     		"$DESTI/$FILENAMERPM.noarch.rpm"=>'AWStats',
-    		"$DESTI/${FILENAMEDEB}_all.deb"=>'AWStats',
-    		"$DESTI/$FILENAMEEXE.exe"=>'AWStats',
     		"$DESTI/$FILENAMETGZ.tar.gz"=>'AWStats',
     		"$DESTI/$FILENAMETGZ.zip"=>'AWStats'
     	);
