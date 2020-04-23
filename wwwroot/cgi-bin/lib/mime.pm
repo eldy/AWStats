@@ -56,7 +56,7 @@
 'diskimage', 'Disc and media file extensions',
 'vm',        'Virtual Machine image',
 'torrent',   'BitTorrent File',
-'gis',       'GIS File'
+'gis',       'GIS File',
 'ebook',     'Ebook File'
 );
 
