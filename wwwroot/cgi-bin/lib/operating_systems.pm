@@ -56,6 +56,7 @@
 'ipad',
 'ipod',
 # Macintosh OS family
+'mac[_+ ]os[_+ ]x[_+ ]10[_\.]15',
 'mac[_+ ]os[_+ ]x[_+ ]10[_\.]14',
 'mac[_+ ]os[_+ ]x[_+ ]10[_\.]13',
 'mac[_+ ]os[_+ ]x[_+ ]10[_\.]12',
@@ -73,6 +74,8 @@
 'macweb',
 'macintosh',
 # Android family
+'android[_+ ]10',       # Android 10
+'android[_+ ]9',        # Pie
 'android[_+ ]8',        # Oreo
 'android[_+ ]7',        # Nougat
 'android[_+ ]6',        # Marshmallow
@@ -104,8 +107,11 @@
 'linux(.*)vine',
 'linux(.*)white\sbox',
 'linux(.*)zenwalk',
-'linux',
+'centos',
 'debian',
+'gentoo',
+'ubuntu',
+'linux',
 # Hurd family
 'gnu.hurd',
 # BSDs family
@@ -194,6 +200,7 @@
 'ipad','ios_ipad', #Must be Before Mac OS Family
 'ipod','ios_ipod',  #Must be Before Mac OS Family
 # Macintosh OS family
+'mac[_+ ]os[_+ ]x[_+ ]10[_\.]15','macosx15',
 'mac[_+ ]os[_+ ]x[_+ ]10[_\.]14','macosx14',
 'mac[_+ ]os[_+ ]x[_+ ]10[_\.]13','macosx13',
 'mac[_+ ]os[_+ ]x[_+ ]10[_\.]12','macosx12',
@@ -208,6 +215,8 @@
 'mac[_+ ]os[_+ ]x','macosx', 'vienna', 'macosx', 'newsfire', 'macosx', 'applesyndication', 'macosx',
 'mac[_+ ]?p','macintosh','mac[_+ ]68','macintosh','macweb','macintosh','macintosh','macintosh',
 # Android family (androidyyy)
+'android[_+ ]10','android10',              # Android 10
+'android[_+ ]9','androidpie',              # Pie
 'android[_+ ]8','androidoreo',              # Oreo
 'android[_+ ]7','androidnougat',            # Nougat
 'android[_+ ]6','androidmarshmallow',       # Marshmallow
@@ -240,7 +249,10 @@
 'linux(.*)white\sbox','linuxwhitebox',
 'linux(.*)zenwalk','linuxzenwalk',
 'linux','linux',
+'centos','linuxcentos',
 'debian','linuxdebian',
+'gentoo','linuxgentoo',
+'ubuntu','linuxubuntu',
 # Hurd family
 'gnu.hurd','gnu',
 # BSDs family (bsdyyy)
@@ -314,20 +326,23 @@
 'winunknown','Windows (unknown version)',
 'winxbox','<a href="http://www.xbox.com/" title="Microsoft XBOX home page [new window]" target="_blank" rel="noopener noreferrer">Microsoft XBOX</a>',
 # Macintosh OS
-'macosx14','<a href="http://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">macOS 10.14 Mojave</a>',
-'macosx13','<a href="http://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">macOS 10.13 High Sierra</a>',
-'macosx12','<a href="http://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">macOS 10.12 Sierra</a>',
-'macosx11','<a href="http://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">OS X 10.11 El Capitan</a>',
-'macosx10','<a href="http://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">OS X 10.10 Yosemite</a>',
-'macosx9','<a href="http://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">OS X 10.9 Mavericks</a>',
-'macosx8','<a href="http://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">OS X 10.8 Mountain Lion</a>',
-'macosx7','<a href="http://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS X 10.7 Lion</a>',
-'macosx6','<a href="http://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS X 10.6 Snow Leopard</a>',
-'macosx5','<a href="http://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS X 10.5 Leopard</a>',
-'macosx4','<a href="http://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS X 10.4 Tiger</a>',
-'macosx','<a href="http://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS X others</a>',
-'macintosh','<a href="http://www.apple.com/" title="Mac OS home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS</a>',
+'macosx15','<a href="https://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">macOS 10.15 Catalina</a>',
+'macosx14','<a href="https://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">macOS 10.14 Mojave</a>',
+'macosx13','<a href="https://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">macOS 10.13 High Sierra</a>',
+'macosx12','<a href="https://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">macOS 10.12 Sierra</a>',
+'macosx11','<a href="https://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">OS X 10.11 El Capitan</a>',
+'macosx10','<a href="https://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">OS X 10.10 Yosemite</a>',
+'macosx9','<a href="https://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">OS X 10.9 Mavericks</a>',
+'macosx8','<a href="https://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">OS X 10.8 Mountain Lion</a>',
+'macosx7','<a href="https://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS X 10.7 Lion</a>',
+'macosx6','<a href="https://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS X 10.6 Snow Leopard</a>',
+'macosx5','<a href="https://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS X 10.5 Leopard</a>',
+'macosx4','<a href="https://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS X 10.4 Tiger</a>',
+'macosx','<a href="https://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS X others</a>',
+'macintosh','<a href="https://www.apple.com/" title="Mac OS home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS</a>',
 # Android
+'android10','<a href="https://developer.android.com/about/versions/10" title="Google Android 10.x home page [new window]" target="_blank" rel="noopener noreferrer">Google Android 10.x</a>',
+'androidpie','<a href="https://developer.android.com/about/versions/pie/" title="Google Android 9.x Pie home page [new window]" target="_blank" rel="noopener noreferrer">Google Android 9.x Pie</a>',
 'androidoreo','<a href="https://developer.android.com/about/versions/oreo/" title="Google Android 8.x Oreo home page [new window]" target="_blank" rel="noopener noreferrer">Google Android 8.x Oreo</a>',
 'androidnougat','<a href="https://developer.android.com/about/versions/nougat/" title="Google Android 7.x Nougat home page [new window]" target="_blank" rel="noopener noreferrer">Google Android 7.x Nougat</a>',
 'androidmarshmallow','<a href="https://developer.android.com/about/versions/marshmallow/" title="Google Android 6.x Marshmallow home page [new window]" target="_blank" rel="noopener noreferrer">Google Android 6.x Marshmallow</a>',
@@ -345,16 +360,16 @@
 'linuxandroid','<a href="https://developer.android.com/index.html" title="Google Android home page [new window]" target="_blank" rel="noopener noreferrer">Google Android Unknown</a>',
 # Linux
 'linuxasplinux','<a href="http://www.asplinux.ru/" title="ASPLinux home page [new window]" target="_blank" rel="noopener noreferrer">ASPLinux</a>',
-'linuxcentos','<a href="http://www.centos.org/" title="Centos home page [new window]" target="_blank" rel="noopener noreferrer">Centos</a>',
-'linuxdebian','<a href="http://www.debian.org/" title="Debian home page [new window]" target="_blank" rel="noopener noreferrer">Debian</a>',
-'linuxfedora','<a href="http://fedora.redhat.com/" title="Fedora home page [new window]" target="_blank" rel="noopener noreferrer">Fedora</a>',
-'linuxgentoo','<a href="http://www.gentoo.org/" title="Gentoo home page [new window]" target="_blank" rel="noopener noreferrer">Gentoo</a>',
+'linuxcentos','<a href="https://www.centos.org/" title="Centos home page [new window]" target="_blank" rel="noopener noreferrer">Centos</a>',
+'linuxdebian','<a href="https://www.debian.org/" title="Debian home page [new window]" target="_blank" rel="noopener noreferrer">Debian</a>',
+'linuxfedora','<a href="https://getfedora.org/" title="Fedora home page [new window]" target="_blank" rel="noopener noreferrer">Fedora</a>',
+'linuxgentoo','<a href="https://www.gentoo.org/" title="Gentoo home page [new window]" target="_blank" rel="noopener noreferrer">Gentoo</a>',
 'linuxmandr','<a href="http://www.mandriva.com/" title="Mandriva (former Mandrake) home page [new window]" target="_blank" rel="noopener noreferrer">Mandriva (or Mandrake)</a>',
 'linuxmomonga','<a href="http://www.momonga-linux.org/" title="Momonga Linux home page [new window]" target="_blank" rel="noopener noreferrer">Momonga Linux</a>',
 'linuxpclinuxos','<a href="http://www.pclinuxos.com/" title="PCLinuxOS home page [new window]" target="_blank" rel="noopener noreferrer">PCLinuxOS</a>',
 'linuxredhat','<a href="http://www.redhat.com/" title="Red Hat home page [new window]" target="_blank" rel="noopener noreferrer">Red Hat</a>',
-'linuxsuse','<a href="http://www.novell.com/linux/suse/" title="Suse home page [new window]" target="_blank" rel="noopener noreferrer">Suse</a>',
-'linuxubuntu','<a href="http://www.ubuntulinux.org/" title="Ubuntu home page [new window]" target="_blank" rel="noopener noreferrer">Ubuntu</a>',
+'linuxsuse','<a href="https://www.suse.com/" title="Suse home page [new window]" target="_blank" rel="noopener noreferrer">Suse</a>',
+'linuxubuntu','<a href="https://www.ubuntu.com/" title="Ubuntu home page [new window]" target="_blank" rel="noopener noreferrer">Ubuntu</a>',
 'linuxvector','<a href="http://vectorlinux.com/" title="VectorLinux home page [new window]" target="_blank" rel="noopener noreferrer">VectorLinux</a>',
 'linuxvine','<a href="http://www.vinelinux.org/index-en.html" title="Vine Linux home page [new window]" target="_blank" rel="noopener noreferrer">Vine Linux</a>',
 'linuxwhitebox','<a href="http://whiteboxlinux.org/" title="White Box Linux home page [new window]" target="_blank" rel="noopener noreferrer">White Box Linux</a>',
