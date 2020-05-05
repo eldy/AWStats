@@ -249,6 +249,8 @@
 '^cn\.bing\.com$',
 '^global\.bing\.com$',
 'bing\.com$',
+'bing\.com/search$',
+'bing\.com/images/search$',
 
 '^(www\.|)yandex\.ru$',
 '^(www\.|)yandex\.com\.tr$',
@@ -1615,6 +1617,8 @@
 '^cn\.bing\.com$','cn_bing_com',
 '^global\.bing\.com$','global_bing_com',
 'bing\.com$','bing_com_catchall',
+'bing\.com/search$','bing_com_catchall',
+'bing\.com/images/search$','images_bing_com',
 
 '^(www\.|)yandex\.ru$','yandexru',
 '^(www\.|)yandex\.com\.tr$','yandexcomtr',
@@ -3829,6 +3833,7 @@
 'cn_bing_com','q(|pvt)=',
 'global_bing_com','q(|pvt)=',
 'bing_com_catchall','q(|pvt)=',
+'images_bing_com','q(|pvt)=',
 
 'blekko','q=',
 'blingo','q=',
@@ -5171,6 +5176,7 @@
 'cn_bing_com','<a href="http://cn.bing.com/" title="Search Engine Home Page [new window]" rel="nofollow" target="_blank">Bing : cn.bing.com</a>',
 'global_bing_com','<a href="http://global.bing.com/" title="Search Engine Home Page [new window]" rel="nofollow" target="_blank">Bing : global.bing.com</a>',
 'bing_com_catchall','<a href="http://www.bing.com/" title="Search Engine Home Page [new window]" rel="nofollow" target="_blank">Bing : bing.com ( catchall )</a>',
+'images_bing_com','<a href="http://www.bing.com/images" title="Search Engine Home Page [new window]" rel="nofollow" target="_blank">Bing : www.bing.com ( images )</a>',
 
 'blekko','blekko',
 'blingo','<a href="http://www.blingo.com/" title="Search Engine Home Page [new window]" rel="nofollow" target="_blank">Blingo</a>',
