@@ -1684,7 +1684,8 @@ sub Read_Config {
 			"$DIR",
 			"/etc/awstats",
 			"/usr/local/etc/awstats", "/etc",
-			"/etc/opt/awstats"
+			"/etc/opt/awstats",
+            ""
 		); 
 
 	if ($configdir) {
