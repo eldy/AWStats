@@ -137,6 +137,7 @@ sub Read_Config {
 		my $searchdir=$dir;
 		if ($searchdir && $searchdir !~ /[\\\/]$/) { $searchdir .= "/"; }
 		if (open(CONFIG,"${searchdir}awstats.$SiteConfig.conf")) 	{ $FileConfig="${searchdir}awstats.$SiteConfig.conf"; $FileSuffix=".$SiteConfig"; last; }
+		if (open(CONFIG,"${searchdir}$SiteConfig")) 	{ $FileConfig="${searchdir}$SiteConfig"; $FileSuffix=''; last; }
 		if (open(CONFIG,"${searchdir}awstats.conf"))  				{ $FileConfig="${searchdir}awstats.conf"; $FileSuffix=''; last; }
 	}
 	if (! $FileConfig) { error("Couldn't open config file \"awstats.$SiteConfig.conf\" nor \"awstats.conf\" after searching in path \"".join(',',@PossibleConfigDir)."\": $!"); }
@@ -439,7 +440,9 @@ my $command="$smallcommand -output";
 print "Build main page: $command\n";
 $retour=`$command  2>&1`;
 if ($?) { print $retour; exit $?; }
-$OutputFile=($OutputDir?$OutputDir:"")."awstats.$OutputSuffix.$StaticExt";
+
+if (substr($OutputSuffix, 0, 1) eq "/") { $OutputFile=$OutputSuffix.$StaticExt;}
+else {$OutputFile=($OutputDir?$OutputDir:"")."$OutputSuffix.$StaticExt";}
 open("OUTPUT",">$OutputFile") || error("Couldn't open log file \"$OutputFile\" for writing : $!");
 print OUTPUT $retour;
 close("OUTPUT");
@@ -452,7 +455,11 @@ for my $output (@OutputList) {
 	print "Build $output page: $command\n";
 	$retour=`$command  2>&1`;
     if ($?) { print $retour; exit $?; }
-	$OutputFile=($OutputDir?$OutputDir:"")."awstats.$OutputSuffix.$output.$StaticExt";
+    if (substr($OutputSuffix, 0, 1) eq "/") { 
+        $OutputFile=$OutputSuffix.".".$output.".".$StaticExt;
+    } else {
+        $OutputFile=($OutputDir?$OutputDir:"")."awstats.$OutputSuffix.$output.$StaticExt";
+    }
 	open("OUTPUT",">$OutputFile") || error("Couldn't open log file \"$OutputFile\" for writing : $!");
 	print OUTPUT $retour;
 	close("OUTPUT");
