@@ -181,3 +181,5 @@ message176=Konqueror versions
 message177=,
 message178=Downloads
 message179=TB
+message180=Frequency[/s]
+message181=Request size

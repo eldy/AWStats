@@ -373,6 +373,7 @@ use vars qw/
 use vars qw/
   @MiscListOrder %MiscListCalc
   %OSFamily %BrowsersFamily @SessionsRange %SessionsAverage
+  @PayloadRange %PayloadAverage
   %LangBrowserToLangAwstats %LangAWStatsToFlagAwstats %BrowsersSafariBuildToVersionHash
   @HostAliases @AllowAccessFromWebToFollowingAuthenticatedUsers
   @DefaultFile @SkipDNSLookupFor
@@ -411,6 +412,12 @@ use vars qw/
 	'0s-30s',   15,  '30s-2mn',   75,   '2mn-5mn', 210,
 	'5mn-15mn', 600, '15mn-30mn', 1350, '30mn-1h', 2700,
 	'1h+',      3600
+);
+
+@PayloadRange = ('0-44', '44-100', '100-500', '500-1K', '1K-2K', '2K-5K', '5K+');
+%PayloadAverage = (
+        '0-44', 44, '44-100', 100, '100-500', 500, '500-1K', 1024,
+        '1K-2K', 2048, '2K-5K', 5120, '5K+', 5121
 );
 
 # HTTP-Accept or Lang parameter => AWStats code to use for lang
@@ -526,6 +533,7 @@ use vars qw/
   %MonthPages %MonthHits %MonthBytes
   %MonthNotViewedPages %MonthNotViewedHits %MonthNotViewedBytes
   %_session %_browser_h %_browser_p
+  %_filesize
   %_domener_p %_domener_h %_domener_k %_errors_h %_errors_k
   %_filetypes_h %_filetypes_k %_filetypes_gz_in %_filetypes_gz_out
   %_host_p %_host_h %_host_k %_host_l %_host_s %_host_u
@@ -739,7 +747,9 @@ use vars qw/ @Message /;
 	'Konqueror versions',
 	',',
  	'Downloads',
- 	'Export CSV'
+        'Export CSV',
+        'Frequency[/s]',
+        'Request size'
 );
 
 #------------------------------------------------------------------------------
@@ -1613,6 +1623,25 @@ sub Get_Filename{
 		if ($idx > -1){ $temp = substr($temp, $idx+1);}
 	}
 	return $temp;
+}
+
+#------------------------------------------------------------------------------
+# Function:     Return string of Bandwidth Range
+# Parameters:   $starttime $endtime
+# Input:        None
+# Output:       None
+# Return:       A string that identify the bandwidth range
+#------------------------------------------------------------------------------
+sub GetBandwidthRange {
+        my $payload = shift;
+        if ($Debug) { debug("GetPayloadRange $payload",4); }
+        if ($payload <= 44)   { return $PayloadRange[0]; }
+        if ($payload <= 100)  { return $PayloadRange[1]; }
+        if ($payload <= 500)  { return $PayloadRange[2]; }
+        if ($payload <= 1024) { return $PayloadRange[3]; }
+        if ($payload <= 2048) { return $PayloadRange[4]; }
+        if ($payload <= 5120) { return $PayloadRange[5]; }
+        return $PayloadRange[6];
 }
 
 #------------------------------------------------------------------------------
@@ -3393,6 +3422,7 @@ sub Read_History_With_TmpUpdate {
 		'searchwords'           => 25,
 		'keywords'              => 26,
 		'errors'                => 27,
+                'filesize'              => 28,
 	);
 
 	my $order = ( scalar keys %allsections ) + 1;
@@ -3501,6 +3531,13 @@ sub Read_History_With_TmpUpdate {
 		{
 			$SectionsToLoad{'session'} = $order++;
 		}
+                if (   $UpdateStats
+                        || $MigrateStats
+                        || ($HTMLOutput{'main'} && $ShowFileSizesStats)
+                        || $HTMLOutput{'filesizes'} )
+                {
+                        $SectionsToLoad{'filesize'} = $order++;
+                }
 		if (   $UpdateStats
 			|| $MigrateStats
 			|| ( $HTMLOutput{'main'} && $ShowPagesStats )
@@ -3846,6 +3883,52 @@ sub Read_History_With_TmpUpdate {
 				}
 				next;
 			}
+
+                        # BEGIN_FILESIZE
+                        if ( $field[0] eq 'BEGIN_FILESIZE' ) {
+                                if ($Debug) { debug(" Begin of FILESIZE section"); }
+                                $field[0] = '';
+                                my $count = 0;
+                                my $countloaded = 0;
+                                do {
+                                        if ( $field[0] ) {
+                                                $count++;
+                                                if ( $SectionsToLoad{'filesize'} ) {
+                                                        $countloaded++;
+                                                        if ($field[1]) {
+                                                               $_filesize{ $field[0] } += $field[1];
+                                                        }
+                                                }
+                                        }
+                                        $_ = <HISTORY>;
+                                        chomp $_;
+                                        s/\r//;
+                                        @field =
+                                          split( /\s+/,
+                                                ( $readxml ? CleanFromTags($_) : $_) );
+                                        $countlines++;
+                                } until ( $field[0] eq 'END_FILESIZE'
+                                           || $field[0] eq "${xmleb}END_FILESIZE"
+                                           || ! $_ );
+                                if (   $field[0] ne 'END_FILESIZE'
+                                        && $field[0] ne "${xmleb}END_FILESIZE")
+                                {
+                                        error(
+"History file \"$filetoread\" is corrupted (End of section FILESIZE not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1
+                                        );
+                                }
+                                if ($Debug) {
+                                        debug(
+" End of FILESIZE section ($count entries, $countloaded loaded)"
+                                        );
+                                }
+                                delete $SectionsToLoad{'filesize'};
+                                if ( !scalar %SectionsToLoad ) {
+                                        debug(" Stop reading history file. Got all we need.");
+                                        last;
+                                }
+                                next;
+                        }
 
 			# BEGIN_MISC
 			if ( $field[0] eq 'BEGIN_MISC' ) {
@@ -6340,6 +6423,9 @@ sub Save_History {
 		print HISTORYTMP "${xmlrb}POS_SESSION${xmlrs}";
 		$PosInFile{"session"} = tell HISTORYTMP;
 		print HISTORYTMP "$spacebar${xmlre}\n";
+                print HISTORYTMP "${xmlrb}POS_FILESIZE${xmlrs}";
+                $PosInFile{"filesize"} = tell HISTORYTMP;
+                print HISTORYTMP "$spacebar${xmlre}\n";
 		print HISTORYTMP "${xmlrb}POS_SIDER${xmlrs}";
 		$PosInFile{"sider"} = tell HISTORYTMP;
 		print HISTORYTMP "$spacebar${xmlre}\n";
@@ -6870,6 +6956,25 @@ sub Save_History {
 		}
 		print HISTORYTMP "${xmleb}END_SESSION${xmlee}\n";
 	}
+        if ($sectiontosave eq 'filesize')
+        {   # This section must be saved after VISITOR section is read
+                print HISTORYTMP "\n";
+                if ($xml) {
+                        print HISTORYTMP "<section id='$sectiontosave'><comment>\n";
+                }
+                print HISTORYTMP "# Payload Range - Payload Frequency\n";
+                $ValueInFile{$sectiontosave} = tell HISTORYTMP;
+                print HISTORYTMP "${xmlbb}BEGIN_FILESIZE${xmlbs}"
+                  . ( scalar keys %_filesize )
+                  . "${xmlbe}\n";
+                foreach ( keys %_filesize) {
+                        print HISTORYTMP "${xmlrb}$_${xmlrs}"
+                          . int( $_filesize{$_} )
+                          . "${xmlre}\n";
+                }
+                print HISTORYTMP "${xmleb}END_FILESIZE${xmlee}\n";
+
+        }
 	if ( $sectiontosave eq 'sider' )
 	{    # This section must be saved after VISITOR section is read
 		print HISTORYTMP "\n";
@@ -7746,6 +7851,7 @@ sub Init_HashArray {
 
 	# Reset all hash arrays with name beginning by _
 	%_session     = %_browser_h   = %_browser_p   = ();
+        %_filesize = ();
 	%_domener_p   = %_domener_h   = %_domener_k = %_errors_h = %_errors_k = ();
 	%_filetypes_h = %_filetypes_k = %_filetypes_gz_in = %_filetypes_gz_out = ();
 	%_host_p = %_host_h = %_host_k = %_host_l = %_host_s = %_host_u = ();
@@ -10301,6 +10407,12 @@ sub HTMLMenu{
 "<a href=\"$linkanchor#sessions\"$targetpage>$Message[117]</a>";
 				print( $frame? "</td></tr>\n" : " &nbsp; " );
 			}
+                                if ($ShowFileSizesStats) {
+                                print ( $frame? "<tr><td class=\"awsm\">" : "" );
+                                print
+"<a href=\"$linkanchor#filesizes\"$targetpage>$Message[181]</a>";
+                                print ( $frame? "</td></tr>\n" : " &nbsp; ");
+                        }
 			if ($ShowFileTypesStats && $LevelForFileTypesDetection > 0) {
 				print( $frame? "<tr><td class=\"awsm\">" : "" );
 				print
@@ -10770,6 +10882,85 @@ sub HTMLMainFileType{
 		print "</tr>\n";
 	}
 	&tab_end();
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the File Size Table
+# Parameters:   _
+# Input:        _
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLMainFileSize{
+        if ($Debug) { debug("ShowFileSizesStats",2); }
+        my $FirstTime = 0;
+        my $LastTime  = 0;
+        foreach my $key ( keys %FirstTime ) {
+                my $keyqualified = 0;
+                if ( $MonthRequired eq 'all' ) { $keyqualified = 1; }
+                if ( $key =~ /^$YearRequired$MonthRequired/ ) { $keyqualified = 1; }
+                if ($keyqualified) {
+                        if ( $FirstTime{$key}
+                                && ( $FirstTime == 0 || $FirstTime > $FirstTime{$key} ) )
+                        {
+                                $FirstTime = $FirstTime{$key};
+                        }
+                        if ( $LastTime < ( $LastTime{$key} || 0 ) ) {
+                                $LastTime = $LastTime{$key};
+                        }
+                }
+        }
+
+        my $inicio = 0;
+        my $fim = 0;
+        if ($FirstTime =~ /$regdate/o) { $inicio = Time::Local::timelocal($6, $5, $4, $3, $2-1, $1); }
+        if ($LastTime =~ /$regdate/o) { $fim = Time::Local::timelocal($6, $5, $4, $3, $2-1, $1); }
+        my $periodo = $fim - $inicio;
+        my $number_of_requests = 0;
+        my $request_frequency_average = 0;
+        foreach my $key (@PayloadRange) {
+                $number_of_requests += $_filesize{$key};
+        }
+        if ($periodo) { $request_frequency_average = $number_of_requests/$periodo;}
+        else { $request_frequency_average = 0 };
+        print "$Center<a name=\"filesizes\">&nbsp;</a><br />\n";
+        my $title = "$Message[181]";
+        &tab_head($title, 19, 0, 'filesizes');
+        my $Totals = 0;
+        my $average_s = 0;
+        foreach (@PayloadRange) {
+                $average_s += ( $_filesize{$_} || 0 ) * $PayloadAverage{$_};
+                $Totals += $_filesize{$_} || 0;
+        }
+        if ($Totals) { $average_s = int($average_s / $Totals); }
+        else { $average_s = '?'; }
+        print "<tr bgcolor=\"#$color_TableBGRowTitle\"".Tooltip(1)."><th>Number of requests: $number_of_requests - Period: $periodo s - Request average frequency [/s]: ".sprintf ("%.6f",$request_frequency_average)."</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[180]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
+        my $total_s = 0;
+        my $count = 0;
+        foreach my $key (@PayloadRange) {
+                my $p = 0;
+                my $f = 0;
+                if ($Totals) { $p = int($_filesize{$key} / $Totals * 1000) / 10; }
+                if ($periodo) { $f = $_filesize{$key} / $periodo; }
+                $total_s += $_filesize{$key} || 0;
+                print "<tr><td class=\"aws\">$key</td>";
+                print "<td>".($_filesize{$key}? sprintf("%.5f",$f):"&nbsp;")."</td>";
+                print "<td>".($_filesize{$key}? $_filesize{$key}:"&nbsp;")."</td>";
+                print "<td>".($_filesize{$key}? "$p %":"&nbsp;")."</td>";
+                print "</tr>\n";
+                $count++;
+        }
+        my $rest_s = $TotalVisits-$total_s;
+        if ($rest_s > 0) {
+                my $p = 0;
+                if ($TotalVisits) { $p = int($rest_s / $TotalVisits * 1000) / 10; }
+                print "<tr".Tooltip(20)."><td class=\"aws\"><span style=\"color: #$color_other\">$Message[0]</span></td>";
+                print "<td>$rest_s</td>";
+                print "<td>".($rest_s?"$p %":"&nbsp;")."</td>";
+                print "</tr>\n";
+        }
+
+        &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -20243,6 +20434,12 @@ s/^(cache|related):[^\+]+//
 			  int( $field[$pos_size] );}    #Count accesses for page (kb)
 		}
 
+                # Check size frequency
+                #---------------------
+                if ( $pos_size >= 0 ) {
+                        $_filesize{ GetBandwidthRange(int($field[$pos_size])) }++;
+                }
+
 		# Analyze: Extra
 		#---------------
 		foreach my $extranum ( 1 .. @ExtraName - 1 ) {
@@ -21345,7 +21542,7 @@ if ( scalar keys %HTMLOutput ) {
 		# BY FILE SIZE
 		#-------------------------
 		if ($ShowFileSizesStats) {
-			# TODO
+			&HTMLMainFileSize();
 		}
 		
 		# BY DOWNLOADS
