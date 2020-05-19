@@ -441,8 +441,17 @@ print "Build main page: $command\n";
 $retour=`$command  2>&1`;
 if ($?) { print $retour; exit $?; }
 
-if (substr($OutputSuffix, 0, 1) eq "/") { $OutputFile=$OutputSuffix.$StaticExt;}
-else {$OutputFile=($OutputDir?$OutputDir:"")."$OutputSuffix.$StaticExt";}
+
+
+$OutputSuffix =~ /^(.*\/)(.*)\.conf$/; 
+my $ConfFolder = $1;
+my $ConfName = $2;
+
+if (substr($OutputSuffix, 0, 1) eq "/") {
+    $OutputFile=($OutputDir?$OutputDir:$ConfFolder).$ConfName.".".$StaticExt;
+} else {
+    $OutputFile=($OutputDir?$OutputDir:"")."$OutputSuffix.$StaticExt";
+}
 open("OUTPUT",">$OutputFile") || error("Couldn't open log file \"$OutputFile\" for writing : $!");
 print OUTPUT $retour;
 close("OUTPUT");
@@ -456,7 +465,7 @@ for my $output (@OutputList) {
 	$retour=`$command  2>&1`;
     if ($?) { print $retour; exit $?; }
     if (substr($OutputSuffix, 0, 1) eq "/") { 
-        $OutputFile=$OutputSuffix.".".$output.".".$StaticExt;
+        $OutputFile=($OutputDir?$OutputDir:$ConfFolder).$ConfName.".".$output.".".$StaticExt;
     } else {
         $OutputFile=($OutputDir?$OutputDir:"")."awstats.$OutputSuffix.$output.$StaticExt";
     }

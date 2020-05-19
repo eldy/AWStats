@@ -17353,7 +17353,8 @@ else {                             # Run from command line
 }
 if ( $QueryString =~ /(^|&|&amp;)staticlinks/i ) {
     if ( substr($SiteConfig, 0, 1) eq '/') {
-        $StaticLinks = $SiteConfig;
+        $SiteConfig =~ /^(.*\/)(.*)\.conf$/;
+        $StaticLinks = $2;
     }
     else {
         $StaticLinks = "$PROG.$SiteConfig";
