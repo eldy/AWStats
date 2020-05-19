@@ -10411,7 +10411,7 @@ sub HTMLMenu{
 "<a href=\"$linkanchor#sessions\"$targetpage>$Message[117]</a>";
 				print( $frame? "</td></tr>\n" : " &nbsp; " );
 			}
-                                if ($ShowFileSizesStats) {
+                        if ($ShowFileSizesStats) {
                                 print ( $frame? "<tr><td class=\"awsm\">" : "" );
                                 print
 "<a href=\"$linkanchor#filesizes\"$targetpage>$Message[185]</a>";
