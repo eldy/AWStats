@@ -17352,11 +17352,19 @@ else {                             # Run from command line
 	$SiteConfig =~ s/\.\.//g; 
 }
 if ( $QueryString =~ /(^|&|&amp;)staticlinks/i ) {
-	$StaticLinks = "$PROG.$SiteConfig";
+    if ( substr($SiteConfig, 0, 1) eq '/') {
+        $StaticLinks = $SiteConfig;
+    }
+    else {
+        $StaticLinks = "$PROG.$SiteConfig";
+    }
 }
+
 if ( $QueryString =~ /(^|&|&amp;)staticlinks=([^&]+)/i ) {
 	$StaticLinks = "$2";
 }    # When ran from awstatsbuildstaticpages.pl
+
+
 if ( $QueryString =~ /(^|&|&amp;)staticlinksext=([^&]+)/i ) {
 	$StaticExt = "$2";
 }

@@ -129,7 +129,7 @@ sub Read_Config {
 	my @PossibleConfigDir=();
 
 	if ($configdir) { @PossibleConfigDir=("$configdir"); }
-	else { @PossibleConfigDir=("$AwstatsDir","$DIR","/etc/awstats","/usr/local/etc/awstats","/etc","/etc/opt/awstats"); }
+	else { @PossibleConfigDir=("$AwstatsDir","$DIR","/etc/awstats","/usr/local/etc/awstats","/etc","/etc/opt/awstats", ""); }
 
 	# Open config file
 	$FileConfig=$FileSuffix='';
