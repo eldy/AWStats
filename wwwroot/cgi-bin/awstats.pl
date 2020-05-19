@@ -749,6 +749,10 @@ use vars qw/ @Message /;
  	'Downloads',
         'Export CSV',
         'Frequency[/s]',
+        'Number of requests',
+        'Period',
+        's',
+        'Request average frequency [/s]',
         'Request size'
 );
 
@@ -10410,7 +10414,7 @@ sub HTMLMenu{
                                 if ($ShowFileSizesStats) {
                                 print ( $frame? "<tr><td class=\"awsm\">" : "" );
                                 print
-"<a href=\"$linkanchor#filesizes\"$targetpage>$Message[181]</a>";
+"<a href=\"$linkanchor#filesizes\"$targetpage>$Message[185]</a>";
                                 print ( $frame? "</td></tr>\n" : " &nbsp; ");
                         }
 			if ($ShowFileTypesStats && $LevelForFileTypesDetection > 0) {
@@ -10924,7 +10928,7 @@ sub HTMLMainFileSize{
         if ($periodo) { $request_frequency_average = $number_of_requests/$periodo;}
         else { $request_frequency_average = 0 };
         print "$Center<a name=\"filesizes\">&nbsp;</a><br />\n";
-        my $title = "$Message[181]";
+        my $title = "$Message[185]";
         &tab_head($title, 19, 0, 'filesizes');
         my $Totals = 0;
         my $average_s = 0;
@@ -10934,7 +10938,7 @@ sub HTMLMainFileSize{
         }
         if ($Totals) { $average_s = int($average_s / $Totals); }
         else { $average_s = '?'; }
-        print "<tr bgcolor=\"#$color_TableBGRowTitle\"".Tooltip(1)."><th>Number of requests: $number_of_requests - Period: $periodo s - Request average frequency [/s]: ".sprintf ("%.6f",$request_frequency_average)."</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[180]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
+        print "<tr bgcolor=\"#$color_TableBGRowTitle\"".Tooltip(1)."><th>$Message[181]: $number_of_requests - $Message[182]: $periodo $Message[183] - $Message[184]: ".sprintf ("%.6f",$request_frequency_average)."</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[180]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
         my $total_s = 0;
         my $count = 0;
         foreach my $key (@PayloadRange) {
