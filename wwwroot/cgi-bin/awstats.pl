@@ -10059,8 +10059,8 @@ sub HTMLTopBanner{
 				if (!$HourRequired) {
 					$HourRequired = $nowhour; 
 				}
-				print "<select class=\"aws_formfield\" name=\"day\">\n";
-				foreach ( 1 .. 31 ) {
+				print "<select class=\"aws_formfield\" name=\"hour\">\n";
+				foreach ( 0 .. 23 ) {
 					print "<option"
 					  . ( $HourRequired eq "$_" ? " selected=\"selected\"" : "" )
 					  . " value=\"$_\">$_</option>\n";
