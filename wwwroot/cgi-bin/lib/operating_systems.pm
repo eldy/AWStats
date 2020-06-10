@@ -342,7 +342,7 @@
 'macosx4','<a href="https://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS X 10.4 Tiger</a>',
 'macosx','<a href="https://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS X others</a>',
 'macintosh','<a href="https://www.apple.com/" title="Mac OS home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS</a>',
-'Haiku', '<a href="http://www.haiku-os.org" title="Haiku OS home page [new window]" target="_blank" rel="noopener noreferrer">Haiku OS</a>',
+'Haiku', '<a href="http://www.haiku-os.org" title="Haiku home page [new window]" target="_blank" rel="noopener noreferrer">Haiku</a>',
 # Android
 'android10','<a href="https://developer.android.com/about/versions/10" title="Google Android 10.x home page [new window]" target="_blank" rel="noopener noreferrer">Google Android 10.x</a>',
 'androidpie','<a href="https://developer.android.com/about/versions/pie/" title="Google Android 9.x Pie home page [new window]" target="_blank" rel="noopener noreferrer">Google Android 9.x Pie</a>',
