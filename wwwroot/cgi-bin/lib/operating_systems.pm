@@ -215,7 +215,7 @@
 'mac[_+ ]os[_+ ]x[_+ ]10[_\.]4','macosx4',
 'mac[_+ ]os[_+ ]x','macosx', 'vienna', 'macosx', 'newsfire', 'macosx', 'applesyndication', 'macosx',
 'mac[_+ ]?p','macintosh','mac[_+ ]68','macintosh','macweb','macintosh','macintosh','macintosh',
-'haiku', 'Haiku',
+'haiku', 'haiku',
 # Android family (androidyyy)
 'android[_+ ]10','android10',              # Android 10
 'android[_+ ]9','androidpie',              # Pie
