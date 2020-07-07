@@ -126,6 +126,7 @@
 'heic',['image','i'],
 'tif',['image','i'],
 'tiff',['image','i'],
+'webp',['image','i'],
 # Document
 'ai',['document','d'],
 'doc',['document','d'],

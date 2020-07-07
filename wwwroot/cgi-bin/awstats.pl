@@ -1789,7 +1789,8 @@ sub Read_Config {
 			'png'   => 1,
 			'bmp'   => 1,
 			'ico'   => 1,
-			'swf'   => 1
+			'swf'   => 1,
+			'webp'  => 1
 		);
 	}
 
