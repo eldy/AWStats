@@ -739,7 +739,8 @@ use vars qw/ @Message /;
 	'Konqueror versions',
 	',',
  	'Downloads',
- 	'Export CSV'
+ 	'Export CSV',
+    'TB'
 );
 
 #------------------------------------------------------------------------------
@@ -8093,7 +8094,7 @@ sub Format_Bytes {
 
 # Do not use exp/log function to calculate 1024power, function make segfault on some unix/perl versions
 	if ( $bytes >= ( $fudge << 40 ) ) {
-		return sprintf( "%.2f", $bytes / 1099511627776 ) . " $Message[179]";
+		return sprintf( "%.2f", $bytes / 1099511627776 ) . " $Message[180]";
 	}
 	if ( $bytes >= ( $fudge << 30 ) ) {
 		return sprintf( "%.2f", $bytes / 1073741824 ) . " $Message[110]";
