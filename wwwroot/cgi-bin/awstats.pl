@@ -18135,7 +18135,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 	my $regnotie          = qr/webtv|omniweb|opera/i;
 	my $regnotnetscape    = qr/gecko|compatible|opera|galeon|safari|charon/i;
 	my $regnotfirefox     = qr/flock/i;
-	my $regnotsafari      = qr/android|arora|chrome|shiira/i;
+	my $regnotsafari      = qr/android|arora|chrome|shiira|webpositive/i;
 	my $regreferer        = qr/^(\w+):\/\/([^\/:]+)(:\d+|)/;
 	my $regreferernoquery = qr/^([^$URLQuerySeparators]+)/;
 	my $reglocal          = qr/^(www\.|)$sitewithoutwww/i;

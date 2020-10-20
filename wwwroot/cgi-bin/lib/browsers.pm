@@ -122,6 +122,7 @@
 'webfetcher',
 'webexplorer',
 'webmirror',
+'webpositive',          # Must be before safari
 'webvcr',
 'qnx\svoyager',
 # Site grabbers
@@ -273,7 +274,6 @@
 'msie','MS Internet Explorer',
 'edge','Edge',
 'netscape','Netscape',
-
 'elinks','ELinks',
 'firebird','Firebird (Old Firefox)',
 'go!zilla','Go!Zilla',
@@ -351,6 +351,7 @@
 'webfetcher','WebFetcher',
 'webexplorer','IBM-WebExplorer',
 'webmirror','WebMirror',
+'webpositive','WebPositive',
 'webvcr','WebVCR',
 'qnx\svoyager','QNX Voyager',
 # Site grabbers
@@ -578,6 +579,7 @@
 'ncsa_mosaic','ncsa_mosaic',
 'netpositive','netpositive',
 'phoenix','phoenix',
+'webpositive','safari',
 # Site grabbers
 'grabber','grabber',
 'teleport','teleport',
