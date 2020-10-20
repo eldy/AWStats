@@ -8784,6 +8784,15 @@ sub HTMLShowFormFilter {
 		if ( $QueryString =~ /(^|&|&amp;)framename=(\w+)/i ) {
 			print "<input type=\"hidden\" name=\"framename\" value=\"$2\" />\n";
 		}
+                if ( $QueryString =~ /(^|&|&amp;)databasebreak=(\w+)/i) {
+                        print "<input type=\"hidden\" name=\"databasebreak\" value=\"$2\" />\n";
+                }
+                if ( $QueryString =~ /(^|&|&amp;)day=(\d\d)/i) {
+                        print "<input type=\"hidden\" name=\"day\" value=\"$2\" />\n";
+                }
+                if ( $QueryString =~ /(^|&|&amp;)hour=(\d\d)/i) {
+                        print "<input type=\"hidden\" name=\"hour\" value=\"$2\" />\n";
+                }
 		print
 "<input type=\"submit\" value=\" $Message[115] \" class=\"aws_button\" /></td>\n";
 		print "<td> &nbsp; </td>";
