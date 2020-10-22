@@ -1,6 +1,94 @@
 AWStats Changelog
 -----------------
 
+***** 7.8 *****
+
+NEW Add SelectBox for DatabaseBreak Mode: month,day and hour.
+Update http status codes
+Add more file types
+Update README.md
+Fix geoip2 formatting problem
+corner case 99
+Fix some incoherent entries in search_engines.pm
+Fix geoip2 plugin on windows by renaming it
+Update robots.pm with PR118 data. Add:
+    - PiplBot bot
+    - um-IC & um-LN bot
+    - arcemedia
+    - bit.ly
+    - bidswitchbot
+    - bnf.fr_bot
+    - contxbot
+    - flamingo
+    - getintent (variant)
+    - laserlikebot
+    - mappy
+    - mojeek (variant)
+    - serendeputy
+    - trendiction
+    - yak (linkinfluence)
+    - zoominfobot
+Fixes #104
+Change markdown to better readability
+Update Copyright year
+Change to https links
+Fix links for perl download
+NEW add %time6 tag in log format to support some IIS log format
+geoip2: Fix table formatting error. Missing "<td>" item tag.
+Changes to robots.pm
+Add support for macOS DMG and PKG files
+Fix browser detection with HTTP 206 status code
+Support for macOS 10.13/10.14 + improved image compression of icons
+Fix use the 5 top hits as base 100 for graph to show the top 5 hits.
+Clean up geoip2 and geoip2 city modules
+    * Correctly convert dns names to ip4 and ip6 address using getaddrinfo
+      (fixes #120, #121, obsoletes #115)
+    * Only lookup if the IP is of type public (fixes #122)
+      and catch further lookup errors (obsoletes #123)
+    * Store and display the GeoIP City output HTML escaped (fixes #127)
+    * Code to perform and cache the actual lookup is consolidated
+    * General code improvement and readability
+Losslessly reduced size of PNG images by about 33% using zopfli, pngout and oxipng. Also added os icons for macOS 10.13 and 10.14.
+Add Robot: The Knowledge AI
+Fix Error: Not same number of records of RobotsSearchIDOrder_listx
+Robots, Search Engine and Web Page Tracking Modifications
+Optimize OptimizeArray
+Added UptimeRobot https://uptimerobot.com/
+Fix a few grammar errors in the model config
+Ignore search phrases longer than 80 characters.
+Fix 404 detail page not updating
+Decode RFC 3986 "unreserved chars" in URLs.
+Fix #80
+Disable nested includes warnings for Perl > 5.6.
+Update domains.pm
+Fix two invalid entries in search_engines.pm
+Format Tera Bytes
+Fix "Illegal division by zero" error.
+Fix #79
+Improving error handling in awstats_buildstaticpages.pl
+FIX #90
+Exclude private IP addresses since GeoIP2::Reader doesn't support them
+Ignore search phrases longer than 80 characters.
+Only purge data for the saved section.
+Make city plugin more functional
+Fix issue with ShowHost section when address is resolved.
+Initial implementation of GeoIP2 City lookup.
+Fix a few issues with Country lookup.
+Initial implementation. Looksup only Country code for IPv4 and IPv6
+Update hebrew file
+Quite a few additions and modifications. Especially yahoo detection.
+Added device pixel ratio ( dpr ) to awstats_misc_tracker.js.
+added 37 new robots to robots.pm file using v 7.7 robots.pm file as base file.
+Move oBot entry lower as to not incorrectly get picked for other *obot robots.
+Decode RFC 3986 "unreserved chars" in URLs.  This makes awstats treat "/foo" and "/%66%6f%6f" as equivalent.
+Missing Sint Maarten  flag
+Wrong label cf. https://dev.maxmind.com/geoip/legacy/codes/iso3166/
+Fix Issue #76 - country name not correct
+Fix utf bom files
+Fix another vulnerability reported by cPanel Security Team (can execute arbitraty code)
+Add more tests
+
+
 ***** 7.7 *****
 
 Security fix: CVE-2017-1000501
