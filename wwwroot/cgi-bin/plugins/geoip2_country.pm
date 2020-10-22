@@ -142,6 +142,7 @@ sub ShowInfoHost_geoip2_country {
         print "</th>";
 	}
 	elsif ($param) {
+		print "<td>";
 		my $res = Lookup_geoip2_country($param);
 		if ($res) {
 				$res = lc($res);
