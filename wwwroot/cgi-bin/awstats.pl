@@ -739,7 +739,8 @@ use vars qw/ @Message /;
 	'Konqueror versions',
 	',',
  	'Downloads',
- 	'Export CSV'
+ 	'Export CSV',
+    'TB'
 );
 
 #------------------------------------------------------------------------------
@@ -1789,7 +1790,8 @@ sub Read_Config {
 			'png'   => 1,
 			'bmp'   => 1,
 			'ico'   => 1,
-			'swf'   => 1
+			'swf'   => 1,
+			'webp'  => 1
 		);
 	}
 
@@ -8093,7 +8095,7 @@ sub Format_Bytes {
 
 # Do not use exp/log function to calculate 1024power, function make segfault on some unix/perl versions
 	if ( $bytes >= ( $fudge << 40 ) ) {
-		return sprintf( "%.2f", $bytes / 1099511627776 ) . " $Message[179]";
+		return sprintf( "%.2f", $bytes / 1099511627776 ) . " $Message[180]";
 	}
 	if ( $bytes >= ( $fudge << 30 ) ) {
 		return sprintf( "%.2f", $bytes / 1073741824 ) . " $Message[110]";
@@ -8782,6 +8784,15 @@ sub HTMLShowFormFilter {
 		if ( $QueryString =~ /(^|&|&amp;)framename=(\w+)/i ) {
 			print "<input type=\"hidden\" name=\"framename\" value=\"$2\" />\n";
 		}
+                if ( $QueryString =~ /(^|&|&amp;)databasebreak=(\w+)/i) {
+                        print "<input type=\"hidden\" name=\"databasebreak\" value=\"$2\" />\n";
+                }
+                if ( $QueryString =~ /(^|&|&amp;)day=(\d\d)/i) {
+                        print "<input type=\"hidden\" name=\"day\" value=\"$2\" />\n";
+                }
+                if ( $QueryString =~ /(^|&|&amp;)hour=(\d\d)/i) {
+                        print "<input type=\"hidden\" name=\"hour\" value=\"$2\" />\n";
+                }
 		print
 "<input type=\"submit\" value=\" $Message[115] \" class=\"aws_button\" /></td>\n";
 		print "<td> &nbsp; </td>";
@@ -10059,8 +10070,8 @@ sub HTMLTopBanner{
 				if (!$HourRequired) {
 					$HourRequired = $nowhour; 
 				}
-				print "<select class=\"aws_formfield\" name=\"day\">\n";
-				foreach ( 1 .. 31 ) {
+				print "<select class=\"aws_formfield\" name=\"hour\">\n";
+				foreach ( 0 .. 23 ) {
 					print "<option"
 					  . ( $HourRequired eq "$_" ? " selected=\"selected\"" : "" )
 					  . " value=\"$_\">$_</option>\n";
@@ -18124,7 +18135,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 	my $regnotie          = qr/webtv|omniweb|opera/i;
 	my $regnotnetscape    = qr/gecko|compatible|opera|galeon|safari|charon/i;
 	my $regnotfirefox     = qr/flock/i;
-	my $regnotsafari      = qr/android|arora|chrome|shiira/i;
+	my $regnotsafari      = qr/android|arora|chrome|shiira|webpositive/i;
 	my $regreferer        = qr/^(\w+):\/\/([^\/:]+)(:\d+|)/;
 	my $regreferernoquery = qr/^([^$URLQuerySeparators]+)/;
 	my $reglocal          = qr/^(www\.|)$sitewithoutwww/i;
