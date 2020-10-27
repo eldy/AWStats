@@ -72,6 +72,7 @@
 'mac[_+ ]?p',									# This works for macppc and mac_ppc and mac_powerpc
 'mac[_+ ]68',									# This works for mac_6800 and mac_68k
 'macweb',
+'haiku',
 'macintosh',
 # Android family
 'android[_+ ]10',       # Android 10
@@ -214,6 +215,7 @@
 'mac[_+ ]os[_+ ]x[_+ ]10[_\.]4','macosx4',
 'mac[_+ ]os[_+ ]x','macosx', 'vienna', 'macosx', 'newsfire', 'macosx', 'applesyndication', 'macosx',
 'mac[_+ ]?p','macintosh','mac[_+ ]68','macintosh','macweb','macintosh','macintosh','macintosh',
+'haiku', 'haiku',
 # Android family (androidyyy)
 'android[_+ ]10','android10',              # Android 10
 'android[_+ ]9','androidpie',              # Pie
@@ -340,6 +342,7 @@
 'macosx4','<a href="https://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS X 10.4 Tiger</a>',
 'macosx','<a href="https://www.apple.com/macos/" title="macOS home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS X others</a>',
 'macintosh','<a href="https://www.apple.com/" title="Mac OS home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS</a>',
+'Haiku', '<a href="http://www.haiku-os.org" title="Haiku home page [new window]" target="_blank" rel="noopener noreferrer">Haiku</a>',
 # Android
 'android10','<a href="https://developer.android.com/about/versions/10" title="Google Android 10.x home page [new window]" target="_blank" rel="noopener noreferrer">Google Android 10.x</a>',
 'androidpie','<a href="https://developer.android.com/about/versions/pie/" title="Google Android 9.x Pie home page [new window]" target="_blank" rel="noopener noreferrer">Google Android 9.x Pie</a>',

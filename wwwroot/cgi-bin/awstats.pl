@@ -749,7 +749,8 @@ use vars qw/ @Message /;
 	'Konqueror versions',
 	',',
  	'Downloads',
-        'Export CSV',
+ 	'Export CSV',
+        'TB',
         'Frequency[/s]',
         'Number of requests',
         'Period',
@@ -1824,7 +1825,8 @@ sub Read_Config {
 			'png'   => 1,
 			'bmp'   => 1,
 			'ico'   => 1,
-			'swf'   => 1
+			'swf'   => 1,
+			'webp'  => 1
 		);
 	}
 
@@ -8204,7 +8206,7 @@ sub Format_Bytes {
 
 # Do not use exp/log function to calculate 1024power, function make segfault on some unix/perl versions
 	if ( $bytes >= ( $fudge << 40 ) ) {
-		return sprintf( "%.2f", $bytes / 1099511627776 ) . " $Message[179]";
+		return sprintf( "%.2f", $bytes / 1099511627776 ) . " $Message[180]";
 	}
 	if ( $bytes >= ( $fudge << 30 ) ) {
 		return sprintf( "%.2f", $bytes / 1073741824 ) . " $Message[110]";
@@ -8893,6 +8895,15 @@ sub HTMLShowFormFilter {
 		if ( $QueryString =~ /(^|&|&amp;)framename=(\w+)/i ) {
 			print "<input type=\"hidden\" name=\"framename\" value=\"$2\" />\n";
 		}
+                if ( $QueryString =~ /(^|&|&amp;)databasebreak=(\w+)/i) {
+                        print "<input type=\"hidden\" name=\"databasebreak\" value=\"$2\" />\n";
+                }
+                if ( $QueryString =~ /(^|&|&amp;)day=(\d\d)/i) {
+                        print "<input type=\"hidden\" name=\"day\" value=\"$2\" />\n";
+                }
+                if ( $QueryString =~ /(^|&|&amp;)hour=(\d\d)/i) {
+                        print "<input type=\"hidden\" name=\"hour\" value=\"$2\" />\n";
+                }
 		print
 "<input type=\"submit\" value=\" $Message[115] \" class=\"aws_button\" /></td>\n";
 		print "<td> &nbsp; </td>";
@@ -10176,8 +10187,8 @@ sub HTMLTopBanner{
 				if (!$HourRequired) {
 					$HourRequired = $nowhour; 
 				}
-				print "<select class=\"aws_formfield\" name=\"day\">\n";
-				foreach ( 1 .. 31 ) {
+				print "<select class=\"aws_formfield\" name=\"hour\">\n";
+				foreach ( 0 .. 23 ) {
 					print "<option"
 					  . ( $HourRequired eq "$_" ? " selected=\"selected\"" : "" )
 					  . " value=\"$_\">$_</option>\n";
@@ -10421,7 +10432,7 @@ sub HTMLMenu{
                         if ($ShowRequestTimesStats) {
                                 print( $frame? "<tr><td class=\"awsm\">" : "" );
                                 print
-"<a href=\"$linkanchor#requesttimes\"$targetpage>$Message[185]</a>";
+"<a href=\"$linkanchor#requesttimes\"$targetpage>$Message[186]</a>";
                                 print ($frame? "</td></tr>\n" : " &nbsp; " );
                         }
 			if ($ShowFileTypesStats && $LevelForFileTypesDetection > 0) {
@@ -10935,7 +10946,7 @@ sub HTMLMainRequestTime{
         if ($periodo) { $request_frequency_average = $number_of_requests / $periodo;}
         else { $request_frequency_average = 0};
         print "$Center<a name=\"requesttimes\">&nbsp;</a><br />\n";
-        my $title = "$Message[185]";
+        my $title = "$Message[186]";
         &tab_head($title, 19, 0, 'requesttimes');
         my $Totals = 0;
         my $average_s = 0;
@@ -10945,7 +10956,7 @@ sub HTMLMainRequestTime{
         }
         if ($Totals) { $average_s = int($average_s / $Totals); }
         else { $average_s = '?'; }
-        print "<tr bgcolor=\"#$color_TableBGRowTitle\"".Tooltip(1)."><th>$Message[181]: $number_of_requests - $Message[182]: $periodo $Message[183] - $Message[184]: ".sprintf ("%.6f",$request_frequency_average)."</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[180]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
+        print "<tr bgcolor=\"#$color_TableBGRowTitle\"".Tooltip(1)."><th>$Message[182]: $number_of_requests - $Message[183]: $periodo $Message[184] - $Message[185]: ".sprintf ("%.6f",$request_frequency_average)."</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[181]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
         my $total_s = 0;
         my $count = 0;
         foreach my $key (@TimeRange) {
@@ -18326,7 +18337,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 	my $regnotie          = qr/webtv|omniweb|opera/i;
 	my $regnotnetscape    = qr/gecko|compatible|opera|galeon|safari|charon/i;
 	my $regnotfirefox     = qr/flock/i;
-	my $regnotsafari      = qr/android|arora|chrome|shiira/i;
+	my $regnotsafari      = qr/android|arora|chrome|shiira|webpositive/i;
 	my $regreferer        = qr/^(\w+):\/\/([^\/:]+)(:\d+|)/;
 	my $regreferernoquery = qr/^([^$URLQuerySeparators]+)/;
 	my $reglocal          = qr/^(www\.|)$sitewithoutwww/i;
