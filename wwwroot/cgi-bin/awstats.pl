@@ -3459,7 +3459,7 @@ sub Read_History_With_TmpUpdate {
 		'keywords'              => 26,
 		'errors'                => 27,
                 'filesize'              => 28,
-                'requesttime'           => 29, 
+                'requesttime'           => 29,
 	);
 
 	my $order = ( scalar keys %allsections ) + 1;
