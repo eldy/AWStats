@@ -370,7 +370,7 @@ foreach my $extranum (1..@ExtraName-1) {
 #Add plugins
 foreach ( @PluginsToLoad ) {
 	if ($_ =~ /^(geoip_[_a-z]+)\s/) { push @OutputList,'plugin_'.$1; }	# Add geoip maxmind subpages
-	if ($_ =~ /^(geoip2_[_a-z]+)\s/) { push @OutputList,'plugin_'.$1; }	# Add geoip2 maxmind subpages
+	if ($_ =~ /^(geoip2_city)\s/) { push @OutputList,'plugin_'.$1; }	# Add geoip2 maxmind subpages
 }
 
 
