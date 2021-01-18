@@ -1711,13 +1711,13 @@ sub Read_Config {
 	# Check config file in common possible directories :
 	# Windows :                   				"$DIR" (same dir than awstats.pl)
 	# Standard, Mandrake and Debian package :	"/etc/awstats"
-	# Other possible directories :				"/usr/local/etc/awstats", "/etc"
+	# Other possible directories :				"/usr/local/etc/awstats",
 	# FHS standard, Suse package : 				"/etc/opt/awstats"
 	my $configdir         = shift;
 	my @PossibleConfigDir = (
 			"$DIR",
 			"/etc/awstats",
-			"/usr/local/etc/awstats", "/etc",
+			"/usr/local/etc/awstats",
 			"/etc/opt/awstats"
 		); 
 
