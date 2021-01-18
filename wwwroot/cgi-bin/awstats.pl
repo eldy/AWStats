@@ -8490,7 +8490,6 @@ sub BuildKeyList {
 			3
 		);
 	}
-	delete $hashforselect->{0};
 	delete $hashforselect->{ ''
 	  }; # Those is to protect from infinite loop when hash array has an incorrect null key
 	my $count = 0;
@@ -20713,7 +20712,7 @@ s/^(cache|related):[^\+]+//
 				}
 			}
 			if ( !$rowkeyok ) { next; }    # End for this section
-			if ( !$rowkeyval ) { $rowkeyval = 'Failed to extract key'; }
+			if ( !defined($rowkeyval) ) { $rowkeyval = 'Failed to extract key'; }
 			if ($Debug) { debug( "  Key val found: $rowkeyval", 5 ); }
 
 			# Apply function on $rowkeyval
