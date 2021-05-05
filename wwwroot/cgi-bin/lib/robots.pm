@@ -398,6 +398,23 @@
 # Note: Robots IDs are in lower case, '_', ' ' and '+' are changed into '[_+\s]' and are quoted.
 #-------------------------------------------------------
 
+# RJC
+
+# Removed Baidu catchall because its picking up baidu.sogo.uc.UCBrowser which is a phone browser
+
+# Newly added from 2021-05-05
+# Adsbot
+# BW/
+# Bytespider
+# CheckMarkNetwork/
+# DuckDuckBot
+# Edg/
+# Foregenix Web Scan
+# IonCrawl
+# Linguee Bot
+# PetalBot
+# TkBot
+# vuhuvBot
 
 @RobotsSearchIDOrder_list1 = (
 # Common robots (In robot file)
@@ -418,6 +435,7 @@
 'Googlebot\-Video/',
 'AdsBot\-Google[\x20]\(',
 'AdsBot\-Google\-Mobile\-Apps',
+'Adsbot',
 'Mediapartners-Google',
 'Feedfetcher\-Google',
 'Google\-Adwords\-Instant',
@@ -426,7 +444,6 @@
 'Yahoo![\x20]Slurp',
 'Baiduspider/',
 'Baiduspider\-image',
-'baidu',
 'YandexBot/',
 'YandexImages/',
 'YandexImageResizer',
@@ -471,9 +488,12 @@
 'boitho\.com\-dc/',
 'BoogleBot',
 'BusinessBot:',
+'BW/',
+'Bytespider',
 'CatchBot/',
 'CB/Nutch',
 'CCBot/',
+'CheckMarkNetwork/',
 'Cliqzbot/',
 'CMS[\x20]Crawler',
 'Companybook\-Crawler',
@@ -508,7 +528,9 @@
 'DomainStatsBot/',
 'DotBot/',
 'DuckDuckBot-Https',
+'DuckDuckBot',
 'DuckDuckGo\-Favicons\-Bot/',
+'Edg/',
 'ELinks/',
 'ELinks[\x20]\(',
 'EmailMarketingRobot/',
@@ -531,6 +553,7 @@
 'flamingo',
 'FlippyBearBot/',
 '^foo$',
+'Foregenix[\x20]Web[\x20]Scan',
 'FreeWebMonitoring[\x20]SiteChecker/',
 'fujilabol',
 'FurlBot/',
@@ -566,6 +589,7 @@
 'Incutio[\x20]XML',
 'IndeedBot',
 'InfluenceBot',
+'IonCrawl',
 'IRLbot/',
 'IssueCrawler',
 'istellabot/',
@@ -579,6 +603,7 @@
 'Lightspeed',
 'linkapediabot',
 'metager\-linkchecker',
+'Linguee[\x20]Bot',
 'linkchecker',
 'LinkCheck',
 'linkdexbot/',
@@ -629,6 +654,7 @@
 'Pcore',
 'pdffillerbot/',
 'peopleman',
+'PetalBot',
 'PhantomJS',
 'PHP/5\.2\.8',
 'Pinterestbot',
@@ -696,6 +722,7 @@
 'Test[\x20]Spider',
 'TestCrawler',
 'The[\x20]Knowledge[\x20]AI',
+'TkBot',
 'tracemyfile',
 'trendiction',
 'TurnitinBot/',
@@ -717,6 +744,7 @@
 'VoilaBot',
 'VORTEX/',
 'voyager/',
+'vuhuvBot',
 'W3C_Validator/',
 'W3C\-checklink/',
 'WBSearchBot/',
@@ -1588,6 +1616,7 @@
 'Googlebot\-Video/','Googlebot-Video',
 'AdsBot\-Google[\x20]\(','AdsBot-Google',
 'AdsBot\-Google\-Mobile\-Apps','AdsBot-Google-Mobile-Apps',
+'Adsbot','Adsbot',
 'Mediapartners\-Google','Mediapartners-Google',
 'Feedfetcher\-Google','Feedfetcher-Google',
 'Google\-Adwords\-Instant','Google-Adwords-Instant',
@@ -1596,7 +1625,6 @@
 'Yahoo![\x20]Slurp','Yahoo! Slurp',
 'Baiduspider/','Baiduspider',
 'Baiduspider\-image','Baiduspider-image',
-'baidu','Baidu ( catchall )',
 'YandexBot/','YandexBot',
 'YandexImages/','YandexImages',
 'YandexImageResizer','YandexImageResizer',
@@ -1641,9 +1669,12 @@
 'boitho\.com\-dc/','boitho.com-dc',
 'BoogleBot','BoogleBot',
 'BusinessBot:','BusinessBot:',
+'BW/','BW',
+'Bytespider','Bytespider',
 'CatchBot/','CatchBot',
 'CB/Nutch','CB/Nutch',
 'CCBot/','CCBot',
+'CheckMarkNetwork/','CheckMarkNetwork',
 'Cliqzbot/','Cliqzbot',
 'CMS[\x20]Crawler','CMS Crawler',
 'Companybook\-Crawler','Companybook-Crawler',
@@ -1678,7 +1709,9 @@
 'DomainStatsBot/','DomainStatsBot',
 'DotBot/','DotBot',
 'DuckDuckBot-Https','DuckDuckBot-Https',
+'DuckDuckBot','DuckDuckBot',
 'DuckDuckGo\-Favicons\-Bot/','DuckDuckGo-Favicons-Bot',
+'Edg/','Edg',
 'ELinks/','ELinks',
 'ELinks[\x20]\(','ELinks (',
 'EmailMarketingRobot/','EmailMarketingRobot',
@@ -1701,6 +1734,7 @@
 'flamingo','Flamingo_SearchEngine',
 'FlippyBearBot/','FlippyBearBot',
 '^foo$','foo',
+'Foregenix[\x20]Web[\x20]Scan','Foregenix Web Scan',
 'FreeWebMonitoring[\x20]SiteChecker/','FreeWebMonitoring SiteChecker',
 'fujilabol','fujilabol',
 'FurlBot/','FurlBot',
@@ -1736,6 +1770,7 @@
 'Incutio[\x20]XML','Incutio XML',
 'IndeedBot','IndeedBot',
 'InfluenceBot','InfluenceBot',
+'IonCrawl','IonCrawl',
 'IRLbot/','IRLbot',
 'IssueCrawler','IssueCrawler',
 'istellabot/','istellabot',
@@ -1748,6 +1783,7 @@
 'Lightspeed','Lightspeed',
 'linkapediabot','linkapediabot',
 'metager\-linkchecker','metager-linkchecker',
+'Linguee[\x20]Bot','Linguee Bot',
 'linkchecker','linkchecker',
 'LinkCheck','LinkCheck',
 'linkdexbot/','linkdexbot',
@@ -1799,6 +1835,7 @@
 'Pcore','Pcore',
 'pdffillerbot/','pdffillerbot',
 'peopleman','peopleman',
+'PetalBot','PetalBot',
 'PhantomJS','PhantomJS',
 'PHP/5\.2\.8','PHP/5.2.8',
 'Pinterestbot','Pinterestbot',
@@ -1866,6 +1903,7 @@
 'Test[\x20]Spider','Test Spider',
 'TestCrawler','TestCrawler',
 'The[\x20]Knowledge[\x20]AI', 'The Knowledge AI',
+'TkBot','TkBot',
 'tracemyfile','tracemyfile',
 'trendiction','trendiction',
 'TurnitinBot/','TurnitinBot',
@@ -1887,6 +1925,7 @@
 'VoilaBot','VoilaBot',
 'VORTEX/','VORTEX',
 'voyager/','voyager',
+'vuhuvBot','vuhuvBot',
 'W3C_Validator/','W3C_Validator',
 'W3C\-checklink/','W3C-checklink',
 'WBSearchBot/','WBSearchBot',
