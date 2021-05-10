@@ -43,6 +43,26 @@
 #
 #-------------------------------------------------------
 
+# 2021-05--05 RobC
+
+# Removed Baidu catchall because its picking up baidu.sogo.uc.UCBrowser which is a phone browser
+# Added baiduspider- catchall instead
+
+# Newly added from 2021-05-05
+# Adsbot
+# BW/
+# Bytespider
+# CheckMarkNetwork/
+# DuckDuckBot
+# # Foregenix Web Scan
+# IonCrawl
+# Linguee Bot
+# Neevabot
+# PetalBot
+# TkBot
+# vuhuvBot
+
+
 # 2018-03-13 RobC 
 #              Added 36 robots and one generic ( survey ) using v 7.7 robots file as base. 
 #              Also moved robot "Obot" into generics so that it is singled out as an individual Robot.         
@@ -398,24 +418,6 @@
 # Note: Robots IDs are in lower case, '_', ' ' and '+' are changed into '[_+\s]' and are quoted.
 #-------------------------------------------------------
 
-# RJC
-
-# Removed Baidu catchall because its picking up baidu.sogo.uc.UCBrowser which is a phone browser
-# Added baiduspider- catchall instead
-
-# Newly added from 2021-05-05
-# Adsbot
-# BW/
-# Bytespider
-# CheckMarkNetwork/
-# DuckDuckBot
-# # Foregenix Web Scan
-# IonCrawl
-# Linguee Bot
-# Neevabot
-# PetalBot
-# TkBot
-# vuhuvBot
 
 @RobotsSearchIDOrder_list1 = (
 # Common robots (In robot file)
