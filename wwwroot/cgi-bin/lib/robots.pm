@@ -121,7 +121,7 @@
 # 2005-12-15
 #		added FAST Enteprise Crawler/6 (www dot fastsearch dot com). Note spelling Enteprise not Enterprise.
 #		added findlinks http://wortschatz.uni-leipzig.de/findlinks/
-#		added IBM Almaden Research Center WebFountain™ http://www.almaden.ibm.com/cs/crawler [hc3]
+#		added IBM Almaden Research Center WebFountainâ„¢ http://www.almaden.ibm.com/cs/crawler [hc3]
 #		added INFOMINE/8.0 VLCrawler (http://infomine.ucr.edu/useragents)
 #		added lmspider (lmspider@scansoft.com) http://www.nuance.com/
 #		added noxtrumbot http://www.noxtrum.com/
@@ -401,6 +401,7 @@
 # RJC
 
 # Removed Baidu catchall because its picking up baidu.sogo.uc.UCBrowser which is a phone browser
+# Added baiduspider- catchall instead
 
 # Newly added from 2021-05-05
 # Adsbot
@@ -408,10 +409,10 @@
 # Bytespider
 # CheckMarkNetwork/
 # DuckDuckBot
-# Edg/
-# Foregenix Web Scan
+# # Foregenix Web Scan
 # IonCrawl
 # Linguee Bot
+# Neevabot
 # PetalBot
 # TkBot
 # vuhuvBot
@@ -444,6 +445,7 @@
 'Yahoo![\x20]Slurp',
 'Baiduspider/',
 'Baiduspider\-image',
+'Baiduspider-',
 'YandexBot/',
 'YandexImages/',
 'YandexImageResizer',
@@ -530,7 +532,6 @@
 'DuckDuckBot-Https',
 'DuckDuckBot',
 'DuckDuckGo\-Favicons\-Bot/',
-'Edg/',
 'ELinks/',
 'ELinks[\x20]\(',
 'EmailMarketingRobot/',
@@ -633,6 +634,7 @@
 'My[\x20]Nutch[\x20]Spider/',
 'myse/Nutch',
 'Naaraa',
+'Neevabot',
 'NerdyBot',
 'netEstate[\x20]NE[\x20]Crawler',
 'NetResearchServer/',
@@ -1625,6 +1627,7 @@
 'Yahoo![\x20]Slurp','Yahoo! Slurp',
 'Baiduspider/','Baiduspider',
 'Baiduspider\-image','Baiduspider-image',
+'Baiduspider-','Baiduspider ( catchall )',
 'YandexBot/','YandexBot',
 'YandexImages/','YandexImages',
 'YandexImageResizer','YandexImageResizer',
@@ -1711,7 +1714,6 @@
 'DuckDuckBot-Https','DuckDuckBot-Https',
 'DuckDuckBot','DuckDuckBot',
 'DuckDuckGo\-Favicons\-Bot/','DuckDuckGo-Favicons-Bot',
-'Edg/','Edg',
 'ELinks/','ELinks',
 'ELinks[\x20]\(','ELinks (',
 'EmailMarketingRobot/','EmailMarketingRobot',
@@ -1814,6 +1816,7 @@
 'My[\x20]Nutch[\x20]Spider/','My Nutch Spider',
 'myse/Nutch','myse/Nutch',
 'Naaraa','Naaraa',
+'Neevabot','Neevabot',
 'NerdyBot','NerdyBot',
 'netEstate[\x20]NE[\x20]Crawler','netEstate NE Crawler',
 'NetResearchServer/','NetResearchServer',
