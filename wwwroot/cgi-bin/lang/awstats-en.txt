@@ -188,3 +188,4 @@ message183=Period
 message184=s
 message185=Request average frequency [/s]
 message186=Request size
+message187=Request time

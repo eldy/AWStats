@@ -84,7 +84,7 @@ use vars qw/
   $TotalSearchEnginesPages $TotalSearchEnginesHits $TotalRefererPages $TotalRefererHits $TotalDifferentSearchEngines $TotalDifferentReferer
   $FrameName $Center $FileConfig $FileSuffix $Host $YearRequired $MonthRequired $DayRequired $HourRequired
   $QueryString $SiteConfig $StaticLinks $PageCode $PageDir $PerlParsingFormat $UserAgent
-  $pos_vh $pos_host $pos_logname $pos_date $pos_tz $pos_method $pos_url $pos_code $pos_size
+  $pos_vh $pos_host $pos_logname $pos_date $pos_tz $pos_method $pos_url $pos_code $pos_size $pos_time
   $pos_referer $pos_agent $pos_query $pos_gzipin $pos_gzipout $pos_compratio $pos_timetaken
   $pos_cluster $pos_emails $pos_emailr $pos_hostr @pos_extra
   /;
@@ -187,7 +187,7 @@ use vars qw/
   $NbOfLinesParsed $NbOfLinesDropped $NbOfLinesCorrupted $NbOfLinesComment $NbOfLinesBlank $NbOfOldLines $NbOfNewLines
   $NbOfLinesShowsteps $NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile $ArchiveLogRecords
   $ShowDropped $ShowCorrupted $ShowUnknownOrigin $ShowDirectOrigin $ShowLinksToWhoIs
-  $ShowAuthenticatedUsers $ShowFileSizesStats $ShowScreenSizeStats $ShowSMTPErrorsStats
+  $ShowAuthenticatedUsers $ShowFileSizesStats $ShowRequestTimesStats $ShowScreenSizeStats $ShowSMTPErrorsStats
   $ShowEMailSenders $ShowEMailReceivers $ShowWormsStats $ShowClusterStats
   $IncludeInternalLinksInOriginSection
   $AuthenticatedUsersNotCaseSensitive
@@ -224,6 +224,7 @@ use vars qw/
 	$ShowLinksToWhoIs,
 	$ShowAuthenticatedUsers,
 	$ShowFileSizesStats,
+        $ShowRequestTimesStats,
 	$ShowScreenSizeStats,
 	$ShowSMTPErrorsStats,
 	$ShowEMailSenders,
@@ -243,7 +244,8 @@ use vars qw/
   )
   = (
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0
   );
 use vars qw/
   $DetailedReportsOnNewWindows
@@ -374,6 +376,7 @@ use vars qw/
   @MiscListOrder %MiscListCalc
   %OSFamily %BrowsersFamily @SessionsRange %SessionsAverage
   @PayloadRange %PayloadAverage
+  @TimeRange %TimeAverage
   %LangBrowserToLangAwstats %LangAWStatsToFlagAwstats %BrowsersSafariBuildToVersionHash
   @HostAliases @AllowAccessFromWebToFollowingAuthenticatedUsers
   @DefaultFile @SkipDNSLookupFor
@@ -416,6 +419,12 @@ use vars qw/
 
 @PayloadRange = ('0-44', '44-100', '100-500', '500-1K', '1K-2K', '2K-5K', '5K+');
 %PayloadAverage = (
+        '0-44', 44, '44-100', 100, '100-500', 500, '500-1K', 1024,
+        '1K-2K', 2048, '2K-5K', 5120, '5K+', 5121
+);
+
+@TimeRange = ('0-44', '44-100', '100-500', '500-1K', '1K-2K', '2K-5K', '5K+');
+%TimeAverage = (
         '0-44', 44, '44-100', 100, '100-500', 500, '500-1K', 1024,
         '1K-2K', 2048, '2K-5K', 5120, '5K+', 5121
 );
@@ -534,6 +543,7 @@ use vars qw/
   %MonthNotViewedPages %MonthNotViewedHits %MonthNotViewedBytes
   %_session %_browser_h %_browser_p
   %_filesize
+  %_requesttime
   %_domener_p %_domener_h %_domener_k %_errors_h %_errors_k
   %_filetypes_h %_filetypes_k %_filetypes_gz_in %_filetypes_gz_out
   %_host_p %_host_h %_host_k %_host_l %_host_s %_host_u
@@ -754,7 +764,8 @@ use vars qw/ @Message /;
         'Period',
         's',
         'Request average frequency [/s]',
-        'Request size'
+        'Request size',
+        'Request time'
 );
 
 #------------------------------------------------------------------------------
@@ -1647,6 +1658,25 @@ sub GetBandwidthRange {
         if ($payload <= 2048) { return $PayloadRange[4]; }
         if ($payload <= 5120) { return $PayloadRange[5]; }
         return $PayloadRange[6];
+}
+
+#------------------------------------------------------------------------------
+# Function:     Return string of Request Time Range
+# Parameters:   $starttime $endtime
+# Input:        None
+# Output:       None
+# Return:       A string that identify the time range
+#------------------------------------------------------------------------------
+sub GetRequestTimeRange {
+        my $rqtime = shift;
+        if ($Debug) { debug("GetRequestTimeRange $rqtime",4); }
+        if ($rqtime <= 44)   { return $TimeRange[0]; }
+        if ($rqtime <= 100)  { return $TimeRange[1]; }
+        if ($rqtime <= 500)  { return $TimeRange[2]; }
+        if ($rqtime <= 1024) { return $TimeRange[3]; }
+        if ($rqtime <= 2048) { return $TimeRange[4]; }
+        if ($rqtime <= 5120) { return $TimeRange[5]; }
+        return $TimeRange[6];
 }
 
 #------------------------------------------------------------------------------
@@ -3429,6 +3459,7 @@ sub Read_History_With_TmpUpdate {
 		'keywords'              => 26,
 		'errors'                => 27,
                 'filesize'              => 28,
+                'requesttime'           => 29,
 	);
 
 	my $order = ( scalar keys %allsections ) + 1;
@@ -3543,6 +3574,13 @@ sub Read_History_With_TmpUpdate {
                         || $HTMLOutput{'filesizes'} )
                 {
                         $SectionsToLoad{'filesize'} = $order++;
+                }
+                if (   $UpdateStats
+                        || $MigrateStats
+                        || ( $HTMLOutput{'main'} && $ShowRequestTimesStats )
+                        || $HTMLOutput{'requesttime'} )
+                {
+                        $SectionsToLoad{'requesttime'} = $order++;
                 }
 		if (   $UpdateStats
 			|| $MigrateStats
@@ -3929,6 +3967,52 @@ sub Read_History_With_TmpUpdate {
                                         );
                                 }
                                 delete $SectionsToLoad{'filesize'};
+                                if ( !scalar %SectionsToLoad ) {
+                                        debug(" Stop reading history file. Got all we need.");
+                                        last;
+                                }
+                                next;
+                        }
+
+                        # BEGIN_REQUESTTIME
+                        if ( $field[0] eq 'BEGIN_REQUESTTIME' ) {
+                                if ($Debug) { debug(" Begin of REQUESTTIME section"); }
+                                $field[0] = '';
+                                my $count = 0;
+                                my $countloaded = 0;
+                                do {
+                                        if ( $field[0] ) {
+                                                $count++;
+                                                if ( $SectionsToLoad{'requesttime'} ) {
+                                                        $countloaded++;
+                                                        if ( $field[1] ) {
+                                                                $_requesttime{ $field[0] } += $field[1];
+                                                        }                                                }
+                                        }
+                                        $_ = <HISTORY>;
+                                        chomp $_;
+                                        s/\r//;
+                                        @field =
+                                          split( /\s+/,
+                                                ( $readxml ? CleanFromTags($_) : $_) );
+                                        $countlines++;
+                                } until ( $field[0] eq 'END_REQUESTTIME'
+                                           || $field[0] eq "${xmleb}END_REQUESTTIME"
+                                           || !$_ );
+                                if ( $field[0] ne 'END_REQUESTTIME'
+                                      && $field[0] ne "${xmleb}END_REQUESTTIME")
+                                {
+                                        error(
+"History file \"$filetoread\" is corrupted (End of section REQUESTTIME not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).",
+                                                "", "", 1
+                                        );
+                                }
+                                if ($Debug) {
+                                        debug(
+" End of _REQUESTTIME section ($count entries, $countloaded loaded)"
+                                        );
+                                }
+                                delete $SectionsToLoad{'requesttime'};
                                 if ( !scalar %SectionsToLoad ) {
                                         debug(" Stop reading history file. Got all we need.");
                                         last;
@@ -6432,6 +6516,9 @@ sub Save_History {
                 print HISTORYTMP "${xmlrb}POS_FILESIZE${xmlrs}";
                 $PosInFile{"filesize"} = tell HISTORYTMP;
                 print HISTORYTMP "$spacebar${xmlre}\n";
+                print HISTORYTMP "${xmlrb}POS_REQUESTTIME${xmlrs}";
+                $PosInFile{"requesttime"} = tell HISTORYTMP;
+                print HISTORYTMP "$spacebar${xmlre}\n";
 		print HISTORYTMP "${xmlrb}POS_SIDER${xmlrs}";
 		$PosInFile{"sider"} = tell HISTORYTMP;
 		print HISTORYTMP "$spacebar${xmlre}\n";
@@ -6979,6 +7066,24 @@ sub Save_History {
                           . "${xmlre}\n";
                 }
                 print HISTORYTMP "${xmleb}END_FILESIZE${xmlee}\n";
+
+        }
+        if ( $sectiontosave eq 'requesttime' ) {
+                print HISTORYTMP "\n";
+                if ($xml) {
+                        print HISTORYTMP "<section id='$sectiontosave'><comment>\n";
+                }
+                print HISTORYTMP "# Request Time Range - Request Time Frequency\n";
+                $ValueInFile{$sectiontosave} = tell HISTORYTMP;
+                print HISTORYTMP "${xmlbb}BEGIN_REQUESTTIME${xmlbs}"
+                  . ( scalar keys %_requesttime )
+                  . "${xmlbe}\n";
+                foreach ( keys %_requesttime ) {
+                        print HISTORYTMP "${xmlrb}$_${xmlrs}"
+                          . int( $_requesttime{$_} )
+                          . "${xmlre}\n";
+                }
+                print HISTORYTMP "${xmleb}END_REQUESTTIME${xmlee}\n";
 
         }
 	if ( $sectiontosave eq 'sider' )
@@ -7858,6 +7963,7 @@ sub Init_HashArray {
 	# Reset all hash arrays with name beginning by _
 	%_session     = %_browser_h   = %_browser_p   = ();
         %_filesize = ();
+        %_requesttime = ();
 	%_domener_p   = %_domener_h   = %_domener_k = %_errors_h = %_errors_k = ();
 	%_filetypes_h = %_filetypes_k = %_filetypes_gz_in = %_filetypes_gz_out = ();
 	%_host_p = %_host_h = %_host_k = %_host_l = %_host_s = %_host_u = ();
@@ -9050,7 +9156,7 @@ sub HTMLShowURLInfo {
 sub DefinePerlParsingFormat {
 	my $LogFormat = shift;
 	$pos_vh = $pos_host = $pos_logname = $pos_date = $pos_tz = $pos_method =
-	  $pos_url = $pos_code = $pos_size = -1;
+	  $pos_url = $pos_code = $pos_size = $pos_time = -1;
 	$pos_referer = $pos_agent = $pos_query = $pos_gzipin = $pos_gzipout =
 	  $pos_compratio   = -1;
 	$pos_cluster       = $pos_emails = $pos_emailr = $pos_hostr = -1;
@@ -9409,6 +9515,12 @@ sub DefinePerlParsingFormat {
 				push @fieldlib, 'size';
 				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
+                        elsif ( $f =~ /%rqtime$/ ) {
+                                $pos_time = $i;
+                                $i++;
+                                push @fieldlib, 'requesttime';
+                                $PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
+                        }
 			elsif ( $f =~ /%refererquot$/ ) {
 				$pos_referer = $i;
 				$i++;
@@ -10427,6 +10539,12 @@ sub HTMLMenu{
 "<a href=\"$linkanchor#filesizes\"$targetpage>$Message[186]</a>";
                                 print ( $frame? "</td></tr>\n" : " &nbsp; ");
                         }
+                        if ($ShowRequestTimesStats) {
+                                print( $frame? "<tr><td class=\"awsm\">" : "" );
+                                print
+"<a href=\"$linkanchor#requesttimes\"$targetpage>$Message[187]</a>";
+                                print ($frame? "</td></tr>\n" : " &nbsp; " );
+                        }
 			if ($ShowFileTypesStats && $LevelForFileTypesDetection > 0) {
 				print( $frame? "<tr><td class=\"awsm\">" : "" );
 				print
@@ -10965,6 +11083,85 @@ sub HTMLMainFileSize{
                 $count++;
         }
         my $rest_s = $TotalVisits-$total_s;
+        if ($rest_s > 0) {
+                my $p = 0;
+                if ($TotalVisits) { $p = int($rest_s / $TotalVisits * 1000) / 10; }
+                print "<tr".Tooltip(20)."><td class=\"aws\"><span style=\"color: #$color_other\">$Message[0]</span></td>";
+                print "<td>$rest_s</td>";
+                print "<td>".($rest_s?"$p %":"&nbsp;")."</td>";
+                print "</tr>\n";
+        }
+
+        &tab_end();
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints Request Time table
+# Parameters:   _
+# Input:        _
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLMainRequestTime{
+        if ($Debug) { debug("ShowRequestTimesStats", 2); }
+        my $FirstTime = 0;
+        my $LastTime  = 0;
+        foreach my $key ( keys %FirstTime ) {
+                my $keyqualified = 0;
+                if ( $MonthRequired eq 'all' ) { $keyqualified = 1; }
+                if ( $key =~ /^$YearRequired$MonthRequired/ ) { $keyqualified = 1; }
+                if ($keyqualified) {
+                        if ( $FirstTime{$key}
+                                && ( $FirstTime == 0 || $FirstTime > $FirstTime{$key} ) )
+                        {
+                                $FirstTime = $FirstTime{$key};
+                        }
+                        if ( $LastTime < ( $LastTime{$key} || 0 ) ) {
+                                $LastTime = $LastTime{$key};
+                        }
+                }
+        }
+
+        my $inicio = 0;
+        my $fim = 0;
+        if ($FirstTime =~ /$regdate/o) { $inicio = Time::Local::timelocal($6,$5,$4,$3,$2-1,$1); }
+        if ($LastTime =~ /$regdate/o) { $fim = Time::Local::timelocal($6,$5,$4,$3,$2-1,$1); }
+        my $periodo = $fim - $inicio;
+        my $number_of_requests = 0;
+        my $request_frequency_average = 0;
+        foreach my $key (@TimeRange) {
+                $number_of_requests += $_requesttime{$key};
+        }
+        if ($periodo) { $request_frequency_average = $number_of_requests / $periodo;}
+        else { $request_frequency_average = 0};
+        print "$Center<a name=\"requesttimes\">&nbsp;</a><br />\n";
+        my $title = "$Message[187]";
+        &tab_head($title, 19, 0, 'requesttimes');
+        my $Totals = 0;
+        my $average_s = 0;
+        foreach (@TimeRange) {
+                $average_s += ($_requesttime{$_} || 0) * $TimeAverage{$_};
+                $Totals += $_requesttime{$_} || 0;
+        }
+        if ($Totals) { $average_s = int($average_s / $Totals); }
+        else { $average_s = '?'; }
+        print "<tr bgcolor=\"#$color_TableBGRowTitle\"".Tooltip(1)."><th>$Message[182]: $number_of_requests - $Message[183]: $periodo $Message[184] - $Message[185]: ".sprintf ("%.6f",$request_frequency_average)."</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[181]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
+        my $total_s = 0;
+        my $count = 0;
+        foreach my $key (@TimeRange) {
+                my $p = 0;
+                my $f = 0;
+                if ($Totals) { $p = int($_requesttime{$key} / $Totals * 1000) / 10; }
+                if ($periodo) { $f = $_requesttime{$key} / $periodo; }
+                $total_s += $_requesttime{$key} || 0;
+                print "<tr><td class=\"aws\">$key</td>";
+                print "<td>".($_requesttime{$key} ? sprintf("%.5f",$f) : "&nbsp;")."</td>";
+                print "<td>".($_requesttime{$key} ? $_requesttime{$key} : "&nbsp;")."</td>";
+                print "<td>".($_requesttime{$key} ? "$p %" : "&nbsp;")."</td>";
+                print "</tr>\n";
+                $count++;
+        }
+        my $rest_s = $TotalVisits - $total_s;
         if ($rest_s > 0) {
                 my $p = 0;
                 if ($TotalVisits) { $p = int($rest_s / $TotalVisits * 1000) / 10; }
@@ -20454,6 +20651,12 @@ s/^(cache|related):[^\+]+//
                         $_filesize{ GetBandwidthRange(int($field[$pos_size])) }++;
                 }
 
+                # Check request time frequency
+                #-----------------------------
+                if ( $pos_time >= 0 ) {
+                        $_requesttime{GetRequestTimeRange(int($field[$pos_time]))}++;
+                }
+
 		# Analyze: Extra
 		#---------------
 		foreach my $extranum ( 1 .. @ExtraName - 1 ) {
@@ -21558,6 +21761,12 @@ if ( scalar keys %HTMLOutput ) {
 		if ($ShowFileSizesStats) {
 			&HTMLMainFileSize();
 		}
+
+                # BY REQUEST TIME
+                #-------------------------
+                if ($ShowRequestTimesStats) {
+                        &HTMLMainRequestTime();
+                }
 		
 		# BY DOWNLOADS
 		#-------------------------
