@@ -776,7 +776,6 @@
 'zspider/',
 'ZumBot/',
 # below placed at end to catch some generics
-'nbot',
 'ng/1\.',
 'ng/2\.',
 'libwww\-perl',
@@ -1566,7 +1565,8 @@
 '^msie',
 '^voyager/',
 '^webindex$',
-'1\-more_scanner'
+'1\-more_scanner',
+'nbot'
 );
 
 @RobotsSearchIDOrder_listgen = (
@@ -1621,7 +1621,7 @@
 'AdsBot\-Google[\x20]\(','AdsBot-Google',
 'AdsBot\-Google\-Mobile\-Apps','AdsBot-Google-Mobile-Apps',
 'Adsbot','Adsbot',
-'Mediapartners\-Google','Mediapartners-Google',
+'Mediapartners-Google','Mediapartners-Google',
 'Feedfetcher\-Google','Feedfetcher-Google',
 'Google\-Adwords\-Instant','Google-Adwords-Instant',
 'Firefox/1\.5','Nautic Expo using Firefox/1.5',
@@ -1784,6 +1784,7 @@
 'Jooblebot','Jooblebot',
 'KomodiaBot/','KomodiaBot',
 'Konqueror/','Konqueror',
+'laserlikebot','laserlikebot',
 'Lightspeed','Lightspeed',
 'linkapediabot','linkapediabot',
 'metager\-linkchecker','metager-linkchecker',
@@ -1811,8 +1812,7 @@
 'missigua_locator','missigua_locator',
 'MixrankBot','MixrankBot',
 'MJ12bot/','MJ12bot',
-'mojeek','mojeek',
-'MojeekBot/','MojeekBot',
+'MojeekBot','MojeekBot',
 'Mojolicious','Mojolicious',
 'MXT/Nutch','MXT/Nutch',
 'My[\x20]Nutch[\x20]Spider/','My Nutch Spider',
@@ -1957,8 +1957,6 @@
 'zoominfobot','zoominfobot',
 'zspider/','zspider',
 'ZumBot/','ZumBot',
-# below placed at end to catch some generics
-'nbot','nbot',
 'ng/1\.','ng/1.',
 'ng/2\.','ng/2.',
 'libwww\-perl','libwww-perl',
@@ -2746,6 +2744,8 @@
 '^voyager/','^voyager',
 '^webindex$','webindex',
 '1\-more_scanner','1-more_scanner',
+# below placed at end to catch some generics
+'nbot','nbot',
 
 # Generic robot
 'robot','robot',
