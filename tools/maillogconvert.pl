@@ -76,9 +76,15 @@ sub CleanVadminUser { $_=shift||'';
 	return $_;
 }
 
+sub UnwrapSRS { $_=shift||'';
+	s/^SRS1=.*=([^=]+)=([^@]+)@.*$/\2@\1/g;
+	s/^SRS0=[^=]+=[^=]+=([^=]+)=([^@]+)@.*$/\2@\1/g;
+	return $_;
+}
+
 sub CleanEmail { $_=shift||'';
 	s/[#<|>\[\]]//g;	# Remove unwanted characters first
-	return $_;
+	return &UnwrapSRS($_);
 }
 
 # Clean host addresses
