@@ -188,3 +188,4 @@ message183=Zeitraum
 message184=s
 message185=Durchschnittliche Requestrate [/s]
 message186=Requestgr&ouml;&szlig;e
+message187=Stunde
