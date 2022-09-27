@@ -36,6 +36,7 @@
 'windows[_+ ]?2008', 'windows[_+ ]nt[_+ ]6\.1', # Must be before windows_nt_6
 'windows[_+ ]?2012', 'windows[_+ ]nt[_+ ]6\.2', # Must be before windows_nt_6 = windows 8
 'windows[_+ ]nt[_+ ]6\.3', # Must be before windows_nt_6 = windows 8.1 
+'windows[_+ ]nt[_+ ]11', # Windows 11
 'windows[_+ ]nt[_+ ]10', # Windows 10
 'windows[_+ ]?vista', 'windows[_+ ]nt[_+ ]6',
 'windows[_+ ]?2003','windows[_+ ]nt[_+ ]5\.2',	# Must be before windows_nt_5
@@ -182,6 +183,7 @@
 'windows[_+ ]?2008','win2008','windows[_+ ]nt[_+ ]6\.1','win7',
 'windows[_+ ]?2012','win2012','windows[_+ ]nt[_+ ]6\.2','win8',
 'windows[_+ ]nt[_+ ]6\.3','win8.1',
+'windows[_+ ]nt[_+ ]11','win11',
 'windows[_+ ]nt[_+ ]10','win10',
 'windows[_+ ]?vista','winvista','windows[_+ ]nt[_+ ]6','winvista',
 'windows[_+ ]?2003','win2003','windows[_+ ]nt[_+ ]5\.2','win2003',
@@ -315,6 +317,7 @@
 #-----------------------------------------------------------
 %OSHashLib      = (
 # Windows family OS
+'win11','<a href="http://www.microsoft.com/windows11/" title="Windows 11 home page [new window]" target="_blank" rel="noopener noreferrer">Windows 11</a>',
 'win10','<a href="http://www.microsoft.com/windows10/" title="Windows 10 home page [new window]" target="_blank" rel="noopener noreferrer">Windows 10</a>',
 'win8.1','<a href="https://technet.microsoft.com/en-us/library/hh832030(v=ws.11).aspx" title="Windows 8.1 home page [new window]" target="_blank" rel="noopener noreferrer">Windows 8.1</a>',
 'win8','<a href="https://technet.microsoft.com/en-us/library/hh832030(v=ws.11).aspx" title="Windows 8 home page [new window]" target="_blank" rel="noopener noreferrer">Windows 8</a>',
