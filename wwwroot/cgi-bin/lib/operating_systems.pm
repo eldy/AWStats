@@ -78,6 +78,7 @@
 'haiku',
 'macintosh',
 # Android family
+'android[_+ ]13',       # Android 13
 'android[_+ ]12',       # Android 12
 'android[_+ ]11',       # Android 11
 'android[_+ ]10',       # Android 10
@@ -225,6 +226,7 @@
 'mac[_+ ]?p','macintosh','mac[_+ ]68','macintosh','macweb','macintosh','macintosh','macintosh',
 'haiku', 'haiku',
 # Android family (androidyyy)
+'android[_+ ]13','android13',              # Android 13
 'android[_+ ]12','android12',              # Android 12
 'android[_+ ]11','android11',              # Android 11
 'android[_+ ]10','android10',              # Android 10
@@ -357,6 +359,7 @@
 'macintosh','<a href="https://www.apple.com/" title="Mac OS home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS</a>',
 'Haiku', '<a href="http://www.haiku-os.org" title="Haiku home page [new window]" target="_blank" rel="noopener noreferrer">Haiku</a>',
 # Android
+'android13','<a href="https://developer.android.com/about/versions/13" title="Google Android 13.x home page [new window]" target="_blank" rel="noopener noreferrer">Google Android 13.x</a>',
 'android12','<a href="https://developer.android.com/about/versions/12" title="Google Android 12.x home page [new window]" target="_blank" rel="noopener noreferrer">Google Android 12.x</a>',
 'android11','<a href="https://developer.android.com/about/versions/11" title="Google Android 11.x home page [new window]" target="_blank" rel="noopener noreferrer">Google Android 11.x</a>',
 'android10','<a href="https://developer.android.com/about/versions/10" title="Google Android 10.x home page [new window]" target="_blank" rel="noopener noreferrer">Google Android 10.x</a>',
