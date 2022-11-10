@@ -36,6 +36,7 @@
 'windows[_+ ]?2008', 'windows[_+ ]nt[_+ ]6\.1', # Must be before windows_nt_6
 'windows[_+ ]?2012', 'windows[_+ ]nt[_+ ]6\.2', # Must be before windows_nt_6 = windows 8
 'windows[_+ ]nt[_+ ]6\.3', # Must be before windows_nt_6 = windows 8.1 
+'windows[_+ ]nt[_+ ]11', # Windows 11
 'windows[_+ ]nt[_+ ]10', # Windows 10
 'windows[_+ ]?vista', 'windows[_+ ]nt[_+ ]6',
 'windows[_+ ]?2003','windows[_+ ]nt[_+ ]5\.2',	# Must be before windows_nt_5
@@ -77,6 +78,7 @@
 'haiku',
 'macintosh',
 # Android family
+'android[_+ ]13',       # Android 13
 'android[_+ ]12',       # Android 12
 'android[_+ ]11',       # Android 11
 'android[_+ ]10',       # Android 10
@@ -182,6 +184,7 @@
 'windows[_+ ]?2008','win2008','windows[_+ ]nt[_+ ]6\.1','win7',
 'windows[_+ ]?2012','win2012','windows[_+ ]nt[_+ ]6\.2','win8',
 'windows[_+ ]nt[_+ ]6\.3','win8.1',
+'windows[_+ ]nt[_+ ]11','win11',
 'windows[_+ ]nt[_+ ]10','win10',
 'windows[_+ ]?vista','winvista','windows[_+ ]nt[_+ ]6','winvista',
 'windows[_+ ]?2003','win2003','windows[_+ ]nt[_+ ]5\.2','win2003',
@@ -223,6 +226,7 @@
 'mac[_+ ]?p','macintosh','mac[_+ ]68','macintosh','macweb','macintosh','macintosh','macintosh',
 'haiku', 'haiku',
 # Android family (androidyyy)
+'android[_+ ]13','android13',              # Android 13
 'android[_+ ]12','android12',              # Android 12
 'android[_+ ]11','android11',              # Android 11
 'android[_+ ]10','android10',              # Android 10
@@ -315,6 +319,7 @@
 #-----------------------------------------------------------
 %OSHashLib      = (
 # Windows family OS
+'win11','<a href="http://www.microsoft.com/windows11/" title="Windows 11 home page [new window]" target="_blank" rel="noopener noreferrer">Windows 11</a>',
 'win10','<a href="http://www.microsoft.com/windows10/" title="Windows 10 home page [new window]" target="_blank" rel="noopener noreferrer">Windows 10</a>',
 'win8.1','<a href="https://technet.microsoft.com/en-us/library/hh832030(v=ws.11).aspx" title="Windows 8.1 home page [new window]" target="_blank" rel="noopener noreferrer">Windows 8.1</a>',
 'win8','<a href="https://technet.microsoft.com/en-us/library/hh832030(v=ws.11).aspx" title="Windows 8 home page [new window]" target="_blank" rel="noopener noreferrer">Windows 8</a>',
@@ -354,6 +359,7 @@
 'macintosh','<a href="https://www.apple.com/" title="Mac OS home page [new window]" target="_blank" rel="noopener noreferrer">Mac OS</a>',
 'Haiku', '<a href="http://www.haiku-os.org" title="Haiku home page [new window]" target="_blank" rel="noopener noreferrer">Haiku</a>',
 # Android
+'android13','<a href="https://developer.android.com/about/versions/13" title="Google Android 13.x home page [new window]" target="_blank" rel="noopener noreferrer">Google Android 13.x</a>',
 'android12','<a href="https://developer.android.com/about/versions/12" title="Google Android 12.x home page [new window]" target="_blank" rel="noopener noreferrer">Google Android 12.x</a>',
 'android11','<a href="https://developer.android.com/about/versions/11" title="Google Android 11.x home page [new window]" target="_blank" rel="noopener noreferrer">Google Android 11.x</a>',
 'android10','<a href="https://developer.android.com/about/versions/10" title="Google Android 10.x home page [new window]" target="_blank" rel="noopener noreferrer">Google Android 10.x</a>',
