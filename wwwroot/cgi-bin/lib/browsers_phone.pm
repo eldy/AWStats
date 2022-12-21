@@ -24,6 +24,9 @@
 		
 #package AWSUA;
 
+# RJC added from 2021-05-05
+# baidu\sogo\.uc.UCBrowser
+
 # Relocated from main file for easier editing
 %BrowsersFamily = (
     'msie'      => 1,
@@ -124,6 +127,7 @@
 'webmirror',
 'webvcr',
 'qnx\svoyager',
+'baidu\.sogo\.uc\.UCBrowser',
 # Site grabbers
 'teleport',
 'webcapture',
@@ -734,6 +738,7 @@
 'webmirror','WebMirror',
 'webvcr','WebVCR',
 'qnx\svoyager','QNX Voyager',
+'baidu\.sogo\.uc\.UCBrowser','baidu.sogo.uc.UCBrowser',
 # Site grabbers
 'teleport','TelePort Pro',
 'webcapture','Acrobat Webcapture',

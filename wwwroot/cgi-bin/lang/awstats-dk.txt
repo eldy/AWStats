@@ -1,6 +1,5 @@
-# Danish message file by Ole Stanstrup (revised and amended by soren@dacafe.com)
+# Danish message file by Michael Andreassen (revised michael@the-exterminator.dk)
 # $Revision$ - $Date$
-# Danish message file Update by Michael Andreassen (revised michael@the-exterminator.dk)
 PageCode=iso-8859-1
 message0=Ukendt
 message1=Ukendt (uopl&oslash;st IP-adresse)
@@ -8,7 +7,7 @@ message2=Andre
 message3=Se detaljer
 message4=Dag
 message5=M&aring;ned
-message6=År
+message6=&Aring;r
 message7=Statistik for
 message8=F&oslash;rste bes&oslash;g
 message9=Sidste bes&oslash;g
@@ -175,3 +174,20 @@ message169=Lavet af
 message170=plugins
 message171=Regioner
 message172=Byer
+message173=Opera versioner
+message174=Safari versioner
+message175=Chrome versioner
+message176=Konqueror versioner
+message177=,
+message178=Downloads
+message179=Eksport CSV
+message180=TB
+message181=Frekvens[/s]
+message182=Antal anmodninger
+message183=Periode
+message184=s
+message185=Anmod om gennemsnitsfrekvens [/s]
+message186=Anmodningsst&oslash;rrelse
+message187=M&aring;nedlige
+message188=Daglige
+message189=Hver time

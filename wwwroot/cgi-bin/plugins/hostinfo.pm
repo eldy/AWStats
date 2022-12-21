@@ -181,7 +181,7 @@ sub BuildFullHTMLOutput_hostinfo {
 
 	&tab_head("Full Whois Field",0,0,'whois');
 	if ($w && $w->response()) {
-		print "<tr><td class=\"aws\"><pre>".($w->response())."</pre></td></tr>\n";
+		print "<tr><td class=\"aws\"><pre>".CleanXSS($w->response())."</pre></td></tr>\n";
 	}
 	else {
 		print "<tr><td><br />The Whois command failed.<br />Did the server running AWStats is allowed to send WhoIs queries (If a firewall is running, port 43 should be opened from inside to outside) ?<br /><br /></td></tr>\n";

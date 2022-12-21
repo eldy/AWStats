@@ -1324,7 +1324,7 @@ sub warning {
 		if ( !$HeaderHTTPSent && $ENV{'GATEWAY_INTERFACE'} ) { http_head(); }
 		if ( !$HeaderHTMLSent )        { html_head(); }
 		if ( scalar keys %HTMLOutput ) {
-			$messagestring =~ s/\n/\<br\>/g;
+			$messagestring =~ s,\n,<br />,g;
 			print "$messagestring<br />\n";
 		}
 		else {
@@ -1741,13 +1741,13 @@ sub Read_Config {
 	# Check config file in common possible directories :
 	# Windows :                   				"$DIR" (same dir than awstats.pl)
 	# Standard, Mandrake and Debian package :	"/etc/awstats"
-	# Other possible directories :				"/usr/local/etc/awstats", "/etc"
+	# Other possible directories :				"/usr/local/etc/awstats",
 	# FHS standard, Suse package : 				"/etc/opt/awstats"
 	my $configdir         = shift;
 	my @PossibleConfigDir = (
 			"$DIR",
 			"/etc/awstats",
-			"/usr/local/etc/awstats", "/etc",
+			"/usr/local/etc/awstats",
 			"/etc/opt/awstats"
 		); 
 
@@ -8596,7 +8596,6 @@ sub BuildKeyList {
 			3
 		);
 	}
-	delete $hashforselect->{0};
 	delete $hashforselect->{ ''
 	  }; # Those is to protect from infinite loop when hash array has an incorrect null key
 	my $count = 0;
@@ -10237,13 +10236,13 @@ sub HTMLTopBanner{
 			print "<select class=\"aws_formfield\" name=\"databasebreak\">\n";
 			print "<option"
 			  . ( $DatabaseBreak eq "month" ? " selected=\"selected\"" : "" )
-			  . " value=\"month\">Monthly</option>\n";
+			  . " value=\"month\">$Message[5]</option>\n";
 			print "<option"
 			  . ( $DatabaseBreak eq "day" ? " selected=\"selected\"" : "" )
-			  . " value=\"day\">Daily</option>\n";
+			  . " value=\"day\">$Message[4]</option>\n";
 			print "<option"
 			  . ( $DatabaseBreak eq "hour" ? " selected=\"selected\"" : "" )
-			  . " value=\"hour\">Hourly</option>\n";
+			  . " value=\"hour\">$Message[187]</option>\n";
 			print "</select>\n";
 
 			print "<select class=\"aws_formfield\" name=\"month\">\n";
@@ -20916,7 +20915,7 @@ s/^(cache|related):[^\+]+//
 				}
 			}
 			if ( !$rowkeyok ) { next; }    # End for this section
-			if ( !$rowkeyval ) { $rowkeyval = 'Failed to extract key'; }
+			if ( !defined($rowkeyval) ) { $rowkeyval = 'Failed to extract key'; }
 			if ($Debug) { debug( "  Key val found: $rowkeyval", 5 ); }
 
 			# Apply function on $rowkeyval
