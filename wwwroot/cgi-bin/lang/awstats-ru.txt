@@ -180,4 +180,5 @@ message175=Версии Chrome
 message176=Версии Konqueror
 message177=,
 message178=Скачивания
-message179=TБ
+message179=Export CSV
+message180=TБ

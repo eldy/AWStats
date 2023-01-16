@@ -180,4 +180,5 @@ message175=Гунаҳои Chrome
 message176=Гунаҳои Konqueror
 message177=,
 message178=Боргириҳо
-message179=ТБ
+message179=Export CSV
+message180=ТБ

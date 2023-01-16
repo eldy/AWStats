@@ -1,6 +1,25 @@
 AWStats Changelog
 -----------------
 
+***** 7.9 *****
+
+Add Windows 11 and Android 13 operating systems
+Update Hungarian translation and migrate it to UTF-8.
+fix cross site scripting
+Replace hard coded text with $Message ( Monthly, Daily, Hourly )
+Android 11 + 12, MacOS 11 ( Big Sur ) + 12 ( Monterey )
+Catch up german translations
+Change the substitution that replaces newlines with BR elements so that the syntax works for both HTML and XHTML.
+Added a few robots and 1 phone browser. Also corrected some errors in devlop robots.pm
+Only look for configuration in dedicated awstats directories
+Unwrap SRS e-mail addresses
+Fixes #195/CVE-2020-35176
+As geoip2_country doesn't have AddHTMLGraph_geoip2_country, it should only generate subpage for geoip2_city.
+added support for HaikuOS and Safari based WebPositive browser
+Adding missing td-tag opening
+Tajik Language Support
+
+
 ***** 7.8 *****
 
 NEW Add SelectBox for DatabaseBreak Mode: month,day and hour.
