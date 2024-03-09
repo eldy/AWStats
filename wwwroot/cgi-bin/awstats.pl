@@ -1823,8 +1823,13 @@ sub Read_Config {
 			'png'   => 1,
 			'bmp'   => 1,
 			'ico'   => 1,
+			'rss'   => 1,
 			'swf'   => 1,
-			'webp'  => 1
+			'webp'  => 1,
+			'xml'   => 1,
+			'eot'   => 1,
+			'woff'  => 1,
+			'woff2' => 1
 		);
 	}
 
