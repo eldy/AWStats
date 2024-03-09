@@ -2902,7 +2902,7 @@ sub Check_Config {
 	}
 	if ( $ShowLinksToWhoIs !~ /[01]/ ) { $ShowLinksToWhoIs = 0; }
 	$Logo     ||= 'awstats_logo6.png';
-	$LogoLink ||= 'http://www.awstats.org';
+	$LogoLink ||= 'https://www.awstats.org';
 	if ( $BarWidth !~ /^\d+/  || $BarWidth < 1 )  { $BarWidth  = 260; }
 	if ( $BarHeight !~ /^\d+/ || $BarHeight < 1 ) { $BarHeight = 90; }
 	$color_Background =~ s/#//g;
@@ -10153,7 +10153,7 @@ sub HTMLTopBanner{
 
 		# Logo and flags
 		if ( $FrameName ne 'mainleft' ) {
-			if ( $LogoLink =~ "http://www.awstats.org" ) {
+			if ( $LogoLink =~ "https://www.awstats.org" ) {
 				print "<td align=\"right\" rowspan=\"3\"><a href=\""
 				  . XMLEncode($LogoLink)
 				  . "\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=\"0\""
@@ -10215,7 +10215,7 @@ sub HTMLTopBanner{
 
 		# Logo and flags
 		if ( $FrameName eq 'mainright' ) {
-			if ( $LogoLink =~ "http://www.awstats.org" ) {
+			if ( $LogoLink =~ "https://www.awstats.org" ) {
 				print "<td align=\"right\" rowspan=\"2\"><a href=\""
 				  . XMLEncode($LogoLink)
 				  . "\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=\"0\""
