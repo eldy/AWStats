@@ -30,6 +30,8 @@ use Time::Local
 use Socket;
 use Encode;
 use File::Spec;
+use JSON::XS;
+use Try::Tiny;
 
 
 #------------------------------------------------------------------------------
@@ -83,7 +85,7 @@ use vars qw/
   $TotalKeyphrases $TotalKeywords $TotalDifferentKeyphrases $TotalDifferentKeywords
   $TotalSearchEnginesPages $TotalSearchEnginesHits $TotalRefererPages $TotalRefererHits $TotalDifferentSearchEngines $TotalDifferentReferer
   $FrameName $Center $FileConfig $FileSuffix $Host $YearRequired $MonthRequired $DayRequired $HourRequired
-  $QueryString $SiteConfig $StaticLinks $PageCode $PageDir $PerlParsingFormat $UserAgent
+  $QueryString $SiteConfig $StaticLinks $PageCode $PageDir $PerlParsingFormat $PerlParsingFormatJsonMap $UserAgent
   $pos_vh $pos_host $pos_logname $pos_date $pos_tz $pos_method $pos_url $pos_code $pos_size $pos_time
   $pos_referer $pos_agent $pos_query $pos_gzipin $pos_gzipout $pos_compratio $pos_timetaken
   $pos_cluster $pos_emails $pos_emailr $pos_hostr @pos_extra
@@ -110,9 +112,10 @@ $TotalRefererHits = $TotalDifferentSearchEngines = $TotalDifferentReferer = 0;
 	$FrameName,    $Center,       $FileConfig,        $FileSuffix,
 	$Host,         $YearRequired, $MonthRequired,     $DayRequired,
 	$HourRequired, $QueryString,  $SiteConfig,        $StaticLinks,
-	$PageCode,     $PageDir,      $PerlParsingFormat, $UserAgent
+	$PageCode,     $PageDir,      $PerlParsingFormat, $UserAgent,
+    $PerlParsingFormatJsonMap
   )
-  = ( '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '' );
+  = ( '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', undef );
 
 # ----- Plugins variable -----
 use vars qw/ %PluginsLoaded $PluginDir $AtLeastOneSectionPlugin /;
@@ -314,7 +317,7 @@ use vars qw/
   $AllowAccessFromWebToFollowingIPAddresses $HTMLHeadSection $HTMLEndSection $LinksToWhoIs $LinksToIPWhoIs
   $LogFile $LogType $LogFormat $LogSeparator $Logo $LogoLink $StyleSheet $WrapperScript $SiteDomain
   $UseHTTPSLinkForUrl $URLQuerySeparators $URLWithAnchor $ErrorMessages $ShowFlagLinks
-  $AddLinkToExternalCGIWrapper
+  $AddLinkToExternalCGIWrapper $LogFormatJsonMap
   /;
 (
 	$DirLock,                                  $DirCgi,
@@ -330,11 +333,12 @@ use vars qw/
 	$WrapperScript,                            $SiteDomain,
 	$UseHTTPSLinkForUrl,                       $URLQuerySeparators,
 	$URLWithAnchor,                            $ErrorMessages,
-	$ShowFlagLinks,                            $AddLinkToExternalCGIWrapper
+	$ShowFlagLinks,                            $AddLinkToExternalCGIWrapper,
+    $LogFormatJsonMap
   )
   = (
 	'', '', '', '', '', '', '', '', '', '', '', '', '', '',
-	'', '', '', '', '', '', '', '', '', '', '', '', '', '', ''
+	'', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''
   );
 use vars qw/
   $color_Background $color_TableBG $color_TableBGRowTitle
@@ -9260,6 +9264,24 @@ sub DefinePerlParsingFormat {
 			  ( 'host', 'logname', 'date', 'method', 'url', 'code', 'size' );
 		}
 	}
+    elsif ( $LogFormat eq 'json' ) {
+        $PerlParsingFormat = 'json';
+        $PerlParsingFormatJsonMap = JSON::XS->new->utf8->decode($LogFormatJsonMap);
+        @fieldlib = keys % {$PerlParsingFormatJsonMap};
+        for my $i (0 .. $#fieldlib) {
+            my $f_name = @fieldlib[$i];
+            my $pos_var_suf = $f_name;
+            if ($f_name =~ /time[12]/) {
+                $pos_var_suf = "date";
+            } elsif ($f_name =~  /extra([0-9]+)/) {
+                $pos_var_suf =~ s/extra//;
+                $pos_extra[$pos_var_suf] = $i;
+                next;
+            }
+            my $k = "pos_$pos_var_suf";
+            $$k = $i;
+        }
+    }
 	else {    # Personalized log format
 		my $LogFormatString = $LogFormat;
 
@@ -18719,7 +18741,26 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 		}
 
 		# Parse line record to get all required fields
-		if ( !( @field = map( /$PerlParsingFormat/, $line ) ) ) {
+        my $json_error = undef;
+        if (defined $PerlParsingFormatJsonMap) {
+            my $json = undef;
+            try {
+                $json = JSON::XS->new->utf8->decode($line);
+            } catch {
+                $json_error = $_;
+                $json_error =~ s/^\s+|\s+$//g;
+            }
+            @field = ();
+            if ($json) {
+                for my $el (@fieldlib) {
+                    my $json_key = ${$PerlParsingFormatJsonMap}{$el};
+                    push(@field, ${$json}{$json_key});
+                }
+            }
+        } else {
+            @field = map( /$PerlParsingFormat/, $line );
+        }
+		if ( !@field ) {
 			# see if the line is a comment, blank or corrupted
  			if ( $line =~ /^#/ || $line =~ /^!/ ) {
 				$NbOfLinesComment++;
@@ -18739,9 +18780,10 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
  			}else{
  				$NbOfLinesCorrupted++;
  				if ($ShowCorrupted){
+                    my $err = $json_error ? $json_error : "record format does not match LogFormat parameter";
  				print "Corrupted record line "
   					  . ( $lastlinenb + $NbOfLinesParsed )
-  					  . " (record format does not match LogFormat parameter): $line\n";
+                      . " ($err): $line\n";
   				}
 			}
 			if (   $NbOfLinesParsed >= $NbOfLinesForCorruptedLog
