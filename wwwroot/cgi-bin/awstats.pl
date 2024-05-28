@@ -8481,7 +8481,7 @@ sub AddInTree {
 		}
 		return;
 	}
-	if ( $val{$keyval} ) {    # Val is already in tree
+	if ( exists($val{$keyval}) ) {    # Val is already in tree
 		if ($Debug) { debug( "  val is already in tree", 4 ); }
 		$egal{$keytoadd} = $val{$keyval};
 		$val{$keyval}    = $keytoadd;
@@ -8528,7 +8528,7 @@ sub AddInTree {
 	while ( $nextval{$valcursor} && ( $nextval{$valcursor} < $keyval ) ) {
 		$valcursor = $nextval{$valcursor};
 	}
-	if ( $nextval{$valcursor} )
+	if ( exists($nextval{$valcursor}) )
 	{    # keyval is between valcursor and nextval{valcursor}
 		$nextval{$keyval} = $nextval{$valcursor};
 	}
@@ -8556,7 +8556,7 @@ sub Removelowerval {
 	if ($Debug) {
 		debug( "   remove for lowerval=$lowerval: key=$keytoremove", 4 );
 	}
-	if ( $egal{$keytoremove} ) {
+	if ( exists($egal{$keytoremove}) ) {
 		$val{$lowerval} = $egal{$keytoremove};
 		delete $egal{$keytoremove};
 	}
