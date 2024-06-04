@@ -38,8 +38,8 @@ use Try::Tiny;
 # Defines
 #------------------------------------------------------------------------------
 use vars qw/ $REVISION $VERSION /;
-$REVISION = '20230108';
-$VERSION  = "7.9 (build $REVISION)";
+$REVISION = '20240604';
+$VERSION  = "8.0 (build $REVISION)";
 
 # ----- Constants -----
 use vars qw/
