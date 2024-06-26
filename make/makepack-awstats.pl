@@ -107,9 +107,9 @@ if (-d "/usr/src/RPM") {
     # mandrake
     $RPMDIR="/usr/src/RPM";
 }
-if (-d "/home/ldestail/rpmbuild") {
+if (-d "/home/ldestailleur/rpmbuild") {
     # debian
-    $RPMDIR="/home/ldestail/rpmbuild";
+    $RPMDIR="/home/ldestailleur/rpmbuild";
 }
 
 
@@ -377,7 +377,7 @@ if ($nboftargetok) {
 
     	if ($target eq 'RPM') {                 # Linux only
 			$NEWDESTI=$DESTI;
-			
+
     		$BUILDFIC="$FILENAME.spec";
     		unlink $FILENAMETGZ.tgz;
     		print "Compress $FILENAMETGZ into $FILENAMETGZ.tgz for RPM build...\n";
