@@ -66,7 +66,7 @@ sub Init_geoip2_country {
 	# <-----
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
 	debug(" Plugin $PluginName: InitParams=$InitParams",1);
-    my ($datafile,$override)=split(/\+/,$InitParams,2);
+    my ($datafile,$override)=split(/\s+/,$InitParams,2);
    	if (! $datafile) { $datafile="GeoLite2-Country.mmdb"; }
     else { $datafile =~ s/%20/ /g; }
 	if ($override){$OverrideFile=$override;}

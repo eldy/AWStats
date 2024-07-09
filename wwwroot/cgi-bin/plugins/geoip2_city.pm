@@ -71,7 +71,7 @@ sub Init_geoip2_city {
 	# <-----
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
 	debug(" Plugin $PluginName: InitParams=$InitParams",1);
-    my ($datafile,$override)=split(/\+/,$InitParams,2);
+    my ($datafile,$override)=split(/\s+/,$InitParams,2);
    	if (! $datafile) { $datafile="GeoLite2-City.mmdb"; }
    	else { $datafile =~ s/%20/ /g; }
 	if ($override){ $override =~ s/%20/ /g; $OverrideFile=$override; }

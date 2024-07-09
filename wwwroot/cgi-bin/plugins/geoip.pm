@@ -63,7 +63,7 @@ sub Init_geoip {
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
 	debug(" Plugin $PluginName: InitParams=$InitParams",1);
    	my ($mode,$tmpdatafile)=split(/\s+/,$InitParams,2);
-   	my ($datafile,$override)=split(/\+/,$tmpdatafile,2);
+   	my ($datafile,$override)=split(/\s+/,$tmpdatafile,2);
    	if (! $datafile) { $datafile="$PluginName.dat"; }
     else { $datafile =~ s/%20/ /g; }
 	if ($type eq 'geoippureperl') {

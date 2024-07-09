@@ -79,7 +79,7 @@ sub Init_geoip_asn_maxmind {
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
 	debug(" Plugin $PluginName: InitParams=$InitParams",1);
     my ($mode,$tmpdatafile)=split(/\s+/,$InitParams,2);
-    my ($datafile,$override,$link)=split(/\+/,$tmpdatafile,3);
+    my ($datafile,$override,$link)=split(/\s+/,$tmpdatafile,3);
    	if (! $datafile) { $datafile="GeoIPASNum.dat"; }
    	else { $datafile =~ s/%20/ /g; }
 	if ($type eq 'geoippureperl') {
