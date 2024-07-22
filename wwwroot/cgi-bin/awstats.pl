@@ -957,45 +957,16 @@ a:visited { color: #$color_link; text-decoration: none; }
 a:hover   { color: #$color_hover; text-decoration: underline; }
 .currentday { font-weight: bold; }
 .bar{  }
-
 .bar-horizontal{ height: 4px; }
-
-.bar-vertical{
-	display: inline-block;
-	width: 4px;
-}
-
-.color-u{
-	background-color: #FFAA66;
-}
-
-.color-v{
-	background-color: #F4F090;
-}
-
-.color-p{
-	background-color: #4477DD;
-}
-
-.color-h{
-	background-color: #66DDEE;
-}
-
-.color-k{
-	background-color: #2EA495;
-}
-
-.color-e{
-	background-color: #CEC2E8;
-}
-
-.color-x{
-	background-color: #C1B2E2;
-}
-
-.color-s{
-	background-color: #8888DD;
-}
+.bar-vertical{ display: inline-block; width: 4px; }
+.color-u{ background-color: #$color_u; }
+.color-v{ background-color: #$color_v; }
+.color-p{ background-color: #$color_p; }
+.color-h{ background-color: #$color_h; }
+.color-k{ background-color: #$color_k; }
+.color-e{ background-color: #$color_e; }
+.color-x{ background-color: #$color_x; }
+.color-s{ background-color: #$color_s; }
 EOF
 			}
 
