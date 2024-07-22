@@ -949,7 +949,7 @@ b, .aws_title, th.aws{ font-weight: 700; }
 .color-e{ background-color: #$color_e; }
 .color-x{ background-color: #$color_x; }
 .color-s{ background-color: #$color_s; }
-.clock{ height: 12px; width: 12px; background: conic-gradient(black 330deg, yellow 30deg); border-radius: 50%; }
+.clock{ height: 12px; width: 12px; margin: auto; background: conic-gradient(black 330deg, yellow 30deg); border-radius: 50%; }
 .hr-1{ rotate: 30deg; }
 .hr-2{ rotate: 60deg; }
 .hr-3{ rotate: 90deg; }
