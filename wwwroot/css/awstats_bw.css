@@ -1,7 +1,7 @@
 body { body { font: 0.75rem sans-serif, system-ui; background-color: #FFFFFF; margin-top: 0; margin-bottom: 0; } }
 .aws_bodyl { background-image: url(/awstatsicons/other/backleft.png); background-repeat: repeat-y; }
 .aws_border { border-collapse: collapse; background-color: #CCCCDD; padding: 1px 1px 1px 1px; margin-top: 0 }
-.aws_title  { font-size: 0.9rem; background-color: #CCCCDD; text-align: center; margin-top: 0; margin-bottom: 0; padding: 1px 1px 1px 1px; color: #$color_TableTitle; }
+.aws_title  { font-size: 0.9rem; background-color: #CCCCDD; text-align: center; margin-top: 0; margin-bottom: 0; padding: 1px 1px 1px 1px; color: #000000; }
 .aws_blank { font-size: 0.9rem; background-color: #FFFFFF; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }
 .aws_data {
 	background-color: #FFFFFF;
@@ -17,8 +17,8 @@ body { body { font: 0.75rem sans-serif, system-ui; background-color: #FFFFFF; ma
 th		{ border-color: #ECECEC; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; text-align:center; color: #000000; }
 th.aws	{ border-color: #ECECEC; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; font-size: 0.9rem; }
 td		{ border-color: #ECECEC; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; text-align:center; color: #000000; }
-td.aws	{ border-color: #ECECEC; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; text-align:$dir; color: #000000; padding: 0px;}
-td.awsm	{ border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; border-bottom-width: 0px; text-align:$dir; color: #000000; padding: 0px; }
+td.aws	{ border-color: #ECECEC; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; text-align:center; color: #000000; padding: 0px;}
+td.awsm	{ border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; border-bottom-width: 0px; text-align:center; color: #000000; padding: 0px; }
 a:link    { color: #0011BB; text-decoration: none; }
 a:visited { color: #0011BB; text-decoration: none; }
 a:hover   { color: #0011BB; text-decoration: underline; }
