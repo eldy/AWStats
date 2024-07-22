@@ -918,18 +918,13 @@ sub html_head {
 			print "<style type=\"text/css\">\n";
 
 			if ( !$StyleSheet ) {
-				print
-"body { font: 11px verdana, arial, helvetica, sans-serif; background-color: #$color_Background; margin-top: 0; margin-bottom: 0; }\n";
+				print "body { font: 0.75rem sans-serif, system-ui; background-color: #$color_Background; margin-top: 0; margin-bottom: 0; }\n";
 				print ".aws_bodyl  { }\n";
-				print
-".aws_border { border-collapse: collapse; background-color: #$color_TableBG; padding: 1px 1px "
-				  . (    $BuildReportFormat eq 'xhtml'
-					  || $BuildReportFormat eq 'xml' ? "2px" : "1px" )
-				  . " 1px; margin-top: 0px; margin-bottom: 0px; }\n";
-				print
-".aws_title  { font: 13px verdana, arial, helvetica, sans-serif; font-weight: bold; background-color: #$color_TableBGTitle; text-align: center; margin-top: 0; margin-bottom: 0; padding: 1px 1px 1px 1px; color: #$color_TableTitle; }\n";
-				print
-".aws_blank  { font: 13px verdana, arial, helvetica, sans-serif; background-color: #$color_Background; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }\n";
+				print ".aws_border { border-collapse: collapse; background-color: #$color_TableBG; padding: 1px 1px "
+				  		. ( $BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml' ? "2px" : "1px" )
+				  		. " 1px; margin-top: 0px; margin-bottom: 0px; }\n";
+				print ".aws_title  { font-size: 0.9rem; font-weight: bold; background-color: #$color_TableBGTitle; text-align: center; margin-top: 0; margin-bottom: 0; padding: 1px 1px 1px 1px; color: #$color_TableTitle; }\n";
+				print ".aws_blank  { font-size: 0.9rem; background-color: #$color_Background; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }\n";
 				print <<EOF;
 .aws_data {
 	background-color: #$color_Background;
@@ -938,24 +933,19 @@ sub html_head {
 	border-right-width: 0px; 
 	border-bottom-width: 0px;
 }
-.aws_formfield { font: 13px verdana, arial, helvetica; }
 .aws_button {
-	font-family: arial,verdana,helvetica, sans-serif;
-	font-size: 12px;
 	border: 1px solid #ccd7e0;
 	background-image : url($DirIcons/other/button.gif);
 }
-th		{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; font: 11px verdana, arial, helvetica, sans-serif; text-align:center; color: #$color_titletext; }
-th.aws	{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; font-size: 13px; font-weight: bold; }
-td		{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; font: 11px verdana, arial, helvetica, sans-serif; text-align:center; color: #$color_text; }
-td.aws	{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; font: 11px verdana, arial, helvetica, sans-serif; text-align:$dir; color: #$color_text; padding: 0px;}
-td.awsm	{ border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; border-bottom-width: 0px; font: 11px verdana, arial, helvetica, sans-serif; text-align:$dir; color: #$color_text; padding: 0px; }
-b { font-weight: bold; }
-a { font: 11px verdana, arial, helvetica, sans-serif; }
+th		{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; text-align:center; color: #$color_titletext; }
+th.aws	{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; font-size: 0.9rem; font-weight: bold; }
+td		{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; text-align:center; color: #$color_text; }
+td.aws	{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; text-align:$dir; color: #$color_text; padding: 0px;}
+td.awsm	{ border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; border-bottom-width: 0px; text-align:$dir; color: #$color_text; padding: 0px; }
 a:link    { color: #$color_link; text-decoration: none; }
 a:visited { color: #$color_link; text-decoration: none; }
 a:hover   { color: #$color_hover; text-decoration: underline; }
-.currentday { font-weight: bold; }
+b, .currentday { font-weight: 900; }
 .bar{  }
 .bar-horizontal{ height: 4px; }
 .bar-vertical{ display: inline-block; width: 4px; }
@@ -1026,7 +1016,7 @@ sub html_end {
 		if ( $FrameName ne 'index' && $FrameName ne 'mainleft' ) {
 			print "$Center<br /><br />\n";
 			print
-"<span dir=\"ltr\" style=\"font: 11px verdana, arial, helvetica; color: #$color_text;\">";
+"<span dir=\"ltr\" style=\"color: #$color_text;\">";
 			print
 "<b>Advanced Web Statistics $VERSION</b> - <a href=\"http://www.awstats.org\" target=\"awstatshome\">";
 			print $Message[169] . " $PROG";
@@ -1121,7 +1111,7 @@ sub tab_end {
 	print "</table></td></tr></table>";
 	if ($string) {
 		print
-"<span style=\"font: 11px verdana, arial, helvetica;\">$string</span><br />\n";
+"<span>$string</span><br />\n";
 	}
 	print "<br />\n\n";
 }
@@ -10194,11 +10184,11 @@ sub HTMLTopBanner{
 				  . substr( $SiteDomain, length($SiteDomain) - 5, 5 );
 			}
 			print
-"<tr><td class=\"awsm\"><b>$Message[7]:</b></td></tr><tr><td class=\"aws\"><span style=\"font-size: 12px;\">$shortSiteDomain</span></td>";
+"<tr><td class=\"awsm\"><b>$Message[7]:</b></td></tr><tr><td class=\"aws\"><span style=\"font-size: 0.9rem;\">$shortSiteDomain</span></td>";
 		}
 		else {
 			print
-"<tr><td class=\"aws\" valign=\"middle\"><b>$Message[7]:</b>&nbsp;</td><td class=\"aws\" valign=\"middle\"><span style=\"font-size: 14px;\">$SiteDomain</span></td>";
+"<tr><td class=\"aws\" valign=\"middle\"><b>$Message[7]:</b>&nbsp;</td><td class=\"aws\" valign=\"middle\"><span style=\"font-size: 1rem;\">$SiteDomain</span></td>";
 		}
 
 		# Logo and flags
@@ -10226,7 +10216,7 @@ sub HTMLTopBanner{
 		print
 "<tr valign=\"middle\"><td class=\"aws\" valign=\"middle\" width=\"$WIDTHMENU1\"><b>$Message[35]:</b>&nbsp;</td>";
 		print
-"<td class=\"aws\" valign=\"middle\"><span style=\"font-size: 12px;\">";
+"<td class=\"aws\" valign=\"middle\"><span>";
 		if ($LastUpdate) { print Format_Date( $LastUpdate, 0 ); }
 		else {
 
@@ -10382,7 +10372,7 @@ sub HTMLTopBanner{
 "<input type=\"submit\" value=\" $Message[115] \" class=\"aws_button\" />";
 		}
 		else {
-			print "<span style=\"font-size: 14px;\">";
+			print "<span style=\"font-size: 1rem;\">";
 			if ($DayRequired) { print "$Message[4] $DayRequired - "; }
 			if ( $MonthRequired eq 'all' ) {
 				print "$Message[6] $YearRequired";
@@ -13830,7 +13820,7 @@ sub HTMLMainMonthly{
 				? '<span class="currentday">'
 				: ''
 			  );
-			print "$MonthNumLib{$monthix}<div style=\"font-size: 9px;\">$YearRequired</div>";
+			print "$MonthNumLib{$monthix}<div style=\"font-size: 0.5rem;\">$YearRequired</div>";
 			print(   !$StaticLinks
 				  && $monthix == $nowmonth
 				  && $YearRequired == $nowyear ? '</span>' : '' );
@@ -14230,8 +14220,8 @@ sub HTMLMainDaily{
 			);
 			print "$day<br /><span style=\"font-size: "
 			  . (    $FrameName ne 'mainright'
-				  && $QueryString !~ /buildpdf/i ? "9" : "8" )
-			  . "px;\">"
+				  && $QueryString !~ /buildpdf/i ? "0.5" : "0.4" )
+			  . "rem;\">"
 			  . $MonthNumLib{$month}
 			  . "</span>";
 			print(   !$StaticLinks
