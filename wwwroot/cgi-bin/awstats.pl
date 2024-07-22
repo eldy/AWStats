@@ -150,7 +150,6 @@ use vars qw/
   $MaxLengthOfShownURL
   $MaxLengthOfStoredURL
   $MaxLengthOfStoredUA
-  %BarPng
   $BuildReportFormat
   $BuildHistoryFormat
   $ExtraTrackedRowsLimit
@@ -167,19 +166,6 @@ $MaxRowsInHTMLOutput    = 1000;
 $MaxLengthOfShownURL    = 64;
 $MaxLengthOfStoredURL = 256;  # Note: Apache LimitRequestLine is default to 8190
 $MaxLengthOfStoredUA  = 256;
-%BarPng               = (
-	'vv' => 'vv.png',
-	'vu' => 'vu.png',
-	'hu' => 'hu.png',
-	'vp' => 'vp.png',
-	'hp' => 'hp.png',
-	'he' => 'he.png',
-	'hx' => 'hx.png',
-	'vh' => 'vh.png',
-	'hh' => 'hh.png',
-	'vk' => 'vk.png',
-	'hk' => 'hk.png'
-);
 $BuildReportFormat     = 'html';
 $BuildHistoryFormat    = 'text';
 $ExtraTrackedRowsLimit = 500;
@@ -970,6 +956,46 @@ a:link    { color: #$color_link; text-decoration: none; }
 a:visited { color: #$color_link; text-decoration: none; }
 a:hover   { color: #$color_hover; text-decoration: underline; }
 .currentday { font-weight: bold; }
+.bar{  }
+
+.bar-horizontal{ height: 4px; }
+
+.bar-vertical{
+	display: inline-block;
+	width: 4px;
+}
+
+.color-u{
+	background-color: #FFAA66;
+}
+
+.color-v{
+	background-color: #F4F090;
+}
+
+.color-p{
+	background-color: #4477DD;
+}
+
+.color-h{
+	background-color: #66DDEE;
+}
+
+.color-k{
+	background-color: #2EA495;
+}
+
+.color-e{
+	background-color: #CEC2E8;
+}
+
+.color-x{
+	background-color: #C1B2E2;
+}
+
+.color-s{
+	background-color: #8888DD;
+}
 EOF
 			}
 
@@ -8355,6 +8381,37 @@ sub Format_Number {
 }
 
 #------------------------------------------------------------------------------
+# Function:		Return Horizontal Bar
+# Parameters:   type, width, alt
+# Input:        None
+# Output:       None
+# Return:       The bar
+#------------------------------------------------------------------------------
+sub HtmlBarH {
+	my $type = shift || '';
+	my $width = shift || 0;
+	my $alt = shift || '';
+
+	return '<div class="bar bar-horizontal color-' . $type . '" style="width: ' . $width . 'px" title="' . $alt . '"></div>';
+}	
+
+#------------------------------------------------------------------------------
+# Function:		Return Vertical Bar
+# Parameters:   type, height
+# Input:        None
+# Output:       None
+# Return:       The bar
+#------------------------------------------------------------------------------
+sub HtmlBarV {
+	my $type = shift || '';
+	my $height = shift || 0;
+	my $alt = shift || '';
+
+	return '<div class="bar bar-vertical color-' . $type . '" style="height: ' . $height . 'px" title="' . $alt . '"></div>';
+}	
+
+
+#------------------------------------------------------------------------------
 # Function:		Return " alt=string title=string"
 # Parameters:   string
 # Input:        None
@@ -11344,10 +11401,8 @@ sub HTMLShowBrowserDetail{
 
 			# alt and title are not provided to reduce page size
 			if ($ShowBrowsersStats) {
-				print
-"<img src=\"$DirIcons\/other\/$BarPng{'hp'}\" width=\"$bredde_p\" height=\"5\" /><br />";
-				print
-"<img src=\"$DirIcons\/other\/$BarPng{'hh'}\" width=\"$bredde_h\" height=\"5\" /><br />";
+				print HtmlBarH('p', $bredde_p);
+				print HtmlBarH('h', $bredde_h);
 				}
 				print "</td>";
 				print "</tr>\n";
@@ -11447,10 +11502,8 @@ sub HTMLShowBrowserDetail{
 
 		# alt and title are not provided to reduce page size
 		if ($ShowBrowsersStats) {
-			print
-"<img src=\"$DirIcons\/other\/$BarPng{'hp'}\" width=\"$bredde_p\" height=\"5\" /><br />";
-			print
-"<img src=\"$DirIcons\/other\/$BarPng{'hh'}\" width=\"$bredde_h\" height=\"5\" /><br />";
+				print HtmlBarH('p', $bredde_p);
+				print HtmlBarH('h', $bredde_h);
 		}
 		print "</td>";
 		print "</tr>\n";
@@ -11630,10 +11683,8 @@ sub HTMLShowOSDetail{
 
 				# alt and title are not provided to reduce page size
 				if ($ShowOSStats) {
-					print
-"<img src=\"$DirIcons\/other\/$BarPng{'hp'}\" width=\"$bredde_p\" height=\"5\" /><br />";
-					print
-"<img src=\"$DirIcons\/other\/$BarPng{'hh'}\" width=\"$bredde_h\" height=\"5\" /><br />";
+					print HtmlBarH('p', $bredde_p);
+				print HtmlBarH('h', $bredde_h);
 				}
 				print "</td>";
 				print "</tr>\n";
@@ -11721,10 +11772,8 @@ sub HTMLShowOSDetail{
 
 		# alt and title are not provided to reduce page size
 		if ($ShowOSStats) {
-			print
-"<img src=\"$DirIcons\/other\/$BarPng{'hp'}\" width=\"$bredde_p\" height=\"5\" /><br />";
-			print
-"<img src=\"$DirIcons\/other\/$BarPng{'hh'}\" width=\"$bredde_h\" height=\"5\" /><br />";
+			print HtmlBarH('p', $bredde_p);
+			print HtmlBarH('h', $bredde_h);
 		}
 		print "</td>";
 		print "</tr>\n";
@@ -12672,20 +12721,16 @@ sub HTMLShowURLDetail{
 
 		# alt and title are not provided to reduce page size
 		if ( $ShowPagesStats =~ /P/i ) {
-			print
-"<img src=\"$DirIcons\/other\/$BarPng{'hp'}\" width=\"$bredde_p\" height=\"4\" /><br />";
+			print HtmlBarH('p', $bredde_p);
 		}
 		if ( $ShowPagesStats =~ /B/i ) {
-			print
-"<img src=\"$DirIcons\/other\/$BarPng{'hk'}\" width=\"$bredde_k\" height=\"4\" /><br />";
+			print HtmlBarH('k', $bredde_k);
 		}
 		if ( $ShowPagesStats =~ /E/i ) {
-			print
-"<img src=\"$DirIcons\/other\/$BarPng{'he'}\" width=\"$bredde_e\" height=\"4\" /><br />";
+			print HtmlBarH('e', $bredde_e);
 		}
 		if ( $ShowPagesStats =~ /X/i ) {
-			print
-"<img src=\"$DirIcons\/other\/$BarPng{'hx'}\" width=\"$bredde_x\" height=\"4\" />";
+			print HtmlBarH('x', $bredde_x);
 		}
 		print "</td></tr>\n";
 		$total_p += $_url_p{$key};
@@ -13252,23 +13297,13 @@ sub HTMLShowDomains{
 		}
 		print "<td class=\"aws\">";
 		if ( $ShowDomainsStats =~ /P/i ) {
-			print
-"<img src=\"$DirIcons\/other\/$BarPng{'hp'}\" width=\"$bredde_p\" height=\"5\""
-			  . AltTitle( "$Message[56]: " . int( $_domener_p{$key} ) )
-			  . " /><br />\n";
+			print HtmlBarH('p', $bredde_p, "$Message[56]: " . int( $_domener_p{$key} ));
 		}
 		if ( $ShowDomainsStats =~ /H/i ) {
-			print
-"<img src=\"$DirIcons\/other\/$BarPng{'hh'}\" width=\"$bredde_h\" height=\"5\""
-			  . AltTitle( "$Message[57]: " . int( $_domener_h{$key} ) )
-			  . " /><br />\n";
+			print HtmlBarH('h', $bredde_h, "$Message[57]: " . int( $_domener_h{$key} ));
 		}
 		if ( $ShowDomainsStats =~ /B/i ) {
-			print
-"<img src=\"$DirIcons\/other\/$BarPng{'hk'}\" width=\"$bredde_k\" height=\"5\""
-			  . AltTitle(
-				"$Message[75]: " . Format_Bytes( $_domener_k{$key} ) )
-			  . " />";
+			print HtmlBarH('k', $bredde_k, "$Message[75]: " . Format_Bytes( $_domener_k{$key} ));
 		}
 		print "</td>";
 		print "</tr>\n";
@@ -13780,47 +13815,19 @@ sub HTMLMainMonthly{
 			}
 			print "<td>";
 			if ( $ShowMonthStats =~ /U/i ) {
-				print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vu'}\" height=\"$bredde_u\" width=\"6\""
-				  . AltTitle( "$Message[11]: "
-					  . ( $MonthUnique{ $YearRequired . $monthix }
-						  || 0 ) )
-				  . " />";
+				print HtmlBarV('u', $bredde_u,  "$Message[11]: " . ( $MonthUnique{ $YearRequired . $monthix } || 0 ));
 			}
 			if ( $ShowMonthStats =~ /V/i ) {
-				print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vv'}\" height=\"$bredde_v\" width=\"6\""
-				  . AltTitle( "$Message[10]: "
-					  . ( $MonthVisits{ $YearRequired . $monthix }
-						  || 0 ) )
-				  . " />";
+				print HtmlBarV('v', $bredde_v,  "$Message[10]: " . ( $MonthVisits{ $YearRequired . $monthix } || 0 ));
 			}
 			if ( $ShowMonthStats =~ /P/i ) {
-				print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"6\""
-				  . AltTitle( "$Message[56]: "
-					  . ( $MonthPages{ $YearRequired . $monthix } || 0 )
-				  )
-				  . " />";
+				print HtmlBarV('p', $bredde_p,  "$Message[56]: " . ( $MonthPages{ $YearRequired . $monthix } || 0 ));
 			}
 			if ( $ShowMonthStats =~ /H/i ) {
-				print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"6\""
-				  . AltTitle( "$Message[57]: "
-					  . ( $MonthHits{ $YearRequired . $monthix } || 0 )
-				  )
-				  . " />";
+				print HtmlBarV('h', $bredde_h,  "$Message[57]: " . ( $MonthHits{ $YearRequired . $monthix } || 0 ));
 			}
 			if ( $ShowMonthStats =~ /B/i ) {
-				print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"6\""
-					  . AltTitle(
-					"$Message[75]: "
-					  . Format_Bytes(
-						$MonthBytes{ $YearRequired . $monthix }
-					  )
-				  )
-				  . " />";
+				print HtmlBarV('k', $bredde_k,  "$Message[75]: " . Format_Bytes( $MonthBytes{ $YearRequired . $monthix } || 0 ));
 			}
 			print "</td>\n";
 		}
@@ -14170,37 +14177,16 @@ sub HTMLMainDaily{
 			}
 			print "<td>";
 			if ( $ShowDaysOfMonthStats =~ /V/i ) {
-				print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vv'}\" height=\"$bredde_v\" width=\"4\""
-				  . AltTitle( "$Message[10]: "
-					  . int( $DayVisits{ $year . $month . $day } || 0 )
-				  )
-				  . " />";
+				print HtmlBarV('v', $bredde_v,  "$Message[10]: " . int( $DayVisits{ $year . $month . $day } || 0 ));
 			}
 			if ( $ShowDaysOfMonthStats =~ /P/i ) {
-				print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"4\""
-				  . AltTitle( "$Message[56]: "
-					  . int( $DayPages{ $year . $month . $day } || 0 ) )
-				  . " />";
+				print HtmlBarV('p', $bredde_p,  "$Message[56]: " . int( $DayPages{ $year . $month . $day } || 0 ));
 			}
 			if ( $ShowDaysOfMonthStats =~ /H/i ) {
-				print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"4\""
-				  . AltTitle( "$Message[57]: "
-					  . int( $DayHits{ $year . $month . $day } || 0 ) )
-				  . " />";
+				print HtmlBarV('h', $bredde_h,  "$Message[57]: " . int( $DayHits{ $year . $month . $day } || 0 ));
 			}
 			if ( $ShowDaysOfMonthStats =~ /B/i ) {
-				print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"4\""
-				  . AltTitle(
-					"$Message[75]: "
-					  . Format_Bytes(
-						$DayBytes{ $year . $month . $day }
-					  )
-				  )
-				  . " />";
+				print HtmlBarV('k', $bredde_k,  "$Message[75]: " . Format_Bytes( $DayBytes{ $year . $month . $day } ));
 			}
 			print "</td>\n";
 		}
@@ -14229,24 +14215,16 @@ sub HTMLMainDaily{
 		$average_h = sprintf( "%.2f", $average_h );
 		$average_k = sprintf( "%.2f", $average_k );
 		if ( $ShowDaysOfMonthStats =~ /V/i ) {
-			print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vv'}\" height=\"$bredde_v\" width=\"4\""
-			  . AltTitle("$Message[10]: $average_v") . " />";
+			print HtmlBarV('v', $bredde_v,  "$Message[10]: $average_v");
 		}
 		if ( $ShowDaysOfMonthStats =~ /P/i ) {
-			print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"4\""
-			  . AltTitle("$Message[56]: $average_p") . " />";
+			print HtmlBarV('p', $bredde_p,  "$Message[56]: $average_p");
 		}
 		if ( $ShowDaysOfMonthStats =~ /H/i ) {
-			print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"4\""
-			  . AltTitle("$Message[57]: $average_h") . " />";
+			print HtmlBarV('h', $bredde_h,  "$Message[57]: $average_h");
 		}
 		if ( $ShowDaysOfMonthStats =~ /B/i ) {
-			print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"4\""
-			  . AltTitle("$Message[75]: $average_k") . " />";
+			print HtmlBarV('k', $bredde_k,  "$Message[75]: $average_k");
 		}
 		print "</td>\n";
 		print "</tr>\n";
@@ -14625,23 +14603,13 @@ sub HTMLMainDaysofWeek{
 					}
 					print "<td valign=\"bottom\">";
 					if ( $ShowDaysOfWeekStats =~ /P/i ) {
-						print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"6\""
-						  . AltTitle("$Message[56]: $avg_dayofweek_p[$_]")
-						  . " />";
+						print HtmlBarV('p', $bredde_p,  "$Message[56]: $avg_dayofweek_p[$_]");
 					}
 					if ( $ShowDaysOfWeekStats =~ /H/i ) {
-						print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"6\""
-						  . AltTitle("$Message[57]: $avg_dayofweek_h[$_]")
-						  . " />";
+						print HtmlBarV('h', $bredde_h,  "$Message[57]: $avg_dayofweek_h[$_]");
 					}
 					if ( $ShowDaysOfWeekStats =~ /B/i ) {
-						print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"6\""
-						  . AltTitle( "$Message[75]: "
-							  . Format_Bytes( $avg_dayofweek_k[$_] ) )
-						  . " />";
+						print HtmlBarV('k', $bredde_k,  "$Message[75]: $avg_dayofweek_k[$_]");
 					}
 					print "</td>\n";
 				}
@@ -14940,23 +14908,13 @@ sub HTMLMainHours{
 			}
 			print "<td>";
 			if ( $ShowHoursStats =~ /P/i ) {
-				print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"6\""
-				  . AltTitle( "$Message[56]: " . int( $_time_p[$ix] ) )
-				  . " />";
+				print HtmlBarV('p', $bredde_p,  "$Message[56]: " . int( $_time_p[$ix] ));
 			}
 			if ( $ShowHoursStats =~ /H/i ) {
-				print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"6\""
-				  . AltTitle( "$Message[57]: " . int( $_time_h[$ix] ) )
-				  . " />";
+				print HtmlBarV('h', $bredde_h,  "$Message[57]: " . int( $_time_h[$ix] ));
 			}
 			if ( $ShowHoursStats =~ /B/i ) {
-				print
-"<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"6\""
-				  . AltTitle(
-					"$Message[75]: " . Format_Bytes( $_time_k[$ix] ) )
-				  . " />";
+				print HtmlBarV('k', $bredde_k,  "$Message[75]: " . int( $_time_k[$ix] ));
 			}
 			print "</td>\n";
 		}
@@ -15272,21 +15230,13 @@ sub HTMLMainCountries{
 		print "<td class=\"aws\">";
 
 		if ( $ShowDomainsStats =~ /P/i ) {
-			print
-"<img src=\"$DirIcons\/other\/$BarPng{'hp'}\" width=\"$bredde_p\" height=\"5\""
-			  . AltTitle("")
-			  . " /><br />\n";
+			print HtmlBarH('p', $bredde_p);
 		}
 		if ( $ShowDomainsStats =~ /H/i ) {
-			print
-"<img src=\"$DirIcons\/other\/$BarPng{'hh'}\" width=\"$bredde_h\" height=\"5\""
-			  . AltTitle("")
-			  . " /><br />\n";
+			print HtmlBarH('h', $bredde_h);
 		}
 		if ( $ShowDomainsStats =~ /B/i ) {
-			print
-"<img src=\"$DirIcons\/other\/$BarPng{'hk'}\" width=\"$bredde_k\" height=\"5\""
-			  . AltTitle("") . " />";
+			print HtmlBarH('k', $bredde_k);
 		}
 		print "</td>";
 		print "</tr>\n";
@@ -16102,33 +16052,19 @@ sub HTMLMainPages{
 		}
 		print "<td class=\"aws\">";
 		if ( $ShowPagesStats =~ /P/i && $LogType ne 'F' ) {
-			print
-"<img src=\"$DirIcons\/other\/$BarPng{'hp'}\" width=\"$bredde_p\" height=\"4\""
-			  . AltTitle("")
-			  . " /><br />";
+			print HtmlBarH('p', $bredde_p);
 		}
 		if ( $ShowPagesStats =~ /[PH]/i && $LogType eq 'F' ) {
-			print
-"<img src=\"$DirIcons\/other\/$BarPng{'hh'}\" width=\"$bredde_p\" height=\"4\""
-			  . AltTitle("")
-			  . " /><br />";
+			print HtmlBarH('h', $bredde_p);
 		}
 		if ( $ShowPagesStats =~ /B/i ) {
-			print
-"<img src=\"$DirIcons\/other\/$BarPng{'hk'}\" width=\"$bredde_k\" height=\"4\""
-			  . AltTitle("")
-			  . " /><br />";
+			print HtmlBarH('k', $bredde_k);
 		}
 		if ( $ShowPagesStats =~ /E/i ) {
-			print
-"<img src=\"$DirIcons\/other\/$BarPng{'he'}\" width=\"$bredde_e\" height=\"4\""
-			  . AltTitle("")
-			  . " /><br />";
+			print HtmlBarH('e', $bredde_e);
 		}
 		if ( $ShowPagesStats =~ /X/i ) {
-			print
-"<img src=\"$DirIcons\/other\/$BarPng{'hx'}\" width=\"$bredde_x\" height=\"4\""
-			  . AltTitle("") . " />";
+			print HtmlBarH('x', $bredde_x);
 		}
 		print "</td></tr>\n";
 		$total_p += $_url_p{$key} || 0;

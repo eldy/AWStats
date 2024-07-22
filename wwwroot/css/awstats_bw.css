@@ -29,3 +29,44 @@ a:visited { color: #001133; text-decoration: none; }
 a:hover   { color: #444444; text-decoration: underline; }
 div { font: 12px arial,verdana,helvetica; text-align:justify; }
 .ctooltip { position:absolute; top:0px; left:0px; z-index:2; width:380; visibility:hidden; font: 8pt MS Comic Sans,arial,sans-serif; background-color: #EEEEEE; padding: 8px; border: 1px solid black; }
+
+.bar{  }
+
+.bar-horizontal{ height: 4px; }
+
+.bar-vertical{
+	display: inline-block;
+	width: 4px;
+}
+
+.color-u{
+	background-color: #FFAA66;
+}
+
+.color-v{
+	background-color: #F4F090;
+}
+
+.color-p{
+	background-color: #4477DD;
+}
+
+.color-h{
+	background-color: #66DDEE;
+}
+
+.color-k{
+	background-color: #2EA495;
+}
+
+.color-e{
+	background-color: #CEC2E8;
+}
+
+.color-x{
+	background-color: #C1B2E2;
+}
+
+.color-s{
+	background-color: #8888DD;
+}
