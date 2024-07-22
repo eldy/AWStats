@@ -923,29 +923,21 @@ sub html_head {
 				print ".aws_border { border-collapse: collapse; background-color: #$color_TableBG; padding: 1px 1px "
 				  		. ( $BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml' ? "2px" : "1px" )
 				  		. " 1px; margin-top: 0px; margin-bottom: 0px; }\n";
-				print ".aws_title  { font-size: 0.9rem; font-weight: bold; background-color: #$color_TableBGTitle; text-align: center; margin-top: 0; margin-bottom: 0; padding: 1px 1px 1px 1px; color: #$color_TableTitle; }\n";
+				print ".aws_title  { font-size: 0.9rem; background-color: #$color_TableBGTitle; text-align: center; margin-top: 0; margin-bottom: 0; padding: 1px 1px 1px 1px; color: #$color_TableTitle; }\n";
 				print ".aws_blank  { font-size: 0.9rem; background-color: #$color_Background; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }\n";
 				print <<EOF;
-.aws_data {
-	background-color: #$color_Background;
-	border-top-width: 1px;   
-	border-left-width: 0px;  
-	border-right-width: 0px; 
-	border-bottom-width: 0px;
-}
-.aws_button {
-	border: 1px solid #ccd7e0;
-	background-image : url($DirIcons/other/button.gif);
-}
-th		{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; text-align:center; color: #$color_titletext; }
-th.aws	{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; font-size: 0.9rem; font-weight: bold; }
-td		{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; text-align:center; color: #$color_text; }
-td.aws	{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; text-align:$dir; color: #$color_text; padding: 0px;}
-td.awsm	{ border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; border-bottom-width: 0px; text-align:$dir; color: #$color_text; padding: 0px; }
-a:link    { color: #$color_link; text-decoration: none; }
-a:visited { color: #$color_link; text-decoration: none; }
-a:hover   { color: #$color_hover; text-decoration: underline; }
-b, .currentday { font-weight: 900; }
+.aws_data{ background-color: #$color_Background; border-top-width: 1px; border-left-width: 0px; border-right-width: 0px; border-bottom-width: 0px; }
+.aws_button{ border: 1px solid #ccd7e0; background-image : url($DirIcons/other/button.gif); }
+th{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; text-align:center; color: #$color_titletext; }
+th.aws{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; font-size: 0.9rem; }
+td{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; text-align:center; color: #$color_text; }
+td.aws{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; text-align:$dir; color: #$color_text; padding: 0px;}
+td.awsm{ border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; border-bottom-width: 0px; text-align:$dir; color: #$color_text; padding: 0px; }
+a:link { color: #$color_link; text-decoration: none; }
+a:visited{ color: #$color_link; text-decoration: none; }
+a:hover{ color: #$color_hover; text-decoration: underline; }
+b, .aws_title, th.aws{ font-weight: 700; }
+.currentday{ font-weight: 900; }
 .bar{  }
 .bar-horizontal{ height: 4px; }
 .bar-vertical{ display: inline-block; width: 4px; }
@@ -957,6 +949,18 @@ b, .currentday { font-weight: 900; }
 .color-e{ background-color: #$color_e; }
 .color-x{ background-color: #$color_x; }
 .color-s{ background-color: #$color_s; }
+.clock{ height: 12px; width: 12px; background: conic-gradient(black 330deg, yellow 30deg); border-radius: 50%; }
+.hr-1{ rotate: 30deg; }
+.hr-2{ rotate: 60deg; }
+.hr-3{ rotate: 90deg; }
+.hr-4{ rotate: 120deg; }
+.hr-5{ rotate: 150deg; }
+.hr-6{ rotate: 180deg; }
+.hr-7{ rotate: 210deg; }
+.hr-8{ rotate: 240deg; }
+.hr-9{ rotate: 270deg; }
+.hr-10{ rotate: 300deg; }
+.hr-11{ rotate: 330deg; }
 EOF
 			}
 
@@ -14895,8 +14899,7 @@ sub HTMLMainHours{
 			my $hrs = ( $ix >= 12 ? $ix - 12 : $ix );
 			my $hre = ( $ix >= 12 ? $ix - 11 : $ix + 1 );
 			my $apm = ( $ix >= 12 ? "pm"     : "am" );
-			print
-"<td><img src=\"$DirIcons\/clock\/hr$hre.png\" width=\"12\" alt=\"$hrs:00 - $hre:00 $apm\" /></td>\n";
+			print "<td><div class=\"clock hr-$hre\" alt=\"$hrs:00 - $hre:00 $apm\" /></td>\n";
 		}
 		print "</tr>\n";
 		print "</table>\n";
