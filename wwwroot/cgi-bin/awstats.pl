@@ -13830,7 +13830,7 @@ sub HTMLMainMonthly{
 				? '<span class="currentday">'
 				: ''
 			  );
-			print "$MonthNumLib{$monthix}<br />$YearRequired";
+			print "$MonthNumLib{$monthix}<div style=\"font-size: 9px;\">$YearRequired</div>";
 			print(   !$StaticLinks
 				  && $monthix == $nowmonth
 				  && $YearRequired == $nowyear ? '</span>' : '' );
