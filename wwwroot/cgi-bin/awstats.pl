@@ -918,14 +918,26 @@ sub html_head {
 			print "<style type=\"text/css\">\n";
 
 			if ( !$StyleSheet ) {
-				print "body { font: 0.75rem sans-serif, system-ui; background-color: #$color_Background; margin-top: 0; margin-bottom: 0; }\n";
-				print ".aws_bodyl  { }\n";
+				print ':root {'
+					. '--aws-color-u: #' . $color_u . ';'
+					. '--aws-color-v: #' . $color_v . ';'
+					. '--aws-color-p: #' . $color_p . ';'
+					. '--aws-color-h: #' . $color_h . ';'
+					. '--aws-color-k: #' . $color_k . ';'
+					. '--aws-color-e: #' . $color_e . ';'
+					. '--aws-color-x: #' . $color_x . ';'
+					. '--aws-color-s: #' . $color_s . ';'
+					. '--dark-color: rgba(0,0,0,0.5);'
+					. '--light-color: rgba(255,255,255,0.9);'
+					. '}';
+
 				print ".aws_border { border-collapse: collapse; background-color: #$color_TableBG; padding: 1px 1px "
 				  		. ( $BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml' ? "2px" : "1px" )
 				  		. " 1px; margin-top: 0px; margin-bottom: 0px; }\n";
-				print ".aws_title  { font-size: 0.9rem; background-color: #$color_TableBGTitle; text-align: center; margin-top: 0; margin-bottom: 0; padding: 1px 1px 1px 1px; color: #$color_TableTitle; }\n";
-				print ".aws_blank  { font-size: 0.9rem; background-color: #$color_Background; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }\n";
 				print <<EOF;
+body { font: 0.75rem sans-serif, system-ui; background-color: #$color_Background; margin-top: 0; margin-bottom: 0; }
+.aws_blank  { font-size: 0.9rem; background-color: #$color_Background; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }
+.aws_title{ font-size: 0.9rem; background-color: #$color_TableBGTitle; text-align: center; margin-top: 0; margin-bottom: 0; padding: 1px 1px 1px 1px; color: #$color_TableTitle; }
 .aws_data{ background-color: #$color_Background; border-top-width: 1px; border-left-width: 0px; border-right-width: 0px; border-bottom-width: 0px; }
 .aws_button{ border: 1px solid #ccd7e0; background-image : url($DirIcons/other/button.gif); }
 th{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; text-align:center; color: #$color_titletext; }
@@ -937,18 +949,25 @@ a:link { color: #$color_link; text-decoration: none; }
 a:visited{ color: #$color_link; text-decoration: none; }
 a:hover{ color: #$color_hover; text-decoration: underline; }
 b, .aws_title, th.aws{ font-weight: 700; }
+.data-table { border-spacing: 0 2px; }
+.data-table tr:hover { background: rgba(0,0,0,0.2); transition: background 0.5s; }
+.data-table th, .data-table td {padding: 4px; }
+.data-table td { text-align: right; font-weight: 700; }
+.data-table th, .data-table td:first-child { font-weight: 400; }
+.data-table tfoot td { border-top: 1px solid; }
+.data-table .title { color: var(--light-color); background : var(--dark-color) }
 .currentday{ font-weight: 900; }
 .bar{  }
 .bar-horizontal{ height: 4px; }
 .bar-vertical{ display: inline-block; width: 4px; }
-.color-u{ background-color: #$color_u; }
-.color-v{ background-color: #$color_v; }
-.color-p{ background-color: #$color_p; }
-.color-h{ background-color: #$color_h; }
-.color-k{ background-color: #$color_k; }
-.color-e{ background-color: #$color_e; }
-.color-x{ background-color: #$color_x; }
-.color-s{ background-color: #$color_s; }
+.color-u{ background-color: var(--aws-color-u); }
+.color-v{ background-color: var(--aws-color-v); }
+.color-p{ background-color: var(--aws-color-p); }
+.color-h{ background-color: var(--aws-color-h); }
+.color-k{ background-color: var(--aws-color-k); }
+.color-e{ background-color: var(--aws-color-e); }
+.color-x{ background-color: var(--aws-color-x); }
+.color-s{ background-color: var(--aws-color-s); }
 .clock{ height: 12px; width: 12px; margin: auto; background: conic-gradient(black 330deg, yellow 30deg); border-radius: 50%; }
 .hr-1{ rotate: 30deg; }
 .hr-2{ rotate: 60deg; }
@@ -8138,6 +8157,7 @@ sub Sanitize {
 	else {
 		$stringtoclean =~ s/[^\w\d\-\\\/\.:\s]//g;
 	}
+
 	return $stringtoclean;
 }
 
@@ -8159,6 +8179,9 @@ sub Sanitize {
 #------------------------------------------------------------------------------
 sub CleanXSS {
 	my $stringtoclean = shift;
+
+	# Replace single quotes by typographic quotes to avoid problems
+	$stringtoclean =~ s/'/’/g;
 
 	# To avoid html tags and javascript
 	$stringtoclean =~ s/</&lt;/g;
@@ -8963,8 +8986,8 @@ sub Tooltip {
 	my $ttnb = shift;
 	return (
 		$TOOLTIPON
-		? " onmouseover=\"ShowTip($ttnb);\" onmouseout=\"HideTip($ttnb);\""
-		: ""
+		? ' onmouseover="ShowTip($ttnb);" onmouseout="HideTip($ttnb);"'
+		: ''
 	);
 }
 
@@ -13638,6 +13661,67 @@ sub HTMLMainSummary{
 }
 
 #------------------------------------------------------------------------------
+# Function:     Return Data table footer with sums
+# Parameters:   string $title, string $config, hash $sums
+# Output:       _
+# Return:       string
+#------------------------------------------------------------------------------
+sub HTMLDataTableFooter {
+	my $title = shift;
+	my $config = shift;
+	my $sums = shift;
+	my %ref_sums = %{ $sums };
+
+	return '<tfoot><tr>'
+		. '<td>' . $Message[102] . '</td>'
+		. ( ( $config =~ /U/i ) ? HTMLDataCellWithBar('u', 110, $ref_sums{'u'}, 100) : '' )
+		. ( ( $config =~ /V/i ) ? HTMLDataCellWithBar('v', 110, $ref_sums{'v'}, 100) : '' )
+		. ( ( $config =~ /P/i ) ? HTMLDataCellWithBar('p', 110, $ref_sums{'p'}, 100) : '' )
+		. ( ( $config =~ /H/i ) ? HTMLDataCellWithBar('h', 110, $ref_sums{'h'}, 100) : '' )
+		. ( ( $config =~ /B/i ) ? HTMLDataCellWithBar('k', 110, $ref_sums{'b'}, 100) : '' )
+		. '</tr></tfoot>';
+}
+
+#------------------------------------------------------------------------------
+# Function:     Return Data table header with titles
+# Parameters:   string $title, string $config
+# Output:       _
+# Return:       string
+#------------------------------------------------------------------------------
+sub HTMLDataTableHeader{
+	my $title = shift;
+	my $config = shift;
+
+	return '<thead><tr>'
+		. '<th class="title">' . $title . '</th>'
+		. ( ( $config =~ /U/i ) ? '<th style="width: ' . $BarWidth . 'px;" class="color-u" ' . Tooltip(2) . '>' . CleanXSS($Message[11]) . '</th>' : '' )
+		. ( ( $config =~ /V/i ) ? '<th style="width: ' . $BarWidth . 'px;" class="color-v" ' . Tooltip(1) . '>' . CleanXSS($Message[10]) . '</th>' : '' )
+		. ( ( $config =~ /P/i ) ? '<th style="width: ' . $BarWidth . 'px;" class="color-p" ' . Tooltip(3) . '>' . CleanXSS($Message[56]) . '</th>' : '' )
+		. ( ( $config =~ /H/i ) ? '<th style="width: ' . $BarWidth . 'px;" class="color-h" ' . Tooltip(4) . '>' . CleanXSS($Message[57]) . '</th>' : '' )
+		. ( ( $config =~ /B/i ) ? '<th style="width: ' . $BarWidth . 'px;" class="color-k" ' . Tooltip(5) . '>' . CleanXSS($Message[75]) . '</th>' : '' )
+		. '</tr></thead>';
+}
+
+#------------------------------------------------------------------------------
+# Function:     Return data cell with percentage bar
+# Parameters:   string $type = 'u' | 'v' | 'p' | 'h' | 'b',
+#								int $data, string | int $formattedData, int $max
+# Output:       _
+# Return:       string (html)
+#------------------------------------------------------------------------------
+sub HTMLDataCellWithBar{
+	my $type = shift;
+	my $data = shift;
+	my $formattedData = shift;
+	my $max = shift;
+	my $percentage = int( ( ( $data || 0 ) / $max ) * $BarHeight );
+
+	return '<td>'
+		. '<div style="background: linear-gradient(to right, var(--aws-color-' . $type .') ' . $percentage . '%, rgba(0,0,0,0) ' . $percentage . '%);">'
+		. $formattedData . '</div></td>';
+}
+
+#------------------------------------------------------------------------------
 # Function:     Prints the Monthly section on the main page
 # Parameters:   _
 # Input:        _
@@ -13655,7 +13739,7 @@ sub HTMLMainMonthly{
 	my $average_nb = my $average_u = my $average_v = my $average_p = 0;
 	my $average_h = my $average_k = 0;
 	my $total_u = my $total_v = my $total_p = my $total_h = my $total_k = 0;
-	my $max_v = my $max_p = my $max_h = my $max_k = 1;
+	my $max_u = my $max_v = my $max_p = my $max_h = my $max_k = 1;
 
 	# Define total and max
 	for ( my $ix = 1 ; $ix <= 12 ; $ix++ ) {
@@ -13666,22 +13750,25 @@ sub HTMLMainMonthly{
 		$total_h += $MonthHits{ $YearRequired . $monthix }   || 0;
 		$total_k += $MonthBytes{ $YearRequired . $monthix }  || 0;
 
-#if (($MonthUnique{$YearRequired.$monthix}||0) > $max_v) { $max_v=$MonthUnique{$YearRequired.$monthix}; }
-		if (
-			( $MonthVisits{ $YearRequired . $monthix } || 0 ) > $max_v )
-		{
-			$max_v = $MonthVisits{ $YearRequired . $monthix };
-		}
+		$max_u = (( $MonthUnique{ $YearRequired . $monthix } || 0 ) > $max_u )
+		 		? $MonthUnique{ $YearRequired . $monthix }
+				: $max_u;
+		
+		$max_v = (( $MonthVisits{ $YearRequired . $monthix } || 0 ) > $max_v )
+				? $MonthVisits{ $YearRequired . $monthix }
+				: $max_v;
 
-#if (($MonthPages{$YearRequired.$monthix}||0) > $max_p)  { $max_p=$MonthPages{$YearRequired.$monthix}; }
-		if ( ( $MonthHits{ $YearRequired . $monthix } || 0 ) > $max_h )
-		{
-			$max_h = $MonthHits{ $YearRequired . $monthix };
-		}
-		if ( ( $MonthBytes{ $YearRequired . $monthix } || 0 ) > $max_k )
-		{
-			$max_k = $MonthBytes{ $YearRequired . $monthix };
-		}
+		$max_p = (($MonthPages{$YearRequired.$monthix}||0) > $max_p)
+				? $MonthPages{$YearRequired.$monthix}
+				: $max_p;
+
+		$max_h = (( $MonthHits{ $YearRequired . $monthix } || 0 ) > $max_h )
+				? $MonthHits{ $YearRequired . $monthix }
+				: $max_h;
+
+		$max_k = (( $MonthBytes{ $YearRequired . $monthix } || 0 ) > $max_k )
+				? $MonthBytes{ $YearRequired . $monthix }
+				: $max_k;
 	}
 
 	# Define average
@@ -13739,7 +13826,7 @@ sub HTMLMainMonthly{
 	}
 	if (! $graphdone)
 	{
-		print "<table>\n";
+		print '<table>';
 		print "<tr valign=\"bottom\">";
 		print "<td>&nbsp;</td>\n";
 		for ( my $ix = 1 ; $ix <= 12 ; $ix++ ) {
@@ -13843,115 +13930,74 @@ sub HTMLMainMonthly{
 		print "</tr>\n";
 		print "</table>\n";
 	}
-	print "<br />\n";
 
 	# Show data array for month
 	if ($AddDataArrayMonthStats) {
-		print "<table>\n";
-		print
-"<tr><td width=\"80\" bgcolor=\"#$color_TableBGRowTitle\">$Message[5]</td>";
-		if ( $ShowMonthStats =~ /U/i ) {
-			print "<td width=\"80\" class=\"color-u\""
-			  . Tooltip(2)
-			  . ">$Message[11]</td>";
-		}
-		if ( $ShowMonthStats =~ /V/i ) {
-			print "<td width=\"80\" class=\"color-v\""
-			  . Tooltip(1)
-			  . ">$Message[10]</td>";
-		}
-		if ( $ShowMonthStats =~ /P/i ) {
-			print "<td width=\"80\" class=\"color-p\""
-			  . Tooltip(3)
-			  . ">$Message[56]</td>";
-		}
-		if ( $ShowMonthStats =~ /H/i ) {
-			print "<td width=\"80\" class=\"color-h\""
-			  . Tooltip(4)
-			  . ">$Message[57]</td>";
-		}
-		if ( $ShowMonthStats =~ /B/i ) {
-			print "<td width=\"80\" class=\"color-k\""
-			  . Tooltip(5)
-			  . ">$Message[75]</td>";
-		}
-		print "</tr>\n";
+
+		print '<table class="data-table month-table">';
+
+		print HTMLDataTableHeader($YearRequired, $ShowMonthStats);
+		
+		# body
+		print '<tbody>';
+		
 		for ( my $ix = 1 ; $ix <= 12 ; $ix++ ) {
+			
 			my $monthix = sprintf( "%02s", $ix );
-			print "<tr>";
-			print "<td>"
-			  . (
-				!$StaticLinks
-				  && $monthix == $nowmonth
-				  && $YearRequired == $nowyear
-				? '<span class="currentday">'
-				: ''
-			  );
-			print "$MonthNumLib{$monthix} $YearRequired";
-			print(   !$StaticLinks
-				  && $monthix == $nowmonth
-				  && $YearRequired == $nowyear ? '</span>' : '' );
-			print "</td>";
+			my $data = '';
+			
+			print '<tr>';
+
+			print '<td>'
+				. (!$StaticLinks && $monthix == $nowmonth && $YearRequired == $nowyear ? '<span class="currentday">' : '' )
+				. $MonthNumLib{$monthix}
+				. (!$StaticLinks && $monthix == $nowmonth && $YearRequired == $nowyear ? '</span>' : '' )
+				. '</td>';
+			
 			if ( $ShowMonthStats =~ /U/i ) {
-				print "<td>",
-				  Format_Number($MonthUnique{ $YearRequired . $monthix }
-				  ? $MonthUnique{ $YearRequired . $monthix }
-				  : "0"), "</td>";
+				$data = $MonthUnique{ $YearRequired . $monthix } ? $MonthUnique{ $YearRequired . $monthix } : '0';
+				print HTMLDataCellWithBar('u', $data, Format_Number($data), $max_u);
 			}
+
 			if ( $ShowMonthStats =~ /V/i ) {
-				print "<td>",
-				  Format_Number($MonthVisits{ $YearRequired . $monthix }
-				  ? $MonthVisits{ $YearRequired . $monthix }
-				  : "0"), "</td>";
+				$data = $MonthVisits{ $YearRequired . $monthix } ? $MonthVisits{ $YearRequired . $monthix } : '0';
+				print HTMLDataCellWithBar('v', $data, Format_Number($data), $max_v);
 			}
+
 			if ( $ShowMonthStats =~ /P/i ) {
-				print "<td>",
-				  Format_Number($MonthPages{ $YearRequired . $monthix }
-				  ? $MonthPages{ $YearRequired . $monthix }
-				  : "0"), "</td>";
+				$data = $MonthPages{ $YearRequired . $monthix } ? $MonthPages{ $YearRequired . $monthix } : '0';
+				print HTMLDataCellWithBar('p', $data, Format_Number($data), $max_p);
 			}
+
 			if ( $ShowMonthStats =~ /H/i ) {
-				print "<td>",
-				  Format_Number($MonthHits{ $YearRequired . $monthix }
-				  ? $MonthHits{ $YearRequired . $monthix }
-				  : "0"), "</td>";
+				$data = $MonthHits{ $YearRequired . $monthix } ? $MonthHits{ $YearRequired . $monthix } : '0';
+				print HTMLDataCellWithBar('h', $data, Format_Number($data), $max_h);
 			}
+
 			if ( $ShowMonthStats =~ /B/i ) {
-				print "<td>",
-				  Format_Bytes(
-					int( $MonthBytes{ $YearRequired . $monthix } || 0 )
-				  ), "</td>";
+				$data = int( $MonthBytes{ $YearRequired . $monthix } || 0 );
+				print HTMLDataCellWithBar('k', $data, Format_Bytes($data), $max_k);
 			}
-			print "</tr>\n";
+
+			print '</tr>';
 		}
 
-		# Average row
+		print '</tbody>';
+
+		# footer
 		# TODO
-		# Total row
-		print
-"<tr><td bgcolor=\"#$color_TableBGRowTitle\">$Message[102]</td>";
-		if ( $ShowMonthStats =~ /U/i ) {
-			print
-			  "<td bgcolor=\"#$color_TableBGRowTitle\">".Format_Number($total_u)."</td>";
-		}
-		if ( $ShowMonthStats =~ /V/i ) {
-			print
-			  "<td bgcolor=\"#$color_TableBGRowTitle\">".Format_Number($total_v)."</td>";
-		}
-		if ( $ShowMonthStats =~ /P/i ) {
-			print
-			  "<td bgcolor=\"#$color_TableBGRowTitle\">".Format_Number($total_p)."</td>";
-		}
-		if ( $ShowMonthStats =~ /H/i ) {
-			print
-			  "<td bgcolor=\"#$color_TableBGRowTitle\">".Format_Number($total_h)."</td>";
-		}
-		if ( $ShowMonthStats =~ /B/i ) {
-			print "<td bgcolor=\"#$color_TableBGRowTitle\">"
-			  . Format_Bytes($total_k) . "</td>";
-		}
-		print "</tr>\n";
-		print "</table>\n<br />\n";
+		# Average row
+		my (%sums) = (
+			'u' => Format_Number($total_u),
+			'v'=> Format_Number($total_v),
+			'p'=> Format_Number($total_p),
+			'h'=> Format_Number($total_h),
+			'b'=> Format_Bytes($total_k)
+		);
+
+		print HTMLDataTableFooter($Message[102], $ShowMonthStats, \%sums);
+
+		print '</table>';
 	}
 
 	print "</center>\n";
@@ -14899,7 +14945,7 @@ sub HTMLMainHours{
 			my $hrs = ( $ix >= 12 ? $ix - 12 : $ix );
 			my $hre = ( $ix >= 12 ? $ix - 11 : $ix + 1 );
 			my $apm = ( $ix >= 12 ? "pm"     : "am" );
-			print "<td><div class=\"clock hr-$hre\" alt=\"$hrs:00 - $hre:00 $apm\" /></td>\n";
+			print "<td><div class=\"clock hr-$hre $apm\" alt=\"$hrs:00 - $hre:00 $apm\" /></td>\n";
 		}
 		print "</tr>\n";
 		print "</table>\n";
