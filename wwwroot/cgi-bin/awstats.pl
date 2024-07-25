@@ -997,6 +997,8 @@ EOF
 			print "</style>\n";
 		}
 
+		print renderJavascript();
+
 # les scripts necessaires pour trier avec Tablekit
 #	print "<script type=\"text\/javascript\" src=\"/js/prototype.js\"><\/script>";
 #	print "<script type=\"text\/javascript\" src=\"/js/fabtabulous.js\"><\/script>";
@@ -1073,6 +1075,32 @@ sub html_end {
 
 		#		print "<!-- NEW PAGE --><!-- NEW SHEET -->\n";
 	}
+}
+
+
+#------------------------------------------------------------------------------
+# Function:		Return the necessary java scripts
+# Parameters:	_
+# Input:		_
+# Output:		_
+# Return:		string
+#------------------------------------------------------------------------------
+sub renderJavascript {
+return <<EOF;
+<script>
+document.addEventListener("DOMContentLoaded", (d) => {
+
+		[...document.querySelectorAll('.flag')].forEach(el => {
+    		el.textContent = el.dataset.country
+    				.split('')
+    				.map(letter => letter.charCodeAt(0) % 32 + 0x1F1E5)
+    				.map(emojiCode => String.fromCodePoint(emojiCode))
+    				.join('');
+    });
+
+});
+</script>'
+EOF
 }
 
 #------------------------------------------------------------------------------
@@ -13246,10 +13274,8 @@ sub HTMLShowDomains{
 			  . " /></td><td class=\"aws\">$Message[0]</td><td>$newkey</td>";
 		}
 		else {
-			print
-"<tr><td width=\"$WIDTHCOLICON\"><img src=\"$DirIcons\/flags\/$newkey.png\" height=\"14\""
-			  . AltTitle("$newkey")
-			  . " /></td><td class=\"aws\">$DomainsHashIDLib{$newkey}</td><td>$newkey</td>";
+			print '<tr><td width="' . $WIDTHCOLICON . '" class="flag" data-country="' . $newkey . '"></td>';
+			print "<td class=\"aws\">$DomainsHashIDLib{$newkey}</td><td>$newkey</td>";
 		}
 		## to add unique visitors and number of visits, by Josep Ruano @ CAPSiDE
 		if ( $ShowDomainsStats =~ /U/i ) {
@@ -15149,10 +15175,8 @@ sub HTMLMainCountries{
 			  . " /></td><td class=\"aws\">$Message[0]</td><td>$newkey</td>";
 		}
 		else {
-			print
-"<tr><td width=\"$WIDTHCOLICON\"><img src=\"$DirIcons\/flags\/$newkey.png\" height=\"14\""
-			  . AltTitle("$newkey")
-			  . " /></td><td class=\"aws\">$DomainsHashIDLib{$newkey}</td><td>$newkey</td>";
+			print '<tr><td width="' . $WIDTHCOLICON . '" class="flag" data-country="' . $newkey . '"></td>';
+print "<td class=\"aws\">$DomainsHashIDLib{$newkey}</td><td>$newkey</td>";
 		}
 		## to add unique visitors and number of visits, by Josep Ruano @ CAPSiDE
 		if ( $ShowDomainsStats =~ /U/i ) {
