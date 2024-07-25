@@ -936,19 +936,19 @@ sub html_head {
 				  		. " 1px; margin-top: 0px; margin-bottom: 0px; }\n";
 				print <<EOF;
 body { font: 0.75rem sans-serif, system-ui; background-color: #$color_Background; margin-top: 0; margin-bottom: 0; }
+b, .aws_title, th.aws{ font-weight: 700; }
+th{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; text-align:center; color: #$color_titletext; }
+td{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; text-align:center; color: #$color_text; }
 .aws_blank  { font-size: 0.9rem; background-color: #$color_Background; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }
 .aws_title{ font-size: 0.9rem; background-color: #$color_TableBGTitle; text-align: center; margin-top: 0; margin-bottom: 0; padding: 1px 1px 1px 1px; color: #$color_TableTitle; }
 .aws_data{ background-color: #$color_Background; border-top-width: 1px; border-left-width: 0px; border-right-width: 0px; border-bottom-width: 0px; }
 .aws_button{ border: 1px solid #ccd7e0; background-image : url($DirIcons/other/button.gif); }
-th{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; text-align:center; color: #$color_titletext; }
 th.aws{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; font-size: 0.9rem; }
-td{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; text-align:center; color: #$color_text; }
 td.aws{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; text-align:$dir; color: #$color_text; padding: 0px;}
 td.awsm{ border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; border-bottom-width: 0px; text-align:$dir; color: #$color_text; padding: 0px; }
 a:link { color: #$color_link; text-decoration: none; }
 a:visited{ color: #$color_link; text-decoration: none; }
 a:hover{ color: #$color_hover; text-decoration: underline; }
-b, .aws_title, th.aws{ font-weight: 700; }
 .multi-data-table { display: flex; gap: 5dvw; flex-wrap: wrap; justify-content: center }
 .data-table { border-spacing: 0 2px; }
 .data-table tbody tr { transition: background 0.5s; transition: transform 0.2s ease-out }
@@ -972,7 +972,9 @@ b, .aws_title, th.aws{ font-weight: 700; }
 .color-e{ background-color: var(--aws-color-e); }
 .color-x{ background-color: var(--aws-color-x); }
 .color-s{ background-color: var(--aws-color-s); }
-.clock{ display: inline-block; vertical-align: bottom; height: 16px; width: 16px; margin: 0 5px; background: conic-gradient(black 330deg, yellow 30deg); border-radius: 50%; }
+.clock{ display: inline-block; vertical-align: bottom; height: 16px; width: 16px; margin: 0 5px; border-radius: 50%; }
+.clock-night{ background: conic-gradient(rgba(30, 28, 97, 1) 330deg, rgba(244, 240, 144, 1) 30deg); }
+.clock-day{ background: conic-gradient(rgba(244, 240, 144, 1) 330deg, rgba(30, 28, 97, 1) 30deg); }
 .hr-1{ rotate: 30deg; }
 .hr-2{ rotate: 60deg; }
 .hr-3{ rotate: 90deg; }
@@ -14942,8 +14944,8 @@ sub HTMLMainHours{
 		for ( my $ix = 0 ; $ix <= 23 ; $ix++ ) {
 			my $hrs = ( $ix >= 12 ? $ix - 12 : $ix );
 			my $hre = ( $ix >= 12 ? $ix - 11 : $ix + 1 );
-			my $apm = ( $ix >= 12 ? "pm"     : "am" );
-			print "<td><div class=\"clock hr-$hre $apm\" alt=\"$hrs:00 - $hre:00 $apm\" /></td>\n";
+			my $apm = ( $ix >= 12 ? 'pm' : 'am' );
+			print '<td><div class="clock hr-' . $hre . ' ' . (($ix > 21 || $ix < 7 ) ? 'clock-night' : 'clock-day') . '" title="' . $hrs . ':00 - ' . $hre . ':00 ' . $apm . '" /></td>';
 		}
 		print "</tr>\n";
 		print "</table>\n";
@@ -14967,7 +14969,7 @@ sub HTMLMainHours{
 			
 			print '<tr>';
 			
-			print '<td>' . $monthix . '<span class="clock hr-' . $ix . '"></span></td>';
+			print '<td>' . $monthix . '<span class="clock hr-' . $ix  . ' ' . (($ix > 21 || $ix < 7 ) ? 'clock-night' : 'clock-day') . '"></span></td>';
 
 			if ( $ShowHoursStats =~ /P/i ) {
 				$data = $_time_p[$monthix] ? $_time_p[$monthix] : '0';
@@ -15002,7 +15004,7 @@ sub HTMLMainHours{
 			
 			print '<tr>';
 			
-			print '<td>' . $monthix . '<span class="clock hr-' . ($ix - 12) . '"></span></td>';
+			print '<td>' . $monthix . '<span class="clock hr-' . $ix  . ' ' . (($ix > 21 || $ix < 7 ) ? 'clock-night' : 'clock-day') . '"></span></td>';
 			
 			if ( $ShowHoursStats =~ /P/i ) {
 				$data = $_time_p[$monthix] ? $_time_p[$monthix] : '0';
