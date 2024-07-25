@@ -952,7 +952,7 @@ a:hover{ color: #$color_hover; text-decoration: underline; }
 .multi-data-table { display: flex; gap: 5dvw; flex-wrap: wrap; justify-content: center }
 .data-table { border-spacing: 0 2px; }
 .data-table tbody tr { transition: background 0.5s; transition: transform 0.2s ease-out }
-.data-table tbody tr:hover { background: rgba(0,0,0,0.2); transform: scale(1.05	); }
+.data-table tbody tr:hover { background: rgba(0,0,0,0.2); transform: scale(1.05) translateX(2px); }
 .data-table th, .data-table td { padding: 2px; }
 .data-table td div { padding: 1px 2px; }
 .data-table td { text-align: right; font-weight: 700; }
