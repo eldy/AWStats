@@ -14955,7 +14955,7 @@ sub HTMLMainHours{
 			
 			if ( $ShowHoursStats =~ /B/i ) {
 				$data = $_time_k[$monthix] ? $_time_k[$monthix] : '0';
-				print HTMLDataCellWithBar('b', $data , Format_Number($data), $max_k);
+				print HTMLDataCellWithBar('b', $data , Format_Bytes($data), $max_k);
 			}
 			
 			print '</tr>';
@@ -14990,7 +14990,7 @@ sub HTMLMainHours{
 			
 			if ( $ShowHoursStats =~ /B/i ) {
 				$data = $_time_k[$monthix] ? $_time_k[$monthix] : '0';
-				print HTMLDataCellWithBar('b', $data , Format_Number($data), $max_k);
+				print HTMLDataCellWithBar('b', $data , Format_Bytes($data), $max_k);
 			}
 
 			print '</tr>';
