@@ -923,7 +923,7 @@ sub html_head {
 					. '--aws-color-v: #' . $color_v . ';'
 					. '--aws-color-p: #' . $color_p . ';'
 					. '--aws-color-h: #' . $color_h . ';'
-					. '--aws-color-k: #' . $color_k . ';'
+					. '--aws-color-b: #' . $color_k . ';'
 					. '--aws-color-e: #' . $color_e . ';'
 					. '--aws-color-x: #' . $color_x . ';'
 					. '--aws-color-s: #' . $color_s . ';'
@@ -950,11 +950,14 @@ a:visited{ color: #$color_link; text-decoration: none; }
 a:hover{ color: #$color_hover; text-decoration: underline; }
 b, .aws_title, th.aws{ font-weight: 700; }
 .data-table { border-spacing: 0 2px; }
-.data-table tr:hover { background: rgba(0,0,0,0.2); transition: background 0.5s; }
-.data-table th, .data-table td {padding: 4px; }
+.data-table tbody tr { transition: background 0.5s; transition: transform 0.2s ease-out }
+.data-table tbody tr:hover { background: rgba(0,0,0,0.2); transform: scale(1.05	); }
+.data-table th, .data-table td { padding: 2px; }
+.data-table td div { padding: 1px 2px; }
 .data-table td { text-align: right; font-weight: 700; }
 .data-table th, .data-table td:first-child { font-weight: 400; }
-.data-table tfoot td { border-top: 1px solid; }
+.data-table tfoot .data-table-sum td { border-top: 1px solid rgba(192,192,192,0.2); }
+.data-table .data-table-sum { font-size : 1.2em }
 .data-table .title { color: var(--light-color); background : var(--dark-color) }
 .currentday{ font-weight: 900; }
 .bar{  }
@@ -964,7 +967,7 @@ b, .aws_title, th.aws{ font-weight: 700; }
 .color-v{ background-color: var(--aws-color-v); }
 .color-p{ background-color: var(--aws-color-p); }
 .color-h{ background-color: var(--aws-color-h); }
-.color-k{ background-color: var(--aws-color-k); }
+.color-b{ background-color: var(--aws-color-b); }
 .color-e{ background-color: var(--aws-color-e); }
 .color-x{ background-color: var(--aws-color-x); }
 .color-s{ background-color: var(--aws-color-s); }
@@ -13667,19 +13670,32 @@ sub HTMLMainSummary{
 # Return:       string
 #------------------------------------------------------------------------------
 sub HTMLDataTableFooter {
-	my $title = shift;
+	my $sumTitle = shift;
 	my $config = shift;
 	my $sums = shift;
 	my %ref_sums = %{ $sums };
+	my $averageTitle = shift;
+	my $averages = shift;
+	my %ref_averages = %{ $averages };
 
-	return '<tfoot><tr>'
-		. '<td>' . $Message[102] . '</td>'
+	return '<tfoot>'
+		.	'<tr class="data-table-sum">'
+		. '<td>' . $sumTitle . '</td>'
 		. ( ( $config =~ /U/i ) ? HTMLDataCellWithBar('u', 110, $ref_sums{'u'}, 100) : '' )
 		. ( ( $config =~ /V/i ) ? HTMLDataCellWithBar('v', 110, $ref_sums{'v'}, 100) : '' )
 		. ( ( $config =~ /P/i ) ? HTMLDataCellWithBar('p', 110, $ref_sums{'p'}, 100) : '' )
 		. ( ( $config =~ /H/i ) ? HTMLDataCellWithBar('h', 110, $ref_sums{'h'}, 100) : '' )
-		. ( ( $config =~ /B/i ) ? HTMLDataCellWithBar('k', 110, $ref_sums{'b'}, 100) : '' )
-		. '</tr></tfoot>';
+		. ( ( $config =~ /B/i ) ? HTMLDataCellWithBar('b', 110, $ref_sums{'b'}, 100) : '' )
+		. '</tr>'
+		.	'<tr>'
+		. '<td>' . $averageTitle . '</td>'
+		. ( ( $config =~ /U/i ) ? HTMLDataCellWithBar('u', 0, $ref_averages{'u'}, 100) : '' )
+		. ( ( $config =~ /V/i ) ? HTMLDataCellWithBar('v', 0, $ref_averages{'v'}, 100) : '' )
+		. ( ( $config =~ /P/i ) ? HTMLDataCellWithBar('p', 0, $ref_averages{'p'}, 100) : '' )
+		. ( ( $config =~ /H/i ) ? HTMLDataCellWithBar('h', 0, $ref_averages{'h'}, 100) : '' )
+		. ( ( $config =~ /B/i ) ? HTMLDataCellWithBar('b', 0, $ref_averages{'b'}, 100) : '' )
+		.	'</tr>'
+		. '</tfoot>';
 }
 
 #------------------------------------------------------------------------------
@@ -13698,7 +13714,7 @@ sub HTMLDataTableHeader{
 		. ( ( $config =~ /V/i ) ? '<th style="width: ' . $BarWidth . 'px;" class="color-v" ' . Tooltip(1) . '>' . CleanXSS($Message[10]) . '</th>' : '' )
 		. ( ( $config =~ /P/i ) ? '<th style="width: ' . $BarWidth . 'px;" class="color-p" ' . Tooltip(3) . '>' . CleanXSS($Message[56]) . '</th>' : '' )
 		. ( ( $config =~ /H/i ) ? '<th style="width: ' . $BarWidth . 'px;" class="color-h" ' . Tooltip(4) . '>' . CleanXSS($Message[57]) . '</th>' : '' )
-		. ( ( $config =~ /B/i ) ? '<th style="width: ' . $BarWidth . 'px;" class="color-k" ' . Tooltip(5) . '>' . CleanXSS($Message[75]) . '</th>' : '' )
+		. ( ( $config =~ /B/i ) ? '<th style="width: ' . $BarWidth . 'px;" class="color-b" ' . Tooltip(5) . '>' . CleanXSS($Message[75]) . '</th>' : '' )
 		. '</tr></thead>';
 }
 
@@ -13736,6 +13752,7 @@ sub HTMLMainMonthly{
 	print "<tr><td align=\"center\">\n";
 	print "<center>\n";
 
+	my $not_empty_months = 0;
 	my $average_nb = my $average_u = my $average_v = my $average_p = 0;
 	my $average_h = my $average_k = 0;
 	my $total_u = my $total_v = my $total_p = my $total_h = my $total_k = 0;
@@ -13744,35 +13761,34 @@ sub HTMLMainMonthly{
 	# Define total and max
 	for ( my $ix = 1 ; $ix <= 12 ; $ix++ ) {
 		my $monthix = sprintf( "%02s", $ix );
+		
+		if($MonthHits{ $YearRequired . $monthix } > 0){
+				$not_empty_months++;
+		}
+
 		$total_u += $MonthUnique{ $YearRequired . $monthix } || 0;
 		$total_v += $MonthVisits{ $YearRequired . $monthix } || 0;
 		$total_p += $MonthPages{ $YearRequired . $monthix }  || 0;
 		$total_h += $MonthHits{ $YearRequired . $monthix }   || 0;
 		$total_k += $MonthBytes{ $YearRequired . $monthix }  || 0;
 
-		$max_u = (( $MonthUnique{ $YearRequired . $monthix } || 0 ) > $max_u )
-		 		? $MonthUnique{ $YearRequired . $monthix }
-				: $max_u;
+		$max_u = (( $MonthUnique{ $YearRequired . $monthix } || 0 ) > $max_u ) ? $MonthUnique{ $YearRequired . $monthix }	: $max_u;
 		
-		$max_v = (( $MonthVisits{ $YearRequired . $monthix } || 0 ) > $max_v )
-				? $MonthVisits{ $YearRequired . $monthix }
-				: $max_v;
+		$max_v = (( $MonthVisits{ $YearRequired . $monthix } || 0 ) > $max_v ) ? $MonthVisits{ $YearRequired . $monthix }	: $max_v;
 
-		$max_p = (($MonthPages{$YearRequired.$monthix}||0) > $max_p)
-				? $MonthPages{$YearRequired.$monthix}
-				: $max_p;
+		$max_p = (($MonthPages{$YearRequired.$monthix}||0) > $max_p) ? $MonthPages{$YearRequired.$monthix} : $max_p;
 
-		$max_h = (( $MonthHits{ $YearRequired . $monthix } || 0 ) > $max_h )
-				? $MonthHits{ $YearRequired . $monthix }
-				: $max_h;
+		$max_h = (( $MonthHits{ $YearRequired . $monthix } || 0 ) > $max_h ) ? $MonthHits{ $YearRequired . $monthix }	: $max_h;
 
-		$max_k = (( $MonthBytes{ $YearRequired . $monthix } || 0 ) > $max_k )
-				? $MonthBytes{ $YearRequired . $monthix }
-				: $max_k;
+		$max_k = (( $MonthBytes{ $YearRequired . $monthix } || 0 ) > $max_k )	? $MonthBytes{ $YearRequired . $monthix }	: $max_k;
 	}
 
 	# Define average
-	# TODO
+	$average_u = sprintf( "%.2f", $total_u / $not_empty_months );
+	$average_v = sprintf( "%.2f", $total_v / $not_empty_months );
+	$average_p = sprintf( "%.2f", $total_p / $not_empty_months );
+	$average_h = sprintf( "%.2f", $total_h / $not_empty_months );
+	$average_k = sprintf( "%.2f", $total_k / $not_empty_months );
 
 	# Show bars for month
 	my $graphdone=0;
@@ -13936,7 +13952,30 @@ sub HTMLMainMonthly{
 
 		print '<table class="data-table month-table">';
 
+		# header
 		print HTMLDataTableHeader($YearRequired, $ShowMonthStats);
+
+		# footer
+
+		# Average row
+		my (%sums) = (
+			'u' => Format_Number($total_u),
+			'v'=> Format_Number($total_v),
+			'p'=> Format_Number($total_p),
+			'h'=> Format_Number($total_h),
+			'b'=> Format_Bytes($total_k)
+		);
+
+		# Average row
+		my (%averages) = (
+			'u'=> Format_Number(int($average_u)),
+			'v'=> Format_Number(int($average_v)),
+			'p'=> Format_Number(int($average_p)),
+			'h'=> Format_Number(int($average_h)),
+			'b'=> Format_Bytes(int($average_k))
+		);
+
+		print HTMLDataTableFooter($Message[102], $ShowMonthStats, \%sums, $Message[96], \%averages);
 		
 		# body
 		print '<tbody>';
@@ -13976,26 +14015,13 @@ sub HTMLMainMonthly{
 
 			if ( $ShowMonthStats =~ /B/i ) {
 				$data = int( $MonthBytes{ $YearRequired . $monthix } || 0 );
-				print HTMLDataCellWithBar('k', $data, Format_Bytes($data), $max_k);
+				print HTMLDataCellWithBar('b', $data, Format_Bytes($data), $max_k);
 			}
 
 			print '</tr>';
 		}
 
 		print '</tbody>';
-
-		# footer
-		# TODO
-		# Average row
-		my (%sums) = (
-			'u' => Format_Number($total_u),
-			'v'=> Format_Number($total_v),
-			'p'=> Format_Number($total_p),
-			'h'=> Format_Number($total_h),
-			'b'=> Format_Bytes($total_k)
-		);
-
-		print HTMLDataTableFooter($Message[102], $ShowMonthStats, \%sums);
 
 		print '</table>';
 	}
@@ -14054,10 +14080,11 @@ sub HTMLMainDaily{
 	print "<td align=\"center\">\n";
 	print "<center>\n";
 	
+	my $not_empty_days = 0;
 	my $average_v = my $average_p = 0;
 	my $average_h = my $average_k = 0;
 	my $total_u = my $total_v = my $total_p = my $total_h = my $total_k = 0;
-	my $max_v = my $max_h = my $max_k = 0;    # Start from 0 because can be lower than 1
+	my $max_v = my $max_p = my $max_h = my $max_k = 0;    # Start from 0 because can be lower than 1
 	foreach my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )
 	{
 		$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
@@ -14067,26 +14094,29 @@ sub HTMLMainDaily{
 		if ( !DateIsValid( $day, $month, $year ) ) {
 			next;
 		}    # If not an existing day, go to next
+
+		if($DayHits{ $year . $month . $day } > 0){
+				$not_empty_days++;
+		}
+
 		$total_v += $DayVisits{ $year . $month . $day } || 0;
 		$total_p += $DayPages{ $year . $month . $day }  || 0;
 		$total_h += $DayHits{ $year . $month . $day }   || 0;
 		$total_k += $DayBytes{ $year . $month . $day }  || 0;
-		if ( ( $DayVisits{ $year . $month . $day } || 0 ) > $max_v ) {
-			$max_v = $DayVisits{ $year . $month . $day };
-		}
+		
+		$max_v = ($DayVisits{ $year . $month . $day } || 0 ) > $max_v ) ? $DayVisits{ $year . $month . $day } : $max_v;
 
-#if (($DayPages{$year.$month.$day}||0) > $max_p)  { $max_p=$DayPages{$year.$month.$day}; }
-		if ( ( $DayHits{ $year . $month . $day } || 0 ) > $max_h ) {
-			$max_h = $DayHits{ $year . $month . $day };
-		}
-		if ( ( $DayBytes{ $year . $month . $day } || 0 ) > $max_k ) {
-			$max_k = $DayBytes{ $year . $month . $day };
-		}
+		$max_p = (($DayPages{$year.$month.$day}||0) > $max_p) ? $DayPages{$year.$month.$day} : $max_p;
+
+		$max_h = ( ( $DayHits{ $year . $month . $day } || 0 ) > $max_h ) ? $DayHits{ $year . $month . $day } : $max_h;
+		
+		$max_k = ( ( $DayBytes{ $year . $month . $day } || 0 ) > $max_k ) ? $DayBytes{ $year . $month . $day } : $max_k;
 	}
-    $average_v = sprintf( "%.2f", $AverageVisits );
-    $average_p = sprintf( "%.2f", $AveragePages );
-    $average_h = sprintf( "%.2f", $AverageHits );
-    $average_k = sprintf( "%.2f", $AverageBytes );
+
+  $average_v = sprintf( "%.2f", $total_v / $not_empty_days );
+  $average_p = sprintf( "%.2f", $total_p / $not_empty_days );
+  $average_h = sprintf( "%.2f", $total_h / $not_empty_days );
+  $average_k = sprintf( "%.2f", $total_k / $not_empty_days );
 
 	# Show bars for day
 	my $graphdone=0;
@@ -14287,34 +14317,38 @@ sub HTMLMainDaily{
 		print "</tr>\n";
 		print "</table>\n";
 	}
-	print "<br />\n";
 
 	# Show data array for days
 	if ($AddDataArrayShowDaysOfMonthStats) {
-		print "<table>\n";
-		print
-"<tr><td width=\"80\" bgcolor=\"#$color_TableBGRowTitle\">$Message[4]</td>";
-		if ( $ShowDaysOfMonthStats =~ /V/i ) {
-			print "<td width=\"80\" class=\"color-v\""
-			  . Tooltip(1)
-			  . ">$Message[10]</td>";
-		}
-		if ( $ShowDaysOfMonthStats =~ /P/i ) {
-			print "<td width=\"80\" class=\"color-p\""
-			  . Tooltip(3)
-			  . ">$Message[56]</td>";
-		}
-		if ( $ShowDaysOfMonthStats =~ /H/i ) {
-			print "<td width=\"80\" class=\"color-h\""
-			  . Tooltip(4)
-			  . ">$Message[57]</td>";
-		}
-		if ( $ShowDaysOfMonthStats =~ /B/i ) {
-			print "<td width=\"80\" class=\"color-k\""
-			  . Tooltip(5)
-			  . ">$Message[75]</td>";
-		}
-		print "</tr>";
+		
+		my $data = '';
+		
+		print '<table class="data-table days-of-month-table">';
+
+		#header
+		print HTMLDataTableHeader($MonthNumLib{$MonthRequired} . ' ' . $YearRequired, $ShowDaysOfMonthStats);
+
+		#footer
+
+		# Total row
+		my (%sums) = (
+			'v'=> Format_Number($total_v),
+			'p'=> Format_Number($total_p),
+			'h'=> Format_Number($total_h),
+			'b'=> Format_Bytes($total_k)
+		);
+
+		# Average row
+		my (%averages) = (
+			'v'=> Format_Number(int($average_v)),
+			'p'=> Format_Number(int($average_p)),
+			'h'=> Format_Number(int($average_h)),
+			'b'=> Format_Bytes(int($average_k))
+		);
+
+		print HTMLDataTableFooter($Message[102], $ShowDaysOfMonthStats, \%sums, $Message[96], \%averages);
+
+		# body
 		foreach
 		  my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )
 		{
@@ -14326,89 +14360,38 @@ sub HTMLMainDaily{
 				next;
 			}    # If not an existing day, go to next
 			my $dayofweekcursor = DayOfWeek( $day, $month, $year );
-			print "<tr"
-			  . (
-				$dayofweekcursor =~ /[06]/
-				? " bgcolor=\"#$color_weekend\""
-				: ""
-			  )
-			  . ">";
-			print "<td>"
-			  . (
-				!$StaticLinks
-				  && $day == $nowday
-				  && $month == $nowmonth
-				  && $year == $nowyear
-				? '<span class="currentday">'
-				: ''
-			  );
-			print Format_Date( "$year$month$day" . "000000", 2 );
-			print(   !$StaticLinks
-				  && $day == $nowday
-				  && $month == $nowmonth
-				  && $year == $nowyear ? '</span>' : '' );
-			print "</td>";
+
+			print '<tr' . (( $dayofweekcursor =~ /[06]/ ) ? ' bgcolor="#' . $color_weekend . '"'	: '' ) . '>';
+			
+			print '<td>'
+			  . ( !$StaticLinks && $day == $nowday && $month == $nowmonth && $year == $nowyear ? '<span class="currentday">' : '' )
+				. $day . ' ' . $MonthNumLib{$MonthRequired}
+			  . ( !$StaticLinks && $day == $nowday && $month == $nowmonth && $year == $nowyear ? '</span>' : '' )
+			  . '</td>';
+
 			if ( $ShowDaysOfMonthStats =~ /V/i ) {
-				print "<td>",
-				  Format_Number($DayVisits{ $year . $month . $day }
-				  ? $DayVisits{ $year . $month . $day }
-				  : "0"), "</td>";
+				$data = $DayVisits{ $year . $month . $day } ? $DayVisits{ $year . $month . $day } : '0';
+				print HTMLDataCellWithBar('v', $data, Format_Number($data), $max_v);
 			}
+
 			if ( $ShowDaysOfMonthStats =~ /P/i ) {
-				print "<td>",
-				  Format_Number($DayPages{ $year . $month . $day }
-				  ? $DayPages{ $year . $month . $day }
-				  : "0"), "</td>";
+				$data = $DayPages{ $year . $month . $day } ? $DayPages{ $year . $month . $day } : '0';
+				print HTMLDataCellWithBar('p', $data, Format_Number($data), $max_p);
 			}
+
 			if ( $ShowDaysOfMonthStats =~ /H/i ) {
-				print "<td>",
-				  Format_Number($DayHits{ $year . $month . $day }
-				  ? $DayHits{ $year . $month . $day }
-				  : "0"), "</td>";
+				$data = $DayHits{ $year . $month . $day } ? $DayHits{ $year . $month . $day } : '0';
+				print HTMLDataCellWithBar('h', $data, Format_Number($data), $max_h);
 			}
+
 			if ( $ShowDaysOfMonthStats =~ /B/i ) {
-				print "<td>",
-				  Format_Bytes(
-					int( $DayBytes{ $year . $month . $day } || 0 ) ),
-				  "</td>";
+				$data = $DayBytes{ $year . $month . $day } ? $DayBytes{ $year . $month . $day } : '0';
+				print HTMLDataCellWithBar('b', $data, Format_Bytes($data), $max_k);
 			}
-			print "</tr>\n";
+			
+			print '</tr>';
 		}
 
-		# Average row
-		print
-"<tr bgcolor=\"#$color_TableBGRowTitle\"><td>$Message[96]</td>";
-		if ( $ShowDaysOfMonthStats =~ /V/i ) {
-			print "<td>".Format_Number(int($average_v))."</td>";
-		}
-		if ( $ShowDaysOfMonthStats =~ /P/i ) {
-			print "<td>".Format_Number(int($average_p))."</td>";
-		}
-		if ( $ShowDaysOfMonthStats =~ /H/i ) {
-			print "<td>".Format_Number(int($average_h))."</td>";
-		}
-		if ( $ShowDaysOfMonthStats =~ /B/i ) {
-			print "<td>".Format_Bytes(int($average_k))."</td>";
-		}
-		print "</tr>\n";
-
-		# Total row
-		print
-"<tr bgcolor=\"#$color_TableBGRowTitle\"><td>$Message[102]</td>";
-		if ( $ShowDaysOfMonthStats =~ /V/i ) {
-			print "<td>".Format_Number($total_v)."</td>";
-		}
-		if ( $ShowDaysOfMonthStats =~ /P/i ) {
-			print "<td>".Format_Number($total_p)."</td>";
-		}
-		if ( $ShowDaysOfMonthStats =~ /H/i ) {
-			print "<td>".Format_Number($total_h)."</td>";
-		}
-		if ( $ShowDaysOfMonthStats =~ /B/i ) {
-			print "<td>" . Format_Bytes($total_k) . "</td>";
-		}
-		print "</tr>\n";
-		print "</table>\n<br />";
 	}
 
 	print "</center>\n";
