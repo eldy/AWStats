@@ -949,6 +949,7 @@ a:link { color: #$color_link; text-decoration: none; }
 a:visited{ color: #$color_link; text-decoration: none; }
 a:hover{ color: #$color_hover; text-decoration: underline; }
 b, .aws_title, th.aws{ font-weight: 700; }
+.multi-data-table { display: flex; gap: 5dvw; flex-wrap: wrap; justify-content: center }
 .data-table { border-spacing: 0 2px; }
 .data-table tbody tr { transition: background 0.5s; transition: transform 0.2s ease-out }
 .data-table tbody tr:hover { background: rgba(0,0,0,0.2); transform: scale(1.05	); }
@@ -971,7 +972,7 @@ b, .aws_title, th.aws{ font-weight: 700; }
 .color-e{ background-color: var(--aws-color-e); }
 .color-x{ background-color: var(--aws-color-x); }
 .color-s{ background-color: var(--aws-color-s); }
-.clock{ height: 12px; width: 12px; margin: auto; background: conic-gradient(black 330deg, yellow 30deg); border-radius: 50%; }
+.clock{ display: inline-block; vertical-align: bottom; height: 16px; width: 16px; margin: 0 5px; background: conic-gradient(black 330deg, yellow 30deg); border-radius: 50%; }
 .hr-1{ rotate: 30deg; }
 .hr-2{ rotate: 60deg; }
 .hr-3{ rotate: 90deg; }
@@ -14349,6 +14350,8 @@ sub HTMLMainDaily{
 		print HTMLDataTableFooter($Message[102], $ShowDaysOfMonthStats, \%sums, $Message[96], \%averages);
 
 		# body
+		print '<tbody>';
+
 		foreach
 		  my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )
 		{
@@ -14391,6 +14394,8 @@ sub HTMLMainDaily{
 			
 			print '</tr>';
 		}
+
+		print '</tbody></table>';
 
 	}
 
@@ -14637,6 +14642,8 @@ sub HTMLMainDaysofWeek{
 				print HTMLDataTableHeader($Message[4], $ShowDaysOfWeekStats);
 
 				#body
+				print '<tbody>';
+
 				for (@DOWIndex) {
 					print '<tr' . ( $_ =~ /[06]/ ? ' bgcolor="#' . $color_weekend . '"' : '' ) . '>';
 
@@ -14665,7 +14672,7 @@ sub HTMLMainDaysofWeek{
 
 					print '</tr>';
 				}
-				print '</table>';
+				print '</tbody></table>';
 			}
 
 			print "</center></td>";
@@ -14826,10 +14833,10 @@ sub HTMLMainHours{
 	print "<tr><td align=\"center\">\n";
 	print "<center>\n";
 
-	my $max_h = my $max_k = 1;
+	my $max_p =	my $max_h = my $max_k = 1;
 	for ( my $ix = 0 ; $ix <= 23 ; $ix++ ) {
 
-		#if ($_time_p[$ix]>$max_p) { $max_p=$_time_p[$ix]; }
+		if ( $_time_p[$ix] > $max_p ) { $max_p=$_time_p[$ix]; }
 		if ( $_time_h[$ix] > $max_h ) { $max_h = $_time_h[$ix]; }
 		if ( $_time_k[$ix] > $max_k ) { $max_k = $_time_k[$ix]; }
 	}
@@ -14915,109 +14922,85 @@ sub HTMLMainHours{
 		print "</tr>\n";
 		print "</table>\n";
 	}
-	print "<br />\n";
 
 	# Show data array for hours
 	if ($AddDataArrayShowHoursStats) {
 
 		my $data = '';
+
+		print '<div class="multi-data-table">';
+		print '<table class="data-table hours-table">';
+
+		#header
+		print HTMLDataTableHeader($Message[20], $ShowHoursStats);
+
+		#body
+		for ( my $ix = 0 ; $ix <= 11 ; $ix++ ) {
+			
+			my $monthix = ( $ix < 10 ? "0$ix" : "$ix" );
+			
+			print '<tr>';
+			
+			print '<td>' . $monthix . '<span class="clock hr-' . $ix . '"></span></td>';
+
+			if ( $ShowHoursStats =~ /P/i ) {
+				$data = $_time_p[$monthix] ? $_time_p[$monthix] : '0';
+				print HTMLDataCellWithBar('p', $data , Format_Number($data), $max_p);
+			}
+
+			if ( $ShowHoursStats =~ /H/i ) {
+				$data = $_time_h[$monthix] ? $_time_h[$monthix] : '0';
+				print HTMLDataCellWithBar('h', $data , Format_Number($data), $max_h);
+			}
+			
+			if ( $ShowHoursStats =~ /B/i ) {
+				$data = $_time_k[$monthix] ? $_time_k[$monthix] : '0';
+				print HTMLDataCellWithBar('b', $data , Format_Number($data), $max_k);
+			}
+			
+			print '</tr>';
+		}
+		print '</table>';
+
 		print '<table class="data-table days-of-week-table">';
 
 		#header
 		print HTMLDataTableHeader($Message[20], $ShowHoursStats);
 
+		#body
+		print '<tbody>';
 
-		print "<table width=\"650\"><tr>\n";
-		print "<td align=\"center\"><center>\n";
-
-		print "<table>\n";
-		print
-"<tr><td width=\"80\" bgcolor=\"#$color_TableBGRowTitle\">$Message[20]</td>";
-		if ( $ShowHoursStats =~ /P/i ) {
-			print "<td width=\"80\" class=\"color-p\""
-			  . Tooltip(3)
-			  . ">$Message[56]</td>";
-		}
-		if ( $ShowHoursStats =~ /H/i ) {
-			print "<td width=\"80\" class=\"color-h\""
-			  . Tooltip(4)
-			  . ">$Message[57]</td>";
-		}
-		if ( $ShowHoursStats =~ /B/i ) {
-			print "<td width=\"80\" class=\"color-k\""
-			  . Tooltip(5)
-			  . ">$Message[75]</td>";
-		}
-		print "</tr>";
-		for ( my $ix = 0 ; $ix <= 11 ; $ix++ ) {
-			my $monthix = ( $ix < 10 ? "0$ix" : "$ix" );
-			print "<tr>";
-			print "<td>$monthix</td>";
-			if ( $ShowHoursStats =~ /P/i ) {
-				print "<td>",
-				  Format_Number($_time_p[$monthix] ? $_time_p[$monthix] : "0"),
-				  "</td>";
-			}
-			if ( $ShowHoursStats =~ /H/i ) {
-				print "<td>",
-				  Format_Number($_time_h[$monthix] ? $_time_h[$monthix] : "0"),
-				  "</td>";
-			}
-			if ( $ShowHoursStats =~ /B/i ) {
-				print "<td>", Format_Bytes( int( $_time_k[$monthix] ) ),
-				  "</td>";
-			}
-			print "</tr>\n";
-		}
-		print "</table>\n";
-
-		print "</center></td>";
-		print "<td width=\"10\">&nbsp;</td>";
-		print "<td align=\"center\"><center>\n";
-
-		print "<table>\n";
-		print
-"<tr><td width=\"80\" bgcolor=\"#$color_TableBGRowTitle\">$Message[20]</td>";
-		if ( $ShowHoursStats =~ /P/i ) {
-			print "<td width=\"80\" class=\"color-p\""
-			  . Tooltip(3)
-			  . ">$Message[56]</td>";
-		}
-		if ( $ShowHoursStats =~ /H/i ) {
-			print "<td width=\"80\" class=\"color-h\""
-			  . Tooltip(4)
-			  . ">$Message[57]</td>";
-		}
-		if ( $ShowHoursStats =~ /B/i ) {
-			print "<td width=\"80\" class=\"color-k\""
-			  . Tooltip(5)
-			  . ">$Message[75]</td>";
-		}
-		print "</tr>\n";
 		for ( my $ix = 12 ; $ix <= 23 ; $ix++ ) {
-			my $monthix = ( $ix < 10 ? "0$ix" : "$ix" );
-			print "<tr>";
-			print "<td>$monthix</td>";
+			
+			my $monthix = $ix;
+			
+			print '<tr>';
+			
+			print '<td>' . $monthix . '<span class="clock hr-' . ($ix - 12) . '"></span></td>';
+			
 			if ( $ShowHoursStats =~ /P/i ) {
-				print "<td>",
-				  Format_Number($_time_p[$monthix] ? $_time_p[$monthix] : "0"),
-				  "</td>";
+				$data = $_time_p[$monthix] ? $_time_p[$monthix] : '0';
+				print HTMLDataCellWithBar('p', $data , Format_Number($data), $max_p);
 			}
-			if ( $ShowHoursStats =~ /H/i ) {
-				print "<td>",
-				  Format_Number($_time_h[$monthix] ? $_time_h[$monthix] : "0"),
-				  "</td>";
-			}
-			if ( $ShowHoursStats =~ /B/i ) {
-				print "<td>", Format_Bytes( int( $_time_k[$monthix] ) ),
-				  "</td>";
-			}
-			print "</tr>\n";
-		}
-		print "</table>\n";
 
+			if ( $ShowHoursStats =~ /H/i ) {
+				$data = $_time_h[$monthix] ? $_time_h[$monthix] : '0';
+				print HTMLDataCellWithBar('h', $data , Format_Number($data), $max_h);
+			}
+			
+			if ( $ShowHoursStats =~ /B/i ) {
+				$data = $_time_k[$monthix] ? $_time_k[$monthix] : '0';
+				print HTMLDataCellWithBar('b', $data , Format_Number($data), $max_k);
+			}
+
+			print '</tr>';
+		}
+		
+		print '</tbody></table>';
+		
+		print '</div>';
+		
 		print "</center></td></tr></table>\n";
-		print "<br />\n";
 	}
 
 	print "</center></td></tr>\n";
