@@ -14104,9 +14104,9 @@ sub HTMLMainDaily{
 		$total_h += $DayHits{ $year . $month . $day }   || 0;
 		$total_k += $DayBytes{ $year . $month . $day }  || 0;
 		
-		$max_v = ($DayVisits{ $year . $month . $day } || 0 ) > $max_v ) ? $DayVisits{ $year . $month . $day } : $max_v;
+		$max_v = ( ( $DayVisits{ $year . $month . $day } || 0 ) > $max_v ) ? $DayVisits{ $year . $month . $day } : $max_v;
 
-		$max_p = (($DayPages{$year.$month.$day}||0) > $max_p) ? $DayPages{$year.$month.$day} : $max_p;
+		$max_p = ( ( $DayPages{$year . $month . $day } ||0) > $max_p) ? $DayPages{$year.$month.$day} : $max_p;
 
 		$max_h = ( ( $DayHits{ $year . $month . $day } || 0 ) > $max_h ) ? $DayHits{ $year . $month . $day } : $max_h;
 		
@@ -14420,7 +14420,7 @@ sub HTMLMainDaysofWeek{
 			print "<td align=\"center\">";
 			print "<center>\n";
 
-			my $max_h = my $max_k = 0;    # Start from 0 because can be lower than 1
+			my $max_p = my $max_h = my $max_k = 0;    # Start from 0 because can be lower than 1
 			                        # Get average value for day of week
 			my @avg_dayofweek_nb = ();
 			my @avg_dayofweek_p  = ();
@@ -14455,13 +14455,9 @@ sub HTMLMainDaysofWeek{
 					$avg_dayofweek_k[$_] =
 					  $avg_dayofweek_k[$_] / $avg_dayofweek_nb[$_];
 
-		  #if ($avg_dayofweek_p[$_] > $max_p) { $max_p = $avg_dayofweek_p[$_]; }
-					if ( $avg_dayofweek_h[$_] > $max_h ) {
-						$max_h = $avg_dayofweek_h[$_];
-					}
-					if ( $avg_dayofweek_k[$_] > $max_k ) {
-						$max_k = $avg_dayofweek_k[$_];
-					}
+		  		if ( $avg_dayofweek_p[$_] > $max_p ) { $max_p = $avg_dayofweek_p[$_]; }
+					if ( $avg_dayofweek_h[$_] > $max_h ) { $max_h = $avg_dayofweek_h[$_];	}
+					if ( $avg_dayofweek_k[$_] > $max_k ) { $max_k = $avg_dayofweek_k[$_];	}
 				}
 				else {
 					$avg_dayofweek_p[$_] = "?";
@@ -14630,60 +14626,46 @@ sub HTMLMainDaysofWeek{
 				}
 				print "</tr>\n</table>\n";
 			}
-			print "<br />\n";
-
+			
 			# Show data array for days of week
 			if ($AddDataArrayShowDaysOfWeekStats) {
-				print "<table>\n";
-				print
-"<tr><td width=\"80\" bgcolor=\"#$color_TableBGRowTitle\">$Message[4]</td>";
-				if ( $ShowDaysOfWeekStats =~ /P/i ) {
-					print "<td width=\"80\" class=\"color-p\""
-					  . Tooltip(3)
-					  . ">$Message[56]</td>";
-				}
-				if ( $ShowDaysOfWeekStats =~ /H/i ) {
-					print "<td width=\"80\" class=\"color-h\""
-					  . Tooltip(4)
-					  . ">$Message[57]</td>";
-				}
-				if ( $ShowDaysOfWeekStats =~ /B/i ) {
-					print "<td width=\"80\" class=\"color-k\""
-					  . Tooltip(5)
-					  . ">$Message[75]</td></tr>";
-				}
+
+				my $data = '';
+				print '<table class="data-table days-of-week-table">';
+
+				#header
+				print HTMLDataTableHeader($Message[4], $ShowDaysOfWeekStats);
+
+				#body
 				for (@DOWIndex) {
-					print "<tr"
-					  . ( $_ =~ /[06]/ ? " bgcolor=\"#$color_weekend\"" : "" )
-					  . ">";
-					print "<td>"
-					  . (
-						!$StaticLinks
-						  && $_ == ( $nowwday - 1 )
-						  && $MonthRequired == $nowmonth
-						  && $YearRequired == $nowyear
-						? '<span class="currentday">'
-						: ''
-					  );
+					print '<tr' . ( $_ =~ /[06]/ ? ' bgcolor="#' . $color_weekend . '"' : '' ) . '>';
+
+					print '<td>' . ( ( !$StaticLinks && $_ == ( $nowwday - 1 ) && $MonthRequired == $nowmonth && $YearRequired == $nowyear ) ? '<span class="currentday">' : '' );
+					
 					print $Message[ $_ + 84 ];
-					print(   !$StaticLinks
-						  && $_ == ( $nowwday - 1 )
-						  && $MonthRequired == $nowmonth
-						  && $YearRequired == $nowyear ? '</span>' : '' );
-					print "</td>";
+
+					print ( ( !$StaticLinks && $_ == ( $nowwday - 1 ) && $MonthRequired == $nowmonth && $YearRequired == $nowyear ) ? '</span>' : '' );
+					
+					print '</td>';
+
 					if ( $ShowDaysOfWeekStats =~ /P/i ) {
-						print "<td>", Format_Number(int($avg_dayofweek_p[$_])), "</td>";
+						$data = int($avg_dayofweek_p[$_]);
+						print HTMLDataCellWithBar('p', $data * .75 , Format_Number($data), $max_p);
 					}
+
 					if ( $ShowDaysOfWeekStats =~ /H/i ) {
-						print "<td>", Format_Number(int($avg_dayofweek_h[$_])), "</td>";
+						$data = int($avg_dayofweek_h[$_]);
+						print HTMLDataCellWithBar('h', $data * .75 , Format_Number($data), $max_h);
 					}
+
 					if ( $ShowDaysOfWeekStats =~ /B/i ) {
-						print "<td>", Format_Bytes(int($avg_dayofweek_k[$_])),
-						  "</td>";
+						$data = int($avg_dayofweek_k[$_]);
+						print HTMLDataCellWithBar('b', $data * .75 , Format_Bytes($data), $max_k);
 					}
-					print "</tr>\n";
+
+					print '</tr>';
 				}
-				print "</table>\n<br />\n";
+				print '</table>';
 			}
 
 			print "</center></td>";
@@ -14937,6 +14919,14 @@ sub HTMLMainHours{
 
 	# Show data array for hours
 	if ($AddDataArrayShowHoursStats) {
+
+		my $data = '';
+		print '<table class="data-table days-of-week-table">';
+
+		#header
+		print HTMLDataTableHeader($Message[20], $ShowHoursStats);
+
+
 		print "<table width=\"650\"><tr>\n";
 		print "<td align=\"center\"><center>\n";
 
