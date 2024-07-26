@@ -938,7 +938,7 @@ sub html_head {
 				print <<EOF;
 body { font: 0.75rem sans-serif, system-ui; background-color: #$color_Background; margin-top: 0; margin-bottom: 0; }
 b, .aws_title, th.aws{ font-weight: 700 }
-th{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; text-align:center; color: #$color_titletext; }
+th{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; color: #$color_titletext; }
 td{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; text-align:center; color: #$color_text; }
 .aws_blank  { font-size: 0.9rem; background-color: #$color_Background; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }
 .aws_title{ font-size: 0.9rem; background-color: #$color_TableBGTitle; text-align: center; margin-top: 0; margin-bottom: 0; padding: 1px 1px 1px 1px; color: #$color_TableTitle; }
@@ -954,14 +954,13 @@ a:hover{ color: #$color_hover; text-decoration: underline; }
 .data-table { border-spacing: 0 2px }
 .data-table tbody tr { transition: background 0.5s; transition: transform 0.2s ease-out }
 .data-table tbody tr:hover { background: rgba(0,0,0,0.2); transform: scale(1.05) translateX(2px); }
-.data-table th, .data-table td { padding: 2px }
-.data-table td div { padding: 1px 2px }
+.data-table th, .data-table td { padding: 4px }
+.data-table td div { padding: 4px }
 .data-table td { text-align: right; font-weight: 700; }
 .data-table th, .data-table td:first-child:not('.country') { font-weight: 400 }
 .data-table tfoot .data-table-sum td { border-top: 1px solid rgba(192,192,192,0.2); }
 .data-table .data-table-sum { font-size : 1.2em }
-.data-table .title { color: var(--light-color); background : var(--dark-color) }
-.domains-table{ width: 100% }
+.data-table .title { font-size: 2em }
 .currentday{ font-weight: 900 }
 .bar{  }
 .bar-horizontal{ height: 4px }
@@ -988,6 +987,7 @@ a:hover{ color: #$color_hover; text-decoration: underline; }
 .hr-9{ rotate: 270deg }
 .hr-10{ rotate: 300deg }
 .hr-11{ rotate: 330deg }
+#worldmap{ width: 50dvw; margin-top: 1dvh; background-color: #4477DD; }
 .country { text-transform: uppercase; font-weight: 700; }
 .lighted-land{ fill: var(--aws-color-u);	var(--dark-color); stroke-width: 0.5;	fill-rule: evenodd;}
 .oceanxx{ fill: #4477DD !important; stroke-width: 0 !important; }
@@ -14626,7 +14626,7 @@ sub HTMLMainDaysofWeek{
 				print '<table class="data-table days-of-week-table">';
 
 				#header
-				print HTMLDataTableHeader($Message[4], $ShowDaysOfWeekStats);
+				print HTMLDataTableHeader('', $ShowDaysOfWeekStats);
 
 				#body
 				print '<tbody>';
@@ -14919,7 +14919,7 @@ sub HTMLMainHours{
 		print '<table class="data-table hours-table">';
 
 		#header
-		print HTMLDataTableHeader($Message[20], $ShowHoursStats);
+		print HTMLDataTableHeader('', $ShowHoursStats);
 
 		#body
 		for ( my $ix = 0 ; $ix <= 11 ; $ix++ ) {
@@ -14952,7 +14952,7 @@ sub HTMLMainHours{
 		print '<table class="data-table days-of-week-table">';
 
 		#header
-		print HTMLDataTableHeader($Message[20], $ShowHoursStats);
+		print HTMLDataTableHeader('', $ShowHoursStats);
 
 		#body
 		print '<tbody>';
@@ -15120,12 +15120,14 @@ EOF
 	# 	}
 	# }
 
+	print "<tr><td>";
+	
 	print '<div class="multi-data-table" style="background-color: #4477DD;">';
-	print '<div id="worldmap" style="width: 80dvw; background-color: #4477DD; border-radius: 5px"></div>';
+	print '<div id="worldmap"></div>';
 	print '<table class="data-table domains-table">';
 
 	#header
-	print HTMLDataTableHeader($Message[148], $ShowDomainsStats);
+	print HTMLDataTableHeader('', $ShowDomainsStats);
 
 	# body
 	print '<tbody>';
@@ -15187,7 +15189,7 @@ EOF
 
 		}
 
-		print "</tr>\n";
+		print '</tr>';
 
 		$total_u += $_domener_u;
 		$total_v += $_domener_v;
@@ -15217,10 +15219,13 @@ EOF
 
 		print (( $ShowDomainsStats =~ /B/i ) ? HTMLDataCellWithBar('b', $rest_k , Format_Bytes($rest_k), $TotalBytes) : '');
 
-		print "</tr>\n";
+		print '</tr>';
 
 		print '</table>';
 		print '</div>';
+
+		print "</td>\n";
+		print "</tr>\n";
 	
 	}
 
