@@ -931,12 +931,11 @@ sub renderCss {
 				. ( $BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml' ? "2px" : "1px" )
 				. " 1px; margin-top: 0px; margin-bottom: 0px; }\n";
 
-
 				$css .= <<EOF;
 body { font: 0.75rem sans-serif, system-ui; background-color: #$color_Background; margin-top: 0; margin-bottom: 0; }
 b, .aws_title, th.aws{ font-weight: 700 }
-th{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; color: #$color_titletext; }
-td{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; text-align:center; }
+th{ border: none; padding: 1px 2px 1px 1px; color: #$color_titletext; }
+td{ border: none; text-align:center; }
 .aws_blank  { font-size: 0.9rem; background-color: #$color_Background; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }
 .aws_title{ font-size: 0.9rem; background-color: #$color_TableBGTitle; text-align: center; margin-top: 0; margin-bottom: 0; padding: 1px 1px 1px 1px; color: #$color_TableTitle; }
 .aws_data{ background-color: #$color_Background; border-top-width: 1px; border-left-width: 0px; border-right-width: 0px; border-bottom-width: 0px; }
@@ -954,7 +953,7 @@ a:hover{ color: #$color_hover; text-decoration: underline; }
 .data-table tbody tr:hover { background: rgba(0,0,0,0.2); transform: scale(1.05) translateX(2px); }
 .data-table th, .data-table td:first-child { padding: 2px 4px }
 .data-table td:not(:first-child) { padding: 2px 0 }
-.data-table td div { padding: 4px }
+.data-table td div { padding: 3px 4px }
 .data-table td { text-align: right; font-weight: 700; }
 .data-table th, .data-table td:first-child:not('.country') { font-weight: 400 }
 .data-table tfoot .data-table-sum td { border-top: 1px solid rgba(192,192,192,0.2); }
