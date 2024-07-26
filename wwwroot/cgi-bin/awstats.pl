@@ -916,6 +916,7 @@ sub renderCss {
 
 	if ( !$StyleSheet ) {
 				$css .= ':root {'
+				. '--default-page-color: #' . $color_text . ';'
 				. '--aws-color-u: #' . $color_u . ';'
 				. '--aws-color-v: #' . $color_v . ';'
 				. '--aws-color-p: #' . $color_p . ';'
@@ -926,6 +927,14 @@ sub renderCss {
 				. '--aws-color-s: #' . $color_s . ';'
 				. '--dark-color: rgba(0,0,0,0.5);'
 				. '--light-color: rgba(255,255,255,0.9);'
+				. '--a-color: #' . $color_link . ';'
+				. '--a-visited-color: #' . $color_link . ';'
+				. '--a-hover-color: #' . $color_hover . ';'
+				. '--aws-table-border-color: #' . $color_TableBorder . ';'
+				. '--aws-background-color: #' . $color_Background . ';'
+				. '--aws-title-text-color: #' . $color_titletext . ';'
+				. '--aws-table-title-color: #' . $color_TableTitle . ';'
+				. '--aws-table-title-bgcolor: #' . $color_TableBGTitle . ';'
 				. '}';
 
 				$css .= ".aws_border { border-collapse: collapse; background-color: #$color_TableBG; padding: 1px 1px "
@@ -933,20 +942,21 @@ sub renderCss {
 				. " 1px; margin-top: 0px; margin-bottom: 0px; }\n";
 
 				$css .= <<EOF;
-body { font: 0.75rem sans-serif, system-ui; background-color: #$color_Background; margin-top: 0; margin-bottom: 0; }
+body { font: 0.75rem sans-serif, system-ui; background-color: var(--aws-background-color); margin: 0; color: var(--default-page-color) }
 b, .aws_title, th.aws{ font-weight: 700 }
-th{ border: none; padding: 1px 2px 1px 1px; color: #$color_titletext; }
-td{ border: none; text-align:center; }
-.aws_blank  { font-size: 0.9rem; background-color: #$color_Background; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }
-.aws_title{ font-size: 0.9rem; background-color: #$color_TableBGTitle; text-align: center; margin-top: 0; margin-bottom: 0; padding: 1px 1px 1px 1px; color: #$color_TableTitle; }
-.aws_data{ background-color: #$color_Background; border-top-width: 1px; border-left-width: 0px; border-right-width: 0px; border-bottom-width: 0px; }
+th{ border: none; padding: 1px 2px 1px 1px; color: var(--aws-title-text-color); }
+td{ border: none; }
+.aws_blank  { font-size: 0.9rem; background-color: var(--aws-background-color); text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }
+.aws_title{ font-size: 0.9rem; background-color: var(--aws-table-title-bgcolor); text-align: center; margin-top: 0; margin-bottom: 0; padding: 1px 1px 1px 1px; color: var(--aws-table-title-color); }
+.aws_data{ background-color: var(--aws-background-color); border-top-width: 1px; border-left-width: 0px; border-right-width: 0px; border-bottom-width: 0px; }
 .aws_button{ border: 1px solid #ccd7e0; background-image : url($DirIcons/other/button.gif); }
-th.aws{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; font-size: 0.9rem; }
-td.aws{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; text-align:$dir; color: #$color_text; padding: 0px;}
-td.awsm{ border-left-widthidth: 0px; border-right-width: 0px; border-top-width: 0px; border-bottom-width: 0px; text-align:$dir; color: #$color_text; padding: 0px; }
-a:link { color: #$color_link; text-decoration: none; }
-a:visited{ color: #$color_link; text-decoration: none; }
-a:hover{ color: #$color_hover; text-decoration: underline; }
+th.aws{ border-color: var(--aws-table-border-color); border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; font-size: 0.9rem; }
+td.aws{ border-color: var(--aws-table-border-color); border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; text-align:$dir; padding: 0px;}
+td.awsm{ border-left-widthidth: 0px; border-right-width: 0px; border-top-width: 0px; border-bottom-width: 0px; text-align:$dir; padding: 0px; }
+a, a:link { color: var(--a-color); text-decoration: none; }
+a:visited{ color: var(--a-visited-color); text-decoration: none; }
+a:hover, a:focus, a:active{ color: var(--a-hover-color); text-decoration: none; }
+#domain { font-weight: 900; font-size: 4ch }
 .multi-data-table { display: flex; gap: 5dvw; flex-wrap: wrap; justify-content: center }
 .multi-data-table.worldmap{ background-color: #4477DD;position: relative; color: #FFFFFF }
 .data-table { border-spacing: 0 2px }
@@ -961,6 +971,7 @@ a:hover{ color: #$color_hover; text-decoration: underline; }
 .data-table .data-table-sum { font-size : 1.2em }
 .data-table .title { font-size: 2em }
 .currentday{ font-weight: 900 }
+.bar-table { text-align: center }
 .bar-table tr:first-child td { vertical-align: bottom; }
 .bar{  }
 .bar-horizontal{ height: 4px }
@@ -10237,8 +10248,7 @@ sub HTMLTopBanner{
 "<tr><td class=\"awsm\"><b>$Message[7]:</b></td></tr><tr><td class=\"aws\"><span style=\"font-size: 0.9rem;\">$shortSiteDomain</span></td>";
 		}
 		else {
-			print
-"<tr><td class=\"aws\" valign=\"middle\"><b>$Message[7]:</b>&nbsp;</td><td class=\"aws\" valign=\"middle\"><span style=\"font-size: 1rem;\">$SiteDomain</span></td>";
+			print '<tr><td colspan="2" id="domain">' . $SiteDomain . '</td>';
 		}
 
 		# Logo and flags
