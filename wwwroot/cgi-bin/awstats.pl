@@ -939,7 +939,7 @@ sub html_head {
 body { font: 0.75rem sans-serif, system-ui; background-color: #$color_Background; margin-top: 0; margin-bottom: 0; }
 b, .aws_title, th.aws{ font-weight: 700 }
 th{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; color: #$color_titletext; }
-td{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; text-align:center; color: #$color_text; }
+td{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; text-align:center; }
 .aws_blank  { font-size: 0.9rem; background-color: #$color_Background; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }
 .aws_title{ font-size: 0.9rem; background-color: #$color_TableBGTitle; text-align: center; margin-top: 0; margin-bottom: 0; padding: 1px 1px 1px 1px; color: #$color_TableTitle; }
 .aws_data{ background-color: #$color_Background; border-top-width: 1px; border-left-width: 0px; border-right-width: 0px; border-bottom-width: 0px; }
@@ -951,7 +951,7 @@ a:link { color: #$color_link; text-decoration: none; }
 a:visited{ color: #$color_link; text-decoration: none; }
 a:hover{ color: #$color_hover; text-decoration: underline; }
 .multi-data-table { display: flex; gap: 5dvw; flex-wrap: wrap; justify-content: center }
-.multi-data-table.worldmap{ background-color: #4477DD;position: relative; }
+.multi-data-table.worldmap{ background-color: #4477DD;position: relative; color: #FFFFFF }
 .data-table { border-spacing: 0 2px }
 .data-table tbody tr { transition: background 0.5s; transition: transform 0.2s ease-out }
 .data-table tbody tr:hover { background: rgba(0,0,0,0.2); transform: scale(1.05) translateX(2px); }
@@ -963,6 +963,7 @@ a:hover{ color: #$color_hover; text-decoration: underline; }
 .data-table .data-table-sum { font-size : 1.2em }
 .data-table .title { font-size: 2em }
 .currentday{ font-weight: 900 }
+.bar-table tr:first-child td { vertical-align: bottom; }
 .bar{  }
 .bar-horizontal{ height: 4px }
 .bar-vertical{ display: inline-block; width: 4px; }
@@ -989,9 +990,10 @@ a:hover{ color: #$color_hover; text-decoration: underline; }
 .hr-10{ rotate: 300deg }
 .hr-11{ rotate: 330deg }
 #worldmap{ width: 50dvw; margin-top: 1dvh; background-color: #4477DD; }
-.title-map{ position:absolute; top:5px; left:5px; color: #FFFFFF; }
+.title-map{ position:absolute; top:5px; left:5px; }
 .country { text-transform: uppercase; font-weight: 700; }
-.lighted-land{ fill: var(--aws-color-u);	var(--dark-color); stroke-width: 0.5;	fill-rule: evenodd;}
+.landxx{ fill: rgba(128, 86, 86, 1) !important }
+.lighted-land{ fill: var(--aws-color-v) !important; stroke-width: 2 !important;	fill-rule: evenodd;}
 .oceanxx{ fill: #4477DD !important; stroke-width: 0 !important; }
 EOF
 			}
@@ -13787,26 +13789,44 @@ sub HTMLDataCellWithBar{
 # Return:       -
 #------------------------------------------------------------------------------
 sub HTMLMainMonthly{
-	if ($Debug) { debug( "ShowMonthStats", 2 ); }
-	print "$Center<a name=\"month\">&nbsp;</a><br />\n";
-	my $title = "$Message[162]";
-	&tab_head( "$title", 0, 0, 'month' );
-	print "<tr><td align=\"center\">\n";
-	print "<center>\n";
 
+	if ($Debug) { debug( "ShowMonthStats", 2 ); }
+
+	my $title = "$Message[162]";
+
+	my $graphPlugin = 0;
 	my $not_empty_months = 0;
 	my $average_nb = my $average_u = my $average_v = my $average_p = 0;
 	my $average_h = my $average_k = 0;
 	my $total_u = my $total_v = my $total_p = my $total_h = my $total_k = 0;
 	my $max_u = my $max_v = my $max_p = my $max_h = my $max_k = 1;
 
+	my $height = 0;
+	my $bars = '';
+	my $data = '';
+	my $tableData = '';
+
+	my @blocklabel = ();
+	my @vallabel = (
+			"$Message[11]", "$Message[10]",
+			"$Message[56]", "$Message[57]",
+			"$Message[75]"
+	);
+	my @valcolor = ( "$color_u", "$color_v", "$color_p", "$color_h", "$color_k" );
+	my @valmax = ( $max_v, $max_v, $max_h, $max_h, $max_k );
+	my @valtotal = ( $total_u, $total_v, $total_p, $total_h, $total_k );
+	my @valaverage = ();
+	my @valdata = ();
+	my $xx      = 0;
+
+	if (%{ $PluginsLoaded{'ShowGraph'} }) {
+  	$graphPlugin = 1;
+  }
+
 	# Define total and max
-	for ( my $ix = 1 ; $ix <= 12 ; $ix++ ) {
+	for ( my $ix = 1 ; $ix <= 12 ; $ix++ )
+	{
 		my $monthix = sprintf( "%02s", $ix );
-		
-		if($MonthHits{ $YearRequired . $monthix } > 0){
-				$not_empty_months++;
-		}
 
 		$total_u += $MonthUnique{ $YearRequired . $monthix } || 0;
 		$total_v += $MonthVisits{ $YearRequired . $monthix } || 0;
@@ -13825,6 +13845,95 @@ sub HTMLMainMonthly{
 		$max_k = (( $MonthBytes{ $YearRequired . $monthix } || 0 ) > $max_k )	? $MonthBytes{ $YearRequired . $monthix }	: $max_k;
 	}
 
+	# Set table datas
+	for ( my $ix = 1 ; $ix <= 12 ; $ix++ )
+	{
+		my $monthix = sprintf( "%02s", $ix );
+		
+		if($MonthHits{ $YearRequired . $monthix } > 0){
+				$not_empty_months++;
+		}
+
+		if ($graphPlugin == 1) {
+	
+			$valdata[ $xx++ ] = $MonthUnique{ $YearRequired . $monthix } || 0;
+			$valdata[ $xx++ ] = $MonthVisits{ $YearRequired . $monthix } || 0;
+			$valdata[ $xx++ ] = $MonthPages{ $YearRequired . $monthix } || 0;
+			$valdata[ $xx++ ] = $MonthHits{ $YearRequired . $monthix } || 0;
+			$valdata[ $xx++ ] = $MonthBytes{ $YearRequired . $monthix } || 0;
+
+			push @blocklabel, "$MonthNumLib{$monthix}\n$YearRequired";
+
+		}
+
+		$bars .= '<td>';
+
+		$tableData .= '<tr>'
+			. '<td>'
+			. (!$StaticLinks && $monthix == $nowmonth && $YearRequired == $nowyear ? '<span class="currentday">' : '' )
+			. $MonthNumLib{$monthix}
+			. (!$StaticLinks && $monthix == $nowmonth && $YearRequired == $nowyear ? '</span>' : '' )
+			. '</td>';
+
+		if ( $ShowMonthStats =~ /U/i ) {
+
+			$data = int($MonthUnique{ $YearRequired . $monthix } || 0 );
+
+			$height = ($max_u> 0) ? $data / $max_u * $BarHeight : 0;
+
+			$bars .= HtmlBarV('u', $height,  "$Message[11]: " . $data);
+
+			$tableData .= HTMLDataCellWithBar('u', $data, Format_Number($data), $max_u);
+		}
+
+		if ( $ShowMonthStats =~ /V/i ) {
+
+			$data = int($MonthVisits{ $YearRequired . $monthix } || 0 );
+
+			$height = ($max_v > 0) ? $data / $max_v * $BarHeight : 0;
+
+			$bars .= HtmlBarV('v', $height,  "$Message[10]: " . ( $MonthVisits{ $YearRequired . $monthix } || 0 ));
+
+			$tableData .= HTMLDataCellWithBar('v', $data, Format_Number($data), $max_v);
+		}
+
+		if ( $ShowMonthStats =~ /P/i ) {
+
+			$data = int($MonthPages{ $YearRequired . $monthix } || 0 );
+
+			$height = ($max_p > 0) ? $data / $max_p * $BarHeight : 0;
+
+			$bars .= HtmlBarV('p', $height,  "$Message[56]: " . $data);
+
+			$tableData .= HTMLDataCellWithBar('p', $data, Format_Number($data), $max_p);
+		}
+
+		if ( $ShowMonthStats =~ /H/i ) {
+
+			$data = int($MonthHits{ $YearRequired . $monthix } || 0 );
+
+			$height = ($max_h > 0) ? $data / $max_h * $BarHeight : 0;
+
+			$bars .= HtmlBarV('h', $height,  "$Message[57]: " . $data);
+
+			$tableData .= HTMLDataCellWithBar('h', $data, Format_Number($data), $max_h);
+		}
+
+		if ( $ShowMonthStats =~ /B/i ) {
+
+			$data = int($MonthBytes{ $YearRequired . $monthix } || 0 );
+
+			$height = ($max_k > 0) ? $data / $max_k * $BarHeight : 0;
+
+			$bars .= HtmlBarV('b', $height,  "$Message[75]: " . Format_Bytes($data));
+
+			$tableData .= HTMLDataCellWithBar('b', $data, Format_Bytes($data), $max_k);
+		}
+
+		$bars .= '</td>';
+		$tableData .= '</tr>';		
+	}
+
 	# Define average
 	$average_u = sprintf( "%.2f", $total_u / $not_empty_months );
 	$average_v = sprintf( "%.2f", $total_v / $not_empty_months );
@@ -13832,161 +13941,47 @@ sub HTMLMainMonthly{
 	$average_h = sprintf( "%.2f", $total_h / $not_empty_months );
 	$average_k = sprintf( "%.2f", $total_k / $not_empty_months );
 
+	print "$Center<a name=\"month\">&nbsp;</a><br />\n";
+	&tab_head( "$title", 0, 0, 'month' );
+	print "<tr><td align=\"center\">\n";
+	print "<center>\n";
+
 	# Show bars for month
-	my $graphdone=0;
-	foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
-	{
-		my @blocklabel = ();
-		for ( my $ix = 1 ; $ix <= 12 ; $ix++ ) {
-			my $monthix = sprintf( "%02s", $ix );
-			push @blocklabel,
-			  "$MonthNumLib{$monthix}\n$YearRequired";
+	if ($graphPlugin == 1) {
+
+		foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
+		{
+			my @valaverage=($average_v,$average_p,$average_h,$average_k);
+
+			my $function = "ShowGraph_$pluginname";
+			&$function(
+				"$title",        "month",
+				$ShowMonthStats, \@blocklabel,
+				\@vallabel,      \@valcolor,
+				\@valmax,        \@valtotal,
+				\@valaverage,    \@valdata
+			);
 		}
-		my @vallabel = (
-			"$Message[11]", "$Message[10]",
-			"$Message[56]", "$Message[57]",
-			"$Message[75]"
-		);
-		my @valcolor =
-		  ( "$color_u", "$color_v", "$color_p", "$color_h",
-			"$color_k" );
-		my @valmax = ( $max_v, $max_v, $max_h, $max_h, $max_k );
-		my @valtotal =
-		  ( $total_u, $total_v, $total_p, $total_h, $total_k );
-		my @valaverage = ();
 
-		#my @valaverage=($average_v,$average_p,$average_h,$average_k);
-		my @valdata = ();
-		my $xx      = 0;
-		for ( my $ix = 1 ; $ix <= 12 ; $ix++ ) {
-			my $monthix = sprintf( "%02s", $ix );
-			$valdata[ $xx++ ] = $MonthUnique{ $YearRequired . $monthix }
-			  || 0;
-			$valdata[ $xx++ ] = $MonthVisits{ $YearRequired . $monthix }
-			  || 0;
-			$valdata[ $xx++ ] = $MonthPages{ $YearRequired . $monthix }
-			  || 0;
-			$valdata[ $xx++ ] = $MonthHits{ $YearRequired . $monthix }
-			  || 0;
-			$valdata[ $xx++ ] = $MonthBytes{ $YearRequired . $monthix }
-			  || 0;
-		}
-		
-		my $function = "ShowGraph_$pluginname";
-		&$function(
-			"$title",        "month",
-			$ShowMonthStats, \@blocklabel,
-			\@vallabel,      \@valcolor,
-			\@valmax,        \@valtotal,
-			\@valaverage,    \@valdata
-		);
-		$graphdone=1;
-	}
-	if (! $graphdone)
-	{
-		print '<table>';
-		print "<tr valign=\"bottom\">";
-		print "<td>&nbsp;</td>\n";
-		for ( my $ix = 1 ; $ix <= 12 ; $ix++ ) {
-			my $monthix  = sprintf( "%02s", $ix );
-			my $bredde_u = 0;
-			my $bredde_v = 0;
-			my $bredde_p = 0;
-			my $bredde_h = 0;
-			my $bredde_k = 0;
-			if ( $max_v > 0 ) {
-				$bredde_u =
-				  int(
-					( $MonthUnique{ $YearRequired . $monthix } || 0 ) /
-					  $max_v * $BarHeight ) + 1;
-			}
-			if ( $max_v > 0 ) {
-				$bredde_v =
-				  int(
-					( $MonthVisits{ $YearRequired . $monthix } || 0 ) /
-					  $max_v * $BarHeight ) + 1;
-			}
-			if ( $max_h > 0 ) {
-				$bredde_p =
-				  int(
-					( $MonthPages{ $YearRequired . $monthix } || 0 ) /
-					  $max_h * $BarHeight ) + 1;
-			}
-			if ( $max_h > 0 ) {
-				$bredde_h =
-				  int( ( $MonthHits{ $YearRequired . $monthix } || 0 ) /
-					  $max_h * $BarHeight ) + 1;
-			}
-			if ( $max_k > 0 ) {
-				$bredde_k =
-				  int(
-					( $MonthBytes{ $YearRequired . $monthix } || 0 ) /
-					  $max_k * $BarHeight ) + 1;
-			}
-			print "<td>";
-			if ( $ShowMonthStats =~ /U/i ) {
-				print HtmlBarV('u', $bredde_u,  "$Message[11]: " . ( $MonthUnique{ $YearRequired . $monthix } || 0 ));
-			}
-			if ( $ShowMonthStats =~ /V/i ) {
-				print HtmlBarV('v', $bredde_v,  "$Message[10]: " . ( $MonthVisits{ $YearRequired . $monthix } || 0 ));
-			}
-			if ( $ShowMonthStats =~ /P/i ) {
-				print HtmlBarV('p', $bredde_p,  "$Message[56]: " . ( $MonthPages{ $YearRequired . $monthix } || 0 ));
-			}
-			if ( $ShowMonthStats =~ /H/i ) {
-				print HtmlBarV('h', $bredde_h,  "$Message[57]: " . ( $MonthHits{ $YearRequired . $monthix } || 0 ));
-			}
-			if ( $ShowMonthStats =~ /B/i ) {
-				print HtmlBarV('k', $bredde_k,  "$Message[75]: " . Format_Bytes( $MonthBytes{ $YearRequired . $monthix } || 0 ));
-			}
-			print "</td>\n";
-		}
-		print "<td>&nbsp;</td>";
-		print "</tr>\n";
+	} else {
 
-		# Show lib for month
-		print "<tr valign=\"middle\">";
+		print '<table class="bar-table">'
+		. '<tr>'
+		. $bars
+		. '</tr>'
+		. '<tr>';
 
-		#if (!$StaticLinks) {
-		#	print "<td><a href=\"".XMLEncode("$AWScript${NewLinkParams}month=12&year=".($YearRequired-1))."\">&lt;&lt;</a></td>";
-		#}
-		#else {
-		print "<td>&nbsp;</td>";
-
-		#				}
 		for ( my $ix = 1 ; $ix <= 12 ; $ix++ ) {
 			my $monthix = sprintf( "%02s", $ix );
 
-#			if (!$StaticLinks) {
-#				print "<td><a href=\"".XMLEncode("$AWScript${NewLinkParams}month=$monthix&year=$YearRequired")."\">$MonthNumLib{$monthix}<br />$YearRequired</a></td>";
-#			}
-#			else {
 			print "<td>"
-			  . (
-				!$StaticLinks
-				  && $monthix == $nowmonth
-				  && $YearRequired == $nowyear
-				? '<span class="currentday">'
-				: ''
-			  );
-			print "$MonthNumLib{$monthix}<div style=\"font-size: 0.5rem;\">$YearRequired</div>";
-			print(   !$StaticLinks
-				  && $monthix == $nowmonth
-				  && $YearRequired == $nowyear ? '</span>' : '' );
-			print "</td>";
-
-			#					}
+			. (!$StaticLinks && $monthix == $nowmonth && $YearRequired == $nowyear ? '<span class="currentday">' : '')
+			. "$MonthNumLib{$monthix}<div style=\"font-size: 0.5rem;\">$YearRequired</div>"
+			. (!$StaticLinks && $monthix == $nowmonth && $YearRequired == $nowyear ? '</span>' : '' )
+			. '</td>';
 		}
 
-#		if (!$StaticLinks) {
-#			print "<td><a href=\"".XMLEncode("$AWScript${NewLinkParams}month=1&year=".($YearRequired+1))."\">&gt;&gt;</a></td>";
-#		}
-#		else {
-		print "<td>&nbsp;</td>";
-
-		#				}
-		print "</tr>\n";
-		print "</table>\n";
+		print '</tr>'	. '</table>';
 	}
 
 	# Show data array for month
@@ -13998,8 +13993,7 @@ sub HTMLMainMonthly{
 		print HTMLDataTableHeader($YearRequired, $ShowMonthStats);
 
 		# footer
-
-		# Average row
+		# Total row
 		my (%sums) = (
 			'u' => Format_Number($total_u),
 			'v'=> Format_Number($total_v),
@@ -14020,52 +14014,7 @@ sub HTMLMainMonthly{
 		print HTMLDataTableFooter($Message[102], $ShowMonthStats, \%sums, $Message[96], \%averages);
 		
 		# body
-		print '<tbody>';
-		
-		for ( my $ix = 1 ; $ix <= 12 ; $ix++ ) {
-			
-			my $monthix = sprintf( "%02s", $ix );
-			my $data = '';
-			
-			print '<tr>';
-
-			print '<td>'
-				. (!$StaticLinks && $monthix == $nowmonth && $YearRequired == $nowyear ? '<span class="currentday">' : '' )
-				. $MonthNumLib{$monthix}
-				. (!$StaticLinks && $monthix == $nowmonth && $YearRequired == $nowyear ? '</span>' : '' )
-				. '</td>';
-			
-			if ( $ShowMonthStats =~ /U/i ) {
-				$data = $MonthUnique{ $YearRequired . $monthix } ? $MonthUnique{ $YearRequired . $monthix } : '0';
-				print HTMLDataCellWithBar('u', $data, Format_Number($data), $max_u);
-			}
-
-			if ( $ShowMonthStats =~ /V/i ) {
-				$data = $MonthVisits{ $YearRequired . $monthix } ? $MonthVisits{ $YearRequired . $monthix } : '0';
-				print HTMLDataCellWithBar('v', $data, Format_Number($data), $max_v);
-			}
-
-			if ( $ShowMonthStats =~ /P/i ) {
-				$data = $MonthPages{ $YearRequired . $monthix } ? $MonthPages{ $YearRequired . $monthix } : '0';
-				print HTMLDataCellWithBar('p', $data, Format_Number($data), $max_p);
-			}
-
-			if ( $ShowMonthStats =~ /H/i ) {
-				$data = $MonthHits{ $YearRequired . $monthix } ? $MonthHits{ $YearRequired . $monthix } : '0';
-				print HTMLDataCellWithBar('h', $data, Format_Number($data), $max_h);
-			}
-
-			if ( $ShowMonthStats =~ /B/i ) {
-				$data = int( $MonthBytes{ $YearRequired . $monthix } || 0 );
-				print HTMLDataCellWithBar('b', $data, Format_Bytes($data), $max_k);
-			}
-
-			print '</tr>';
-		}
-
-		print '</tbody>';
-
-		print '</table>';
+		print '<tbody>' . $tableData . '</tbody>' . '</table>';
 	}
 
 	print "</center>\n";
@@ -14157,11 +14106,7 @@ sub HTMLMainDaily{
 		my $day   = $3;
 		if ( !DateIsValid( $day, $month, $year ) ) { next; } # If not an existing day, go to next
 
-		my $dayofweekcursor = DayOfWeek( $day, $month, $year );
-
-		if($DayHits{ $year . $month . $day } > 0){
-				$not_empty_days++;
-		}
+		if($DayHits{ $year . $month . $day } > 0){ $not_empty_days++;	}
 
 		$total_v += $DayVisits{ $year . $month . $day } || 0;
 		$total_p += $DayPages{ $year . $month . $day }  || 0;
@@ -14175,11 +14120,22 @@ sub HTMLMainDaily{
 		$max_h = ( ( $DayHits{ $year . $month . $day } || 0 ) > $max_h ) ? $DayHits{ $year . $month . $day } : $max_h;
 		
 		$max_k = ( ( $DayBytes{ $year . $month . $day } || 0 ) > $max_k ) ? $DayBytes{ $year . $month . $day } : $max_k;
+	}
 
-		$average_v = sprintf( "%.2f", $total_v / $not_empty_days );
-  	$average_p = sprintf( "%.2f", $total_p / $not_empty_days );
-  	$average_h = sprintf( "%.2f", $total_h / $not_empty_days );
-  	$average_k = sprintf( "%.2f", $total_k / $not_empty_days );
+	$average_v = sprintf( "%.2f", $total_v / $not_empty_days );
+	$average_p = sprintf( "%.2f", $total_p / $not_empty_days );
+	$average_h = sprintf( "%.2f", $total_h / $not_empty_days );
+	$average_k = sprintf( "%.2f", $total_k / $not_empty_days );
+
+	foreach my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )
+	{
+		$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
+		my $year  = $1;
+		my $month = $2;
+		my $day   = $3;
+		if ( !DateIsValid( $day, $month, $year ) ) { next; } # If not an existing day, go to next
+
+		my $dayofweekcursor = DayOfWeek( $day, $month, $year );
 
 		if ($graphPlugin == 1) {
 
@@ -14191,41 +14147,9 @@ sub HTMLMainDaily{
 			$valdata[ $xx++ ] = $DayHits{ $year . $month . $day }  || 0;
 			$valdata[ $xx++ ] = $DayBytes{ $year . $month . $day } || 0;
 
-		} else {
-	
-			$bars .=  '<td>';
-
-			if ( $ShowDaysOfMonthStats =~ /V/i ) {
-
-				$height = ( $max_v > 0 ) ? int( ( $DayVisits{ $year . $month . $day } || 0 ) / $max_v * $BarHeight ) : 0;
-				
-				$bars .=  HtmlBarV('v', $height,  "$Message[10]: " . int( $DayVisits{ $year . $month . $day } || 0 ));
-			}
-
-			if ( $ShowDaysOfMonthStats =~ /P/i ) {
-
-				$height = ($max_h > 0 ) ? int( ( $DayPages{ $year . $month . $day } || 0 ) / $max_h * $BarHeight ) : 0;
-
-				$bars .= HtmlBarV('p', $height,  "$Message[56]: " . int( $DayPages{ $year . $month . $day } || 0 ));
-			}
-
-			if ( $ShowDaysOfMonthStats =~ /H/i ) {
-
-				$height = ( $max_h > 0 ) ? int( ( $DayHits{ $year . $month . $day } || 0 ) / $max_h * $BarHeight ) : 0;
-
-				$bars .= HtmlBarV('h', $height,  "$Message[57]: " . int( $DayHits{ $year . $month . $day } || 0 ));
-
-			}
-			if ( $ShowDaysOfMonthStats =~ /B/i ) {
-
-				$height = ( $max_k > 0 ) ? int( ( $DayBytes{ $year . $month . $day } || 0 ) / $max_k * $BarHeight ) : 0;
-
-				$bars .= HtmlBarV('k', $height,  "$Message[75]: " . Format_Bytes( $DayBytes{ $year . $month . $day } ));
-			}
-
-			$bars .= '</td>';
-
 		}
+
+		$bars .=  '<td>';
 
 		$tableData .= '<tr' . (( $dayofweekcursor =~ /[06]/ ) ? ' bgcolor="#' . $color_weekend . '"'	: '' ) . '>'
 				. '<td>'
@@ -14235,31 +14159,55 @@ sub HTMLMainDaily{
 			  . '</td>';
 
 		if ( $ShowDaysOfMonthStats =~ /V/i ) {
-			$data = $DayVisits{ $year . $month . $day } ? $DayVisits{ $year . $month . $day } : '0';
+			$data = int($DayVisits{ $year . $month . $day } || 0 );
+			
+			$height = ($max_v > 0) ? $data / $max_v * $BarHeight  : 0;
+				
+			$bars .=  HtmlBarV('v', $height,  "$Message[10]: " . $data);
+			
 			$tableData .= HTMLDataCellWithBar('v', $data, Format_Number($data), $max_v);
 		}
 
 		if ( $ShowDaysOfMonthStats =~ /P/i ) {
-			$data = $DayPages{ $year . $month . $day } ? $DayPages{ $year . $month . $day } : '0';
+			$data = int($DayPages{ $year . $month . $day } || 0 );
+
+			$height = ($max_p > 0) ? $data / $max_p * $BarHeight : 0;
+
+			$bars .= HtmlBarV('p', $height,  "$Message[56]: " . $data);
+
 			$tableData .= HTMLDataCellWithBar('p', $data, Format_Number($data), $max_p);
 		}
 
 		if ( $ShowDaysOfMonthStats =~ /H/i ) {
-			$data = $DayHits{ $year . $month . $day } ? $DayHits{ $year . $month . $day } : '0';
+
+			$data = int($DayHits{ $year . $month . $day } || 0 );
+
+			$height = ($max_h > 0) ? $data / $max_h * $BarHeight : 0;
+
+			$bars .= HtmlBarV('h', $height,  "$Message[57]: " . $data);
+
 			$tableData .= HTMLDataCellWithBar('h', $data, Format_Number($data), $max_h);
 		}
 
 		if ( $ShowDaysOfMonthStats =~ /B/i ) {
-			$data = $DayBytes{ $year . $month . $day } ? $DayBytes{ $year . $month . $day } : '0';
+
+			$data = int($DayBytes{ $year . $month . $day } || 0 );
+
+			$height = ($max_k > 0) ? $data / $max_k * $BarHeight : 0;
+
+			$bars .= HtmlBarV('b', $height,  "$Message[75]: " . Format_Bytes($data));
+			
 			$tableData .= HTMLDataCellWithBar('b', $data, Format_Bytes($data), $max_k);
 		}
 			
+		$bars .= '</td>';
 		$tableData .= '</tr>';
 
 	}
 
 	# render Graph Plugin
 	if ($graphPlugin == 1) {
+
 		foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
 		{
 			my $function = "ShowGraph_$pluginname";
@@ -14274,87 +14222,59 @@ sub HTMLMainDaily{
 
   } else {
 
-  	print '<table>';
-  	print '<tr valign="bottom">';
-  	print $bars . '<td>&nbsp;</td>';
-
 		# Show average value bars
-		print '<td>';
+		$bars .= '<td>&nbsp;</td>' . '<td>';
 
 		if ( $ShowDaysOfMonthStats =~ /V/i ) {
 
 			$height = ($max_v > 0 ) ? int( $average_v / $max_v * $BarHeight ) : 0;
 
-			print HtmlBarV('v', $height,  "$Message[10]: $average_v");
+			$bars .= HtmlBarV('v', $height,  "$Message[10]: $average_v");
 		}
 
 		if ( $ShowDaysOfMonthStats =~ /P/i ) {
 
 			$height = ($max_p > 0 ) ? int( $average_p / $max_p * $BarHeight ) : 0;
 
-			print HtmlBarV('p', $height,  "$Message[56]: $average_p");
+			$bars .= HtmlBarV('p', $height,  "$Message[56]: $average_p");
 		}
 
 		if ( $ShowDaysOfMonthStats =~ /H/i ) {
 
 			$height = ($max_h > 0 ) ? int( $average_h / $max_h * $BarHeight ) : 0;
 
-			print HtmlBarV('h', $height,  "$Message[57]: $average_h");
+			$bars .= HtmlBarV('h', $height,  "$Message[57]: $average_h");
 		}
 
 		if ( $ShowDaysOfMonthStats =~ /B/i ) {
 
 			$height = ($max_k > 0 ) ? int( $average_k / $max_k * $BarHeight ) : 0;
 
-			print HtmlBarV('b', $height,  "$Message[75]: $average_k");
+			$bars .= HtmlBarV('b', $height,  "$Message[75]: $average_k");
 		}
 
-		print '</td>'	. '</tr>';
+		$bars .= '</td>' . '</tr>';
 
 		# Show lib for day
-		print "<tr valign=\"middle\">";
+		$bars .= "<tr valign=\"middle\">";
 		foreach my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )	{
+
 			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
 			my $year  = $1;
 			my $month = $2;
 			my $day   = $3;
-			if ( !DateIsValid( $day, $month, $year ) ) {
-				next;
-			}    # If not an existing day, go to next
+			if ( !DateIsValid( $day, $month, $year ) ) { next; }    # If not an existing day, go to next
 			my $dayofweekcursor = DayOfWeek( $day, $month, $year );
-			print "<td"
-			  . (
-				$dayofweekcursor =~ /[06]/
-				? " bgcolor=\"#$color_weekend\""
-				: ""
-			  )
-			  . ">";
-			print(
-				!$StaticLinks
-				  && $day == $nowday
-				  && $month == $nowmonth
-				  && $year == $nowyear
-				? '<span class="currentday">'
-				: ''
-			);
-			print "$day<br /><span style=\"font-size: "
-			  . (    $FrameName ne 'mainright'
-				  && $QueryString !~ /buildpdf/i ? "0.5" : "0.4" )
-			  . "rem;\">"
-			  . $MonthNumLib{$month}
-			  . "</span>";
-			print(   !$StaticLinks
-				  && $day == $nowday
-				  && $month == $nowmonth
-				  && $year == $nowyear ? '</span>' : '' );
-			print "</td>\n";
+			$bars .= "<td" . ($dayofweekcursor =~ /[06]/ ? " bgcolor=\"#$color_weekend\"" : "") . ">"
+			. (!$StaticLinks && $day == $nowday && $month == $nowmonth && $year == $nowyear ? '<span class="currentday">' : '')
+			. "$day<br /><span style=\"font-size: " . ($FrameName ne 'mainright' && $QueryString !~ /buildpdf/i ? "0.5" : "0.4" ) . "rem;\">" . $MonthNumLib{$month} . "</span>"
+			. (!$StaticLinks && $day == $nowday && $month == $nowmonth && $year == $nowyear ? '</span>' : '' )
+			. "</td>\n";
 		}
-		print "<td>&nbsp;</td>";
-		print "<td valign=\"middle\""
-		  . Tooltip(18)
-		  . ">$Message[96]</td>\n";
-		print "</tr>\n";
-		print "</table>\n";
+
+		print '<table class="bar-table">'
+		. '<tr>'
+		. $bars	. '<td>&nbsp;</td>' . '<td valign="middle"' . Tooltip(18) . '>' . $Message[96] . '</td>'	. '</tr>'	. '</table>';
   }
 
 	# Show data array for days
@@ -15013,7 +14933,7 @@ sub HTMLMainCountries{
 	my $rest_u  = my $rest_v  = my $rest_p  = my $rest_h  = my $rest_k = 0; 
 	my $max_u = my $max_p = my $max_h = 1;
 
-	print "$Center<a name=\"countries\">&nbsp;</a><br />\n";
+	print "$Center<a name=\"countries\">&nbsp;</a>";
 
 	print <<EOF;
 <script>
@@ -15038,7 +14958,6 @@ document.addEventListener("DOMContentLoaded", (d) => {
 		if(country !== null){
 
 			[...country.querySelectorAll('.landxx')].forEach(el => {
-    		el.classList.remove('landxx');
     		el.classList.add('lighted-land');
   		});
 
