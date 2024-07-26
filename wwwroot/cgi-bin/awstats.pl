@@ -8407,7 +8407,7 @@ sub Format_Number {
 # Parameters:   type, width, alt
 # Input:        None
 # Output:       None
-# Return:       The bar
+# Return:       string
 #------------------------------------------------------------------------------
 sub HtmlBarH {
 	my $type = shift || '';
@@ -8419,19 +8419,48 @@ sub HtmlBarH {
 
 #------------------------------------------------------------------------------
 # Function:		Return Vertical Bar
-# Parameters:   type, height
-# Input:        None
-# Output:       None
-# Return:       The bar
+# Parameters: string $type, int $data, string $formattedData, int $max, string $title
+# Input:      None
+# Output:     None
+# Return:     string
 #------------------------------------------------------------------------------
-sub HtmlBarV {
+sub HtmlBar {
 	my $type = shift || '';
-	my $height = shift || 0;
-	my $alt = shift || '';
+	my $data = shift;
+	my $formattedData = shift;
+	my $max = shift;
+	my $title = shift || '';
+	my $height = ($max > 0) ? int( ( ( $data || 0 ) / $max ) * $BarHeight ): 0;
 
-	return '<div class="bar bar-vertical color-' . $type . '" style="height: ' . $height . 'px" title="' . $alt . '"></div>';
-}	
+	if($data > 0 && $height < 1){
+		$height = 1;
+	}
 
+	return '<div class="bar bar-vertical color-' . $type . '" style="height: ' . $height . 'px" title="' . $title . ' : ' . $formattedData . '"></div>';
+}
+
+#------------------------------------------------------------------------------
+# Function:     Return data cell with percentage bar
+# Parameters:   string $type = 'u' | 'v' | 'p' | 'h' | 'b',
+#								int $data, string | int $formattedData, int $max
+# Output:       _
+# Return:       string
+#------------------------------------------------------------------------------
+sub HTMLDataCellWithBar{
+	my $type = shift;
+	my $data = shift;
+	my $formattedData = shift;
+	my $max = shift;
+	my $percentage = int( ( ( $data || 0 ) / $max ) * $BarHeight );
+	
+	if($data > 0 && $percentage < 1){
+		$percentage = 1;
+	}
+
+	return '<td>'
+		. '<div style="background: linear-gradient(to right, var(--aws-color-' . $type .') ' . $percentage . '%, rgba(0,0,0,0) ' . $percentage . '%);">'
+		. $formattedData . '</div></td>';
+}
 
 #------------------------------------------------------------------------------
 # Function:		Return " alt=string title=string"
@@ -13747,25 +13776,6 @@ sub HTMLDataTableHeader{
 }
 
 #------------------------------------------------------------------------------
-# Function:     Return data cell with percentage bar
-# Parameters:   string $type = 'u' | 'v' | 'p' | 'h' | 'b',
-#								int $data, string | int $formattedData, int $max
-# Output:       _
-# Return:       string (html)
-#------------------------------------------------------------------------------
-sub HTMLDataCellWithBar{
-	my $type = shift;
-	my $data = shift;
-	my $formattedData = shift;
-	my $max = shift;
-	my $percentage = int( ( ( $data || 0 ) / $max ) * $BarHeight );
-
-	return '<td>'
-		. '<div style="background: linear-gradient(to right, var(--aws-color-' . $type .') ' . $percentage . '%, rgba(0,0,0,0) ' . $percentage . '%);">'
-		. $formattedData . '</div></td>';
-}
-
-#------------------------------------------------------------------------------
 # Function:     Prints the Monthly section on the main page
 # Parameters:   _
 # Input:        _
@@ -13863,9 +13873,7 @@ sub HTMLMainMonthly{
 
 			$data = int($MonthUnique{ $YearRequired . $monthix } || 0 );
 
-			$height = ($max_u> 0) ? $data / $max_u * $BarHeight : 0;
-
-			$bars .= HtmlBarV('u', $height,  "$Message[11]: " . $data);
+			$bars .= HtmlBar('u', $data, Format_Number($data), $max_u, $Message[11]);
 
 			$tableData .= HTMLDataCellWithBar('u', $data, Format_Number($data), $max_u);
 		}
@@ -13874,10 +13882,8 @@ sub HTMLMainMonthly{
 
 			$data = int($MonthVisits{ $YearRequired . $monthix } || 0 );
 
-			$height = ($max_v > 0) ? $data / $max_v * $BarHeight : 0;
-
-			$bars .= HtmlBarV('v', $height,  "$Message[10]: " . ( $MonthVisits{ $YearRequired . $monthix } || 0 ));
-
+			$bars .= HtmlBar('v', $data, Format_Number($data), $max_v, $Message[10]);
+			
 			$tableData .= HTMLDataCellWithBar('v', $data, Format_Number($data), $max_v);
 		}
 
@@ -13885,9 +13891,7 @@ sub HTMLMainMonthly{
 
 			$data = int($MonthPages{ $YearRequired . $monthix } || 0 );
 
-			$height = ($max_p > 0) ? $data / $max_p * $BarHeight : 0;
-
-			$bars .= HtmlBarV('p', $height,  "$Message[56]: " . $data);
+			$bars .= HtmlBar('p', $data, Format_Number($data), $max_p, $Message[56]);
 
 			$tableData .= HTMLDataCellWithBar('p', $data, Format_Number($data), $max_p);
 		}
@@ -13896,9 +13900,7 @@ sub HTMLMainMonthly{
 
 			$data = int($MonthHits{ $YearRequired . $monthix } || 0 );
 
-			$height = ($max_h > 0) ? $data / $max_h * $BarHeight : 0;
-
-			$bars .= HtmlBarV('h', $height,  "$Message[57]: " . $data);
+			$bars .= HtmlBar('h', $data, Format_Number($data), $max_h, $Message[57]);
 
 			$tableData .= HTMLDataCellWithBar('h', $data, Format_Number($data), $max_h);
 		}
@@ -13907,9 +13909,7 @@ sub HTMLMainMonthly{
 
 			$data = int($MonthBytes{ $YearRequired . $monthix } || 0 );
 
-			$height = ($max_k > 0) ? $data / $max_k * $BarHeight : 0;
-
-			$bars .= HtmlBarV('b', $height,  "$Message[75]: " . Format_Bytes($data));
+			$bars .= HtmlBar('b', $data, Format_Bytes($data), $max_k, $Message[75]);
 
 			$tableData .= HTMLDataCellWithBar('b', $data, Format_Bytes($data), $max_k);
 		}
@@ -14149,19 +14149,15 @@ sub HTMLMainDaily{
 		if ( $ShowDaysOfMonthStats =~ /V/i ) {
 			$data = int($DayVisits{ $date } || 0 );
 			
-			$height = ($max_v > 0) ? $data / $max_v * $BarHeight  : 0;
-				
-			$bars .=  HtmlBarV('v', $height,  "$Message[10]: " . $data);
-			
+			$bars .= HtmlBar('v', $data, Format_Number($data), $max_v, $Message[10]);
+
 			$tableData .= HTMLDataCellWithBar('v', $data, Format_Number($data), $max_v);
 		}
 
 		if ( $ShowDaysOfMonthStats =~ /P/i ) {
 			$data = int($DayPages{ $date } || 0 );
 
-			$height = ($max_p > 0) ? $data / $max_p * $BarHeight : 0;
-
-			$bars .= HtmlBarV('p', $height,  "$Message[56]: " . $data);
+			$bars .= HtmlBar('p', $data, Format_Number($data), $max_p, $Message[56]);
 
 			$tableData .= HTMLDataCellWithBar('p', $data, Format_Number($data), $max_p);
 		}
@@ -14170,9 +14166,7 @@ sub HTMLMainDaily{
 
 			$data = int($DayHits{ $date } || 0 );
 
-			$height = ($max_h > 0) ? $data / $max_h * $BarHeight : 0;
-
-			$bars .= HtmlBarV('h', $height,  "$Message[57]: " . $data);
+			$bars .= HtmlBar('h', $data, Format_Number($data), $max_h, $Message[57]);
 
 			$tableData .= HTMLDataCellWithBar('h', $data, Format_Number($data), $max_h);
 		}
@@ -14181,10 +14175,8 @@ sub HTMLMainDaily{
 
 			$data = int($DayBytes{ $date } || 0 );
 
-			$height = ($max_k > 0) ? $data / $max_k * $BarHeight : 0;
+			$bars .= HtmlBar('b', $data, Format_Bytes($data), $max_k, $Message[75]);
 
-			$bars .= HtmlBarV('b', $height,  "$Message[75]: " . Format_Bytes($data));
-			
 			$tableData .= HTMLDataCellWithBar('b', $data, Format_Bytes($data), $max_k);
 		}
 			
@@ -14211,37 +14203,12 @@ sub HTMLMainDaily{
   } elsif($ShowBars == 1) {
 
 		# Show average value bars
-		$bars .= '<td>&nbsp;</td>' . '<td>';
-
-		if ( $ShowDaysOfMonthStats =~ /V/i ) {
-
-			$height = ($max_v > 0 ) ? int( $average_v / $max_v * $BarHeight ) : 0;
-
-			$bars .= HtmlBarV('v', $height,  "$Message[10]: $average_v");
-		}
-
-		if ( $ShowDaysOfMonthStats =~ /P/i ) {
-
-			$height = ($max_p > 0 ) ? int( $average_p / $max_p * $BarHeight ) : 0;
-
-			$bars .= HtmlBarV('p', $height,  "$Message[56]: $average_p");
-		}
-
-		if ( $ShowDaysOfMonthStats =~ /H/i ) {
-
-			$height = ($max_h > 0 ) ? int( $average_h / $max_h * $BarHeight ) : 0;
-
-			$bars .= HtmlBarV('h', $height,  "$Message[57]: $average_h");
-		}
-
-		if ( $ShowDaysOfMonthStats =~ /B/i ) {
-
-			$height = ($max_k > 0 ) ? int( $average_k / $max_k * $BarHeight ) : 0;
-
-			$bars .= HtmlBarV('b', $height,  "$Message[75]: $average_k");
-		}
-
-		$bars .= '</td>' . '</tr>';
+		$bars .= '<td>&nbsp;</td>' . '<td>'
+		. (( $ShowDaysOfMonthStats =~ /V/i ) ? HtmlBar('v', $average_v, Format_Number($average_v), $max_v, $Message[10]) : '')
+		. (( $ShowDaysOfMonthStats =~ /P/i ) ? HtmlBar('p', $average_p, Format_Number($average_p), $max_p, $Message[56]) : '')
+		. (( $ShowDaysOfMonthStats =~ /H/i ) ? HtmlBar('h', $average_h, Format_Number($average_h), $max_h, $Message[57]) : '')
+		. (( $ShowDaysOfMonthStats =~ /B/i ) ? HtmlBar('b', $average_k, Format_Number($average_k), $max_k, $Message[75]) : '')
+		. '</td>' . '</tr>';
 
 		# Show lib for day
 		$bars .= "<tr valign=\"middle\">";
@@ -14432,79 +14399,13 @@ sub HTMLMainDaysofWeek{
 				print "<table>\n";
 				print "<tr valign=\"bottom\">\n";
 				for (@DOWIndex) {
-					my $bredde_p = 0;
-					my $bredde_h = 0;
-					my $bredde_k = 0;
-					if ( $max_h > 0 ) {
-						$bredde_p = int(
-							(
-								  $avg_dayofweek_p[$_] ne '?'
-								? $avg_dayofweek_p[$_]
-								: 0
-							) / $max_h * $BarHeight
-						) + 1;
-					}
-					if ( $max_h > 0 ) {
-						$bredde_h = int(
-							(
-								  $avg_dayofweek_h[$_] ne '?'
-								? $avg_dayofweek_h[$_]
-								: 0
-							) / $max_h * $BarHeight
-						) + 1;
-					}
-					if ( $max_k > 0 ) {
-						$bredde_k = int(
-							(
-								  $avg_dayofweek_k[$_] ne '?'
-								? $avg_dayofweek_k[$_]
-								: 0
-							) / $max_k * $BarHeight
-						) + 1;
-					}
-					$avg_dayofweek_p[$_] = sprintf(
-						"%.2f",
-						(
-							  $avg_dayofweek_p[$_] ne '?'
-							? $avg_dayofweek_p[$_]
-							: 0
-						)
-					);
-					$avg_dayofweek_h[$_] = sprintf(
-						"%.2f",
-						(
-							  $avg_dayofweek_h[$_] ne '?'
-							? $avg_dayofweek_h[$_]
-							: 0
-						)
-					);
-					$avg_dayofweek_k[$_] = sprintf(
-						"%.2f",
-						(
-							  $avg_dayofweek_k[$_] ne '?'
-							? $avg_dayofweek_k[$_]
-							: 0
-						)
-					);
+					
+					print '<td>'
+					. (( $ShowDaysOfWeekStats =~ /P/i ) ? HtmlBar('p', $avg_dayofweek_p[$_], Format_Number($avg_dayofweek_p[$_]), $max_p, $Message[56]) : '')
+					. (( $ShowDaysOfWeekStats =~ /H/i ) ? HtmlBar('h', $avg_dayofweek_h[$_], Format_Number($avg_dayofweek_h[$_]), $max_h, $Message[57]) : '')
+					. (( $ShowDaysOfWeekStats =~ /B/i ) ? HtmlBar('b', $avg_dayofweek_k[$_], Format_Number($avg_dayofweek_k[$_]), $max_k, $Message[75]) : '')
+					. '</td>';
 
-					# Remove decimal part that are .0
-					if ( $avg_dayofweek_p[$_] == int( $avg_dayofweek_p[$_] ) ) {
-						$avg_dayofweek_p[$_] = int( $avg_dayofweek_p[$_] );
-					}
-					if ( $avg_dayofweek_h[$_] == int( $avg_dayofweek_h[$_] ) ) {
-						$avg_dayofweek_h[$_] = int( $avg_dayofweek_h[$_] );
-					}
-					print "<td valign=\"bottom\">";
-					if ( $ShowDaysOfWeekStats =~ /P/i ) {
-						print HtmlBarV('p', $bredde_p,  "$Message[56]: $avg_dayofweek_p[$_]");
-					}
-					if ( $ShowDaysOfWeekStats =~ /H/i ) {
-						print HtmlBarV('h', $bredde_h,  "$Message[57]: $avg_dayofweek_h[$_]");
-					}
-					if ( $ShowDaysOfWeekStats =~ /B/i ) {
-						print HtmlBarV('b', $bredde_k,  "$Message[75]: $avg_dayofweek_k[$_]");
-					}
-					print "</td>\n";
 				}
 				print "</tr>\n";
 				print "<tr" . Tooltip(17) . ">\n";
@@ -14772,13 +14673,10 @@ sub HTMLMainHours{
 		print "<table>\n";
 		print "<tr valign=\"bottom\">\n";
 		for ( my $ix = 0 ; $ix <= 23 ; $ix++ ) {
-			my $bredde_p = 0;
+			
 			my $bredde_h = 0;
 			my $bredde_k = 0;
-			if ( $max_h > 0 ) {
-				$bredde_p =
-				  int( $BarHeight * $_time_p[$ix] / $max_h ) + 1;
-			}
+			
 			if ( $max_h > 0 ) {
 				$bredde_h =
 				  int( $BarHeight * $_time_h[$ix] / $max_h ) + 1;
@@ -14787,17 +14685,13 @@ sub HTMLMainHours{
 				$bredde_k =
 				  int( $BarHeight * $_time_k[$ix] / $max_k ) + 1;
 			}
-			print "<td>";
-			if ( $ShowHoursStats =~ /P/i ) {
-				print HtmlBarV('p', $bredde_p,  "$Message[56]: " . int( $_time_p[$ix] ));
-			}
-			if ( $ShowHoursStats =~ /H/i ) {
-				print HtmlBarV('h', $bredde_h,  "$Message[57]: " . int( $_time_h[$ix] ));
-			}
-			if ( $ShowHoursStats =~ /B/i ) {
-				print HtmlBarV('b', $bredde_k,  "$Message[75]: " . int( $_time_k[$ix] ));
-			}
-			print "</td>\n";
+			
+			print '<td>'
+			. (( $ShowHoursStats =~ /P/i ) ? HtmlBar('p', $_time_p[$ix], $_time_p[$ix], $max_p, $Message[56]) : '')
+			. (( $ShowHoursStats =~ /H/i ) ? HtmlBar('h', $_time_h[$ix], $_time_h[$ix], $max_h, $Message[57]) : '')
+			. (( $ShowHoursStats =~ /B/i ) ? HtmlBar('b', $_time_k[$ix], $_time_k[$ix], $max_k, $Message[75]) : '')
+			. '</td>';
+			
 		}
 		print "</tr>\n";
 
