@@ -172,7 +172,7 @@ $ExtraTrackedRowsLimit = 500;
 $DatabaseBreak         = 'month';
 use vars qw/
   $DebugMessages $AllowToUpdateStatsFromBrowser $EnableLockForUpdate $DNSLookup $DynamicDNSLookup $AllowAccessFromWebToAuthenticatedUsersOnly
-  $BarHeight $BarWidth $CreateDirDataIfNotExists $KeepBackupOfHistoricFiles
+  $ShowBars $BarHeight $BarWidth $CreateDirDataIfNotExists $KeepBackupOfHistoricFiles
   $NbOfLinesParsed $NbOfLinesDropped $NbOfLinesCorrupted $NbOfLinesComment $NbOfLinesBlank $NbOfOldLines $NbOfNewLines
   $NbOfLinesShowsteps $NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile $ArchiveLogRecords
   $ShowDropped $ShowCorrupted $ShowUnknownOrigin $ShowDirectOrigin $ShowLinksToWhoIs
@@ -190,6 +190,7 @@ use vars qw/
 	$DNSLookup,
 	$DynamicDNSLookup,
 	$AllowAccessFromWebToAuthenticatedUsersOnly,
+	$ShowBars,
 	$BarHeight,
 	$BarWidth,
 	$CreateDirDataIfNotExists,
@@ -2938,6 +2939,7 @@ sub Check_Config {
 	if ( $ShowLinksToWhoIs !~ /[01]/ ) { $ShowLinksToWhoIs = 0; }
 	$Logo     ||= 'awstats_logo6.png';
 	$LogoLink ||= 'https://www.awstats.org';
+	if ( $ShowBars !~ /[01]/ )  { $ShowBars  = 1; }
 	if ( $BarWidth !~ /^\d+/  || $BarWidth < 1 )  { $BarWidth  = 260; }
 	if ( $BarHeight !~ /^\d+/ || $BarHeight < 1 ) { $BarHeight = 90; }
 	$color_Background =~ s/#//g;
@@ -13935,7 +13937,7 @@ sub HTMLMainMonthly{
 			);
 		}
 
-	} else {
+	} elsif($ShowBars == 1) {
 
 		print '<table class="bar-table">'
 		. '<tr>'
@@ -14196,7 +14198,7 @@ sub HTMLMainDaily{
 			);
 		}
 
-  } else {
+  } elsif($ShowBars == 1) {
 
 		# Show average value bars
 		$bars .= '<td>&nbsp;</td>' . '<td>';
