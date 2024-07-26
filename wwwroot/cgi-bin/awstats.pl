@@ -13705,7 +13705,7 @@ sub HTMLDataTableFooter {
 		. ( ( $config =~ /H/i ) ? HTMLDataCellWithBar('h', 110, $ref_sums{'h'}, 100) : '' )
 		. ( ( $config =~ /B/i ) ? HTMLDataCellWithBar('b', 110, $ref_sums{'b'}, 100) : '' )
 		. '</tr>'
-		.	'<tr>'
+		.	'<tr class="data-table-average">'
 		. '<td>' . $averageTitle . '</td>'
 		. ( ( $config =~ /U/i ) ? HTMLDataCellWithBar('u', 0, $ref_averages{'u'}, 100) : '' )
 		. ( ( $config =~ /V/i ) ? HTMLDataCellWithBar('v', 0, $ref_averages{'v'}, 100) : '' )
