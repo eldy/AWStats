@@ -810,132 +810,129 @@ sub http_head {
 # Return:		None
 #------------------------------------------------------------------------------
 sub html_head {
-	my $dir = $PageDir ? 'right' : 'left';
+		
 	if ($NOHTML) { return; }
+	
 	if ( scalar keys %HTMLOutput || $PluginMode ) {
-		my $periodtitle = " ($YearRequired";
-		$periodtitle .= ( $MonthRequired ne 'all' ? "-$MonthRequired" : "" );
-		$periodtitle .= ( $DayRequired   ne ''    ? "-$DayRequired"   : "" );
-		$periodtitle .= ( $HourRequired  ne ''    ? "-$HourRequired"  : "" );
-		$periodtitle .= ")";
+
+		my $periodtitle = " ($YearRequired"
+		. ( $MonthRequired ne 'all' ? "-$MonthRequired" : "" )
+		. ( $DayRequired   ne ''    ? "-$DayRequired"   : "" )
+		. ( $HourRequired  ne ''    ? "-$HourRequired"  : "" )
+		. ")";
 
 		# Write head section
 		if ( $BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml' ) {
-			if ($PageCode) {
-				print "<?xml version=\"1.0\" encoding=\"$PageCode\"?>\n";
-			}
-			else { print "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?>\n"; }
-			if ( $FrameName ne 'index' ) {
-				print
-"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n";
-			}
-			else {
-				print
-"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Frameset//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd\">\n";
-			}
-			print
-"<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"$Lang\">\n";
-		}
-		else {
-			if ( $FrameName ne 'index' ) {
-				print
-"<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n";
-			}
-			else {
-				print
-"<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Frameset//EN\" \"http://www.w3.org/TR/html4/frameset.dtd\">\n";
-			}
-			print '<html lang="' . $Lang . '"'
-			  . ( $PageDir ? ' dir="rtl"' : '' ) . ">\n";
-		}
-		print "<head>\n";
 
-		my $endtag = '>';
-		if ( $BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml' ) {
-			$endtag = ' />';
+			print (($PageCode) ? '<?xml version="1.0" encoding="' . $PageCode . '"?>' : '<?xml version="1.0" encoding="iso-8859-1"?>');
+
+			print (( $FrameName ne 'index' )
+			 	? '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'
+			 	: '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">'
+			 );
+
+			print '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . $Lang . '">';
+		
+		}	else {
+
+			print (( $FrameName ne 'index' )
+				? '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">'
+				: '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">'
+			);
+
+			print '<html lang="' . $Lang . '"' . ( $PageDir ? ' dir="rtl"' : '' ) . '>';
+		
 		}
+		
+		print '<head>';
+
+		my $endtag = ( $BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml' ) ? ' />' : '>';
 
 		# Affiche tag meta generator
-		print
-"<meta name=\"generator\" content=\"AWStats $VERSION from config file awstats.$SiteConfig.conf (http://www.awstats.org)\"$endtag\n";
+		print '<meta name="generator" content="AWStats ' . $VERSION . ' from config file awstats.' . $SiteConfig. 'conf (http://www.awstats.org)"' . $endtag;
 
 		# Affiche tag meta robots
-		if ($MetaRobot) {
-			print "<meta name=\"robots\" content=\""
-			  . ( $FrameName eq 'mainleft' ? 'no' : '' )
-			  . "index,"
-			  . (    $FrameName eq 'mainleft'
-				  || $FrameName eq 'index' ? '' : 'no' )
-			  . "follow\"$endtag\n";
-		}
-		else {
-			print "<meta name=\"robots\" content=\"noindex,nofollow\"$endtag\n";
-		}
+		print (($MetaRobot)
+			? '<meta name="robots" content="' . ( $FrameName eq 'mainleft' ? 'no' : '' ) . 'index,' . ( $FrameName eq 'mainleft' || $FrameName eq 'index' ? '' : 'no' ) . 'follow"' . $endtag
+			: '<meta name="robots" content="noindex,nofollow"' . $endtag
+		);
 
 		# Affiche tag meta content-type
 		if ( $BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml' ) {
-			print( $ENV{'HTTP_USER_AGENT'} =~ /MSIE|Googlebot/i
-				? "<meta http-equiv=\"content-type\" content=\"text/html; charset="
-				  . ( $PageCode ? $PageCode : "iso-8859-1" )
-				  . "\" />\n"
-				: "<meta http-equiv=\"content-type\" content=\"text/xml; charset="
-				  . ( $PageCode ? $PageCode : "iso-8859-1" )
-				  . "\"$endtag\n"
+
+			print (($ENV{'HTTP_USER_AGENT'} =~ /MSIE|Googlebot/i)
+				? '<meta http-equiv="content-type" content="text/html; charset=' . ( $PageCode ? $PageCode : 'iso-8859-1' ) . '" />'
+				: '<meta http-equiv="content-type" content="text/xml; charset=' . ( $PageCode ? $PageCode : 'iso-8859-1' ) . '"' . $endtag
 			);
-		}
-		else {
-			print
-			  "<meta http-equiv=\"content-type\" content=\"text/html; charset="
-			  . ( $PageCode ? $PageCode : "iso-8859-1" )
-			  . "\"$endtag\n";
+		
+		}else {
+			print '<meta http-equiv="content-type" content="text/html; charset=' . ( $PageCode ? $PageCode : 'iso-8859-1' ) . '"' . $endtag;
 		}
 
-		if ($Expires) {
-			print "<meta http-equiv=\"expires\" content=\""
-			  . ( gmtime( $starttime + $Expires ) )
-			  . "\"$endtag\n";
-		}
+		print (($Expires) ? '<meta http-equiv="expires" content="' . ( gmtime( $starttime + $Expires ) ) . '"' . $endtag : '');
+		
 		my @k = keys
-		  %HTMLOutput;    # This is to have a unique title and description page
-		print "<meta http-equiv=\"description\" content=\""
-		  . ucfirst($PROG)
-		  . " - Advanced Web Statistics for $SiteDomain$periodtitle"
-		  . ( $k[0] ? " - " . $k[0] : "" )
-		  . "\"$endtag\n";
-		if ( $MetaRobot && $FrameName ne 'mainleft' ) {
-			print
-"<meta http-equiv=\"keywords\" content=\"$SiteDomain, free, advanced, realtime, web, server, logfile, log, analyzer, analysis, statistics, stats, perl, analyse, performance, hits, visits\"$endtag\n";
-		}
-		print "<title>$Message[7] $SiteDomain$periodtitle"
-		  . ( $k[0] ? " - " . $k[0] : "" )
-		  . "</title>\n";
+		
+		%HTMLOutput;    # This is to have a unique title and description page
+		
+		print '<meta http-equiv="description" content="' . ucfirst($PROG) . ' - Advanced Web Statistics for ' . $SiteDomain . $periodtitle . ( $k[0] ? ' - ' . $k[0] : '' ) . '"' . $endtag;
+
+		print (( $MetaRobot && $FrameName ne 'mainleft' ) ? '<meta http-equiv="keywords" content="' . $SiteDomain . ', free, advanced, realtime, web, server, logfile, log, analyzer, analysis, statistics, stats, perl, analyse, performance, hits, visits"' . $endtag : '');
+
+		print '<title>' . $Message[7] . ' ' . $SiteDomain . $periodtitle . ( $k[0] ? ' - ' . $k[0] : '' ) . '</title>';
+		
 		if ( $FrameName ne 'index' ) {
+			print (($StyleSheet) ? '<link rel="stylesheet" type="text/css" href="' . $StyleSheet . '" />' : renderCss());
+		}
 
-			if ($StyleSheet) {
-				print "<link rel=\"stylesheet\" href=\"$StyleSheet\" />\n";
-			}
+		print renderJavascript();
 
-# A STYLE section must be in head section. Do not use " for number in a style section
-			print "<style type=\"text/css\">\n";
+# les scripts necessaires pour trier avec Tablekit
+#	print "<script type=\"text\/javascript\" src=\"/js/prototype.js\"><\/script>";
+#	print "<script type=\"text\/javascript\" src=\"/js/fabtabulous.js\"><\/script>";
+#	print "<script type=\"text\/javascript\" src=\"/js/mytablekit.js\"><\/script>";
 
-			if ( !$StyleSheet ) {
-				print ':root {'
-					. '--aws-color-u: #' . $color_u . ';'
-					. '--aws-color-v: #' . $color_v . ';'
-					. '--aws-color-p: #' . $color_p . ';'
-					. '--aws-color-h: #' . $color_h . ';'
-					. '--aws-color-b: #' . $color_k . ';'
-					. '--aws-color-e: #' . $color_e . ';'
-					. '--aws-color-x: #' . $color_x . ';'
-					. '--aws-color-s: #' . $color_s . ';'
-					. '--dark-color: rgba(0,0,0,0.5);'
-					. '--light-color: rgba(255,255,255,0.9);'
-					. '}';
+		print '</head>';
+		
+		if ( $FrameName ne 'index' ) {
+			print '<body style="margin-top: 0px"' . (( $FrameName eq 'mainleft' ) ? ' class="aws_bodyl"' : '') . '>';
+		}
+	}
 
-				print ".aws_border { border-collapse: collapse; background-color: #$color_TableBG; padding: 1px 1px "
-				  		. ( $BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml' ? "2px" : "1px" )
-				  		. " 1px; margin-top: 0px; margin-bottom: 0px; }\n";
-				print <<EOF;
+	$HeaderHTMLSent++;
+}
+
+#------------------------------------------------------------------------------
+# Function:		Return the necessary css rules
+# Parameters:	_
+# Input:		_
+# Output:		_
+# Return:		string
+#------------------------------------------------------------------------------
+sub renderCss {
+	my $dir = $PageDir ? 'right' : 'left';
+	my $css = '';
+
+	if ( !$StyleSheet ) {
+				$css .= ':root {'
+				. '--aws-color-u: #' . $color_u . ';'
+				. '--aws-color-v: #' . $color_v . ';'
+				. '--aws-color-p: #' . $color_p . ';'
+				. '--aws-color-h: #' . $color_h . ';'
+				. '--aws-color-b: #' . $color_k . ';'
+				. '--aws-color-e: #' . $color_e . ';'
+				. '--aws-color-x: #' . $color_x . ';'
+				. '--aws-color-s: #' . $color_s . ';'
+				. '--dark-color: rgba(0,0,0,0.5);'
+				. '--light-color: rgba(255,255,255,0.9);'
+				. '}';
+
+				$css .= ".aws_border { border-collapse: collapse; background-color: #$color_TableBG; padding: 1px 1px "
+				. ( $BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml' ? "2px" : "1px" )
+				. " 1px; margin-top: 0px; margin-bottom: 0px; }\n";
+
+
+				$css .= <<EOF;
 body { font: 0.75rem sans-serif, system-ui; background-color: #$color_Background; margin-top: 0; margin-bottom: 0; }
 b, .aws_title, th.aws{ font-weight: 700 }
 th{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; color: #$color_titletext; }
@@ -955,7 +952,8 @@ a:hover{ color: #$color_hover; text-decoration: underline; }
 .data-table { border-spacing: 0 2px }
 .data-table tbody tr { transition: background 0.5s; transition: transform 0.2s ease-out }
 .data-table tbody tr:hover { background: rgba(0,0,0,0.2); transform: scale(1.05) translateX(2px); }
-.data-table th, .data-table td { padding: 4px }
+.data-table th, .data-table td:first-child { padding: 2px 4px }
+.data-table td:not(:first-child) { padding: 2px 0 }
 .data-table td div { padding: 4px }
 .data-table td { text-align: right; font-weight: 700; }
 .data-table th, .data-table td:first-child:not('.country') { font-weight: 400 }
@@ -996,40 +994,41 @@ a:hover{ color: #$color_hover; text-decoration: underline; }
 .lighted-land{ fill: var(--aws-color-v) !important; stroke-width: 2 !important;	fill-rule: evenodd;}
 .oceanxx{ fill: #4477DD !important; stroke-width: 0 !important; }
 EOF
-			}
-
-			# Call to plugins' function AddHTMLStyles
-			foreach my $pluginname ( keys %{ $PluginsLoaded{'AddHTMLStyles'} } )
-			{
-				my $function = "AddHTMLStyles_$pluginname";
-				&$function();
-			}
-
-			print "</style>\n";
-		}
-
-		print renderJavascript();
-
-# les scripts necessaires pour trier avec Tablekit
-#	print "<script type=\"text\/javascript\" src=\"/js/prototype.js\"><\/script>";
-#	print "<script type=\"text\/javascript\" src=\"/js/fabtabulous.js\"><\/script>";
-#	print "<script type=\"text\/javascript\" src=\"/js/mytablekit.js\"><\/script>";
-
-		# Call to plugins' function AddHTMLHeader
-		foreach my $pluginname ( keys %{ $PluginsLoaded{'AddHTMLHeader'} } )
-		{
-			my $function = "AddHTMLHeader_$pluginname";
-			&$function();
-		}
-			
-		print "</head>\n\n";
-		if ( $FrameName ne 'index' ) {
-			print "<body style=\"margin-top: 0px\"";
-			if ( $FrameName eq 'mainleft' ) { print " class=\"aws_bodyl\""; }
-			print ">\n";
-		}
 	}
-	$HeaderHTMLSent++;
+
+	# Call to plugins' function AddHTMLStyles
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'AddHTMLStyles'} } )
+		{
+			my $function = "AddHTMLStyles_$pluginname";
+			$css .= &$function();
+		}
+
+		return '<style type="text/css">' . $css . '</style>';
+}
+
+#------------------------------------------------------------------------------
+# Function:		Return the necessary javascripts scripts
+# Parameters:	_
+# Input:		_
+# Output:		_
+# Return:		string
+#------------------------------------------------------------------------------
+sub renderJavascript {
+return <<EOF;
+<script>
+document.addEventListener("DOMContentLoaded", (d) => {
+
+		[...document.querySelectorAll('.flag')].forEach(el => {
+    		el.textContent = el.dataset.country
+    				.split('')
+    				.map(letter => letter.charCodeAt(0) % 32 + 0x1F1E5)
+    				.map(emojiCode => String.fromCodePoint(emojiCode))
+    				.join('');
+    });
+
+});
+</script>'
+EOF
 }
 
 #------------------------------------------------------------------------------
@@ -1086,32 +1085,6 @@ sub html_end {
 
 		#		print "<!-- NEW PAGE --><!-- NEW SHEET -->\n";
 	}
-}
-
-
-#------------------------------------------------------------------------------
-# Function:		Return the necessary java scripts
-# Parameters:	_
-# Input:		_
-# Output:		_
-# Return:		string
-#------------------------------------------------------------------------------
-sub renderJavascript {
-return <<EOF;
-<script>
-document.addEventListener("DOMContentLoaded", (d) => {
-
-		[...document.querySelectorAll('.flag')].forEach(el => {
-    		el.textContent = el.dataset.country
-    				.split('')
-    				.map(letter => letter.charCodeAt(0) % 32 + 0x1F1E5)
-    				.map(emojiCode => String.fromCodePoint(emojiCode))
-    				.join('');
-    });
-
-});
-</script>'
-EOF
 }
 
 #------------------------------------------------------------------------------
@@ -14104,22 +14077,24 @@ sub HTMLMainDaily{
 		my $year  = $1;
 		my $month = $2;
 		my $day   = $3;
-		if ( !DateIsValid( $day, $month, $year ) ) { next; } # If not an existing day, go to next
+		my $date  = $year . $month . $day;
 
-		if($DayHits{ $year . $month . $day } > 0){ $not_empty_days++;	}
+		if ( !DateIsValid( $3, $2, $1 ) ) { next; } # If not an existing day, go to next
 
-		$total_v += $DayVisits{ $year . $month . $day } || 0;
-		$total_p += $DayPages{ $year . $month . $day }  || 0;
-		$total_h += $DayHits{ $year . $month . $day }   || 0;
-		$total_k += $DayBytes{ $year . $month . $day }  || 0;
+		if($DayHits{ $date } > 0){ $not_empty_days++;	}
+
+		$total_v += $DayVisits{ $date } || 0;
+		$total_p += $DayPages{ $date }  || 0;
+		$total_h += $DayHits{ $date }   || 0;
+		$total_k += $DayBytes{ $date }  || 0;
 		
-		$max_v = ( ( $DayVisits{ $year . $month . $day } || 0 ) > $max_v ) ? $DayVisits{ $year . $month . $day } : $max_v;
+		$max_v = ( ( $DayVisits{ $date } || 0 ) > $max_v ) ? $DayVisits{ $date } : $max_v;
 
-		$max_p = ( ( $DayPages{$year . $month . $day } ||0) > $max_p) ? $DayPages{$year.$month.$day} : $max_p;
+		$max_p = ( ( $DayPages{$date } ||0) > $max_p) ? $DayPages{$date} : $max_p;
 
-		$max_h = ( ( $DayHits{ $year . $month . $day } || 0 ) > $max_h ) ? $DayHits{ $year . $month . $day } : $max_h;
+		$max_h = ( ( $DayHits{ $date } || 0 ) > $max_h ) ? $DayHits{ $date } : $max_h;
 		
-		$max_k = ( ( $DayBytes{ $year . $month . $day } || 0 ) > $max_k ) ? $DayBytes{ $year . $month . $day } : $max_k;
+		$max_k = ( ( $DayBytes{ $date } || 0 ) > $max_k ) ? $DayBytes{ $date } : $max_k;
 	}
 
 	$average_v = sprintf( "%.2f", $total_v / $not_empty_days );
@@ -14133,19 +14108,21 @@ sub HTMLMainDaily{
 		my $year  = $1;
 		my $month = $2;
 		my $day   = $3;
-		if ( !DateIsValid( $day, $month, $year ) ) { next; } # If not an existing day, go to next
+		my $date  = $year . $month . $day;
+		
+		if ( !DateIsValid( $3, $2, $1 ) ) { next; } # If not an existing day, go to next
 
 		my $dayofweekcursor = DayOfWeek( $day, $month, $year );
 
 		if ($graphPlugin == 1) {
 
 			my $bold = ($day == $nowday && $month == $nowmonth && $year == $nowyear) ? ':' : '';
-			my $weekend = (DayOfWeek( $day, $month, $year ) =~ /[06]/) ? '!' : '' ;
+			my $weekend = ($dayofweekcursor =~ /[06]/) ? '!' : '' ;
 			push @blocklabel, "$day\n$MonthNumLib{$month}$weekend$bold";
-			$valdata[ $xx++ ] = $DayVisits{ $year . $month . $day } || 0;
-			$valdata[ $xx++ ] = $DayPages{ $year . $month . $day } || 0;
-			$valdata[ $xx++ ] = $DayHits{ $year . $month . $day }  || 0;
-			$valdata[ $xx++ ] = $DayBytes{ $year . $month . $day } || 0;
+			$valdata[ $xx++ ] = $DayVisits{ $date } || 0;
+			$valdata[ $xx++ ] = $DayPages{ $date } || 0;
+			$valdata[ $xx++ ] = $DayHits{ $date }  || 0;
+			$valdata[ $xx++ ] = $DayBytes{ $date } || 0;
 
 		}
 
@@ -14159,7 +14136,7 @@ sub HTMLMainDaily{
 			  . '</td>';
 
 		if ( $ShowDaysOfMonthStats =~ /V/i ) {
-			$data = int($DayVisits{ $year . $month . $day } || 0 );
+			$data = int($DayVisits{ $date } || 0 );
 			
 			$height = ($max_v > 0) ? $data / $max_v * $BarHeight  : 0;
 				
@@ -14169,7 +14146,7 @@ sub HTMLMainDaily{
 		}
 
 		if ( $ShowDaysOfMonthStats =~ /P/i ) {
-			$data = int($DayPages{ $year . $month . $day } || 0 );
+			$data = int($DayPages{ $date } || 0 );
 
 			$height = ($max_p > 0) ? $data / $max_p * $BarHeight : 0;
 
@@ -14180,7 +14157,7 @@ sub HTMLMainDaily{
 
 		if ( $ShowDaysOfMonthStats =~ /H/i ) {
 
-			$data = int($DayHits{ $year . $month . $day } || 0 );
+			$data = int($DayHits{ $date } || 0 );
 
 			$height = ($max_h > 0) ? $data / $max_h * $BarHeight : 0;
 
@@ -14191,7 +14168,7 @@ sub HTMLMainDaily{
 
 		if ( $ShowDaysOfMonthStats =~ /B/i ) {
 
-			$data = int($DayBytes{ $year . $month . $day } || 0 );
+			$data = int($DayBytes{ $date } || 0 );
 
 			$height = ($max_k > 0) ? $data / $max_k * $BarHeight : 0;
 
@@ -14263,8 +14240,10 @@ sub HTMLMainDaily{
 			my $year  = $1;
 			my $month = $2;
 			my $day   = $3;
-			if ( !DateIsValid( $day, $month, $year ) ) { next; }    # If not an existing day, go to next
-			my $dayofweekcursor = DayOfWeek( $day, $month, $year );
+			
+			if ( !DateIsValid( $3, $2, $1 ) ) { next; } # If not an existing day, go to next
+
+			my $dayofweekcursor = DayOfWeek( $3, $2, $1 );
 			$bars .= "<td" . ($dayofweekcursor =~ /[06]/ ? " bgcolor=\"#$color_weekend\"" : "") . ">"
 			. (!$StaticLinks && $day == $nowday && $month == $nowmonth && $year == $nowyear ? '<span class="currentday">' : '')
 			. "$day<br /><span style=\"font-size: " . ($FrameName ne 'mainright' && $QueryString !~ /buildpdf/i ? "0.5" : "0.4" ) . "rem;\">" . $MonthNumLib{$month} . "</span>"
@@ -14323,57 +14302,56 @@ sub HTMLMainDaily{
 sub HTMLMainDaysofWeek{
 	my $firstdaytocountaverage = shift;
 	my $lastdaytocountaverage = shift;
-    my $NewLinkParams = shift;
-    my $NewLinkTarget = shift;	
+  my $NewLinkParams = shift;
+  my $NewLinkTarget = shift;	
     
 	if ($Debug) { debug( "ShowDaysOfWeekStats", 2 ); }
-			print "$Center<a name=\"daysofweek\">&nbsp;</a><br />\n";
-			my $title = "$Message[91]";
-			&tab_head( "$title", 18, 0, 'daysofweek' );
-			print "<tr>";
-			print "<td align=\"center\">";
-			print "<center>\n";
 
-			my $max_p = my $max_h = my $max_k = 0;    # Start from 0 because can be lower than 1
-			                        # Get average value for day of week
-			my @avg_dayofweek_nb = ();
-			my @avg_dayofweek_p  = ();
-			my @avg_dayofweek_h  = ();
-			my @avg_dayofweek_k  = ();
-			foreach my $daycursor (
-				$firstdaytocountaverage .. $lastdaytocountaverage )
-			{
-				$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
-				my $year  = $1;
-				my $month = $2;
-				my $day   = $3;
-				if ( !DateIsValid( $day, $month, $year ) ) {
-					next;
-				}    # If not an existing day, go to next
-				my $dayofweekcursor = DayOfWeek( $day, $month, $year );
-				$avg_dayofweek_nb[$dayofweekcursor]
-				  ++; # Increase number of day used to count for this day of week
-				$avg_dayofweek_p[$dayofweekcursor] +=
-				  ( $DayPages{$daycursor} || 0 );
-				$avg_dayofweek_h[$dayofweekcursor] +=
-				  ( $DayHits{$daycursor} || 0 );
-				$avg_dayofweek_k[$dayofweekcursor] +=
-				  ( $DayBytes{$daycursor} || 0 );
-			}
-			for (@DOWIndex) {
-				if ( $avg_dayofweek_nb[$_] ) {
-					$avg_dayofweek_p[$_] =
-					  $avg_dayofweek_p[$_] / $avg_dayofweek_nb[$_];
-					$avg_dayofweek_h[$_] =
-					  $avg_dayofweek_h[$_] / $avg_dayofweek_nb[$_];
-					$avg_dayofweek_k[$_] =
-					  $avg_dayofweek_k[$_] / $avg_dayofweek_nb[$_];
+	my $title = "$Message[91]";
+	
+	my $max_p = my $max_h = my $max_k = 0;
+	my @avg_dayofweek_nb = ();
+	my @avg_dayofweek_p  = ();
+	my @avg_dayofweek_h  = ();
+	my @avg_dayofweek_k  = ();
+	
+	print "$Center<a name=\"daysofweek\">&nbsp;</a><br />\n";
+	&tab_head( "$title", 18, 0, 'daysofweek' );
+	print "<tr>";
+	print "<td align=\"center\">";
+	print "<center>\n";
 
-		  		if ( $avg_dayofweek_p[$_] > $max_p ) { $max_p = $avg_dayofweek_p[$_]; }
-					if ( $avg_dayofweek_h[$_] > $max_h ) { $max_h = $avg_dayofweek_h[$_];	}
-					if ( $avg_dayofweek_k[$_] > $max_k ) { $max_k = $avg_dayofweek_k[$_];	}
-				}
-				else {
+	foreach my $daycursor (
+		$firstdaytocountaverage .. $lastdaytocountaverage )
+		{
+			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
+			my $year  = $1;
+			my $month = $2;
+			my $day   = $3;
+
+			if ( !DateIsValid( $3, $2, $1 ) ) { next; } # If not an existing day, go to next
+			
+			my $dayofweekcursor = DayOfWeek( $3, $2, $1 );
+			
+			$avg_dayofweek_nb[$dayofweekcursor]++; # Increase number of day used to count for this day of week
+			$avg_dayofweek_p[$dayofweekcursor] += ( $DayPages{$daycursor} || 0 );
+			$avg_dayofweek_h[$dayofweekcursor] += ( $DayHits{$daycursor} || 0 );
+			$avg_dayofweek_k[$dayofweekcursor] += ( $DayBytes{$daycursor} || 0 );
+		}
+		
+		for (@DOWIndex) {
+			
+			if ( $avg_dayofweek_nb[$_] ) {
+
+				$avg_dayofweek_p[$_] = $avg_dayofweek_p[$_] / $avg_dayofweek_nb[$_];
+				$avg_dayofweek_h[$_] = $avg_dayofweek_h[$_] / $avg_dayofweek_nb[$_];
+				$avg_dayofweek_k[$_] = $avg_dayofweek_k[$_] / $avg_dayofweek_nb[$_];
+
+		  	if ( $avg_dayofweek_p[$_] > $max_p ) { $max_p = $avg_dayofweek_p[$_]; }
+				if ( $avg_dayofweek_h[$_] > $max_h ) { $max_h = $avg_dayofweek_h[$_];	}
+				if ( $avg_dayofweek_k[$_] > $max_k ) { $max_k = $avg_dayofweek_k[$_];	}
+			} else {
+
 					$avg_dayofweek_p[$_] = "?";
 					$avg_dayofweek_h[$_] = "?";
 					$avg_dayofweek_k[$_] = "?";
