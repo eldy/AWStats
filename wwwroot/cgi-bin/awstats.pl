@@ -299,7 +299,7 @@ use vars qw/
   )
   = ( 2, 2, 0, 2, 2, 2, 2, 2, 2 );
 use vars qw/
-  $DirLock $DirCgi $DirConfig $DirData $DirIcons $DirLang $AWScript $ArchiveFileName
+  $DirLock $DirCgi $DirConfig $DirData $DirIcons $DirImgs $DirLang $AWScript $ArchiveFileName
   $AllowAccessFromWebToFollowingIPAddresses $HTMLHeadSection $HTMLEndSection $LinksToWhoIs $LinksToIPWhoIs
   $LogFile $LogType $LogFormat $LogSeparator $Logo $LogoLink $StyleSheet $WrapperScript $SiteDomain
   $UseHTTPSLinkForUrl $URLQuerySeparators $URLWithAnchor $ErrorMessages $ShowFlagLinks
@@ -308,7 +308,8 @@ use vars qw/
 (
 	$DirLock,                                  $DirCgi,
 	$DirConfig,                                $DirData,
-	$DirIcons,                                 $DirLang,
+	$DirIcons,																 $DirImgs,
+	$DirLang,
 	$AWScript,                                 $ArchiveFileName,
 	$AllowAccessFromWebToFollowingIPAddresses, $HTMLHeadSection,
 	$HTMLEndSection,                           $LinksToWhoIs,
@@ -534,7 +535,7 @@ use vars qw/
   %_session %_browser_h %_browser_p
   %_filesize
   %_requesttime
-  %_domener_p %_domener_h %_domener_k %_errors_h %_errors_k
+  %_domener_u %_domener_p %_domener_h %_domener_k %_errors_h %_errors_k
   %_filetypes_h %_filetypes_k %_filetypes_gz_in %_filetypes_gz_out
   %_host_p %_host_h %_host_k %_host_l %_host_s %_host_u
   %_waithost_e %_waithost_l %_waithost_s %_waithost_u
@@ -936,7 +937,7 @@ sub html_head {
 				  		. " 1px; margin-top: 0px; margin-bottom: 0px; }\n";
 				print <<EOF;
 body { font: 0.75rem sans-serif, system-ui; background-color: #$color_Background; margin-top: 0; margin-bottom: 0; }
-b, .aws_title, th.aws{ font-weight: 700; }
+b, .aws_title, th.aws{ font-weight: 700 }
 th{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; text-align:center; color: #$color_titletext; }
 td{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; text-align:center; color: #$color_text; }
 .aws_blank  { font-size: 0.9rem; background-color: #$color_Background; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }
@@ -945,47 +946,51 @@ td{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-widt
 .aws_button{ border: 1px solid #ccd7e0; background-image : url($DirIcons/other/button.gif); }
 th.aws{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; font-size: 0.9rem; }
 td.aws{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; text-align:$dir; color: #$color_text; padding: 0px;}
-td.awsm{ border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; border-bottom-width: 0px; text-align:$dir; color: #$color_text; padding: 0px; }
+td.awsm{ border-left-widthidth: 0px; border-right-width: 0px; border-top-width: 0px; border-bottom-width: 0px; text-align:$dir; color: #$color_text; padding: 0px; }
 a:link { color: #$color_link; text-decoration: none; }
 a:visited{ color: #$color_link; text-decoration: none; }
 a:hover{ color: #$color_hover; text-decoration: underline; }
 .multi-data-table { display: flex; gap: 5dvw; flex-wrap: wrap; justify-content: center }
-.data-table { border-spacing: 0 2px; }
+.data-table { border-spacing: 0 2px }
 .data-table tbody tr { transition: background 0.5s; transition: transform 0.2s ease-out }
 .data-table tbody tr:hover { background: rgba(0,0,0,0.2); transform: scale(1.05) translateX(2px); }
-.data-table th, .data-table td { padding: 2px; }
-.data-table td div { padding: 1px 2px; }
+.data-table th, .data-table td { padding: 2px }
+.data-table td div { padding: 1px 2px }
 .data-table td { text-align: right; font-weight: 700; }
-.data-table th, .data-table td:first-child { font-weight: 400; }
+.data-table th, .data-table td:first-child:not('.country') { font-weight: 400 }
 .data-table tfoot .data-table-sum td { border-top: 1px solid rgba(192,192,192,0.2); }
 .data-table .data-table-sum { font-size : 1.2em }
 .data-table .title { color: var(--light-color); background : var(--dark-color) }
-.currentday{ font-weight: 900; }
+.domains-table{ width: 100% }
+.currentday{ font-weight: 900 }
 .bar{  }
-.bar-horizontal{ height: 4px; }
+.bar-horizontal{ height: 4px }
 .bar-vertical{ display: inline-block; width: 4px; }
-.color-u{ background-color: var(--aws-color-u); }
-.color-v{ background-color: var(--aws-color-v); }
-.color-p{ background-color: var(--aws-color-p); }
-.color-h{ background-color: var(--aws-color-h); }
-.color-b{ background-color: var(--aws-color-b); }
-.color-e{ background-color: var(--aws-color-e); }
-.color-x{ background-color: var(--aws-color-x); }
-.color-s{ background-color: var(--aws-color-s); }
+.color-u{ background-color: var(--aws-color-u) }
+.color-v{ background-color: var(--aws-color-v) }
+.color-p{ background-color: var(--aws-color-p) }
+.color-h{ background-color: var(--aws-color-h) }
+.color-b{ background-color: var(--aws-color-b) }
+.color-e{ background-color: var(--aws-color-e) }
+.color-x{ background-color: var(--aws-color-x) }
+.color-s{ background-color: var(--aws-color-s) }
 .clock{ display: inline-block; vertical-align: bottom; height: 16px; width: 16px; margin: 0 5px; border-radius: 50%; }
 .clock-night{ background: conic-gradient(rgba(30, 28, 97, 1) 330deg, rgba(244, 240, 144, 1) 30deg); }
 .clock-day{ background: conic-gradient(rgba(244, 240, 144, 1) 330deg, rgba(30, 28, 97, 1) 30deg); }
-.hr-1{ rotate: 30deg; }
-.hr-2{ rotate: 60deg; }
-.hr-3{ rotate: 90deg; }
-.hr-4{ rotate: 120deg; }
-.hr-5{ rotate: 150deg; }
-.hr-6{ rotate: 180deg; }
-.hr-7{ rotate: 210deg; }
-.hr-8{ rotate: 240deg; }
-.hr-9{ rotate: 270deg; }
-.hr-10{ rotate: 300deg; }
-.hr-11{ rotate: 330deg; }
+.hr-1{ rotate: 30deg }
+.hr-2{ rotate: 60deg }
+.hr-3{ rotate: 90deg }
+.hr-4{ rotate: 120deg }
+.hr-5{ rotate: 150deg }
+.hr-6{ rotate: 180deg }
+.hr-7{ rotate: 210deg }
+.hr-8{ rotate: 240deg }
+.hr-9{ rotate: 270deg }
+.hr-10{ rotate: 300deg }
+.hr-11{ rotate: 330deg }
+.country { text-transform: uppercase; font-weight: 700; }
+.lighted-land{ fill: var(--aws-color-u);	var(--dark-color); stroke-width: 0.5;	fill-rule: evenodd;}
+.oceanxx{ fill: #4477DD !important; stroke-width: 0 !important; }
 EOF
 			}
 
@@ -1131,7 +1136,7 @@ sub tab_head {
 	}
 	else {
 		print
-"<table class=\"aws_border sortable\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\" width=\"100%\">\n";
+"<table class=\"sortable\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\" width=\"100%\">\n";
 	}
 
 	if ($tooltipnb) {
@@ -2042,6 +2047,12 @@ sub Parse_Config {
 			if ( $QueryString !~ /diricons=([^\s&]+)/i ) { $DirIcons = $value; }
 			next;
 		}
+
+		if ( $param =~ /^DirImgs/ ) {
+			if ( $QueryString !~ /dirimgs=([^\s&]+)/i ) { $DirImgs = $value; }
+			next;
+		}
+
 		if ( $param =~ /^SiteDomain/ ) {
 
 			# No regex test as SiteDomain is always exact value
@@ -15047,38 +15058,87 @@ sub HTMLMainCountries{
 	my $NewLinkTarget = shift;
 	
 	if ($Debug) { debug( "ShowDomainsStats", 2 ); }
+
+	my $total_u = my $total_v = my $total_p = my $total_h = my $total_k = 0;
+	my $rest_u  = my $rest_v  = my $rest_p  = my $rest_h  = my $rest_k = 0; 
+	my $max_u = my $max_p = my $max_h = 1;
+
 	print "$Center<a name=\"countries\">&nbsp;</a><br />\n";
-	my $title =
-"$Message[25] ($Message[77] $MaxNbOf{'Domain'}) &nbsp; - &nbsp; <a href=\""
-	  . (
-		$ENV{'GATEWAY_INTERFACE'}
-		  || !$StaticLinks
-		? XMLEncode("$AWScript${NewLinkParams}output=alldomains")
-		: "$StaticLinks.alldomains.$StaticExt"
-	  )
+
+	print <<EOF;
+<script>
+
+document.addEventListener("DOMContentLoaded", (d) => {
+	let worldmap = document.getElementById('worldmap');
+
+	fetch('$DirImgs/BlankMap-World.svg').then(response=>response.text()).then(data=>{ 
+	
+	worldmap.innerHTML = data;
+	
+	let realMap = worldmap.querySelector('svg');
+	realMap.setAttribute('width', '100%');
+	realMap.setAttribute('height', '100%');
+	realMap.setAttribute('viewBox', '300 20 2300 1170');
+
+	let domainsTable = document.querySelector('.domains-table');
+
+	[...domainsTable.querySelectorAll('.flag')].forEach(el => {
+		let country =	worldmap.querySelector('g#' + el.dataset.country);
+			
+		if(country !== null){
+
+			[...country.querySelectorAll('.landxx')].forEach(el => {
+    		el.classList.remove('landxx');
+    		el.classList.add('lighted-land');
+  		});
+
+		} else {
+			
+			country = worldmap.querySelector('path#' + el.dataset.country);
+
+			if(country !== null){
+				country.classList.remove('landxx');
+    		country.classList.add('lighted-land');
+			}
+		}
+  });
+ });
+});
+</script>'
+EOF
+
+	my $title = "$Message[25] ($Message[77] $MaxNbOf{'Domain'}) &nbsp; - &nbsp; <a href=\""
+	  . (	$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? XMLEncode("$AWScript${NewLinkParams}output=alldomains") : "$StaticLinks.alldomains.$StaticExt" )
 	  . "\"$NewLinkTarget>$Message[80]</a>";
 	  
-
-    if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
-       # extend the title to include the added link
-           $title = "$title &nbsp; - &nbsp; <a href=\"" . (XMLEncode(
-               "$AddLinkToExternalCGIWrapper" . "?section=DOMAIN&baseName=$DirData/$PROG"
-           . "&month=$MonthRequired&year=$YearRequired&day=$DayRequired"
-           . "&siteConfig=$SiteConfig" )
-           . "\"$NewLinkTarget>$Message[179]</a>");
-    }
+  if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
+    # extend the title to include the added link
+    $title = "$title &nbsp; - &nbsp; <a href=\"" . (XMLEncode(
+    	"$AddLinkToExternalCGIWrapper" . "?section=DOMAIN&baseName=$DirData/$PROG"
+      . "&month=$MonthRequired&year=$YearRequired&day=$DayRequired"
+      . "&siteConfig=$SiteConfig" ) . "\"$NewLinkTarget>$Message[179]</a>");
+  }
         	  
 	&tab_head( "$title", 19, 0, 'countries' );
 	
-	my $total_u = my $total_v = my $total_p = my $total_h = my $total_k = 0;
-	my $max_h = 1;
+	foreach ( values %_domener_u ) {
+		if ( $_ > $max_u ) { $max_u = $_; }
+	}
+
+	foreach ( values %_domener_p ) {
+		if ( $_ > $max_p ) { $max_p = $_; }
+	}
+
 	foreach ( values %_domener_h ) {
 		if ( $_ > $max_h ) { $max_h = $_; }
 	}
+
 	my $max_k = 1;
+	
 	foreach ( values %_domener_k ) {
 		if ( $_ > $max_k ) { $max_k = $_; }
 	}
+
 	my $count = 0;
 	
 	&BuildKeyList(
@@ -15086,151 +15146,99 @@ sub HTMLMainCountries{
 		\%_domener_h,       \%_domener_p
 	);
 	
-	# print the map
-	if (scalar @keylist > 1){
-		foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
-		{
-			my @blocklabel = ();
-			my @valdata = ();
-			my $cnt = 0;
-			foreach my $key (@keylist) {
-				push @valdata, int( $_domener_h{$key} );
-				push @blocklabel, $DomainsHashIDLib{$key};
-				$cnt++;
-				if ($cnt > 99) { last; }
-			}
-			print "<tr><td colspan=\"7\" align=\"center\">";
-			my $function = "ShowGraph_$pluginname";
-			&$function(
-				"AWStatsCountryMap",              "countries_map",
-				0, 						\@blocklabel,
-				0,           			0,
-				0,              		0,
-				0,          			\@valdata
-			);
-			print "</td></tr>";
-		}
-	}
-	
-	print
-"<tr bgcolor=\"#$color_TableBGRowTitle\"><th width=\"$WIDTHCOLICON\">&nbsp;</th><th colspan=\"2\">$Message[17]</th>";
+	# # print the map
+	# if (scalar @keylist > 1){
+	# 	foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
+	# 	{
+	# 		my @blocklabel = ();
+	# 		my @valdata = ();
+	# 		my $cnt = 0;
+	# 		foreach my $key (@keylist) {
+	# 			push @valdata, int( $_domener_h{$key} );
+	# 			push @blocklabel, $DomainsHashIDLib{$key};
+	# 			$cnt++;
+	# 			if ($cnt > 99) { last; }
+	# 		}
+	# 		print "<tr><td colspan=\"7\" align=\"center\">";
+	# 		my $function = "ShowGraph_$pluginname";
+	# 		&$function(
+	# 			"AWStatsCountryMap",              "countries_map",
+	# 			0, 						\@blocklabel,
+	# 			0,           			0,
+	# 			0,              		0,
+	# 			0,          			\@valdata
+	# 		);
+	# 		print "</td></tr>";
+	# 	}
+	# }
 
-	## to add unique visitors and number of visits by calculation of average of the relation with total
-	## pages and total hits, and total visits and total unique
-	## by Josep Ruano @ CAPSiDE
-	if ( $ShowDomainsStats =~ /U/i ) {
-		print "<th class=\"color-u\" width=\"80\""
-		  . Tooltip(2)
-		  . ">$Message[11]</th>";
-	}
-	if ( $ShowDomainsStats =~ /V/i ) {
-		print "<th class=\"color-v\" width=\"80\""
-		  . Tooltip(1)
-		  . ">$Message[10]</th>";
-	}
-	if ( $ShowDomainsStats =~ /P/i ) {
-		print "<th class=\"color-p\" width=\"80\""
-		  . Tooltip(3)
-		  . ">$Message[56]</th>";
-	}
-	if ( $ShowDomainsStats =~ /H/i ) {
-		print "<th class=\"color-h\" width=\"80\""
-		  . Tooltip(4)
-		  . ">$Message[57]</th>";
-	}
-	if ( $ShowDomainsStats =~ /B/i ) {
-		print "<th class=\"color-k\" width=\"80\""
-		  . Tooltip(5)
-		  . ">$Message[75]</th>";
-	}
-	print "<th>&nbsp;</th>";
-	print "</tr>\n";
-	
+	print '<div class="multi-data-table" style="background-color: #4477DD;">';
+	print '<div id="worldmap" style="width: 80dvw; background-color: #4477DD; border-radius: 5px"></div>';
+	print '<table class="data-table domains-table">';
+
+	#header
+	print HTMLDataTableHeader($Message[148], $ShowDomainsStats);
+
+	# body
+	print '<tbody>';
+
 	foreach my $key (@keylist) {
+
 		my ( $_domener_u, $_domener_v );
-		my $bredde_p = 0;
-		my $bredde_h = 0;
-		my $bredde_k = 0;
-		my $bredde_u = 0;
-		my $bredde_v = 0;
-		if ( $max_h > 0 ) {
-			$bredde_p =
-			  int( $BarWidth * $_domener_p{$key} / $max_h ) + 1;
-		}    # use max_h to enable to compare pages with hits
-		if ( $_domener_p{$key} && $bredde_p == 1 ) { $bredde_p = 2; }
-		if ( $max_h > 0 ) {
-			$bredde_h =
-			  int( $BarWidth * $_domener_h{$key} / $max_h ) + 1;
-		}
-		if ( $_domener_h{$key} && $bredde_h == 1 ) { $bredde_h = 2; }
-		if ( $max_k > 0 ) {
-			$bredde_k =
-			  int( $BarWidth * ( $_domener_k{$key} || 0 ) / $max_k ) +
-			  1;
-		}
-		if ( $_domener_k{$key} && $bredde_k == 1 ) { $bredde_k = 2; }
 		my $newkey = lc($key);
+		my $data = '';
+
+		print '<tr>';
+
 		if ( $newkey eq 'ip' || !$DomainsHashIDLib{$newkey} ) {
-			print
-"<tr><td width=\"$WIDTHCOLICON\"><img src=\"$DirIcons\/flags\/ip.png\" height=\"14\""
-			  . AltTitle("$Message[0]")
-			  . " /></td><td class=\"aws\">$Message[0]</td><td>$newkey</td>";
+			print '<td>' . $Message[0] . ' </td>';
 		}
 		else {
-			print '<tr><td width="' . $WIDTHCOLICON . '" class="flag" data-country="' . $newkey . '"></td>';
-print "<td class=\"aws\">$DomainsHashIDLib{$newkey}</td><td>$newkey</td>";
+			print '<td class="country">' . $DomainsHashIDLib{$newkey} . ' <small>( ' . $newkey . ' )</small> <span class="flag" data-country="' . $newkey . '"></span></td>';
 		}
-		## to add unique visitors and number of visits, by Josep Ruano @ CAPSiDE
+
+		my $domener_temp = ($_domener_p{$key} ? $_domener_p{$key} / $TotalPages : 0) + $_domener_h{$key} / $TotalHits;
+
 		if ( $ShowDomainsStats =~ /U/i ) {
-			$_domener_u = (
-				  $_domener_p{$key}
-				? $_domener_p{$key} / $TotalPages
-				: 0
-			);
-			$_domener_u += ( $_domener_h{$key} / $TotalHits );
-			$_domener_u =
-			  sprintf( "%.0f", ( $_domener_u * $TotalUnique ) / 2 );
-			print "<td>".Format_Number($_domener_u)." ("
-			  . sprintf( "%.1f%", 100 * $_domener_u / $TotalUnique )
-			  . ")</td>";
+
+			$data = int( $domener_temp * $TotalUnique / 2 );
+
+			print HTMLDataCellWithBar('u', $data , Format_Number($data), $TotalUnique);
+
 		}
+
 		if ( $ShowDomainsStats =~ /V/i ) {
-			$_domener_v = (
-				  $_domener_p{$key}
-				? $_domener_p{$key} / $TotalPages
-				: 0
-			);
-			$_domener_v += ( $_domener_h{$key} / $TotalHits );
-			$_domener_v =
-			  sprintf( "%.0f", ( $_domener_v * $TotalVisits ) / 2 );
-			print "<td>".Format_Number($_domener_v)." ("
-			  . sprintf( "%.1f%", 100 * $_domener_v / $TotalVisits )
-			  . ")</td>";
+
+			$data = int( $domener_temp * $TotalVisits / 2 );
+
+			print HTMLDataCellWithBar('v', $data , Format_Number($data), $TotalVisits);
+		
 		}
 
 		if ( $ShowDomainsStats =~ /P/i ) {
-			print "<td>"
-			  . ( $_domener_p{$key} ? Format_Number($_domener_p{$key}) : '&nbsp;' )
-			  . "</td>";
-		}
-		if ( $ShowDomainsStats =~ /H/i ) {
-			print "<td>".Format_Number($_domener_h{$key})."</td>";
-		}
-		if ( $ShowDomainsStats =~ /B/i ) {
-			print "<td>" . Format_Bytes( $_domener_k{$key} ) . "</td>";
-		}
-		print "<td class=\"aws\">";
 
-		if ( $ShowDomainsStats =~ /P/i ) {
-			print HtmlBarH('p', $bredde_p);
+			$data = int($_domener_p{$key} || 0);
+
+			print HTMLDataCellWithBar('p', $data , Format_Number($data), $TotalPages);
+
 		}
+
 		if ( $ShowDomainsStats =~ /H/i ) {
-			print HtmlBarH('h', $bredde_h);
+
+			$data = int($_domener_h{$key} || 0);
+
+			print HTMLDataCellWithBar('h', $data , Format_Number($data), $TotalHits);
+
 		}
+
 		if ( $ShowDomainsStats =~ /B/i ) {
-			print HtmlBarH('k', $bredde_k);
+
+			$data = int($_domener_k{$key} || 0);
+
+			print HTMLDataCellWithBar('b', $data , Format_Bytes($data), $TotalBytes);
+
 		}
-		print "</td>";
+
 		print "</tr>\n";
 
 		$total_u += $_domener_u;
@@ -15240,29 +15248,34 @@ print "<td class=\"aws\">$DomainsHashIDLib{$newkey}</td><td>$newkey</td>";
 		$total_k += $_domener_k{$key} || 0;
 		$count++;
 	}
-	my $rest_u = $TotalUnique - $total_u;
-	my $rest_v = $TotalVisits - $total_v;
-	my $rest_p = $TotalPages - $total_p;
-	my $rest_h = $TotalHits - $total_h;
-	my $rest_k = $TotalBytes - $total_k;
-	if (   $rest_u > 0
-		|| $rest_v > 0
-		|| $rest_p > 0
-		|| $rest_h > 0
-		|| $rest_k > 0 )
-	{    # All other domains (known or not)
-		print
-"<tr><td width=\"$WIDTHCOLICON\">&nbsp;</td><td colspan=\"2\" class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
-		if ( $ShowDomainsStats =~ /U/i ) { print "<td>$rest_u</td>"; }
-		if ( $ShowDomainsStats =~ /V/i ) { print "<td>$rest_v</td>"; }
-		if ( $ShowDomainsStats =~ /P/i ) { print "<td>$rest_p</td>"; }
-		if ( $ShowDomainsStats =~ /H/i ) { print "<td>$rest_h</td>"; }
-		if ( $ShowDomainsStats =~ /B/i ) {
-			print "<td>" . Format_Bytes($rest_k) . "</td>";
-		}
-		print "<td class=\"aws\">&nbsp;</td>";
+
+	$rest_u = $TotalUnique - $total_u;
+	$rest_v = $TotalVisits - $total_v;
+	$rest_p = $TotalPages - $total_p;
+	$rest_h = $TotalHits - $total_h;
+	$rest_k = $TotalBytes - $total_k;
+
+	if ( $rest_u > 0 || $rest_v > 0 || $rest_p > 0 || $rest_h > 0 || $rest_k > 0 ) {    # All other domains (known or not)
+
+		print '<tr><td>' . $Message[2] . '</td>';
+
+		print (( $ShowDomainsStats =~ /U/i ) ? HTMLDataCellWithBar('u', $rest_u , Format_Number($rest_u), $TotalUnique) : '');
+
+		print (( $ShowDomainsStats =~ /V/i ) ? HTMLDataCellWithBar('v', $rest_v , Format_Number($rest_v), $TotalVisits) : '');
+
+		print (( $ShowDomainsStats =~ /P/i ) ? HTMLDataCellWithBar('p', $rest_p , Format_Number($rest_p), $TotalPages) : '');
+
+		print (( $ShowDomainsStats =~ /H/i ) ? HTMLDataCellWithBar('h', $rest_h , Format_Number($rest_h), $TotalHits) : '');
+
+		print (( $ShowDomainsStats =~ /B/i ) ? HTMLDataCellWithBar('b', $rest_k , Format_Bytes($rest_k), $TotalBytes) : '');
+
 		print "</tr>\n";
+
+		print '</table>';
+		print '</div>';
+	
 	}
+
 	&tab_end();
 }
 
