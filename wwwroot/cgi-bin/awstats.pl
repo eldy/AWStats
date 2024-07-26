@@ -13786,9 +13786,8 @@ sub HTMLMainMonthly{
 
 	if ($Debug) { debug( "ShowMonthStats", 2 ); }
 
-	my $title = "$Message[162]";
+	my $title = $Message[162];
 
-	my $graphPlugin = 0;
 	my $not_empty_months = 0;
 	my $average_nb = my $average_u = my $average_v = my $average_p = 0;
 	my $average_h = my $average_k = 0;
@@ -13802,21 +13801,19 @@ sub HTMLMainMonthly{
 
 	my @blocklabel = ();
 	my @vallabel = (
-			"$Message[11]", "$Message[10]",
-			"$Message[56]", "$Message[57]",
-			"$Message[75]"
+			$Message[11], $Message[10],
+			$Message[56], $Message[57],
+			$Message[75]
 	);
-	my @valcolor = ( "$color_u", "$color_v", "$color_p", "$color_h", "$color_k" );
+	my @valcolor = ( $color_u, $color_v, $color_p, $color_h, $color_k );
 	my @valmax = ( $max_v, $max_v, $max_h, $max_h, $max_k );
 	my @valtotal = ( $total_u, $total_v, $total_p, $total_h, $total_k );
 	my @valaverage = ();
 	my @valdata = ();
 	my $xx      = 0;
 
-	if (%{ $PluginsLoaded{'ShowGraph'} }) {
-  	$graphPlugin = 1;
-  }
-
+	my $graphPlugin = (%{ $PluginsLoaded{'ShowGraph'} }) ? 1 : 0;
+  
 	# Define total and max
 	for ( my $ix = 1 ; $ix <= 12 ; $ix++ )
 	{
@@ -13939,7 +13936,7 @@ sub HTMLMainMonthly{
 
 			my $function = "ShowGraph_$pluginname";
 			&$function(
-				"$title",        "month",
+				$title,        'month',
 				$ShowMonthStats, \@blocklabel,
 				\@vallabel,      \@valcolor,
 				\@valmax,        \@valtotal,
@@ -13949,10 +13946,7 @@ sub HTMLMainMonthly{
 
 	} elsif($ShowBars == 1) {
 
-		print '<table class="bar-table">'
-		. '<tr>'
-		. $bars
-		. '</tr>'
+		print '<table class="bar-table">'	. '<tr>' . $bars . '</tr>'
 		. '<tr>';
 
 		for ( my $ix = 1 ; $ix <= 12 ; $ix++ ) {
@@ -14015,13 +14009,12 @@ sub HTMLMainMonthly{
 # Return:       -
 #------------------------------------------------------------------------------
 sub HTMLMainDaily{
+	if ($Debug) { debug( "ShowDaysOfMonthStats", 2 ); }
+
 	my $firstdaytocountaverage = shift;
 	my $lastdaytocountaverage = shift;
 	my $firstdaytoshowtime = shift;
 	my $lastdaytoshowtime = shift;
-	
-	if ($Debug) { debug( "ShowDaysOfMonthStats", 2 ); }
-	
 	my $NewLinkParams = ${QueryString};
 	
 	$NewLinkParams =~ s/(^|&|&amp;)update(=\w*|$)//i;
@@ -14037,7 +14030,6 @@ sub HTMLMainDaily{
 	
 	my $NewLinkTarget = '';
 	my $title = "$Message[138]";
-	my $graphPlugin = 0;
 	my $not_empty_days = 0;
 	my $average_v = my $average_p = 0;
 	my $average_h = my $average_k = 0;
@@ -14061,9 +14053,7 @@ sub HTMLMainDaily{
 		$NewLinkTarget = " target=\"_parent\"";
 	}
 
-	if (%{ $PluginsLoaded{'ShowGraph'} }) {
-  	$graphPlugin = 1;
-  }
+	my $graphPlugin = (%{ $PluginsLoaded{'ShowGraph'} }) ? 1 : 0;
 
 	if ($AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
     # extend the title to include the added link
@@ -14192,7 +14182,7 @@ sub HTMLMainDaily{
 		{
 			my $function = "ShowGraph_$pluginname";
 			&$function(
-				"$title",              "daysofmonth",
+				$title,              'daysofmonth',
 				$ShowDaysOfMonthStats, \@blocklabel,
 				\@vallabel,            \@valcolor,
 				\@valmax,              \@valtotal,
@@ -14211,7 +14201,7 @@ sub HTMLMainDaily{
 		. '</td>' . '</tr>';
 
 		# Show lib for day
-		$bars .= "<tr valign=\"middle\">";
+		$bars .= '<tr>';
 		foreach my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )	{
 
 			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
