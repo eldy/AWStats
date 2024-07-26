@@ -14591,7 +14591,7 @@ sub HTMLMainDaysofWeek{
 						print HtmlBarV('h', $bredde_h,  "$Message[57]: $avg_dayofweek_h[$_]");
 					}
 					if ( $ShowDaysOfWeekStats =~ /B/i ) {
-						print HtmlBarV('k', $bredde_k,  "$Message[75]: $avg_dayofweek_k[$_]");
+						print HtmlBarV('b', $bredde_k,  "$Message[75]: $avg_dayofweek_k[$_]");
 					}
 					print "</td>\n";
 				}
@@ -14884,7 +14884,7 @@ sub HTMLMainHours{
 				print HtmlBarV('h', $bredde_h,  "$Message[57]: " . int( $_time_h[$ix] ));
 			}
 			if ( $ShowHoursStats =~ /B/i ) {
-				print HtmlBarV('k', $bredde_k,  "$Message[75]: " . int( $_time_k[$ix] ));
+				print HtmlBarV('b', $bredde_k,  "$Message[75]: " . int( $_time_k[$ix] ));
 			}
 			print "</td>\n";
 		}
