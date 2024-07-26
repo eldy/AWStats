@@ -14086,9 +14086,9 @@ sub HTMLMainDaily{
 	my $lastdaytoshowtime = shift;
 	
 	if ($Debug) { debug( "ShowDaysOfMonthStats", 2 ); }
-	print "$Center<a name=\"daysofmonth\">&nbsp;</a><br />\n";
-
+	
 	my $NewLinkParams = ${QueryString};
+	
 	$NewLinkParams =~ s/(^|&|&amp;)update(=\w*|$)//i;
 	$NewLinkParams =~ s/(^|&|&amp;)staticlinks(=\w*|$)//i;
 	$NewLinkParams =~ s/(^|&|&amp;)year=[^&]*//i;
@@ -14097,43 +14097,65 @@ sub HTMLMainDaily{
 	$NewLinkParams =~ s/(&amp;|&)+/&amp;/i;
 	$NewLinkParams =~ s/^&amp;//;
 	$NewLinkParams =~ s/&amp;$//;
-	if ($NewLinkParams) { $NewLinkParams = "${NewLinkParams}&amp;"; }
-	my $NewLinkTarget = '';
-
-	if ( $FrameName eq 'mainright' ) {
-		$NewLinkTarget = " target=\"_parent\"";
-	}
-
-	my $title = "$Message[138]";
-
-    if ($AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
-        # extend the title to include the added link
-            $title = "$title &nbsp; - &nbsp; <a href=\"".(XMLEncode(
-                "$AddLinkToExternalCGIWrapper". "?section=DAY&baseName=$DirData/$PROG"
-           . "&month=$MonthRequired&year=$YearRequired&day=$DayRequired"
-           . "&siteConfig=$SiteConfig" )
-           . "\"$NewLinkTarget>$Message[179]</a>");
-    }
-
-	&tab_head( "$title", 0, 0, 'daysofmonth' );
-	print "<tr>";
-	print "<td align=\"center\">\n";
-	print "<center>\n";
 	
+	if ($NewLinkParams) { $NewLinkParams = "${NewLinkParams}&amp;"; }
+	
+	my $NewLinkTarget = '';
+	my $title = "$Message[138]";
+	my $graphPlugin = 0;
 	my $not_empty_days = 0;
 	my $average_v = my $average_p = 0;
 	my $average_h = my $average_k = 0;
 	my $total_u = my $total_v = my $total_p = my $total_h = my $total_k = 0;
 	my $max_v = my $max_p = my $max_h = my $max_k = 0;    # Start from 0 because can be lower than 1
+	my $height = 0;
+	my $bars = '';
+	my $data = '';
+	my $tableData = '';
+
+	my @blocklabel = ();
+	my @valcolor   = ("$color_v", "$color_p", "$color_h", "$color_k" );
+	my @valmax     = ($max_v,   $max_h,   $max_h,   $max_k );
+	my @valtotal   = ($total_v, $total_p, $total_h, $total_k );
+	my @valaverage = ($average_v, $average_p, $average_h, $average_k );
+	my @valdata = ();
+	my $xx      = 0;
+	my @vallabel = ("$Message[10]", "$Message[56]",	"$Message[57]", "$Message[75]");
+
+	if ( $FrameName eq 'mainright' ) {
+		$NewLinkTarget = " target=\"_parent\"";
+	}
+
+	if (%{ $PluginsLoaded{'ShowGraph'} }) {
+  	$graphPlugin = 1;
+  }
+
+	if ($AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
+    # extend the title to include the added link
+    $title = "$title &nbsp; - &nbsp; <a href=\"" . (XMLEncode(
+      "$AddLinkToExternalCGIWrapper". "?section=DAY&baseName=$DirData/$PROG"
+      . "&month=$MonthRequired&year=$YearRequired&day=$DayRequired"
+      . "&siteConfig=$SiteConfig" )
+      . "\"$NewLinkTarget>$Message[179]</a>"
+      );
+  }
+
+  print "$Center<a name=\"daysofmonth\">&nbsp;</a><br />\n";
+		
+	&tab_head( "$title", 0, 0, 'daysofmonth' );
+	print "<tr>";
+	print "<td align=\"center\">\n";
+	print "<center>\n";
+	
 	foreach my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )
 	{
 		$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
 		my $year  = $1;
 		my $month = $2;
 		my $day   = $3;
-		if ( !DateIsValid( $day, $month, $year ) ) {
-			next;
-		}    # If not an existing day, go to next
+		if ( !DateIsValid( $day, $month, $year ) ) { next; } # If not an existing day, go to next
+
+		my $dayofweekcursor = DayOfWeek( $day, $month, $year );
 
 		if($DayHits{ $year . $month . $day } > 0){
 				$not_empty_days++;
@@ -14151,170 +14173,145 @@ sub HTMLMainDaily{
 		$max_h = ( ( $DayHits{ $year . $month . $day } || 0 ) > $max_h ) ? $DayHits{ $year . $month . $day } : $max_h;
 		
 		$max_k = ( ( $DayBytes{ $year . $month . $day } || 0 ) > $max_k ) ? $DayBytes{ $year . $month . $day } : $max_k;
-	}
 
-  $average_v = sprintf( "%.2f", $total_v / $not_empty_days );
-  $average_p = sprintf( "%.2f", $total_p / $not_empty_days );
-  $average_h = sprintf( "%.2f", $total_h / $not_empty_days );
-  $average_k = sprintf( "%.2f", $total_k / $not_empty_days );
+		$average_v = sprintf( "%.2f", $total_v / $not_empty_days );
+  	$average_p = sprintf( "%.2f", $total_p / $not_empty_days );
+  	$average_h = sprintf( "%.2f", $total_h / $not_empty_days );
+  	$average_k = sprintf( "%.2f", $total_k / $not_empty_days );
 
-	# Show bars for day
-	my $graphdone=0;
-	foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
-	{
-		my @blocklabel = ();
-		foreach my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )
-		{
-			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
-			my $year  = $1;
-			my $month = $2;
-			my $day   = $3;
-			if ( !DateIsValid( $day, $month, $year ) ) {
-				next;
-			}    # If not an existing day, go to next
-			my $bold =
-			  (      $day == $nowday
-				  && $month == $nowmonth
-				  && $year == $nowyear ? ':' : '' );
-			my $weekend =
-			  ( DayOfWeek( $day, $month, $year ) =~ /[06]/ ? '!' : '' );
-			push @blocklabel,
-			  "$day\n$MonthNumLib{$month}$weekend$bold";
-		}
-		my @vallabel = (
-			"$Message[10]", "$Message[56]",
-			"$Message[57]", "$Message[75]"
-		);
-		my @valcolor =
-		  ( "$color_v", "$color_p", "$color_h", "$color_k" );
-		my @valmax   = ( $max_v,   $max_h,   $max_h,   $max_k );
-		my @valtotal = ( $total_v, $total_p, $total_h, $total_k );
-		my @valaverage =
-		  ( $average_v, $average_p, $average_h, $average_k );
-		my @valdata = ();
-		my $xx      = 0;
+		if ($graphPlugin == 1) {
 
-		foreach my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )
-		{
-			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
-			my $year  = $1;
-			my $month = $2;
-			my $day   = $3;
-			if ( !DateIsValid( $day, $month, $year ) ) {
-				next;
-			}    # If not an existing day, go to next
-			$valdata[ $xx++ ] = $DayVisits{ $year . $month . $day }
-			  || 0;
+			my $bold = ($day == $nowday && $month == $nowmonth && $year == $nowyear) ? ':' : '';
+			my $weekend = (DayOfWeek( $day, $month, $year ) =~ /[06]/) ? '!' : '' ;
+			push @blocklabel, "$day\n$MonthNumLib{$month}$weekend$bold";
+			$valdata[ $xx++ ] = $DayVisits{ $year . $month . $day } || 0;
 			$valdata[ $xx++ ] = $DayPages{ $year . $month . $day } || 0;
 			$valdata[ $xx++ ] = $DayHits{ $year . $month . $day }  || 0;
 			$valdata[ $xx++ ] = $DayBytes{ $year . $month . $day } || 0;
-		}
-		my $function = "ShowGraph_$pluginname";
-		&$function(
-			"$title",              "daysofmonth",
-			$ShowDaysOfMonthStats, \@blocklabel,
-			\@vallabel,            \@valcolor,
-			\@valmax,              \@valtotal,
-			\@valaverage,          \@valdata
-		);
-		$graphdone=1;
-	}
-	# If graph was not printed by a plugin
-	if (! $graphdone) {
-		print "<table>\n";
-		print "<tr valign=\"bottom\">\n";
-		foreach my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )
-		{
-			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
-			my $year  = $1;
-			my $month = $2;
-			my $day   = $3;
-			if ( !DateIsValid( $day, $month, $year ) ) {
-				next;
-			}    # If not an existing day, go to next
-			my $bredde_v = 0;
-			my $bredde_p = 0;
-			my $bredde_h = 0;
-			my $bredde_k = 0;
-			if ( $max_v > 0 ) {
-				$bredde_v =
-				  int( ( $DayVisits{ $year . $month . $day } || 0 ) /
-					  $max_v * $BarHeight ) + 1;
-			}
-			if ( $max_h > 0 ) {
-				$bredde_p =
-				  int( ( $DayPages{ $year . $month . $day } || 0 ) /
-					  $max_h * $BarHeight ) + 1;
-			}
-			if ( $max_h > 0 ) {
-				$bredde_h =
-				  int( ( $DayHits{ $year . $month . $day } || 0 ) /
-					  $max_h * $BarHeight ) + 1;
-			}
-			if ( $max_k > 0 ) {
-				$bredde_k =
-				  int( ( $DayBytes{ $year . $month . $day } || 0 ) /
-					  $max_k * $BarHeight ) + 1;
-			}
-			print "<td>";
+
+		} else {
+	
+			$bars .=  '<td>';
+
 			if ( $ShowDaysOfMonthStats =~ /V/i ) {
-				print HtmlBarV('v', $bredde_v,  "$Message[10]: " . int( $DayVisits{ $year . $month . $day } || 0 ));
+
+				$height = ( $max_v > 0 ) ? int( ( $DayVisits{ $year . $month . $day } || 0 ) / $max_v * $BarHeight ) : 0;
+				
+				$bars .=  HtmlBarV('v', $height,  "$Message[10]: " . int( $DayVisits{ $year . $month . $day } || 0 ));
 			}
+
 			if ( $ShowDaysOfMonthStats =~ /P/i ) {
-				print HtmlBarV('p', $bredde_p,  "$Message[56]: " . int( $DayPages{ $year . $month . $day } || 0 ));
+
+				$height = ($max_h > 0 ) ? int( ( $DayPages{ $year . $month . $day } || 0 ) / $max_h * $BarHeight ) : 0;
+
+				$bars .= HtmlBarV('p', $height,  "$Message[56]: " . int( $DayPages{ $year . $month . $day } || 0 ));
 			}
+
 			if ( $ShowDaysOfMonthStats =~ /H/i ) {
-				print HtmlBarV('h', $bredde_h,  "$Message[57]: " . int( $DayHits{ $year . $month . $day } || 0 ));
+
+				$height = ( $max_h > 0 ) ? int( ( $DayHits{ $year . $month . $day } || 0 ) / $max_h * $BarHeight ) : 0;
+
+				$bars .= HtmlBarV('h', $height,  "$Message[57]: " . int( $DayHits{ $year . $month . $day } || 0 ));
+
 			}
 			if ( $ShowDaysOfMonthStats =~ /B/i ) {
-				print HtmlBarV('k', $bredde_k,  "$Message[75]: " . Format_Bytes( $DayBytes{ $year . $month . $day } ));
+
+				$height = ( $max_k > 0 ) ? int( ( $DayBytes{ $year . $month . $day } || 0 ) / $max_k * $BarHeight ) : 0;
+
+				$bars .= HtmlBarV('k', $height,  "$Message[75]: " . Format_Bytes( $DayBytes{ $year . $month . $day } ));
 			}
-			print "</td>\n";
+
+			$bars .= '</td>';
+
 		}
-		print "<td>&nbsp;</td>";
+
+		$tableData .= '<tr' . (( $dayofweekcursor =~ /[06]/ ) ? ' bgcolor="#' . $color_weekend . '"'	: '' ) . '>'
+				. '<td>'
+			  . ( !$StaticLinks && $day == $nowday && $month == $nowmonth && $year == $nowyear ? '<span class="currentday">' : '' )
+				. $day . ' ' . $MonthNumLib{$MonthRequired}
+			  . ( !$StaticLinks && $day == $nowday && $month == $nowmonth && $year == $nowyear ? '</span>' : '' )
+			  . '</td>';
+
+		if ( $ShowDaysOfMonthStats =~ /V/i ) {
+			$data = $DayVisits{ $year . $month . $day } ? $DayVisits{ $year . $month . $day } : '0';
+			$tableData .= HTMLDataCellWithBar('v', $data, Format_Number($data), $max_v);
+		}
+
+		if ( $ShowDaysOfMonthStats =~ /P/i ) {
+			$data = $DayPages{ $year . $month . $day } ? $DayPages{ $year . $month . $day } : '0';
+			$tableData .= HTMLDataCellWithBar('p', $data, Format_Number($data), $max_p);
+		}
+
+		if ( $ShowDaysOfMonthStats =~ /H/i ) {
+			$data = $DayHits{ $year . $month . $day } ? $DayHits{ $year . $month . $day } : '0';
+			$tableData .= HTMLDataCellWithBar('h', $data, Format_Number($data), $max_h);
+		}
+
+		if ( $ShowDaysOfMonthStats =~ /B/i ) {
+			$data = $DayBytes{ $year . $month . $day } ? $DayBytes{ $year . $month . $day } : '0';
+			$tableData .= HTMLDataCellWithBar('b', $data, Format_Bytes($data), $max_k);
+		}
+			
+		$tableData .= '</tr>';
+
+	}
+
+	# render Graph Plugin
+	if ($graphPlugin == 1) {
+		foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
+		{
+			my $function = "ShowGraph_$pluginname";
+			&$function(
+				"$title",              "daysofmonth",
+				$ShowDaysOfMonthStats, \@blocklabel,
+				\@vallabel,            \@valcolor,
+				\@valmax,              \@valtotal,
+				\@valaverage,          \@valdata
+			);
+		}
+
+  } else {
+
+  	print '<table>';
+  	print '<tr valign="bottom">';
+  	print $bars . '<td>&nbsp;</td>';
 
 		# Show average value bars
-		print "<td>";
-		my $bredde_v = 0;
-		my $bredde_p = 0;
-		my $bredde_h = 0;
-		my $bredde_k = 0;
-		if ( $max_v > 0 ) {
-			$bredde_v = int( $average_v / $max_v * $BarHeight ) + 1;
-		}
-		if ( $max_h > 0 ) {
-			$bredde_p = int( $average_p / $max_h * $BarHeight ) + 1;
-		}
-		if ( $max_h > 0 ) {
-			$bredde_h = int( $average_h / $max_h * $BarHeight ) + 1;
-		}
-		if ( $max_k > 0 ) {
-			$bredde_k = int( $average_k / $max_k * $BarHeight ) + 1;
-		}
-		$average_v = sprintf( "%.2f", $average_v );
-		$average_p = sprintf( "%.2f", $average_p );
-		$average_h = sprintf( "%.2f", $average_h );
-		$average_k = sprintf( "%.2f", $average_k );
+		print '<td>';
+
 		if ( $ShowDaysOfMonthStats =~ /V/i ) {
-			print HtmlBarV('v', $bredde_v,  "$Message[10]: $average_v");
+
+			$height = ($max_v > 0 ) ? int( $average_v / $max_v * $BarHeight ) : 0;
+
+			print HtmlBarV('v', $height,  "$Message[10]: $average_v");
 		}
+
 		if ( $ShowDaysOfMonthStats =~ /P/i ) {
-			print HtmlBarV('p', $bredde_p,  "$Message[56]: $average_p");
+
+			$height = ($max_p > 0 ) ? int( $average_p / $max_p * $BarHeight ) : 0;
+
+			print HtmlBarV('p', $height,  "$Message[56]: $average_p");
 		}
+
 		if ( $ShowDaysOfMonthStats =~ /H/i ) {
-			print HtmlBarV('h', $bredde_h,  "$Message[57]: $average_h");
+
+			$height = ($max_h > 0 ) ? int( $average_h / $max_h * $BarHeight ) : 0;
+
+			print HtmlBarV('h', $height,  "$Message[57]: $average_h");
 		}
+
 		if ( $ShowDaysOfMonthStats =~ /B/i ) {
-			print HtmlBarV('k', $bredde_k,  "$Message[75]: $average_k");
+
+			$height = ($max_k > 0 ) ? int( $average_k / $max_k * $BarHeight ) : 0;
+
+			print HtmlBarV('b', $height,  "$Message[75]: $average_k");
 		}
-		print "</td>\n";
-		print "</tr>\n";
+
+		print '</td>'	. '</tr>';
 
 		# Show lib for day
 		print "<tr valign=\"middle\">";
-		foreach
-		  my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )
-		{
+		foreach my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )	{
 			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
 			my $year  = $1;
 			my $month = $2;
@@ -14356,12 +14353,10 @@ sub HTMLMainDaily{
 		  . ">$Message[96]</td>\n";
 		print "</tr>\n";
 		print "</table>\n";
-	}
+  }
 
 	# Show data array for days
 	if ($AddDataArrayShowDaysOfMonthStats) {
-		
-		my $data = '';
 		
 		print '<table class="data-table days-of-month-table">';
 
@@ -14369,7 +14364,6 @@ sub HTMLMainDaily{
 		print HTMLDataTableHeader($MonthNumLib{$MonthRequired} . ' ' . $YearRequired, $ShowDaysOfMonthStats);
 
 		#footer
-
 		# Total row
 		my (%sums) = (
 			'v'=> Format_Number($total_v),
@@ -14377,7 +14371,6 @@ sub HTMLMainDaily{
 			'h'=> Format_Number($total_h),
 			'b'=> Format_Bytes($total_k)
 		);
-
 		# Average row
 		my (%averages) = (
 			'v'=> Format_Number(int($average_v)),
@@ -14389,52 +14382,7 @@ sub HTMLMainDaily{
 		print HTMLDataTableFooter($Message[102], $ShowDaysOfMonthStats, \%sums, $Message[96], \%averages);
 
 		# body
-		print '<tbody>';
-
-		foreach
-		  my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )
-		{
-			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
-			my $year  = $1;
-			my $month = $2;
-			my $day   = $3;
-			if ( !DateIsValid( $day, $month, $year ) ) {
-				next;
-			}    # If not an existing day, go to next
-			my $dayofweekcursor = DayOfWeek( $day, $month, $year );
-
-			print '<tr' . (( $dayofweekcursor =~ /[06]/ ) ? ' bgcolor="#' . $color_weekend . '"'	: '' ) . '>';
-			
-			print '<td>'
-			  . ( !$StaticLinks && $day == $nowday && $month == $nowmonth && $year == $nowyear ? '<span class="currentday">' : '' )
-				. $day . ' ' . $MonthNumLib{$MonthRequired}
-			  . ( !$StaticLinks && $day == $nowday && $month == $nowmonth && $year == $nowyear ? '</span>' : '' )
-			  . '</td>';
-
-			if ( $ShowDaysOfMonthStats =~ /V/i ) {
-				$data = $DayVisits{ $year . $month . $day } ? $DayVisits{ $year . $month . $day } : '0';
-				print HTMLDataCellWithBar('v', $data, Format_Number($data), $max_v);
-			}
-
-			if ( $ShowDaysOfMonthStats =~ /P/i ) {
-				$data = $DayPages{ $year . $month . $day } ? $DayPages{ $year . $month . $day } : '0';
-				print HTMLDataCellWithBar('p', $data, Format_Number($data), $max_p);
-			}
-
-			if ( $ShowDaysOfMonthStats =~ /H/i ) {
-				$data = $DayHits{ $year . $month . $day } ? $DayHits{ $year . $month . $day } : '0';
-				print HTMLDataCellWithBar('h', $data, Format_Number($data), $max_h);
-			}
-
-			if ( $ShowDaysOfMonthStats =~ /B/i ) {
-				$data = $DayBytes{ $year . $month . $day } ? $DayBytes{ $year . $month . $day } : '0';
-				print HTMLDataCellWithBar('b', $data, Format_Bytes($data), $max_k);
-			}
-			
-			print '</tr>';
-		}
-
-		print '</tbody></table>';
+		print '<tbody>' . $tableData . '</tbody></table>';
 
 	}
 
