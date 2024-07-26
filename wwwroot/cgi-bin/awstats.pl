@@ -951,6 +951,7 @@ a:link { color: #$color_link; text-decoration: none; }
 a:visited{ color: #$color_link; text-decoration: none; }
 a:hover{ color: #$color_hover; text-decoration: underline; }
 .multi-data-table { display: flex; gap: 5dvw; flex-wrap: wrap; justify-content: center }
+.multi-data-table.worldmap{ background-color: #4477DD;position: relative; }
 .data-table { border-spacing: 0 2px }
 .data-table tbody tr { transition: background 0.5s; transition: transform 0.2s ease-out }
 .data-table tbody tr:hover { background: rgba(0,0,0,0.2); transform: scale(1.05) translateX(2px); }
@@ -988,6 +989,7 @@ a:hover{ color: #$color_hover; text-decoration: underline; }
 .hr-10{ rotate: 300deg }
 .hr-11{ rotate: 330deg }
 #worldmap{ width: 50dvw; margin-top: 1dvh; background-color: #4477DD; }
+.title-map{ position:absolute; top:5px; left:5px; color: #FFFFFF; }
 .country { text-transform: uppercase; font-weight: 700; }
 .lighted-land{ fill: var(--aws-color-u);	var(--dark-color); stroke-width: 0.5;	fill-rule: evenodd;}
 .oceanxx{ fill: #4477DD !important; stroke-width: 0 !important; }
@@ -15061,13 +15063,13 @@ EOF
 	  
   if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
     # extend the title to include the added link
-    $title = "$title &nbsp; - &nbsp; <a href=\"" . (XMLEncode(
+    $title .= "&nbsp; - &nbsp; <a href=\"" . (XMLEncode(
     	"$AddLinkToExternalCGIWrapper" . "?section=DOMAIN&baseName=$DirData/$PROG"
       . "&month=$MonthRequired&year=$YearRequired&day=$DayRequired"
       . "&siteConfig=$SiteConfig" ) . "\"$NewLinkTarget>$Message[179]</a>");
   }
         	  
-	&tab_head( "$title", 19, 0, 'countries' );
+	# &tab_head( "$title", 19, 0, 'countries' );
 	
 	foreach ( values %_domener_u ) {
 		if ( $_ > $max_u ) { $max_u = $_; }
@@ -15120,9 +15122,10 @@ EOF
 	# 	}
 	# }
 
-	print "<tr><td>";
+	# print "<tr><td>";
 	
-	print '<div class="multi-data-table" style="background-color: #4477DD;">';
+	print '<div class="multi-data-table worldmap">';
+	print '<div class="title-map">' . $title . '</div>';
 	print '<div id="worldmap"></div>';
 	print '<table class="data-table domains-table">';
 
@@ -15224,8 +15227,8 @@ EOF
 		print '</table>';
 		print '</div>';
 
-		print "</td>\n";
-		print "</tr>\n";
+		# print "</td>\n";
+		# print "</tr>\n";
 	
 	}
 
