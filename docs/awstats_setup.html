@@ -115,6 +115,7 @@ Installation path. <br>
 Alias /awstatsclasses "/usr/local/awstats/wwwroot/classes/" <br>
 Alias /awstatscss "/usr/local/awstats/wwwroot/css/" <br>
 Alias /awstatsicons "/usr/local/awstats/wwwroot/icon/" <br>
+Alias /awstatsimgs "/usr/local/awstats/wwwroot/img/" <br>
 ScriptAlias /awstats/ "/usr/local/awstats/wwwroot/cgi-bin/" <br>
 # <br>
 # This is to permit URL access to scripts/files in AWStats directory. <br>
@@ -252,6 +253,9 @@ and the <b>lang</b>, <b>lib</b> and <b>plugins</b> sub-directories).<br>
 Move AWStats <b>icon sub-directories</b> and its content into a
 directory readable by your
 web server, for example C:\yourwwwroot\icon.<br>
+Move AWStats <b>img sub-directories</b> and its content into a
+directory readable by your
+web server, for example C:\yourwwwroot\img.<br>
 <br>
 <font style="color: rgb(17, 17, 85);"><b>* Step 4</b>:</font><br>
 <br>
@@ -282,6 +286,8 @@ being logged, for example:<br>
 cs-uri-query sc-status sc-bytes cs-version cs(User-Agent) cs(Referer)"</i><br>
 - Change the <a href="awstats_config.html#DirIcons">DirIcons</a>
 parameter to reflect relative path of icon directory.<br>
+- Change the <a href="awstats_config.html#DirImgs">DirImgs</a>
+parameter to reflect relative path of img directory.<br>
 - Set the <a href="awstats_config.html#SiteDomain">SiteDomain</a>
 parameter to the main domain name or the intranet
 web server name used to reach the web site being analyzed (Example:

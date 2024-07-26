@@ -21,6 +21,7 @@ use strict;
 use vars qw/
 $AWSTATS_PATH
 $AWSTATS_ICON_PATH
+$AWSTATS_IMG_PATH
 $AWSTATS_CSS_PATH
 $AWSTATS_CLASSES_PATH
 $AWSTATS_CGI_PATH
@@ -29,6 +30,7 @@ $AWSTATS_DIRDATA_PATH
 /;
 $AWSTATS_PATH='';
 $AWSTATS_ICON_PATH='/usr/local/awstats/wwwroot/icon';
+$AWSTATS_IMG_PATH='/usr/local/awstats/wwwroot/img';
 $AWSTATS_CSS_PATH='/usr/local/awstats/wwwroot/css';
 $AWSTATS_CLASSES_PATH='/usr/local/awstats/wwwroot/classes';
 $AWSTATS_CGI_PATH='/usr/local/awstats/wwwroot/cgi-bin';
@@ -324,6 +326,7 @@ if ($OS eq 'linux') {
 			exit 1;
 		}
 		$AWSTATS_ICON_PATH="$AWSTATS_PATH/wwwroot/icon";
+		$AWSTATS_IMG_PATH="$AWSTATS_PATH/wwwroot/img"
 		$AWSTATS_CSS_PATH="$AWSTATS_PATH/wwwroot/css";
 		$AWSTATS_CLASSES_PATH="$AWSTATS_PATH/wwwroot/classes";
 		$AWSTATS_CGI_PATH="$AWSTATS_PATH/wwwroot/cgi-bin";
@@ -349,6 +352,7 @@ elsif ($OS eq 'macosx') {
 			exit 1;
 		}
 		$AWSTATS_ICON_PATH="$AWSTATS_PATH/wwwroot/icon";
+		$AWSTATS_IMG_PATH="$AWSTATS_PATH/wwwroot/img";
 		$AWSTATS_CSS_PATH="$AWSTATS_PATH/wwwroot/css";
 		$AWSTATS_CLASSES_PATH="$AWSTATS_PATH/wwwroot/classes";
 		$AWSTATS_CGI_PATH="$AWSTATS_PATH/wwwroot/cgi-bin";
@@ -358,6 +362,7 @@ elsif ($OS eq 'windows') {
 	# We do not use default values for awstats directives
 	# but thoose defined from AWSTATS_PATH
 	$AWSTATS_ICON_PATH="$AWSTATS_PATH/wwwroot/icon";
+	$AWSTATS_IMG_PATH="$AWSTATS_PATH/wwwroot/img";
 	$AWSTATS_CSS_PATH="$AWSTATS_PATH/wwwroot/css";
 	$AWSTATS_CLASSES_PATH="$AWSTATS_PATH/wwwroot/classes";
 	$AWSTATS_CGI_PATH="$AWSTATS_PATH/wwwroot/cgi-bin";
@@ -457,6 +462,7 @@ foreach my $key (keys %ApacheConfPath) {
 	my $awstatsclassesfound=0;
 	my $awstatscssfound=0;
 	my $awstatsiconsfound=0;
+	my $awstatsimgsfound=0;
 	my $awstatscgifound=0;
 	my $awstatsdirectoryfound=0;
 	while(<CONF>)
@@ -480,13 +486,14 @@ foreach my $key (keys %ApacheConfPath) {
 		if ($_ =~ /Alias \/awstatsclasses/) 		{ $awstatsclassesfound=1; }
 		if ($_ =~ /Alias \/awstatscss/) 			{ $awstatscssfound=1; }
 		if ($_ =~ /Alias \/awstatsicons/) 			{ $awstatsiconsfound=1; }
+		if ($_ =~ /Alias \/awstatsimgs/) 			{ $awstatsimgsfound=1; }
 		if ($_ =~ /ScriptAlias \/awstats\//)		{ $awstatscgifound=1; }
 		my $awstats_path_quoted=quotemeta($AWSTATS_PATH);
 		if ($_ =~ /Directory "$awstats_path_quoted\/wwwroot"/)	{ $awstatsdirectoryfound=1; }
     }	
 	close CONF;
 
-	if ($awstatsclassesfound && $awstatscssfound && $awstatsiconsfound && $awstatscgifound && $awstatsdirectoryfound)
+	if ($awstatsclassesfound && $awstatscssfound && $awstatsiconsfound && $awstatsimgsfound && $awstatscgifound && $awstatsdirectoryfound)
 	{
 		$UseAlias=1;
 		if ($commonchangedtocombined) { print "  Common log files changed to combined.\n"; }
@@ -497,7 +504,7 @@ foreach my $key (keys %ApacheConfPath) {
 	# Add awstats directives
 	open(CONF,">>$key") || error("Failed to open config file '$key' for adding AWStats directives");
 	binmode CONF;
-	if (! $awstatsclassesfound || ! $awstatscssfound || ! $awstatsiconsfound || ! $awstatscgifound) {
+	if (! $awstatsclassesfound || ! $awstatscssfound || ! $awstatsiconsfound || ! $awstatsimgsfound || ! $awstatscgifound) {
 		print CONF "$CR\n";
 		print CONF "#$CR\n";
 		print CONF "# Directives to allow use of AWStats as a CGI$CR\n";
@@ -515,6 +522,12 @@ foreach my $key (keys %ApacheConfPath) {
 		print "  Add 'Alias \/awstatsicons \"$AWSTATS_ICON_PATH\/\"'\n";
 		print CONF "Alias \/awstatsicons \"$AWSTATS_ICON_PATH\/\"$CR\n";
 	}
+
+	if (! $awstatsimgsfound) {
+		print "  Add 'Alias \/awstatsimgs \"$AWSTATS_IMG_PATH\/\"'\n";
+		print CONF "Alias \/awstatsimgs \"$AWSTATS_IMG_PATH\/\"$CR\n";
+	}
+
 	if (! $awstatscgifound) {
 		print "  Add 'ScriptAlias \/awstats\/ \"$AWSTATS_CGI_PATH\/\"'\n";
 		print CONF "ScriptAlias \/awstats\/ \"$AWSTATS_CGI_PATH\/\"$CR\n";
@@ -570,6 +583,7 @@ if (-s $modelfile && -w $modelfile) {
 	if ($UseAlias) {
 		$ConfToChange{'DirCgi'}='/awstats';
 		$ConfToChange{'DirIcons'}='/awstatsicons';
+		$ConfToChange{'DirImgs'}='/awstatsimgs';
 	}
 	update_awstats_config("$modelfile");
 	print "  File awstats.model.conf updated.\n";
@@ -639,6 +653,7 @@ if ($bidon =~ /^y/i) {
 		if ($UseAlias) {
 			$ConfToChange{'DirCgi'}='/awstats';
 			$ConfToChange{'DirIcons'}='/awstatsicons';
+			$ConfToChange{'DirImgs'}='/awstatsimgs';
 		}
 		$ConfToChange{'SiteDomain'}="$site";
 		my $sitewithoutwww=lc($site); $sitewithoutwww =~ s/^www\.//i;

@@ -53,6 +53,7 @@ when reading it), follow the example:<br>
 </li><li><a href="#DirData">DirData</a>
 </li><li><a href="#DirCgi">DirCgi</a>
 </li><li><a href="#DirIcons">DirIcons</a>
+</li><li><a href="#DirImgs">DirImgs</a>
 </li><li><a href="#SiteDomain">SiteDomain</a>
 </li><li><a href="#HostAliases">HostAliases</a>
 </li><li><a href="#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a>
@@ -465,6 +466,19 @@ when reading it), follow the example:<br>
 <br># Default: "/icon" (means you must copy icon directories in "/mywwwroot/icon")
 <br>#
 <br>DirIcons="/icon"
+
+<br><br><hr>
+
+<a name="DirImgs"><b>DirImgs</b></a><br>
+<b>Version : </b>1.0+<br>
+<br># Relative or absolute web URL of your awstats images directory.
+<br># If you build static reports ("... -output &gt; outputpath/output.html"), enter
+<br># path of images directory relative to the output directory 'outputpath'.
+<br># Example: "/awstatsimgs"
+<br># Example: "../img"
+<br># Default: "/img" (means you must copy images directories in "/mywwwroot/img")
+<br>#
+<br>DirIcons="/img"
 
 <br><br><hr>
 
@@ -1430,8 +1444,8 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br>
 <br># Show domains/country chart
 <br># Context: Web, Streaming, Mail, Ftp
-<br># Default: PHB, Possible column codes: PHB
-<br>ShowDomainsStats=PHB
+<br># Default: UVPHB, Possible column codes: UVPHB
+<br>ShowDomainsStats=UVPHB
 <br>
 <br># Show hosts chart
 <br># Context: Web, Streaming, Mail, Ftp
