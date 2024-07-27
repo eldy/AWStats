@@ -1006,8 +1006,9 @@ a:hover, a:focus, a:active{ color: var(--a-hover-color); text-decoration: none; 
 #worldmap{ width: 50dvw; margin-top: 1dvh; background-color: #4477DD; }
 .title-map{ position:absolute; top:5px; left:5px; }
 .country { text-transform: uppercase; font-weight: 700; }
-.landxx{ fill: rgba(128, 86, 86, 1) !important }
-.lighted-land{ fill: var(--aws-color-v) !important; stroke-width: 2 !important;	fill-rule: evenodd;}
+.landxx{ fill: rgba(128, 86, 86, 1) !important; transition: fill 0.5s ease-in }
+.lighted-land{ fill: var(--aws-color-u) !important; fill-rule: evenodd;}
+.zoomed-land{ fill: var(--aws-color-v) !important;}
 .oceanxx{ fill: #4477DD !important; stroke-width: 0 !important; }
 EOF
 
@@ -1033,13 +1034,96 @@ return <<EOF;
 <script>
 document.addEventListener("DOMContentLoaded", (d) => {
 
-		[...document.querySelectorAll('.flag')].forEach(el => {
-    		el.textContent = el.dataset.country
-    				.split('')
-    				.map(letter => letter.charCodeAt(0) % 32 + 0x1F1E5)
-    				.map(emojiCode => String.fromCodePoint(emojiCode))
-    				.join('');
+	[...document.querySelectorAll('.flag')].forEach(el => {
+   		el.textContent = el.dataset.country
+   				.split('')
+   				.map(letter => letter.charCodeAt(0) % 32 + 0x1F1E5)
+   				.map(emojiCode => String.fromCodePoint(emojiCode))
+   				.join('');
+   });
+
+	let worldmap = document.getElementById('worldmap');
+
+	fetch('$DirImgs/BlankMap-World.svg').then(response=>response.text()).then(data=>{ 
+	
+		worldmap.innerHTML = data;
+	
+		let realMap = worldmap.querySelector('svg');
+		realMap.setAttribute('width', '100%');
+		realMap.setAttribute('height', '100%');
+		realMap.setAttribute('viewBox', '300 20 2300 1170');
+
+		let domainsTable = document.querySelector('.domains-table');
+
+		[...domainsTable.querySelectorAll('.flag')].forEach(el => {
+			let country =	worldmap.querySelector('g#' + el.dataset.country);
+			
+			if(country !== null){
+
+				[...country.querySelectorAll('.landxx')].forEach(el => {
+	    		el.classList.add('lighted-land');
+  			});
+
+			} else {
+			
+				country = worldmap.querySelector('path#' + el.dataset.country);
+
+				if(country !== null){
+					country.classList.remove('landxx');
+    			country.classList.add('lighted-land');
+				}
+			}
+  	});
+
+  	[...document.querySelectorAll('.multi-data-table.worldmap tbody tr.country')].forEach(el => {
+    		el.addEventListener("mouseover", (e) => {
+    			let country =	worldmap.querySelector('g#' + el.dataset.country);
+			
+					if(country !== null){
+
+						[...country.querySelectorAll('.landxx')].forEach(land => {
+	    				land.classList.add('zoomed-land');
+  					});
+
+					} else {
+			
+						country = worldmap.querySelector('path#' + el.dataset.country);
+
+						if(country !== null){
+    					country.classList.add('zoomed-land');
+						}
+					}
+
+    		});
+
+    		el.addEventListener("mouseout", (e) => {
+    			let country =	worldmap.querySelector('g#' + el.dataset.country);
+			
+					if(country !== null){
+
+						[...country.querySelectorAll('.landxx')].forEach(land => {
+	    				land.classList.remove('zoomed-land');
+  					});
+
+					} else {
+			
+						country = worldmap.querySelector('path#' + el.dataset.country);
+
+						if(country !== null){
+    					country.classList.remove('zoomed-land');
+						}
+					}
+
+    		});
     });
+
+ 	});
+
+
+
+
+
+    
 
 });
 </script>'
@@ -13310,7 +13394,7 @@ sub HTMLShowDomains{
 			  . " /></td><td class=\"aws\">$Message[0]</td><td>$newkey</td>";
 		}
 		else {
-			print '<tr><td width="' . $WIDTHCOLICON . '" class="flag" data-country="' . $newkey . '"></td>';
+			print '<tr class="country" data-country="' . $newkey . '"><td width="' . $WIDTHCOLICON . '" class="flag" data-country="' . $newkey . '"></td>';
 			print "<td class=\"aws\">$DomainsHashIDLib{$newkey}</td><td>$newkey</td>";
 		}
 		## to add unique visitors and number of visits, by Josep Ruano @ CAPSiDE
@@ -14806,47 +14890,6 @@ sub HTMLMainCountries{
 
 	print "$Center<a name=\"countries\">&nbsp;</a>";
 
-	print <<EOF;
-<script>
-
-document.addEventListener("DOMContentLoaded", (d) => {
-	let worldmap = document.getElementById('worldmap');
-
-	fetch('$DirImgs/BlankMap-World.svg').then(response=>response.text()).then(data=>{ 
-	
-	worldmap.innerHTML = data;
-	
-	let realMap = worldmap.querySelector('svg');
-	realMap.setAttribute('width', '100%');
-	realMap.setAttribute('height', '100%');
-	realMap.setAttribute('viewBox', '300 20 2300 1170');
-
-	let domainsTable = document.querySelector('.domains-table');
-
-	[...domainsTable.querySelectorAll('.flag')].forEach(el => {
-		let country =	worldmap.querySelector('g#' + el.dataset.country);
-			
-		if(country !== null){
-
-			[...country.querySelectorAll('.landxx')].forEach(el => {
-    		el.classList.add('lighted-land');
-  		});
-
-		} else {
-			
-			country = worldmap.querySelector('path#' + el.dataset.country);
-
-			if(country !== null){
-				country.classList.remove('landxx');
-    		country.classList.add('lighted-land');
-			}
-		}
-  });
- });
-});
-</script>'
-EOF
-
 	my $title = "$Message[25] ($Message[77] $MaxNbOf{'Domain'}) &nbsp; - &nbsp; <a href=\""
 	  . (	$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? XMLEncode("$AWScript${NewLinkParams}output=alldomains") : "$StaticLinks.alldomains.$StaticExt" )
 	  . "\"$NewLinkTarget>$Message[80]</a>";
@@ -14931,12 +14974,12 @@ EOF
 		my $newkey = lc($key);
 		my $data = '';
 
-		print '<tr>';
-
 		if ( $newkey eq 'ip' || !$DomainsHashIDLib{$newkey} ) {
+			print '<tr>';
 			print '<td>' . $Message[0] . ' </td>';
 		}
 		else {
+			print '<tr class="country" data-country="' . $newkey . '">';
 			print '<td class="country">' . $DomainsHashIDLib{$newkey} . ' <small>( ' . $newkey . ' )</small> <span class="flag" data-country="' . $newkey . '"></span></td>';
 		}
 
