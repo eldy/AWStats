@@ -14378,7 +14378,7 @@ sub HTMLMainDaysofWeek{
 				\@valaverage,         \@valdata
 			);
 		}
-	} else {
+	} elsif($ShowBars == 1) {
 
 		print '<table class="bar-table">'	. '<tr>';
 			
