@@ -960,8 +960,8 @@ a:hover, a:focus, a:active{ color: var(--a-hover-color); text-decoration: none; 
 .multi-data-table { display: flex; gap: 5dvw; flex-wrap: wrap; justify-content: center }
 .multi-data-table.worldmap{ background-color: #4477DD;position: relative; color: #FFFFFF }
 .data-table { border-spacing: 0 2px }
-.data-table tbody tr { transition: background 0.5s; transition: transform 0.2s ease-out }
-.data-table tbody tr:hover { background: rgba(0,0,0,0.2); transform: scale(1.05) translateX(2px); }
+.data-table tbody tr { transition: background 0.5s ease-out; transition: transform 0.1s ease-in }
+.data-table tbody tr:hover { font-weight: 900; background: rgba(0,0,0,0.2); transform: scale(1.1) translateX(2px); }
 .data-table th, .data-table td:first-child { padding: 2px 4px }
 .data-table td:not(:first-child) { padding: 2px 0 }
 .data-table td div { padding: 3px 4px }
@@ -14664,7 +14664,7 @@ sub HTMLMainHours{
 			. (( $ShowHoursStats =~ /H/i ) ? HtmlBar('h', $_time_h[$ix], $_time_h[$ix], $max_h, $Message[57]) : '')
 			. (( $ShowHoursStats =~ /B/i ) ? HtmlBar('b', $_time_k[$ix], $_time_k[$ix], $max_k, $Message[75]) : '')
 			. '</td>';
-			
+
 		}
 		print "</tr>\n";
 
