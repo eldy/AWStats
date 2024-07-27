@@ -14268,12 +14268,13 @@ sub HTMLMainDaily{
 # Return:       -
 #------------------------------------------------------------------------------
 sub HTMLMainDaysofWeek{
+	
+	if ($Debug) { debug( "ShowDaysOfWeekStats", 2 ); }
+
 	my $firstdaytocountaverage = shift;
 	my $lastdaytocountaverage = shift;
   my $NewLinkParams = shift;
   my $NewLinkTarget = shift;	
-    
-	if ($Debug) { debug( "ShowDaysOfWeekStats", 2 ); }
 
 	my $title = "$Message[91]";
 	
@@ -14282,6 +14283,9 @@ sub HTMLMainDaysofWeek{
 	my @avg_dayofweek_p  = ();
 	my @avg_dayofweek_h  = ();
 	my @avg_dayofweek_k  = ();
+
+
+	my $graphPlugin = (%{ $PluginsLoaded{'ShowGraph'} }) ? 1 : 0;
 	
 	print "$Center<a name=\"daysofweek\">&nbsp;</a><br />\n";
 	&tab_head( "$title", 18, 0, 'daysofweek' );
@@ -14289,184 +14293,163 @@ sub HTMLMainDaysofWeek{
 	print "<td align=\"center\">";
 	print "<center>\n";
 
-	foreach my $daycursor (
-		$firstdaytocountaverage .. $lastdaytocountaverage )
-		{
-			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
-			my $year  = $1;
-			my $month = $2;
-			my $day   = $3;
+	foreach my $daycursor ($firstdaytocountaverage .. $lastdaytocountaverage )
+	{
+		$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
+		my $year  = $1;
+		my $month = $2;
+		my $day   = $3;
+		my $bars = '';
 
-			if ( !DateIsValid( $3, $2, $1 ) ) { next; } # If not an existing day, go to next
+		if ( !DateIsValid( $3, $2, $1 ) ) { next; } # If not an existing day, go to next
 			
-			my $dayofweekcursor = DayOfWeek( $3, $2, $1 );
-			
-			$avg_dayofweek_nb[$dayofweekcursor]++; # Increase number of day used to count for this day of week
-			$avg_dayofweek_p[$dayofweekcursor] += ( $DayPages{$daycursor} || 0 );
-			$avg_dayofweek_h[$dayofweekcursor] += ( $DayHits{$daycursor} || 0 );
-			$avg_dayofweek_k[$dayofweekcursor] += ( $DayBytes{$daycursor} || 0 );
-		}
+		my $dayofweekcursor = DayOfWeek( $3, $2, $1 );
 		
+		$avg_dayofweek_nb[$dayofweekcursor]++; # Increase number of day used to count for this day of week
+		$avg_dayofweek_p[$dayofweekcursor] += ( $DayPages{$daycursor} || 0 );
+		$avg_dayofweek_h[$dayofweekcursor] += ( $DayHits{$daycursor} || 0 );
+		$avg_dayofweek_k[$dayofweekcursor] += ( $DayBytes{$daycursor} || 0 );
+	}
+		
+	for (@DOWIndex) {
+
+		$avg_dayofweek_p[$_] = ( $avg_dayofweek_nb[$_] ) ? $avg_dayofweek_p[$_] / $avg_dayofweek_nb[$_] : 0;
+		$avg_dayofweek_h[$_] = ( $avg_dayofweek_nb[$_] ) ?$avg_dayofweek_h[$_] / $avg_dayofweek_nb[$_] : 0;
+		$avg_dayofweek_k[$_] = ( $avg_dayofweek_nb[$_] ) ? $avg_dayofweek_k[$_] / $avg_dayofweek_nb[$_] : 0;
+
+		$max_p = ( $avg_dayofweek_p[$_] > $max_p ) ? $avg_dayofweek_p[$_] : $max_p;
+  	$max_h = ( $avg_dayofweek_h[$_] > $max_h ) ? $avg_dayofweek_h[$_] : $max_h;
+  	$max_k = ( $avg_dayofweek_k[$_] > $max_k ) ? $avg_dayofweek_k[$_] : $max_k;
+	}
+
+	my $graphPlugin = (%{ $PluginsLoaded{'ShowGraph'} }) ? 1 : 0;
+
+	if($graphPlugin == 1){
+		foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
+		{
+			my @blocklabel = ();
+
+			for (@DOWIndex) {
+				push @blocklabel, ( $Message[ $_ + 84 ] . ( $_ =~ /[06]/ ? "!" : "" ) );
+			}
+				
+			my @vallabel = ( $Message[56], $Message[57], $Message[75] );
+			my @valcolor = ( $color_p, $color_h, $color_k );
+			my @valmax = ( int($max_h), int($max_h), int($max_k) );
+			my @valtotal = ( $TotalPages, $TotalHits, $TotalBytes );
+
+			my @valaverage = (
+			 sprintf( "%.2f", $AveragePages ),
+			 sprintf( "%.2f", $AverageHits ),
+			 (int($AverageBytes)	? Format_Bytes(sprintf( "%.2f", $AverageBytes)) : "0.00")
+			);
+
+			my @valdata    = ();
+			my $xx         = 0;
+
+			for (@DOWIndex) {
+				$valdata[ $xx++ ] = $avg_dayofweek_p[$_] || 0;
+				$valdata[ $xx++ ] = $avg_dayofweek_h[$_] || 0;
+				$valdata[ $xx++ ] = $avg_dayofweek_k[$_] || 0;
+
+				# Round to be ready to show array
+				$avg_dayofweek_p[$_] = sprintf( "%.2f", $avg_dayofweek_p[$_] );
+				$avg_dayofweek_h[$_] = sprintf( "%.2f", $avg_dayofweek_h[$_] );
+				$avg_dayofweek_k[$_] = sprintf( "%.2f", $avg_dayofweek_k[$_] );
+
+				# Remove decimal part that are .0
+				if ( $avg_dayofweek_p[$_] == int( $avg_dayofweek_p[$_] ) ) {
+					$avg_dayofweek_p[$_] = int( $avg_dayofweek_p[$_] );
+				}
+				if ( $avg_dayofweek_h[$_] == int( $avg_dayofweek_h[$_] ) ) {
+					$avg_dayofweek_h[$_] = int( $avg_dayofweek_h[$_] );
+				}
+			}
+
+			my $function = "ShowGraph_$pluginname";
+			&$function(
+				$title,             	'daysofweek',
+				$ShowDaysOfWeekStats, \@blocklabel,
+				\@vallabel,           \@valcolor,
+				\@valmax,             \@valtotal,
+				\@valaverage,         \@valdata
+			);
+		}
+	} else {
+
+		print '<table class="bar-table">'	. '<tr>';
+			
+		for (@DOWIndex) {
+
+			print '<td>'
+			. (( $ShowDaysOfWeekStats =~ /P/i ) ? HtmlBar('p', $avg_dayofweek_p[$_], Format_Number($avg_dayofweek_p[$_]), $max_p, $Message[56]) : '')
+			. (( $ShowDaysOfWeekStats =~ /H/i ) ? HtmlBar('h', $avg_dayofweek_h[$_], Format_Number($avg_dayofweek_h[$_]), $max_h, $Message[57]) : '')
+			. (( $ShowDaysOfWeekStats =~ /B/i ) ? HtmlBar('b', $avg_dayofweek_k[$_], Format_Number($avg_dayofweek_k[$_]), $max_k, $Message[75]) : '')
+			. '</td>';
+
+		}
+
+		print '</tr>'	. '<tr' . Tooltip(17) . '>';
+
+		for (@DOWIndex) {
+
+			print '<td' . ( $_ =~ /[06]/ ? " bgcolor=\"#$color_weekend\"" : "" ) . ">"
+			. (!$StaticLinks && $_ == ( $nowwday - 1 ) && $MonthRequired == $nowmonth && $YearRequired == $nowyear ? '<span class="currentday">' : '')
+			. $Message[ $_ + 84 ]
+			. (!$StaticLinks && $_ == ( $nowwday - 1 ) && $MonthRequired == $nowmonth && $YearRequired == $nowyear ? '</span>' : '' )
+			. '</td>';
+
+		}
+
+		print '</tr>' . '</table>';
+
+	}
+
+	# Show data array for days of week
+	if ($AddDataArrayShowDaysOfWeekStats) {
+
+		my $data = '';
+
+		print '<table class="data-table days-of-week-table">';
+
+		#header
+		print HTMLDataTableHeader('', $ShowDaysOfWeekStats);
+
+		#body
+		print '<tbody>';
+
 		for (@DOWIndex) {
 			
-			if ( $avg_dayofweek_nb[$_] ) {
+			print '<tr' . ( $_ =~ /[06]/ ? ' bgcolor="#' . $color_weekend . '"' : '' ) . '>'
+			. '<td>' . ( ( !$StaticLinks && $_ == ( $nowwday - 1 ) && $MonthRequired == $nowmonth && $YearRequired == $nowyear ) ? '<span class="currentday">' : '' )
+			. $Message[ $_ + 84 ]
+			. ( ( !$StaticLinks && $_ == ( $nowwday - 1 ) && $MonthRequired == $nowmonth && $YearRequired == $nowyear ) ? '</span>' : '' )
+			. '</td>';
 
-				$avg_dayofweek_p[$_] = $avg_dayofweek_p[$_] / $avg_dayofweek_nb[$_];
-				$avg_dayofweek_h[$_] = $avg_dayofweek_h[$_] / $avg_dayofweek_nb[$_];
-				$avg_dayofweek_k[$_] = $avg_dayofweek_k[$_] / $avg_dayofweek_nb[$_];
-
-		  	if ( $avg_dayofweek_p[$_] > $max_p ) { $max_p = $avg_dayofweek_p[$_]; }
-				if ( $avg_dayofweek_h[$_] > $max_h ) { $max_h = $avg_dayofweek_h[$_];	}
-				if ( $avg_dayofweek_k[$_] > $max_k ) { $max_k = $avg_dayofweek_k[$_];	}
-			} else {
-
-					$avg_dayofweek_p[$_] = "?";
-					$avg_dayofweek_h[$_] = "?";
-					$avg_dayofweek_k[$_] = "?";
-				}
+			if ( $ShowDaysOfWeekStats =~ /P/i ) {
+				$data = int($avg_dayofweek_p[$_]);
+				print HTMLDataCellWithBar('p', $data , Format_Number($data), $max_p);
 			}
 
-			# Show bars for days of week
-			my $graphdone=0;
-			foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
-			{
-				my @blocklabel = ();
-				for (@DOWIndex) {
-					push @blocklabel,
-					  ( $Message[ $_ + 84 ] . ( $_ =~ /[06]/ ? "!" : "" ) );
-				}
-				my @vallabel =
-				  ( "$Message[56]", "$Message[57]", "$Message[75]" );
-				my @valcolor = ( "$color_p", "$color_h", "$color_k" );
-				my @valmax = ( int($max_h), int($max_h), int($max_k) );
-				my @valtotal = ( $TotalPages, $TotalHits, $TotalBytes );
-				# TEMP
-				my $average_p = my $average_h = my $average_k = 0;
-				$average_p = sprintf( "%.2f", $AveragePages );
-				$average_h = sprintf( "%.2f", $AverageHits );
-				$average_k = (
-					int($average_k)
-					? Format_Bytes( sprintf( "%.2f", $AverageBytes ) )
-					: "0.00"
-				);
-				my @valaverage = ( $average_p, $average_h, $average_k );
-				my @valdata    = ();
-				my $xx         = 0;
-
-				for (@DOWIndex) {
-					$valdata[ $xx++ ] = $avg_dayofweek_p[$_] || 0;
-					$valdata[ $xx++ ] = $avg_dayofweek_h[$_] || 0;
-					$valdata[ $xx++ ] = $avg_dayofweek_k[$_] || 0;
-
-					# Round to be ready to show array
-					$avg_dayofweek_p[$_] =
-					  sprintf( "%.2f", $avg_dayofweek_p[$_] );
-					$avg_dayofweek_h[$_] =
-					  sprintf( "%.2f", $avg_dayofweek_h[$_] );
-					$avg_dayofweek_k[$_] =
-					  sprintf( "%.2f", $avg_dayofweek_k[$_] );
-
-					# Remove decimal part that are .0
-					if ( $avg_dayofweek_p[$_] == int( $avg_dayofweek_p[$_] ) ) {
-						$avg_dayofweek_p[$_] = int( $avg_dayofweek_p[$_] );
-					}
-					if ( $avg_dayofweek_h[$_] == int( $avg_dayofweek_h[$_] ) ) {
-						$avg_dayofweek_h[$_] = int( $avg_dayofweek_h[$_] );
-					}
-				}
-				my $function = "ShowGraph_$pluginname";
-				&$function(
-					"$title",             "daysofweek",
-					$ShowDaysOfWeekStats, \@blocklabel,
-					\@vallabel,           \@valcolor,
-					\@valmax,             \@valtotal,
-					\@valaverage,         \@valdata
-				);
-				$graphdone=1;
-			}
-			if (! $graphdone) 
-			{
-				print "<table>\n";
-				print "<tr valign=\"bottom\">\n";
-				for (@DOWIndex) {
-					
-					print '<td>'
-					. (( $ShowDaysOfWeekStats =~ /P/i ) ? HtmlBar('p', $avg_dayofweek_p[$_], Format_Number($avg_dayofweek_p[$_]), $max_p, $Message[56]) : '')
-					. (( $ShowDaysOfWeekStats =~ /H/i ) ? HtmlBar('h', $avg_dayofweek_h[$_], Format_Number($avg_dayofweek_h[$_]), $max_h, $Message[57]) : '')
-					. (( $ShowDaysOfWeekStats =~ /B/i ) ? HtmlBar('b', $avg_dayofweek_k[$_], Format_Number($avg_dayofweek_k[$_]), $max_k, $Message[75]) : '')
-					. '</td>';
-
-				}
-				print "</tr>\n";
-				print "<tr" . Tooltip(17) . ">\n";
-				for (@DOWIndex) {
-					print "<td"
-					  . ( $_ =~ /[06]/ ? " bgcolor=\"#$color_weekend\"" : "" )
-					  . ">"
-					  . (
-						!$StaticLinks
-						  && $_ == ( $nowwday - 1 )
-						  && $MonthRequired == $nowmonth
-						  && $YearRequired == $nowyear
-						? '<span class="currentday">'
-						: ''
-					  );
-					print $Message[ $_ + 84 ];
-					print(   !$StaticLinks
-						  && $_ == ( $nowwday - 1 )
-						  && $MonthRequired == $nowmonth
-						  && $YearRequired == $nowyear ? '</span>' : '' );
-					print "</td>";
-				}
-				print "</tr>\n</table>\n";
-			}
-			
-			# Show data array for days of week
-			if ($AddDataArrayShowDaysOfWeekStats) {
-
-				my $data = '';
-				print '<table class="data-table days-of-week-table">';
-
-				#header
-				print HTMLDataTableHeader('', $ShowDaysOfWeekStats);
-
-				#body
-				print '<tbody>';
-
-				for (@DOWIndex) {
-					print '<tr' . ( $_ =~ /[06]/ ? ' bgcolor="#' . $color_weekend . '"' : '' ) . '>';
-
-					print '<td>' . ( ( !$StaticLinks && $_ == ( $nowwday - 1 ) && $MonthRequired == $nowmonth && $YearRequired == $nowyear ) ? '<span class="currentday">' : '' );
-					
-					print $Message[ $_ + 84 ];
-
-					print ( ( !$StaticLinks && $_ == ( $nowwday - 1 ) && $MonthRequired == $nowmonth && $YearRequired == $nowyear ) ? '</span>' : '' );
-					
-					print '</td>';
-
-					if ( $ShowDaysOfWeekStats =~ /P/i ) {
-						$data = int($avg_dayofweek_p[$_]);
-						print HTMLDataCellWithBar('p', $data * .75 , Format_Number($data), $max_p);
-					}
-
-					if ( $ShowDaysOfWeekStats =~ /H/i ) {
-						$data = int($avg_dayofweek_h[$_]);
-						print HTMLDataCellWithBar('h', $data * .75 , Format_Number($data), $max_h);
-					}
-
-					if ( $ShowDaysOfWeekStats =~ /B/i ) {
-						$data = int($avg_dayofweek_k[$_]);
-						print HTMLDataCellWithBar('b', $data * .75 , Format_Bytes($data), $max_k);
-					}
-
-					print '</tr>';
-				}
-				print '</tbody></table>';
+			if ( $ShowDaysOfWeekStats =~ /H/i ) {
+				$data = int($avg_dayofweek_h[$_]);
+				print HTMLDataCellWithBar('h', $data , Format_Number($data), $max_h);
 			}
 
-			print "</center></td>";
-			print "</tr>\n";
-			&tab_end();
+			if ( $ShowDaysOfWeekStats =~ /B/i ) {
+				$data = int($avg_dayofweek_k[$_]);
+				print HTMLDataCellWithBar('b', $data , Format_Bytes($data), $max_k);
+			}
+
+			print '</tr>';
+		}
+
+		print '</tbody></table>';
+	}
+
+	print "</center></td>";
+	print "</tr>\n";
+	&tab_end();
 }
 
 #------------------------------------------------------------------------------
