@@ -846,7 +846,7 @@ sub html_head {
 		
 		}
 		
-		print '<head>';
+		print "\n" . '<head>';
 
 		my $endtag = ( $BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml' ) ? ' />' : '>';
 
@@ -877,7 +877,7 @@ sub html_head {
 		
 		%HTMLOutput;    # This is to have a unique title and description page
 		
-		print '<meta http-equiv="description" content="' . ucfirst($PROG) . ' - Advanced Web Statistics for ' . $SiteDomain . $periodtitle . ( $k[0] ? ' - ' . $k[0] : '' ) . '"' . $endtag;
+		print '<meta name="description" content="' . ucfirst($PROG) . ' - Advanced Web Statistics for ' . $SiteDomain . $periodtitle . ( $k[0] ? ' - ' . $k[0] : '' ) . '"' . $endtag;
 
 		print (( $MetaRobot && $FrameName ne 'mainleft' ) ? '<meta http-equiv="keywords" content="' . $SiteDomain . ', free, advanced, realtime, web, server, logfile, log, analyzer, analysis, statistics, stats, perl, analyse, performance, hits, visits"' . $endtag : '');
 
@@ -887,7 +887,7 @@ sub html_head {
 
 			print ((!$StyleSheet || $StyleSheetMode eq "herited") ? renderCss() : '');
 
-			print (($StyleSheet) ? '<link rel="stylesheet" type="text/css" href="' . $StyleSheet . '" />' : '');
+			print (($StyleSheet) ? '<link rel="stylesheet" href="' . $StyleSheet . '" />' : '');
 
 			print renderJavascript();		
 		}
@@ -900,7 +900,7 @@ sub html_head {
 		print '</head>';
 		
 		if ( $FrameName ne 'index' ) {
-			print '<body style="margin-top: 0px"' . (( $FrameName eq 'mainleft' ) ? ' class="aws_bodyl"' : '') . '>';
+			print '<body' . (( $FrameName eq 'mainleft' ) ? ' class="aws_bodyl"' : '') . '>';
 		}
 	}
 
@@ -942,7 +942,7 @@ sub renderCss {
 
 	$css .= ".aws_border { border-collapse: collapse; background-color: #$color_TableBG; padding: 1px 1px "
 	. ( $BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml' ? "2px" : "1px" )
-	. " 1px; margin-top: 0px; margin-bottom: 0px; }\n";
+	. " 1px; margin-top: 0px; margin-bottom: 0px; }";
 
 	$css .= <<EOF;
 body { font: 0.75rem sans-serif, system-ui; background-color: var(--aws-background-color); margin: 0; color: var(--default-page-color) }
@@ -955,7 +955,7 @@ td{ border: none; }
 .aws_button{ border: 1px solid #ccd7e0; background-image : url($DirIcons/other/button.gif); }
 th.aws{ border-color: var(--aws-table-border-color); border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; font-size: 0.9rem; }
 td.aws{ border-color: var(--aws-table-border-color); border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; text-align:$dir; padding: 0px;}
-td.awsm{ border-left-widthidth: 0px; border-right-width: 0px; border-top-width: 0px; border-bottom-width: 0px; text-align:$dir; padding: 0px; }
+td.awsm{ border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; border-bottom-width: 0px; text-align:$dir; padding: 0px; }
 a, a:link { color: var(--a-color); text-decoration: none; }
 a:visited{ color: var(--a-visited-color); text-decoration: none; }
 a:hover, a:focus, a:active{ color: var(--a-hover-color); text-decoration: none; }
@@ -969,7 +969,7 @@ a:hover, a:focus, a:active{ color: var(--a-hover-color); text-decoration: none; 
 .data-table td:not(:first-child) { padding: 2px 0 }
 .data-table td div { padding: 3px 4px }
 .data-table td { text-align: right; font-weight: 700; }
-.data-table th, .data-table td:first-child:not('.country') { font-weight: 400 }
+.data-table th, .data-table td:first-child:not(.country) { font-weight: 400 }
 .data-table tfoot .data-table-sum td { border-top: 1px solid rgba(192,192,192,0.2); }
 .data-table .data-table-sum { font-size : 1.2em }
 .data-table .title { font-size: 2em }
@@ -1019,7 +1019,7 @@ EOF
 			$css .= &$function();
 		}
 
-		return '<style type="text/css">' . $css . '</style>';
+		return '<style>' . $css . '</style>';
 }
 
 #------------------------------------------------------------------------------
@@ -1118,7 +1118,7 @@ document.addEventListener("DOMContentLoaded", (d) => {
     });
  	});
 });
-</script>'
+</script>
 EOF
 }
 
@@ -1200,11 +1200,11 @@ sub tab_head {
 
 	if ( $width == 70 && $QueryString =~ /buildpdf/i ) {
 		print
-"<table class=\"aws_border sortable\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\" width=\"800\">\n";
+"<table class=\"aws_border sortable\">\n";
 	}
 	else {
 		print
-"<table class=\"sortable\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\" width=\"100%\">\n";
+"<table class=\"sortable\">\n";
 	}
 
 	if ($tooltipnb) {
@@ -1221,11 +1221,11 @@ sub tab_head {
 	print "<tr><td colspan=\"2\">\n";
 	if ( $width == 70 && $QueryString =~ /buildpdf/i ) {
 		print
-"<table class=\"aws_data\" border=\"1\" cellpadding=\"2\" cellspacing=\"0\" width=\"796\">\n";
+"<table class=\"aws_data\" width=\"796\">\n";
 	}
 	else {
 		print
-"<table class=\"aws_data\" border=\"1\" cellpadding=\"2\" cellspacing=\"0\" width=\"100%\">\n";
+"<table class=\"aws_data\">\n";
 	}
 }
 
@@ -8429,7 +8429,7 @@ sub Show_Flag_Links {
 			);
 			print "<a href=\""
 			  . XMLEncode("$AWScript${NewLinkParams}lang=$lng")
-			  . "\"$NewLinkTarget><img src=\"$DirIcons\/flags\/$flag.png\" height=\"14\" border=\"0\""
+			  . "\"$NewLinkTarget><img src=\"$DirIcons\/flags\/$flag.png\" height=\"14\""
 			  . AltTitle("$lngtitle")
 			  . " /></a>&nbsp;\n";
 		}
@@ -9160,14 +9160,14 @@ sub HTMLShowFormFilter {
 		  . XMLEncode("$AWScript${NewLinkParams}")
 		  . "\" class=\"aws_border\">\n";
 		print
-"<table valign=\"middle\" width=\"99%\" border=\"0\" cellspacing=\"0\" cellpadding=\"2\"><tr>\n";
-		print "<td align=\"left\" width=\"50\">$Message[79]&nbsp;:</td>\n";
+"<table><tr>\n";
+		print "<td>$Message[79]&nbsp;:</td>\n";
 		print
-"<td align=\"left\" width=\"100\"><input type=\"text\" name=\"${fieldfiltername}\" value=\"$fieldfilterinvalue\" class=\"aws_formfield\" /></td>\n";
+"<td><input type=\"text\" name=\"${fieldfiltername}\" value=\"$fieldfilterinvalue\" class=\"aws_formfield\" /></td>\n";
 		print "<td> &nbsp; </td>";
-		print "<td align=\"left\" width=\"100\">$Message[153]&nbsp;:</td>\n";
+		print "<td>$Message[153]&nbsp;:</td>\n";
 		print
-"<td align=\"left\" width=\"100\"><input type=\"text\" name=\"${fieldfiltername}ex\" value=\"$fieldfilterexvalue\" class=\"aws_formfield\" /></td>\n";
+"<td><input type=\"text\" name=\"${fieldfiltername}ex\" value=\"$fieldfilterexvalue\" class=\"aws_formfield\" /></td>\n";
 		print "<td>";
 		print "<input type=\"hidden\" name=\"output\" value=\""
 		  . join( ',', keys %HTMLOutput )
@@ -9932,7 +9932,7 @@ sub HTMLShowMenuCateg {
 # At least one entry in menu for this category, we can show category and entries
 	my $WIDTHMENU1 = ( $FrameName eq 'mainleft' ? $FRAMEWIDTH : 150 );
 	print "<tr><td class=\"awsm\" width=\"$WIDTHMENU1\""
-	  . ( $frame ? "" : " valign=\"top\"" ) . ">"
+	  . ( $frame ? "" : "" ) . ">"
 	  . ( $categicon ? "<img src=\"$DirIcons/other/$categicon\" />&nbsp;" : "" )
 	  . "<b>$categtext:</b></td>\n";
 	print( $frame? "</tr>\n" : "<td class=\"awsm\">" );
@@ -10090,16 +10090,16 @@ sub HTMLShowEmailSendersChart {
 		}
 		if ( $ShowEMailSenders =~ /H/i ) { print "<td>$_emails_h{$key}</td>"; }
 		if ( $ShowEMailSenders =~ /B/i ) {
-			print "<td nowrap=\"nowrap\">"
+			print "<td>"
 			  . Format_Bytes( $_emails_k{$key} ) . "</td>";
 		}
 		if ( $ShowEMailSenders =~ /M/i ) {
-			print "<td nowrap=\"nowrap\">"
+			print "<td>"
 			  . Format_Bytes( $_emails_k{$key} / ( $_emails_h{$key} || 1 ) )
 			  . "</td>";
 		}
 		if ( $ShowEMailSenders =~ /L/i ) {
-			print "<td nowrap=\"nowrap\">"
+			print "<td>"
 			  . ( $_emails_l{$key} ? Format_Date( $_emails_l{$key}, 1 ) : '-' )
 			  . "</td>";
 		}
@@ -10118,10 +10118,10 @@ sub HTMLShowEmailSendersChart {
 "<tr><td colspan=\"3\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
 		if ( $ShowEMailSenders =~ /H/i ) { print "<td>$rest_h</td>"; }
 		if ( $ShowEMailSenders =~ /B/i ) {
-			print "<td nowrap=\"nowrap\">" . Format_Bytes($rest_k) . "</td>";
+			print "<td>" . Format_Bytes($rest_k) . "</td>";
 		}
 		if ( $ShowEMailSenders =~ /M/i ) {
-			print "<td nowrap=\"nowrap\">"
+			print "<td>"
 			  . Format_Bytes( $rest_k / ( $rest_h || 1 ) ) . "</td>";
 		}
 		if ( $ShowEMailSenders =~ /L/i ) { print "<td>&nbsp;</td>"; }
@@ -10259,16 +10259,16 @@ sub HTMLShowEmailReceiversChart {
 			print "<td>$_emailr_h{$key}</td>";
 		}
 		if ( $ShowEMailReceivers =~ /B/i ) {
-			print "<td nowrap=\"nowrap\">"
+			print "<td>"
 			  . Format_Bytes( $_emailr_k{$key} ) . "</td>";
 		}
 		if ( $ShowEMailReceivers =~ /M/i ) {
-			print "<td nowrap=\"nowrap\">"
+			print "<td>"
 			  . Format_Bytes( $_emailr_k{$key} / ( $_emailr_h{$key} || 1 ) )
 			  . "</td>";
 		}
 		if ( $ShowEMailReceivers =~ /L/i ) {
-			print "<td nowrap=\"nowrap\">"
+			print "<td>"
 			  . ( $_emailr_l{$key} ? Format_Date( $_emailr_l{$key}, 1 ) : '-' )
 			  . "</td>";
 		}
@@ -10288,10 +10288,10 @@ sub HTMLShowEmailReceiversChart {
 "<tr><td colspan=\"3\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
 		if ( $ShowEMailReceivers =~ /H/i ) { print "<td>$rest_h</td>"; }
 		if ( $ShowEMailReceivers =~ /B/i ) {
-			print "<td nowrap=\"nowrap\">" . Format_Bytes($rest_k) . "</td>";
+			print "<td>" . Format_Bytes($rest_k) . "</td>";
 		}
 		if ( $ShowEMailReceivers =~ /M/i ) {
-			print "<td nowrap=\"nowrap\">"
+			print "<td>"
 			  . Format_Bytes( $rest_k / ( $rest_h || 1 ) ) . "</td>";
 		}
 		if ( $ShowEMailReceivers =~ /L/i ) { print "<td>&nbsp;</td>"; }
@@ -10336,13 +10336,13 @@ sub HTMLTopBanner{
 
 	if ( $QueryString !~ /buildpdf/i ) {
 		print
-"<table class=\"aws_border\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\" width=\"100%\">\n";
+"<table class=\"aws_border\">\n";
 		print "<tr><td>\n";
 		print
-"<table class=\"aws_data sortable\" border=\"0\" cellpadding=\"1\" cellspacing=\"0\" width=\"100%\">\n";
+"<table class=\"aws_data sortable\">\n";
 	}
 	else {
-		print "<table width=\"100%\">\n";
+		print "<table>\n";
 	}
 
 	if ( $FrameName ne 'mainright' ) {
@@ -10365,16 +10365,16 @@ sub HTMLTopBanner{
 		# Logo and flags
 		if ( $FrameName ne 'mainleft' ) {
 			if ( $LogoLink =~ "https://www.awstats.org" ) {
-				print "<td align=\"right\" rowspan=\"3\"><a href=\""
+				print "<td rowspan=\"3\"><a href=\""
 				  . XMLEncode($LogoLink)
-				  . "\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=\"0\""
+				  . "\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\""
 				  . AltTitle( ucfirst($PROG) . " Web Site" )
 				  . " /></a>";
 			}
 			else {
-				print "<td align=\"right\" rowspan=\"3\"><a href=\""
+				print "<td rowspan=\"3\"><a href=\""
 				  . XMLEncode($LogoLink)
-				  . "\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=\"0\" /></a>";
+				  . "\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" /></a>";
 			}
 			if ( !$StaticLinks ) { print "<br />"; Show_Flag_Links($Lang); }
 			print "</td>";
@@ -10385,9 +10385,9 @@ sub HTMLTopBanner{
 
 		# Print Last Update
 		print
-"<tr valign=\"middle\"><td class=\"aws\" valign=\"middle\" width=\"$WIDTHMENU1\"><b>$Message[35]:</b>&nbsp;</td>";
+"<tr><td class=\"aws\" width=\"$WIDTHMENU1\"><b>$Message[35]:</b>&nbsp;</td>";
 		print
-"<td class=\"aws\" valign=\"middle\"><span>";
+"<td class=\"aws\"><span>";
 		if ($LastUpdate) { print Format_Date( $LastUpdate, 0 ); }
 		else {
 
@@ -10427,16 +10427,16 @@ sub HTMLTopBanner{
 		# Logo and flags
 		if ( $FrameName eq 'mainright' ) {
 			if ( $LogoLink =~ "https://www.awstats.org" ) {
-				print "<td align=\"right\" rowspan=\"2\"><a href=\""
+				print "<td rowspan=\"2\"><a href=\""
 				  . XMLEncode($LogoLink)
-				  . "\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=\"0\""
+				  . "\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\""
 				  . AltTitle( ucfirst($PROG) . " Web Site" )
 				  . " /></a>\n";
 			}
 			else {
-				print "<td align=\"right\" rowspan=\"2\"><a href=\""
+				print "<td rowspan=\"2\"><a href=\""
 				  . XMLEncode($LogoLink)
-				  . "\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=\"0\" /></a>\n";
+				  . "\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" /></a>\n";
 			}
 			if ( !$StaticLinks ) { print "<br />"; Show_Flag_Links($Lang); }
 			print "</td>";
@@ -10446,8 +10446,8 @@ sub HTMLTopBanner{
 
 		# Print selected period of analysis (month and year required)
 		print
-"<tr><td class=\"aws\" valign=\"middle\"><b>$Message[133]:</b></td>";
-		print "<td class=\"aws\" valign=\"middle\">";
+"<tr><td class=\"aws\"><b>$Message[133]:</b></td>";
+		print "<td class=\"aws\">";
 		if ( $ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ) {
 			print "<select class=\"aws_formfield\" name=\"databasebreak\">\n";
 			print "<option"
@@ -10608,7 +10608,7 @@ sub HTMLMenu{
 			print "<table"
 			  . (
 				$frame
-				? " cellspacing=\"0\" cellpadding=\"0\" border=\"0\""
+				? ""
 				: ""
 			  )
 			  . ">\n";
@@ -10732,7 +10732,7 @@ sub HTMLMenu{
 			);
 			if ($linetitle) {
 				print "<tr><td class=\"awsm\""
-				  . ( $frame ? "" : " valign=\"top\"" ) . ">"
+				  . ( $frame ? "" : "" ) . ">"
 				  . (
 					$menuicon
 					? "<img src=\"$DirIcons/other/menu2.png\" />&nbsp;"
@@ -11132,7 +11132,7 @@ sub HTMLMainFileType{
 	}
 	if ( $ShowFileTypesStats =~ /C/i ) {
 		print
-"<th class=\"color-k\" width=\"100\">$Message[100]</th><th class=\"color-k\" width=\"100\">$Message[101]</th><th class=\"color-k\" width=\"100\">$Message[99]</th>";
+"<th class=\"color-k\">$Message[100]</th><th class=\"color-k\">$Message[101]</th><th class=\"color-k\">$Message[99]</th>";
 	}
 	print "</tr>\n";
 	my $total_con = 0;
@@ -11170,7 +11170,7 @@ sub HTMLMainFileType{
 			print "<td>".Format_Number($_filetypes_h{$key})."</td><td>$p_h</td>";
 		}
 		if ( $ShowFileTypesStats =~ /B/i ) {
-			print '<td nowrap="nowrap">'
+			print '<td>'
 			  . Format_Bytes( $_filetypes_k{$key} )
 			  . "</td><td>$p_k</td>";
 		}
@@ -11467,7 +11467,7 @@ sub HTMLShowBrowserDetail{
 			if ( $key =~ /^$family(.*)/i ) {
 				if ( !$familyheadershown ) {
 					print
-"<tr bgcolor=\"#F6F6F6\"><td class=\"aws\" colspan=\"2\"><b>"
+"<tr><td class=\"aws\" colspan=\"2\"><b>"
 				  . uc($family)
 				  . "</b></td>";
 				print "<td>&nbsp;</td><td><b>"
@@ -11563,7 +11563,7 @@ sub HTMLShowBrowserDetail{
 				$p_h = "$p_h %";
 			}
 			print
-"<tr bgcolor=\"#F6F6F6\"><td class=\"aws\" colspan=\"2\"><b>$Message[2]</b></td>";
+"<tr><td class=\"aws\" colspan=\"2\"><b>$Message[2]</b></td>";
 			print "<td>&nbsp;</td><td><b>"
 			  . Format_Number(( $total_p - $TotalFamily_p ))
 			  . "</b></td><td><b>$p_p</b></td>";
@@ -11674,7 +11674,7 @@ sub HTMLShowBrowserUnknown{
 	foreach my $key (@keylist) {
 		my $useragent = XMLEncode( CleanXSS($key) );
 		print
-		  "<tr><td class=\"aws\">$useragent</td><td nowrap=\"nowrap\">"
+		  "<tr><td class=\"aws\">$useragent</td><td>"
 		  . Format_Date( $_unknownrefererbrowser_l{$key}, 1 )
 		  . "</td></tr>\n";
 		$total_l += 1;
@@ -11761,7 +11761,7 @@ sub HTMLShowOSDetail{
 						$family_name = $OSFamily{$family};
 					}
 					print
-"<tr bgcolor=\"#F6F6F6\"><td class=\"aws\" colspan=\"2\"><b>$family_name</b></td>";
+"<tr><td class=\"aws\" colspan=\"2\"><b>$family_name</b></td>";
 					print "<td><b>"
 					  . Format_Number(int( $totalfamily_p{$family} ))
 					  . "</b></td><td><b>$p_p</b></td>";
@@ -11845,7 +11845,7 @@ sub HTMLShowOSDetail{
 				$p_p = "$p_p %";
 			}
 			print
-"<tr bgcolor=\"#F6F6F6\"><td class=\"aws\" colspan=\"2\"><b>$Message[2]</b></td>";
+"<tr><td class=\"aws\" colspan=\"2\"><b>$Message[2]</b></td>";
 			print "<td><b>"
 			  . Format_Number(( $total_p - $TotalFamily_p ))
 			  . "</b></td><td><b>$p_p</b></td>";
@@ -11944,7 +11944,7 @@ sub HTMLShowOSUnknown{
 	foreach my $key (@keylist) {
 		my $useragent = XMLEncode( CleanXSS($key) );
 		print "<tr><td class=\"aws\">$useragent</td>";
-		print "<td nowrap=\"nowrap\">"
+		print "<td>"
 		  . Format_Date( $_unknownreferer_l{$key}, 1 ) . "</td>";
 		print "</tr>\n";
 		$total_l += 1;
@@ -14007,8 +14007,7 @@ sub HTMLMainMonthly{
 
 	print "$Center<a name=\"month\">&nbsp;</a><br />\n";
 	&tab_head( "$title", 0, 0, 'month' );
-	print "<tr><td align=\"center\">\n";
-	print "<center>\n";
+	print "<tr><td>\n";
 
 	# Show bars for month
 	if ($graphPlugin == 1) {
@@ -14078,7 +14077,6 @@ sub HTMLMainMonthly{
 		print '<tbody>' . $tableData . '</tbody>' . '</table>';
 	}
 
-	print "</center>\n";
 	print "</td></tr>\n";
 	&tab_end();
 }
@@ -14153,8 +14151,7 @@ sub HTMLMainDaily{
 		
 	&tab_head( "$title", 0, 0, 'daysofmonth' );
 	print "<tr>";
-	print "<td align=\"center\">\n";
-	print "<center>\n";
+	print "<td>\n";
 	
 	foreach my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )
 	{
@@ -14344,7 +14341,6 @@ sub HTMLMainDaily{
 
 	}
 
-	print "</center>\n";
 	print "</td></tr>\n";
 	&tab_end();
 }
@@ -14380,8 +14376,7 @@ sub HTMLMainDaysofWeek{
 	print "$Center<a name=\"daysofweek\">&nbsp;</a><br />\n";
 	&tab_head( "$title", 18, 0, 'daysofweek' );
 	print "<tr>";
-	print "<td align=\"center\">";
-	print "<center>\n";
+	print "<td>";
 
 	foreach my $daycursor ($firstdaytocountaverage .. $lastdaytocountaverage )
 	{
@@ -14537,7 +14532,7 @@ sub HTMLMainDaysofWeek{
 		print '</tbody></table>';
 	}
 
-	print "</center></td>";
+	print "</td>";
 	print "</tr>\n";
 	&tab_end();
 }
@@ -14692,8 +14687,7 @@ sub HTMLMainHours{
 		  . int( GetTimeZoneTitle_timezone() ) . ")";
 	}
 	&tab_head( "$title", 19, 0, 'hours' );
-	print "<tr><td align=\"center\">\n";
-	print "<center>\n";
+	print "<tr><td>\n";
 
 	my $width = 8;
 	my $max_p =	my $max_h = my $max_k = 1;
@@ -14735,7 +14729,7 @@ sub HTMLMainHours{
 	if (! $graphdone) 
 	{
 		print "<table>\n";
-		print "<tr valign=\"bottom\">\n";
+		print "<tr>\n";
 		for ( my $ix = 0 ; $ix <= 23 ; $ix++ ) {
 			
 			my $bredde_h = 0;
@@ -14856,10 +14850,10 @@ sub HTMLMainHours{
 		
 		print '</div>';
 		
-		print "</center></td></tr></table>\n";
+		print "</td></tr></table>\n";
 	}
 
-	print "</center></td></tr>\n";
+	print "</td></tr>\n";
 	&tab_end();
 }
 
@@ -14934,7 +14928,7 @@ sub HTMLMainCountries{
 	# 			$cnt++;
 	# 			if ($cnt > 99) { last; }
 	# 		}
-	# 		print "<tr><td colspan=\"7\" align=\"center\">";
+	# 		print "<tr><td colspan=\"7\">";
 	# 		my $function = "ShowGraph_$pluginname";
 	# 		&$function(
 	# 			"AWStatsCountryMap",              "countries_map",
@@ -15220,7 +15214,7 @@ sub HTMLMainHosts{
 			print '<td>' . Format_Bytes( $_host_k{$key} ) . '</td>';
 		}
 		if ( $ShowHostsStats =~ /L/i ) {
-			print '<td nowrap="nowrap">'
+			print '<td>'
 			  . (
 				$_host_l{$key}
 				? Format_Date( $_host_l{$key}, 1 )
@@ -16448,15 +16442,15 @@ sub HTMLMainReferrers{
 	}
 	print "</td>\n";
 	if ( $ShowOriginStats =~ /P/i ) {
-		print "<td valign=\"top\">"
+		print "<td>"
 		  . ( $_from_p[2] ? Format_Number($_from_p[2]) : "&nbsp;" )
-		  . "</td><td valign=\"top\">"
+		  . "</td><td>"
 		  . ( $_from_p[2] ? "$p_p[2] %" : "&nbsp;" ) . "</td>";
 	}
 	if ( $ShowOriginStats =~ /H/i ) {
-		print "<td valign=\"top\">"
+		print "<td>"
 		  . ( $_from_h[2] ? Format_Number($_from_h[2]) : "&nbsp;" )
-		  . "</td><td valign=\"top\">"
+		  . "</td><td>"
 		  . ( $_from_h[2] ? "$p_h[2] %" : "&nbsp;" ) . "</td>";
 	}
 	print "</tr>\n";
@@ -16519,15 +16513,15 @@ sub HTMLMainReferrers{
 	}
 	print "</td>\n";
 	if ( $ShowOriginStats =~ /P/i ) {
-		print "<td valign=\"top\">"
+		print "<td>"
 		  . ( $_from_p[3] ? Format_Number($_from_p[3]) : "&nbsp;" )
-		  . "</td><td valign=\"top\">"
+		  . "</td><td>"
 		  . ( $_from_p[3] ? "$p_p[3] %" : "&nbsp;" ) . "</td>";
 	}
 	if ( $ShowOriginStats =~ /H/i ) {
-		print "<td valign=\"top\">"
+		print "<td>"
 		  . ( $_from_h[3] ? Format_Number($_from_h[3]) : "&nbsp;" )
-		  . "</td><td valign=\"top\">"
+		  . "</td><td>"
 		  . ( $_from_h[3] ? "$p_h[3] %" : "&nbsp;" ) . "</td>";
 	}
 	print "</tr>\n";
@@ -16601,13 +16595,13 @@ sub HTMLMainKeys{
 	if ( $ShowKeyphrasesStats || $ShowKeywordsStats ) { print "<br />\n"; }
 	if ( $ShowKeyphrasesStats && $ShowKeywordsStats ) {
 		print
-		  "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\"><tr>";
+		  "<table><tr>";
 	}
 	if ($ShowKeyphrasesStats) {
 		
 		# By Keyphrases
 		if ( $ShowKeyphrasesStats && $ShowKeywordsStats ) {
-			print "<td width=\"50%\" valign=\"top\">\n";
+			print "<td width=\"50%\">\n";
 		}
 		if ($Debug) { debug( "ShowKeyphrasesStats", 2 ); }
 		&tab_head(
@@ -16678,7 +16672,7 @@ sub HTMLMainKeys{
 
 		# By Keywords
 		if ( $ShowKeyphrasesStats && $ShowKeywordsStats ) {
-			print "<td width=\"50%\" valign=\"top\">\n";
+			print "<td width=\"50%\">\n";
 		}
 		if ($Debug) { debug( "ShowKeywordsStats", 2 ); }
 		&tab_head(
@@ -16760,8 +16754,8 @@ sub HTMLMainMisc{
 	&tab_head( "$title", 19, 0, 'misc' );
 	print
 	  "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$Message[139]</th>";
-	print "<th width=\"100\">&nbsp;</th>";
-	print "<th width=\"100\">&nbsp;</th>";
+	print "<th>&nbsp;</th>";
+	print "<th>&nbsp;</th>";
 	print "</tr>\n";
 	my %label = (
 		'AddToFavourites'           => $Message[137],
@@ -16884,7 +16878,7 @@ sub HTMLMainHTTPStatus{
 			  )
 			  . "\"$NewLinkTarget>$key</a></td>";
 		}
-		else { print "<td valign=\"top\">$key</td>"; }
+		else { print "<td>$key</td>"; }
 		print "<td class=\"aws\">"
 		  . (
 			$httpcodelib{$key} ? $httpcodelib{$key} : 'Unknown error' )
@@ -16921,7 +16915,7 @@ sub HTMLMainSMTPStatus{
 	foreach my $key (@keylist) {
 		my $p = int( $_errors_h{$key} / $TotalHitsErrors * 1000 ) / 10;
 		print "<tr" . Tooltip( $key, $key ) . ">";
-		print "<td valign=\"top\">$key</td>";
+		print "<td>$key</td>";
 		print "<td class=\"aws\">"
 		  . (
 			$smtpcodelib{$key} ? $smtpcodelib{$key} : 'Unknown error' )
