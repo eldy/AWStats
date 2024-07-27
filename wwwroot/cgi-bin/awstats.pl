@@ -302,7 +302,7 @@ use vars qw/
 use vars qw/
   $DirLock $DirCgi $DirConfig $DirData $DirIcons $DirImgs $DirLang $AWScript $ArchiveFileName
   $AllowAccessFromWebToFollowingIPAddresses $HTMLHeadSection $HTMLEndSection $LinksToWhoIs $LinksToIPWhoIs
-  $LogFile $LogType $LogFormat $LogSeparator $Logo $LogoLink $StyleSheet $WrapperScript $SiteDomain
+  $LogFile $LogType $LogFormat $LogSeparator $Logo $LogoLink $StyleSheet $StyleSheetMode $WrapperScript $SiteDomain
   $UseHTTPSLinkForUrl $URLQuerySeparators $URLWithAnchor $ErrorMessages $ShowFlagLinks
   $AddLinkToExternalCGIWrapper $LogFormatJsonMap
   /;
@@ -318,6 +318,7 @@ use vars qw/
 	$LogType,                                  $LogFormat,
 	$LogSeparator,                             $Logo,
 	$LogoLink,                                 $StyleSheet,
+	$StyleSheetMode,
 	$WrapperScript,                            $SiteDomain,
 	$UseHTTPSLinkForUrl,                       $URLQuerySeparators,
 	$URLWithAnchor,                            $ErrorMessages,
@@ -325,7 +326,7 @@ use vars qw/
     $LogFormatJsonMap
   )
   = (
-	'', '', '', '', '', '', '', '', '', '', '', '', '', '',
+	'', '', '', '', '', '', '', '', '', '', '', '', '', '', '',
 	'', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''
   );
 use vars qw/
@@ -806,7 +807,7 @@ sub http_head {
 #------------------------------------------------------------------------------
 # Function:		Write on output header of HTML page
 # Parameters:	None
-# Input:		%HTMLOutput $PluginMode $Expires $Lang $StyleSheet $HTMLHeadSection $PageCode $PageDir
+# Input:		%HTMLOutput $PluginMode $Expires $Lang $StyleSheet $StyleSheetMode $HTMLHeadSection $PageCode $PageDir
 # Output:		$HeaderHTMLSent=1
 # Return:		None
 #------------------------------------------------------------------------------
@@ -883,10 +884,13 @@ sub html_head {
 		print '<title>' . $Message[7] . ' ' . $SiteDomain . $periodtitle . ( $k[0] ? ' - ' . $k[0] : '' ) . '</title>';
 		
 		if ( $FrameName ne 'index' ) {
-			print (($StyleSheet) ? '<link rel="stylesheet" type="text/css" href="' . $StyleSheet . '" />' : renderCss());
-		}
 
-		print renderJavascript();
+			print ((!$StyleSheet || $StyleSheetMode eq "herited") ? renderCss() : '');
+
+			print (($StyleSheet) ? '<link rel="stylesheet" type="text/css" href="' . $StyleSheet . '" />' : '');
+
+			print renderJavascript();		
+		}
 
 # les scripts necessaires pour trier avec Tablekit
 #	print "<script type=\"text\/javascript\" src=\"/js/prototype.js\"><\/script>";
@@ -914,34 +918,33 @@ sub renderCss {
 	my $dir = $PageDir ? 'right' : 'left';
 	my $css = '';
 
-	if ( !$StyleSheet ) {
-				$css .= ':root {'
-				. '--default-page-color: #' . $color_text . ';'
-				. '--aws-color-u: #' . $color_u . ';'
-				. '--aws-color-v: #' . $color_v . ';'
-				. '--aws-color-p: #' . $color_p . ';'
-				. '--aws-color-h: #' . $color_h . ';'
-				. '--aws-color-b: #' . $color_k . ';'
-				. '--aws-color-e: #' . $color_e . ';'
-				. '--aws-color-x: #' . $color_x . ';'
-				. '--aws-color-s: #' . $color_s . ';'
-				. '--dark-color: rgba(0,0,0,0.5);'
-				. '--light-color: rgba(255,255,255,0.9);'
-				. '--a-color: #' . $color_link . ';'
-				. '--a-visited-color: #' . $color_link . ';'
-				. '--a-hover-color: #' . $color_hover . ';'
-				. '--aws-table-border-color: #' . $color_TableBorder . ';'
-				. '--aws-background-color: #' . $color_Background . ';'
-				. '--aws-title-text-color: #' . $color_titletext . ';'
-				. '--aws-table-title-color: #' . $color_TableTitle . ';'
-				. '--aws-table-title-bgcolor: #' . $color_TableBGTitle . ';'
-				. '}';
+	$css .= ':root {'
+	. '--default-page-color: #' . $color_text . ';'
+	. '--aws-color-u: #' . $color_u . ';'
+	. '--aws-color-v: #' . $color_v . ';'
+	. '--aws-color-p: #' . $color_p . ';'
+	. '--aws-color-h: #' . $color_h . ';'
+	. '--aws-color-b: #' . $color_k . ';'
+	. '--aws-color-e: #' . $color_e . ';'
+	. '--aws-color-x: #' . $color_x . ';'
+	. '--aws-color-s: #' . $color_s . ';'
+	. '--dark-color: rgba(0,0,0,0.5);'
+	. '--light-color: rgba(255,255,255,0.9);'
+	. '--a-color: #' . $color_link . ';'
+	. '--a-visited-color: #' . $color_link . ';'
+	. '--a-hover-color: #' . $color_hover . ';'
+	. '--aws-table-border-color: #' . $color_TableBorder . ';'
+	. '--aws-background-color: #' . $color_Background . ';'
+	. '--aws-title-text-color: #' . $color_titletext . ';'
+	. '--aws-table-title-color: #' . $color_TableTitle . ';'
+	. '--aws-table-title-bgcolor: #' . $color_TableBGTitle . ';'
+	. '}';
 
-				$css .= ".aws_border { border-collapse: collapse; background-color: #$color_TableBG; padding: 1px 1px "
-				. ( $BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml' ? "2px" : "1px" )
-				. " 1px; margin-top: 0px; margin-bottom: 0px; }\n";
+	$css .= ".aws_border { border-collapse: collapse; background-color: #$color_TableBG; padding: 1px 1px "
+	. ( $BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml' ? "2px" : "1px" )
+	. " 1px; margin-top: 0px; margin-bottom: 0px; }\n";
 
-				$css .= <<EOF;
+	$css .= <<EOF;
 body { font: 0.75rem sans-serif, system-ui; background-color: var(--aws-background-color); margin: 0; color: var(--default-page-color) }
 b, .aws_title, th.aws{ font-weight: 700 }
 th{ border: none; padding: 1px 2px 1px 1px; color: var(--aws-title-text-color); }
@@ -1005,7 +1008,6 @@ a:hover, a:focus, a:active{ color: var(--a-hover-color); text-decoration: none; 
 .lighted-land{ fill: var(--aws-color-v) !important; stroke-width: 2 !important;	fill-rule: evenodd;}
 .oceanxx{ fill: #4477DD !important; stroke-width: 0 !important; }
 EOF
-	}
 
 	# Call to plugins' function AddHTMLStyles
 	foreach my $pluginname ( keys %{ $PluginsLoaded{'AddHTMLStyles'} } )
@@ -17727,7 +17729,7 @@ else
 }
 
 
-# Print html header (Need HTMLOutput,Expires,Lang,StyleSheet,HTMLHeadSectionExpires defined by Read_Config, PageCode defined by Read_Language_Data)
+# Print html header (Need HTMLOutput,Expires,Lang,StyleSheet,StylesheetMode,HTMLHeadSectionExpires defined by Read_Config, PageCode defined by Read_Language_Data)
 if ( !$HeaderHTMLSent ) { &html_head; }
 
 # AWStats output is replaced by a plugin output
