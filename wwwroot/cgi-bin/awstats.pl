@@ -1076,9 +1076,11 @@ document.addEventListener("DOMContentLoaded", (d) => {
   	});
 
   	[...document.querySelectorAll('.multi-data-table.worldmap tbody tr.country')].forEach(el => {
+    		
+    		let country =	worldmap.querySelector('g#' + el.dataset.country);
+
     		el.addEventListener("mouseover", (e) => {
-    			let country =	worldmap.querySelector('g#' + el.dataset.country);
-			
+    		
 					if(country !== null){
 
 						[...country.querySelectorAll('.landxx')].forEach(land => {
@@ -1097,8 +1099,7 @@ document.addEventListener("DOMContentLoaded", (d) => {
     		});
 
     		el.addEventListener("mouseout", (e) => {
-    			let country =	worldmap.querySelector('g#' + el.dataset.country);
-			
+    			
 					if(country !== null){
 
 						[...country.querySelectorAll('.landxx')].forEach(land => {
@@ -1113,18 +1114,9 @@ document.addEventListener("DOMContentLoaded", (d) => {
     					country.classList.remove('zoomed-land');
 						}
 					}
-
     		});
     });
-
  	});
-
-
-
-
-
-    
-
 });
 </script>'
 EOF
