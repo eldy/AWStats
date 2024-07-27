@@ -901,6 +901,7 @@ sub html_head {
 		
 		if ( $FrameName ne 'index' ) {
 			print '<body' . (( $FrameName eq 'mainleft' ) ? ' class="aws_bodyl"' : '') . '>';
+			print '<div id="container">';
 		}
 	}
 
@@ -938,20 +939,15 @@ sub renderCss {
 	. '--aws-title-text-color: #' . $color_titletext . ';'
 	. '--aws-table-title-color: #' . $color_TableTitle . ';'
 	. '--aws-table-title-bgcolor: #' . $color_TableBGTitle . ';'
-	. '}';
-
-	$css .= ".aws_border { border-collapse: collapse; background-color: #$color_TableBG; padding: 1px 1px "
-	. ( $BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml' ? "2px" : "1px" )
-	. " 1px; margin-top: 0px; margin-bottom: 0px; }";
-
-	$css .= <<EOF;
+	. '}'
+	. <<EOF;
 body { font: 0.75rem sans-serif, system-ui; background-color: var(--aws-background-color); margin: 0; color: var(--default-page-color) }
+#container { width: clamp(760px, 960px, 80%); margin: auto; }
 b, .aws_title, th.aws{ font-weight: 700 }
 th{ border: none; padding: 1px 2px 1px 1px; color: var(--aws-title-text-color); }
-td{ border: none; }
-.aws_blank  { font-size: 0.9rem; background-color: var(--aws-background-color); text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }
-.aws_title{ font-size: 0.9rem; background-color: var(--aws-table-title-bgcolor); text-align: center; margin-top: 0; margin-bottom: 0; padding: 1px 1px 1px 1px; color: var(--aws-table-title-color); }
-.aws_data{ background-color: var(--aws-background-color); border-top-width: 1px; border-left-width: 0px; border-right-width: 0px; border-bottom-width: 0px; }
+.aws_blank  { font-size: 0.9rem; background-color: var(--aws-background-color); text-align: center; }
+.aws_title{ font-size: 0.9rem; background-color: var(--aws-table-title-bgcolor); text-align: center; color: var(--aws-table-title-color); }
+.aws_data{ background-color: var(--aws-background-color); }
 .aws_button{ border: 1px solid #ccd7e0; background-image : url($DirIcons/other/button.gif); }
 th.aws{ border-color: var(--aws-table-border-color); border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; font-size: 0.9rem; }
 td.aws{ border-color: var(--aws-table-border-color); border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; text-align:$dir; padding: 0px;}
@@ -960,7 +956,8 @@ a, a:link { color: var(--a-color); text-decoration: none; }
 a:visited{ color: var(--a-visited-color); text-decoration: none; }
 a:hover, a:focus, a:active{ color: var(--a-hover-color); text-decoration: none; }
 #domain { font-weight: 900; font-size: 4ch }
-.multi-data-table { display: flex; gap: 5dvw; flex-wrap: wrap; justify-content: center }
+#header-form { display: flex; flex-wrap: wrap; column-gap: 20px; }
+.multi-data-table { display: flex; column-gap: 5dvw; flex-wrap: wrap; justify-content: center }
 .multi-data-table.worldmap{ background-color: #4477DD;position: relative; color: #FFFFFF }
 .data-table { border-spacing: 0 2px }
 .data-table tbody tr { transition: background 0.5s ease-out; transition: transform 0.1s ease-in }
@@ -975,8 +972,6 @@ a:hover, a:focus, a:active{ color: var(--a-hover-color); text-decoration: none; 
 .data-table .title { font-size: 2em }
 .currentday{ font-weight: 900 }
 .bar-table { text-align: center }
-.month-bar-table { margin-left: 58px }
-.daysofweek-bar-table { margin-left: 29px }
 .bar-table tr:first-child td { vertical-align: bottom; }
 .bar{  }
 .bar-horizontal{ height: 4px }
@@ -1170,6 +1165,7 @@ sub html_end {
 			if ( $FrameName ne 'mainleft' && $BuildReportFormat eq 'html' ) {
 				print "<br />\n";
 			}
+			print '</div>';
 			print "</body>\n";
 		}
 		print "</html>\n";
@@ -1200,7 +1196,7 @@ sub tab_head {
 
 	if ( $width == 70 && $QueryString =~ /buildpdf/i ) {
 		print
-"<table class=\"aws_border sortable\">\n";
+"<table class=\"sortable\">\n";
 	}
 	else {
 		print
@@ -9158,7 +9154,7 @@ sub HTMLShowFormFilter {
 		if ($NewLinkParams) { $NewLinkParams = "${NewLinkParams}&amp;"; }
 		print "\n<form name=\"FormFilter\" action=\""
 		  . XMLEncode("$AWScript${NewLinkParams}")
-		  . "\" class=\"aws_border\">\n";
+		  . "\">\n";
 		print
 "<table><tr>\n";
 		print "<td>$Message[79]&nbsp;:</td>\n";
@@ -9931,22 +9927,22 @@ sub HTMLShowMenuCateg {
 
 # At least one entry in menu for this category, we can show category and entries
 	my $WIDTHMENU1 = ( $FrameName eq 'mainleft' ? $FRAMEWIDTH : 150 );
-	print "<tr><td class=\"awsm\" width=\"$WIDTHMENU1\""
+	print "<tr><td"
 	  . ( $frame ? "" : "" ) . ">"
 	  . ( $categicon ? "<img src=\"$DirIcons/other/$categicon\" />&nbsp;" : "" )
 	  . "<b>$categtext:</b></td>\n";
-	print( $frame? "</tr>\n" : "<td class=\"awsm\">" );
+	print( $frame? "</tr>\n" : "<td>" );
 	foreach my $key ( sort { $menu->{$a} <=> $menu->{$b} } keys %$menu ) {
 		if ( $menu->{$key} == 0 )     { next; }
 		if ( $menulink->{$key} == 1 ) {
-			print( $frame? "<tr><td class=\"awsm\">" : "" );
+			print( $frame? "<tr><td>" : "" );
 			print
 			  "<a href=\"$linkanchor#$key\"$targetpage>$menutext->{$key}</a>";
 			print( $frame? "</td></tr>\n" : " &nbsp; " );
 		}
 		if ( $menulink->{$key} == 2 ) {
 			print( $frame
-				? "<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> "
+				? "<tr><td> &nbsp; <img style=\"height:8px;width:9px\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> "
 				: ""
 			);
 			print "<a href=\""
@@ -10308,7 +10304,6 @@ sub HTMLShowEmailReceiversChart {
 # Return:       -
 #------------------------------------------------------------------------------
 sub HTMLTopBanner{
-	my $WIDTHMENU1 = shift;
 	my $frame = ( $FrameName eq 'mainleft' );
 
 	if ($Debug) { debug( "ShowTopBan", 2 ); }
@@ -10329,22 +10324,18 @@ sub HTMLTopBanner{
 		if ( $FrameName eq 'mainright' ) {
 			$NewLinkTarget = " target=\"_parent\"";
 		}
-		print "<form name=\"FormDateFilter\" action=\""
-		  . XMLEncode("$AWScript${NewLinkParams}")
-		  . "\" style=\"padding: 0px 0px 20px 0px; margin-top: 0\"$NewLinkTarget>\n";
+		print '<form id="header-form" name="FormDateFilter" action="' . XMLEncode("$AWScript${NewLinkParams}") . '" ' . $NewLinkTarget . '>';
+
+		print '<div id="domain">' . $SiteDomain . '</div>';
+
+		# Logo and flags
+		print '<a href="' . XMLEncode($LogoLink). '" target="awstatshome"><img src="' . $DirIcons . '/other/' . $Logo .'" ' . (( $LogoLink =~ "https://www.awstats.org" ) ? AltTitle( ucfirst($PROG) . ' Web Site' ) : '') . ' /></a>';
+
+		if ( !$StaticLinks ) { Show_Flag_Links($Lang); }
 	}
 
-	if ( $QueryString !~ /buildpdf/i ) {
-		print
-"<table class=\"aws_border\">\n";
-		print "<tr><td>\n";
-		print
-"<table class=\"aws_data sortable\">\n";
-	}
-	else {
-		print "<table>\n";
-	}
-
+	print '<table '. (( $QueryString !~ /buildpdf/i ) ? 'class="aws_data sortable"' : '') .'>';
+	
 	if ( $FrameName ne 'mainright' ) {
 
 		# Print Statistics Of
@@ -10355,39 +10346,16 @@ sub HTMLTopBanner{
 				    substr( $SiteDomain, 0, 20 ) . "..."
 				  . substr( $SiteDomain, length($SiteDomain) - 5, 5 );
 			}
-			print
-"<tr><td class=\"awsm\"><b>$Message[7]:</b></td></tr><tr><td class=\"aws\"><span style=\"font-size: 0.9rem;\">$shortSiteDomain</span></td>";
+			print "<tr><td class=\"awsm\"><b>$Message[7]:</b></td></tr><tr><td class=\"aws\"><span style=\"font-size: 0.9rem;\">$shortSiteDomain</span></td>";
 		}
-		else {
-			print '<tr><td colspan="2" id="domain">' . $SiteDomain . '</td>';
-		}
-
-		# Logo and flags
-		if ( $FrameName ne 'mainleft' ) {
-			if ( $LogoLink =~ "https://www.awstats.org" ) {
-				print "<td rowspan=\"3\"><a href=\""
-				  . XMLEncode($LogoLink)
-				  . "\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\""
-				  . AltTitle( ucfirst($PROG) . " Web Site" )
-				  . " /></a>";
-			}
-			else {
-				print "<td rowspan=\"3\"><a href=\""
-				  . XMLEncode($LogoLink)
-				  . "\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" /></a>";
-			}
-			if ( !$StaticLinks ) { print "<br />"; Show_Flag_Links($Lang); }
-			print "</td>";
-		}
+		
 		print "</tr>\n";
 	}
 	if ( $FrameName ne 'mainleft' ) {
 
 		# Print Last Update
-		print
-"<tr><td class=\"aws\" width=\"$WIDTHMENU1\"><b>$Message[35]:</b>&nbsp;</td>";
-		print
-"<td class=\"aws\"><span>";
+		print '<tr>';
+		print '<td colspan="2"><span>'. $Message[35] .' : ';
 		if ($LastUpdate) { print Format_Date( $LastUpdate, 0 ); }
 		else {
 
@@ -10396,8 +10364,7 @@ sub HTMLTopBanner{
 				print "<span style=\"color: #880000\">$Message[24]</span>";
 			}
 			else {
-				print
- "<span style=\"color: #880000\">No qualified records found in log 
+				print "<span style=\"color: #880000\">No qualified records found in log 
  ($NbOfLinesCorrupted corrupted, $NbOfLinesComment comments, $NbOfLinesBlank Blank, 
  $NbOfLinesDropped dropped)</span>";
 			}
@@ -10438,15 +10405,14 @@ sub HTMLTopBanner{
 				  . XMLEncode($LogoLink)
 				  . "\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" /></a>\n";
 			}
-			if ( !$StaticLinks ) { print "<br />"; Show_Flag_Links($Lang); }
+			if ( !$StaticLinks ) { Show_Flag_Links($Lang); }
 			print "</td>";
 		}
 
 		print "</tr>\n";
 
 		# Print selected period of analysis (month and year required)
-		print
-"<tr><td class=\"aws\"><b>$Message[133]:</b></td>";
+		print "<tr><td></td>";
 		print "<td class=\"aws\">";
 		if ( $ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ) {
 			print "<select class=\"aws_formfield\" name=\"databasebreak\">\n";
@@ -10558,15 +10524,12 @@ sub HTMLTopBanner{
 	}
 	if ( $QueryString !~ /buildpdf/i ) {
 		print "</table>\n";
-		print "</td></tr></table>\n";
 	}
 	else {
 		print "</table>\n";
 	}
 
-	if ( $FrameName ne 'mainleft' ) { print "</form><br />\n"; }
-	else { print "<br />\n"; }
-	print "\n";
+	if ( $FrameName ne 'mainleft' ) { print "</form>"; }
 }
 
 #------------------------------------------------------------------------------
@@ -10605,13 +10568,7 @@ sub HTMLMenu{
 		if ( !$PluginsLoaded{'ShowMenu'}{'menuapplet'} ) {
 			my $menuicon = 0;    # TODO a virer
 			                     # Menu HTML
-			print "<table"
-			  . (
-				$frame
-				? ""
-				: ""
-			  )
-			  . ">\n";
+			print '<table id="sitemap">';
 			if ( $FrameName eq 'mainleft' && $ShowMonthStats ) {
 				print( $frame? "<tr><td class=\"awsm\">" : "" );
 				print
@@ -11021,8 +10978,6 @@ sub HTMLMenu{
 			else { }
 		}
 
-		#print ($frame?"":"<br />\n");
-		print "<br />\n";
 	}
 
 	# Print Back link
@@ -11067,7 +11022,7 @@ sub HTMLMainFileType{
     my $NewLinkTarget = shift;
 	if (!$LevelForFileTypesDetection > 0){return;}
 	if ($Debug) { debug( "ShowFileTypesStatsCompressionStats", 2 ); }
-	print "$Center<a name=\"filetypes\">&nbsp;</a><br />\n";
+	print "$Center<a name=\"filetypes\">&nbsp;</a>\n";
 	my $Totalh = 0;
 	foreach ( keys %_filetypes_h ) { $Totalh += $_filetypes_h{$_}; }
 	my $Totalk = 0;
@@ -13599,9 +13554,7 @@ sub HTMLMainSummary{
 	}
 
 	my $colspan = 5;
-	my $w       = '20';
 	if ( $LogType eq 'W' || $LogType eq 'S' ) {
-		$w       = '17';
 		$colspan = 6;
 	}
 
@@ -13637,7 +13590,7 @@ sub HTMLMainSummary{
 		print "<td bgcolor=\"#$color_TableBGTitle\">&nbsp;</td>";
 	}
 	if ( $ShowSummary =~ /U/i ) {
-		print "<td width=\"$w%\" class=\"color-u\""
+		print "<td class=\"color-u\""
 		  . Tooltip(2)
 		  . ">$Message[11]</td>";
 	}
@@ -13646,7 +13599,7 @@ sub HTMLMainSummary{
 "<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>";
 	}
 	if ( $ShowSummary =~ /V/i ) {
-		print "<td width=\"$w%\" class=\"color-v\""
+		print "<td class=\"color-v\""
 		  . Tooltip(1)
 		  . ">$Message[10]</td>";
 	}
@@ -13655,7 +13608,7 @@ sub HTMLMainSummary{
 "<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>";
 	}
 	if ( $ShowSummary =~ /P/i ) {
-		print "<td width=\"$w%\" class=\"color-p\""
+		print "<td class=\"color-p\""
 		  . Tooltip(3)
 		  . ">$Message[56]</td>";
 	}
@@ -13664,7 +13617,7 @@ sub HTMLMainSummary{
 "<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>";
 	}
 	if ( $ShowSummary =~ /H/i ) {
-		print "<td width=\"$w%\" class=\"color-h\""
+		print "<td class=\"color-h\""
 		  . Tooltip(4)
 		  . ">$Message[57]</td>";
 	}
@@ -13673,7 +13626,7 @@ sub HTMLMainSummary{
 "<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>";
 	}
 	if ( $ShowSummary =~ /B/i ) {
-		print "<td width=\"$w%\" class=\"color-k\""
+		print "<td class=\"color-k\""
 		  . Tooltip(5)
 		  . ">$Message[75]</td>";
 	}
@@ -14728,7 +14681,7 @@ sub HTMLMainHours{
 	}
 	if (! $graphdone) 
 	{
-		print "<table>\n";
+		print '<table class="bar-table">';
 		print "<tr>\n";
 		for ( my $ix = 0 ; $ix <= 23 ; $ix++ ) {
 			
@@ -21081,12 +21034,10 @@ if ( scalar keys %HTMLOutput ) {
 		&$function();
 	}
 
-	my $WIDTHMENU1 = ( $FrameName eq 'mainleft' ? $FRAMEWIDTH : 150 );
-
 	# TOP BAN
 	#---------------------------------------------------------------------
 	if ( $ShowMenu || $FrameName eq 'mainleft' ) {
-		HTMLTopBanner($WIDTHMENU1);
+		HTMLTopBanner();
 	}
 
 	# Call to plugins' function AddHTMLMenuHeader
