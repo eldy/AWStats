@@ -975,6 +975,8 @@ a:hover, a:focus, a:active{ color: var(--a-hover-color); text-decoration: none; 
 .data-table .title { font-size: 2em }
 .currentday{ font-weight: 900 }
 .bar-table { text-align: center }
+.month-bar-table { margin-left: 58px }
+.daysofweek-bar-table { margin-left: 29px }
 .bar-table tr:first-child td { vertical-align: bottom; }
 .bar{  }
 .bar-horizontal{ height: 4px }
@@ -8428,18 +8430,19 @@ sub HtmlBarH {
 # Return:     string
 #------------------------------------------------------------------------------
 sub HtmlBar {
-	my $type = shift || '';
+	my $type = shift;
 	my $data = shift;
 	my $formattedData = shift;
 	my $max = shift;
-	my $title = shift || '';
+	my $title = shift;
+	my $width = shift || 4;
 	my $height = ($max > 0) ? int( ( ( $data || 0 ) / $max ) * $BarHeight ): 0;
 
 	if($data > 0 && $height < 1){
 		$height = 1;
 	}
 
-	return '<div class="bar bar-vertical color-' . $type . '" style="height: ' . $height . 'px" title="' . $title . ' : ' . $formattedData . '"></div>';
+	return '<div class="bar bar-vertical color-' . $type . '" style="width: ' . $width . 'px;height: ' . $height . 'px" title="' . $title . ' : ' . $formattedData . '"></div>';
 }
 
 #------------------------------------------------------------------------------
@@ -13799,6 +13802,7 @@ sub HTMLMainMonthly{
 
 	my $height = 0;
 	my $bars = '';
+	my $width = 9;
 	my $data = '';
 	my $tableData = '';
 
@@ -13873,7 +13877,7 @@ sub HTMLMainMonthly{
 
 			$data = int($MonthUnique{ $YearRequired . $monthix } || 0 );
 
-			$bars .= HtmlBar('u', $data, Format_Number($data), $max_u, $Message[11]);
+			$bars .= HtmlBar('u', $data, Format_Number($data), $max_u, $Message[11], $width);
 
 			$tableData .= HTMLDataCellWithBar('u', $data, Format_Number($data), $max_u);
 		}
@@ -13882,7 +13886,7 @@ sub HTMLMainMonthly{
 
 			$data = int($MonthVisits{ $YearRequired . $monthix } || 0 );
 
-			$bars .= HtmlBar('v', $data, Format_Number($data), $max_v, $Message[10]);
+			$bars .= HtmlBar('v', $data, Format_Number($data), $max_v, $Message[10], $width);
 			
 			$tableData .= HTMLDataCellWithBar('v', $data, Format_Number($data), $max_v);
 		}
@@ -13891,7 +13895,7 @@ sub HTMLMainMonthly{
 
 			$data = int($MonthPages{ $YearRequired . $monthix } || 0 );
 
-			$bars .= HtmlBar('p', $data, Format_Number($data), $max_p, $Message[56]);
+			$bars .= HtmlBar('p', $data, Format_Number($data), $max_p, $Message[56], $width);
 
 			$tableData .= HTMLDataCellWithBar('p', $data, Format_Number($data), $max_p);
 		}
@@ -13900,7 +13904,7 @@ sub HTMLMainMonthly{
 
 			$data = int($MonthHits{ $YearRequired . $monthix } || 0 );
 
-			$bars .= HtmlBar('h', $data, Format_Number($data), $max_h, $Message[57]);
+			$bars .= HtmlBar('h', $data, Format_Number($data), $max_h, $Message[57], $width);
 
 			$tableData .= HTMLDataCellWithBar('h', $data, Format_Number($data), $max_h);
 		}
@@ -13909,7 +13913,7 @@ sub HTMLMainMonthly{
 
 			$data = int($MonthBytes{ $YearRequired . $monthix } || 0 );
 
-			$bars .= HtmlBar('b', $data, Format_Bytes($data), $max_k, $Message[75]);
+			$bars .= HtmlBar('b', $data, Format_Bytes($data), $max_k, $Message[75], $width);
 
 			$tableData .= HTMLDataCellWithBar('b', $data, Format_Bytes($data), $max_k);
 		}
@@ -13949,7 +13953,7 @@ sub HTMLMainMonthly{
 
 	} elsif($ShowBars == 1) {
 
-		print '<table class="bar-table">'	. '<tr>' . $bars . '</tr>'
+		print '<table class="bar-table month-bar-table">'	. '<tr>' . $bars . '</tr>'
 		. '<tr>';
 
 		for ( my $ix = 1 ; $ix <= 12 ; $ix++ ) {
@@ -14039,6 +14043,7 @@ sub HTMLMainDaily{
 	my $total_u = my $total_v = my $total_p = my $total_h = my $total_k = 0;
 	my $max_v = my $max_p = my $max_h = my $max_k = 0;    # Start from 0 because can be lower than 1
 	my $height = 0;
+	my $width = 5;
 	my $bars = '';
 	my $data = '';
 	my $tableData = '';
@@ -14142,7 +14147,7 @@ sub HTMLMainDaily{
 		if ( $ShowDaysOfMonthStats =~ /V/i ) {
 			$data = int($DayVisits{ $date } || 0 );
 			
-			$bars .= HtmlBar('v', $data, Format_Number($data), $max_v, $Message[10]);
+			$bars .= HtmlBar('v', $data, Format_Number($data), $max_v, $Message[10], $width);
 
 			$tableData .= HTMLDataCellWithBar('v', $data, Format_Number($data), $max_v);
 		}
@@ -14150,7 +14155,7 @@ sub HTMLMainDaily{
 		if ( $ShowDaysOfMonthStats =~ /P/i ) {
 			$data = int($DayPages{ $date } || 0 );
 
-			$bars .= HtmlBar('p', $data, Format_Number($data), $max_p, $Message[56]);
+			$bars .= HtmlBar('p', $data, Format_Number($data), $max_p, $Message[56], $width);
 
 			$tableData .= HTMLDataCellWithBar('p', $data, Format_Number($data), $max_p);
 		}
@@ -14159,7 +14164,7 @@ sub HTMLMainDaily{
 
 			$data = int($DayHits{ $date } || 0 );
 
-			$bars .= HtmlBar('h', $data, Format_Number($data), $max_h, $Message[57]);
+			$bars .= HtmlBar('h', $data, Format_Number($data), $max_h, $Message[57], $width);
 
 			$tableData .= HTMLDataCellWithBar('h', $data, Format_Number($data), $max_h);
 		}
@@ -14168,7 +14173,7 @@ sub HTMLMainDaily{
 
 			$data = int($DayBytes{ $date } || 0 );
 
-			$bars .= HtmlBar('b', $data, Format_Bytes($data), $max_k, $Message[75]);
+			$bars .= HtmlBar('b', $data, Format_Bytes($data), $max_k, $Message[75], $width);
 
 			$tableData .= HTMLDataCellWithBar('b', $data, Format_Bytes($data), $max_k);
 		}
@@ -14196,12 +14201,14 @@ sub HTMLMainDaily{
   } elsif($ShowBars == 1) {
 
 		# Show average value bars
-		$bars .= '<td>&nbsp;</td>' . '<td>'
-		. (( $ShowDaysOfMonthStats =~ /V/i ) ? HtmlBar('v', $average_v, Format_Number($average_v), $max_v, $Message[10]) : '')
-		. (( $ShowDaysOfMonthStats =~ /P/i ) ? HtmlBar('p', $average_p, Format_Number($average_p), $max_p, $Message[56]) : '')
-		. (( $ShowDaysOfMonthStats =~ /H/i ) ? HtmlBar('h', $average_h, Format_Number($average_h), $max_h, $Message[57]) : '')
-		. (( $ShowDaysOfMonthStats =~ /B/i ) ? HtmlBar('b', $average_k, Format_Number($average_k), $max_k, $Message[75]) : '')
-		. '</td>' . '</tr>';
+		# $bars .= '<td>&nbsp;</td>' . '<td>'
+		# . (( $ShowDaysOfMonthStats =~ /V/i ) ? HtmlBar('v', $average_v, Format_Number($average_v), $max_v, $Message[10], $width) : '')
+		# . (( $ShowDaysOfMonthStats =~ /P/i ) ? HtmlBar('p', $average_p, Format_Number($average_p), $max_p, $Message[56], $width) : '')
+		# . (( $ShowDaysOfMonthStats =~ /H/i ) ? HtmlBar('h', $average_h, Format_Number($average_h), $max_h, $Message[57], $width) : '')
+		# . (( $ShowDaysOfMonthStats =~ /B/i ) ? HtmlBar('b', $average_k, Format_Number($average_k), $max_k, $Message[75], $width) : '')
+		# . '</td>';
+
+		$bars .= '</tr>';
 
 		# Show lib for day
 		$bars .= '<tr>';
@@ -14224,7 +14231,10 @@ sub HTMLMainDaily{
 
 		print '<table class="bar-table">'
 		. '<tr>'
-		. $bars	. '<td>&nbsp;</td>' . '<td valign="middle"' . Tooltip(18) . '>' . $Message[96] . '</td>'	. '</tr>'	. '</table>';
+		. $bars
+		# . '<td>&nbsp;</td>'
+		# . '<td valign="middle"' . Tooltip(18) . '>' . $Message[96] . '</td>'
+		. '</tr>'	. '</table>';
   }
 
 	# Show data array for days
@@ -14280,6 +14290,7 @@ sub HTMLMainDaysofWeek{
   my $NewLinkTarget = shift;	
 
 	my $title = "$Message[91]";
+	my $width = 15;
 	
 	my $max_p = my $max_h = my $max_k = 0;
 	my @avg_dayofweek_nb = ();
@@ -14380,14 +14391,14 @@ sub HTMLMainDaysofWeek{
 		}
 	} elsif($ShowBars == 1) {
 
-		print '<table class="bar-table">'	. '<tr>';
+		print '<table class="bar-table daysofweek-bar-table">'	. '<tr>';
 			
 		for (@DOWIndex) {
 
 			print '<td>'
-			. (( $ShowDaysOfWeekStats =~ /P/i ) ? HtmlBar('p', $avg_dayofweek_p[$_], Format_Number($avg_dayofweek_p[$_]), $max_p, $Message[56]) : '')
-			. (( $ShowDaysOfWeekStats =~ /H/i ) ? HtmlBar('h', $avg_dayofweek_h[$_], Format_Number($avg_dayofweek_h[$_]), $max_h, $Message[57]) : '')
-			. (( $ShowDaysOfWeekStats =~ /B/i ) ? HtmlBar('b', $avg_dayofweek_k[$_], Format_Number($avg_dayofweek_k[$_]), $max_k, $Message[75]) : '')
+			. (( $ShowDaysOfWeekStats =~ /P/i ) ? HtmlBar('p', $avg_dayofweek_p[$_], Format_Number($avg_dayofweek_p[$_]), $max_p, $Message[56], $width) : '')
+			. (( $ShowDaysOfWeekStats =~ /H/i ) ? HtmlBar('h', $avg_dayofweek_h[$_], Format_Number($avg_dayofweek_h[$_]), $max_h, $Message[57], $width) : '')
+			. (( $ShowDaysOfWeekStats =~ /B/i ) ? HtmlBar('b', $avg_dayofweek_k[$_], Format_Number($avg_dayofweek_k[$_]), $max_k, $Message[75], $width) : '')
 			. '</td>';
 
 		}
@@ -14608,6 +14619,7 @@ sub HTMLMainHours{
 	print "<tr><td align=\"center\">\n";
 	print "<center>\n";
 
+	my $width = 8;
 	my $max_p =	my $max_h = my $max_k = 1;
 	for ( my $ix = 0 ; $ix <= 23 ; $ix++ ) {
 
@@ -14663,9 +14675,9 @@ sub HTMLMainHours{
 			}
 			
 			print '<td>'
-			. (( $ShowHoursStats =~ /P/i ) ? HtmlBar('p', $_time_p[$ix], $_time_p[$ix], $max_p, $Message[56]) : '')
-			. (( $ShowHoursStats =~ /H/i ) ? HtmlBar('h', $_time_h[$ix], $_time_h[$ix], $max_h, $Message[57]) : '')
-			. (( $ShowHoursStats =~ /B/i ) ? HtmlBar('b', $_time_k[$ix], $_time_k[$ix], $max_k, $Message[75]) : '')
+			. (( $ShowHoursStats =~ /P/i ) ? HtmlBar('p', $_time_p[$ix], $_time_p[$ix], $max_p, $Message[56], $width) : '')
+			. (( $ShowHoursStats =~ /H/i ) ? HtmlBar('h', $_time_h[$ix], $_time_h[$ix], $max_h, $Message[57], $width) : '')
+			. (( $ShowHoursStats =~ /B/i ) ? HtmlBar('b', $_time_k[$ix], $_time_k[$ix], $max_k, $Message[75], $width) : '')
 			. '</td>';
 
 		}
@@ -14932,7 +14944,7 @@ EOF
 
 		if ( $ShowDomainsStats =~ /U/i ) {
 
-			$data = int( $domener_temp * $TotalUnique / 2 );
+			$data = int( $domener_temp * $TotalUnique );
 
 			print HTMLDataCellWithBar('u', $data , Format_Number($data), $TotalUnique);
 
@@ -14940,7 +14952,7 @@ EOF
 
 		if ( $ShowDomainsStats =~ /V/i ) {
 
-			$data = int( $domener_temp * $TotalVisits / 2 );
+			$data = int( $domener_temp * $TotalVisits);
 
 			print HTMLDataCellWithBar('v', $data , Format_Number($data), $TotalVisits);
 		
