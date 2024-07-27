@@ -958,7 +958,7 @@ a:hover, a:focus, a:active{ color: var(--a-hover-color); text-decoration: none; 
 #domain { font-weight: 900; font-size: 4ch }
 #header-form { display: flex; flex-wrap: wrap; column-gap: 20px; }
 .multi-data-table { display: flex; column-gap: 5dvw; flex-wrap: wrap; justify-content: center }
-.multi-data-table.worldmap{ background-color: #4477DD;position: relative; color: #FFFFFF }
+.multi-data-table.worldmap{ position: relative; }
 .data-table { border-spacing: 0 2px }
 .data-table tbody tr { transition: background 0.5s ease-out; transition: transform 0.1s ease-in }
 .data-table tbody tr:hover { font-weight: 900; background: rgba(0,0,0,0.2); transform: scale(1.1) translateX(2px); }
@@ -998,8 +998,8 @@ a:hover, a:focus, a:active{ color: var(--a-hover-color); text-decoration: none; 
 .hr-9{ rotate: 270deg }
 .hr-10{ rotate: 300deg }
 .hr-11{ rotate: 330deg }
-#worldmap{ width: 50dvw; margin-top: 1dvh; background-color: #4477DD; }
-.title-map{ position:absolute; top:5px; left:5px; }
+#worldmap{ width: 100%; margin-top: 1dvh; background-color: #4477DD; }
+.title-map{ position:absolute; top: 16px; color: #FFFFFF; }
 .country { text-transform: uppercase; font-weight: 700; }
 .landxx{ fill: rgba(128, 86, 86, 1) !important; transition: fill 0.5s ease-in }
 .lighted-land{ fill: var(--aws-color-u) !important; fill-rule: evenodd;}
