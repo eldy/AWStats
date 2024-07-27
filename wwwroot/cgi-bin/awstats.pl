@@ -942,7 +942,7 @@ sub renderCss {
 	. '}'
 	. <<EOF;
 body { font: 0.75rem sans-serif, system-ui; background-color: var(--aws-background-color); margin: 0; color: var(--default-page-color) }
-#container { width: clamp(760px, 960px, 80%); margin: auto; }
+#container { width: clamp(760px, 960px, 80%); margin: auto; display: flex; flex-wrap: wrap; justify-content: center; row-gap: 40px; }
 b, .aws_title, th.aws{ font-weight: 700 }
 th{ border: none; padding: 1px 2px 1px 1px; color: var(--aws-title-text-color); }
 .aws_blank  { font-size: 0.9rem; background-color: var(--aws-background-color); text-align: center; }
