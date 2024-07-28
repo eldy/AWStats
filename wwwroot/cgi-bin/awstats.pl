@@ -935,6 +935,7 @@ sub renderCss {
 	. '--light-color: hsl(1, 0%, 90%);'
 	. '--a-color: #' . $color_link . ';'
 	. '--a-hover-color: #' . $color_hover . ';'
+	. '--bar-width: ' . $BarWidth .'px; /* default 125 */'
 	. '}'
 	. <<EOF;
 body { font: 0.75rem sans-serif, system-ui; background-color: var(--default-page-bgcolor); margin: 0; color: var(--default-page-color) }
@@ -942,15 +943,16 @@ a, a:link, a:visited { color: var(--a-color); text-decoration: none; }
 a:hover, a:focus, a:active{ color: var(--a-hover-color); text-decoration: none; }
 b { font-weight: 700 }
 small { font-size: 0.9em }
-#container { width: clamp(760px, 960px, 85%); margin: auto; display: flex; flex-wrap: wrap; justify-content: center; row-gap: 25px; align-items: flex-start;}
+#container { width: clamp(600px, 960px, 85%); margin: auto; display: flex; flex-wrap: wrap; justify-content: center; row-gap: 25px; align-items: flex-start;}
 #container > header { display: flex; flex-wrap: wrap; column-gap: 20px; }
 #domain { font-weight: 900; font-size: 2.4em }
 header select { width : 60px }
 nav { height: 17px; background-color: #F9F9F9; width:clamp(760px, 960px, 80%); }
 #summary-logs { max-width: 100%; text-align: center;  margin: auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; align-items: flex-start;}
-#summary-logs div { padding: 2px 4px }
+#summary-logs div { padding: 2px 0 }
 .summary-label { margin: 0 9px; }
-#summary-logs div[class^="bg-"], .data-table th, .currentday{ font-weight: 900 }
+#summary-logs div[class^="bg-"], .currentday{ width:var(--bar-width); font-weight: 900 }
+div[class^="bg-"], th[class^="bg-"] { width: 100px }
 button, select, input[type=submit] { cursor: pointer; color: var(--light-color); background-color: var(--dark-color); border: 1px solid #ccd7e0; }
 section header {border-bottom: 8px solid var(--light-color); width: 100%; text-align: center; font-weight: 900; font-size: 1.4rem; }
 .multi-data-table { display: flex; column-gap: 5dvw; flex-wrap: wrap; justify-content: center }
@@ -960,20 +962,24 @@ section header {border-bottom: 8px solid var(--light-color); width: 100%; text-a
 .data-table tbody div { opacity: 0.9 }
 .data-table tbody tr { transition: background 0.5s ease-out; transition: transform 0.1s ease-in }
 .data-table tbody tr:hover { font-weight: 900; background: rgba(0,0,0,0.2); transform: scale(1.1) translateX(2px); }
-.data-table th, .data-table td:first-child { padding: 2px 4px }
-.data-table td:not(:first-child) { padding: 2px 0 }
+.data-table th { font-weight: 900 }
+.data-table th, .data-table td:not(:first-child) { padding: 2px 0 }
+.data-table td:first-child { padding-right: 4px }
 .data-table td div { padding: 3px 4px }
 .data-table td { text-align: right; font-weight: 700; }
 .data-table td:first-child:not(.country) { font-weight: 400 }
 .data-table tfoot .data-table-sum td { border-top: 1px solid rgba(192,192,192,0.2); }
 .data-table-sum { font-size : 1.3em }
 .data-table .title { font-size: 2em }
-.bar-table { margin: auto; text-align: center }
+.bar-table { margin: auto; text-align: center; font-size: 10px; }
 .bar-table tr:first-child td { vertical-align: bottom; }
+.bar-table span { font-size: 0.8em }
 .bar{  }
 .bar-horizontal{ height: 4px }
 .bar-vertical{ display: inline-block; width: 4px; }
-.clock{ display: inline-block; vertical-align: bottom; height: 16px; width: 16px; margin: 0 5px; border-radius: 50%; }
+.clock{ display: inline-block; vertical-align: bottom; margin: 0 5px; border-radius: 50%; }
+.bar-table .clock {  width: 10px; height: 10px }
+.data-table .clock {  width: 16px; height: 16px }
 .hr-1{ rotate: 30deg } .hr-2{ rotate: 60deg } .hr-3{ rotate: 90deg } .hr-4{ rotate: 120deg } .hr-5{ rotate: 150deg } .hr-6{ rotate: 180deg } .hr-7{ rotate: 210deg } .hr-8{ rotate: 240deg } .hr-9{ rotate: 270deg } .hr-10{ rotate: 300deg } .hr-11{ rotate: 330deg }
 #worldmap{ width: 100%; margin-bottom: 1dvh; background-color: #4477DD; border-radius: 225px; overflow: auto; }
 .title-map{ position:absolute; top: 16px; color: var(--light-color); }
@@ -13529,11 +13535,11 @@ sub HTMLDataTableHeader{
 
 	return '<thead><tr>'
 		. '<th class="title">' . $title . '</th>'
-		. ( ( $config =~ /U/i ) ? '<th style="width: ' . $BarWidth . 'px;" class="bg-u" ' . Tooltip(2) . '>' . CleanXSS($Message[11]) . '</th>' : '' )
-		. ( ( $config =~ /V/i ) ? '<th style="width: ' . $BarWidth . 'px;" class="bg-v" ' . Tooltip(1) . '>' . CleanXSS($Message[10]) . '</th>' : '' )
-		. ( ( $config =~ /P/i ) ? '<th style="width: ' . $BarWidth . 'px;" class="bg-p" ' . Tooltip(3) . '>' . CleanXSS($Message[56]) . '</th>' : '' )
-		. ( ( $config =~ /H/i ) ? '<th style="width: ' . $BarWidth . 'px;" class="bg-h" ' . Tooltip(4) . '>' . CleanXSS($Message[57]) . '</th>' : '' )
-		. ( ( $config =~ /B/i ) ? '<th style="width: ' . $BarWidth . 'px;" class="bg-b" ' . Tooltip(5) . '>' . CleanXSS($Message[75]) . '</th>' : '' )
+		. ( ( $config =~ /U/i ) ? '<th style="width: var(--bar-width)" class="bg-u" ' . Tooltip(2) . '>' . CleanXSS($Message[11]) . '</th>' : '' )
+		. ( ( $config =~ /V/i ) ? '<th style="width: var(--bar-width)" class="bg-v" ' . Tooltip(1) . '>' . CleanXSS($Message[10]) . '</th>' : '' )
+		. ( ( $config =~ /P/i ) ? '<th style="width: var(--bar-width)" class="bg-p" ' . Tooltip(3) . '>' . CleanXSS($Message[56]) . '</th>' : '' )
+		. ( ( $config =~ /H/i ) ? '<th style="width: var(--bar-width)" class="bg-h" ' . Tooltip(4) . '>' . CleanXSS($Message[57]) . '</th>' : '' )
+		. ( ( $config =~ /B/i ) ? '<th style="width: var(--bar-width)" class="bg-b" ' . Tooltip(5) . '>' . CleanXSS($Message[75]) . '</th>' : '' )
 		. '</tr></thead>';
 }
 
@@ -13558,7 +13564,7 @@ sub HTMLMainMonthly{
 
 	my $height = 0;
 	my $bars = '';
-	my $width = 10;
+	my $width = 9;
 	my $data = '';
 	my $tableData = '';
 
@@ -13715,7 +13721,7 @@ sub HTMLMainMonthly{
 
 			print "<td>"
 			. (!$StaticLinks && $monthix == $nowmonth && $YearRequired == $nowyear ? '<span class="currentday">' : '')
-			. "$MonthNumLib{$monthix}<div style=\"font-size: 0.5rem;\">$YearRequired</div>"
+			. "$MonthNumLib{$monthix}<div>$YearRequired</div>"
 			. (!$StaticLinks && $monthix == $nowmonth && $YearRequired == $nowyear ? '</span>' : '' )
 			. '</td>';
 		}
@@ -13795,7 +13801,7 @@ sub HTMLMainDaily{
 	my $total_u = my $total_v = my $total_p = my $total_h = my $total_k = 0;
 	my $max_v = my $max_p = my $max_h = my $max_k = 0;    # Start from 0 because can be lower than 1
 	my $height = 0;
-	my $width = 5;
+	my $width = 3;
 	my $bars = '';
 	my $data = '';
 	my $tableData = '';
@@ -14367,7 +14373,7 @@ sub HTMLMainHours{
 	&tab_head( "$title", 19, 0, 'hours' );
 	print "<tr><td>\n";
 
-	my $width = 8;
+	my $width = 6;
 	my $max_p =	my $max_h = my $max_k = 1;
 	for ( my $ix = 0 ; $ix <= 23 ; $ix++ ) {
 
@@ -14404,23 +14410,11 @@ sub HTMLMainHours{
 		);
 		$graphdone=1;
 	}
-	if (! $graphdone) 
+	if (! $graphdone && $ShowBars == 1) 
 	{
 		print '<table class="bar-table">';
 		print "<tr>\n";
 		for ( my $ix = 0 ; $ix <= 23 ; $ix++ ) {
-			
-			my $bredde_h = 0;
-			my $bredde_k = 0;
-			
-			if ( $max_h > 0 ) {
-				$bredde_h =
-				  int( $BarHeight * $_time_h[$ix] / $max_h ) + 1;
-			}
-			if ( $max_k > 0 ) {
-				$bredde_k =
-				  int( $BarHeight * $_time_k[$ix] / $max_k ) + 1;
-			}
 			
 			print '<td>'
 			. (( $ShowHoursStats =~ /P/i ) ? HtmlBar('p', $_time_p[$ix], $_time_p[$ix], $max_p, $Message[56], $width) : '')
@@ -14434,7 +14428,7 @@ sub HTMLMainHours{
 		# Show hour lib
 		print "<tr" . Tooltip(17) . ">";
 		for ( my $ix = 0 ; $ix <= 23 ; $ix++ ) {
-			print "<th width=\"19\">$ix</th>\n"
+			print '<th>' . $ix . '</th>'
 			  ;   # width=19 instead of 18 to avoid a MacOS browser bug.
 		}
 		print "</tr>\n";
