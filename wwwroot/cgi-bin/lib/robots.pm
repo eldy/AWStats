@@ -43,6 +43,11 @@
 #
 #-------------------------------------------------------
 
+# 2024-07-17 Dinko Sotirov
+#              Added Amazonbot (https://developer.amazon.com/support/amazonbot)
+#              Added GPTBot (https://openai.com/gptbot)
+#              Added GeedoProductSearch (http://www.geedo.com/product-search.html)
+
 # 2023-07-04 RobC 
 #              Removed Dalvik as native Android UI Browser User Agent
 #              Removed CFNetwork as native iOS and OSX Browser User Agent
@@ -458,6 +463,9 @@
 'YandexMetrika/',
 'YandexMobileBot/',
 'yandex',
+'Amazonbot/',
+'GPTBot/',
+'GeedoProductSearch/',
 'electricmonk/',
 'spbot/',
 'SeznamBot/',
@@ -1638,6 +1646,9 @@
 'YandexMetrika/','YandexMetrika',
 'YandexMobileBot/','YandexMobileBot',
 'yandex','Yandex ( catchall )',
+'Amazonbot/','Amazonbot',
+'GPTBot/','GPTBot/',
+'GeedoProductSearch/','GeedoProductSearch/',
 'electricmonk/','electricmonk',
 'spbot/','spbot',
 'SeznamBot/','SeznamBot',
