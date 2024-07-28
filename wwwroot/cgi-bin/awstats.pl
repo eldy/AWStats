@@ -14749,48 +14749,31 @@ sub HTMLMainHosts{
 	my $NewLinkParams = shift;
 	my $NewLinkTarget = shift;
 	
-	if ($Debug) { debug( "ShowHostsStats", 2 ); }
-	print "<a name=\"visitors\">&nbsp;</a>";
-	my $title =
-"$Message[81] ($Message[77] $MaxNbOf{'HostsShown'}) &nbsp; - &nbsp; <a href=\""
-	  . (
-		$ENV{'GATEWAY_INTERFACE'}
-		  || !$StaticLinks
-		? XMLEncode("$AWScript${NewLinkParams}output=allhosts")
-		: "$StaticLinks.allhosts.$StaticExt"
-	  )
-	  . "\"$NewLinkTarget>$Message[80]</a> &nbsp; - &nbsp; <a href=\""
-	  . (
-		$ENV{'GATEWAY_INTERFACE'}
-		  || !$StaticLinks
-		? XMLEncode("$AWScript${NewLinkParams}output=lasthosts")
-		: "$StaticLinks.lasthosts.$StaticExt"
-	  )
-	  . "\"$NewLinkTarget>$Message[9]</a> &nbsp; - &nbsp; <a href=\""
-	  . (
-		$ENV{'GATEWAY_INTERFACE'}
-		  || !$StaticLinks
-		? XMLEncode("$AWScript${NewLinkParams}output=unknownip")
-		: "$StaticLinks.unknownip.$StaticExt"
-	  )
-	  . "\"$NewLinkTarget>$Message[45]</a>";
+	if ($Debug) { debug( 'ShowHostsStats', 2 ); }
+	# print "<a name=\"visitors\">&nbsp;</a>";
+
+	my $title = $Message[81] . '(' . $Message[77] . ' ' . $MaxNbOf{'HostsShown'} .')'	. ' - '
+	. '<a href="' . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? XMLEncode($AWScript . ${NewLinkParams} . 'output=allhosts') : $StaticLinks . '.allhosts.' . $StaticExt) . '" ' . $NewLinkTarget . '>'
+	. $Message[80] . '</a> - '
+	. '<a href="' . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? XMLEncode($AWScript . ${NewLinkParams} . 'output=lasthosts')	: $StaticLinks . '.lasthosts.' . $StaticExt) . '" ' . $NewLinkTarget . '>'
+	. $Message[9]	. '</a> - '
+	. '<a href="' . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks	? XMLEncode($AWScript . ${NewLinkParams} . 'output=unknownip')	: $StaticLinks . '.unknownip.' . $StaticExt) . '" ' . $NewLinkTarget . '>'
+	. $Message[45] . '</a>';
 	  
-    if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
-       # extend the title to include the added link
-           $title = "$title &nbsp; - &nbsp; <a href=\"" . (XMLEncode(
-               "$AddLinkToExternalCGIWrapper" . "?section=VISITOR&baseName=$DirData/$PROG"
-           . "&month=$MonthRequired&year=$YearRequired&day=$DayRequired"
-           . "&siteConfig=$SiteConfig" )
-           . "\"$NewLinkTarget>$Message[179]</a>");
-    }
+	if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
+	{ # extend the title to include the added link
+    $title .= ' - '
+    . '<a href="' . XMLEncode($AddLinkToExternalCGIWrapper . '?section=VISITOR&baseName=' . $DirData/$PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig) . '" ' . $NewLinkTarget . '>'
+    . $Message[179] . '</a>';
+  }
 	  
-	&tab_head( "$title", 19, 0, 'visitors' );
+	&tab_head( $title, 19, 0, 'visitors' );
 	
-	&BuildKeyList( $MaxNbOf{'HostsShown'}, $MinHit{'Host'}, \%_host_h,
-		\%_host_p );
+	&BuildKeyList( $MaxNbOf{'HostsShown'}, $MinHit{'Host'}, \%_host_h, \%_host_p );
 		
 	# Graph the top five in a pie chart
-	if (scalar @keylist > 1){
+	if (scalar @keylist > 1)
+	{
 		foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
 		{
 			my @blocklabel = ();
@@ -14800,135 +14783,110 @@ sub HTMLMainHosts{
 			my $cnt = 0;
 			my $suma = 0;
 			foreach my $key (@keylist) {
-               $suma=$suma + ( $_host_h{$key});
-               $cnt++;
-               if ($cnt > 4) { last; }
+        $suma=$suma + ( $_host_h{$key});
+        $cnt++;
+        if ($cnt > 4) { last; }
 			}
 			
 			my $cnt = 0;
 			foreach my $key (@keylist) {
-               push @valdata, int( $_host_h{$key} / $suma * 1000 ) / 10;
-               push @blocklabel, "$key";
-               $cnt++;
-               if ($cnt > 4) { last; }
+        push @valdata, int( $_host_h{$key} / $suma * 1000 ) / 10;
+        push @blocklabel, "$key";
+        $cnt++;
+        if ($cnt > 4) { last; }
 			}
 			
-			print "<tr><td colspan=\"7\">";
+			print '<tr><td colspan="7">';
 			my $function = "ShowGraph_$pluginname";
 			&$function(
-				"Hosts",              "hosts",
+				"Hosts",      "hosts",
 				0, 						\@blocklabel,
-				0,           			\@valcolor,
-				0,              		0,
-				0,          			\@valdata
+				0,           	\@valcolor,
+				0,            0,
+				0,          	\@valdata
 			);
-			print "</td></tr>";
+			print '</td></tr>';
 		}
 	}
 	
-	print "<tr bgcolor=\"#$color_TableBGRowTitle\">";
-	print "<th>";
-	if ( $MonthRequired ne 'all' ) {
-		print
-"$Message[81] : ".Format_Number($TotalHostsKnown)." $Message[82], ".Format_Number($TotalHostsUnknown)." $Message[1]<br />".Format_Number($TotalUnique)." $Message[11]</th>";
-	}
-	else {
-		print "$Message[81] : " . ( scalar keys %_host_h ) . "</th>";
-	}
+	print '<tr bgcolor="#' . $color_TableBGRowTitle .'">'
+	. '<th>'
+	. $Message[81] . ' : '
+	. (( $MonthRequired ne 'all' )
+			? Format_Number($TotalHostsKnown) . ' ' . $Message[82] . ', ' . Format_Number($TotalHostsUnknown) . ' ' . $Message[1]. '<br>' . Format_Number($TotalUnique) . ' ' . $Message[11]
+			: ( scalar keys %_host_h )
+	)
+	. '</th>';
+	
 	&HTMLShowHostInfo('__title__');
-	if ( $ShowHostsStats =~ /P/i ) {
-		print "<th class=\"bg-p\" width=\"80\""
-		  . Tooltip(3)
-		  . ">$Message[56]</th>";
-	}
-	if ( $ShowHostsStats =~ /H/i ) {
-		print "<th class=\"bg-h\" width=\"80\""
-		  . Tooltip(4)
-		  . ">$Message[57]</th>";
-	}
-	if ( $ShowHostsStats =~ /B/i ) {
-		print "<th class=\"bg-k\" width=\"80\""
-		  . Tooltip(5)
-		  . ">$Message[75]</th>";
-	}
-	if ( $ShowHostsStats =~ /L/i ) {
-		print "<th width=\"120\">$Message[9]</th>";
-	}
-	print "</tr>\n";
+	
+	print (( $ShowHostsStats =~ /P/i ) ? '<th class="bg-p" width="80"' . Tooltip(3) . '>' . $Message[56] . '</th>' : '')
+	. (( $ShowHostsStats =~ /H/i ) ? '<th class="bg-h" width="80"' . Tooltip(4) . '>' . $Message[57] . '</th>' : '')
+	. (( $ShowHostsStats =~ /B/i ) ? '<th class="bg-k" width="80"' . Tooltip(5) . '>' . $Message[75] . '</th>' : '')
+	. (( $ShowHostsStats =~ /L/i ) ? '<th width="120">' . $Message[9] . '</th>' : '')
+	. '</tr>';
+
 	my $total_p = my $total_h = my $total_k = 0;
 	my $count = 0;
 	
 	my $regipv4 = qr/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;	
 
-        if ( $DynamicDNSLookup == 2 ) {
-	        # Use static DNS file
-                &Read_DNS_Cache( \%MyDNSTable, "$DNSStaticCacheFile", "", 1 );
+  if ( $DynamicDNSLookup == 2 )
+  { # Use static DNS file
+    &Read_DNS_Cache( \%MyDNSTable, "$DNSStaticCacheFile", "", 1 );
+  }
+
+	foreach my $key (@keylist)
+	{
+		print '<tr>' . '<td class="aws">' . $key;
+
+		if ($DynamicDNSLookup && $key =~ /$regipv4/o)
+		{ # Dynamic reverse DNS lookup
+	    my $lookupresult=lc(gethostbyaddr(pack("C4",split(/\./,$key)),AF_INET));	# This may be slow
+      if (! $lookupresult || $lookupresult =~ /$regipv4/o || ! IsAscii($lookupresult))
+      {
+        if ( $DynamicDNSLookup == 2 )
+        { # Check static DNS file
+          $lookupresult = $MyDNSTable{$key};
+          if ($lookupresult) { print " ($lookupresult)"; }
         }
+      } else { print " ($lookupresult)"; }
+    }
 
-	foreach my $key (@keylist) {
-		print "<tr>";
-		print "<td class=\"aws\">$key";
+		print '</td>';
 
-		if ($DynamicDNSLookup) {
-	                # Dynamic reverse DNS lookup
-	                if ($key =~ /$regipv4/o) {
-		                my $lookupresult=lc(gethostbyaddr(pack("C4",split(/\./,$key)),AF_INET));	# This may be slow
-                	        if (! $lookupresult || $lookupresult =~ /$regipv4/o || ! IsAscii($lookupresult)) {
-                                        if ( $DynamicDNSLookup == 2 ) {
-                                                # Check static DNS file
-                                                $lookupresult = $MyDNSTable{$key};
-                                                if ($lookupresult) { print " ($lookupresult)"; }
-                                                else { print ""; }
-                                        }
-                                        else { print ""; }
-                                }
-                                else { print " ($lookupresult)"; }
-                        }
-                }
-
-		print "</td>";
 		&HTMLShowHostInfo($key);
-		if ( $ShowHostsStats =~ /P/i ) {
-			print '<td>' . ( Format_Number($_host_p{$key}) || "&nbsp;" ) . '</td>';
-		}
-		if ( $ShowHostsStats =~ /H/i ) {
-			print "<td>".Format_Number($_host_h{$key})."</td>";
-		}
-		if ( $ShowHostsStats =~ /B/i ) {
-			print '<td>' . Format_Bytes( $_host_k{$key} ) . '</td>';
-		}
-		if ( $ShowHostsStats =~ /L/i ) {
-			print '<td>'
-			  . (
-				$_host_l{$key}
-				? Format_Date( $_host_l{$key}, 1 )
-				: '-'
-			  )
-			  . '</td>';
-		}
-		print "</tr>\n";
+		
+		print (( $ShowHostsStats =~ /P/i ) ? '<td>' . ( Format_Number($_host_p{$key}) || "&nbsp;" ) . '</td>' : '')
+		. (( $ShowHostsStats =~ /H/i ) ? '<td>' . Format_Number($_host_h{$key}) . '</td>' : '')
+		. (( $ShowHostsStats =~ /B/i ) ? '<td>' . Format_Bytes( $_host_k{$key} ) . '</td>' : '')
+		. (( $ShowHostsStats =~ /L/i ) ? '<td>' . (	$_host_l{$key} ? Format_Date( $_host_l{$key}, 1 )	: '-' ) . '</td>' : '')
+		. '</tr>';
+
 		$total_p += $_host_p{$key};
 		$total_h += $_host_h{$key};
 		$total_k += $_host_k{$key} || 0;
 		$count++;
 	}
+
 	my $rest_p = $TotalPages - $total_p;
 	my $rest_h = $TotalHits - $total_h;
 	my $rest_k = $TotalBytes - $total_k;
+
 	if ( $rest_p > 0 || $rest_h > 0 || $rest_k > 0 )
-	{    # All other visitors (known or not)
-		print "<tr>";
-		print
-"<td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
+	{ # All other visitors (known or not)
+		print '<tr>'
+		. '<td class="aws"><span style="color: #' . $color_other . '">' . $Message[2] . '</span></td>';
+
 		&HTMLShowHostInfo('');
-		if ( $ShowHostsStats =~ /P/i ) { print "<td>".Format_Number($rest_p)."</td>"; }
-		if ( $ShowHostsStats =~ /H/i ) { print "<td>".Format_Number($rest_h)."</td>"; }
-		if ( $ShowHostsStats =~ /B/i ) {
-			print "<td>" . Format_Bytes($rest_k) . "</td>";
-		}
-		if ( $ShowHostsStats =~ /L/i ) { print "<td>&nbsp;</td>"; }
-		print "</tr>\n";
+		
+		print (( $ShowHostsStats =~ /P/i ) ? '<td>' . Format_Number($rest_p) . '</td>' : '')
+		. (( $ShowHostsStats =~ /H/i ) ? '<td>' . Format_Number($rest_h) . '</td>' : '')
+		. (( $ShowHostsStats =~ /B/i ) ? '<td>' . Format_Bytes($rest_k) . '</td>' : '')
+		. (( $ShowHostsStats =~ /L/i ) ? '<td>&nbsp;</td>' : '')
+		. '</tr>';
 	}
+
 	&tab_end();
 }
 
