@@ -13435,7 +13435,7 @@ sub HTMLMainSummary{
 		'<div>'
 		. '<div class="bg-v" ' . Tooltip(1) . ">$Message[10]</div>"
 		. '<div><b>' . Format_Number($TotalVisits) . '</b></div>'
-		. '<small>(' . $RatioVisits . ' ' . $Message[52] .')</small>'
+		. '<small>' . $RatioVisits . ' ' . $Message[52] .'</small>'
 		. '</div>'
 		: ''
 	);
@@ -13445,7 +13445,7 @@ sub HTMLMainSummary{
 		. '<div class="bg-p" ' . Tooltip(3) . ">$Message[56]</div>"
 		. '<div>'
 		. '<div><b>' . Format_Number($TotalPages) . '</b></div>'
-		. '<small>(' . $RatioPages . ' ' . $Message[56] . ' / ' . $Message[12] . ')</small>'
+		. '<small>' . $RatioPages . ' ' . $Message[56] . ' / ' . $Message[12] . '</small>'
 		. '</div>'
 		. '<div><small>' . Format_Number($TotalNotViewedPages) . ' *' .  $Message[( $LogType eq 'M' ) ? 166 : 161]  . ' </small></div>'
 		. '</div>'
@@ -13457,7 +13457,7 @@ sub HTMLMainSummary{
 		. '<div class="bg-h"' . Tooltip(4) . ">$Message[57]</div>"
 		. '<div>'
 		. '<div><b>'.Format_Number($TotalHits).'</b></div>'
-		. ($LogType eq 'M' ? '' : ' <small>(' . $RatioHits . ' ' . $Message[57] . ' / ' . $Message[12] . ')</small>')
+		. ($LogType eq 'M' ? '' : ' <small>' . $RatioHits . ' ' . $Message[57] . ' / ' . $Message[12] . '</small>')
 		. '</div>'
 		. '<div><small>' . Format_Number($TotalNotViewedHits) . ' *' .  $Message[( $LogType eq 'M' ) ? 166 : 161]  . '</small></div>'
 		. '</div>'
@@ -13469,18 +13469,16 @@ sub HTMLMainSummary{
 		. '<div class="bg-b"' . Tooltip(5) . ">$Message[75]</div>"
 		. '<div>'
 		. '<div><b>' . Format_Bytes( int($TotalBytes) ) . '</b></div>'
-		. '<small>(' . $RatioBytes . ' ' . $Message[108] . ' / ' . $Message[ ( $LogType eq 'M' ? 149 : 12 ) ] . ')</small>'
+		. '<small>' . $RatioBytes . ' ' . $Message[108] . ' / ' . $Message[ ( $LogType eq 'M' ? 149 : 12 ) ] . '</small>'
 		. '</div>'
 		. '<div><small>' . Format_Bytes( int($TotalNotViewedBytes) ) . ' *' .  $Message[( $LogType eq 'M' ) ? 166 : 161]  . '</small></div>'
 		. '</div>'
 		: ''
 	);
-print '<div>' . ($LogType eq 'W' || $LogType eq 'S' ? "* $Message[159]" : "" ) . '</div>';
-	print '</div>';
-	print '</div>';
 
+	print '<div>' . ($LogType eq 'W' || $LogType eq 'S' ? "* $Message[159]" : "" ) . '</div>';
 	
-
+	print '</div>' . '</div>';
 
 }
 
