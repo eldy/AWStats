@@ -920,8 +920,8 @@ sub renderCss {
 	my $css = '';
 
 	$css .= ':root {'
-	. '--default-page-color: hsl(1, 0%, 25%);'
-	. '--default-page-bgcolor: hsl(1, 0%, 95%);'
+	. '--page-color: hsl(1, 0%, 25%);'
+	. '--page-bgcolor: hsl(1, 0%, 95%);'
 	. '--aws-color-u: #' . $color_u . ';'
 	. '--aws-color-v: #' . $color_v . ';'
 	. '--aws-color-p: #' . $color_p . ';'
@@ -938,30 +938,33 @@ sub renderCss {
 	. '--bar-width: ' . $BarWidth .'px; /* default 125 */'
 	. '}'
 	. <<EOF;
-body { font: 0.75rem sans-serif, system-ui; background-color: var(--default-page-bgcolor); margin: 0; color: var(--default-page-color) }
+body { font: 0.75rem sans-serif, system-ui; background-color: var(--page-bgcolor); margin: 0; padding:0; color: var(--page-color) }
 a, a:link, a:visited { color: var(--a-color); text-decoration: none; }
 a:hover, a:focus, a:active{ color: var(--a-hover-color); text-decoration: none; }
 b { font-weight: 700 }
+hr { width: 100%; height: 0; margin: 0; color: transparent; border: none; }
 small { font-size: 0.9em }
-#container { width: clamp(600px, 960px, 85%); margin: auto; display: flex; flex-wrap: wrap; justify-content: center; row-gap: 25px; align-items: flex-start;}
-#container > header { display: flex; flex-wrap: wrap; column-gap: 20px; }
+#container { display: flex; flex-wrap: wrap; justify-content: center; row-gap: 25px; align-items: flex-start;}
+#container > header { position: sticky; top: 0; z-index: 100; width: 100%; background-color: var(--page-bgcolor); display: flex; flex-wrap: wrap; column-gap: 20px; justify-content: center; }
 #domain { font-weight: 900; font-size: 2.4em }
 header select { width : 60px }
-nav { height: 17px; background-color: #F9F9F9; width:clamp(760px, 960px, 80%); }
-#summary-logs { max-width: 100%; text-align: center;  margin: auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; align-items: flex-start;}
+nav { width: 100%; height: 17px; margin: 8px 0; background-color: white; text-align: center; }
+#about { width: 100%; text-align: center; }
+nav { margin-top: 0; }
+#summary-logs { max-width: 100%; text-align: center;  margin: auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; align-items: flex-start;}
 #summary-logs div { padding: 2px 0 }
 .summary-label { margin: 0 9px; }
 #summary-logs div[class^="bg-"], .currentday{ width:var(--bar-width); font-weight: 900 }
-div[class^="bg-"], th[class^="bg-"] { width: 100px }
+div[class^="bg-"], th[class^="bg-"] { width: var(--bar-width) }
 button, select, input[type=submit] { cursor: pointer; color: var(--light-color); background-color: var(--dark-color); border: 1px solid #ccd7e0; }
-section header {border-bottom: 8px solid var(--light-color); width: 100%; text-align: center; font-weight: 900; font-size: 1.4rem; }
+h1, section header {border-bottom: 8px solid var(--light-color); width: 100%; margin: 0; text-align: center; font-weight: 900; font-size: 1.4rem; }
 .multi-data-table { display: flex; column-gap: 5dvw; flex-wrap: wrap; justify-content: center }
-.multi-data-table.worldmap{ position: relative; }
+.multi-data-table.worldmap{ width: 60%; position: relative; }
 .data-table { border-spacing: 0 2px; margin: auto; }
 .data-table tfoot { display: table-header-group }
 .data-table tbody div { opacity: 0.9 }
 .data-table tbody tr { transition: background 0.5s ease-out; transition: transform 0.1s ease-in }
-.data-table tbody tr:hover { font-weight: 900; background: rgba(0,0,0,0.2); transform: scale(1.1) translateX(2px); }
+.data-table tbody tr:hover { font-weight: 900; background: var(--neutral-color); transform: scale(1.1) translateX(2px); }
 .data-table th { font-weight: 900 }
 .data-table th, .data-table td:not(:first-child) { padding: 2px 0 }
 .data-table td:first-child { padding-right: 4px }
@@ -978,10 +981,10 @@ section header {border-bottom: 8px solid var(--light-color); width: 100%; text-a
 .bar-horizontal{ height: 4px }
 .bar-vertical{ display: inline-block; width: 4px; }
 .clock{ display: inline-block; vertical-align: bottom; margin: 0 5px; border-radius: 50%; }
-.bar-table .clock {  width: 10px; height: 10px }
+.bar-table .clock {  width: 1dvw; height: 1dvw }
 .data-table .clock {  width: 16px; height: 16px }
 .hr-1{ rotate: 30deg } .hr-2{ rotate: 60deg } .hr-3{ rotate: 90deg } .hr-4{ rotate: 120deg } .hr-5{ rotate: 150deg } .hr-6{ rotate: 180deg } .hr-7{ rotate: 210deg } .hr-8{ rotate: 240deg } .hr-9{ rotate: 270deg } .hr-10{ rotate: 300deg } .hr-11{ rotate: 330deg }
-#worldmap{ width: 100%; margin-bottom: 1dvh; background-color: #4477DD; border-radius: 225px; overflow: auto; }
+#worldmap{ width: 56%; margin-bottom: 1dvh; background-color: #4477DD; }
 .title-map{ position:absolute; top: 16px; color: var(--light-color); }
 .country { text-transform: uppercase; font-weight: 700; }
 /* colors */
@@ -995,7 +998,7 @@ section header {border-bottom: 8px solid var(--light-color); width: 100%; text-a
 .bg-s{ background-color: var(--aws-color-s) }
 .clock-night{ background: conic-gradient(rgba(30, 28, 97, 1) 330deg, rgba(244, 240, 144, 1) 30deg); }
 .clock-day{ background: conic-gradient(rgba(244, 240, 144, 1) 330deg, rgba(30, 28, 97, 1) 30deg); }
-.landxx{ fill: rgba(128, 86, 86, 1) !important; transition: fill 0.5s ease-in }
+.landxx{ fill: rgba(128, 86, 86, 1) !important; transition: fill 0.3s ease-in }
 .oceanxx{ fill: #4477DD !important; stroke-width: 0 !important; }
 .lighted-land{ fill: var(--aws-color-u) !important; fill-rule: evenodd;}
 .zoomed-land{ fill: var(--aws-color-v) !important;}
@@ -8497,7 +8500,7 @@ sub HtmlBar {
 		$height = 1;
 	}
 
-	return '<div class="bar bar-vertical bg-' . $type . '" style="width: ' . $width . 'px;height: ' . $height . 'px" title="' . $title . ' : ' . $formattedData . '"></div>';
+	return '<div class="bar bar-vertical bg-' . $type . '" style="width: ' . $width . (($width =~ m/^\d+$/) ? 'px' : '') . ';height: ' . $height . 'px" title="' . $title . ' : ' . $formattedData . '"></div>';
 }
 
 #------------------------------------------------------------------------------
@@ -10287,7 +10290,7 @@ sub HTMLShowEmailReceiversChart {
 sub HTMLTopBanner{
 	if ($Debug) { debug( "ShowTopBan", 2 ); }
 	
-	print "<a name=\"menu\">&nbsp;</a>\n";
+	# print "<a name=\"menu\">&nbsp;</a>\n";
 
 	my $NewLinkParams = ${QueryString};
 	$NewLinkParams =~ s/(^|&|&amp;)update(=\w*|$)//i;
@@ -10328,7 +10331,7 @@ sub HTMLTopBanner{
 		$lastUpdateBuild .= '<a href="' . XMLEncode("$AWScript${NewLinkParams}update=1") . '"><button>' . $Message[74] . '</button></a>';
 	}
 
-	print '<div><div id="domain">' . $SiteDomain . '</div><div id="last-update"><span>'. $Message[35] .' : </span> ' . $lastUpdateBuild . '</div></div>'
+	print '<div>'
 	. '<a href="' . XMLEncode($LogoLink). '" target="awstatshome"><img src="' . $DirIcons . '/other/' . $Logo .'" ' . (( $LogoLink =~ "https://www.awstats.org" ) ? AltTitle( ucfirst($PROG) . ' Web Site' ) : '') . ' /></a>';
 
 	if ( !$StaticLinks ) { Show_Flag_Links($Lang); }
@@ -10343,7 +10346,6 @@ sub HTMLTopBanner{
 		. '<option' . ( $DatabaseBreak eq 'hour' ? ' selected="selected"' : '' ) . ' value="hour">' . $Message[187] . '</option>'
 		. '</select>';
 		
-
 		print '<select name="month">';
 		foreach ( 1 .. 12 ) {
 			my $monthix = sprintf( "%02s", $_ );
@@ -10400,6 +10402,13 @@ sub HTMLTopBanner{
 
 		print "</span>";
 	}
+
+	print '</div>'
+	. '<div><div id="domain">' . $SiteDomain . '</div><div id="last-update"><span>'. $Message[35] .' : </span> ' . $lastUpdateBuild . '</div></div>';
+
+	&HTMLMainSummary();
+
+	HTMLMenu($NewLinkParams, $NewLinkTarget);
 
 	print "</header>";
 	
@@ -13419,19 +13428,24 @@ sub HTMLMainSummary{
 	if ( $TotalVisits > 0 ) { $RatioHits = sprintf( "%.1f", $TotalHits / $TotalVisits ); }
 	if ( $TotalVisits > 0 ) { $RatioBytes = int( ( $TotalBytes / 1024 ) * 100 / ( $LogType eq 'M' ? $TotalHits : $TotalVisits ) ) / 100; }
 
-	# Show first/last
-	print '<div>'
-	. '<span class="summary-label">' . $Message[133] . ' <b class="summary-data">' . ($MonthRequired eq 'all' ? $YearRequired : $MonthNumLib{$MonthRequired} . ' ' . $YearRequired) . '</b></span>'
-	. '<span class="summary-label">' . $Message[8] . ' <b class="summary-data">' . ($FirstTime ? Format_Date($FirstTime, 0) : 'N/A') . '</b></span>'
-	. '<span class="summary-label">' . $Message[9] . ' <b class="summary-data">' . ($LastTime ? Format_Date( $LastTime, 0 ) : "NA" ) . '</b></span>'
-	. '</div>';
+	print '<hr>';
 
 	# Show main indicators title row
 	print '<div>';
+
 	print '<div id="summary-logs">';
+	print '<h1>' . ($MonthRequired eq 'all' ? $YearRequired : $MonthNumLib{$MonthRequired} . ' ' . $YearRequired) . '</h1>';
+
+	# Show first/last
+	print '<div id="about">'
+	# . '<span class="summary-label">' . $Message[133] . ' <b class="summary-data">' . ($MonthRequired eq 'all' ? $YearRequired : $MonthNumLib{$MonthRequired} . ' ' . $YearRequired) . '</b></span>'
+	. '<span class="summary-label">' . $Message[8] . ' <b class="summary-data">' . ($FirstTime ? Format_Date($FirstTime, 0) : 'N/A') . '</b></span> - '
+	. '<span class="summary-label">' . $Message[9] . ' <b class="summary-data">' . ($LastTime ? Format_Date( $LastTime, 0 ) : "NA" ) . '</b></span>'
+	. '</div>';
+
 	print (( $ShowSummary =~ /U/i && $LogType ne 'M' ) ?
 		'<div>'
-		. '<div class="bg-u" ' . Tooltip(2) . ">$Message[11]</div>"
+		. '<div class="bg-u" ' . Tooltip(2) . ">$Message[18]</div>"
 		. '<div>' . (($MonthRequired eq 'all') ? '<b>&lt;= ' . Format_Number($TotalUnique) . '</b> ' . $Message[129] : '<b>' . Format_Number($TotalUnique) . '</b>') . '</div>'
 		. '</div>'
 	 	: ''
@@ -13477,13 +13491,11 @@ sub HTMLMainSummary{
 		. '<div><b>' . Format_Bytes( int($TotalBytes) ) . '</b></div>'
 		. '<small>' . $RatioBytes . ' ' . $Message[108] . ' / ' . $Message[ ( $LogType eq 'M' ? 149 : 12 ) ] . '</small>'
 		. '</div>'
-		. '<div><small>' . Format_Bytes( int($TotalNotViewedBytes) ) . ' *' .  $Message[( $LogType eq 'M' ) ? 166 : 161]  . '</small></div>'
+		. '<div title="' . ($LogType eq 'W' || $LogType eq 'S' ? "* $Message[159]" : "" ) . '"><small>' . Format_Bytes( int($TotalNotViewedBytes) ) . ' *' .  $Message[( $LogType eq 'M' ) ? 166 : 161]  . '</small></div>'
 		. '</div>'
 		: ''
 	);
 
-	print '<div>' . ($LogType eq 'W' || $LogType eq 'S' ? "* $Message[159]" : "" ) . '</div>';
-	
 	print '</div>' . '</div>';
 
 }
@@ -13535,7 +13547,7 @@ sub HTMLDataTableHeader{
 
 	return '<thead><tr>'
 		. '<th class="title">' . $title . '</th>'
-		. ( ( $config =~ /U/i ) ? '<th style="width: var(--bar-width)" class="bg-u" ' . Tooltip(2) . '>' . CleanXSS($Message[11]) . '</th>' : '' )
+		. ( ( $config =~ /U/i ) ? '<th style="width: var(--bar-width)" class="bg-u" ' . Tooltip(2) . '>' . CleanXSS($Message[18]) . '</th>' : '' )
 		. ( ( $config =~ /V/i ) ? '<th style="width: var(--bar-width)" class="bg-v" ' . Tooltip(1) . '>' . CleanXSS($Message[10]) . '</th>' : '' )
 		. ( ( $config =~ /P/i ) ? '<th style="width: var(--bar-width)" class="bg-p" ' . Tooltip(3) . '>' . CleanXSS($Message[56]) . '</th>' : '' )
 		. ( ( $config =~ /H/i ) ? '<th style="width: var(--bar-width)" class="bg-h" ' . Tooltip(4) . '>' . CleanXSS($Message[57]) . '</th>' : '' )
@@ -13564,7 +13576,7 @@ sub HTMLMainMonthly{
 
 	my $height = 0;
 	my $bars = '';
-	my $width = 9;
+	my $width = 8;
 	my $data = '';
 	my $tableData = '';
 
@@ -13801,7 +13813,7 @@ sub HTMLMainDaily{
 	my $total_u = my $total_v = my $total_p = my $total_h = my $total_k = 0;
 	my $max_v = my $max_p = my $max_h = my $max_k = 0;    # Start from 0 because can be lower than 1
 	my $height = 0;
-	my $width = 3;
+	my $width = '0.2dvw';
 	my $bars = '';
 	my $data = '';
 	my $tableData = '';
@@ -14373,7 +14385,7 @@ sub HTMLMainHours{
 	&tab_head( "$title", 19, 0, 'hours' );
 	print "<tr><td>\n";
 
-	my $width = 6;
+	my $width = '0.4dvw';
 	my $max_p =	my $max_h = my $max_k = 1;
 	for ( my $ix = 0 ; $ix <= 23 ; $ix++ ) {
 
@@ -20740,7 +20752,7 @@ if ( scalar keys %HTMLOutput ) {
 
 	# HTMLHeadSection
 	if ( $FrameName ne 'index' && $FrameName ne 'mainleft' ) {
-		print "<a name=\"top\"></a>\n\n";
+		# print "<a name=\"top\"></a>\n\n";
 		my $newhead = $HTMLHeadSection;
 		$newhead =~ s/\\n/\n/g;
 		print "$newhead\n";
@@ -20752,38 +20764,6 @@ if ( scalar keys %HTMLOutput ) {
 		my $function = "AddHTMLBodyHeader_$pluginname";
 		&$function();
 	}
-
-	# TOP BAN
-	#---------------------------------------------------------------------
-	if ( $ShowMenu || $FrameName eq 'mainleft' ) {
-		HTMLTopBanner();
-	}
-
-	# Call to plugins' function AddHTMLMenuHeader
-	foreach my $pluginname ( keys %{ $PluginsLoaded{'AddHTMLMenuHeader'} } ) {
-		my $function = "AddHTMLMenuHeader_$pluginname";
-		&$function();
-	}
-
-	# MENU (ON LEFT IF FRAME OR TOP)
-	#---------------------------------------------------------------------
-	if ( $ShowMenu || $FrameName eq 'mainleft' ) {
-		HTMLMenu($NewLinkParams, $NewLinkTarget);
-	}
-
-	# Call to plugins' function AddHTMLMenuFooter
-	foreach my $pluginname ( keys %{ $PluginsLoaded{'AddHTMLMenuFooter'} } ) {
-		my $function = "AddHTMLMenuFooter_$pluginname";
-		&$function();
-	}
-
-	# Exit if left frame
-	if ( $FrameName eq 'mainleft' ) {
-		&html_end(0);
-		exit 0;
-	}
-
-	
 
 # TotalVisits TotalUnique TotalPages TotalHits TotalBytes TotalHostsKnown TotalHostsUnknown
 	$TotalUnique = $TotalVisits = $TotalPages = $TotalHits = $TotalBytes = 0;
@@ -20952,6 +20932,36 @@ if ( scalar keys %HTMLOutput ) {
 		);
 	}
 
+	# TOP BAN
+	#---------------------------------------------------------------------
+	if ( $ShowMenu || $FrameName eq 'mainleft' ) {
+		HTMLTopBanner();
+	}
+
+	# Call to plugins' function AddHTMLMenuHeader
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'AddHTMLMenuHeader'} } ) {
+		my $function = "AddHTMLMenuHeader_$pluginname";
+		&$function();
+	}
+
+	# MENU (ON LEFT IF FRAME OR TOP)
+	#---------------------------------------------------------------------
+	# if ( $ShowMenu || $FrameName eq 'mainleft' ) {
+	# 	HTMLMenu($NewLinkParams, $NewLinkTarget);
+	# }
+
+	# Call to plugins' function AddHTMLMenuFooter
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'AddHTMLMenuFooter'} } ) {
+		my $function = "AddHTMLMenuFooter_$pluginname";
+		&$function();
+	}
+
+	# Exit if left frame
+	if ( $FrameName eq 'mainleft' ) {
+		&html_end(0);
+		exit 0;
+	}
+
 	# Call to plugins' function AddHTMLContentHeader
 	foreach my $pluginname ( keys %{ $PluginsLoaded{'AddHTMLContentHeader'} } )
 	{
@@ -21100,9 +21110,9 @@ if ( scalar keys %HTMLOutput ) {
 
 		# SUMMARY
 		#---------------------------------------------------------------------
-		if ($ShowSummary) {
-			&HTMLMainSummary();
-		}
+		# if ($ShowSummary) {
+		# 	&HTMLMainSummary();
+		# }
 
 		# BY MONTH
 		#---------------------------------------------------------------------
