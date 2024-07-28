@@ -84,7 +84,7 @@ use vars qw/
   $TotalEntries $TotalExits $TotalBytesPages $TotalDifferentPages
   $TotalKeyphrases $TotalKeywords $TotalDifferentKeyphrases $TotalDifferentKeywords
   $TotalSearchEnginesPages $TotalSearchEnginesHits $TotalRefererPages $TotalRefererHits $TotalDifferentSearchEngines $TotalDifferentReferer
-  $FrameName $Center $FileConfig $FileSuffix $Host $YearRequired $MonthRequired $DayRequired $HourRequired
+  $FrameName $FileConfig $FileSuffix $Host $YearRequired $MonthRequired $DayRequired $HourRequired
   $QueryString $SiteConfig $StaticLinks $PageCode $PageDir $PerlParsingFormat $PerlParsingFormatJsonMap $UserAgent
   $pos_vh $pos_host $pos_logname $pos_date $pos_tz $pos_method $pos_url $pos_code $pos_size $pos_time
   $pos_referer $pos_agent $pos_query $pos_gzipin $pos_gzipout $pos_compratio $pos_timetaken
@@ -109,13 +109,13 @@ $TotalDifferentKeywords = 0;
 $TotalSearchEnginesPages = $TotalSearchEnginesHits = $TotalRefererPages = 0;
 $TotalRefererHits = $TotalDifferentSearchEngines = $TotalDifferentReferer = 0;
 (
-	$FrameName,    $Center,       $FileConfig,        $FileSuffix,
+	$FrameName,    $FileConfig,        $FileSuffix,
 	$Host,         $YearRequired, $MonthRequired,     $DayRequired,
 	$HourRequired, $QueryString,  $SiteConfig,        $StaticLinks,
 	$PageCode,     $PageDir,      $PerlParsingFormat, $UserAgent,
     $PerlParsingFormatJsonMap
   )
-  = ( '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', undef );
+  = ( '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', undef );
 
 # ----- Plugins variable -----
 use vars qw/ %PluginsLoaded $PluginDir $AtLeastOneSectionPlugin /;
@@ -920,7 +920,8 @@ sub renderCss {
 	my $css = '';
 
 	$css .= ':root {'
-	. '--default-page-color: #' . $color_text . ';'
+	. '--default-page-color: hsl(1, 0%, 25%);'
+	. '--default-page-bgcolor: hsl(1, 0%, 95%);'
 	. '--aws-color-u: #' . $color_u . ';'
 	. '--aws-color-v: #' . $color_v . ';'
 	. '--aws-color-p: #' . $color_p . ';'
@@ -929,37 +930,33 @@ sub renderCss {
 	. '--aws-color-e: #' . $color_e . ';'
 	. '--aws-color-x: #' . $color_x . ';'
 	. '--aws-color-s: #' . $color_s . ';'
-	. '--dark-color: rgba(0,0,0,0.5);'
-	. '--light-color: rgba(255,255,255,0.9);'
+	. '--dark-color: hsl(1, 0%, 50%);'
+	. '--neutral-color: hsl(1, 0%, 75%);'
+	. '--light-color: hsl(1, 0%, 90%);'
 	. '--a-color: #' . $color_link . ';'
-	. '--a-visited-color: #' . $color_link . ';'
 	. '--a-hover-color: #' . $color_hover . ';'
-	. '--aws-table-border-color: #' . $color_TableBorder . ';'
-	. '--aws-background-color: #' . $color_Background . ';'
-	. '--aws-title-text-color: #' . $color_titletext . ';'
-	. '--aws-table-title-color: #' . $color_TableTitle . ';'
-	. '--aws-table-title-bgcolor: #' . $color_TableBGTitle . ';'
 	. '}'
 	. <<EOF;
-body { font: 0.75rem sans-serif, system-ui; background-color: var(--aws-background-color); margin: 0; color: var(--default-page-color) }
-#container { width: clamp(760px, 960px, 80%); margin: auto; display: flex; flex-wrap: wrap; justify-content: center; row-gap: 40px; }
-b, .aws_title, th.aws{ font-weight: 700 }
-th{ border: none; padding: 1px 2px 1px 1px; color: var(--aws-title-text-color); }
-.aws_blank  { font-size: 0.9rem; background-color: var(--aws-background-color); text-align: center; }
-.aws_title{ font-size: 0.9rem; background-color: var(--aws-table-title-bgcolor); text-align: center; color: var(--aws-table-title-color); }
-.aws_data{ background-color: var(--aws-background-color); }
-.aws_button{ border: 1px solid #ccd7e0; background-image : url($DirIcons/other/button.gif); }
-th.aws{ border-color: var(--aws-table-border-color); border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; font-size: 0.9rem; }
-td.aws{ border-color: var(--aws-table-border-color); border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; text-align:$dir; padding: 0px;}
-td.awsm{ border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; border-bottom-width: 0px; text-align:$dir; padding: 0px; }
-a, a:link { color: var(--a-color); text-decoration: none; }
-a:visited{ color: var(--a-visited-color); text-decoration: none; }
+body { font: 0.75rem sans-serif, system-ui; background-color: var(--default-page-bgcolor); margin: 0; color: var(--default-page-color) }
+a, a:link, a:visited { color: var(--a-color); text-decoration: none; }
 a:hover, a:focus, a:active{ color: var(--a-hover-color); text-decoration: none; }
-#domain { font-weight: 900; font-size: 4ch }
-#header-form { display: flex; flex-wrap: wrap; column-gap: 20px; }
+b { font-weight: 700 }
+small { font-size: 0.9em }
+#container { width: clamp(760px, 960px, 80%); margin: auto; display: flex; flex-wrap: wrap; justify-content: center; row-gap: 25px; align-items: flex-start;}
+#container > header { display: flex; flex-wrap: wrap; column-gap: 20px; }
+#domain { font-weight: 900; font-size: 2.4em }
+header select { width : 60px }
+nav { height: 17px; background-color: #F9F9F9; width:clamp(760px, 960px, 80%); }
+#summary-logs { max-width: 100%; text-align: center;  margin: auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; align-items: flex-start;}
+#summary-logs div { padding: 2px 4px }
+.summary-label { margin: 0 9px; }
+button, select, input[type=submit] { cursor: pointer; color: var(--light-color); background-color: var(--dark-color); border: 1px solid #ccd7e0; }
+section header {border-bottom: 8px solid var(--light-color); width: 100%; text-align: center; font-weight: 900; font-size: 1.4rem; }
 .multi-data-table { display: flex; column-gap: 5dvw; flex-wrap: wrap; justify-content: center }
 .multi-data-table.worldmap{ position: relative; }
-.data-table { border-spacing: 0 2px }
+.data-table { border-spacing: 0 2px; margin: auto; }
+.data-table tfoot { display: table-header-group }
+.data-table tbody div { opacity: 0.9 }
 .data-table tbody tr { transition: background 0.5s ease-out; transition: transform 0.1s ease-in }
 .data-table tbody tr:hover { font-weight: 900; background: rgba(0,0,0,0.2); transform: scale(1.1) translateX(2px); }
 .data-table th, .data-table td:first-child { padding: 2px 4px }
@@ -968,7 +965,7 @@ a:hover, a:focus, a:active{ color: var(--a-hover-color); text-decoration: none; 
 .data-table td { text-align: right; font-weight: 700; }
 .data-table th, .data-table td:first-child:not(.country) { font-weight: 400 }
 .data-table tfoot .data-table-sum td { border-top: 1px solid rgba(192,192,192,0.2); }
-.data-table .data-table-sum { font-size : 1.2em }
+.data-table-sum { font-size : 1.3em }
 .data-table .title { font-size: 2em }
 .currentday{ font-weight: 900 }
 .bar-table { text-align: center }
@@ -976,35 +973,28 @@ a:hover, a:focus, a:active{ color: var(--a-hover-color); text-decoration: none; 
 .bar{  }
 .bar-horizontal{ height: 4px }
 .bar-vertical{ display: inline-block; width: 4px; }
-.color-u{ background-color: var(--aws-color-u) }
-.color-v{ background-color: var(--aws-color-v) }
-.color-p{ background-color: var(--aws-color-p) }
-.color-h{ background-color: var(--aws-color-h) }
-.color-b{ background-color: var(--aws-color-b) }
-.color-e{ background-color: var(--aws-color-e) }
-.color-x{ background-color: var(--aws-color-x) }
-.color-s{ background-color: var(--aws-color-s) }
 .clock{ display: inline-block; vertical-align: bottom; height: 16px; width: 16px; margin: 0 5px; border-radius: 50%; }
+.hr-1{ rotate: 30deg } .hr-2{ rotate: 60deg } .hr-3{ rotate: 90deg } .hr-4{ rotate: 120deg } .hr-5{ rotate: 150deg } .hr-6{ rotate: 180deg } .hr-7{ rotate: 210deg } .hr-8{ rotate: 240deg } .hr-9{ rotate: 270deg } .hr-10{ rotate: 300deg } .hr-11{ rotate: 330deg }
+#worldmap{ width: 100%; margin-top: 1dvh; background-color: #4477DD; }
+.title-map{ position:absolute; top: 16px; color: var(--light-color); }
+.country { text-transform: uppercase; font-weight: 700; }
+/* colors */
+.bg-u{ background-color: var(--aws-color-u) }
+.bg-v{ background-color: var(--aws-color-v) }
+.bg-p{ background-color: var(--aws-color-p) }
+.bg-h{ background-color: var(--aws-color-h) }
+.bg-b{ background-color: var(--aws-color-b) }
+.bg-e{ background-color: var(--aws-color-e) }
+.bg-x{ background-color: var(--aws-color-x) }
+.bg-s{ background-color: var(--aws-color-s) }
 .clock-night{ background: conic-gradient(rgba(30, 28, 97, 1) 330deg, rgba(244, 240, 144, 1) 30deg); }
 .clock-day{ background: conic-gradient(rgba(244, 240, 144, 1) 330deg, rgba(30, 28, 97, 1) 30deg); }
-.hr-1{ rotate: 30deg }
-.hr-2{ rotate: 60deg }
-.hr-3{ rotate: 90deg }
-.hr-4{ rotate: 120deg }
-.hr-5{ rotate: 150deg }
-.hr-6{ rotate: 180deg }
-.hr-7{ rotate: 210deg }
-.hr-8{ rotate: 240deg }
-.hr-9{ rotate: 270deg }
-.hr-10{ rotate: 300deg }
-.hr-11{ rotate: 330deg }
-#worldmap{ width: 100%; margin-top: 1dvh; background-color: #4477DD; }
-.title-map{ position:absolute; top: 16px; color: #FFFFFF; }
-.country { text-transform: uppercase; font-weight: 700; }
 .landxx{ fill: rgba(128, 86, 86, 1) !important; transition: fill 0.5s ease-in }
+.oceanxx{ fill: #4477DD !important; stroke-width: 0 !important; }
 .lighted-land{ fill: var(--aws-color-u) !important; fill-rule: evenodd;}
 .zoomed-land{ fill: var(--aws-color-v) !important;}
-.oceanxx{ fill: #4477DD !important; stroke-width: 0 !important; }
+.weekend { background-color: var(--light-color) }
+.data-table-average { background-color: var(--neutral-color) }
 EOF
 
 	# Call to plugins' function AddHTMLStyles
@@ -1139,7 +1129,6 @@ sub html_end {
 		}
 
 		if ( $FrameName ne 'index' && $FrameName ne 'mainleft' ) {
-			print "$Center<br /><br />\n";
 			print
 "<span dir=\"ltr\" style=\"color: #$color_text;\">";
 			print
@@ -1157,14 +1146,11 @@ sub html_end {
 				}
 				if ($atleastoneplugin) { print ")"; }
 			}
-			print "</a></span><br />\n";
-			if ($HTMLEndSection) { print "<br />\n$HTMLEndSection\n"; }
+			print "</a></span>";
+			if ($HTMLEndSection) { print "$HTMLEndSection\n"; }
 		}
 		print "\n";
 		if ( $FrameName ne 'index' ) {
-			if ( $FrameName ne 'mainleft' && $BuildReportFormat eq 'html' ) {
-				print "<br />\n";
-			}
 			print '</div>';
 			print "</body>\n";
 		}
@@ -1184,45 +1170,37 @@ sub html_end {
 sub tab_head {
 	my $title     = shift;
 	my $tooltipnb = shift;
-	my $width     = shift || 70;
-	my $class     = shift;
+
+	print '<section>';
+	print '<header>' . $title . '</header>';
 
 	# Call to plugins' function TabHeadHTML
-	my $extra_head_html = '';
-	foreach my $pluginname ( keys %{ $PluginsLoaded{'TabHeadHTML'} } ) {
-		my $function = "TabHeadHTML_$pluginname";
-		$extra_head_html .= &$function($title);
-	}
+	# my $extra_head_html = '';
+	# foreach my $pluginname ( keys %{ $PluginsLoaded{'TabHeadHTML'} } ) {
+	# 	my $function = "TabHeadHTML_$pluginname";
+	# 	$extra_head_html .= &$function($title);
+	# }
 
-	if ( $width == 70 && $QueryString =~ /buildpdf/i ) {
-		print
-"<table class=\"sortable\">\n";
-	}
-	else {
-		print
-"<table class=\"sortable\">\n";
-	}
+	# if ($tooltipnb) {
+	# 	print "<tr><td class=\"aws_title\" width=\"$width%\""
+	# 	  . Tooltip( $tooltipnb, $tooltipnb )
+	# 	  . ">$title "
+	# 	  . $extra_head_html . "</td>";
+	# }
+	# else {
+	# 	print "<tr><td class=\"aws_title\" width=\"$width%\">$title "
+	# 	  . $extra_head_html . "</td>";
+	# }
 
-	if ($tooltipnb) {
-		print "<tr><td class=\"aws_title\" width=\"$width%\""
-		  . Tooltip( $tooltipnb, $tooltipnb )
-		  . ">$title "
-		  . $extra_head_html . "</td>";
-	}
-	else {
-		print "<tr><td class=\"aws_title\" width=\"$width%\">$title "
-		  . $extra_head_html . "</td>";
-	}
-	print "<td class=\"aws_blank\">&nbsp;</td></tr>\n";
-	print "<tr><td colspan=\"2\">\n";
-	if ( $width == 70 && $QueryString =~ /buildpdf/i ) {
-		print
-"<table class=\"aws_data\" width=\"796\">\n";
-	}
-	else {
-		print
-"<table class=\"aws_data\">\n";
-	}
+# 	print "<tr><td colspan=\"2\">\n";
+# 	if ( $width == 70 && $QueryString =~ /buildpdf/i ) {
+# 		print
+# "<table class=\"aws_data\" width=\"796\">\n";
+# 	}
+# 	else {
+# 		print
+# "<table class=\"aws_data\">\n";
+# 	}
 }
 
 #------------------------------------------------------------------------------
@@ -1234,12 +1212,12 @@ sub tab_head {
 #------------------------------------------------------------------------------
 sub tab_end {
 	my $string = shift;
-	print "</table></td></tr></table>";
+	# print "</table></td></tr></table>";
 	if ($string) {
-		print
-"<span>$string</span><br />\n";
+		print "<div>$string</div>";
 	}
-	print "<br />\n\n";
+
+	print '</section>';
 }
 
 #------------------------------------------------------------------------------
@@ -1282,7 +1260,6 @@ sub error {
 	if ( !$ErrorMessages && $message =~ /^Format error$/i ) {
 
 		# Files seems to have bad format
-		if ( scalar keys %HTMLOutput )   { print "<br /><br />\n"; }
 		if ( $message !~ $LogSeparator ) {
 
 			# Bad LogSeparator parameter
@@ -1365,7 +1342,7 @@ sub error {
 			}
 			print
 "And this is an example of records AWStats found in your log file (the record number $NbOfLinesForCorruptedLog in your log):\n";
-			print( scalar keys %HTMLOutput ? "<br />$tagfontgrey<i>" : "" );
+			print( scalar keys %HTMLOutput ? "$tagfontgrey<i>" : "" );
 			print "$secondmessage";
 			print(
 				scalar keys %HTMLOutput
@@ -1380,9 +1357,9 @@ sub error {
 #print "\n";
 	}
 	else {
-		print( scalar keys %HTMLOutput ? "<br />$tagfontred\n" : "" );
+		print( scalar keys %HTMLOutput ? "$tagfontred\n" : "" );
 		print( $ErrorMessages? "$ErrorMessages" : "Error: $message" );
-		print( scalar keys %HTMLOutput ? "\n</span><br />" : "" );
+		print( scalar keys %HTMLOutput ? "\n</span>" : "" );
 		print "\n";
 	}
 	if ( !$ErrorMessages && !$donotshowsetupinfo ) {
@@ -8491,7 +8468,7 @@ sub HtmlBarH {
 	my $width = shift || 0;
 	my $alt = shift || '';
 
-	return '<div class="bar bar-horizontal color-' . $type . '" style="width: ' . $width . 'px" title="' . $alt . '"></div>';
+	return '<div class="bar bar-horizontal bg-' . $type . '" style="width: ' . $width . 'px" title="' . $alt . '"></div>';
 }	
 
 #------------------------------------------------------------------------------
@@ -8514,7 +8491,7 @@ sub HtmlBar {
 		$height = 1;
 	}
 
-	return '<div class="bar bar-vertical color-' . $type . '" style="width: ' . $width . 'px;height: ' . $height . 'px" title="' . $title . ' : ' . $formattedData . '"></div>';
+	return '<div class="bar bar-vertical bg-' . $type . '" style="width: ' . $width . 'px;height: ' . $height . 'px" title="' . $title . ' : ' . $formattedData . '"></div>';
 }
 
 #------------------------------------------------------------------------------
@@ -9208,8 +9185,6 @@ sub HTMLShowFormFilter {
 		print "<td> &nbsp; </td>";
 		print "</tr></table>\n";
 		print "</form>\n";
-		print "<br />\n";
-		print "\n";
 	}
 }
 
@@ -9985,7 +9960,7 @@ sub HTMLShowEmailSendersChart {
 	#&ShowFormFilter("emailsfilter",$EmailsFilter);
 	# Show emails list
 
-	print "$Center<a name=\"emailsenders\">&nbsp;</a><br />\n";
+	print "<a name=\"emailsenders\">&nbsp;</a>";
 	my $title;
 	if ( $HTMLOutput{'allemails'} || $HTMLOutput{'lastemails'} ) {
 		$title = "$Message[131]";
@@ -10016,7 +9991,7 @@ sub HTMLShowEmailSendersChart {
 "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"3\">$Message[131] : "
 	  . ( scalar keys %_emails_h ) . "</th>";
 	if ( $ShowEMailSenders =~ /H/i ) {
-		print "<th rowspan=\"2\" class=\"color-h\" width=\"80\""
+		print "<th rowspan=\"2\" class=\"bg-h\" width=\"80\""
 		  . Tooltip(4)
 		  . ">$Message[57]</th>";
 	}
@@ -10028,7 +10003,7 @@ sub HTMLShowEmailSendersChart {
 	}
 	if ( $ShowEMailSenders =~ /M/i ) {
 		print
-"<th rowspan=\"2\" class=\"color-k\" width=\"80\">$Message[106]</th>";
+"<th rowspan=\"2\" class=\"bg-k\" width=\"80\">$Message[106]</th>";
 	}
 	if ( $ShowEMailSenders =~ /L/i ) {
 		print "<th rowspan=\"2\" width=\"120\">$Message[9]</th>";
@@ -10152,7 +10127,7 @@ sub HTMLShowEmailReceiversChart {
 	#&ShowFormFilter("emailrfilter",$EmailrFilter);
 	# Show emails list
 
-	print "$Center<a name=\"emailreceivers\">&nbsp;</a><br />\n";
+	print "<a name=\"emailreceivers\">&nbsp;</a>";
 	my $title;
 	if ( $HTMLOutput{'allemailr'} || $HTMLOutput{'lastemailr'} ) {
 		$title = "$Message[132]";
@@ -10183,7 +10158,7 @@ sub HTMLShowEmailReceiversChart {
 "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"3\">$Message[132] : "
 	  . ( scalar keys %_emailr_h ) . "</th>";
 	if ( $ShowEMailReceivers =~ /H/i ) {
-		print "<th rowspan=\"2\" class=\"color-h\" width=\"80\""
+		print "<th rowspan=\"2\" class=\"bg-h\" width=\"80\""
 		  . Tooltip(4)
 		  . ">$Message[57]</th>";
 	}
@@ -10195,7 +10170,7 @@ sub HTMLShowEmailReceiversChart {
 	}
 	if ( $ShowEMailReceivers =~ /M/i ) {
 		print
-"<th rowspan=\"2\" class=\"color-k\" width=\"80\">$Message[106]</th>";
+"<th rowspan=\"2\" class=\"bg-k\" width=\"80\">$Message[106]</th>";
 	}
 	if ( $ShowEMailReceivers =~ /L/i ) {
 		print "<th rowspan=\"2\" width=\"120\">$Message[9]</th>";
@@ -10304,232 +10279,124 @@ sub HTMLShowEmailReceiversChart {
 # Return:       -
 #------------------------------------------------------------------------------
 sub HTMLTopBanner{
-	my $frame = ( $FrameName eq 'mainleft' );
-
 	if ($Debug) { debug( "ShowTopBan", 2 ); }
-	print "$Center<a name=\"menu\">&nbsp;</a>\n";
+	
+	print "<a name=\"menu\">&nbsp;</a>\n";
 
-	if ( $FrameName ne 'mainleft' ) {
+	my $NewLinkParams = ${QueryString};
+	$NewLinkParams =~ s/(^|&|&amp;)update(=\w*|$)//i;
+	$NewLinkParams =~ s/(^|&|&amp;)staticlinks(=\w*|$)//i;
+	$NewLinkParams =~ s/(^|&|&amp;)year=[^&]*//i;
+	$NewLinkParams =~ s/(^|&|&amp;)month=[^&]*//i;
+	$NewLinkParams =~ s/(^|&|&amp;)framename=[^&]*//i;
+	$NewLinkParams =~ s/(&amp;|&)+/&amp;/i;
+	$NewLinkParams =~ s/^&amp;//;
+	$NewLinkParams =~ s/&amp;$//;
+	my $NewLinkTarget = '';
+
+	if ( $FrameName eq 'mainright' ) {
+		$NewLinkTarget = " target=\"_parent\"";
+	}
+
+	print '<header>';
+
+	my $lastUpdateBuild = (($LastUpdate) ?
+		'<b>'	. Format_Date( $LastUpdate, 0 )	. '</b>'
+  	: '<span style="color: #880000">'
+  	. (( !$UpdateStats ) ? $Message[24] : 'No qualified records found in log (' . $NbOfLinesCorrupted .' corrupted, ' . $NbOfLinesComment . ' comments, ' . $NbOfLinesBlank . ' Blank, ' . $NbOfLinesDropped .' dropped)')
+  	. '</span>'
+  );
+
+  if ( $AllowToUpdateStatsFromBrowser && !$StaticLinks ) {
 		my $NewLinkParams = ${QueryString};
 		$NewLinkParams =~ s/(^|&|&amp;)update(=\w*|$)//i;
 		$NewLinkParams =~ s/(^|&|&amp;)staticlinks(=\w*|$)//i;
-		$NewLinkParams =~ s/(^|&|&amp;)year=[^&]*//i;
-		$NewLinkParams =~ s/(^|&|&amp;)month=[^&]*//i;
 		$NewLinkParams =~ s/(^|&|&amp;)framename=[^&]*//i;
+		if ( $FrameName eq 'mainright' ) {
+			$NewLinkParams .= "&amp;framename=mainright";
+		}
 		$NewLinkParams =~ s/(&amp;|&)+/&amp;/i;
 		$NewLinkParams =~ s/^&amp;//;
 		$NewLinkParams =~ s/&amp;$//;
-		my $NewLinkTarget = '';
-
-		if ( $FrameName eq 'mainright' ) {
-			$NewLinkTarget = " target=\"_parent\"";
-		}
-		print '<form id="header-form" name="FormDateFilter" action="' . XMLEncode("$AWScript${NewLinkParams}") . '" ' . $NewLinkTarget . '>';
-
-		print '<div id="domain">' . $SiteDomain . '</div>';
-
-		# Logo and flags
-		print '<a href="' . XMLEncode($LogoLink). '" target="awstatshome"><img src="' . $DirIcons . '/other/' . $Logo .'" ' . (( $LogoLink =~ "https://www.awstats.org" ) ? AltTitle( ucfirst($PROG) . ' Web Site' ) : '') . ' /></a>';
-
-		if ( !$StaticLinks ) { Show_Flag_Links($Lang); }
+		if ($NewLinkParams) { $NewLinkParams = "${NewLinkParams}&amp;"; }
+		$lastUpdateBuild .= '<a href="' . XMLEncode("$AWScript${NewLinkParams}update=1") . '"><button>' . $Message[74] . '</button></a>';
 	}
 
-	print '<table '. (( $QueryString !~ /buildpdf/i ) ? 'class="aws_data sortable"' : '') .'>';
+	print '<div><div id="domain">' . $SiteDomain . '</div><div id="last-update"><span>'. $Message[35] .' : </span> ' . $lastUpdateBuild . '</div></div>'
+	. '<a href="' . XMLEncode($LogoLink). '" target="awstatshome"><img src="' . $DirIcons . '/other/' . $Logo .'" ' . (( $LogoLink =~ "https://www.awstats.org" ) ? AltTitle( ucfirst($PROG) . ' Web Site' ) : '') . ' /></a>';
+
+	if ( !$StaticLinks ) { Show_Flag_Links($Lang); }
 	
-	if ( $FrameName ne 'mainright' ) {
+	if ( $ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ) {
 
-		# Print Statistics Of
-		if ( $FrameName eq 'mainleft' ) {
-			my $shortSiteDomain = $SiteDomain;
-			if ( length($SiteDomain) > 30 ) {
-				$shortSiteDomain =
-				    substr( $SiteDomain, 0, 20 ) . "..."
-				  . substr( $SiteDomain, length($SiteDomain) - 5, 5 );
-			}
-			print "<tr><td class=\"awsm\"><b>$Message[7]:</b></td></tr><tr><td class=\"aws\"><span style=\"font-size: 0.9rem;\">$shortSiteDomain</span></td>";
-		}
+		print '<form style="align-self: center" name="FormDateFilter" action="' . XMLEncode("$AWScript${NewLinkParams}") . '" ' . $NewLinkTarget . '>';
+
+		print '<select name="databasebreak">'
+		. '<option' . ( $DatabaseBreak eq 'month' ? ' selected="selected"' : '' ) . ' value="month">' . $Message[5] . '</option>'
+		. '<option' . ( $DatabaseBreak eq 'day' ? ' selected="selected"' : '' ) . ' value="day">' . $Message[4] . '</option>'
+		. '<option' . ( $DatabaseBreak eq 'hour' ? ' selected="selected"' : '' ) . ' value="hour">' . $Message[187] . '</option>'
+		. '</select>';
 		
-		print "</tr>\n";
-	}
-	if ( $FrameName ne 'mainleft' ) {
 
-		# Print Last Update
-		print '<tr>';
-		print '<td colspan="2"><span>'. $Message[35] .' : ';
-		if ($LastUpdate) { print Format_Date( $LastUpdate, 0 ); }
-		else {
-
-			# Here NbOfOldLines = 0 (because LastUpdate is not defined)
-			if ( !$UpdateStats ) {
-				print "<span style=\"color: #880000\">$Message[24]</span>";
-			}
-			else {
-				print "<span style=\"color: #880000\">No qualified records found in log 
- ($NbOfLinesCorrupted corrupted, $NbOfLinesComment comments, $NbOfLinesBlank Blank, 
- $NbOfLinesDropped dropped)</span>";
-			}
+		print '<select name="month">';
+		foreach ( 1 .. 12 ) {
+			my $monthix = sprintf( "%02s", $_ );
+			print '<option' . ( "$MonthRequired" eq "$monthix" ? ' selected="selected"' : '' ) . ' value="' . $monthix . '">' . $MonthNumLib{$monthix} . '</option>';
 		}
+		print (( $AllowFullYearView >= 2 ) ? '<option' . ( $MonthRequired eq 'all' ? ' selected="selected"' : '' ) . ' value="all">- '. $Message[6] . ' -</option>' : '');
+		print '</select>';
+
+		print '<select name="year">';
+		# Add YearRequired in list if not in ListOfYears
+		$ListOfYears{$YearRequired} ||= $MonthRequired;
+		foreach ( sort keys %ListOfYears ) {
+			print '<option' . ( $YearRequired eq "$_" ? ' selected="selected"' : '' ) . " value=\"$_\">$_</option>";
+		}
+		print '</select>';
+
+		if (	$DatabaseBreak eq 'day' || $DatabaseBreak eq 'hour') {
+			if (!$DayRequired) { $DayRequired = $nowday; }
+			print '<select name="day">';
+			foreach ( 1 .. 31 ) {
+				print '<option' . ( $DayRequired eq "$_" ? ' selected="selected"' : '' ) . " value=\"$_\">$_</option>";
+			}
+			print '</select>';
+		}
+
+		if (	$DatabaseBreak eq 'hour') {
+			if (!$HourRequired) { $HourRequired = $nowhour; }
+			print '<select name="hour">';
+			foreach ( 0 .. 23 ) {
+				print '<option' . ( $HourRequired eq "$_" ? ' selected="selected"' : '' ) . " value=\"$_\">$_</option>";
+			}
+			print '</select>';
+		}
+
+		print '<input type="hidden" name="output" value="' . join( ',', keys %HTMLOutput ) . '" />'
+		. (($SiteConfig) ? '<input type="hidden" name="config" value="' . $SiteConfig . '" />' : '')
+		. (($DirConfig) ? '<input type="hidden" name="configdir" value="' . $DirConfig . '" />' : '')
+		. (( $QueryString =~ /lang=(\w+)/i ) ? '<input type="hidden" name="lang" value="' . $1 .'" />' : '')
+		. (( $QueryString =~ /debug=(\d+)/i ) ? '<input type="hidden" name="debug" value="' . $1 . '" />' : '')
+		. (( $FrameName eq 'mainright' ) ? '<input type="hidden" name="framename" value="index" />' : '')
+		. '<input type="submit" value="' . $Message[115] . '" />';
+		
+		print '</form>';
+		
+	} else {
+		print "<span style=\"font-size: 1rem;\">";
+		if ($DayRequired) { print "$Message[4] $DayRequired - "; }
+			
+		if ( $MonthRequired eq 'all' ) {
+			 print "$Message[6] $YearRequired";
+		} else {
+			print "$Message[5] $MonthNumLib{$MonthRequired} $YearRequired";
+		}
+
 		print "</span>";
-
-		# Print Update Now link
-		if ( $AllowToUpdateStatsFromBrowser && !$StaticLinks ) {
-			my $NewLinkParams = ${QueryString};
-			$NewLinkParams =~ s/(^|&|&amp;)update(=\w*|$)//i;
-			$NewLinkParams =~ s/(^|&|&amp;)staticlinks(=\w*|$)//i;
-			$NewLinkParams =~ s/(^|&|&amp;)framename=[^&]*//i;
-			if ( $FrameName eq 'mainright' ) {
-				$NewLinkParams .= "&amp;framename=mainright";
-			}
-			$NewLinkParams =~ s/(&amp;|&)+/&amp;/i;
-			$NewLinkParams =~ s/^&amp;//;
-			$NewLinkParams =~ s/&amp;$//;
-			if ($NewLinkParams) { $NewLinkParams = "${NewLinkParams}&amp;"; }
-			print "&nbsp; &nbsp; &nbsp; &nbsp;";
-			print "<a href=\""
-			  . XMLEncode("$AWScript${NewLinkParams}update=1")
-			  . "\">$Message[74]</a>";
-		}
-		print "</td>";
-
-		# Logo and flags
-		if ( $FrameName eq 'mainright' ) {
-			if ( $LogoLink =~ "https://www.awstats.org" ) {
-				print "<td rowspan=\"2\"><a href=\""
-				  . XMLEncode($LogoLink)
-				  . "\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\""
-				  . AltTitle( ucfirst($PROG) . " Web Site" )
-				  . " /></a>\n";
-			}
-			else {
-				print "<td rowspan=\"2\"><a href=\""
-				  . XMLEncode($LogoLink)
-				  . "\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" /></a>\n";
-			}
-			if ( !$StaticLinks ) { Show_Flag_Links($Lang); }
-			print "</td>";
-		}
-
-		print "</tr>\n";
-
-		# Print selected period of analysis (month and year required)
-		print "<tr><td></td>";
-		print "<td class=\"aws\">";
-		if ( $ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ) {
-			print "<select class=\"aws_formfield\" name=\"databasebreak\">\n";
-			print "<option"
-			  . ( $DatabaseBreak eq "month" ? " selected=\"selected\"" : "" )
-			  . " value=\"month\">$Message[5]</option>\n";
-			print "<option"
-			  . ( $DatabaseBreak eq "day" ? " selected=\"selected\"" : "" )
-			  . " value=\"day\">$Message[4]</option>\n";
-			print "<option"
-			  . ( $DatabaseBreak eq "hour" ? " selected=\"selected\"" : "" )
-			  . " value=\"hour\">$Message[187]</option>\n";
-			print "</select>\n";
-
-			print "<select class=\"aws_formfield\" name=\"month\">\n";
-			foreach ( 1 .. 12 ) {
-				my $monthix = sprintf( "%02s", $_ );
-				print "<option"
-				  . (
-					  "$MonthRequired" eq "$monthix"
-					? " selected=\"selected\""
-					: ""
-				  )
-				  . " value=\"$monthix\">$MonthNumLib{$monthix}</option>\n";
-			}
-			if ( $AllowFullYearView >= 2 ) {
-				print "<option"
-				  . ( $MonthRequired eq 'all' ? " selected=\"selected\"" : "" )
-				  . " value=\"all\">- $Message[6] -</option>\n";
-			}
-			print "</select>\n";
-			print "<select class=\"aws_formfield\" name=\"year\">\n";
-
-			# Add YearRequired in list if not in ListOfYears
-			$ListOfYears{$YearRequired} ||= $MonthRequired;
-			foreach ( sort keys %ListOfYears ) {
-				print "<option"
-				  . ( $YearRequired eq "$_" ? " selected=\"selected\"" : "" )
-				  . " value=\"$_\">$_</option>\n";
-			}
-			print "</select>\n";
-
-			if (	$DatabaseBreak eq 'day' || 
-					$DatabaseBreak eq 'hour') {
-				if (!$DayRequired) {
-					$DayRequired = $nowday; 
-				}
-				print "<select class=\"aws_formfield\" name=\"day\">\n";
-				foreach ( 1 .. 31 ) {
-					print "<option"
-					  . ( $DayRequired eq "$_" ? " selected=\"selected\"" : "" )
-					  . " value=\"$_\">$_</option>\n";
-				}
-				print "</select>\n";
-			}
-
-			if (	$DatabaseBreak eq 'hour') {
-				if (!$HourRequired) {
-					$HourRequired = $nowhour; 
-				}
-				print "<select class=\"aws_formfield\" name=\"hour\">\n";
-				foreach ( 0 .. 23 ) {
-					print "<option"
-					  . ( $HourRequired eq "$_" ? " selected=\"selected\"" : "" )
-					  . " value=\"$_\">$_</option>\n";
-				}
-				print "</select>\n";
-			}
-
-			print "<input type=\"hidden\" name=\"output\" value=\""
-			  . join( ',', keys %HTMLOutput )
-			  . "\" />\n";
-			if ($SiteConfig) {
-				print
-"<input type=\"hidden\" name=\"config\" value=\"$SiteConfig\" />\n";
-			}
-			if ($DirConfig) {
-				print
-"<input type=\"hidden\" name=\"configdir\" value=\"$DirConfig\" />\n";
-			}
-			if ( $QueryString =~ /lang=(\w+)/i ) {
-				print
-				  "<input type=\"hidden\" name=\"lang\" value=\"$1\" />\n";
-			}
-			if ( $QueryString =~ /debug=(\d+)/i ) {
-				print
-				  "<input type=\"hidden\" name=\"debug\" value=\"$1\" />\n";
-			}
-			if ( $FrameName eq 'mainright' ) {
-				print
-"<input type=\"hidden\" name=\"framename\" value=\"index\" />\n";
-			}
-			print
-"<input type=\"submit\" value=\" $Message[115] \" class=\"aws_button\" />";
-		}
-		else {
-			print "<span style=\"font-size: 1rem;\">";
-			if ($DayRequired) { print "$Message[4] $DayRequired - "; }
-			if ( $MonthRequired eq 'all' ) {
-				print "$Message[6] $YearRequired";
-			}
-			else {
-				print
-				  "$Message[5] $MonthNumLib{$MonthRequired} $YearRequired";
-			}
-			print "</span>";
-		}
-		print "</td></tr>\n";
-	}
-	if ( $QueryString !~ /buildpdf/i ) {
-		print "</table>\n";
-	}
-	else {
-		print "</table>\n";
 	}
 
-	if ( $FrameName ne 'mainleft' ) { print "</form>"; }
+	print "</header>";
+	
 }
 
 #------------------------------------------------------------------------------
@@ -10540,6 +10407,10 @@ sub HTMLTopBanner{
 # Return:       -
 #------------------------------------------------------------------------------
 sub HTMLMenu{
+
+	print '<nav></nav>';
+	return;
+
 	my $NewLinkParams = shift;
 	my $NewLinkTarget = shift;
 	my $frame = ( $FrameName eq 'mainleft' );
@@ -11022,7 +10893,7 @@ sub HTMLMainFileType{
     my $NewLinkTarget = shift;
 	if (!$LevelForFileTypesDetection > 0){return;}
 	if ($Debug) { debug( "ShowFileTypesStatsCompressionStats", 2 ); }
-	print "$Center<a name=\"filetypes\">&nbsp;</a>\n";
+	print "<a name=\"filetypes\">&nbsp;</a>\n";
 	my $Totalh = 0;
 	foreach ( keys %_filetypes_h ) { $Totalh += $_filetypes_h{$_}; }
 	my $Totalk = 0;
@@ -11076,18 +10947,18 @@ sub HTMLMainFileType{
 "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"3\">$Message[73]</th>";
 
 	if ( $ShowFileTypesStats =~ /H/i ) {
-		print "<th class=\"color-h\" width=\"80\""
+		print "<th class=\"bg-h\" width=\"80\""
 		  . Tooltip(4)
-		  . ">$Message[57]</th><th class=\"color-h\" width=\"80\">$Message[15]</th>";
+		  . ">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th>";
 	}
 	if ( $ShowFileTypesStats =~ /B/i ) {
-		print "<th class=\"color-k\" width=\"80\""
+		print "<th class=\"bg-k\" width=\"80\""
 		  . Tooltip(5)
-		  . ">$Message[75]</th><th class=\"color-k\" width=\"80\">$Message[15]</th>";
+		  . ">$Message[75]</th><th class=\"bg-k\" width=\"80\">$Message[15]</th>";
 	}
 	if ( $ShowFileTypesStats =~ /C/i ) {
 		print
-"<th class=\"color-k\">$Message[100]</th><th class=\"color-k\">$Message[101]</th><th class=\"color-k\">$Message[99]</th>";
+"<th class=\"bg-k\">$Message[100]</th><th class=\"bg-k\">$Message[101]</th><th class=\"bg-k\">$Message[99]</th>";
 	}
 	print "</tr>\n";
 	my $total_con = 0;
@@ -11226,7 +11097,7 @@ sub HTMLMainFileSize{
         }
         if ($periodo) { $request_frequency_average = $number_of_requests/$periodo;}
         else { $request_frequency_average = 0 };
-        print "$Center<a name=\"filesizes\">&nbsp;</a><br />\n";
+        print "<a name=\"filesizes\">&nbsp;</a>";
         my $title = "$Message[186]";
         &tab_head($title, 19, 0, 'filesizes');
         my $Totals = 0;
@@ -11237,7 +11108,7 @@ sub HTMLMainFileSize{
         }
         if ($Totals) { $average_s = int($average_s / $Totals); }
         else { $average_s = '?'; }
-        print "<tr bgcolor=\"#$color_TableBGRowTitle\"".Tooltip(1)."><th>$Message[182]: $number_of_requests - $Message[183]: $periodo $Message[184] - $Message[185]: ".sprintf ("%.6f",$request_frequency_average)."</th><th class=\"color-s\" width=\"80\">$Message[181]</th><th class=\"color-s\" width=\"80\">$Message[57]</th><th class=\"color-s\" width=\"80\">$Message[15]</th></tr>\n";
+        print "<tr bgcolor=\"#$color_TableBGRowTitle\"".Tooltip(1)."><th>$Message[182]: $number_of_requests - $Message[183]: $periodo $Message[184] - $Message[185]: ".sprintf ("%.6f",$request_frequency_average)."</th><th class=\"bg-s\" width=\"80\">$Message[181]</th><th class=\"bg-s\" width=\"80\">$Message[57]</th><th class=\"bg-s\" width=\"80\">$Message[15]</th></tr>\n";
         my $total_s = 0;
         my $count = 0;
         foreach my $key (@PayloadRange) {
@@ -11305,7 +11176,7 @@ sub HTMLMainRequestTime{
         }
         if ($periodo) { $request_frequency_average = $number_of_requests / $periodo;}
         else { $request_frequency_average = 0};
-        print "$Center<a name=\"requesttimes\">&nbsp;</a><br />\n";
+        print "<a name=\"requesttimes\">&nbsp;</a>";
         my $title = "$Message[188]";
         &tab_head($title, 19, 0, 'requesttimes');
         my $Totals = 0;
@@ -11316,7 +11187,7 @@ sub HTMLMainRequestTime{
         }
         if ($Totals) { $average_s = int($average_s / $Totals); }
         else { $average_s = '?'; }
-        print "<tr bgcolor=\"#$color_TableBGRowTitle\"".Tooltip(1)."><th>$Message[182]: $number_of_requests - $Message[183]: $periodo $Message[184] - $Message[185]: ".sprintf ("%.6f",$request_frequency_average)."</th><th class=\"color-s\" width=\"80\">$Message[181]</th><th class=\"color-s\" width=\"80\">$Message[57]</th><th class=\"color-s\" width=\"80\">$Message[15]</th></tr>\n";
+        print "<tr bgcolor=\"#$color_TableBGRowTitle\"".Tooltip(1)."><th>$Message[182]: $number_of_requests - $Message[183]: $periodo $Message[184] - $Message[185]: ".sprintf ("%.6f",$request_frequency_average)."</th><th class=\"bg-s\" width=\"80\">$Message[181]</th><th class=\"bg-s\" width=\"80\">$Message[57]</th><th class=\"bg-s\" width=\"80\">$Message[15]</th></tr>\n";
         my $total_s = 0;
         my $count = 0;
         foreach my $key (@TimeRange) {
@@ -11354,15 +11225,15 @@ sub HTMLMainRequestTime{
 #------------------------------------------------------------------------------
 sub HTMLShowBrowserDetail{
 	# Show browsers versions
-	print "$Center<a name=\"browsersversions\">&nbsp;</a><br />";
+	print "<a name=\"browsersversions\">&nbsp;</a>";
 	my $title = "$Message[21]";
 	&tab_head( "$title", 19, 0, 'browsersversions' );
 	print
 "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[58]</th>";
 	print
-"<th width=\"80\">$Message[111]</th><th class=\"color-p\" width=\"80\">$Message[56]</th><th class=\"color-p\" width=\"80\">$Message[15]</th>";
+"<th width=\"80\">$Message[111]</th><th class=\"bg-p\" width=\"80\">$Message[56]</th><th class=\"bg-p\" width=\"80\">$Message[15]</th>";
 	print
-"<th class=\"color-h\" width=\"80\">$Message[57]</th><th class=\"color-h\" width=\"80\">$Message[15]</th>";
+"<th class=\"bg-h\" width=\"80\">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th>";
 	print "<th>&nbsp;</th>";
 	print "</tr>\n";
 	my $total_h = 0;
@@ -11608,7 +11479,7 @@ sub HTMLShowBrowserDetail{
 #------------------------------------------------------------------------------
 sub HTMLShowBrowserUnknown{
     my $NewLinkTarget = shift;
-	print "$Center<a name=\"unknownbrowser\">&nbsp;</a><br />\n";
+	print "<a name=\"unknownbrowser\">&nbsp;</a>";
 	my $title = "$Message[50]";
     if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
        # extend the title to include the added link 
@@ -11655,15 +11526,15 @@ sub HTMLShowBrowserUnknown{
 #------------------------------------------------------------------------------
 sub HTMLShowOSDetail{
 	# Show os versions
-	print "$Center<a name=\"osversions\">&nbsp;</a><br />";
+	print "<a name=\"osversions\">&nbsp;</a>";
 	my $title = "$Message[59]";
 	&tab_head( "$title", 19, 0, 'osversions' );
 	print
 "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[58]</th>";
 	print
-"<th class=\"color-p\" width=\"80\">$Message[56]</th><th class=\"color-p\" width=\"80\">$Message[15]</th>";
+"<th class=\"bg-p\" width=\"80\">$Message[56]</th><th class=\"bg-p\" width=\"80\">$Message[15]</th>";
 	print
-"<th class=\"color-h\" width=\"80\">$Message[57]</th><th class=\"color-h\" width=\"80\">$Message[15]</th>";
+"<th class=\"bg-h\" width=\"80\">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th>";
 	print "</tr>\n";
 	my $total_h = 0;
 	my $total_p = 0;
@@ -11878,7 +11749,7 @@ sub HTMLShowOSDetail{
 #------------------------------------------------------------------------------
 sub HTMLShowOSUnknown{
     my $NewLinkTarget = shift;
-	print "$Center<a name=\"unknownos\">&nbsp;</a><br />\n";
+	print "<a name=\"unknownos\">&nbsp;</a>";
 	my $title = "$Message[46]";
     if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
        # extend the title to include the added link 
@@ -11925,7 +11796,7 @@ sub HTMLShowOSUnknown{
 #------------------------------------------------------------------------------
 sub HTMLShowReferers{
     my $NewLinkTarget = shift;
-	print "$Center<a name=\"refererse\">&nbsp;</a><br />\n";
+	print "<a name=\"refererse\">&nbsp;</a>";
 	my $title = "$Message[40]";
     if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
        # extend the title to include the added link 
@@ -11939,9 +11810,9 @@ sub HTMLShowReferers{
 	print
 "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>".Format_Number($TotalDifferentSearchEngines)." $Message[122]</th>";
 	print
-"<th class=\"color-p\" width=\"80\">$Message[56]</th><th class=\"color-p\" width=\"80\">$Message[15]</th>";
+"<th class=\"bg-p\" width=\"80\">$Message[56]</th><th class=\"bg-p\" width=\"80\">$Message[15]</th>";
 	print
-"<th class=\"color-h\" width=\"80\">$Message[57]</th><th class=\"color-h\" width=\"80\">$Message[15]</th>";
+"<th class=\"bg-h\" width=\"80\">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th>";
 	print "</tr>\n";
 	my $total_s = 0;
 	my $total_p = 0;
@@ -12027,7 +11898,7 @@ sub HTMLShowReferers{
 #------------------------------------------------------------------------------
 sub HTMLShowRefererPages{
     my $NewLinkTarget = shift;
-	print "$Center<a name=\"refererpages\">&nbsp;</a><br />\n";
+	print "<a name=\"refererpages\">&nbsp;</a>";
 	my $total_p = 0;
 	my $total_h = 0;
 	my $rest_p = 0;
@@ -12070,15 +11941,15 @@ sub HTMLShowRefererPages{
 		print "$cpt $Message[28]";
 
 		#if ($MonthRequired ne 'all') {
-		#	if ($HTMLOutput{'refererpages'}) { print "<br />$Message[102]: $TotalDifferentPages $Message[28]"; }
+		#	if ($HTMLOutput{'refererpages'}) { print "$Message[102]: $TotalDifferentPages $Message[28]"; }
 		#}
 	}
 	else { print "$Message[102]: ".Format_Number($cpt)." $Message[28]"; }
 	print "</th>";
 	print
-"<th class=\"color-p\" width=\"80\">$Message[56]</th><th class=\"color-p\" width=\"80\">$Message[15]</th>";
+"<th class=\"bg-p\" width=\"80\">$Message[56]</th><th class=\"bg-p\" width=\"80\">$Message[15]</th>";
 	print
-"<th class=\"color-h\" width=\"80\">$Message[57]</th><th class=\"color-h\" width=\"80\">$Message[15]</th>";
+"<th class=\"bg-h\" width=\"80\">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th>";
 	print "</tr>\n";
 	my $total_s = 0;
 	my $count = 0;
@@ -12165,7 +12036,7 @@ sub HTMLShowRefererPages{
 #------------------------------------------------------------------------------
 sub HTMLShowKeyPhrases{
 	my $NewLinkTarget = shift;
-	print "$Center<a name=\"keyphrases\">&nbsp;</a><br />\n";
+	print "<a name=\"keyphrases\">&nbsp;</a>";
     my $title = "$Message[43]";
     if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
        # extend the title to include the added link 
@@ -12178,7 +12049,7 @@ sub HTMLShowKeyPhrases{
 	&tab_head( $title, 19, 0, 'keyphrases' );
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\""
 	  . Tooltip(15)
-	  . "><th>".Format_Number($TotalDifferentKeyphrases)." $Message[103]</th><th class=\"color-s\" width=\"80\">$Message[14]</th><th class=\"color-s\" width=\"80\">$Message[15]</th></tr>\n";
+	  . "><th>".Format_Number($TotalDifferentKeyphrases)." $Message[103]</th><th class=\"bg-s\" width=\"80\">$Message[14]</th><th class=\"bg-s\" width=\"80\">$Message[15]</th></tr>\n";
 	my $total_s = 0;
 	my $count = 0;
 	&BuildKeyList(
@@ -12233,7 +12104,7 @@ sub HTMLShowKeyPhrases{
 #------------------------------------------------------------------------------
 sub HTMLShowKeywords{
 	my $NewLinkTarget = shift;
-	print "$Center<a name=\"keywords\">&nbsp;</a><br />\n";
+	print "<a name=\"keywords\">&nbsp;</a>";
 	my $title = "$Message[44]";
     if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
        # extend the title to include the added link 
@@ -12246,7 +12117,7 @@ sub HTMLShowKeywords{
 	&tab_head( $title, 19, 0, 'keywords' );
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\""
 	  . Tooltip(15)
-	  . "><th>".Format_Number($TotalDifferentKeywords)." $Message[13]</th><th class=\"color-s\" width=\"80\">$Message[14]</th><th class=\"color-s\" width=\"80\">$Message[15]</th></tr>\n";
+	  . "><th>".Format_Number($TotalDifferentKeywords)." $Message[13]</th><th class=\"bg-s\" width=\"80\">$Message[14]</th><th class=\"bg-s\" width=\"80\">$Message[15]</th></tr>\n";
 	my $total_s = 0;
 	my $count = 0;
 	&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Keyword'},
@@ -12303,16 +12174,16 @@ sub HTMLShowErrorCodes{
 	$title = $customtitles{$code} ? $customtitles{$code} :
 	           (join(' ', ( ($httpcodelib{$code} ? $httpcodelib{$code} :
 	           'Unknown error'), "urls (HTTP code " . $code . ")" )));
-	print "$Center<a name=\"errors$code\">&nbsp;</a><br />\n";
+	print "<a name=\"errors$code\">&nbsp;</a>";
 	&tab_head( $title, 19, 0, "errors$code" );
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>URL ("
 	  . Format_Number(( scalar keys %{$_sider_h{$code}} ))
-	  . ")</th><th class=\"color-h\">$Message[49]</th>";
+	  . ")</th><th class=\"bg-h\">$Message[49]</th>";
 	foreach (split(//, $ShowHTTPErrorsPageDetail)) {
 		if ( $_ =~ /R/i ) {
-			print "<th class=\"color-p\" width=\"80\">$Message[23]</th>";
+			print "<th class=\"bg-p\" width=\"80\">$Message[23]</th>";
 		} elsif ( $_ =~ /H/i ) {
-			print "<th class=\"color-p\" width=\"80\">$Message[81]</th>";
+			print "<th class=\"bg-p\" width=\"80\">$Message[81]</th>";
 		}
 	}
 	print "</tr>\n";
@@ -12370,7 +12241,7 @@ sub HTMLShowExtraSections{
 		
 		if ( $HTMLOutput{"allextra$extranum"} ) {
 			if ($Debug) { debug( "ExtraName$extranum", 2 ); }
-			print "$Center<a name=\"extra$extranum\">&nbsp;</a><br />";
+			print "<a name=\"extra$extranum\">&nbsp;</a>";
 			my $title = $ExtraName[$extranum];
 			&tab_head( "$title", 19, 0, "extra$extranum" );
 			print "<tr bgcolor=\"#$color_TableBGRowTitle\">";
@@ -12378,11 +12249,11 @@ sub HTMLShowExtraSections{
 
 			if ( $ExtraStatTypes[$extranum] =~ m/P/i ) {
 				print
-"<th class=\"color-p\" width=\"80\">$Message[56]</th>";
+"<th class=\"bg-p\" width=\"80\">$Message[56]</th>";
 			}
 			if ( $ExtraStatTypes[$extranum] =~ m/H/i ) {
 				print
-"<th class=\"color-h\" width=\"80\">$Message[57]</th>";
+"<th class=\"bg-h\" width=\"80\">$Message[57]</th>";
 			}
 			if ( $ExtraStatTypes[$extranum] =~ m/B/i ) {
 				print
@@ -12535,7 +12406,7 @@ sub HTMLShowRobots{
 	my $rest_k = 0;
 	my $rest_r = 0;
 	
-	print "$Center<a name=\"robots\">&nbsp;</a><br />\n";
+	print "<a name=\"robots\">&nbsp;</a>";
 	my $title = '';
 	if ( $HTMLOutput{'allrobots'} )  { $title .= "$Message[53]"; }
 	if ( $HTMLOutput{'lastrobots'} ) { $title .= "$Message[9]"; }
@@ -12545,7 +12416,7 @@ sub HTMLShowRobots{
 	  . " $Message[51]</th>";
 	if ( $ShowRobotsStats =~ /H/i ) {
 		print
-		  "<th class=\"color-h\" width=\"80\">$Message[57]</th>";
+		  "<th class=\"bg-h\" width=\"80\">$Message[57]</th>";
 	}
 	if ( $ShowRobotsStats =~ /B/i ) {
 		print
@@ -12650,7 +12521,7 @@ sub HTMLShowURLDetail{
 		my $function = "ShowPagesFilter_$pluginname";
 		&$function();
 	}
-	print "$Center<a name=\"urls\">&nbsp;</a><br />\n";
+	print "<a name=\"urls\">&nbsp;</a>";
 
 	# Show filter form
 	&HTMLShowFormFilter( "urlfilter", $FilterIn{'url'}, $FilterEx{'url'} );
@@ -12685,7 +12556,7 @@ sub HTMLShowURLDetail{
 		if ( $MonthRequired ne 'all' ) {
 			if ( $HTMLOutput{'urldetail'} ) {
 				print
-"<br />$Message[102]: ".Format_Number($TotalDifferentPages)." $Message[28]";
+"$Message[102]: ".Format_Number($TotalDifferentPages)." $Message[28]";
 			}
 		}
 	}
@@ -12693,7 +12564,7 @@ sub HTMLShowURLDetail{
 	print "</th>";
 	if ( $ShowPagesStats =~ /P/i ) {
 		print
-		  "<th class=\"color-p\" width=\"80\">$Message[29]</th>";
+		  "<th class=\"bg-p\" width=\"80\">$Message[29]</th>";
 	}
 	if ( $ShowPagesStats =~ /B/i ) {
 		print
@@ -12701,11 +12572,11 @@ sub HTMLShowURLDetail{
 	}
 	if ( $ShowPagesStats =~ /E/i ) {
 		print
-		  "<th class=\"color-e\" width=\"80\">$Message[104]</th>";
+		  "<th class=\"bg-e\" width=\"80\">$Message[104]</th>";
 	}
 	if ( $ShowPagesStats =~ /X/i ) {
 		print
-		  "<th class=\"color-x\" width=\"80\">$Message[116]</th>";
+		  "<th class=\"bg-x\" width=\"80\">$Message[116]</th>";
 	}
 
 	# Call to plugins' function ShowPagesAddField
@@ -12884,7 +12755,7 @@ sub HTMLShowLogins{
 	my $rest_p = 0;
 	my $rest_h = 0;
 	my $rest_k = 0;
-	print "$Center<a name=\"logins\">&nbsp;</a><br />\n";
+	print "<a name=\"logins\">&nbsp;</a>";
 	my $title = '';
 	if ( $HTMLOutput{'alllogins'} )  { $title .= "$Message[94]"; }
 	if ( $HTMLOutput{'lastlogins'} ) { $title .= "$Message[9]"; }
@@ -12894,11 +12765,11 @@ sub HTMLShowLogins{
 	&HTMLShowUserInfo('__title__');
 	if ( $ShowAuthenticatedUsers =~ /P/i ) {
 		print
-		  "<th class=\"color-p\" width=\"80\">$Message[56]</th>";
+		  "<th class=\"bg-p\" width=\"80\">$Message[56]</th>";
 	}
 	if ( $ShowAuthenticatedUsers =~ /H/i ) {
 		print
-		  "<th class=\"color-h\" width=\"80\">$Message[57]</th>";
+		  "<th class=\"bg-h\" width=\"80\">$Message[57]</th>";
 	}
 	if ( $ShowAuthenticatedUsers =~ /B/i ) {
 		print
@@ -12993,7 +12864,7 @@ sub HTMLShowHostsUnknown{
 	my $rest_p = 0;
 	my $rest_h = 0;
 	my $rest_k = 0;
-	print "$Center<a name=\"unknownip\">&nbsp;</a><br />\n";
+	print "<a name=\"unknownip\">&nbsp;</a>";
 	&tab_head( "$Message[45]", 19, 0, 'unknownwip' );
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>"
 	  . Format_Number(( scalar keys %_host_h ))
@@ -13001,11 +12872,11 @@ sub HTMLShowHostsUnknown{
 	&HTMLShowHostInfo('__title__');
 	if ( $ShowHostsStats =~ /P/i ) {
 		print
-		  "<th class=\"color-p\" width=\"80\">$Message[56]</th>";
+		  "<th class=\"bg-p\" width=\"80\">$Message[56]</th>";
 	}
 	if ( $ShowHostsStats =~ /H/i ) {
 		print
-		  "<th class=\"color-h\" width=\"80\">$Message[57]</th>";
+		  "<th class=\"bg-h\" width=\"80\">$Message[57]</th>";
 	}
 	if ( $ShowHostsStats =~ /B/i ) {
 		print
@@ -13091,7 +12962,7 @@ sub HTMLShowHosts{
 	my $rest_p = 0;
 	my $rest_h = 0;
 	my $rest_k = 0;
-	print "$Center<a name=\"hosts\">&nbsp;</a><br />\n";
+	print "<a name=\"hosts\">&nbsp;</a>";
 
 	# Show filter form
 	&HTMLShowFormFilter( "hostfilter", $FilterIn{'host'},
@@ -13123,7 +12994,7 @@ sub HTMLShowHosts{
 		if ( $MonthRequired ne 'all' ) {
 			if ( $HTMLOutput{'allhosts'} || $HTMLOutput{'lasthosts'} ) {
 				print
-"<br />$Message[102]: ".Format_Number($TotalHostsKnown)." $Message[82], ".Format_Number($TotalHostsUnknown)." $Message[1] - ".Format_Number($TotalUnique)." $Message[11]";
+"$Message[102]: ".Format_Number($TotalHostsKnown)." $Message[82], ".Format_Number($TotalHostsUnknown)." $Message[1] - ".Format_Number($TotalUnique)." $Message[11]";
 			}
 		}
 	}
@@ -13138,11 +13009,11 @@ sub HTMLShowHosts{
 	&HTMLShowHostInfo('__title__');
 	if ( $ShowHostsStats =~ /P/i ) {
 		print
-		  "<th class=\"color-p\" width=\"80\">$Message[56]</th>";
+		  "<th class=\"bg-p\" width=\"80\">$Message[56]</th>";
 	}
 	if ( $ShowHostsStats =~ /H/i ) {
 		print
-		  "<th class=\"color-h\" width=\"80\">$Message[57]</th>";
+		  "<th class=\"bg-h\" width=\"80\">$Message[57]</th>";
 	}
 	if ( $ShowHostsStats =~ /B/i ) {
 		print
@@ -13266,7 +13137,7 @@ sub HTMLShowDomains{
 	my $rest_k = 0;
 	my $rest_v = 0;
 	my $rest_u = 0;
-	print "$Center<a name=\"domains\">&nbsp;</a><br />\n";
+	print "<a name=\"domains\">&nbsp;</a>";
 
 	# Show domains list
 	my $title = '';
@@ -13280,19 +13151,19 @@ sub HTMLShowDomains{
 "<tr bgcolor=\"#$color_TableBGRowTitle\"><th width=\"$WIDTHCOLICON\">&nbsp;</th><th colspan=\"2\">$Message[17]</th>";
 	if ( $ShowDomainsStats =~ /U/i ) {
 		print
-		  "<th class=\"color-u\" width=\"80\">$Message[11]</th>";
+		  "<th class=\"bg-u\" width=\"80\">$Message[11]</th>";
 	}
 	if ( $ShowDomainsStats =~ /V/i ) {
 		print
-		  "<th class=\"color-v\" width=\"80\">$Message[10]</th>";
+		  "<th class=\"bg-v\" width=\"80\">$Message[10]</th>";
 	}
 	if ( $ShowDomainsStats =~ /P/i ) {
 		print
-		  "<th class=\"color-p\" width=\"80\">$Message[56]</th>";
+		  "<th class=\"bg-p\" width=\"80\">$Message[56]</th>";
 	}
 	if ( $ShowDomainsStats =~ /H/i ) {
 		print
-		  "<th class=\"color-h\" width=\"80\">$Message[57]</th>";
+		  "<th class=\"bg-h\" width=\"80\">$Message[57]</th>";
 	}
 	if ( $ShowDomainsStats =~ /B/i ) {
 		print
@@ -13435,14 +13306,14 @@ sub HTMLShowDomains{
 #------------------------------------------------------------------------------
 sub HTMLShowDownloads{
 	my $regext         = qr/\.(\w{1,6})$/;
-	print "$Center<a name=\"downloads\">&nbsp;</a><br />\n";
+	print "<a name=\"downloads\">&nbsp;</a>";
 	&tab_head( $Message[178], 19, 0, "downloads" );
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[178]</th>";
-	if ( $ShowFileTypesStats =~ /H/i ){print "<th class=\"color-h\" width=\"80\">$Message[57]</th>"
-		."<th class=\"color-h\" width=\"80\">206 $Message[57]</th>"; }
+	if ( $ShowFileTypesStats =~ /H/i ){print "<th class=\"bg-h\" width=\"80\">$Message[57]</th>"
+		."<th class=\"bg-h\" width=\"80\">206 $Message[57]</th>"; }
 	if ( $ShowFileTypesStats =~ /B/i ){
-		print "<th class=\"color-k\" width=\"80\">$Message[75]</th>";
-		print "<th class=\"color-k\" width=\"80\">$Message[106]</th>";
+		print "<th class=\"bg-k\" width=\"80\">$Message[75]</th>";
+		print "<th class=\"bg-k\" width=\"80\">$Message[106]</th>";
 	}
 	print "</tr>\n";
 	my $count = 0;
@@ -13494,9 +13365,10 @@ sub HTMLShowDownloads{
 #------------------------------------------------------------------------------
 sub HTMLMainSummary{
 	if ($Debug) { debug( "ShowSummary", 2 ); }
-	# FirstTime LastTime
+
 	my $FirstTime = 0;
 	my $LastTime  = 0;
+	
 	foreach my $key ( keys %FirstTime ) {
 		my $keyqualified = 0;
 		if ( $MonthRequired eq 'all' ) { $keyqualified = 1; }
@@ -13512,10 +13384,6 @@ sub HTMLMainSummary{
 			}
 		}
 	}
-			
-	#print "$Center<a name=\"summary\">&nbsp;</a><br />\n";
-	my $title = "$Message[128]";
-	&tab_head( "$title", 0, 0, 'month' );
 
 	my $NewLinkParams = ${QueryString};
 	$NewLinkParams =~ s/(^|&|&amp;)update(=\w*|$)//i;
@@ -13526,6 +13394,7 @@ sub HTMLMainSummary{
 	$NewLinkParams =~ s/(&amp;|&)+/&amp;/i;
 	$NewLinkParams =~ s/^&amp;//;
 	$NewLinkParams =~ s/&amp;$//;
+	
 	if ($NewLinkParams) { $NewLinkParams = "${NewLinkParams}&amp;"; }
 	my $NewLinkTarget = '';
 
@@ -13538,226 +13407,86 @@ sub HTMLMainSummary{
 	my $RatioPages  = 0;
 	my $RatioHits   = 0;
 	my $RatioBytes  = 0;
-	if ( $TotalUnique > 0 ) {
-		$RatioVisits = int( $TotalVisits / $TotalUnique * 100 ) / 100;
-	}
-	if ( $TotalVisits > 0 ) {
-		$RatioPages = int( $TotalPages / $TotalVisits * 100 ) / 100;
-	}
-	if ( $TotalVisits > 0 ) {
-		$RatioHits = int( $TotalHits / $TotalVisits * 100 ) / 100;
-	}
-	if ( $TotalVisits > 0 ) {
-		$RatioBytes =
-		  int( ( $TotalBytes / 1024 ) * 100 /
-			  ( $LogType eq 'M' ? $TotalHits : $TotalVisits ) ) / 100;
-	}
-
-	my $colspan = 5;
-	if ( $LogType eq 'W' || $LogType eq 'S' ) {
-		$colspan = 6;
-	}
+	
+	if ( $TotalUnique > 0 ) { $RatioVisits = sprintf( "%.1f", $TotalVisits / $TotalUnique )   ; }
+	if ( $TotalVisits > 0 ) { $RatioPages = sprintf( "%.1f", $TotalPages / $TotalVisits ); }
+	if ( $TotalVisits > 0 ) { $RatioHits = sprintf( "%.1f", $TotalHits / $TotalVisits ); }
+	if ( $TotalVisits > 0 ) { $RatioBytes = int( ( $TotalBytes / 1024 ) * 100 / ( $LogType eq 'M' ? $TotalHits : $TotalVisits ) ) / 100; }
 
 	# Show first/last
-	print "<tr bgcolor=\"#$color_TableBGRowTitle\">";
-	print
-"<td class=\"aws\"><b>$Message[133]</b></td><td class=\"aws\" colspan=\""
-	  . ( $colspan - 1 ) . "\">\n";
-	print( $MonthRequired eq 'all'
-		? "$Message[6] $YearRequired"
-		: "$Message[5] "
-		  . $MonthNumLib{$MonthRequired}
-		  . " $YearRequired"
-	);
-	print "</td></tr>\n";
-	print "<tr bgcolor=\"#$color_TableBGRowTitle\">";
-	print "<td class=\"aws\"><b>$Message[8]</b></td>\n";
-	print "<td class=\"aws\" colspan=\""
-	  . ( $colspan - 1 ) . "\">"
-	  . ( $FirstTime ? Format_Date( $FirstTime, 0 ) : "NA" ) . "</td>";
-	print "</tr>\n";
-	print "<tr bgcolor=\"#$color_TableBGRowTitle\">";
-	print "<td class=\"aws\"><b>$Message[9]</b></td>\n";
-	print "<td class=\"aws\" colspan=\""
-	  . ( $colspan - 1 ) . "\">"
-	  . ( $LastTime ? Format_Date( $LastTime, 0 ) : "NA" )
-	  . "</td>\n";
-	print "</tr>\n";
+	print '<div>'
+	. '<span class="summary-label">' . $Message[133] . ' <b class="summary-data">' . ($MonthRequired eq 'all' ? $YearRequired : $MonthNumLib{$MonthRequired} . ' ' . $YearRequired) . '</b></span>'
+	. '<span class="summary-label">' . $Message[8] . ' <b class="summary-data">' . ($FirstTime ? Format_Date($FirstTime, 0) : 'N/A') . '</b></span>'
+	. '<span class="summary-label">' . $Message[9] . ' <b class="summary-data">' . ($LastTime ? Format_Date( $LastTime, 0 ) : "NA" ) . '</b></span>'
+	. '</div>';
 
 	# Show main indicators title row
-	print "<tr>";
-	if ( $LogType eq 'W' || $LogType eq 'S' ) {
-		print "<td bgcolor=\"#$color_TableBGTitle\">&nbsp;</td>";
-	}
-	if ( $ShowSummary =~ /U/i ) {
-		print "<td class=\"color-u\""
-		  . Tooltip(2)
-		  . ">$Message[11]</td>";
-	}
-	else {
-		print
-"<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>";
-	}
-	if ( $ShowSummary =~ /V/i ) {
-		print "<td class=\"color-v\""
-		  . Tooltip(1)
-		  . ">$Message[10]</td>";
-	}
-	else {
-		print
-"<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>";
-	}
-	if ( $ShowSummary =~ /P/i ) {
-		print "<td class=\"color-p\""
-		  . Tooltip(3)
-		  . ">$Message[56]</td>";
-	}
-	else {
-		print
-"<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>";
-	}
-	if ( $ShowSummary =~ /H/i ) {
-		print "<td class=\"color-h\""
-		  . Tooltip(4)
-		  . ">$Message[57]</td>";
-	}
-	else {
-		print
-"<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>";
-	}
-	if ( $ShowSummary =~ /B/i ) {
-		print "<td class=\"color-k\""
-		  . Tooltip(5)
-		  . ">$Message[75]</td>";
-	}
-	else {
-		print
-"<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>";
-	}
-	print "</tr>\n";
+	print '<div>';
+	print '<div id="summary-logs">';
+	print (( $ShowSummary =~ /U/i && $LogType ne 'M' ) ?
+		'<div>'
+		. '<div class="bg-u" ' . Tooltip(2) . ">$Message[11]</div>"
+		. '<div>' . (($MonthRequired eq 'all') ? '<b>&lt;= ' . Format_Number($TotalUnique) . '</b> ' . $Message[129] : '<b>' . Format_Number($TotalUnique) . '</b>') . '</div>'
+		. '</div>'
+	 	: ''
+	);
 
-	# Show main indicators values for viewed traffic
-	print "<tr>";
-	if ( $LogType eq 'M' ) {
-		print "<td class=\"aws\">$Message[165]</td>";
-		print "<td>&nbsp;<br />&nbsp;</td>\n";
-		print "<td>&nbsp;<br />&nbsp;</td>\n";
-		if ( $ShowSummary =~ /H/i ) {
-			print "<td><b>".Format_Number($TotalHits)."</b>"
-			  . (
-				$LogType eq 'M'
-				? ""
-				: "<br />($RatioHits&nbsp;"
-				  . lc( $Message[57] . "/" . $Message[12] ) . ")"
-			  )
-			  . "</td>";
-		}
-		else { print "<td>&nbsp;</td>"; }
-		if ( $ShowSummary =~ /B/i ) {
-			print "<td><b>"
-			  . Format_Bytes( int($TotalBytes) )
-			  . "</b><br />($RatioBytes&nbsp;$Message[108]/"
-			  . $Message[ ( $LogType eq 'M' ? 149 : 12 ) ]
-			  . ")</td>";
-		}
-		else { print "<td>&nbsp;</td>"; }
-	}
-	else {
-		if ( $LogType eq 'W' || $LogType eq 'S' ) {
-			print "<td class=\"aws\">$Message[160]&nbsp;*</td>";
-		}
-		if ( $ShowSummary =~ /U/i ) {
-			print "<td>"
-			  . (
-				$MonthRequired eq 'all'
-				? "<b>&lt;= ".Format_Number($TotalUnique)."</b><br />$Message[129]"
-				: "<b>".Format_Number($TotalUnique)."</b><br />&nbsp;"
-			  )
-			  . "</td>";
-		}
-		else { print "<td>&nbsp;</td>"; }
-		if ( $ShowSummary =~ /V/i ) {
-			print
-"<td><b>".Format_Number($TotalVisits)."</b><br />($RatioVisits&nbsp;$Message[52])</td>";
-		}
-		else { print "<td>&nbsp;</td>"; }
-		if ( $ShowSummary =~ /P/i ) {
-			print "<td><b>".Format_Number($TotalPages)."</b><br />($RatioPages&nbsp;"
-			  . $Message[56] . "/"
-			  . $Message[12]
-			  . ")</td>";
-		}
-		else { print "<td>&nbsp;</td>"; }
-		if ( $ShowSummary =~ /H/i ) {
-			print "<td><b>".Format_Number($TotalHits)."</b>"
-			  . (
-				$LogType eq 'M'
-				? ""
-				: "<br />($RatioHits&nbsp;"
-				  . $Message[57] . "/"
-				  . $Message[12] . ")"
-			  )
-			  . "</td>";
-		}
-		else { print "<td>&nbsp;</td>"; }
-		if ( $ShowSummary =~ /B/i ) {
-			print "<td><b>"
-			  . Format_Bytes( int($TotalBytes) )
-			  . "</b><br />($RatioBytes&nbsp;$Message[108]/"
-			  . $Message[ ( $LogType eq 'M' ? 149 : 12 ) ]
-			  . ")</td>";
-		}
-		else { print "<td>&nbsp;</td>"; }
-	}
-	print "</tr>\n";
+	print (( $ShowSummary =~ /V/i && $LogType ne 'M' ) ?
+		'<div>'
+		. '<div class="bg-v" ' . Tooltip(1) . ">$Message[10]</div>"
+		. '<div><b>' . Format_Number($TotalVisits) . '</b></div>'
+		. '<small>(' . $RatioVisits . ' ' . $Message[52] .')</small>'
+		. '</div>'
+		: ''
+	);
+		
+	print (( $ShowSummary =~ /P/i && $LogType ne 'M' ) ?
+		'<div>'
+		. '<div class="bg-p" ' . Tooltip(3) . ">$Message[56]</div>"
+		. '<div>'
+		. '<div><b>' . Format_Number($TotalPages) . '</b></div>'
+		. '<small>(' . $RatioPages . ' ' . $Message[56] . ' / ' . $Message[12] . ')</small>'
+		. '</div>'
+		. '<div><small>' . Format_Number($TotalNotViewedPages) . ' *' .  $Message[( $LogType eq 'M' ) ? 166 : 161]  . ' </small></div>'
+		. '</div>'
+		: ''
+	);
 
-	# Show main indicators values for not viewed traffic values
-	if ( $LogType eq 'M' || $LogType eq 'W' || $LogType eq 'S' ) {
-		print "<tr>";
-		if ( $LogType eq 'M' ) {
-			print "<td class=\"aws\">$Message[166]</td>";
-			print "<td>&nbsp;<br />&nbsp;</td>\n";
-			print "<td>&nbsp;<br />&nbsp;</td>\n";
-			if ( $ShowSummary =~ /H/i ) {
-				print "<td><b>".Format_Number($TotalNotViewedHits)."</b></td>";
-			}
-			else { print "<td>&nbsp;</td>"; }
-			if ( $ShowSummary =~ /B/i ) {
-				print "<td><b>"
-				  . Format_Bytes( int($TotalNotViewedBytes) )
-				  . "</b></td>";
-			}
-			else { print "<td>&nbsp;</td>"; }
-		}
-		else {
-			if ( $LogType eq 'W' || $LogType eq 'S' ) {
-				print "<td class=\"aws\">$Message[161]&nbsp;*</td>";
-			}
-			print "<td colspan=\"2\">&nbsp;<br />&nbsp;</td>\n";
-			if ( $ShowSummary =~ /P/i ) {
-				print "<td><b>".Format_Number($TotalNotViewedPages)."</b></td>";
-			}
-			else { print "<td>&nbsp;</td>"; }
-			if ( $ShowSummary =~ /H/i ) {
-				print "<td><b>".Format_Number($TotalNotViewedHits)."</b></td>";
-			}
-			else { print "<td>&nbsp;</td>"; }
-			if ( $ShowSummary =~ /B/i ) {
-				print "<td><b>"
-				  . Format_Bytes( int($TotalNotViewedBytes) )
-				  . "</b></td>";
-			}
-			else { print "<td>&nbsp;</td>"; }
-		}
-		print "</tr>\n";
-	}
-	&tab_end($LogType eq 'W'
-		  || $LogType eq 'S' ? "* $Message[159]" : "" );
+	print (( $ShowSummary =~ /H/i ) ?
+		'<div>'
+		. '<div class="bg-h"' . Tooltip(4) . ">$Message[57]</div>"
+		. '<div>'
+		. '<div><b>'.Format_Number($TotalHits).'</b></div>'
+		. ($LogType eq 'M' ? '' : ' <small>(' . $RatioHits . ' ' . $Message[57] . ' / ' . $Message[12] . ')</small>')
+		. '</div>'
+		. '<div><small>' . Format_Number($TotalNotViewedHits) . ' *' .  $Message[( $LogType eq 'M' ) ? 166 : 161]  . '</small></div>'
+		. '</div>'
+		: ''
+	);
+
+	print (( $ShowSummary =~ /B/i ) ?
+		'<div>'
+		. '<div class="bg-b"' . Tooltip(5) . ">$Message[75]</div>"
+		. '<div>'
+		. '<div><b>' . Format_Bytes( int($TotalBytes) ) . '</b></div>'
+		. '<small>(' . $RatioBytes . ' ' . $Message[108] . ' / ' . $Message[ ( $LogType eq 'M' ? 149 : 12 ) ] . ')</small>'
+		. '</div>'
+		. '<div><small>' . Format_Bytes( int($TotalNotViewedBytes) ) . ' *' .  $Message[( $LogType eq 'M' ) ? 166 : 161]  . '</small></div>'
+		. '</div>'
+		: ''
+	);
+print '<div>' . ($LogType eq 'W' || $LogType eq 'S' ? "* $Message[159]" : "" ) . '</div>';
+	print '</div>';
+	print '</div>';
+
+	
+
+
 }
 
 #------------------------------------------------------------------------------
 # Function:     Return Data table footer with sums
-# Parameters:   string $title, string $config, hash $sums
+# Parameters:   string $title, string $config, hash $sums, string $averageTitle, int $average
 # Output:       _
 # Return:       string
 #------------------------------------------------------------------------------
@@ -13773,11 +13502,11 @@ sub HTMLDataTableFooter {
 	return '<tfoot>'
 		.	'<tr class="data-table-sum">'
 		. '<td>' . $sumTitle . '</td>'
-		. ( ( $config =~ /U/i ) ? HTMLDataCellWithBar('u', 110, $ref_sums{'u'}, 100) : '' )
-		. ( ( $config =~ /V/i ) ? HTMLDataCellWithBar('v', 110, $ref_sums{'v'}, 100) : '' )
-		. ( ( $config =~ /P/i ) ? HTMLDataCellWithBar('p', 110, $ref_sums{'p'}, 100) : '' )
-		. ( ( $config =~ /H/i ) ? HTMLDataCellWithBar('h', 110, $ref_sums{'h'}, 100) : '' )
-		. ( ( $config =~ /B/i ) ? HTMLDataCellWithBar('b', 110, $ref_sums{'b'}, 100) : '' )
+		. ( ( $config =~ /U/i ) ? HTMLDataCellWithBar('u', 200, $ref_sums{'u'}, 100) : '' )
+		. ( ( $config =~ /V/i ) ? HTMLDataCellWithBar('v', 200, $ref_sums{'v'}, 100) : '' )
+		. ( ( $config =~ /P/i ) ? HTMLDataCellWithBar('p', 200, $ref_sums{'p'}, 100) : '' )
+		. ( ( $config =~ /H/i ) ? HTMLDataCellWithBar('h', 200, $ref_sums{'h'}, 100) : '' )
+		. ( ( $config =~ /B/i ) ? HTMLDataCellWithBar('b', 200, $ref_sums{'b'}, 100) : '' )
 		. '</tr>'
 		.	'<tr class="data-table-average">'
 		. '<td>' . $averageTitle . '</td>'
@@ -13802,11 +13531,11 @@ sub HTMLDataTableHeader{
 
 	return '<thead><tr>'
 		. '<th class="title">' . $title . '</th>'
-		. ( ( $config =~ /U/i ) ? '<th style="width: ' . $BarWidth . 'px;" class="color-u" ' . Tooltip(2) . '>' . CleanXSS($Message[11]) . '</th>' : '' )
-		. ( ( $config =~ /V/i ) ? '<th style="width: ' . $BarWidth . 'px;" class="color-v" ' . Tooltip(1) . '>' . CleanXSS($Message[10]) . '</th>' : '' )
-		. ( ( $config =~ /P/i ) ? '<th style="width: ' . $BarWidth . 'px;" class="color-p" ' . Tooltip(3) . '>' . CleanXSS($Message[56]) . '</th>' : '' )
-		. ( ( $config =~ /H/i ) ? '<th style="width: ' . $BarWidth . 'px;" class="color-h" ' . Tooltip(4) . '>' . CleanXSS($Message[57]) . '</th>' : '' )
-		. ( ( $config =~ /B/i ) ? '<th style="width: ' . $BarWidth . 'px;" class="color-b" ' . Tooltip(5) . '>' . CleanXSS($Message[75]) . '</th>' : '' )
+		. ( ( $config =~ /U/i ) ? '<th style="width: ' . $BarWidth . 'px;" class="bg-u" ' . Tooltip(2) . '>' . CleanXSS($Message[11]) . '</th>' : '' )
+		. ( ( $config =~ /V/i ) ? '<th style="width: ' . $BarWidth . 'px;" class="bg-v" ' . Tooltip(1) . '>' . CleanXSS($Message[10]) . '</th>' : '' )
+		. ( ( $config =~ /P/i ) ? '<th style="width: ' . $BarWidth . 'px;" class="bg-p" ' . Tooltip(3) . '>' . CleanXSS($Message[56]) . '</th>' : '' )
+		. ( ( $config =~ /H/i ) ? '<th style="width: ' . $BarWidth . 'px;" class="bg-h" ' . Tooltip(4) . '>' . CleanXSS($Message[57]) . '</th>' : '' )
+		. ( ( $config =~ /B/i ) ? '<th style="width: ' . $BarWidth . 'px;" class="bg-b" ' . Tooltip(5) . '>' . CleanXSS($Message[75]) . '</th>' : '' )
 		. '</tr></thead>';
 }
 
@@ -13831,7 +13560,7 @@ sub HTMLMainMonthly{
 
 	my $height = 0;
 	my $bars = '';
-	my $width = 9;
+	my $width = 10;
 	my $data = '';
 	my $tableData = '';
 
@@ -13958,9 +13687,8 @@ sub HTMLMainMonthly{
 	$average_h = sprintf( "%.2f", $total_h / $not_empty_months );
 	$average_k = sprintf( "%.2f", $total_k / $not_empty_months );
 
-	print "$Center<a name=\"month\">&nbsp;</a><br />\n";
-	&tab_head( "$title", 0, 0, 'month' );
-	print "<tr><td>\n";
+	print "<a name=\"month\">&nbsp;</a>";
+	&tab_head( $title );
 
 	# Show bars for month
 	if ($graphPlugin == 1) {
@@ -14024,13 +13752,12 @@ sub HTMLMainMonthly{
 			'b'=> Format_Bytes(int($average_k))
 		);
 
-		print HTMLDataTableFooter($Message[102], $ShowMonthStats, \%sums, $Message[96], \%averages);
+		print HTMLDataTableFooter('', $ShowMonthStats, \%sums, $Message[96], \%averages);
 		
 		# body
 		print '<tbody>' . $tableData . '</tbody>' . '</table>';
 	}
 
-	print "</td></tr>\n";
 	&tab_end();
 }
 
@@ -14100,7 +13827,7 @@ sub HTMLMainDaily{
       );
   }
 
-  print "$Center<a name=\"daysofmonth\">&nbsp;</a><br />\n";
+  print "<a name=\"daysofmonth\">&nbsp;</a>";
 		
 	&tab_head( "$title", 0, 0, 'daysofmonth' );
 	print "<tr>";
@@ -14163,7 +13890,7 @@ sub HTMLMainDaily{
 
 		$bars .=  '<td>';
 
-		$tableData .= '<tr' . (( $dayofweekcursor =~ /[06]/ ) ? ' bgcolor="#' . $color_weekend . '"'	: '' ) . '>'
+		$tableData .= '<tr' . (( $dayofweekcursor =~ /[06]/ ) ? ' class="weekend">'	: '>' )
 				. '<td>'
 			  . ( !$StaticLinks && $day == $nowday && $month == $nowmonth && $year == $nowyear ? '<span class="currentday">' : '' )
 				. $day . ' ' . $MonthNumLib{$MonthRequired}
@@ -14287,7 +14014,7 @@ sub HTMLMainDaily{
 			'b'=> Format_Bytes(int($average_k))
 		);
 
-		print HTMLDataTableFooter($Message[102], $ShowDaysOfMonthStats, \%sums, $Message[96], \%averages);
+		print HTMLDataTableFooter('', $ShowDaysOfMonthStats, \%sums, $Message[96], \%averages);
 
 		# body
 		print '<tbody>' . $tableData . '</tbody></table>';
@@ -14326,7 +14053,7 @@ sub HTMLMainDaysofWeek{
 
 	my $graphPlugin = (%{ $PluginsLoaded{'ShowGraph'} }) ? 1 : 0;
 	
-	print "$Center<a name=\"daysofweek\">&nbsp;</a><br />\n";
+	print "<a name=\"daysofweek\">&nbsp;</a>";
 	&tab_head( "$title", 18, 0, 'daysofweek' );
 	print "<tr>";
 	print "<td>";
@@ -14503,7 +14230,7 @@ sub HTMLMainDownloads{
 	if (!$LevelForFileTypesDetection > 0){return;}
 	if ($Debug) { debug( "ShowDownloadStats", 2 ); }
 	my $regext         = qr/\.(\w{1,6})$/;
-	print "$Center<a name=\"downloads\">&nbsp;</a><br />\n";
+	print "<a name=\"downloads\">&nbsp;</a>";
 	my $Totalh = 0;
 	if ($MaxNbOf{'DownloadsShown'} < 1){$MaxNbOf{'DownloadsShown'} = 10;}	# default if undefined
 	my $title =
@@ -14564,11 +14291,11 @@ sub HTMLMainDownloads{
 	
 	my $total_dls = scalar keys %_downloads;
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[178]: $total_dls</th>";
-	if ( $ShowDownloadsStats =~ /H/i ){print "<th class=\"color-h\" width=\"80\">$Message[57]</th>"
-		."<th class=\"color-h\" width=\"80\">206 $Message[57]</th>"; }
+	if ( $ShowDownloadsStats =~ /H/i ){print "<th class=\"bg-h\" width=\"80\">$Message[57]</th>"
+		."<th class=\"bg-h\" width=\"80\">206 $Message[57]</th>"; }
 	if ( $ShowDownloadsStats =~ /B/i ){
-		print "<th class=\"color-k\" width=\"80\">$Message[75]</th>";
-		print "<th class=\"color-k\" width=\"80\">$Message[106]</th>"; 
+		print "<th class=\"bg-k\" width=\"80\">$Message[75]</th>";
+		print "<th class=\"bg-k\" width=\"80\">$Message[106]</th>"; 
 	}
 	print "</tr>\n";
 	my $count   = 0;
@@ -14622,7 +14349,7 @@ sub HTMLMainHours{
     my $NewLinkTarget = shift;
         
     if ($Debug) { debug( "ShowHoursStats", 2 ); }
-	print "$Center<a name=\"hours\">&nbsp;</a><br />\n";
+	print "<a name=\"hours\">&nbsp;</a>";
 	my $title = "$Message[20]";
 	
     if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
@@ -14827,7 +14554,7 @@ sub HTMLMainCountries{
 	my $rest_u  = my $rest_v  = my $rest_p  = my $rest_h  = my $rest_k = 0; 
 	my $max_u = my $max_p = my $max_h = 1;
 
-	print "$Center<a name=\"countries\">&nbsp;</a>";
+	print "<a name=\"countries\">&nbsp;</a>";
 
 	my $title = "$Message[25] ($Message[77] $MaxNbOf{'Domain'}) &nbsp; - &nbsp; <a href=\""
 	  . (	$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? XMLEncode("$AWScript${NewLinkParams}output=alldomains") : "$StaticLinks.alldomains.$StaticExt" )
@@ -15019,7 +14746,7 @@ sub HTMLMainHosts{
 	my $NewLinkTarget = shift;
 	
 	if ($Debug) { debug( "ShowHostsStats", 2 ); }
-	print "$Center<a name=\"visitors\">&nbsp;</a><br />\n";
+	print "<a name=\"visitors\">&nbsp;</a>";
 	my $title =
 "$Message[81] ($Message[77] $MaxNbOf{'HostsShown'}) &nbsp; - &nbsp; <a href=\""
 	  . (
@@ -15106,17 +14833,17 @@ sub HTMLMainHosts{
 	}
 	&HTMLShowHostInfo('__title__');
 	if ( $ShowHostsStats =~ /P/i ) {
-		print "<th class=\"color-p\" width=\"80\""
+		print "<th class=\"bg-p\" width=\"80\""
 		  . Tooltip(3)
 		  . ">$Message[56]</th>";
 	}
 	if ( $ShowHostsStats =~ /H/i ) {
-		print "<th class=\"color-h\" width=\"80\""
+		print "<th class=\"bg-h\" width=\"80\""
 		  . Tooltip(4)
 		  . ">$Message[57]</th>";
 	}
 	if ( $ShowHostsStats =~ /B/i ) {
-		print "<th class=\"color-k\" width=\"80\""
+		print "<th class=\"bg-k\" width=\"80\""
 		  . Tooltip(5)
 		  . ">$Message[75]</th>";
 	}
@@ -15213,7 +14940,7 @@ sub HTMLMainLogins{
 	my $NewLinkTarget = shift;
 	
 	if ($Debug) { debug( "ShowAuthenticatedUsers", 2 ); }
-	print "$Center<a name=\"logins\">&nbsp;</a><br />\n";
+	print "<a name=\"logins\">&nbsp;</a>";
 	my $title =
 "$Message[94] ($Message[77] $MaxNbOf{'LoginShown'}) &nbsp; - &nbsp; <a href=\""
 	  . (
@@ -15238,17 +14965,17 @@ sub HTMLMainLogins{
 	  . Format_Number(( scalar keys %_login_h )) . "</th>";
 	&HTMLShowUserInfo('__title__');
 	if ( $ShowAuthenticatedUsers =~ /P/i ) {
-		print "<th class=\"color-p\" width=\"80\""
+		print "<th class=\"bg-p\" width=\"80\""
 		  . Tooltip(3)
 		  . ">$Message[56]</th>";
 	}
 	if ( $ShowAuthenticatedUsers =~ /H/i ) {
-		print "<th class=\"color-h\" width=\"80\""
+		print "<th class=\"bg-h\" width=\"80\""
 		  . Tooltip(4)
 		  . ">$Message[57]</th>";
 	}
 	if ( $ShowAuthenticatedUsers =~ /B/i ) {
-		print "<th class=\"color-k\" width=\"80\""
+		print "<th class=\"bg-k\" width=\"80\""
 		  . Tooltip(5)
 		  . ">$Message[75]</th>";
 	}
@@ -15350,7 +15077,7 @@ sub HTMLMainRobots{
 	my $NewLinkTarget = shift;
 	
 	if ($Debug) { debug( "ShowRobotStats", 2 ); }
-	print "$Center<a name=\"robots\">&nbsp;</a><br />\n";
+	print "<a name=\"robots\">&nbsp;</a>";
 
 	my $title = "$Message[53] ($Message[77] $MaxNbOf{'RobotShown'}) &nbsp; - &nbsp; <a href=\""
 		  . (
@@ -15385,11 +15112,11 @@ sub HTMLMainRobots{
 	  . " $Message[51]*</th>";
 	if ( $ShowRobotsStats =~ /H/i ) {
 		print
-		  "<th class=\"color-h\" width=\"80\">$Message[57]</th>";
+		  "<th class=\"bg-h\" width=\"80\">$Message[57]</th>";
 	}
 	if ( $ShowRobotsStats =~ /B/i ) {
 		print
-		  "<th class=\"color-k\" width=\"80\">$Message[75]</th>";
+		  "<th class=\"bg-k\" width=\"80\">$Message[75]</th>";
 	}
 	if ( $ShowRobotsStats =~ /L/i ) {
 		print "<th width=\"120\">$Message[9]</th>";
@@ -15472,7 +15199,7 @@ sub HTMLMainRobots{
 #------------------------------------------------------------------------------
 sub HTMLMainWorms{
 	if ($Debug) { debug( "ShowWormsStats", 2 ); }
-	print "$Center<a name=\"worms\">&nbsp;</a><br />\n";
+	print "<a name=\"worms\">&nbsp;</a>";
 	&tab_head( "$Message[163] ($Message[77] $MaxNbOf{'WormsShown'})",
 		19, 0, 'worms' );
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\"" . Tooltip(21) . ">";
@@ -15480,11 +15207,11 @@ sub HTMLMainWorms{
 	print "<th>$Message[167]</th>";
 	if ( $ShowWormsStats =~ /H/i ) {
 		print
-		  "<th class=\"color-h\" width=\"80\">$Message[57]</th>";
+		  "<th class=\"bg-h\" width=\"80\">$Message[57]</th>";
 	}
 	if ( $ShowWormsStats =~ /B/i ) {
 		print
-		  "<th class=\"color-k\" width=\"80\">$Message[75]</th>";
+		  "<th class=\"bg-k\" width=\"80\">$Message[75]</th>";
 	}
 	if ( $ShowWormsStats =~ /L/i ) {
 		print "<th width=\"120\">$Message[9]</th>";
@@ -15564,7 +15291,7 @@ sub HTMLMainWorms{
 #------------------------------------------------------------------------------
 sub HTMLMainSessions{
 	if ($Debug) { debug( "ShowSessionsStats", 2 ); }
-	print "$Center<a name=\"sessions\">&nbsp;</a><br />\n";
+	print "<a name=\"sessions\">&nbsp;</a>";
 	my $title = "$Message[117]";
 	&tab_head( $title, 19, 0, 'sessions' );
 	my $Totals = 0;
@@ -15577,7 +15304,7 @@ sub HTMLMainSessions{
 	else { $average_s = '?'; }
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\""
 	  . Tooltip(1)
-	  . "><th>$Message[10]: ".Format_Number($TotalVisits)." - $Message[96]: ".Format_Number($average_s)." s</th><th class=\"color-s\" width=\"80\">$Message[10]</th><th class=\"color-s\" width=\"80\">$Message[15]</th></tr>\n";
+	  . "><th>$Message[10]: ".Format_Number($TotalVisits)." - $Message[96]: ".Format_Number($average_s)." s</th><th class=\"bg-s\" width=\"80\">$Message[10]</th><th class=\"bg-s\" width=\"80\">$Message[15]</th></tr>\n";
 	$average_s = 0;
 	my $total_s   = 0;
 	my $count = 0;
@@ -15630,7 +15357,7 @@ sub HTMLMainPages{
 	}
 	my $regext         = qr/\.(\w{1,6})$/;
 	print
-"$Center<a name=\"urls\">&nbsp;</a><a name=\"entry\">&nbsp;</a><a name=\"exit\">&nbsp;</a><br />\n";
+"<a name=\"urls\">&nbsp;</a><a name=\"entry\">&nbsp;</a><a name=\"exit\">&nbsp;</a>";
 	my $title =
 "$Message[19] ($Message[77] $MaxNbOf{'PageShown'}) &nbsp; - &nbsp; <a href=\""
 	  . (
@@ -15675,23 +15402,23 @@ sub HTMLMainPages{
 "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>".Format_Number($TotalDifferentPages)." $Message[28]</th>";
 	if ( $ShowPagesStats =~ /P/i && $LogType ne 'F' ) {
 		print
-		  "<th class=\"color-p\" width=\"80\">$Message[29]</th>";
+		  "<th class=\"bg-p\" width=\"80\">$Message[29]</th>";
 	}
 	if ( $ShowPagesStats =~ /[PH]/i && $LogType eq 'F' ) {
 		print
-		  "<th class=\"color-h\" width=\"80\">$Message[57]</th>";
+		  "<th class=\"bg-h\" width=\"80\">$Message[57]</th>";
 	}
 	if ( $ShowPagesStats =~ /B/i ) {
 		print
-		  "<th class=\"color-k\" width=\"80\">$Message[106]</th>";
+		  "<th class=\"bg-k\" width=\"80\">$Message[106]</th>";
 	}
 	if ( $ShowPagesStats =~ /E/i ) {
 		print
-		  "<th class=\"color-e\" width=\"80\">$Message[104]</th>";
+		  "<th class=\"bg-e\" width=\"80\">$Message[104]</th>";
 	}
 	if ( $ShowPagesStats =~ /X/i ) {
 		print
-		  "<th class=\"color-x\" width=\"80\">$Message[116]</th>";
+		  "<th class=\"bg-x\" width=\"80\">$Message[116]</th>";
 	}
 
 	# Call to plugins' function ShowPagesAddField
@@ -15863,7 +15590,7 @@ sub HTMLMainOS{
 	my $NewLinkTarget = shift;
 
 	if ($Debug) { debug( "ShowOSStats", 2 ); }
-	print "$Center<a name=\"os\">&nbsp;</a><br />\n";
+	print "<a name=\"os\">&nbsp;</a>";
 	my $Totalh   = 0;
 	my $Totalp   = 0;
 	my %new_os_h = ();
@@ -15954,9 +15681,9 @@ sub HTMLMainOS{
 	print
 "<tr bgcolor=\"#$color_TableBGRowTitle\"><th width=\"$WIDTHCOLICON\">&nbsp;</th><th>$Message[59]</th>";
 	print
-"<th class=\"color-p\" width=\"80\">$Message[56]</th><th class=\"color-p\" width=\"80\">$Message[15]</th>";
+"<th class=\"bg-p\" width=\"80\">$Message[56]</th><th class=\"bg-p\" width=\"80\">$Message[15]</th>";
 	print
-"<th class=\"color-h\" width=\"80\">$Message[57]</th><th class=\"color-h\" width=\"80\">$Message[15]</th></tr>\n";
+"<th class=\"bg-h\" width=\"80\">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th></tr>\n";
 	my $total_h = 0;
 	my $total_p = 0;
 	my $count = 0;
@@ -16031,7 +15758,7 @@ sub HTMLMainBrowsers{
 	my $NewLinkTarget = shift;
 	
 	if ($Debug) { debug( "ShowBrowsersStats", 2 ); }
-	print "$Center<a name=\"browsers\">&nbsp;</a><br />\n";
+	print "<a name=\"browsers\">&nbsp;</a>";
 	my $Totalh        = 0;
 	my $Totalp        = 0;
 	my %new_browser_h = ();
@@ -16122,7 +15849,7 @@ sub HTMLMainBrowsers{
 		}
 	}
 	print
-"<tr bgcolor=\"#$color_TableBGRowTitle\"><th width=\"$WIDTHCOLICON\">&nbsp;</th><th>$Message[21]</th><th width=\"80\">$Message[111]</th><th class=\"color-p\" width=\"80\">$Message[56]</th><th class=\"color-p\" width=\"80\">$Message[15]</th><th class=\"color-h\" width=\"80\">$Message[57]</th><th class=\"color-h\" width=\"80\">$Message[15]</th></tr>\n";
+"<tr bgcolor=\"#$color_TableBGRowTitle\"><th width=\"$WIDTHCOLICON\">&nbsp;</th><th>$Message[21]</th><th width=\"80\">$Message[111]</th><th class=\"bg-p\" width=\"80\">$Message[56]</th><th class=\"bg-p\" width=\"80\">$Message[15]</th><th class=\"bg-h\" width=\"80\">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th></tr>\n";
 	my $total_h = 0;
 	my $total_p = 0;
 	my $count = 0;
@@ -16204,14 +15931,14 @@ sub HTMLMainBrowsers{
 #------------------------------------------------------------------------------
 sub HTMLMainScreenSize{
 	if ($Debug) { debug( "ShowScreenSizeStats", 2 ); }
-	print "$Center<a name=\"screensizes\">&nbsp;</a><br />\n";
+	print "<a name=\"screensizes\">&nbsp;</a>";
 	my $Totalh = 0;
 	foreach ( keys %_screensize_h ) { $Totalh += $_screensize_h{$_}; }
 	my $title =
 	  "$Message[135] ($Message[77] $MaxNbOf{'ScreenSizesShown'})";
 	&tab_head( "$title", 0, 0, 'screensizes' );
 	print
-"<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$Message[135]</th><th class=\"color-h\" width=\"80\">$Message[15]</th></tr>\n";
+"<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$Message[135]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th></tr>\n";
 	my $total_h = 0;
 	my $count   = 0;
 	&BuildKeyList( $MaxNbOf{'ScreenSizesShown'},
@@ -16262,7 +15989,7 @@ sub HTMLMainReferrers{
 	my $NewLinkTarget = shift;
 	
 	if ($Debug) { debug( "ShowOriginStats", 2 ); }
-	print "$Center<a name=\"referer\">&nbsp;</a><br />\n";
+	print "<a name=\"referer\">&nbsp;</a>";
 	my $Totalp = 0;
 	foreach ( 0 .. 5 ) {
 		$Totalp +=
@@ -16312,11 +16039,11 @@ sub HTMLMainReferrers{
 	  "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$Message[37]</th>";
 	if ( $ShowOriginStats =~ /P/i ) {
 		print
-"<th class=\"color-p\" width=\"80\">$Message[56]</th><th class=\"color-p\" width=\"80\">$Message[15]</th>";
+"<th class=\"bg-p\" width=\"80\">$Message[56]</th><th class=\"bg-p\" width=\"80\">$Message[15]</th>";
 	}
 	if ( $ShowOriginStats =~ /H/i ) {
 		print
-"<th class=\"color-h\" width=\"80\">$Message[57]</th><th class=\"color-h\" width=\"80\">$Message[15]</th>";
+"<th class=\"bg-h\" width=\"80\">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th>";
 	}
 	print "</tr>\n";
 
@@ -16346,7 +16073,7 @@ sub HTMLMainReferrers{
 		? XMLEncode("$AWScript${NewLinkParams}output=refererse")
 		: "$StaticLinks.refererse.$StaticExt"
 	  )
-	  . "\"$NewLinkTarget>$Message[80]</a><br />\n";
+	  . "\"$NewLinkTarget>$Message[80]</a>";
 	if ( scalar keys %_se_referrals_h ) {
 		print "<table>\n";
 		my $total_p = 0;
@@ -16418,7 +16145,7 @@ sub HTMLMainReferrers{
 		? XMLEncode("$AWScript${NewLinkParams}output=refererpages")
 		: "$StaticLinks.refererpages.$StaticExt"
 	  )
-	  . "\"$NewLinkTarget>$Message[80]</a><br />\n";
+	  . "\"$NewLinkTarget>$Message[80]</a>";
 	if ( scalar keys %_pagesrefs_h ) {
 		print "<table>\n";
 		my $total_p = 0;
@@ -16540,12 +16267,12 @@ sub HTMLMainKeys{
 	my $NewLinkTarget = shift;
 	
 	if ($ShowKeyphrasesStats) {
-		print "$Center<a name=\"keyphrases\">&nbsp;</a>";
+		print "<a name=\"keyphrases\">&nbsp;</a>";
 	}
 	if ($ShowKeywordsStats) {
-		print "$Center<a name=\"keywords\">&nbsp;</a>";
+		print "<a name=\"keywords\">&nbsp;</a>";
 	}
-	if ( $ShowKeyphrasesStats || $ShowKeywordsStats ) { print "<br />\n"; }
+	
 	if ( $ShowKeyphrasesStats && $ShowKeywordsStats ) {
 		print
 		  "<table><tr>";
@@ -16572,7 +16299,7 @@ sub HTMLMainKeys{
 		);
 		print "<tr bgcolor=\"#$color_TableBGRowTitle\""
 		  . Tooltip(15)
-		  . "><th>$TotalDifferentKeyphrases $Message[103]</th><th class=\"color-s\" width=\"80\">$Message[14]</th><th class=\"color-s\" width=\"80\">$Message[15]</th></tr>\n";
+		  . "><th>$TotalDifferentKeyphrases $Message[103]</th><th class=\"bg-s\" width=\"80\">$Message[14]</th><th class=\"bg-s\" width=\"80\">$Message[15]</th></tr>\n";
 		my $total_s = 0;
 		my $count = 0;
 		&BuildKeyList( $MaxNbOf{'KeyphrasesShown'},
@@ -16643,7 +16370,7 @@ sub HTMLMainKeys{
 		);
 		print "<tr bgcolor=\"#$color_TableBGRowTitle\""
 		  . Tooltip(15)
-		  . "><th>$TotalDifferentKeywords $Message[13]</th><th class=\"color-s\" width=\"80\">$Message[14]</th><th class=\"color-s\" width=\"80\">$Message[15]</th></tr>\n";
+		  . "><th>$TotalDifferentKeywords $Message[13]</th><th class=\"bg-s\" width=\"80\">$Message[14]</th><th class=\"bg-s\" width=\"80\">$Message[15]</th></tr>\n";
 		my $total_s = 0;
 		my $count = 0;
 		&BuildKeyList( $MaxNbOf{'KeywordsShown'},
@@ -16702,7 +16429,7 @@ sub HTMLMainKeys{
 #------------------------------------------------------------------------------
 sub HTMLMainMisc{
 	if ($Debug) { debug( "ShowMiscStats", 2 ); }
-	print "$Center<a name=\"misc\">&nbsp;</a><br />\n";
+	print "<a name=\"misc\">&nbsp;</a>";
 	my $title = "$Message[139]";
 	&tab_head( "$title", 19, 0, 'misc' );
 	print
@@ -16771,7 +16498,7 @@ sub HTMLMainHTTPStatus{
 	my $NewLinkTarget = shift;
 	
 	if ($Debug) { debug( "ShowHTTPErrorsStats", 2 ); }
-	print "$Center<a name=\"errors\">&nbsp;</a><br />\n";
+	print "<a name=\"errors\">&nbsp;</a>";
 	my $title = "$Message[32]";
 	
     if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
@@ -16815,7 +16542,7 @@ sub HTMLMainHTTPStatus{
 	}
 	
 	print
-"<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[32]*</th><th class=\"color-h\" width=\"80\">$Message[57]</th><th class=\"color-h\" width=\"80\">$Message[15]</th><th class=\"color-k\" width=\"80\">$Message[75]</th></tr>\n";
+"<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[32]*</th><th class=\"bg-h\" width=\"80\">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th><th class=\"bg-k\" width=\"80\">$Message[75]</th></tr>\n";
 	my $total_h = 0;
 	my $count = 0;
 	foreach my $key (@keylist) {
@@ -16856,11 +16583,11 @@ sub HTMLMainSMTPStatus{
 	my $NewLinkTarget = shift;
 	
 	if ($Debug) { debug( "ShowSMTPErrorsStats", 2 ); }
-	print "$Center<a name=\"errors\">&nbsp;</a><br />\n";
+	print "<a name=\"errors\">&nbsp;</a>";
 	my $title = "$Message[147]";
 	&tab_head( "$title", 19, 0, 'errors' );
 	print
-"<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[147]</th><th class=\"color-h\" width=\"80\">$Message[57]</th><th class=\"color-h\" width=\"80\">$Message[15]</th><th class=\"color-k\" width=\"80\">$Message[75]</th></tr>\n";
+"<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[147]</th><th class=\"bg-h\" width=\"80\">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th><th class=\"bg-k\" width=\"80\">$Message[75]</th></tr>\n";
 	my $total_h = 0;
 	my $count = 0;
 	&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_errors_h, \%_errors_h );
@@ -16893,7 +16620,7 @@ sub HTMLMainCluster{
 	my $NewLinkTarget = shift;
 	
 	if ($Debug) { debug( "ShowClusterStats", 2 ); }
-	print "$Center<a name=\"clusters\">&nbsp;</a><br />\n";
+	print "<a name=\"clusters\">&nbsp;</a>";
 	my $title = "$Message[155]";
 	
     if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
@@ -16941,15 +16668,15 @@ sub HTMLMainCluster{
 	&HTMLShowClusterInfo('__title__');
 	if ( $ShowClusterStats =~ /P/i ) {
 		print
-"<th class=\"color-p\" width=\"80\">$Message[56]</th><th class=\"color-p\" width=\"80\">$Message[15]</th>";
+"<th class=\"bg-p\" width=\"80\">$Message[56]</th><th class=\"bg-p\" width=\"80\">$Message[15]</th>";
 	}
 	if ( $ShowClusterStats =~ /H/i ) {
 		print
-"<th class=\"color-h\" width=\"80\">$Message[57]</th><th class=\"color-h\" width=\"80\">$Message[15]</th>";
+"<th class=\"bg-h\" width=\"80\">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th>";
 	}
 	if ( $ShowClusterStats =~ /B/i ) {
 		print
-"<th class=\"color-k\" width=\"80\">$Message[75]</th><th class=\"color-k\" width=\"80\">$Message[15]</th>";
+"<th class=\"bg-k\" width=\"80\">$Message[75]</th><th class=\"bg-k\" width=\"80\">$Message[15]</th>";
 	}
 	print "</tr>\n";
 	my $total_p = my $total_h = my $total_k = 0;
@@ -17001,7 +16728,7 @@ sub HTMLMainExtra{
 	my $extranum = shift;
 	
 	if ($Debug) { debug( "ExtraName$extranum", 2 ); }
-	print "$Center<a name=\"extra$extranum\">&nbsp;</a><br />";
+	print "<a name=\"extra$extranum\">&nbsp;</a>";
 	my $title = $ExtraName[$extranum];
 	&tab_head( "$title", 19, 0, "extra$extranum" );
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\">";
@@ -17028,15 +16755,15 @@ sub HTMLMainExtra{
 
 	if ( $ExtraStatTypes[$extranum] =~ m/P/i ) {
 		print
-		  "<th class=\"color-p\" width=\"80\">$Message[56]</th>";
+		  "<th class=\"bg-p\" width=\"80\">$Message[56]</th>";
 	}
 	if ( $ExtraStatTypes[$extranum] =~ m/H/i ) {
 		print
-		  "<th class=\"color-h\" width=\"80\">$Message[57]</th>";
+		  "<th class=\"bg-h\" width=\"80\">$Message[57]</th>";
 	}
 	if ( $ExtraStatTypes[$extranum] =~ m/B/i ) {
 		print
-		  "<th class=\"color-k\" width=\"80\">$Message[75]</th>";
+		  "<th class=\"bg-k\" width=\"80\">$Message[75]</th>";
 	}
 	if ( $ExtraStatTypes[$extranum] =~ m/L/i ) {
 		print "<th width=\"120\">$Message[9]</th>";
@@ -21238,10 +20965,10 @@ if ( scalar keys %HTMLOutput ) {
 	{
 		# to add unique visitors & number of visits, by J Ruano @ CAPSiDE
 		if ( $ShowDomainsStats =~ /U/i ) {
-			print "<th class=\"color-u\" width=\"80\">$Message[11]</th>";
+			print "<th class=\"bg-u\" width=\"80\">$Message[11]</th>";
 		}
 		if ( $ShowDomainsStats =~ /V/i ) {
-			print "<th class=\"color-v\" width=\"80\">$Message[10]</th>";
+			print "<th class=\"bg-v\" width=\"80\">$Message[10]</th>";
 		}
 
 		my $function = "AddHTMLContentHeader_$pluginname";
@@ -21320,7 +21047,7 @@ if ( scalar keys %HTMLOutput ) {
 		
 		if ( $HTMLOutput{'info'} ) {
 			# TODO Not yet available
-			print "$Center<a name=\"info\">&nbsp;</a><br />";
+			print "<a name=\"info\">&nbsp;</a>";
 			&html_end(1);
 		}
 
@@ -21330,7 +21057,7 @@ if ( scalar keys %HTMLOutput ) {
 		foreach my $key ( keys %HTMLOutput ) { $htmloutput = $key; }
 		if ( $htmloutput =~ /^plugin_(\w+)$/ ) {
 			my $pluginname = $1;
-			print "$Center<a name=\"plugin_$pluginname\">&nbsp;</a><br />";
+			print "<a name=\"plugin_$pluginname\">&nbsp;</a>";
 			my $function = "AddHTMLGraph_$pluginname";
 			&$function();
 			&html_end(1);
