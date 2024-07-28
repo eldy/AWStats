@@ -13,38 +13,42 @@ $PERL="perl";
 
 @TESTLIST=(
 "testglobal",
-"testlogins",
-"testworms",
-"testipv6",
-"testdnsdone",
-"testextra",
-"testgeoip",
-"testgeoip_region_maxmind",
-"testgeoip_city_maxmind",
+"testsmall",
+"testnginx",
+"testtime5",
+#"testlogins",
+#"testworms",
+#"testipv6",
+#"testdnsdone",
+#"testextra",
+#"testgeoip",
+#"testgeoip_region_maxmind",
+#"testgeoip_city_maxmind",
 "testgeoip_isp_maxmind",
-"testgeoip_org_maxmind",
-"testrobot",
-"benchmark",
-"testmoddeflate","testmodgzip","testmodgzip2","testmodgzip3",
-"testurlwithquery",
-"testwindowsmediaserver","testwindowsmediaserver9","testrealmediaserver","testdarwinserver",
-"testsquidextended",
-"testisa1",
-"testisa2",
-"testlotus",
-"testlotus65",
-"testwebstar",
-"testzope",
-"testcluster",
-"testoracle9ias",
-"testproftp","testproftp2","testvsftpd",
-"testskipfiles",
-"testvirtualhosts",
-"testsendmail",
-"testpostfix",
-"testpostfix1",
-"testpostfix4",
-"testexchange");
+#"testgeoip_org_maxmind",
+#"testrobot",
+#"benchmark",
+#"testmoddeflate","testmodgzip","testmodgzip2","testmodgzip3",
+#"testurlwithquery",
+#"testwindowsmediaserver","testwindowsmediaserver9","testrealmediaserver","testdarwinserver",
+#"testsquidextended",
+#"testisa1",
+#"testisa2",
+#"testlotus",
+#"testlotus65",
+#"testwebstar",
+#"testzope",
+#"testcluster",
+#"testoracle9ias",
+#"testproftp","testproftp2","testvsftpd",
+#"testskipfiles",
+#"testvirtualhosts",
+#"testsendmail",
+#"testpostfix",
+#"testpostfix1",
+#"testpostfix4",
+#"testexchange"
+);
 
 #@TESTLIST=("testglobal","testsmall","testtime5");
 #@TESTLIST=("testlogins");
@@ -88,7 +92,7 @@ while(1==1)
 {
 	
 	print "Choose test to execute...\n";
-	sprintf("$02i %s",0,"All");
+	sprintf("$2i %s", 0, "All");
 	my $i=1;
 	foreach my $key (@TESTLIST) {
 	    print sprintf("%02i) %s\n",$i,$key);
@@ -106,7 +110,7 @@ while(1==1)
 	else { push @chosen, $TESTLIST[$bidon-1]; }
 	
 	# Option output
-	print "Choose output option (browserdetail, osdetail, ...)\n";
+	print "Choose output option ('', 'browserdetail', 'osdetail', ...)\n";
 	$bidon='';
 	print "Your choice : ";
 	$bidon=<STDIN>;
