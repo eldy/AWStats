@@ -950,6 +950,7 @@ nav { height: 17px; background-color: #F9F9F9; width:clamp(760px, 960px, 80%); }
 #summary-logs { max-width: 100%; text-align: center;  margin: auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; align-items: flex-start;}
 #summary-logs div { padding: 2px 4px }
 .summary-label { margin: 0 9px; }
+#summary-logs div[class^="bg-"], .data-table th, .currentday{ font-weight: 900 }
 button, select, input[type=submit] { cursor: pointer; color: var(--light-color); background-color: var(--dark-color); border: 1px solid #ccd7e0; }
 section header {border-bottom: 8px solid var(--light-color); width: 100%; text-align: center; font-weight: 900; font-size: 1.4rem; }
 .multi-data-table { display: flex; column-gap: 5dvw; flex-wrap: wrap; justify-content: center }
@@ -963,11 +964,10 @@ section header {border-bottom: 8px solid var(--light-color); width: 100%; text-a
 .data-table td:not(:first-child) { padding: 2px 0 }
 .data-table td div { padding: 3px 4px }
 .data-table td { text-align: right; font-weight: 700; }
-.data-table th, .data-table td:first-child:not(.country) { font-weight: 400 }
+.data-table td:first-child:not(.country) { font-weight: 400 }
 .data-table tfoot .data-table-sum td { border-top: 1px solid rgba(192,192,192,0.2); }
 .data-table-sum { font-size : 1.3em }
 .data-table .title { font-size: 2em }
-.currentday{ font-weight: 900 }
 .bar-table { margin: auto; text-align: center }
 .bar-table tr:first-child td { vertical-align: bottom; }
 .bar{  }
