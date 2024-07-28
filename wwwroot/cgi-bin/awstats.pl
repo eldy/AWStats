@@ -942,7 +942,7 @@ a, a:link, a:visited { color: var(--a-color); text-decoration: none; }
 a:hover, a:focus, a:active{ color: var(--a-hover-color); text-decoration: none; }
 b { font-weight: 700 }
 small { font-size: 0.9em }
-#container { width: clamp(760px, 960px, 80%); margin: auto; display: flex; flex-wrap: wrap; justify-content: center; row-gap: 25px; align-items: flex-start;}
+#container { width: clamp(760px, 960px, 85%); margin: auto; display: flex; flex-wrap: wrap; justify-content: center; row-gap: 25px; align-items: flex-start;}
 #container > header { display: flex; flex-wrap: wrap; column-gap: 20px; }
 #domain { font-weight: 900; font-size: 2.4em }
 header select { width : 60px }
@@ -968,14 +968,14 @@ section header {border-bottom: 8px solid var(--light-color); width: 100%; text-a
 .data-table-sum { font-size : 1.3em }
 .data-table .title { font-size: 2em }
 .currentday{ font-weight: 900 }
-.bar-table { text-align: center }
+.bar-table { margin: auto; text-align: center }
 .bar-table tr:first-child td { vertical-align: bottom; }
 .bar{  }
 .bar-horizontal{ height: 4px }
 .bar-vertical{ display: inline-block; width: 4px; }
 .clock{ display: inline-block; vertical-align: bottom; height: 16px; width: 16px; margin: 0 5px; border-radius: 50%; }
 .hr-1{ rotate: 30deg } .hr-2{ rotate: 60deg } .hr-3{ rotate: 90deg } .hr-4{ rotate: 120deg } .hr-5{ rotate: 150deg } .hr-6{ rotate: 180deg } .hr-7{ rotate: 210deg } .hr-8{ rotate: 240deg } .hr-9{ rotate: 270deg } .hr-10{ rotate: 300deg } .hr-11{ rotate: 330deg }
-#worldmap{ width: 100%; margin-top: 1dvh; background-color: #4477DD; }
+#worldmap{ width: 100%; margin-bottom: 1dvh; background-color: #4477DD; border-radius: 225px; overflow: auto; }
 .title-map{ position:absolute; top: 16px; color: var(--light-color); }
 .country { text-transform: uppercase; font-weight: 700; }
 /* colors */
