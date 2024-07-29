@@ -10933,7 +10933,7 @@ sub HTMLMainFileType{
 		
 	&tab_head($title, $subtitle, 'filetypes', 19);
 		
-	print '<table>';
+	print '<table class="data-table">';
 
 	# Graph the top five in a pie chart
 	if (scalar @keylist > 1){
@@ -11136,7 +11136,7 @@ sub HTMLMainFileSize{
   if ($Totals) { $average_s = int($average_s / $Totals); }
   else { $average_s = '?'; }
 
-  print '<table>'
+  print '<table class="data-table">'
   . "<tr bgcolor=\"#$color_TableBGRowTitle\"".Tooltip(1)."><th>$Message[182]: $number_of_requests - $Message[183]: $periodo $Message[184] - $Message[185]: ".sprintf ("%.6f",$request_frequency_average)."</th><th class=\"bg-s\" width=\"80\">$Message[181]</th><th class=\"bg-s\" width=\"80\">$Message[57]</th><th class=\"bg-s\" width=\"80\">$Message[15]</th></tr>\n";
   my $total_s = 0;
   my $count = 0;
@@ -11226,7 +11226,7 @@ sub HTMLMainRequestTime{
   if ($Totals) { $average_s = int($average_s / $Totals); }
   else { $average_s = '?'; }
 
-  print '<table>'
+  print '<table class="data-table">'
   . "<tr bgcolor=\"#$color_TableBGRowTitle\"".Tooltip(1)."><th>$Message[182]: $number_of_requests - $Message[183]: $periodo $Message[184] - $Message[185]: ".sprintf ("%.6f",$request_frequency_average)."</th><th class=\"bg-s\" width=\"80\">$Message[181]</th><th class=\"bg-s\" width=\"80\">$Message[57]</th><th class=\"bg-s\" width=\"80\">$Message[15]</th></tr>\n";
   my $total_s = 0;
   my $count = 0;
@@ -14298,7 +14298,7 @@ sub HTMLMainDownloads{
 		if ($cnt > 4){last;}
 	}
 
-	print '<table>';
+	print '<table class="data-table">';
 
 	# Graph the top five in a pie chart
 	if (($Totalh > 0) and (scalar keys %_downloads > 1)){
@@ -14799,7 +14799,7 @@ sub HTMLMainHosts{
 	
 	&BuildKeyList( $MaxNbOf{'HostsShown'}, $MinHit{'Host'}, \%_host_h, \%_host_p );
 		
-	print '<table>';
+	print '<table class="data-table">';
 
 	# Graph the top five in a pie chart
 	if (scalar @keylist > 1)
@@ -15091,7 +15091,7 @@ sub HTMLMainRobots{
         
   &tab_head($title, $subtitle, 'robots',  19);
         
-  print '<table>'
+  print '<table class="data-table">'
   . "<tr bgcolor=\"#$color_TableBGRowTitle\""
 	. Tooltip(16) . "><th>"
 	. Format_Number(( scalar keys %_robot_h ))
@@ -15166,7 +15166,7 @@ sub HTMLMainWorms{
 	# print "<a name=\"worms\">&nbsp;</a>";
 	&tab_head( $Message[163] . ' (' . $Message[77] . $MaxNbOf{'WormsShown'} . ')', '', 'worms', 19 );
 
-  print '<table>'
+  print '<table class="data-table">'
 	. "<tr bgcolor=\"#$color_TableBGRowTitle\"" . Tooltip(21) . ">"
 	. "<th>" . Format_Number(( scalar keys %_worm_h )) . " $Message[164]*</th>"
 	. "<th>$Message[167]</th>";
@@ -15272,7 +15272,7 @@ sub HTMLMainSessions{
 	if ($Totals) { $average_s = int( $average_s / $Totals ); }
 	else { $average_s = '?'; }
 
-	print '<table>'
+	print '<table class="data-table">'
 	. "<tr bgcolor=\"#$color_TableBGRowTitle\"" . Tooltip(1) . ">"
 	. "<th>$Message[10]: ".Format_Number($TotalVisits)." - $Message[96]: ".Format_Number($average_s)." s</th><th class=\"bg-s\" width=\"80\">$Message[10]</th><th class=\"bg-s\" width=\"80\">$Message[15]</th></tr>\n";
 	$average_s = 0;
@@ -15322,76 +15322,56 @@ sub HTMLMainPages{
 	my $NewLinkParams = shift;
 	my $NewLinkTarget = shift;
 	
-	if ($Debug) {
-		debug(
-"ShowPagesStats (MaxNbOf{'PageShown'}=$MaxNbOf{'PageShown'} TotalDifferentPages=$TotalDifferentPages)",
-			2
-		);
-	}
+	if ($Debug) {debug("ShowPagesStats (MaxNbOf{'PageShown'}=$MaxNbOf{'PageShown'} TotalDifferentPages=$TotalDifferentPages)",	2);}
 	my $regext         = qr/\.(\w{1,6})$/;
-	print
-"<a name=\"urls\">&nbsp;</a><a name=\"entry\">&nbsp;</a><a name=\"exit\">&nbsp;</a>";
-	my $title =
-"$Message[19] ($Message[77] $MaxNbOf{'PageShown'}) &nbsp; - &nbsp; <a href=\""
-	  . (
-		$ENV{'GATEWAY_INTERFACE'}
-		  || !$StaticLinks
-		? XMLEncode("$AWScript${NewLinkParams}output=urldetail")
-		: "$StaticLinks.urldetail.$StaticExt"
-	  )
-	  . "\"$NewLinkTarget>$Message[80]</a>";
-	if ( $ShowPagesStats =~ /E/i ) {
-		$title .= " &nbsp; - &nbsp; <a href=\""
-		  . (
-			$ENV{'GATEWAY_INTERFACE'}
-			  || !$StaticLinks
-			? XMLEncode("$AWScript${NewLinkParams}output=urlentry")
-			: "$StaticLinks.urlentry.$StaticExt"
-		  )
-		  . "\"$NewLinkTarget>$Message[104]</a>";
+	# print "<a name=\"urls\">&nbsp;</a><a name=\"entry\">&nbsp;</a><a name=\"exit\">&nbsp;</a>";
+	
+	my $title = $Message[19] . ' (' . $Message[77] . ' ' . $MaxNbOf{'PageShown'} . ')';
+
+	my $link = XMLEncode($AWScript . ${NewLinkParams});
+	my $subtitle = '<a href="'
+	. (($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ? $link . 'output=urldetail' : $StaticLinks . '.urldetail.' . $StaticExt)
+	. '" ' . $NewLinkTarget . '>' . $Message[80] . '</a>';
+
+	if ( $ShowPagesStats =~ /E/i )
+	{
+		$subtitle .= ' - <a href="'
+		  . (($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ? $link . 'output=urlentry' : $StaticLinks . '.urlentry.' . $StaticExt)
+		  . '" ' . $NewLinkTarget . '>' . $Message[104] . '</a>';
 	}
-	if ( $ShowPagesStats =~ /X/i ) {
-		$title .= " &nbsp; - &nbsp; <a href=\""
-		  . (
-			$ENV{'GATEWAY_INTERFACE'}
-			  || !$StaticLinks
-			? XMLEncode("$AWScript${NewLinkParams}output=urlexit")
-			: "$StaticLinks.urlexit.$StaticExt"
-		  )
+
+	if ( $ShowPagesStats =~ /X/i )
+	{
+		$subtitle .= ' - <a href="'
+		  . (($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ? $link . 'output=urlexit' : $StaticLinks . '.urlexit.' . $StaticExt)
 		  . "\"$NewLinkTarget>$Message[116]</a>";
 	}
 	
-    if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
-       # extend the title to include the added link
-           $title .= " &nbsp; - &nbsp; <a href=\"" . (XMLEncode(
-               "$AddLinkToExternalCGIWrapper" . "?section=SIDER&baseName=$DirData/$PROG"
-           . "&month=$MonthRequired&year=$YearRequired&day=$DayRequired"
-           . "&siteConfig=$SiteConfig" )
-           . "\"$NewLinkTarget>$Message[179]</a>");
-    }
+  if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
+  { # extend the title to include the added link
+    $subtitle .= ' - <a href="'
+    . XMLEncode($AddLinkToExternalCGIWrapper . '?section=SIDER&baseName=' . $DirData . '/' . $PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig)
+    . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>';
+  }
         	
-	&tab_head( "$title", 19, 0, 'urls' );
-	print
-"<tr bgcolor=\"#$color_TableBGRowTitle\"><th>".Format_Number($TotalDifferentPages)." $Message[28]</th>";
+	&tab_head($title, $subtitle, 'urls', 19);
+
+	print '<table>'
+	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>".Format_Number($TotalDifferentPages)." $Message[28]</th>";
 	if ( $ShowPagesStats =~ /P/i && $LogType ne 'F' ) {
-		print
-		  "<th class=\"bg-p\" width=\"80\">$Message[29]</th>";
+		print "<th class=\"bg-p\" width=\"80\">$Message[29]</th>";
 	}
 	if ( $ShowPagesStats =~ /[PH]/i && $LogType eq 'F' ) {
-		print
-		  "<th class=\"bg-h\" width=\"80\">$Message[57]</th>";
+		print "<th class=\"bg-h\" width=\"80\">$Message[57]</th>";
 	}
 	if ( $ShowPagesStats =~ /B/i ) {
-		print
-		  "<th class=\"bg-k\" width=\"80\">$Message[106]</th>";
+		print "<th class=\"bg-k\" width=\"80\">$Message[106]</th>";
 	}
 	if ( $ShowPagesStats =~ /E/i ) {
-		print
-		  "<th class=\"bg-e\" width=\"80\">$Message[104]</th>";
+		print "<th class=\"bg-e\" width=\"80\">$Message[104]</th>";
 	}
 	if ( $ShowPagesStats =~ /X/i ) {
-		print
-		  "<th class=\"bg-x\" width=\"80\">$Message[116]</th>";
+		print "<th class=\"bg-x\" width=\"80\">$Message[116]</th>";
 	}
 
 	# Call to plugins' function ShowPagesAddField
@@ -15602,7 +15582,7 @@ sub HTMLMainOS{
 	&BuildKeyList( $MaxNbOf{'OsShown'}, $MinHit{'Os'}, \%new_os_h,
 		\%new_os_p );
 		
-	print '<table>';
+	print '<table class="data-table">';
 
 	# Graph the top five in a pie chart
 	if (scalar @keylist > 1){
@@ -15762,7 +15742,7 @@ sub HTMLMainBrowsers{
 		\%new_browser_h,           \%new_browser_p
 	);
 	
-	print '<table>';
+	print '<table class="data-table" class="data-table">';
 
 	# Graph the top five in a pie chart
 	if (scalar @keylist > 1){
@@ -15896,7 +15876,7 @@ sub HTMLMainScreenSize{
 
 	&tab_head($title, '', 'screensizes');
 	
-	print '<table>'
+	print '<table class="data-table">'
 	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$Message[135]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th></tr>\n";
 	my $total_h = 0;
 	my $count   = 0;
@@ -15993,7 +15973,7 @@ sub HTMLMainReferrers{
 		$p_h[4] = int( $_from_h[4] / $Totalh * 1000 ) / 10;
 		$p_h[5] = int( $_from_h[5] / $Totalh * 1000 ) / 10;
 	}
-	print '<table>'
+	print '<table class="data-table">'
 	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$Message[37]</th>";
 	if ( $ShowOriginStats =~ /P/i ) {
 		print "<th class=\"bg-p\" width=\"80\">$Message[56]</th><th class=\"bg-p\" width=\"80\">$Message[15]</th>";
@@ -16242,7 +16222,7 @@ sub HTMLMainKeys{
 
 		&tab_head($title, $subtitle, 'keyphrases', 19, ( $ShowKeyphrasesStats && $ShowKeywordsStats ) ? 95 : 70);
 		
-		print '<table>'
+		print '<table class="data-table">'
 		. "<tr bgcolor=\"#$color_TableBGRowTitle\""
 		. Tooltip(15)
 		. "><th>$TotalDifferentKeyphrases $Message[103]</th><th class=\"bg-s\" width=\"80\">$Message[14]</th><th class=\"bg-s\" width=\"80\">$Message[15]</th></tr>\n";
@@ -16302,7 +16282,7 @@ sub HTMLMainKeys{
 		
 		&tab_head($title , $subtitle, 'keywords', 19);
 
-		print '<table>'
+		print '<table class="data-table">'
 		. "<tr bgcolor=\"#$color_TableBGRowTitle\""
 		. Tooltip(15)
 		. "><th>$TotalDifferentKeywords $Message[13]</th><th class=\"bg-s\" width=\"80\">$Message[14]</th><th class=\"bg-s\" width=\"80\">$Message[15]</th></tr>\n";
@@ -16367,7 +16347,7 @@ sub HTMLMainMisc{
 
 	&tab_head($title, '', 'misc', 19);
 	
-	print '<table>'
+	print '<table class="data-table">'
 	. '<tr bgcolor="#' . $color_TableBGRowTitle . '"><th>' . $Message[139] . '</th>'
 	. '<th>&nbsp;</th>'
 	. '<th>&nbsp;</th>'
@@ -16453,7 +16433,7 @@ sub HTMLMainHTTPStatus{
 	&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_errors_h, \%_errors_h );
 
 
-	print '<table>';
+	print '<table class="data-table">';
 
 	# Graph the top five in a pie chart
 	if (scalar @keylist > 1){
