@@ -65,9 +65,9 @@ sub AddHTMLStyles_tooltips {
 
 
 #-----------------------------------------------------------------------------
-# PLUGIN FUNCTION: AddHTMLJavascript_pluginname
+# PLUGIN FUNCTION: getTooltip_pluginname
 # UNIQUE: NO (Several plugins using this function can be loaded)
-# Function called to Add Javascript at beginning of BODY section.
+# Function called to get the tooltip by number.
 #-----------------------------------------------------------------------------
 sub getTooltip_tooltips {
 	# <-----
@@ -77,10 +77,10 @@ sub getTooltip_tooltips {
 }
 
 #------------------------------------------------------------------------------
-# Function:     Get the tooltip texts for a specified language and write it
+# Function:     Get the tooltip texts for a specified language and set it global
 # Parameters:	LanguageId
 # Input:		$DirLang $DIR
-# Output:		Full tooltips text
+# Output:		None
 # Return:		None
 #------------------------------------------------------------------------------
 sub _ReadAndOutputTooltipFile {
