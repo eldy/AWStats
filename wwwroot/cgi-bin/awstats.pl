@@ -10001,14 +10001,13 @@ sub HTMLShowEmailSendersChart {
 	#&ShowFormFilter("emailsfilter",$EmailsFilter);
 	# Show emails list
 
-	print "<a name=\"emailsenders\">&nbsp;</a>";
-	my $title;
-	if ( $HTMLOutput{'allemails'} || $HTMLOutput{'lastemails'} ) {
-		$title = "$Message[131]";
-	}
-	else {
-		$title =
-"$Message[131] ($Message[77] $MaxNbOf{'EMailsShown'}) &nbsp; - &nbsp; <a href=\""
+	# print "<a name=\"emailsenders\">&nbsp;</a>";
+	my $title = $Message[131];
+	my $subtitle = '';
+
+	if ( !($HTMLOutput{'allemails'} || $HTMLOutput{'lastemails'}) )
+	{
+		$subtitle .= "($Message[77] $MaxNbOf{'EMailsShown'}) &nbsp; - &nbsp; <a href=\""
 		  . (
 			$ENV{'GATEWAY_INTERFACE'}
 			  || !$StaticLinks
@@ -10017,7 +10016,7 @@ sub HTMLShowEmailSendersChart {
 		  )
 		  . "\"$NewLinkTarget>$Message[80]</a>";
 		if ( $ShowEMailSenders =~ /L/i ) {
-			$title .= " &nbsp; - &nbsp; <a href=\""
+			$subtitle .= " &nbsp; - &nbsp; <a href=\""
 			  . (
 				$ENV{'GATEWAY_INTERFACE'}
 				  || !$StaticLinks
@@ -10027,10 +10026,18 @@ sub HTMLShowEmailSendersChart {
 			  . "\"$NewLinkTarget>$Message[9]</a>";
 		}
 	}
-	print &tab_head( "$title", 19, 0, 'emailsenders' );
-	print
-"<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"3\">$Message[131] : "
-	  . ( scalar keys %_emails_h ) . "</th>";
+
+	my $tooltip = '';
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
+	{
+		my $function = "getTooltip_$pluginname";
+		$tooltip .= &$function(19);
+	}
+		
+	print &tab_head($title, $subtitle, 'emailsenders', $tooltip )
+	. '<table>'
+	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"3\">$Message[131] : "
+	. ( scalar keys %_emails_h ) . "</th>";
 	if ( $ShowEMailSenders =~ /H/i ) {
 		print "<th rowspan=\"2\" class=\"bg-h\" width=\"80\""
 		  . Tooltip(4)
@@ -10169,14 +10176,12 @@ sub HTMLShowEmailReceiversChart {
 	#&ShowFormFilter("emailrfilter",$EmailrFilter);
 	# Show emails list
 
-	print "<a name=\"emailreceivers\">&nbsp;</a>";
-	my $title;
-	if ( $HTMLOutput{'allemailr'} || $HTMLOutput{'lastemailr'} ) {
-		$title = "$Message[132]";
-	}
-	else {
-		$title =
-"$Message[132] ($Message[77] $MaxNbOf{'EMailsShown'}) &nbsp; - &nbsp; <a href=\""
+	# print "<a name=\"emailreceivers\">&nbsp;</a>";
+	my $title = $Message[132];
+	my $subtitle = '';
+	if ( !($HTMLOutput{'allemailr'} || $HTMLOutput{'lastemailr'}) )
+	{
+		$subtitle = "($Message[77] $MaxNbOf{'EMailsShown'}) &nbsp; - &nbsp; <a href=\""
 		  . (
 			$ENV{'GATEWAY_INTERFACE'}
 			  || !$StaticLinks
@@ -10185,7 +10190,7 @@ sub HTMLShowEmailReceiversChart {
 		  )
 		  . "\"$NewLinkTarget>$Message[80]</a>";
 		if ( $ShowEMailReceivers =~ /L/i ) {
-			$title .= " &nbsp; - &nbsp; <a href=\""
+			$subtitle .= " &nbsp; - &nbsp; <a href=\""
 			  . (
 				$ENV{'GATEWAY_INTERFACE'}
 				  || !$StaticLinks
@@ -10195,10 +10200,18 @@ sub HTMLShowEmailReceiversChart {
 			  . "\"$NewLinkTarget>$Message[9]</a>";
 		}
 	}
-	print &tab_head( "$title", 19, 0, 'emailreceivers' );
-	print
-"<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"3\">$Message[132] : "
-	  . ( scalar keys %_emailr_h ) . "</th>";
+
+	my $tooltip = '';
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
+	{
+		my $function = "getTooltip_$pluginname";
+		$tooltip .= &$function(19);
+	}
+		
+	print &tab_head($title, $subtitle, 'emailreceivers', $tooltip )
+	. '<table>'
+	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"3\">$Message[132] : "
+	. ( scalar keys %_emailr_h ) . "</th>";
 	if ( $ShowEMailReceivers =~ /H/i ) {
 		print "<th rowspan=\"2\" class=\"bg-h\" width=\"80\""
 		  . Tooltip(4)
@@ -10970,9 +10983,8 @@ sub HTMLMainFileType{
 		$tooltip .= &$function(19);
 	}
 
-	print &tab_head($title, $subtitle, 'filetypes', $tooltip);
-		
-	print '<table class="data-table">';
+	print &tab_head($title, $subtitle, 'filetypes', $tooltip)
+	. '<table class="data-table">';
 
 	# Graph the top five in a pie chart
 	if (scalar @keylist > 1){
@@ -11326,16 +11338,13 @@ sub HTMLShowBrowserDetail{
 		$tooltip .= &$function(19);
 	}
 
-	print &tab_head($title, '', 'browsersversions', $tooltip);
-	
-	print
-"<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[58]</th>";
-	print
-"<th width=\"80\">$Message[111]</th><th class=\"bg-p\" width=\"80\">$Message[56]</th><th class=\"bg-p\" width=\"80\">$Message[15]</th>";
-	print
-"<th class=\"bg-h\" width=\"80\">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th>";
-	print "<th>&nbsp;</th>";
-	print "</tr>\n";
+	print &tab_head($title, '', 'browsersversions', $tooltip)
+	. '<table>'
+	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[58]</th>"
+	. "<th width=\"80\">$Message[111]</th><th class=\"bg-p\" width=\"80\">$Message[56]</th><th class=\"bg-p\" width=\"80\">$Message[15]</th>"
+	. "<th class=\"bg-h\" width=\"80\">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th>"
+	. "<th>&nbsp;</th>"
+	. "</tr>\n";
 	my $total_h = 0;
 	my $total_p = 0;
 	my $count = 0;
@@ -11591,10 +11600,11 @@ sub HTMLShowBrowserUnknown{
            . "&siteConfig=$SiteConfig" )
            . "\"$NewLinkTarget>$Message[179]</a>");
     } 
-	print &tab_head( "$title", 19, 0, 'unknownbrowser' );
-	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>User agent ("
-	  . ( scalar keys %_unknownrefererbrowser_l )
-	  . ")</th><th>$Message[9]</th></tr>\n";
+	print &tab_head( "$title", 19, 0, 'unknownbrowser' )
+	. '<table>'
+	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>User agent ("
+	. ( scalar keys %_unknownrefererbrowser_l )
+	. ")</th><th>$Message[9]</th></tr>\n";
 	my $total_l = 0;
 	my $count = 0;
 	&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_unknownrefererbrowser_l,
@@ -11632,14 +11642,12 @@ sub HTMLShowOSDetail{
 	# Show os versions
 	print "<a name=\"osversions\">&nbsp;</a>";
 	my $title = "$Message[59]";
-	print &tab_head( "$title", 19, 0, 'osversions' );
-	print
-"<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[58]</th>";
-	print
-"<th class=\"bg-p\" width=\"80\">$Message[56]</th><th class=\"bg-p\" width=\"80\">$Message[15]</th>";
-	print
-"<th class=\"bg-h\" width=\"80\">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th>";
-	print "</tr>\n";
+	print &tab_head( "$title", 19, 0, 'osversions' )
+	. '<table>'
+	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[58]</th>"
+	. "<th class=\"bg-p\" width=\"80\">$Message[56]</th><th class=\"bg-p\" width=\"80\">$Message[15]</th>"
+	. "<th class=\"bg-h\" width=\"80\">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th>"
+	. "</tr>\n";
 	my $total_h = 0;
 	my $total_p = 0;
 	my $count = 0;
@@ -11865,8 +11873,9 @@ sub HTMLShowOSUnknown{
            . "&siteConfig=$SiteConfig" )
            . "\"$NewLinkTarget>$Message[179]</a>");
     } 
-    print &tab_head( "$title", 19, 0, 'unknownos' );
-	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>User agent ("
+    print &tab_head( "$title", 19, 0, 'unknownos' )
+    . '<table>'
+    . "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>User agent ("
 	  . ( scalar keys %_unknownreferer_l )
 	  . ")</th><th>$Message[9]</th></tr>\n";
 	my $total_l = 0;
@@ -11914,14 +11923,12 @@ sub HTMLShowReferers{
            . "&siteConfig=$SiteConfig" )
            . "\"$NewLinkTarget>$Message[179]</a>");
     } 
-    print &tab_head( $title, 19, 0, 'refererse' );
-	print
-"<tr bgcolor=\"#$color_TableBGRowTitle\"><th>".Format_Number($TotalDifferentSearchEngines)." $Message[122]</th>";
-	print
-"<th class=\"bg-p\" width=\"80\">$Message[56]</th><th class=\"bg-p\" width=\"80\">$Message[15]</th>";
-	print
-"<th class=\"bg-h\" width=\"80\">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th>";
-	print "</tr>\n";
+    print &tab_head( $title, 19, 0, 'refererse' )
+    . '<table>'
+    . "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>".Format_Number($TotalDifferentSearchEngines)." $Message[122]</th>"
+    . "<th class=\"bg-p\" width=\"80\">$Message[56]</th><th class=\"bg-p\" width=\"80\">$Message[15]</th>"
+    . "<th class=\"bg-h\" width=\"80\">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th>"
+    . "</tr>\n";
 	my $total_s = 0;
 	my $total_p = 0;
 	my $total_h = 0;
@@ -12031,8 +12038,9 @@ sub HTMLShowRefererPages{
     }
     my $cpt   = 0;
 	$cpt = ( scalar keys %_pagesrefs_h );
-	print &tab_head( "$title", 19, 0, 'refererpages' );
-	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>";
+	print &tab_head( "$title", 19, 0, 'refererpages' )
+	. '<table>'
+	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>";
 	if ( $FilterIn{'refererpages'} || $FilterEx{'refererpages'} ) {
 
 		if ( $FilterIn{'refererpages'} ) {
@@ -12158,10 +12166,11 @@ sub HTMLShowKeyPhrases{
            . "&siteConfig=$SiteConfig" )
            . "\"$NewLinkTarget>$Message[179]</a>");
     } 
-	print &tab_head( $title, 19, 0, 'keyphrases' );
-	print "<tr bgcolor=\"#$color_TableBGRowTitle\""
-	  . Tooltip(15)
-	  . "><th>".Format_Number($TotalDifferentKeyphrases)." $Message[103]</th><th class=\"bg-s\" width=\"80\">$Message[14]</th><th class=\"bg-s\" width=\"80\">$Message[15]</th></tr>\n";
+	print &tab_head( $title, 19, 0, 'keyphrases' )
+	. '<table>'
+	. "<tr bgcolor=\"#$color_TableBGRowTitle\""
+	. Tooltip(15)
+	. "><th>".Format_Number($TotalDifferentKeyphrases)." $Message[103]</th><th class=\"bg-s\" width=\"80\">$Message[14]</th><th class=\"bg-s\" width=\"80\">$Message[15]</th></tr>\n";
 	my $total_s = 0;
 	my $count = 0;
 	&BuildKeyList(
@@ -12228,10 +12237,11 @@ sub HTMLShowKeywords{
            . "&siteConfig=$SiteConfig" )
            . "\"$NewLinkTarget>$Message[179]</a>");
     } 
-	print &tab_head( $title, 19, 0, 'keywords' );
-	print "<tr bgcolor=\"#$color_TableBGRowTitle\""
-	  . Tooltip(15)
-	  . "><th>".Format_Number($TotalDifferentKeywords)." $Message[13]</th><th class=\"bg-s\" width=\"80\">$Message[14]</th><th class=\"bg-s\" width=\"80\">$Message[15]</th></tr>\n";
+	print &tab_head( $title, 19, 0, 'keywords' )
+	. '<table>'
+	. "<tr bgcolor=\"#$color_TableBGRowTitle\""
+	. Tooltip(15)
+	. "><th>".Format_Number($TotalDifferentKeywords)." $Message[13]</th><th class=\"bg-s\" width=\"80\">$Message[14]</th><th class=\"bg-s\" width=\"80\">$Message[15]</th></tr>\n";
 	my $total_s = 0;
 	my $count = 0;
 	&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Keyword'},
@@ -12290,11 +12300,12 @@ sub HTMLShowErrorCodes{
 	$title = $customtitles{$code} ? $customtitles{$code} :
 	           (join(' ', ( ($httpcodelib{$code} ? $httpcodelib{$code} :
 	           'Unknown error'), "urls (HTTP code " . $code . ")" )));
-	print "<a name=\"errors$code\">&nbsp;</a>";
-	print &tab_head( $title, 19, 0, "errors$code" );
-	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>URL ("
-	  . Format_Number(( scalar keys %{$_sider_h{$code}} ))
-	  . ")</th><th class=\"bg-h\">$Message[49]</th>";
+	# print "<a name=\"errors$code\">&nbsp;</a>";
+	print &tab_head( $title, 19, 0, "errors$code" )
+	. '<table>'
+	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>URL ("
+	. Format_Number(( scalar keys %{$_sider_h{$code}} ))
+	. ")</th><th class=\"bg-h\">$Message[49]</th>";
 	foreach (split(//, $ShowHTTPErrorsPageDetail)) {
 		if ( $_ =~ /R/i ) {
 			print "<th class=\"bg-p\" width=\"80\">$Message[23]</th>";
@@ -12359,11 +12370,12 @@ sub HTMLShowExtraSections{
 		
 		if ( $HTMLOutput{"allextra$extranum"} ) {
 			if ($Debug) { debug( "ExtraName$extranum", 2 ); }
-			print "<a name=\"extra$extranum\">&nbsp;</a>";
+			# print "<a name=\"extra$extranum\">&nbsp;</a>";
 			my $title = $ExtraName[$extranum];
-			print &tab_head( "$title", 19, 0, "extra$extranum" );
-			print "<tr bgcolor=\"#$color_TableBGRowTitle\">";
-			print "<th>" . $ExtraFirstColumnTitle[$extranum] . "</th>";
+			print &tab_head( "$title", 19, 0, "extra$extranum" )
+			. '<table>'
+			. "<tr bgcolor=\"#$color_TableBGRowTitle\">"
+			. "<th>" . $ExtraFirstColumnTitle[$extranum] . "</th>";
 
 			if ( $ExtraStatTypes[$extranum] =~ m/P/i ) {
 				print
@@ -12530,10 +12542,11 @@ sub HTMLShowRobots{
 	my $title = '';
 	if ( $HTMLOutput{'allrobots'} )  { $title .= "$Message[53]"; }
 	if ( $HTMLOutput{'lastrobots'} ) { $title .= "$Message[9]"; }
-	print &tab_head( "$title", 19, 0, 'robots' );
-	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>"
-	  . Format_Number(( scalar keys %_robot_h ))
-	  . " $Message[51]</th>";
+	print &tab_head( "$title", 19, 0, 'robots' )
+	. '<table>'
+	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>"
+	. Format_Number(( scalar keys %_robot_h ))
+	. " $Message[51]</th>";
 	if ( $ShowRobotsStats =~ /H/i ) {
 		print
 		  "<th class=\"bg-h\" width=\"80\">$Message[57]</th>";
@@ -12662,8 +12675,9 @@ sub HTMLShowURLDetail{
 		$title = $Message[116];
 		$cpt   = ( scalar keys %_url_x );
 	}
-	print &tab_head( "$title", 19, 0, 'urls' );
-	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>";
+	print &tab_head( "$title", 19, 0, 'urls' )
+	. '<table>'
+	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>";
 	if ( $FilterIn{'url'} || $FilterEx{'url'} ) {
 		if ( $FilterIn{'url'} ) {
 			print "$Message[79] <b>$FilterIn{'url'}</b>";
@@ -12882,9 +12896,10 @@ sub HTMLShowLogins{
 	my $title = '';
 	if ( $HTMLOutput{'alllogins'} )  { $title .= "$Message[94]"; }
 	if ( $HTMLOutput{'lastlogins'} ) { $title .= "$Message[9]"; }
-	print &tab_head( "$title", 19, 0, 'logins' );
-	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$Message[94] : "
-	  . Format_Number(( scalar keys %_login_h )) . "</th>";
+	print &tab_head( "$title", 19, 0, 'logins' )
+	. '<table>'
+	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$Message[94] : "
+	. Format_Number(( scalar keys %_login_h )) . "</th>";
 	&HTMLShowUserInfo('__title__');
 	if ( $ShowAuthenticatedUsers =~ /P/i ) {
 		print
@@ -12989,11 +13004,12 @@ sub HTMLShowHostsUnknown{
 	my $rest_p = 0;
 	my $rest_h = 0;
 	my $rest_k = 0;
-	print "<a name=\"unknownip\">&nbsp;</a>";
-	print &tab_head( "$Message[45]", 19, 0, 'unknownwip' );
-	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>"
-	  . Format_Number(( scalar keys %_host_h ))
-	  . " $Message[1]</th>";
+	# print "<a name=\"unknownip\">&nbsp;</a>";
+	print &tab_head( "$Message[45]", 19, 0, 'unknownwip' )
+	. '<table>'
+	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>"
+	. Format_Number(( scalar keys %_host_h ))
+	. " $Message[1]</th>";
 	&HTMLShowHostInfo('__title__');
 	if ( $ShowHostsStats =~ /P/i ) {
 		print
@@ -13106,8 +13122,9 @@ sub HTMLShowHosts{
 		$title .= "$Message[9]";
 		$cpt = ( scalar keys %_host_h );
 	}
-	print &tab_head( "$title", 19, 0, 'hosts' );
-	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>";
+	print &tab_head( "$title", 19, 0, 'hosts' )
+	. '<table>'
+	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>";
 	if ( $FilterIn{'host'} || $FilterEx{'host'} ) {    # With filter
 		if ( $FilterIn{'host'} ) {
 			print "$Message[79] '<b>$FilterIn{'host'}</b>'";
@@ -13275,9 +13292,9 @@ sub HTMLShowDomains{
 		$title .= "$Message[25]";
 		$cpt = ( scalar keys %_domener_h );
 	}
-	print &tab_head( "$title", 19, 0, 'domains' );
-	print
-"<tr bgcolor=\"#$color_TableBGRowTitle\"><th width=\"$WIDTHCOLICON\">&nbsp;</th><th colspan=\"2\">$Message[17]</th>";
+	print &tab_head( "$title", 19, 0, 'domains' )
+	. '<table>'
+	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th width=\"$WIDTHCOLICON\">&nbsp;</th><th colspan=\"2\">$Message[17]</th>";
 	if ( $ShowDomainsStats =~ /U/i ) {
 		print
 		  "<th class=\"bg-u\" width=\"80\">$Message[11]</th>";
@@ -13438,8 +13455,9 @@ sub HTMLShowDomains{
 sub HTMLShowDownloads{
 	my $regext         = qr/\.(\w{1,6})$/;
 	print "<a name=\"downloads\">&nbsp;</a>";
-	print &tab_head( $Message[178], 19, 0, "downloads" );
-	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[178]</th>";
+	print &tab_head( $Message[178], 19, 0, "downloads" )
+	. '<table>'
+	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[178]</th>";
 	if ( $ShowFileTypesStats =~ /H/i ){print "<th class=\"bg-h\" width=\"80\">$Message[57]</th>"
 		."<th class=\"bg-h\" width=\"80\">206 $Message[57]</th>"; }
 	if ( $ShowFileTypesStats =~ /B/i ){
