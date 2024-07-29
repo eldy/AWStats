@@ -990,7 +990,8 @@ section header:hover .tooltip { visibility: visible; opacity: 1; }
 .bar-horizontal{ height: 4px }
 .bar-vertical{ display: inline-block; transition: height 0.5s ease-out;  }
 .hr-1{ rotate: 30deg } .hr-2{ rotate: 60deg } .hr-3{ rotate: 90deg } .hr-4{ rotate: 120deg } .hr-5{ rotate: 150deg } .hr-6{ rotate: 180deg } .hr-7{ rotate: 210deg } .hr-8{ rotate: 240deg } .hr-9{ rotate: 270deg } .hr-10{ rotate: 300deg } .hr-11{ rotate: 330deg }
-#worldmap{ width: 100%; margin-bottom: 1dvh; background-color: #4477DD; }
+#worldmap-wrapper{ width: 100dvw; margin-bottom: 1dvh; background-color: #4477DD; }
+#worldmap{ width: 50%; margin: auto; background-color: #4477DD; }
 .title-map{ position:absolute; top: 16px; color: var(--light-color); }
 .country { text-transform: uppercase; font-weight: 700; }
 /* colors */
@@ -1073,7 +1074,7 @@ document.addEventListener("DOMContentLoaded", (d) => {
 		let domainsTable = document.querySelector('.domains-table');
 
 		[...domainsTable.querySelectorAll('.flag')].forEach(el => {
-			let country =	worldmap.querySelector('g#' + el.dataset.country);
+			let country =	realMap.querySelector('g#' + el.dataset.country);
 			
 			if(country !== null){
 
@@ -1083,7 +1084,7 @@ document.addEventListener("DOMContentLoaded", (d) => {
 
 			} else {
 			
-				country = worldmap.querySelector('path#' + el.dataset.country);
+				country = realMap.querySelector('path#' + el.dataset.country);
 
 				if(country !== null){
 					country.classList.remove('landxx');
@@ -1092,7 +1093,7 @@ document.addEventListener("DOMContentLoaded", (d) => {
 			}
   	});
 
-  	[...document.querySelectorAll('.multi-data-table.worldmap tbody tr.country')].forEach(el => {
+  	[...document.querySelectorAll('.domains-table tbody tr.country')].forEach(el => {
     		
     		let country =	worldmap.querySelector('g#' + el.dataset.country);
 
@@ -9146,11 +9147,7 @@ sub PrintCLIHelp{
 #------------------------------------------------------------------------------
 sub Tooltip {
 	my $ttnb = shift;
-	return (
-		$TOOLTIPON
-		? ' onmouseover="ShowTip($ttnb);" onmouseout="HideTip($ttnb);"'
-		: ''
-	);
+	return '';
 }
 
 #------------------------------------------------------------------------------
@@ -14647,9 +14644,9 @@ sub HTMLMainCountries{
 
 	# print "<tr><td>";
 	
-	print '<div class="multi-data-table worldmap">';
-	print '<div id="worldmap"></div>';
-	print '<table class="data-table domains-table">';
+	# print '<div class="multi-data-table worldmap">';
+	print '<div id="worldmap-wrapper"><div id="worldmap"></div></div>'
+	.'<table class="data-table domains-table">';
 
 	#header
 	print HTMLDataTableHeader('', $ShowDomainsStats);
@@ -14747,7 +14744,7 @@ sub HTMLMainCountries{
 		print '</tr>';
 
 		print '</table>';
-		print '</div>';
+		# print '</div>';
 
 		# print "</td>\n";
 		# print "</tr>\n";
