@@ -14273,35 +14273,33 @@ sub HTMLMainDownloads{
 	if (!$LevelForFileTypesDetection > 0){return;}
 	if ($Debug) { debug( "ShowDownloadStats", 2 ); }
 	my $regext         = qr/\.(\w{1,6})$/;
-	print "<a name=\"downloads\">&nbsp;</a>";
+	# print "<a name=\"downloads\">&nbsp;</a>";
 	my $Totalh = 0;
 	if ($MaxNbOf{'DownloadsShown'} < 1){$MaxNbOf{'DownloadsShown'} = 10;}	# default if undefined
-	my $title =
-	  "$Message[178] ($Message[77] $MaxNbOf{'DownloadsShown'}) &nbsp; - &nbsp; <a href=\""
-	  . (
-		$ENV{'GATEWAY_INTERFACE'}
-		  || !$StaticLinks
-		? XMLEncode("$AWScript${NewLinkParams}output=downloads")
-		: "$StaticLinks.downloads.$StaticExt"
-	  )
-	  . "\"$NewLinkTarget>$Message[80]</a>";
+	
+	my $title = $Message[178] . ' ('. $Message[77] . ' ' . $MaxNbOf{'DownloadsShown'} .')';
+	my $subtitle = '<a href="'
+	  . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? XMLEncode($AWScript . ${NewLinkParams} . 'output=downloads') : $StaticLinks . '.downloads.' . $StaticExt)
+	  . '" ' . $NewLinkTarget . '>' . $Message[80] . '</a>';
 
-    if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
-        # extend the title to include the added link
-            $title = "$title &nbsp; - &nbsp; <a href=\"" . (XMLEncode(
-                "$AddLinkToExternalCGIWrapper" . "?section=DOWNLOADS&baseName=$DirData/$PROG"
-            . "&month=$MonthRequired&year=$YearRequired&day=$DayRequired"
-            . "&siteConfig=$SiteConfig" )
-            . "\"$NewLinkTarget>$Message[179]</a>");
-    }
+  if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
+  { # extend the title to include the added link
+    $subtitle .= '<a href="'
+    . XMLEncode($AddLinkToExternalCGIWrapper . '?section=DOWNLOADS&baseName=' . $DirData  .'/' . $PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig)
+    . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>';
+  }
 	  
-	&tab_head( "$title", 0, 0, 'downloads' );
+	&tab_head($title, '', 'downloads');
+	
 	my $cnt=0;
 	for my $u (sort {$_downloads{$b}->{'AWSTATS_HITS'} <=> $_downloads{$a}->{'AWSTATS_HITS'}}(keys %_downloads) ){
 		$Totalh += $_downloads{$u}->{'AWSTATS_HITS'};
 		$cnt++;
 		if ($cnt > 4){last;}
 	}
+
+	print '<table>';
+
 	# Graph the top five in a pie chart
 	if (($Totalh > 0) and (scalar keys %_downloads > 1)){
 		foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
@@ -14377,6 +14375,9 @@ sub HTMLMainDownloads{
 		$count++;
 		if ($count >= $MaxNbOf{'DownloadsShown'}){last;}
 	}
+
+	print '</table>';
+
 	&tab_end();
 }
 
