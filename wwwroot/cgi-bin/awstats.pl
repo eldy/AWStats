@@ -951,7 +951,7 @@ b { font-weight: 700 }
 hr { width: 100%; height: 0; margin: 0; color: transparent; border: none; }
 small { font-size: 0.7rem; font-weight: 400; }
 #container { display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; align-items: flex-start;}
-#container > header { position: sticky; top: 0; z-index: 100; width: 100%; background-color: var(--page-bgcolor); display: flex; flex-wrap: wrap; column-gap: 20px; justify-content: center; text-align: center; }
+#container > header { position: sticky; top: 0; z-index: 100; width: 100%; background-color: var(--page-bgcolor); display: flex; flex-wrap: wrap; column-gap: 20px; justify-content: center; text-align: center;	 }
 #domain { font-weight: 900; font-size: 2.4em }
 header select { width : 60px }
 #logo { height: 40px; }
@@ -1200,28 +1200,26 @@ sub tab_head {
 	my $title = shift;
 	my $subtitle = shift || '';
 	my $anchor = shift || '';
-	# my $tooltipnb = shift;
+	my $tooltipnb = shift || '';
 
 	print '<section title="' . $title . '" id="' . $anchor . '">';
-	print '<header>' . $title . (($subtitle ne '') ? ' <small>' . $subtitle . '</small>' : '') . '</header>';
+	print '<header>'
+	. $title . (($subtitle ne '') ? ' <small>' . $subtitle . '</small>' : '');
 
 	# Call to plugins' function TabHeadHTML
-	# my $extra_head_html = '';
-	# foreach my $pluginname ( keys %{ $PluginsLoaded{'TabHeadHTML'} } ) {
-	# 	my $function = "TabHeadHTML_$pluginname";
-	# 	$extra_head_html .= &$function($title);
-	# }
+	my $extra_head_html = '';
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'TabHeadHTML'} } ) {
+		my $function = "TabHeadHTML_$pluginname";
+		$extra_head_html .= &$function($title);
+	}
 
-	# if ($tooltipnb) {
-	# 	print "<tr><td class=\"aws_title\" width=\"$width%\""
-	# 	  . Tooltip( $tooltipnb, $tooltipnb )
-	# 	  . ">$title "
-	# 	  . $extra_head_html . "</td>";
-	# }
-	# else {
-	# 	print "<tr><td class=\"aws_title\" width=\"$width%\">$title "
-	# 	  . $extra_head_html . "</td>";
-	# }
+	print $extra_head_html;
+
+	if ($tooltipnb) {
+		print '<span' . Tooltip( $tooltipnb, $tooltipnb ) . '> ? </span>';
+	}
+
+	print '</header>';
 
 # 	print "<tr><td colspan=\"2\">\n";
 # 	if ( $width == 70 && $QueryString =~ /buildpdf/i ) {
@@ -1243,12 +1241,7 @@ sub tab_head {
 #------------------------------------------------------------------------------
 sub tab_end {
 	my $string = shift;
-	# print "</table></td></tr></table>";
-	if ($string) {
-		print "<div>$string</div>";
-	}
-
-	print '</section>';
+	print (($string) ? "<div>$string</div>" : '') . '</section>';
 }
 
 #------------------------------------------------------------------------------
@@ -13481,7 +13474,6 @@ sub HTMLMainSummary{
 	print '<div>';
 
 	print '<div id="summary-logs">';
-	# print '<h1>' . ($MonthRequired eq 'all' ? $YearRequired : $MonthNumLib{$MonthRequired} . ' ' . $YearRequired) . '</h1>';
 
 	# Show first/last
 	print '<div id="about">'
@@ -15172,9 +15164,11 @@ sub HTMLMainRobots{
 		. '</tr>';
 	}
 
+	print '<tr><td colspan="3">* ' . $Message[156] . ' ' . ( $TotalRRobots ? $Message[157] : '' ) . '</td></tr>';
+
 	print '</table>';
 
-	&tab_end("* $Message[156]" . ( $TotalRRobots ? " $Message[157]" : "" ) );
+	&tab_end();
 }
 
 #------------------------------------------------------------------------------
