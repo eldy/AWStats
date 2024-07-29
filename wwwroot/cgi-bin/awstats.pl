@@ -14278,8 +14278,10 @@ sub HTMLMainDownloads{
 	if ($MaxNbOf{'DownloadsShown'} < 1){$MaxNbOf{'DownloadsShown'} = 10;}	# default if undefined
 	
 	my $title = $Message[178] . ' ('. $Message[77] . ' ' . $MaxNbOf{'DownloadsShown'} .')';
+
+	my $link = XMLEncode($AWScript . ${NewLinkParams});
 	my $subtitle = '<a href="'
-	  . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? XMLEncode($AWScript . ${NewLinkParams} . 'output=downloads') : $StaticLinks . '.downloads.' . $StaticExt)
+	  . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? $link . 'output=downloads' : $StaticLinks . '.downloads.' . $StaticExt)
 	  . '" ' . $NewLinkTarget . '>' . $Message[80] . '</a>';
 
   if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
@@ -14389,28 +14391,29 @@ sub HTMLMainDownloads{
 # Return:       -
 #------------------------------------------------------------------------------
 sub HTMLMainHours{
-    my $NewLinkParams = shift;
-    my $NewLinkTarget = shift;
+  my $NewLinkParams = shift;
+  my $NewLinkTarget = shift;
         
-    if ($Debug) { debug( "ShowHoursStats", 2 ); }
+  if ($Debug) { debug( "ShowHoursStats", 2 ); }
 	# print "<a name=\"hours\">&nbsp;</a>";
-	my $title = "$Message[20]";
+	my $title = $Message[20];
+	my $subtitle = '';
 	
-    if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
-       # extend the title to include the added link 
-           $title = "$title &nbsp; - &nbsp; <a href=\"" . (XMLEncode(
-               "$AddLinkToExternalCGIWrapper" . "?section=TIME&baseName=$DirData/$PROG"
-           . "&month=$MonthRequired&year=$YearRequired&day=$DayRequired"
-           . "&siteConfig=$SiteConfig" )
-           . "\"$NewLinkTarget>$Message[179]</a>");
-    } 
+  if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
+  { # extend the title to include the added link 
+    $subtitle = ' - <a href="'
+    . XMLEncode($AddLinkToExternalCGIWrapper . '?section=TIME&baseName=' . $DirData .'/' . $PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig)
+    . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>';
+  } 
 	
 	if ( $PluginsLoaded{'GetTimeZoneTitle'}{'timezone'} ) {
 		$title .= " (GMT "
 		  . ( GetTimeZoneTitle_timezone() >= 0 ? "+" : "" )
 		  . int( GetTimeZoneTitle_timezone() ) . ")";
 	}
+
 	&tab_head( $title, '', 'hours', 19 );
+
 	print "<tr><td>\n";
 
 	my $width = '0.4dvw';
@@ -14589,8 +14592,10 @@ sub HTMLMainCountries{
 	# print "<a name=\"countries\">&nbsp;</a>";
 
 	my $title = $Message[25] . '(' . $Message[77] . ' ' . $MaxNbOf{'Domain'} . ')';
+
+	my $link = XMLEncode($AWScript . ${NewLinkParams});
 	my $subtitle =  '<a href="'
-	  . (	$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? XMLEncode("$AWScript${NewLinkParams}output=alldomains") : "$StaticLinks.alldomains.$StaticExt" ) . '" '. $NewLinkTarget
+	  . (	$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? $link . 'output=alldomains' : $StaticLinks . '.alldomains.' . $StaticExt) . '" '. $NewLinkTarget
 	  . '>' . $Message[80] .'</a>';
 	  
   if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
@@ -14780,12 +14785,14 @@ sub HTMLMainHosts{
 	# print "<a name=\"visitors\">&nbsp;</a>";
 
 	my $title = $Message[81] . ' (' . $Message[77] . ' ' . $MaxNbOf{'HostsShown'} .')';
+
+	my $link = XMLEncode($AWScript . ${NewLinkParams});
 	my $subtitle =
-	'<a href="' . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? XMLEncode($AWScript . ${NewLinkParams} . 'output=allhosts') : $StaticLinks . '.allhosts.' . $StaticExt) . '" ' . $NewLinkTarget . '>'
+	'<a href="' . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? $link . 'output=allhosts' : $StaticLinks . '.allhosts.' . $StaticExt) . '" ' . $NewLinkTarget . '>'
 	. $Message[80] . '</a> - '
-	. '<a href="' . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? XMLEncode($AWScript . ${NewLinkParams} . 'output=lasthosts')	: $StaticLinks . '.lasthosts.' . $StaticExt) . '" ' . $NewLinkTarget . '>'
+	. '<a href="' . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? $link . 'output=lasthosts'	: $StaticLinks . '.lasthosts.' . $StaticExt) . '" ' . $NewLinkTarget . '>'
 	. $Message[9]	. '</a> - '
-	. '<a href="' . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks	? XMLEncode($AWScript . ${NewLinkParams} . 'output=unknownip')	: $StaticLinks . '.unknownip.' . $StaticExt) . '" ' . $NewLinkTarget . '>'
+	. '<a href="' . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks	? $link . 'output=unknownip'	: $StaticLinks . '.unknownip.' . $StaticExt) . '" ' . $NewLinkTarget . '>'
 	. $Message[45] . '</a>';
 	  
 	if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
@@ -15075,11 +15082,12 @@ sub HTMLMainRobots{
 
 	my $title = $Message[53] . ' ('. $Message[77]. ' ' . $MaxNbOf{'RobotShown'} .')';
 
+	my $link = XMLEncode($AWScript . ${NewLinkParams});
 	my $subtitle = ' <a href="'
-		 . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks	? XMLEncode("$AWScript${NewLinkParams}output=allrobots") : "$StaticLinks.allrobots.$StaticExt")
+		 . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks	? $link . 'output=allrobots' : $StaticLinks . '.allrobots.' . $StaticExt)
 		 . '" ' . $NewLinkTarget . '>' . $Message[80] . '</a>'
 		 . ' - <a href="'
-		 . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks	? XMLEncode("$AWScript${NewLinkParams}output=lastrobots")	: "$StaticLinks.lastrobots.$StaticExt")
+		 . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks	? $link . 'output=lastrobots'	: $StaticLinks . '.lastrobots.' . $StaticExt)
 		 . '" ' . $NewLinkTarget . '>' . $Message[9] . '</a>';
 
   if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
@@ -15563,11 +15571,13 @@ sub HTMLMainOS{
 	}
 
 	my $title = $Message[59] . ' (' . $Message[77] . ' ' . $MaxNbOf{'OsShown'} . ')';
+
+	my $link = XMLEncode($AWScript . ${NewLinkParams});
 	my $subtitle = ' <a href="'
-	  . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? XMLEncode("$AWScript${NewLinkParams}output=osdetail") : "$StaticLinks.osdetail.$StaticExt")
+	  . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? $link . 'output=osdetail' : $StaticLinks . '.osdetail.' . $StaticExt)
 	  . '" '. $NewLinkTarget . '>' . $Message[80] . '/' . $Message[58] .'</a>'
 	  . ' - <a href="'
-	  . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? XMLEncode("$AWScript${NewLinkParams}output=unknownos") : "$StaticLinks.unknownos.$StaticExt")
+	  . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? $link . 'output=unknownos' : $StaticLinks . '.unknownos.' . $StaticExt)
 	  . '" ' . $NewLinkTarget . '>' . $Message[0] . '</a>';
 	  
   if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
@@ -15721,11 +15731,13 @@ sub HTMLMainBrowsers{
 		$new_browser_p{$key} += $_browser_p{$key};
 	}
 	my $title = $Message[21] . ' (' . $Message[77] . ' ' . $MaxNbOf{'BrowsersShown'} .')';
+
+	my $link = XMLEncode($AWScript . ${NewLinkParams});
 	my $subtitle = '<a href="'
-	  . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? XMLEncode($AWScript . ${NewLinkParams} . 'output=browserdetail') : $StaticLinks . '.browserdetail.' . $StaticExt)
+	  . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? $link . 'output=browserdetail' : $StaticLinks . '.browserdetail.' . $StaticExt)
 	  . '" ' . $NewLinkTarget . '>' . $Message[80] . '/' . $Message[58] . '</a>'
 	  . ' - <a href="'
-	  . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? XMLEncode($AWScript . ${NewLinkParams} . 'output=unknownbrowser') : $StaticLinks . '.unknownbrowser.' . $StaticExt)
+	  . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? $link . 'output=unknownbrowser' : $StaticLinks . '.unknownbrowser.' . $StaticExt)
 	  . '" ' . $NewLinkTarget . '>' . $Message[0] . '</a>';
 	  
     if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
@@ -16216,8 +16228,10 @@ sub HTMLMainKeys{
 		if ($Debug) { debug( "ShowKeyphrasesStats", 2 ); }
 
 		$title = $Message[120] . ' (' . $Message[77] . ' ' . $MaxNbOf{'KeyphrasesShown'} . ')';
+
+		my $link = XMLEncode($AWScript . ${NewLinkParams});
 		$subtitle = '<a href="'
-		. ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? XMLEncode($AWScript . ${NewLinkParams} . 'output=keyphrases') : $StaticLinks . '.keyphrases.' . $StaticExt)
+		. ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? $link . 'output=keyphrases' : $StaticLinks . '.keyphrases.' . $StaticExt)
 		. '" ' . $NewLinkTarget . '>' . $Message[80] . '</a>';
 
 		&tab_head($title, $subtitle, 'keyphrases', 19, ( $ShowKeyphrasesStats && $ShowKeywordsStats ) ? 95 : 70);
