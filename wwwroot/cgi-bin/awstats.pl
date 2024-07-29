@@ -966,7 +966,7 @@ div[class^="bg-"], th[class^="bg-"] { width: var(--bar-width) }
 button, select, input[type=submit] { cursor: pointer; color: var(--light-color); background-color: var(--dark-color); border: 1px solid #ccd7e0; }
 h1, section header {border-bottom: 6px solid var(--light-color); width: 100%; margin: 0; text-align: center; font-weight: 900; font-size: 1rem; }
 section header { position: relative }
-.tooltip { visibility: hidden; opacity: 0; position: absolute; bottom: -357%; left: 25%; z-index: 10; font-size: 0.7rem; width: 320px; background-color: var(--dark-color); color: var(--light-color); padding: 4px; border-radius: 5px; }
+.tooltip { visibility: hidden; opacity: 0; position: absolute; bottom: -60px; left: 0; z-index: 10; font-size: 0.7rem; width: 320px; background-color: var(--dark-color); color: var(--light-color); padding: 4px; border-radius: 5px; }
 section header:hover .tooltip { visibility: visible; opacity: 1; }
 .multi-data-table { display: flex; column-gap: 3dvw; flex-wrap: wrap; justify-content: center }
 .multi-data-table.worldmap{ position: relative; }
