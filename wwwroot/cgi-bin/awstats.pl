@@ -965,6 +965,9 @@ nav { margin-top: 0; }
 div[class^="bg-"], th[class^="bg-"] { width: var(--bar-width) }
 button, select, input[type=submit] { cursor: pointer; color: var(--light-color); background-color: var(--dark-color); border: 1px solid #ccd7e0; }
 h1, section header {border-bottom: 6px solid var(--light-color); width: 100%; margin: 0; text-align: center; font-weight: 900; font-size: 1rem; }
+section header { position: relative }
+.tooltip { visibility: hidden; opacity: 0; position: absolute; bottom: -357%; left: 25%; z-index: 10; font-size: 0.7rem; width: 320px; background-color: var(--dark-color); color: var(--light-color); padding: 4px; border-radius: 5px; }
+section header:hover .tooltip { visibility: visible; opacity: 1; }
 .multi-data-table { display: flex; column-gap: 3dvw; flex-wrap: wrap; justify-content: center }
 .multi-data-table.worldmap{ position: relative; }
 .data-table { border-spacing: 0 2px; margin: auto; }
@@ -1013,11 +1016,11 @@ h1, section header {border-bottom: 6px solid var(--light-color); width: 100%; ma
 EOF
 
 	# Call to plugins' function AddHTMLStyles
-	foreach my $pluginname ( keys %{ $PluginsLoaded{'AddHTMLStyles'} } )
-		{
-			my $function = "AddHTMLStyles_$pluginname";
-			$css .= &$function();
-		}
+	foreach my $pluginname (keys %{ $PluginsLoaded{'AddHTMLStyles'} })
+	{
+		my $function = "AddHTMLStyles_$pluginname";
+		$css .= &$function();
+	}
 
 		return '<style>' . $css . '</style>';
 }
@@ -1030,7 +1033,7 @@ EOF
 # Return:		string
 #------------------------------------------------------------------------------
 sub renderJavascript {
-return <<EOF;
+	my $js =  <<EOF;
 <script>
 document.addEventListener("DOMContentLoaded", (d) => {
 
@@ -1134,6 +1137,16 @@ document.addEventListener("DOMContentLoaded", (d) => {
 });
 </script>
 EOF
+
+	# # Call to plugins' function AddHTMLJavascript
+	# foreach my $pluginname ( keys %{ $PluginsLoaded{'AddHTMLJavascript'} } )
+	# {
+	# 	my $function = "AddHTMLJavascript_$pluginname";
+	# 	$js .= &$function();
+	# }
+
+	return $js;
+
 }
 
 #------------------------------------------------------------------------------
@@ -1200,7 +1213,8 @@ sub tab_head {
 	my $title = shift;
 	my $subtitle = shift || '';
 	my $anchor = shift || '';
-	my $tooltipnb = shift || '';
+	my $tooltip = shift || 0;
+	my $msg = shift || 0;
 
 	print '<section title="' . $title . '" id="' . $anchor . '">';
 	print '<header>'
@@ -1213,10 +1227,14 @@ sub tab_head {
 		$extra_head_html .= &$function($title);
 	}
 
-	print $extra_head_html;
+	print ' ' . $extra_head_html;
 
-	if ($tooltipnb) {
-		print '<span' . Tooltip( $tooltipnb, $tooltipnb ) . '> ? </span>';
+	if ($tooltip) {
+		print '<span class="tooltip">' . $tooltip . '</span>';
+	}
+
+	if ($msg) {
+		print '<div> <small>' . $msg . '</small></div>';
 	}
 
 	print '</header>';
@@ -10943,8 +10961,15 @@ sub HTMLMainFileType{
 	
 	# build keylist at top
 	&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_filetypes_h, \%_filetypes_h );
-		
-	&tab_head($title, $subtitle, 'filetypes', 19);
+	
+	my $tooltip = '';
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
+	{
+		my $function = "getTooltip_$pluginname";
+		$tooltip .= &$function(19);
+	}
+
+	&tab_head($title, $subtitle, 'filetypes', $tooltip);
 		
 	print '<table class="data-table">';
 
@@ -11137,7 +11162,15 @@ sub HTMLMainFileSize{
   # print "<a name=\"filesizes\">&nbsp;</a>";
   
   my $title = $Message[186];
-  &tab_head($title, '', 'filesizes', 19);
+
+  my $tooltip = '';
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
+	{
+		my $function = "getTooltip_$pluginname";
+		$tooltip .= &$function(19);
+	}
+
+  &tab_head($title, '', 'filesizes', $tooltip);
 
   my $Totals = 0;
   my $average_s = 0;
@@ -11228,7 +11261,14 @@ sub HTMLMainRequestTime{
   
   my $title = $Message[188];
   
-  &tab_head($title, '', 'requesttimes', 19);
+  my $tooltip = '';
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
+	{
+		my $function = "getTooltip_$pluginname";
+		$tooltip .= &$function(19);
+	}
+
+  &tab_head($title, '', 'requesttimes', $tooltip);
   
   my $Totals = 0;
   my $average_s = 0;
@@ -11281,8 +11321,18 @@ sub HTMLMainRequestTime{
 sub HTMLShowBrowserDetail{
 	# Show browsers versions
 	print "<a name=\"browsersversions\">&nbsp;</a>";
+
 	my $title = "$Message[21]";
-	&tab_head( "$title", 19, 0, 'browsersversions' );
+
+	my $tooltip = '';
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
+	{
+		my $function = "getTooltip_$pluginname";
+		$tooltip .= &$function(19);
+	}
+
+	&tab_head($title, '', 'browsersversions', $tooltip);
+	
 	print
 "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[58]</th>";
 	print
@@ -13825,7 +13875,7 @@ sub HTMLMainMonthly{
 # Return:       -
 #------------------------------------------------------------------------------
 sub HTMLMainDaily{
-	if ($Debug) { debug( "ShowDaysOfMonthStats", 2 ); }
+	if ($Debug) { debug( 'ShowDaysOfMonthStats', 2 ); }
 
 	my $firstdaytocountaverage = shift;
 	my $lastdaytocountaverage = shift;
@@ -13866,14 +13916,15 @@ sub HTMLMainDaily{
 	my $xx      = 0;
 	my @vallabel = ("$Message[10]", "$Message[56]",	"$Message[57]", "$Message[75]");
 
-	if ( $FrameName eq 'mainright' ) {
-		$NewLinkTarget = " target=\"_parent\"";
+	if ( $FrameName eq 'mainright' )
+	{
+		$NewLinkTarget = ' target="_parent"';
 	}
 
 	my $graphPlugin = (%{ $PluginsLoaded{'ShowGraph'} }) ? 1 : 0;
 
-	if ($AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
-    # extend the title to include the added link
+	if ($AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
+	{ # extend the title to include the added link
     $title = "$title &nbsp; - &nbsp; <a href=\"" . (XMLEncode(
       "$AddLinkToExternalCGIWrapper". "?section=DAY&baseName=$DirData/$PROG"
       . "&month=$MonthRequired&year=$YearRequired&day=$DayRequired"
@@ -13885,8 +13936,8 @@ sub HTMLMainDaily{
   # print "<a name=\"daysofmonth\">&nbsp;</a>";
 		
 	&tab_head( $title, '', 'daysofmonth' );
-	print "<tr>";
-	print "<td>\n";
+	
+	print '<tr>' . '<td>';
 	
 	foreach my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )
 	{
@@ -13931,8 +13982,8 @@ sub HTMLMainDaily{
 
 		my $dayofweekcursor = DayOfWeek( $day, $month, $year );
 
-		if ($graphPlugin == 1) {
-
+		if ($graphPlugin == 1)
+		{
 			my $bold = ($day == $nowday && $month == $nowmonth && $year == $nowyear) ? ':' : '';
 			my $weekend = ($dayofweekcursor =~ /[06]/) ? '!' : '' ;
 			push @blocklabel, "$day\n$MonthNumLib{$month}$weekend$bold";
@@ -13951,7 +14002,8 @@ sub HTMLMainDaily{
 			  . ( !$StaticLinks && $day == $nowday && $month == $nowmonth && $year == $nowyear ? '</span>' : '' )
 			  . '</td>';
 
-		if ( $ShowDaysOfMonthStats =~ /V/i ) {
+		if ( $ShowDaysOfMonthStats =~ /V/i )
+		{
 			$data = int($DayVisits{ $date } || 0 );
 			
 			$bars .= HtmlBar('v', $data, Format_Number($data), $max_v, $Message[10], $width);
@@ -13959,7 +14011,8 @@ sub HTMLMainDaily{
 			$tableData .= HTMLDataCellWithBar('v', $data, Format_Number($data), $max_v);
 		}
 
-		if ( $ShowDaysOfMonthStats =~ /P/i ) {
+		if ( $ShowDaysOfMonthStats =~ /P/i )
+		{
 			$data = int($DayPages{ $date } || 0 );
 
 			$bars .= HtmlBar('p', $data, Format_Number($data), $max_p, $Message[56], $width);
@@ -13967,8 +14020,8 @@ sub HTMLMainDaily{
 			$tableData .= HTMLDataCellWithBar('p', $data, Format_Number($data), $max_p);
 		}
 
-		if ( $ShowDaysOfMonthStats =~ /H/i ) {
-
+		if ( $ShowDaysOfMonthStats =~ /H/i )
+		{
 			$data = int($DayHits{ $date } || 0 );
 
 			$bars .= HtmlBar('h', $data, Format_Number($data), $max_h, $Message[57], $width);
@@ -13976,8 +14029,8 @@ sub HTMLMainDaily{
 			$tableData .= HTMLDataCellWithBar('h', $data, Format_Number($data), $max_h);
 		}
 
-		if ( $ShowDaysOfMonthStats =~ /B/i ) {
-
+		if ( $ShowDaysOfMonthStats =~ /B/i )
+		{
 			$data = int($DayBytes{ $date } || 0 );
 
 			$bars .= HtmlBar('b', $data, Format_Bytes($data), $max_k, $Message[75], $width);
@@ -13990,8 +14043,8 @@ sub HTMLMainDaily{
 	}
 
 	# render Graph Plugin
-	if ($graphPlugin == 1) {
-
+	if ($graphPlugin == 1)
+	{
 		foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
 		{
 			my $function = "ShowGraph_$pluginname";
@@ -14044,8 +14097,8 @@ sub HTMLMainDaily{
   }
 
 	# Show data array for days
-	if ($AddDataArrayShowDaysOfMonthStats) {
-		
+	if ($AddDataArrayShowDaysOfMonthStats)
+	{
 		print '<table class="data-table days-of-month-table">';
 
 		#header
@@ -14094,7 +14147,7 @@ sub HTMLMainDaysofWeek{
   my $NewLinkParams = shift;
   my $NewLinkTarget = shift;	
 
-	my $title = "$Message[91]";
+	my $title = $Message[91];
 	my $width = 'var(--bar-v-width-weekday)';
 	
 	my $max_p = my $max_h = my $max_k = 0;
@@ -14105,11 +14158,18 @@ sub HTMLMainDaysofWeek{
 
 
 	my $graphPlugin = (%{ $PluginsLoaded{'ShowGraph'} }) ? 1 : 0;
-	
+
+	my $tooltip = '';
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
+	{
+		my $function = "getTooltip_$pluginname";
+		$tooltip .= &$function(18);
+	}
+		
 	# print "<a name=\"daysofweek\">&nbsp;</a>";
-	&tab_head( "$title", '', 'daysofweek', 18 );
-	print "<tr>";
-	print "<td>";
+	&tab_head($title, '', 'daysofweek', $tooltip );
+
+	print '<tr>' . '<td>';
 
 	foreach my $daycursor ($firstdaytocountaverage .. $lastdaytocountaverage )
 	{
@@ -14299,7 +14359,14 @@ sub HTMLMainHours{
 		  . int( GetTimeZoneTitle_timezone() ) . ")";
 	}
 
-	&tab_head( $title, '', 'hours', 19 );
+	my $tooltip = '';
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
+	{
+		my $function = "getTooltip_$pluginname";
+		$tooltip .= &$function(19);
+	}
+
+	&tab_head( $title, '', 'hours', $tooltip );
 
 	my $width = 'var(--bar-v-width-hours)';
 	my $max_p =	my $max_h = my $max_k = 1;
@@ -14489,8 +14556,15 @@ sub HTMLMainCountries{
     . (XMLEncode($AddLinkToExternalCGIWrapper . '?section=DOMAIN&baseName=' . $DirData/$PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig)
     . '" '. $NewLinkTarget . '>' . $Message[179] . '</a>');
   }
+
+  my $tooltip = '';
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
+	{
+		my $function = "getTooltip_$pluginname";
+		$tooltip .= &$function(19);
+	}
         	  
-	&tab_head( $title, $subtitle, 'countries', 19);
+	&tab_head( $title, $subtitle, 'countries', $tooltip);
 	
 	foreach ( values %_domener_u ) {
 		if ( $_ > $max_u ) { $max_u = $_; }
@@ -14809,8 +14883,15 @@ sub HTMLMainHosts{
     . '<a href="' . XMLEncode($AddLinkToExternalCGIWrapper . '?section=VISITOR&baseName=' . $DirData/$PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig) . '" ' . $NewLinkTarget . '>'
     . $Message[179] . '</a>';
   }
+
+  my $tooltip = '';
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
+	{
+		my $function = "getTooltip_$pluginname";
+		$tooltip .= &$function(19);
+	}
 	  
-	&tab_head( $title, $subtitle, 19);
+	&tab_head( $title, $subtitle, 'hosts', $tooltip);
 	
 	&BuildKeyList( $MaxNbOf{'HostsShown'}, $MinHit{'Host'}, \%_host_h, \%_host_p );
 		
@@ -15104,8 +15185,18 @@ sub HTMLMainRobots{
     . XMLEncode($AddLinkToExternalCGIWrapper . '?section=ROBOT&baseName=' . $DirData .'/'. $PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig)
     . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>';
   }
+  
+  my $TotalRRobots = 0;
+	foreach ( values %_robot_r ) { $TotalRRobots += $_; }
+
+	my $tooltip = '';
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
+	{
+		my $function = "getTooltip_$pluginname";
+		$tooltip .= &$function(19);
+	}
         
-  &tab_head($title, $subtitle, 'robots',  19);
+  &tab_head($title, $subtitle, 'robots',  $tooltip, '* ' . $Message[156] . ' ' . ( $TotalRRobots ? $Message[157] : '' ));
         
   print '<table class="data-table">'
   . "<tr bgcolor=\"#$color_TableBGRowTitle\""
@@ -15148,8 +15239,7 @@ sub HTMLMainRobots{
 	foreach ( values %_robot_h ) { $TotalHitsRobots += $_; }
 	my $TotalBytesRobots = 0;
 	foreach ( values %_robot_k ) { $TotalBytesRobots += $_; }
-	my $TotalRRobots = 0;
-	foreach ( values %_robot_r ) { $TotalRRobots += $_; }
+	
 	my $rest_p = 0;    #$rest_p=$TotalPagesRobots-$total_p;
 	my $rest_h = $TotalHitsRobots - $total_h;
 	my $rest_k = $TotalBytesRobots - $total_k;
@@ -15163,8 +15253,6 @@ sub HTMLMainRobots{
 		. (( $ShowRobotsStats =~ /L/i ) ? '<td>&nbsp;</td>' : '')
 		. '</tr>';
 	}
-
-	print '<tr><td colspan="3">* ' . $Message[156] . ' ' . ( $TotalRRobots ? $Message[157] : '' ) . '</td></tr>';
 
 	print '</table>';
 
@@ -15182,7 +15270,15 @@ sub HTMLMainWorms{
 	if ($Debug) { debug( "ShowWormsStats", 2 ); }
 	
 	# print "<a name=\"worms\">&nbsp;</a>";
-	&tab_head( $Message[163] . ' (' . $Message[77] . $MaxNbOf{'WormsShown'} . ')', '', 'worms', 19 );
+
+	my $tooltip = '';
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
+	{
+		my $function = "getTooltip_$pluginname";
+		$tooltip .= &$function(19);
+	}
+        
+	&tab_head( $Message[163] . ' (' . $Message[77] . $MaxNbOf{'WormsShown'} . ')', '', 'worms', $tooltip, '*' . $Message[158] );
 
   print '<table class="data-table">'
 	. "<tr bgcolor=\"#$color_TableBGRowTitle\"" . Tooltip(21) . ">"
@@ -15265,7 +15361,7 @@ sub HTMLMainWorms{
 	}
 
 	print '</table>';
-	&tab_end("* $Message[158]");
+	&tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -15279,7 +15375,15 @@ sub HTMLMainSessions{
 	if ($Debug) { debug( "ShowSessionsStats", 2 ); }
 	# print "<a name=\"sessions\">&nbsp;</a>";
 	my $title = $Message[117];
-	&tab_head( $title, '', 'sessions', 19);
+
+	my $tooltip = '';
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
+	{
+		my $function = "getTooltip_$pluginname";
+		$tooltip .= &$function(19);
+	}
+        
+	&tab_head( $title, '', 'sessions', $tooltip);
 
 	my $Totals = 0;
 	my $average_s = 0;
@@ -15371,8 +15475,15 @@ sub HTMLMainPages{
     . XMLEncode($AddLinkToExternalCGIWrapper . '?section=SIDER&baseName=' . $DirData . '/' . $PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig)
     . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>';
   }
-        	
-	&tab_head($title, $subtitle, 'urls', 19);
+
+  my $tooltip = '';
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
+	{
+		my $function = "getTooltip_$pluginname";
+		$tooltip .= &$function(19);
+	}
+
+	&tab_head($title, $subtitle, 'urls', $tooltip);
 
 	print '<table>'
 	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>".Format_Number($TotalDifferentPages)." $Message[28]</th>";
@@ -15596,8 +15707,15 @@ sub HTMLMainOS{
     . XMLEncode($AddLinkToExternalCGIWrapper . '?section=OS&baseName=' . $DirData . '/' . $PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig)
     . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>';
   }
-        	  
-	&tab_head($title, $subtitle, 'os', 19);
+
+  my $tooltip = '';
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
+	{
+		my $function = "getTooltip_$pluginname";
+		$tooltip .= &$function(19);
+	}
+
+	&tab_head($title, $subtitle, 'os', $tooltip);
 	
 	&BuildKeyList( $MaxNbOf{'OsShown'}, $MinHit{'Os'}, \%new_os_h,
 		\%new_os_p );
@@ -15756,8 +15874,15 @@ sub HTMLMainBrowsers{
            . XMLEncode($AddLinkToExternalCGIWrapper . '?section=BROWSER&baseName=' . $DirData . '/' . $PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig)
            . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>';
     }
-        	  
-	&tab_head($title, $subtitle, 'browsers',  19);
+
+  my $tooltip = '';
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
+	{
+		my $function = "getTooltip_$pluginname";
+		$tooltip .= &$function(19);
+	}
+
+	&tab_head($title, $subtitle, 'browsers',  $tooltip);
 	
 	&BuildKeyList(
 		$MaxNbOf{'BrowsersShown'}, $MinHit{'Browser'},
@@ -15974,8 +16099,15 @@ sub HTMLMainReferrers{
     . XMLEncode($AddLinkToExternalCGIWrapper . '?section=ORIGIN&baseName=' . $DirData . '/' . $PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig)
     . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>';
   }
-        
-	&tab_head($title, $subtitle, 'referer', 19);
+
+	my $tooltip = '';
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
+	{
+		my $function = "getTooltip_$pluginname";
+		$tooltip .= &$function(19);
+	}
+
+	&tab_head($title, $subtitle, 'referer', $tooltip);
 
 	my @p_p = ( 0, 0, 0, 0, 0, 0 );
 	if ( $Totalp > 0 ) {
@@ -16244,7 +16376,14 @@ sub HTMLMainKeys{
 		. ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? $link . 'output=keyphrases' : $StaticLinks . '.keyphrases.' . $StaticExt)
 		. '" ' . $NewLinkTarget . '>' . $Message[80] . '</a>';
 
-		&tab_head($title, $subtitle, 'keyphrases', 19, ( $ShowKeyphrasesStats && $ShowKeywordsStats ) ? 95 : 70);
+		my $tooltip = '';
+		foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
+		{
+			my $function = "getTooltip_$pluginname";
+			$tooltip .= &$function(19);
+		}
+
+		&tab_head($title, $subtitle, 'keyphrases', $tooltip);
 		
 		print '<table class="data-table">'
 		. "<tr bgcolor=\"#$color_TableBGRowTitle\""
@@ -16304,7 +16443,14 @@ sub HTMLMainKeys{
 		. ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? XMLEncode($AWScript . ${NewLinkParams} . 'output=keywords') : $StaticLinks . '.keywords.' . $StaticExt)
 		. '" ' . $NewLinkTarget . '>' . $Message[80] . '</a>';
 		
-		&tab_head($title , $subtitle, 'keywords', 19);
+		my $tooltip = '';
+		foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
+		{
+			my $function = "getTooltip_$pluginname";
+			$tooltip .= &$function(19);
+		}
+
+		&tab_head($title, $subtitle, 'keywords', $tooltip);
 
 		print '<table class="data-table">'
 		. "<tr bgcolor=\"#$color_TableBGRowTitle\""
@@ -16369,7 +16515,14 @@ sub HTMLMainMisc{
 	
 	my $title = $Message[139];
 
-	&tab_head($title, '', 'misc', 19);
+	my $tooltip = '';
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
+	{
+		my $function = "getTooltip_$pluginname";
+		$tooltip .= &$function(19);
+	}
+
+	&tab_head($title, '', 'misc', $tooltip);
 	
 	print '<table class="data-table">'
 	. '<tr bgcolor="#' . $color_TableBGRowTitle . '"><th>' . $Message[139] . '</th>'
@@ -16451,8 +16604,15 @@ sub HTMLMainHTTPStatus{
     . XMLEncode($AddLinkToExternalCGIWrapper . '?section=ERRORS&baseName=' . $DirData . '/' . $PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig)
     . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>';
   }
-        	
-	&tab_head($title, $subtitle, 'errors', 19);
+
+	my $tooltip = '';
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
+	{
+		my $function = "getTooltip_$pluginname";
+		$tooltip .= &$function(19);
+	}
+
+	&tab_head($title, $subtitle, 'errors', $tooltip, '*' . $Message[154]);
 	
 	&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_errors_h, \%_errors_h );
 
@@ -16515,7 +16675,7 @@ sub HTMLMainHTTPStatus{
 
 	print '<table>';
 
-	&tab_end("* $Message[154]");
+	&tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -16532,7 +16692,16 @@ sub HTMLMainSMTPStatus{
 	if ($Debug) { debug( "ShowSMTPErrorsStats", 2 ); }
 	print "<a name=\"errors\">&nbsp;</a>";
 	my $title = "$Message[147]";
-	&tab_head( "$title", 19, 0, 'errors' );
+
+	my $tooltip = '';
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
+	{
+		my $function = "getTooltip_$pluginname";
+		$tooltip .= &$function(19);
+	}
+
+	&tab_head($title, '', 'errors', $tooltip );
+
 	print
 "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[147]</th><th class=\"bg-h\" width=\"80\">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th><th class=\"bg-k\" width=\"80\">$Message[75]</th></tr>\n";
 	my $total_h = 0;
@@ -16578,8 +16747,15 @@ sub HTMLMainCluster{
            . "&siteConfig=$SiteConfig" )
            . "\"$NewLinkTarget>$Message[179]</a>");
     }
-        	
-	&tab_head( "$title", 19, 0, 'clusters' );
+
+	my $tooltip = '';
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
+	{
+		my $function = "getTooltip_$pluginname";
+		$tooltip .= &$function(19);
+	}
+
+	&tab_head($title, '', 'clusters', $tooltip);
 	
 	&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_cluster_p, \%_cluster_p );
 	
@@ -16675,9 +16851,19 @@ sub HTMLMainExtra{
 	my $extranum = shift;
 	
 	if ($Debug) { debug( "ExtraName$extranum", 2 ); }
-	print "<a name=\"extra$extranum\">&nbsp;</a>";
+	# print "<a name=\"extra$extranum\">&nbsp;</a>";
+
 	my $title = $ExtraName[$extranum];
-	&tab_head( "$title", 19, 0, "extra$extranum" );
+
+	my $tooltip = '';
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
+	{
+		my $function = "getTooltip_$pluginname";
+		$tooltip .= &$function(19);
+	}
+
+	&tab_head($title, 'extra' . $extranum, '', $tooltip);
+
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\">";
 	print "<th>" . $ExtraFirstColumnTitle[$extranum];
 	print "&nbsp; - &nbsp; <a href=\""
@@ -20702,11 +20888,11 @@ if ( scalar keys %HTMLOutput ) {
 		print "\n";
 	}
 
-	# Call to plugins' function AddHTMLBodyHeader
-	foreach my $pluginname ( keys %{ $PluginsLoaded{'AddHTMLBodyHeader'} } ) {
-		my $function = "AddHTMLBodyHeader_$pluginname";
-		&$function();
-	}
+	# # Call to plugins' function AddHTMLBodyHeader
+	# foreach my $pluginname ( keys %{ $PluginsLoaded{'AddHTMLBodyHeader'} } ) {
+	# 	my $function = "AddHTMLBodyHeader_$pluginname";
+	# 	&$function();
+	# }
 
 # TotalVisits TotalUnique TotalPages TotalHits TotalBytes TotalHostsKnown TotalHostsUnknown
 	$TotalUnique = $TotalVisits = $TotalPages = $TotalHits = $TotalBytes = 0;
