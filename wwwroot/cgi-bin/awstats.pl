@@ -1216,8 +1216,8 @@ sub tab_head {
 	my $tooltip = shift || 0;
 	my $msg = shift || 0;
 
-	print '<section title="' . $title . '" id="' . $anchor . '">';
-	print '<header>'
+	my $head =  '<section title="' . $title . '" id="' . $anchor . '">'
+	. '<header>'
 	. $title . (($subtitle ne '') ? ' <small>' . $subtitle . '</small>' : '');
 
 	# Call to plugins' function TabHeadHTML
@@ -1227,17 +1227,17 @@ sub tab_head {
 		$extra_head_html .= &$function($title);
 	}
 
-	print ' ' . $extra_head_html;
+	$head .= ' ' . $extra_head_html;
 
 	if ($tooltip) {
-		print '<span class="tooltip">' . $tooltip . '</span>';
+		$head .= '<span class="tooltip">' . $tooltip . '</span>';
 	}
 
 	if ($msg) {
-		print '<div> <small>' . $msg . '</small></div>';
+		$head .= '<div> <small>' . $msg . '</small></div>';
 	}
 
-	print '</header>';
+	$head .= '</header>';
 
 # 	print "<tr><td colspan=\"2\">\n";
 # 	if ( $width == 70 && $QueryString =~ /buildpdf/i ) {
@@ -1248,6 +1248,8 @@ sub tab_head {
 # 		print
 # "<table class=\"aws_data\">\n";
 # 	}
+
+	return $head;
 }
 
 #------------------------------------------------------------------------------
@@ -1259,7 +1261,7 @@ sub tab_head {
 #------------------------------------------------------------------------------
 sub tab_end {
 	my $string = shift;
-	print (($string) ? "<div>$string</div>" : '') . '</section>';
+	return (($string) ? "<div>$string</div>" : '') . '</section>';
 }
 
 #------------------------------------------------------------------------------
@@ -10028,7 +10030,7 @@ sub HTMLShowEmailSendersChart {
 			  . "\"$NewLinkTarget>$Message[9]</a>";
 		}
 	}
-	&tab_head( "$title", 19, 0, 'emailsenders' );
+	print &tab_head( "$title", 19, 0, 'emailsenders' );
 	print
 "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"3\">$Message[131] : "
 	  . ( scalar keys %_emails_h ) . "</th>";
@@ -10140,7 +10142,8 @@ sub HTMLShowEmailSendersChart {
 		if ( $ShowEMailSenders =~ /L/i ) { print "<td>&nbsp;</td>"; }
 		print "</tr>\n";
 	}
-	&tab_end();
+	
+	print '</table>' . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -10195,7 +10198,7 @@ sub HTMLShowEmailReceiversChart {
 			  . "\"$NewLinkTarget>$Message[9]</a>";
 		}
 	}
-	&tab_head( "$title", 19, 0, 'emailreceivers' );
+	print &tab_head( "$title", 19, 0, 'emailreceivers' );
 	print
 "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"3\">$Message[132] : "
 	  . ( scalar keys %_emailr_h ) . "</th>";
@@ -10310,7 +10313,8 @@ sub HTMLShowEmailReceiversChart {
 		if ( $ShowEMailReceivers =~ /L/i ) { print "<td>&nbsp;</td>"; }
 		print "</tr>\n";
 	}
-	&tab_end();
+	
+	print '</table>' . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -10969,7 +10973,7 @@ sub HTMLMainFileType{
 		$tooltip .= &$function(19);
 	}
 
-	&tab_head($title, $subtitle, 'filetypes', $tooltip);
+	print &tab_head($title, $subtitle, 'filetypes', $tooltip);
 		
 	print '<table class="data-table">';
 
@@ -11112,9 +11116,7 @@ sub HTMLMainFileType{
 		print "</tr>\n";
 	}
 
-	print '</table>';
-
-	&tab_end();
+	print '</table>' . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -11170,7 +11172,7 @@ sub HTMLMainFileSize{
 		$tooltip .= &$function(19);
 	}
 
-  &tab_head($title, '', 'filesizes', $tooltip);
+  print &tab_head($title, '', 'filesizes', $tooltip);
 
   my $Totals = 0;
   my $average_s = 0;
@@ -11211,9 +11213,7 @@ sub HTMLMainFileSize{
     . "</tr>\n";
   }
 
-	print '</table>';
-  
-  &tab_end();
+	print '</table>' . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -11268,7 +11268,7 @@ sub HTMLMainRequestTime{
 		$tooltip .= &$function(19);
 	}
 
-  &tab_head($title, '', 'requesttimes', $tooltip);
+  print &tab_head($title, '', 'requesttimes', $tooltip);
   
   my $Totals = 0;
   my $average_s = 0;
@@ -11306,9 +11306,7 @@ sub HTMLMainRequestTime{
           print "</tr>\n";
   }
 
-	print '</table>';
-
-  &tab_end();
+	print '</table>' . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -11331,7 +11329,7 @@ sub HTMLShowBrowserDetail{
 		$tooltip .= &$function(19);
 	}
 
-	&tab_head($title, '', 'browsersversions', $tooltip);
+	print &tab_head($title, '', 'browsersversions', $tooltip);
 	
 	print
 "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[58]</th>";
@@ -11571,7 +11569,9 @@ sub HTMLShowBrowserDetail{
 		print "</td>";
 		print "</tr>\n";
 	}
-	&tab_end();
+
+	print '</table>' . &tab_end();
+
 	&html_end(1);
 }
 
@@ -11594,7 +11594,7 @@ sub HTMLShowBrowserUnknown{
            . "&siteConfig=$SiteConfig" )
            . "\"$NewLinkTarget>$Message[179]</a>");
     } 
-	&tab_head( "$title", 19, 0, 'unknownbrowser' );
+	print &tab_head( "$title", 19, 0, 'unknownbrowser' );
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>User agent ("
 	  . ( scalar keys %_unknownrefererbrowser_l )
 	  . ")</th><th>$Message[9]</th></tr>\n";
@@ -11618,7 +11618,9 @@ sub HTMLShowBrowserUnknown{
 		print "<td>-</td>";
 		print "</tr>\n";
 	}
-	&tab_end();
+	
+	print '</table>' . &tab_end();
+
 	&html_end(1);
 }
 
@@ -11633,7 +11635,7 @@ sub HTMLShowOSDetail{
 	# Show os versions
 	print "<a name=\"osversions\">&nbsp;</a>";
 	my $title = "$Message[59]";
-	&tab_head( "$title", 19, 0, 'osversions' );
+	print &tab_head( "$title", 19, 0, 'osversions' );
 	print
 "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[58]</th>";
 	print
@@ -11841,7 +11843,9 @@ sub HTMLShowOSDetail{
 		print "</td>";
 		print "</tr>\n";
 	}
-	&tab_end();
+	
+	print '</table>' . &tab_end();
+
 	&html_end(1);
 }
 
@@ -11864,7 +11868,7 @@ sub HTMLShowOSUnknown{
            . "&siteConfig=$SiteConfig" )
            . "\"$NewLinkTarget>$Message[179]</a>");
     } 
-    &tab_head( "$title", 19, 0, 'unknownos' );
+    print &tab_head( "$title", 19, 0, 'unknownos' );
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>User agent ("
 	  . ( scalar keys %_unknownreferer_l )
 	  . ")</th><th>$Message[9]</th></tr>\n";
@@ -11888,7 +11892,9 @@ sub HTMLShowOSUnknown{
 		print "<td>-</td>";
 		print "</tr>\n";
 	}
-	&tab_end();
+	
+	print '</table>' . &tab_end();
+
 	&html_end(1);
 }
 
@@ -11911,7 +11917,7 @@ sub HTMLShowReferers{
            . "&siteConfig=$SiteConfig" )
            . "\"$NewLinkTarget>$Message[179]</a>");
     } 
-    &tab_head( $title, 19, 0, 'refererse' );
+    print &tab_head( $title, 19, 0, 'refererse' );
 	print
 "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>".Format_Number($TotalDifferentSearchEngines)." $Message[122]</th>";
 	print
@@ -11990,7 +11996,9 @@ sub HTMLShowReferers{
 		print "<td>$p_h %</td>";
 		print "</tr>\n";
 	}
-	&tab_end();
+	
+	print '</table>' . &tab_end();
+
 	&html_end(1);
 }
 
@@ -12026,7 +12034,7 @@ sub HTMLShowRefererPages{
     }
     my $cpt   = 0;
 	$cpt = ( scalar keys %_pagesrefs_h );
-	&tab_head( "$title", 19, 0, 'refererpages' );
+	print &tab_head( "$title", 19, 0, 'refererpages' );
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>";
 	if ( $FilterIn{'refererpages'} || $FilterEx{'refererpages'} ) {
 
@@ -12128,7 +12136,9 @@ sub HTMLShowRefererPages{
 		print "<td>$p_h %</td>";
 		print "</tr>\n";
 	}
-	&tab_end();
+	
+	print '</table>' . &tab_end();
+
 	&html_end(1);
 }
 
@@ -12151,7 +12161,7 @@ sub HTMLShowKeyPhrases{
            . "&siteConfig=$SiteConfig" )
            . "\"$NewLinkTarget>$Message[179]</a>");
     } 
-	&tab_head( $title, 19, 0, 'keyphrases' );
+	print &tab_head( $title, 19, 0, 'keyphrases' );
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\""
 	  . Tooltip(15)
 	  . "><th>".Format_Number($TotalDifferentKeyphrases)." $Message[103]</th><th class=\"bg-s\" width=\"80\">$Message[14]</th><th class=\"bg-s\" width=\"80\">$Message[15]</th></tr>\n";
@@ -12196,7 +12206,9 @@ sub HTMLShowKeyPhrases{
 "<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[124]</span></td><td>".Format_Number($rest_s)."</td>";
 				print "<td>$p %</td></tr>\n";
 	}
-	&tab_end();
+	
+	print '</table>' . &tab_end();
+
 	&html_end(1);
 }
 
@@ -12219,7 +12231,7 @@ sub HTMLShowKeywords{
            . "&siteConfig=$SiteConfig" )
            . "\"$NewLinkTarget>$Message[179]</a>");
     } 
-	&tab_head( $title, 19, 0, 'keywords' );
+	print &tab_head( $title, 19, 0, 'keywords' );
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\""
 	  . Tooltip(15)
 	  . "><th>".Format_Number($TotalDifferentKeywords)." $Message[13]</th><th class=\"bg-s\" width=\"80\">$Message[14]</th><th class=\"bg-s\" width=\"80\">$Message[15]</th></tr>\n";
@@ -12261,7 +12273,9 @@ sub HTMLShowKeywords{
 "<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[30]</span></td><td>".Format_Number($rest_s)."</td>";
 		print "<td>$p %</td></tr>\n";
 	}
-	&tab_end();
+	
+	print '</table>' . &tab_end();
+
 	&html_end(1);
 }
 
@@ -12280,7 +12294,7 @@ sub HTMLShowErrorCodes{
 	           (join(' ', ( ($httpcodelib{$code} ? $httpcodelib{$code} :
 	           'Unknown error'), "urls (HTTP code " . $code . ")" )));
 	print "<a name=\"errors$code\">&nbsp;</a>";
-	&tab_head( $title, 19, 0, "errors$code" );
+	print &tab_head( $title, 19, 0, "errors$code" );
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>URL ("
 	  . Format_Number(( scalar keys %{$_sider_h{$code}} ))
 	  . ")</th><th class=\"bg-h\">$Message[49]</th>";
@@ -12327,7 +12341,9 @@ sub HTMLShowErrorCodes{
 #				print "<td>...</td>";
 #				print "</tr>\n";
 #			}
-	&tab_end();
+	
+	print '</table>' . &tab_end();
+
 	&html_end(1);
 }
 
@@ -12348,7 +12364,7 @@ sub HTMLShowExtraSections{
 			if ($Debug) { debug( "ExtraName$extranum", 2 ); }
 			print "<a name=\"extra$extranum\">&nbsp;</a>";
 			my $title = $ExtraName[$extranum];
-			&tab_head( "$title", 19, 0, "extra$extranum" );
+			print &tab_head( "$title", 19, 0, "extra$extranum" );
 			print "<tr bgcolor=\"#$color_TableBGRowTitle\">";
 			print "<th>" . $ExtraFirstColumnTitle[$extranum] . "</th>";
 
@@ -12488,7 +12504,9 @@ sub HTMLShowExtraSections{
 				}
 				print "</tr>\n";
 			}
-			&tab_end();
+			
+			print '</table>' . &tab_end();
+
 			&html_end(1);
 		}
 	}
@@ -12515,7 +12533,7 @@ sub HTMLShowRobots{
 	my $title = '';
 	if ( $HTMLOutput{'allrobots'} )  { $title .= "$Message[53]"; }
 	if ( $HTMLOutput{'lastrobots'} ) { $title .= "$Message[9]"; }
-	&tab_head( "$title", 19, 0, 'robots' );
+	print &tab_head( "$title", 19, 0, 'robots' );
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>"
 	  . Format_Number(( scalar keys %_robot_h ))
 	  . " $Message[51]</th>";
@@ -12602,8 +12620,9 @@ sub HTMLShowRobots{
 		if ( $ShowRobotsStats =~ /L/i ) { print "<td>&nbsp;</td>"; }
 		print "</tr>\n";
 	}
-	&tab_end(
-		"* $Message[156]" . ( $TotalRRobots ? " $Message[157]" : "" ) );
+
+	print '</table>' . &tab_end("* $Message[156]" . ( $TotalRRobots ? " $Message[157]" : "" ) );
+
 	&html_end(1);
 }
 
@@ -12646,7 +12665,7 @@ sub HTMLShowURLDetail{
 		$title = $Message[116];
 		$cpt   = ( scalar keys %_url_x );
 	}
-	&tab_head( "$title", 19, 0, 'urls' );
+	print &tab_head( "$title", 19, 0, 'urls' );
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>";
 	if ( $FilterIn{'url'} || $FilterEx{'url'} ) {
 		if ( $FilterIn{'url'} ) {
@@ -12842,7 +12861,9 @@ sub HTMLShowURLDetail{
 		}
 		print "<td>&nbsp;</td></tr>\n";
 	}
-	&tab_end();
+	
+	print '</table>' . &tab_end();
+
 	&html_end(1);
 }
 
@@ -12864,7 +12885,7 @@ sub HTMLShowLogins{
 	my $title = '';
 	if ( $HTMLOutput{'alllogins'} )  { $title .= "$Message[94]"; }
 	if ( $HTMLOutput{'lastlogins'} ) { $title .= "$Message[9]"; }
-	&tab_head( "$title", 19, 0, 'logins' );
+	print &tab_head( "$title", 19, 0, 'logins' );
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$Message[94] : "
 	  . Format_Number(( scalar keys %_login_h )) . "</th>";
 	&HTMLShowUserInfo('__title__');
@@ -12951,7 +12972,9 @@ sub HTMLShowLogins{
 		}
 		print "</tr>\n";
 	}
-	&tab_end();
+	
+	print '</table>' . &tab_end();
+
 	&html_end(1);
 }
 
@@ -12970,7 +12993,7 @@ sub HTMLShowHostsUnknown{
 	my $rest_h = 0;
 	my $rest_k = 0;
 	print "<a name=\"unknownip\">&nbsp;</a>";
-	&tab_head( "$Message[45]", 19, 0, 'unknownwip' );
+	print &tab_head( "$Message[45]", 19, 0, 'unknownwip' );
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>"
 	  . Format_Number(( scalar keys %_host_h ))
 	  . " $Message[1]</th>";
@@ -13049,7 +13072,9 @@ sub HTMLShowHostsUnknown{
 		if ( $ShowHostsStats =~ /L/i ) { print "<td>&nbsp;</td>"; }
 		print "</tr>\n";
 	}
-	&tab_end();
+	
+	print '</table>' . &tab_end();
+
 	&html_end(1);
 }
 
@@ -13084,7 +13109,7 @@ sub HTMLShowHosts{
 		$title .= "$Message[9]";
 		$cpt = ( scalar keys %_host_h );
 	}
-	&tab_head( "$title", 19, 0, 'hosts' );
+	print &tab_head( "$title", 19, 0, 'hosts' );
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>";
 	if ( $FilterIn{'host'} || $FilterEx{'host'} ) {    # With filter
 		if ( $FilterIn{'host'} ) {
@@ -13220,7 +13245,9 @@ sub HTMLShowHosts{
 		if ( $ShowHostsStats =~ /L/i ) { print "<td>&nbsp;</td>"; }
 		print "</tr>\n";
 	}
-	&tab_end();
+	
+	print '</table>' . &tab_end();
+
 	&html_end(1);
 }
 
@@ -13251,7 +13278,7 @@ sub HTMLShowDomains{
 		$title .= "$Message[25]";
 		$cpt = ( scalar keys %_domener_h );
 	}
-	&tab_head( "$title", 19, 0, 'domains' );
+	print &tab_head( "$title", 19, 0, 'domains' );
 	print
 "<tr bgcolor=\"#$color_TableBGRowTitle\"><th width=\"$WIDTHCOLICON\">&nbsp;</th><th colspan=\"2\">$Message[17]</th>";
 	if ( $ShowDomainsStats =~ /U/i ) {
@@ -13398,7 +13425,9 @@ sub HTMLShowDomains{
 		print "<td class=\"aws\">&nbsp;</td>";
 		print "</tr>\n";
 	}
-	&tab_end();
+	
+	print '</table>' . &tab_end();
+
 	&html_end(1);
 }
 
@@ -13412,7 +13441,7 @@ sub HTMLShowDomains{
 sub HTMLShowDownloads{
 	my $regext         = qr/\.(\w{1,6})$/;
 	print "<a name=\"downloads\">&nbsp;</a>";
-	&tab_head( $Message[178], 19, 0, "downloads" );
+	print &tab_head( $Message[178], 19, 0, "downloads" );
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[178]</th>";
 	if ( $ShowFileTypesStats =~ /H/i ){print "<th class=\"bg-h\" width=\"80\">$Message[57]</th>"
 		."<th class=\"bg-h\" width=\"80\">206 $Message[57]</th>"; }
@@ -13457,7 +13486,9 @@ sub HTMLShowDownloads{
 		$count++;
 		if ($count >= $MaxRowsInHTMLOutput){last;}
 	}
-	&tab_end();
+	
+	print '</table>' . &tab_end();
+
 	&html_end(1);
 }
 
@@ -13793,7 +13824,7 @@ sub HTMLMainMonthly{
 	$average_k = sprintf( "%.2f", $total_k / $not_empty_months );
 
 	# print "<a name=\"month\">&nbsp;</a>";
-	&tab_head( $title, '', 'month' );
+	print &tab_head( $title, '', 'month' );
 
 	# Show bars for month
 	if ($graphPlugin == 1) {
@@ -13863,7 +13894,7 @@ sub HTMLMainMonthly{
 		print '<tbody>' . $tableData . '</tbody>' . '</table>';
 	}
 
-	&tab_end();
+	print '</table>' . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -13935,7 +13966,7 @@ sub HTMLMainDaily{
 
   # print "<a name=\"daysofmonth\">&nbsp;</a>";
 		
-	&tab_head( $title, '', 'daysofmonth' );
+	print &tab_head( $title, '', 'daysofmonth' );
 	
 	print '<tr>' . '<td>';
 	
@@ -14127,8 +14158,7 @@ sub HTMLMainDaily{
 
 	}
 
-	print "</td></tr>\n";
-	&tab_end();
+	print '</td></tr>' . '</table>' . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -14167,7 +14197,7 @@ sub HTMLMainDaysofWeek{
 	}
 		
 	# print "<a name=\"daysofweek\">&nbsp;</a>";
-	&tab_head($title, '', 'daysofweek', $tooltip );
+	print &tab_head($title, '', 'daysofweek', $tooltip );
 
 	print '<tr>' . '<td>';
 
@@ -14325,9 +14355,7 @@ sub HTMLMainDaysofWeek{
 		print '</tbody></table>';
 	}
 
-	print "</td>";
-	print "</tr>\n";
-	&tab_end();
+	print '</td></tr>' . '</table>' . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -14366,7 +14394,7 @@ sub HTMLMainHours{
 		$tooltip .= &$function(19);
 	}
 
-	&tab_head( $title, '', 'hours', $tooltip );
+	print &tab_head( $title, '', 'hours', $tooltip );
 
 	my $width = 'var(--bar-v-width-hours)';
 	my $max_p =	my $max_h = my $max_k = 1;
@@ -14521,7 +14549,7 @@ sub HTMLMainHours{
 		print "</td></tr></table>\n";
 	}
 
-	&tab_end();
+	print '</table>' . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -14564,7 +14592,7 @@ sub HTMLMainCountries{
 		$tooltip .= &$function(19);
 	}
         	  
-	&tab_head( $title, $subtitle, 'countries', $tooltip);
+	print &tab_head( $title, $subtitle, 'countries', $tooltip);
 	
 	foreach ( values %_domener_u ) {
 		if ( $_ > $max_u ) { $max_u = $_; }
@@ -14726,7 +14754,7 @@ sub HTMLMainCountries{
 	
 	}
 
-	&tab_end();
+	print '</table>' . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -14760,7 +14788,7 @@ sub HTMLMainDownloads{
     . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>';
   }
 	  
-	&tab_head($title, '', 'downloads');
+	print &tab_head($title, '', 'downloads');
 	
 	my $cnt=0;
 	for my $u (sort {$_downloads{$b}->{'AWSTATS_HITS'} <=> $_downloads{$a}->{'AWSTATS_HITS'}}(keys %_downloads) ){
@@ -14847,9 +14875,7 @@ sub HTMLMainDownloads{
 		if ($count >= $MaxNbOf{'DownloadsShown'}){last;}
 	}
 
-	print '</table>';
-
-	&tab_end();
+	print '</table>' . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -14891,7 +14917,7 @@ sub HTMLMainHosts{
 		$tooltip .= &$function(19);
 	}
 	  
-	&tab_head( $title, $subtitle, 'hosts', $tooltip);
+	print &tab_head( $title, $subtitle, 'hosts', $tooltip);
 	
 	&BuildKeyList( $MaxNbOf{'HostsShown'}, $MinHit{'Host'}, \%_host_h, \%_host_p );
 		
@@ -15013,9 +15039,7 @@ sub HTMLMainHosts{
 		. '</tr>';
 	}
 
-	print '</table>';
-	
-	&tab_end();
+	print '</table>' . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -15050,7 +15074,7 @@ sub HTMLMainLogins{
 		  )
 		  . "\"$NewLinkTarget>$Message[9]</a>";
 	}
-	&tab_head( "$title", 19, 0, 'logins' );
+	print &tab_head( "$title", 19, 0, 'logins' );
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$Message[94] : "
 	  . Format_Number(( scalar keys %_login_h )) . "</th>";
 	&HTMLShowUserInfo('__title__');
@@ -15152,7 +15176,8 @@ sub HTMLMainLogins{
 		}
 		print "</tr>\n";
 	}
-	&tab_end();
+
+	print '</table>' . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -15196,7 +15221,7 @@ sub HTMLMainRobots{
 		$tooltip .= &$function(19);
 	}
         
-  &tab_head($title, $subtitle, 'robots',  $tooltip, '* ' . $Message[156] . ' ' . ( $TotalRRobots ? $Message[157] : '' ));
+  print &tab_head($title, $subtitle, 'robots',  $tooltip, '* ' . $Message[156] . ' ' . ( $TotalRRobots ? $Message[157] : '' ));
         
   print '<table class="data-table">'
   . "<tr bgcolor=\"#$color_TableBGRowTitle\""
@@ -15254,9 +15279,7 @@ sub HTMLMainRobots{
 		. '</tr>';
 	}
 
-	print '</table>';
-
-	&tab_end();
+	print '</table>' . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -15278,7 +15301,7 @@ sub HTMLMainWorms{
 		$tooltip .= &$function(19);
 	}
         
-	&tab_head( $Message[163] . ' (' . $Message[77] . $MaxNbOf{'WormsShown'} . ')', '', 'worms', $tooltip, '*' . $Message[158] );
+	print &tab_head( $Message[163] . ' (' . $Message[77] . $MaxNbOf{'WormsShown'} . ')', '', 'worms', $tooltip, '*' . $Message[158] );
 
   print '<table class="data-table">'
 	. "<tr bgcolor=\"#$color_TableBGRowTitle\"" . Tooltip(21) . ">"
@@ -15360,8 +15383,7 @@ sub HTMLMainWorms{
 		print "</tr>\n";
 	}
 
-	print '</table>';
-	&tab_end();
+	print '</table>' . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -15383,7 +15405,7 @@ sub HTMLMainSessions{
 		$tooltip .= &$function(19);
 	}
         
-	&tab_head( $title, '', 'sessions', $tooltip);
+	print &tab_head( $title, '', 'sessions', $tooltip);
 
 	my $Totals = 0;
 	my $average_s = 0;
@@ -15428,9 +15450,7 @@ sub HTMLMainSessions{
 		print "</tr>\n";
 	}
 
-	print '<table>';
-
-	&tab_end();
+	print '</table>' . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -15483,7 +15503,7 @@ sub HTMLMainPages{
 		$tooltip .= &$function(19);
 	}
 
-	&tab_head($title, $subtitle, 'urls', $tooltip);
+	print &tab_head($title, $subtitle, 'urls', $tooltip);
 
 	print '<table>'
 	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>".Format_Number($TotalDifferentPages)." $Message[28]</th>";
@@ -15657,7 +15677,8 @@ sub HTMLMainPages{
 		}
 		print "<td>&nbsp;</td></tr>\n";
 	}
-	&tab_end();
+
+	print '</table>' . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -15715,7 +15736,7 @@ sub HTMLMainOS{
 		$tooltip .= &$function(19);
 	}
 
-	&tab_head($title, $subtitle, 'os', $tooltip);
+	print &tab_head($title, $subtitle, 'os', $tooltip);
 	
 	&BuildKeyList( $MaxNbOf{'OsShown'}, $MinHit{'Os'}, \%new_os_h,
 		\%new_os_p );
@@ -15823,9 +15844,7 @@ sub HTMLMainOS{
 		. "<td>$p_p %</td><td>".Format_Number($rest_h)."</td><td>$p_h %</td></tr>\n";
 	}
 
-	print '</table>';
-
-	&tab_end();
+	print '</table>' . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -15882,7 +15901,7 @@ sub HTMLMainBrowsers{
 		$tooltip .= &$function(19);
 	}
 
-	&tab_head($title, $subtitle, 'browsers',  $tooltip);
+	print &tab_head($title, $subtitle, 'browsers',  $tooltip);
 	
 	&BuildKeyList(
 		$MaxNbOf{'BrowsersShown'}, $MinHit{'Browser'},
@@ -16001,9 +16020,7 @@ sub HTMLMainBrowsers{
 		print "<td>$p_p %</td><td>$rest_h</td><td>$p_h %</td></tr>\n";
 	}
 
-	print '<table>';
-
-	&tab_end();
+	print '</table>' . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -16021,7 +16038,7 @@ sub HTMLMainScreenSize{
 	
 	my $title = $Message[135] . ' (' . $Message[77] . ' ' . $MaxNbOf{'ScreenSizesShown'} . ')';
 
-	&tab_head($title, '', 'screensizes');
+	print &tab_head($title, '', 'screensizes');
 	
 	print '<table class="data-table">'
 	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$Message[135]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th></tr>\n";
@@ -16061,9 +16078,7 @@ sub HTMLMainScreenSize{
 		print "</tr>\n";
 	}
 
-	print '</table>';
-
-	&tab_end();
+	print '</table>' . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -16107,7 +16122,7 @@ sub HTMLMainReferrers{
 		$tooltip .= &$function(19);
 	}
 
-	&tab_head($title, $subtitle, 'referer', $tooltip);
+	print &tab_head($title, $subtitle, 'referer', $tooltip);
 
 	my @p_p = ( 0, 0, 0, 0, 0, 0 );
 	if ( $Totalp > 0 ) {
@@ -16335,9 +16350,7 @@ sub HTMLMainReferrers{
 		  . ( $_from_h[1] ? "$p_h[1] %" : "&nbsp;" ) . "</td>";
 	}
 
-	print '</tr></table>';
-	
-	&tab_end();
+	print '</tr></table>' . &tab_end();
 
 	# 0: Direct
 	# 1: Unknown
@@ -16383,7 +16396,7 @@ sub HTMLMainKeys{
 			$tooltip .= &$function(19);
 		}
 
-		&tab_head($title, $subtitle, 'keyphrases', $tooltip);
+		print &tab_head($title, $subtitle, 'keyphrases', $tooltip);
 		
 		print '<table class="data-table">'
 		. "<tr bgcolor=\"#$color_TableBGRowTitle\""
@@ -16430,8 +16443,7 @@ sub HTMLMainKeys{
 			print "<td>$p&nbsp;%</td></tr>\n";
 		}
 
-		print '</table>';
-		&tab_end();
+		print '</table>' . &tab_end();
 	}
 
 	if ($ShowKeywordsStats)
@@ -16450,7 +16462,7 @@ sub HTMLMainKeys{
 			$tooltip .= &$function(19);
 		}
 
-		&tab_head($title, $subtitle, 'keywords', $tooltip);
+		print &tab_head($title, $subtitle, 'keywords', $tooltip);
 
 		print '<table class="data-table">'
 		. "<tr bgcolor=\"#$color_TableBGRowTitle\""
@@ -16496,9 +16508,7 @@ sub HTMLMainKeys{
 			print "<td>$p %</td></tr>\n";
 		}
 
-		print '</table>';
-
-		&tab_end();
+		print '</table>' . &tab_end();
 	}
 }
 
@@ -16522,7 +16532,7 @@ sub HTMLMainMisc{
 		$tooltip .= &$function(19);
 	}
 
-	&tab_head($title, '', 'misc', $tooltip);
+	print &tab_head($title, '', 'misc', $tooltip);
 	
 	print '<table class="data-table">'
 	. '<tr bgcolor="#' . $color_TableBGRowTitle . '"><th>' . $Message[139] . '</th>'
@@ -16577,9 +16587,7 @@ sub HTMLMainMisc{
 		print "</tr>\n";
 	}
 
-	print '</table>';
-
-	&tab_end();
+	print '</table>' . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -16612,7 +16620,7 @@ sub HTMLMainHTTPStatus{
 		$tooltip .= &$function(19);
 	}
 
-	&tab_head($title, $subtitle, 'errors', $tooltip, '*' . $Message[154]);
+	print &tab_head($title, $subtitle, 'errors', $tooltip, '*' . $Message[154]);
 	
 	&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_errors_h, \%_errors_h );
 
@@ -16673,9 +16681,7 @@ sub HTMLMainHTTPStatus{
 		$count++;
 	}
 
-	print '<table>';
-
-	&tab_end();
+	print '</table>' . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -16700,7 +16706,7 @@ sub HTMLMainSMTPStatus{
 		$tooltip .= &$function(19);
 	}
 
-	&tab_head($title, '', 'errors', $tooltip );
+	print &tab_head($title, '', 'errors', $tooltip );
 
 	print
 "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[147]</th><th class=\"bg-h\" width=\"80\">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th><th class=\"bg-k\" width=\"80\">$Message[75]</th></tr>\n";
@@ -16721,7 +16727,8 @@ sub HTMLMainSMTPStatus{
 		$total_h += $_errors_h{$key};
 		$count++;
 	}
-	&tab_end();
+	
+	print '</table>' . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -16755,7 +16762,7 @@ sub HTMLMainCluster{
 		$tooltip .= &$function(19);
 	}
 
-	&tab_head($title, '', 'clusters', $tooltip);
+	print &tab_head($title, '', 'clusters', $tooltip);
 	
 	&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_cluster_p, \%_cluster_p );
 	
@@ -16835,7 +16842,8 @@ sub HTMLMainCluster{
 		print "</tr>\n";
 		$count++;
 	}
-	&tab_end();
+	
+	print '</table>' . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -16862,7 +16870,7 @@ sub HTMLMainExtra{
 		$tooltip .= &$function(19);
 	}
 
-	&tab_head($title, 'extra' . $extranum, '', $tooltip);
+	print &tab_head($title, 'extra' . $extranum, '', $tooltip);
 
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\">";
 	print "<th>" . $ExtraFirstColumnTitle[$extranum];
@@ -17021,7 +17029,8 @@ sub HTMLMainExtra{
 		}
 		print "</tr>\n";
 	}
-	&tab_end();
+	
+	print '</table>' . &tab_end();
 }
 
 #------------------------------------------------------------------------------
