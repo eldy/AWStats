@@ -936,6 +936,12 @@ sub renderCss {
 	. '--a-color: #' . $color_link . ';'
 	. '--a-hover-color: #' . $color_hover . ';'
 	. '--bar-width: ' . $BarWidth .'px; /* default 125 */'
+	. '--bar-v-height: 20; /* default 75 */'
+	. '--bar-v-grow: 1;'
+	. '--bar-v-width-month: 0.44dvw;'
+	. '--bar-v-width-daily: 0.17dvw;'
+	. '--bar-v-width-weekday: 0.75dvw;'
+	. '--bar-v-width-hours: 0.23dvw;'
 	. '}'
 	. <<EOF;
 body { font: 0.75rem sans-serif, system-ui; background-color: var(--page-bgcolor); margin: 0; padding:0; color: var(--page-color) }
@@ -944,22 +950,23 @@ a:hover, a:focus, a:active{ color: var(--a-hover-color); text-decoration: none; 
 b { font-weight: 700 }
 hr { width: 100%; height: 0; margin: 0; color: transparent; border: none; }
 small { font-size: 0.7rem; font-weight: 400; }
-#container { display: flex; flex-wrap: wrap; justify-content: center; row-gap: 25px; align-items: flex-start;}
-#container > header { position: sticky; top: 0; z-index: 100; width: 100%; background-color: var(--page-bgcolor); display: flex; flex-wrap: wrap; column-gap: 20px; justify-content: center; }
+#container { display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; align-items: flex-start;}
+#container > header { position: sticky; top: 0; z-index: 100; width: 100%; background-color: var(--page-bgcolor); display: flex; flex-wrap: wrap; column-gap: 20px; justify-content: center; text-align: center; }
 #domain { font-weight: 900; font-size: 2.4em }
 header select { width : 60px }
+#logo { height: 40px; }
 nav { width: 100%; height: 17px; margin: 8px 0; background-color: white; text-align: center; }
 #about { width: 100%; text-align: center; }
 nav { margin-top: 0; }
-#summary-logs { max-width: 100%; text-align: center;  margin: auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; align-items: flex-start;}
+#summary-logs { max-width: 100%; text-align: center;  margin: auto; display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;}
 #summary-logs div { padding: 2px 0 }
 .summary-label { margin: 0 9px; }
 #summary-logs div[class^="bg-"], .currentday{ width:var(--bar-width); font-weight: 900 }
 div[class^="bg-"], th[class^="bg-"] { width: var(--bar-width) }
 button, select, input[type=submit] { cursor: pointer; color: var(--light-color); background-color: var(--dark-color); border: 1px solid #ccd7e0; }
-h1, section header {border-bottom: 8px solid var(--light-color); width: 100%; margin: 0; text-align: center; font-weight: 900; font-size: 1.4rem; }
+h1, section header {border-bottom: 6px solid var(--light-color); width: 100%; margin: 0; text-align: center; font-weight: 900; font-size: 1rem; }
 .multi-data-table { display: flex; column-gap: 3dvw; flex-wrap: wrap; justify-content: center }
-.multi-data-table.worldmap{ width: 60%; position: relative; }
+.multi-data-table.worldmap{ position: relative; }
 .data-table { border-spacing: 0 2px; margin: auto; }
 .data-table tfoot { display: table-header-group }
 .data-table tbody div { opacity: 0.9 }
@@ -968,23 +975,19 @@ h1, section header {border-bottom: 8px solid var(--light-color); width: 100%; ma
 .data-table th { font-weight: 900 }
 .data-table th, .data-table td:not(:first-child) { padding: 2px 0 }
 .data-table td:first-child { padding-right: 4px }
-.data-table td div { padding: 3px 4px }
+.data-table td div { padding: 0 4px }
 .data-table td { text-align: right; font-weight: 700; }
 .data-table td:first-child:not(.country) { font-weight: 400 }
 .data-table tfoot .data-table-sum td { border-top: 1px solid rgba(192,192,192,0.2); }
 .data-table-sum { font-size : 1.3em }
-.data-table .title { font-size: 2em }
-.bar-table { margin: auto; text-align: center; font-size: 10px; }
+.bar-table { margin: auto; text-align: center; font-size: 10px; border-bottom: 6px solid var(--light-color);}
 .bar-table tr:first-child td { vertical-align: bottom; }
 .bar-table span { font-size: 0.8em }
 .bar{  }
 .bar-horizontal{ height: 4px }
-.bar-vertical{ display: inline-block; width: 4px; }
-.clock{ display: inline-block; vertical-align: bottom; margin: 0 5px; border-radius: 50%; }
-.bar-table .clock {  width: 1dvw; height: 1dvw }
-.data-table .clock {  width: 16px; height: 16px }
+.bar-vertical{ display: inline-block; transition: height 0.5s ease-out;  }
 .hr-1{ rotate: 30deg } .hr-2{ rotate: 60deg } .hr-3{ rotate: 90deg } .hr-4{ rotate: 120deg } .hr-5{ rotate: 150deg } .hr-6{ rotate: 180deg } .hr-7{ rotate: 210deg } .hr-8{ rotate: 240deg } .hr-9{ rotate: 270deg } .hr-10{ rotate: 300deg } .hr-11{ rotate: 330deg }
-#worldmap{ width: 56%; margin-bottom: 1dvh; background-color: #4477DD; }
+#worldmap{ width: 100%; margin-bottom: 1dvh; background-color: #4477DD; }
 .title-map{ position:absolute; top: 16px; color: var(--light-color); }
 .country { text-transform: uppercase; font-weight: 700; }
 /* colors */
@@ -996,8 +999,11 @@ h1, section header {border-bottom: 8px solid var(--light-color); width: 100%; ma
 .bg-e{ background-color: var(--aws-color-e) }
 .bg-x{ background-color: var(--aws-color-x) }
 .bg-s{ background-color: var(--aws-color-s) }
+.clock{ display: inline-block; vertical-align: bottom; margin: 0 5px; border-radius: 50%; }
 .clock-night{ background: conic-gradient(rgba(30, 28, 97, 1) 330deg, rgba(244, 240, 144, 1) 30deg); }
 .clock-day{ background: conic-gradient(rgba(244, 240, 144, 1) 330deg, rgba(30, 28, 97, 1) 30deg); }
+.bar-table .clock { width: 0.15dvw; height: 0.15dvw }
+.data-table .clock { width: 16px; height: 16px }
 .landxx{ fill: rgba(128, 86, 86, 1) !important; transition: fill 0.3s ease-in }
 .oceanxx{ fill: #4477DD !important; stroke-width: 0 !important; }
 .lighted-land{ fill: var(--aws-color-u) !important; fill-rule: evenodd;}
@@ -1034,7 +1040,21 @@ document.addEventListener("DOMContentLoaded", (d) => {
    				.map(letter => letter.charCodeAt(0) % 32 + 0x1F1E5)
    				.map(emojiCode => String.fromCodePoint(emojiCode))
    				.join('');
-   });
+  });
+
+	[...document.querySelectorAll('.bar-table')].forEach(el => {
+   		el.addEventListener("mouseenter", (e) => {
+   			[...el.querySelectorAll('.bar')].forEach(bar => {
+   				bar.style.setProperty('--bar-v-grow', 4);
+   			});
+   		});
+
+   		el.addEventListener("mouseleave", (e) => {
+   			[...el.querySelectorAll('.bar')].forEach(bar => {
+   				bar.style.setProperty('--bar-v-grow', 1);
+   			});
+   		});
+  });
 
 	let worldmap = document.getElementById('worldmap');
 
@@ -8496,13 +8516,13 @@ sub HtmlBar {
 	my $max = shift;
 	my $title = shift;
 	my $width = shift || 4;
-	my $height = ($max > 0) ? int( ( ( $data || 0 ) / $max ) * $BarHeight ): 0;
+	my $height = ($max > 0) ? int( ( $data || 0 ) * 100 / $max ) : 0;
 
 	if($data > 0 && $height < 1){
 		$height = 1;
 	}
 
-	return '<div class="bar bar-vertical bg-' . $type . '" style="width: ' . $width . (($width =~ m/^\d+$/) ? 'px' : '') . ';height: ' . $height . 'px" title="' . $title . ' : ' . $formattedData . '"></div>';
+	return '<div class="bar bar-vertical bg-' . $type . '" style="width: ' . $width . (($width =~ m/^\d+$/) ? 'px' : '') . ';height: calc( var(--bar-v-height) * var(--bar-v-grow) * ' . $height . 'px / 100)" title="' . $title . ' : ' . $formattedData . '"></div>';
 }
 
 #------------------------------------------------------------------------------
@@ -10334,7 +10354,7 @@ sub HTMLTopBanner{
 	}
 
 	print '<div>'
-	. '<a href="' . XMLEncode($LogoLink). '" target="awstatshome"><img src="' . $DirIcons . '/other/' . $Logo .'" ' . (( $LogoLink =~ "https://www.awstats.org" ) ? AltTitle( ucfirst($PROG) . ' Web Site' ) : '') . ' /></a>';
+	. '<a href="' . XMLEncode($LogoLink). '" target="awstatshome"><img id="logo" src="' . $DirIcons . '/other/' . $Logo .'" ' . (( $LogoLink =~ "https://www.awstats.org" ) ? AltTitle( ucfirst($PROG) . ' Web Site' ) : '') . ' /></a>';
 
 	if ( !$StaticLinks ) { Show_Flag_Links($Lang); }
 	
@@ -13461,12 +13481,12 @@ sub HTMLMainSummary{
 	print '<div>';
 
 	print '<div id="summary-logs">';
-	print '<h1>' . ($MonthRequired eq 'all' ? $YearRequired : $MonthNumLib{$MonthRequired} . ' ' . $YearRequired) . '</h1>';
+	# print '<h1>' . ($MonthRequired eq 'all' ? $YearRequired : $MonthNumLib{$MonthRequired} . ' ' . $YearRequired) . '</h1>';
 
 	# Show first/last
 	print '<div id="about">'
-	# . '<span class="summary-label">' . $Message[133] . ' <b class="summary-data">' . ($MonthRequired eq 'all' ? $YearRequired : $MonthNumLib{$MonthRequired} . ' ' . $YearRequired) . '</b></span>'
-	. '<span class="summary-label">' . $Message[8] . ' <b class="summary-data">' . ($FirstTime ? Format_Date($FirstTime, 0) : 'N/A') . '</b></span> - '
+	. '<span class="summary-label">' . $Message[8] . ' <b class="summary-data">' . ($FirstTime ? Format_Date($FirstTime, 0) : 'N/A') . '</b></span>'
+	. ' - <span class="summary-label"> <b class="summary-data">' . ($MonthRequired eq 'all' ? $YearRequired : $MonthNumLib{$MonthRequired} . ' ' . $YearRequired) . '</b></span> - '
 	. '<span class="summary-label">' . $Message[9] . ' <b class="summary-data">' . ($LastTime ? Format_Date( $LastTime, 0 ) : "NA" ) . '</b></span>'
 	. '</div>';
 
@@ -13603,7 +13623,7 @@ sub HTMLMainMonthly{
 
 	my $height = 0;
 	my $bars = '';
-	my $width = 8;
+	my $width = 'var(--bar-v-width-month)';
 	my $data = '';
 	my $tableData = '';
 
@@ -13840,7 +13860,7 @@ sub HTMLMainDaily{
 	my $total_u = my $total_v = my $total_p = my $total_h = my $total_k = 0;
 	my $max_v = my $max_p = my $max_h = my $max_k = 0;    # Start from 0 because can be lower than 1
 	my $height = 0;
-	my $width = '0.2dvw';
+	my $width = 'var(--bar-v-width-daily)';
 	my $bars = '';
 	my $data = '';
 	my $tableData = '';
@@ -13928,7 +13948,6 @@ sub HTMLMainDaily{
 			$valdata[ $xx++ ] = $DayPages{ $date } || 0;
 			$valdata[ $xx++ ] = $DayHits{ $date }  || 0;
 			$valdata[ $xx++ ] = $DayBytes{ $date } || 0;
-
 		}
 
 		$bars .=  '<td>';
@@ -13976,7 +13995,6 @@ sub HTMLMainDaily{
 			
 		$bars .= '</td>';
 		$tableData .= '</tr>';
-
 	}
 
 	# render Graph Plugin
@@ -14085,7 +14103,7 @@ sub HTMLMainDaysofWeek{
   my $NewLinkTarget = shift;	
 
 	my $title = "$Message[91]";
-	my $width = 15;
+	my $width = 'var(--bar-v-width-weekday)';
 	
 	my $max_p = my $max_h = my $max_k = 0;
 	my @avg_dayofweek_nb = ();
@@ -14261,129 +14279,6 @@ sub HTMLMainDaysofWeek{
 }
 
 #------------------------------------------------------------------------------
-# Function:     Prints the Downloads chart and table
-# Parameters:   -
-# Input:        $NewLinkParams, $NewLinkTarget
-# Output:       HTML
-# Return:       -
-#------------------------------------------------------------------------------
-sub HTMLMainDownloads{
-	my $NewLinkParams = shift;
-	my $NewLinkTarget = shift;
-	if (!$LevelForFileTypesDetection > 0){return;}
-	if ($Debug) { debug( "ShowDownloadStats", 2 ); }
-	my $regext         = qr/\.(\w{1,6})$/;
-	# print "<a name=\"downloads\">&nbsp;</a>";
-	my $Totalh = 0;
-	if ($MaxNbOf{'DownloadsShown'} < 1){$MaxNbOf{'DownloadsShown'} = 10;}	# default if undefined
-	
-	my $title = $Message[178] . ' ('. $Message[77] . ' ' . $MaxNbOf{'DownloadsShown'} .')';
-
-	my $link = XMLEncode($AWScript . ${NewLinkParams});
-	my $subtitle = '<a href="'
-	  . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? $link . 'output=downloads' : $StaticLinks . '.downloads.' . $StaticExt)
-	  . '" ' . $NewLinkTarget . '>' . $Message[80] . '</a>';
-
-  if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
-  { # extend the title to include the added link
-    $subtitle .= '<a href="'
-    . XMLEncode($AddLinkToExternalCGIWrapper . '?section=DOWNLOADS&baseName=' . $DirData  .'/' . $PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig)
-    . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>';
-  }
-	  
-	&tab_head($title, '', 'downloads');
-	
-	my $cnt=0;
-	for my $u (sort {$_downloads{$b}->{'AWSTATS_HITS'} <=> $_downloads{$a}->{'AWSTATS_HITS'}}(keys %_downloads) ){
-		$Totalh += $_downloads{$u}->{'AWSTATS_HITS'};
-		$cnt++;
-		if ($cnt > 4){last;}
-	}
-
-	print '<table class="data-table">';
-
-	# Graph the top five in a pie chart
-	if (($Totalh > 0) and (scalar keys %_downloads > 1)){
-		foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
-		{
-			my @blocklabel = ();
-			my @valdata = ();
-			my @valcolor = ($color_p);
-			my $cnt = 0;
-			for my $u (sort {$_downloads{$b}->{'AWSTATS_HITS'} <=> $_downloads{$a}->{'AWSTATS_HITS'}}(keys %_downloads) ){
-				push @valdata, ($_downloads{$u}->{'AWSTATS_HITS'} / $Totalh * 1000 ) / 10;
-				push @blocklabel, Get_Filename($u);
-				$cnt++;
-				if ($cnt > 4) { last; }
-			}
-			my $columns = 2;
-			if ($ShowDownloadsStats =~ /H/i){$columns += length($ShowDownloadsStats)+1;}
-			else{$columns += length($ShowDownloadsStats);}
-			print "<tr><td colspan=\"$columns\">";
-			my $function = "ShowGraph_$pluginname";
-			&$function(
-				"$Message[80]",              "downloads",
-				0, 						\@blocklabel,
-				0,           			\@valcolor,
-				0,              		0,
-				0,          			\@valdata
-			);
-			print "</td></tr>";
-		}
-	}
-	
-	my $total_dls = scalar keys %_downloads;
-	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[178]: $total_dls</th>";
-	if ( $ShowDownloadsStats =~ /H/i ){print "<th class=\"bg-h\" width=\"80\">$Message[57]</th>"
-		."<th class=\"bg-h\" width=\"80\">206 $Message[57]</th>"; }
-	if ( $ShowDownloadsStats =~ /B/i ){
-		print "<th class=\"bg-k\" width=\"80\">$Message[75]</th>";
-		print "<th class=\"bg-k\" width=\"80\">$Message[106]</th>"; 
-	}
-	print "</tr>\n";
-	my $count   = 0;
-	for my $u (sort {$_downloads{$b}->{'AWSTATS_HITS'} <=> $_downloads{$a}->{'AWSTATS_HITS'}}(keys %_downloads) ){
-		print "<tr>";
-		my $ext = Get_Extension($regext, $u);
-		if ( !$ext) {
-			print "<td"
-			  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
-			  . "><img src=\"$DirIcons\/mime\/unknown.png\""
-			  . AltTitle("")
-			  . " /></td>";
-		}
-		else {
-			my $nameicon = $MimeHashLib{$ext}[0] || "notavailable";
-			my $nametype = $MimeHashFamily{$MimeHashLib{$ext}[0]} || "&nbsp;";
-			print "<td"
-			  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
-			  . "><img src=\"$DirIcons\/mime\/$nameicon.png\""
-			  . AltTitle("")
-			  . " /></td>";
-		}
-		print "<td class=\"aws\">";
-		&HTMLShowURLInfo($u);
-		print "</td>";
-		if ( $ShowDownloadsStats =~ /H/i ){
-			print "<td>".Format_Number($_downloads{$u}->{'AWSTATS_HITS'})."</td>";
-			print "<td>".Format_Number($_downloads{$u}->{'AWSTATS_206'})."</td>";
-		}
-		if ( $ShowDownloadsStats =~ /B/i ){
-			print "<td>".Format_Bytes($_downloads{$u}->{'AWSTATS_SIZE'})."</td>";
-			print "<td>".Format_Bytes(($_downloads{$u}->{'AWSTATS_SIZE'}/
-					($_downloads{$u}->{'AWSTATS_HITS'} + $_downloads{$u}->{'AWSTATS_206'})))."</td>";
-		}
-		print "</tr>\n";
-		$count++;
-		if ($count >= $MaxNbOf{'DownloadsShown'}){last;}
-	}
-
-	print '</table>';
-
-	&tab_end();
-}
-
-#------------------------------------------------------------------------------
 # Function:     Prints the hours chart and table
 # Parameters:   $NewLinkParams, $NewLinkTarget
 # Input:        -
@@ -14414,9 +14309,7 @@ sub HTMLMainHours{
 
 	&tab_head( $title, '', 'hours', 19 );
 
-	print "<tr><td>\n";
-
-	my $width = '0.4dvw';
+	my $width = 'var(--bar-v-width-hours)';
 	my $max_p =	my $max_h = my $max_k = 1;
 	for ( my $ix = 0 ; $ix <= 23 ; $ix++ ) {
 
@@ -14453,10 +14346,11 @@ sub HTMLMainHours{
 		);
 		$graphdone=1;
 	}
+
 	if (! $graphdone && $ShowBars == 1) 
 	{
 		print '<table class="bar-table">';
-		print "<tr>\n";
+		print '<tr>';
 		for ( my $ix = 0 ; $ix <= 23 ; $ix++ ) {
 			
 			print '<td>'
@@ -14500,7 +14394,7 @@ sub HTMLMainHours{
 		print HTMLDataTableHeader('', $ShowHoursStats);
 
 		#body
-		for ( my $ix = 0 ; $ix <= 11 ; $ix++ ) {
+		for ( my $ix = 0 ; $ix <= 23 ; $ix++ ) {
 			
 			my $monthix = ( $ix < 10 ? "0$ix" : "$ix" );
 			
@@ -14527,48 +14421,47 @@ sub HTMLMainHours{
 		}
 		print '</table>';
 
-		print '<table class="data-table days-of-week-table">';
+		# print '<table class="data-table days-of-week-table">';
 
-		#header
-		print HTMLDataTableHeader('', $ShowHoursStats);
+		# #header
+		# print HTMLDataTableHeader('', $ShowHoursStats);
 
-		#body
-		print '<tbody>';
+		# #body
+		# print '<tbody>';
 
-		for ( my $ix = 12 ; $ix <= 23 ; $ix++ ) {
+		# for ( my $ix = 12 ; $ix <= 23 ; $ix++ ) {
 			
-			my $monthix = $ix;
+		# 	my $monthix = $ix;
 			
-			print '<tr>';
+		# 	print '<tr>';
 			
-			print '<td>' . $monthix . '<span class="clock hr-' . $ix  . ' ' . (($ix > 21 || $ix < 7 ) ? 'clock-night' : 'clock-day') . '"></span></td>';
+		# 	print '<td>' . $monthix . '<span class="clock hr-' . $ix  . ' ' . (($ix > 21 || $ix < 7 ) ? 'clock-night' : 'clock-day') . '"></span></td>';
 			
-			if ( $ShowHoursStats =~ /P/i ) {
-				$data = $_time_p[$monthix] ? $_time_p[$monthix] : '0';
-				print HTMLDataCellWithBar('p', $data , Format_Number($data), $max_p);
-			}
+		# 	if ( $ShowHoursStats =~ /P/i ) {
+		# 		$data = $_time_p[$monthix] ? $_time_p[$monthix] : '0';
+		# 		print HTMLDataCellWithBar('p', $data , Format_Number($data), $max_p);
+		# 	}
 
-			if ( $ShowHoursStats =~ /H/i ) {
-				$data = $_time_h[$monthix] ? $_time_h[$monthix] : '0';
-				print HTMLDataCellWithBar('h', $data , Format_Number($data), $max_h);
-			}
+		# 	if ( $ShowHoursStats =~ /H/i ) {
+		# 		$data = $_time_h[$monthix] ? $_time_h[$monthix] : '0';
+		# 		print HTMLDataCellWithBar('h', $data , Format_Number($data), $max_h);
+		# 	}
 			
-			if ( $ShowHoursStats =~ /B/i ) {
-				$data = $_time_k[$monthix] ? $_time_k[$monthix] : '0';
-				print HTMLDataCellWithBar('b', $data , Format_Bytes($data), $max_k);
-			}
+		# 	if ( $ShowHoursStats =~ /B/i ) {
+		# 		$data = $_time_k[$monthix] ? $_time_k[$monthix] : '0';
+		# 		print HTMLDataCellWithBar('b', $data , Format_Bytes($data), $max_k);
+		# 	}
 
-			print '</tr>';
-		}
+		# 	print '</tr>';
+		# }
 		
-		print '</tbody></table>';
+		# print '</tbody></table>';
 		
 		print '</div>';
 		
 		print "</td></tr></table>\n";
 	}
 
-	print "</td></tr>\n";
 	&tab_end();
 }
 
@@ -14766,6 +14659,129 @@ sub HTMLMainCountries{
 		# print "</tr>\n";
 	
 	}
+
+	&tab_end();
+}
+
+#------------------------------------------------------------------------------
+# Function:     Prints the Downloads chart and table
+# Parameters:   -
+# Input:        $NewLinkParams, $NewLinkTarget
+# Output:       HTML
+# Return:       -
+#------------------------------------------------------------------------------
+sub HTMLMainDownloads{
+	my $NewLinkParams = shift;
+	my $NewLinkTarget = shift;
+	if (!$LevelForFileTypesDetection > 0){return;}
+	if ($Debug) { debug( "ShowDownloadStats", 2 ); }
+	my $regext         = qr/\.(\w{1,6})$/;
+	# print "<a name=\"downloads\">&nbsp;</a>";
+	my $Totalh = 0;
+	if ($MaxNbOf{'DownloadsShown'} < 1){$MaxNbOf{'DownloadsShown'} = 10;}	# default if undefined
+	
+	my $title = $Message[178] . ' ('. $Message[77] . ' ' . $MaxNbOf{'DownloadsShown'} .')';
+
+	my $link = XMLEncode($AWScript . ${NewLinkParams});
+	my $subtitle = '<a href="'
+	  . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? $link . 'output=downloads' : $StaticLinks . '.downloads.' . $StaticExt)
+	  . '" ' . $NewLinkTarget . '>' . $Message[80] . '</a>';
+
+  if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
+  { # extend the title to include the added link
+    $subtitle .= '<a href="'
+    . XMLEncode($AddLinkToExternalCGIWrapper . '?section=DOWNLOADS&baseName=' . $DirData  .'/' . $PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig)
+    . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>';
+  }
+	  
+	&tab_head($title, '', 'downloads');
+	
+	my $cnt=0;
+	for my $u (sort {$_downloads{$b}->{'AWSTATS_HITS'} <=> $_downloads{$a}->{'AWSTATS_HITS'}}(keys %_downloads) ){
+		$Totalh += $_downloads{$u}->{'AWSTATS_HITS'};
+		$cnt++;
+		if ($cnt > 4){last;}
+	}
+
+	print '<table class="data-table">';
+
+	# Graph the top five in a pie chart
+	if (($Totalh > 0) and (scalar keys %_downloads > 1)){
+		foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
+		{
+			my @blocklabel = ();
+			my @valdata = ();
+			my @valcolor = ($color_p);
+			my $cnt = 0;
+			for my $u (sort {$_downloads{$b}->{'AWSTATS_HITS'} <=> $_downloads{$a}->{'AWSTATS_HITS'}}(keys %_downloads) ){
+				push @valdata, ($_downloads{$u}->{'AWSTATS_HITS'} / $Totalh * 1000 ) / 10;
+				push @blocklabel, Get_Filename($u);
+				$cnt++;
+				if ($cnt > 4) { last; }
+			}
+			my $columns = 2;
+			if ($ShowDownloadsStats =~ /H/i){$columns += length($ShowDownloadsStats)+1;}
+			else{$columns += length($ShowDownloadsStats);}
+			print "<tr><td colspan=\"$columns\">";
+			my $function = "ShowGraph_$pluginname";
+			&$function(
+				"$Message[80]",              "downloads",
+				0, 						\@blocklabel,
+				0,           			\@valcolor,
+				0,              		0,
+				0,          			\@valdata
+			);
+			print "</td></tr>";
+		}
+	}
+	
+	my $total_dls = scalar keys %_downloads;
+	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[178]: $total_dls</th>";
+	if ( $ShowDownloadsStats =~ /H/i ){print "<th class=\"bg-h\" width=\"80\">$Message[57]</th>"
+		."<th class=\"bg-h\" width=\"80\">206 $Message[57]</th>"; }
+	if ( $ShowDownloadsStats =~ /B/i ){
+		print "<th class=\"bg-k\" width=\"80\">$Message[75]</th>";
+		print "<th class=\"bg-k\" width=\"80\">$Message[106]</th>"; 
+	}
+	print "</tr>\n";
+	my $count   = 0;
+	for my $u (sort {$_downloads{$b}->{'AWSTATS_HITS'} <=> $_downloads{$a}->{'AWSTATS_HITS'}}(keys %_downloads) ){
+		print "<tr>";
+		my $ext = Get_Extension($regext, $u);
+		if ( !$ext) {
+			print "<td"
+			  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
+			  . "><img src=\"$DirIcons\/mime\/unknown.png\""
+			  . AltTitle("")
+			  . " /></td>";
+		}
+		else {
+			my $nameicon = $MimeHashLib{$ext}[0] || "notavailable";
+			my $nametype = $MimeHashFamily{$MimeHashLib{$ext}[0]} || "&nbsp;";
+			print "<td"
+			  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
+			  . "><img src=\"$DirIcons\/mime\/$nameicon.png\""
+			  . AltTitle("")
+			  . " /></td>";
+		}
+		print "<td class=\"aws\">";
+		&HTMLShowURLInfo($u);
+		print "</td>";
+		if ( $ShowDownloadsStats =~ /H/i ){
+			print "<td>".Format_Number($_downloads{$u}->{'AWSTATS_HITS'})."</td>";
+			print "<td>".Format_Number($_downloads{$u}->{'AWSTATS_206'})."</td>";
+		}
+		if ( $ShowDownloadsStats =~ /B/i ){
+			print "<td>".Format_Bytes($_downloads{$u}->{'AWSTATS_SIZE'})."</td>";
+			print "<td>".Format_Bytes(($_downloads{$u}->{'AWSTATS_SIZE'}/
+					($_downloads{$u}->{'AWSTATS_HITS'} + $_downloads{$u}->{'AWSTATS_206'})))."</td>";
+		}
+		print "</tr>\n";
+		$count++;
+		if ($count >= $MaxNbOf{'DownloadsShown'}){last;}
+	}
+
+	print '</table>';
 
 	&tab_end();
 }
@@ -21074,13 +21090,16 @@ if ( scalar keys %HTMLOutput ) {
 			&HTMLMainHours($NewLinkParams, $NewLinkTarget);
 		}
 
-		print "\n<a name=\"who\">&nbsp;</a>\n\n";
+		# print "\n<a name=\"who\">&nbsp;</a>\n\n";
+		print '<hr>';
 
 		# BY COUNTRY/DOMAIN
 		#---------------------------
 		if ($ShowDomainsStats) {
 			&HTMLMainCountries($NewLinkParams, $NewLinkTarget);
 		}
+
+		print '<hr>';
 
 		# BY HOST/VISITOR
 		#--------------------------
