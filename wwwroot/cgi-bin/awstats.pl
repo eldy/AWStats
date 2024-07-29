@@ -16711,8 +16711,8 @@ sub HTMLMainSMTPStatus{
 	my $NewLinkTarget = shift;
 	
 	if ($Debug) { debug( "ShowSMTPErrorsStats", 2 ); }
-	print "<a name=\"errors\">&nbsp;</a>";
-	my $title = "$Message[147]";
+	# print "<a name=\"errors\">&nbsp;</a>";
+	my $title = $Message[147];
 
 	my $tooltip = '';
 	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
@@ -16721,10 +16721,9 @@ sub HTMLMainSMTPStatus{
 		$tooltip .= &$function(19);
 	}
 
-	print &tab_head($title, '', 'errors', $tooltip );
-
-	print
-"<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[147]</th><th class=\"bg-h\" width=\"80\">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th><th class=\"bg-k\" width=\"80\">$Message[75]</th></tr>\n";
+	print &tab_head($title, '', 'errors', $tooltip )
+	. '<table>'
+	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[147]</th><th class=\"bg-h\" width=\"80\">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th><th class=\"bg-k\" width=\"80\">$Message[75]</th></tr>\n";
 	my $total_h = 0;
 	my $count = 0;
 	&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_errors_h, \%_errors_h );
