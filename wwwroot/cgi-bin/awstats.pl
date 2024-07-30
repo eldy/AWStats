@@ -935,7 +935,7 @@ sub renderCss {
 	. '--neutral-color: hsl(1, 0%, 75%);'
 	. '--light-color: hsl(1, 0%, 90%);'
 	. '--a-color: hsl(0, 0%, 0%);'
-	. '--a-hover-color: hsl(0, 0%, 60%);'
+	. '--a-hover-color: hsl(0, 0%, 0%);'
 	. '--bar-width: 100;'
 	. '--bar-v-height: 20;'
 	. '--bar-v-grow: 1;'
@@ -946,7 +946,9 @@ sub renderCss {
 	. '--direction: ltr;'
 	. '}'
 	. <<EOF;
-body { font: 0.75rem sans-serif, system-ui; background-color: var(--page-bgcolor); margin: 0; padding:0; color: var(--page-color) }
+
+html { scroll-behavior: smooth; scroll-padding: var(--scroll-padding, 5rem); }
+body { font: 0.75rem sans-serif, system-ui; background-color: var(--page-bgcolor); margin: 0; padding:0; color: var(--page-color); }
 a, a:link, a:visited { color: var(--a-color); text-decoration: none; }
 a:hover, a:focus, a:active{ color: var(--a-hover-color); text-decoration: none; }
 b { font-weight: 700 }
@@ -957,9 +959,16 @@ small { font-size: 0.7rem; font-weight: 400; }
 #domain { font-weight: 900; font-size: 2.4em }
 header select { width : 60px }
 #logo { height: 40px; }
-nav { width: 100%; height: 17px; margin: 8px 0; background-color: white; text-align: center; }
+nav { width: 100%; height: 17px; margin: 8px 0; margin-top: 0; background-color: white; font-weight: 600 }
+nav ul { display: flex; justify-content: center; gap: 1dvw; list-style-type: none; margin: 0; padding: 0; overflow: hidden; }
+nav li a, .dropbtn { display: inline-block; padding: 2px 4px; }
+li a:hover, .dropdown:hover .dropbtn { background-color: var(--neutral-color); }
+li.dropdown { display: inline-block; }
+.dropdown-content { display: none; position: absolute; background-color: white; min-width: 160px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); z-index: 1; }
+.dropdown-content a { padding: 12px 16px; display: block; }
+.dropdown-content a:hover { background-color: var(--neutral-color); }
+.dropdown:hover .dropdown-content { display: block; }
 #about { width: 100%; text-align: center; }
-nav { margin-top: 0; }
 #summary-logs { max-width: 100%; text-align: center;  margin: auto; display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;}
 #summary-logs div { padding: 2px 0 }
 .summary-label { margin: 0 9px; }
@@ -1040,13 +1049,11 @@ sub renderJavascript {
 <script>
 document.addEventListener("DOMContentLoaded", (d) => {
 
-	[...document.querySelectorAll('.flag')].forEach(el => {
-   		el.textContent = el.dataset.country
-   				.split('')
-   				.map(letter => letter.charCodeAt(0) % 32 + 0x1F1E5)
-   				.map(emojiCode => String.fromCodePoint(emojiCode))
-   				.join('');
-  });
+	const header = document.querySelector("#container > header");
+
+	const headerHeight = header.offsetHeight;
+
+	document.documentElement.style.setProperty("--scroll-padding", headerHeight + "px");
 
 	[...document.querySelectorAll('.bar-table')].forEach(el => {
    		el.addEventListener("mouseenter", (e) => {
@@ -1060,6 +1067,14 @@ document.addEventListener("DOMContentLoaded", (d) => {
    				bar.style.setProperty('--bar-v-grow', 1);
    			});
    		});
+  });
+
+	[...document.querySelectorAll('.flag')].forEach(el => {
+   		el.textContent = el.dataset.country
+   				.split('')
+   				.map(letter => letter.charCodeAt(0) % 32 + 0x1F1E5)
+   				.map(emojiCode => String.fromCodePoint(emojiCode))
+   				.join('');
   });
 
 	let worldmap = document.getElementById('worldmap');
@@ -10463,7 +10478,57 @@ sub HTMLTopBanner{
 #------------------------------------------------------------------------------
 sub HTMLMenu{
 
-	print '<nav></nav>';
+	print '<nav>'
+	. '<ul>'
+	. '<li class="dropdown">'
+	. '<a href="javascript:void(0)" class="dropbtn">' . $Message[93] . '</a>'
+	. '<div class="dropdown-content">'
+	. '<a href="#month">' . $Message[162] . '</>'
+	. '<a href="#daysofmonth">' . $Message[138] . '</>'
+	. '<a href="#daysofweek">' . $Message[91] . '</>'
+	. '<a href="#hours">' . $Message[20] . '</>'
+	. '</div>'
+	. '</li>'
+	. '<li class="dropdown">'
+	. '<a href="javascript:void(0)" class="dropbtn">' . $Message[92] . '</a>'
+	. '<div class="dropdown-content">'
+	. '<a href="#countries">' . $Message[17] . '</>'
+	. '<a href="#hosts">' . $Message[81] . '</>'
+	. '<a href="#robots">' . $Message[83] . '</>'
+	. '<a href="#os">' . $Message[59] . '</>'
+	. '<a href="#browsers">' . $Message[21] . '</>'
+	. '<a href="#screensizes">' . $Message[135] . '</>'
+	. '<a href="#sessions">' . $Message[117] . '</>'
+	. '</div>'
+	. '</li>'
+	. '<li class="dropdown">'
+	. '<a href="javascript:void(0)" class="dropbtn">' . $Message[72] . '</a>'
+	. '<div class="dropdown-content">'
+	. '<a href="#urls">' . $Message[19] . '</>'
+	. '<a href="#downloads">' . $Message[178] . '</>'
+	. '<a href="#filetypes">' . $Message[73] . '</>'
+	. '<a href="#filesizes">' . $Message[186] . '</>'
+	. '<a href="#requesttimes">' . $Message[188] . '</>'
+	. '</div>'
+	. '</li>'
+	. '<li class="dropdown">'	
+	. '<a href="javascript:void(0)" class="dropbtn">' . $Message[37] . '</a>'
+	. '<div class="dropdown-content">'
+	. '<a href="#referer">' . $Message[23] . '</>'
+	. '<a href="#keyphrases">' . $Message[43] . '</>'
+	. '<a href="#keywords">' . $Message[44] . '</>'
+	. '</div>'
+	. '</li>'
+	. '<li class="dropdown">'
+	. '<a href="javascript:void(0)" class="dropbtn">' . $Message[2] . '</a>'
+	. '<div class="dropdown-content">'
+	. '<a href="#misc">' . $Message[139] . '</>'
+	. '<a href="#errors">' . $Message[32] . '</>'
+	. '<a href="#worms">' . $Message[163] . '</>'
+	. '</div>'
+	. '</li>'
+	. '</ul>'
+	. '</nav>';
 	return;
 
 	my $NewLinkParams = shift;
