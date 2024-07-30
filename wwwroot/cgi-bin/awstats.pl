@@ -918,22 +918,24 @@ sub renderCss {
 	my $dir = $PageDir ? 'right' : 'left';
 	my $css = '';
 
+	#TODO set pagedir var(--direction), but where ?
+
 	$css .= ':root {'
 	. '--page-color: hsl(1, 0%, 25%);'
 	. '--page-bgcolor: hsl(1, 0%, 95%);'
-	. '--aws-color-u: #' . $color_u . ';'
-	. '--aws-color-v: #' . $color_v . ';'
-	. '--aws-color-p: #' . $color_p . ';'
-	. '--aws-color-h: #' . $color_h . ';'
-	. '--aws-color-b: #' . $color_k . ';'
-	. '--aws-color-e: #' . $color_e . ';'
-	. '--aws-color-x: #' . $color_x . ';'
-	. '--aws-color-s: #' . $color_s . ';'
+	. '--aws-color-u: hsl(27, 100%, 70%);'
+	. '--aws-color-v: hsl(58, 82%, 76%);'
+	. '--aws-color-p: hsl(220, 97%, 72%);'
+	. '--aws-color-h: hsl(188, 80%, 67%);'
+	. '--aws-color-b: hsl(172, 56%, 41%);'
+	. '--aws-color-e: hsl(259, 45%, 84%);'
+	. '--aws-color-x: hsl(259, 45%, 79%);'
+	. '--aws-color-s: hsl(240, 56%, 70%);'
 	. '--dark-color: hsl(1, 0%, 50%);'
 	. '--neutral-color: hsl(1, 0%, 75%);'
 	. '--light-color: hsl(1, 0%, 90%);'
-	. '--a-color: #' . $color_link . ';'
-	. '--a-hover-color: #' . $color_hover . ';'
+	. '--a-color: hsl(0, 0%, 0%);'
+	. '--a-hover-color: hsl(0, 0%, 60%);'
 	. '--bar-width: 100;'
 	. '--bar-v-height: 20;'
 	. '--bar-v-grow: 1;'
@@ -941,6 +943,7 @@ sub renderCss {
 	. '--bar-v-width-daily: 0.17dvw;'
 	. '--bar-v-width-weekday: 0.75dvw;'
 	. '--bar-v-width-hours: 0.23dvw;'
+	. '--direction: ltr;'
 	. '}'
 	. <<EOF;
 body { font: 0.75rem sans-serif, system-ui; background-color: var(--page-bgcolor); margin: 0; padding:0; color: var(--page-color) }
