@@ -996,6 +996,7 @@ section header:hover .tooltip { visibility: visible; opacity: 1; }
 .bar-table { visibility: visible; margin: auto; text-align: center; font-size: 10px; border-bottom: 6px solid var(--light-color);}
 .bar-table tr:first-child td { vertical-align: bottom; }
 .bar-table span { font-size: 0.8em }
+.collapsed{ visibility: collapse; transition visibility 0.5s ease-in }
 .bar{  }
 .bar-horizontal{ height: 4px }
 .bar-vertical{ display: inline-block; transition: height 0.5s ease-out;  }
@@ -1018,9 +1019,10 @@ section header:hover .tooltip { visibility: visible; opacity: 1; }
 .clock-day{ background: conic-gradient(rgba(244, 240, 144, 1) 330deg, rgba(30, 28, 97, 1) 30deg); }
 .bar-table .clock { width: 0.5dvw; height: 0.5dvw }
 .data-table .clock { width: 16px; height: 16px }
-.landxx{ fill: rgba(128, 86, 86, 1) !important; transition: fill 0.3s ease-in }
+.landxx{ fill: var(--dark-color) !important; transition: fill 0.3s ease-in }
 .oceanxx{ fill: #4477DD !important; stroke-width: 0 !important; }
-.lighted-land{ fill: var(--aws-color-u) !important; fill-rule: evenodd;}
+.lighted-land{ fill: rgba(128, 86, 86, 1) !important; fill-rule: evenodd;}
+.highlighted-land{ fill: var(--aws-color-u) !important; fill-rule: evenodd;}
 .zoomed-land{ fill: var(--aws-color-v) !important;}
 .weekend { background-color: var(--light-color) }
 .data-table-average { background-color: var(--neutral-color) }
@@ -1048,9 +1050,7 @@ sub renderJavascript {
 <script>
 document.addEventListener("DOMContentLoaded", (d) => {
 
-	const header = document.querySelector("#container > header");
-
-	const headerHeight = header.offsetHeight;
+	const headerHeight = document.querySelector("#container > header").offsetHeight;
 
 	document.documentElement.style.setProperty("--scroll-padding", headerHeight + "px");
 
@@ -1066,6 +1066,23 @@ document.addEventListener("DOMContentLoaded", (d) => {
    				bar.style.setProperty('--bar-v-grow', 1);
    			});
    		});
+  });
+
+  [...document.querySelectorAll('.show-all')].forEach(el => {
+  		el.addEventListener("click", (e) => {
+  			let children = [...el.parentElement.parentElement.parentElement.parentElement.querySelectorAll('.collapsed')];
+  			if(el.classList.contains('opened')){
+					children.forEach(opened => {
+ 						opened.style.visibility = 'collapse';
+  				});
+  				el.classList.remove('opened');
+  			} else {
+  				children.forEach(collapsed => {
+ 						collapsed.style.visibility = 'visible';
+  				});
+  				el.classList.add('opened');
+  			}
+  		});
   });
 
 	[...document.querySelectorAll('.flag')].forEach(el => {
@@ -1089,66 +1106,46 @@ document.addEventListener("DOMContentLoaded", (d) => {
 
 		let domainsTable = document.querySelector('.domains-table');
 
-		[...domainsTable.querySelectorAll('.flag')].forEach(el => {
+		[...domainsTable.querySelectorAll('.flag')].forEach(el =>
+		{
 			let country =	realMap.querySelector('g#' + el.dataset.country);
 			
 			if(country !== null){
-
-				[...country.querySelectorAll('.landxx')].forEach(el => {
-	    		el.classList.add('lighted-land');
+				[...country.querySelectorAll('.landxx')].forEach(mapEl => {
+	    		mapEl.classList.add((el.classList.contains('highlighted')) ? 'highlighted-land' : 'lighted-land');
   			});
 
 			} else {
-			
 				country = realMap.querySelector('path#' + el.dataset.country);
 
 				if(country !== null){
 					country.classList.remove('landxx');
-    			country.classList.add('lighted-land');
+    			country.classList.add((el.classList.contains('highlighted')) ? 'highlighted-land' : 'lighted-land');
 				}
 			}
   	});
 
   	[...document.querySelectorAll('.domains-table tbody tr.country')].forEach(el => {
     		
-    		let country =	worldmap.querySelector('g#' + el.dataset.country);
+    	let country =	realMap.querySelector('g#' + el.dataset.country);
 
-    		el.addEventListener("mouseover", (e) => {
-    		
+    	el.addEventListener("mouseover", (e) =>
+    	{
+				if(country !== null) {
+					[...country.querySelectorAll('.landxx')].forEach(land => { land.classList.add('zoomed-land'); });
+				} else {
+					country = realMap.querySelector('path#' + el.dataset.country);
 					if(country !== null){
-
-						[...country.querySelectorAll('.landxx')].forEach(land => {
-	    				land.classList.add('zoomed-land');
-  					});
-
-					} else {
-			
-						country = worldmap.querySelector('path#' + el.dataset.country);
-
-						if(country !== null){
-    					country.classList.add('zoomed-land');
-						}
+    				country.classList.add('zoomed-land');
 					}
+				}
+    	});
 
-    		});
-
-    		el.addEventListener("mouseout", (e) => {
-    			
-					if(country !== null){
-
-						[...country.querySelectorAll('.landxx')].forEach(land => {
-	    				land.classList.remove('zoomed-land');
-  					});
-
-					} else {
-			
-						country = worldmap.querySelector('path#' + el.dataset.country);
-
-						if(country !== null){
-    					country.classList.remove('zoomed-land');
-						}
-					}
-    		});
+    	el.addEventListener("mouseout", (e) =>
+    	{
+					[...realMap.querySelectorAll('.landxx')].forEach(land => { land.classList.remove('zoomed-land'); });
+					[...realMap.querySelectorAll('path')].forEach(land => { land.classList.remove('zoomed-land'); });
+    	});
     });
  	});
 });
@@ -8553,7 +8550,7 @@ sub HtmlBar {
 #------------------------------------------------------------------------------
 # Function:     Return data cell with percentage bar
 # Parameters:   string $type = 'u' | 'v' | 'p' | 'h' | 'b',
-#								int $data, string | int $formattedData, int $max
+#								int $data, string | int $formattedData, int $max, string $class
 # Output:       _
 # Return:       string
 #------------------------------------------------------------------------------
@@ -8562,10 +8559,12 @@ sub HTMLDataCellWithBar{
 	my $data = shift;
 	my $formattedData = shift;
 	my $max = shift;
+	my $class = shift || '';
 	my $percentage = ($max > 0) ? ($data || 0) / $max : 0;
 
-	return '<td>'
-		. '<div style="background: linear-gradient(to right, var(--aws-color-' . $type .') calc(var(--bar-width) * ' . $percentage . ' * 1%), rgba(0,0,0,0) calc(var(--bar-width) * ' . $percentage . ' * 1%));">'
+	return '<td><div ' . (($class ne '') ? 'class="' . $class . '"' : '') . ' style="background:'
+		. 'linear-gradient(to right, var(--aws-color-' . $type .') calc(var(--bar-width) * ' . $percentage . ' * 1%), rgba(0,0,0,0) calc(var(--bar-width) * ' . $percentage . ' * 1%));'
+		. '">'
 		. $formattedData . '</div></td>';
 }
 
@@ -14634,16 +14633,16 @@ sub HTMLMainCountries{
 
 	my $total_u = my $total_v = my $total_p = my $total_h = my $total_k = 0;
 	my $rest_u  = my $rest_v  = my $rest_p  = my $rest_h  = my $rest_k = 0; 
-	my $max_u = my $max_p = my $max_h = 1;
-
-	# print "<a name=\"countries\">&nbsp;</a>";
+	my $max_u = my $max_p = my $max_h = my $max_k = 1;
+	my $count = 0;
 
 	my $title = $Message[25] . '(' . $Message[77] . ' ' . $MaxNbOf{'Domain'} . ')';
 
 	my $link = XMLEncode($AWScript . ${NewLinkParams});
-	my $subtitle =  '<a href="'
-	  . (	$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? $link . 'output=alldomains' : $StaticLinks . '.alldomains.' . $StaticExt) . '" '. $NewLinkTarget
-	  . '>' . $Message[80] .'</a>';
+	my $subtitle = '';
+	# my $subtitle =  '<a href="'
+	#   . (	$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? $link . 'output=alldomains' : $StaticLinks . '.alldomains.' . $StaticExt) . '" '. $NewLinkTarget
+	#   . '>' . $Message[80] .'</a>';
 	  
   if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
     # extend the title to include the added link
@@ -14661,30 +14660,20 @@ sub HTMLMainCountries{
         	  
 	print &tab_head( $title, $subtitle, 'countries', $tooltip);
 	
-	foreach ( values %_domener_u ) {
-		if ( $_ > $max_u ) { $max_u = $_; }
-	}
+	foreach ( values %_domener_u ) { if ( $_ > $max_u ) { $max_u = $_; } }
 
-	foreach ( values %_domener_p ) {
-		if ( $_ > $max_p ) { $max_p = $_; }
-	}
+	foreach ( values %_domener_p ) { if ( $_ > $max_p ) { $max_p = $_; } }
 
-	foreach ( values %_domener_h ) {
-		if ( $_ > $max_h ) { $max_h = $_; }
-	}
-
-	my $max_k = 1;
+	foreach ( values %_domener_h ) { if ( $_ > $max_h ) { $max_h = $_; } }
 	
-	foreach ( values %_domener_k ) {
-		if ( $_ > $max_k ) { $max_k = $_; }
-	}
-
-	my $count = 0;
+	foreach ( values %_domener_k ) { if ( $_ > $max_k ) { $max_k = $_; } }
 	
-	&BuildKeyList(
-		$MaxNbOf{'Domain'}, $MinHit{'Domain'},
-		\%_domener_h,       \%_domener_p
-	);
+	&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_domener_h,	\%_domener_p );
+
+	# &BuildKeyList(
+	# 	$MaxNbOf{'Domain'}, $MinHit{'Domain'},
+	# 	\%_domener_h,       \%_domener_p
+	# );
 	
 	# # print the map
 	# if (scalar @keylist > 1){
@@ -14714,71 +14703,60 @@ sub HTMLMainCountries{
 
 	# print "<tr><td>";
 	
-	# print '<div class="multi-data-table worldmap">';
 	print '<div id="worldmap-wrapper"><div id="worldmap"></div></div>'
 	.'<table class="data-table domains-table">';
 
-	#header
-	print HTMLDataTableHeader('', $ShowDomainsStats);
+	print HTMLDataTableHeader('<button class="show-all">' . $Message[80] . '</button>', $ShowDomainsStats)
+	. '<tbody>';
 
-	# body
-	print '<tbody>';
-
-	foreach my $key (@keylist) {
-
+	foreach my $key (@keylist)
+	{
 		my ( $_domener_u, $_domener_v );
 		my $newkey = lc($key);
 		my $data = '';
 
-		if ( $newkey eq 'ip' || !$DomainsHashIDLib{$newkey} ) {
-			print '<tr>';
-			print '<td>' . $Message[0] . ' </td>';
+		if ( $newkey eq 'ip' || !$DomainsHashIDLib{$newkey} )
+		{
+			print '<tr><td>' . $Message[0] . ' </td>';
 		}
 		else {
-			print '<tr class="country" data-country="' . $newkey . '">';
-			print '<td class="country">' . $DomainsHashIDLib{$newkey} . ' <small>( ' . $newkey . ' )</small> <span class="flag" data-country="' . $newkey . '"></span></td>';
+			print '<tr'
+			. ' class="country' . (($count < $MaxNbOf{'Domain'}) ? '' : ' collapsed') . '"'
+			. (($count < $MaxNbOf{'Domain'}) ? '' : ' style="visibility: collapse"')
+			. ' data-country="' . $newkey . '">'
+			. '<td class="country">' . $DomainsHashIDLib{$newkey} . ' <small>( ' . $newkey . ' )</small> <span class="flag' . (($count < $MaxNbOf{'Domain'}) ? ' highlighted' : '') . '" data-country="' . $newkey . '"></span></td>';
 		}
 
 		my $domener_temp = ($_domener_p{$key} ? $_domener_p{$key} / $TotalPages : 0) + $_domener_h{$key} / $TotalHits;
 
-		if ( $ShowDomainsStats =~ /U/i ) {
-
+		if ( $ShowDomainsStats =~ /U/i )
+		{
 			$data = int( $domener_temp * $TotalUnique );
-
 			print HTMLDataCellWithBar('u', $data , Format_Number($data), $TotalUnique);
-
 		}
 
-		if ( $ShowDomainsStats =~ /V/i ) {
-
+		if ( $ShowDomainsStats =~ /V/i )
+		{
 			$data = int( $domener_temp * $TotalVisits);
-
 			print HTMLDataCellWithBar('v', $data , Format_Number($data), $TotalVisits);
-		
 		}
 
-		if ( $ShowDomainsStats =~ /P/i ) {
-
+		if ( $ShowDomainsStats =~ /P/i )
+		{
 			$data = int($_domener_p{$key} || 0);
-
 			print HTMLDataCellWithBar('p', $data , Format_Number($data), $TotalPages);
-
 		}
 
-		if ( $ShowDomainsStats =~ /H/i ) {
-
+		if ( $ShowDomainsStats =~ /H/i )
+		{
 			$data = int($_domener_h{$key} || 0);
-
 			print HTMLDataCellWithBar('h', $data , Format_Number($data), $TotalHits);
-
 		}
 
-		if ( $ShowDomainsStats =~ /B/i ) {
-
+		if ( $ShowDomainsStats =~ /B/i )
+		{
 			$data = int($_domener_k{$key} || 0);
-
 			print HTMLDataCellWithBar('b', $data , Format_Bytes($data), $TotalBytes);
-
 		}
 
 		print '</tr>';
@@ -14797,28 +14775,16 @@ sub HTMLMainCountries{
 	$rest_h = $TotalHits - $total_h;
 	$rest_k = $TotalBytes - $total_k;
 
-	if ( $rest_u > 0 || $rest_v > 0 || $rest_p > 0 || $rest_h > 0 || $rest_k > 0 ) {    # All other domains (known or not)
-
-		print '<tr><td>' . $Message[2] . '</td>';
-
-		print (( $ShowDomainsStats =~ /U/i ) ? HTMLDataCellWithBar('u', $rest_u , Format_Number($rest_u), $TotalUnique) : '');
-
-		print (( $ShowDomainsStats =~ /V/i ) ? HTMLDataCellWithBar('v', $rest_v , Format_Number($rest_v), $TotalVisits) : '');
-
-		print (( $ShowDomainsStats =~ /P/i ) ? HTMLDataCellWithBar('p', $rest_p , Format_Number($rest_p), $TotalPages) : '');
-
-		print (( $ShowDomainsStats =~ /H/i ) ? HTMLDataCellWithBar('h', $rest_h , Format_Number($rest_h), $TotalHits) : '');
-
-		print (( $ShowDomainsStats =~ /B/i ) ? HTMLDataCellWithBar('b', $rest_k , Format_Bytes($rest_k), $TotalBytes) : '');
-
-		print '</tr>';
-
-		print '</table>';
-		# print '</div>';
-
-		# print "</td>\n";
-		# print "</tr>\n";
-	
+	if ( $rest_u > 0 || $rest_v > 0 || $rest_p > 0 || $rest_h > 0 || $rest_k > 0 )
+	{ # All other domains (known or not)
+		print '<tr><td>' . $Message[2] . '</td>'
+		. (( $ShowDomainsStats =~ /U/i ) ? HTMLDataCellWithBar('u', $rest_u , Format_Number($rest_u), $TotalUnique) : '')
+		. (( $ShowDomainsStats =~ /V/i ) ? HTMLDataCellWithBar('v', $rest_v , Format_Number($rest_v), $TotalVisits) : '')
+		. (( $ShowDomainsStats =~ /P/i ) ? HTMLDataCellWithBar('p', $rest_p , Format_Number($rest_p), $TotalPages) : '')
+		. (( $ShowDomainsStats =~ /H/i ) ? HTMLDataCellWithBar('h', $rest_h , Format_Number($rest_h), $TotalHits) : '')
+		. (( $ShowDomainsStats =~ /B/i ) ? HTMLDataCellWithBar('b', $rest_k , Format_Bytes($rest_k), $TotalBytes) : '')
+		. '</tr>'
+		. '</table>';
 	}
 
 	print '</table>' . &tab_end();
