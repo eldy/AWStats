@@ -172,7 +172,7 @@ $ExtraTrackedRowsLimit = 500;
 $DatabaseBreak         = 'month';
 use vars qw/
   $DebugMessages $AllowToUpdateStatsFromBrowser $EnableLockForUpdate $DNSLookup $DynamicDNSLookup $AllowAccessFromWebToAuthenticatedUsersOnly
-  $ShowBars $BarHeight $BarWidth $CreateDirDataIfNotExists $KeepBackupOfHistoricFiles
+  $BarHeight $BarWidth $CreateDirDataIfNotExists $KeepBackupOfHistoricFiles
   $NbOfLinesParsed $NbOfLinesDropped $NbOfLinesCorrupted $NbOfLinesComment $NbOfLinesBlank $NbOfOldLines $NbOfNewLines
   $NbOfLinesShowsteps $NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile $ArchiveLogRecords
   $ShowDropped $ShowCorrupted $ShowUnknownOrigin $ShowDirectOrigin $ShowLinksToWhoIs
@@ -190,7 +190,6 @@ use vars qw/
 	$DNSLookup,
 	$DynamicDNSLookup,
 	$AllowAccessFromWebToAuthenticatedUsersOnly,
-	$ShowBars,
 	$BarHeight,
 	$BarWidth,
 	$CreateDirDataIfNotExists,
@@ -935,8 +934,8 @@ sub renderCss {
 	. '--light-color: hsl(1, 0%, 90%);'
 	. '--a-color: #' . $color_link . ';'
 	. '--a-hover-color: #' . $color_hover . ';'
-	. '--bar-width: ' . $BarWidth .'px; /* default 125 */'
-	. '--bar-v-height: 20; /* default 75 */'
+	. '--bar-width: 100;'
+	. '--bar-v-height: 20;'
 	. '--bar-v-grow: 1;'
 	. '--bar-v-width-month: 0.44dvw;'
 	. '--bar-v-width-daily: 0.17dvw;'
@@ -961,8 +960,8 @@ nav { margin-top: 0; }
 #summary-logs { max-width: 100%; text-align: center;  margin: auto; display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;}
 #summary-logs div { padding: 2px 0 }
 .summary-label { margin: 0 9px; }
-#summary-logs div[class^="bg-"], .currentday{ width:var(--bar-width); font-weight: 900 }
-div[class^="bg-"], th[class^="bg-"] { width: var(--bar-width) }
+#summary-logs div[class^="bg-"], .currentday{ width: calc(var(--bar-width) * 1px); font-weight: 900 }
+div[class^="bg-"], th[class^="bg-"] { width: calc(var(--bar-width) * 1px) }
 button, select, input[type=submit] { cursor: pointer; color: var(--light-color); background-color: var(--dark-color); border: 1px solid #ccd7e0; }
 h1, section header {border-bottom: 6px solid var(--light-color); width: 100%; margin: 0; text-align: center; font-weight: 900; font-size: 1rem; }
 section header { position: relative }
@@ -983,7 +982,7 @@ section header:hover .tooltip { visibility: visible; opacity: 1; }
 .data-table td:first-child:not(.country) { font-weight: 400 }
 .data-table tfoot .data-table-sum td { border-top: 1px solid rgba(192,192,192,0.2); }
 .data-table-sum { font-size : 1.3em }
-.bar-table { margin: auto; text-align: center; font-size: 10px; border-bottom: 6px solid var(--light-color);}
+.bar-table { visibility: visible; margin: auto; text-align: center; font-size: 10px; border-bottom: 6px solid var(--light-color);}
 .bar-table tr:first-child td { vertical-align: bottom; }
 .bar-table span { font-size: 0.8em }
 .bar{  }
@@ -3049,7 +3048,6 @@ sub Check_Config {
 	if ( $ShowLinksToWhoIs !~ /[01]/ ) { $ShowLinksToWhoIs = 0; }
 	$Logo     ||= 'awstats_logo6.png';
 	$LogoLink ||= 'https://www.awstats.org';
-	if ( $ShowBars !~ /[01]/ )  { $ShowBars  = 1; }
 	if ( $BarWidth !~ /^\d+/  || $BarWidth < 1 )  { $BarWidth  = 260; }
 	if ( $BarHeight !~ /^\d+/ || $BarHeight < 1 ) { $BarHeight = 90; }
 	$color_Background =~ s/#//g;
@@ -8530,13 +8528,9 @@ sub HtmlBar {
 	my $max = shift;
 	my $title = shift;
 	my $width = shift || 4;
-	my $height = ($max > 0) ? int( ( $data || 0 ) * 100 / $max ) : 0;
+	my $height = ($max > 0) ? ( $data || 0 ) / $max : 0;
 
-	if($data > 0 && $height < 1){
-		$height = 1;
-	}
-
-	return '<div class="bar bar-vertical bg-' . $type . '" style="width: ' . $width . (($width =~ m/^\d+$/) ? 'px' : '') . ';height: calc( var(--bar-v-height) * var(--bar-v-grow) * ' . $height . 'px / 100)" title="' . $title . ' : ' . $formattedData . '"></div>';
+	return '<div class="bar bar-vertical bg-' . $type . '" style="width: ' . $width . (($width =~ m/^\d+$/) ? 'px' : '') . ';height: calc( var(--bar-v-height) * var(--bar-v-grow) * ' . $height . 'px)" title="' . $title . ' : ' . $formattedData . '"></div>';
 }
 
 #------------------------------------------------------------------------------
@@ -8551,14 +8545,10 @@ sub HTMLDataCellWithBar{
 	my $data = shift;
 	my $formattedData = shift;
 	my $max = shift;
-	my $percentage = int( ( ( $data || 0 ) / $max ) * $BarHeight );
-	
-	if($data > 0 && $percentage < 1){
-		$percentage = 1;
-	}
+	my $percentage = ($max > 0) ? ($data || 0) / $max : 0;
 
 	return '<td>'
-		. '<div style="background: linear-gradient(to right, var(--aws-color-' . $type .') ' . $percentage . '%, rgba(0,0,0,0) ' . $percentage . '%);">'
+		. '<div style="background: linear-gradient(to right, var(--aws-color-' . $type .') calc(var(--bar-width) * ' . $percentage . ' * 1%), rgba(0,0,0,0) calc(var(--bar-width) * ' . $percentage . ' * 1%));">'
 		. $formattedData . '</div></td>';
 }
 
@@ -13682,11 +13672,11 @@ sub HTMLDataTableHeader{
 
 	return '<thead><tr>'
 		. '<th class="title">' . $title . '</th>'
-		. ( ( $config =~ /U/i ) ? '<th style="width: var(--bar-width)" class="bg-u" ' . Tooltip(2) . '>' . CleanXSS($Message[18]) . '</th>' : '' )
-		. ( ( $config =~ /V/i ) ? '<th style="width: var(--bar-width)" class="bg-v" ' . Tooltip(1) . '>' . CleanXSS($Message[10]) . '</th>' : '' )
-		. ( ( $config =~ /P/i ) ? '<th style="width: var(--bar-width)" class="bg-p" ' . Tooltip(3) . '>' . CleanXSS($Message[56]) . '</th>' : '' )
-		. ( ( $config =~ /H/i ) ? '<th style="width: var(--bar-width)" class="bg-h" ' . Tooltip(4) . '>' . CleanXSS($Message[57]) . '</th>' : '' )
-		. ( ( $config =~ /B/i ) ? '<th style="width: var(--bar-width)" class="bg-b" ' . Tooltip(5) . '>' . CleanXSS($Message[75]) . '</th>' : '' )
+		. ( ( $config =~ /U/i ) ? '<th class="bg-u" ' . Tooltip(2) . '>' . CleanXSS($Message[18]) . '</th>' : '' )
+		. ( ( $config =~ /V/i ) ? '<th class="bg-v" ' . Tooltip(1) . '>' . CleanXSS($Message[10]) . '</th>' : '' )
+		. ( ( $config =~ /P/i ) ? '<th class="bg-p" ' . Tooltip(3) . '>' . CleanXSS($Message[56]) . '</th>' : '' )
+		. ( ( $config =~ /H/i ) ? '<th class="bg-h" ' . Tooltip(4) . '>' . CleanXSS($Message[57]) . '</th>' : '' )
+		. ( ( $config =~ /B/i ) ? '<th class="bg-b" ' . Tooltip(5) . '>' . CleanXSS($Message[75]) . '</th>' : '' )
 		. '</tr></thead>';
 }
 
@@ -13858,23 +13848,22 @@ sub HTMLMainMonthly{
 			);
 		}
 
-	} elsif($ShowBars == 1) {
-
-		print '<table class="bar-table month-bar-table">'	. '<tr>' . $bars . '</tr>'
-		. '<tr>';
-
-		for ( my $ix = 1 ; $ix <= 12 ; $ix++ ) {
-			my $monthix = sprintf( "%02s", $ix );
-
-			print "<td>"
-			. (!$StaticLinks && $monthix == $nowmonth && $YearRequired == $nowyear ? '<span class="currentday">' : '')
-			. "$MonthNumLib{$monthix}<div>$YearRequired</div>"
-			. (!$StaticLinks && $monthix == $nowmonth && $YearRequired == $nowyear ? '</span>' : '' )
-			. '</td>';
-		}
-
-		print '</tr>'	. '</table>';
 	}
+
+	print '<table class="bar-table month-bar-table">'	. '<tr>' . $bars . '</tr>'
+	. '<tr>';
+
+	for ( my $ix = 1 ; $ix <= 12 ; $ix++ ) {
+		my $monthix = sprintf( "%02s", $ix );
+
+		print "<td>"
+		. (!$StaticLinks && $monthix == $nowmonth && $YearRequired == $nowyear ? '<span class="currentday">' : '')
+		. "$MonthNumLib{$monthix}<div>$YearRequired</div>"
+		. (!$StaticLinks && $monthix == $nowmonth && $YearRequired == $nowyear ? '</span>' : '' )
+		. '</td>';
+	}
+
+	print '</tr>'	. '</table>';
 
 	# Show data array for month
 	if ($AddDataArrayMonthStats) {
@@ -14103,44 +14092,41 @@ sub HTMLMainDaily{
 			);
 		}
 
-  } elsif($ShowBars == 1) {
-
-		# Show average value bars
-		# $bars .= '<td>&nbsp;</td>' . '<td>'
-		# . (( $ShowDaysOfMonthStats =~ /V/i ) ? HtmlBar('v', $average_v, Format_Number($average_v), $max_v, $Message[10], $width) : '')
-		# . (( $ShowDaysOfMonthStats =~ /P/i ) ? HtmlBar('p', $average_p, Format_Number($average_p), $max_p, $Message[56], $width) : '')
-		# . (( $ShowDaysOfMonthStats =~ /H/i ) ? HtmlBar('h', $average_h, Format_Number($average_h), $max_h, $Message[57], $width) : '')
-		# . (( $ShowDaysOfMonthStats =~ /B/i ) ? HtmlBar('b', $average_k, Format_Number($average_k), $max_k, $Message[75], $width) : '')
-		# . '</td>';
-
-		$bars .= '</tr>';
-
-		# Show lib for day
-		$bars .= '<tr>';
-		foreach my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )	{
-
-			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
-			my $year  = $1;
-			my $month = $2;
-			my $day   = $3;
-			
-			if ( !DateIsValid( $3, $2, $1 ) ) { next; } # If not an existing day, go to next
-
-			my $dayofweekcursor = DayOfWeek( $3, $2, $1 );
-			$bars .= "<td" . ($dayofweekcursor =~ /[06]/ ? " bgcolor=\"#$color_weekend\"" : "") . ">"
-			. (!$StaticLinks && $day == $nowday && $month == $nowmonth && $year == $nowyear ? '<span class="currentday">' : '')
-			. "$day<br /><span style=\"font-size: " . ($FrameName ne 'mainright' && $QueryString !~ /buildpdf/i ? "0.5" : "0.4" ) . "rem;\">" . $MonthNumLib{$month} . "</span>"
-			. (!$StaticLinks && $day == $nowday && $month == $nowmonth && $year == $nowyear ? '</span>' : '' )
-			. "</td>\n";
-		}
-
-		print '<table class="bar-table">'
-		. '<tr>'
-		. $bars
-		# . '<td>&nbsp;</td>'
-		# . '<td valign="middle"' . Tooltip(18) . '>' . $Message[96] . '</td>'
-		. '</tr>'	. '</table>';
   }
+
+	# Show average value bars
+	# $bars .= '<td>&nbsp;</td>' . '<td>'
+	# . (( $ShowDaysOfMonthStats =~ /V/i ) ? HtmlBar('v', $average_v, Format_Number($average_v), $max_v, $Message[10], $width) : '')
+	# . (( $ShowDaysOfMonthStats =~ /P/i ) ? HtmlBar('p', $average_p, Format_Number($average_p), $max_p, $Message[56], $width) : '')
+	# . (( $ShowDaysOfMonthStats =~ /H/i ) ? HtmlBar('h', $average_h, Format_Number($average_h), $max_h, $Message[57], $width) : '')
+	# . (( $ShowDaysOfMonthStats =~ /B/i ) ? HtmlBar('b', $average_k, Format_Number($average_k), $max_k, $Message[75], $width) : '')
+	# . '</td>';
+
+	$bars .= '</tr>';
+
+	# Show lib for day
+	$bars .= '<tr>';
+	foreach my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )	{
+
+		$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
+		my $year  = $1;
+		my $month = $2;
+		my $day   = $3;
+			
+		if ( !DateIsValid( $3, $2, $1 ) ) { next; } # If not an existing day, go to next
+
+		my $dayofweekcursor = DayOfWeek( $3, $2, $1 );
+		$bars .= "<td" . ($dayofweekcursor =~ /[06]/ ? " bgcolor=\"#$color_weekend\"" : "") . ">"
+		. (!$StaticLinks && $day == $nowday && $month == $nowmonth && $year == $nowyear ? '<span class="currentday">' : '')
+		. "$day<br /><span style=\"font-size: " . ($FrameName ne 'mainright' && $QueryString !~ /buildpdf/i ? "0.5" : "0.4" ) . "rem;\">" . $MonthNumLib{$month} . "</span>"
+		. (!$StaticLinks && $day == $nowday && $month == $nowmonth && $year == $nowyear ? '</span>' : '' )
+		. "</td>\n";
+	}
+
+	print '<table class="bar-table">'
+	. '<tr>'
+	. $bars
+	. '</tr>'	. '</table>';
 
 	# Show data array for days
 	if ($AddDataArrayShowDaysOfMonthStats)
@@ -14298,35 +14284,33 @@ sub HTMLMainDaysofWeek{
 				\@valaverage,         \@valdata
 			);
 		}
-	} elsif($ShowBars == 1) {
+	}
 
-		print '<table class="bar-table daysofweek-bar-table">'	. '<tr>';
+	print '<table class="bar-table daysofweek-bar-table">'	. '<tr>';
 			
-		for (@DOWIndex) {
+	for (@DOWIndex) {
 
-			print '<td>'
-			. (( $ShowDaysOfWeekStats =~ /P/i ) ? HtmlBar('p', $avg_dayofweek_p[$_], Format_Number($avg_dayofweek_p[$_]), $max_p, $Message[56], $width) : '')
-			. (( $ShowDaysOfWeekStats =~ /H/i ) ? HtmlBar('h', $avg_dayofweek_h[$_], Format_Number($avg_dayofweek_h[$_]), $max_h, $Message[57], $width) : '')
-			. (( $ShowDaysOfWeekStats =~ /B/i ) ? HtmlBar('b', $avg_dayofweek_k[$_], Format_Number($avg_dayofweek_k[$_]), $max_k, $Message[75], $width) : '')
-			. '</td>';
-
-		}
-
-		print '</tr>'	. '<tr' . Tooltip(17) . '>';
-
-		for (@DOWIndex) {
-
-			print '<td' . ( $_ =~ /[06]/ ? " bgcolor=\"#$color_weekend\"" : "" ) . ">"
-			. (!$StaticLinks && $_ == ( $nowwday - 1 ) && $MonthRequired == $nowmonth && $YearRequired == $nowyear ? '<span class="currentday">' : '')
-			. $Message[ $_ + 84 ]
-			. (!$StaticLinks && $_ == ( $nowwday - 1 ) && $MonthRequired == $nowmonth && $YearRequired == $nowyear ? '</span>' : '' )
-			. '</td>';
-
-		}
-
-		print '</tr>' . '</table>';
+		print '<td>'
+		. (( $ShowDaysOfWeekStats =~ /P/i ) ? HtmlBar('p', $avg_dayofweek_p[$_], Format_Number($avg_dayofweek_p[$_]), $max_p, $Message[56], $width) : '')
+		. (( $ShowDaysOfWeekStats =~ /H/i ) ? HtmlBar('h', $avg_dayofweek_h[$_], Format_Number($avg_dayofweek_h[$_]), $max_h, $Message[57], $width) : '')
+		. (( $ShowDaysOfWeekStats =~ /B/i ) ? HtmlBar('b', $avg_dayofweek_k[$_], Format_Number($avg_dayofweek_k[$_]), $max_k, $Message[75], $width) : '')
+		. '</td>';
 
 	}
+
+	print '</tr>'	. '<tr' . Tooltip(17) . '>';
+
+	for (@DOWIndex) {
+
+		print '<td' . ( $_ =~ /[06]/ ? " bgcolor=\"#$color_weekend\"" : "" ) . ">"
+		. (!$StaticLinks && $_ == ( $nowwday - 1 ) && $MonthRequired == $nowmonth && $YearRequired == $nowyear ? '<span class="currentday">' : '')
+		. $Message[ $_ + 84 ]
+		. (!$StaticLinks && $_ == ( $nowwday - 1 ) && $MonthRequired == $nowmonth && $YearRequired == $nowyear ? '</span>' : '' )
+		. '</td>';
+
+		}
+
+	print '</tr>' . '</table>';
 
 	# Show data array for days of week
 	if ($AddDataArrayShowDaysOfWeekStats) {
@@ -14449,40 +14433,41 @@ sub HTMLMainHours{
 		$graphdone=1;
 	}
 
-	if (! $graphdone && $ShowBars == 1) 
+	print '<table class="bar-table">';
+	print '<tr>';
+	for ( my $ix = 0 ; $ix <= 23 ; $ix++ )
 	{
-		print '<table class="bar-table">';
-		print '<tr>';
-		for ( my $ix = 0 ; $ix <= 23 ; $ix++ ) {
-			
-			print '<td>'
-			. (( $ShowHoursStats =~ /P/i ) ? HtmlBar('p', $_time_p[$ix], $_time_p[$ix], $max_p, $Message[56], $width) : '')
-			. (( $ShowHoursStats =~ /H/i ) ? HtmlBar('h', $_time_h[$ix], $_time_h[$ix], $max_h, $Message[57], $width) : '')
-			. (( $ShowHoursStats =~ /B/i ) ? HtmlBar('b', $_time_k[$ix], $_time_k[$ix], $max_k, $Message[75], $width) : '')
-			. '</td>';
-
-		}
-		print "</tr>\n";
-
-		# Show hour lib
-		print "<tr" . Tooltip(17) . ">";
-		for ( my $ix = 0 ; $ix <= 23 ; $ix++ ) {
-			print '<th>' . $ix . '</th>'
-			  ;   # width=19 instead of 18 to avoid a MacOS browser bug.
-		}
-		print "</tr>\n";
-
-		# Show clock icon
-		print "<tr" . Tooltip(17) . ">\n";
-		for ( my $ix = 0 ; $ix <= 23 ; $ix++ ) {
-			my $hrs = ( $ix >= 12 ? $ix - 12 : $ix );
-			my $hre = ( $ix >= 12 ? $ix - 11 : $ix + 1 );
-			my $apm = ( $ix >= 12 ? 'pm' : 'am' );
-			print '<td><div class="clock hr-' . $hre . ' ' . (($ix > 21 || $ix < 7 ) ? 'clock-night' : 'clock-day') . '" title="' . $hrs . ':00 - ' . $hre . ':00 ' . $apm . '" /></td>';
-		}
-		print "</tr>\n";
-		print "</table>\n";
+		print '<td>'
+		. (( $ShowHoursStats =~ /P/i ) ? HtmlBar('p', $_time_p[$ix], $_time_p[$ix], $max_p, $Message[56], $width) : '')
+		. (( $ShowHoursStats =~ /H/i ) ? HtmlBar('h', $_time_h[$ix], $_time_h[$ix], $max_h, $Message[57], $width) : '')
+		. (( $ShowHoursStats =~ /B/i ) ? HtmlBar('b', $_time_k[$ix], $_time_k[$ix], $max_k, $Message[75], $width) : '')
+		. '</td>';
 	}
+	
+	print "</tr>\n";
+
+	# Show hour lib
+	print "<tr" . Tooltip(17) . ">";
+	
+	for ( my $ix = 0 ; $ix <= 23 ; $ix++ )
+	{
+			print '<th>' . $ix . '</th>';
+	}
+
+	print "</tr>\n";
+
+	# Show clock icon
+	print "<tr" . Tooltip(17) . ">\n";
+	
+	for ( my $ix = 0 ; $ix <= 23 ; $ix++ )
+	{
+		my $hrs = ( $ix >= 12 ? $ix - 12 : $ix );
+		my $hre = ( $ix >= 12 ? $ix - 11 : $ix + 1 );
+		my $apm = ( $ix >= 12 ? 'pm' : 'am' );
+		print '<td><div class="clock hr-' . $hre . ' ' . (($ix > 21 || $ix < 7 ) ? 'clock-night' : 'clock-day') . '" title="' . $hrs . ':00 - ' . $hre . ':00 ' . $apm . '" /></td>';
+	}
+	print "</tr>\n";
+	print "</table>\n";
 
 	# Show data array for hours
 	if ($AddDataArrayShowHoursStats) {
