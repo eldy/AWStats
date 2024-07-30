@@ -172,7 +172,7 @@ $ExtraTrackedRowsLimit = 500;
 $DatabaseBreak         = 'month';
 use vars qw/
   $DebugMessages $AllowToUpdateStatsFromBrowser $EnableLockForUpdate $DNSLookup $DynamicDNSLookup $AllowAccessFromWebToAuthenticatedUsersOnly
-  $BarHeight $BarWidth $CreateDirDataIfNotExists $KeepBackupOfHistoricFiles
+  $BarWidth $CreateDirDataIfNotExists $KeepBackupOfHistoricFiles
   $NbOfLinesParsed $NbOfLinesDropped $NbOfLinesCorrupted $NbOfLinesComment $NbOfLinesBlank $NbOfOldLines $NbOfNewLines
   $NbOfLinesShowsteps $NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile $ArchiveLogRecords
   $ShowDropped $ShowCorrupted $ShowUnknownOrigin $ShowDirectOrigin $ShowLinksToWhoIs
@@ -190,7 +190,6 @@ use vars qw/
 	$DNSLookup,
 	$DynamicDNSLookup,
 	$AllowAccessFromWebToAuthenticatedUsersOnly,
-	$BarHeight,
 	$BarWidth,
 	$CreateDirDataIfNotExists,
 	$KeepBackupOfHistoricFiles,
@@ -3067,7 +3066,7 @@ sub Check_Config {
 	$Logo     ||= 'awstats_logo6.png';
 	$LogoLink ||= 'https://www.awstats.org';
 	if ( $BarWidth !~ /^\d+/  || $BarWidth < 1 )  { $BarWidth  = 260; }
-	if ( $BarHeight !~ /^\d+/ || $BarHeight < 1 ) { $BarHeight = 90; }
+
 	$color_Background =~ s/#//g;
 	if ( $color_Background !~ /^[0-9|A-H]+$/i ) {
 		$color_Background = 'FFFFFF';
