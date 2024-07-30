@@ -1006,7 +1006,7 @@ section header:hover .tooltip { visibility: visible; opacity: 1; }
 .clock{ display: inline-block; vertical-align: bottom; margin: 0 5px; border-radius: 50%; }
 .clock-night{ background: conic-gradient(rgba(30, 28, 97, 1) 330deg, rgba(244, 240, 144, 1) 30deg); }
 .clock-day{ background: conic-gradient(rgba(244, 240, 144, 1) 330deg, rgba(30, 28, 97, 1) 30deg); }
-.bar-table .clock { width: 0.15dvw; height: 0.15dvw }
+.bar-table .clock { width: 0.5dvw; height: 0.5dvw }
 .data-table .clock { width: 16px; height: 16px }
 .landxx{ fill: rgba(128, 86, 86, 1) !important; transition: fill 0.3s ease-in }
 .oceanxx{ fill: #4477DD !important; stroke-width: 0 !important; }
