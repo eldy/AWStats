@@ -16121,11 +16121,13 @@ sub HTMLMainScreenSize{
 	my $Totalh = 0;
 	my $title = $Message[135] . ' <small>(' . $Message[77] . ' ' . $MaxNbOf{'ScreenSizesShown'} . ')</small>';
 	my $total_h = 0;
+	my $max_h = 0;
 	my $html = '';
 
 	foreach ( keys %_screensize_h )
 	{
 		$Totalh += $_screensize_h{$_};
+		$max_h = ($_screensize_h{$_} > $max_h) ? $_screensize_h{$_} : $max_h;
 	}
 
 	&BuildKeyList( $MaxNbOf{'ScreenSizesShown'}, $MinHit{'ScreenSize'}, \%_screensize_h, \%_screensize_h );
@@ -16136,11 +16138,9 @@ sub HTMLMainScreenSize{
 
 		$total_h += $_screensize_h{$key} || 0;
 
-		$html .= '<tr><td></td><td style="width:calc(var(--bar-width) * 1px)"></td></tr>'
-		. '<tr>'
-		. (( $key eq 'Unknown' ) ?
-			'<td>' . $Message[0] . '</td>' : '<td>' . $key . '</td>')
-		. HTMLDataCellWithBar('h', $_screensize_h{$key}, $p . ' %', $Totalh)
+		$html .= '<tr>'
+		. HTMLDataCellWithBar('h', $_screensize_h{$key}, (( $key eq 'Unknown' ) ? $Message[0] : $key), $max_h)
+		. '<td>' . $p . ' %' . '</td>'
 		. '</tr>';
 	}
 
@@ -16148,9 +16148,11 @@ sub HTMLMainScreenSize{
 	if ( $rest_h > 0 )
 	{ # All others sessions
 		my $p = ($Totalh) ? int( $rest_h / $Totalh * 1000 ) / 10 : 0;
+		
 		$html .= '<tr>'
-		. '<td>' . $Message[2] . '</td>'
-		. HTMLDataCellWithBar('h', $rest_h, $p . '%', $Totalh);
+		. HTMLDataCellWithBar('h', $rest_h, $Message[2], $max_h)
+		. '<td>' . $p . '%' . '</td>'
+		. '</tr>';
 	}
 
 	return &tab_head($title, '', 'screensizes')
