@@ -956,11 +956,11 @@ b { font-weight: 700 }
 hr { width: 100%; height: 0; margin: 0; color: transparent; border: none; }
 small { font-size: 0.7rem; font-weight: 400; }
 #container { display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; align-items: flex-start;}
-#container > header { position: sticky; top: 0; z-index: 100; width: 100%; margin-bottom: -25px; background-color: var(--page-bgcolor); display: flex; flex-wrap: wrap; column-gap: 20px; justify-content: center; text-align: center;	 }
-.column { display:flex;flex-flow:column wrap; row-gap: 20px; }
-#domain { font-weight: 900; font-size: 2.4em }
+#container > header { position: sticky; top: 0; z-index: 100; width: 100%; margin-bottom: -30px; background-color: var(--page-bgcolor); display: flex; flex-wrap: wrap; column-gap: 20px; justify-content: center; text-align: center;	 }
+.column { display:flex;flex-flow:column wrap; row-gap: 10px; }
+#domain { font-weight: 900; font-size: 1.5rem }
 header select { width : 60px }
-#logo { height: 40px; }
+#logo { height: 33px; }
 nav { width: 100%; height: 17px; margin: 8px 0; margin-top: 0; background-color: white; font-weight: 600 }
 nav ul { display: flex; justify-content: center; gap: 1dvw; list-style-type: none; margin: 0; padding: 0; overflow: hidden; }
 nav li a, .dropbtn { display: inline-block; padding: 2px 4px; }
@@ -972,7 +972,7 @@ li.dropdown { display: inline-block; }
 .dropdown:hover .dropdown-content { display: block; }
 #about { width: 100%; text-align: center; }
 #summary-logs { max-width: 100%; text-align: center;  margin: auto; display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;}
-#summary-logs div { padding: 2px 0 }
+#summary-logs div { padding: 1px 0 }
 .summary-label { margin: 0 9px; }
 #summary-logs div[class^="bg-"], .currentday{ width: calc(var(--bar-width) * 1px); font-weight: 900 }
 div[class^="bg-"], th[class^="bg-"] { width: calc(var(--bar-width) * 1px) }
@@ -13645,10 +13645,10 @@ sub HTMLMainSummary{
 	print (( $ShowSummary =~ /P/i && $LogType ne 'M' ) ?
 		'<div>'
 		. '<div class="bg-p" ' . Tooltip(3) . ">$Message[56]</div>"
-		. '<div>'
+		# . '<div>'
 		. '<div><b>' . Format_Number($TotalPages) . '</b></div>'
 		# . '<small>' . $RatioPages . ' ' . $Message[56] . ' / ' . $Message[12] . '</small>'
-		. '</div>'
+		# . '</div>'
 		. '<div><small>' . Format_Number($TotalNotViewedPages) . ' *' .  $Message[( $LogType eq 'M' ) ? 166 : 161]  . ' </small></div>'
 		. '</div>'
 		: ''
