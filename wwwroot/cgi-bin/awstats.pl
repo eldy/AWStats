@@ -11068,7 +11068,7 @@ sub HTMLMainFileType{
 		}	else {
 			my $nameicon = $MimeHashLib{$key}[0] || 'notavailable';
 			my $nametype = $MimeHashFamily{$MimeHashLib{$key}[0]} || '';
-			$html .= '<td><small>(' . $nametype . ')</small> <span><b>' . $key . '</b> <img src="' . $DirIcons . '/mime/' . $nameicon . '.png"/></span></td>';
+			$html .= '<td><small>(' . $nametype . ')</small> &nbsp;<span><b>' . $key . '</b> <img src="' . $DirIcons . '/mime/' . $nameicon . '.png"/></span></td>';
 		}
 
 		$html .= (( $ShowFileTypesStats =~ /H/i ) ? HTMLDataCellWithBar('h', $_filetypes_h{$key}, '<small>' . $p_h . '%</small> ' . Format_Number($_filetypes_h{$key}), $Totalh) : '' )
