@@ -14517,9 +14517,9 @@ sub HTMLMainHours{
   } 
 	
 	if ( $PluginsLoaded{'GetTimeZoneTitle'}{'timezone'} ) {
-		$title .= " (GMT "
+		$title .= " <small>(GMT "
 		  . ( GetTimeZoneTitle_timezone() >= 0 ? "+" : "" )
-		  . int( GetTimeZoneTitle_timezone() ) . ")";
+		  . int( GetTimeZoneTitle_timezone() ) . ")</small>";
 	}
 
 	my $tooltip = '';
@@ -14706,7 +14706,7 @@ sub HTMLMainCountries{
 	my $max_u = my $max_p = my $max_h = my $max_k = 1;
 	my $count = 0;
 
-	my $title = $Message[25] . '(' . $Message[77] . ' ' . $MaxNbOf{'Domain'} . ')';
+	my $title = $Message[25] . ' <small>(' . $Message[77] . ' ' . $MaxNbOf{'Domain'} . ')</small>';
 
 	my $link = XMLEncode($AWScript . ${NewLinkParams});
 	my $subtitle = '';
@@ -16127,61 +16127,52 @@ sub HTMLMainBrowsers{
 }
 
 #------------------------------------------------------------------------------
-# Function:     Prints the ScreenSize chart and table
+# Function:     Return the ScreenSize chart and table (html)
 # Parameters:   -
 # Input:        -
-# Output:       HTML
-# Return:       -
+# Output:       -
+# Return:       string
 #------------------------------------------------------------------------------
 sub HTMLMainScreenSize{
 	if ($Debug) { debug( "ShowScreenSizeStats", 2 ); }
-	# print "<a name=\"screensizes\">&nbsp;</a>";
+
 	my $Totalh = 0;
-	foreach ( keys %_screensize_h ) { $Totalh += $_screensize_h{$_}; }
-	
-	my $title = $Message[135] . ' (' . $Message[77] . ' ' . $MaxNbOf{'ScreenSizesShown'} . ')';
-
-	print &tab_head($title, '', 'screensizes');
-	
-	print '<table class="data-table">'
-	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$Message[135]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th></tr>\n";
+	my $title = $Message[135] . ' <small>(' . $Message[77] . ' ' . $MaxNbOf{'ScreenSizesShown'} . ')</small>';
 	my $total_h = 0;
-	my $count   = 0;
-	&BuildKeyList( $MaxNbOf{'ScreenSizesShown'},
-		$MinHit{'ScreenSize'}, \%_screensize_h, \%_screensize_h );
+	my $html = '';
 
-	foreach my $key (@keylist) {
-		my $p = '&nbsp;';
-		if ($Totalh) {
-			$p = int( $_screensize_h{$key} / $Totalh * 1000 ) / 10;
-			$p = "$p %";
-		}
+	foreach ( keys %_screensize_h )
+	{
+		$Totalh += $_screensize_h{$_};
+	}
+
+	&BuildKeyList( $MaxNbOf{'ScreenSizesShown'}, $MinHit{'ScreenSize'}, \%_screensize_h, \%_screensize_h );
+
+	foreach my $key (@keylist)
+	{
+		my $p = ($Totalh) ? (int( $_screensize_h{$key} / $Totalh * 1000 ) / 10) : '';
+
 		$total_h += $_screensize_h{$key} || 0;
-		print "<tr>";
-		if ( $key eq 'Unknown' ) {
-			print
-"<td class=\"aws\"><span style=\"color: #$color_other\">$Message[0]</span></td>";
-			print "<td>$p</td>";
-		}
-		else {
-			my $screensize = $key;
-			print "<td class=\"aws\">$screensize</td>";
-			print "<td>$p</td>";
-		}
-		print "</tr>\n";
-		$count++;
-	}
-	my $rest_h = $Totalh - $total_h;
-	if ( $rest_h > 0 ) {    # All others sessions
-		my $p = 0;
-		if ($Totalh) { $p = int( $rest_h / $Totalh * 1000 ) / 10; }
-		print
-"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
-		print "<td>" . ( $rest_h ? "$p %" : "&nbsp;" ) . "</td>";
-		print "</tr>\n";
+
+		$html .= '<tr><td></td><td style="width:calc(var(--bar-width) * 1px)"></td></tr>'
+		. '<tr>'
+		. (( $key eq 'Unknown' ) ?
+			'<td style="color: var(--neutral-color)">' . $Message[0] . '</td>' : '<td>' . $key . '</td>')
+		. HTMLDataCellWithBar('h', $_screensize_h{$key}, $p . ' %', $Totalh)
+		. '</tr>';
 	}
 
-	print '</table>' . &tab_end();
+	my $rest_h = $Totalh - $total_h;
+	if ( $rest_h > 0 )
+	{ # All others sessions
+		my $p = ($Totalh) ? int( $rest_h / $Totalh * 1000 ) / 10 : 0;
+		$html .= '<tr>'
+		. '<td><span style="color: var(--neutral-color)">' . $Message[2] . '</span></td>'
+		. HTMLDataCellWithBar('h', $rest_h, $p . '%', $Totalh);
+	}
+
+	return &tab_head($title, '', 'screensizes')
+	. '<table class="data-table">' . $html . '</table>' . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -21438,8 +21429,6 @@ if ( scalar keys %HTMLOutput ) {
 			&HTMLMainWorms();
 		}
 
-		print "\n<a name=\"how\">&nbsp;</a>\n\n";
-
 		# BY SESSION
 		#----------------------------
 		if ($ShowSessionsStats) {
@@ -21491,10 +21480,8 @@ if ( scalar keys %HTMLOutput ) {
 		# BY SCREEN SIZE
 		#----------------------------
 		if ($ShowScreenSizeStats) {
-			&HTMLMainScreenSize();
+			print &HTMLMainScreenSize();
 		}
-
-		print "\n<a name=\"refering\">&nbsp;</a>\n\n";
 
 		# BY REFERENCE
 		#---------------------------
@@ -21502,15 +21489,11 @@ if ( scalar keys %HTMLOutput ) {
 			&HTMLMainReferrers($NewLinkParams, $NewLinkTarget);
 		}
 
-		print "\n<a name=\"keys\">&nbsp;</a>\n\n";
-
 		# BY SEARCH KEYWORDS AND/OR KEYPHRASES
 		#-------------------------------------
 		if ($ShowKeyphrasesStats || $ShowKeywordsStats){
 			&HTMLMainKeys($NewLinkParams, $NewLinkTarget);
 		}	
-
-		print "\n<a name=\"other\">&nbsp;</a>\n\n";
 
 		# BY MISC
 		#----------------------------
