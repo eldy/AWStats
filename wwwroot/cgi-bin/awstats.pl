@@ -239,7 +239,7 @@ use vars qw/
   $DetailedReportsOnNewWindows
   $FirstDayOfWeek $KeyWordsNotSensitive $SaveDatabaseFilesWithPermissionsForEveryone
   $WarningMessages $ShowLinksOnUrl $UseFramesWhenCGI
-  $ShowMenu $ShowSummary $ShowMonthStats $ShowDaysOfMonthStats $ShowDaysOfWeekStats
+  $ShowMenu $ShowSummary $ShowMonthStats $ShowDaysOfMonthStats $ShowRatiosStats $ShowDaysOfWeekStats
   $ShowHoursStats $ShowDomainsStats $ShowHostsStats
   $ShowRobotsStats $ShowSessionsStats $ShowPagesStats $ShowFileTypesStats $ShowDownloadsStats
   $ShowOSStats $ShowBrowsersStats $ShowOriginStats
@@ -258,6 +258,7 @@ use vars qw/
 	$ShowSummary,
 	$ShowMonthStats,
 	$ShowDaysOfMonthStats,
+	$ShowRatiosStats,
 	$ShowDaysOfWeekStats,
 	$ShowHoursStats,
 	$ShowDomainsStats,
@@ -282,7 +283,8 @@ use vars qw/
   )
   = (
 	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1
   );
 use vars qw/
   $AllowFullYearView
@@ -591,7 +593,7 @@ use vars qw/ @Message /;
 	'Pages-URL',
 	'Hours',
 	'Browsers',
-	'',
+	'Ratios',
 	'Referers',
 	'Never updated (See \'Build/Update\' on awstats_setup.html page)',
 	'Visitors domains/countries',
@@ -2968,54 +2970,42 @@ sub Check_Config {
 	}
 
 	# Optional appearance setup section
-	if ( $MaxRowsInHTMLOutput !~ /^\d+/ || $MaxRowsInHTMLOutput < 1 ) {
-		$MaxRowsInHTMLOutput = 1000;
-	}
-	if ( $ShowMenu !~ /[01]/ )            { $ShowMenu       = 1; }
-	if ( $ShowSummary !~ /[01UVPHB]/ )    { $ShowSummary    = 'UVPHB'; }
-	if ( $ShowMonthStats !~ /[01UVPHB]/ ) { $ShowMonthStats = 'UVPHB'; }
-	if ( $ShowDaysOfMonthStats !~ /[01VPHB]/ ) {
-		$ShowDaysOfMonthStats = 'VPHB';
-	}
-	if ( $ShowDaysOfWeekStats !~ /[01PHBL]/ ) { $ShowDaysOfWeekStats = 'PHBL'; }
-	if ( $ShowHoursStats !~ /[01PHBL]/ )      { $ShowHoursStats      = 'PHBL'; }
-	if ( $ShowDomainsStats !~ /[01PHB]/ )     { $ShowDomainsStats    = 'PHB'; }
-	if ( $ShowHostsStats !~ /[01PHBL]/ )      { $ShowHostsStats      = 'PHBL'; }
-
-	if ( $ShowAuthenticatedUsers !~ /[01PHBL]/ ) {
-		$ShowAuthenticatedUsers = 0;
-	}
-	if ( $ShowRobotsStats !~ /[01HBL]/ )     { $ShowRobotsStats     = 'HBL'; }
-	if ( $ShowWormsStats !~ /[01HBL]/ )      { $ShowWormsStats      = 'HBL'; }
-	if ( $ShowEMailSenders !~ /[01HBML]/ )   { $ShowEMailSenders    = 0; }
-	if ( $ShowEMailReceivers !~ /[01HBML]/ ) { $ShowEMailReceivers  = 0; }
-	if ( $ShowSessionsStats !~ /[01]/ )      { $ShowSessionsStats   = 1; }
-	if ( $ShowPagesStats !~ /[01PBEX]/i )    { $ShowPagesStats      = 'PBEX'; }
-	if ( $ShowFileTypesStats !~ /[01HBC]/ )  { $ShowFileTypesStats  = 'HB'; }
-	if ( $ShowDownloadsStats !~ /[01HB]/ )   { $ShowDownloadsStats  = 'HB';}
-	if ( $ShowFileSizesStats !~ /[01]/ )     { $ShowFileSizesStats  = 1; }
-	if ( $ShowOSStats !~ /[01]/ )            { $ShowOSStats         = 1; }
-	if ( $ShowBrowsersStats !~ /[01]/ )      { $ShowBrowsersStats   = 1; }
-	if ( $ShowScreenSizeStats !~ /[01]/ )    { $ShowScreenSizeStats = 0; }
-	if ( $ShowOriginStats !~ /[01PH]/ )      { $ShowOriginStats     = 'PH'; }
-	if ( $ShowKeyphrasesStats !~ /[01]/ )    { $ShowKeyphrasesStats = 1; }
-	if ( $ShowKeywordsStats !~ /[01]/ )      { $ShowKeywordsStats   = 1; }
-	if ( $ShowClusterStats !~ /[01PHB]/ )    { $ShowClusterStats    = 0; }
-	if ( $ShowMiscStats !~ /[01anjdfrqwp]/ ) { $ShowMiscStats       = 'a'; }
-	if ( $ShowHTTPErrorsStats !~ /[01]/ )    { $ShowHTTPErrorsStats = 1; }
-	if ( $ShowHTTPErrorsPageDetail !~ /[RH]/ ) { $ShowHTTPErrorsPageDetail = 'R'; }
-	if ( $ShowSMTPErrorsStats !~ /[01]/ )    { $ShowSMTPErrorsStats = 0; }
-	if ( $AddDataArrayMonthStats !~ /[01]/ ) { $AddDataArrayMonthStats = 1; }
-
-	if ( $AddDataArrayShowDaysOfMonthStats !~ /[01]/ ) {
-		$AddDataArrayShowDaysOfMonthStats = 1;
-	}
-	if ( $AddDataArrayShowDaysOfWeekStats !~ /[01]/ ) {
-		$AddDataArrayShowDaysOfWeekStats = 1;
-	}
-	if ( $AddDataArrayShowHoursStats !~ /[01]/ ) {
-		$AddDataArrayShowHoursStats = 1;
-	}
+	if ( $MaxRowsInHTMLOutput !~ /^\d+/ || $MaxRowsInHTMLOutput < 1 ) {	$MaxRowsInHTMLOutput = 1000; }
+	if ( $ShowMenu !~ /[01]/ )                         { $ShowMenu                         = 1; }
+	if ( $ShowSummary !~ /[01UVPHB]/ )                 { $ShowSummary                      = 'UVPHB'; }
+	if ( $ShowMonthStats !~ /[01UVPHB]/ )              { $ShowMonthStats                   = 'UVPHB'; }
+	if ( $ShowDaysOfMonthStats !~ /[01VPHB]/ )         { $ShowDaysOfMonthStats             = 'VPHB'; }
+	if ( $ShowRatiosStats !~ /[01UVPH]/ )              { $ShowRatiosStats                  = 'UVPH'; }
+	if ( $ShowDaysOfWeekStats !~ /[01PHBL]/ )          { $ShowDaysOfWeekStats              = 'PHBL'; }
+	if ( $ShowHoursStats !~ /[01PHBL]/ )               { $ShowHoursStats                   = 'PHBL'; }
+	if ( $ShowDomainsStats !~ /[01PHB]/ )              { $ShowDomainsStats                 = 'PHB'; }
+	if ( $ShowHostsStats !~ /[01PHBL]/ )               { $ShowHostsStats                   = 'PHBL'; }
+	if ( $ShowAuthenticatedUsers !~ /[01PHBL]/ )       { $ShowAuthenticatedUsers           = 0;	}
+	if ( $ShowRobotsStats !~ /[01HBL]/ )               { $ShowRobotsStats                  = 'HBL'; }
+	if ( $ShowWormsStats !~ /[01HBL]/ )                { $ShowWormsStats                   = 'HBL'; }
+	if ( $ShowEMailSenders !~ /[01HBML]/ )             { $ShowEMailSenders                 = 0; }
+	if ( $ShowEMailReceivers !~ /[01HBML]/ )           { $ShowEMailReceivers               = 0; }
+	if ( $ShowSessionsStats !~ /[01]/ )                { $ShowSessionsStats                = 1; }
+	if ( $ShowPagesStats !~ /[01PBEX]/i )              { $ShowPagesStats                   = 'PBEX'; }
+	if ( $ShowFileTypesStats !~ /[01HBC]/ )            { $ShowFileTypesStats               = 'HB'; }
+	if ( $ShowDownloadsStats !~ /[01HB]/ )             { $ShowDownloadsStats               = 'HB';}
+	if ( $ShowFileSizesStats !~ /[01]/ )               { $ShowFileSizesStats               = 1; }
+	if ( $ShowOSStats !~ /[01]/ )                      { $ShowOSStats                      = 1; }
+	if ( $ShowBrowsersStats !~ /[01]/ )                { $ShowBrowsersStats                = 1; }
+	if ( $ShowScreenSizeStats !~ /[01]/ )              { $ShowScreenSizeStats              = 0; }
+	if ( $ShowOriginStats !~ /[01PH]/ )                { $ShowOriginStats                  = 'PH'; }
+	if ( $ShowKeyphrasesStats !~ /[01]/ )              { $ShowKeyphrasesStats              = 1; }
+	if ( $ShowKeywordsStats !~ /[01]/ )                { $ShowKeywordsStats                = 1; }
+	if ( $ShowClusterStats !~ /[01PHB]/ )              { $ShowClusterStats                 = 0; }
+	if ( $ShowMiscStats !~ /[01anjdfrqwp]/ )           { $ShowMiscStats                    = 'a'; }
+	if ( $ShowHTTPErrorsStats !~ /[01]/ )              { $ShowHTTPErrorsStats              = 1; }
+	if ( $ShowHTTPErrorsPageDetail !~ /[RH]/ )         { $ShowHTTPErrorsPageDetail         = 'R'; }
+	if ( $ShowSMTPErrorsStats !~ /[01]/ )              { $ShowSMTPErrorsStats              = 0; }
+	if ( $AddDataArrayMonthStats !~ /[01]/ )           { $AddDataArrayMonthStats           = 1; }
+	if ( $AddDataArrayShowDaysOfMonthStats !~ /[01]/ ) { $AddDataArrayShowDaysOfMonthStats = 1; }
+	if ( $AddDataArrayShowDaysOfWeekStats !~ /[01]/ )  { $AddDataArrayShowDaysOfWeekStats  = 1;	}
+	if ( $AddDataArrayShowHoursStats !~ /[01]/ )       { $AddDataArrayShowHoursStats       = 1;	}
+	
 	my @maxnboflist = (
 		'Domain',           'HostsShown',
 		'LoginShown',       'RobotShown',
@@ -3128,6 +3118,7 @@ sub Check_Config {
 	if ( $ShowSummary            eq '1' ) { $ShowSummary            = 'UVPHB'; }
 	if ( $ShowMonthStats         eq '1' ) { $ShowMonthStats         = 'UVPHB'; }
 	if ( $ShowDaysOfMonthStats   eq '1' ) { $ShowDaysOfMonthStats   = 'VPHB'; }
+	if ( $ShowRatiosStats   		 eq '1' ) { $ShowRatiosStats   = 'UVPH'; }
 	if ( $ShowDaysOfWeekStats    eq '1' ) { $ShowDaysOfWeekStats    = 'PHBL'; }
 	if ( $ShowHoursStats         eq '1' ) { $ShowHoursStats         = 'PHBL'; }
 	if ( $ShowDomainsStats       eq '1' ) { $ShowDomainsStats       = 'PHB'; }
@@ -10343,8 +10334,6 @@ sub HTMLShowEmailReceiversChart {
 sub HTMLTopBanner{
 	if ($Debug) { debug( "ShowTopBan", 2 ); }
 	
-	# print "<a name=\"menu\">&nbsp;</a>\n";
-
 	my $NewLinkParams = ${QueryString};
 	$NewLinkParams =~ s/(^|&|&amp;)update(=\w*|$)//i;
 	$NewLinkParams =~ s/(^|&|&amp;)staticlinks(=\w*|$)//i;
@@ -10483,6 +10472,7 @@ sub HTMLMenu{
 	. '<div class="dropdown-content">'
 	. '<a href="#month">' . $Message[162] . '</>'
 	. '<a href="#daysofmonth">' . $Message[138] . '</>'
+	. '<a href="#ratios">' . $Message[22] . '</>'
 	. '<a href="#daysofweek">' . $Message[91] . '</>'
 	. '<a href="#hours">' . $Message[20] . '</>'
 	. '</div>'
@@ -13646,7 +13636,7 @@ sub HTMLMainSummary{
 		'<div>'
 		. '<div class="bg-v" ' . Tooltip(1) . ">$Message[10]</div>"
 		. '<div><b>' . Format_Number($TotalVisits) . '</b></div>'
-		. '<small>' . $RatioVisits . ' ' . $Message[52] .'</small>'
+		# . '<small>' . $RatioVisits . ' ' . $Message[52] .'</small>'
 		. '</div>'
 		: ''
 	);
@@ -13656,7 +13646,7 @@ sub HTMLMainSummary{
 		. '<div class="bg-p" ' . Tooltip(3) . ">$Message[56]</div>"
 		. '<div>'
 		. '<div><b>' . Format_Number($TotalPages) . '</b></div>'
-		. '<small>' . $RatioPages . ' ' . $Message[56] . ' / ' . $Message[12] . '</small>'
+		# . '<small>' . $RatioPages . ' ' . $Message[56] . ' / ' . $Message[12] . '</small>'
 		. '</div>'
 		. '<div><small>' . Format_Number($TotalNotViewedPages) . ' *' .  $Message[( $LogType eq 'M' ) ? 166 : 161]  . ' </small></div>'
 		. '</div>'
@@ -13668,7 +13658,7 @@ sub HTMLMainSummary{
 		. '<div class="bg-h"' . Tooltip(4) . ">$Message[57]</div>"
 		. '<div>'
 		. '<div><b>'.Format_Number($TotalHits).'</b></div>'
-		. ($LogType eq 'M' ? '' : ' <small>' . $RatioHits . ' ' . $Message[57] . ' / ' . $Message[12] . '</small>')
+		# . ($LogType eq 'M' ? '' : ' <small>' . $RatioHits . ' ' . $Message[57] . ' / ' . $Message[12] . '</small>')
 		. '</div>'
 		. '<div><small>' . Format_Number($TotalNotViewedHits) . ' *' .  $Message[( $LogType eq 'M' ) ? 166 : 161]  . '</small></div>'
 		. '</div>'
@@ -13680,7 +13670,7 @@ sub HTMLMainSummary{
 		. '<div class="bg-b"' . Tooltip(5) . ">$Message[75]</div>"
 		. '<div>'
 		. '<div><b>' . Format_Bytes( int($TotalBytes) ) . '</b></div>'
-		. '<small>' . $RatioBytes . ' ' . $Message[108] . ' / ' . $Message[ ( $LogType eq 'M' ? 149 : 12 ) ] . '</small>'
+		# . '<small>' . $RatioBytes . ' ' . $Message[108] . ' / ' . $Message[ ( $LogType eq 'M' ? 149 : 12 ) ] . '</small>'
 		. '</div>'
 		. '<div title="' . ($LogType eq 'W' || $LogType eq 'S' ? "* $Message[159]" : "" ) . '"><small>' . Format_Bytes( int($TotalNotViewedBytes) ) . ' *' .  $Message[( $LogType eq 'M' ) ? 166 : 161]  . '</small></div>'
 		. '</div>'
@@ -13965,6 +13955,85 @@ sub HTMLMainMonthly{
 	}
 
 	print '</table>' . &tab_end();
+}
+
+#------------------------------------------------------------------------------
+# Function:     Return the Ratio section (html)
+# Parameters:   $firstdaytocountaverage, $lastdaytocountaverage
+#               $firstdaytoshowtime, $lastdaytoshowtime
+# Input:        _
+# Output:       _
+# Return:       string
+#------------------------------------------------------------------------------
+sub HTMLMainRatios{
+	if ($Debug) { debug( 'ShowRatiosStats', 2 ); }
+
+	my $firstdaytocountaverage = shift;
+	my $lastdaytocountaverage = shift;
+	my $firstdaytoshowtime = shift;
+	my $lastdaytoshowtime = shift;
+
+	my $title = $Message[22];
+	my $total_u = my $total_v = my $total_p = my $total_h = my $total_k = 0;
+	my @cat;
+	my $tableData = '';
+
+	foreach my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )
+	{
+		$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
+		if ( !DateIsValid( $3, $2, $1 ) ) { next; } # If not an existing day, go to next
+		my $date = $1 . $2 . $3 ;
+		$total_v += $DayVisits{$date} || 0;
+		$total_p += $DayPages{$date}  || 0;
+		$total_h += $DayHits{$date}   || 0;
+		$total_k += $DayBytes{$date}  || 0;
+	}
+
+	if ( $ShowRatiosStats =~ /U/i )
+	{
+		my $ratio_V_U = ($TotalUnique > 0) ? sprintf('%.2f', Format_Number($total_v / $TotalUnique)) : '';
+		my $ratio_P_U = ($TotalUnique > 0) ? sprintf('%.2f', Format_Number($total_p / $TotalUnique)) : '';
+		my $ratio_H_U = ($TotalUnique > 0) ? sprintf('%.2f', Format_Number($total_h / $TotalUnique)) : '';
+		my $ratio_B_U = ($TotalUnique > 0) ? Format_Bytes($total_k / $TotalUnique) : '';
+		push @cat, {'ref' => 'u', 'name' => $Message[18], 'u' => '', 'v' => $ratio_V_U, 'p' => $ratio_P_U, 'h' => $ratio_H_U, 'b' => $ratio_B_U};
+	}
+
+	if ( $ShowRatiosStats =~ /V/i )
+	{
+		my $ratio_P_V = ($total_v > 0) ? sprintf('%.2f', Format_Number($total_p / $total_v)) : '';
+		my $ratio_H_V = ($total_v > 0) ? sprintf('%.2f', Format_Number($total_h / $total_v)) : '';
+		my $ratio_B_V = ($total_v > 0) ? Format_Bytes($total_k / $total_v) : '';
+		push @cat, {'ref' => 'v', 'name' => $Message[10], 'u' => '', 'v' => '', 'p' => $ratio_P_V, 'h' => $ratio_H_V, 'b' => $ratio_B_V};
+	}
+
+	if ( $ShowRatiosStats =~ /P/i )
+	{
+		my $ratio_H_P = ($total_p > 0) ? sprintf('%.2f', Format_Number($total_h / $total_p)) : '';
+		my $ratio_B_P = ($total_p > 0) ? Format_Bytes($total_k / $total_p) : '';
+		push @cat, {'ref' => 'p', 'name' => $Message[56], 'u' => '', 'v' => '', 'p' => '', 'h' => $ratio_H_P, 'b' => $ratio_B_P};
+	}
+
+	if ( $ShowRatiosStats =~ /H/i )
+	{
+		my $ratio_B_H = ($total_h > 0) ? Format_Bytes($total_k / $total_h) : '';
+		push @cat, {'ref' => 'h', 'name' => $Message[57], 'u' => '', 'v' => '', 'p' => '', 'h' => '', 'b' => $ratio_B_H};
+	}
+	
+	foreach my $hash (@cat){
+		$tableData .= '<tr class="bg-' . $hash->{'ref'} . '">'
+		. '<td>&nbsp;<b>/ ' . $hash->{'name'} . '</b></td>'
+		. HTMLDataCellWithBar($hash->{'ref'}, 0, $hash->{'v'}, 100)
+		. HTMLDataCellWithBar($hash->{'ref'}, 0, $hash->{'p'}, 100)
+		. HTMLDataCellWithBar($hash->{'ref'}, 0, $hash->{'h'}, 100)
+		. HTMLDataCellWithBar($hash->{'ref'}, 0, $hash->{'b'}, 100)
+		. '</tr>';
+	}
+
+	return &tab_head( $title, '', 'ratios' )
+	. '<table class="data-table days-of-month-table">'
+	. HTMLDataTableHeader($MonthNumLib{$MonthRequired} . ' ' . $YearRequired, $ShowDaysOfMonthStats)
+	. '<tbody>' . $tableData . '</tbody></table>'
+	. &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -21295,8 +21364,13 @@ if ( scalar keys %HTMLOutput ) {
 		# BY DAY OF MONTH
 		#---------------------------------------------------------------------
 		if ($ShowDaysOfMonthStats) {
-			&HTMLMainDaily($firstdaytocountaverage, $lastdaytocountaverage,
-						  $firstdaytoshowtime, $lastdaytoshowtime);
+			&HTMLMainDaily($firstdaytocountaverage, $lastdaytocountaverage, $firstdaytoshowtime, $lastdaytoshowtime);
+		}
+
+		# BY RATIOS
+		#---------------------------------------------------------------------
+		if ($ShowRatiosStats && $LogType eq 'W') {
+			print &HTMLMainRatios($firstdaytocountaverage, $lastdaytocountaverage, $firstdaytoshowtime, $lastdaytoshowtime);
 		}
 
 		# BY DAY OF WEEK
