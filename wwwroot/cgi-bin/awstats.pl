@@ -15284,20 +15284,21 @@ sub HTMLMainLogins{
 }
 
 #------------------------------------------------------------------------------
-# Function:     Prints the robots chart and table
+# Function:     Return the robots chart and table
 # Parameters:   $NewLinkParams, $NewLinkTarget
 # Input:        -
-# Output:       HTML
-# Return:       -
+# Output:       -
+# Return:       string (html)
 #------------------------------------------------------------------------------
 sub HTMLMainRobots{
 	my $NewLinkParams = shift;
 	my $NewLinkTarget = shift;
 	
 	if ($Debug) { debug( "ShowRobotStats", 2 ); }
-	# print "<a name=\"robots\">&nbsp;</a>";
 
-	my $title = $Message[53] . ' ('. $Message[77]. ' ' . $MaxNbOf{'RobotShown'} .')';
+	my $title = $Message[53] . ' <small>('. $Message[77]. ' ' . $MaxNbOf{'RobotShown'} .')</small>';
+	my $html = '';
+	my $total_p = my $total_h = my $total_k = my $total_r = 0;
 
 	my $link = XMLEncode($AWScript . ${NewLinkParams});
 	my $subtitle = ' <a href="'
@@ -15321,36 +15322,38 @@ sub HTMLMainRobots{
 	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
 	{
 		my $function = "getTooltip_$pluginname";
-		$tooltip .= &$function(19);
+		$tooltip .= &$function(19)
+		. '<br>' . &$function(16)
+		. '<br>' . $Message[51]
+		. '<br>' . $Message[156]
+		. ( $TotalRRobots ? '<br>' . $Message[157] : '' )
 	}
-        
-  print &tab_head($title, $subtitle, 'robots',  $tooltip, '* ' . $Message[156] . ' ' . ( $TotalRRobots ? $Message[157] : '' ));
-        
-  print '<table class="data-table">'
-  . "<tr bgcolor=\"#$color_TableBGRowTitle\""
-	. Tooltip(16) . "><th>"
-	. Format_Number(( scalar keys %_robot_h ))
-	. " $Message[51]*</th>";
-
-	print (( $ShowRobotsStats =~ /H/i ) ? '<th class="bg-h" width="80">' . $Message[57] . '</th>' : '')
-	. (( $ShowRobotsStats =~ /B/i ) ? '<th class="bg-k" width="80">' . $Message[75] . '</th>' : '')
-	. (( $ShowRobotsStats =~ /L/i ) ? '<th width="120">' . $Message[9] . '</th>' : '')
-	. '</tr>';
-
-	my $total_p = my $total_h = my $total_k = my $total_r = 0;
-	my $count = 0;
-	
+ 
 	&BuildKeyList( $MaxNbOf{'RobotShown'}, $MinHit{'Robot'}, \%_robot_h, \%_robot_h );
+
+	# For bots we need to count Totals
+	# my $TotalPagesRobots = 0;    #foreach (values %_robot_p) { $TotalPagesRobots+=$_; }
+	my $TotalHitsRobots = 0;
+	my $max_h = 0;
+	my $max_b = 0;
+	foreach ( values %_robot_h ) { 
+		$TotalHitsRobots += $_;
+		$max_h = ($_ > $max_h) ? $_ : $max_h;
+	}
+	my $TotalBytesRobots = 0;
+	foreach ( values %_robot_k ) {
+	 $TotalBytesRobots += $_;
+	 $max_b = ($_ > $max_b) ? $_ : $max_b;
+	}
 
 	foreach my $key (@keylist)
 	{
-		print '<tr><td>'
-		  . ( $PageDir eq 'rtl' ? '<span dir="ltr">' : '' )
-		  . ( $RobotsHashIDLib{$key} ? $RobotsHashIDLib{$key} : $key )
-		  . ( $PageDir eq 'rtl' ? '</span>' : '' ) . '</td>';
-
-		print (( $ShowRobotsStats =~ /H/i ) ? '<td>' . Format_Number(( $_robot_h{$key} - $_robot_r{$key} )) . ( $_robot_r{$key} ? "+$_robot_r{$key}" : "" ) . '</td>' : '')
-		. (( $ShowRobotsStats =~ /B/i ) ? '<td>' . Format_Bytes( $_robot_k{$key} ) . '</td>' : '')
+		$html .= '<tr><td>'
+		. ( $PageDir eq 'rtl' ? '<span dir="ltr">' : '' )
+		. ( $RobotsHashIDLib{$key} ? $RobotsHashIDLib{$key} : $key )
+		. ( $PageDir eq 'rtl' ? '</span>' : '' ) . '</td>'
+		. (( $ShowRobotsStats =~ /H/i ) ? HTMLDataCellWithBar('h', ($_robot_h{$key} - $_robot_r{$key}), Format_Number(( $_robot_h{$key} - $_robot_r{$key} )) . ( $_robot_r{$key} ? ' <small>+' . $_robot_r{$key} . '</small>' : '' ), $max_h): '')
+		. (( $ShowRobotsStats =~ /B/i ) ? HTMLDataCellWithBar('b', $_robot_k{$key}, Format_Bytes( $_robot_k{$key} ), $max_b): '')
 		. (( $ShowRobotsStats =~ /L/i ) ? '<td>' . ($_robot_l{$key}	? Format_Date( $_robot_l{$key}, 1 )	: '-' ) . '</td>' : '')
 		. '</tr>';
 
@@ -15358,31 +15361,32 @@ sub HTMLMainRobots{
 		$total_h += $_robot_h{$key};
 		$total_k += $_robot_k{$key} || 0;
 		$total_r += $_robot_r{$key} || 0;
-		$count++;
 	}
-
-	# For bots we need to count Totals
-	my $TotalPagesRobots = 0;    #foreach (values %_robot_p) { $TotalPagesRobots+=$_; }
-	my $TotalHitsRobots = 0;
-	foreach ( values %_robot_h ) { $TotalHitsRobots += $_; }
-	my $TotalBytesRobots = 0;
-	foreach ( values %_robot_k ) { $TotalBytesRobots += $_; }
 	
-	my $rest_p = 0;    #$rest_p=$TotalPagesRobots-$total_p;
+	# my $rest_p = 0;    #$rest_p=$TotalPagesRobots-$total_p;
 	my $rest_h = $TotalHitsRobots - $total_h;
 	my $rest_k = $TotalBytesRobots - $total_k;
 	my $rest_r = $TotalRRobots - $total_r;
 
-	if ( $rest_p > 0 || $rest_h > 0 || $rest_k > 0 || $rest_r > 0 )
+	if ( $rest_h > 0 || $rest_k > 0 || $rest_r > 0 )
 	{ # All other robots
-		print '<tr><td><span style="color: #' . $color_other . '">' . $Message[2] . '</span></td>'
-		. (( $ShowRobotsStats =~ /H/i ) ? '<td>' . Format_Number( $rest_h - $rest_r ) . ( $rest_r ? "+$rest_r" : '' ) . '</td>' : '')
-		. (( $ShowRobotsStats =~ /B/i ) ? '<td>' . Format_Bytes($rest_k) . '</td>' : '')
+		$html .= '<tr><td><span style="color: #' . $color_other . '">' . $Message[2] . '</span></td>'
+		. (( $ShowRobotsStats =~ /H/i ) ? HTMLDataCellWithBar('h', ($rest_h - ($rest_r), Format_Number( $rest_h - $rest_r ) . ( $rest_r ? "+$rest_r" : '' )), $max_h) : '')
+		. (( $ShowRobotsStats =~ /B/i ) ? HTMLDataCellWithBar('b', $rest_k, Format_Bytes($rest_k), $max_b) : '')
 		. (( $ShowRobotsStats =~ /L/i ) ? '<td>&nbsp;</td>' : '')
 		. '</tr>';
 	}
 
-	print '</table>' . &tab_end();
+	return &tab_head($title, $subtitle, 'robots',  $tooltip, '')
+	. '<table class="data-table">'
+  . '<tr><th>' . Format_Number(( scalar keys %_robot_h ))	. ' ' . $Message[51] . '</th>'
+	. (( $ShowRobotsStats =~ /H/i ) ? '<th class="bg-h">' . $Message[57] . '</th>' : '')
+	. (( $ShowRobotsStats =~ /B/i ) ? '<th class="bg-b">' . $Message[75] . '</th>' : '')
+	. (( $ShowRobotsStats =~ /L/i ) ? '<th>' . $Message[9] . '</th>' : '')
+	. '</tr>'
+	. $html
+	. '</table>'
+	. &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -21420,7 +21424,7 @@ if ( scalar keys %HTMLOutput ) {
 		# BY ROBOTS
 		#----------------------------
 		if ($ShowRobotsStats) {
-			&HTMLMainRobots($NewLinkParams, $NewLinkTarget);
+			print &HTMLMainRobots($NewLinkParams, $NewLinkTarget);
 		}
 
 		# BY WORMS
