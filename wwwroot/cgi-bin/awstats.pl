@@ -14032,7 +14032,7 @@ sub HTMLMainRatios{
 
 	return &tab_head( $title, '', 'ratios' )
 	. '<table class="data-table days-of-month-table">'
-	. HTMLDataTableHeader($MonthNumLib{$MonthRequired} . ' ' . $YearRequired, $ShowDaysOfMonthStats)
+	. HTMLDataTableHeader($MonthNumLib{$MonthRequired} . ' ' . $YearRequired, $ShowDaysOfMonthStats) # pass $ShowDaysOfMonthStats to have correct headers
 	. '<tbody>' . $tableData . '</tbody></table>'
 	. &tab_end();
 }
