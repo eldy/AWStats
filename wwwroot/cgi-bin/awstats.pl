@@ -938,7 +938,7 @@ sub renderCss {
 	. '--a-color: hsl(0, 0%, 0%);'
 	. '--a-hover-color: hsl(0, 0%, 0%);'
 	. '--bar-width: 100;'
-	. '--bar-v-height: 20;'
+	. '--bar-v-height: 16;'
 	. '--bar-v-grow: 1;'
 	. '--bar-v-width-month: 0.44dvw;'
 	. '--bar-v-width-daily: 0.17dvw;'
@@ -956,7 +956,8 @@ b { font-weight: 700 }
 hr { width: 100%; height: 0; margin: 0; color: transparent; border: none; }
 small { font-size: 0.7rem; font-weight: 400; }
 #container { display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; align-items: flex-start;}
-#container > header { position: sticky; top: 0; z-index: 100; width: 100%; background-color: var(--page-bgcolor); display: flex; flex-wrap: wrap; column-gap: 20px; justify-content: center; text-align: center;	 }
+#container > header { position: sticky; top: 0; z-index: 100; width: 100%; margin-bottom: -25px; background-color: var(--page-bgcolor); display: flex; flex-wrap: wrap; column-gap: 20px; justify-content: center; text-align: center;	 }
+.column { display:flex;flex-flow:column wrap; row-gap: 20px; }
 #domain { font-weight: 900; font-size: 2.4em }
 header select { width : 60px }
 #logo { height: 40px; }
@@ -21353,19 +21354,7 @@ if ( scalar keys %HTMLOutput ) {
 		# 	&HTMLMainSummary();
 		# }
 
-		# BY MONTH
-		#---------------------------------------------------------------------
-		if ($ShowMonthStats) {
-			&HTMLMainMonthly();
-		}
-
-		#print "\n<a name=\"when\">&nbsp;</a>\n\n";
-
-		# BY DAY OF MONTH
-		#---------------------------------------------------------------------
-		if ($ShowDaysOfMonthStats) {
-			&HTMLMainDaily($firstdaytocountaverage, $lastdaytocountaverage, $firstdaytoshowtime, $lastdaytoshowtime);
-		}
+		print '<div class="column">';
 
 		# BY RATIOS
 		#---------------------------------------------------------------------
@@ -21373,6 +21362,22 @@ if ( scalar keys %HTMLOutput ) {
 			print &HTMLMainRatios($firstdaytocountaverage, $lastdaytocountaverage, $firstdaytoshowtime, $lastdaytoshowtime);
 		}
 
+		# BY MONTH
+		#---------------------------------------------------------------------
+		if ($ShowMonthStats) {
+			&HTMLMainMonthly();
+		}
+
+		print '</div>';
+
+		# BY DAY OF MONTH
+		#---------------------------------------------------------------------
+		if ($ShowDaysOfMonthStats) {
+			&HTMLMainDaily($firstdaytocountaverage, $lastdaytocountaverage, $firstdaytoshowtime, $lastdaytoshowtime);
+		}
+
+		print '<div class="column">';
+		
 		# BY DAY OF WEEK
 		#-------------------------
 		if ($ShowDaysOfWeekStats) {
@@ -21385,7 +21390,8 @@ if ( scalar keys %HTMLOutput ) {
 			&HTMLMainHours($NewLinkParams, $NewLinkTarget);
 		}
 
-		# print "\n<a name=\"who\">&nbsp;</a>\n\n";
+		print '</div>';
+
 		print '<hr>';
 
 		# BY COUNTRY/DOMAIN
