@@ -990,10 +990,12 @@ section header:hover .tooltip { visibility: visible; opacity: 1; }
 .data-table tbody tr:hover { font-weight: 900; background: var(--neutral-color); transform: scale(1.1) translateX(2px); }
 .data-table th { font-weight: 900 }
 .data-table th, .data-table td:not(:first-child) { padding-top: 2px; padding-bottom: 2px; }
-.data-table td:first-child { padding-right: 4px }
-.data-table td div { padding: 0 4px }
 .data-table td { text-align: right; font-weight: 700; }
+.data-table td:first-child { padding-right: 4px }
 .data-table td:first-child:not(.country) { font-weight: 400 }
+.data-table td div { padding: 0 4px }
+.data-table td img { width: 16px; height: 16px;vertical-align: bottom; }
+.data-table td small { float: left; line-height: 1.3; }
 .data-table tfoot .data-table-sum td { border-top: 1px solid rgba(192,192,192,0.2); }
 .data-table-sum { font-size : 1.3em }
 .left-padding-separator { padding-left: 20px }
@@ -10999,181 +11001,127 @@ sub HTMLMenu{
 # Return:       -
 #------------------------------------------------------------------------------
 sub HTMLMainFileType{
-    my $NewLinkParams = shift;
-    my $NewLinkTarget = shift;
+  if ($Debug) { debug( "ShowFileTypesStatsCompressionStats", 2 ); }
+
 	if (!$LevelForFileTypesDetection > 0){return;}
-	if ($Debug) { debug( "ShowFileTypesStatsCompressionStats", 2 ); }
-	# print "<a name=\"filetypes\">&nbsp;</a>\n";
-	my $Totalh = 0;
-	foreach ( keys %_filetypes_h ) { $Totalh += $_filetypes_h{$_}; }
-	my $Totalk = 0;
-	foreach ( keys %_filetypes_k ) { $Totalk += $_filetypes_k{$_}; }
-	
+
+  my $NewLinkParams = shift;
+  my $NewLinkTarget = shift;
 	my $title = $Message[73];
 	my $subtitle = '';
-
-  if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
-  { # extend the title to include the added link 
-    $subtitle = '<a href="'
-    . XMLEncode($AddLinkToExternalCGIWrapper . '?section=FILETYPES&baseName=' . $DirData . '/' . $PROG . '&month='. $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig)
-    . '" ' . $NewLinkTarget . '>' . $Message[179] .'</a>';
-  } 
-
-	if ( $ShowFileTypesStats =~ /C/i ) { $subtitle .= ' - ' . $Message[98]; }
-	
-	# build keylist at top
-	&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_filetypes_h, \%_filetypes_h );
-	
 	my $tooltip = '';
-	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
+	my $html = '';
+	my $Totalh = 0;
+	my $Totalk = 0;
+	my $total_con = 0;
+	my $total_cre = 0;
+
+	foreach ( keys %_filetypes_h ) { $Totalh += $_filetypes_h{$_}; }
+	foreach ( keys %_filetypes_k ) { $Totalk += $_filetypes_k{$_}; }
+
+	&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_filetypes_h, \%_filetypes_h );
+
+	my sub showGraph()
 	{
-		my $function = "getTooltip_$pluginname";
-		$tooltip .= &$function(19);
-	}
-
-	print &tab_head($title, $subtitle, 'filetypes', $tooltip)
-	. '<table class="data-table">';
-
-	# Graph the top five in a pie chart
-	if (scalar @keylist > 1){
+		my $html = '';
 		foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
 		{
 			my @blocklabel = ();
 			my @valdata = ();
 			my @valcolor = ($color_p);
 			my $cnt = 0;
+
 			foreach my $key (@keylist) {
 				push @valdata, int( $_filetypes_h{$key} / $Totalh * 1000 ) / 10;
 				push @blocklabel, "$key";
 				$cnt++;
 				if ($cnt > 4) { last; }
 			}
-			print "<tr><td colspan=\"7\">";
-			my $function = "ShowGraph_$pluginname";
-			&$function(
-				"$Message[73]",              "filetypes",
-				0, 						\@blocklabel,
-				0,           			\@valcolor,
-				0,              		0,
-				0,          			\@valdata
-			);
-			print "</td></tr>";
-		}
-	}
-	
-	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"3\">$Message[73]</th>";
 
-	if ( $ShowFileTypesStats =~ /H/i ) {
-		print "<th class=\"bg-h\" width=\"80\""
-		  . Tooltip(4)
-		  . ">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th>";
-	}
-	if ( $ShowFileTypesStats =~ /B/i ) {
-		print "<th class=\"bg-k\" width=\"80\""
-		  . Tooltip(5)
-		  . ">$Message[75]</th><th class=\"bg-k\" width=\"80\">$Message[15]</th>";
-	}
-	if ( $ShowFileTypesStats =~ /C/i ) {
-		print
-"<th class=\"bg-k\">$Message[100]</th><th class=\"bg-k\">$Message[101]</th><th class=\"bg-k\">$Message[99]</th>";
-	}
-	print "</tr>\n";
-	my $total_con = 0;
-	my $total_cre = 0;
-	my $count     = 0;
-	foreach my $key (@keylist) {
-		my $p_h = '&nbsp;';
-		my $p_k = '&nbsp;';
-		if ($Totalh) {
-			$p_h = int( $_filetypes_h{$key} / $Totalh * 1000 ) / 10;
-			$p_h = "$p_h %";
+			my $function = "ShowGraph_$pluginname";
+			$html .= '<div class="aws-graph">'
+			. &$function(
+				$Message[73], "filetypes",
+				0,            \@blocklabel,
+				0,            \@valcolor,
+				0,            0,
+				0,            \@valdata
+			)
+			. '</div>';
 		}
-		if ($Totalk) {
-			$p_k = int( $_filetypes_k{$key} / $Totalk * 1000 ) / 10;
-			$p_k = "$p_k %";
-		}
+	}
+
+	# Graph the top five in a pie chart
+	if (scalar @keylist > 1)
+	{
+		$html .= showGraph();
+	}
+
+	foreach my $key (@keylist)
+	{
+		my $p_h = ($Totalh) ? int( $_filetypes_h{$key} / $Totalh * 1000 ) * .1 : 0;
+		my $p_k = ($Totalk) ? int( $_filetypes_k{$key} / $Totalk * 1000 ) * .1 : 0;
+		
+		$html .= '<tr>';
 		if ( $key eq 'Unknown' ) {
-			print "<tr><td"
-			  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
-			  . "><img src=\"$DirIcons\/mime\/unknown.png\""
-			  . AltTitle("")
-			  . " /></td><td class=\"aws\" colspan=\"2\"><span style=\"color: #$color_other\">$Message[0]</span></td>";
+			$html .= '<td><b>' . $Message[0] . '</b> <img src="'. $DirIcons . '/mime/unknown.png"/></td>';
+		}	else {
+			my $nameicon = $MimeHashLib{$key}[0] || 'notavailable';
+			my $nametype = $MimeHashFamily{$MimeHashLib{$key}[0]} || '';
+			$html .= '<td><small>(' . $nametype . ')</small> <span><b>' . $key . '</b> <img src="' . $DirIcons . '/mime/' . $nameicon . '.png"/></span></td>';
 		}
-		else {
-			my $nameicon = $MimeHashLib{$key}[0] || "notavailable";
-			my $nametype = $MimeHashFamily{$MimeHashLib{$key}[0]} || "&nbsp;";
-			print "<tr><td"
-			  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
-			  . "><img src=\"$DirIcons\/mime\/$nameicon.png\""
-			  . AltTitle("")
-			  . " /></td><td class=\"aws\">$key</td>";
-			print "<td class=\"aws\">$nametype</td>";
-		}
-		if ( $ShowFileTypesStats =~ /H/i ) {
-			print "<td>".Format_Number($_filetypes_h{$key})."</td><td>$p_h</td>";
-		}
-		if ( $ShowFileTypesStats =~ /B/i ) {
-			print '<td>'
-			  . Format_Bytes( $_filetypes_k{$key} )
-			  . "</td><td>$p_k</td>";
-		}
-		if ( $ShowFileTypesStats =~ /C/i ) {
-			if ( $_filetypes_gz_in{$key} ) {
-				my $percent = int(
-					100 * (
-						1 - $_filetypes_gz_out{$key} /
-						  $_filetypes_gz_in{$key}
-					)
-				);
-				printf(
-					"<td>%s</td><td>%s</td><td>%s (%s%)</td>",
-					Format_Bytes( $_filetypes_gz_in{$key} ),
-					Format_Bytes( $_filetypes_gz_out{$key} ),
-					Format_Bytes(
-						$_filetypes_gz_in{$key} -
-						  $_filetypes_gz_out{$key}
-					),
-					$percent
-				);
+
+		$html .= (( $ShowFileTypesStats =~ /H/i ) ? HTMLDataCellWithBar('h', $_filetypes_h{$key}, '<small>' . $p_h . '%</small> ' . Format_Number($_filetypes_h{$key}), $Totalh) : '' )
+		. (( $ShowFileTypesStats =~ /B/i ) ? HTMLDataCellWithBar('b', $_filetypes_k{$key},  '<small>' . $p_k . '%</small> ' . Format_Bytes($_filetypes_k{$key}), $Totalk) : '' );
+
+		if ( $ShowFileTypesStats =~ /C/i )
+		{
+			if ( $_filetypes_gz_in{$key} )
+			{
+				$html .= '<td>' . Format_Bytes( $_filetypes_gz_in{$key} ) . '</td>'
+				. '<td>' . Format_Bytes( $_filetypes_gz_out{$key} ) . '</td>'
+				. '<td>' . Format_Bytes( $_filetypes_gz_in{$key} - $_filetypes_gz_out{$key} ) . '</td>'
+				. '<td>' . int( 100 * (1 - $_filetypes_gz_out{$key} /$_filetypes_gz_in{$key}) ) . '</td>';
 				$total_con += $_filetypes_gz_in{$key};
 				$total_cre += $_filetypes_gz_out{$key};
-			}
-			else {
-				print "<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>";
-			}
-		}
-		print "</tr>\n";
-		$count++;
-	}
-
-	# Add total (only useful if compression is enabled)
-	if ( $ShowFileTypesStats =~ /C/i ) {
-		my $colspan = 3;
-		if ( $ShowFileTypesStats =~ /H/i ) { $colspan += 2; }
-		if ( $ShowFileTypesStats =~ /B/i ) { $colspan += 2; }
-		print "<tr>";
-		print
-"<td class=\"aws\" colspan=\"$colspan\"><b>$Message[98]</b></td>";
-		if ( $ShowFileTypesStats =~ /C/i ) {
-			if ($total_con) {
-				my $percent =
-				  int( 100 * ( 1 - $total_cre / $total_con ) );
-				printf(
-					"<td>%s</td><td>%s</td><td>%s (%s%)</td>",
-					Format_Bytes($total_con),
-					Format_Bytes($total_cre),
-					Format_Bytes( $total_con - $total_cre ),
-					$percent
-				);
-			}
-			else {
-				print "<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>";
+			}	else {
+				$html .= '<td></td><td></td><td></td>';
 			}
 		}
-		print "</tr>\n";
+		$html .= '</tr>';
 	}
 
-	print '</table>' . &tab_end();
+	# Add total (compression)
+	if ($total_con && $ShowFileTypesStats =~ /C/i )
+	{
+		$html .= '<tr>'
+		. (( $ShowFileTypesStats =~ /H/i ) ? '<td></td>' : '')
+		. (( $ShowFileTypesStats =~ /B/i ) ? '<td></td>' : '')
+		. '<td><b>' . $Message[98] . '</b></td>'
+		. '<td>' . Format_Bytes($total_con) . '</td>'
+		. '<td>' . Format_Bytes($total_cre) . '</td>'
+		. '<td>' . Format_Bytes( $total_con - $total_cre ) . '</td>'
+		. '<td>' . int( 100 * ( 1 - $total_cre / $total_con ) ) . '</td>'
+		. '</tr>';
+	}
+
+  if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
+  { # extend the title to include the added link 
+    $subtitle .= '<a href="'
+    . XMLEncode($AddLinkToExternalCGIWrapper . '?section=FILETYPES&baseName=' . $DirData . '/' . $PROG . '&month='. $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig)
+    . '" ' . $NewLinkTarget . '>' . $Message[179] .'</a>';
+  } 
+
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
+	{
+		my $function = "getTooltip_$pluginname";
+		$tooltip .= &$function(19);
+	}
+
+	return &tab_head($title, $subtitle, 'filetypes', $tooltip)
+	. '<table class="data-table">'
+	. HTMLDataTableHeader('', $ShowFileTypesStats)
+	. $html	. '</table>' . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -13736,6 +13684,7 @@ sub HTMLDataTableHeader{
 		. ( ( $config =~ /H/i ) ? '<th class="bg-h" ' . Tooltip(4) . '>' . CleanXSS($Message[57]) . '</th>' : '' )
 		. ( ( $config =~ /B/i ) ? '<th class="bg-b" ' . Tooltip(5) . '>' . CleanXSS($Message[75]) . '</th>' : '' )
 		. ( ( $config =~ /L/i ) ? '<th>' . CleanXSS($Message[9]) . '</th>' : '' )
+		. ( ( $config =~ /C/i ) ? '<th>' . $Message[83] . '<br>' . $Message[100] . '</th><th>' . $Message[83] . '<br>' . $Message[101] . '</th><th>' . $Message[99] . '</th>' : '' )
 		. '</tr></thead>';
 }
 
@@ -13929,7 +13878,6 @@ sub HTMLMainMonthly{
 
 		print '<table class="data-table month-table">';
 
-		# header
 		print HTMLDataTableHeader($YearRequired, $ShowMonthStats);
 
 		# footer
@@ -16148,7 +16096,7 @@ sub HTMLMainScreenSize{
 	if ( $rest_h > 0 )
 	{ # All others sessions
 		my $p = ($Totalh) ? int( $rest_h / $Totalh * 1000 ) / 10 : 0;
-		
+
 		$html .= '<tr>'
 		. HTMLDataCellWithBar('h', $rest_h, $Message[2], $max_h)
 		. '<td>' . $p . '%' . '</td>'
@@ -21422,7 +21370,7 @@ if ( scalar keys %HTMLOutput ) {
 		# BY FILE TYPE
 		#-------------------------
 		if ($ShowFileTypesStats) {
-			&HTMLMainFileType($NewLinkParams, $NewLinkTarget);
+			print &HTMLMainFileType($NewLinkParams, $NewLinkTarget);
 		}
 
 		# BY FILE SIZE
