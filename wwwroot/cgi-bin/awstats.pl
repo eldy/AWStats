@@ -979,7 +979,7 @@ div[class^="bg-"], th[class^="bg-"] { width: calc(var(--bar-width) * 1px) }
 button, select, input[type=submit] { cursor: pointer; color: var(--light-color); background-color: var(--dark-color); border: 1px solid #ccd7e0; }
 h1, section header {border-bottom: 6px solid var(--light-color); width: 100%; margin: 0; text-align: center; font-weight: 900; font-size: 1rem; }
 section header { position: relative }
-.tooltip { visibility: hidden; opacity: 0; position: absolute; bottom: -60px; left: 0; z-index: 10; font-size: 0.7rem; width: 320px; background-color: var(--dark-color); color: var(--light-color); padding: 4px; border-radius: 5px; }
+.tooltip { visibility: hidden; opacity: 0; position: absolute; bottom: -94px; left: 0; z-index: 10; font-size: 0.7rem; font-weight: 400; text-align: left; width: 100%; background-color: var(--dark-color); color: var(--light-color); padding: 4px; border-radius: 5px; }
 section header:hover .tooltip { visibility: visible; opacity: 1; }
 .multi-data-table { display: flex; column-gap: 3dvw; flex-wrap: wrap; justify-content: center }
 .multi-data-table.worldmap{ position: relative; }
@@ -10473,8 +10473,7 @@ sub HTMLMenu{
 	. '<div class="dropdown-content">'
 	. '<a href="#month">' . $Message[162] . '</>'
 	. '<a href="#daysofmonth">' . $Message[138] . '</>'
-	. '<a href="#ratios">' . $Message[22] . '</>'
-	. '<a href="#daysofweek">' . $Message[91] . '</>'
+		. '<a href="#daysofweek">' . $Message[91] . '</>'
 	. '<a href="#hours">' . $Message[20] . '</>'
 	. '</div>'
 	. '</li>'
@@ -10493,6 +10492,7 @@ sub HTMLMenu{
 	. '<li class="dropdown">'
 	. '<a href="javascript:void(0)" class="dropbtn">' . $Message[72] . '</a>'
 	. '<div class="dropdown-content">'
+	. '<a href="#ratios">' . $Message[22] . '</>'
 	. '<a href="#urls">' . $Message[19] . '</>'
 	. '<a href="#downloads">' . $Message[178] . '</>'
 	. '<a href="#filetypes">' . $Message[73] . '</>'
@@ -13734,6 +13734,7 @@ sub HTMLDataTableHeader{
 		. ( ( $config =~ /P/i ) ? '<th class="bg-p" ' . Tooltip(3) . '>' . CleanXSS($Message[56]) . '</th>' : '' )
 		. ( ( $config =~ /H/i ) ? '<th class="bg-h" ' . Tooltip(4) . '>' . CleanXSS($Message[57]) . '</th>' : '' )
 		. ( ( $config =~ /B/i ) ? '<th class="bg-b" ' . Tooltip(5) . '>' . CleanXSS($Message[75]) . '</th>' : '' )
+		. ( ( $config =~ /L/i ) ? '<th>' . CleanXSS($Message[9]) . '</th>' : '' )
 		. '</tr></thead>';
 }
 
@@ -13975,9 +13976,16 @@ sub HTMLMainRatios{
 	my $lastdaytoshowtime = shift;
 
 	my $title = $Message[22];
+	my $tooltip = '';
 	my $total_u = my $total_v = my $total_p = my $total_h = my $total_k = 0;
 	my @cat;
 	my $tableData = '';
+
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
+	{
+		my $function = "getTooltip_$pluginname";
+		$tooltip .= &$function(19) . '<br><br>*' . $Message[158];
+	}
 
 	foreach my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )
 	{
@@ -14019,7 +14027,7 @@ sub HTMLMainRatios{
 		my $ratio_B_H = ($total_h > 0) ? Format_Bytes($total_k / $total_h) : '';
 		push @cat, {'ref' => 'h', 'name' => $Message[57], 'u' => '', 'v' => '', 'p' => '', 'h' => '', 'b' => $ratio_B_H};
 	}
-	
+
 	foreach my $hash (@cat){
 		$tableData .= '<tr class="bg-' . $hash->{'ref'} . '">'
 		. '<td>&nbsp;<b>/ ' . $hash->{'name'} . '</b></td>'
@@ -14030,7 +14038,7 @@ sub HTMLMainRatios{
 		. '</tr>';
 	}
 
-	return &tab_head( $title, '', 'ratios' )
+	return &tab_head( $title, '', 'ratios', $tooltip )
 	. '<table class="data-table days-of-month-table">'
 	. HTMLDataTableHeader($MonthNumLib{$MonthRequired} . ' ' . $YearRequired, $ShowDaysOfMonthStats) # pass $ShowDaysOfMonthStats to have correct headers
 	. '<tbody>' . $tableData . '</tbody></table>'
@@ -15325,9 +15333,8 @@ sub HTMLMainRobots{
 	{
 		my $function = "getTooltip_$pluginname";
 		$tooltip .= &$function(19)
-		. '<br>' . &$function(16)
-		. '<br>' . $Message[51]
-		. '<br>' . $Message[156]
+		. '<br><br>' . &$function(16)
+		. '<br><br>' . $Message[156]
 		. ( $TotalRRobots ? '<br>' . $Message[157] : '' )
 	}
  
@@ -15401,98 +15408,68 @@ sub HTMLMainRobots{
 sub HTMLMainWorms{
 	if ($Debug) { debug( "ShowWormsStats", 2 ); }
 	
-	# print "<a name=\"worms\">&nbsp;</a>";
-
 	my $tooltip = '';
-	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
-	{
-		my $function = "getTooltip_$pluginname";
-		$tooltip .= &$function(19);
-	}
-        
-	print &tab_head( $Message[163] . ' (' . $Message[77] . $MaxNbOf{'WormsShown'} . ')', '', 'worms', $tooltip, '*' . $Message[158] );
+	my $html = '';
+	my $total_h = my $total_k = 0; #my $total_p
+	my $max_h = my $max_k = 0; #my $max_p
+	my $TotalHitsWorms = my $TotalBytesWorms = 0; 	# my $TotalPagesWorms
 
-  print '<table class="data-table">'
-	. "<tr bgcolor=\"#$color_TableBGRowTitle\"" . Tooltip(21) . ">"
-	. "<th>" . Format_Number(( scalar keys %_worm_h )) . " $Message[164]*</th>"
-	. "<th>$Message[167]</th>";
-
-	if ( $ShowWormsStats =~ /H/i ) {
-		print
-		  "<th class=\"bg-h\" width=\"80\">$Message[57]</th>";
-	}
-	if ( $ShowWormsStats =~ /B/i ) {
-		print
-		  "<th class=\"bg-k\" width=\"80\">$Message[75]</th>";
-	}
-	if ( $ShowWormsStats =~ /L/i ) {
-		print "<th width=\"120\">$Message[9]</th>";
-	}
-	print "</tr>\n";
-	my $total_p = my $total_h = my $total_k = 0;
-	my $count = 0;
-	&BuildKeyList( $MaxNbOf{'WormsShown'}, $MinHit{'Worm'}, \%_worm_h,
-		\%_worm_h );
-	foreach my $key (@keylist) {
-		print "<tr>";
-		print "<td class=\"aws\">"
-		  . ( $PageDir eq 'rtl' ? "<span dir=\"ltr\">" : "" )
-		  . ( $WormsHashLib{$key} ? $WormsHashLib{$key} : $key )
-		  . ( $PageDir eq 'rtl' ? "</span>" : "" ) . "</td>";
-		print "<td class=\"aws\">"
-		  . ( $PageDir eq 'rtl' ? "<span dir=\"ltr\">" : "" )
-		  . ( $WormsHashTarget{$key} ? $WormsHashTarget{$key} : $key )
-		  . ( $PageDir eq 'rtl' ? "</span>" : "" ) . "</td>";
-		if ( $ShowWormsStats =~ /H/i ) {
-			print "<td>" . Format_Number($_worm_h{$key}) . "</td>";
-		}
-		if ( $ShowWormsStats =~ /B/i ) {
-			print "<td>" . Format_Bytes( $_worm_k{$key} ) . "</td>";
-		}
-		if ( $ShowWormsStats =~ /L/i ) {
-			print "<td>"
-			  . (
-				$_worm_l{$key}
-				? Format_Date( $_worm_l{$key}, 1 )
-				: '-'
-			  )
-			  . "</td>";
-		}
-		print "</tr>\n";
-
-		#$total_p += $_worm_p{$key};
-		$total_h += $_worm_h{$key};
-		$total_k += $_worm_k{$key} || 0;
-		$count++;
-	}
-
-	# For worms we need to count Totals
-	my $TotalPagesWorms =
-	  0;    #foreach (values %_worm_p) { $TotalPagesWorms+=$_; }
-	my $TotalHitsWorms = 0;
+	#foreach (values %_worm_p) { $TotalPagesWorms+=$_; }
 	foreach ( values %_worm_h ) { $TotalHitsWorms += $_; }
-	my $TotalBytesWorms = 0;
 	foreach ( values %_worm_k ) { $TotalBytesWorms += $_; }
-	my $rest_p = 0;    #$rest_p=$TotalPagesRobots-$total_p;
+	# my $rest_p = $TotalPagesRobots-$total_p;
 	my $rest_h = $TotalHitsWorms - $total_h;
 	my $rest_k = $TotalBytesWorms - $total_k;
 
-	if ( $rest_p > 0 || $rest_h > 0 || $rest_k > 0 ) { # All other worms
-		print "<tr>";
-		print
-"<td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
-		print "<td class=\"aws\">-</td>";
-		if ( $ShowWormsStats =~ /H/i ) {
-			print "<td>" . Format_Number(($rest_h)) . "</td>";
-		}
-		if ( $ShowWormsStats =~ /B/i ) {
-			print "<td>" . ( Format_Bytes($rest_k) ) . "</td>";
-		}
-		if ( $ShowWormsStats =~ /L/i ) { print "<td>&nbsp;</td>"; }
-		print "</tr>\n";
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
+	{
+		my $function = "getTooltip_$pluginname";
+		$tooltip .= &$function(19) . '<br><br>' .&$function(21) . '<br><br>*' . $Message[158];
+	}
+        
+	&BuildKeyList( $MaxNbOf{'WormsShown'}, $MinHit{'Worm'}, \%_worm_h, \%_worm_h );
+	
+	foreach my $key (@keylist)
+	{
+		#$total_p += $_worm_p{$key};
+		$total_h += $_worm_h{$key} || 0;
+		$total_k += $_worm_k{$key} || 0;
+
+		$max_h = (($_worm_h{$key} > $max_h) ? $_worm_h{$key} : $max_h);
+		$max_k = (($_worm_k{$key} > $max_k) ? $_worm_k{$key} : $max_k);
 	}
 
-	print '</table>' . &tab_end();
+	foreach my $key (@keylist)
+	{
+		$html .= '<tr>'
+		. '<td' . ( $PageDir eq 'rtl' ? ' dir="ltr">' : '' ) . '>'
+		. ( $WormsHashLib{$key} ? $WormsHashLib{$key} : $key )
+		. '</td>'
+		. '<td' . ( $PageDir eq 'rtl' ? ' dir="ltr">' : '' ) . '>'
+		. ( $WormsHashTarget{$key} ? $WormsHashTarget{$key} : $key )
+		. '</td>'
+		. (( $ShowWormsStats =~ /H/i ) ? HTMLDataCellWithBar('u', $_worm_h{$key}, Format_Number($_worm_h{$key}), $max_h) : '')
+		. (( $ShowWormsStats =~ /B/i ) ? HTMLDataCellWithBar('u', $_worm_k{$key}, Format_Bytes($_worm_k{$key}), $max_k) : '')
+		. (( $ShowWormsStats =~ /L/i ) ? '<td>' . (($_worm_l{$key})	? Format_Date( $_worm_l{$key}, 1 ) : '-') : '')
+		. '</tr>';
+	}
+
+	if ( $rest_h > 0 || $rest_k > 0 )
+	{ # All other worms
+		$html .= '<tr>'
+		. '<td>' . $Message[2] . '</td>'
+		. '<td>-</td>'
+		. (( $ShowWormsStats =~ /H/i ) ? '<td>' . Format_Number(($rest_h)) . '</td>' : '')
+		. (( $ShowWormsStats =~ /B/i ) ? '<td>' . ( Format_Bytes($rest_k) ) . '</td>' : '')
+		. (( $ShowWormsStats =~ /L/i ) ? '<td>&nbsp;</td>' : '')
+		. '</tr>';
+	}
+
+	return &tab_head( $Message[163] . ' (' . $Message[77] . $MaxNbOf{'WormsShown'} . ')', '', 'worms', $tooltip)
+	. '<table class="data-table">'
+  . HTMLDataTableHeader(Format_Number(( scalar keys %_worm_h )) . ' ' . $Message[164], $ShowWormsStats)
+  . $html
+  . '</table>' . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -21432,7 +21409,7 @@ if ( scalar keys %HTMLOutput ) {
 		# BY WORMS
 		#----------------------------
 		if ($ShowWormsStats) {
-			&HTMLMainWorms();
+			print 	&HTMLMainWorms();
 		}
 
 		# BY SESSION
