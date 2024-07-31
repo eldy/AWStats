@@ -16,13 +16,13 @@ tt14=Liste des <b>pages de sites externes</b> contenant un lien suivi pour accé
 
 tt15=Ce tableau offre la liste des <b>phrases ou mots</b> clés les plus souvent utilisés pour retrouver et accéder au site depuis un moteur de recherche Internet (Les recherches depuis <b>#SearchEnginesArray#</b> moteurs de recherche parmi les plus populaires sont reconnues, comme Yahoo, Altavista, Lycos, Google, Voila, etc...).<br />Notez que le nombre total de recherche de mots clés peut être supérieur au nombre total de recherche de phrases clés (nombre réel de recherche) dans la mesure où une recherche est comptée 2 fois (1 pour chaque mot) si 2 mots furent utilisés comme critères.
 
-tt16=Les robots sont des <b>automates visiteurs</b> scannant le site dans le but de l'indexer, d'obtenir des statistiques sur les sites Web Internet ou de vérifier sa disponibilié.<br />#PROG# reconnait <b>#RobotArray#</b> robots.
+tt16=Les robots sont des <b>automates</b> scannant le site pour l'indexer, vérifier sa disponibilié, ou obtenir des statistiques sur les sites Web. <b>#PROG# reconnait #RobotArray# robots</b>.
 
 tt17=Toutes les statistiques en rapport avec le temps sont basées sur les heures du serveur.
 
-tt18=Ici les données rapportées sont des: <b>valeurs moyennes</b> (calculées à partir des données entre la première et dernière visite de la période analysée).
+tt18=Ici les données rapportées sont des <b>valeurs moyennes</b> entre la première et dernière visite de la période analysée.
 
-tt19=Ici les données rapportées sont des: <b>sommes cumulées</b> (calculées à partir des données entre la première et dernière visite de la période analysée).
+tt19=Ici les données rapportées sont des <b>sommes cumulées</b> entre la première et la dernière visite de la période analysée.
 
 tt20=Certaines <b>Durée de visites</b> sont 'inconnues' car elles ne peuvent pas toujours etre calculées. En voici les raisons principales:<br />- La visite n'étaient pas terminée lorsque la mise à jour eut lieu (Sera comptée à la prochaine mise à jour).<br />- La visite a commencé la derniere heure (après 23:00) du dernier jour du mois (Un raison technique empêche #PROG# de calculer la durée des visites de telles sessions).
 

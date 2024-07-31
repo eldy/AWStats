@@ -10482,7 +10482,7 @@ sub HTMLMenu{
 	. '<div class="dropdown-content">'
 	. '<a href="#countries">' . $Message[17] . '</>'
 	. '<a href="#hosts">' . $Message[81] . '</>'
-	. '<a href="#robots">' . $Message[83] . '</>'
+	. '<a href="#robots">' . ucfirst($Message[51]) . '</>'
 	. '<a href="#os">' . $Message[59] . '</>'
 	. '<a href="#browsers">' . $Message[21] . '</>'
 	. '<a href="#screensizes">' . $Message[135] . '</>'
@@ -11388,7 +11388,7 @@ sub HTMLShowBrowserDetail{
 	print &tab_head($title, '', 'browsersversions', $tooltip)
 	. '<table>'
 	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[58]</th>"
-	. "<th width=\"80\">$Message[111]</th><th class=\"bg-p\" width=\"80\">$Message[56]</th><th class=\"bg-p\" width=\"80\">$Message[15]</th>"
+	. "<th width=\"80\">$Message[111]</th><th class=\"bg-p\" width=\"80\">" . ucfirst($Message[28]) . "</th><th class=\"bg-p\" width=\"80\">$Message[15]</th>"
 	. "<th class=\"bg-h\" width=\"80\">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th>"
 	. "<th>&nbsp;</th>"
 	. "</tr>\n";
@@ -11692,7 +11692,7 @@ sub HTMLShowOSDetail{
 	print &tab_head( "$title", 19, 0, 'osversions' )
 	. '<table>'
 	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[58]</th>"
-	. "<th class=\"bg-p\" width=\"80\">$Message[56]</th><th class=\"bg-p\" width=\"80\">$Message[15]</th>"
+	. "<th class=\"bg-p\" width=\"80\">" . ucfirst($Message[28]) . "</th><th class=\"bg-p\" width=\"80\">$Message[15]</th>"
 	. "<th class=\"bg-h\" width=\"80\">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th>"
 	. "</tr>\n";
 	my $total_h = 0;
@@ -11973,7 +11973,7 @@ sub HTMLShowReferers{
     print &tab_head( $title, 19, 0, 'refererse' )
     . '<table>'
     . "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>".Format_Number($TotalDifferentSearchEngines)." $Message[122]</th>"
-    . "<th class=\"bg-p\" width=\"80\">$Message[56]</th><th class=\"bg-p\" width=\"80\">$Message[15]</th>"
+    . "<th class=\"bg-p\" width=\"80\">" . ucfirst($Message[28]) . "</th><th class=\"bg-p\" width=\"80\">$Message[15]</th>"
     . "<th class=\"bg-h\" width=\"80\">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th>"
     . "</tr>\n";
 	my $total_s = 0;
@@ -12112,7 +12112,7 @@ sub HTMLShowRefererPages{
 	else { print "$Message[102]: ".Format_Number($cpt)." $Message[28]"; }
 	print "</th>";
 	print
-"<th class=\"bg-p\" width=\"80\">$Message[56]</th><th class=\"bg-p\" width=\"80\">$Message[15]</th>";
+"<th class=\"bg-p\" width=\"80\">" . ucfirst($Message[28]) . "</th><th class=\"bg-p\" width=\"80\">$Message[15]</th>";
 	print
 "<th class=\"bg-h\" width=\"80\">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th>";
 	print "</tr>\n";
@@ -12426,7 +12426,7 @@ sub HTMLShowExtraSections{
 
 			if ( $ExtraStatTypes[$extranum] =~ m/P/i ) {
 				print
-"<th class=\"bg-p\" width=\"80\">$Message[56]</th>";
+"<th class=\"bg-p\" width=\"80\">" . ucfirst($Message[28]) . "</th>";
 			}
 			if ( $ExtraStatTypes[$extranum] =~ m/H/i ) {
 				print
@@ -12950,7 +12950,7 @@ sub HTMLShowLogins{
 	&HTMLShowUserInfo('__title__');
 	if ( $ShowAuthenticatedUsers =~ /P/i ) {
 		print
-		  "<th class=\"bg-p\" width=\"80\">$Message[56]</th>";
+		  "<th class=\"bg-p\" width=\"80\">" . ucfirst($Message[28]) . "</th>";
 	}
 	if ( $ShowAuthenticatedUsers =~ /H/i ) {
 		print
@@ -13060,7 +13060,7 @@ sub HTMLShowHostsUnknown{
 	&HTMLShowHostInfo('__title__');
 	if ( $ShowHostsStats =~ /P/i ) {
 		print
-		  "<th class=\"bg-p\" width=\"80\">$Message[56]</th>";
+		  "<th class=\"bg-p\" width=\"80\">" . ucfirst($Message[28]) . "</th>";
 	}
 	if ( $ShowHostsStats =~ /H/i ) {
 		print
@@ -13200,7 +13200,7 @@ sub HTMLShowHosts{
 	&HTMLShowHostInfo('__title__');
 	if ( $ShowHostsStats =~ /P/i ) {
 		print
-		  "<th class=\"bg-p\" width=\"80\">$Message[56]</th>";
+		  "<th class=\"bg-p\" width=\"80\">" . ucfirst($Message[28]) . "</th>";
 	}
 	if ( $ShowHostsStats =~ /H/i ) {
 		print
@@ -13352,7 +13352,7 @@ sub HTMLShowDomains{
 	}
 	if ( $ShowDomainsStats =~ /P/i ) {
 		print
-		  "<th class=\"bg-p\" width=\"80\">$Message[56]</th>";
+		  "<th class=\"bg-p\" width=\"80\">" . ucfirst($Message[28]) . "</th>";
 	}
 	if ( $ShowDomainsStats =~ /H/i ) {
 		print
@@ -13446,7 +13446,7 @@ sub HTMLShowDomains{
 		}
 		print "<td class=\"aws\">";
 		if ( $ShowDomainsStats =~ /P/i ) {
-			print HtmlBarH('p', $bredde_p, "$Message[56]: " . int( $_domener_p{$key} ));
+			print HtmlBarH('p', $bredde_p, ucfirst($Message[28]) . ': ' . int( $_domener_p{$key} ));
 		}
 		if ( $ShowDomainsStats =~ /H/i ) {
 			print HtmlBarH('h', $bredde_h, "$Message[57]: " . int( $_domener_h{$key} ));
@@ -13644,10 +13644,10 @@ sub HTMLMainSummary{
 		
 	print (( $ShowSummary =~ /P/i && $LogType ne 'M' ) ?
 		'<div>'
-		. '<div class="bg-p" ' . Tooltip(3) . ">$Message[56]</div>"
+		. '<div class="bg-p" ' . Tooltip(3) . ">" . ucfirst($Message[28]) . "</div>"
 		# . '<div>'
 		. '<div><b>' . Format_Number($TotalPages) . '</b></div>'
-		# . '<small>' . $RatioPages . ' ' . $Message[56] . ' / ' . $Message[12] . '</small>'
+		# . '<small>' . $RatioPages . ' ' . ucfirst($Message[28]) . ' / ' . $Message[12] . '</small>'
 		# . '</div>'
 		. '<div><small>' . Format_Number($TotalNotViewedPages) . ' *' .  $Message[( $LogType eq 'M' ) ? 166 : 161]  . ' </small></div>'
 		. '</div>'
@@ -13731,7 +13731,7 @@ sub HTMLDataTableHeader{
 		. '<th class="title">' . $title . '</th>'
 		. ( ( $config =~ /U/i ) ? '<th class="bg-u" ' . Tooltip(2) . '>' . CleanXSS($Message[18]) . '</th>' : '' )
 		. ( ( $config =~ /V/i ) ? '<th class="bg-v" ' . Tooltip(1) . '>' . CleanXSS($Message[10]) . '</th>' : '' )
-		. ( ( $config =~ /P/i ) ? '<th class="bg-p" ' . Tooltip(3) . '>' . CleanXSS($Message[56]) . '</th>' : '' )
+		. ( ( $config =~ /P/i ) ? '<th class="bg-p" ' . Tooltip(3) . '>' . CleanXSS(ucfirst($Message[28])) . '</th>' : '' )
 		. ( ( $config =~ /H/i ) ? '<th class="bg-h" ' . Tooltip(4) . '>' . CleanXSS($Message[57]) . '</th>' : '' )
 		. ( ( $config =~ /B/i ) ? '<th class="bg-b" ' . Tooltip(5) . '>' . CleanXSS($Message[75]) . '</th>' : '' )
 		. ( ( $config =~ /L/i ) ? '<th>' . CleanXSS($Message[9]) . '</th>' : '' )
@@ -13766,7 +13766,7 @@ sub HTMLMainMonthly{
 	my @blocklabel = ();
 	my @vallabel = (
 			$Message[11], $Message[10],
-			$Message[56], $Message[57],
+			ucfirst($Message[28]), $Message[57],
 			$Message[75]
 	);
 	my @valcolor = ( $color_u, $color_v, $color_p, $color_h, $color_k );
@@ -13852,7 +13852,7 @@ sub HTMLMainMonthly{
 
 			$data = int($MonthPages{ $YearRequired . $monthix } || 0 );
 
-			$bars .= HtmlBar('p', $data, Format_Number($data), $max_p, $Message[56], $width);
+			$bars .= HtmlBar('p', $data, Format_Number($data), $max_p, ucfirst($Message[28]), $width);
 
 			$tableData .= HTMLDataCellWithBar('p', $data, Format_Number($data), $max_p);
 		}
@@ -14019,7 +14019,7 @@ sub HTMLMainRatios{
 	{
 		my $ratio_H_P = ($total_p > 0) ? sprintf('%.2f', Format_Number($total_h / $total_p)) : '';
 		my $ratio_B_P = ($total_p > 0) ? Format_Bytes($total_k / $total_p) : '';
-		push @cat, {'ref' => 'p', 'name' => $Message[56], 'u' => '', 'v' => '', 'p' => '', 'h' => $ratio_H_P, 'b' => $ratio_B_P};
+		push @cat, {'ref' => 'p', 'name' => ucfirst($Message[28]), 'u' => '', 'v' => '', 'p' => '', 'h' => $ratio_H_P, 'b' => $ratio_B_P};
 	}
 
 	if ( $ShowRatiosStats =~ /H/i )
@@ -14093,7 +14093,7 @@ sub HTMLMainDaily{
 	my @valaverage = ($average_v, $average_p, $average_h, $average_k );
 	my @valdata = ();
 	my $xx      = 0;
-	my @vallabel = ("$Message[10]", "$Message[56]",	"$Message[57]", "$Message[75]");
+	my @vallabel = ($Message[10], ucfirst($Message[28]), $Message[57], $Message[75]);
 
 	if ( $FrameName eq 'mainright' )
 	{
@@ -14194,7 +14194,7 @@ sub HTMLMainDaily{
 		{
 			$data = int($DayPages{ $date } || 0 );
 
-			$bars .= HtmlBar('p', $data, Format_Number($data), $max_p, $Message[56], $width);
+			$bars .= HtmlBar('p', $data, Format_Number($data), $max_p, ucfirst($Message[28]), $width);
 
 			$tableData .= HTMLDataCellWithBar('p', $data, Format_Number($data), $max_p);
 		}
@@ -14241,7 +14241,7 @@ sub HTMLMainDaily{
 	# Show average value bars
 	# $bars .= '<td>&nbsp;</td>' . '<td>'
 	# . (( $ShowDaysOfMonthStats =~ /V/i ) ? HtmlBar('v', $average_v, Format_Number($average_v), $max_v, $Message[10], $width) : '')
-	# . (( $ShowDaysOfMonthStats =~ /P/i ) ? HtmlBar('p', $average_p, Format_Number($average_p), $max_p, $Message[56], $width) : '')
+	# . (( $ShowDaysOfMonthStats =~ /P/i ) ? HtmlBar('p', $average_p, Format_Number($average_p), $max_p, ucfirst($Message[28]), $width) : '')
 	# . (( $ShowDaysOfMonthStats =~ /H/i ) ? HtmlBar('h', $average_h, Format_Number($average_h), $max_h, $Message[57], $width) : '')
 	# . (( $ShowDaysOfMonthStats =~ /B/i ) ? HtmlBar('b', $average_k, Format_Number($average_k), $max_k, $Message[75], $width) : '')
 	# . '</td>';
@@ -14386,7 +14386,7 @@ sub HTMLMainDaysofWeek{
 				push @blocklabel, ( $Message[ $_ + 84 ] . ( $_ =~ /[06]/ ? "!" : "" ) );
 			}
 				
-			my @vallabel = ( $Message[56], $Message[57], $Message[75] );
+			my @vallabel = ( ucfirst($Message[28]), $Message[57], $Message[75] );
 			my @valcolor = ( $color_p, $color_h, $color_k );
 			my @valmax = ( int($max_h), int($max_h), int($max_k) );
 			my @valtotal = ( $TotalPages, $TotalHits, $TotalBytes );
@@ -14435,7 +14435,7 @@ sub HTMLMainDaysofWeek{
 	for (@DOWIndex) {
 
 		print '<td>'
-		. (( $ShowDaysOfWeekStats =~ /P/i ) ? HtmlBar('p', $avg_dayofweek_p[$_], Format_Number($avg_dayofweek_p[$_]), $max_p, $Message[56], $width) : '')
+		. (( $ShowDaysOfWeekStats =~ /P/i ) ? HtmlBar('p', $avg_dayofweek_p[$_], Format_Number($avg_dayofweek_p[$_]), $max_p, ucfirst($Message[28]), $width) : '')
 		. (( $ShowDaysOfWeekStats =~ /H/i ) ? HtmlBar('h', $avg_dayofweek_h[$_], Format_Number($avg_dayofweek_h[$_]), $max_h, $Message[57], $width) : '')
 		. (( $ShowDaysOfWeekStats =~ /B/i ) ? HtmlBar('b', $avg_dayofweek_k[$_], Format_Number($avg_dayofweek_k[$_]), $max_k, $Message[75], $width) : '')
 		. '</td>';
@@ -14553,8 +14553,7 @@ sub HTMLMainHours{
 	foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
 	{
 		my @blocklabel = ( 0 .. 23 );
-		my @vallabel   =
-		  ( "$Message[56]", "$Message[57]", "$Message[75]" );
+		my @vallabel   = ( ucfirst($Message[28]), $Message[57], $Message[75] );
 		my @valcolor = ( "$color_p", "$color_h", "$color_k" );
 		my @valmax = ( int($max_h), int($max_h), int($max_k) );
 		my @valtotal   = ( $TotalPages,   $TotalHits,   $TotalBytes );
@@ -14582,7 +14581,7 @@ sub HTMLMainHours{
 	for ( my $ix = 0 ; $ix <= 23 ; $ix++ )
 	{
 		print '<td>'
-		. (( $ShowHoursStats =~ /P/i ) ? HtmlBar('p', $_time_p[$ix], $_time_p[$ix], $max_p, $Message[56], $width) : '')
+		. (( $ShowHoursStats =~ /P/i ) ? HtmlBar('p', $_time_p[$ix], $_time_p[$ix], $max_p, ucfirst($Message[28]), $width) : '')
 		. (( $ShowHoursStats =~ /H/i ) ? HtmlBar('h', $_time_h[$ix], $_time_h[$ix], $max_h, $Message[57], $width) : '')
 		. (( $ShowHoursStats =~ /B/i ) ? HtmlBar('b', $_time_k[$ix], $_time_k[$ix], $max_k, $Message[75], $width) : '')
 		. '</td>';
@@ -15081,7 +15080,7 @@ sub HTMLMainHosts{
 	
 	&HTMLShowHostInfo('__title__') ;
 	
-	print (( $ShowHostsStats =~ /P/i ) ? '<th class="bg-p">' . $Message[56] . '</th>' : ''); #tooltip3
+	print (( $ShowHostsStats =~ /P/i ) ? '<th class="bg-p">' . ucfirst($Message[28]) . '</th>' : ''); #tooltip3
 	print (( $ShowHostsStats =~ /H/i ) ? '<th class="bg-h">' . $Message[57] . '</th>' : ''); #tt4
 	print (( $ShowHostsStats =~ /B/i ) ? '<th class="bg-b">' . $Message[75] . '</th>' : '');  #tt5
 	print (( $ShowHostsStats =~ /L/i ) ? '<th>' . $Message[9] . '</th>' : '');
@@ -15194,7 +15193,7 @@ sub HTMLMainLogins{
 	if ( $ShowAuthenticatedUsers =~ /P/i ) {
 		print "<th class=\"bg-p\" width=\"80\""
 		  . Tooltip(3)
-		  . ">$Message[56]</th>";
+		  . ">" . ucfirst($Message[28]) . "</th>";
 	}
 	if ( $ShowAuthenticatedUsers =~ /H/i ) {
 		print "<th class=\"bg-h\" width=\"80\""
@@ -15467,7 +15466,7 @@ sub HTMLMainWorms{
 
 	return &tab_head( $Message[163] . ' (' . $Message[77] . $MaxNbOf{'WormsShown'} . ')', '', 'worms', $tooltip)
 	. '<table class="data-table">'
-  . HTMLDataTableHeader(Format_Number(( scalar keys %_worm_h )) . ' ' . $Message[164], $ShowWormsStats)
+  . HTMLDataTableHeader(Format_Number(( scalar keys %_worm_h )) . ' ' . ucfirst($Message[163]), $ShowWormsStats)
   . $html
   . '</table>' . &tab_end();
 }
@@ -15869,7 +15868,7 @@ sub HTMLMainOS{
 	}
 	
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th width=\"$WIDTHCOLICON\">&nbsp;</th><th>$Message[59]</th>"
-	. "<th class=\"bg-p\" width=\"80\">$Message[56]</th><th class=\"bg-p\" width=\"80\">$Message[15]</th>"
+	. "<th class=\"bg-p\" width=\"80\">" . ucfirst($Message[28]) . "</th><th class=\"bg-p\" width=\"80\">$Message[15]</th>"
 	. "<th class=\"bg-h\" width=\"80\">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th></tr>\n";
 	my $total_h = 0;
 	my $total_p = 0;
@@ -16035,7 +16034,7 @@ sub HTMLMainBrowsers{
 		}
 	}
 	print
-"<tr bgcolor=\"#$color_TableBGRowTitle\"><th width=\"$WIDTHCOLICON\">&nbsp;</th><th>$Message[21]</th><th width=\"80\">$Message[111]</th><th class=\"bg-p\" width=\"80\">$Message[56]</th><th class=\"bg-p\" width=\"80\">$Message[15]</th><th class=\"bg-h\" width=\"80\">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th></tr>\n";
+"<tr bgcolor=\"#$color_TableBGRowTitle\"><th width=\"$WIDTHCOLICON\">&nbsp;</th><th>$Message[21]</th><th width=\"80\">$Message[111]</th><th class=\"bg-p\" width=\"80\">" . ucfirst($Message[28]) . "</th><th class=\"bg-p\" width=\"80\">$Message[15]</th><th class=\"bg-h\" width=\"80\">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th></tr>\n";
 	my $total_h = 0;
 	my $total_p = 0;
 	my $count = 0;
@@ -16222,7 +16221,7 @@ sub HTMLMainReferrers{
 	print '<table class="data-table">'
 	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$Message[37]</th>";
 	if ( $ShowOriginStats =~ /P/i ) {
-		print "<th class=\"bg-p\" width=\"80\">$Message[56]</th><th class=\"bg-p\" width=\"80\">$Message[15]</th>";
+		print "<th class=\"bg-p\" width=\"80\">" . ucfirst($Message[28]) . "</th><th class=\"bg-p\" width=\"80\">$Message[15]</th>";
 	}
 	if ( $ShowOriginStats =~ /H/i ) {
 		print "<th class=\"bg-h\" width=\"80\">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th>";
@@ -16874,7 +16873,7 @@ sub HTMLMainCluster{
 	&HTMLShowClusterInfo('__title__');
 	if ( $ShowClusterStats =~ /P/i ) {
 		print
-"<th class=\"bg-p\" width=\"80\">$Message[56]</th><th class=\"bg-p\" width=\"80\">$Message[15]</th>";
+"<th class=\"bg-p\" width=\"80\">" . ucfirst($Message[28]) . "</th><th class=\"bg-p\" width=\"80\">$Message[15]</th>";
 	}
 	if ( $ShowClusterStats =~ /H/i ) {
 		print
@@ -16972,7 +16971,7 @@ sub HTMLMainExtra{
 
 	if ( $ExtraStatTypes[$extranum] =~ m/P/i ) {
 		print
-		  "<th class=\"bg-p\" width=\"80\">$Message[56]</th>";
+		  "<th class=\"bg-p\" width=\"80\">" . ucfirst($Message[28]) . "</th>";
 	}
 	if ( $ExtraStatTypes[$extranum] =~ m/H/i ) {
 		print
