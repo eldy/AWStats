@@ -989,13 +989,14 @@ section header:hover .tooltip { visibility: visible; opacity: 1; }
 .data-table tbody tr { transition: background 0.5s ease-out; transition: transform 0.1s ease-in }
 .data-table tbody tr:hover { font-weight: 900; background: var(--neutral-color); transform: scale(1.1) translateX(2px); }
 .data-table th { font-weight: 900 }
-.data-table th, .data-table td:not(:first-child) { padding: 2px 0 }
+.data-table th, .data-table td:not(:first-child) { padding-top: 2px; padding-bottom: 2px; }
 .data-table td:first-child { padding-right: 4px }
 .data-table td div { padding: 0 4px }
 .data-table td { text-align: right; font-weight: 700; }
 .data-table td:first-child:not(.country) { font-weight: 400 }
 .data-table tfoot .data-table-sum td { border-top: 1px solid rgba(192,192,192,0.2); }
 .data-table-sum { font-size : 1.3em }
+.left-padding-separator { padding-left: 20px }
 .bar-table { visibility: visible; margin: auto; text-align: center; font-size: 10px; border-bottom: 6px solid var(--light-color);}
 .bar-table tr:first-child td { vertical-align: bottom; }
 .bar-table span { font-size: 0.8em }
@@ -15001,7 +15002,7 @@ sub HTMLMainHosts{
 	
 	if ($Debug) { debug( 'ShowHostsStats', 2 ); }
 
-	my $title = $Message[81] . ' (' . $Message[77] . ' ' . $MaxNbOf{'HostsShown'} .')';
+	my $title = $Message[81] . ' <small>(' . $Message[77] . ' ' . $MaxNbOf{'HostsShown'} .')</small>';
 
 	my $link = XMLEncode($AWScript . ${NewLinkParams});
 	my $subtitle =
@@ -15398,11 +15399,11 @@ sub HTMLMainRobots{
 }
 
 #------------------------------------------------------------------------------
-# Function:     Prints the worms chart and table
+# Function:     Return the worms chart and table
 # Parameters:   -
 # Input:        -
-# Output:       HTML
-# Return:       -
+# Output:       -
+# Return:       string
 #------------------------------------------------------------------------------
 sub HTMLMainWorms{
 	if ($Debug) { debug( "ShowWormsStats", 2 ); }
@@ -15464,78 +15465,77 @@ sub HTMLMainWorms{
 		. '</tr>';
 	}
 
-	return &tab_head( $Message[163] . ' (' . $Message[77] . $MaxNbOf{'WormsShown'} . ')', '', 'worms', $tooltip)
+	return &tab_head( $Message[163] . ' <small>(' . $Message[77] . $MaxNbOf{'WormsShown'} . ')</small>', '', 'worms', $tooltip)
 	. '<table class="data-table">'
-  . HTMLDataTableHeader(Format_Number(( scalar keys %_worm_h )) . ' ' . ucfirst($Message[163]), $ShowWormsStats)
+  . HTMLDataTableHeader(Format_Number(( scalar keys %_worm_h )) . ' ' . $Message[163], $ShowWormsStats)
   . $html
   . '</table>' . &tab_end();
 }
 
 #------------------------------------------------------------------------------
-# Function:     Prints the sessions chart and table
+# Function:     Return the sessions chart and table
 # Parameters:   -
 # Input:        -
-# Output:       HTML
-# Return:       -
+# Output:       -
+# Return:       string
 #------------------------------------------------------------------------------
 sub HTMLMainSessions{
 	if ($Debug) { debug( "ShowSessionsStats", 2 ); }
-	# print "<a name=\"sessions\">&nbsp;</a>";
-	my $title = $Message[117];
 
+	my $title = $Message[117];
 	my $tooltip = '';
+	my $html = '';
+	
+	my $Totals = 0;
+	my $average_s = 0;
+	my $total_s   = 0;
+
 	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
 	{
 		my $function = "getTooltip_$pluginname";
-		$tooltip .= &$function(19);
+		$tooltip .= &$function(19) . '<br><br>' . &$function(1);
 	}
         
-	print &tab_head( $title, '', 'sessions', $tooltip);
-
-	my $Totals = 0;
-	my $average_s = 0;
-	foreach (@SessionsRange) {
+	foreach (@SessionsRange)
+	{
 		$average_s += ( $_session{$_} || 0 ) * $SessionsAverage{$_};
 		$Totals += $_session{$_} || 0;
 	}
-	if ($Totals) { $average_s = int( $average_s / $Totals ); }
-	else { $average_s = '?'; }
 
-	print '<table class="data-table">'
-	. "<tr bgcolor=\"#$color_TableBGRowTitle\"" . Tooltip(1) . ">"
-	. "<th>$Message[10]: ".Format_Number($TotalVisits)." - $Message[96]: ".Format_Number($average_s)." s</th><th class=\"bg-s\" width=\"80\">$Message[10]</th><th class=\"bg-s\" width=\"80\">$Message[15]</th></tr>\n";
-	$average_s = 0;
-	my $total_s   = 0;
-	my $count = 0;
-	foreach my $key (@SessionsRange) {
-		my $p = 0;
-		if ($TotalVisits) {
-			$p = int( $_session{$key} / $TotalVisits * 1000 ) / 10;
-		}
+	$average_s = ($Totals) ? int( $average_s / $Totals ) : '?';
+
+	foreach my $key (@SessionsRange)
+	{
+		my $p = ($TotalVisits) ? (int( $_session{$key} / $TotalVisits * 1000 ) * .1) : 0;
+		
 		$total_s += $_session{$key} || 0;
-		print "<tr><td class=\"aws\">$key</td>";
-		print "<td>"
-		  . ( $_session{$key} ? Format_Number($_session{$key}) : "&nbsp;" ) . "</td>";
-		print "<td>"
-		  . ( $_session{$key} ? "$p %" : "&nbsp;" ) . "</td>";
-		print "</tr>\n";
-		$count++;
-	}
-	my $rest_s = $TotalVisits - $total_s;
-	if ( $rest_s > 0 ) {    # All others sessions
-		my $p = 0;
-		if ($TotalVisits) {
-			$p = int( $rest_s / $TotalVisits * 1000 ) / 10;
-		}
-		print "<tr"
-		  . Tooltip(20)
-		  . "><td class=\"aws\"><span style=\"color: #$color_other\">$Message[0]</span></td>";
-		print "<td>".Format_Number($rest_s)."</td>";
-		print "<td>" . ( $rest_s ? "$p %" : "&nbsp;" ) . "</td>";
-		print "</tr>\n";
+
+		$html .= '<tr>'
+		. HTMLDataCellWithBar('v', ($_session{$key} || 0), $key, $Totals)
+		. '<td>' . ( $_session{$key} ? Format_Number($_session{$key}) : '' ) . '</td>'
+		. '<td class="left-padding-separator">' . ( $_session{$key} ? $p . ' %' : '' ) . '</td>'
+		. '</tr>';
 	}
 
-	print '</table>' . &tab_end();
+	my $rest_s = $TotalVisits - $total_s;
+	
+	if ( $rest_s > 0 )
+	{ # All others sessions
+		my $p = ($TotalVisits) ? (int( $rest_s / $TotalVisits * 1000 ) * .1) : 0;
+
+		#TODO add tooltip 20
+		$html = '<tr>'
+		. '<td>' . $Message[0] . '</td>' 
+		. '<td>' . Format_Number($rest_s) . '</td>'
+		. '<td>' . ( $rest_s ? "$p %" : '' ) . '</td>'
+		. '</tr>';
+	}
+
+	return &tab_head( $title, '', 'sessions', $tooltip)
+	. '<div>' . $Message[10] . ': ' . Format_Number($TotalVisits) . ' - ' . $Message[96] . ': ' . Format_Number($average_s) . ' s' . '</div>'
+	. '<table class="data-table">'
+	. $html
+	. '</table>' . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -21414,7 +21414,7 @@ if ( scalar keys %HTMLOutput ) {
 		# BY SESSION
 		#----------------------------
 		if ($ShowSessionsStats) {
-			&HTMLMainSessions();
+			print &HTMLMainSessions();
 		}
 
 		# BY FILE TYPE
