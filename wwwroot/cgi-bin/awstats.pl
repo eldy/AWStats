@@ -1220,11 +1220,11 @@ sub html_end {
 }
 
 #------------------------------------------------------------------------------
-# Function:		Print on stdout tab header of a chart
+# Function:		Return tab header of a chart
 # Parameters:	$title $tooltipnb [$width percentage of chart title]
-# Input:		None
-# Output:		None
-# Return:		None
+# Input:		-
+# Output:		-
+# Return:		string
 #------------------------------------------------------------------------------
 sub tab_head {
 	my $title = shift;
@@ -14993,7 +14993,6 @@ sub HTMLMainHosts{
 	my $NewLinkTarget = shift;
 	
 	if ($Debug) { debug( 'ShowHostsStats', 2 ); }
-	# print "<a name=\"visitors\">&nbsp;</a>";
 
 	my $title = $Message[81] . ' (' . $Message[77] . ' ' . $MaxNbOf{'HostsShown'} .')';
 
@@ -15020,11 +15019,9 @@ sub HTMLMainHosts{
 		$tooltip .= &$function(19);
 	}
 	  
-	print &tab_head( $title, $subtitle, 'hosts', $tooltip);
-	
 	&BuildKeyList( $MaxNbOf{'HostsShown'}, $MinHit{'Host'}, \%_host_h, \%_host_p );
 		
-	print '<table class="data-table">';
+	print &tab_head( $title, $subtitle, 'hosts', $tooltip);
 
 	# Graph the top five in a pie chart
 	if (scalar @keylist > 1)
@@ -15051,7 +15048,7 @@ sub HTMLMainHosts{
         if ($cnt > 4) { last; }
 			}
 			
-			print '<tr><td colspan="7">';
+			print '<table><tr><td colspan="7">';
 			my $function = "ShowGraph_$pluginname";
 			&$function(
 				"Hosts",      "hosts",
@@ -15060,29 +15057,30 @@ sub HTMLMainHosts{
 				0,            0,
 				0,          	\@valdata
 			);
-			print '</td></tr>';
+			print '</td></tr></table>';
 		}
 	}
+
+	print '<div>'
+	.(( $MonthRequired ne 'all' )
+			? Format_Number($TotalHostsKnown) . ' ' . $Message[82] . ' - ' . Format_Number($TotalHostsUnknown) . ' ' . $Message[1]. ' - ' . Format_Number($TotalUnique) . ' ' . $Message[11]
+			: ( scalar keys %_host_h ))
+	. '</div>';
+
+	print '<table class="data-table">'
+	. '<tr>'
+	. '<th></th>';
 	
-	print '<tr bgcolor="#' . $color_TableBGRowTitle .'">'
-	. '<th>'
-	. $Message[81] . ' : '
-	. (( $MonthRequired ne 'all' )
-			? Format_Number($TotalHostsKnown) . ' ' . $Message[82] . ', ' . Format_Number($TotalHostsUnknown) . ' ' . $Message[1]. '<br>' . Format_Number($TotalUnique) . ' ' . $Message[11]
-			: ( scalar keys %_host_h )
-	)
-	. '</th>';
+	&HTMLShowHostInfo('__title__') ;
 	
-	&HTMLShowHostInfo('__title__');
-	
-	print (( $ShowHostsStats =~ /P/i ) ? '<th class="bg-p" width="80"' . Tooltip(3) . '>' . $Message[56] . '</th>' : '')
-	. (( $ShowHostsStats =~ /H/i ) ? '<th class="bg-h" width="80"' . Tooltip(4) . '>' . $Message[57] . '</th>' : '')
-	. (( $ShowHostsStats =~ /B/i ) ? '<th class="bg-k" width="80"' . Tooltip(5) . '>' . $Message[75] . '</th>' : '')
-	. (( $ShowHostsStats =~ /L/i ) ? '<th width="120">' . $Message[9] . '</th>' : '')
-	. '</tr>';
+	print (( $ShowHostsStats =~ /P/i ) ? '<th class="bg-p">' . $Message[56] . '</th>' : ''); #tooltip3
+	print (( $ShowHostsStats =~ /H/i ) ? '<th class="bg-h">' . $Message[57] . '</th>' : ''); #tt4
+	print (( $ShowHostsStats =~ /B/i ) ? '<th class="bg-b">' . $Message[75] . '</th>' : '');  #tt5
+	print (( $ShowHostsStats =~ /L/i ) ? '<th>' . $Message[9] . '</th>' : '');
+	print '</tr>';
 
 	my $total_p = my $total_h = my $total_k = 0;
-	my $count = 0;
+	my $max_p = my $max_h = my $max_k = 0;
 	
 	my $regipv4 = qr/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;	
 
@@ -15091,9 +15089,20 @@ sub HTMLMainHosts{
     &Read_DNS_Cache( \%MyDNSTable, "$DNSStaticCacheFile", "", 1 );
   }
 
+  foreach my $key (@keylist)
+	{
+		$total_p += $_host_p{$key};
+		$total_h += $_host_h{$key};
+		$total_k += $_host_k{$key} || 0;
+
+		$max_p = ($_host_p{$key} > $max_p) ? $_host_p{$key} : $max_p;
+		$max_h = ($_host_h{$key} > $max_h) ? $_host_h{$key} : $max_h;
+		$max_k = ($_host_k{$key} > $max_k) ? $_host_k{$key} : $max_k;
+	}
+
 	foreach my $key (@keylist)
 	{
-		print '<tr>' . '<td class="aws">' . $key;
+		print '<tr>' . '<td>' . $key;
 
 		if ($DynamicDNSLookup && $key =~ /$regipv4/o)
 		{ # Dynamic reverse DNS lookup
@@ -15111,17 +15120,11 @@ sub HTMLMainHosts{
 		print '</td>';
 
 		&HTMLShowHostInfo($key);
-		
-		print (( $ShowHostsStats =~ /P/i ) ? '<td>' . ( Format_Number($_host_p{$key}) || "&nbsp;" ) . '</td>' : '')
-		. (( $ShowHostsStats =~ /H/i ) ? '<td>' . Format_Number($_host_h{$key}) . '</td>' : '')
-		. (( $ShowHostsStats =~ /B/i ) ? '<td>' . Format_Bytes( $_host_k{$key} ) . '</td>' : '')
-		. (( $ShowHostsStats =~ /L/i ) ? '<td>' . (	$_host_l{$key} ? Format_Date( $_host_l{$key}, 1 )	: '-' ) . '</td>' : '')
-		. '</tr>';
-
-		$total_p += $_host_p{$key};
-		$total_h += $_host_h{$key};
-		$total_k += $_host_k{$key} || 0;
-		$count++;
+		print (( $ShowHostsStats =~ /P/i ) ? HTMLDataCellWithBar('p', $_host_p{$key}, Format_Number($_host_p{$key}), $max_p) : '' );
+		print (( $ShowHostsStats =~ /H/i ) ? HTMLDataCellWithBar('h', $_host_h{$key}, Format_Number($_host_h{$key}), $max_h) : '' );
+		print (( $ShowHostsStats =~ /B/i ) ? HTMLDataCellWithBar('b', $_host_k{$key}, Format_Bytes($_host_k{$key}), $max_k) : '' );
+		print (( $ShowHostsStats =~ /L/i ) ? '<td>' . (	$_host_l{$key} ? Format_Date( $_host_l{$key}, 1 )	: '-' ) . '</td>' : '');
+		print '</tr>';
 	}
 
 	my $rest_p = $TotalPages - $total_p;
@@ -15130,8 +15133,7 @@ sub HTMLMainHosts{
 
 	if ( $rest_p > 0 || $rest_h > 0 || $rest_k > 0 )
 	{ # All other visitors (known or not)
-		print '<tr>'
-		. '<td class="aws"><span style="color: #' . $color_other . '">' . $Message[2] . '</span></td>';
+		print '<tr>' . '<td>' . $Message[2] . '</td>';
 
 		&HTMLShowHostInfo('');
 		
@@ -15370,7 +15372,7 @@ sub HTMLMainRobots{
 
 	if ( $rest_h > 0 || $rest_k > 0 || $rest_r > 0 )
 	{ # All other robots
-		$html .= '<tr><td><span style="color: #' . $color_other . '">' . $Message[2] . '</span></td>'
+		$html .= '<tr><td>' . $Message[2] . '</td>'
 		. (( $ShowRobotsStats =~ /H/i ) ? HTMLDataCellWithBar('h', ($rest_h - ($rest_r), Format_Number( $rest_h - $rest_r ) . ( $rest_r ? "+$rest_r" : '' )), $max_h) : '')
 		. (( $ShowRobotsStats =~ /B/i ) ? HTMLDataCellWithBar('b', $rest_k, Format_Bytes($rest_k), $max_b) : '')
 		. (( $ShowRobotsStats =~ /L/i ) ? '<td>&nbsp;</td>' : '')
@@ -16161,7 +16163,7 @@ sub HTMLMainScreenSize{
 		$html .= '<tr><td></td><td style="width:calc(var(--bar-width) * 1px)"></td></tr>'
 		. '<tr>'
 		. (( $key eq 'Unknown' ) ?
-			'<td style="color: var(--neutral-color)">' . $Message[0] . '</td>' : '<td>' . $key . '</td>')
+			'<td>' . $Message[0] . '</td>' : '<td>' . $key . '</td>')
 		. HTMLDataCellWithBar('h', $_screensize_h{$key}, $p . ' %', $Totalh)
 		. '</tr>';
 	}
@@ -16171,7 +16173,7 @@ sub HTMLMainScreenSize{
 	{ # All others sessions
 		my $p = ($Totalh) ? int( $rest_h / $Totalh * 1000 ) / 10 : 0;
 		$html .= '<tr>'
-		. '<td><span style="color: var(--neutral-color)">' . $Message[2] . '</span></td>'
+		. '<td>' . $Message[2] . '</td>'
 		. HTMLDataCellWithBar('h', $rest_h, $p . '%', $Totalh);
 	}
 
