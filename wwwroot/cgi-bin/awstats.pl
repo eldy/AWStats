@@ -921,37 +921,59 @@ sub renderCss {
 
 	#TODO set pagedir var(--direction), but where ?
 
-	$css .= ':root {'
-	. '--page-color: hsl(1, 0%, 25%);'
-	. '--page-bgcolor: hsl(1, 0%, 95%);'
-	. '--aws-color-u: hsl(27, 100%, 70%);'
-	. '--aws-color-v: hsl(58, 82%, 76%);'
-	. '--aws-color-p: hsl(220, 97%, 72%);'
-	. '--aws-color-h: hsl(188, 80%, 67%);'
-	. '--aws-color-b: hsl(172, 56%, 41%);'
-	. '--aws-color-e: hsl(259, 45%, 84%);'
-	. '--aws-color-x: hsl(259, 45%, 79%);'
-	. '--aws-color-s: hsl(240, 56%, 70%);'
-	. '--dark-color: hsl(1, 0%, 50%);'
-	. '--neutral-color: hsl(1, 0%, 75%);'
-	. '--light-color: hsl(1, 0%, 90%);'
-	. '--a-color: hsl(0, 0%, 0%);'
-	. '--a-hover-color: hsl(0, 0%, 0%);'
-	. '--bar-width: 100;'
-	. '--bar-v-height: 16;'
-	. '--bar-v-grow: 1;'
-	. '--bar-v-width-month: 0.44dvw;'
-	. '--bar-v-width-daily: 0.17dvw;'
-	. '--bar-v-width-weekday: 0.75dvw;'
-	. '--bar-v-width-hours: 0.23dvw;'
-	. '--direction: ltr;'
-	. '}'
-	. <<EOF;
+	$css .= '
+:root {
+	--page-color: hsl(1, 0%, 25%);
+	--page-bgcolor: hsl(1, 0%, 95%);
+	--aws-color-u: hsl(27, 100%, 70%);
+	--aws-color-v: hsl(58, 82%, 76%);
+	--aws-color-p: hsl(220, 97%, 72%);
+	--aws-color-h: hsl(188, 80%, 67%);
+	--aws-color-b: hsl(172, 56%, 41%);
+	--aws-color-e: hsl(259, 45%, 84%);
+	--aws-color-x: hsl(259, 45%, 79%);
+	--aws-color-s: hsl(240, 56%, 70%);
+	--dark-color: hsl(1, 0%, 50%);
+	--neutral-color: hsl(1, 0%, 75%);
+	--light-color: hsl(1, 0%, 90%);
+	--a-color: hsl(0, 0%, 0%);
+	--a-hover-color: hsl(0, 0%, 0%);
+	--bar-width: 100;
+	--bar-v-height: 16;
+	--bar-v-grow: 1;
+	--bar-v-width-month: 0.44dvw;
+	--bar-v-width-daily: 0.17dvw;
+	--bar-v-width-weekday: 0.75dvw;
+	--bar-v-width-hours: 0.23dvw;
+	--direction: ltr;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--page-color: hsl(0, 0%, 100%);
+		--page-bgcolor: hsl(0, 0%, 23.5%);
+		--aws-color-u: hsl(27, 100%, 40%);
+		--aws-color-v: hsl(58, 82%, 30%);
+		--aws-color-p: hsl(220, 97%, 42%);
+		--aws-color-h: hsl(188, 80%, 39%);
+		--aws-color-b: hsl(172, 56%, 27%);
+		--aws-color-e: hsl(259, 45%, 84%);
+		--aws-color-x: hsl(259, 45%, 79%);
+		--aws-color-s: hsl(240, 56%, 70%);
+		--dark-color: hsl(0, 0%, 8.2%);
+		--neutral-color: hsl(0, 0%, 48.2%);
+		--light-color: hsl(0, 0%, 40.8%);
+		--a-color: hsl(0, 0%, 81.6%);
+		--a-hover-color: hsl(0, 0%, 100%);
+		--nav-color: hsl(0, 0%, 2.4%);
+	}
+}
 
 html { scroll-behavior: smooth; scroll-padding: var(--scroll-padding, 5rem); }
 body { font: 0.75rem sans-serif, system-ui; background-color: var(--page-bgcolor); margin: 0; padding:0; color: var(--page-color); }
 a, a:link, a:visited { color: var(--a-color); text-decoration: none; }
 a:hover, a:focus, a:active{ color: var(--a-hover-color); text-decoration: none; }
+nav a, nav a:link, nav a:visited { color: var(--nav-color) }
 b { font-weight: 700 }
 hr { width: 100%; height: 0; margin: 0; color: transparent; border: none; }
 small { font-size: 0.7rem; font-weight: 400; }
@@ -1032,7 +1054,7 @@ section header:hover .tooltip { visibility: visible; opacity: 1; }
 .zoomed-land{ fill: var(--aws-color-v) !important;}
 .weekend { background-color: var(--light-color) }
 .data-table-average { background-color: var(--neutral-color) }
-EOF
+';
 
 	# Call to plugins' function AddHTMLStyles
 	foreach my $pluginname (keys %{ $PluginsLoaded{'AddHTMLStyles'} })
@@ -10474,49 +10496,49 @@ sub HTMLMenu{
 	. '<li class="dropdown">'
 	. '<a href="javascript:void(0)" class="dropbtn">' . $Message[93] . '</a>'
 	. '<div class="dropdown-content">'
-	. '<a href="#month">' . $Message[162] . '</>'
-	. '<a href="#daysofmonth">' . $Message[138] . '</>'
-		. '<a href="#daysofweek">' . $Message[91] . '</>'
-	. '<a href="#hours">' . $Message[20] . '</>'
+	. '<a href="#month">' . $Message[162] . '</a>'
+	. '<a href="#daysofmonth">' . $Message[138] . '</a>'
+		. '<a href="#daysofweek">' . $Message[91] . '</a>'
+	. '<a href="#hours">' . $Message[20] . '</a>'
 	. '</div>'
 	. '</li>'
 	. '<li class="dropdown">'
 	. '<a href="javascript:void(0)" class="dropbtn">' . $Message[92] . '</a>'
 	. '<div class="dropdown-content">'
-	. '<a href="#countries">' . $Message[17] . '</>'
-	. '<a href="#hosts">' . $Message[81] . '</>'
-	. '<a href="#robots">' . ucfirst($Message[51]) . '</>'
-	. '<a href="#os">' . $Message[59] . '</>'
-	. '<a href="#browsers">' . $Message[21] . '</>'
-	. '<a href="#screensizes">' . $Message[135] . '</>'
-	. '<a href="#sessions">' . $Message[117] . '</>'
+	. '<a href="#countries">' . $Message[17] . '</a>'
+	. '<a href="#hosts">' . $Message[81] . '</a>'
+	. '<a href="#robots">' . ucfirst($Message[51]) . '</a>'
+	. '<a href="#os">' . $Message[59] . '</a>'
+	. '<a href="#browsers">' . $Message[21] . '</a>'
+	. '<a href="#screensizes">' . $Message[135] . '</a>'
+	. '<a href="#sessions">' . $Message[117] . '</a>'
 	. '</div>'
 	. '</li>'
 	. '<li class="dropdown">'
 	. '<a href="javascript:void(0)" class="dropbtn">' . $Message[72] . '</a>'
 	. '<div class="dropdown-content">'
-	. '<a href="#ratios">' . $Message[22] . '</>'
-	. '<a href="#urls">' . $Message[19] . '</>'
-	. '<a href="#downloads">' . $Message[178] . '</>'
-	. '<a href="#filetypes">' . $Message[73] . '</>'
-	. '<a href="#filesizes">' . $Message[186] . '</>'
-	. '<a href="#requesttimes">' . $Message[188] . '</>'
+	. '<a href="#ratios">' . $Message[22] . '</a>'
+	. '<a href="#urls">' . $Message[19] . '</a>'
+	. '<a href="#downloads">' . $Message[178] . '</a>'
+	. '<a href="#filetypes">' . $Message[73] . '</a>'
+	. '<a href="#filesizes">' . $Message[186] . '</a>'
+	. '<a href="#requesttimes">' . $Message[188] . '</a>'
 	. '</div>'
 	. '</li>'
 	. '<li class="dropdown">'	
 	. '<a href="javascript:void(0)" class="dropbtn">' . $Message[37] . '</a>'
 	. '<div class="dropdown-content">'
-	. '<a href="#referer">' . $Message[23] . '</>'
-	. '<a href="#keyphrases">' . $Message[43] . '</>'
-	. '<a href="#keywords">' . $Message[44] . '</>'
+	. '<a href="#referer">' . $Message[23] . '</a>'
+	. '<a href="#keyphrases">' . $Message[43] . '</a>'
+	. '<a href="#keywords">' . $Message[44] . '</a>'
 	. '</div>'
 	. '</li>'
 	. '<li class="dropdown">'
 	. '<a href="javascript:void(0)" class="dropbtn">' . $Message[2] . '</a>'
 	. '<div class="dropdown-content">'
-	. '<a href="#misc">' . $Message[139] . '</>'
-	. '<a href="#errors">' . $Message[32] . '</>'
-	. '<a href="#worms">' . $Message[163] . '</>'
+	. '<a href="#misc">' . $Message[139] . '</a>'
+	. '<a href="#errors">' . $Message[32] . '</a>'
+	. '<a href="#worms">' . $Message[163] . '</a>'
 	. '</div>'
 	. '</li>'
 	. '</ul>'
@@ -10994,11 +11016,11 @@ sub HTMLMenu{
 }
 
 #------------------------------------------------------------------------------
-# Function:     Prints the File Type table
-# Parameters:   _
+# Function:     Return the File Type table
+# Parameters:   -
 # Input:        $NewLinkParams, $NewLinkTargets
-# Output:       HTML
-# Return:       -
+# Output:       -
+# Return:       string
 #------------------------------------------------------------------------------
 sub HTMLMainFileType{
   if ($Debug) { debug( "ShowFileTypesStatsCompressionStats", 2 ); }
