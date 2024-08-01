@@ -970,7 +970,7 @@ sub renderCss {
 }
 
 html { scroll-behavior: smooth; scroll-padding: var(--scroll-padding, 5rem); }
-body { font: clamp(0.75rem, -3vw + 3rem, 1rem) sans-serif, system-ui; background-color: var(--page-bgcolor); margin: 0; padding:0; color: var(--page-color); }
+body { font-size: clamp(0.75rem, -3vw + 3rem, 0.9rem); font-family: sans-serif, system-ui; background-color: var(--page-bgcolor); margin: 0; padding:0; color: var(--page-color); }
 a, a:link, a:visited { color: var(--a-color); text-decoration: none; }
 a:hover, a:focus, a:active{ color: var(--a-hover-color); text-decoration: none; }
 nav a, nav a:link, nav a:visited { color: var(--nav-color) }
@@ -1006,7 +1006,7 @@ section header { position: relative }
 section header:hover .tooltip { visibility: visible; opacity: 1; }
 .multi-data-table { display: flex; column-gap: 3dvw; flex-wrap: wrap; justify-content: center }
 .multi-data-table.worldmap{ position: relative; }
-.data-table { border-spacing: 0 2px; margin: auto; }
+.data-table { border-spacing: 0 2px; margin: auto; max-width: 90dvw; }
 .data-table tfoot { display: table-header-group }
 .data-table tbody div { opacity: 0.9 }
 .data-table tbody tr { transition: background 0.5s ease-out; transition: transform 0.1s ease-in }
@@ -1056,6 +1056,15 @@ section header:hover .tooltip { visibility: visible; opacity: 1; }
 .zoomed-land{ fill: var(--aws-color-v) !important;}
 .weekend { background-color: var(--light-color) }
 .data-table-average { background-color: var(--neutral-color) }
+
+@media (min-resolution: 2dppx) {
+	body { font-size: clamp(1rem, -3vw + 3rem, 1.4rem) }
+
+	@media (orientation: portrait) {
+		.data-table { width: 90dvw}
+	}
+}
+
 ';
 
 	# Call to plugins' function AddHTMLStyles
@@ -9353,10 +9362,10 @@ sub HTMLShowURLInfo {
 		{ # URL seems to be extracted from a proxy log file
 			return $plugins . ' <a href="' . XMLEncode($newkey) . '" target="url" rel="nofollow noopener noreferrer">' .  XMLEncode($nompage) . '</a>';
 		}
-		elsif ( $newkey =~ /^\// )
+
+		if ( $newkey =~ /^\// )
 		{ # URL seems to be an url extracted from a web or wap server log file
 			$newkey =~ s/^\/$SiteDomain//i;
-
 			# Define urlprot
 			my $urlprot = ( $UseHTTPSLinkForUrl && $newkey =~ /^$UseHTTPSLinkForUrl/ ) ? 'https' : 'http';
 
