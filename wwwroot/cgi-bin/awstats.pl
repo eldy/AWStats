@@ -9326,70 +9326,46 @@ sub HTMLShowHostInfo {
 }
 
 #------------------------------------------------------------------------------
-# Function:     Write other url info (with help of plugin)
+# Function:     Return other url info (with help of plugin)
 # Parameters:   $url
 # Input:        %Aliases $MaxLengthOfShownURL $ShowLinksOnUrl $SiteDomain $UseHTTPSLinkForUrl
-# Output:       URL link
-# Return:       None
+# Output:       -
+# Return:       string (url link)
 #------------------------------------------------------------------------------
 sub HTMLShowURLInfo {
 	my $url     = shift;
-	my $nompage = CleanXSS($url);
+	my $newkey = CleanXSS($url);
+	my $nompage = ( length($newkey) > $MaxLengthOfShownURL ) ? substr( $newkey, 0, $MaxLengthOfShownURL ) . "..." : $newkey;
+	my $plugins = '';
 
 	# Call to plugins' function ShowInfoURL
-	foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowInfoURL'} } ) {
-
-		#		my $function="ShowInfoURL_$pluginname('$url')";
-		#		eval("$function");
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowInfoURL'} } )
+	{
+		# my $function="ShowInfoURL_$pluginname('$url')";
+		# eval("$function");
 		my $function = "ShowInfoURL_$pluginname";
-		&$function($url);
+		$plugins .= &$function($url);
 	}
 
-	if ( length($nompage) > $MaxLengthOfShownURL ) {
-		$nompage = substr( $nompage, 0, $MaxLengthOfShownURL ) . "...";
-	}
-	if ($ShowLinksOnUrl) {
-		my $newkey = CleanXSS($url);
-		if ( $LogType eq 'W' || $LogType eq 'S' ) {  # Web or streaming log file
-			if ( $newkey =~ /^http(s|):/i )
-			{    # URL seems to be extracted from a proxy log file
-				print "<a href=\""
-				  . XMLEncode("$newkey")
-				  . "\" target=\"url\" rel=\"nofollow noopener noreferrer\">"
-				  . XMLEncode($nompage) . "</a>";
-			}
-			elsif ( $newkey =~ /^\// )
-			{ # URL seems to be an url extracted from a web or wap server log file
-				$newkey =~ s/^\/$SiteDomain//i;
+	if ( $LogType eq 'W' || $LogType eq 'S' )
+	{ # Web or streaming log file
+		if ( $newkey =~ /^http(s|):/i )
+		{ # URL seems to be extracted from a proxy log file
+			return $plugins . ' <a href="' . XMLEncode($newkey) . '" target="url" rel="nofollow noopener noreferrer">' .  XMLEncode($nompage) . '</a>';
+		}
+		elsif ( $newkey =~ /^\// )
+		{ # URL seems to be an url extracted from a web or wap server log file
+			$newkey =~ s/^\/$SiteDomain//i;
 
-				# Define urlprot
-				my $urlprot = 'http';
-				if ( $UseHTTPSLinkForUrl && $newkey =~ /^$UseHTTPSLinkForUrl/ )
-				{
-					$urlprot = 'https';
-				}
-				print "<a href=\""
-				  . XMLEncode("$urlprot://$SiteDomain$newkey")
-				  . "\" target=\"url\" rel=\"nofollow noopener noreferrer\">"
-				  . XMLEncode($nompage) . "</a>";
-			}
-			else {
-				print XMLEncode($nompage);
-			}
-		}
-		elsif ( $LogType eq 'F' ) {    # Ftp log file
-			print XMLEncode($nompage);
-		}
-		elsif ( $LogType eq 'M' ) {    # Smtp log file
-			print XMLEncode($nompage);
-		}
-		else {                         # Other type log file
-			print XMLEncode($nompage);
+			# Define urlprot
+			my $urlprot = ( $UseHTTPSLinkForUrl && $newkey =~ /^$UseHTTPSLinkForUrl/ ) ? 'https' : 'http';
+
+			return $plugins . ' <a href="' . XMLEncode($urlprot . '://' . $SiteDomain . $newkey) . '" target="url" rel="nofollow noopener noreferrer">' . XMLEncode($nompage) . '</a>';
 		}
 	}
-	else {
-		print XMLEncode($nompage);
-	}
+
+	# "Hidden" by config or SMTP/FTP/Othertype log file
+	return $plugins . ' ' . XMLEncode($nompage);
 }
 
 #------------------------------------------------------------------------------
@@ -12131,7 +12107,7 @@ sub HTMLShowRefererPages{
 			  10;
 		}
 		print "<tr><td class=\"aws\">";
-		&HTMLShowURLInfo($key);
+		print &HTMLShowURLInfo($key);
 		print "</td>";
 		print "<td>"
 		  . ( $_pagesrefs_p{$key} ? Format_Number($_pagesrefs_p{$key}) : '&nbsp;' )
@@ -12779,7 +12755,7 @@ sub HTMLShowURLDetail{
 	}
 	foreach my $key (@keylist) {
 		print "<tr><td class=\"aws\">";
-		&HTMLShowURLInfo($key);
+		print &HTMLShowURLInfo($key);
 		print "</td>";
 		my $bredde_p = 0;
 		my $bredde_e = 0;
@@ -13516,7 +13492,7 @@ sub HTMLShowDownloads{
 			  . " /></td>";
 		}
 		print "<td class=\"aws\">";
-		&HTMLShowURLInfo($u);
+		print &HTMLShowURLInfo($u);
 		print "</td>";
 		if ( $ShowFileTypesStats =~ /H/i ){
 			print "<td>".Format_Number($_downloads{$u}->{'AWSTATS_HITS'})."</td>";
@@ -14885,7 +14861,7 @@ sub HTMLMainDownloads{
 			  . " /></td>";
 		}
 		print "<td class=\"aws\">";
-		&HTMLShowURLInfo($u);
+		print &HTMLShowURLInfo($u);
 		print "</td>";
 		if ( $ShowDownloadsStats =~ /H/i ){
 			print "<td>".Format_Number($_downloads{$u}->{'AWSTATS_HITS'})."</td>";
@@ -15546,7 +15522,7 @@ sub HTMLMainPages{
 	}
 	foreach my $key (@keylist) {
 		print "<tr><td class=\"aws\">";
-		&HTMLShowURLInfo($key);
+		print &HTMLShowURLInfo($key);
 		print "</td>";
 		my $bredde_p = 0;
 		my $bredde_e = 0;
@@ -16259,7 +16235,7 @@ sub HTMLMainReferrers{
 		);
 		foreach my $key (@keylist) {
 			print "<tr><td class=\"aws\">- ";
-			&HTMLShowURLInfo($key);
+			print &HTMLShowURLInfo($key);
 			print "</td>";
 			print "<td>"
 			  . Format_Number(( $_pagesrefs_p{$key} ? $_pagesrefs_p{$key} : '0' ))
