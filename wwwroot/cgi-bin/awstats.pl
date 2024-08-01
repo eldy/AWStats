@@ -977,8 +977,9 @@ nav a, nav a:link, nav a:visited { color: var(--nav-color) }
 b { font-weight: 700 }
 hr { width: 100%; height: 0; margin: 0; color: transparent; border: none; }
 small { font-size: 0.7rem; font-weight: 400; }
-#container { display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; align-items: flex-start;}
-#container > header { position: sticky; top: 0; z-index: 100; width: 100%; margin-bottom: -30px; background-color: var(--page-bgcolor); display: flex; flex-wrap: wrap; column-gap: 20px; justify-content: center; text-align: center;	 }
+#container, .flex { gap: 25px; }
+#container, #container > header, .flex { display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;}
+#container > header { position: sticky; top: 0; z-index: 100; width: 100%; margin-bottom: -30px; column-gap: 20px; background-color: var(--page-bgcolor); text-align: center;	 }
 .column { display:flex;flex-flow:column wrap; row-gap: 10px; }
 #domain { font-weight: 900; font-size: 1.5rem }
 header select { width : 60px }
@@ -1029,7 +1030,7 @@ section header:hover .tooltip { visibility: visible; opacity: 1; }
 .bar-horizontal{ height: 4px }
 .bar-vertical{ display: inline-block; transition: height 0.5s ease-out;  }
 .hr-1{ rotate: 30deg } .hr-2{ rotate: 60deg } .hr-3{ rotate: 90deg } .hr-4{ rotate: 120deg } .hr-5{ rotate: 150deg } .hr-6{ rotate: 180deg } .hr-7{ rotate: 210deg } .hr-8{ rotate: 240deg } .hr-9{ rotate: 270deg } .hr-10{ rotate: 300deg } .hr-11{ rotate: 330deg }
-#worldmap-wrapper{ width: 100dvw; margin-bottom: 1dvh; background-color: #4477DD; }
+#worldmap-wrapper{ margin-bottom: 1dvh; background-color: #4477DD; }
 #worldmap{ width: 50%; margin: auto; background-color: #4477DD; }
 .title-map{ position:absolute; top: 16px; color: var(--light-color); }
 .country { text-transform: uppercase; font-weight: 700; }
@@ -1063,7 +1064,7 @@ section header:hover .tooltip { visibility: visible; opacity: 1; }
 		$css .= &$function();
 	}
 
-		return '<style>' . $css . '</style>';
+	return '<style>' . $css . '</style>';
 }
 
 #------------------------------------------------------------------------------
@@ -1188,57 +1189,67 @@ EOF
 	# }
 
 	return $js;
-
 }
 
 #------------------------------------------------------------------------------
-# Function:		Write on output end of HTML page
+# Function:		Return end of HTML page
 # Parameters:	0|1 (0=no list plugins,1=list plugins)
 # Input:		%HTMLOutput $HTMLEndSection $FrameName $BuildReportFormat
-# Output:		None
-# Return:		None
+# Output:		-
+# Return:		string
 #------------------------------------------------------------------------------
 sub html_end {
 	my $listplugins = shift || 0;
-	if ( scalar keys %HTMLOutput ) {
 
+	my $html = '';
+
+	if ( scalar keys %HTMLOutput )
+	{
 		# Call to plugins' function AddHTMLBodyFooter
 		foreach my $pluginname ( keys %{ $PluginsLoaded{'AddHTMLBodyFooter'} } )
 		{
-
 			# my $function="AddHTMLBodyFooter_$pluginname()";
 			# eval("$function");
 			my $function = "AddHTMLBodyFooter_$pluginname";
 			&$function();
 		}
 
-		if ( $FrameName ne 'index' && $FrameName ne 'mainleft' ) {
-			print
-"<span dir=\"ltr\" style=\"color: #$color_text;\">";
-			print
-"<b>Advanced Web Statistics $VERSION</b> - <a href=\"http://www.awstats.org\" target=\"awstatshome\">";
-			print $Message[169] . " $PROG";
-			if ($listplugins) {
+		if ( $FrameName ne 'index' && $FrameName ne 'mainleft' )
+		{
+			$html .= '<span dir="ltr">'
+			. '<b>Advanced Web Statistics ' . $VERSION . '</b> - <a href="http://www.awstats.org" target="awstatshome">'
+			. $Message[169] . ' ' . $PROG;
+			
+			if ($listplugins)
+			{
 				my $atleastoneplugin = 0;
-				foreach my $pluginname ( keys %{ $PluginsLoaded{'init'} } ) {
-					if ( !$atleastoneplugin ) {
+				foreach my $pluginname ( keys %{ $PluginsLoaded{'init'} } )
+				{
+					if ( !$atleastoneplugin )
+					{
 						$atleastoneplugin = 1;
-						print " ($Message[170]: ";
+						$html .= ' (' . $Message[170] . ': ';
+					}	else
+					{
+					 $html .= ', ';
 					}
-					else { print ", "; }
-					print "$pluginname";
+
+					$html .= $pluginname;
 				}
-				if ($atleastoneplugin) { print ")"; }
+
+				if ($atleastoneplugin) { $html .=  ')'; }
 			}
-			print "</a></span>";
-			if ($HTMLEndSection) { print "$HTMLEndSection\n"; }
+
+			$html .= '</a></span>';
+			
+			if ($HTMLEndSection) { $html .= "$HTMLEndSection\n"; }
 		}
-		print "\n";
+
 		if ( $FrameName ne 'index' ) {
-			print '</div>';
-			print "</body>\n";
+			$html .= '</div></body>';
 		}
-		print "</html>\n";
+
+		return $html . '</html>';
 
 		#		print "<!-- NEW PAGE --><!-- NEW SHEET -->\n";
 	}
@@ -11596,7 +11607,7 @@ sub HTMLShowBrowserDetail{
 
 	print '</table>' . &tab_end();
 
-	&html_end(1);
+	print &html_end(1);
 }
 
 #------------------------------------------------------------------------------
@@ -11646,7 +11657,7 @@ sub HTMLShowBrowserUnknown{
 	
 	print '</table>' . &tab_end();
 
-	&html_end(1);
+	print &html_end(1);
 }
 
 #------------------------------------------------------------------------------
@@ -11869,7 +11880,7 @@ sub HTMLShowOSDetail{
 	
 	print '</table>' . &tab_end();
 
-	&html_end(1);
+	print &html_end(1);
 }
 
 #------------------------------------------------------------------------------
@@ -11919,7 +11930,7 @@ sub HTMLShowOSUnknown{
 	
 	print '</table>' . &tab_end();
 
-	&html_end(1);
+	print &html_end(1);
 }
 
 #------------------------------------------------------------------------------
@@ -12021,7 +12032,7 @@ sub HTMLShowReferers{
 	
 	print '</table>' . &tab_end();
 
-	&html_end(1);
+	print &html_end(1);
 }
 
 #------------------------------------------------------------------------------
@@ -12162,7 +12173,7 @@ sub HTMLShowRefererPages{
 	
 	print '</table>' . &tab_end();
 
-	&html_end(1);
+	print &html_end(1);
 }
 
 #------------------------------------------------------------------------------
@@ -12233,7 +12244,7 @@ sub HTMLShowKeyPhrases{
 	
 	print '</table>' . &tab_end();
 
-	&html_end(1);
+	print &html_end(1);
 }
 
 #------------------------------------------------------------------------------
@@ -12301,7 +12312,7 @@ sub HTMLShowKeywords{
 	
 	print '</table>' . &tab_end();
 
-	&html_end(1);
+	print &html_end(1);
 }
 
 #------------------------------------------------------------------------------
@@ -12370,7 +12381,7 @@ sub HTMLShowErrorCodes{
 	
 	print '</table>' . &tab_end();
 
-	&html_end(1);
+	print &html_end(1);
 }
 
 #------------------------------------------------------------------------------
@@ -12534,7 +12545,7 @@ sub HTMLShowExtraSections{
 			
 			print '</table>' . &tab_end();
 
-			&html_end(1);
+			print &html_end(1);
 		}
 	}
 }
@@ -12651,7 +12662,7 @@ sub HTMLShowRobots{
 
 	print '</table>' . &tab_end("* $Message[156]" . ( $TotalRRobots ? " $Message[157]" : "" ) );
 
-	&html_end(1);
+	print &html_end(1);
 }
 
 #------------------------------------------------------------------------------
@@ -12893,7 +12904,7 @@ sub HTMLShowURLDetail{
 	
 	print '</table>' . &tab_end();
 
-	&html_end(1);
+	print &html_end(1);
 }
 
 #------------------------------------------------------------------------------
@@ -13005,7 +13016,7 @@ sub HTMLShowLogins{
 	
 	print '</table>' . &tab_end();
 
-	&html_end(1);
+	print &html_end(1);
 }
 
 #------------------------------------------------------------------------------
@@ -13106,7 +13117,7 @@ sub HTMLShowHostsUnknown{
 	
 	print '</table>' . &tab_end();
 
-	&html_end(1);
+	print &html_end(1);
 }
 
 #------------------------------------------------------------------------------
@@ -13280,7 +13291,7 @@ sub HTMLShowHosts{
 	
 	print '</table>' . &tab_end();
 
-	&html_end(1);
+	print &html_end(1);
 }
 
 #------------------------------------------------------------------------------
@@ -13460,7 +13471,7 @@ sub HTMLShowDomains{
 	
 	print '</table>' . &tab_end();
 
-	&html_end(1);
+	print &html_end(1);
 }
 
 #------------------------------------------------------------------------------
@@ -13522,7 +13533,7 @@ sub HTMLShowDownloads{
 	
 	print '</table>' . &tab_end();
 
-	&html_end(1);
+	print &html_end(1);
 }
 
 #------------------------------------------------------------------------------
@@ -17582,7 +17593,7 @@ if ($PluginMode) {
 	my $function = "BuildFullHTMLOutput_$PluginMode";
 	&$function();
 	if ( $? || $@ ) { error("$@"); }
-	&html_end(0);
+	print &html_end(0);
 	exit 0;
 }
 
@@ -17736,7 +17747,7 @@ if ($MigrateStats) {
 	if ($EnableLockForUpdate) { &Lock_Update(0); }
 	print "Migration for file '$MigrateStats' successful.";
 	print $ENV{'GATEWAY_INTERFACE'} ? "<br />\n" : "\n";
-	&html_end(1);
+	print &html_end(1);
 	exit 0;
 }
 
@@ -17765,7 +17776,7 @@ if ( $FrameName eq 'index' ) {
 	print "to see your reports.<br />\n";
 	print "</body></noframes>\n";
 	print "</frameset>\n";
-	&html_end(0);
+	print &html_end(0);
 	exit 0;
 }
 
@@ -21074,7 +21085,7 @@ if ( scalar keys %HTMLOutput ) {
 
 	# Exit if left frame
 	if ( $FrameName eq 'mainleft' ) {
-		&html_end(0);
+		print &html_end(0);
 		exit 0;
 	}
 
@@ -21108,11 +21119,11 @@ if ( scalar keys %HTMLOutput ) {
 		}
 		if ( $HTMLOutput{'allemails'} || $HTMLOutput{'lastemails'} ) {
 			&HTMLShowEmailSendersChart( $NewLinkParams, $NewLinkTarget );
-			&html_end(1);
+			print &html_end(1);
 		}
 		if ( $HTMLOutput{'allemailr'} || $HTMLOutput{'lastemailr'} ) {
 			&HTMLShowEmailReceiversChart( $NewLinkParams, $NewLinkTarget );
-			&html_end(1);
+			print &html_end(1);
 		}
 		if ( $HTMLOutput{'alllogins'} || $HTMLOutput{'lastlogins'} ) {
 			&HTMLShowLogins();
@@ -21166,7 +21177,7 @@ if ( scalar keys %HTMLOutput ) {
 		if ( $HTMLOutput{'info'} ) {
 			# TODO Not yet available
 			print "<a name=\"info\">&nbsp;</a>";
-			&html_end(1);
+			print &html_end(1);
 		}
 
 		# Print any plugins that have individual pages
@@ -21178,7 +21189,7 @@ if ( scalar keys %HTMLOutput ) {
 			print "<a name=\"plugin_$pluginname\">&nbsp;</a>";
 			my $function = "AddHTMLGraph_$pluginname";
 			&$function();
-			&html_end(1);
+			print &html_end(1);
 		}
 	}
 
@@ -21267,8 +21278,28 @@ if ( scalar keys %HTMLOutput ) {
 		}
 
 		print '</div>';
+		print '<div class="column">';
 
-		print '<hr>';
+		# BY HOST/VISITOR
+		#--------------------------
+		if ($ShowHostsStats) {
+			&HTMLMainHosts($NewLinkParams, $NewLinkTarget);
+		}
+
+print '<div class="flex">';
+		# BY SESSION
+		#----------------------------
+		if ($ShowSessionsStats) {
+			print &HTMLMainSessions();
+		}
+
+		# BY SCREEN SIZE
+		#----------------------------
+		if ($ShowScreenSizeStats) {
+			print &HTMLMainScreenSize();
+		}
+print '</div>';
+		print '</div>';
 
 		# BY COUNTRY/DOMAIN
 		#---------------------------
@@ -21276,13 +21307,21 @@ if ( scalar keys %HTMLOutput ) {
 			print &HTMLMainCountries($NewLinkParams, $NewLinkTarget);
 		}
 
-		print '<hr>';
-
-		# BY HOST/VISITOR
-		#--------------------------
-		if ($ShowHostsStats) {
-			&HTMLMainHosts($NewLinkParams, $NewLinkTarget);
+		print '<div class="column">';
+		
+		# BY ROBOTS
+		#----------------------------
+		if ($ShowRobotsStats) {
+			print &HTMLMainRobots($NewLinkParams, $NewLinkTarget);
 		}
+
+		# BY WORMS
+		#----------------------------
+		if ($ShowWormsStats) {
+			print &HTMLMainWorms();
+		}
+
+		print '</div>';
 
 		# BY SENDER EMAIL
 		#----------------------------
@@ -21302,28 +21341,16 @@ if ( scalar keys %HTMLOutput ) {
 			&HTMLMainLogins($NewLinkParams, $NewLinkTarget);
 		}
 
-		# BY ROBOTS
-		#----------------------------
-		if ($ShowRobotsStats) {
-			print &HTMLMainRobots($NewLinkParams, $NewLinkTarget);
-		}
-
-		# BY WORMS
-		#----------------------------
-		if ($ShowWormsStats) {
-			print &HTMLMainWorms();
-		}
-
-		# BY SESSION
-		#----------------------------
-		if ($ShowSessionsStats) {
-			print &HTMLMainSessions();
-		}
-
 		# BY FILE TYPE
 		#-------------------------
 		if ($ShowFileTypesStats) {
 			print &HTMLMainFileType($NewLinkParams, $NewLinkTarget);
+		}
+
+		# BY PAGE
+		#-------------------------
+		if ($ShowPagesStats) {
+			&HTMLMainPages($NewLinkParams, $NewLinkTarget);
 		}
 
 		# BY FILE SIZE
@@ -21343,12 +21370,8 @@ if ( scalar keys %HTMLOutput ) {
 		if ($ShowDownloadsStats) {
 			&HTMLMainDownloads($NewLinkParams, $NewLinkTarget);
 		}
-
-		# BY PAGE
-		#-------------------------
-		if ($ShowPagesStats) {
-			&HTMLMainPages($NewLinkParams, $NewLinkTarget);
-		}
+		
+		
 
 		# BY OS
 		#----------------------------
@@ -21356,16 +21379,12 @@ if ( scalar keys %HTMLOutput ) {
 			&HTMLMainOS($NewLinkParams, $NewLinkTarget);
 		}
 
+
+
 		# BY BROWSER
 		#----------------------------
 		if ($ShowBrowsersStats) {
 			&HTMLMainBrowsers($NewLinkParams, $NewLinkTarget);
-		}
-
-		# BY SCREEN SIZE
-		#----------------------------
-		if ($ShowScreenSizeStats) {
-			print &HTMLMainScreenSize();
 		}
 
 		# BY REFERENCE
@@ -21411,7 +21430,7 @@ if ( scalar keys %HTMLOutput ) {
 		}
 
 		# close the HTML page
-		&html_end(1);
+		print &html_end(1);
 	}
 }
 else {
