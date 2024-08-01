@@ -14019,7 +14019,7 @@ sub HTMLMainRatios{
 
 	return &tab_head( $title, '', 'ratios', $tooltip )
 	. '<table class="data-table days-of-month-table">'
-	. HTMLDataTableHeader($MonthNumLib{$MonthRequired} . ' ' . $YearRequired, $ShowDaysOfMonthStats) # pass $ShowDaysOfMonthStats to have correct headers
+	. HTMLDataTableHeader($MonthNumLib{$MonthRequired} . ' ' . $YearRequired, 'VPHB')
 	. '<tbody>' . $tableData . '</tbody></table>'
 	. &tab_end();
 }
@@ -21279,6 +21279,37 @@ if ( scalar keys %HTMLOutput ) {
 		}
 
 		print '</div>';
+
+		# BY FILE TYPE
+		#-------------------------
+		if ($ShowFileTypesStats) {
+			print &HTMLMainFileType($NewLinkParams, $NewLinkTarget);
+		}
+
+		# BY PAGE
+		#-------------------------
+		if ($ShowPagesStats) {
+			&HTMLMainPages($NewLinkParams, $NewLinkTarget);
+		}
+
+		# BY FILE SIZE
+		#-------------------------
+		if ($ShowFileSizesStats) {
+			&HTMLMainFileSize();
+		}
+
+                # BY REQUEST TIME
+                #-------------------------
+                if ($ShowRequestTimesStats) {
+                        &HTMLMainRequestTime();
+                }
+		
+		# BY DOWNLOADS
+		#-------------------------
+		if ($ShowDownloadsStats) {
+			&HTMLMainDownloads($NewLinkParams, $NewLinkTarget);
+		}
+
 		print '<div class="column">';
 
 		# BY HOST/VISITOR
@@ -21287,21 +21318,12 @@ if ( scalar keys %HTMLOutput ) {
 			&HTMLMainHosts($NewLinkParams, $NewLinkTarget);
 		}
 
-		print '<div class="flex">';
-		
-		# BY SESSION
+		# BY MISC
 		#----------------------------
-		if ($ShowSessionsStats) {
-			print &HTMLMainSessions();
+		if ($ShowMiscStats) {
+			&HTMLMainMisc();
 		}
 
-		# BY SCREEN SIZE
-		#----------------------------
-		if ($ShowScreenSizeStats) {
-			print &HTMLMainScreenSize();
-		}
-
-		print '</div>';
 		print '</div>';
 
 		# BY COUNTRY/DOMAIN
@@ -21344,45 +21366,23 @@ if ( scalar keys %HTMLOutput ) {
 			&HTMLMainLogins($NewLinkParams, $NewLinkTarget);
 		}
 
-		# BY FILE TYPE
-		#-------------------------
-		if ($ShowFileTypesStats) {
-			print &HTMLMainFileType($NewLinkParams, $NewLinkTarget);
-		}
-
-		# BY PAGE
-		#-------------------------
-		if ($ShowPagesStats) {
-			&HTMLMainPages($NewLinkParams, $NewLinkTarget);
-		}
-
-		# BY FILE SIZE
-		#-------------------------
-		if ($ShowFileSizesStats) {
-			&HTMLMainFileSize();
-		}
-
-                # BY REQUEST TIME
-                #-------------------------
-                if ($ShowRequestTimesStats) {
-                        &HTMLMainRequestTime();
-                }
-		
-		# BY DOWNLOADS
-		#-------------------------
-		if ($ShowDownloadsStats) {
-			&HTMLMainDownloads($NewLinkParams, $NewLinkTarget);
+		# BY SESSION
+		#----------------------------
+		if ($ShowSessionsStats) {
+			print &HTMLMainSessions();
 		}
 		
-		
+		# BY SCREEN SIZE
+		#----------------------------
+		if ($ShowScreenSizeStats) {
+			print &HTMLMainScreenSize();
+		}
 
 		# BY OS
 		#----------------------------
 		if ($ShowOSStats) {
 			&HTMLMainOS($NewLinkParams, $NewLinkTarget);
 		}
-
-
 
 		# BY BROWSER
 		#----------------------------
@@ -21401,12 +21401,6 @@ if ( scalar keys %HTMLOutput ) {
 		if ($ShowKeyphrasesStats || $ShowKeywordsStats){
 			&HTMLMainKeys($NewLinkParams, $NewLinkTarget);
 		}	
-
-		# BY MISC
-		#----------------------------
-		if ($ShowMiscStats) {
-			&HTMLMainMisc();
-		}
 
 		# BY HTTP STATUS
 		#----------------------------
