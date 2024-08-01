@@ -13977,6 +13977,8 @@ sub HTMLMainRatios{
 		$total_k += $DayBytes{$date}  || 0;
 	}
 
+	if($total_h < 1){return ''};
+
 	if ( $ShowRatiosStats =~ /U/i )
 	{
 		my $ratio_V_U = ($TotalUnique > 0) ? sprintf('%.2f', Format_Number($total_v / $TotalUnique)) : '';
