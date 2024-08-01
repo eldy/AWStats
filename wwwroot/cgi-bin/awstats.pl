@@ -1029,7 +1029,8 @@ section header:hover .tooltip { visibility: visible; opacity: 1; }
 .bar{  }
 .bar-horizontal{ height: 4px }
 .bar-vertical{ display: inline-block; transition: height 0.5s ease-out;  }
-.hr-1{ rotate: 30deg } .hr-2{ rotate: 60deg } .hr-3{ rotate: 90deg } .hr-4{ rotate: 120deg } .hr-5{ rotate: 150deg } .hr-6{ rotate: 180deg } .hr-7{ rotate: 210deg } .hr-8{ rotate: 240deg } .hr-9{ rotate: 270deg } .hr-10{ rotate: 300deg } .hr-11{ rotate: 330deg }
+.hr-1, .hr-13{ rotate: 30deg } .hr-2, .hr-14{ rotate: 60deg } .hr-3, .hr-15{ rotate: 90deg } .hr-4, .hr-16{ rotate: 120deg } .hr-5, .hr-17{ rotate: 150deg } .hr-6, .hr-18{ rotate: 180deg }
+.hr-7, .hr-19{ rotate: 210deg } .hr-8, .hr-20{ rotate: 240deg } .hr-9, .hr-21{ rotate: 270deg } .hr-10, .hr-22{ rotate: 300deg } .hr-11, .hr-23{ rotate: 330deg }
 #worldmap-wrapper{ margin-bottom: 1dvh; background-color: #4477DD; }
 #worldmap{ width: 50%; margin: auto; background-color: #4477DD; }
 .title-map{ position:absolute; top: 16px; color: var(--light-color); }
@@ -21286,7 +21287,8 @@ if ( scalar keys %HTMLOutput ) {
 			&HTMLMainHosts($NewLinkParams, $NewLinkTarget);
 		}
 
-print '<div class="flex">';
+		print '<div class="flex">';
+		
 		# BY SESSION
 		#----------------------------
 		if ($ShowSessionsStats) {
@@ -21298,7 +21300,8 @@ print '<div class="flex">';
 		if ($ShowScreenSizeStats) {
 			print &HTMLMainScreenSize();
 		}
-print '</div>';
+
+		print '</div>';
 		print '</div>';
 
 		# BY COUNTRY/DOMAIN
