@@ -15322,6 +15322,8 @@ sub HTMLMainRobots{
 #------------------------------------------------------------------------------
 sub HTMLMainWorms{
 	if ($Debug) { debug( "ShowWormsStats", 2 ); }
+
+	if(!%_worm_h){return '';}
 	
 	my $tooltip = '';
 	my $html = '';
@@ -21282,16 +21284,16 @@ if ( scalar keys %HTMLOutput ) {
 
 		print '</div>';
 
-		# BY FILE TYPE
-		#-------------------------
-		if ($ShowFileTypesStats) {
-			print &HTMLMainFileType($NewLinkParams, $NewLinkTarget);
-		}
-
 		# BY PAGE
 		#-------------------------
 		if ($ShowPagesStats) {
 			&HTMLMainPages($NewLinkParams, $NewLinkTarget);
+		}
+
+		# BY FILE TYPE
+		#-------------------------
+		if ($ShowFileTypesStats) {
+			print &HTMLMainFileType($NewLinkParams, $NewLinkTarget);
 		}
 
 		# BY FILE SIZE
@@ -21312,6 +21314,7 @@ if ( scalar keys %HTMLOutput ) {
 			&HTMLMainDownloads($NewLinkParams, $NewLinkTarget);
 		}
 
+		print '<hr>';
 		print '<div class="column">';
 
 		# BY HOST/VISITOR
