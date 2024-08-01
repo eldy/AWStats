@@ -9356,7 +9356,7 @@ sub HTMLShowURLInfo {
 		$plugins .= &$function($url);
 	}
 
-	if ( $LogType eq 'W' || $LogType eq 'S' )
+	if ($ShowLinksOnUrl && ($LogType eq 'W' || $LogType eq 'S'))
 	{ # Web or streaming log file
 		if ( $newkey =~ /^http(s|):/i )
 		{ # URL seems to be extracted from a proxy log file
