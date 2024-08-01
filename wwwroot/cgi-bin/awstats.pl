@@ -938,7 +938,7 @@ sub renderCss {
 	--light-color: hsl(1, 0%, 90%);
 	--a-color: hsl(0, 0%, 0%);
 	--a-hover-color: hsl(0, 0%, 0%);
-	--bar-width: 100;
+	--bar-width: 120;
 	--bar-v-height: 16;
 	--bar-v-grow: 1;
 	--bar-v-width-month: 0.44dvw;
@@ -970,21 +970,21 @@ sub renderCss {
 }
 
 html { scroll-behavior: smooth; scroll-padding: var(--scroll-padding, 5rem); }
-body { font: 0.75rem sans-serif, system-ui; background-color: var(--page-bgcolor); margin: 0; padding:0; color: var(--page-color); }
+body { font: clamp(0.75rem, -3vw + 3rem, 1rem) sans-serif, system-ui; background-color: var(--page-bgcolor); margin: 0; padding:0; color: var(--page-color); }
 a, a:link, a:visited { color: var(--a-color); text-decoration: none; }
 a:hover, a:focus, a:active{ color: var(--a-hover-color); text-decoration: none; }
 nav a, nav a:link, nav a:visited { color: var(--nav-color) }
 b { font-weight: 700 }
 hr { width: 100%; height: 0; margin: 0; color: transparent; border: none; }
-small { font-size: 0.7rem; font-weight: 400; }
+small { font-size: 0.9em; font-weight: 400; }
 #container, .flex { gap: 25px; }
 #container, #container > header, .flex { display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;}
 #container > header { position: sticky; top: 0; z-index: 100; width: 100%; margin-bottom: -30px; column-gap: 20px; background-color: var(--page-bgcolor); text-align: center;	 }
 .column { display:flex;flex-flow:column wrap; row-gap: 10px; }
-#domain { font-weight: 900; font-size: 1.5rem }
+#domain { font-weight: 900; font-size: 1.5em }
 header select { width : 60px }
 #logo { height: 33px; }
-nav { width: 100%; height: 17px; margin: 8px 0; margin-top: 0; background-color: white; font-weight: 600 }
+nav { width: 100%; height: 2.5ch; margin: 8px 0; margin-top: 0; background-color: white; font-weight: 600 }
 nav ul { display: flex; justify-content: center; gap: 1dvw; list-style-type: none; margin: 0; padding: 0; overflow: hidden; }
 nav li a, .dropbtn { display: inline-block; padding: 2px 4px; }
 li a:hover, .dropdown:hover .dropbtn { background-color: var(--neutral-color); }
@@ -1000,9 +1000,9 @@ li.dropdown { display: inline-block; }
 #summary-logs div[class^="bg-"], .currentday{ width: calc(var(--bar-width) * 1px); font-weight: 900 }
 div[class^="bg-"], th[class^="bg-"] { width: calc(var(--bar-width) * 1px) }
 button, select, input[type=submit] { cursor: pointer; color: var(--light-color); background-color: var(--dark-color); border: 1px solid #ccd7e0; }
-h1, section header {border-bottom: 6px solid var(--light-color); width: 100%; margin: 0; text-align: center; font-weight: 900; font-size: 1rem; }
+h1, section header {border-bottom: 6px solid var(--light-color); width: 100%; margin: 0; text-align: center; font-weight: 900; font-size: 1em; }
 section header { position: relative }
-.tooltip { visibility: hidden; opacity: 0; position: absolute; bottom: -94px; left: 0; z-index: 10; font-size: 0.7rem; font-weight: 400; text-align: left; width: 100%; background-color: var(--dark-color); color: var(--light-color); padding: 4px; border-radius: 5px; }
+.tooltip { visibility: hidden; opacity: 0; position: absolute; bottom: -94px; left: 0; z-index: 10; font-size: 0.9em; font-weight: 400; text-align: left; width: 100%; background-color: var(--dark-color); color: var(--light-color); padding: 4px; border-radius: 5px; }
 section header:hover .tooltip { visibility: visible; opacity: 1; }
 .multi-data-table { display: flex; column-gap: 3dvw; flex-wrap: wrap; justify-content: center }
 .multi-data-table.worldmap{ position: relative; }
@@ -1020,7 +1020,7 @@ section header:hover .tooltip { visibility: visible; opacity: 1; }
 .data-table td img { width: 16px; height: 16px;vertical-align: bottom; }
 .data-table td small { float: left; line-height: 1.3; }
 .data-table tfoot .data-table-sum td { border-top: 1px solid rgba(192,192,192,0.2); }
-.data-table-sum { font-size : 1.3em }
+.data-table-sum { font-size : clamp(0.938rem, -3vw + 3rem, 1.125rem) }
 .left-padding-separator { padding-left: 20px }
 .bar-table { visibility: visible; width: 100%; margin: auto; text-align: center; font-size: 10px; border-bottom: 6px solid var(--light-color);}
 .bar-table tr:first-child td { vertical-align: bottom; }
