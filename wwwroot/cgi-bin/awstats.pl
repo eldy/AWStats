@@ -1043,8 +1043,8 @@ section header:hover .tooltip { visibility: visible; opacity: 1; }
 .bg-x{ background-color: var(--aws-color-x) }
 .bg-s{ background-color: var(--aws-color-s) }
 .clock{ display: inline-block; vertical-align: bottom; margin: 0 5px; border-radius: 50%; }
-.clock-night{ background: conic-gradient(rgba(30, 28, 97, 1) 330deg, rgba(244, 240, 144, 1) 30deg); }
-.clock-day{ background: conic-gradient(rgba(244, 240, 144, 1) 330deg, rgba(30, 28, 97, 1) 30deg); }
+.clock-night{ background: conic-gradient(var(--dark-color) 330deg, rgb(244, 240, 144) 30deg); }
+.clock-day{ background: conic-gradient(rgb(244, 240, 144) 330deg, var(--dark-color) 30deg); }
 .bar-table .clock { width: 0.5dvw; height: 0.5dvw }
 .data-table .clock { width: 16px; height: 16px }
 .landxx{ fill: var(--dark-color) !important; transition: fill 0.3s ease-in }
@@ -13711,11 +13711,11 @@ sub HTMLDataTableHeader{
 }
 
 #------------------------------------------------------------------------------
-# Function:     Prints the Monthly section on the main page
-# Parameters:   _
-# Input:        _
-# Output:       HTML
-# Return:       -
+# Function:     Return the Monthly section on the main page
+# Parameters:   -
+# Input:        -
+# Output:       -
+# Return:       string
 #------------------------------------------------------------------------------
 sub HTMLMainMonthly{
 
@@ -13734,6 +13734,7 @@ sub HTMLMainMonthly{
 	my $width = 'var(--bar-v-width-month)';
 	my $data = '';
 	my $tableData = '';
+	my $html = '';
 
 	my @blocklabel = ();
 	my @vallabel = (
@@ -13858,9 +13859,6 @@ sub HTMLMainMonthly{
 	$average_h = sprintf( "%.2f", $total_h / $not_empty_months );
 	$average_k = sprintf( "%.2f", $total_k / $not_empty_months );
 
-	# print "<a name=\"month\">&nbsp;</a>";
-	print &tab_head( $title, '', 'month' );
-
 	# Show bars for month
 	if ($graphPlugin == 1) {
 
@@ -13880,27 +13878,27 @@ sub HTMLMainMonthly{
 
 	}
 
-	print '<table class="bar-table month-bar-table">'	. '<tr>' . $bars . '</tr>'
+	$html .= '<table class="bar-table month-bar-table">'	. '<tr>' . $bars . '</tr>'
 	. '<tr>';
 
 	for ( my $ix = 1 ; $ix <= 12 ; $ix++ ) {
 		my $monthix = sprintf( "%02s", $ix );
 
-		print "<td>"
+		$html .= '<td>'
 		. (!$StaticLinks && $monthix == $nowmonth && $YearRequired == $nowyear ? '<span class="currentday">' : '')
 		. "$MonthNumLib{$monthix}"
 		. (!$StaticLinks && $monthix == $nowmonth && $YearRequired == $nowyear ? '</span>' : '' )
 		. '</td>';
 	}
 
-	print '</tr>'	. '</table>';
+	$html .= '</tr>' . '</table>';
 
 	# Show data array for month
 	if ($AddDataArrayMonthStats) {
 
-		print '<table class="data-table month-table">';
+		$html .= '<table class="data-table month-table">';
 
-		print HTMLDataTableHeader($YearRequired, $ShowMonthStats);
+		$html .= HTMLDataTableHeader($YearRequired, $ShowMonthStats);
 
 		# footer
 		# Total row
@@ -13921,13 +13919,11 @@ sub HTMLMainMonthly{
 			'b'=> Format_Bytes(int($average_k))
 		);
 
-		print HTMLDataTableFooter('', $ShowMonthStats, \%sums, $Message[96], \%averages);
-		
-		# body
-		print '<tbody>' . $tableData . '</tbody>' . '</table>';
+		$html .= HTMLDataTableFooter('', $ShowMonthStats, \%sums, $Message[96], \%averages)
+		. '<tbody>' . $tableData . '</tbody>' . '</table>';
 	}
 
-	print '</table>' . &tab_end();
+	return &tab_head( $title, '', 'month' ) . $html . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -14017,12 +14013,12 @@ sub HTMLMainRatios{
 }
 
 #------------------------------------------------------------------------------
-# Function:     Prints the Daily section on the main page
+# Function:     Return the Daily section on the main page
 # Parameters:   $firstdaytocountaverage, $lastdaytocountaverage
-#				$firstdaytoshowtime, $lastdaytoshowtime
-# Input:        _
-# Output:       HTML
-# Return:       -
+#								$firstdaytoshowtime, $lastdaytoshowtime
+# Input:        -
+# Output:       -
+# Return:       string
 #------------------------------------------------------------------------------
 sub HTMLMainDaily{
 	if ($Debug) { debug( 'ShowDaysOfMonthStats', 2 ); }
@@ -14056,6 +14052,7 @@ sub HTMLMainDaily{
 	my $bars = '';
 	my $data = '';
 	my $tableData = '';
+	my $html = '';
 
 	my @blocklabel = ();
 	my @valcolor   = ("$color_v", "$color_p", "$color_h", "$color_k" );
@@ -14082,10 +14079,6 @@ sub HTMLMainDaily{
       . "\"$NewLinkTarget>$Message[179]</a>"
       );
   }
-
-	print &tab_head( $title, '', 'daysofmonth' );
-	
-	print '<tr>' . '<td>';
 	
 	foreach my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )
 	{
@@ -14236,18 +14229,11 @@ sub HTMLMainDaily{
 		. '</td>';
 	}
 
-	print '<table class="bar-table">'
-	. '<tr>'
-	. $bars
-	. '</tr>'	. '</table>';
-
 	# Show data array for days
 	if ($AddDataArrayShowDaysOfMonthStats)
 	{
-		print '<table class="data-table days-of-month-table">';
-
-		#header
-		print HTMLDataTableHeader($MonthNumLib{$MonthRequired} . ' ' . $YearRequired, $ShowDaysOfMonthStats);
+		$html .= '<table class="data-table days-of-month-table">'
+		. HTMLDataTableHeader($MonthNumLib{$MonthRequired} . ' ' . $YearRequired, $ShowDaysOfMonthStats);
 
 		#footer
 		# Total row
@@ -14265,22 +14251,22 @@ sub HTMLMainDaily{
 			'b'=> Format_Bytes(int($average_k))
 		);
 
-		print HTMLDataTableFooter('', $ShowDaysOfMonthStats, \%sums, $Message[96], \%averages);
-
-		# body
-		print '<tbody>' . $tableData . '</tbody></table>';
+		$html .= HTMLDataTableFooter('', $ShowDaysOfMonthStats, \%sums, $Message[96], \%averages)
+		. '<tbody>' . $tableData . '</tbody></table>';
 
 	}
 
-	print '</td></tr>' . '</table>' . &tab_end();
+	return &tab_head( $title, '', 'daysofmonth' )
+	. '<table class="bar-table">' . '<tr>' . $bars . '</tr>' . '</table>'
+	. $html . &tab_end();
 }
 
 #------------------------------------------------------------------------------
-# Function:     Prints the Days of the Week section on the main page
+# Function:     Return the Days of the Week section on the main page
 # Parameters:   $firstdaytocountaverage, $lastdaytocountaverage
-# Input:        _
-# Output:       HTML
-# Return:       -
+# Input:        -
+# Output:       -
+# Return:       string
 #------------------------------------------------------------------------------
 sub HTMLMainDaysofWeek{
 	
@@ -14293,13 +14279,14 @@ sub HTMLMainDaysofWeek{
 
 	my $title = $Message[91];
 	my $width = 'var(--bar-v-width-weekday)';
+	my $bars = '';
+	my $tableData = '';
 	
 	my $max_p = my $max_h = my $max_k = 0;
 	my @avg_dayofweek_nb = ();
 	my @avg_dayofweek_p  = ();
 	my @avg_dayofweek_h  = ();
 	my @avg_dayofweek_k  = ();
-
 
 	my $graphPlugin = (%{ $PluginsLoaded{'ShowGraph'} }) ? 1 : 0;
 
@@ -14310,11 +14297,6 @@ sub HTMLMainDaysofWeek{
 		$tooltip .= &$function(18);
 	}
 		
-	# print "<a name=\"daysofweek\">&nbsp;</a>";
-	print &tab_head($title, '', 'daysofweek', $tooltip );
-
-	print '<tr>' . '<td>';
-
 	foreach my $daycursor ($firstdaytocountaverage .. $lastdaytocountaverage )
 	{
 		$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
@@ -14333,8 +14315,8 @@ sub HTMLMainDaysofWeek{
 		$avg_dayofweek_k[$dayofweekcursor] += ( $DayBytes{$daycursor} || 0 );
 	}
 		
-	for (@DOWIndex) {
-
+	for (@DOWIndex)
+	{
 		$avg_dayofweek_p[$_] = ( $avg_dayofweek_nb[$_] ) ? $avg_dayofweek_p[$_] / $avg_dayofweek_nb[$_] : 0;
 		$avg_dayofweek_h[$_] = ( $avg_dayofweek_nb[$_] ) ?$avg_dayofweek_h[$_] / $avg_dayofweek_nb[$_] : 0;
 		$avg_dayofweek_k[$_] = ( $avg_dayofweek_nb[$_] ) ? $avg_dayofweek_k[$_] / $avg_dayofweek_nb[$_] : 0;
@@ -14346,12 +14328,14 @@ sub HTMLMainDaysofWeek{
 
 	my $graphPlugin = (%{ $PluginsLoaded{'ShowGraph'} }) ? 1 : 0;
 
-	if($graphPlugin == 1){
+	if($graphPlugin == 1)
+	{
 		foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
 		{
 			my @blocklabel = ();
 
-			for (@DOWIndex) {
+			for (@DOWIndex)
+			{
 				push @blocklabel, ( $Message[ $_ + 84 ] . ( $_ =~ /[06]/ ? "!" : "" ) );
 			}
 				
@@ -14369,7 +14353,8 @@ sub HTMLMainDaysofWeek{
 			my @valdata    = ();
 			my $xx         = 0;
 
-			for (@DOWIndex) {
+			for (@DOWIndex)
+			{
 				$valdata[ $xx++ ] = $avg_dayofweek_p[$_] || 0;
 				$valdata[ $xx++ ] = $avg_dayofweek_h[$_] || 0;
 				$valdata[ $xx++ ] = $avg_dayofweek_k[$_] || 0;
@@ -14380,16 +14365,19 @@ sub HTMLMainDaysofWeek{
 				$avg_dayofweek_k[$_] = sprintf( "%.2f", $avg_dayofweek_k[$_] );
 
 				# Remove decimal part that are .0
-				if ( $avg_dayofweek_p[$_] == int( $avg_dayofweek_p[$_] ) ) {
+				if ( $avg_dayofweek_p[$_] == int( $avg_dayofweek_p[$_] ) )
+				{
 					$avg_dayofweek_p[$_] = int( $avg_dayofweek_p[$_] );
 				}
-				if ( $avg_dayofweek_h[$_] == int( $avg_dayofweek_h[$_] ) ) {
+
+				if ( $avg_dayofweek_h[$_] == int( $avg_dayofweek_h[$_] ) )
+				{
 					$avg_dayofweek_h[$_] = int( $avg_dayofweek_h[$_] );
 				}
 			}
 
 			my $function = "ShowGraph_$pluginname";
-			&$function(
+			$bars .= &$function(
 				$title,             	'daysofweek',
 				$ShowDaysOfWeekStats, \@blocklabel,
 				\@vallabel,           \@valcolor,
@@ -14399,48 +14387,40 @@ sub HTMLMainDaysofWeek{
 		}
 	}
 
-	print '<table class="bar-table daysofweek-bar-table">'	. '<tr>';
-			
-	for (@DOWIndex) {
+	$bars .= '<table class="bar-table daysofweek-bar-table"><tr>';
 
-		print '<td>'
+	for (@DOWIndex)
+	{
+		$bars .= '<td>'
 		. (( $ShowDaysOfWeekStats =~ /P/i ) ? HtmlBar('p', $avg_dayofweek_p[$_], Format_Number($avg_dayofweek_p[$_]), $max_p, ucfirst($Message[28]), $width) : '')
 		. (( $ShowDaysOfWeekStats =~ /H/i ) ? HtmlBar('h', $avg_dayofweek_h[$_], Format_Number($avg_dayofweek_h[$_]), $max_h, $Message[57], $width) : '')
 		. (( $ShowDaysOfWeekStats =~ /B/i ) ? HtmlBar('b', $avg_dayofweek_k[$_], Format_Number($avg_dayofweek_k[$_]), $max_k, $Message[75], $width) : '')
 		. '</td>';
-
 	}
 
-	print '</tr>'	. '<tr' . Tooltip(17) . '>';
+	$bars .= '</tr>'	. '<tr>'; #tooltip 17
 
-	for (@DOWIndex) {
-
-		print '<td' . ( $_ =~ /[06]/ ?  ' class="weekend"' : '' ) . '>'
+	for (@DOWIndex)
+	{
+		$bars .= '<td' . ( $_ =~ /[06]/ ?  ' class="weekend"' : '' ) . '>'
 		. (!$StaticLinks && $_ == ( $nowwday - 1 ) && $MonthRequired == $nowmonth && $YearRequired == $nowyear ? '<span class="currentday">' : '')
 		. $Message[ $_ + 84 ]
 		. (!$StaticLinks && $_ == ( $nowwday - 1 ) && $MonthRequired == $nowmonth && $YearRequired == $nowyear ? '</span>' : '' )
 		. '</td>';
+	}
 
-		}
-
-	print '</tr>' . '</table>';
-
-	# Show data array for days of week
-	if ($AddDataArrayShowDaysOfWeekStats) {
-
+		# Show data array for days of week
+	if ($AddDataArrayShowDaysOfWeekStats)
+	{
 		my $data = '';
 
-		print '<table class="data-table days-of-week-table">';
+		$tableData .= '<table class="data-table days-of-week-table">'
+		. HTMLDataTableHeader('', $ShowDaysOfWeekStats)
+		. '<tbody>';
 
-		#header
-		print HTMLDataTableHeader('', $ShowDaysOfWeekStats);
-
-		#body
-		print '<tbody>';
-
-		for (@DOWIndex) {
-			
-			print '<tr' . (( $_ =~ /[06]/) ? ' class="weekend"' : '' ) . '>'
+		for (@DOWIndex)
+		{
+			$tableData .=  '<tr' . (( $_ =~ /[06]/) ? ' class="weekend"' : '' ) . '>'
 			. '<td>' . ( ( !$StaticLinks && $_ == ( $nowwday - 1 ) && $MonthRequired == $nowmonth && $YearRequired == $nowyear ) ? '<span class="currentday">' : '' )
 			. $Message[ $_ + 84 ]
 			. ( ( !$StaticLinks && $_ == ( $nowwday - 1 ) && $MonthRequired == $nowmonth && $YearRequired == $nowyear ) ? '</span>' : '' )
@@ -14448,43 +14428,44 @@ sub HTMLMainDaysofWeek{
 
 			if ( $ShowDaysOfWeekStats =~ /P/i ) {
 				$data = int($avg_dayofweek_p[$_]);
-				print HTMLDataCellWithBar('p', $data , Format_Number($data), $max_p);
+				$tableData .= HTMLDataCellWithBar('p', $data , Format_Number($data), $max_p);
 			}
 
 			if ( $ShowDaysOfWeekStats =~ /H/i ) {
 				$data = int($avg_dayofweek_h[$_]);
-				print HTMLDataCellWithBar('h', $data , Format_Number($data), $max_h);
+				$tableData .= HTMLDataCellWithBar('h', $data , Format_Number($data), $max_h);
 			}
 
 			if ( $ShowDaysOfWeekStats =~ /B/i ) {
 				$data = int($avg_dayofweek_k[$_]);
-				print HTMLDataCellWithBar('b', $data , Format_Bytes($data), $max_k);
+				$tableData .= HTMLDataCellWithBar('b', $data , Format_Bytes($data), $max_k);
 			}
 
-			print '</tr>';
+			$tableData .= '</tr>';
 		}
 
-		print '</tbody></table>';
+		$tableData .= '</tbody></table>';
 	}
 
-	print '</td></tr>' . '</table>' . &tab_end();
+	return  &tab_head($title, '', 'daysofweek', $tooltip ) . $bars . $tableData . &tab_end();
 }
 
 #------------------------------------------------------------------------------
-# Function:     Prints the hours chart and table
+# Function:     Return the hours chart and table
 # Parameters:   $NewLinkParams, $NewLinkTarget
 # Input:        -
-# Output:       HTML
-# Return:       -
+# Output:       -
+# Return:       string
 #------------------------------------------------------------------------------
 sub HTMLMainHours{
   my $NewLinkParams = shift;
   my $NewLinkTarget = shift;
         
   if ($Debug) { debug( "ShowHoursStats", 2 ); }
-	# print "<a name=\"hours\">&nbsp;</a>";
 	my $title = $Message[20];
 	my $subtitle = '';
+	my $bars = '';
+	my $tableData = '';
 	
   if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
   { # extend the title to include the added link 
@@ -14493,7 +14474,8 @@ sub HTMLMainHours{
     . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>';
   } 
 	
-	if ( $PluginsLoaded{'GetTimeZoneTitle'}{'timezone'} ) {
+	if ( $PluginsLoaded{'GetTimeZoneTitle'}{'timezone'} )
+	{
 		$title .= " <small>(GMT "
 		  . ( GetTimeZoneTitle_timezone() >= 0 ? "+" : "" )
 		  . int( GetTimeZoneTitle_timezone() ) . ")</small>";
@@ -14506,12 +14488,10 @@ sub HTMLMainHours{
 		$tooltip .= &$function(19);
 	}
 
-	print &tab_head( $title, '', 'hours', $tooltip );
-
 	my $width = 'var(--bar-v-width-hours)';
 	my $max_p =	my $max_h = my $max_k = 1;
-	for ( my $ix = 0 ; $ix <= 23 ; $ix++ ) {
-
+	for ( my $ix = 0 ; $ix <= 23 ; $ix++ )
+	{
 		if ( $_time_p[$ix] > $max_p ) { $max_p=$_time_p[$ix]; }
 		if ( $_time_h[$ix] > $max_h ) { $max_h = $_time_h[$ix]; }
 		if ( $_time_k[$ix] > $max_k ) { $max_k = $_time_k[$ix]; }
@@ -14544,132 +14524,86 @@ sub HTMLMainHours{
 		);
 		$graphdone=1;
 	}
+	
+	$bars .= '<table class="bar-table"><tr>';
 
-	print '<table class="bar-table">';
-	print '<tr>';
 	for ( my $ix = 0 ; $ix <= 23 ; $ix++ )
 	{
-		print '<td>'
+		$bars .= '<td>'
 		. (( $ShowHoursStats =~ /P/i ) ? HtmlBar('p', $_time_p[$ix], $_time_p[$ix], $max_p, ucfirst($Message[28]), $width) : '')
 		. (( $ShowHoursStats =~ /H/i ) ? HtmlBar('h', $_time_h[$ix], $_time_h[$ix], $max_h, $Message[57], $width) : '')
 		. (( $ShowHoursStats =~ /B/i ) ? HtmlBar('b', $_time_k[$ix], $_time_k[$ix], $max_k, $Message[75], $width) : '')
 		. '</td>';
 	}
 	
-	print "</tr>\n";
-
-	# Show hour lib
-	print "<tr" . Tooltip(17) . ">";
+	$bars .= '</tr><tr>'; #tooltip 17
 	
 	for ( my $ix = 0 ; $ix <= 23 ; $ix++ )
 	{
-			print '<th>' . $ix . '</th>';
+			$bars .= '<th>' . $ix . '</th>';
 	}
 
-	print "</tr>\n";
+	$bars .= '</tr>';
 
 	# Show clock icon
-	print "<tr" . Tooltip(17) . ">\n";
+	$bars .= '<tr>'; #tooltip 17
 	
 	for ( my $ix = 0 ; $ix <= 23 ; $ix++ )
 	{
 		my $hrs = ( $ix >= 12 ? $ix - 12 : $ix );
 		my $hre = ( $ix >= 12 ? $ix - 11 : $ix + 1 );
 		my $apm = ( $ix >= 12 ? 'pm' : 'am' );
-		print '<td><div class="clock hr-' . $hre . ' ' . (($ix > 21 || $ix < 7 ) ? 'clock-night' : 'clock-day') . '" title="' . $hrs . ':00 - ' . $hre . ':00 ' . $apm . '" /></td>';
+		$bars .= '<td><div class="clock hr-' . $hre . ' ' . (($ix > 21 || $ix < 7 ) ? 'clock-night' : 'clock-day') . '" title="' . $hrs . ':00 - ' . $hre . ':00 ' . $apm . '"></div></td>';
 	}
-	print "</tr>\n";
-	print "</table>\n";
+
+	$bars .= '</tr></table>';
 
 	# Show data array for hours
-	if ($AddDataArrayShowHoursStats) {
-
+	if ($AddDataArrayShowHoursStats)
+	{
 		my $data = '';
 
-		print '<div class="multi-data-table">';
-		print '<table class="data-table hours-table">';
-
-		#header
-		print HTMLDataTableHeader('', $ShowHoursStats);
+		$tableData .= '<table class="data-table hours-table">'
+		. HTMLDataTableHeader('', $ShowHoursStats);
 
 		#body
 		for ( my $ix = 0 ; $ix <= 23 ; $ix++ ) {
 			
 			my $monthix = ( $ix < 10 ? "0$ix" : "$ix" );
 			
-			print '<tr>';
+			$tableData .= '<tr>';
 			
-			print '<td>' . $monthix . '<span class="clock hr-' . $ix  . ' ' . (($ix > 21 || $ix < 7 ) ? 'clock-night' : 'clock-day') . '"></span></td>';
+			$tableData .= '<td>' . $monthix . '<span class="clock hr-' . $ix  . ' ' . (($ix > 21 || $ix < 7 ) ? 'clock-night' : 'clock-day') . '"></span></td>';
 
 			if ( $ShowHoursStats =~ /P/i ) {
 				$data = $_time_p[$monthix] ? $_time_p[$monthix] : '0';
-				print HTMLDataCellWithBar('p', $data , Format_Number($data), $max_p);
+				$tableData .= HTMLDataCellWithBar('p', $data , Format_Number($data), $max_p);
 			}
 
 			if ( $ShowHoursStats =~ /H/i ) {
 				$data = $_time_h[$monthix] ? $_time_h[$monthix] : '0';
-				print HTMLDataCellWithBar('h', $data , Format_Number($data), $max_h);
+				$tableData .= HTMLDataCellWithBar('h', $data , Format_Number($data), $max_h);
 			}
 			
 			if ( $ShowHoursStats =~ /B/i ) {
 				$data = $_time_k[$monthix] ? $_time_k[$monthix] : '0';
-				print HTMLDataCellWithBar('b', $data , Format_Bytes($data), $max_k);
+				$tableData .= HTMLDataCellWithBar('b', $data , Format_Bytes($data), $max_k);
 			}
 			
-			print '</tr>';
+			$tableData .= '</tr>';
 		}
-		print '</table>';
-
-		# print '<table class="data-table days-of-week-table">';
-
-		# #header
-		# print HTMLDataTableHeader('', $ShowHoursStats);
-
-		# #body
-		# print '<tbody>';
-
-		# for ( my $ix = 12 ; $ix <= 23 ; $ix++ ) {
-			
-		# 	my $monthix = $ix;
-			
-		# 	print '<tr>';
-			
-		# 	print '<td>' . $monthix . '<span class="clock hr-' . $ix  . ' ' . (($ix > 21 || $ix < 7 ) ? 'clock-night' : 'clock-day') . '"></span></td>';
-			
-		# 	if ( $ShowHoursStats =~ /P/i ) {
-		# 		$data = $_time_p[$monthix] ? $_time_p[$monthix] : '0';
-		# 		print HTMLDataCellWithBar('p', $data , Format_Number($data), $max_p);
-		# 	}
-
-		# 	if ( $ShowHoursStats =~ /H/i ) {
-		# 		$data = $_time_h[$monthix] ? $_time_h[$monthix] : '0';
-		# 		print HTMLDataCellWithBar('h', $data , Format_Number($data), $max_h);
-		# 	}
-			
-		# 	if ( $ShowHoursStats =~ /B/i ) {
-		# 		$data = $_time_k[$monthix] ? $_time_k[$monthix] : '0';
-		# 		print HTMLDataCellWithBar('b', $data , Format_Bytes($data), $max_k);
-		# 	}
-
-		# 	print '</tr>';
-		# }
-		
-		# print '</tbody></table>';
-		
-		print '</div>';
-		
-		print "</td></tr></table>\n";
+		$tableData .= '</table>';
 	}
 
-	print '</table>' . &tab_end();
+	return &tab_head( $title, '', 'hours', $tooltip )	. $bars	. $tableData . &tab_end();
 }
 
 #------------------------------------------------------------------------------
-# Function:     Prints the countries chart and table
+# Function:     Return the countries chart and table
 # Parameters:   $NewLinkParams, $NewLinkTarget
 # Input:        -
-# Output:       HTML
-# Return:       -
+# Output:       -
+# Return:       string
 #------------------------------------------------------------------------------
 sub HTMLMainCountries{
 	my $NewLinkParams = shift;
@@ -14686,6 +14620,9 @@ sub HTMLMainCountries{
 
 	my $link = XMLEncode($AWScript . ${NewLinkParams});
 	my $subtitle = '';
+	my $map = '<div id="worldmap-wrapper"><div id="worldmap"></div></div>';
+	my $tableData = '';
+
 	# my $subtitle =  '<a href="'
 	#   . (	$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? $link . 'output=alldomains' : $StaticLinks . '.alldomains.' . $StaticExt) . '" '. $NewLinkTarget
 	#   . '>' . $Message[80] .'</a>';
@@ -14704,8 +14641,6 @@ sub HTMLMainCountries{
 		$tooltip .= &$function(19);
 	}
         	  
-	print &tab_head( $title, $subtitle, 'countries', $tooltip);
-	
 	foreach ( values %_domener_u ) { if ( $_ > $max_u ) { $max_u = $_; } }
 
 	foreach ( values %_domener_p ) { if ( $_ > $max_p ) { $max_p = $_; } }
@@ -14749,10 +14684,8 @@ sub HTMLMainCountries{
 
 	# print "<tr><td>";
 	
-	print '<div id="worldmap-wrapper"><div id="worldmap"></div></div>'
-	.'<table class="data-table domains-table">';
-
-	print HTMLDataTableHeader('<button class="show-all">' . $Message[80] . '</button>', $ShowDomainsStats)
+	$tableData .= '<table class="data-table domains-table">'
+	. HTMLDataTableHeader('<button class="show-all">' . $Message[80] . '</button>', $ShowDomainsStats)
 	. '<tbody>';
 
 	foreach my $key (@keylist)
@@ -14763,10 +14696,10 @@ sub HTMLMainCountries{
 
 		if ( $newkey eq 'ip' || !$DomainsHashIDLib{$newkey} )
 		{
-			print '<tr><td>' . $Message[0] . ' </td>';
+			$tableData .= '<tr><td>' . $Message[0] . ' </td>';
 		}
 		else {
-			print '<tr'
+			$tableData .= '<tr'
 			. ' class="country' . (($count < $MaxNbOf{'Domain'}) ? '' : ' collapsed') . '"'
 			. (($count < $MaxNbOf{'Domain'}) ? '' : ' style="visibility: collapse"')
 			. ' data-country="' . $newkey . '">'
@@ -14778,34 +14711,34 @@ sub HTMLMainCountries{
 		if ( $ShowDomainsStats =~ /U/i )
 		{
 			$data = int( $domener_temp * $TotalUnique );
-			print HTMLDataCellWithBar('u', $data , Format_Number($data), $TotalUnique);
+			$tableData .= HTMLDataCellWithBar('u', $data , Format_Number($data), $TotalUnique);
 		}
 
 		if ( $ShowDomainsStats =~ /V/i )
 		{
 			$data = int( $domener_temp * $TotalVisits);
-			print HTMLDataCellWithBar('v', $data , Format_Number($data), $TotalVisits);
+			$tableData .= HTMLDataCellWithBar('v', $data , Format_Number($data), $TotalVisits);
 		}
 
 		if ( $ShowDomainsStats =~ /P/i )
 		{
 			$data = int($_domener_p{$key} || 0);
-			print HTMLDataCellWithBar('p', $data , Format_Number($data), $TotalPages);
+			$tableData .= HTMLDataCellWithBar('p', $data , Format_Number($data), $TotalPages);
 		}
 
 		if ( $ShowDomainsStats =~ /H/i )
 		{
 			$data = int($_domener_h{$key} || 0);
-			print HTMLDataCellWithBar('h', $data , Format_Number($data), $TotalHits);
+			$tableData .= HTMLDataCellWithBar('h', $data , Format_Number($data), $TotalHits);
 		}
 
 		if ( $ShowDomainsStats =~ /B/i )
 		{
 			$data = int($_domener_k{$key} || 0);
-			print HTMLDataCellWithBar('b', $data , Format_Bytes($data), $TotalBytes);
+			$tableData .= HTMLDataCellWithBar('b', $data , Format_Bytes($data), $TotalBytes);
 		}
 
-		print '</tr>';
+		$tableData .= '</tr>';
 
 		$total_u += $_domener_u;
 		$total_v += $_domener_v;
@@ -14823,7 +14756,7 @@ sub HTMLMainCountries{
 
 	if ( $rest_u > 0 || $rest_v > 0 || $rest_p > 0 || $rest_h > 0 || $rest_k > 0 )
 	{ # All other domains (known or not)
-		print '<tr><td>' . $Message[2] . '</td>'
+		$tableData .= '<tr><td>' . $Message[2] . '</td>'
 		. (( $ShowDomainsStats =~ /U/i ) ? HTMLDataCellWithBar('u', $rest_u , Format_Number($rest_u), $TotalUnique) : '')
 		. (( $ShowDomainsStats =~ /V/i ) ? HTMLDataCellWithBar('v', $rest_v , Format_Number($rest_v), $TotalVisits) : '')
 		. (( $ShowDomainsStats =~ /P/i ) ? HTMLDataCellWithBar('p', $rest_p , Format_Number($rest_p), $TotalPages) : '')
@@ -14833,7 +14766,7 @@ sub HTMLMainCountries{
 		. '</table>';
 	}
 
-	print '</table>' . &tab_end();
+	return &tab_head( $title, $subtitle, 'countries', $tooltip)	. $map . $tableData . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -14958,7 +14891,7 @@ sub HTMLMainDownloads{
 }
 
 #------------------------------------------------------------------------------
-# Function:     Prints the hosts chart and table
+# Function:     Print the hosts chart and table
 # Parameters:   $NewLinkParams, $NewLinkTarget
 # Input:        -
 # Output:       HTML
@@ -14996,9 +14929,9 @@ sub HTMLMainHosts{
 	}
 	  
 	&BuildKeyList( $MaxNbOf{'HostsShown'}, $MinHit{'Host'}, \%_host_h, \%_host_p );
-		
-	print &tab_head( $title, $subtitle, 'hosts', $tooltip);
 
+	print &tab_head( $title, $subtitle, 'hosts', $tooltip);
+		
 	# Graph the top five in a pie chart
 	if (scalar @keylist > 1)
 	{
@@ -21308,7 +21241,7 @@ if ( scalar keys %HTMLOutput ) {
 		# BY MONTH
 		#---------------------------------------------------------------------
 		if ($ShowMonthStats) {
-			&HTMLMainMonthly();
+			print &HTMLMainMonthly();
 		}
 
 		print '</div>';
@@ -21316,7 +21249,7 @@ if ( scalar keys %HTMLOutput ) {
 		# BY DAY OF MONTH
 		#---------------------------------------------------------------------
 		if ($ShowDaysOfMonthStats) {
-			&HTMLMainDaily($firstdaytocountaverage, $lastdaytocountaverage, $firstdaytoshowtime, $lastdaytoshowtime);
+			print &HTMLMainDaily($firstdaytocountaverage, $lastdaytocountaverage, $firstdaytoshowtime, $lastdaytoshowtime);
 		}
 
 		print '<div class="column">';
@@ -21324,13 +21257,13 @@ if ( scalar keys %HTMLOutput ) {
 		# BY DAY OF WEEK
 		#-------------------------
 		if ($ShowDaysOfWeekStats) {
-			&HTMLMainDaysofWeek($firstdaytocountaverage, $lastdaytocountaverage, $NewLinkParams, $NewLinkTarget);
+			print &HTMLMainDaysofWeek($firstdaytocountaverage, $lastdaytocountaverage, $NewLinkParams, $NewLinkTarget);
 		}
 
 		# BY HOUR
 		#----------------------------
 		if ($ShowHoursStats) {
-			&HTMLMainHours($NewLinkParams, $NewLinkTarget);
+			print &HTMLMainHours($NewLinkParams, $NewLinkTarget);
 		}
 
 		print '</div>';
@@ -21340,7 +21273,7 @@ if ( scalar keys %HTMLOutput ) {
 		# BY COUNTRY/DOMAIN
 		#---------------------------
 		if ($ShowDomainsStats) {
-			&HTMLMainCountries($NewLinkParams, $NewLinkTarget);
+			print &HTMLMainCountries($NewLinkParams, $NewLinkTarget);
 		}
 
 		print '<hr>';
@@ -21378,7 +21311,7 @@ if ( scalar keys %HTMLOutput ) {
 		# BY WORMS
 		#----------------------------
 		if ($ShowWormsStats) {
-			print 	&HTMLMainWorms();
+			print &HTMLMainWorms();
 		}
 
 		# BY SESSION
