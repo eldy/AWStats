@@ -1021,7 +1021,7 @@ section header:hover .tooltip { visibility: visible; opacity: 1; }
 .data-table tfoot .data-table-sum td { border-top: 1px solid rgba(192,192,192,0.2); }
 .data-table-sum { font-size : 1.3em }
 .left-padding-separator { padding-left: 20px }
-.bar-table { visibility: visible; margin: auto; text-align: center; font-size: 10px; border-bottom: 6px solid var(--light-color);}
+.bar-table { visibility: visible; width: 100%; margin: auto; text-align: center; font-size: 10px; border-bottom: 6px solid var(--light-color);}
 .bar-table tr:first-child td { vertical-align: bottom; }
 .bar-table span { font-size: 0.8em }
 .collapsed{ visibility: collapse; transition visibility 0.5s ease-in }
@@ -13888,7 +13888,7 @@ sub HTMLMainMonthly{
 
 		print "<td>"
 		. (!$StaticLinks && $monthix == $nowmonth && $YearRequired == $nowyear ? '<span class="currentday">' : '')
-		. "$MonthNumLib{$monthix}<div>$YearRequired</div>"
+		. "$MonthNumLib{$monthix}"
 		. (!$StaticLinks && $monthix == $nowmonth && $YearRequired == $nowyear ? '</span>' : '' )
 		. '</td>';
 	}
@@ -14083,8 +14083,6 @@ sub HTMLMainDaily{
       );
   }
 
-  # print "<a name=\"daysofmonth\">&nbsp;</a>";
-		
 	print &tab_head( $title, '', 'daysofmonth' );
 	
 	print '<tr>' . '<td>';
@@ -14231,11 +14229,11 @@ sub HTMLMainDaily{
 		if ( !DateIsValid( $3, $2, $1 ) ) { next; } # If not an existing day, go to next
 
 		my $dayofweekcursor = DayOfWeek( $3, $2, $1 );
-		$bars .= "<td" . ($dayofweekcursor =~ /[06]/ ? " bgcolor=\"#$color_weekend\"" : "") . ">"
-		. (!$StaticLinks && $day == $nowday && $month == $nowmonth && $year == $nowyear ? '<span class="currentday">' : '')
-		. "$day<br /><span style=\"font-size: " . ($FrameName ne 'mainright' && $QueryString !~ /buildpdf/i ? "0.5" : "0.4" ) . "rem;\">" . $MonthNumLib{$month} . "</span>"
-		. (!$StaticLinks && $day == $nowday && $month == $nowmonth && $year == $nowyear ? '</span>' : '' )
-		. "</td>\n";
+		$bars .= '<td' . ($dayofweekcursor =~ /[06]/ ? ' class="weekend"' : '') . '>'
+		. ((!$StaticLinks && $day == $nowday && $month == $nowmonth && $year == $nowyear) ? '<span class="currentday">' : '')
+		. $day
+		. ((!$StaticLinks && $day == $nowday && $month == $nowmonth && $year == $nowyear) ? '</span>' : '' )
+		. '</td>';
 	}
 
 	print '<table class="bar-table">'
@@ -14417,7 +14415,7 @@ sub HTMLMainDaysofWeek{
 
 	for (@DOWIndex) {
 
-		print '<td' . ( $_ =~ /[06]/ ? " bgcolor=\"#$color_weekend\"" : "" ) . ">"
+		print '<td' . ( $_ =~ /[06]/ ?  ' class="weekend"' : '' ) . '>'
 		. (!$StaticLinks && $_ == ( $nowwday - 1 ) && $MonthRequired == $nowmonth && $YearRequired == $nowyear ? '<span class="currentday">' : '')
 		. $Message[ $_ + 84 ]
 		. (!$StaticLinks && $_ == ( $nowwday - 1 ) && $MonthRequired == $nowmonth && $YearRequired == $nowyear ? '</span>' : '' )
@@ -14442,7 +14440,7 @@ sub HTMLMainDaysofWeek{
 
 		for (@DOWIndex) {
 			
-			print '<tr' . ( $_ =~ /[06]/ ? ' bgcolor="#' . $color_weekend . '"' : '' ) . '>'
+			print '<tr' . (( $_ =~ /[06]/) ? ' class="weekend"' : '' ) . '>'
 			. '<td>' . ( ( !$StaticLinks && $_ == ( $nowwday - 1 ) && $MonthRequired == $nowmonth && $YearRequired == $nowyear ) ? '<span class="currentday">' : '' )
 			. $Message[ $_ + 84 ]
 			. ( ( !$StaticLinks && $_ == ( $nowwday - 1 ) && $MonthRequired == $nowmonth && $YearRequired == $nowyear ) ? '</span>' : '' )
