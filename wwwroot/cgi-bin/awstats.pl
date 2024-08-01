@@ -15467,12 +15467,11 @@ sub HTMLMainPages{
 	my $NewLinkTarget = shift;
 	
 	if ($Debug) {debug("ShowPagesStats (MaxNbOf{'PageShown'}=$MaxNbOf{'PageShown'} TotalDifferentPages=$TotalDifferentPages)",	2);}
-	my $regext         = qr/\.(\w{1,6})$/;
-	# print "<a name=\"urls\">&nbsp;</a><a name=\"entry\">&nbsp;</a><a name=\"exit\">&nbsp;</a>";
-	
-	my $title = $Message[19] . ' (' . $Message[77] . ' ' . $MaxNbOf{'PageShown'} . ')';
 
+	my $regext = qr/\.(\w{1,6})$/;
+	my $title = $Message[19] . ' (' . $Message[77] . ' ' . $MaxNbOf{'PageShown'} . ')';
 	my $link = XMLEncode($AWScript . ${NewLinkParams});
+	
 	my $subtitle = '<a href="'
 	. (($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ? $link . 'output=urldetail' : $StaticLinks . '.urldetail.' . $StaticExt)
 	. '" ' . $NewLinkTarget . '>' . $Message[80] . '</a>';
@@ -15508,41 +15507,38 @@ sub HTMLMainPages{
 	print &tab_head($title, $subtitle, 'urls', $tooltip);
 
 	print '<table>'
-	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>".Format_Number($TotalDifferentPages)." $Message[28]</th>";
-	if ( $ShowPagesStats =~ /P/i && $LogType ne 'F' ) {
-		print "<th class=\"bg-p\" width=\"80\">$Message[29]</th>";
-	}
-	if ( $ShowPagesStats =~ /[PH]/i && $LogType eq 'F' ) {
-		print "<th class=\"bg-h\" width=\"80\">$Message[57]</th>";
-	}
-	if ( $ShowPagesStats =~ /B/i ) {
-		print "<th class=\"bg-k\" width=\"80\">$Message[106]</th>";
-	}
-	if ( $ShowPagesStats =~ /E/i ) {
-		print "<th class=\"bg-e\" width=\"80\">$Message[104]</th>";
-	}
-	if ( $ShowPagesStats =~ /X/i ) {
-		print "<th class=\"bg-x\" width=\"80\">$Message[116]</th>";
-	}
+	. '<tr><th>' . Format_Number($TotalDifferentPages) . ' ' . $Message[28] .'</th>';
+
+	print (( $ShowPagesStats =~ /P/i && $LogType ne 'F' ) ? '<th class="bg-p">' . $Message[29] .'</th>' : '');
+	
+	print (( $ShowPagesStats =~ /[PH]/i && $LogType eq 'F' ) ? '<th class="bg-h">' . $Message[57] . '</th>' : '');
+	
+	print (( $ShowPagesStats =~ /B/i ) ? '<th class="bg-k">' . $Message[106] . '</th>' : '');
+
+	print (( $ShowPagesStats =~ /E/i ) ? '<th class="bg-e">' . $Message[104] . '</th>' : '');
+
+	print (( $ShowPagesStats =~ /X/i ) ? '<th class="bg-x">' . $Message[116] . '</th>' : '');
 
 	# Call to plugins' function ShowPagesAddField
-	foreach
-	  my $pluginname ( keys %{ $PluginsLoaded{'ShowPagesAddField'} } )
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowPagesAddField'} } )
 	{
-
 		#				my $function="ShowPagesAddField_$pluginname('title')";
 		#				eval("$function");
 		my $function = "ShowPagesAddField_$pluginname";
 		&$function('title');
 	}
-	print "<th>&nbsp;</th></tr>\n";
+
+	print '<th></th></tr>';
+
 	my $total_p = my $total_e = my $total_x = my $total_k = 0;
 	my $max_p   = 1;
 	my $max_k   = 1;
 	my $count = 0;
-	&BuildKeyList( $MaxNbOf{'PageShown'}, $MinHit{'File'}, \%_url_p,
-		\%_url_p );
-	foreach my $key (@keylist) {
+	
+	&BuildKeyList( $MaxNbOf{'PageShown'}, $MinHit{'File'}, \%_url_p, \%_url_p );
+
+	foreach my $key (@keylist)
+	{
 		if ( $_url_p{$key} > $max_p ) { $max_p = $_url_p{$key}; }
 		if ( $_url_k{$key} / ( $_url_p{$key} || 1 ) > $max_k ) {
 			$max_k = $_url_k{$key} / ( $_url_p{$key} || 1 );
