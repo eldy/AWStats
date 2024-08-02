@@ -930,15 +930,15 @@ sub renderCss {
 	--aws-color-p: hsl(220, 97%, 72%);
 	--aws-color-h: hsl(188, 80%, 67%);
 	--aws-color-b: hsl(172, 56%, 41%);
-	--aws-color-e: hsl(259, 45%, 84%);
-	--aws-color-x: hsl(259, 45%, 79%);
+	--aws-color-e: hsl(258, 60%, 75%);
+	--aws-color-x: hsl(260, 76%, 81%);
 	--aws-color-s: hsl(240, 56%, 70%);
 	--dark-color: hsl(1, 0%, 50%);
 	--neutral-color: hsl(1, 0%, 75%);
 	--light-color: hsl(1, 0%, 90%);
 	--a-color: hsl(0, 0%, 0%);
 	--a-hover-color: hsl(0, 0%, 0%);
-	--bar-width: 120;
+	--bar-width: 100;
 	--bar-v-height: 16;
 	--bar-v-grow: 1;
 	--bar-v-width-month: 0.44dvw;
@@ -951,14 +951,14 @@ sub renderCss {
 @media (prefers-color-scheme: dark) {
 	:root {
 		--page-color: hsl(0, 0%, 100%);
-		--page-bgcolor: hsl(0, 0%, 23.5%);
+		--page-bgcolor: hsl(0, 0%, 23.5%);-
 		--aws-color-u: hsl(27, 100%, 40%);
 		--aws-color-v: hsl(58, 82%, 30%);
 		--aws-color-p: hsl(220, 97%, 42%);
 		--aws-color-h: hsl(188, 80%, 39%);
 		--aws-color-b: hsl(172, 56%, 27%);
-		--aws-color-e: hsl(259, 45%, 84%);
-		--aws-color-x: hsl(259, 45%, 79%);
+		--aws-color-e: hsl(258, 60%, 75%);
+		--aws-color-x: hsl(260, 76%, 81%);
 		--aws-color-s: hsl(240, 56%, 70%);
 		--dark-color: hsl(0, 0%, 8.2%);
 		--neutral-color: hsl(0, 0%, 48.2%);
@@ -15426,14 +15426,12 @@ sub HTMLMainSessions{
 	. '</table>' . &tab_end();
 }
 
-
-
 #------------------------------------------------------------------------------
-# Function:     Prints the pages chart and table
+# Function:     Return the pages chart and table
 # Parameters:   $NewLinkParams, $NewLinkTarget
 # Input:        -
-# Output:       HTML
-# Return:       -
+# Output:       -
+# Return:       string
 #------------------------------------------------------------------------------
 sub HTMLMainPages{
 	my $NewLinkParams = shift;
@@ -15444,6 +15442,9 @@ sub HTMLMainPages{
 	my $regext = qr/\.(\w{1,6})$/;
 	my $title = $Message[19] . ' (' . $Message[77] . ' ' . $MaxNbOf{'PageShown'} . ')';
 	my @links = ();
+	my $tooltip = my $tableHeader = my $tableData = '';
+	my $total_p = my $total_e = my $total_x = my $total_k = 0;
+	my $max_p = my $max_k = my $max_e = my $max_x = 0;
 
 	push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'urldetail', $Message[80]));
 
@@ -15464,186 +15465,87 @@ sub HTMLMainPages{
     . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>');
   }
 
-  my $tooltip = '';
-	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
+  foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
 	{
 		my $function = "getTooltip_$pluginname";
 		$tooltip .= &$function(19);
 	}
-
-	print &tab_head($title, join( ' - ', @links ), 'urls', $tooltip);
-
-	print '<table>'
-	. '<tr><th>' . Format_Number($TotalDifferentPages) . ' ' . $Message[28] .'</th>';
-
-	print (( $ShowPagesStats =~ /P/i && $LogType ne 'F' ) ? '<th class="bg-p">' . $Message[29] .'</th>' : '');
 	
-	print (( $ShowPagesStats =~ /[PH]/i && $LogType eq 'F' ) ? '<th class="bg-h">' . $Message[57] . '</th>' : '');
-	
-	print (( $ShowPagesStats =~ /B/i ) ? '<th class="bg-k">' . $Message[106] . '</th>' : '');
-
-	print (( $ShowPagesStats =~ /E/i ) ? '<th class="bg-e">' . $Message[104] . '</th>' : '');
-
-	print (( $ShowPagesStats =~ /X/i ) ? '<th class="bg-x">' . $Message[116] . '</th>' : '');
+	$tableHeader .= '<tr><th>' . Format_Number($TotalDifferentPages) . ' ' . $Message[28] .'</th>'
+	. (( $ShowPagesStats =~ /P/i && $LogType ne 'F' ) ? '<th class="bg-p">' . $Message[29] .'</th>' : '')
+	. (( $ShowPagesStats =~ /[PH]/i && $LogType eq 'F' ) ? '<th class="bg-h">' . $Message[57] . '</th>' : '')
+	. (( $ShowPagesStats =~ /B/i ) ? '<th class="bg-b">' . $Message[106] . '</th>' : '')
+	. (( $ShowPagesStats =~ /E/i ) ? '<th class="bg-e">' . $Message[104] . '</th>' : '')
+	. (( $ShowPagesStats =~ /X/i ) ? '<th class="bg-x">' . $Message[116] . '</th>' : '');
 
 	# Call to plugins' function ShowPagesAddField
 	foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowPagesAddField'} } )
 	{
-		#				my $function="ShowPagesAddField_$pluginname('title')";
-		#				eval("$function");
 		my $function = "ShowPagesAddField_$pluginname";
-		&$function('title');
+		$tableHeader .= &$function('title');
 	}
 
-	print '<th></th></tr>';
+	$tableHeader .= '</tr>';
 
-	my $total_p = my $total_e = my $total_x = my $total_k = 0;
-	my $max_p   = 1;
-	my $max_k   = 1;
-	my $count = 0;
-	
 	&BuildKeyList( $MaxNbOf{'PageShown'}, $MinHit{'File'}, \%_url_p, \%_url_p );
 
 	foreach my $key (@keylist)
 	{
-		if ( $_url_p{$key} > $max_p ) { $max_p = $_url_p{$key}; }
-		if ( $_url_k{$key} / ( $_url_p{$key} || 1 ) > $max_k ) {
-			$max_k = $_url_k{$key} / ( $_url_p{$key} || 1 );
-		}
+		$max_p = ( $_url_p{$key} > $max_p ) ? $_url_p{$key} : $max_p;
+		$max_k = ( $_url_k{$key} > $max_k ) ? $_url_k{$key} : $max_k;
+		$max_e = ( $_url_e{$key} > $max_e ) ? $_url_e{$key} : $max_e;
+		$max_x = ( $_url_x{$key} > $max_x ) ? $_url_x{$key} : $max_x;
 	}
-	foreach my $key (@keylist) {
-		print "<tr><td>";
-		print &HTMLShowURLInfo($key);
-		print "</td>";
-		my $bredde_p = 0;
-		my $bredde_e = 0;
-		my $bredde_x = 0;
-		my $bredde_k = 0;
-		if ( $max_p > 0 ) {
-			$bredde_p =
-			  int( $BarWidth * ( $_url_p{$key} || 0 ) / $max_p ) + 1;
-		}
-		if ( ( $bredde_p == 1 ) && $_url_p{$key} ) { $bredde_p = 2; }
-		if ( $max_p > 0 ) {
-			$bredde_e =
-			  int( $BarWidth * ( $_url_e{$key} || 0 ) / $max_p ) + 1;
-		}
-		if ( ( $bredde_e == 1 ) && $_url_e{$key} ) { $bredde_e = 2; }
-		if ( $max_p > 0 ) {
-			$bredde_x =
-			  int( $BarWidth * ( $_url_x{$key} || 0 ) / $max_p ) + 1;
-		}
-		if ( ( $bredde_x == 1 ) && $_url_x{$key} ) { $bredde_x = 2; }
-		if ( $max_k > 0 ) {
-			$bredde_k =
-			  int( $BarWidth *
-				  ( ( $_url_k{$key} || 0 ) / ( $_url_p{$key} || 1 ) ) /
-				  $max_k ) + 1;
-		}
-		if ( ( $bredde_k == 1 ) && $_url_k{$key} ) { $bredde_k = 2; }
-		if ( $ShowPagesStats =~ /P/i && $LogType ne 'F' ) {
-			print "<td>".Format_Number($_url_p{$key})."</td>";
-		}
-		if ( $ShowPagesStats =~ /[PH]/i && $LogType eq 'F' ) {
-			print "<td>".Format_Number($_url_p{$key})."</td>";
-		}
-		if ( $ShowPagesStats =~ /B/i ) {
-			print "<td>"
-			  . (
-				$_url_k{$key}
-				? Format_Bytes(
-					$_url_k{$key} / ( $_url_p{$key} || 1 )
-				  )
-				: "&nbsp;"
-			  )
-			  . "</td>";
-		}
-		if ( $ShowPagesStats =~ /E/i ) {
-			print "<td>"
-			  . ( $_url_e{$key} ? Format_Number($_url_e{$key}) : "&nbsp;" ) . "</td>";
-		}
-		if ( $ShowPagesStats =~ /X/i ) {
-			print "<td>"
-			  . ( $_url_x{$key} ? Format_Number($_url_x{$key}) : "&nbsp;" ) . "</td>";
-		}
 
-		# Call to plugins' function ShowPagesAddField
-		foreach my $pluginname (
-			keys %{ $PluginsLoaded{'ShowPagesAddField'} } )
-		{
-
-			#					my $function="ShowPagesAddField_$pluginname('$key')";
-			#					eval("$function");
-			my $function = "ShowPagesAddField_$pluginname";
-			&$function($key);
-		}
-		print "<td class=\"aws\">";
-		if ( $ShowPagesStats =~ /P/i && $LogType ne 'F' ) {
-			print HtmlBarH('p', $bredde_p);
-		}
-		if ( $ShowPagesStats =~ /[PH]/i && $LogType eq 'F' ) {
-			print HtmlBarH('h', $bredde_p);
-		}
-		if ( $ShowPagesStats =~ /B/i ) {
-			print HtmlBarH('k', $bredde_k);
-		}
-		if ( $ShowPagesStats =~ /E/i ) {
-			print HtmlBarH('e', $bredde_e);
-		}
-		if ( $ShowPagesStats =~ /X/i ) {
-			print HtmlBarH('x', $bredde_x);
-		}
-		print "</td></tr>\n";
+	foreach my $key (@keylist)
+	{
 		$total_p += $_url_p{$key} || 0;
 		$total_e += $_url_e{$key} || 0;
 		$total_x += $_url_x{$key} || 0;
 		$total_k += $_url_k{$key} || 0;
-		$count++;
+
+		$tableData .= '<tr><td>' . &HTMLShowURLInfo($key) . '</td>'
+		.	(( ($ShowPagesStats =~ /P/i && $LogType ne 'F') || ($ShowPagesStats =~ /[PH]/i && $LogType eq 'F') )
+			? HTMLDataCellWithBar('p', $_url_p{$key}, Format_Number($_url_p{$key}), $max_p) : '')
+		. (( $ShowPagesStats =~ /B/i ) ? HTMLDataCellWithBar('b', ($_url_k{$key} / $_url_p{$key}), Format_Bytes($_url_k{$key} / $_url_p{$key}), ($max_k / $max_p)) : '')
+		. (( $ShowPagesStats =~ /E/i ) ? HTMLDataCellWithBar('e', $_url_e{$key}, Format_Number($_url_e{$key}), $max_e) : '')
+		. (( $ShowPagesStats =~ /X/i ) ? HTMLDataCellWithBar('x', $_url_x{$key}, Format_Number($_url_x{$key}), $max_x) : '');
+
+		# Call to plugins' function ShowPagesAddField
+		foreach my $pluginname (keys %{ $PluginsLoaded{'ShowPagesAddField'} } )
+		{
+			my $function = "ShowPagesAddField_$pluginname";
+			$tableData .= &$function($key);
+		}
+
+		$tableData .= '</tr>';
 	}
+
 	my $rest_p = $TotalPages - $total_p;
 	my $rest_e = $TotalEntries - $total_e;
 	my $rest_x = $TotalExits - $total_x;
 	my $rest_k = $TotalBytesPages - $total_k;
 	if ( $rest_p > 0 || $rest_k > 0 || $rest_e > 0 || $rest_x > 0 )
-	{    # All other urls
-		print
-"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
-		if ( $ShowPagesStats =~ /P/i && $LogType ne 'F' ) {
-			print "<td>".Format_Number($rest_p)."</td>";
-		}
-		if ( $ShowPagesStats =~ /[PH]/i && $LogType eq 'F' ) {
-			print "<td>".Format_Number($rest_p)."</td>";
-		}
-		if ( $ShowPagesStats =~ /B/i ) {
-			print "<td>"
-			  . (
-				$rest_k
-				? Format_Bytes( $rest_k / ( $rest_p || 1 ) )
-				: "&nbsp;"
-			  )
-			  . "</td>";
-		}
-		if ( $ShowPagesStats =~ /E/i ) {
-			print "<td>" . ( $rest_e ? Format_Number($rest_e) : "&nbsp;" ) . "</td>";
-		}
-		if ( $ShowPagesStats =~ /X/i ) {
-			print "<td>" . ( $rest_x ? Format_Number($rest_x) : "&nbsp;" ) . "</td>";
-		}
+	{ # All other urls
+		$tableData .= '<tr><td>' . $Message[2] . '</span></td>'
+		. (( $ShowPagesStats =~ /P/i && $LogType ne 'F' ) ? '<td>' . Format_Number($rest_p) . '</td>' : '')
+		. (( $ShowPagesStats =~ /[PH]/i && $LogType eq 'F' ) ? '<td>' . Format_Number($rest_p) . '</td>' : '')
+		. (( $ShowPagesStats =~ /B/i ) ? '<td>' . ( $rest_k ? Format_Bytes $rest_k / ($rest_p || 1) : '' ) . '</td>' : '')
+		. (( $ShowPagesStats =~ /E/i ) ? '<td>' . ( $rest_e ? Format_Number($rest_e) : '' ) . '</td>' : '')
+		. (( $ShowPagesStats =~ /X/i ) ? '<td>' . ( $rest_x ? Format_Number($rest_x) : '' ) . '</td>' : '');
 
 		# Call to plugins' function ShowPagesAddField
-		foreach my $pluginname (
-			keys %{ $PluginsLoaded{'ShowPagesAddField'} } )
+		foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowPagesAddField'} } )
 		{
-
-			#					my $function="ShowPagesAddField_$pluginname('')";
-			#					eval("$function");
 			my $function = "ShowPagesAddField_$pluginname";
-			&$function('');
+			$tableData .= &$function('');
 		}
-		print "<td>&nbsp;</td></tr>\n";
+		$tableData .= '</tr>';
 	}
 
-	print '</table>' . &tab_end();
+	return &tab_head($title, join( ' - ', @links ), 'urls', $tooltip)
+	. '<table class="data-table">' . $tableHeader . $tableData . '</table>'
+	. &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -21231,7 +21133,7 @@ if ( scalar keys %HTMLOutput ) {
 		# BY PAGE
 		#-------------------------
 		if ($ShowPagesStats) {
-			&HTMLMainPages($NewLinkParams, $NewLinkTarget);
+			print &HTMLMainPages($NewLinkParams, $NewLinkTarget);
 		}
 
 		# BY FILE TYPE
