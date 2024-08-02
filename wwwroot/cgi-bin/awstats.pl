@@ -37,9 +37,10 @@ use Try::Tiny;
 #------------------------------------------------------------------------------
 # Defines
 #------------------------------------------------------------------------------
-use vars qw/ $REVISION $VERSION /;
+use vars qw/ $RELEASE $REVISION $VERSION /;
+$RELEASE = '8.0';
 $REVISION = '20240604';
-$VERSION  = "8.0 (build $REVISION)";
+$VERSION  = $RELEASE . '(build ' . $REVISION . ')';
 
 # ----- Constants -----
 use vars qw/
@@ -758,7 +759,9 @@ use vars qw/ @Message /;
         's',
         'Request average frequency [/s]',
         'Request size',
-        'Request time'
+        'Request time',
+  'New major release available for AWStats',
+  'New minor release available for AWStats'
 );
 
 #------------------------------------------------------------------------------
@@ -983,6 +986,7 @@ small { font-size: 0.9em; font-weight: 400; }
 .column { display:flex;flex-flow:column wrap; row-gap: 10px; }
 #domain { font-weight: 900; font-size: 1.5em }
 header select { width : 60px }
+footer { width: 100dvw; text-align: center; border-top: 1px solid; padding-top: 5px; }
 #logo { height: 33px; }
 nav { width: 100%; height: 2.5ch; margin: 8px 0; margin-top: 0; background-color: white; font-weight: 600 }
 nav ul { display: flex; justify-content: center; gap: 1dvw; list-style-type: none; margin: 0; padding: 0; overflow: hidden; }
@@ -1210,7 +1214,6 @@ EOF
 #------------------------------------------------------------------------------
 sub html_end {
 	my $listplugins = shift || 0;
-
 	my $html = '';
 
 	if ( scalar keys %HTMLOutput )
@@ -1218,20 +1221,39 @@ sub html_end {
 		# Call to plugins' function AddHTMLBodyFooter
 		foreach my $pluginname ( keys %{ $PluginsLoaded{'AddHTMLBodyFooter'} } )
 		{
-			# my $function="AddHTMLBodyFooter_$pluginname()";
-			# eval("$function");
 			my $function = "AddHTMLBodyFooter_$pluginname";
 			&$function();
 		}
 
 		if ( $FrameName ne 'index' && $FrameName ne 'mainleft' )
 		{
-			$html .= '<span dir="ltr">'
-			. '<b>Advanced Web Statistics ' . $VERSION . '</b> - <a href="http://www.awstats.org" target="awstatshome">'
-			. $Message[169] . ' ' . $PROG;
+			$html .= '<footer dir="ltr">'
+			. $Message[169] . ' <a href="http://www.awstats.org" target="awstatshome"><b>Advanced Web Statistics ' . $VERSION . '</b></a>';
 			
+			use ExtUtils::Installed;
+			my ($inst) = ExtUtils::Installed->new();
+			my (@installed_modules) = $inst->modules();
+			eval{ $inst->validate('JSON::Parse') };
+  		if(!$@) {
+				use LWP::Simple;
+				use JSON::Parse 'parse_json';
+  			my $sourceforge = parse_json(get('https://sourceforge.net/projects/awstats/best_release.json'));
+				$sourceforge->{'release'}->{'filename'} =~ /(\d\.\d)/;
+				my $latestVersion = $1;
+
+				(my $latestMajor, my $latestMinor) = split(/\./, $latestVersion);
+				(my $major, my $minor) = split(/\./, $RELEASE);
+
+				if(int($latestMajor) > int($major)){
+					$html .= ' <span class="bg-v">' . $Message[189]. ' : ' . $latestVersion . ' !</span>';
+				} elsif (int($latestMajor) == int($major) && int($latestMinor) > int($minor)) {
+					$html .= ' <span class="bg-v">' . $Message[190] . ' : ' . $latestVersion . ' !</span>';
+				}
+			}
+
 			if ($listplugins)
 			{
+				$html .= '<br>';
 				my $atleastoneplugin = 0;
 				foreach my $pluginname ( keys %{ $PluginsLoaded{'init'} } )
 				{
@@ -1250,7 +1272,7 @@ sub html_end {
 				if ($atleastoneplugin) { $html .=  ')'; }
 			}
 
-			$html .= '</a></span>';
+			$html .= '</footer>';
 			
 			if ($HTMLEndSection) { $html .= "$HTMLEndSection\n"; }
 		}

@@ -190,3 +190,5 @@ message185=Fréquence moyenne de requête [/s]
 message186=Taille de la requête
 message187=Heure
 message188=Request time
+message189=Nouvelle version majeure de AWStats disponible
+message190=Nouvelle version mineure de AWStats disponible
