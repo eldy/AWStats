@@ -13773,7 +13773,8 @@ sub HTMLMainMonthly{
 	{
 		my $monthix = sprintf( "%02s", $ix );
 		
-		if($MonthHits{ $YearRequired . $monthix } > 0){
+		if($MonthHits{ $YearRequired . $monthix } > 0)
+		{
 				$not_empty_months++;
 		}
 
@@ -13798,8 +13799,8 @@ sub HTMLMainMonthly{
 			. (!$StaticLinks && $monthix == $nowmonth && $YearRequired == $nowyear ? '</span>' : '' )
 			. '</td>';
 
-		if ( $ShowMonthStats =~ /U/i ) {
-
+		if ( $ShowMonthStats =~ /U/i )
+		{
 			$data = int($MonthUnique{ $YearRequired . $monthix } || 0 );
 
 			$bars .= HtmlBar('u', $data, Format_Number($data), $max_u, $Message[11], $width);
@@ -13807,8 +13808,8 @@ sub HTMLMainMonthly{
 			$tableData .= HTMLDataCellWithBar('u', $data, Format_Number($data), $max_u);
 		}
 
-		if ( $ShowMonthStats =~ /V/i ) {
-
+		if ( $ShowMonthStats =~ /V/i )
+		{
 			$data = int($MonthVisits{ $YearRequired . $monthix } || 0 );
 
 			$bars .= HtmlBar('v', $data, Format_Number($data), $max_v, $Message[10], $width);
@@ -13816,8 +13817,8 @@ sub HTMLMainMonthly{
 			$tableData .= HTMLDataCellWithBar('v', $data, Format_Number($data), $max_v);
 		}
 
-		if ( $ShowMonthStats =~ /P/i ) {
-
+		if ( $ShowMonthStats =~ /P/i )
+		{
 			$data = int($MonthPages{ $YearRequired . $monthix } || 0 );
 
 			$bars .= HtmlBar('p', $data, Format_Number($data), $max_p, ucfirst($Message[28]), $width);
@@ -13825,8 +13826,8 @@ sub HTMLMainMonthly{
 			$tableData .= HTMLDataCellWithBar('p', $data, Format_Number($data), $max_p);
 		}
 
-		if ( $ShowMonthStats =~ /H/i ) {
-
+		if ( $ShowMonthStats =~ /H/i )
+		{
 			$data = int($MonthHits{ $YearRequired . $monthix } || 0 );
 
 			$bars .= HtmlBar('h', $data, Format_Number($data), $max_h, $Message[57], $width);
@@ -13834,8 +13835,8 @@ sub HTMLMainMonthly{
 			$tableData .= HTMLDataCellWithBar('h', $data, Format_Number($data), $max_h);
 		}
 
-		if ( $ShowMonthStats =~ /B/i ) {
-
+		if ( $ShowMonthStats =~ /B/i )
+		{
 			$data = int($MonthBytes{ $YearRequired . $monthix } || 0 );
 
 			$bars .= HtmlBar('b', $data, Format_Bytes($data), $max_k, $Message[75], $width);
@@ -13855,8 +13856,8 @@ sub HTMLMainMonthly{
 	$average_k = sprintf( "%.2f", $total_k / $not_empty_months );
 
 	# Show bars for month
-	if ($graphPlugin == 1) {
-
+	if ($graphPlugin == 1)
+	{
 		foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
 		{
 			my @valaverage=($average_v,$average_p,$average_h,$average_k);
@@ -13870,13 +13871,13 @@ sub HTMLMainMonthly{
 				\@valaverage,    \@valdata
 			);
 		}
-
 	}
 
 	$html .= '<table class="bar-table month-bar-table">'	. '<tr>' . $bars . '</tr>'
 	. '<tr>';
 
-	for ( my $ix = 1 ; $ix <= 12 ; $ix++ ) {
+	for ( my $ix = 1 ; $ix <= 12 ; $ix++ )
+	{
 		my $monthix = sprintf( "%02s", $ix );
 
 		$html .= '<td>'
@@ -13889,13 +13890,8 @@ sub HTMLMainMonthly{
 	$html .= '</tr>' . '</table>';
 
 	# Show data array for month
-	if ($AddDataArrayMonthStats) {
-
-		$html .= '<table class="data-table month-table">';
-
-		$html .= HTMLDataTableHeader($YearRequired, $ShowMonthStats);
-
-		# footer
+	if ($AddDataArrayMonthStats)
+	{
 		# Total row
 		my (%sums) = (
 			'u' => Format_Number($total_u),
@@ -13914,7 +13910,9 @@ sub HTMLMainMonthly{
 			'b'=> Format_Bytes(int($average_k))
 		);
 
-		$html .= HTMLDataTableFooter('', $ShowMonthStats, \%sums, $Message[96], \%averages)
+		$html .= '<table class="data-table month-table">'
+		. HTMLDataTableHeader($YearRequired, $ShowMonthStats)
+		. HTMLDataTableFooter('', $ShowMonthStats, \%sums, $Message[96], \%averages)
 		. '<tbody>' . $tableData . '</tbody>' . '</table>';
 	}
 
@@ -14194,7 +14192,6 @@ sub HTMLMainDaily{
 				\@valaverage,          \@valdata
 			);
 		}
-
   }
 
 	# Show average value bars
@@ -14209,8 +14206,8 @@ sub HTMLMainDaily{
 
 	# Show lib for day
 	$bars .= '<tr>';
-	foreach my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )	{
-
+	foreach my $daycursor ( $firstdaytoshowtime .. $lastdaytoshowtime )
+	{
 		$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
 		my $year  = $1;
 		my $month = $2;
@@ -14229,10 +14226,6 @@ sub HTMLMainDaily{
 	# Show data array for days
 	if ($AddDataArrayShowDaysOfMonthStats)
 	{
-		$html .= '<table class="data-table days-of-month-table">'
-		. HTMLDataTableHeader($MonthNumLib{$MonthRequired} . ' ' . $YearRequired, $ShowDaysOfMonthStats);
-
-		#footer
 		# Total row
 		my (%sums) = (
 			'v'=> Format_Number($total_v),
@@ -14248,9 +14241,10 @@ sub HTMLMainDaily{
 			'b'=> Format_Bytes(int($average_k))
 		);
 
-		$html .= HTMLDataTableFooter('', $ShowDaysOfMonthStats, \%sums, $Message[96], \%averages)
+		$html .= '<table class="data-table days-of-month-table">'
+		. HTMLDataTableHeader($MonthNumLib{$MonthRequired} . ' ' . $YearRequired, $ShowDaysOfMonthStats)
+		. HTMLDataTableFooter('', $ShowDaysOfMonthStats, \%sums, $Message[96], \%averages)
 		. '<tbody>' . $tableData . '</tbody></table>';
-
 	}
 
 	return &tab_head( $title, '', 'daysofmonth' )
@@ -14266,7 +14260,6 @@ sub HTMLMainDaily{
 # Return:       string
 #------------------------------------------------------------------------------
 sub HTMLMainDaysofWeek{
-	
 	if ($Debug) { debug( "ShowDaysOfWeekStats", 2 ); }
 
 	my $firstdaytocountaverage = shift;
@@ -14423,17 +14416,20 @@ sub HTMLMainDaysofWeek{
 			. ( ( !$StaticLinks && $_ == ( $nowwday - 1 ) && $MonthRequired == $nowmonth && $YearRequired == $nowyear ) ? '</span>' : '' )
 			. '</td>';
 
-			if ( $ShowDaysOfWeekStats =~ /P/i ) {
+			if ( $ShowDaysOfWeekStats =~ /P/i )
+			{
 				$data = int($avg_dayofweek_p[$_]);
 				$tableData .= HTMLDataCellWithBar('p', $data , Format_Number($data), $max_p);
 			}
 
-			if ( $ShowDaysOfWeekStats =~ /H/i ) {
+			if ( $ShowDaysOfWeekStats =~ /H/i )
+			{
 				$data = int($avg_dayofweek_h[$_]);
 				$tableData .= HTMLDataCellWithBar('h', $data , Format_Number($data), $max_h);
 			}
 
-			if ( $ShowDaysOfWeekStats =~ /B/i ) {
+			if ( $ShowDaysOfWeekStats =~ /B/i )
+			{
 				$data = int($avg_dayofweek_k[$_]);
 				$tableData .= HTMLDataCellWithBar('b', $data , Format_Bytes($data), $max_k);
 			}
@@ -14455,10 +14451,11 @@ sub HTMLMainDaysofWeek{
 # Return:       string
 #------------------------------------------------------------------------------
 sub HTMLMainHours{
+  if ($Debug) { debug( "ShowHoursStats", 2 ); }
+
   my $NewLinkParams = shift;
   my $NewLinkTarget = shift;
-        
-  if ($Debug) { debug( "ShowHoursStats", 2 ); }
+  
 	my $title = $Message[20];
 	my @links = ();
 	my $bars = '';
@@ -14564,25 +14561,27 @@ sub HTMLMainHours{
 		. HTMLDataTableHeader('', $ShowHoursStats);
 
 		#body
-		for ( my $ix = 0 ; $ix <= 23 ; $ix++ ) {
-			
+		for ( my $ix = 0 ; $ix <= 23 ; $ix++ )
+		{
 			my $monthix = ( $ix < 10 ? "0$ix" : "$ix" );
 			
-			$tableData .= '<tr>';
-			
-			$tableData .= '<td>' . $monthix . '<span class="clock hr-' . $ix  . ' ' . (($ix > 21 || $ix < 7 ) ? 'clock-night' : 'clock-day') . '"></span></td>';
+			$tableData .= '<tr>'
+			. '<td>' . $monthix . '<span class="clock hr-' . $ix  . ' ' . (($ix > 21 || $ix < 7 ) ? 'clock-night' : 'clock-day') . '"></span></td>';
 
-			if ( $ShowHoursStats =~ /P/i ) {
+			if ( $ShowHoursStats =~ /P/i )
+			{
 				$data = $_time_p[$monthix] ? $_time_p[$monthix] : '0';
 				$tableData .= HTMLDataCellWithBar('p', $data , Format_Number($data), $max_p);
 			}
 
-			if ( $ShowHoursStats =~ /H/i ) {
+			if ( $ShowHoursStats =~ /H/i )
+			{
 				$data = $_time_h[$monthix] ? $_time_h[$monthix] : '0';
 				$tableData .= HTMLDataCellWithBar('h', $data , Format_Number($data), $max_h);
 			}
 			
-			if ( $ShowHoursStats =~ /B/i ) {
+			if ( $ShowHoursStats =~ /B/i )
+			{
 				$data = $_time_k[$monthix] ? $_time_k[$monthix] : '0';
 				$tableData .= HTMLDataCellWithBar('b', $data , Format_Bytes($data), $max_k);
 			}
@@ -14603,10 +14602,10 @@ sub HTMLMainHours{
 # Return:       string
 #------------------------------------------------------------------------------
 sub HTMLMainCountries{
+	if ($Debug) { debug( "ShowDomainsStats", 2 ); }
+
 	my $NewLinkParams = shift;
 	my $NewLinkTarget = shift;
-	
-	if ($Debug) { debug( "ShowDomainsStats", 2 ); }
 
 	my $total_u = my $total_v = my $total_p = my $total_h = my $total_k = 0;
 	my $rest_u  = my $rest_v  = my $rest_p  = my $rest_h  = my $rest_k = 0; 
@@ -15187,11 +15186,11 @@ sub HTMLMainLogins{
 # Return:       string (html)
 #------------------------------------------------------------------------------
 sub HTMLMainRobots{
+	if ($Debug) { debug( "ShowRobotStats", 2 ); }
+
 	my $NewLinkParams = shift;
 	my $NewLinkTarget = shift;
 	
-	if ($Debug) { debug( "ShowRobotStats", 2 ); }
-
 	my $title = $Message[53] . ' <small>('. $Message[77]. ' ' . $MaxNbOf{'RobotShown'} .')</small>';
 	my $html = '';
 	my @links = ();
@@ -15228,12 +15227,16 @@ sub HTMLMainRobots{
 	my $TotalHitsRobots = 0;
 	my $max_h = 0;
 	my $max_b = 0;
-	foreach ( values %_robot_h ) { 
+	
+	foreach ( values %_robot_h )
+	{ 
 		$TotalHitsRobots += $_;
 		$max_h = ($_ > $max_h) ? $_ : $max_h;
 	}
+	
 	my $TotalBytesRobots = 0;
-	foreach ( values %_robot_k ) {
+	foreach ( values %_robot_k )
+	{
 	 $TotalBytesRobots += $_;
 	 $max_b = ($_ > $max_b) ? $_ : $max_b;
 	}
