@@ -8607,6 +8607,24 @@ sub HTMLDataCellWithBar{
 }
 
 #------------------------------------------------------------------------------
+# Function:     Return links to the standalone reports
+# Parameters:   $NewLinkParams, $NewLinkTarget
+# Input:        string $standalonePage, string $title
+# Output:       -
+# Return:       string
+#------------------------------------------------------------------------------
+sub HTMLLinkToStandalonePage{
+	my $NewLinkParams = shift;
+	my $NewLinkTarget = shift;
+	my $standalonePage = shift;
+	my $title = shift || '';
+
+	my $link = XMLEncode($AWScript . ${NewLinkParams});
+
+	return '<a href="' . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? $link . 'output=' . $standalonePage : $StaticLinks . '.' . $standalonePage . '.' . $StaticExt) . '" ' . $NewLinkTarget . '>' . $title . '</a>'
+}
+
+#------------------------------------------------------------------------------
 # Function:		Return " alt=string title=string"
 # Parameters:   string
 # Input:        None
@@ -10024,26 +10042,16 @@ sub HTMLShowEmailSendersChart {
 	# print "<a name=\"emailsenders\">&nbsp;</a>";
 	my $title = $Message[131];
 	my $subtitle = '';
+	my @links = ();
 
 	if ( !($HTMLOutput{'allemails'} || $HTMLOutput{'lastemails'}) )
 	{
-		$subtitle .= "($Message[77] $MaxNbOf{'EMailsShown'}) &nbsp; - &nbsp; <a href=\""
-		  . (
-			$ENV{'GATEWAY_INTERFACE'}
-			  || !$StaticLinks
-			? XMLEncode("$AWScript${NewLinkParams}output=allemails")
-			: "$StaticLinks.allemails.$StaticExt"
-		  )
-		  . "\"$NewLinkTarget>$Message[80]</a>";
-		if ( $ShowEMailSenders =~ /L/i ) {
-			$subtitle .= " &nbsp; - &nbsp; <a href=\""
-			  . (
-				$ENV{'GATEWAY_INTERFACE'}
-				  || !$StaticLinks
-				? XMLEncode("$AWScript${NewLinkParams}output=lastemails")
-				: "$StaticLinks.lastemails.$StaticExt"
-			  )
-			  . "\"$NewLinkTarget>$Message[9]</a>";
+		$subtitle = '(' . $Message[77] . ' ' . $MaxNbOf{'EMailsShown'} . ')';
+		push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'allemails', $Message[80]));
+		
+		if ( $ShowEMailSenders =~ /L/i )
+		{
+			push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'lastemails', $Message[9]));
 		}
 	}
 
@@ -10054,7 +10062,7 @@ sub HTMLShowEmailSendersChart {
 		$tooltip .= &$function(19);
 	}
 		
-	print &tab_head($title, $subtitle, 'emailsenders', $tooltip )
+	print &tab_head($title, $subtitle . ' ' .  join( ' - ', @links ), 'emailsenders', $tooltip )
 	. '<table>'
 	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"3\">$Message[131] : "
 	. ( scalar keys %_emails_h ) . "</th>";
@@ -10192,43 +10200,33 @@ sub HTMLShowEmailReceiversChart {
 	my $rest_h;
 	my $rest_k;
 
+	my $title = $Message[132];
+	my $subtitle = '';
+	my @links = ();
+	my $tooltip = '';
+
 	# Show filter form
 	#&ShowFormFilter("emailrfilter",$EmailrFilter);
 	# Show emails list
-
-	# print "<a name=\"emailreceivers\">&nbsp;</a>";
-	my $title = $Message[132];
-	my $subtitle = '';
+	
 	if ( !($HTMLOutput{'allemailr'} || $HTMLOutput{'lastemailr'}) )
 	{
-		$subtitle = "($Message[77] $MaxNbOf{'EMailsShown'}) &nbsp; - &nbsp; <a href=\""
-		  . (
-			$ENV{'GATEWAY_INTERFACE'}
-			  || !$StaticLinks
-			? XMLEncode("$AWScript${NewLinkParams}output=allemailr")
-			: "$StaticLinks.allemailr.$StaticExt"
-		  )
-		  . "\"$NewLinkTarget>$Message[80]</a>";
-		if ( $ShowEMailReceivers =~ /L/i ) {
-			$subtitle .= " &nbsp; - &nbsp; <a href=\""
-			  . (
-				$ENV{'GATEWAY_INTERFACE'}
-				  || !$StaticLinks
-				? XMLEncode("$AWScript${NewLinkParams}output=lastemailr")
-				: "$StaticLinks.lastemailr.$StaticExt"
-			  )
-			  . "\"$NewLinkTarget>$Message[9]</a>";
+		$subtitle = '(' . $Message[77] . ' ' . $MaxNbOf{'EMailsShown'} . ')';
+		push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'allemailr', $Message[80]));
+
+		if ( $ShowEMailReceivers =~ /L/i )
+		{
+			push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'lastemailr', $Message[9]));
 		}
 	}
-
-	my $tooltip = '';
+	
 	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
 	{
 		my $function = "getTooltip_$pluginname";
 		$tooltip .= &$function(19);
 	}
 		
-	print &tab_head($title, $subtitle, 'emailreceivers', $tooltip )
+	print &tab_head($title, $subtitle . join( ' - ', @links ), 'emailreceivers', $tooltip )
 	. '<table>'
 	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"3\">$Message[132] : "
 	. ( scalar keys %_emailr_h ) . "</th>";
@@ -11027,7 +11025,7 @@ sub HTMLMainFileType{
   my $NewLinkParams = shift;
   my $NewLinkTarget = shift;
 	my $title = $Message[73];
-	my $subtitle = '';
+	my @links = ();
 	my $tooltip = '';
 	my $html = '';
 	my $Totalh = 0;
@@ -11126,9 +11124,9 @@ sub HTMLMainFileType{
 
   if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
   { # extend the title to include the added link 
-    $subtitle .= '<a href="'
+    push(@links, '<a href="'
     . XMLEncode($AddLinkToExternalCGIWrapper . '?section=FILETYPES&baseName=' . $DirData . '/' . $PROG . '&month='. $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig)
-    . '" ' . $NewLinkTarget . '>' . $Message[179] .'</a>';
+    . '" ' . $NewLinkTarget . '>' . $Message[179] .'</a>');
   } 
 
 	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
@@ -11137,7 +11135,7 @@ sub HTMLMainFileType{
 		$tooltip .= &$function(19);
 	}
 
-	return &tab_head($title, $subtitle, 'filetypes', $tooltip)
+	return &tab_head($title, join( ' - ', @links ), 'filetypes', $tooltip)
 	. '<table class="data-table">'
 	. HTMLDataTableHeader('', $ShowFileTypesStats)
 	. $html	. '</table>' . &tab_end();
@@ -14462,15 +14460,15 @@ sub HTMLMainHours{
         
   if ($Debug) { debug( "ShowHoursStats", 2 ); }
 	my $title = $Message[20];
-	my $subtitle = '';
+	my @links = ();
 	my $bars = '';
 	my $tableData = '';
 	
   if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
   { # extend the title to include the added link 
-    $subtitle = ' - <a href="'
+    push(@links, '<a href="'
     . XMLEncode($AddLinkToExternalCGIWrapper . '?section=TIME&baseName=' . $DirData .'/' . $PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig)
-    . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>';
+    . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>');
   } 
 	
 	if ( $PluginsLoaded{'GetTimeZoneTitle'}{'timezone'} )
@@ -14594,7 +14592,7 @@ sub HTMLMainHours{
 		$tableData .= '</table>';
 	}
 
-	return &tab_head( $title, '', 'hours', $tooltip )	. $bars	. $tableData . &tab_end();
+	return &tab_head( $title, join( ' - ', @links ), 'hours', $tooltip )	. $bars	. $tableData . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -14616,20 +14614,17 @@ sub HTMLMainCountries{
 	my $count = 0;
 
 	my $title = $Message[25] . ' <small>(' . $Message[77] . ' ' . $MaxNbOf{'Domain'} . ')</small>';
-
-	my $link = XMLEncode($AWScript . ${NewLinkParams});
-	my $subtitle = '';
+	my @links = ();
 	my $map = '<div id="worldmap-wrapper"><div id="worldmap"></div></div>';
 	my $tableData = '';
 
-	# my $subtitle =  '<a href="'
-	#   . (	$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? $link . 'output=alldomains' : $StaticLinks . '.alldomains.' . $StaticExt) . '" '. $NewLinkTarget
-	#   . '>' . $Message[80] .'</a>';
+	# push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'alldomains', $Message[80]));
 	  
-  if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
+  if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
+  {
     # extend the title to include the added link
-    $subtitle .= ' - <a href="'
-    . (XMLEncode($AddLinkToExternalCGIWrapper . '?section=DOMAIN&baseName=' . $DirData/$PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig)
+    push(@links, '<a href="'
+    . XMLEncode($AddLinkToExternalCGIWrapper . '?section=DOMAIN&baseName=' . $DirData/$PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig)
     . '" '. $NewLinkTarget . '>' . $Message[179] . '</a>');
   }
 
@@ -14765,7 +14760,7 @@ sub HTMLMainCountries{
 		. '</table>';
 	}
 
-	return &tab_head( $title, $subtitle, 'countries', $tooltip)	. $map . $tableData . &tab_end();
+	return &tab_head( $title, join( ' - ', @links ), 'countries', $tooltip)	. $map . $tableData . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -14781,25 +14776,21 @@ sub HTMLMainDownloads{
 	if (!$LevelForFileTypesDetection > 0){return;}
 	if ($Debug) { debug( "ShowDownloadStats", 2 ); }
 	my $regext         = qr/\.(\w{1,6})$/;
-	# print "<a name=\"downloads\">&nbsp;</a>";
 	my $Totalh = 0;
 	if ($MaxNbOf{'DownloadsShown'} < 1){$MaxNbOf{'DownloadsShown'} = 10;}	# default if undefined
-	
+	my @links = ();
 	my $title = $Message[178] . ' ('. $Message[77] . ' ' . $MaxNbOf{'DownloadsShown'} .')';
 
-	my $link = XMLEncode($AWScript . ${NewLinkParams});
-	my $subtitle = '<a href="'
-	  . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? $link . 'output=downloads' : $StaticLinks . '.downloads.' . $StaticExt)
-	  . '" ' . $NewLinkTarget . '>' . $Message[80] . '</a>';
+	push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'downloads', $Message[80]));
 
   if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
   { # extend the title to include the added link
-    $subtitle .= '<a href="'
+    push (@links, '<a href="'
     . XMLEncode($AddLinkToExternalCGIWrapper . '?section=DOWNLOADS&baseName=' . $DirData  .'/' . $PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig)
-    . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>';
+    . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>');
   }
 	  
-	print &tab_head($title, '', 'downloads');
+	print &tab_head($title, join( ' - ', @links ), 'downloads');
 	
 	my $cnt=0;
 	for my $u (sort {$_downloads{$b}->{'AWSTATS_HITS'} <=> $_downloads{$a}->{'AWSTATS_HITS'}}(keys %_downloads) ){
@@ -14903,21 +14894,16 @@ sub HTMLMainHosts{
 	if ($Debug) { debug( 'ShowHostsStats', 2 ); }
 
 	my $title = $Message[81] . ' <small>(' . $Message[77] . ' ' . $MaxNbOf{'HostsShown'} .')</small>';
-
-	my $link = XMLEncode($AWScript . ${NewLinkParams});
-	my $subtitle =
-	'<a href="' . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? $link . 'output=allhosts' : $StaticLinks . '.allhosts.' . $StaticExt) . '" ' . $NewLinkTarget . '>'
-	. $Message[80] . '</a> - '
-	. '<a href="' . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? $link . 'output=lasthosts'	: $StaticLinks . '.lasthosts.' . $StaticExt) . '" ' . $NewLinkTarget . '>'
-	. $Message[9]	. '</a> - '
-	. '<a href="' . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks	? $link . 'output=unknownip'	: $StaticLinks . '.unknownip.' . $StaticExt) . '" ' . $NewLinkTarget . '>'
-	. $Message[45] . '</a>';
-	  
+	my @links = ();
+	
+	push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'allhosts', $Message[80]));
+	push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'lasthosts', $Message[9]));
+	push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'unknownip', $Message[45]));
+  
 	if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
 	{ # extend the title to include the added link
-    $subtitle .= ' - '
-    . '<a href="' . XMLEncode($AddLinkToExternalCGIWrapper . '?section=VISITOR&baseName=' . $DirData/$PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig) . '" ' . $NewLinkTarget . '>'
-    . $Message[179] . '</a>';
+    push(@links, '<a href="' . XMLEncode($AddLinkToExternalCGIWrapper . '?section=VISITOR&baseName=' . $DirData/$PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig) . '" ' . $NewLinkTarget . '>'
+    . $Message[179] . '</a>');
   }
 
   my $tooltip = '';
@@ -14929,7 +14915,7 @@ sub HTMLMainHosts{
 	  
 	&BuildKeyList( $MaxNbOf{'HostsShown'}, $MinHit{'Host'}, \%_host_h, \%_host_p );
 
-	print &tab_head( $title, $subtitle, 'hosts', $tooltip);
+	print &tab_head( $title, join( ' - ', @links ), 'hosts', $tooltip);
 		
 	# Graph the top five in a pie chart
 	if (scalar @keylist > 1)
@@ -15208,21 +15194,18 @@ sub HTMLMainRobots{
 
 	my $title = $Message[53] . ' <small>('. $Message[77]. ' ' . $MaxNbOf{'RobotShown'} .')</small>';
 	my $html = '';
+	my @links = ();
+
 	my $total_p = my $total_h = my $total_k = my $total_r = 0;
 
-	my $link = XMLEncode($AWScript . ${NewLinkParams});
-	my $subtitle = ' <a href="'
-		 . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks	? $link . 'output=allrobots' : $StaticLinks . '.allrobots.' . $StaticExt)
-		 . '" ' . $NewLinkTarget . '>' . $Message[80] . '</a>'
-		 . ' - <a href="'
-		 . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks	? $link . 'output=lastrobots'	: $StaticLinks . '.lastrobots.' . $StaticExt)
-		 . '" ' . $NewLinkTarget . '>' . $Message[9] . '</a>';
-
+	push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'allrobots', $Message[80]));
+	push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'lastrobots', $Message[9]));
+	
   if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
   { # extend the title to include the added link
-    $subtitle .= $title . ' - <a href="'
+    push(@links, '<a href="'
     . XMLEncode($AddLinkToExternalCGIWrapper . '?section=ROBOT&baseName=' . $DirData .'/'. $PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig)
-    . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>';
+    . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>');
   }
   
   my $TotalRRobots = 0;
@@ -15286,7 +15269,7 @@ sub HTMLMainRobots{
 		. '</tr>';
 	}
 
-	return &tab_head($title, $subtitle, 'robots',  $tooltip, '')
+	return &tab_head($title, join( ' - ', @links ), 'robots',  $tooltip, '')
 	. '<table class="data-table">'
   . '<tr><th>' . Format_Number(( scalar keys %_robot_h ))	. ' ' . $Message[51] . '</th>'
 	. (( $ShowRobotsStats =~ /H/i ) ? '<th class="bg-h">' . $Message[57] . '</th>' : '')
@@ -15440,6 +15423,8 @@ sub HTMLMainSessions{
 	. '</table>' . &tab_end();
 }
 
+
+
 #------------------------------------------------------------------------------
 # Function:     Prints the pages chart and table
 # Parameters:   $NewLinkParams, $NewLinkTarget
@@ -15450,36 +15435,30 @@ sub HTMLMainSessions{
 sub HTMLMainPages{
 	my $NewLinkParams = shift;
 	my $NewLinkTarget = shift;
-	
+
 	if ($Debug) {debug("ShowPagesStats (MaxNbOf{'PageShown'}=$MaxNbOf{'PageShown'} TotalDifferentPages=$TotalDifferentPages)",	2);}
 
 	my $regext = qr/\.(\w{1,6})$/;
 	my $title = $Message[19] . ' (' . $Message[77] . ' ' . $MaxNbOf{'PageShown'} . ')';
-	my $link = XMLEncode($AWScript . ${NewLinkParams});
-	
-	my $subtitle = '<a href="'
-	. (($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ? $link . 'output=urldetail' : $StaticLinks . '.urldetail.' . $StaticExt)
-	. '" ' . $NewLinkTarget . '>' . $Message[80] . '</a>';
+	my @links = ();
+
+	push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'urldetail', $Message[80]));
 
 	if ( $ShowPagesStats =~ /E/i )
 	{
-		$subtitle .= ' - <a href="'
-		  . (($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ? $link . 'output=urlentry' : $StaticLinks . '.urlentry.' . $StaticExt)
-		  . '" ' . $NewLinkTarget . '>' . $Message[104] . '</a>';
+		push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'urlentry', $Message[104]));
 	}
 
 	if ( $ShowPagesStats =~ /X/i )
 	{
-		$subtitle .= ' - <a href="'
-		  . (($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ? $link . 'output=urlexit' : $StaticLinks . '.urlexit.' . $StaticExt)
-		  . "\"$NewLinkTarget>$Message[116]</a>";
+		push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'urlexit', $Message[116]));
 	}
-	
+
   if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
   { # extend the title to include the added link
-    $subtitle .= ' - <a href="'
+    push(@links, '<a href="'
     . XMLEncode($AddLinkToExternalCGIWrapper . '?section=SIDER&baseName=' . $DirData . '/' . $PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig)
-    . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>';
+    . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>');
   }
 
   my $tooltip = '';
@@ -15489,7 +15468,7 @@ sub HTMLMainPages{
 		$tooltip .= &$function(19);
 	}
 
-	print &tab_head($title, $subtitle, 'urls', $tooltip);
+	print &tab_head($title, join( ' - ', @links ), 'urls', $tooltip);
 
 	print '<table>'
 	. '<tr><th>' . Format_Number($TotalDifferentPages) . ' ' . $Message[28] .'</th>';
@@ -15530,7 +15509,7 @@ sub HTMLMainPages{
 		}
 	}
 	foreach my $key (@keylist) {
-		print "<tr><td class=\"aws\">";
+		print "<tr><td>";
 		print &HTMLShowURLInfo($key);
 		print "</td>";
 		my $bredde_p = 0;
@@ -15696,20 +15675,16 @@ sub HTMLMainOS{
 	}
 
 	my $title = $Message[59] . ' (' . $Message[77] . ' ' . $MaxNbOf{'OsShown'} . ')';
+	my @links = ();
 
-	my $link = XMLEncode($AWScript . ${NewLinkParams});
-	my $subtitle = ' <a href="'
-	  . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? $link . 'output=osdetail' : $StaticLinks . '.osdetail.' . $StaticExt)
-	  . '" '. $NewLinkTarget . '>' . $Message[80] . '/' . $Message[58] .'</a>'
-	  . ' - <a href="'
-	  . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? $link . 'output=unknownos' : $StaticLinks . '.unknownos.' . $StaticExt)
-	  . '" ' . $NewLinkTarget . '>' . $Message[0] . '</a>';
-	  
-  if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
+	push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'osdetail', $Message[80] . '/' . $Message[58]));
+	push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'unknownos', $Message[0]));
+
+	if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
   { # extend the title to include the added link
-    $subtitle .= ' - <a href="'
+    push(@links, '<a href="'
     . XMLEncode($AddLinkToExternalCGIWrapper . '?section=OS&baseName=' . $DirData . '/' . $PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig)
-    . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>';
+    . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>');
   }
 
   my $tooltip = '';
@@ -15719,7 +15694,7 @@ sub HTMLMainOS{
 		$tooltip .= &$function(19);
 	}
 
-	print &tab_head($title, $subtitle, 'os', $tooltip);
+	print &tab_head($title, join( ' - ', @links ), 'os', $tooltip);
 	
 	&BuildKeyList( $MaxNbOf{'OsShown'}, $MinHit{'Os'}, \%new_os_h,
 		\%new_os_p );
@@ -15861,21 +15836,17 @@ sub HTMLMainBrowsers{
 		$new_browser_p{$key} += $_browser_p{$key};
 	}
 	my $title = $Message[21] . ' (' . $Message[77] . ' ' . $MaxNbOf{'BrowsersShown'} .')';
+	my @links = ();
 
-	my $link = XMLEncode($AWScript . ${NewLinkParams});
-	my $subtitle = '<a href="'
-	  . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? $link . 'output=browserdetail' : $StaticLinks . '.browserdetail.' . $StaticExt)
-	  . '" ' . $NewLinkTarget . '>' . $Message[80] . '/' . $Message[58] . '</a>'
-	  . ' - <a href="'
-	  . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? $link . 'output=unknownbrowser' : $StaticLinks . '.unknownbrowser.' . $StaticExt)
-	  . '" ' . $NewLinkTarget . '>' . $Message[0] . '</a>';
+	push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'browserdetail', $Message[80] . '/' . $Message[58]));
+	push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'unknownbrowser', $Message[0]));
 	  
-    if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) ) {
-       # extend the title to include the added link
-           $subtitle .= ' - <a href="'
-           . XMLEncode($AddLinkToExternalCGIWrapper . '?section=BROWSER&baseName=' . $DirData . '/' . $PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig)
-           . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>';
-    }
+  if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
+  { # extend the title to include the added link
+    push(@links, '<a href="'
+    . XMLEncode($AddLinkToExternalCGIWrapper . '?section=BROWSER&baseName=' . $DirData . '/' . $PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig)
+    . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>');
+  }
 
   my $tooltip = '';
 	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
@@ -15884,7 +15855,7 @@ sub HTMLMainBrowsers{
 		$tooltip .= &$function(19);
 	}
 
-	print &tab_head($title, $subtitle, 'browsers',  $tooltip);
+	print &tab_head($title, join( ' - ', @links ), 'browsers',  $tooltip);
 	
 	&BuildKeyList(
 		$MaxNbOf{'BrowsersShown'}, $MinHit{'Browser'},
@@ -16082,13 +16053,13 @@ sub HTMLMainReferrers{
 	}
 
   my $title = $Message[36];
-  my $subtitle = '';
+  my @links = ();
 
   if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
   { # extend the title to include the added link
-    $subtitle = '<a href="'
+    push(@links, '<a href="'
     . XMLEncode($AddLinkToExternalCGIWrapper . '?section=ORIGIN&baseName=' . $DirData . '/' . $PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig)
-    . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>';
+    . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>');
   }
 
 	my $tooltip = '';
@@ -16098,7 +16069,7 @@ sub HTMLMainReferrers{
 		$tooltip .= &$function(19);
 	}
 
-	print &tab_head($title, $subtitle, 'referer', $tooltip);
+	print &tab_head($title, join( ' - ', @links ), 'referer', $tooltip);
 
 	my @p_p = ( 0, 0, 0, 0, 0, 0 );
 	if ( $Totalp > 0 ) {
@@ -16351,8 +16322,7 @@ sub HTMLMainKeys{
 	# 	print "<a name=\"keywords\">&nbsp;</a>";
 	
 	my $title = '';
-	my $subtitle = '';
-	
+	my @links = ();
 
 	if ($ShowKeyphrasesStats)
 	{
@@ -16360,11 +16330,8 @@ sub HTMLMainKeys{
 
 		$title = $Message[120] . ' (' . $Message[77] . ' ' . $MaxNbOf{'KeyphrasesShown'} . ')';
 
-		my $link = XMLEncode($AWScript . ${NewLinkParams});
-		$subtitle = '<a href="'
-		. ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? $link . 'output=keyphrases' : $StaticLinks . '.keyphrases.' . $StaticExt)
-		. '" ' . $NewLinkTarget . '>' . $Message[80] . '</a>';
-
+		push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'keyphrases', $Message[80]));
+		
 		my $tooltip = '';
 		foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
 		{
@@ -16372,7 +16339,7 @@ sub HTMLMainKeys{
 			$tooltip .= &$function(19);
 		}
 
-		print &tab_head($title, $subtitle, 'keyphrases', $tooltip);
+		print &tab_head($title, join( ' - ', @links ), 'keyphrases', $tooltip);
 		
 		print '<table class="data-table">'
 		. "<tr bgcolor=\"#$color_TableBGRowTitle\""
@@ -16427,9 +16394,9 @@ sub HTMLMainKeys{
 		if ($Debug) { debug( "ShowKeywordsStats", 2 ); }
 
 		$title = $Message[121] . ' (' . $Message[77] . ' ' . $MaxNbOf{'KeywordsShown'} . ')';
-		$subtitle = '<a href="'
-		. ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ? XMLEncode($AWScript . ${NewLinkParams} . 'output=keywords') : $StaticLinks . '.keywords.' . $StaticExt)
-		. '" ' . $NewLinkTarget . '>' . $Message[80] . '</a>';
+		my @links = ();
+
+		push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'keywords', $Message[80]));
 		
 		my $tooltip = '';
 		foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
@@ -16438,7 +16405,7 @@ sub HTMLMainKeys{
 			$tooltip .= &$function(19);
 		}
 
-		print &tab_head($title, $subtitle, 'keywords', $tooltip);
+		print &tab_head($title, join( ' - ', @links ), 'keywords', $tooltip);
 
 		print '<table class="data-table">'
 		. "<tr bgcolor=\"#$color_TableBGRowTitle\""
@@ -16580,13 +16547,13 @@ sub HTMLMainHTTPStatus{
 	if ($Debug) { debug( "ShowHTTPErrorsStats", 2 ); }
 	# print "<a name=\"errors\">&nbsp;</a>";
 	my $title = $Message[32];
-	my $subtitle = '';
+	my @links = ();
 
   if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
   { # extend the title to include the added link
-    $subtitle = '<a href="'
+    push(@links, '<a href="'
     . XMLEncode($AddLinkToExternalCGIWrapper . '?section=ERRORS&baseName=' . $DirData . '/' . $PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig)
-    . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>';
+    . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>');
   }
 
 	my $tooltip = '';
@@ -16596,10 +16563,9 @@ sub HTMLMainHTTPStatus{
 		$tooltip .= &$function(19);
 	}
 
-	print &tab_head($title, $subtitle, 'errors', $tooltip, '*' . $Message[154]);
+	print &tab_head($title, join( ' - ', @links ), 'errors', $tooltip, '*' . $Message[154]);
 	
 	&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_errors_h, \%_errors_h );
-
 
 	print '<table class="data-table">';
 
@@ -16633,18 +16599,12 @@ sub HTMLMainHTTPStatus{
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[32]*</th><th class=\"bg-h\" width=\"80\">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th><th class=\"bg-k\" width=\"80\">$Message[75]</th></tr>\n";
 	my $total_h = 0;
 	my $count = 0;
-	foreach my $key (@keylist) {
+	foreach my $key (@keylist)
+	{
 		my $p = int( $_errors_h{$key} / $TotalHitsErrors * 1000 ) / 10;
 		print "<tr" . Tooltip( $key, $key ) . ">";
 		if ( $TrapInfosForHTTPErrorCodes{$key} ) {
-			print "<td><a href=\""
-			  . (
-				$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
-				? XMLEncode(
-					"$AWScript${NewLinkParams}output=errors$key")
-				: "$StaticLinks.errors$key.$StaticExt"
-			  )
-			  . "\"$NewLinkTarget>$key</a></td>";
+			print '<td>' . HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'errors', $key) . '</td>';
 		}
 		else { print "<td>$key</td>"; }
 		print "<td class=\"aws\">"
