@@ -15899,6 +15899,9 @@ sub HTMLMainBrowsers{
 # Return:       string
 #------------------------------------------------------------------------------
 sub HTMLMainScreenSize{
+
+	#TODO add devicePixelRatio
+
 	if ($Debug) { debug( "ShowScreenSizeStats", 2 ); }
 
 	my $Totalh = 0;
