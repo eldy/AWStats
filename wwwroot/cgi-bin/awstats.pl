@@ -15634,9 +15634,11 @@ sub HTMLMainOS{
 			$p_p = int( $new_os_p{$key} / $Totalp * 1000 ) / 10;
 		}
 
+		$dataTableBody .= '<tr>';
+
 		if ( $key eq 'Unknown' )
 		{
-			$dataTableBody .= '<tr><td>' . $Message[0] . ' <img src="' . $DirIcons . '/os/unknown.png" /></td>'
+			$dataTableBody .= '<td>' . $Message[0] . ' <img src="' . $DirIcons . '/os/unknown.png" /></td>'
 			. HTMLDataCellWithBar('p', $_os_p{$key}, '<small>' . $p_p . '%</small> ' . Format_Number($_os_p{$key}), $Totalp)
 			. HTMLDataCellWithBar('h', $_os_h{$key}, '<small>' . $p_h . '%</small> ' . Format_Number($_os_h{$key}), $Totalh);
 		}
@@ -15644,8 +15646,7 @@ sub HTMLMainOS{
 		{
 			my $keywithoutcumul = $key;
 			$keywithoutcumul =~ s/cumul$//i;
-			my $libos = $OSHashLib{$keywithoutcumul}
-			  || $keywithoutcumul;
+			my $libos = $OSHashLib{$keywithoutcumul} || $keywithoutcumul;
 			my $nameicon = $keywithoutcumul;
 			$nameicon =~ s/[^\w]//g;
 
@@ -15653,10 +15654,13 @@ sub HTMLMainOS{
 			{
 				$libos = "<b>" . $OSFamily{$keywithoutcumul} . "</b>";
 			}
-			$dataTableBody .= '<tr><td>' . $libos . ' <img src="' . $DirIcons . '/os/' . $nameicon . '.png" /></td>'
+			$dataTableBody .= '<td>' . $libos . ' <img src="' . $DirIcons . '/os/' . $nameicon . '.png" /></td>'
 			. HTMLDataCellWithBar('p', $new_os_p{$key}, '<small>' . $p_p . '%</small> ' . Format_Number($new_os_p{$key}), $Totalp)
 			. HTMLDataCellWithBar('h', $new_os_h{$key}, '<small>' . $p_h . '%</small> ' . Format_Number($new_os_h{$key}), $Totalh);
 		}
+
+		$dataTableBody .= '</tr>';
+
 		$total_h += $new_os_h{$key};
 		$total_p += $new_os_p{$key};
 	}
@@ -15685,27 +15689,31 @@ sub HTMLMainOS{
 }
 
 #------------------------------------------------------------------------------
-# Function:     Prints the Browsers chart and table
+# Function:     Return the Browsers chart and table
 # Parameters:   $NewLinkParams, $NewLinkTarget
 # Input:        -
-# Output:       HTML
-# Return:       -
+# Output:       -
+# Return:       string
 #------------------------------------------------------------------------------
 sub HTMLMainBrowsers{
+	if ($Debug) { debug( "ShowBrowsersStats", 2 ); }
+
 	my $NewLinkParams = shift;
 	my $NewLinkTarget = shift;
 	
-	if ($Debug) { debug( "ShowBrowsersStats", 2 ); }
-	# print "<a name=\"browsers\">&nbsp;</a>";
-	my $Totalh        = 0;
-	my $Totalp        = 0;
-	my %new_browser_h = ();
-	my %new_browser_p = ();
-  BROWSERLOOP: foreach my $key ( keys %_browser_h ) {
+	my $Totalh = my $Totalp = my $total_h = my $total_p = 0;
+	my %new_browser_h = my %new_browser_p = my @links = ();
+	my $tooltip = my $dataTableHeader = my $dataTableBody = my $graph = '';
+	my $title = $Message[21] . ' (' . $Message[77] . ' ' . $MaxNbOf{'BrowsersShown'} .')';
+
+  BROWSERLOOP: foreach my $key ( keys %_browser_h )
+  {
 		$Totalh += $_browser_h{$key};
 		$Totalp += $_browser_p{$key};
-		foreach my $family ( keys %BrowsersFamily ) {
-			if ( $key =~ /^$family/i ) {
+		foreach my $family ( keys %BrowsersFamily )
+		{
+			if ( $key =~ /^$family/i )
+			{
 				$new_browser_h{"${family}cumul"} += $_browser_h{$key};
 				$new_browser_p{"${family}cumul"} += $_browser_p{$key};
 				next BROWSERLOOP;
@@ -15714,12 +15722,10 @@ sub HTMLMainBrowsers{
 		$new_browser_h{$key} += $_browser_h{$key};
 		$new_browser_p{$key} += $_browser_p{$key};
 	}
-	my $title = $Message[21] . ' (' . $Message[77] . ' ' . $MaxNbOf{'BrowsersShown'} .')';
-	my @links = ();
 
 	push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'browserdetail', $Message[80] . '/' . $Message[58]));
 	push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'unknownbrowser', $Message[0]));
-	  
+  
   if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
   { # extend the title to include the added link
     push(@links, '<a href="'
@@ -15727,31 +15733,24 @@ sub HTMLMainBrowsers{
     . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>');
   }
 
-  my $tooltip = '';
 	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
 	{
 		my $function = "getTooltip_$pluginname";
 		$tooltip .= &$function(19);
 	}
 
-	print &tab_head($title, join( ' - ', @links ), 'browsers',  $tooltip);
+	&BuildKeyList($MaxNbOf{'BrowsersShown'}, $MinHit{'Browser'}, \%new_browser_h, \%new_browser_p);
 	
-	&BuildKeyList(
-		$MaxNbOf{'BrowsersShown'}, $MinHit{'Browser'},
-		\%new_browser_h,           \%new_browser_p
-	);
-	
-	print '<table class="data-table" class="data-table">';
-
-	# Graph the top five in a pie chart
-	if (scalar @keylist > 1){
+	if (scalar @keylist > 1)
+	{ # Graph the top five in a pie chart
 		foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
 		{
 			my @blocklabel = ();
 			my @valdata = ();
 			my @valcolor = ($color_p);
 			my $cnt = 0;
-			foreach my $key (@keylist) {
+			foreach my $key (@keylist)
+			{
 				push @valdata, int(  $new_browser_h{$key} / $TotalHits * 1000 ) / 10;
 				if ($key eq 'Unknown'){push @blocklabel, "$key"; }
 				else{
@@ -15769,91 +15768,89 @@ sub HTMLMainBrowsers{
 				$cnt++;
 				if ($cnt > 4) { last; }
 			}
-			print "<tr><td colspan=\"5\">";
+			
 			my $function = "ShowGraph_$pluginname";
-			&$function(
-				"Top 5 Browsers",       "browsers",
-				0, 						\@blocklabel,
-				0,           			\@valcolor,
-				0,              		0,
-				0,          			\@valdata
-			);
-			print "</td></tr>";
+			$graph .= '<div>'
+			. &$function(
+				"Top 5 Browsers", "browsers",
+				0, \@blocklabel,
+				0, \@valcolor,
+				0, 0,
+				0, \@valdata
+			)
+			. '</div>';
 		}
 	}
-	print
-"<tr bgcolor=\"#$color_TableBGRowTitle\"><th width=\"$WIDTHCOLICON\">&nbsp;</th><th>$Message[21]</th><th width=\"80\">$Message[111]</th><th class=\"bg-p\" width=\"80\">" . ucfirst($Message[28]) . "</th><th class=\"bg-p\" width=\"80\">$Message[15]</th><th class=\"bg-h\" width=\"80\">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th></tr>\n";
-	my $total_h = 0;
-	my $total_p = 0;
-	my $count = 0;
-	foreach my $key (@keylist) {
-		my $p_h = '&nbsp;';
-		my $p_p = '&nbsp;';
-		if ($Totalh) {
+	
+	$dataTableHeader .= '<thead><tr><th></th>'
+	. '<th class="bg-p">' . ucfirst($Message[28]) . '</th>'
+	. '<th class="bg-h">' . $Message[57] . '</th>'
+	. '</tr></thead>';
+
+	$dataTableBody .= '<tbody>';
+
+	foreach my $key (@keylist)
+	{
+		my $p_h = my $p_p = '';
+		if ($Totalh)
+		{
 			$p_h = int( $new_browser_h{$key} / $Totalh * 1000 ) / 10;
-			$p_h = "$p_h %";
 		}
-		if ($Totalp) {
+		if ($Totalp)
+		{
 			$p_p = int( $new_browser_p{$key} / $Totalp * 1000 ) / 10;
-			$p_p = "$p_p %";
 		}
-		if ( $key eq 'Unknown' ) {
-			print "<tr><td"
-			  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
-			  . "><img src=\"$DirIcons\/browser\/unknown.png\""
-			  . AltTitle("")
-			  . " /></td><td class=\"aws\"><span style=\"color: #$color_other\">$Message[0]</span></td><td width=\"80\">?</td>"
-			  . "<td>".Format_Number($_browser_p{$key})."</td><td>$p_p</td>"
-			  . "<td>".Format_Number($_browser_h{$key})."</td><td>$p_h</td></tr>\n";
+
+		$dataTableBody .= '<tr>';
+
+		if ( $key eq 'Unknown' )
+		{
+			$dataTableBody .= '<tr><td>' . $Message[0] . ' <img src="' . $DirIcons . '/browser/unknown.png"/></td>'
+			. HTMLDataCellWithBar('p', $_browser_p{$key}, '<small>' . $p_p . '%</small> ' . Format_Number($_browser_p{$key}), $Totalp)
+			. HTMLDataCellWithBar('h', $_browser_h{$key}, '<small>' . $p_h . '%</small> ' . Format_Number($_browser_h{$key}), $Totalh);
 		}
-		else {
+		else
+		{
 			my $keywithoutcumul = $key;
 			$keywithoutcumul =~ s/cumul$//i;
-			my $libbrowser = $BrowsersHashIDLib{$keywithoutcumul}
-			  || $keywithoutcumul;
-			my $nameicon = $BrowsersHashIcon{$keywithoutcumul}
-			  || "notavailable";
-			if ( $BrowsersFamily{$keywithoutcumul} ) {
+			my $libbrowser = $BrowsersHashIDLib{$keywithoutcumul} || $keywithoutcumul;
+			my $nameicon = $BrowsersHashIcon{$keywithoutcumul} || 'notavailable';
+			if ( $BrowsersFamily{$keywithoutcumul} )
+			{
 				$libbrowser = "<b>$libbrowser</b>";
 			}
-			print "<tr><td"
-			  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
-			  . "><img src=\"$DirIcons\/browser\/$nameicon.png\""
-			  . AltTitle("")
-			  . " /></td><td class=\"aws\">"
-			  . ( $PageDir eq 'rtl' ? "<span dir=\"ltr\">" : "" )
-			  . "$libbrowser"
-			  . ( $PageDir eq 'rtl' ? "</span>" : "" )
-			  . "</td><td>"
-			  . (
-				$BrowsersHereAreGrabbers{$key}
-				? "<b>$Message[112]</b>"
-				: "$Message[113]"
-			  )
-			  . "</td><td>".Format_Number($new_browser_p{$key})."</td><td>$p_p</td><td>".Format_Number($new_browser_h{$key})."</td><td>$p_h</td></tr>\n";
+
+			$dataTableBody .= '<tr><td' . ( $PageDir eq 'rtl' ? ' dir="ltr"' : '' ) . '>'
+			. (($BrowsersHereAreGrabbers{$key} ? '<small>(' . $Message[111] . ')</small> '	: '' ))
+			. $libbrowser	. ' <img src="' . $DirIcons . '/browser/' . $nameicon . '.png"/></td>'
+			. HTMLDataCellWithBar('p', $new_browser_p{$key}, '<small>' . $p_p . '%</small> ' . Format_Number($new_browser_p{$key}), $Totalp)
+			. HTMLDataCellWithBar('h', $new_browser_h{$key}, '<small>' . $p_h . '%</small> ' . Format_Number($new_browser_h{$key}), $Totalh);
 		}
+
+		$dataTableBody .= '</tr>';
+
 		$total_h += $new_browser_h{$key};
 		$total_p += $new_browser_p{$key};
-		$count++;
 	}
+
 	if ($Debug) {
 		debug( "Total real / shown : $Totalh / $total_h", 2 );
 	}
+
 	my $rest_h = $Totalh - $total_h;
 	my $rest_p = $Totalp - $total_p;
-	if ( $rest_h > 0 ) {
-		my $p_p = 0.0;
-		my $p_h;
+	if ( $rest_h > 0 )
+	{
+		my $p_p = my $p_h = 0;
 		if ($Totalh) { $p_h = int( $rest_h / $Totalh * 1000 ) / 10; }
 		if ($Totalp) { $p_p = int( $rest_p / $Totalp * 1000 ) / 10; }
-		print "<tr>";
-		print "<td>&nbsp;</td>";
-		print
-"<td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td><td>&nbsp;</td><td>$rest_p</td>";
-		print "<td>$p_p %</td><td>$rest_h</td><td>$p_h %</td></tr>\n";
+		$dataTableBody .= '<tr><td>' . $Message[2] . '</td>'
+		. '<td><small>' . $p_p . '%</small> ' . $rest_p . '</td>'
+		. '<td><small>' . $p_p . '%</small> ' . $rest_h . '</td></tr>';
 	}
 
-	print '</table>' . &tab_end();
+	return &tab_head($title, join( ' - ', @links ), 'browsers',  $tooltip)
+	. $graph . '<table class="data-table">' . $dataTableHeader . $dataTableBody . '</table>' . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -21213,7 +21210,7 @@ if ( scalar keys %HTMLOutput ) {
 		# BY BROWSER
 		#----------------------------
 		if ($ShowBrowsersStats) {
-			&HTMLMainBrowsers($NewLinkParams, $NewLinkTarget);
+			print &HTMLMainBrowsers($NewLinkParams, $NewLinkTarget);
 		}
 
 		# BY REFERENCE
