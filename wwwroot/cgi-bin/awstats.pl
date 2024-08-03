@@ -14792,16 +14792,23 @@ sub HTMLMainCountries{
 # Return:       -
 #------------------------------------------------------------------------------
 sub HTMLMainDownloads{
-	my $NewLinkParams = shift;
-	my $NewLinkTarget = shift;
 	if (!$LevelForFileTypesDetection > 0){return;}
 	if ($Debug) { debug( "ShowDownloadStats", 2 ); }
-	my $regext         = qr/\.(\w{1,6})$/;
-	my $Totalh = 0;
-	if ($MaxNbOf{'DownloadsShown'} < 1){$MaxNbOf{'DownloadsShown'} = 10;}	# default if undefined
-	my @links = ();
-	my $title = $Message[178] . ' ('. $Message[77] . ' ' . $MaxNbOf{'DownloadsShown'} .')';
 
+	my $NewLinkParams = shift;
+	my $NewLinkTarget = shift;
+
+	my $TopFiveTotalh = my $total_h = my $total_206 = my $max_k = my $max_average_k = 0;
+	my @links = ();
+	my $chart = my $dataTable = '';
+	
+	my $title = $Message[178] . ' ('. $Message[77] . ' ' . $MaxNbOf{'DownloadsShown'} .')';
+	my @sortedDlKeys = (sort {$_downloads{$a}->{'AWSTATS_SIZE'} <=> $_downloads{$b}->{'AWSTATS_SIZE'}}(keys %_downloads));
+	my @sorted_MaxNbOf_DlKeys = (scalar keys @sortedDlKeys > $MaxNbOf{'DownloadsShown'}) ? @sortedDlKeys[0..($MaxNbOf{'DownloadsShown'} - 1)] : @sortedDlKeys;
+	my @sorted_TopFive_DlKeys = (scalar keys @sortedDlKeys > $MaxNbOf{'DownloadsShown'}) ? @sortedDlKeys[0..4] : @sortedDlKeys;
+
+	if ($MaxNbOf{'DownloadsShown'} < 1){$MaxNbOf{'DownloadsShown'} = 10;}	# default if undefined
+	
 	push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'downloads', $Message[80]));
 
   if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
@@ -14810,95 +14817,75 @@ sub HTMLMainDownloads{
     . XMLEncode($AddLinkToExternalCGIWrapper . '?section=DOWNLOADS&baseName=' . $DirData  .'/' . $PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig)
     . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>');
   }
-	  
-	print &tab_head($title, join( ' - ', @links ), 'downloads');
-	
-	my $cnt=0;
-	for my $u (sort {$_downloads{$b}->{'AWSTATS_HITS'} <=> $_downloads{$a}->{'AWSTATS_HITS'}}(keys %_downloads) ){
-		$Totalh += $_downloads{$u}->{'AWSTATS_HITS'};
-		$cnt++;
-		if ($cnt > 4){last;}
-	}
-
-	print '<table class="data-table">';
 
 	# Graph the top five in a pie chart
-	if (($Totalh > 0) and (scalar keys %_downloads > 1)){
-		foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
-		{
-			my @blocklabel = ();
-			my @valdata = ();
-			my @valcolor = ($color_p);
-			my $cnt = 0;
-			for my $u (sort {$_downloads{$b}->{'AWSTATS_HITS'} <=> $_downloads{$a}->{'AWSTATS_HITS'}}(keys %_downloads) ){
-				push @valdata, ($_downloads{$u}->{'AWSTATS_HITS'} / $Totalh * 1000 ) / 10;
-				push @blocklabel, Get_Filename($u);
-				$cnt++;
-				if ($cnt > 4) { last; }
-			}
-			my $columns = 2;
-			if ($ShowDownloadsStats =~ /H/i){$columns += length($ShowDownloadsStats)+1;}
-			else{$columns += length($ShowDownloadsStats);}
-			print "<tr><td colspan=\"$columns\">";
-			my $function = "ShowGraph_$pluginname";
-			&$function(
-				"$Message[80]",              "downloads",
-				0, 						\@blocklabel,
-				0,           			\@valcolor,
-				0,              		0,
-				0,          			\@valdata
-			);
-			print "</td></tr>";
-		}
-	}
-	
-	my $total_dls = scalar keys %_downloads;
-	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[178]: $total_dls</th>";
-	if ( $ShowDownloadsStats =~ /H/i ){print "<th class=\"bg-h\" width=\"80\">$Message[57]</th>"
-		."<th class=\"bg-h\" width=\"80\">206 $Message[57]</th>"; }
-	if ( $ShowDownloadsStats =~ /B/i ){
-		print "<th class=\"bg-k\" width=\"80\">$Message[75]</th>";
-		print "<th class=\"bg-k\" width=\"80\">$Message[106]</th>"; 
-	}
-	print "</tr>\n";
-	my $count   = 0;
-	for my $u (sort {$_downloads{$b}->{'AWSTATS_HITS'} <=> $_downloads{$a}->{'AWSTATS_HITS'}}(keys %_downloads) ){
-		print "<tr>";
-		my $ext = Get_Extension($regext, $u);
-		if ( !$ext) {
-			print "<td"
-			  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
-			  . "><img src=\"$DirIcons\/mime\/unknown.png\""
-			  . AltTitle("")
-			  . " /></td>";
-		}
-		else {
-			my $nameicon = $MimeHashLib{$ext}[0] || "notavailable";
-			my $nametype = $MimeHashFamily{$MimeHashLib{$ext}[0]} || "&nbsp;";
-			print "<td"
-			  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
-			  . "><img src=\"$DirIcons\/mime\/$nameicon.png\""
-			  . AltTitle("")
-			  . " /></td>";
-		}
-		print "<td class=\"aws\">";
-		print &HTMLShowURLInfo($u);
-		print "</td>";
-		if ( $ShowDownloadsStats =~ /H/i ){
-			print "<td>".Format_Number($_downloads{$u}->{'AWSTATS_HITS'})."</td>";
-			print "<td>".Format_Number($_downloads{$u}->{'AWSTATS_206'})."</td>";
-		}
-		if ( $ShowDownloadsStats =~ /B/i ){
-			print "<td>".Format_Bytes($_downloads{$u}->{'AWSTATS_SIZE'})."</td>";
-			print "<td>".Format_Bytes(($_downloads{$u}->{'AWSTATS_SIZE'}/
-					($_downloads{$u}->{'AWSTATS_HITS'} + $_downloads{$u}->{'AWSTATS_206'})))."</td>";
-		}
-		print "</tr>\n";
-		$count++;
-		if ($count >= $MaxNbOf{'DownloadsShown'}){last;}
+	for my $u (keys @sorted_TopFive_DlKeys)
+	{
+		$TopFiveTotalh += $_downloads{$sorted_TopFive_DlKeys[$u]}->{'AWSTATS_HITS'};
 	}
 
-	print '</table>' . &tab_end();
+	if (($TopFiveTotalh > 0) and (scalar keys %_downloads > 1))
+	{
+		foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
+		{
+			my $function = "ShowGraph_$pluginname";
+			my @blocklabel = my @valdata = ();
+			my @valcolor = ($color_p);
+
+			for my $u ((keys @sorted_TopFive_DlKeys) )
+			{
+				push @valdata, ($_downloads{$u}->{'AWSTATS_HITS'} / $TopFiveTotalh * 1000 ) / 10;
+				push @blocklabel, Get_Filename($u);
+			}
+			
+			$chart .= '<div>'
+			. &$function(
+				$Message[80], 'downloads',
+				0,            \@blocklabel,
+				0,            \@valcolor,
+				0,            0,
+				0,            \@valdata
+			)
+			. '</div>';
+		}
+	}
+
+	for my $u (%_downloads)
+	{
+		$total_h += ($u ne '/robots.txt') ? ($_downloads{$u}->{'AWSTATS_HITS'} || 0) : 0;
+		$total_206 += $_downloads{$u}->{'AWSTATS_206'} || 0;
+		$max_k = ($_downloads{$u}->{'AWSTATS_SIZE'} > $max_k) ? $_downloads{$u}->{'AWSTATS_SIZE'} : $max_k;
+		$max_average_k = ($_downloads{$u}->{'AWSTATS_SIZE'} > $max_average_k) ? $_downloads{$u}->{'AWSTATS_SIZE'} / ($_downloads{$u}->{'AWSTATS_HITS'} + $_downloads{$u}->{'AWSTATS_206'}) : $max_average_k;
+	}
+	
+	$dataTable .= '<thead><tr><th>' . (scalar keys %_downloads) . ' ' .$Message[178] . '</th>'
+	. (( $ShowDownloadsStats =~ /H/i ) ? '<th class="bg-h">' . $Message[57] . '</th><th class="bg-h">206 ' . $Message[57] .'</th>' :'')
+	. (( $ShowDownloadsStats =~ /B/i ) ? '<th class="bg-b">' . $Message[75] . '</th><th class="bg-b">' . $Message[106] . '</th>':'')
+	. '</tr></thead>';
+
+	for my $u (@sorted_MaxNbOf_DlKeys)
+	{
+		my $ext = Get_Extension(qr/\.(\w{1,6})$/, $u);
+		my $img = ' <img src="' . $DirIcons . '/mime/unknown.png />';
+		my $nameicon = my $nametype = '';
+		my $average = $_downloads{$u}->{'AWSTATS_SIZE'} / ($_downloads{$u}->{'AWSTATS_HITS'} + $_downloads{$u}->{'AWSTATS_206'});
+
+		if($ext){
+			$nameicon = $MimeHashLib{$ext}[0] || 'notavailable';
+			$nametype = $MimeHashFamily{$MimeHashLib{$ext}[0]} || '';
+			$img = ' <img src="' . $DirIcons . '/mime/' . $nameicon . '.png" />';
+		}
+
+		$dataTable .= '<tr><td><small>(' . $nametype . ')</small>&nbsp; ' . &HTMLShowURLInfo($u) . ' ' . $img . '</td>'
+		. (( $ShowDownloadsStats =~ /H/i ) ? HTMLDataCellWithBar('h', $_downloads{$u}->{'AWSTATS_HITS'}, Format_Number($_downloads{$u}->{'AWSTATS_HITS'}), $total_h) : '')
+		. (( $ShowDownloadsStats =~ /H/i ) ? HTMLDataCellWithBar('h', $_downloads{$u}->{'AWSTATS_206'}, Format_Number($_downloads{$u}->{'AWSTATS_206'}), $total_206) : '')
+		. (( $ShowDownloadsStats =~ /B/i ) ? HTMLDataCellWithBar('b', $_downloads{$u}->{'AWSTATS_SIZE'}, Format_Bytes($_downloads{$u}->{'AWSTATS_SIZE'}), $max_k) : '')
+		. (( $ShowDownloadsStats =~ /B/i ) ? HTMLDataCellWithBar('b', $average, Format_Bytes($average), $max_average_k) : '')
+		. '</tr>';
+	}
+
+	return &tab_head($title, join( ' - ', @links ), 'downloads') . $chart
+	. '<table class="data-table">' . $dataTable . '</table>' . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -15493,7 +15480,7 @@ sub HTMLMainPages{
 		$tooltip .= &$function(19);
 	}
 	
-	$tableHeader .= '<tr><th>' . Format_Number($TotalDifferentPages) . ' ' . $Message[28] .'</th>'
+	$tableHeader .= '<thead><tr><th>' . Format_Number($TotalDifferentPages) . ' ' . $Message[28] .'</th>'
 	. (( $ShowPagesStats =~ /P/i && $LogType ne 'F' ) ? '<th class="bg-p">' . $Message[29] .'</th>' : '')
 	. (( $ShowPagesStats =~ /[PH]/i && $LogType eq 'F' ) ? '<th class="bg-h">' . $Message[57] . '</th>' : '')
 	. (( $ShowPagesStats =~ /B/i ) ? '<th class="bg-b">' . $Message[106] . '</th>' : '')
@@ -15507,7 +15494,7 @@ sub HTMLMainPages{
 		$tableHeader .= &$function('title');
 	}
 
-	$tableHeader .= '</tr>';
+	$tableHeader .= '</tr></thead>';
 
 	&BuildKeyList( $MaxNbOf{'PageShown'}, $MinHit{'File'}, \%_url_p, \%_url_p );
 
@@ -21179,7 +21166,7 @@ if ( scalar keys %HTMLOutput ) {
 		# BY DOWNLOADS
 		#-------------------------
 		if ($ShowDownloadsStats) {
-			&HTMLMainDownloads($NewLinkParams, $NewLinkTarget);
+			print &HTMLMainDownloads($NewLinkParams, $NewLinkTarget);
 		}
 
 		print '<hr>';
