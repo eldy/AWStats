@@ -15524,11 +15524,11 @@ sub HTMLMainPages{
 }
 
 #------------------------------------------------------------------------------
-# Function:     Prints the OS chart and table
+# Function:     Return the OS chart and table
 # Parameters:   $NewLinkParams, $NewLinkTarget
 # Input:        -
-# Output:       HTML
-# Return:       -
+# Output:       -
+# Return:       string
 #------------------------------------------------------------------------------
 sub HTMLMainOS{
 	if ($Debug) { debug( "ShowOSStats", 2 ); }
@@ -15536,14 +15536,20 @@ sub HTMLMainOS{
 	my $NewLinkParams = shift;
 	my $NewLinkTarget = shift;
 
-	my $Totalh   = my $Totalp   = 0;
-	my $total_h = my $total_p = my $count = 0;
+	my $Totalh = my $Totalp = 0;
+	my $total_h = my $total_p = 0;
 	my @links = my %new_os_h = my %new_os_p = ();
-  OSLOOP: foreach my $key ( keys %_os_h ) {
+	my $tooltip = my $dataTableHeader = my $dataTableBody = my $graph = '';
+	my $title = $Message[59] . ' (' . $Message[77] . ' ' . $MaxNbOf{'OsShown'} . ')';
+
+  OSLOOP: foreach my $key ( keys %_os_h )
+  {
 		$Totalh += $_os_h{$key};
 		$Totalp += $_os_p{$key};
-		foreach my $family ( keys %OSFamily ) {
-			if ( $key =~ /^$family/i ) {
+		foreach my $family ( keys %OSFamily )
+		{
+			if ( $key =~ /^$family/i )
+			{
 				$new_os_h{"${family}cumul"} += $_os_h{$key};
 				$new_os_p{"${family}cumul"} += $_os_p{$key};
 				next OSLOOP;
@@ -15552,8 +15558,6 @@ sub HTMLMainOS{
 		$new_os_h{$key} += $_os_h{$key};
 		$new_os_p{$key} += $_os_p{$key};
 	}
-
-	my $title = $Message[59] . ' (' . $Message[77] . ' ' . $MaxNbOf{'OsShown'} . ')';
 
 	push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'osdetail', $Message[80] . '/' . $Message[58]));
 	push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'unknownos', $Message[0]));
@@ -15564,27 +15568,20 @@ sub HTMLMainOS{
     . XMLEncode($AddLinkToExternalCGIWrapper . '?section=OS&baseName=' . $DirData . '/' . $PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig)
     . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>');
   }
-
-  my $tooltip = '';
+  
 	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
 	{
 		my $function = "getTooltip_$pluginname";
 		$tooltip .= &$function(19);
 	}
 
-	print &tab_head($title, join( ' - ', @links ), 'os', $tooltip);
-	
-	&BuildKeyList( $MaxNbOf{'OsShown'}, $MinHit{'Os'}, \%new_os_h,
-		\%new_os_p );
-		
-	print '<table class="data-table">';
+	&BuildKeyList( $MaxNbOf{'OsShown'}, $MinHit{'Os'}, \%new_os_h, \%new_os_p );
 
-	# Graph the top five in a pie chart
-	if (scalar @keylist > 1){
+	if (scalar @keylist > 1)
+	{ # Graph the top five in a pie chart
 		foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
 		{
-			my @blocklabel = ();
-			my @valdata = ();
+			my @blocklabel = my @valdata = ();
 			my @valcolor = ($color_p);
 			my $cnt = 0;
 			foreach my $key (@keylist) {
@@ -15605,79 +15602,86 @@ sub HTMLMainOS{
 				$cnt++;
 				if ($cnt > 4) { last; }
 			}
-			print "<tr><td colspan=\"5\">";
+
 			my $function = "ShowGraph_$pluginname";
-			&$function(
-				"Top 5 Operating Systems",       "oss",
+			$graph .= '<div>'
+			. &$function(
+				"Top 5 Operating Systems", "oss",
 				0, 						\@blocklabel,
 				0,           			\@valcolor,
 				0,              		0,
 				0,          			\@valdata
-			);
-			print "</td></tr>";
+			)
+			.'</div>';
 		}
 	}
 	
-	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th width=\"$WIDTHCOLICON\">&nbsp;</th><th>$Message[59]</th>"
-	. "<th class=\"bg-p\" width=\"80\">" . ucfirst($Message[28]) . "</th><th class=\"bg-p\" width=\"80\">$Message[15]</th>"
-	. "<th class=\"bg-h\" width=\"80\">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th></tr>\n";
+	$dataTableHeader .= '<thead><tr><th></th>'
+	. '<th class="bg-p">' . ucfirst($Message[28]) . '</th>'
+	. '<th class="bg-h">' . $Message[57] . '</th>'
+	. '</tr></thead>';
 	
-	foreach my $key (@keylist) {
-		my $p_h = '&nbsp;';
-		my $p_p = '&nbsp;';
-		if ($Totalh) {
+	$dataTableBody .= '<tbody>';
+	foreach my $key (@keylist)
+	{
+		my $p_h = my $p_p = '';
+		if ($Totalh)
+		{
 			$p_h = int( $new_os_h{$key} / $Totalh * 1000 ) / 10;
-			$p_h = "$p_h %";
 		}
-		if ($Totalp) {
+		if ($Totalp)
+		{
 			$p_p = int( $new_os_p{$key} / $Totalp * 1000 ) / 10;
-			$p_p = "$p_p %";
 		}
-		if ( $key eq 'Unknown' ) {
-			print "<tr><td"
-			  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
-			  . "><img src=\"$DirIcons\/os\/unknown.png\""
-			  . AltTitle("")
-			  . " /></td><td class=\"aws\"><span style=\"color: #$color_other\">$Message[0]</span></td>"
-			  . "<td>".Format_Number($_os_p{$key})."</td><td>$p_p</td><td>".Format_Number($_os_h{$key})."</td><td>$p_h</td></tr>\n";
+
+		if ( $key eq 'Unknown' )
+		{
+			$dataTableBody .= '<tr><td>' . $Message[0] . ' <img src="' . $DirIcons . '/os/unknown.png" /></td>'
+			. HTMLDataCellWithBar('p', $_os_p{$key}, '<small>' . $p_p . '%</small> ' . Format_Number($_os_p{$key}), $Totalp)
+			. HTMLDataCellWithBar('h', $_os_h{$key}, '<small>' . $p_h . '%</small> ' . Format_Number($_os_h{$key}), $Totalh);
 		}
-		else {
+		else
+		{
 			my $keywithoutcumul = $key;
 			$keywithoutcumul =~ s/cumul$//i;
 			my $libos = $OSHashLib{$keywithoutcumul}
 			  || $keywithoutcumul;
 			my $nameicon = $keywithoutcumul;
 			$nameicon =~ s/[^\w]//g;
-			if ( $OSFamily{$keywithoutcumul} ) {
+
+			if ( $OSFamily{$keywithoutcumul} )
+			{
 				$libos = "<b>" . $OSFamily{$keywithoutcumul} . "</b>";
 			}
-			print "<tr><td"
-			  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
-			  . "><img src=\"$DirIcons\/os\/$nameicon.png\""
-			  . AltTitle("")
-			  . " /></td><td class=\"aws\">$libos</td><td>".Format_Number($new_os_p{$key})."</td><td>$p_p</td><td>".Format_Number($new_os_h{$key})."</td><td>$p_h</td></tr>\n";
+			$dataTableBody .= '<tr><td>' . $libos . ' <img src="' . $DirIcons . '/os/' . $nameicon . '.png" /></td>'
+			. HTMLDataCellWithBar('p', $new_os_p{$key}, '<small>' . $p_p . '%</small> ' . Format_Number($new_os_p{$key}), $Totalp)
+			. HTMLDataCellWithBar('h', $new_os_h{$key}, '<small>' . $p_h . '%</small> ' . Format_Number($new_os_h{$key}), $Totalh);
 		}
 		$total_h += $new_os_h{$key};
 		$total_p += $new_os_p{$key};
-		$count++;
 	}
-	if ($Debug) {
+
+	if ($Debug)
+	{
 		debug( "Total real / shown : $Totalh / $total_h", 2 );
 	}
+
 	my $rest_h = $Totalh - $total_h;
 	my $rest_p = $Totalp - $total_p;
-	if ( $rest_h > 0 ) {
+	if ( $rest_h > 0 )
+	{
 		my $p_p;
 		my $p_h;
 		if ($Totalh) { $p_h = int( $rest_h / $Totalh * 1000 ) / 10; }
 		if ($Totalp) { $p_p = int( $rest_p / $Totalp * 1000 ) / 10; }
-		print "<tr>"
-		. "<td>&nbsp;</td>"
-		. "<td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td><td>".Format_Number($rest_p)."</td>"
-		. "<td>$p_p %</td><td>".Format_Number($rest_h)."</td><td>$p_h %</td></tr>\n";
+		$dataTableBody .= '<tr><td>' . $Message[2] .'</td>'
+		. HTMLDataCellWithBar('p', $rest_p, '<small>' . $p_p . '%</small> ' . Format_Number($rest_p), $Totalp)
+		. HTMLDataCellWithBar('h', $rest_h, '<small>' . $p_h . '%</small> ' . Format_Number($rest_h), $Totalh);
 	}
+	$dataTableBody .= '</tbody>';
 
-	print '</table>' . &tab_end();
+	return &tab_head($title, join( ' - ', @links ), 'os', $tooltip)
+	. $graph . '<table class="data-table">' . $dataTableHeader . $dataTableBody . '</table>' . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -15896,7 +15900,7 @@ sub HTMLMainScreenSize{
 
 		$html .= '<tr>'
 		. HTMLDataCellWithBar('h', $rest_h, $Message[2], $max_h)
-		. '<td>' . $p . '%' . '</td>'
+		. '<td>' . $p . ' %' . '</td>'
 		. '</tr>';
 	}
 
@@ -21203,7 +21207,7 @@ if ( scalar keys %HTMLOutput ) {
 		# BY OS
 		#----------------------------
 		if ($ShowOSStats) {
-			&HTMLMainOS($NewLinkParams, $NewLinkTarget);
+			print &HTMLMainOS($NewLinkParams, $NewLinkTarget);
 		}
 
 		# BY BROWSER
