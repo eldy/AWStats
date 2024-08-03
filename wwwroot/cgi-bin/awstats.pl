@@ -9346,9 +9346,6 @@ sub HTMLShowClusterInfo {
 	# Call to plugins' function ShowInfoCluster
 	foreach my $pluginname ( sort keys %{ $PluginsLoaded{'ShowInfoCluster'} } )
 	{
-
-		#		my $function="ShowInfoCluster_$pluginname('$user')";
-		#		eval("$function");
 		my $function = "ShowInfoCluster_$pluginname";
 		&$function($cluster);
 	}
@@ -9365,10 +9362,8 @@ sub HTMLShowHostInfo {
 	my $host = shift;
 
 	# Call to plugins' function ShowInfoHost
-	foreach my $pluginname ( sort keys %{ $PluginsLoaded{'ShowInfoHost'} } ) {
-
-		#		my $function="ShowInfoHost_$pluginname('$host')";
-		#		eval("$function");
+	foreach my $pluginname ( sort keys %{ $PluginsLoaded{'ShowInfoHost'} } )
+	{
 		my $function = "ShowInfoHost_$pluginname";
 		&$function($host);
 	}
@@ -11048,12 +11043,8 @@ sub HTMLMainFileType{
   my $NewLinkTarget = shift;
 	my $title = $Message[73];
 	my @links = ();
-	my $tooltip = '';
-	my $html = '';
-	my $Totalh = 0;
-	my $Totalk = 0;
-	my $total_con = 0;
-	my $total_cre = 0;
+	my $tooltip = my $html = '';
+	my $Totalh = my $Totalk = my $total_con = my $total_cre = 0;
 
 	foreach ( keys %_filetypes_h ) { $Totalh += $_filetypes_h{$_}; }
 	foreach ( keys %_filetypes_k ) { $Totalk += $_filetypes_k{$_}; }
@@ -11172,8 +11163,10 @@ sub HTMLMainFileType{
 #------------------------------------------------------------------------------
 sub HTMLMainFileSize{
   if ($Debug) { debug("ShowFileSizesStats",2); }
-  my $FirstTime = 0;
-  my $LastTime  = 0;
+  my $FirstTime = my $LastTime = my $inicio = my $fim = my $number_of_requests = my $request_frequency_average = my $Totals = my $average_s = my $total_s = 0;
+
+  my $title = $Message[186];
+  my $tooltip = '';
 
   foreach my $key ( keys %FirstTime )
   {
@@ -11192,24 +11185,18 @@ sub HTMLMainFileSize{
     }
   }
 
-  my $inicio = 0;
-  my $fim = 0;
   if ($FirstTime =~ /$regdate/o) { $inicio = Time::Local::timelocal($6, $5, $4, $3, $2-1, $1); }
   if ($LastTime =~ /$regdate/o) { $fim = Time::Local::timelocal($6, $5, $4, $3, $2-1, $1); }
   my $periodo = $fim - $inicio;
-  my $number_of_requests = 0;
-  my $request_frequency_average = 0;
+  
   foreach my $key (@PayloadRange)
   {
     $number_of_requests += $_filesize{$key};
   }
+
   if ($periodo) { $request_frequency_average = $number_of_requests/$periodo;}
   else { $request_frequency_average = 0 };
-  # print "<a name=\"filesizes\">&nbsp;</a>";
   
-  my $title = $Message[186];
-
-  my $tooltip = '';
 	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
 	{
 		my $function = "getTooltip_$pluginname";
@@ -11218,8 +11205,6 @@ sub HTMLMainFileSize{
 
   print &tab_head($title, '', 'filesizes', $tooltip);
 
-  my $Totals = 0;
-  my $average_s = 0;
   foreach (@PayloadRange)
   {
     $average_s += ( $_filesize{$_} || 0 ) * $PayloadAverage{$_};
@@ -11230,22 +11215,21 @@ sub HTMLMainFileSize{
 
   print '<table class="data-table">'
   . "<tr bgcolor=\"#$color_TableBGRowTitle\"".Tooltip(1)."><th>$Message[182]: $number_of_requests - $Message[183]: $periodo $Message[184] - $Message[185]: ".sprintf ("%.6f",$request_frequency_average)."</th><th class=\"bg-s\" width=\"80\">$Message[181]</th><th class=\"bg-s\" width=\"80\">$Message[57]</th><th class=\"bg-s\" width=\"80\">$Message[15]</th></tr>\n";
-  my $total_s = 0;
-  my $count = 0;
+
   foreach my $key (@PayloadRange)
   {
-          my $p = 0;
-          my $f = 0;
-          if ($Totals) { $p = int($_filesize{$key} / $Totals * 1000) / 10; }
-          if ($periodo) { $f = $_filesize{$key} / $periodo; }
-          $total_s += $_filesize{$key} || 0;
-          print "<tr><td class=\"aws\">$key</td>"
-          . "<td>".($_filesize{$key}? sprintf("%.5f",$f):"&nbsp;")."</td>"
-          . "<td>".($_filesize{$key}? $_filesize{$key}:"&nbsp;")."</td>"
-          . "<td>".($_filesize{$key}? "$p %":"&nbsp;")."</td>"
-          . "</tr>\n";
-          $count++;
+    my $p = 0;
+    my $f = 0;
+    if ($Totals) { $p = int($_filesize{$key} / $Totals * 1000) / 10; }
+    if ($periodo) { $f = $_filesize{$key} / $periodo; }
+    $total_s += $_filesize{$key} || 0;
+    print "<tr><td class=\"aws\">$key</td>"
+    . "<td>".($_filesize{$key}? sprintf("%.5f",$f):"&nbsp;")."</td>"
+    . "<td>".($_filesize{$key}? $_filesize{$key}:"&nbsp;")."</td>"
+    . "<td>".($_filesize{$key}? "$p %":"&nbsp;")."</td>"
+    . "</tr>\n";
   }
+
   my $rest_s = $TotalVisits-$total_s;
   if ($rest_s > 0)
   {
@@ -13588,17 +13572,6 @@ sub HTMLMainSummary{
 		$NewLinkTarget = " target=\"_parent\"";
 	}
 
-	# Ratio
-	my $RatioVisits = 0;
-	my $RatioPages  = 0;
-	my $RatioHits   = 0;
-	my $RatioBytes  = 0;
-	
-	if ( $TotalUnique > 0 ) { $RatioVisits = sprintf( "%.1f", $TotalVisits / $TotalUnique )   ; }
-	if ( $TotalVisits > 0 ) { $RatioPages = sprintf( "%.1f", $TotalPages / $TotalVisits ); }
-	if ( $TotalVisits > 0 ) { $RatioHits = sprintf( "%.1f", $TotalHits / $TotalVisits ); }
-	if ( $TotalVisits > 0 ) { $RatioBytes = int( ( $TotalBytes / 1024 ) * 100 / ( $LogType eq 'M' ? $TotalHits : $TotalVisits ) ) / 100; }
-
 	print '<hr>';
 
 	# Show main indicators title row
@@ -13625,7 +13598,6 @@ sub HTMLMainSummary{
 		'<div>'
 		. '<div class="bg-v" ' . Tooltip(1) . ">$Message[10]</div>"
 		. '<div><b>' . Format_Number($TotalVisits) . '</b></div>'
-		# . '<small>' . $RatioVisits . ' ' . $Message[52] .'</small>'
 		. '</div>'
 		: ''
 	);
@@ -13633,10 +13605,7 @@ sub HTMLMainSummary{
 	print (( $ShowSummary =~ /P/i && $LogType ne 'M' ) ?
 		'<div>'
 		. '<div class="bg-p" ' . Tooltip(3) . ">" . ucfirst($Message[28]) . "</div>"
-		# . '<div>'
 		. '<div><b>' . Format_Number($TotalPages) . '</b></div>'
-		# . '<small>' . $RatioPages . ' ' . ucfirst($Message[28]) . ' / ' . $Message[12] . '</small>'
-		# . '</div>'
 		. '<div><small>' . Format_Number($TotalNotViewedPages) . ' *' .  $Message[( $LogType eq 'M' ) ? 166 : 161]  . ' </small></div>'
 		. '</div>'
 		: ''
@@ -13647,7 +13616,6 @@ sub HTMLMainSummary{
 		. '<div class="bg-h"' . Tooltip(4) . ">$Message[57]</div>"
 		. '<div>'
 		. '<div><b>'.Format_Number($TotalHits).'</b></div>'
-		# . ($LogType eq 'M' ? '' : ' <small>' . $RatioHits . ' ' . $Message[57] . ' / ' . $Message[12] . '</small>')
 		. '</div>'
 		. '<div><small>' . Format_Number($TotalNotViewedHits) . ' *' .  $Message[( $LogType eq 'M' ) ? 166 : 161]  . '</small></div>'
 		. '</div>'
@@ -13659,7 +13627,6 @@ sub HTMLMainSummary{
 		. '<div class="bg-b"' . Tooltip(5) . ">$Message[75]</div>"
 		. '<div>'
 		. '<div><b>' . Format_Bytes( int($TotalBytes) ) . '</b></div>'
-		# . '<small>' . $RatioBytes . ' ' . $Message[108] . ' / ' . $Message[ ( $LogType eq 'M' ? 149 : 12 ) ] . '</small>'
 		. '</div>'
 		. '<div title="' . ($LogType eq 'W' || $LogType eq 'S' ? "* $Message[159]" : "" ) . '"><small>' . Format_Bytes( int($TotalNotViewedBytes) ) . ' *' .  $Message[( $LogType eq 'M' ) ? 166 : 161]  . '</small></div>'
 		. '</div>'
@@ -13667,7 +13634,6 @@ sub HTMLMainSummary{
 	);
 
 	print '</div>' . '</div>';
-
 }
 
 #------------------------------------------------------------------------------
@@ -14785,11 +14751,11 @@ sub HTMLMainCountries{
 }
 
 #------------------------------------------------------------------------------
-# Function:     Prints the Downloads chart and table
+# Function:     Return the Downloads chart and table
 # Parameters:   -
 # Input:        $NewLinkParams, $NewLinkTarget
-# Output:       HTML
-# Return:       -
+# Output:       -
+# Return:       string
 #------------------------------------------------------------------------------
 sub HTMLMainDownloads{
 	if (!$LevelForFileTypesDetection > 0){return;}
@@ -15565,15 +15531,14 @@ sub HTMLMainPages{
 # Return:       -
 #------------------------------------------------------------------------------
 sub HTMLMainOS{
+	if ($Debug) { debug( "ShowOSStats", 2 ); }
+
 	my $NewLinkParams = shift;
 	my $NewLinkTarget = shift;
 
-	if ($Debug) { debug( "ShowOSStats", 2 ); }
-	# print "<a name=\"os\">&nbsp;</a>";
-	my $Totalh   = 0;
-	my $Totalp   = 0;
-	my %new_os_h = ();
-	my %new_os_p = ();
+	my $Totalh   = my $Totalp   = 0;
+	my $total_h = my $total_p = my $count = 0;
+	my @links = my %new_os_h = my %new_os_p = ();
   OSLOOP: foreach my $key ( keys %_os_h ) {
 		$Totalh += $_os_h{$key};
 		$Totalp += $_os_p{$key};
@@ -15589,7 +15554,6 @@ sub HTMLMainOS{
 	}
 
 	my $title = $Message[59] . ' (' . $Message[77] . ' ' . $MaxNbOf{'OsShown'} . ')';
-	my @links = ();
 
 	push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'osdetail', $Message[80] . '/' . $Message[58]));
 	push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'unknownos', $Message[0]));
@@ -15657,9 +15621,6 @@ sub HTMLMainOS{
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th width=\"$WIDTHCOLICON\">&nbsp;</th><th>$Message[59]</th>"
 	. "<th class=\"bg-p\" width=\"80\">" . ucfirst($Message[28]) . "</th><th class=\"bg-p\" width=\"80\">$Message[15]</th>"
 	. "<th class=\"bg-h\" width=\"80\">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th></tr>\n";
-	my $total_h = 0;
-	my $total_p = 0;
-	my $count = 0;
 	
 	foreach my $key (@keylist) {
 		my $p_h = '&nbsp;';
@@ -15904,10 +15865,8 @@ sub HTMLMainScreenSize{
 
 	if ($Debug) { debug( "ShowScreenSizeStats", 2 ); }
 
-	my $Totalh = 0;
 	my $title = $Message[135] . ' <small>(' . $Message[77] . ' ' . $MaxNbOf{'ScreenSizesShown'} . ')</small>';
-	my $total_h = 0;
-	my $max_h = 0;
+	my $Totalh = my $total_h = my $max_h = 0;
 	my $html = '';
 
 	foreach ( keys %_screensize_h )
