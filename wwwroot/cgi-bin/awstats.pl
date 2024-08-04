@@ -16388,20 +16388,22 @@ sub HTMLMainMisc{
 }
 
 #------------------------------------------------------------------------------
-# Function:     Prints the Status codes chart and table
+# Function:     Return the Status codes chart and table
 # Parameters:   $NewLinkParams, $NewLinkTarget
 # Input:        -
-# Output:       HTML
-# Return:       -
+# Output:       -
+# Return:       string
 #------------------------------------------------------------------------------
 sub HTMLMainHTTPStatus{
+	if ($Debug) { debug( "ShowHTTPErrorsStats", 2 ); }
+
 	my $NewLinkParams = shift;
 	my $NewLinkTarget = shift;
 	
-	if ($Debug) { debug( "ShowHTTPErrorsStats", 2 ); }
-	# print "<a name=\"errors\">&nbsp;</a>";
 	my $title = $Message[32];
 	my @links = ();
+	my $tooltip = my $graph = my $tableHeader = my $tableData = '';
+	my $total_h = 0;
 
   if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
   { # extend the title to include the added link
@@ -16409,69 +16411,63 @@ sub HTMLMainHTTPStatus{
     . XMLEncode($AddLinkToExternalCGIWrapper . '?section=ERRORS&baseName=' . $DirData . '/' . $PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig)
     . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>');
   }
-
-	my $tooltip = '';
+	
 	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
 	{
 		my $function = "getTooltip_$pluginname";
 		$tooltip .= &$function(19);
 	}
 
-	print &tab_head($title, join( ' - ', @links ), 'errors', $tooltip, '*' . $Message[154]);
-	
 	&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_errors_h, \%_errors_h );
 
-	print '<table class="data-table">';
-
-	# Graph the top five in a pie chart
-	if (scalar @keylist > 1){
+	if (scalar @keylist > 1)
+	{ # Graph the top five in a pie chart
 		foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
 		{
 			my @blocklabel = ();
 			my @valdata = ();
 			my @valcolor = ($color_p);
 			my $cnt = 0;
-			foreach my $key (@keylist) {
+			foreach my $key (@keylist)
+			{
 				push @valdata, int( $_errors_h{$key} / $TotalHitsErrors * 1000 ) / 10;
 				push @blocklabel, "$key";
 				$cnt++;
 				if ($cnt > 4) { last; }
 			}
-			print "<tr><td colspan=\"5\">";
+
 			my $function = "ShowGraph_$pluginname";
-			&$function(
-				"$title",              "httpstatus",
-				0, 						\@blocklabel,
-				0,           			\@valcolor,
-				0,              		0,
-				0,          			\@valdata
-			);
-			print "</td></tr>";
+			$graph .= '<div>'
+			. &$function(
+				$title, 'httpstatus',
+				0, \@blocklabel,
+				0, \@valcolor,
+				0, 0,
+				0, \@valdata
+			)
+			. '</div>';
 		}
 	}
 	
-	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[32]*</th><th class=\"bg-h\" width=\"80\">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th><th class=\"bg-k\" width=\"80\">$Message[75]</th></tr>\n";
-	my $total_h = 0;
-	my $count = 0;
+	$tableHeader = '<tr><th></th><th class="bg-h">' . $Message[57] . '</th><th class="bg-b">' . $Message[75] . '</th></tr>';
+	
 	foreach my $key (@keylist)
 	{
-		my $p = int( $_errors_h{$key} / $TotalHitsErrors * 1000 ) / 10;
-		print "<tr" . Tooltip( $key, $key ) . ">";
-		if ( $TrapInfosForHTTPErrorCodes{$key} ) {
-			print '<td>' . HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'errors', $key) . '</td>';
-		}
-		else { print "<td>$key</td>"; }
-		print "<td class=\"aws\">"
-		  . (
-			$httpcodelib{$key} ? $httpcodelib{$key} : 'Unknown error' )
-		  . "</td><td>".Format_Number($_errors_h{$key})."</td><td>$p %</td><td>"
-		  . Format_Bytes( $_errors_k{$key} ) . "</td>";
-		print "</tr>\n";
+		my $p_h = int( $_errors_h{$key} / $TotalHitsErrors * 1000 ) / 10;
+		$tableData .= '<tr>' #Tooltip( $key, $key )
+		. '<td>' . (	$httpcodelib{$key} ? $httpcodelib{$key} : 'Unknown error' )
+		. ' ' . (( $TrapInfosForHTTPErrorCodes{$key} ) ? '<b>@ ' . HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'errors', $key) . '</b>' : $key)
+		. '</td>'
+		. HTMLDataCellWithBar('h', $_errors_h{$key}, '<small>' . $p_h . '%</small> ' . Format_Number($_errors_h{$key}), $TotalHitsErrors)
+		. '<td>' . Format_Bytes( $_errors_k{$key} ) . '</td>'
+		. '</tr>';
+
 		$total_h += $_errors_h{$key};
-		$count++;
 	}
 
-	print '</table>' . &tab_end();
+	return &tab_head($title, join( ' - ', @links ), 'errors', $tooltip, $Message[154])
+	. $graph . '<table class="data-table">' . $tableHeader . $tableData . '</table>'
+	. &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -21044,16 +21040,16 @@ if ( scalar keys %HTMLOutput ) {
 		print '<section class="flex">';
 		print '<div class="column">';
 
-		# BY RATIOS
-		#---------------------------------------------------------------------
-		if ($ShowRatiosStats && $LogType eq 'W') {
-			print &HTMLMainRatios($firstdaytocountaverage, $lastdaytocountaverage, $firstdaytoshowtime, $lastdaytoshowtime);
-		}
-
 		# BY MONTH
 		#---------------------------------------------------------------------
 		if ($ShowMonthStats) {
 			print &HTMLMainMonthly();
+		}
+
+		# BY RATIOS
+		#---------------------------------------------------------------------
+		if ($ShowRatiosStats && $LogType eq 'W') {
+			print &HTMLMainRatios($firstdaytocountaverage, $lastdaytocountaverage, $firstdaytoshowtime, $lastdaytoshowtime);
 		}
 
 		print '</div>';
@@ -21221,7 +21217,7 @@ if ( scalar keys %HTMLOutput ) {
 		# BY HTTP STATUS
 		#----------------------------
 		if ($ShowHTTPErrorsStats) {
-			&HTMLMainHTTPStatus($NewLinkParams, $NewLinkTarget);
+			print &HTMLMainHTTPStatus($NewLinkParams, $NewLinkTarget);
 		}
 
 		# BY SMTP STATUS
