@@ -1057,7 +1057,7 @@ section header:hover .tooltip { visibility: visible; opacity: 1; }
 .oceanxx{ fill: #4477DD !important; stroke-width: 0 !important; }
 .lighted-land{ fill: rgba(128, 86, 86, 1) !important; fill-rule: evenodd;}
 .highlighted-land{ fill: var(--aws-color-u) !important; fill-rule: evenodd;}
-.zoomed-land{ fill: var(--aws-color-v) !important;}
+.zoomed-land{ fill: white !important;}
 .weekend { background-color: var(--light-color) }
 .data-table-average { background-color: var(--neutral-color) }
 
@@ -16185,151 +16185,128 @@ sub HTMLMainReferrers{
 }
 
 #------------------------------------------------------------------------------
-# Function:     Prints the Key Phrases and Keywords chart and table
+# Function:     Return the Key Phrases chart and table
 # Parameters:   $NewLinkParams, $NewLinkTarget
 # Input:        -
-# Output:       HTML
-# Return:       -
+# Output:       -
+# Return:       string
 #------------------------------------------------------------------------------
-sub HTMLMainKeys{
+sub HTMLMainKeyphrases{
+	if ($Debug) { debug( "ShowKeyphrasesStats", 2 ); }
+
 	my $NewLinkParams = shift;
 	my $NewLinkTarget = shift;
 	
-	# 	print "<a name=\"keyphrases\">&nbsp;</a>";
-	# 	print "<a name=\"keywords\">&nbsp;</a>";
-	
-	my $title = '';
+	my $title = $Message[120] . ' (' . $Message[77] . ' ' . $MaxNbOf{'KeyphrasesShown'} . ')';
+	my $tableData = my $tooltip = ''; # Tooltip(15)
 	my @links = ();
+	my $p = my $total_s = 0;
 
-	if ($ShowKeyphrasesStats)
+	my $tableHeader = '<thead><tr><th>' . $TotalDifferentKeyphrases . ' ' . $Message[103] . '</th><th class="bg-s">' . $Message[14] . '</th></tr></thead>';
+
+	push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'keyphrases', $Message[80]));
+		
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
 	{
-		if ($Debug) { debug( "ShowKeyphrasesStats", 2 ); }
-
-		$title = $Message[120] . ' (' . $Message[77] . ' ' . $MaxNbOf{'KeyphrasesShown'} . ')';
-
-		push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'keyphrases', $Message[80]));
-		
-		my $tooltip = '';
-		foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
-		{
-			my $function = "getTooltip_$pluginname";
-			$tooltip .= &$function(19);
-		}
-
-		print &tab_head($title, join( ' - ', @links ), 'keyphrases', $tooltip);
-		
-		print '<table class="data-table">'
-		. "<tr bgcolor=\"#$color_TableBGRowTitle\""
-		. Tooltip(15)
-		. "><th>$TotalDifferentKeyphrases $Message[103]</th><th class=\"bg-s\" width=\"80\">$Message[14]</th><th class=\"bg-s\" width=\"80\">$Message[15]</th></tr>\n";
-		
-		my $total_s = 0;
-		my $count = 0;
-		&BuildKeyList( $MaxNbOf{'KeyphrasesShown'},
-			$MinHit{'Keyphrase'}, \%_keyphrases, \%_keyphrases );
-		foreach my $key (@keylist) {
-			my $mot;
-
-  # Convert coded keywords (utf8,...) to be correctly reported in HTML page.
-			if ( $PluginsLoaded{'DecodeKey'}{'decodeutfkeys'} ) {
-				$mot = CleanXSS(
-					DecodeKey_decodeutfkeys(
-						$key, $PageCode || 'iso-8859-1'
-					)
-				);
-			}
-			else { $mot = CleanXSS( DecodeEncodedString($key) ); }
-			my $p;
-			if ($TotalKeyphrases) {
-				$p =
-				  int( $_keyphrases{$key} / $TotalKeyphrases * 1000 ) / 10;
-			}
-			print "<tr><td class=\"aws\">"
-			  . XMLEncode($mot)
-			  . "</td><td>$_keyphrases{$key}</td><td>$p %</td></tr>\n";
-			$total_s += $_keyphrases{$key};
-			$count++;
-		}
-		if ($Debug) {
-			debug( "Total real / shown : $TotalKeyphrases / $total_s", 2 );
-		}
-		my $rest_s = $TotalKeyphrases - $total_s;
-		if ( $rest_s > 0 ) {
-			my $p;
-			if ($TotalKeyphrases) {
-				$p = int( $rest_s / $TotalKeyphrases * 1000 ) / 10;
-			}
-			print "<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[124]</span></td><td>$rest_s</td>";
-			print "<td>$p&nbsp;%</td></tr>\n";
-		}
-
-		print '</table>' . &tab_end();
+		my $function = "getTooltip_$pluginname";
+		$tooltip .= &$function(19);
 	}
 
-	if ($ShowKeywordsStats)
+	&BuildKeyList( $MaxNbOf{'KeyphrasesShown'},	$MinHit{'Keyphrase'}, \%_keyphrases, \%_keyphrases );
+
+	foreach my $key (@keylist)
 	{
-		if ($Debug) { debug( "ShowKeywordsStats", 2 ); }
+		# Convert coded keywords (utf8,...) to be correctly reported in HTML page.
+		my $mot = ( $PluginsLoaded{'DecodeKey'}{'decodeutfkeys'} ) ? CleanXSS(DecodeKey_decodeutfkeys($key, $PageCode || 'iso-8859-1')) : CleanXSS(DecodeEncodedString($key));
 
-		$title = $Message[121] . ' (' . $Message[77] . ' ' . $MaxNbOf{'KeywordsShown'} . ')';
-		my @links = ();
+		$p = ($TotalKeyphrases) ? int( $_keyphrases{$key} / $TotalKeyphrases * 1000 ) / 10 : 0;
 
-		push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'keywords', $Message[80]));
+		$tableData .= '<tr><td>' . XMLEncode($mot) . '</td>'
+		. HTMLDataCellWithBar('p', $_keyphrases{$key}, '<small>' . $p . '%</small> ' . $_keyphrases{$key}, $TotalKeyphrases)
+		. '</tr>';
 		
-		my $tooltip = '';
-		foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
-		{
-			my $function = "getTooltip_$pluginname";
-			$tooltip .= &$function(19);
-		}
-
-		print &tab_head($title, join( ' - ', @links ), 'keywords', $tooltip);
-
-		print '<table class="data-table">'
-		. "<tr bgcolor=\"#$color_TableBGRowTitle\""
-		. Tooltip(15)
-		. "><th>$TotalDifferentKeywords $Message[13]</th><th class=\"bg-s\" width=\"80\">$Message[14]</th><th class=\"bg-s\" width=\"80\">$Message[15]</th></tr>\n";
-
-		my $total_s = 0;
-		my $count = 0;
-		&BuildKeyList( $MaxNbOf{'KeywordsShown'},
-			$MinHit{'Keyword'}, \%_keywords, \%_keywords );
-		foreach my $key (@keylist) {
-			my $mot;
-
-  # Convert coded keywords (utf8,...) to be correctly reported in HTML page.
-			if ( $PluginsLoaded{'DecodeKey'}{'decodeutfkeys'} ) {
-				$mot = CleanXSS(
-					DecodeKey_decodeutfkeys(
-						$key, $PageCode || 'iso-8859-1'
-					)
-				);
-			}
-			else { $mot = CleanXSS( DecodeEncodedString($key) ); }
-			my $p;
-			if ($TotalKeywords) {
-				$p = int( $_keywords{$key} / $TotalKeywords * 1000 ) / 10;
-			}
-			print "<tr><td class=\"aws\">"
-			  . XMLEncode($mot)
-			  . "</td><td>$_keywords{$key}</td><td>$p %</td></tr>\n";
-			$total_s += $_keywords{$key};
-			$count++;
-		}
-		if ($Debug) {
-			debug( "Total real / shown : $TotalKeywords / $total_s", 2 );
-		}
-		my $rest_s = $TotalKeywords - $total_s;
-		if ( $rest_s > 0 ) {
-			my $p;
-			if ($TotalKeywords) {
-				$p = int( $rest_s / $TotalKeywords * 1000 ) / 10;
-			}
-			print "<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[30]</span></td><td>$rest_s</td>";
-			print "<td>$p %</td></tr>\n";
-		}
-
-		print '</table>' . &tab_end();
+		$total_s += $_keyphrases{$key};
 	}
+
+	if ($Debug) {
+		debug( "Total real / shown : $TotalKeyphrases / $total_s", 2 );
+	}
+
+	my $rest_s = $TotalKeyphrases - $total_s;
+	if ( $rest_s > 0 )
+	{
+		$p = ($TotalKeyphrases) ? int( $rest_s / $TotalKeyphrases * 1000 ) / 10 : 0;
+
+		$tableData .= '<tr><td>' . $Message[124] . '</td>'
+		. HTMLDataCellWithBar('p', $rest_s, '<small>' . $p . '%</small> ' . $rest_s, $TotalKeyphrases)
+		. '</tr>';
+	}
+
+		return &tab_head($title, join( ' - ', @links ), 'keyphrases', $tooltip)
+		. '<table class="data-table">' . $tableHeader . $tableData
+		. '</table>' . &tab_end();
+}
+
+#------------------------------------------------------------------------------
+# Function:     Return the Keywords chart and table
+# Parameters:   $NewLinkParams, $NewLinkTarget
+# Input:        -
+# Output:       -
+# Return:       string
+#------------------------------------------------------------------------------
+sub HTMLMainKeywords{
+	if ($Debug) { debug( "ShowKeywordsStats", 2 ); }
+
+	my $NewLinkParams = shift;
+	my $NewLinkTarget = shift;
+	
+	my $title = $Message[121] . ' (' . $Message[77] . ' ' . $MaxNbOf{'KeywordsShown'} . ')';
+	my $tableData = my $tooltip = ''; # Tooltip(15)
+	my @links = ();
+	my $p = my $total_s = 0;
+
+	my $tableHeader = '<thead><tr><th>' . $TotalDifferentKeywords . ' ' . $Message[13] . '</th><th class="bg-s">' . $Message[14] . '</th></tr></thead>';
+
+	push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'keywords', $Message[80]));
+		
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
+	{
+		my $function = "getTooltip_$pluginname";
+		$tooltip .= &$function(19);
+	}
+
+	&BuildKeyList( $MaxNbOf{'KeywordsShown'}, $MinHit{'Keyword'}, \%_keywords, \%_keywords );
+	
+	foreach my $key (@keylist)
+	{
+		# Convert coded keywords (utf8,...) to be correctly reported in HTML page.
+		my $mot = ( $PluginsLoaded{'DecodeKey'}{'decodeutfkeys'} ) ? CleanXSS(DecodeKey_decodeutfkeys($key, $PageCode || 'iso-8859-1')) : CleanXSS(DecodeEncodedString($key));
+		
+		$p = ($TotalKeywords) ? int( $_keywords{$key} / $TotalKeywords * 1000 ) / 10 : 0;
+
+		$tableData .= '<tr><td>' . XMLEncode($mot) . '</td>'
+		. HTMLDataCellWithBar('p', $_keywords{$key}, '<small>' . $p . '%</small> ' . $_keywords{$key}, $TotalKeywords)
+		. '</tr>';
+		
+		$total_s += $_keywords{$key};
+	}
+
+	if ($Debug) {
+		debug( "Total real / shown : $TotalKeywords / $total_s", 2 );
+	}
+
+	my $rest_s = $TotalKeywords - $total_s;
+	if ( $rest_s > 0 )
+	{
+		$p = ($TotalKeywords) ? int( $rest_s / $TotalKeywords * 1000 ) / 10 : 0;
+		$tableData .= '<tr><td>' . $Message[30] . '</td>'
+		. HTMLDataCellWithBar('p', $rest_s, '<small>' . $p . '%</small> ' . $rest_s, $TotalKeywords)
+		. '</tr>';
+	}
+
+	return &tab_head($title, join( ' - ', @links ), 'keywords', $tooltip)
+	. '<table class="data-table">' . $tableHeader . $tableData
+	. '</table>' . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -21189,6 +21166,8 @@ if ( scalar keys %HTMLOutput ) {
 			&HTMLMainLogins($NewLinkParams, $NewLinkTarget);
 		}
 
+		print '<div class="column">';
+
 		# BY SESSION
 		#----------------------------
 		if ($ShowSessionsStats) {
@@ -21200,6 +21179,8 @@ if ( scalar keys %HTMLOutput ) {
 		if ($ShowScreenSizeStats) {
 			print &HTMLMainScreenSize();
 		}
+
+		print '</div>';
 
 		# BY OS
 		#----------------------------
@@ -21213,17 +21194,23 @@ if ( scalar keys %HTMLOutput ) {
 			print &HTMLMainBrowsers($NewLinkParams, $NewLinkTarget);
 		}
 
+		# BY SEARCH KEYPHRASES
+		#----------------------------
+		if ($ShowKeyphrasesStats){
+			print &HTMLMainKeyphrases($NewLinkParams, $NewLinkTarget);
+		}
+
+		# BY SEARCH KEYWORDS
+		#----------------------------
+		if ($ShowKeywordsStats){
+			print &HTMLMainKeywords($NewLinkParams, $NewLinkTarget);
+		}
+
 		# BY REFERENCE
 		#---------------------------
 		if ($ShowOriginStats) {
 			&HTMLMainReferrers($NewLinkParams, $NewLinkTarget);
 		}
-
-		# BY SEARCH KEYWORDS AND/OR KEYPHRASES
-		#-------------------------------------
-		if ($ShowKeyphrasesStats || $ShowKeywordsStats){
-			&HTMLMainKeys($NewLinkParams, $NewLinkTarget);
-		}	
 
 		# BY HTTP STATUS
 		#----------------------------
