@@ -964,36 +964,34 @@ sub renderCss {
 		--aws-color-x: hsl(260, 76%, 81%);
 		--aws-color-s: hsl(240, 56%, 70%);
 		--dark-color: hsl(0, 0%, 8.2%);
-		--neutral-color: hsl(0, 0%, 48.2%);
-		--light-color: hsl(0, 0%, 40.8%);
+		--neutral-color: hsl(0, 0%, 48%);
+		--light-color: hsl(0, 0%, 60%);
 		--a-color: hsl(0, 0%, 81.6%);
 		--a-hover-color: hsl(0, 0%, 100%);
 		--nav-color: hsl(0, 0%, 2.4%);
 	}
 }
 
-html { scroll-behavior: smooth; scroll-padding: var(--scroll-padding, 5rem); }
+html { scroll-behavior: smooth; scroll-padding: var(--scroll-padding); }
 body { font-size: clamp(0.75rem, -3vw + 3rem, 0.9rem); font-family: sans-serif, system-ui; background-color: var(--page-bgcolor); margin: 0; padding:0; color: var(--page-color); }
-a, a:link, a:visited { color: var(--a-color); text-decoration: none; }
-a:hover, a:focus, a:active{ color: var(--a-hover-color); text-decoration: none; }
-nav a, nav a:link, nav a:visited { color: var(--nav-color) }
 b { font-weight: 700 }
 hr { width: 100%; height: 0; margin: 0; color: transparent; border: none; }
 small { font-size: 0.9em; font-weight: 400; }
 #container, .flex { gap: 25px; }
 #container, #container > header, .flex { display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;}
-#container > header { position: sticky; top: 0; z-index: 100; width: 100%; margin-bottom: -30px; column-gap: 20px; background-color: var(--page-bgcolor); text-align: center;	 }
+#container > header { position: sticky; top: 0; z-index: 100; width: 100%; column-gap: 20px; background-color: var(--page-bgcolor); text-align: center;	 }
+#container > *:nth-child(odd):not(header):not(footer) { width: 100dvw; padding: 20px 0; background-color: var(--neutral-color)}
 .column { display:flex;flex-flow:column wrap; row-gap: 10px; }
 #domain { font-weight: 900; font-size: 1.5em }
 header select { width : 60px }
 footer { width: 100dvw; text-align: center; border-top: 1px solid; padding-top: 5px; }
 #logo { height: 33px; }
-nav { width: 100%; height: 2.5ch; margin: 8px 0; margin-top: 0; background-color: white; font-weight: 600 }
-nav ul { display: flex; justify-content: center; gap: 1dvw; list-style-type: none; margin: 0; padding: 0; overflow: hidden; }
+nav { width: 100%; height: 2.5ch; margin: 0; background-color: white; font-weight: 600 }
+nav ul { display: flex; justify-content: center; gap: 1dvw; list-style-type: none; margin: 0; padding: 0; overflow: hidden; border: none; }
 nav li a, .dropbtn { display: inline-block; padding: 2px 4px; }
 li a:hover, .dropdown:hover .dropbtn { background-color: var(--neutral-color); }
 li.dropdown { display: inline-block; }
-.dropdown-content { display: none; position: absolute; background-color: white; min-width: 160px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); z-index: 1; }
+.dropdown-content { display: none; position: absolute; background-color: white; min-width: 160px; z-index: 1; }
 .dropdown-content a { padding: 12px 16px; display: block; }
 .dropdown-content a:hover { background-color: var(--neutral-color); }
 .dropdown:hover .dropdown-content { display: block; }
@@ -1003,10 +1001,9 @@ li.dropdown { display: inline-block; }
 .summary-label { margin: 0 9px; }
 #summary-logs div[class^="bg-"], .currentday{ width: calc(var(--bar-width) * 1px); font-weight: 900 }
 div[class^="bg-"], th[class^="bg-"] { width: calc(var(--bar-width) * 1px) }
-button, select, input[type=submit] { cursor: pointer; color: var(--light-color); background-color: var(--dark-color); border: 1px solid #ccd7e0; }
+button, select, input { cursor: pointer; color: var(--light-color); background-color: var(--dark-color); border: none; }
 h1, section header {border-bottom: 6px solid var(--light-color); width: 100%; margin: 0; text-align: center; font-weight: 900; font-size: 1em; }
-section header { position: relative }
-.tooltip { visibility: hidden; opacity: 0; position: absolute; bottom: -94px; left: 0; z-index: 10; font-size: 0.9em; font-weight: 400; text-align: left; width: 100%; background-color: var(--dark-color); color: var(--light-color); padding: 4px; border-radius: 5px; }
+.tooltip { visibility: hidden; opacity: 0; position: fixed; top: 0; left: 0; z-index: 1000; font-size: 0.9rem; font-weight: 600; text-align: left; width: 100%; background-color: var(--dark-color); color: white; padding: 6px;}
 section header:hover .tooltip { visibility: visible; opacity: 1; }
 .multi-data-table { display: flex; column-gap: 3dvw; flex-wrap: wrap; justify-content: center }
 .multi-data-table.worldmap{ position: relative; }
@@ -1014,7 +1011,7 @@ section header:hover .tooltip { visibility: visible; opacity: 1; }
 .data-table tfoot { display: table-header-group }
 .data-table tbody div { opacity: 0.9 }
 .data-table tbody tr { transition: background 0.5s ease-out; transition: transform 0.1s ease-in }
-.data-table tbody tr:hover { font-weight: 900; background: var(--neutral-color); transform: scale(1.1) translateX(2px); }
+.data-table tbody tr:hover { font-weight: 900; background: var(--light-color); transform: scale(1.1) translateX(2px); }
 .data-table th { font-weight: 900 }
 .data-table th, .data-table td:not(:first-child) { padding-top: 2px; padding-bottom: 2px; }
 .data-table td { text-align: right; font-weight: 700; }
@@ -1040,6 +1037,9 @@ section header:hover .tooltip { visibility: visible; opacity: 1; }
 .title-map{ position:absolute; top: 16px; color: var(--light-color); }
 .country { text-transform: uppercase; font-weight: 700; }
 /* colors */
+nav a, nav a:link, nav a:visited { color: var(--nav-color) }
+a, a:link, a:visited { color: var(--a-color); text-decoration: none; }
+a:hover, a:focus, a:active{ color: var(--a-hover-color); text-decoration: none; }
 .bg-u{ background-color: var(--aws-color-u) }
 .bg-v{ background-color: var(--aws-color-v) }
 .bg-p{ background-color: var(--aws-color-p) }
@@ -1093,7 +1093,7 @@ sub renderJavascript {
 <script>
 document.addEventListener("DOMContentLoaded", (d) => {
 
-	const headerHeight = document.querySelector("#container > header").offsetHeight;
+	const headerHeight = document.querySelector("#container > header").offsetHeight + 20;
 
 	document.documentElement.style.setProperty("--scroll-padding", headerHeight + "px");
 
@@ -16224,7 +16224,7 @@ sub HTMLMainKeyphrases{
 		$tableData .= '<tr><td>' . XMLEncode($mot) . '</td>'
 		. HTMLDataCellWithBar('p', $_keyphrases{$key}, '<small>' . $p . '%</small> ' . $_keyphrases{$key}, $TotalKeyphrases)
 		. '</tr>';
-		
+
 		$total_s += $_keyphrases{$key};
 	}
 
@@ -21041,6 +21041,7 @@ if ( scalar keys %HTMLOutput ) {
 		# 	&HTMLMainSummary();
 		# }
 
+		print '<section class="flex">';
 		print '<div class="column">';
 
 		# BY RATIOS
@@ -21078,6 +21079,8 @@ if ( scalar keys %HTMLOutput ) {
 		}
 
 		print '</div>';
+		print '</section>';
+		print '<section class="flex">';
 
 		# BY PAGE
 		#-------------------------
@@ -21109,7 +21112,8 @@ if ( scalar keys %HTMLOutput ) {
 			print &HTMLMainDownloads($NewLinkParams, $NewLinkTarget);
 		}
 
-		print '<hr>';
+		print '</section>';
+		print '<section class="flex">';
 		print '<div class="column">';
 
 		# BY HOST/VISITOR
@@ -21165,9 +21169,7 @@ if ( scalar keys %HTMLOutput ) {
 		if ($ShowAuthenticatedUsers) {
 			&HTMLMainLogins($NewLinkParams, $NewLinkTarget);
 		}
-
-		print '<div class="column">';
-
+		
 		# BY SESSION
 		#----------------------------
 		if ($ShowSessionsStats) {
@@ -21180,8 +21182,6 @@ if ( scalar keys %HTMLOutput ) {
 			print &HTMLMainScreenSize();
 		}
 
-		print '</div>';
-
 		# BY OS
 		#----------------------------
 		if ($ShowOSStats) {
@@ -21193,6 +21193,9 @@ if ( scalar keys %HTMLOutput ) {
 		if ($ShowBrowsersStats) {
 			print &HTMLMainBrowsers($NewLinkParams, $NewLinkTarget);
 		}
+
+		print '</section>';
+		print '<section class="flex">';
 
 		# BY SEARCH KEYPHRASES
 		#----------------------------
@@ -21212,6 +21215,9 @@ if ( scalar keys %HTMLOutput ) {
 			&HTMLMainReferrers($NewLinkParams, $NewLinkTarget);
 		}
 
+		print '</section>';
+		print '<section class="flex">';
+
 		# BY HTTP STATUS
 		#----------------------------
 		if ($ShowHTTPErrorsStats) {
@@ -21230,10 +21236,14 @@ if ( scalar keys %HTMLOutput ) {
 			&HTMLMainCluster($NewLinkParams, $NewLinkTarget);
 		}
 
+		print '</section>';
+		
 		# BY EXTRA SECTIONS
 		#----------------------------
 		foreach my $extranum ( 1 .. @ExtraName - 1 ) {
+			print '<section class="flex">';
 			&HTMLMainExtra($NewLinkParams, $NewLinkTarget, $extranum);
+			print '</section>';
 		}
 
 		# close the HTML page
