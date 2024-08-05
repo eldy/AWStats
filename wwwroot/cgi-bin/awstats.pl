@@ -919,7 +919,7 @@ sub html_head {
 # Return:		string
 #------------------------------------------------------------------------------
 sub renderCss {
-	my $dir = $PageDir ? 'right' : 'left';
+	#my $dir = $PageDir ? 'right' : 'left';
 	my $css = '';
 
 	#TODO set pagedir var(--direction), but where ?
@@ -1036,6 +1036,7 @@ section header:hover .tooltip { visibility: visible; opacity: 1; }
 #worldmap{ width: 50%; margin: auto; background-color: #4477DD; }
 .title-map{ position:absolute; top: 16px; color: var(--light-color); }
 .country { text-transform: uppercase; font-weight: 700; }
+.expand-collapse-button { font-family: monospace; line-height: 1; }
 /* colors */
 nav a, nav a:link, nav a:visited { color: var(--nav-color) }
 a, a:link, a:visited { color: var(--a-color); text-decoration: none; }
@@ -1091,6 +1092,9 @@ a:hover, a:focus, a:active{ color: var(--a-hover-color); text-decoration: none; 
 sub renderJavascript {
 	my $js =  <<EOF;
 <script>
+
+let dirImgs = '$DirImgs';
+
 document.addEventListener("DOMContentLoaded", (d) => {
 
 	const headerHeight = document.querySelector("#container > header").offsetHeight + 20;
@@ -1111,20 +1115,25 @@ document.addEventListener("DOMContentLoaded", (d) => {
    		});
   });
 
-  [...document.querySelectorAll('.show-all')].forEach(el => {
+  [...document.querySelectorAll('.expand-collapse-button')].forEach(el => {
   		el.addEventListener("click", (e) => {
-  			let children = [...el.parentElement.parentElement.parentElement.parentElement.querySelectorAll('.collapsed')];
+  			let parent = el.parentElement.parentElement.parentElement.parentElement.parentElement;
+  			let children = [...parent.querySelectorAll('.collapsed')];
+
   			if(el.classList.contains('opened')){
 					children.forEach(opened => {
  						opened.style.visibility = 'collapse';
   				});
-  				el.classList.remove('opened');
+  				el.innerHTML = '+';
+  				parent.scrollIntoView();
   			} else {
   				children.forEach(collapsed => {
  						collapsed.style.visibility = 'visible';
   				});
-  				el.classList.add('opened');
+  				el.innerHTML = '-';
   			}
+
+  			el.classList.toggle('opened');
   		});
   });
 
@@ -1138,7 +1147,7 @@ document.addEventListener("DOMContentLoaded", (d) => {
 
 	let worldmap = document.getElementById('worldmap');
 
-	fetch('$DirImgs/BlankMap-World.svg').then(response=>response.text()).then(data=>{ 
+	fetch( dirImgs + '/BlankMap-World.svg').then(response=>response.text()).then(data=>{ 
 	
 		worldmap.innerHTML = data;
 	
@@ -14597,48 +14606,38 @@ sub HTMLMainCountries{
 	my $NewLinkParams = shift;
 	my $NewLinkTarget = shift;
 
-	my $total_u = my $total_v = my $total_p = my $total_h = my $total_k = 0;
+	my $count = my $total_u = my $total_v = my $total_p = my $total_h = my $total_k = 0;
 	my $rest_u  = my $rest_v  = my $rest_p  = my $rest_h  = my $rest_k = 0; 
 	my $max_u = my $max_p = my $max_h = my $max_k = 1;
-	my $count = 0;
-
 	my $title = $Message[25] . ' <small>(' . $Message[77] . ' ' . $MaxNbOf{'Domain'} . ')</small>';
 	my @links = ();
 	my $map = '<div id="worldmap-wrapper"><div id="worldmap"></div></div>';
-	my $tableData = '';
+	my $tooltip = my $tableData = my $tableFooter = '';
+	my $colspan = ($ShowDomainsStats =~ /U/i) + ($ShowDomainsStats =~ /V/i) + ($ShowDomainsStats =~ /P/i) + ($ShowDomainsStats =~ /H/i) + ($ShowDomainsStats =~ /B/i);
 
-	# push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'alldomains', $Message[80]));
-	  
   if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
-  {
-    # extend the title to include the added link
+  { # extend the title to include the added link
     push(@links, '<a href="'
     . XMLEncode($AddLinkToExternalCGIWrapper . '?section=DOMAIN&baseName=' . $DirData/$PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig)
     . '" '. $NewLinkTarget . '>' . $Message[179] . '</a>');
   }
 
-  my $tooltip = '';
 	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
 	{
 		my $function = "getTooltip_$pluginname";
 		$tooltip .= &$function(19);
 	}
         	  
-	foreach ( values %_domener_u ) { if ( $_ > $max_u ) { $max_u = $_; } }
+	foreach ( values %_domener_u ) { $max_u = ( $_ > $max_u ) ? $_ : $max_u; }
 
-	foreach ( values %_domener_p ) { if ( $_ > $max_p ) { $max_p = $_; } }
+	foreach ( values %_domener_p ) { $max_p = ( $_ > $max_p ) ? $_ : $max_p; }
 
-	foreach ( values %_domener_h ) { if ( $_ > $max_h ) { $max_h = $_; } }
+	foreach ( values %_domener_h ) { $max_h = ( $_ > $max_h ) ? $_ : $max_h; }
 	
-	foreach ( values %_domener_k ) { if ( $_ > $max_k ) { $max_k = $_; } }
+	foreach ( values %_domener_k ) { $max_k = ( $_ > $max_k ) ? $_ : $max_k }
 	
-	&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_domener_h,	\%_domener_p );
+	&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Domain'}, \%_domener_h,	\%_domener_p );
 
-	# &BuildKeyList(
-	# 	$MaxNbOf{'Domain'}, $MinHit{'Domain'},
-	# 	\%_domener_h,       \%_domener_p
-	# );
-	
 	# # print the map
 	# if (scalar @keylist > 1){
 	# 	foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowGraph'} } )
@@ -14652,7 +14651,7 @@ sub HTMLMainCountries{
 	# 			$cnt++;
 	# 			if ($cnt > 99) { last; }
 	# 		}
-	# 		print "<tr><td colspan=\"7\">";
+	# 		print "<div>";
 	# 		my $function = "ShowGraph_$pluginname";
 	# 		&$function(
 	# 			"AWStatsCountryMap",              "countries_map",
@@ -14661,15 +14660,11 @@ sub HTMLMainCountries{
 	# 			0,              		0,
 	# 			0,          			\@valdata
 	# 		);
-	# 		print "</td></tr>";
+	# 		print "</div>";
 	# 	}
 	# }
-
-	# print "<tr><td>";
 	
-	$tableData .= '<table class="data-table domains-table">'
-	. HTMLDataTableHeader('<button class="show-all">' . $Message[80] . '</button>', $ShowDomainsStats)
-	. '<tbody>';
+	$tableData .= '<tbody>';
 
 	foreach my $key (@keylist)
 	{
@@ -14681,7 +14676,8 @@ sub HTMLMainCountries{
 		{
 			$tableData .= '<tr><td>' . $Message[0] . ' </td>';
 		}
-		else {
+		else
+		{
 			$tableData .= '<tr'
 			. ' class="country' . (($count < $MaxNbOf{'Domain'}) ? '' : ' collapsed') . '"'
 			. (($count < $MaxNbOf{'Domain'}) ? '' : ' style="visibility: collapse"')
@@ -14731,6 +14727,8 @@ sub HTMLMainCountries{
 		$count++;
 	}
 
+	$tableFooter .= '<tfoot><tr><td><button class="expand-collapse-button">+</button></td><td colspan="' . $colspan . '"></td></tr></tfoot>';
+
 	$rest_u = $TotalUnique - $total_u;
 	$rest_v = $TotalVisits - $total_v;
 	$rest_p = $TotalPages - $total_p;
@@ -14745,11 +14743,13 @@ sub HTMLMainCountries{
 		. (( $ShowDomainsStats =~ /P/i ) ? HTMLDataCellWithBar('p', $rest_p , Format_Number($rest_p), $TotalPages) : '')
 		. (( $ShowDomainsStats =~ /H/i ) ? HTMLDataCellWithBar('h', $rest_h , Format_Number($rest_h), $TotalHits) : '')
 		. (( $ShowDomainsStats =~ /B/i ) ? HTMLDataCellWithBar('b', $rest_k , Format_Bytes($rest_k), $TotalBytes) : '')
-		. '</tr>'
-		. '</table>';
+		. '</tr>';
 	}
 
-	return &tab_head( $title, join( ' - ', @links ), 'countries', $tooltip)	. $map . $tableData . &tab_end();
+	return &tab_head( $title, join( ' - ', @links ), 'countries', $tooltip)
+	. $map
+	. '<table class="data-table domains-table">' . HTMLDataTableHeader('', $ShowDomainsStats) . $tableData . $tableFooter . '</table>'
+	. &tab_end();
 }
 
 #------------------------------------------------------------------------------
