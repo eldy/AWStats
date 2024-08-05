@@ -926,8 +926,8 @@ sub renderCss {
 
 	$css .= '
 :root {
-	--page-color: hsl(1, 0%, 25%);
-	--page-bgcolor: hsl(1, 0%, 95%);
+	--page-color: hsl(220, 0%, 25%);
+	--page-bgcolor: hsl(200, 0%, 95%);
 	--aws-color-u: hsl(27, 100%, 70%);
 	--aws-color-v: hsl(58, 82%, 76%);
 	--aws-color-p: hsl(220, 97%, 72%);
@@ -936,9 +936,9 @@ sub renderCss {
 	--aws-color-e: hsl(258, 60%, 75%);
 	--aws-color-x: hsl(260, 76%, 81%);
 	--aws-color-s: hsl(240, 56%, 70%);
-	--dark-color: hsl(1, 0%, 50%);
-	--neutral-color: hsl(1, 0%, 75%);
-	--light-color: hsl(1, 0%, 90%);
+	--dark-color: hsl(220, 0%, 50%);
+	--neutral-color: hsl(220, 0%, 75%);
+	--light-color: hsl(220, 0%, 90%);
 	--a-color: hsl(0, 0%, 0%);
 	--a-hover-color: hsl(0, 0%, 0%);
 	--bar-width: 100;
@@ -963,12 +963,12 @@ sub renderCss {
 		--aws-color-e: hsl(258, 60%, 75%);
 		--aws-color-x: hsl(260, 76%, 81%);
 		--aws-color-s: hsl(240, 56%, 70%);
-		--dark-color: hsl(0, 0%, 8.2%);
-		--neutral-color: hsl(0, 0%, 48%);
-		--light-color: hsl(0, 0%, 60%);
-		--a-color: hsl(0, 0%, 81.6%);
-		--a-hover-color: hsl(0, 0%, 100%);
-		--nav-color: hsl(0, 0%, 2.4%);
+		--dark-color: hsl(220, 0%, 8.2%);
+		--neutral-color: hsl(220, 0%, 48%);
+		--light-color: hsl(220, 0%, 60%);
+		--a-color: hsl(220, 0%, 81.6%);
+		--a-hover-color: hsl(220, 0%, 100%);
+		--nav-color: hsl(220, 0%, 2.4%);
 	}
 }
 
@@ -8610,8 +8610,8 @@ sub HtmlBar {
 #------------------------------------------------------------------------------
 # Function:     Return data cell with percentage bar
 # Parameters:   string $type = 'u' | 'v' | 'p' | 'h' | 'b',
-#								int $data, string | int $formattedData, int $max, string $class
-# Output:       _
+#								int $data, string | int $formattedData, int $max, string $mixedColor
+# Output:       -
 # Return:       string
 #------------------------------------------------------------------------------
 sub HTMLDataCellWithBar{
@@ -8619,11 +8619,13 @@ sub HTMLDataCellWithBar{
 	my $data = shift;
 	my $formattedData = shift;
 	my $max = shift;
-	my $class = shift || '';
+	my $mixedColor = shift || '';
 	my $percentage = ($max > 0) ? ($data || 0) / $max : 0;
 
-	return '<td><div ' . (($class ne '') ? 'class="' . $class . '"' : '') . ' style="background:'
-		. 'linear-gradient(to right, var(--aws-color-' . $type .') calc(var(--bar-width) * ' . $percentage . ' * 1%), rgba(0,0,0,0) calc(var(--bar-width) * ' . $percentage . ' * 1%));'
+	return '<td><div style="background:'
+		. 'linear-gradient(to right,'
+		. (($mixedColor ne '') ? 'color-mix(in hsl, var(--aws-color-' . $type .'), var(--neutral-color) 50%)' : ' var(--aws-color-' . $type .')')
+		. 'calc(var(--bar-width) * ' . $percentage . ' * 1%), rgba(0,0,0,0) calc(var(--bar-width) * ' . $percentage . ' * 1%));'
 		. '">'
 		. $formattedData . '</div></td>';
 }
@@ -15912,245 +15914,149 @@ sub HTMLMainScreenSize{
 # Output:       HTML
 # Return:       -
 #------------------------------------------------------------------------------
+# 0: Direct
+# 1: Unknown
+# 2: SE
+# 3: External link
+# 4: Internal link
+# 5: Newsgroup (deprecated)
 sub HTMLMainReferrers{
+	if ($Debug) { debug( "ShowOriginStats", 2 ); }
+	
 	my $NewLinkParams = shift;
 	my $NewLinkTarget = shift;
 	
-	if ($Debug) { debug( "ShowOriginStats", 2 ); }
-	# print "<a name=\"referer\">&nbsp;</a>";
-	my $Totalp = 0;
-	foreach ( 0 .. 5 )
-	{
-		$Totalp += ( $_ != 4 || $IncludeInternalLinksInOriginSection ) ? $_from_p[$_] : 0;
-	}
+	my $Totalp = my $Totalh = 0;
+	my $title = $Message[36];
+	my @links = ();
+	my $tooltip = my $tableHeader = my $tableData = '';
+	my @p_p = my @p_h = ( 0, 0, 0, 0, 0, 0 );
 
-	my $Totalh = 0;
-	foreach ( 0 .. 5 ) {
-		$Totalh += ( $_ != 4 || $IncludeInternalLinksInOriginSection ) ? $_from_h[$_] : 0;
-	}
-
-  my $title = $Message[36];
-  my @links = ();
-
-  if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
-  { # extend the title to include the added link
-    push(@links, '<a href="'
-    . XMLEncode($AddLinkToExternalCGIWrapper . '?section=ORIGIN&baseName=' . $DirData . '/' . $PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig)
-    . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>');
+	if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
+	{ # extend the title to include the added link
+		push(@links, '<a href="'
+		. XMLEncode($AddLinkToExternalCGIWrapper . '?section=ORIGIN&baseName=' . $DirData . '/' . $PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig)
+		. '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>');
   }
 
-	my $tooltip = '';
 	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
 	{
 		my $function = "getTooltip_$pluginname";
 		$tooltip .= &$function(19);
 	}
 
-	print &tab_head($title, join( ' - ', @links ), 'referer', $tooltip);
+	foreach ( 0 .. 5 )
+	{
+		$Totalp += ( $_ != 4 || $IncludeInternalLinksInOriginSection ) ? $_from_p[$_] : 0;
+		$Totalh += ( $_ != 4 || $IncludeInternalLinksInOriginSection ) ? $_from_h[$_] : 0;
+	}
 
-	my @p_p = ( 0, 0, 0, 0, 0, 0 );
-	if ( $Totalp > 0 ) {
-		$p_p[0] = int( $_from_p[0] / $Totalp * 1000 ) / 10;
-		$p_p[1] = int( $_from_p[1] / $Totalp * 1000 ) / 10;
-		$p_p[2] = int( $_from_p[2] / $Totalp * 1000 ) / 10;
-		$p_p[3] = int( $_from_p[3] / $Totalp * 1000 ) / 10;
-		$p_p[4] = int( $_from_p[4] / $Totalp * 1000 ) / 10;
-		$p_p[5] = int( $_from_p[5] / $Totalp * 1000 ) / 10;
+	foreach ( 0 .. 5 )
+	{
+		$p_p[$_] = ( $Totalp > 0 ) ? int( $_from_p[$_] / $Totalp * 1000 ) / 10 : 0;
+		$p_h[$_] = ( $Totalh > 0 ) ? int( $_from_h[$_] / $Totalh * 1000 ) / 10 : 0;
 	}
-	my @p_h = ( 0, 0, 0, 0, 0, 0 );
-	if ( $Totalh > 0 ) {
-		$p_h[0] = int( $_from_h[0] / $Totalh * 1000 ) / 10;
-		$p_h[1] = int( $_from_h[1] / $Totalh * 1000 ) / 10;
-		$p_h[2] = int( $_from_h[2] / $Totalh * 1000 ) / 10;
-		$p_h[3] = int( $_from_h[3] / $Totalh * 1000 ) / 10;
-		$p_h[4] = int( $_from_h[4] / $Totalh * 1000 ) / 10;
-		$p_h[5] = int( $_from_h[5] / $Totalh * 1000 ) / 10;
-	}
-	print '<table class="data-table">'
-	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$Message[37]</th>";
-	if ( $ShowOriginStats =~ /P/i ) {
-		print "<th class=\"bg-p\" width=\"80\">" . ucfirst($Message[28]) . "</th><th class=\"bg-p\" width=\"80\">$Message[15]</th>";
-	}
-	if ( $ShowOriginStats =~ /H/i ) {
-		print "<th class=\"bg-h\" width=\"80\">$Message[57]</th><th class=\"bg-h\" width=\"80\">$Message[15]</th>";
-	}
-	print "</tr>\n";
 
 	#------- Referrals by direct address/bookmark/link in email/etc...
-	print "<tr><td class=\"aws\"><b>$Message[38]</b></td>";
-	if ( $ShowOriginStats =~ /P/i ) {
-		print "<td>"
-		  . ( $_from_p[0] ? Format_Number($_from_p[0]) : "&nbsp;" )
-		  . "</td><td>"
-		  . ( $_from_p[0] ? "$p_p[0] %" : "&nbsp;" ) . "</td>";
-	}
-	if ( $ShowOriginStats =~ /H/i ) {
-		print "<td>"
-		  . ( $_from_h[0] ? Format_Number($_from_h[0]) : "&nbsp;" )
-		  . "</td><td>"
-		  . ( $_from_h[0] ? "$p_h[0] %" : "&nbsp;" ) . "</td>";
-	}
-	print "</tr>\n";
+	$tableData .= '<tr class="weekend"><td><b>' . $Message[38] .'</b></td>'
+	. (( $ShowOriginStats =~ /P/i && $_from_p[0]) ? HTMLDataCellWithBar('p', $_from_p[0], '<small>' . $p_p[0] . '%</small> ' . Format_Number($_from_p[0]), $Totalp) : '<td></td>')
+	. (( $ShowOriginStats =~ /H/i && $_from_h[0] ) ? HTMLDataCellWithBar('h', $_from_h[0], '<small>' . $p_h[0] . '%</small> ' . Format_Number($_from_h[0]), $Totalh) : '<td></td>')
+	. '</tr>';
 
 	#------- Referrals by search engines
-	print "<tr"
-	  . Tooltip(13)
-	  . "><td class=\"aws\"><b>$Message[40]</b> - <a href=\""
-	  . (
-		$ENV{'GATEWAY_INTERFACE'}
-		  || !$StaticLinks
-		? XMLEncode("$AWScript${NewLinkParams}output=refererse")
-		: "$StaticLinks.refererse.$StaticExt"
-	  )
-	  . "\"$NewLinkTarget>$Message[80]</a>";
-	if ( scalar keys %_se_referrals_h ) {
-		print "<table>\n";
-		my $total_p = 0;
-		my $total_h = 0;
-		my $count = 0;
-		&BuildKeyList(
-			$MaxNbOf{'RefererShown'},
-			$MinHit{'Refer'},
-			\%_se_referrals_h,
-			(
-				( scalar keys %_se_referrals_p )
-				? \%_se_referrals_p
-				: \%_se_referrals_h
-			)
-		);
-		foreach my $key (@keylist) {
-			my $newreferer = $SearchEnginesHashLib{$key}
-			  || CleanXSS($key);
-			print "<tr><td class=\"aws\">- $newreferer</td>";
-			print "<td>"
-			  . (
-				Format_Number($_se_referrals_p{$key} ? $_se_referrals_p{$key} : '0' ))
-			  . "</td>";
-			print "<td> / ".Format_Number($_se_referrals_h{$key})."</td>";
-			print "</tr>\n";
+	$tableData .= '<tr class="weekend">' #tooltip 13
+	  . '<td><b>' . $Message[40] . '</b> - '
+	  . HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'refererse', $Message[80])
+	  . '</td>'
+	  . (( $ShowOriginStats =~ /P/i && $_from_p[2]) ? HTMLDataCellWithBar('p', $_from_p[2], '<small>' . $p_p[2] . '%</small> ' . Format_Number($_from_p[2]), $Totalp) : '<td></td>')
+	  . (( $ShowOriginStats =~ /H/i && $_from_p[2]) ? HTMLDataCellWithBar('h', $_from_h[2], '<small>' . $p_h[2] . '%</small> ' . Format_Number($_from_h[2]), $Totalh) : '<td></td>')
+	  . '</tr>';
+	
+	if ( scalar keys %_se_referrals_h )
+	{
+		my $total_p = my $total_h = 0;
+		&BuildKeyList($MaxNbOf{'RefererShown'}, $MinHit{'Refer'}, \%_se_referrals_h, (( scalar keys %_se_referrals_p ) ? \%_se_referrals_p : \%_se_referrals_h));
+
+		foreach my $key (@keylist)
+		{
+			my $newreferer = $SearchEnginesHashLib{$key} || CleanXSS($key);
+			my $p_p = ($Totalp) ? int( $_se_referrals_p{$key} / $Totalp * 1000 ) / 10 : 0;
+			my $p_h = ($Totalh) ? int( $_se_referrals_h{$key} / $Totalh * 1000 ) / 10 : 0;
 			$total_p += $_se_referrals_p{$key};
 			$total_h += $_se_referrals_h{$key};
-			$count++;
+
+			$tableData .= '<tr><td><b>' . $newreferer . '</b></td>'
+			. (( $ShowOriginStats =~ /P/i && $_se_referrals_p{$key}) ? HTMLDataCellWithBar('p', $_se_referrals_p{$key}, '<small>' . $p_p  . '%</small> ' . Format_Number($_se_referrals_p{$key}), $Totalp, '--neutral-color') : '<td></td>')
+			. (( $ShowOriginStats =~ /H/i && $_se_referrals_h{$key}) ? HTMLDataCellWithBar('h', $_se_referrals_h{$key}, '<small>' . $p_h . '%</small> ' . Format_Number($_se_referrals_h{$key}), $Totalh, '--neutral-color') : '<td></td>');
 		}
+
 		if ($Debug) {
-			debug(
-"Total real / shown : $TotalSearchEnginesPages / $total_p -  $TotalSearchEnginesHits / $total_h",
-				2
-			);
+			debug("Total real / shown : $TotalSearchEnginesPages / $total_p -  $TotalSearchEnginesHits / $total_h", 2);
 		}
+
 		my $rest_p = $TotalSearchEnginesPages - $total_p;
 		my $rest_h = $TotalSearchEnginesHits - $total_h;
-		if ( $rest_p > 0 || $rest_h > 0 ) {
-			print
-"<tr><td class=\"aws\"><span style=\"color: #$color_other\">- $Message[2]</span></td>";
-			print "<td>".Format_Number($rest_p)."</td>";
-			print "<td> / ".Format_Number($rest_h)."</td>";
-			print "</tr>\n";
+		
+		if ( $rest_p > 0 || $rest_h > 0 )
+		{
+			$tableData .= '<tr><td>- ' . $Message[2] . '</td>'
+			. (( $ShowOriginStats =~ /P/i) ? HTMLDataCellWithBar('p', $rest_p, '<small>%</small> ' . Format_Number($rest_p), $Totalp) : '<td></td>')
+			. (( $ShowOriginStats =~ /H/i) ? HTMLDataCellWithBar('h', $rest_h, '<small>%</small> ' . Format_Number($rest_h), $Totalh) : '<td></td>')
+			. '</tr>';
 		}
-		print "</table>";
 	}
-	print "</td>\n";
-	if ( $ShowOriginStats =~ /P/i ) {
-		print "<td>"
-		  . ( $_from_p[2] ? Format_Number($_from_p[2]) : "&nbsp;" )
-		  . "</td><td>"
-		  . ( $_from_p[2] ? "$p_p[2] %" : "&nbsp;" ) . "</td>";
-	}
-	if ( $ShowOriginStats =~ /H/i ) {
-		print "<td>"
-		  . ( $_from_h[2] ? Format_Number($_from_h[2]) : "&nbsp;" )
-		  . "</td><td>"
-		  . ( $_from_h[2] ? "$p_h[2] %" : "&nbsp;" ) . "</td>";
-	}
-	print "</tr>\n";
 
 	#------- Referrals by external HTML link
-	print "<tr"
-	  . Tooltip(14)
-	  . "><td class=\"aws\"><b>$Message[41]</b> - <a href=\""
-	  . (
-		$ENV{'GATEWAY_INTERFACE'}
-		  || !$StaticLinks
-		? XMLEncode("$AWScript${NewLinkParams}output=refererpages")
-		: "$StaticLinks.refererpages.$StaticExt"
-	  )
-	  . "\"$NewLinkTarget>$Message[80]</a>";
-	if ( scalar keys %_pagesrefs_h ) {
-		print "<table>\n";
-		my $total_p = 0;
-		my $total_h = 0;
-		my $count = 0;
-		&BuildKeyList(
-			$MaxNbOf{'RefererShown'},
-			$MinHit{'Refer'},
-			\%_pagesrefs_h,
-			(
-				( scalar keys %_pagesrefs_p )
-				? \%_pagesrefs_p
-				: \%_pagesrefs_h
-			)
-		);
-		foreach my $key (@keylist) {
-			print "<tr><td class=\"aws\">- ";
-			print &HTMLShowURLInfo($key);
-			print "</td>";
-			print "<td>"
-			  . Format_Number(( $_pagesrefs_p{$key} ? $_pagesrefs_p{$key} : '0' ))
-			  . "</td>";
-			print "<td>".Format_Number($_pagesrefs_h{$key})."</td>";
-			print "</tr>\n";
+	$tableData .= '<tr class="weekend">'; # tooltip 14
+	$tableData .= '<td><b>' . $Message[41] . '</b> - '
+	. HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'refererpages', $Message[80])
+	. '</td>'
+	. (( $ShowOriginStats =~ /P/i && $_from_p[3]) ? HTMLDataCellWithBar('p', $_from_p[3], '<small>' . $p_p[3] . '%</small> ' . Format_Number($_from_p[3]), $Totalp) : '<td></td>')
+	. (( $ShowOriginStats =~ /H/i && $_from_p[3]) ? HTMLDataCellWithBar('h', $_from_h[3], '<small>' . $p_h[3] . '%</small> ' . Format_Number($_from_h[3]), $Totalh) : '<td></td>')
+	. '</tr>';
+	
+	if ( scalar keys %_pagesrefs_h )
+	{
+		my $total_p = my $total_h = 0;
+		
+		&BuildKeyList($MaxNbOf{'RefererShown'}, $MinHit{'Refer'}, \%_pagesrefs_h, ( ( scalar keys %_pagesrefs_p ) ? \%_pagesrefs_p : \%_pagesrefs_h));
+
+		foreach my $key (@keylist)
+		{
+			my $p_p = ($Totalp) ? int( $_pagesrefs_p{$key} / $Totalp * 1000 ) / 10 : 0;
+			my $p_h = ($Totalh) ? int( $_pagesrefs_h{$key} / $Totalh * 1000 ) / 10 : 0;
 			$total_p += $_pagesrefs_p{$key};
 			$total_h += $_pagesrefs_h{$key};
-			$count++;
+
+			$tableData .= '<tr><td>' . &HTMLShowURLInfo($key) . '</td>'
+			. (( $ShowOriginStats =~ /P/i && $_pagesrefs_p{$key}) ? HTMLDataCellWithBar('p', $_pagesrefs_p{$key}, '<small>' . $p_p  . '%</small> ' . Format_Number($_pagesrefs_p{$key}), $Totalp, '--neutral-color') : '<td></td>')
+			. (( $ShowOriginStats =~ /H/i && $_pagesrefs_h{$key}) ? HTMLDataCellWithBar('h', $_pagesrefs_h{$key}, '<small>' . $p_h . '%</small> ' . Format_Number($_pagesrefs_h{$key}), $Totalh, '--neutral-color') : '<td></td>')
+			. '</tr>';		
 		}
-		if ($Debug) {
-			debug(
-"Total real / shown : $TotalRefererPages / $total_p - $TotalRefererHits / $total_h",
-				2
-			);
-		}
+
+		if ($Debug) { debug("Total real / shown : $TotalRefererPages / $total_p - $TotalRefererHits / $total_h", 2);}
+		
 		my $rest_p = $TotalRefererPages - $total_p;
 		my $rest_h = $TotalRefererHits - $total_h;
-		if ( $rest_p > 0 || $rest_h > 0 ) {
-			print
-"<tr><td class=\"aws\"><span style=\"color: #$color_other\">- $Message[2]</span></td>";
-			print "<td>".Format_Number($rest_p)."</td>";
-			print "<td>".Format_Number($rest_h)."</td>";
-			print "</tr>\n";
+
+		if ( $rest_p > 0 || $rest_h > 0 )
+		{
+			my $p_p = ($Totalp) ? int( $rest_p / $Totalp * 1000 ) / 10 : 0;
+			my $p_h = ($Totalh) ? int( $rest_h / $Totalh * 1000 ) / 10 : 0;
+			$tableData .= '<tr><td>' . $Message[2] . '</td>'
+			. (( $ShowOriginStats =~ /P/i) ? HTMLDataCellWithBar('p', $rest_p, '<small>' . $p_p . '%</small> ' . Format_Number($rest_p), $Totalp) : '<td></td>')
+			. (( $ShowOriginStats =~ /H/i) ? HTMLDataCellWithBar('h', $rest_h, '<small>' . $p_h . '%</small> ' . Format_Number($rest_h), $Totalh) : '<td></td>')
+			. '</tr>';
 		}
-		print "</table>";
 	}
-	print "</td>\n";
-	if ( $ShowOriginStats =~ /P/i ) {
-		print "<td>"
-		  . ( $_from_p[3] ? Format_Number($_from_p[3]) : "&nbsp;" )
-		  . "</td><td>"
-		  . ( $_from_p[3] ? "$p_p[3] %" : "&nbsp;" ) . "</td>";
-	}
-	if ( $ShowOriginStats =~ /H/i ) {
-		print "<td>"
-		  . ( $_from_h[3] ? Format_Number($_from_h[3]) : "&nbsp;" )
-		  . "</td><td>"
-		  . ( $_from_h[3] ? "$p_h[3] %" : "&nbsp;" ) . "</td>";
-	}
-	print "</tr>\n";
 
 	#------- Referrals by internal HTML link
-	if ($IncludeInternalLinksInOriginSection) {
-		print "<tr><td class=\"aws\"><b>$Message[42]</b></td>";
-		if ( $ShowOriginStats =~ /P/i ) {
-			print "<td>"
-			  . ( $_from_p[4] ? Format_Number($_from_p[4]) : "&nbsp;" )
-			  . "</td><td>"
-			  . ( $_from_p[4] ? "$p_p[4] %" : "&nbsp;" ) . "</td>";
-		}
-		if ( $ShowOriginStats =~ /H/i ) {
-			print "<td>"
-			  . ( $_from_h[4] ? Format_Number($_from_h[4]) : "&nbsp;" )
-			  . "</td><td>"
-			  . ( $_from_h[4] ? "$p_h[4] %" : "&nbsp;" ) . "</td>";
-		}
-		print "</tr>\n";
+	if ($IncludeInternalLinksInOriginSection)
+	{
+		$tableData .= '<tr><td><b>' . $Message[42] . '</b></td>'
+		. (( $ShowOriginStats =~ /P/i && $_from_p[4]) ? HTMLDataCellWithBar('p', $_from_p[4], '<small>' . $p_p[4] . '%</small> ' . Format_Number($_from_p[4]), $Totalp) : '<td></td>')
+		. (( $ShowOriginStats =~ /H/i && $_from_p[4]) ? HTMLDataCellWithBar('h', $_from_h[4], '<small>' . $p_h[4] . '%</small> ' . Format_Number($_from_h[4]), $Totalh) : '<td></td>')
+		. '</tr>';
 	}
 
 	#------- Referrals by news group
@@ -16160,28 +16066,19 @@ sub HTMLMainReferrers{
 	#print "</tr>\n";
 	
 	#------- Unknown origin
-	print "<tr><td class=\"aws\"><b>$Message[39]</b></td>";
-	if ( $ShowOriginStats =~ /P/i ) {
-		print "<td>"
-		  . ( $_from_p[1] ? Format_Number($_from_p[1]) : "&nbsp;" )
-		  . "</td><td>"
-		  . ( $_from_p[1] ? "$p_p[1] %" : "&nbsp;" ) . "</td>";
-	}
-	if ( $ShowOriginStats =~ /H/i ) {
-		print "<td>"
-		  . ( $_from_h[1] ? Format_Number($_from_h[1]) : "&nbsp;" )
-		  . "</td><td>"
-		  . ( $_from_h[1] ? "$p_h[1] %" : "&nbsp;" ) . "</td>";
-	}
+	$tableData .= '<tr><td><b>' . $Message[39] . '</b></td>'
+	. (( $ShowOriginStats =~ /P/i && $_from_p[1]) ? HTMLDataCellWithBar('p', $_from_p[1], '<small>' . $p_p[1] . '%</small> ' . Format_Number($_from_p[1]), $Totalp) : '<td></td>')
+	. (( $ShowOriginStats =~ /H/i && $_from_p[1]) ? HTMLDataCellWithBar('h', $_from_h[1], '<small>' . $p_h[1] . '%</small> ' . Format_Number($_from_h[1]), $Totalh) : '<td></td>')
+	. '</tr>';
 
-	print '</tr></table>' . &tab_end();
+	$tableHeader .= '<thead><tr><th>' . $Message[37] . '</th>'
+	. (( $ShowOriginStats =~ /P/i ) ? '<th class="bg-p">' . ucfirst($Message[28]) . '</th>' : '')
+	. (( $ShowOriginStats =~ /H/i ) ? '<th class="bg-h">' . $Message[57] . '</th>' : '')
+	. '</tr></thead>';
 
-	# 0: Direct
-	# 1: Unknown
-	# 2: SE
-	# 3: External link
-	# 4: Internal link
-	# 5: Newsgroup (deprecated)
+	return &tab_head($title, join( ' - ', @links ), 'referer', $tooltip)
+	. '<table class="data-table">' . $tableHeader . $tableData . '</table>'
+	. &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -21208,7 +21105,7 @@ if ( scalar keys %HTMLOutput ) {
 		# BY REFERENCE
 		#---------------------------
 		if ($ShowOriginStats) {
-			&HTMLMainReferrers($NewLinkParams, $NewLinkTarget);
+			print &HTMLMainReferrers($NewLinkParams, $NewLinkTarget);
 		}
 
 		print '</section>';
