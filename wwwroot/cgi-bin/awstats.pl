@@ -12680,245 +12680,17 @@ sub HTMLShowRobots{
 }
 
 #------------------------------------------------------------------------------
-# Function:     Prints the URL, Entry or Exit details frame or static page
-# Parameters:   _
-# Input:        _
-# Output:       HTML
-# Return:       -
+# Function:     Return the URL, Entry or Exit details frame or static page
+# Parameters:   $NewLinkParams, $NewLinkTarget
+# Input:        -
+# Output:       -
+# Return:       string
 #------------------------------------------------------------------------------
 sub HTMLShowURLDetail{
-	my $total_p = 0;
-	my $total_e = 0;
-	my $total_k = 0;
-	my $total_x = 0;
-	# Call to plugins' function ShowPagesFilter
-	foreach
-	  my $pluginname ( keys %{ $PluginsLoaded{'ShowPagesFilter'} } )
-	{
-		my $function = "ShowPagesFilter_$pluginname";
-		&$function();
-	}
-	print "<a name=\"urls\">&nbsp;</a>";
-
-	# Show filter form
-	&HTMLShowFormFilter( "urlfilter", $FilterIn{'url'}, $FilterEx{'url'} );
-
-	# Show URL list
-	my $title = '';
-	my $cpt   = 0;
-	if ( $HTMLOutput{'urldetail'} ) {
-		$title = $Message[19];
-		$cpt   = ( scalar keys %_url_p );
-	}
-	if ( $HTMLOutput{'urlentry'} ) {
-		$title = $Message[104];
-		$cpt   = ( scalar keys %_url_e );
-	}
-	if ( $HTMLOutput{'urlexit'} ) {
-		$title = $Message[116];
-		$cpt   = ( scalar keys %_url_x );
-	}
-	print &tab_head( "$title", 19, 0, 'urls' )
-	. '<table>'
-	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>";
-	if ( $FilterIn{'url'} || $FilterEx{'url'} ) {
-		if ( $FilterIn{'url'} ) {
-			print "$Message[79] <b>$FilterIn{'url'}</b>";
-		}
-		if ( $FilterIn{'url'} && $FilterEx{'url'} ) { print " - "; }
-		if ( $FilterEx{'url'} ) {
-			print "Exclude $Message[79] <b>$FilterEx{'url'}</b>";
-		}
-		if ( $FilterIn{'url'} || $FilterEx{'url'} ) { print ": "; }
-		print Format_Number($cpt)." $Message[28]";
-		if ( $MonthRequired ne 'all' ) {
-			if ( $HTMLOutput{'urldetail'} ) {
-				print
-"$Message[102]: ".Format_Number($TotalDifferentPages)." $Message[28]";
-			}
-		}
-	}
-	else { print "$Message[102]: ".Format_Number($cpt)." $Message[28]"; }
-	print "</th>";
-	if ( $ShowPagesStats =~ /P/i ) {
-		print
-		  "<th class=\"bg-p\" width=\"80\">$Message[29]</th>";
-	}
-	if ( $ShowPagesStats =~ /B/i ) {
-		print
-"<th class=\"datasize color_k\" width=\"80\">$Message[106]</th>";
-	}
-	if ( $ShowPagesStats =~ /E/i ) {
-		print
-		  "<th class=\"bg-e\" width=\"80\">$Message[104]</th>";
-	}
-	if ( $ShowPagesStats =~ /X/i ) {
-		print
-		  "<th class=\"bg-x\" width=\"80\">$Message[116]</th>";
-	}
-
-	# Call to plugins' function ShowPagesAddField
-	foreach
-	  my $pluginname ( keys %{ $PluginsLoaded{'ShowPagesAddField'} } )
-	{
-
-		#    			my $function="ShowPagesAddField_$pluginname('title')";
-		#    			eval("$function");
-		my $function = "ShowPagesAddField_$pluginname";
-		&$function('title');
-	}
-	print "<th>&nbsp;</th></tr>\n";
-	$total_p = $total_k = $total_e = $total_x = 0;
-	my $count = 0;
-	if ( $HTMLOutput{'urlentry'} ) {
-		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'File'}, \%_url_e,
-			\%_url_e );
-	}
-	elsif ( $HTMLOutput{'urlexit'} ) {
-		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'File'}, \%_url_x,
-			\%_url_x );
-	}
-	else {
-		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'File'}, \%_url_p,
-			\%_url_p );
-	}
-	my $max_p = 1;
-	my $max_k = 1;
-	foreach my $key (@keylist) {
-		if ( $_url_p{$key} > $max_p ) { $max_p = $_url_p{$key}; }
-		if ( $_url_k{$key} / ( $_url_p{$key} || 1 ) > $max_k ) {
-			$max_k = $_url_k{$key} / ( $_url_p{$key} || 1 );
-		}
-	}
-	foreach my $key (@keylist) {
-		print "<tr><td class=\"aws\">";
-		print &HTMLShowURLInfo($key);
-		print "</td>";
-		my $bredde_p = 0;
-		my $bredde_e = 0;
-		my $bredde_x = 0;
-		my $bredde_k = 0;
-		if ( $max_p > 0 ) {
-			$bredde_p =
-			  int( $BarWidth * ( $_url_p{$key} || 0 ) / $max_p ) + 1;
-		}
-		if ( ( $bredde_p == 1 ) && $_url_p{$key} ) { $bredde_p = 2; }
-		if ( $max_p > 0 ) {
-			$bredde_e =
-			  int( $BarWidth * ( $_url_e{$key} || 0 ) / $max_p ) + 1;
-		}
-		if ( ( $bredde_e == 1 ) && $_url_e{$key} ) { $bredde_e = 2; }
-		if ( $max_p > 0 ) {
-			$bredde_x =
-			  int( $BarWidth * ( $_url_x{$key} || 0 ) / $max_p ) + 1;
-		}
-		if ( ( $bredde_x == 1 ) && $_url_x{$key} ) { $bredde_x = 2; }
-		if ( $max_k > 0 ) {
-			$bredde_k =
-			  int( $BarWidth *
-				  ( ( $_url_k{$key} || 0 ) / ( $_url_p{$key} || 1 ) ) /
-				  $max_k ) + 1;
-		}
-		if ( ( $bredde_k == 1 ) && $_url_k{$key} ) { $bredde_k = 2; }
-		if ( $ShowPagesStats =~ /P/i ) {
-			print "<td>".Format_Number($_url_p{$key})."</td>";
-		}
-		if ( $ShowPagesStats =~ /B/i ) {
-			print "<td>"
-			  . (
-				$_url_k{$key}
-				? Format_Bytes(
-					$_url_k{$key} / ( $_url_p{$key} || 1 )
-				  )
-				: "&nbsp;"
-			  )
-			  . "</td>";
-		}
-		if ( $ShowPagesStats =~ /E/i ) {
-			print "<td>"
-			  . ( $_url_e{$key} ? Format_Number($_url_e{$key}) : "&nbsp;" ) . "</td>";
-		}
-		if ( $ShowPagesStats =~ /X/i ) {
-			print "<td>"
-			  . ( $_url_x{$key} ? Format_Number($_url_x{$key}) : "&nbsp;" ) . "</td>";
-		}
-
-		# Call to plugins' function ShowPagesAddField
-		foreach my $pluginname (
-			keys %{ $PluginsLoaded{'ShowPagesAddField'} } )
-		{
-
-		  #    				my $function="ShowPagesAddField_$pluginname('$key')";
-		  #    				eval("$function");
-			my $function = "ShowPagesAddField_$pluginname";
-			&$function($key);
-		}
-		print "<td class=\"aws\">";
-
-		# alt and title are not provided to reduce page size
-		if ( $ShowPagesStats =~ /P/i ) {
-			print HtmlBarH('p', $bredde_p);
-		}
-		if ( $ShowPagesStats =~ /B/i ) {
-			print HtmlBarH('k', $bredde_k);
-		}
-		if ( $ShowPagesStats =~ /E/i ) {
-			print HtmlBarH('e', $bredde_e);
-		}
-		if ( $ShowPagesStats =~ /X/i ) {
-			print HtmlBarH('x', $bredde_x);
-		}
-		print "</td></tr>\n";
-		$total_p += $_url_p{$key};
-		$total_e += $_url_e{$key};
-		$total_x += $_url_x{$key};
-		$total_k += $_url_k{$key};
-		$count++;
-	}
-	if ($Debug) {
-		debug(
-"Total real / shown : $TotalPages / $total_p - $TotalEntries / $total_e - $TotalExits / $total_x - $TotalBytesPages / $total_k",
-			2
-		);
-	}
-	my $rest_p = $TotalPages - $total_p;
-	my $rest_k = $TotalBytesPages - $total_k;
-	my $rest_e = $TotalEntries - $total_e;
-	my $rest_x = $TotalExits - $total_x;
-	if ( $rest_p > 0 || $rest_e > 0 || $rest_k > 0 ) {
-		print
-"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
-		if ( $ShowPagesStats =~ /P/i ) {
-			print "<td>" . ( $rest_p ? Format_Number($rest_p) : "&nbsp;" ) . "</td>";
-		}
-		if ( $ShowPagesStats =~ /B/i ) {
-			print "<td>"
-			  . (
-				$rest_k
-				? Format_Bytes( $rest_k / ( $rest_p || 1 ) )
-				: "&nbsp;"
-			  )
-			  . "</td>";
-		}
-		if ( $ShowPagesStats =~ /E/i ) {
-			print "<td>" . ( $rest_e ? Format_Number($rest_e) : "&nbsp;" ) . "</td>";
-		}
-		if ( $ShowPagesStats =~ /X/i ) {
-			print "<td>" . ( $rest_x ? Format_Number($rest_x) : "&nbsp;" ) . "</td>";
-		}
-
-		# Call to plugins' function ShowPagesAddField
-		foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowPagesAddField'} } )
-		{
-			my $function = "ShowPagesAddField_$pluginname";
-			&$function('');
-		}
-		print "<td>&nbsp;</td></tr>\n";
-	}
+	my $NewLinkParams = shift;
+	my $NewLinkTarget = shift;
 	
-	print '</table>' . &tab_end();
-
-	print &html_end(1);
+	return HTMLMainPages($NewLinkParams, $NewLinkTarget, 'all') . &html_end(1);
 }
 
 #------------------------------------------------------------------------------
@@ -15257,7 +15029,7 @@ sub HTMLMainSessions{
 
 #------------------------------------------------------------------------------
 # Function:     Return the pages chart and table
-# Parameters:   $NewLinkParams, $NewLinkTarget
+# Parameters:   $NewLinkParams, $NewLinkTarget, $all
 # Input:        -
 # Output:       -
 # Return:       string
@@ -15265,6 +15037,7 @@ sub HTMLMainSessions{
 sub HTMLMainPages{
 	my $NewLinkParams = shift;
 	my $NewLinkTarget = shift;
+	my $all = shift || '';
 
 	if ($Debug) {debug("ShowPagesStats (MaxNbOf{'PageShown'}=$MaxNbOf{'PageShown'} TotalDifferentPages=$TotalDifferentPages)",	2);}
 
@@ -15275,16 +15048,18 @@ sub HTMLMainPages{
 	my $total_p = my $total_e = my $total_x = my $total_k = 0;
 	my $max_p = my $max_k = my $max_e = my $max_x = 0;
 
-	push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'urldetail', $Message[80]));
+	if($all ne 'all'){
+		push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'urldetail', $Message[80]));
 
-	if ( $ShowPagesStats =~ /E/i )
-	{
-		push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'urlentry', $Message[104]));
-	}
+		if ( $ShowPagesStats =~ /E/i )
+		{
+			push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'urlentry', $Message[104]));
+		}
 
-	if ( $ShowPagesStats =~ /X/i )
-	{
-		push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'urlexit', $Message[116]));
+		if ( $ShowPagesStats =~ /X/i )
+		{
+			push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'urlexit', $Message[116]));
+		}
 	}
 
   if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
@@ -15316,7 +15091,18 @@ sub HTMLMainPages{
 
 	$tableHeader .= '</tr></thead>';
 
-	&BuildKeyList( $MaxNbOf{'PageShown'}, $MinHit{'File'}, \%_url_p, \%_url_p );
+	if ( $HTMLOutput{'urlentry'} ) {
+		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'File'}, \%_url_e, \%_url_e );
+	}
+	elsif ( $HTMLOutput{'urlexit'} ) {
+		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'File'}, \%_url_x, \%_url_x );
+	}
+	elsif ($all eq 'all') {
+		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'File'}, \%_url_p, \%_url_p );
+	}
+	else {
+		&BuildKeyList( $MaxNbOf{'PageShown'}, $MinHit{'File'}, \%_url_p, \%_url_p );
+	}
 
 	foreach my $key (@keylist)
 	{
@@ -20680,7 +20466,7 @@ if ( scalar keys %HTMLOutput ) {
 			|| $HTMLOutput{'urlentry'}
 			|| $HTMLOutput{'urlexit'} )
 		{
-			&HTMLShowURLDetail();
+			print &HTMLShowURLDetail($NewLinkParams, $NewLinkTarget);
 		}
 		if ( $HTMLOutput{'unknownos'} ) {
 			&HTMLShowOSUnknown($NewLinkTarget);
