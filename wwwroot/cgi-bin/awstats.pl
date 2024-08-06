@@ -1036,7 +1036,7 @@ section header:hover .tooltip { visibility: visible; opacity: 1; }
 #worldmap-wrapper.all{ width: 100dvw; position: sticky; z-index: 900; }
 #worldmap{ width: 50%; margin: auto; background-color: #4477DD; }
 .title-map{ position:absolute; top: 16px; color: var(--light-color); }
-.country { text-transform: uppercase; font-weight: 700; }
+.country td:first-child { text-transform: uppercase; font-weight: 700; }
 .expand-collapse-button { font-family: monospace; line-height: 1; }
 /* colors */
 nav a, nav a:link, nav a:visited { color: var(--nav-color) }
