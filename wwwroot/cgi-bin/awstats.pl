@@ -1030,8 +1030,8 @@ section header:hover .tooltip { visibility: visible; opacity: 1; }
 .bar{  }
 .bar-horizontal{ height: 4px }
 .bar-vertical{ display: inline-block; transition: height 0.5s ease-out;  }
-.hr-1, .hr-13{ rotate: 30deg } .hr-2, .hr-14{ rotate: 60deg } .hr-3, .hr-15{ rotate: 90deg } .hr-4, .hr-16{ rotate: 120deg } .hr-5, .hr-17{ rotate: 150deg } .hr-6, .hr-18{ rotate: 180deg }
-.hr-7, .hr-19{ rotate: 210deg } .hr-8, .hr-20{ rotate: 240deg } .hr-9, .hr-21{ rotate: 270deg } .hr-10, .hr-22{ rotate: 300deg } .hr-11, .hr-23{ rotate: 330deg }
+.hr-0, .hr-12 {rotate: 30deg } .hr-1, .hr-13{ rotate: 60deg } .hr-2, .hr-14{ rotate: 90deg } .hr-3, .hr-15{ rotate: 120deg } .hr-4, .hr-16{ rotate: 150deg } .hr-5, .hr-17{ rotate: 180deg } .hr-6, .hr-18{ rotate: 210deg }
+.hr-7, .hr-19{ rotate: 240deg } .hr-8, .hr-20{ rotate: 270deg } .hr-9, .hr-21{ rotate: 300deg } .hr-10, .hr-22{ rotate: 330deg }
 #worldmap-wrapper{ margin-bottom: 1dvh; background-color: #4477DD; }
 #worldmap-wrapper.all{ width: 100dvw; position: sticky; z-index: 900; }
 #worldmap{ width: 50%; margin: auto; background-color: #4477DD; }
@@ -14074,7 +14074,7 @@ sub HTMLMainHours{
 		}
 		my $function = "ShowGraph_$pluginname";
 		&$function(
-			"$title",        "hours",
+			$title,        "hours",
 			$ShowHoursStats, \@blocklabel,
 			\@vallabel,      \@valcolor,
 			\@valmax,        \@valtotal,
@@ -14111,7 +14111,7 @@ sub HTMLMainHours{
 		my $hrs = ( $ix >= 12 ? $ix - 12 : $ix );
 		my $hre = ( $ix >= 12 ? $ix - 11 : $ix + 1 );
 		my $apm = ( $ix >= 12 ? 'pm' : 'am' );
-		$bars .= '<td><div class="clock hr-' . $hre . ' ' . (($ix > 21 || $ix < 7 ) ? 'clock-night' : 'clock-day') . '" title="' . $hrs . ':00 - ' . $hre . ':00 ' . $apm . '"></div></td>';
+		$bars .= '<td><div class="clock hr-' . $ix . ' ' . (($ix > 21 || $ix < 7 ) ? 'clock-night' : 'clock-day') . '" title="' . $hrs . ':00 - ' . $hre . ':00 ' . $apm . '"></div></td>';
 	}
 
 	$bars .= '</tr></table>';
