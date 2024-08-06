@@ -1003,16 +1003,18 @@ li.dropdown { display: inline-block; }
 #summary-logs div[class^="bg-"], .currentday{ width: calc(var(--bar-width) * 1px); font-weight: 900 }
 div[class^="bg-"], th[class^="bg-"] { width: calc(var(--bar-width) * 1px) }
 button, select, input { cursor: pointer; color: var(--light-color); background-color: var(--darker-color); border: none; }
-h1, section header {border-bottom: 6px solid var(--light-color); width: 100%; margin: 0; text-align: center; font-weight: 900; font-size: 1em; }
-.tooltip { visibility: hidden; opacity: 0; position: fixed; top: 0; left: 0; z-index: 1000; font-size: 0.9rem; font-weight: 600; text-align: left; width: 100%; background-color: var(--dark-color); color: white; padding: 6px;}
-section header:hover .tooltip { visibility: visible; opacity: 1; }
+h1, section header {border-bottom: 6px solid var(--light-color); width: 100%; margin: 0; font-weight: 900; font-size: 1em; }
+.tooltip { visibility: hidden; opacity: 0; position: fixed; top: 0; left: 0; z-index: 1000; font-size: 0.9rem; font-weight: 600; text-align: left; width: 100%; background-color: var(--darker-color); color: white; padding: 6px;}
+.tab { width: 17px; height: 16px; text-align: center; border: 1px solid var(--light-color); border-bottom: none; background-color: var(--light-color); cursor: pointer;}
+.help { float: right; cursor: help; }
+.help:hover .tooltip { visibility: visible; opacity: 1; }
 .multi-data-table { display: flex; column-gap: 3dvw; flex-wrap: wrap; justify-content: center }
 .multi-data-table.worldmap{ position: relative; }
 .data-table { border-spacing: 0 2px; margin: auto; max-width: 90dvw; }
 .data-table tfoot { display: table-header-group }
 .data-table tbody div { opacity: 0.9 }
 .data-table tbody tr { transition: background 0.5s ease-out; transition: transform 0.1s ease-in }
-.data-table tbody tr:hover { font-weight: 900; background: var(--light-color); transform: scale(1.1) translateX(2px); }
+.data-table tbody tr:hover { font-weight: 900; color: var(--darker-color);background: var(--light-color); transform: scale(1.1) translateX(2px); }
 .data-table th { font-weight: 900 }
 .data-table th, .data-table td:not(:first-child) { padding-top: 2px; padding-bottom: 2px; }
 .data-table td { text-align: right; font-weight: 700; }
@@ -1039,6 +1041,7 @@ section header:hover .tooltip { visibility: visible; opacity: 1; }
 .title-map{ position:absolute; top: 16px; color: var(--light-color); }
 .country td:first-child { text-transform: uppercase; font-weight: 700; }
 .expand-collapse-button { font-family: monospace; line-height: 1; }
+
 /* colors */
 nav a, nav a:link, nav a:visited { color: var(--nav-color) }
 a, a:link, a:visited { color: var(--a-color); text-decoration: none; }
@@ -1339,7 +1342,7 @@ sub tab_head {
 	$head .= ' ' . $extra_head_html;
 
 	if ($tooltip) {
-		$head .= '<span class="tooltip">' . $tooltip . '</span>';
+		$head .= '<span class="tab help">?<span class="tooltip">' . $tooltip . '</span></span>';
 	}
 
 	if ($msg) {
