@@ -12687,10 +12687,7 @@ sub HTMLShowRobots{
 # Return:       string
 #------------------------------------------------------------------------------
 sub HTMLShowURLDetail{
-	my $NewLinkParams = shift;
-	my $NewLinkTarget = shift;
-	
-	return HTMLMainPages($NewLinkParams, $NewLinkTarget, 'all') . &html_end(1);
+	return HTMLMainPages(shift, shift, 'all') . &html_end(1);
 }
 
 #------------------------------------------------------------------------------
@@ -13088,73 +13085,18 @@ sub HTMLShowHosts{
 # Return:       string
 #------------------------------------------------------------------------------
 sub HTMLShowDomains{
-	my $NewLinkParams = shift;
-	my $NewLinkTarget = shift;
-
-	return HTMLMainCountries($NewLinkParams, $NewLinkTarget, 'all')
-	. &html_end(1);
+	return HTMLMainCountries(shift, shift, 'all') . &html_end(1);
 }
 
 #------------------------------------------------------------------------------
-# Function:     Prints the Downloads code frame or static page
-# Parameters:   _
-# Input:        _
-# Output:       HTML
-# Return:       -
+# Function:     Return the Downloads code frame or static page
+# Parameters:   -
+# Input:        -
+# Output:       -
+# Return:       string
 #------------------------------------------------------------------------------
 sub HTMLShowDownloads{
-	my $regext         = qr/\.(\w{1,6})$/;
-	print "<a name=\"downloads\">&nbsp;</a>";
-	print &tab_head( $Message[178], 19, 0, "downloads" )
-	. '<table>'
-	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"2\">$Message[178]</th>";
-	if ( $ShowFileTypesStats =~ /H/i ){print "<th class=\"bg-h\" width=\"80\">$Message[57]</th>"
-		."<th class=\"bg-h\" width=\"80\">206 $Message[57]</th>"; }
-	if ( $ShowFileTypesStats =~ /B/i ){
-		print "<th class=\"bg-k\" width=\"80\">$Message[75]</th>";
-		print "<th class=\"bg-k\" width=\"80\">$Message[106]</th>";
-	}
-	print "</tr>\n";
-	my $count = 0;
-	for my $u (sort {$_downloads{$b}->{'AWSTATS_HITS'} <=> $_downloads{$a}->{'AWSTATS_HITS'}}(keys %_downloads) ){
-		print "<tr>";
-		my $ext = Get_Extension($regext, $u);
-		if ( !$ext) {
-			print "<td"
-			  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
-			  . "><img src=\"$DirIcons\/mime\/unknown.png\""
-			  . AltTitle("")
-			  . " /></td>";
-		}
-		else {
-			my $nameicon = $MimeHashLib{$ext}[0] || "notavailable";
-			my $nametype = $MimeHashFamily{$MimeHashLib{$ext}[0]} || "&nbsp;";
-			print "<td"
-			  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
-			  . "><img src=\"$DirIcons\/mime\/$nameicon.png\""
-			  . AltTitle("")
-			  . " /></td>";
-		}
-		print "<td class=\"aws\">";
-		print &HTMLShowURLInfo($u);
-		print "</td>";
-		if ( $ShowFileTypesStats =~ /H/i ){
-			print "<td>".Format_Number($_downloads{$u}->{'AWSTATS_HITS'})."</td>";
-			print "<td>".Format_Number($_downloads{$u}->{'AWSTATS_206'})."</td>";
-		}
-		if ( $ShowFileTypesStats =~ /B/i ){
-			print "<td>".Format_Bytes($_downloads{$u}->{'AWSTATS_SIZE'})."</td>";
-			print "<td>".Format_Bytes(($_downloads{$u}->{'AWSTATS_SIZE'}/
-					($_downloads{$u}->{'AWSTATS_HITS'} + $_downloads{$u}->{'AWSTATS_206'})))."</td>";
-		}
-		print "</tr>\n";
-		$count++;
-		if ($count >= $MaxRowsInHTMLOutput){last;}
-	}
-	
-	print '</table>' . &tab_end();
-
-	print &html_end(1);
+	return HTMLMainDownloads(shift, shift, 'all') . &html_end(1);
 }
 
 #------------------------------------------------------------------------------
@@ -14379,7 +14321,7 @@ sub HTMLMainCountries{
 #------------------------------------------------------------------------------
 # Function:     Return the Downloads chart and table
 # Parameters:   -
-# Input:        $NewLinkParams, $NewLinkTarget
+# Input:        $NewLinkParams, $NewLinkTarget, $all
 # Output:       -
 # Return:       string
 #------------------------------------------------------------------------------
@@ -14389,19 +14331,26 @@ sub HTMLMainDownloads{
 
 	my $NewLinkParams = shift;
 	my $NewLinkTarget = shift;
+	my $all = shift || '';
 
 	my $TopFiveTotalh = my $total_h = my $total_206 = my $max_k = my $max_average_k = 0;
 	my @links = ();
 	my $chart = my $dataTable = '';
+	my $title = $Message[178] . (($all ne 'all') ? ' ('. $Message[77] . ' ' . $MaxNbOf{'DownloadsShown'} .')' : '');
+	my @sortedDlKeys = (sort {$_downloads{$b}->{'AWSTATS_SIZE'} <=> $_downloads{$a}->{'AWSTATS_SIZE'}}(keys %_downloads));
 	
-	my $title = $Message[178] . ' ('. $Message[77] . ' ' . $MaxNbOf{'DownloadsShown'} .')';
-	my @sortedDlKeys = (sort {$_downloads{$a}->{'AWSTATS_SIZE'} <=> $_downloads{$b}->{'AWSTATS_SIZE'}}(keys %_downloads));
-	my @sorted_MaxNbOf_DlKeys = (scalar keys @sortedDlKeys > $MaxNbOf{'DownloadsShown'}) ? @sortedDlKeys[0..($MaxNbOf{'DownloadsShown'} - 1)] : @sortedDlKeys;
+	if($all ne 'all')
+	{
+		@sortedDlKeys = (scalar keys @sortedDlKeys > $MaxNbOf{'DownloadsShown'}) ? @sortedDlKeys[0..($MaxNbOf{'DownloadsShown'} - 1)] : @sortedDlKeys;
+	}
+	
 	my @sorted_TopFive_DlKeys = (scalar keys @sortedDlKeys > $MaxNbOf{'DownloadsShown'}) ? @sortedDlKeys[0..4] : @sortedDlKeys;
 
-	if ($MaxNbOf{'DownloadsShown'} < 1){$MaxNbOf{'DownloadsShown'} = 10;}	# default if undefined
-	
-	push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'downloads', $Message[80]));
+	if($all ne 'all')
+	{
+		if ($MaxNbOf{'DownloadsShown'} < 1){$MaxNbOf{'DownloadsShown'} = 10;}	# default if undefined
+		push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'downloads', $Message[80]));
+	}
 
   if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
   { # extend the title to include the added link
@@ -14449,17 +14398,17 @@ sub HTMLMainDownloads{
 		$max_k = ($_downloads{$u}->{'AWSTATS_SIZE'} > $max_k) ? $_downloads{$u}->{'AWSTATS_SIZE'} : $max_k;
 		$max_average_k = ($_downloads{$u}->{'AWSTATS_SIZE'} > $max_average_k) ? $_downloads{$u}->{'AWSTATS_SIZE'} / ($_downloads{$u}->{'AWSTATS_HITS'} + $_downloads{$u}->{'AWSTATS_206'}) : $max_average_k;
 	}
-	
-	$dataTable .= '<thead><tr><th>' . (scalar keys %_downloads) . ' ' .$Message[178] . '</th>'
+
+	$dataTable .= '<thead><tr><th>' . ((scalar keys %_downloads) / 2) . ' ' .$Message[178] . '</th>'
 	. (( $ShowDownloadsStats =~ /H/i ) ? '<th class="bg-h">' . $Message[57] . '</th><th class="bg-h">206 ' . $Message[57] .'</th>' :'')
 	. (( $ShowDownloadsStats =~ /B/i ) ? '<th class="bg-b">' . $Message[75] . '</th><th class="bg-b">' . $Message[106] . '</th>':'')
 	. '</tr></thead>';
 
-	for my $u (@sorted_MaxNbOf_DlKeys)
+	for my $u (@sortedDlKeys)
 	{
 		my $ext = Get_Extension(qr/\.(\w{1,6})$/, $u);
 		my $img = ' <img src="' . $DirIcons . '/mime/unknown.png />';
-		my $nameicon = my $nametype = '';
+		my $nameicon = my $nametype = $Message[0];
 		my $average = $_downloads{$u}->{'AWSTATS_SIZE'} / ($_downloads{$u}->{'AWSTATS_HITS'} + $_downloads{$u}->{'AWSTATS_206'});
 
 		if($ext){
@@ -20493,7 +20442,7 @@ if ( scalar keys %HTMLOutput ) {
 			&HTMLShowKeywords($NewLinkTarget);
 		}
 		if ( $HTMLOutput{'downloads'} ) {
-			&HTMLShowDownloads();
+			print &HTMLShowDownloads($NewLinkParams, $NewLinkTarget);
 		}
 		foreach my $code ( keys %TrapInfosForHTTPErrorCodes ) {
 			if ( $HTMLOutput{"errors$code"} ) {
