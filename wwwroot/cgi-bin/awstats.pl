@@ -9376,21 +9376,24 @@ sub HTMLShowClusterInfo {
 }
 
 #------------------------------------------------------------------------------
-# Function:     Write other host info (with help of plugin)
+# Function:     Return other host info (with help of plugin)
 # Parameters:   $host
 # Input:        $LinksToWhoIs $LinksToWhoIsIp
 # Output:       None
-# Return:       None
+# Return:       string
 #------------------------------------------------------------------------------
 sub HTMLShowHostInfo {
 	my $host = shift;
+	my $infos = '';
 
 	# Call to plugins' function ShowInfoHost
 	foreach my $pluginname ( sort keys %{ $PluginsLoaded{'ShowInfoHost'} } )
 	{
 		my $function = "ShowInfoHost_$pluginname";
-		&$function($host);
+		 $infos .= &$function($host);
 	}
+
+	return $infos;
 }
 
 #------------------------------------------------------------------------------
@@ -12822,7 +12825,7 @@ sub HTMLShowHostsUnknown{
 	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>"
 	. Format_Number(( scalar keys %_host_h ))
 	. " $Message[1]</th>";
-	&HTMLShowHostInfo('__title__');
+	print &HTMLShowHostInfo('__title__');
 	if ( $ShowHostsStats =~ /P/i ) {
 		print
 		  "<th class=\"bg-p\" width=\"80\">" . ucfirst($Message[28]) . "</th>";
@@ -12846,7 +12849,7 @@ sub HTMLShowHostsUnknown{
 	foreach my $key (@keylist) {
 		my $host = CleanXSS($key);
 		print "<tr><td class=\"aws\">$host</td>";
-		&HTMLShowHostInfo($key);
+		print &HTMLShowHostInfo($key);
 		if ( $ShowHostsStats =~ /P/i ) {
 			print "<td>"
 			  . ( $_host_p{$key} ? Format_Number($_host_p{$key}) : "&nbsp;" )
@@ -12886,7 +12889,7 @@ sub HTMLShowHostsUnknown{
 	{    # All other visitors (known or not)
 		print
 "<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[82]</span></td>";
-		&HTMLShowHostInfo('');
+		print &HTMLShowHostInfo('');
 		if ( $ShowHostsStats =~ /P/i ) {
 			print "<td>" . ( $rest_p ? Format_Number($rest_p) : "&nbsp;" ) . "</td>";
 		}
@@ -12962,7 +12965,7 @@ sub HTMLShowHosts{
 		else { print "$Message[102] : " . Format_Number(( scalar keys %_host_h )); }
 	}
 	print "</th>";
-	&HTMLShowHostInfo('__title__');
+	print &HTMLShowHostInfo('__title__');
 	if ( $ShowHostsStats =~ /P/i ) {
 		print
 		  "<th class=\"bg-p\" width=\"80\">" . ucfirst($Message[28]) . "</th>";
@@ -13020,7 +13023,7 @@ sub HTMLShowHosts{
 		}
 
 		print "</td>";
-		&HTMLShowHostInfo($key);
+		print &HTMLShowHostInfo($key);
 		if ( $ShowHostsStats =~ /P/i ) {
 			print "<td>"
 			  . ( $_host_p{$key} ? Format_Number($_host_p{$key}) : "&nbsp;" )
@@ -13060,7 +13063,7 @@ sub HTMLShowHosts{
 	{    # All other visitors (known or not)
 		print
 "<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
-		&HTMLShowHostInfo('');
+		print &HTMLShowHostInfo('');
 		if ( $ShowHostsStats =~ /P/i ) {
 			print "<td>" . ( $rest_p ? Format_Number($rest_p) : "&nbsp;" ) . "</td>";
 		}
@@ -14430,11 +14433,11 @@ sub HTMLMainDownloads{
 }
 
 #------------------------------------------------------------------------------
-# Function:     Print the hosts chart and table
+# Function:     Return the hosts chart and table
 # Parameters:   $NewLinkParams, $NewLinkTarget
 # Input:        -
-# Output:       HTML
-# Return:       -
+# Output:       -
+# Return:       string
 #------------------------------------------------------------------------------
 sub HTMLMainHosts{
 	my $NewLinkParams = shift;
@@ -14444,6 +14447,10 @@ sub HTMLMainHosts{
 
 	my $title = $Message[81] . ' <small>(' . $Message[77] . ' ' . $MaxNbOf{'HostsShown'} .')</small>';
 	my @links = ();
+	my $tooltip = my $graph = my $tableData = my $tableHeader = '';
+	my $total_p = my $total_h = my $total_k = 0;
+	my $max_p = my $max_h = my $max_k = 0;
+	my $regipv4 = qr/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;	
 	
 	push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'allhosts', $Message[80]));
 	push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'lasthosts', $Message[9]));
@@ -14454,8 +14461,7 @@ sub HTMLMainHosts{
     push(@links, '<a href="' . XMLEncode($AddLinkToExternalCGIWrapper . '?section=VISITOR&baseName=' . $DirData/$PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig) . '" ' . $NewLinkTarget . '>'
     . $Message[179] . '</a>');
   }
-
-  my $tooltip = '';
+  
 	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
 	{
 		my $function = "getTooltip_$pluginname";
@@ -14463,9 +14469,7 @@ sub HTMLMainHosts{
 	}
 	  
 	&BuildKeyList( $MaxNbOf{'HostsShown'}, $MinHit{'Host'}, \%_host_h, \%_host_p );
-
-	print &tab_head( $title, join( ' - ', @links ), 'hosts', $tooltip);
-		
+	
 	# Graph the top five in a pie chart
 	if (scalar @keylist > 1)
 	{
@@ -14474,58 +14478,45 @@ sub HTMLMainHosts{
 			my @blocklabel = ();
 			my @valdata = ();
 			my @valcolor = ($color_p);
-
 			my $cnt = 0;
 			my $suma = 0;
-			foreach my $key (@keylist) {
+
+			foreach my $key (@keylist)
+			{
         $suma=$suma + ( $_host_h{$key});
         $cnt++;
         if ($cnt > 4) { last; }
 			}
 			
 			my $cnt = 0;
-			foreach my $key (@keylist) {
+			foreach my $key (@keylist)
+			{
         push @valdata, int( $_host_h{$key} / $suma * 1000 ) / 10;
         push @blocklabel, "$key";
         $cnt++;
         if ($cnt > 4) { last; }
 			}
 			
-			print '<table><tr><td colspan="7">';
 			my $function = "ShowGraph_$pluginname";
-			&$function(
-				"Hosts",      "hosts",
-				0, 						\@blocklabel,
-				0,           	\@valcolor,
-				0,            0,
-				0,          	\@valdata
-			);
-			print '</td></tr></table>';
+			$graph .= '<div>'
+			.	&$function(
+				"Hosts", "hosts",
+				0, \@blocklabel,
+				0, \@valcolor,
+				0, 0,
+				0, \@valdata
+			)
+			. '</div>';
 		}
 	}
 
-	print '<div>'
-	.(( $MonthRequired ne 'all' )
-			? Format_Number($TotalHostsKnown) . ' ' . $Message[82] . ' - ' . Format_Number($TotalHostsUnknown) . ' ' . $Message[1]. ' - ' . Format_Number($TotalUnique) . ' ' . $Message[11]
-			: ( scalar keys %_host_h ))
-	. '</div>';
-
-	print '<table class="data-table">'
-	. '<tr>'
-	. '<th></th>';
-	
-	&HTMLShowHostInfo('__title__') ;
-	
-	print (( $ShowHostsStats =~ /P/i ) ? '<th class="bg-p">' . ucfirst($Message[28]) . '</th>' : ''); #tooltip3
-	print (( $ShowHostsStats =~ /H/i ) ? '<th class="bg-h">' . $Message[57] . '</th>' : ''); #tt4
-	print (( $ShowHostsStats =~ /B/i ) ? '<th class="bg-b">' . $Message[75] . '</th>' : '');  #tt5
-	print (( $ShowHostsStats =~ /L/i ) ? '<th>' . $Message[9] . '</th>' : '');
-	print '</tr>';
-
-	my $total_p = my $total_h = my $total_k = 0;
-	my $max_p = my $max_h = my $max_k = 0;
-	
-	my $regipv4 = qr/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;	
+	$tableHeader .= '<thead><tr><th></th>'
+	. &HTMLShowHostInfo('__title__')
+	. (( $ShowHostsStats =~ /P/i ) ? '<th class="bg-p">' . ucfirst($Message[28]) . '</th>' : '') #tooltip3
+	. (( $ShowHostsStats =~ /H/i ) ? '<th class="bg-h">' . $Message[57] . '</th>' : '') #tt4
+	. (( $ShowHostsStats =~ /B/i ) ? '<th class="bg-b">' . $Message[75] . '</th>' : '')  #tt5
+	. (( $ShowHostsStats =~ /L/i ) ? '<th>' . $Message[9] . '</th>' : '')
+	. '</tr></thead>';
 
   if ( $DynamicDNSLookup == 2 )
   { # Use static DNS file
@@ -14545,7 +14536,7 @@ sub HTMLMainHosts{
 
 	foreach my $key (@keylist)
 	{
-		print '<tr>' . '<td>' . $key;
+		$tableData .= '<tr>' . '<td>' . $key;
 
 		if ($DynamicDNSLookup && $key =~ /$regipv4/o)
 		{ # Dynamic reverse DNS lookup
@@ -14555,19 +14546,18 @@ sub HTMLMainHosts{
         if ( $DynamicDNSLookup == 2 )
         { # Check static DNS file
           $lookupresult = $MyDNSTable{$key};
-          if ($lookupresult) { print " ($lookupresult)"; }
+          if ($lookupresult) { $tableData .= ' (' . $lookupresult . ')'; }
         }
-      } else { print " ($lookupresult)"; }
+      } else { $tableData .= ' (' . $lookupresult . ')'; }
     }
 
-		print '</td>';
-
-		&HTMLShowHostInfo($key);
-		print (( $ShowHostsStats =~ /P/i ) ? HTMLDataCellWithBar('p', $_host_p{$key}, Format_Number($_host_p{$key}), $max_p) : '' );
-		print (( $ShowHostsStats =~ /H/i ) ? HTMLDataCellWithBar('h', $_host_h{$key}, Format_Number($_host_h{$key}), $max_h) : '' );
-		print (( $ShowHostsStats =~ /B/i ) ? HTMLDataCellWithBar('b', $_host_k{$key}, Format_Bytes($_host_k{$key}), $max_k) : '' );
-		print (( $ShowHostsStats =~ /L/i ) ? '<td>' . (	$_host_l{$key} ? Format_Date( $_host_l{$key}, 1 )	: '-' ) . '</td>' : '');
-		print '</tr>';
+		$tableData .= '</td>'
+		. &HTMLShowHostInfo($key)
+		. (( $ShowHostsStats =~ /P/i ) ? HTMLDataCellWithBar('p', $_host_p{$key}, Format_Number($_host_p{$key}), $max_p) : '' )
+		. (( $ShowHostsStats =~ /H/i ) ? HTMLDataCellWithBar('h', $_host_h{$key}, Format_Number($_host_h{$key}), $max_h) : '' )
+		. (( $ShowHostsStats =~ /B/i ) ? HTMLDataCellWithBar('b', $_host_k{$key}, Format_Bytes($_host_k{$key}), $max_k) : '' )
+		. (( $ShowHostsStats =~ /L/i ) ? '<td>' . (	$_host_l{$key} ? Format_Date( $_host_l{$key}, 1 )	: '-' ) . '</td>' : '')
+		. '</tr>';
 	}
 
 	my $rest_p = $TotalPages - $total_p;
@@ -14576,18 +14566,23 @@ sub HTMLMainHosts{
 
 	if ( $rest_p > 0 || $rest_h > 0 || $rest_k > 0 )
 	{ # All other visitors (known or not)
-		print '<tr>' . '<td>' . $Message[2] . '</td>';
-
-		&HTMLShowHostInfo('');
-		
-		print (( $ShowHostsStats =~ /P/i ) ? '<td>' . Format_Number($rest_p) . '</td>' : '')
+		$tableData .= '<tr><td>' . $Message[2] . '</td>'
+		. &HTMLShowHostInfo('')
+		. (( $ShowHostsStats =~ /P/i ) ? '<td>' . Format_Number($rest_p) . '</td>' : '')
 		. (( $ShowHostsStats =~ /H/i ) ? '<td>' . Format_Number($rest_h) . '</td>' : '')
 		. (( $ShowHostsStats =~ /B/i ) ? '<td>' . Format_Bytes($rest_k) . '</td>' : '')
 		. (( $ShowHostsStats =~ /L/i ) ? '<td>&nbsp;</td>' : '')
 		. '</tr>';
 	}
 
-	print '</table>' . &tab_end();
+	return &tab_head( $title, join( ' - ', @links ), 'hosts', $tooltip) . $graph
+	. '<div>'
+	. (( $MonthRequired ne 'all' )
+			? Format_Number($TotalHostsKnown) . ' ' . $Message[82] . ' - ' . Format_Number($TotalHostsUnknown) . ' ' . $Message[1]. ' - ' . Format_Number($TotalUnique) . ' ' . $Message[11]
+			: ( scalar keys %_host_h ))
+	. '</div>'
+	.'<table class="data-table">' . $tableHeader . $tableData	. '</table>'
+	. &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -20599,7 +20594,7 @@ if ( scalar keys %HTMLOutput ) {
 		# BY HOST/VISITOR
 		#--------------------------
 		if ($ShowHostsStats) {
-			&HTMLMainHosts($NewLinkParams, $NewLinkTarget);
+			print &HTMLMainHosts($NewLinkParams, $NewLinkTarget);
 		}
 
 		# BY MISC
