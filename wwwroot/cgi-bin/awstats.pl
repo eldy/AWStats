@@ -13296,17 +13296,17 @@ sub HTMLShowHosts{
 }
 
 #------------------------------------------------------------------------------
-# Function:     Prints the Domains details frame or static page
+# Function:     Return the Domains details frame or static page
 # Parameters:   $NewLinkParams, $NewLinkTarget
 # Input:        -
-# Output:       HTML
-# Return:       -
+# Output:       -
+# Return:       string
 #------------------------------------------------------------------------------
 sub HTMLShowDomains{
 	my $NewLinkParams = shift;
 	my $NewLinkTarget = shift;
 
-	print HTMLMainCountries($NewLinkParams, $NewLinkTarget, 'all')
+	return HTMLMainCountries($NewLinkParams, $NewLinkTarget, 'all')
 	. &html_end(1);
 }
 
