@@ -1033,6 +1033,7 @@ section header:hover .tooltip { visibility: visible; opacity: 1; }
 .hr-1, .hr-13{ rotate: 30deg } .hr-2, .hr-14{ rotate: 60deg } .hr-3, .hr-15{ rotate: 90deg } .hr-4, .hr-16{ rotate: 120deg } .hr-5, .hr-17{ rotate: 150deg } .hr-6, .hr-18{ rotate: 180deg }
 .hr-7, .hr-19{ rotate: 210deg } .hr-8, .hr-20{ rotate: 240deg } .hr-9, .hr-21{ rotate: 270deg } .hr-10, .hr-22{ rotate: 300deg } .hr-11, .hr-23{ rotate: 330deg }
 #worldmap-wrapper{ margin-bottom: 1dvh; background-color: #4477DD; }
+#worldmap-wrapper.all{ width: 100dvw; position: sticky; z-index: 900; }
 #worldmap{ width: 50%; margin: auto; background-color: #4477DD; }
 .title-map{ position:absolute; top: 16px; color: var(--light-color); }
 .country { text-transform: uppercase; font-weight: 700; }
@@ -1071,7 +1072,10 @@ a:hover, a:focus, a:active{ color: var(--a-hover-color); text-decoration: none; 
 }
 
 @media print {
-	nav, form, #update-datas-button { display: none }
+	body, #container > :nth-child(2n+1):not(header):not(footer) { background-color: white }
+	nav, form, #update-datas-button, .collapsed, .expand-collapse-button { display: none }
+	section #daysofweek { margin-bottom: 40px }
+	#container section section, .column { break-inside: avoid-page; }
 }
 
 ';
@@ -1101,10 +1105,15 @@ let dirImgs = '$DirImgs';
 
 document.addEventListener("DOMContentLoaded", (d) => {
 
-	const headerHeight = document.querySelector("#container > header").offsetHeight + 20;
+	const headerHeight = document.querySelector("#container > header").offsetHeight;
 
-	document.documentElement.style.setProperty("--scroll-padding", headerHeight + "px");
-
+	document.documentElement.style.setProperty("--scroll-padding", (headerHeight + 20) + "px");
+	
+	let worldmapAll = document.querySelector("#worldmap-wrapper.all")
+	if(worldmapAll){
+		worldmapAll.style.top = headerHeight + "px";
+	}
+	
 	[...document.querySelectorAll('.bar-table')].forEach(el => {
    		el.addEventListener("mouseenter", (e) => {
    			[...el.querySelectorAll('.bar')].forEach(bar => {
@@ -14451,7 +14460,7 @@ sub HTMLMainCountries{
 	my $max_u = my $max_p = my $max_h = my $max_k = 1;
 	my $title = $Message[25] . (($all ne 'all') ? ' <small>(' . $Message[77] . ' ' . $MaxNbOf{'Domain'} . ')</small>' : '');
 	my @links = ();
-	my $map = '<div id="worldmap-wrapper"><div id="worldmap"></div></div>';
+	my $map = '<div id="worldmap-wrapper" class="' . $all . '"><div id="worldmap"></div></div>';
 	my $tooltip = my $tableData = my $tableFooter = '';
 	my $colspan = ($ShowDomainsStats =~ /U/i) + ($ShowDomainsStats =~ /V/i) + ($ShowDomainsStats =~ /P/i) + ($ShowDomainsStats =~ /H/i) + ($ShowDomainsStats =~ /B/i);
 	my $tableFooter = ($all ne 'all') ? '<tfoot><tr><td><button class="expand-collapse-button">+</button></td><td colspan="' . $colspan . '"></td></tr></tfoot>' : '';
@@ -14527,7 +14536,7 @@ sub HTMLMainCountries{
 			. ' class="country' . ((($all ne 'all') && $count > $MaxNbOf{'Domain'}) ? ' collapsed' : '') . '"'
 			. ((($all ne 'all') && $count > $MaxNbOf{'Domain'}) ? ' style="visibility: collapse"' : '')
 			. ' data-country="' . $newkey . '">'
-			. '<td class="country">' . $DomainsHashIDLib{$newkey} . ' <small>( ' . $newkey . ' )</small> <span class="flag' . (($count > $MaxNbOf{'Domain'}) ? '' : ' highlighted') . '" data-country="' . $newkey . '"></span></td>';
+			. '<td class="country"><small>( ' . $newkey . ' )</small>' . $DomainsHashIDLib{$newkey} . ' <span class="flag' . (($count > $MaxNbOf{'Domain'}) ? '' : ' highlighted') . '" data-country="' . $newkey . '"></span></td>';
 		}
 
 		my $domener_temp = ($_domener_p{$key} ? $_domener_p{$key} / $TotalPages : 0) + $_domener_h{$key} / $TotalHits;
