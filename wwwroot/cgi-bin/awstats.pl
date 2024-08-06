@@ -1005,8 +1005,8 @@ div[class^="bg-"], th[class^="bg-"] { width: calc(var(--bar-width) * 1px) }
 button, select, input { cursor: pointer; color: var(--light-color); background-color: var(--darker-color); border: none; }
 h1, section header {border-bottom: 6px solid var(--light-color); width: 100%; margin: 0; font-weight: 900; font-size: 1em; }
 .tooltip { visibility: hidden; opacity: 0; position: fixed; top: 0; left: 0; z-index: 1000; font-size: 0.9rem; font-weight: 600; text-align: left; width: 100%; background-color: var(--darker-color); color: white; padding: 6px;}
-.tab { width: 17px; height: 16px; text-align: center; border: 1px solid var(--light-color); border-bottom: none; background-color: var(--light-color); cursor: pointer;}
-.help { float: right; cursor: help; }
+.tab, section header a:any-link { float: right; margin: 0 0 0 1ch; height: 2ch; text-align: center; border: 0.5ch solid var(--light-color); background-color: var(--light-color); color: var(--darker-color); cursor: pointer; font-weight: 700}
+.help { width: 2ch; cursor: help; }
 .help:hover .tooltip { visibility: visible; opacity: 1; }
 .multi-data-table { display: flex; column-gap: 3dvw; flex-wrap: wrap; justify-content: center }
 .multi-data-table.worldmap{ position: relative; }
@@ -1043,8 +1043,8 @@ h1, section header {border-bottom: 6px solid var(--light-color); width: 100%; ma
 .expand-collapse-button { font-family: monospace; line-height: 1; }
 
 /* colors */
-nav a, nav a:link, nav a:visited { color: var(--nav-color) }
-a, a:link, a:visited { color: var(--a-color); text-decoration: none; }
+nav a:any-link { color: var(--nav-color) }
+a:any-link { color: var(--a-color); text-decoration: none; }
 a:hover, a:focus, a:active{ color: var(--a-hover-color); text-decoration: none; }
 .bg-u{ background-color: var(--aws-color-u) }
 .bg-v{ background-color: var(--aws-color-v) }
@@ -1330,7 +1330,9 @@ sub tab_head {
 
 	my $head =  '<section title="' . $title . '" id="' . $anchor . '">'
 	. '<header>'
-	. $title . (($subtitle ne '') ? ' <small>' . $subtitle . '</small>' : '');
+	. $title
+	. (($tooltip) ? '<span class="tab help">?<span class="tooltip">' . $tooltip . '</span></span>' : '')
+	. (($subtitle ne '') ? ' <small>' . $subtitle . '</small>' : '');
 
 	# Call to plugins' function TabHeadHTML
 	my $extra_head_html = '';
@@ -1340,10 +1342,6 @@ sub tab_head {
 	}
 
 	$head .= ' ' . $extra_head_html;
-
-	if ($tooltip) {
-		$head .= '<span class="tab help">?<span class="tooltip">' . $tooltip . '</span></span>';
-	}
 
 	if ($msg) {
 		$head .= '<div> <small>' . $msg . '</small></div>';
@@ -10111,7 +10109,7 @@ sub HTMLShowEmailSendersChart {
 		$tooltip .= &$function(19);
 	}
 		
-	print &tab_head($title, $subtitle . ' ' .  join( ' - ', @links ), 'emailsenders', $tooltip )
+	print &tab_head($title, $subtitle . ' ' .  join( ' ', @links ), 'emailsenders', $tooltip )
 	. '<table>'
 	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"3\">$Message[131] : "
 	. ( scalar keys %_emails_h ) . "</th>";
@@ -10275,7 +10273,7 @@ sub HTMLShowEmailReceiversChart {
 		$tooltip .= &$function(19);
 	}
 		
-	print &tab_head($title, $subtitle . join( ' - ', @links ), 'emailreceivers', $tooltip )
+	print &tab_head($title, $subtitle . join( ' ', @links ), 'emailreceivers', $tooltip )
 	. '<table>'
 	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"3\">$Message[132] : "
 	. ( scalar keys %_emailr_h ) . "</th>";
@@ -11180,7 +11178,7 @@ sub HTMLMainFileType{
 		$tooltip .= &$function(19);
 	}
 
-	return &tab_head($title, join( ' - ', @links ), 'filetypes', $tooltip)
+	return &tab_head($title, join( ' ', @links ), 'filetypes', $tooltip)
 	. '<table class="data-table">'
 	. HTMLDataTableHeader('', $ShowFileTypesStats)
 	. $html	. '</table>' . &tab_end();
@@ -14160,7 +14158,7 @@ sub HTMLMainHours{
 		$tableData .= '</table>';
 	}
 
-	return &tab_head( $title, join( ' - ', @links ), 'hours', $tooltip )	. $bars	. $tableData . &tab_end();
+	return &tab_head( $title, join( ' ', @links ), 'hours', $tooltip )	. $bars	. $tableData . &tab_end();
 }
 
 #------------------------------------------------------------------------------
@@ -14320,7 +14318,7 @@ sub HTMLMainCountries{
 		. '</tr>';
 	}
 
-	return &tab_head( $title, join( ' - ', @links ), 'countries', $tooltip)
+	return &tab_head( $title, join( ' ', @links ), 'countries', $tooltip)
 	. $map
 	. '<table class="data-table domains-table">' . HTMLDataTableHeader('', $ShowDomainsStats) . $tableData . $tableFooter . '</table>'
 	. &tab_end();
@@ -14433,7 +14431,7 @@ sub HTMLMainDownloads{
 		. '</tr>';
 	}
 
-	return &tab_head($title, join( ' - ', @links ), 'downloads') . $chart
+	return &tab_head($title, join( ' ', @links ), 'downloads') . $chart
 	. '<table class="data-table">' . $dataTable . '</table>' . &tab_end();
 }
 
@@ -14580,7 +14578,7 @@ sub HTMLMainHosts{
 		. '</tr>';
 	}
 
-	return &tab_head( $title, join( ' - ', @links ), 'hosts', $tooltip) . $graph
+	return &tab_head( $title, join( ' ', @links ), 'hosts', $tooltip) . $graph
 	. '<div>'
 	. (( $MonthRequired ne 'all' )
 			? Format_Number($TotalHostsKnown) . ' ' . $Message[82] . ' - ' . Format_Number($TotalHostsUnknown) . ' ' . $Message[1]. ' - ' . Format_Number($TotalUnique) . ' ' . $Message[11]
@@ -14822,7 +14820,7 @@ sub HTMLMainRobots{
 		. '</tr>';
 	}
 
-	return &tab_head($title, join( ' - ', @links ), 'robots',  $tooltip, '')
+	return &tab_head($title, join( ' ', @links ), 'robots',  $tooltip, '')
 	. '<table class="data-table">'
   . '<tr><th>' . Format_Number(( scalar keys %_robot_h ))	. ' ' . $Message[51] . '</th>'
 	. (( $ShowRobotsStats =~ /H/i ) ? '<th class="bg-h">' . $Message[57] . '</th>' : '')
@@ -15107,7 +15105,7 @@ sub HTMLMainPages{
 		$tableData .= '</tr>';
 	}
 
-	return &tab_head($title, join( ' - ', @links ), 'urls', $tooltip)
+	return &tab_head($title, join( ' ', @links ), 'urls', $tooltip)
 	. '<table class="data-table">' . $tableHeader . $tableData . '</table>'
 	. &tab_end();
 }
@@ -15273,7 +15271,7 @@ sub HTMLMainOS{
 	}
 	$dataTableBody .= '</tbody>';
 
-	return &tab_head($title, join( ' - ', @links ), 'os', $tooltip)
+	return &tab_head($title, join( ' ', @links ), 'os', $tooltip)
 	. $graph . '<table class="data-table">' . $dataTableHeader . $dataTableBody . '</table>' . &tab_end();
 }
 
@@ -15438,7 +15436,7 @@ sub HTMLMainBrowsers{
 		. '<td><small>' . $p_p . '%</small> ' . $rest_h . '</td></tr>';
 	}
 
-	return &tab_head($title, join( ' - ', @links ), 'browsers',  $tooltip)
+	return &tab_head($title, join( ' ', @links ), 'browsers',  $tooltip)
 	. $graph . '<table class="data-table">' . $dataTableHeader . $dataTableBody . '</table>' . &tab_end();
 }
 
@@ -15663,7 +15661,7 @@ sub HTMLMainReferrers{
 	. (( $ShowOriginStats =~ /H/i ) ? '<th class="bg-h">' . $Message[57] . '</th>' : '')
 	. '</tr></thead>';
 
-	return &tab_head($title, join( ' - ', @links ), 'referer', $tooltip)
+	return &tab_head($title, join( ' ', @links ), 'referer', $tooltip)
 	. '<table class="data-table">' . $tableHeader . $tableData . '</table>'
 	. &tab_end();
 }
@@ -15706,7 +15704,7 @@ sub HTMLMainKeyphrases{
 		$p = ($TotalKeyphrases) ? int( $_keyphrases{$key} / $TotalKeyphrases * 1000 ) / 10 : 0;
 
 		$tableData .= '<tr><td>' . XMLEncode($mot) . '</td>'
-		. HTMLDataCellWithBar('p', $_keyphrases{$key}, '<small>' . $p . '%</small> ' . $_keyphrases{$key}, $TotalKeyphrases)
+		. HTMLDataCellWithBar('s', $_keyphrases{$key}, '<small>' . $p . '%</small> ' . $_keyphrases{$key}, $TotalKeyphrases)
 		. '</tr>';
 
 		$total_s += $_keyphrases{$key};
@@ -15722,11 +15720,11 @@ sub HTMLMainKeyphrases{
 		$p = ($TotalKeyphrases) ? int( $rest_s / $TotalKeyphrases * 1000 ) / 10 : 0;
 
 		$tableData .= '<tr><td>' . $Message[124] . '</td>'
-		. HTMLDataCellWithBar('p', $rest_s, '<small>' . $p . '%</small> ' . $rest_s, $TotalKeyphrases)
+		. HTMLDataCellWithBar('s', $rest_s, '<small>' . $p . '%</small> ' . $rest_s, $TotalKeyphrases)
 		. '</tr>';
 	}
 
-		return &tab_head($title, join( ' - ', @links ), 'keyphrases', $tooltip)
+		return &tab_head($title, join( ' ', @links ), 'keyphrases', $tooltip)
 		. '<table class="data-table">' . $tableHeader . $tableData
 		. '</table>' . &tab_end();
 }
@@ -15769,7 +15767,7 @@ sub HTMLMainKeywords{
 		$p = ($TotalKeywords) ? int( $_keywords{$key} / $TotalKeywords * 1000 ) / 10 : 0;
 
 		$tableData .= '<tr><td>' . XMLEncode($mot) . '</td>'
-		. HTMLDataCellWithBar('p', $_keywords{$key}, '<small>' . $p . '%</small> ' . $_keywords{$key}, $TotalKeywords)
+		. HTMLDataCellWithBar('s', $_keywords{$key}, '<small>' . $p . '%</small> ' . $_keywords{$key}, $TotalKeywords)
 		. '</tr>';
 		
 		$total_s += $_keywords{$key};
@@ -15784,11 +15782,11 @@ sub HTMLMainKeywords{
 	{
 		$p = ($TotalKeywords) ? int( $rest_s / $TotalKeywords * 1000 ) / 10 : 0;
 		$tableData .= '<tr><td>' . $Message[30] . '</td>'
-		. HTMLDataCellWithBar('p', $rest_s, '<small>' . $p . '%</small> ' . $rest_s, $TotalKeywords)
+		. HTMLDataCellWithBar('s', $rest_s, '<small>' . $p . '%</small> ' . $rest_s, $TotalKeywords)
 		. '</tr>';
 	}
 
-	return &tab_head($title, join( ' - ', @links ), 'keywords', $tooltip)
+	return &tab_head($title, join( ' ', @links ), 'keywords', $tooltip)
 	. '<table class="data-table">' . $tableHeader . $tableData
 	. '</table>' . &tab_end();
 }
@@ -15895,11 +15893,13 @@ sub HTMLMainHTTPStatus{
     . XMLEncode($AddLinkToExternalCGIWrapper . '?section=ERRORS&baseName=' . $DirData . '/' . $PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig)
     . '" ' . $NewLinkTarget . '>' . $Message[179] . '</a>');
   }
+
+  $tooltip .= $Message[154];
 	
 	foreach my $pluginname ( keys %{ $PluginsLoaded{'getTooltip'} } )
 	{
 		my $function = "getTooltip_$pluginname";
-		$tooltip .= &$function(19);
+		$tooltip .= '<br>' . &$function(19);
 	}
 
 	&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_errors_h, \%_errors_h );
@@ -15949,7 +15949,7 @@ sub HTMLMainHTTPStatus{
 		$total_h += $_errors_h{$key};
 	}
 
-	return &tab_head($title, join( ' - ', @links ), 'errors', $tooltip, $Message[154])
+	return &tab_head($title, join( ' ', @links ), 'errors', $tooltip)
 	. $graph . '<table class="data-table">' . $tableHeader . $tableData . '</table>'
 	. &tab_end();
 }
