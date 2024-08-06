@@ -15025,6 +15025,7 @@ sub HTMLMainPages{
 	$tableHeader .= '<thead><tr><th>' . Format_Number($TotalDifferentPages) . ' ' . $Message[28] .'</th>'
 	. (( $ShowPagesStats =~ /P/i && $LogType ne 'F' ) ? '<th class="bg-p">' . $Message[29] .'</th>' : '')
 	. (( $ShowPagesStats =~ /[PH]/i && $LogType eq 'F' ) ? '<th class="bg-h">' . $Message[57] . '</th>' : '')
+	. (( $ShowPagesStats =~ /B/i ) ? '<th class="bg-b">' . $Message[75] . '</th>' : '')
 	. (( $ShowPagesStats =~ /B/i ) ? '<th class="bg-b">' . $Message[106] . '</th>' : '')
 	. (( $ShowPagesStats =~ /E/i ) ? '<th class="bg-e">' . $Message[104] . '</th>' : '')
 	. (( $ShowPagesStats =~ /X/i ) ? '<th class="bg-x">' . $Message[116] . '</th>' : '');
@@ -15069,6 +15070,7 @@ sub HTMLMainPages{
 		$tableData .= '<tr><td>' . &HTMLShowURLInfo($key) . '</td>'
 		.	(( ($ShowPagesStats =~ /P/i && $LogType ne 'F') || ($ShowPagesStats =~ /[PH]/i && $LogType eq 'F') )
 			? HTMLDataCellWithBar('p', $_url_p{$key}, Format_Number($_url_p{$key}), $max_p) : '')
+		. (( $ShowPagesStats =~ /B/i ) ? HTMLDataCellWithBar('b', $_url_k{$key}, Format_Bytes($_url_k{$key}), $max_k) : '')
 		. (( $ShowPagesStats =~ /B/i ) ? HTMLDataCellWithBar('b', ($_url_k{$key} / $_url_p{$key}), Format_Bytes($_url_k{$key} / $_url_p{$key}), ($max_k / $max_p)) : '')
 		. (( $ShowPagesStats =~ /E/i ) ? HTMLDataCellWithBar('e', $_url_e{$key}, Format_Number($_url_e{$key}), $max_e) : '')
 		. (( $ShowPagesStats =~ /X/i ) ? HTMLDataCellWithBar('x', $_url_x{$key}, Format_Number($_url_x{$key}), $max_x) : '');
@@ -15090,11 +15092,12 @@ sub HTMLMainPages{
 	if ( $rest_p > 0 || $rest_k > 0 || $rest_e > 0 || $rest_x > 0 )
 	{ # All other urls
 		$tableData .= '<tr><td>' . $Message[2] . '</span></td>'
-		. (( $ShowPagesStats =~ /P/i && $LogType ne 'F' ) ? '<td>' . Format_Number($rest_p) . '</td>' : '')
-		. (( $ShowPagesStats =~ /[PH]/i && $LogType eq 'F' ) ? '<td>' . Format_Number($rest_p) . '</td>' : '')
-		. (( $ShowPagesStats =~ /B/i ) ? '<td>' . ( $rest_k ? Format_Bytes $rest_k / ($rest_p || 1) : '' ) . '</td>' : '')
-		. (( $ShowPagesStats =~ /E/i ) ? '<td>' . ( $rest_e ? Format_Number($rest_e) : '' ) . '</td>' : '')
-		. (( $ShowPagesStats =~ /X/i ) ? '<td>' . ( $rest_x ? Format_Number($rest_x) : '' ) . '</td>' : '');
+		.	(( ($ShowPagesStats =~ /P/i && $LogType ne 'F') || ($ShowPagesStats =~ /[PH]/i && $LogType eq 'F') )
+			?  HTMLDataCellWithBar('p', $rest_p, Format_Number($rest_p), $max_p) : '')
+		. (( $ShowPagesStats =~ /B/i ) ? HTMLDataCellWithBar('b', $rest_k, Format_Bytes($rest_k), $max_k) : '')
+		. (( $ShowPagesStats =~ /B/i ) ? HTMLDataCellWithBar('b', $rest_k / ($rest_p || 1), Format_Bytes($rest_k / ($rest_p || 1)), $max_k / ($max_p || 1)) : '')
+		. (( $ShowPagesStats =~ /E/i ) ? HTMLDataCellWithBar('e', $rest_e, Format_Number($rest_e), $max_e) : '')
+		. (( $ShowPagesStats =~ /X/i ) ? HTMLDataCellWithBar('e', $rest_x, Format_Number($rest_x), $max_x) : '');
 
 		# Call to plugins' function ShowPagesAddField
 		foreach my $pluginname ( keys %{ $PluginsLoaded{'ShowPagesAddField'} } )
