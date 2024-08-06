@@ -936,8 +936,9 @@ sub renderCss {
 	--aws-color-e: hsl(258, 60%, 75%);
 	--aws-color-x: hsl(260, 76%, 81%);
 	--aws-color-s: hsl(240, 56%, 70%);
-	--dark-color: hsl(220, 0%, 50%);
-	--neutral-color: hsl(220, 0%, 75%);
+	--dark-color: hsl(220, 0%, 75%);
+	--darker-color: hsl(220, 0%, 7%);
+	--neutral-color: hsl(220, 0%, 80%);
 	--light-color: hsl(220, 0%, 90%);
 	--a-color: hsl(0, 0%, 0%);
 	--a-hover-color: hsl(0, 0%, 0%);
@@ -954,7 +955,7 @@ sub renderCss {
 @media (prefers-color-scheme: dark) {
 	:root {
 		--page-color: hsl(0, 0%, 100%);
-		--page-bgcolor: hsl(0, 0%, 23.5%);-
+		--page-bgcolor: hsl(0, 0%, 23%);-
 		--aws-color-u: hsl(27, 100%, 40%);
 		--aws-color-v: hsl(58, 82%, 30%);
 		--aws-color-p: hsl(220, 97%, 42%);
@@ -963,7 +964,7 @@ sub renderCss {
 		--aws-color-e: hsl(258, 60%, 75%);
 		--aws-color-x: hsl(260, 76%, 81%);
 		--aws-color-s: hsl(240, 56%, 70%);
-		--dark-color: hsl(220, 0%, 8.2%);
+		--dark-color: hsl(220, 0%, 15%);
 		--neutral-color: hsl(220, 0%, 48%);
 		--light-color: hsl(220, 0%, 60%);
 		--a-color: hsl(220, 0%, 81.6%);
@@ -979,12 +980,12 @@ hr { width: 100%; height: 0; margin: 0; color: transparent; border: none; }
 small { font-size: 0.9em; font-weight: 400; }
 #container, .flex { gap: 25px; }
 #container, #container > header, .flex { display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;}
-#container > header { position: sticky; top: 0; z-index: 100; width: 100%; column-gap: 20px; background-color: var(--page-bgcolor); text-align: center;	 }
-#container > *:nth-child(odd):not(header):not(footer) { width: 100dvw; padding: 20px 0; background-color: var(--neutral-color)}
+#container > header { position: sticky; top: 0; z-index: 100; width: 100%; column-gap: 20px; background-color: var(--dark-color); text-align: center;	 }
+#container > *:nth-child(odd):not(header) { width: 100dvw; padding: 20px 0; background-color: var(--dark-color)}
 .column { display:flex;flex-flow:column wrap; row-gap: 10px; }
 #domain { font-weight: 900; font-size: 1.5em }
 header select { width : 60px }
-footer { width: 100dvw; text-align: center; border-top: 1px solid; padding-top: 5px; }
+footer { width: 100dvw; text-align: center; padding-top: 5px; }
 #logo { height: 33px; }
 nav { width: 100%; height: 2.5ch; margin: 0; background-color: white; font-weight: 600 }
 nav ul { display: flex; justify-content: center; gap: 1dvw; list-style-type: none; margin: 0; padding: 0; overflow: hidden; border: none; }
@@ -1001,7 +1002,7 @@ li.dropdown { display: inline-block; }
 .summary-label { margin: 0 9px; }
 #summary-logs div[class^="bg-"], .currentday{ width: calc(var(--bar-width) * 1px); font-weight: 900 }
 div[class^="bg-"], th[class^="bg-"] { width: calc(var(--bar-width) * 1px) }
-button, select, input { cursor: pointer; color: var(--light-color); background-color: var(--dark-color); border: none; }
+button, select, input { cursor: pointer; color: var(--light-color); background-color: var(--darker-color); border: none; }
 h1, section header {border-bottom: 6px solid var(--light-color); width: 100%; margin: 0; text-align: center; font-weight: 900; font-size: 1em; }
 .tooltip { visibility: hidden; opacity: 0; position: fixed; top: 0; left: 0; z-index: 1000; font-size: 0.9rem; font-weight: 600; text-align: left; width: 100%; background-color: var(--dark-color); color: white; padding: 6px;}
 section header:hover .tooltip { visibility: visible; opacity: 1; }
@@ -1076,6 +1077,7 @@ a:hover, a:focus, a:active{ color: var(--a-hover-color); text-decoration: none; 
 	nav, form, #update-datas-button, .collapsed, .expand-collapse-button { display: none }
 	section #daysofweek { margin-bottom: 40px }
 	#container section section, .column { break-inside: avoid-page; }
+	:root { --dark-color: hsl(220, 0%, 100%); }
 }
 
 ';
