@@ -1070,6 +1070,10 @@ a:hover, a:focus, a:active{ color: var(--a-hover-color); text-decoration: none; 
 	}
 }
 
+@media print {
+	nav, form, #update-datas-button { display: none }
+}
+
 ';
 
 	# Call to plugins' function AddHTMLStyles
@@ -10419,7 +10423,7 @@ sub HTMLTopBanner{
 		$NewLinkParams =~ s/^&amp;//;
 		$NewLinkParams =~ s/&amp;$//;
 		if ($NewLinkParams) { $NewLinkParams = "${NewLinkParams}&amp;"; }
-		$lastUpdateBuild .= '<a href="' . XMLEncode("$AWScript${NewLinkParams}update=1") . '"><button>' . $Message[74] . '</button></a>';
+		$lastUpdateBuild .= '<a id="update-datas-button" href="' . XMLEncode("$AWScript${NewLinkParams}update=1") . '"><button>' . $Message[74] . '</button></a>';
 	}
 
 	print '<div>'
