@@ -13297,182 +13297,17 @@ sub HTMLShowHosts{
 
 #------------------------------------------------------------------------------
 # Function:     Prints the Domains details frame or static page
-# Parameters:   _
-# Input:        _
+# Parameters:   $NewLinkParams, $NewLinkTarget
+# Input:        -
 # Output:       HTML
 # Return:       -
 #------------------------------------------------------------------------------
 sub HTMLShowDomains{
-	my $total_p = 0;
-	my $total_h = 0;
-	my $total_k = 0;
-	my $total_v = 0;
-	my $total_u = 0;
-	my $rest_p = 0;
-	my $rest_h = 0;
-	my $rest_k = 0;
-	my $rest_v = 0;
-	my $rest_u = 0;
-	print "<a name=\"domains\">&nbsp;</a>";
+	my $NewLinkParams = shift;
+	my $NewLinkTarget = shift;
 
-	# Show domains list
-	my $title = '';
-	my $cpt   = 0;
-	if ( $HTMLOutput{'alldomains'} ) {
-		$title .= "$Message[25]";
-		$cpt = ( scalar keys %_domener_h );
-	}
-	print &tab_head( "$title", 19, 0, 'domains' )
-	. '<table>'
-	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th width=\"$WIDTHCOLICON\">&nbsp;</th><th colspan=\"2\">$Message[17]</th>";
-	if ( $ShowDomainsStats =~ /U/i ) {
-		print
-		  "<th class=\"bg-u\" width=\"80\">$Message[11]</th>";
-	}
-	if ( $ShowDomainsStats =~ /V/i ) {
-		print
-		  "<th class=\"bg-v\" width=\"80\">$Message[10]</th>";
-	}
-	if ( $ShowDomainsStats =~ /P/i ) {
-		print
-		  "<th class=\"bg-p\" width=\"80\">" . ucfirst($Message[28]) . "</th>";
-	}
-	if ( $ShowDomainsStats =~ /H/i ) {
-		print
-		  "<th class=\"bg-h\" width=\"80\">$Message[57]</th>";
-	}
-	if ( $ShowDomainsStats =~ /B/i ) {
-		print
-"<th class=\"datasize color_k\" width=\"80\">$Message[75]</th>";
-	}
-	print "<th>&nbsp;</th>";
-	print "</tr>\n";
-	$total_u = $total_v = $total_p = $total_h = $total_k = 0;
-	my $max_h = 1;
-	foreach ( values %_domener_h ) {
-		if ( $_ > $max_h ) { $max_h = $_; }
-	}
-	my $max_k = 1;
-	foreach ( values %_domener_k ) {
-		if ( $_ > $max_k ) { $max_k = $_; }
-	}
-	my $count = 0;
-	&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_domener_h,
-		\%_domener_p );
-	foreach my $key (@keylist) {
-		my ( $_domener_u, $_domener_v );
-		my $bredde_p = 0;
-		my $bredde_h = 0;
-		my $bredde_k = 0;
-		if ( $max_h > 0 ) {
-			$bredde_p =
-			  int( $BarWidth * $_domener_p{$key} / $max_h ) + 1;
-		}    # use max_h to enable to compare pages with hits
-		if ( $_domener_p{$key} && $bredde_p == 1 ) { $bredde_p = 2; }
-		if ( $max_h > 0 ) {
-			$bredde_h =
-			  int( $BarWidth * $_domener_h{$key} / $max_h ) + 1;
-		}
-		if ( $_domener_h{$key} && $bredde_h == 1 ) { $bredde_h = 2; }
-		if ( $max_k > 0 ) {
-			$bredde_k =
-			  int( $BarWidth * ( $_domener_k{$key} || 0 ) / $max_k ) +
-			  1;
-		}
-		if ( $_domener_k{$key} && $bredde_k == 1 ) { $bredde_k = 2; }
-		my $newkey = lc($key);
-		if ( $newkey eq 'ip' || !$DomainsHashIDLib{$newkey} ) {
-			print
-"<tr><td width=\"$WIDTHCOLICON\"><img src=\"$DirIcons\/flags\/ip.png\" height=\"14\""
-			  . AltTitle("$Message[0]")
-			  . " /></td><td class=\"aws\">$Message[0]</td><td>$newkey</td>";
-		}
-		else {
-			print '<tr class="country" data-country="' . $newkey . '"><td width="' . $WIDTHCOLICON . '" class="flag" data-country="' . $newkey . '"></td>';
-			print "<td class=\"aws\">$DomainsHashIDLib{$newkey}</td><td>$newkey</td>";
-		}
-		## to add unique visitors and number of visits, by Josep Ruano @ CAPSiDE
-		if ( $ShowDomainsStats =~ /U/i ) {
-			$_domener_u = (
-				  $_domener_p{$key}
-				? $_domener_p{$key} / $TotalPages
-				: 0
-			);
-			$_domener_u += ( $_domener_h{$key} / $TotalHits );
-			$_domener_u =
-			  sprintf( "%.0f", ( $_domener_u * $TotalUnique ) / 2 );
-			print "<td>".Format_Number($_domener_u)." ("
-			  . sprintf( "%.1f%", 100 * $_domener_u / $TotalUnique )
-			  . ")</td>";
-		}
-		if ( $ShowDomainsStats =~ /V/i ) {
-			$_domener_v = (
-				  $_domener_p{$key}
-				? $_domener_p{$key} / $TotalPages
-				: 0
-			);
-			$_domener_v += ( $_domener_h{$key} / $TotalHits );
-			$_domener_v =
-			  sprintf( "%.0f", ( $_domener_v * $TotalVisits ) / 2 );
-			print "<td>".Format_Number($_domener_v)." ("
-			  . sprintf( "%.1f%", 100 * $_domener_v / $TotalVisits )
-			  . ")</td>";
-		}
-		if ( $ShowDomainsStats =~ /P/i ) {
-			print "<td>".Format_Number($_domener_p{$key})."</td>";
-		}
-		if ( $ShowDomainsStats =~ /H/i ) {
-			print "<td>".Format_Number($_domener_h{$key})."</td>";
-		}
-		if ( $ShowDomainsStats =~ /B/i ) {
-			print "<td>" . Format_Bytes( $_domener_k{$key} ) . "</td>";
-		}
-		print "<td class=\"aws\">";
-		if ( $ShowDomainsStats =~ /P/i ) {
-			print HtmlBarH('p', $bredde_p, ucfirst($Message[28]) . ': ' . int( $_domener_p{$key} ));
-		}
-		if ( $ShowDomainsStats =~ /H/i ) {
-			print HtmlBarH('h', $bredde_h, "$Message[57]: " . int( $_domener_h{$key} ));
-		}
-		if ( $ShowDomainsStats =~ /B/i ) {
-			print HtmlBarH('k', $bredde_k, "$Message[75]: " . Format_Bytes( $_domener_k{$key} ));
-		}
-		print "</td>";
-		print "</tr>\n";
-		$total_u += $_domener_u;
-		$total_v += $_domener_v;
-		$total_p += $_domener_p{$key};
-		$total_h += $_domener_h{$key};
-		$total_k += $_domener_k{$key} || 0;
-		$count++;
-	}
-	my $rest_u = $TotalUnique - $total_u;
-	my $rest_v = $TotalVisits - $total_v;
-	$rest_p = $TotalPages - $total_p;
-	$rest_h = $TotalHits - $total_h;
-	$rest_k = $TotalBytes - $total_k;
-	if (   $rest_u > 0
-		|| $rest_v > 0
-		|| $rest_p > 0
-		|| $rest_h > 0
-		|| $rest_k > 0 )
-	{    # All other domains (known or not)
-		print
-"<tr><td width=\"$WIDTHCOLICON\">&nbsp;</td><td colspan=\"2\" class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
-		if ( $ShowDomainsStats =~ /U/i ) { print "<td>$rest_u</td>"; }
-		if ( $ShowDomainsStats =~ /V/i ) { print "<td>$rest_v</td>"; }
-		if ( $ShowDomainsStats =~ /P/i ) { print "<td>$rest_p</td>"; }
-		if ( $ShowDomainsStats =~ /H/i ) { print "<td>$rest_h</td>"; }
-		if ( $ShowDomainsStats =~ /B/i ) {
-			print "<td>" . Format_Bytes($rest_k) . "</td>";
-		}
-		print "<td class=\"aws\">&nbsp;</td>";
-		print "</tr>\n";
-	}
-	
-	print '</table>' . &tab_end();
-
-	print &html_end(1);
+	print HTMLMainCountries($NewLinkParams, $NewLinkTarget, 'all')
+	. &html_end(1);
 }
 
 #------------------------------------------------------------------------------
@@ -14595,7 +14430,7 @@ sub HTMLMainHours{
 
 #------------------------------------------------------------------------------
 # Function:     Return the countries chart and table
-# Parameters:   $NewLinkParams, $NewLinkTarget
+# Parameters:   $NewLinkParams, $NewLinkTarget, $all
 # Input:        -
 # Output:       -
 # Return:       string
@@ -14605,17 +14440,23 @@ sub HTMLMainCountries{
 
 	my $NewLinkParams = shift;
 	my $NewLinkTarget = shift;
+	my $all = shift || '';
 
 	my $count = my $total_u = my $total_v = my $total_p = my $total_h = my $total_k = 0;
 	my $rest_u  = my $rest_v  = my $rest_p  = my $rest_h  = my $rest_k = 0; 
 	my $max_u = my $max_p = my $max_h = my $max_k = 1;
-	my $title = $Message[25] . ' <small>(' . $Message[77] . ' ' . $MaxNbOf{'Domain'} . ')</small>';
+	my $title = $Message[25] . (($all ne 'all') ? ' <small>(' . $Message[77] . ' ' . $MaxNbOf{'Domain'} . ')</small>' : '');
 	my @links = ();
 	my $map = '<div id="worldmap-wrapper"><div id="worldmap"></div></div>';
 	my $tooltip = my $tableData = my $tableFooter = '';
 	my $colspan = ($ShowDomainsStats =~ /U/i) + ($ShowDomainsStats =~ /V/i) + ($ShowDomainsStats =~ /P/i) + ($ShowDomainsStats =~ /H/i) + ($ShowDomainsStats =~ /B/i);
+	my $tableFooter = ($all ne 'all') ? '<tfoot><tr><td><button class="expand-collapse-button">+</button></td><td colspan="' . $colspan . '"></td></tr></tfoot>' : '';
 
-  if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
+	if($all ne 'all'){
+		push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'alldomains', $Message[80]));
+	}
+
+  if ($AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
   { # extend the title to include the added link
     push(@links, '<a href="'
     . XMLEncode($AddLinkToExternalCGIWrapper . '?section=DOMAIN&baseName=' . $DirData/$PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig)
@@ -14679,10 +14520,10 @@ sub HTMLMainCountries{
 		else
 		{
 			$tableData .= '<tr'
-			. ' class="country' . (($count < $MaxNbOf{'Domain'}) ? '' : ' collapsed') . '"'
-			. (($count < $MaxNbOf{'Domain'}) ? '' : ' style="visibility: collapse"')
+			. ' class="country' . ((($all ne 'all') && $count > $MaxNbOf{'Domain'}) ? ' collapsed' : '') . '"'
+			. ((($all ne 'all') && $count > $MaxNbOf{'Domain'}) ? ' style="visibility: collapse"' : '')
 			. ' data-country="' . $newkey . '">'
-			. '<td class="country">' . $DomainsHashIDLib{$newkey} . ' <small>( ' . $newkey . ' )</small> <span class="flag' . (($count < $MaxNbOf{'Domain'}) ? ' highlighted' : '') . '" data-country="' . $newkey . '"></span></td>';
+			. '<td class="country">' . $DomainsHashIDLib{$newkey} . ' <small>( ' . $newkey . ' )</small> <span class="flag' . (($count > $MaxNbOf{'Domain'}) ? '' : ' highlighted') . '" data-country="' . $newkey . '"></span></td>';
 		}
 
 		my $domener_temp = ($_domener_p{$key} ? $_domener_p{$key} / $TotalPages : 0) + $_domener_h{$key} / $TotalHits;
@@ -14726,8 +14567,6 @@ sub HTMLMainCountries{
 		$total_k += $_domener_k{$key} || 0;
 		$count++;
 	}
-
-	$tableFooter .= '<tfoot><tr><td><button class="expand-collapse-button">+</button></td><td colspan="' . $colspan . '"></td></tr></tfoot>';
 
 	$rest_u = $TotalUnique - $total_u;
 	$rest_v = $TotalVisits - $total_v;
@@ -20802,7 +20641,7 @@ if ( scalar keys %HTMLOutput ) {
 	if ( scalar keys %HTMLOutput == 1 ) {
 
 		if ( $HTMLOutput{'alldomains'} ) {
-			&HTMLShowDomains();
+			print &HTMLShowDomains($NewLinkParams, $NewLinkTarget);
 		}
 		if ( $HTMLOutput{'allhosts'} || $HTMLOutput{'lasthosts'} ) {
 			&HTMLShowHosts();
