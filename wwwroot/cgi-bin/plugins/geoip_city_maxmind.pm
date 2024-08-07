@@ -4537,8 +4537,11 @@ sub GetCountryCodeByName_geoip_city_maxmind {
 #-----------------------------------------------------------------------------
 sub ShowInfoHost_geoip_city_maxmind {
     my $param="$_[0]";
-    my $html = '';
+    my $noRes = '<span>' . $Message[56] . '</span>';
+
 	# <-----
+	if(!$param){ return $noRes; }
+
 	if ($param eq '__title__')
 	{
     	my $NewLinkParams=${QueryString};
@@ -4556,100 +4559,66 @@ sub ShowInfoHost_geoip_city_maxmind {
     	$NewLinkParams =~ s/^&amp;//; $NewLinkParams =~ s/&amp;$//;
     	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 
-#		print "<th width=\"80\">";
-#        print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=plugin_geoip_city_maxmind&amp;suboutput=country"):"$PROG$StaticLinks.plugin_geoip_city_maxmind.country.$StaticExt")."\"$NewLinkTarget>GeoIP<br/>Country</a>";
-#        print "</th>";
-		$html .= '<th>'
-		. '<a href="' . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=plugin_$PluginName"):"$StaticLinks.plugin_$PluginName.$StaticExt") . '" $NewLinkTarget>GeoIP<br/>City</a>'
-		. '</th>';
+		return '<a href="' . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=plugin_$PluginName"):"$StaticLinks.plugin_$PluginName.$StaticExt") . '" $NewLinkTarget>GeoIP City</a>';
 	}
-	elsif ($param)
-	{
-		# try loading our override file if we haven't yet
-        my $ip=0;
-		my $key;
-		if ($param =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {	# IPv4 address
-		    $ip=4;
-			$key=$param;
+
+	if ($param =~ /^[0-9A-F]*:/i) { debug ("Plugin $PluginName: IPv6 not supported by GeoIP: $key"); return $noRes; } # IPv6 address
+
+	my $country;
+	my $city;
+	my @res = TmpLookup_geoip_city_maxmind($param);
+
+	if ($param !~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/)
+	{ # Not IPv4 address (hostname)
+		
+		if (@res){
+	  		$country = $res[0];
+	   		$city = $res[4];
 		}
-		elsif ($param =~ /^[0-9A-F]*:/i) {						# IPv6 address
-		    $ip=6;
-			$key=$param;
+		elsif ($type eq 'geoippureperl')
+		{
+			my @record = ();
+			@record=$geoip_city_maxmind->get_city_record($param) if $geoip_city_maxmind;
+	       	if ($Debug) { debug("  Plugin $PluginName: GetCityByHostname for $param: [@record]",5); }
+	        $country=$record[0] if @record;
+	        $city=$record[4] if @record;
 		}
-		if ($key && $ip==4) {
-	        my $country;
-	        my $city;
-	        my @res = TmpLookup_geoip_city_maxmind($param);
-	        if (@res){
-	        	$country = $res[0];
-	        	$city = $res[4];
-	        }
-			elsif ($type eq 'geoippureperl')
-			{ 
-				my @record = ();
-				@record=$geoip_city_maxmind->get_city_record($param) if $geoip_city_maxmind;
-	        	if ($Debug) { debug("  Plugin $PluginName: GetCityByIp for $param: [@record]",5); }
-	            $country=$record[0] if @record;
-	            $city=$record[4] if @record;
-			}
-			else
-			{
-	        	my $record=();
-	        	$record=$geoip_city_maxmind->record_by_addr($param) if $geoip_city_maxmind;
-	        	if ($Debug) { debug("  Plugin $PluginName: GetCityByIp for $param: [$record]",5); }
-	            $country=$record->country_code if $record;
-	            $city=$record->city if $record;
-			}
-#			print "<td>";
-#		    if ($country) { print $DomainsHashIDLib{$country}?$DomainsHashIDLib{$country}:"<span style=\"color: #$color_other\">$Message[0]</span>"; }
-#		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
-#		    print "</td>";
-			$html .= '<td>';
-		    if ($city) { $html .= EncodeToPageCode($city); }
-		    else { $html .= '<span>' . $Message[0] . '</span>'; }
-		    $html .= '</td>';
+		else
+		{
+	      	my $record=();
+	       	$record=$geoip_city_maxmind->record_by_name($param) if $geoip_city_maxmind;
+	       	if ($Debug) { debug("  Plugin $PluginName: GetCityByHostname for $param: [$record]",5); }
+	        $country=$record->country_code if $record;
+	        $city=$record->city if $record;
 		}
-		if ($key && $ip==6) {
-			debug ("  Plugin $PluginName: IPv6 not supported by GeoIP: $key");
-			$html .= '<td><span>' . $Message[0] . '</span></td>';
-		}
-		if (! $key) {
-	        my $country;
-	        my $city;
-	        my @res = TmpLookup_geoip_city_maxmind($param);
-	        if (@res){
-	        	$country = $res[0];
-	        	$city = $res[4];
-	        }
-			elsif ($type eq 'geoippureperl')
-			{
-				my @record = ();
-				@record=$geoip_city_maxmind->get_city_record($param) if $geoip_city_maxmind;
-	        	if ($Debug) { debug("  Plugin $PluginName: GetCityByHostname for $param: [@record]",5); }
-	            $country=$record[0] if @record;
-	            $city=$record[4] if @record;
-			}
-			else
-			{
-	        	my $record=();
-	        	$record=$geoip_city_maxmind->record_by_name($param) if $geoip_city_maxmind;
-	        	if ($Debug) { debug("  Plugin $PluginName: GetCityByHostname for $param: [$record]",5); }
-	            $country=$record->country_code if $record;
-	            $city=$record->city if $record;
-			}
-#			print "<td>";
-#		    if ($country) { print $DomainsHashIDLib{$country}?$DomainsHashIDLib{$country}:"<span style=\"color: #$color_other\">$Message[0]</span>"; }
-#		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
-#		    print "</td>";
-			$html .= '<td>';
-		    if ($city) { $html .= EncodeToPageCode($city); }
-		    else { $html .= '<span>' . $Message[0] . '</span>'; }
-			$html .= '</td>';
-		}
+	}
+
+	# try loading our override file if we haven't yet
+    my $ip=0;
+	my $key;
+
+    if (@res){
+      	$country = $res[0];
+       	$city = $res[4];
+    }
+	elsif ($type eq 'geoippureperl')
+	{ 
+		my @record = ();
+		@record=$geoip_city_maxmind->get_city_record($param) if $geoip_city_maxmind;
+	   	if ($Debug) { debug("  Plugin $PluginName: GetCityByIp for $param: [@record]",5); }
+	    $country=$record[0] if @record;
+	    $city=$record[4] if @record;
 	}
 	else
-	{ $html .=  '<td></td>'; }
-	return $html;
+	{
+	   	my $record=();
+	   	$record=$geoip_city_maxmind->record_by_addr($param) if $geoip_city_maxmind;
+	   	if ($Debug) { debug("  Plugin $PluginName: GetCityByIp for $param: [$record]",5); }
+	    $country=$record->country_code if $record;
+	    $city=$record->city if $record;
+	}
+
+    return (($city) ? EncodeToPageCode($city) : $noRes);
 	# ----->
 }
 

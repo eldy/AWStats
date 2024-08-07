@@ -962,9 +962,8 @@ li.dropdown { display: inline-block; }
 #summary-logs { max-width: 100%; text-align: center;  margin: auto; display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;}
 #summary-logs div { padding: 1px 0 }
 .summary-label { margin: 0 9px; }
-#summary-logs div[class^="bg-"], .currentday{ width: calc(var(--bar-width) * 1px); font-weight: 900 }
-div[class^="bg-"], th[class^="bg-"] { width: calc(var(--bar-width) * 1px) }
-th:not([class^="bg-"]):not(:first-child) { background-color: var(--neutral-color)}
+#summary-logs div[class^="bg-"], .currentday{ font-weight: 900 }
+:is(div, th)[class^="bg-"] { width: calc(var(--bar-width) * 1px) }
 button, select, input { cursor: pointer; color: var(--light-color); background-color: var(--darker-color); border: none; }
 h1, section header {border-bottom: 6px solid var(--light-color); width: 100%; margin: 0; font-weight: 900; font-size: 1em; }
 .tooltip { visibility: hidden; opacity: 0; position: fixed; top: 0; left: 0; z-index: 1000; font-size: 0.9rem; font-weight: 600; text-align: left; width: 100%; background-color: var(--darker-color); color: white; padding: 6px;}
@@ -973,17 +972,18 @@ h1, section header {border-bottom: 6px solid var(--light-color); width: 100%; ma
 .help:hover .tooltip { visibility: visible; opacity: 1; }
 .multi-data-table { display: flex; column-gap: 3dvw; flex-wrap: wrap; justify-content: center }
 .multi-data-table.worldmap{ position: relative; }
-.data-table { border-spacing: 0 2px; margin: auto; max-width: 90dvw; }
+.data-table { border-spacing: 0; margin: auto; max-width: 98dvw; }
 .data-table tfoot { display: table-header-group }
-.data-table tbody div { opacity: 0.9 }
 .data-table tbody tr { transition: background 0.5s ease-out; transition: transform 0.1s ease-in }
 .data-table tbody tr:hover { font-weight: 900; color: var(--darker-color);background: var(--light-color); transform: scale(1.1) translateX(2px); }
-.data-table th { font-weight: 900 }
-.data-table th, .data-table td:not(:first-child) { padding-top: 2px; padding-bottom: 2px; }
-.data-table td { text-align: right; font-weight: 700; }
+.data-table th { font-weight: 900; padding-top: 2px; padding-bottom: 2px; }
+.data-table :is(th, td).plugin:nth-child(odd) { background-color: var(--dark-color)}
+.data-table :is(th, td).plugin:nth-child(even) { background-color: var(--darker-color);}
+.data-table td { text-align: right; font-weight: 700; padding-top: 2px; padding-bottom: 2px; padding-left: 0; padding-right: 0; }
 .data-table td:first-child { padding-right: 4px }
 .data-table td:first-child:not(.country) { font-weight: 400 }
-.data-table td div { padding: 0 4px }
+.data-table td.plugin { padding-left: 4px; padding-right: 4px; color: var(--light-color); text-align: center; }
+.data-table td div { padding: 0 2px }
 .data-table td img { width: 16px; height: 16px;vertical-align: bottom; }
 .data-table td small { float: left; line-height: 1.3; }
 .data-table tfoot .data-table-sum td { border-top: 1px solid rgba(192,192,192,0.2); }
@@ -9372,16 +9372,17 @@ sub HTMLShowClusterInfo {
 #------------------------------------------------------------------------------
 sub HTMLShowHostInfo {
 	my $host = shift;
-	my $infos = '';
+	my $cellType = ($host eq '__title__') ? 'h' : 'd';
+	my $cells = '';
 
 	# Call to plugins' function ShowInfoHost
 	foreach my $pluginname ( sort keys %{ $PluginsLoaded{'ShowInfoHost'} } )
 	{
 		my $function = "ShowInfoHost_$pluginname";
-		 $infos .= &$function($host);
+		$cells .= '<t' . $cellType . ' class="plugin ' . $pluginname . '">' . (($host eq '') ? '' : &$function($host)) . '</t' . $cellType . '>';
 	}
 
-	return $infos;
+	return $cells;
 }
 
 #------------------------------------------------------------------------------
@@ -14556,10 +14557,10 @@ sub HTMLMainHosts{
 	if ( $rest_p > 0 || $rest_h > 0 || $rest_k > 0 )
 	{ # All other visitors (known or not)
 		$tableData .= '<tr><td>' . $Message[2] . '</td>'
-		. &HTMLShowHostInfo('')
 		. (( $ShowHostsStats =~ /P/i ) ? '<td>' . Format_Number($rest_p) . '</td>' : '')
 		. (( $ShowHostsStats =~ /H/i ) ? '<td>' . Format_Number($rest_h) . '</td>' : '')
 		. (( $ShowHostsStats =~ /B/i ) ? '<td>' . Format_Bytes($rest_k) . '</td>' : '')
+		. &HTMLShowHostInfo('')
 		. (( $ShowHostsStats =~ /L/i ) ? '<td>&nbsp;</td>' : '')
 		. '</tr>';
 	}

@@ -145,9 +145,13 @@ sub GetCountryCodeByName_geoip {
 #-----------------------------------------------------------------------------
 sub ShowInfoHost_geoip {
     my $param="$_[0]";
-    my $html = '';
+    my $noRes = '<span>' . $Message[56] . '</span>';
+
 	# <-----
-	if ($param eq '__title__') {
+	if(!$param){ return $noRes; }
+
+	if ($param eq '__title__')
+	{
     	my $NewLinkParams=${QueryString};
     	$NewLinkParams =~ s/(^|&)update(=\w*|$)//i;
     	$NewLinkParams =~ s/(^|&)output(=\w*|$)//i;
@@ -162,43 +166,34 @@ sub ShowInfoHost_geoip {
     	$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
     	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 
-		$html .= '<th><a href="#countries">GeoIP<br />Country</a></th>';
+		return 'GeoIP Country';
 	}
-	elsif ($param) {
-        my $ip=0;
-		my $key;
-		if ($param =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {	# IPv4 address
-		    $ip=4;
-			$key=$param;
-		}
-		elsif ($param =~ /^[0-9A-F]*:/i) {						# IPv6 address
-		    $ip=6;
-			$key=$param;
-		}
-		$html .= '<td>';
-		if ($key && $ip==4) {
-			my $res = TmpLookup_geoip($param);
-        	if (!$res){$res=lc($gi->country_code_by_addr($param)) if $gi;}
-        	if ($Debug) { debug("  Plugin $PluginName: GetCountryByIp for $param: [$res]",5); }
-		    if ($res) { $html .= $DomainsHashIDLib{$res}?$DomainsHashIDLib{$res}:'<span>' . $Message[0] . '</span>'; }
-		    else { $html .= '<span>' . $Message[0] . '</span>'; }
-		}
-		if ($key && $ip==6) {
-		    $html .= '<span>' . $Message[0] . '</span>';
-		}
-		if (! $key) {
-			my $res = TmpLookup_geoip($param);
-        	if (!$res){$res=lc($gi->country_code_by_name($param)) if $gi;}
-        	if ($Debug) { debug("  Plugin $PluginName: GetCountryByHostname for $param: [$res]",5); }
-		    if ($res) { $html .= $DomainsHashIDLib{$res}?$DomainsHashIDLib{$res}:'<span>' . $Message[0] . '</span>'; }
-		    else { $html .= '<span>' . $Message[0] . '</span>'; }
-		}
-		$html .= '</td>';
+	
+	if ($param =~ /^[0-9A-F]*:/i) { return $noRes; } # IPv6 address
+
+	if ($param !~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/)
+	{ # Not IPv4 address (hostname)
+		my $res = TmpLookup_geoip($param);
+       	if (!$res){$res=lc($gi->country_code_by_name($param)) if $gi;}
+       	if ($Debug) { debug("  Plugin $PluginName: GetCountryByHostname for $param: [$res]",5); }
+	    return (
+	    	($res)
+	    	? ($DomainsHashIDLib{$res} ? $DomainsHashIDLib{$res} : $noRes)
+	    	: $noRes
+	    );
 	}
-	else {
-		$html .= '<td></td>';
-	}
-	return $html;
+
+	my $res = TmpLookup_geoip($param);
+   	if (!$res){$res=lc($gi->country_code_by_addr($param)) if $gi;}
+   	if ($Debug) { debug("  Plugin $PluginName: GetCountryByIp for $param: [$res]",5); }
+
+    return (
+    	($res)
+    	? ($DomainsHashIDLib{$res} ? $DomainsHashIDLib{$res} : $noRes)
+    	: $noRes
+    );
+
+	return $noRes;
 	# ----->
 }
 
