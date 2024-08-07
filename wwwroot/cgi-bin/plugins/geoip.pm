@@ -139,13 +139,15 @@ sub GetCountryCodeByName_geoip {
 # UNIQUE: NO (Several plugins using this function can be loaded)
 # Function called to add additionnal columns to the Hosts report.
 # This function is called when building rows of the report (One call for each
-# row). So it allows you to add a column in report, for example with code :
-#   print "<TD>This is a new cell for $param</TD>";
+# row). So it allows you to add a column in report.
+# The returned string is the content of the cell, the cell is build by AWStats.pl
+# return code example: ### return "This is a new content for $param";
+# 
 # Parameters: Host name or ip
 #-----------------------------------------------------------------------------
 sub ShowInfoHost_geoip {
     my $param="$_[0]";
-    my $noRes = '<span>' . $Message[56] . '</span>';
+    my $noRes = $Message[56];
 
 	# <-----
 	if(!$param){ return $noRes; }
