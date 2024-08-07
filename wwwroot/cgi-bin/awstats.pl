@@ -898,13 +898,13 @@ sub renderCss {
 	--aws-color-e: hsl(258, 60%, 75%);
 	--aws-color-x: hsl(260, 76%, 81%);
 	--aws-color-s: hsl(240, 56%, 70%);
-	--dark-color: hsl(220, 0%, 75%);
+	--dark-color: hsl(220, 0%, 50%);
 	--darker-color: hsl(220, 0%, 7%);
-	--neutral-color: hsl(220, 0%, 80%);
-	--light-color: hsl(220, 0%, 90%);
+	--neutral-color: hsl(220, 0%, 90%);
+	--light-color: hsl(220, 0%, 80%);
 	--a-color: hsl(0, 0%, 0%);
 	--a-hover-color: hsl(0, 0%, 0%);
-	--bar-width: 100;
+	--bar-width: 90;
 	--bar-v-height: 16;
 	--bar-v-grow: 1;
 	--bar-v-width-month: 0.44dvw;
@@ -927,7 +927,7 @@ sub renderCss {
 		--aws-color-x: hsl(260, 76%, 81%);
 		--aws-color-s: hsl(240, 56%, 70%);
 		--dark-color: hsl(220, 0%, 15%);
-		--neutral-color: hsl(220, 0%, 48%);
+		--neutral-color: hsl(220, 0%, 30%);
 		--light-color: hsl(220, 0%, 60%);
 		--a-color: hsl(220, 0%, 81.6%);
 		--a-hover-color: hsl(220, 0%, 100%);
@@ -963,33 +963,33 @@ li.dropdown { display: inline-block; }
 #summary-logs div { padding: 1px 0 }
 .summary-label { margin: 0 9px; }
 #summary-logs div[class^="bg-"], .currentday{ font-weight: 900 }
-:is(div, th)[class^="bg-"] { width: calc(var(--bar-width) * 1px) }
+:is(div, th)[class^="bg-"] { min-width: calc(var(--bar-width) * 1px); max-width: calc(var(--bar-width) * 2px) }
 button, select, input { cursor: pointer; color: var(--light-color); background-color: var(--darker-color); border: none; }
 h1, section header {border-bottom: 6px solid var(--light-color); width: 100%; margin: 0; font-weight: 900; font-size: 1em; }
-.tooltip { visibility: hidden; opacity: 0; position: fixed; top: 0; left: 0; z-index: 1000; font-size: 0.9rem; font-weight: 600; text-align: left; width: 100%; background-color: var(--darker-color); color: white; padding: 6px;}
+.tooltip { visibility: hidden; opacity: 0; position: fixed; top: 0; left: 0; z-index: 1000; font-size: 0.9rem; font-weight: 400; text-align: left; width: 100%; background-color: var(--darker-color); color: white; padding: 6px;}
 .tab, section header a:any-link { float: right; margin: 0 0 0 1ch; height: 2ch; text-align: center; border: 0.5ch solid var(--light-color); background-color: var(--light-color); color: var(--darker-color); cursor: pointer; font-weight: 700}
 .help { width: 2ch; cursor: help; }
 .help:hover .tooltip { visibility: visible; opacity: 1; }
 .multi-data-table { display: flex; column-gap: 3dvw; flex-wrap: wrap; justify-content: center }
 .multi-data-table.worldmap{ position: relative; }
-.data-table { border-spacing: 0; margin: auto; max-width: 98dvw; }
+.data-table { border-spacing: 0; margin: auto; }
 .data-table tfoot { display: table-header-group }
 .data-table tbody tr { transition: background 0.5s ease-out; transition: transform 0.1s ease-in }
 .data-table tbody tr:hover { font-weight: 900; color: var(--darker-color);background: var(--light-color); transform: scale(1.1) translateX(2px); }
 .data-table th { font-weight: 900; padding-top: 2px; padding-bottom: 2px; }
 .data-table :is(th, td).plugin:nth-child(odd) { background-color: var(--dark-color)}
 .data-table :is(th, td).plugin:nth-child(even) { background-color: var(--darker-color);}
-.data-table td { text-align: right; font-weight: 700; padding-top: 2px; padding-bottom: 2px; padding-left: 0; padding-right: 0; }
+.data-table td { text-align: right; font-weight: 700; padding-top: 3px; padding-bottom: 3px; padding-left: 0; padding-right: 0; }
 .data-table td:first-child { padding-right: 4px }
 .data-table td:first-child:not(.country) { font-weight: 400 }
 .data-table td.plugin { padding-left: 4px; padding-right: 4px; color: var(--light-color); text-align: center; }
-.data-table td div { padding: 0 2px }
+.data-table td div { padding: 0 2px; height: 2ch; }
 .data-table td img { width: 16px; height: 16px;vertical-align: bottom; }
 .data-table td small { float: left; line-height: 1.3; }
 .data-table tfoot .data-table-sum td { border-top: 1px solid rgba(192,192,192,0.2); }
 .data-table-sum { font-size : clamp(0.938rem, -3vw + 3rem, 1.125rem) }
 .left-padding-separator { padding-left: 20px }
-.bar-table { visibility: visible; width: 100%; margin: auto; text-align: center; font-size: 10px; border-bottom: 6px solid var(--light-color);}
+.bar-table { visibility: visible; width: 100%; margin: 3px auto; padding: 2px 0; text-align: center; font-size: 10px; border-bottom: 1px solid var(--light-color);}
 .bar-table tr:first-child td { vertical-align: bottom; }
 .bar-table span { font-size: 0.8em }
 .collapsed{ visibility: collapse; transition visibility 0.5s ease-in }
@@ -1018,8 +1018,8 @@ a:hover, a:focus, a:active{ color: var(--a-hover-color); text-decoration: none; 
 .bg-x{ background-color: var(--aws-color-x) }
 .bg-s{ background-color: var(--aws-color-s) }
 .clock{ display: inline-block; vertical-align: bottom; margin: 0 5px; border-radius: 50%; }
-.clock-night{ background: conic-gradient(var(--dark-color) 330deg, rgb(244, 240, 144) 30deg); }
-.clock-day{ background: conic-gradient(rgb(244, 240, 144) 330deg, var(--dark-color) 30deg); }
+.clock-night{ background: conic-gradient(var(--darker-color) 330deg, rgb(244, 240, 144) 30deg); }
+.clock-day{ background: conic-gradient(rgb(244, 240, 144) 330deg, var(--darker-color) 30deg); }
 .bar-table .clock { width: 0.5dvw; height: 0.5dvw }
 .data-table .clock { width: 16px; height: 16px }
 .landxx{ fill: var(--dark-color) !important; transition: fill 0.3s ease-in }
@@ -1027,23 +1027,24 @@ a:hover, a:focus, a:active{ color: var(--a-hover-color); text-decoration: none; 
 .lighted-land{ fill: rgba(128, 86, 86, 1) !important; fill-rule: evenodd;}
 .highlighted-land{ fill: var(--aws-color-u) !important; fill-rule: evenodd;}
 .zoomed-land{ fill: white !important;}
-.weekend { background-color: var(--light-color) }
-.data-table-average { background-color: var(--neutral-color) }
+.weekend { background-color: var(--neutral-color) }
+.data-table-average { background-color: var(--light-color) }
 
 @media (min-resolution: 2dppx) {
 	body { font-size: clamp(1rem, -3vw + 3rem, 1.4rem) }
+}
 
-	@media (orientation: portrait) {
-		.data-table { width: 90dvw}
-	}
+@media (orientation: portrait) {
+	.data-table { width: 96dvw}
 }
 
 @media print {
 	body, #container > :nth-child(2n+1):not(header):not(footer) { background-color: white }
-	nav, form, #update-datas-button, .collapsed, .expand-collapse-button { display: none }
+	nav, form, #update-datas-button, .collapsed, .expand-collapse-button, .help, .tab
+	, section header a:any-link { display: none }
 	section #daysofweek { margin-bottom: 40px }
 	#container section section, .column { break-inside: avoid-page; }
-	:root { --dark-color: hsl(220, 0%, 100%); }
+	:root { --dark-color: hsl(220, 0%, 100%);}
 }
 
 ';
@@ -10079,7 +10080,7 @@ sub HTMLShowEmailSendersChart {
 
 	if ( !($HTMLOutput{'allemails'} || $HTMLOutput{'lastemails'}) )
 	{
-		$subtitle = '(' . $Message[77] . ' ' . $MaxNbOf{'EMailsShown'} . ')';
+		$subtitle = '<small>(' . $Message[77] . ' ' . $MaxNbOf{'EMailsShown'} . ')</small>';
 		push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'allemails', $Message[80]));
 		
 		if ( $ShowEMailSenders =~ /L/i )
@@ -10244,7 +10245,7 @@ sub HTMLShowEmailReceiversChart {
 	
 	if ( !($HTMLOutput{'allemailr'} || $HTMLOutput{'lastemailr'}) )
 	{
-		$subtitle = '(' . $Message[77] . ' ' . $MaxNbOf{'EMailsShown'} . ')';
+		$subtitle = '<small>(' . $Message[77] . ' ' . $MaxNbOf{'EMailsShown'} . ')</small>';
 		push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'allemailr', $Message[80]));
 
 		if ( $ShowEMailReceivers =~ /L/i )
@@ -14329,7 +14330,7 @@ sub HTMLMainDownloads{
 	my $TopFiveTotalh = my $total_h = my $total_206 = my $max_k = my $max_average_k = 0;
 	my @links = ();
 	my $chart = my $dataTable = '';
-	my $title = $Message[178] . (($all ne 'all') ? ' ('. $Message[77] . ' ' . $MaxNbOf{'DownloadsShown'} .')' : '');
+	my $title = $Message[178] . (($all ne 'all') ? ' <small>('. $Message[77] . ' ' . $MaxNbOf{'DownloadsShown'} .')</small>' : '');
 	my @sortedDlKeys = (sort {$_downloads{$b}->{'AWSTATS_SIZE'} <=> $_downloads{$a}->{'AWSTATS_SIZE'}}(keys %_downloads));
 	
 	if($all ne 'all')
@@ -14589,7 +14590,7 @@ sub HTMLMainLogins{
 	if ($Debug) { debug( "ShowAuthenticatedUsers", 2 ); }
 	print "<a name=\"logins\">&nbsp;</a>";
 	my $title =
-"$Message[94] ($Message[77] $MaxNbOf{'LoginShown'}) &nbsp; - &nbsp; <a href=\""
+"$Message[94] <small>($Message[77] $MaxNbOf{'LoginShown'})</small> &nbsp; - &nbsp; <a href=\""
 	  . (
 		$ENV{'GATEWAY_INTERFACE'}
 		  || !$StaticLinks
@@ -14976,7 +14977,7 @@ sub HTMLMainPages{
 	if ($Debug) {debug("ShowPagesStats (MaxNbOf{'PageShown'}=$MaxNbOf{'PageShown'} TotalDifferentPages=$TotalDifferentPages)",	2);}
 
 	my $regext = qr/\.(\w{1,6})$/;
-	my $title = $Message[19] . ' (' . $Message[77] . ' ' . $MaxNbOf{'PageShown'} . ')';
+	my $title = $Message[19] . ' <small>(' . $Message[77] . ' ' . $MaxNbOf{'PageShown'} . ')</small>';
 	my @links = ();
 	my $tooltip = my $tableHeader = my $tableData = '';
 	my $total_p = my $total_e = my $total_x = my $total_k = 0;
@@ -15117,7 +15118,7 @@ sub HTMLMainOS{
 	my $total_h = my $total_p = 0;
 	my @links = my %new_os_h = my %new_os_p = ();
 	my $tooltip = my $dataTableHeader = my $dataTableBody = my $graph = '';
-	my $title = $Message[59] . ' (' . $Message[77] . ' ' . $MaxNbOf{'OsShown'} . ')';
+	my $title = $Message[59] . ' <small>(' . $Message[77] . ' ' . $MaxNbOf{'OsShown'} . ')</small>';
 
   OSLOOP: foreach my $key ( keys %_os_h )
   {
@@ -15281,7 +15282,7 @@ sub HTMLMainBrowsers{
 	my $Totalh = my $Totalp = my $total_h = my $total_p = 0;
 	my %new_browser_h = my %new_browser_p = my @links = ();
 	my $tooltip = my $dataTableHeader = my $dataTableBody = my $graph = '';
-	my $title = $Message[21] . ' (' . $Message[77] . ' ' . $MaxNbOf{'BrowsersShown'} .')';
+	my $title = $Message[21] . ' <small>(' . $Message[77] . ' ' . $MaxNbOf{'BrowsersShown'} .')</small>';
 
   BROWSERLOOP: foreach my $key ( keys %_browser_h )
   {
@@ -15669,7 +15670,7 @@ sub HTMLMainKeyphrases{
 	my $NewLinkParams = shift;
 	my $NewLinkTarget = shift;
 	
-	my $title = $Message[120] . ' (' . $Message[77] . ' ' . $MaxNbOf{'KeyphrasesShown'} . ')';
+	my $title = $Message[120] . ' <small>(' . $Message[77] . ' ' . $MaxNbOf{'KeyphrasesShown'} . ')</small>';
 	my $tableData = my $tooltip = ''; # Tooltip(15)
 	my @links = ();
 	my $p = my $total_s = 0;
@@ -15732,7 +15733,7 @@ sub HTMLMainKeywords{
 	my $NewLinkParams = shift;
 	my $NewLinkTarget = shift;
 	
-	my $title = $Message[121] . ' (' . $Message[77] . ' ' . $MaxNbOf{'KeywordsShown'} . ')';
+	my $title = $Message[121] . ' <small>(' . $Message[77] . ' ' . $MaxNbOf{'KeywordsShown'} . ')</small>';
 	my $tableData = my $tooltip = ''; # Tooltip(15)
 	my @links = ();
 	my $p = my $total_s = 0;
@@ -20592,12 +20593,6 @@ if ( scalar keys %HTMLOutput ) {
 			print &HTMLMainHosts($NewLinkParams, $NewLinkTarget);
 		}
 
-		# BY MISC
-		#----------------------------
-		if ($ShowMiscStats) {
-			&HTMLMainMisc();
-		}
-
 		print '</div>';
 
 		# BY COUNTRY/DOMAIN
@@ -20687,6 +20682,12 @@ if ( scalar keys %HTMLOutput ) {
 
 		print '</section>';
 		print '<section class="flex">';
+
+		# BY MISC
+		#----------------------------
+		if ($ShowMiscStats) {
+			&HTMLMainMisc();
+		}
 
 		# BY HTTP STATUS
 		#----------------------------
