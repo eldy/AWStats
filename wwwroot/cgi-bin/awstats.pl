@@ -173,7 +173,7 @@ $ExtraTrackedRowsLimit = 500;
 $DatabaseBreak         = 'month';
 use vars qw/
   $DebugMessages $AllowToUpdateStatsFromBrowser $EnableLockForUpdate $DNSLookup $DynamicDNSLookup $AllowAccessFromWebToAuthenticatedUsersOnly
-  $BarWidth $CreateDirDataIfNotExists $KeepBackupOfHistoricFiles
+  $BarWidth $CreateDirDataIfNotExists $KeepBackupOfHistoricFiles $ShowMap
   $NbOfLinesParsed $NbOfLinesDropped $NbOfLinesCorrupted $NbOfLinesComment $NbOfLinesBlank $NbOfOldLines $NbOfNewLines
   $NbOfLinesShowsteps $NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile $ArchiveLogRecords
   $ShowDropped $ShowCorrupted $ShowUnknownOrigin $ShowDirectOrigin $ShowLinksToWhoIs
@@ -185,56 +185,35 @@ use vars qw/
   $DecodeUA $DecodePunycode
   /;
 (
-	$DebugMessages,
-	$AllowToUpdateStatsFromBrowser,
-	$EnableLockForUpdate,
-	$DNSLookup,
-	$DynamicDNSLookup,
-	$AllowAccessFromWebToAuthenticatedUsersOnly,
-	$BarWidth,
-	$CreateDirDataIfNotExists,
-	$KeepBackupOfHistoricFiles,
-	$NbOfLinesParsed,
-	$NbOfLinesDropped,
-	$NbOfLinesCorrupted,
-	$NbOfLinesComment,
-	$NbOfLinesBlank,
-	$NbOfOldLines,
-	$NbOfNewLines,
-	$NbOfLinesShowsteps,
-	$NewLinePhase,
-	$NbOfLinesForCorruptedLog,
-	$PurgeLogFile,
-	$ArchiveLogRecords,
-	$ShowDropped,
-	$ShowCorrupted,
-	$ShowUnknownOrigin,
-	$ShowDirectOrigin,
-	$ShowLinksToWhoIs,
-	$ShowAuthenticatedUsers,
+	$DebugMessages,                       $AllowToUpdateStatsFromBrowser,
+	$EnableLockForUpdate,                 $DNSLookup,
+	$DynamicDNSLookup,                    $AllowAccessFromWebToAuthenticatedUsersOnly,
+	$BarWidth,                            $CreateDirDataIfNotExists,
+	$KeepBackupOfHistoricFiles,           $ShowMap,
+	$NbOfLinesParsed,                     $NbOfLinesDropped,
+	$NbOfLinesCorrupted,                  $NbOfLinesComment,
+	$NbOfLinesBlank,                      $NbOfOldLines,
+	$NbOfNewLines,                        $NbOfLinesShowsteps,
+	$NewLinePhase,                        $NbOfLinesForCorruptedLog,
+	$PurgeLogFile,                        $ArchiveLogRecords,
+	$ShowDropped,                         $ShowCorrupted,
+	$ShowUnknownOrigin,                   $ShowDirectOrigin,
+	$ShowLinksToWhoIs,                    $ShowAuthenticatedUsers,
 	$ShowFileSizesStats,
         $ShowRequestTimesStats,
-	$ShowScreenSizeStats,
-	$ShowSMTPErrorsStats,
-	$ShowEMailSenders,
-	$ShowEMailReceivers,
-	$ShowWormsStats,
-	$ShowClusterStats,
-	$IncludeInternalLinksInOriginSection,
-	$AuthenticatedUsersNotCaseSensitive,
-	$Expires,
-	$UpdateStats,
-	$MigrateStats,
-	$URLNotCaseSensitive,
-	$URLWithQuery,
-	$URLReferrerWithQuery,
-	$DecodeUA,
-	$DecodePunycode
+	$ShowScreenSizeStats,                 $ShowSMTPErrorsStats,
+	$ShowEMailSenders,                    $ShowEMailReceivers,
+	$ShowWormsStats,                      $ShowClusterStats,
+	$IncludeInternalLinksInOriginSection, $AuthenticatedUsersNotCaseSensitive,
+	$Expires,                             $UpdateStats,
+	$MigrateStats,                        $URLNotCaseSensitive,
+	$URLWithQuery,                        $URLReferrerWithQuery,
+	$DecodeUA,                            $DecodePunycode
   )
   = (
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
   );
 use vars qw/
   $DetailedReportsOnNewWindows
@@ -248,38 +227,22 @@ use vars qw/
   $AddDataArrayMonthStats $AddDataArrayShowDaysOfMonthStats $AddDataArrayShowDaysOfWeekStats $AddDataArrayShowHoursStats
   /;
 (
-	$DetailedReportsOnNewWindows,
-	$FirstDayOfWeek,
-	$KeyWordsNotSensitive,
-	$SaveDatabaseFilesWithPermissionsForEveryone,
-	$WarningMessages,
-	$ShowLinksOnUrl,
-	$UseFramesWhenCGI,
-	$ShowMenu,
-	$ShowSummary,
-	$ShowMonthStats,
-	$ShowDaysOfMonthStats,
-	$ShowRatiosStats,
-	$ShowDaysOfWeekStats,
-	$ShowHoursStats,
-	$ShowDomainsStats,
-	$ShowHostsStats,
-	$ShowRobotsStats,
-	$ShowSessionsStats,
-	$ShowPagesStats,
-	$ShowFileTypesStats,
-	$ShowDownloadsStats,
-	$ShowOSStats,
-	$ShowBrowsersStats,
-	$ShowOriginStats,
-	$ShowKeyphrasesStats,
-	$ShowKeywordsStats,
-	$ShowMiscStats,
-	$ShowHTTPErrorsStats,
-	$ShowHTTPErrorsPageDetail,
-	$AddDataArrayMonthStats,
-	$AddDataArrayShowDaysOfMonthStats,
-	$AddDataArrayShowDaysOfWeekStats,
+	$DetailedReportsOnNewWindows,      $FirstDayOfWeek,
+	$KeyWordsNotSensitive,             $SaveDatabaseFilesWithPermissionsForEveryone,
+	$WarningMessages,                  $ShowLinksOnUrl,
+	$UseFramesWhenCGI,                 $ShowMenu,
+	$ShowSummary,                      $ShowMonthStats,
+	$ShowDaysOfMonthStats,             $ShowRatiosStats,
+	$ShowDaysOfWeekStats,              $ShowHoursStats,
+	$ShowDomainsStats,                 $ShowHostsStats,
+	$ShowRobotsStats,                  $ShowSessionsStats,
+	$ShowPagesStats,                   $ShowFileTypesStats,
+	$ShowDownloadsStats,               $ShowOSStats,
+	$ShowBrowsersStats,                $ShowOriginStats,
+	$ShowKeyphrasesStats,              $ShowKeywordsStats,
+	$ShowMiscStats,                    $ShowHTTPErrorsStats,
+	$ShowHTTPErrorsPageDetail,         $AddDataArrayMonthStats,
+	$AddDataArrayShowDaysOfMonthStats, $AddDataArrayShowDaysOfWeekStats,
 	$AddDataArrayShowHoursStats
   )
   = (
@@ -303,8 +266,8 @@ use vars qw/
 use vars qw/
   $DirLock $DirCgi $DirConfig $DirData $DirIcons $DirImgs $FlagsType $DirLang $AWScript $ArchiveFileName
   $AllowAccessFromWebToFollowingIPAddresses $HTMLHeadSection $HTMLEndSection $LinksToWhoIs $LinksToIPWhoIs
-  $LogFile $LogType $LogFormat $LogSeparator $Logo $LogoLink $StyleSheet $StyleSheetMode $WrapperScript $SiteDomain
-  $UseHTTPSLinkForUrl $URLQuerySeparators $URLWithAnchor $ErrorMessages $ShowFlagLinks
+  $LogFile $LogType $LogFormat $LogSeparator $Logo $LogoLink $StyleSheet $StyleSheetMode $WrapperScript
+  $SiteDomain $UseHTTPSLinkForUrl $URLQuerySeparators $URLWithAnchor $ErrorMessages $ShowFlagLinks
   $AddLinkToExternalCGIWrapper $LogFormatJsonMap
   /;
 (
@@ -319,15 +282,14 @@ use vars qw/
 	$LogType,                                  $LogFormat,
 	$LogSeparator,                             $Logo,
 	$LogoLink,                                 $StyleSheet,
-	$StyleSheetMode,
-	$WrapperScript,                            $SiteDomain,
-	$UseHTTPSLinkForUrl,                       $URLQuerySeparators,
-	$URLWithAnchor,                            $ErrorMessages,
-	$ShowFlagLinks,                            $AddLinkToExternalCGIWrapper,
-    $LogFormatJsonMap
+	$StyleSheetMode,                           $WrapperScript,
+	$SiteDomain,                               $UseHTTPSLinkForUrl,
+	$URLQuerySeparators,                       $URLWithAnchor,
+	$ErrorMessages,                            $ShowFlagLinks,
+	$AddLinkToExternalCGIWrapper,              $LogFormatJsonMap
   )
   = (
-	'', '', '', '', '', '', '', '', '', '', '', '', '', '', '',
+	'', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '',
 	'', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''
   );
 use vars qw/
@@ -347,8 +309,8 @@ use vars qw/
 	$color_v
   )
   = (
-	'', '', '', '', '', '', '', '', '', '', '', '',
-	'', '', '', '', '', '', '', '', '', ''
+	'', '', '', '', '', '', '', '', '', '', '', '',	'', '', '', '',
+	'', '', '', '', '', ''
   );
 
 # ---------- Init arrays --------
@@ -1110,6 +1072,7 @@ sub renderJavascript {
 let dirIcons = '$DirIcons';
 let dirImgs = '$DirImgs';
 let flags = '$FlagsType';
+let showMap = $ShowMap;
 
 document.addEventListener("DOMContentLoaded", (d) => {
 
@@ -1170,61 +1133,64 @@ document.addEventListener("DOMContentLoaded", (d) => {
 		}
   });
 
-	let worldmap = document.getElementById('worldmap');
+  if(showMap === 1){
 
-	fetch( dirImgs + '/BlankMap-World.svg').then(response=>response.text()).then(data=>{ 
-	
-		worldmap.innerHTML = data;
-	
-		let realMap = worldmap.querySelector('svg');
-		realMap.setAttribute('width', '100%');
-		realMap.setAttribute('height', '100%');
-		realMap.setAttribute('viewBox', '300 20 2300 1170');
+		let worldmap = document.getElementById('worldmap');
 
-		let domainsTable = document.querySelector('.domains-table');
+		fetch( dirImgs + '/BlankMap-World.svg').then(response=>response.text()).then(data=>{ 
 
-		[...domainsTable.querySelectorAll('.flag')].forEach(el =>
-		{
-			let country =	realMap.querySelector('g#' + el.dataset.country);
-			
-			if(country !== null){
-				[...country.querySelectorAll('.landxx')].forEach(mapEl => {
-	    		mapEl.classList.add((el.classList.contains('highlighted')) ? 'highlighted-land' : 'lighted-land');
-  			});
+			worldmap.innerHTML = data;
 
-			} else {
-				country = realMap.querySelector('path#' + el.dataset.country);
+			let realMap = worldmap.querySelector('svg');
+			realMap.setAttribute('width', '100%');
+			realMap.setAttribute('height', '100%');
+			realMap.setAttribute('viewBox', '300 20 2300 1170');
+
+			let domainsTable = document.querySelector('.domains-table');
+
+			[...domainsTable.querySelectorAll('.flag')].forEach(el =>
+			{
+				let country =	realMap.querySelector('g#' + el.dataset.country);
 
 				if(country !== null){
-					country.classList.remove('landxx');
-    			country.classList.add((el.classList.contains('highlighted')) ? 'highlighted-land' : 'lighted-land');
-				}
-			}
-  	});
+					[...country.querySelectorAll('.landxx')].forEach(mapEl => {
+	    			mapEl.classList.add((el.classList.contains('highlighted')) ? 'highlighted-land' : 'lighted-land');
+  				});
 
-  	[...document.querySelectorAll('.domains-table tbody tr.country')].forEach(el => {
-    		
-    	let country =	realMap.querySelector('g#' + el.dataset.country);
-
-    	el.addEventListener("mouseover", (e) =>
-    	{
-				if(country !== null) {
-					[...country.querySelectorAll('.landxx')].forEach(land => { land.classList.add('zoomed-land'); });
 				} else {
 					country = realMap.querySelector('path#' + el.dataset.country);
+
 					if(country !== null){
-    				country.classList.add('zoomed-land');
+						country.classList.remove('landxx');
+    				country.classList.add((el.classList.contains('highlighted')) ? 'highlighted-land' : 'lighted-land');
 					}
 				}
-    	});
+  		});
 
-    	el.addEventListener("mouseout", (e) =>
-    	{
-					[...realMap.querySelectorAll('.landxx')].forEach(land => { land.classList.remove('zoomed-land'); });
-					[...realMap.querySelectorAll('path')].forEach(land => { land.classList.remove('zoomed-land'); });
+  		[...document.querySelectorAll('.domains-table tbody tr.country')].forEach(el => {
+
+    		let country =	realMap.querySelector('g#' + el.dataset.country);
+
+    		el.addEventListener("mouseover", (e) =>
+    		{
+					if(country !== null) {
+						[...country.querySelectorAll('.landxx')].forEach(land => { land.classList.add('zoomed-land'); });
+					} else {
+						country = realMap.querySelector('path#' + el.dataset.country);
+						if(country !== null){
+    					country.classList.add('zoomed-land');
+						}
+					}
+    		});
+
+    		el.addEventListener("mouseout", (e) =>
+    		{
+						[...realMap.querySelectorAll('.landxx')].forEach(land => { land.classList.remove('zoomed-land'); });
+						[...realMap.querySelectorAll('path')].forEach(land => { land.classList.remove('zoomed-land'); });
+    		});
     	});
-    });
- 	});
+ 		});
+ 	}
 });
 </script>
 EOF
@@ -2256,9 +2222,13 @@ sub Parse_Config {
 			next;
 		}
 
-
 		if ( $param =~ /^FlagsType/ ) {
 			$FlagsType = ( $value eq 'utf8' ) ? 'utf8' : 'png';
+			next;
+		}
+
+		if ( $param =~ /^ShowMap/ ) {
+			$ShowMap = ( $value eq '1' ) ? 1 : 0;
 			next;
 		}
 
@@ -3113,7 +3083,8 @@ sub Check_Config {
 	if ( $AddDataArrayShowDaysOfWeekStats !~ /[01]/ )  { $AddDataArrayShowDaysOfWeekStats  = 1;	}
 	if ( $AddDataArrayShowHoursStats !~ /[01]/ )       { $AddDataArrayShowHoursStats       = 1;	}
 	if ( $FlagsType !~ /image|utf8/ )                  { $FlagsType                        = 'image';	}
-	
+	if ( $ShowMap !~ /[01]/ )                          { $ShowMap                          = 1;	}
+
 	my @maxnboflist = (
 		'Domain',           'HostsShown',
 		'LoginShown',       'RobotShown',
