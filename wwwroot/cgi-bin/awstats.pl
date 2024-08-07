@@ -301,7 +301,7 @@ use vars qw/
   )
   = ( 2, 2, 0, 2, 2, 2, 2, 2, 2 );
 use vars qw/
-  $DirLock $DirCgi $DirConfig $DirData $DirIcons $DirImgs $DirLang $AWScript $ArchiveFileName
+  $DirLock $DirCgi $DirConfig $DirData $DirIcons $DirImgs $FlagsType $DirLang $AWScript $ArchiveFileName
   $AllowAccessFromWebToFollowingIPAddresses $HTMLHeadSection $HTMLEndSection $LinksToWhoIs $LinksToIPWhoIs
   $LogFile $LogType $LogFormat $LogSeparator $Logo $LogoLink $StyleSheet $StyleSheetMode $WrapperScript $SiteDomain
   $UseHTTPSLinkForUrl $URLQuerySeparators $URLWithAnchor $ErrorMessages $ShowFlagLinks
@@ -311,7 +311,7 @@ use vars qw/
 	$DirLock,                                  $DirCgi,
 	$DirConfig,                                $DirData,
 	$DirIcons,																 $DirImgs,
-	$DirLang,
+	$FlagsType, 															 $DirLang,
 	$AWScript,                                 $ArchiveFileName,
 	$AllowAccessFromWebToFollowingIPAddresses, $HTMLHeadSection,
 	$HTMLEndSection,                           $LinksToWhoIs,
@@ -1107,7 +1107,9 @@ sub renderJavascript {
 	my $js =  <<EOF;
 <script>
 
+let dirIcons = '$DirIcons';
 let dirImgs = '$DirImgs';
+let flags = '$FlagsType';
 
 document.addEventListener("DOMContentLoaded", (d) => {
 
@@ -1157,11 +1159,15 @@ document.addEventListener("DOMContentLoaded", (d) => {
   });
 
 	[...document.querySelectorAll('.flag')].forEach(el => {
+		if(flags === 'utf8'){
    		el.textContent = el.dataset.country
    				.split('')
    				.map(letter => letter.charCodeAt(0) % 32 + 0x1F1E5)
    				.map(emojiCode => String.fromCodePoint(emojiCode))
    				.join('');
+		} else {
+			el.innerHTML = '<img src="' + dirIcons + '/flags/' + el.dataset.country + '.png" style="width:16px;height:12px;vertical-align: text-top;" />';
+		}
   });
 
 	let worldmap = document.getElementById('worldmap');
@@ -2250,6 +2256,12 @@ sub Parse_Config {
 			next;
 		}
 
+
+		if ( $param =~ /^FlagsType/ ) {
+			$FlagsType = ( $value eq 'utf8' ) ? 'utf8' : 'png';
+			next;
+		}
+
 		if ( $param =~ /^SiteDomain/ ) {
 
 			# No regex test as SiteDomain is always exact value
@@ -3100,6 +3112,7 @@ sub Check_Config {
 	if ( $AddDataArrayShowDaysOfMonthStats !~ /[01]/ ) { $AddDataArrayShowDaysOfMonthStats = 1; }
 	if ( $AddDataArrayShowDaysOfWeekStats !~ /[01]/ )  { $AddDataArrayShowDaysOfWeekStats  = 1;	}
 	if ( $AddDataArrayShowHoursStats !~ /[01]/ )       { $AddDataArrayShowHoursStats       = 1;	}
+	if ( $FlagsType !~ /image|utf8/ )                  { $FlagsType                        = 'image';	}
 	
 	my @maxnboflist = (
 		'Domain',           'HostsShown',
