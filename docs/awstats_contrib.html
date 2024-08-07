@@ -227,6 +227,7 @@ will reduce the speed of AWStats processing.<br><br><span style="font-weight: bo
 <br>Note: You must choose between using this plugin&nbsp;or the
 GeoIPfree plugin&nbsp;(need Perl Geo::IPfree module, database is free
 but not up to date).
+<br>Free databases can be found here : <a href = "https://mailfud.org/geoip-legacy/">https://mailfud.org/geoip-legacy/</a>
 <br>Example <span style="font-style: italic;">LoadPlugin="geoip GEOIP_STANDARD /usr/local/geoip.dat /usr/local/geoip_override.txt"
 
 </span><br>Plugin provided with AWStats (5.2+)
@@ -236,7 +237,9 @@ but not up to date).
 <br><span style="font-style: italic;">Parameters:</span> [GEOIP_STANDARD | GEOIP_MEMORY_CACHE] [/pathto/GeoIPCity.dat] &lt;/pathto/override.txt&gt;<br><span style="font-style: italic;">Description: </span>This plugin adds a chart of hits by cities (with country and regions&nbsp;informations for major countries).
 <br>
 By enabling this plugin, you will see a new link called 'Cities' on 
-reports menu.<br>Example <span style="font-style: italic;">LoadPlugin="geoip_city_maxmind GEOIP_STANDARD /usr/local/geoip.dat /usr/local/GeoIPCity_override.txt"
+reports menu.
+<br>Free databases can be found here : <a href = "https://mailfud.org/geoip-legacy/">https://mailfud.org/geoip-legacy/</a>
+<br>Example <span style="font-style: italic;">LoadPlugin="geoip_city_maxmind GEOIP_STANDARD /usr/local/geoip.dat /usr/local/GeoIPCity_override.txt"
 
 </span><br>Plugin provided with AWStats (6.2+)
 
@@ -247,7 +250,9 @@ registered. This plugin can display some ISP information if included in
 the database. You can also provide a link that will be used to lookup
 additional registration data. Put the link at the end of the parameter
 string and the report page will include the link with the full AS
-number at the end.<br>Example <span style="font-style: italic;">LoadPlugin="geoip_asn_maxmind
+number at the end.
+<br>Free databases can be found here : <a href = "https://mailfud.org/geoip-legacy/">https://mailfud.org/geoip-legacy/</a>
+<br>Example <span style="font-style: italic;">LoadPlugin="geoip_asn_maxmind
 GEOIP_STANDARD /usr/local/geoip.dat /usr/local/GeoIPASN_override.txt
 http://enc.com.au/itools/aut-num.php?autnum="
 </span><br>Plugin provided with AWStats (6.9+)
@@ -268,6 +273,7 @@ supported).
 <br>By enabling this plugin, you will see a new link called 'ISP' on reports menu. For
 the moment this link works only when AWStats reports are build as CGI (static built not yet
 supported).
+<br>Free databases can be found here : <a href = "https://mailfud.org/geoip-legacy/">https://mailfud.org/geoip-legacy/</a>
 <br>Example <span style="font-style: italic;">LoadPlugin="geoip_isp_maxmind GEOIP_STANDARD /usr/local/GeoIPISP.dat </span><span style="font-style: italic;">/usr/local/geoip_override.txt"</span><br>Plugin provided with AWStats (6.3+)
 
 <br><br><span style="font-weight: bold;">GeoIP_Org_Maxmind
@@ -276,6 +282,7 @@ supported).
 <br>By enabling this plugin, you will see a new link called 'Organizations' on reports menu. For
 the moment this link works only when AWStats reports are build as CGI (static built not yet
 supported).
+<br>Free databases can be found here : <a href = "https://mailfud.org/geoip-legacy/">https://mailfud.org/geoip-legacy/</a>
 <br>Example <span style="font-style: italic;">LoadPlugin="geoip_org_maxmind GEOIP_STANDARD /usr/local/GeoIPOrg.dat </span><span style="font-style: italic;">/usr/local/geoip_override.txt"</span><br>Plugin provided with AWStats (6.3+)
 
 <br><br>
