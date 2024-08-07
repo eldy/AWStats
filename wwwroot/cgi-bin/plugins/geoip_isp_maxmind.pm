@@ -210,13 +210,19 @@ sub AddHTMLGraph_geoip_isp_maxmind {
 # UNIQUE: NO (Several plugins using this function can be loaded)
 # Function called to add additionnal columns to the Hosts report.
 # This function is called when building rows of the report (One call for each
-# row). So it allows you to add a column in report, for example with code :
-#   print "<TD>This is a new cell for $param</TD>";
+# row). So it allows you to add a column in report.
+# The returned string is the content of the cell, the cell is build by AWStats.pl
+# return code example: ### return "This is a new content for $param";
+# 
 # Parameters: Host name or ip
 #-----------------------------------------------------------------------------
 sub ShowInfoHost_geoip_isp_maxmind {
     my $param="$_[0]";
+    my $noRes = $Message[56];
+
 	# <-----
+	if(!$param){ return $noRes; }
+
 	if ($param eq '__title__') {
     	my $NewLinkParams=${QueryString};
     	$NewLinkParams =~ s/(^|&|&amp;)update(=\w*|$)//i;
@@ -233,75 +239,46 @@ sub ShowInfoHost_geoip_isp_maxmind {
     	$NewLinkParams =~ s/^&amp;//; $NewLinkParams =~ s/&amp;$//;
     	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 
-		print "<th width=\"80\">";
-        print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=plugin_$PluginName"):"$StaticLinks.plugin_$PluginName.$StaticExt")."\"$NewLinkTarget>GeoIP<br />ISP</a>";
-        print "</th>";
+        return "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=plugin_$PluginName"):"$StaticLinks.plugin_$PluginName.$StaticExt")."\"$NewLinkTarget>GeoIP ISP</a>";
 	}
-	elsif ($param) {
-        my $ip=0;
-		my $key;
-		if ($param =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {	# IPv4 address
-		    $ip=4;
-			$key=$param;
-		}
-		elsif ($param =~ /^[0-9A-F]*:/i) {						# IPv6 address
-		    $ip=6;
-			$key=$param;
-		}
-		print "<td>";
-		if ($key && $ip==4) {
-        	my $isp = TmpLookup_geoip_isp_maxmind($param);
-        	if (!$isp && $type eq 'geoippureperl')
-			{
-        		# Function isp_by_addr does not exists in PurePerl but isp_by_name do same
-        		$isp=$geoip_isp_maxmind->isp_by_name($param) if $geoip_isp_maxmind;
-        	}
-        	elsif (!$isp)
-        	{
-        		# Function isp_by_addr does not exits, so we use org_by_addr
-        		$isp=$geoip_isp_maxmind->org_by_addr($param) if $geoip_isp_maxmind;
-        	}
-        	if ($Debug) { debug("  Plugin $PluginName: GetIspByIp for $param: [$isp]",5); }
-		    if ($isp) {
-		        if (length($isp) <= $MAXLENGTH) {
-		            print "$isp";
-		        }
-		        else {
-		            print substr($isp,0,$MAXLENGTH).'...';
-		        }
-		    }
-		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
-		}
-		if ($key && $ip==6) {
-		    print "<span style=\"color: #$color_other\">$Message[0]</span>";
-		}
-		if (! $key) {
-        	my $isp = TmpLookup_geoip_isp_maxmind($param);
-        	if (!$isp && $type eq 'geoippureperl')
-			{
-        		$isp=$geoip_isp_maxmind->isp_by_name($param) if $geoip_isp_maxmind;
-        	}
-        	elsif (!$isp)
-        	{
-        		$isp=$geoip_isp_maxmind->isp_by_name($param) if $geoip_isp_maxmind;
-        	}
-        	if ($Debug) { debug("  Plugin $PluginName: GetIspByHostname for $param: [$isp]",5); }
-		    if ($isp) {
-		        if (length($isp) <= $MAXLENGTH) {
-		            print "$isp";
-		        }
-		        else {
-		            print substr($isp,0,$MAXLENGTH).'...';
-		        }
-		    }
-		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
-		}
-		print "</td>";
+
+	if ($param =~ /^[0-9A-F]*:/i) { return $noRes; } # IPv6 address
+
+	my $isp = TmpLookup_geoip_isp_maxmind($param);
+
+	if ($param =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/)
+	{ # IPv4
+        if (!$isp && $type eq 'geoippureperl')
+		{
+        	# Function isp_by_addr does not exists in PurePerl but isp_by_name do same
+        	$isp=$geoip_isp_maxmind->isp_by_name($param) if $geoip_isp_maxmind;
+        }
+        elsif (!$isp)
+        {
+        	# Function isp_by_addr does not exits, so we use org_by_addr
+        	$isp=$geoip_isp_maxmind->org_by_addr($param) if $geoip_isp_maxmind;
+        }
+        if ($Debug) { debug("  Plugin $PluginName: GetIspByIp for $param: [$isp]",5); }
+		
 	}
-	else {
-		print "<td>&nbsp;</td>";
+	else
+	{ #hostname
+   		if (!$isp && $type eq 'geoippureperl')
+		{
+   			$isp=$geoip_isp_maxmind->isp_by_name($param) if $geoip_isp_maxmind;
+   		}
+   		elsif (!$isp)
+   		{
+	   		$isp=$geoip_isp_maxmind->isp_by_name($param) if $geoip_isp_maxmind;
+	   	}
+	   	if ($Debug) { debug("  Plugin $PluginName: GetIspByHostname for $param: [$isp]",5); }
+    }
+    
+    if ($isp) {
+	    return ((length($isp) <= $MAXLENGTH) ? "$isp" : substr($isp,0,$MAXLENGTH).'...');
 	}
-	return 1;
+
+	return $noRes;
 	# ----->
 }
 

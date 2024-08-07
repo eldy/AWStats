@@ -121,7 +121,11 @@ sub GetCountryCodeByName_geoip2_country {
 #-----------------------------------------------------------------------------
 sub ShowInfoHost_geoip2_country {
     my $param="$_[0]";
-	# <-----
+    my $noRes = $Message[56];
+
+    # <-----
+    if(!$param){ return $noRes; }
+
 	if ($param eq '__title__') {
     	my $NewLinkParams=${QueryString};
     	$NewLinkParams =~ s/(^|&)update(=\w*|$)//i;
@@ -137,24 +141,16 @@ sub ShowInfoHost_geoip2_country {
     	$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
     	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 
-		print "<th width=\"80\">";
-        print "<a href=\"#countries\">GeoIP2<br />Country</a>";
-        print "</th>";
-	}
-	elsif ($param) {
-		print "<td>";
-		my $res = Lookup_geoip2_country($param);
-		if ($res) {
-				$res = lc($res);
-				print $DomainsHashIDLib{$res}?$DomainsHashIDLib{$res}:"<span style=\"color: #$color_other\">$Message[0]</span>";
-		}
-		else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
-		print "</td>";
-	}
-	else {
-		print "<td>&nbsp;</td>";
-	}
-	return 1;
+        return "<a href=\"#countries\">GeoIP2 Country</a>";
+    }
+
+    my $res = Lookup_geoip2_country($param);
+    if ($res) {
+	    $res = lc($res);
+	    return ($DomainsHashIDLib{$res} ? $DomainsHashIDLib{$res} : $noRes);
+    }
+
+    return $noRes;
 	# ----->
 }
 

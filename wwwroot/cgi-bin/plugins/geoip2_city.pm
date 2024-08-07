@@ -221,13 +221,19 @@ sub AddHTMLGraph_geoip2_city {
 # UNIQUE: NO (Several plugins using this function can be loaded)
 # Function called to add additionnal columns to the Hosts report.
 # This function is called when building rows of the report (One call for each
-# row). So it allows you to add a column in report, for example with code :
-#   print "<TD>This is a new cell for $param</TD>";
+# row). So it allows you to add a column in report.
+# The returned string is the content of the cell, the cell is build by AWStats.pl
+# return code example: ### return "This is a new content for $param";
+# 
 # Parameters: Host name or ip
 #-----------------------------------------------------------------------------
 sub ShowInfoHost_geoip2_city {
     my $param="$_[0]";
+    my $noRes = $Message[56];
+
 	# <-----
+	if(!$param){ return $noRes; }
+
 	if ($param eq '__title__')
 	{
     	my $NewLinkParams=${QueryString};
@@ -245,28 +251,20 @@ sub ShowInfoHost_geoip2_city {
     	$NewLinkParams =~ s/^&amp;//; $NewLinkParams =~ s/&amp;$//;
     	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 
-#		print "<th width=\"80\">";
 #        print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=plugin_geoip2_city&amp;suboutput=country"):"$PROG$StaticLinks.plugin_geoip2_city.country.$StaticExt")."\"$NewLinkTarget>GeoIP2<br/>Country</a>";
-#        print "</th>";
-		print "<th width=\"80\">";
-        print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=plugin_$PluginName"):"$StaticLinks.plugin_$PluginName.$StaticExt")."\"$NewLinkTarget>GeoIP2<br/>City</a>";
-        print "</th>";
+        return "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=plugin_$PluginName"):"$StaticLinks.plugin_$PluginName.$StaticExt")."\"$NewLinkTarget>GeoIP2 City</a>";
 	}
-	elsif ($param)
-	{
-		my ($country, $city, $subdivision) = Lookup_geoip2_city($param);
-#		print "<td>";
+
+	my ($country, $city, $subdivision) = Lookup_geoip2_city($param);
 #		if ($country) { print $DomainsHashIDLib{$country}?$DomainsHashIDLib{$country}:"<span style=\"color: #$color_other\">$Message[0]</span>"; }
 #		else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
-#		print "</td>";
-		print "<td>";
-		if ($city) { print EncodeToPageCode($city); }
-		else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
-		print "</td>";
+
+	if ($city)
+	{
+		return EncodeToPageCode($city);
 	}
-	else
-	{ print "<td>&nbsp;</td>"; }
-	return 1;
+	
+	return $noRes;
 	# ----->
 }
 

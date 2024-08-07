@@ -353,13 +353,19 @@ sub GetCountryCodeByName_geoip_region_maxmind {
 # UNIQUE: NO (Several plugins using this function can be loaded)
 # Function called to add additionnal columns to the Hosts report.
 # This function is called when building rows of the report (One call for each
-# row). So it allows you to add a column in report, for example with code :
-#   print "<TD>This is a new cell for $param</TD>";
+# row). So it allows you to add a column in report.
+# The returned string is the content of the cell, the cell is build by AWStats.pl
+# return code example: ### return "This is a new content for $param";
+# 
 # Parameters: Host name or ip
 #-----------------------------------------------------------------------------
 sub ShowInfoHost_geoip_region_maxmind {
     my $param="$_[0]";
+    my $noRes = $Message[56];
+
 	# <-----
+	if(!$param){ return $noRes; }
+
 	if ($param eq '__title__') {
     	my $NewLinkParams=${QueryString};
     	$NewLinkParams =~ s/(^|&|&amp;)update(=\w*|$)//i;
@@ -376,91 +382,60 @@ sub ShowInfoHost_geoip_region_maxmind {
     	$NewLinkParams =~ s/^&amp;//; $NewLinkParams =~ s/&amp;$//;
     	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 
-		print "<th width=\"80\">";
-        print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=plugin_$PluginName"):"$StaticLinks.plugin_$PluginName.$StaticExt")."\"$NewLinkTarget>GeoIP<br />Region</a>";
-        print "</th>";
+        return "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=plugin_$PluginName"):"$StaticLinks.plugin_$PluginName.$StaticExt")."\"$NewLinkTarget>GeoIP Region</a>";
 	}
-	elsif ($param) {
-		# try loading our override file if we haven't yet
-		if (!$LoadedOverride){&LoadOverrideFile_geoip_region_maxmind();}
-        my $ip=0;
-		my $key;
-		if ($param =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {	# IPv4 address
-			$ip=4;
-			$key=$param;
-		}
-		elsif ($param =~ /^[0-9A-F]*:/i) {						# IPv6 address
-			$ip=6;
-			$key=$param;
-		}
-		print "<td>";
-		if ($key && $ip==4) {
-        	my ($res1,$res2,$countryregion)=();
-        	my @res = TmpLookup_geoip_region_maxmind($param);
-	        if (@res){
-	        	$res1 = $res[0];
-	        	$res2 = $res[1];
-	        }else{
-        		($res1,$res2)=$geoip_region_maxmind->region_by_name($param) if $geoip_region_maxmind;
-	        }
-        	if ($Debug) { debug("  Plugin $PluginName: GetRegionByIp for $param: [${res1}_${res2}]",5); }
-            if (! $PluginsLoaded{'init'}{'geoip'}) {
-                # Show country
-                if ($res1 =~ /\w\w/) { print $DomainsHashIDLib{lc($res1)}||uc($res1); }
-                else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
-                # Show region
-                if ($res1 =~ /\w\w/ && $res2 =~ /\w\w/) {
-                    print "&nbsp;(";
-                    print $region{lc($res1)}{uc($res2)};
-                    print ")";
-                }
-            }
-            else {
-            	# Show region
-                if ($res1 =~ /\w\w/ && $res2 =~ /\w\w/) {
-                    print $region{lc($res1)}{uc($res2)};
-                }
-                else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
-            }
-		}
-		if ($key && $ip==6) {
-            print "<span style=\"color: #$color_other\">$Message[0]</span>";
+
+	if ($param =~ /^[0-9A-F]*:/i) { return $noRes; } # IPv6 address
+
+	my ($res1,$res2,$countryregion)=();
+    my @res = TmpLookup_geoip_region_maxmind($param);
+
+	# try loading our override file if we haven't yet
+	if (!$LoadedOverride){&LoadOverrideFile_geoip_region_maxmind();}
+    
+	if ($param =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/)
+	{	# IPv4 address
+	    if (@res){
+	      	$res1 = $res[0];
+	       	$res2 = $res[1];
+	    }else{
+       		($res1,$res2)=$geoip_region_maxmind->region_by_name($param) if $geoip_region_maxmind;
+	    }
+    	if ($Debug) { debug("  Plugin $PluginName: GetRegionByIp for $param: [${res1}_${res2}]",5); }
+	}
+	else
+	{
+	    if (@res){
+	       	$res1 = $res[0];
+	       	$res2 = $res[1];
+	    }else{
+       		($res1,$res2)=$geoip_region_maxmind->region_by_name($param) if $geoip_region_maxmind;
+	    }
+       	if ($Debug) { debug("  Plugin $PluginName: GetRegionByName for $param: [${res1}_${res2}]",5); }
+    }
+
+	if (! $PluginsLoaded{'init'}{'geoip'})
+	{ # Show country
+		my $html = '';
+        if ($res1 =~ /\w\w/)
+        {
+        	$html .= $DomainsHashIDLib{lc($res1)}||uc($res1);
         }
-		if (! $key) {
-        	my ($res1,$res2,$countryregion)=();
-        	my @res = TmpLookup_geoip_region_maxmind($param);
-	        if (@res){
-	        	$res1 = $res[0];
-	        	$res2 = $res[1];
-	        }else{
-        		($res1,$res2)=$geoip_region_maxmind->region_by_name($param) if $geoip_region_maxmind;
-	        }
-        	if ($Debug) { debug("  Plugin $PluginName: GetRegionByName for $param: [${res1}_${res2}]",5); }
-            if (! $PluginsLoaded{'init'}{'geoip'}) {
-                # Show country
-                if ($res1 =~ /\w\w/) { print $DomainsHashIDLib{lc($res1)}||uc($res1); }
-                else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
-                # Show region
-                if ($res1 =~ /\w\w/ && $res2 =~ /\w\w/) {
-                    print "&nbsp;(";
-                    print $region{lc($res1)}{uc($res2)};
-                    print ")";
-                }
-            }
-            else {
-                # Show region
-                if ($res1 =~ /\w\w/ && $res2 =~ /\w\w/) {
-                    print $region{lc($res1)}{uc($res2)};
-                }
-                else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
-            }
-		}
-		print "</td>";
-	}
-	else {
-		print "<td>&nbsp;</td>";
-	}
-	return 1;
+
+        # Show region
+        if ($res1 =~ /\w\w/ && $res2 =~ /\w\w/) {
+            $html .= "&nbsp;(" . $region{lc($res1)}{uc($res2)} . ")";
+        }
+
+        return $html;
+    }
+    
+    # Show region
+    if ($res1 =~ /\w\w/ && $res2 =~ /\w\w/) {
+        return $region{lc($res1)}{uc($res2)};
+    }
+    
+    return $noRes;
 	# ----->
 }
 

@@ -96,32 +96,34 @@ EOF
 #-----------------------------------------------------------------------------
 sub ShowInfoHost_hostinfo {
     my $param="$_[0]";
+    my $noRes = $Message[56];
+    my $keyforwhois;
+
 	# <-----
+	if(!$param){ return $noRes; }
+
 	if ($param eq '__title__') {
-		print "<th width=\"40\">$Message[114]</th>";	
+		return $Message[114];	
 	}
-	elsif ($param) {
-		my $keyforwhois;
-		if ($param =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {	# IPv4 address
-			$keyforwhois=$param;
-		}
-		elsif ($param =~ /^[0-9A-F]*:/i) {						# IPv6 address
-			$keyforwhois=$param;
-		}
-		else {	# Hostname
-			$param =~ /([-\w]+\.[-\w]+\.(?:au|uk|jp|nz))$/ or $param =~ /([-\w]+\.[-\w]+)$/;
-			$keyforwhois=$1;
-		}
-		print "<td>";
-#		if ($keyforwhois) { print "<a href=\"javascript:neww('$keyforwhois','".md5_hex("${keyforwhois}XXX")."')\">?</a>"; }
-		if ($keyforwhois) { print "<a href=\"javascript:neww('$keyforwhois','${keyforwhois}XXX')\">?</a>"; }
-		else { print "&nbsp;" }
-		print "</td>";
+	
+	if ($param =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {	# IPv4 address
+		$keyforwhois=$param;
 	}
-	else {
-		print "<td>&nbsp;</td>";
+	elsif ($param =~ /^[0-9A-F]*:/i)
+	{ # IPv6 address
+		$keyforwhois=$param;
 	}
-	return 1;
+	else
+	{ # Hostname
+		$param =~ /([-\w]+\.[-\w]+\.(?:au|uk|jp|nz))$/ or $param =~ /([-\w]+\.[-\w]+)$/;
+		$keyforwhois=$1;
+	}
+
+	return (
+		($keyforwhois)
+		? '<a href="javascript:neww(\'' . $keyforwhois . '\', \'' . ${keyforwhois} . 'XXX\')">?</a>'
+		: $noRes
+	);
 	# ----->
 }
 
