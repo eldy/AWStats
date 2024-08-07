@@ -1080,11 +1080,6 @@ document.addEventListener("DOMContentLoaded", (d) => {
 
 	document.documentElement.style.setProperty("--scroll-padding", (headerHeight + 20) + "px");
 	
-	let worldmapAll = document.querySelector("#worldmap-wrapper.all")
-	if(worldmapAll){
-		worldmapAll.style.top = headerHeight + "px";
-	}
-	
 	[...document.querySelectorAll('.bar-table')].forEach(el => {
    		el.addEventListener("mouseenter", (e) => {
    			[...el.querySelectorAll('.bar')].forEach(bar => {
@@ -1134,6 +1129,11 @@ document.addEventListener("DOMContentLoaded", (d) => {
   });
 
   if(showMap === 1){
+
+  	let worldmapAll = document.querySelector("#worldmap-wrapper.all")
+		if(worldmapAll){
+			worldmapAll.style.top = headerHeight + "px";
+		}
 
 		let worldmap = document.getElementById('worldmap');
 
