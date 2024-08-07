@@ -1002,6 +1002,7 @@ li.dropdown { display: inline-block; }
 .summary-label { margin: 0 9px; }
 #summary-logs div[class^="bg-"], .currentday{ width: calc(var(--bar-width) * 1px); font-weight: 900 }
 div[class^="bg-"], th[class^="bg-"] { width: calc(var(--bar-width) * 1px) }
+th:not([class^="bg-"]):not(:first-child) { background-color: var(--neutral-color)}
 button, select, input { cursor: pointer; color: var(--light-color); background-color: var(--darker-color); border: none; }
 h1, section header {border-bottom: 6px solid var(--light-color); width: 100%; margin: 0; font-weight: 900; font-size: 1em; }
 .tooltip { visibility: hidden; opacity: 0; position: fixed; top: 0; left: 0; z-index: 1000; font-size: 0.9rem; font-weight: 600; text-align: left; width: 100%; background-color: var(--darker-color); color: white; padding: 6px;}
@@ -11119,9 +11120,9 @@ sub HTMLMainFileType{
 
 	foreach my $key (@keylist)
 	{
-		my $p_h = ($Totalh) ? int( $_filetypes_h{$key} / $Totalh * 1000 ) * .1 : 0;
-		my $p_k = ($Totalk) ? int( $_filetypes_k{$key} / $Totalk * 1000 ) * .1 : 0;
-		
+		my $p_h = ($Totalh) ? int( $_filetypes_h{$key} / $Totalh * 1000 ) * .1 : 1;
+		my $p_k = ($Totalk) ? int( $_filetypes_k{$key} / $Totalk * 1000 ) * .1 : 1;
+
 		$html .= '<tr>';
 		if ( $key eq 'Unknown' ) {
 			$html .= '<td><b>' . $Message[0] . '</b> <img src="'. $DirIcons . '/mime/unknown.png"/></td>';
@@ -11132,7 +11133,8 @@ sub HTMLMainFileType{
 		}
 
 		$html .= (( $ShowFileTypesStats =~ /H/i ) ? HTMLDataCellWithBar('h', $_filetypes_h{$key}, '<small>' . $p_h . '%</small> ' . Format_Number($_filetypes_h{$key}), $Totalh) : '' )
-		. (( $ShowFileTypesStats =~ /B/i ) ? HTMLDataCellWithBar('b', $_filetypes_k{$key},  '<small>' . $p_k . '%</small> ' . Format_Bytes($_filetypes_k{$key}), $Totalk) : '' );
+		. (( $ShowFileTypesStats =~ /B/i ) ? HTMLDataCellWithBar('b', $_filetypes_k{$key},  '<small>' . $p_k . '%</small> ' . Format_Bytes($_filetypes_k{$key}), $Totalk) : '' )
+		. (( $ShowFileTypesStats =~ /B/i ) ? HTMLDataCellWithBar('b', 0, Format_Bytes($_filetypes_k{$key} / $_filetypes_h{$key}), 200) : '' );
 
 		if ( $ShowFileTypesStats =~ /C/i )
 		{
@@ -13262,11 +13264,11 @@ sub HTMLDataTableHeader{
 
 	return '<thead><tr>'
 		. '<th class="title">' . $title . '</th>'
-		. ( ( $config =~ /U/i ) ? '<th class="bg-u" ' . Tooltip(2) . '>' . CleanXSS($Message[18]) . '</th>' : '' )
-		. ( ( $config =~ /V/i ) ? '<th class="bg-v" ' . Tooltip(1) . '>' . CleanXSS($Message[10]) . '</th>' : '' )
-		. ( ( $config =~ /P/i ) ? '<th class="bg-p" ' . Tooltip(3) . '>' . CleanXSS(ucfirst($Message[28])) . '</th>' : '' )
-		. ( ( $config =~ /H/i ) ? '<th class="bg-h" ' . Tooltip(4) . '>' . CleanXSS($Message[57]) . '</th>' : '' )
-		. ( ( $config =~ /B/i ) ? '<th class="bg-b" ' . Tooltip(5) . '>' . CleanXSS($Message[75]) . '</th>' : '' )
+		. ( ( $config =~ /U/i ) ? '<th class="bg-u">' . CleanXSS($Message[18]) . '</th>' : '' ) #tooltip 2
+		. ( ( $config =~ /V/i ) ? '<th class="bg-v">' . CleanXSS($Message[10]) . '</th>' : '' ) #tooltip 1
+		. ( ( $config =~ /P/i ) ? '<th class="bg-p">' . CleanXSS(ucfirst($Message[28])) . '</th>' : '' ) #tooltip 3
+		. ( ( $config =~ /H/i ) ? '<th class="bg-h">' . CleanXSS($Message[57]) . '</th>' : '' ) #tooltip 4
+		. ( ( $config =~ /B/i ) ? '<th class="bg-b">' . CleanXSS($Message[75]) . '</th>' : '' ) #tooltip 5
 		. ( ( $config =~ /L/i ) ? '<th>' . CleanXSS($Message[9]) . '</th>' : '' )
 		. ( ( $config =~ /C/i ) ? '<th>' . $Message[83] . '<br>' . $Message[100] . '</th><th>' . $Message[83] . '<br>' . $Message[101] . '</th><th>' . $Message[99] . '</th>' : '' )
 		. '</tr></thead>';
@@ -14514,10 +14516,10 @@ sub HTMLMainHosts{
 	}
 
 	$tableHeader .= '<thead><tr><th></th>'
-	. &HTMLShowHostInfo('__title__')
 	. (( $ShowHostsStats =~ /P/i ) ? '<th class="bg-p">' . ucfirst($Message[28]) . '</th>' : '') #tooltip3
 	. (( $ShowHostsStats =~ /H/i ) ? '<th class="bg-h">' . $Message[57] . '</th>' : '') #tt4
 	. (( $ShowHostsStats =~ /B/i ) ? '<th class="bg-b">' . $Message[75] . '</th>' : '')  #tt5
+	. &HTMLShowHostInfo('__title__')
 	. (( $ShowHostsStats =~ /L/i ) ? '<th>' . $Message[9] . '</th>' : '')
 	. '</tr></thead>';
 
@@ -14555,10 +14557,10 @@ sub HTMLMainHosts{
     }
 
 		$tableData .= '</td>'
-		. &HTMLShowHostInfo($key)
 		. (( $ShowHostsStats =~ /P/i ) ? HTMLDataCellWithBar('p', $_host_p{$key}, Format_Number($_host_p{$key}), $max_p) : '' )
 		. (( $ShowHostsStats =~ /H/i ) ? HTMLDataCellWithBar('h', $_host_h{$key}, Format_Number($_host_h{$key}), $max_h) : '' )
 		. (( $ShowHostsStats =~ /B/i ) ? HTMLDataCellWithBar('b', $_host_k{$key}, Format_Bytes($_host_k{$key}), $max_k) : '' )
+		. &HTMLShowHostInfo($key)
 		. (( $ShowHostsStats =~ /L/i ) ? '<td>' . (	$_host_l{$key} ? Format_Date( $_host_l{$key}, 1 )	: '-' ) . '</td>' : '')
 		. '</tr>';
 	}

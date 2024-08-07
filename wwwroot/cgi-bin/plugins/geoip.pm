@@ -145,6 +145,7 @@ sub GetCountryCodeByName_geoip {
 #-----------------------------------------------------------------------------
 sub ShowInfoHost_geoip {
     my $param="$_[0]";
+    my $html = '';
 	# <-----
 	if ($param eq '__title__') {
     	my $NewLinkParams=${QueryString};
@@ -161,9 +162,7 @@ sub ShowInfoHost_geoip {
     	$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
     	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 
-		print "<th width=\"80\">";
-        print "<a href=\"#countries\">GeoIP<br />Country</a>";
-        print "</th>";
+		$html .= '<th><a href="#countries">GeoIP<br />Country</a></th>';
 	}
 	elsif ($param) {
         my $ip=0;
@@ -176,30 +175,30 @@ sub ShowInfoHost_geoip {
 		    $ip=6;
 			$key=$param;
 		}
-		print "<td>";
+		$html .= '<td>';
 		if ($key && $ip==4) {
 			my $res = TmpLookup_geoip($param);
         	if (!$res){$res=lc($gi->country_code_by_addr($param)) if $gi;}
         	if ($Debug) { debug("  Plugin $PluginName: GetCountryByIp for $param: [$res]",5); }
-		    if ($res) { print $DomainsHashIDLib{$res}?$DomainsHashIDLib{$res}:"<span style=\"color: #$color_other\">$Message[0]</span>"; }
-		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
+		    if ($res) { $html .= $DomainsHashIDLib{$res}?$DomainsHashIDLib{$res}:'<span>' . $Message[0] . '</span>'; }
+		    else { $html .= '<span>' . $Message[0] . '</span>'; }
 		}
 		if ($key && $ip==6) {
-		    print "<span style=\"color: #$color_other\">$Message[0]</span>";
+		    $html .= '<span>' . $Message[0] . '</span>';
 		}
 		if (! $key) {
 			my $res = TmpLookup_geoip($param);
         	if (!$res){$res=lc($gi->country_code_by_name($param)) if $gi;}
         	if ($Debug) { debug("  Plugin $PluginName: GetCountryByHostname for $param: [$res]",5); }
-		    if ($res) { print $DomainsHashIDLib{$res}?$DomainsHashIDLib{$res}:"<span style=\"color: #$color_other\">$Message[0]</span>"; }
-		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
+		    if ($res) { $html .= $DomainsHashIDLib{$res}?$DomainsHashIDLib{$res}:'<span>' . $Message[0] . '</span>'; }
+		    else { $html .= '<span>' . $Message[0] . '</span>'; }
 		}
-		print "</td>";
+		$html .= '</td>';
 	}
 	else {
-		print "<td>&nbsp;</td>";
+		$html .= '<td></td>';
 	}
-	return 1;
+	return $html;
 	# ----->
 }
 

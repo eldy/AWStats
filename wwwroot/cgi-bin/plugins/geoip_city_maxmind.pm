@@ -4537,6 +4537,7 @@ sub GetCountryCodeByName_geoip_city_maxmind {
 #-----------------------------------------------------------------------------
 sub ShowInfoHost_geoip_city_maxmind {
     my $param="$_[0]";
+    my $html = '';
 	# <-----
 	if ($param eq '__title__')
 	{
@@ -4558,9 +4559,9 @@ sub ShowInfoHost_geoip_city_maxmind {
 #		print "<th width=\"80\">";
 #        print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=plugin_geoip_city_maxmind&amp;suboutput=country"):"$PROG$StaticLinks.plugin_geoip_city_maxmind.country.$StaticExt")."\"$NewLinkTarget>GeoIP<br/>Country</a>";
 #        print "</th>";
-		print "<th width=\"80\">";
-        print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=plugin_$PluginName"):"$StaticLinks.plugin_$PluginName.$StaticExt")."\"$NewLinkTarget>GeoIP<br/>City</a>";
-        print "</th>";
+		$html .= '<th>'
+		. '<a href="' . ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=plugin_$PluginName"):"$StaticLinks.plugin_$PluginName.$StaticExt") . '" $NewLinkTarget>GeoIP<br/>City</a>'
+		. '</th>';
 	}
 	elsif ($param)
 	{
@@ -4603,16 +4604,14 @@ sub ShowInfoHost_geoip_city_maxmind {
 #		    if ($country) { print $DomainsHashIDLib{$country}?$DomainsHashIDLib{$country}:"<span style=\"color: #$color_other\">$Message[0]</span>"; }
 #		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
 #		    print "</td>";
-			print "<td>";
-		    if ($city) { print EncodeToPageCode($city); }
-		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
-		    print "</td>";
+			$html .= '<td>';
+		    if ($city) { $html .= EncodeToPageCode($city); }
+		    else { $html .= '<span>' . $Message[0] . '</span>'; }
+		    $html .= '</td>';
 		}
 		if ($key && $ip==6) {
 			debug ("  Plugin $PluginName: IPv6 not supported by GeoIP: $key");
-			print "<td>";
-		    print "<span style=\"color: #$color_other\">$Message[0]</span>";
-			print "</td>";
+			$html .= '<td><span>' . $Message[0] . '</span></td>';
 		}
 		if (! $key) {
 	        my $country;
@@ -4642,15 +4641,15 @@ sub ShowInfoHost_geoip_city_maxmind {
 #		    if ($country) { print $DomainsHashIDLib{$country}?$DomainsHashIDLib{$country}:"<span style=\"color: #$color_other\">$Message[0]</span>"; }
 #		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
 #		    print "</td>";
-			print "<td>";
-		    if ($city) { print EncodeToPageCode($city); }
-		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
-			print "</td>";
+			$html .= '<td>';
+		    if ($city) { $html .= EncodeToPageCode($city); }
+		    else { $html .= '<span>' . $Message[0] . '</span>'; }
+			$html .= '</td>';
 		}
 	}
 	else
-	{ print "<td>&nbsp;</td>"; }
-	return 1;
+	{ $html .=  '<td></td>'; }
+	return $html;
 	# ----->
 }
 
