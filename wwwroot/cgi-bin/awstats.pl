@@ -963,9 +963,8 @@ th		{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-wi
 th.aws	{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; font-size: 13px; font-weight: bold; }
 td		{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; font: 0.9em verdana, arial, helvetica, sans-serif; text-align:center; color: #$color_text; }
 td.aws	{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; text-align:$dir; color: #$color_text; padding: 6px;}
-td.awsm	{ border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; border-bottom-width: 0px; font: 11px verdana, arial, helvetica, sans-serif; text-align:$dir; color: #$color_text; padding: 0px; }
+td.awsm	{ border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; border-bottom-width: 0px; font: 0.8em verdana, arial, helvetica, sans-serif; text-align:$dir; color: #$color_text; padding: 0px; }
 b { font-weight: bold; }
-.awsm a { font: 1.4em verdana, arial, helvetica, sans-serif; }
 a:link    { color: #$color_link; text-decoration: none; }
 a:visited { color: #$color_link; text-decoration: none; }
 a:hover   { color: #$color_hover; text-decoration: underline; }
