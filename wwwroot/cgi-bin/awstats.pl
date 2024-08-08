@@ -12567,121 +12567,6 @@ sub HTMLShowExtraSections{
 }
 
 #------------------------------------------------------------------------------
-# Function:     Prints the Robot details frame or static page
-# Parameters:   _
-# Input:        _
-# Output:       HTML
-# Return:       -
-#------------------------------------------------------------------------------
-sub HTMLShowRobots{
-	my $total_p = 0;
-	my $total_h = 0;
-	my $total_k = 0;
-	my $total_r = 0;
-	my $rest_p = 0;
-	my $rest_h = 0;
-	my $rest_k = 0;
-	my $rest_r = 0;
-	
-	print "<a name=\"robots\">&nbsp;</a>";
-	my $title = '';
-	if ( $HTMLOutput{'allrobots'} )  { $title .= "$Message[53]"; }
-	if ( $HTMLOutput{'lastrobots'} ) { $title .= "$Message[9]"; }
-	print &tab_head( "$title", 19, 0, 'robots' )
-	. '<table>'
-	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>"
-	. Format_Number(( scalar keys %_robot_h ))
-	. " $Message[51]</th>";
-	if ( $ShowRobotsStats =~ /H/i ) {
-		print
-		  "<th class=\"bg-h\" width=\"80\">$Message[57]</th>";
-	}
-	if ( $ShowRobotsStats =~ /B/i ) {
-		print
-"<th class=\"datasize color_k\" width=\"80\">$Message[75]</th>";
-	}
-	if ( $ShowRobotsStats =~ /L/i ) {
-		print "<th width=\"120\">$Message[9]</th>";
-	}
-	print "</tr>\n";
-	$total_p = $total_h = $total_k = $total_r = 0;
-	my $count = 0;
-	if ( $HTMLOutput{'allrobots'} ) {
-		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Robot'},
-			\%_robot_h, \%_robot_h );
-	}
-	if ( $HTMLOutput{'lastrobots'} ) {
-		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Robot'},
-			\%_robot_h, \%_robot_l );
-	}
-	foreach my $key (@keylist) {
-		print "<tr><td class=\"aws\">"
-		  . ( $RobotsHashIDLib{$key} ? $RobotsHashIDLib{$key} : $key )
-		  . "</td>";
-		if ( $ShowRobotsStats =~ /H/i ) {
-			print "<td>"
-			  . Format_Number(( $_robot_h{$key} - $_robot_r{$key} ))
-			  . ( $_robot_r{$key} ? "+$_robot_r{$key}" : "" ) . "</td>";
-		}
-		if ( $ShowRobotsStats =~ /B/i ) {
-			print "<td>" . Format_Bytes( $_robot_k{$key} ) . "</td>";
-		}
-		if ( $ShowRobotsStats =~ /L/i ) {
-			print "<td>"
-			  . (
-				$_robot_l{$key}
-				? Format_Date( $_robot_l{$key}, 1 )
-				: '-'
-			  )
-			  . "</td>";
-		}
-		print "</tr>\n";
-
-		#$total_p += $_robot_p{$key}||0;
-		$total_h += $_robot_h{$key};
-		$total_k += $_robot_k{$key} || 0;
-		$total_r += $_robot_r{$key} || 0;
-		$count++;
-	}
-
-	# For bots we need to count Totals
-	my $TotalPagesRobots =
-	  0;    #foreach (values %_robot_p) { $TotalPagesRobots+=$_; }
-	my $TotalHitsRobots = 0;
-	foreach ( values %_robot_h ) { $TotalHitsRobots += $_; }
-	my $TotalBytesRobots = 0;
-	foreach ( values %_robot_k ) { $TotalBytesRobots += $_; }
-	my $TotalRRobots = 0;
-	foreach ( values %_robot_r ) { $TotalRRobots += $_; }
-	$rest_p = 0;    #$rest_p=$TotalPagesRobots-$total_p;
-	$rest_h = $TotalHitsRobots - $total_h;
-	$rest_k = $TotalBytesRobots - $total_k;
-	$rest_r = $TotalRRobots - $total_r;
-
-	if ($Debug) {
-		debug(
-"Total real / shown : $TotalPagesRobots / $total_p - $TotalHitsRobots / $total_h - $TotalBytesRobots / $total_k",
-			2
-		);
-	}
-	if ( $rest_p > 0 || $rest_h > 0 || $rest_k > 0 || $rest_r > 0 )
-	{               # All other robots
-		print
-"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
-		if ( $ShowRobotsStats =~ /H/i ) { print "<td>".Format_Number($rest_h)."</td>"; }
-		if ( $ShowRobotsStats =~ /B/i ) {
-			print "<td>" . ( Format_Bytes($rest_k) ) . "</td>";
-		}
-		if ( $ShowRobotsStats =~ /L/i ) { print "<td>&nbsp;</td>"; }
-		print "</tr>\n";
-	}
-
-	print '</table>' . &tab_end("* $Message[156]" . ( $TotalRRobots ? " $Message[157]" : "" ) );
-
-	print &html_end(1);
-}
-
-#------------------------------------------------------------------------------
 # Function:     Prints the Login details frame or static page
 # Parameters:   _
 # Input:        _
@@ -14431,7 +14316,7 @@ sub HTMLMainLogins{
 # Parameters:   $NewLinkParams, $NewLinkTarget
 # Input:        -
 # Output:       -
-# Return:       string (html)
+# Return:       string
 #------------------------------------------------------------------------------
 sub HTMLMainRobots{
 	if ($Debug) { debug( "ShowRobotStats", 2 ); }
@@ -14439,7 +14324,7 @@ sub HTMLMainRobots{
 	my $NewLinkParams = shift;
 	my $NewLinkTarget = shift;
 	
-	my $title = $Message[53] . ' <small>('. $Message[77]. ' ' . $MaxNbOf{'RobotShown'} .')</small>';
+	my $title = $Message[53];
 	my $html = '';
 	my @links = ();
 
@@ -14468,7 +14353,17 @@ sub HTMLMainRobots{
 		. ( $TotalRRobots ? '<br>' . $Message[157] : '' )
 	}
  
-	&BuildKeyList( $MaxNbOf{'RobotShown'}, $MinHit{'Robot'}, \%_robot_h, \%_robot_h );
+	if ( $HTMLOutput{'allrobots'} )
+	{
+		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Robot'}, \%_robot_h, \%_robot_h );
+	}
+	elsif ( $HTMLOutput{'lastrobots'} ) {
+		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Robot'}, \%_robot_h, \%_robot_l ); 	
+	}
+	else {
+ 		$title .= ' <small>('. $Message[77]. ' ' . $MaxNbOf{'RobotShown'} .')</small>';
+ 		&BuildKeyList( $MaxNbOf{'RobotShown'}, $MinHit{'Robot'}, \%_robot_h, \%_robot_h );
+	}
 
 	# For bots we need to count Totals
 	# my $TotalPagesRobots = 0;    #foreach (values %_robot_p) { $TotalPagesRobots+=$_; }
@@ -20110,7 +20005,7 @@ if ( scalar keys %HTMLOutput ) {
 			&HTMLShowLogins();
 		}
 		if ( $HTMLOutput{'allrobots'} || $HTMLOutput{'lastrobots'} ) {
-			&HTMLShowRobots();
+			print &HTMLMainRobots() . html_end(1);
 		}
 		if ( $HTMLOutput{'urldetail'} || $HTMLOutput{'urlentry'} || $HTMLOutput{'urlexit'} )
 		{
