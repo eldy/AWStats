@@ -803,7 +803,7 @@ sub html_head {
 		}	else {
 
 			print (( $FrameName ne 'index' )
-				? '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">'
+				? '<!DOCTYPE html>'
 				: '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">'
 			);
 
@@ -833,7 +833,7 @@ sub html_head {
 			);
 		
 		}else {
-			print '<meta http-equiv="content-type" content="text/html; charset=' . ( $PageCode ? $PageCode : 'iso-8859-1' ) . '"' . $endtag;
+			print '<meta charset="' . ( $PageCode ? $PageCode : 'utf-8' ) . '"' . $endtag;
 		}
 
 		print (($Expires) ? '<meta http-equiv="expires" content="' . ( gmtime( $starttime + $Expires ) ) . '"' . $endtag : '');
@@ -865,7 +865,7 @@ sub html_head {
 		print '</head>';
 		
 		if ( $FrameName ne 'index' ) {
-			print '<body' . (( $FrameName eq 'mainleft' ) ? ' class="aws_bodyl"' : '') . '>';
+			print '<body>';
 			print '<div id="container">';
 		}
 	}
@@ -977,8 +977,8 @@ h1, section header {border-bottom: 6px solid var(--light-color); width: 100%; ma
 .multi-data-table.worldmap{ position: relative; }
 .data-table { border-spacing: 0; margin: auto; }
 .data-table tfoot { display: table-header-group }
-.data-table tbody tr { transition: background 0.2s ease-in, transform 0.2s ease-in }
-.data-table tbody tr:hover { font-weight: 900; background: var(--light-color); transform: scale(1.02) translateX(2px); }
+.data-table tbody tr { transition: background 0.3s ease-in }
+.data-table tbody tr:hover { font-weight: 900; background: var(--light-color); }
 .data-table th { font-weight: 900; padding-top: 2px; padding-bottom: 2px; }
 .data-table td { text-align: right; font-weight: 700; padding-top: 3px; padding-bottom: 3px; padding-left: 0; padding-right: 0; }
 .data-table td:first-child { padding-right: 4px }
@@ -990,8 +990,8 @@ h1, section header {border-bottom: 6px solid var(--light-color); width: 100%; ma
 .data-table tfoot .data-table-sum td { border-top: 1px solid rgba(192,192,192,0.2); }
 .data-table-sum { font-size : clamp(0.938rem, -3vw + 3rem, 1.125rem) }
 .data-table tbody .B { font-size: 0.9em; }
-.data-table tbody .KB { font-size: 0.9em; font-weight: 900; }
-.data-table tbody .MB { font-size: 1em; }
+.data-table tbody .KB { font-size: 0.9em; }
+.data-table tbody .MB { font-size: 1em; font-weight: 900; }
 .data-table tbody .GB { font-size: 1.2em; font-weight: 900; }
 .data-table tbody .TB { font-size: 1.25em; font-weight: 900; }
 .left-padding-separator { padding-left: 20px }
@@ -1041,7 +1041,7 @@ a:hover, a:focus, a:active{ color: var(--a-hover-color); text-decoration: none; 
 }
 
 @media (orientation: portrait) {
-	.data-table { width: 96dvw}
+	.data-table { width: 98dvw}
 }
 
 @media print {
