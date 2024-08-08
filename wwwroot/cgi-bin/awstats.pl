@@ -12682,17 +12682,6 @@ sub HTMLShowRobots{
 }
 
 #------------------------------------------------------------------------------
-# Function:     Return the URL, Entry or Exit details frame or static page
-# Parameters:   $NewLinkParams, $NewLinkTarget
-# Input:        -
-# Output:       -
-# Return:       string
-#------------------------------------------------------------------------------
-sub HTMLShowURLDetail{
-	return HTMLMainPages(shift, shift, 'all') . &html_end(1);
-}
-
-#------------------------------------------------------------------------------
 # Function:     Prints the Login details frame or static page
 # Parameters:   _
 # Input:        _
@@ -14166,7 +14155,7 @@ sub HTMLMainHosts{
 
 	if ($Debug) { debug( 'ShowHostsStats', 2 ); }
 
-	my $title = '';
+	my $title = $Message[81];
 	my @links = ();
 	my $tooltip = my $graph = my $tableData = my $tableHeader = '';
 	my $total_p = my $total_h = my $total_k = 0;
@@ -14191,20 +14180,20 @@ sub HTMLMainHosts{
 	
 	if ($HTMLOutput{'allhosts'})
 	{
-		$title = $Message[80];
+		$title .= ' - ' . $Message[80];
 		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Host'}, \%_host_h, \%_host_p );
 	}
 	elsif ($HTMLOutput{'lasthosts'}){
-		$title = $Message[9];
+		$title .= ' - ' . $Message[9];
 		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Host'}, \%_host_h, \%_host_l );
 	}
 	elsif($HTMLOutput{'unknownip'})
 	{
-		$title = $Message[45];
+		$title .= ' - ' . $Message[45];
 		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Host'}, \%_host_h, \%_host_p );
 	}
 	else {
-		$title = $Message[81]	. ' <small>(' . $Message[77] . ' ' . $MaxNbOf{'HostsShown'} .')</small>';
+		$title .= ' <small>(' . $Message[77] . ' ' . $MaxNbOf{'HostsShown'} .')</small>';
 		&BuildKeyList( $MaxNbOf{'HostsShown'}, $MinHit{'Host'}, \%_host_h, \%_host_p );
 	}
 	
@@ -14711,7 +14700,7 @@ sub HTMLMainSessions{
 
 #------------------------------------------------------------------------------
 # Function:     Return the pages chart and table
-# Parameters:   $NewLinkParams, $NewLinkTarget, $all
+# Parameters:   $NewLinkParams, $NewLinkTarget
 # Input:        -
 # Output:       -
 # Return:       string
@@ -14719,18 +14708,16 @@ sub HTMLMainSessions{
 sub HTMLMainPages{
 	my $NewLinkParams = shift;
 	my $NewLinkTarget = shift;
-	my $all = shift || '';
 
 	if ($Debug) {debug("ShowPagesStats (MaxNbOf{'PageShown'}=$MaxNbOf{'PageShown'} TotalDifferentPages=$TotalDifferentPages)",	2);}
 
 	my $regext = qr/\.(\w{1,6})$/;
-	my $title = $Message[19] . ' <small>(' . $Message[77] . ' ' . $MaxNbOf{'PageShown'} . ')</small>';
+	my $title = $Message[19];
 	my @links = ();
 	my $tooltip = my $tableHeader = my $tableData = '';
 	my $total_p = my $total_e = my $total_x = my $total_k = 0;
 	my $max_p = my $max_k = my $max_e = my $max_x = 0;
 
-	if($all ne 'all'){
 		push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'urldetail', $Message[80]));
 
 		if ( $ShowPagesStats =~ /E/i )
@@ -14742,7 +14729,6 @@ sub HTMLMainPages{
 		{
 			push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'urlexit', $Message[116]));
 		}
-	}
 
   if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
   { # extend the title to include the added link
@@ -14775,15 +14761,19 @@ sub HTMLMainPages{
 	$tableHeader .= '</tr></thead>';
 
 	if ( $HTMLOutput{'urlentry'} ) {
+		$title .= ' - ' . $Message[104];
 		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'File'}, \%_url_e, \%_url_e );
 	}
 	elsif ( $HTMLOutput{'urlexit'} ) {
+		$title .= ' - ' . $Message[116];
 		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'File'}, \%_url_x, \%_url_x );
 	}
-	elsif ($all eq 'all') {
+	elsif ( $HTMLOutput{'urldetail'} ) {
+		$title .= ' - ' . $Message[80];
 		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'File'}, \%_url_p, \%_url_p );
 	}
 	else {
+		 $title .= ' <small>(' . $Message[77] . ' ' . $MaxNbOf{'PageShown'} . ')</small>'
 		&BuildKeyList( $MaxNbOf{'PageShown'}, $MinHit{'File'}, \%_url_p, \%_url_p );
 	}
 
@@ -20130,7 +20120,7 @@ if ( scalar keys %HTMLOutput ) {
 			print &HTMLShowDomains($NewLinkParams, $NewLinkTarget);
 		}
 		if ( $HTMLOutput{'allhosts'} || $HTMLOutput{'lasthosts'} || $HTMLOutput{'unknownip'}) {
-			print &HTMLMainHosts($NewLinkParams, $NewLinkTarget);
+			print &HTMLMainHosts($NewLinkParams, $NewLinkTarget) . html_end(1);
 		}
 		if ( $HTMLOutput{'allemails'} || $HTMLOutput{'lastemails'} ) {
 			&HTMLShowEmailSendersChart( $NewLinkParams, $NewLinkTarget );
@@ -20146,11 +20136,9 @@ if ( scalar keys %HTMLOutput ) {
 		if ( $HTMLOutput{'allrobots'} || $HTMLOutput{'lastrobots'} ) {
 			&HTMLShowRobots();
 		}
-		if (   $HTMLOutput{'urldetail'}
-			|| $HTMLOutput{'urlentry'}
-			|| $HTMLOutput{'urlexit'} )
+		if ( $HTMLOutput{'urldetail'} || $HTMLOutput{'urlentry'} || $HTMLOutput{'urlexit'} )
 		{
-			print &HTMLShowURLDetail($NewLinkParams, $NewLinkTarget);
+			print &HTMLMainPages($NewLinkParams, $NewLinkTarget) . html_end(1);
 		}
 		if ( $HTMLOutput{'unknownos'} ) {
 			&HTMLShowOSUnknown($NewLinkTarget);
