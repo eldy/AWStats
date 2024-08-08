@@ -889,7 +889,7 @@ sub renderCss {
 	$css .= '
 :root {
 	--page-color: hsl(220, 0%, 25%);
-	--page-bgcolor: hsl(200, 0%, 95%);
+	--page-bgcolor: hsl(200, 0%, 100%);
 	--aws-color-u: hsl(27, 100%, 70%);
 	--aws-color-v: hsl(58, 82%, 76%);
 	--aws-color-p: hsl(220, 97%, 72%);
@@ -898,10 +898,10 @@ sub renderCss {
 	--aws-color-e: hsl(258, 60%, 75%);
 	--aws-color-x: hsl(260, 76%, 81%);
 	--aws-color-s: hsl(240, 56%, 70%);
-	--dark-color: hsl(220, 0%, 50%);
-	--darker-color: hsl(220, 0%, 7%);
-	--neutral-color: hsl(220, 0%, 90%);
-	--light-color: hsl(220, 0%, 80%);
+	--dark-color: hsl(220, 0%, 88%);
+	--darker-color: hsl(220, 0%, 50%);
+	--neutral-color: hsl(220, 0%, 96%);
+	--light-color: hsl(220, 0%, 93%);
 	--a-color: hsl(0, 0%, 0%);
 	--a-hover-color: hsl(0, 0%, 0%);
 	--bar-width: 90;
@@ -927,6 +927,7 @@ sub renderCss {
 		--aws-color-x: hsl(260, 76%, 81%);
 		--aws-color-s: hsl(240, 56%, 70%);
 		--dark-color: hsl(220, 0%, 15%);
+		--darker-color: hsl(220, 0%, 5%);
 		--neutral-color: hsl(220, 0%, 30%);
 		--light-color: hsl(220, 0%, 60%);
 		--a-color: hsl(220, 0%, 81.6%);
@@ -935,21 +936,23 @@ sub renderCss {
 	}
 }
 
+* {margin: 0; padding: 0; font: inherit;}
 html { scroll-behavior: smooth; scroll-padding: var(--scroll-padding); }
-body { font-size: clamp(0.75rem, -3vw + 3rem, 0.9rem); font-family: sans-serif, system-ui; background-color: var(--page-bgcolor); margin: 0; padding:0; color: var(--page-color); }
+body { font-size: clamp(0.75rem, -3vw + 3rem, 0.9rem); font-family: sans-serif, system-ui; background-color: var(--page-bgcolor); color: var(--page-color); }
 b { font-weight: 700 }
 hr { width: 100%; height: 0; margin: 0; color: transparent; border: none; }
 small { font-size: 0.9em; font-weight: 400; }
 #container, .flex { gap: 25px; }
-#container, #container > header, .flex { display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;}
-#container > header { position: sticky; top: 0; z-index: 100; width: 100%; column-gap: 20px; background-color: var(--dark-color); text-align: center;	 }
+#container, .flex { display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;}
+#container > header { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; }
+#container > header { position: sticky; top: 0; z-index: 100; width: 100%; column-gap: 20px; background-color: var(--dark-color); text-align: center; }
 #container > *:nth-child(odd):not(header) { width: 100dvw; padding: 20px 0; background-color: var(--dark-color)}
 .column { display:flex;flex-flow:column wrap; row-gap: 10px; }
 #domain { font-weight: 900; font-size: 1.5em }
 header select { width : 60px }
 footer { width: 100dvw; text-align: center; padding-top: 5px; }
 #logo { height: 33px; }
-nav { width: 100%; height: 2.5ch; margin: 0; background-color: white; font-weight: 600 }
+nav { width: 100%; height: 2.5ch; margin: 0; color: var(--darker-color); background-color: var(--light-color); font-weight: 600 }
 nav ul { display: flex; justify-content: center; gap: 1dvw; list-style-type: none; margin: 0; padding: 0; overflow: hidden; border: none; }
 nav li a, .dropbtn { display: inline-block; padding: 2px 4px; }
 li a:hover, .dropdown:hover .dropbtn { background-color: var(--neutral-color); }
@@ -958,7 +961,7 @@ li.dropdown { display: inline-block; }
 .dropdown-content a { padding: 12px 16px; display: block; }
 .dropdown-content a:hover { background-color: var(--neutral-color); }
 .dropdown:hover .dropdown-content { display: block; }
-#about { width: 100%; text-align: center; }
+#about { text-align: center; }
 #summary-logs { max-width: 100%; text-align: center;  margin: auto; display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;}
 #summary-logs div { padding: 1px 0 }
 .summary-label { margin: 0 9px; }
@@ -974,15 +977,13 @@ h1, section header {border-bottom: 6px solid var(--light-color); width: 100%; ma
 .multi-data-table.worldmap{ position: relative; }
 .data-table { border-spacing: 0; margin: auto; }
 .data-table tfoot { display: table-header-group }
-.data-table tbody tr { transition: background 0.5s ease-out; transition: transform 0.1s ease-in }
-.data-table tbody tr:hover { font-weight: 900; color: var(--darker-color);background: var(--light-color); transform: scale(1.1) translateX(2px); }
+.data-table tbody tr { transition: background 0.3s ease-in, transform 0.3s ease-in }
+.data-table tbody tr:hover { font-weight: 900; background: var(--light-color); transform: scale(1.1) translateX(2px); }
 .data-table th { font-weight: 900; padding-top: 2px; padding-bottom: 2px; }
-.data-table :is(th, td).plugin:nth-child(odd) { background-color: var(--dark-color)}
-.data-table :is(th, td).plugin:nth-child(even) { background-color: var(--darker-color);}
 .data-table td { text-align: right; font-weight: 700; padding-top: 3px; padding-bottom: 3px; padding-left: 0; padding-right: 0; }
 .data-table td:first-child { padding-right: 4px }
 .data-table td:first-child:not(.country) { font-weight: 400 }
-.data-table td.plugin { padding-left: 4px; padding-right: 4px; color: var(--light-color); text-align: center; }
+.data-table td.plugin { padding-left: 4px; padding-right: 4px; text-align: center; }
 .data-table td div { padding: 0 2px; height: 2ch; }
 .data-table td img { width: 16px; height: 16px;vertical-align: bottom; }
 .data-table td small { float: left; line-height: 1.3; }
@@ -1003,7 +1004,7 @@ h1, section header {border-bottom: 6px solid var(--light-color); width: 100%; ma
 #worldmap{ width: 50%; margin: auto; background-color: #4477DD; }
 .title-map{ position:absolute; top: 16px; color: var(--light-color); }
 .country td:first-child { text-transform: uppercase; font-weight: 700; }
-.expand-collapse-button { font-family: monospace; line-height: 1; }
+.data-table td .bg, .date, .expand-collapse-button { font-family: monospace; line-height: 1; }
 
 /* colors */
 nav a:any-link { color: var(--nav-color) }
@@ -1078,8 +1079,12 @@ let showMap = $ShowMap;
 document.addEventListener("DOMContentLoaded", (d) => {
 
 	const headerHeight = document.querySelector("#container > header").offsetHeight;
-
 	document.documentElement.style.setProperty("--scroll-padding", (headerHeight + 20) + "px");
+
+	window.onresize = (e) => {
+		let headerHeight = document.querySelector("#container > header").offsetHeight;
+		document.documentElement.style.setProperty("--scroll-padding", (headerHeight + 20) + "px");
+	};
 	
 	[...document.querySelectorAll('.bar-table')].forEach(el => {
    		el.addEventListener("mouseenter", (e) => {
@@ -8633,7 +8638,7 @@ sub HTMLDataCellWithBar{
 	my $mixedColor = shift || '';
 	my $percentage = ($max > 0) ? ($data || 0) / $max : 0;
 
-	return '<td><div style="background:'
+	return '<td><div class="bg" style="background:'
 		. 'linear-gradient(to right,'
 		. (($mixedColor ne '') ? 'color-mix(in hsl, var(--aws-color-' . $type .'), var(--neutral-color) 50%)' : ' var(--aws-color-' . $type .')')
 		. 'calc(var(--bar-width) * ' . $percentage . ' * 1%), rgba(0,0,0,0) calc(var(--bar-width) * ' . $percentage . ' * 1%));'
@@ -10429,10 +10434,13 @@ sub HTMLTopBanner{
 	}
 
 	print '<div>'
-	. '<a href="' . XMLEncode($LogoLink). '" target="awstatshome"><img id="logo" src="' . $DirIcons . '/other/' . $Logo .'" ' . (( $LogoLink =~ "https://www.awstats.org" ) ? AltTitle( ucfirst($PROG) . ' Web Site' ) : '') . ' /></a>';
+	. '<a href="' . XMLEncode($LogoLink). '" target="awstatshome"><img id="logo" src="' . $DirIcons . '/other/' . $Logo .'" ' . (( $LogoLink =~ "https://www.awstats.org" ) ? AltTitle( ucfirst($PROG) . ' Web Site' ) : '') . ' /></a>'
+	. '<div id="domain">' . $SiteDomain . '</div>';
 
 	if ( !$StaticLinks ) { Show_Flag_Links($Lang); }
 	
+	print '</div><div>';
+
 	if ( $ENV{'GATEWAY_INTERFACE'} || !$StaticLinks ) {
 
 		print '<form style="align-self: center" name="FormDateFilter" action="' . XMLEncode("$AWScript${NewLinkParams}") . '" ' . $NewLinkTarget . '>';
@@ -10500,8 +10508,8 @@ sub HTMLTopBanner{
 		print "</span>";
 	}
 
-	print '</div>'
-	. '<div><div id="domain">' . $SiteDomain . '</div><div id="last-update"><span>'. $Message[35] .' : </span> ' . $lastUpdateBuild . '</div></div>';
+	print '<div id="last-update"><span>'. $Message[35] .' : </span> ' . $lastUpdateBuild . '</div>'
+	. '</div>';
 
 	&HTMLMainSummary();
 
@@ -12797,281 +12805,6 @@ sub HTMLShowLogins{
 }
 
 #------------------------------------------------------------------------------
-# Function:     Prints the Unknown IP/Host details frame or static page
-# Parameters:   _
-# Input:        _
-# Output:       HTML
-# Return:       -
-#------------------------------------------------------------------------------
-sub HTMLShowHostsUnknown{
-	my $total_p = 0;
-	my $total_h = 0;
-	my $total_k = 0;
-	my $rest_p = 0;
-	my $rest_h = 0;
-	my $rest_k = 0;
-	# print "<a name=\"unknownip\">&nbsp;</a>";
-	print &tab_head( "$Message[45]", 19, 0, 'unknownwip' )
-	. '<table>'
-	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>"
-	. Format_Number(( scalar keys %_host_h ))
-	. " $Message[1]</th>";
-	print &HTMLShowHostInfo('__title__');
-	if ( $ShowHostsStats =~ /P/i ) {
-		print
-		  "<th class=\"bg-p\" width=\"80\">" . ucfirst($Message[28]) . "</th>";
-	}
-	if ( $ShowHostsStats =~ /H/i ) {
-		print
-		  "<th class=\"bg-h\" width=\"80\">$Message[57]</th>";
-	}
-	if ( $ShowHostsStats =~ /B/i ) {
-		print
-"<th class=\"datasize color_k\" width=\"80\">$Message[75]</th>";
-	}
-	if ( $ShowHostsStats =~ /L/i ) {
-		print "<th width=\"120\">$Message[9]</th>";
-	}
-	print "</tr>\n";
-	$total_p = $total_h = $total_k = 0;
-	my $count = 0;
-	&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Host'}, \%_host_h,
-		\%_host_p );
-	foreach my $key (@keylist) {
-		my $host = CleanXSS($key);
-		print "<tr><td class=\"aws\">$host</td>";
-		print &HTMLShowHostInfo($key);
-		if ( $ShowHostsStats =~ /P/i ) {
-			print "<td>"
-			  . ( $_host_p{$key} ? Format_Number($_host_p{$key}) : "&nbsp;" )
-			  . "</td>";
-		}
-		if ( $ShowHostsStats =~ /H/i ) {
-			print "<td>".Format_Number($_host_h{$key})."</td>";
-		}
-		if ( $ShowHostsStats =~ /B/i ) {
-			print "<td>" . Format_Bytes( $_host_k{$key} ) . "</td>";
-		}
-		if ( $ShowHostsStats =~ /L/i ) {
-			print "<td>"
-			  . (
-				$_host_l{$key}
-				? Format_Date( $_host_l{$key}, 1 )
-				: '-'
-			  )
-			  . "</td>";
-		}
-		print "</tr>\n";
-		$total_p += $_host_p{$key};
-		$total_h += $_host_h{$key};
-		$total_k += $_host_k{$key} || 0;
-		$count++;
-	}
-	if ($Debug) {
-		debug(
-"Total real / shown : $TotalPages / $total_p - $TotalHits / $total_h - $TotalBytes / $total_h",
-			2
-		);
-	}
-	$rest_p = $TotalPages - $total_p;
-	$rest_h = $TotalHits - $total_h;
-	$rest_k = $TotalBytes - $total_k;
-	if ( $rest_p > 0 || $rest_h > 0 || $rest_k > 0 )
-	{    # All other visitors (known or not)
-		print
-"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[82]</span></td>";
-		print &HTMLShowHostInfo('');
-		if ( $ShowHostsStats =~ /P/i ) {
-			print "<td>" . ( $rest_p ? Format_Number($rest_p) : "&nbsp;" ) . "</td>";
-		}
-		if ( $ShowHostsStats =~ /H/i ) { print "<td>".Format_Number($rest_h)."</td>"; }
-		if ( $ShowHostsStats =~ /B/i ) {
-			print "<td>" . Format_Bytes($rest_k) . "</td>";
-		}
-		if ( $ShowHostsStats =~ /L/i ) { print "<td>&nbsp;</td>"; }
-		print "</tr>\n";
-	}
-	
-	print '</table>' . &tab_end();
-
-	print &html_end(1);
-}
-
-#------------------------------------------------------------------------------
-# Function:     Prints the Host details frame or static page
-# Parameters:   _
-# Input:        _
-# Output:       HTML
-# Return:       -
-#------------------------------------------------------------------------------
-sub HTMLShowHosts{
-	my $total_p = 0;
-	my $total_h = 0;
-	my $total_k = 0;
-	my $rest_p = 0;
-	my $rest_h = 0;
-	my $rest_k = 0;
-	print "<a name=\"hosts\">&nbsp;</a>";
-
-	# Show filter form
-	&HTMLShowFormFilter( "hostfilter", $FilterIn{'host'},
-		$FilterEx{'host'} );
-
-	# Show hosts list
-	my $title = '';
-	my $cpt   = 0;
-	if ( $HTMLOutput{'allhosts'} ) {
-		$title .= "$Message[81]";
-		$cpt = ( scalar keys %_host_h );
-	}
-	if ( $HTMLOutput{'lasthosts'} ) {
-		$title .= "$Message[9]";
-		$cpt = ( scalar keys %_host_h );
-	}
-	print &tab_head( "$title", 19, 0, 'hosts' )
-	. '<table>'
-	. "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>";
-	if ( $FilterIn{'host'} || $FilterEx{'host'} ) {    # With filter
-		if ( $FilterIn{'host'} ) {
-			print "$Message[79] '<b>$FilterIn{'host'}</b>'";
-		}
-		if ( $FilterIn{'host'} && $FilterEx{'host'} ) { print " - "; }
-		if ( $FilterEx{'host'} ) {
-			print " Exclude $Message[79] '<b>$FilterEx{'host'}</b>'";
-		}
-		if ( $FilterIn{'host'} || $FilterEx{'host'} ) { print ": "; }
-		print "$cpt $Message[81]";
-		if ( $MonthRequired ne 'all' ) {
-			if ( $HTMLOutput{'allhosts'} || $HTMLOutput{'lasthosts'} ) {
-				print
-"$Message[102]: ".Format_Number($TotalHostsKnown)." $Message[82], ".Format_Number($TotalHostsUnknown)." $Message[1] - ".Format_Number($TotalUnique)." $Message[11]";
-			}
-		}
-	}
-	else {    # Without filter
-		if ( $MonthRequired ne 'all' ) {
-			print
-"$Message[102] : ".Format_Number($TotalHostsKnown)." $Message[82], ".Format_Number($TotalHostsUnknown)." $Message[1] - ".Format_Number($TotalUnique)." $Message[11]";
-		}
-		else { print "$Message[102] : " . Format_Number(( scalar keys %_host_h )); }
-	}
-	print "</th>";
-	print &HTMLShowHostInfo('__title__');
-	if ( $ShowHostsStats =~ /P/i ) {
-		print
-		  "<th class=\"bg-p\" width=\"80\">" . ucfirst($Message[28]) . "</th>";
-	}
-	if ( $ShowHostsStats =~ /H/i ) {
-		print
-		  "<th class=\"bg-h\" width=\"80\">$Message[57]</th>";
-	}
-	if ( $ShowHostsStats =~ /B/i ) {
-		print
-"<th class=\"datasize color_k\" width=\"80\">$Message[75]</th>";
-	}
-	if ( $ShowHostsStats =~ /L/i ) {
-		print "<th width=\"120\">$Message[9]</th>";
-	}
-	print "</tr>\n";
-	$total_p = $total_h = $total_k = 0;
-	my $count = 0;
-	if ( $HTMLOutput{'allhosts'} ) {
-		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Host'}, \%_host_h,
-			\%_host_p );
-	}
-	if ( $HTMLOutput{'lasthosts'} ) {
-		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Host'}, \%_host_h,
-			\%_host_l );
-	}
-	my $regipv4=qr/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
-
-	if ( $DynamicDNSLookup == 2 ) {
-		# Use static DNS file
-		&Read_DNS_Cache( \%MyDNSTable, "$DNSStaticCacheFile", "", 1 );
-	}
-
-	foreach my $key (@keylist) {
-		my $host = CleanXSS($key);
-		print "<tr><td class=\"aws\">"
-		  . ( $_robot_l{$key} ? '<b>'  : '' ) . "$host"
-		  . ( $_robot_l{$key} ? '</b>' : '' );
-
-		if ($DynamicDNSLookup) {
-			# Dynamic reverse DNS lookup
-        	        if ($host =~ /$regipv4/o) {
-                	        my $lookupresult=lc(gethostbyaddr(pack("C4",split(/\./,$host)),AF_INET));       # This may be slow
-                        	if (! $lookupresult || $lookupresult =~ /$regipv4/o || ! IsAscii($lookupresult)) {
-					if ( $DynamicDNSLookup == 2 ) {
-						# Check static DNS file
-						$lookupresult = $MyDNSTable{$host};
-						if ($lookupresult) { print " ($lookupresult)"; }
-						else { print ""; }
-					}
-					else { print ""; }
-	                        }
-        	                else { print " ($lookupresult)"; }
-	                }
-		}
-
-		print "</td>";
-		print &HTMLShowHostInfo($key);
-		if ( $ShowHostsStats =~ /P/i ) {
-			print "<td>"
-			  . ( $_host_p{$key} ? Format_Number($_host_p{$key}) : "&nbsp;" )
-			  . "</td>";
-		}
-		if ( $ShowHostsStats =~ /H/i ) {
-			print "<td>".Format_Number($_host_h{$key})."</td>";
-		}
-		if ( $ShowHostsStats =~ /B/i ) {
-			print "<td>" . Format_Bytes( $_host_k{$key} ) . "</td>";
-		}
-		if ( $ShowHostsStats =~ /L/i ) {
-			print "<td>"
-			  . (
-				$_host_l{$key}
-				? Format_Date( $_host_l{$key}, 1 )
-				: '-'
-			  )
-			  . "</td>";
-		}
-		print "</tr>\n";
-		$total_p += $_host_p{$key};
-		$total_h += $_host_h{$key};
-		$total_k += $_host_k{$key} || 0;
-		$count++;
-	}
-	if ($Debug) {
-		debug(
-"Total real / shown : $TotalPages / $total_p - $TotalHits / $total_h - $TotalBytes / $total_h",
-			2
-		);
-	}
-	$rest_p = $TotalPages - $total_p;
-	$rest_h = $TotalHits - $total_h;
-	$rest_k = $TotalBytes - $total_k;
-	if ( $rest_p > 0 || $rest_h > 0 || $rest_k > 0 )
-	{    # All other visitors (known or not)
-		print
-"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
-		print &HTMLShowHostInfo('');
-		if ( $ShowHostsStats =~ /P/i ) {
-			print "<td>" . ( $rest_p ? Format_Number($rest_p) : "&nbsp;" ) . "</td>";
-		}
-		if ( $ShowHostsStats =~ /H/i ) { print "<td>".Format_Number($rest_h)."</td>"; }
-		if ( $ShowHostsStats =~ /B/i ) {
-			print "<td>" . Format_Bytes($rest_k) . "</td>";
-		}
-		if ( $ShowHostsStats =~ /L/i ) { print "<td>&nbsp;</td>"; }
-		print "</tr>\n";
-	}
-	
-	print '</table>' . &tab_end();
-
-	print &html_end(1);
-}
-
-#------------------------------------------------------------------------------
 # Function:     Return the Domains details frame or static page
 # Parameters:   $NewLinkParams, $NewLinkTarget
 # Input:        -
@@ -13139,12 +12872,8 @@ sub HTMLMainSummary{
 		$NewLinkTarget = " target=\"_parent\"";
 	}
 
-	print '<hr>';
-
 	# Show main indicators title row
 	print '<div>';
-
-	print '<div id="summary-logs">';
 
 	# Show first/last
 	print '<div id="about">'
@@ -13152,6 +12881,7 @@ sub HTMLMainSummary{
 	. ' - <span class="summary-label"> <b class="summary-data">' . ($MonthRequired eq 'all' ? $YearRequired : $MonthNumLib{$MonthRequired} . ' ' . $YearRequired) . '</b></span> - '
 	. '<span class="summary-label">' . $Message[9] . ' <b class="summary-data">' . ($LastTime ? Format_Date( $LastTime, 0 ) : "NA" ) . '</b></span>'
 	. '</div>';
+	print '<div id="summary-logs">';
 
 	print (( $ShowSummary =~ /U/i && $LogType ne 'M' ) ?
 		'<div>'
@@ -14433,20 +14163,20 @@ sub HTMLMainDownloads{
 sub HTMLMainHosts{
 	my $NewLinkParams = shift;
 	my $NewLinkTarget = shift;
-	
+
 	if ($Debug) { debug( 'ShowHostsStats', 2 ); }
 
-	my $title = $Message[81] . ' <small>(' . $Message[77] . ' ' . $MaxNbOf{'HostsShown'} .')</small>';
+	my $title = '';
 	my @links = ();
 	my $tooltip = my $graph = my $tableData = my $tableHeader = '';
 	my $total_p = my $total_h = my $total_k = 0;
 	my $max_p = my $max_h = my $max_k = 0;
 	my $regipv4 = qr/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;	
 	
-	push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'allhosts', $Message[80]));
-	push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'lasthosts', $Message[9]));
 	push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'unknownip', $Message[45]));
-  
+	push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'lasthosts', $Message[9]));
+	push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'allhosts', $Message[80]));
+
 	if ( $AddLinkToExternalCGIWrapper && ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) )
 	{ # extend the title to include the added link
     push(@links, '<a href="' . XMLEncode($AddLinkToExternalCGIWrapper . '?section=VISITOR&baseName=' . $DirData/$PROG . '&month=' . $MonthRequired . '&year=' . $YearRequired . '&day=' . $DayRequired . '&siteConfig=' . $SiteConfig) . '" ' . $NewLinkTarget . '>'
@@ -14458,8 +14188,25 @@ sub HTMLMainHosts{
 		my $function = "getTooltip_$pluginname";
 		$tooltip .= &$function(19);
 	}
-	  
-	&BuildKeyList( $MaxNbOf{'HostsShown'}, $MinHit{'Host'}, \%_host_h, \%_host_p );
+	
+	if ($HTMLOutput{'allhosts'})
+	{
+		$title = $Message[80];
+		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Host'}, \%_host_h, \%_host_p );
+	}
+	elsif ($HTMLOutput{'lasthosts'}){
+		$title = $Message[9];
+		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Host'}, \%_host_h, \%_host_l );
+	}
+	elsif($HTMLOutput{'unknownip'})
+	{
+		$title = $Message[45];
+		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Host'}, \%_host_h, \%_host_p );
+	}
+	else {
+		$title = $Message[81]	. ' <small>(' . $Message[77] . ' ' . $MaxNbOf{'HostsShown'} .')</small>';
+		&BuildKeyList( $MaxNbOf{'HostsShown'}, $MinHit{'Host'}, \%_host_h, \%_host_p );
+	}
 	
 	# Graph the top five in a pie chart
 	if (scalar @keylist > 1)
@@ -14547,7 +14294,7 @@ sub HTMLMainHosts{
 		. (( $ShowHostsStats =~ /H/i ) ? HTMLDataCellWithBar('h', $_host_h{$key}, Format_Number($_host_h{$key}), $max_h) : '' )
 		. (( $ShowHostsStats =~ /B/i ) ? HTMLDataCellWithBar('b', $_host_k{$key}, Format_Bytes($_host_k{$key}), $max_k) : '' )
 		. &HTMLShowHostInfo($key)
-		. (( $ShowHostsStats =~ /L/i ) ? '<td>' . (	$_host_l{$key} ? Format_Date( $_host_l{$key}, 1 )	: '-' ) . '</td>' : '')
+		. (( $ShowHostsStats =~ /L/i ) ? '<td class="date">' . (	$_host_l{$key} ? Format_Date( $_host_l{$key}, 1 )	: '-' ) . '</td>' : '')
 		. '</tr>';
 	}
 
@@ -14562,7 +14309,7 @@ sub HTMLMainHosts{
 		. (( $ShowHostsStats =~ /H/i ) ? '<td>' . Format_Number($rest_h) . '</td>' : '')
 		. (( $ShowHostsStats =~ /B/i ) ? '<td>' . Format_Bytes($rest_k) . '</td>' : '')
 		. &HTMLShowHostInfo('')
-		. (( $ShowHostsStats =~ /L/i ) ? '<td>&nbsp;</td>' : '')
+		. (( $ShowHostsStats =~ /L/i ) ? '<td></td>' : '')
 		. '</tr>';
 	}
 
@@ -20382,11 +20129,8 @@ if ( scalar keys %HTMLOutput ) {
 		if ( $HTMLOutput{'alldomains'} ) {
 			print &HTMLShowDomains($NewLinkParams, $NewLinkTarget);
 		}
-		if ( $HTMLOutput{'allhosts'} || $HTMLOutput{'lasthosts'} ) {
-			&HTMLShowHosts();
-		}
-		if ( $HTMLOutput{'unknownip'} ) {
-			&HTMLShowHostsUnknown();
+		if ( $HTMLOutput{'allhosts'} || $HTMLOutput{'lasthosts'} || $HTMLOutput{'unknownip'}) {
+			print &HTMLMainHosts($NewLinkParams, $NewLinkTarget);
 		}
 		if ( $HTMLOutput{'allemails'} || $HTMLOutput{'lastemails'} ) {
 			&HTMLShowEmailSendersChart( $NewLinkParams, $NewLinkTarget );
