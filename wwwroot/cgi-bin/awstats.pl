@@ -12794,17 +12794,6 @@ sub HTMLShowLogins{
 }
 
 #------------------------------------------------------------------------------
-# Function:     Return the Domains details frame or static page
-# Parameters:   $NewLinkParams, $NewLinkTarget
-# Input:        -
-# Output:       -
-# Return:       string
-#------------------------------------------------------------------------------
-sub HTMLShowDomains{
-	return HTMLMainCountries(shift, shift, 'all') . &html_end(1);
-}
-
-#------------------------------------------------------------------------------
 # Function:     Prints the Summary section at the top of the main page
 # Parameters:   _
 # Input:        _
@@ -13859,7 +13848,7 @@ sub HTMLMainHours{
 
 #------------------------------------------------------------------------------
 # Function:     Return the countries chart and table
-# Parameters:   $NewLinkParams, $NewLinkTarget, $all
+# Parameters:   $NewLinkParams, $NewLinkTarget
 # Input:        -
 # Output:       -
 # Return:       string
@@ -13869,19 +13858,18 @@ sub HTMLMainCountries{
 
 	my $NewLinkParams = shift;
 	my $NewLinkTarget = shift;
-	my $all = shift || '';
 
 	my $count = my $total_u = my $total_v = my $total_p = my $total_h = my $total_k = 0;
 	my $rest_u  = my $rest_v  = my $rest_p  = my $rest_h  = my $rest_k = 0; 
 	my $max_u = my $max_p = my $max_h = my $max_k = 1;
-	my $title = $Message[25] . (($all ne 'all') ? ' <small>(' . $Message[77] . ' ' . $MaxNbOf{'Domain'} . ')</small>' : '');
+	my $title = $Message[25] . (($HTMLOutput{'main'}) ? ' <small>(' . $Message[77] . ' ' . $MaxNbOf{'Domain'} . ')</small>' : '');
 	my @links = ();
-	my $map = '<div id="worldmap-wrapper" class="' . $all . '"><div id="worldmap"></div></div>';
+	my $map = '<div id="worldmap-wrapper" class="' . ((!$HTMLOutput{'main'})? 'all' : '')  . '"><div id="worldmap"></div></div>';
 	my $tooltip = my $tableData = my $tableFooter = '';
 	my $colspan = ($ShowDomainsStats =~ /U/i) + ($ShowDomainsStats =~ /V/i) + ($ShowDomainsStats =~ /P/i) + ($ShowDomainsStats =~ /H/i) + ($ShowDomainsStats =~ /B/i);
-	my $tableFooter = ($all ne 'all') ? '<tfoot><tr><td><button class="expand-collapse-button">+</button></td><td colspan="' . $colspan . '"></td></tr></tfoot>' : '';
+	my $tableFooter = ($HTMLOutput{'main'}) ? '<tfoot><tr><td><button class="expand-collapse-button">+</button></td><td colspan="' . $colspan . '"></td></tr></tfoot>' : '';
 
-	if($all ne 'all'){
+	if($HTMLOutput{'main'}){
 		push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'alldomains', $Message[80]));
 	}
 
@@ -13949,8 +13937,8 @@ sub HTMLMainCountries{
 		else
 		{
 			$tableData .= '<tr'
-			. ' class="country' . ((($all ne 'all') && $count > $MaxNbOf{'Domain'}) ? ' collapsed' : '') . '"'
-			. ((($all ne 'all') && $count > $MaxNbOf{'Domain'}) ? ' style="visibility: collapse"' : '')
+			. ' class="country' . ((($HTMLOutput{'main'}) && $count > $MaxNbOf{'Domain'}) ? ' collapsed' : '') . '"'
+			. ((($HTMLOutput{'main'}) && $count > $MaxNbOf{'Domain'}) ? ' style="visibility: collapse"' : '')
 			. ' data-country="' . $newkey . '">'
 			. '<td class="country"><small>( ' . $newkey . ' )</small>' . $DomainsHashIDLib{$newkey} . ' <span class="flag' . (($count > $MaxNbOf{'Domain'}) ? '' : ' highlighted') . '" data-country="' . $newkey . '"></span></td>';
 		}
@@ -20105,7 +20093,7 @@ if ( scalar keys %HTMLOutput ) {
 	if ( scalar keys %HTMLOutput == 1 ) {
 
 		if ( $HTMLOutput{'alldomains'} ) {
-			print &HTMLShowDomains($NewLinkParams, $NewLinkTarget);
+			print &HTMLMainCountries($NewLinkParams, $NewLinkTarget) . html_end(1);
 		}
 		if ( $HTMLOutput{'allhosts'} || $HTMLOutput{'lasthosts'} || $HTMLOutput{'unknownip'}) {
 			print &HTMLMainHosts($NewLinkParams, $NewLinkTarget) . html_end(1);
