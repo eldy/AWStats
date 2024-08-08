@@ -12805,17 +12805,6 @@ sub HTMLShowDomains{
 }
 
 #------------------------------------------------------------------------------
-# Function:     Return the Downloads code frame or static page
-# Parameters:   -
-# Input:        -
-# Output:       -
-# Return:       string
-#------------------------------------------------------------------------------
-sub HTMLShowDownloads{
-	return HTMLMainDownloads(shift, shift, 'all') . &html_end(1);
-}
-
-#------------------------------------------------------------------------------
 # Function:     Prints the Summary section at the top of the main page
 # Parameters:   _
 # Input:        _
@@ -14034,7 +14023,7 @@ sub HTMLMainCountries{
 #------------------------------------------------------------------------------
 # Function:     Return the Downloads chart and table
 # Parameters:   -
-# Input:        $NewLinkParams, $NewLinkTarget, $all
+# Input:        $NewLinkParams, $NewLinkTarget
 # Output:       -
 # Return:       string
 #------------------------------------------------------------------------------
@@ -14044,22 +14033,21 @@ sub HTMLMainDownloads{
 
 	my $NewLinkParams = shift;
 	my $NewLinkTarget = shift;
-	my $all = shift || '';
 
 	my $TopFiveTotalh = my $total_h = my $total_206 = my $max_k = my $max_average_k = 0;
 	my @links = ();
 	my $chart = my $dataTable = '';
-	my $title = $Message[178] . (($all ne 'all') ? ' <small>('. $Message[77] . ' ' . $MaxNbOf{'DownloadsShown'} .')</small>' : '');
+	my $title = $Message[178] . (($HTMLOutput{'main'}) ? ' <small>('. $Message[77] . ' ' . $MaxNbOf{'DownloadsShown'} .')</small>' : '');
 	my @sortedDlKeys = (sort {$_downloads{$b}->{'AWSTATS_SIZE'} <=> $_downloads{$a}->{'AWSTATS_SIZE'}}(keys %_downloads));
 	
-	if($all ne 'all')
+	if($HTMLOutput{'main'})
 	{
 		@sortedDlKeys = (scalar keys @sortedDlKeys > $MaxNbOf{'DownloadsShown'}) ? @sortedDlKeys[0..($MaxNbOf{'DownloadsShown'} - 1)] : @sortedDlKeys;
 	}
 	
 	my @sorted_TopFive_DlKeys = (scalar keys @sortedDlKeys > $MaxNbOf{'DownloadsShown'}) ? @sortedDlKeys[0..4] : @sortedDlKeys;
 
-	if($all ne 'all')
+	if($HTMLOutput{'main'})
 	{
 		if ($MaxNbOf{'DownloadsShown'} < 1){$MaxNbOf{'DownloadsShown'} = 10;}	# default if undefined
 		push(@links, HTMLLinkToStandalonePage($NewLinkParams, $NewLinkTarget, 'downloads', $Message[80]));
@@ -20165,7 +20153,7 @@ if ( scalar keys %HTMLOutput ) {
 			&HTMLShowKeywords($NewLinkTarget);
 		}
 		if ( $HTMLOutput{'downloads'} ) {
-			print &HTMLShowDownloads($NewLinkParams, $NewLinkTarget);
+			print &HTMLMainDownloads($NewLinkParams, $NewLinkTarget) . &html_end(1);
 		}
 		foreach my $code ( keys %TrapInfosForHTTPErrorCodes ) {
 			if ( $HTMLOutput{"errors$code"} ) {
