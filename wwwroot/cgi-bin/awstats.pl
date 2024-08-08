@@ -977,8 +977,8 @@ h1, section header {border-bottom: 6px solid var(--light-color); width: 100%; ma
 .multi-data-table.worldmap{ position: relative; }
 .data-table { border-spacing: 0; margin: auto; }
 .data-table tfoot { display: table-header-group }
-.data-table tbody tr { transition: background 0.3s ease-in, transform 0.3s ease-in }
-.data-table tbody tr:hover { font-weight: 900; background: var(--light-color); transform: scale(1.1) translateX(2px); }
+.data-table tbody tr { transition: background 0.2s ease-in, transform 0.2s ease-in }
+.data-table tbody tr:hover { font-weight: 900; background: var(--light-color); transform: scale(1.02) translateX(2px); }
 .data-table th { font-weight: 900; padding-top: 2px; padding-bottom: 2px; }
 .data-table td { text-align: right; font-weight: 700; padding-top: 3px; padding-bottom: 3px; padding-left: 0; padding-right: 0; }
 .data-table td:first-child { padding-right: 4px }
@@ -989,11 +989,11 @@ h1, section header {border-bottom: 6px solid var(--light-color); width: 100%; ma
 .data-table td small { float: left; line-height: 1.3; }
 .data-table tfoot .data-table-sum td { border-top: 1px solid rgba(192,192,192,0.2); }
 .data-table-sum { font-size : clamp(0.938rem, -3vw + 3rem, 1.125rem) }
-.data-table tbody .B { font-size: 0.7rem; }
-.data-table tbody .KB { font-size: 0.7rem; font-weight: 900; }
-.data-table tbody .MB { font-size: 0.8rem; }
-.data-table tbody .GB { font-size: 0.9rem; font-weight: 900; }
-.data-table tbody .TB { font-size: 1rem; font-weight: 900; }
+.data-table tbody .B { font-size: 0.9em; }
+.data-table tbody .KB { font-size: 0.9em; font-weight: 900; }
+.data-table tbody .MB { font-size: 1em; }
+.data-table tbody .GB { font-size: 1.2em; font-weight: 900; }
+.data-table tbody .TB { font-size: 1.25em; font-weight: 900; }
 .left-padding-separator { padding-left: 20px }
 .bar-table { visibility: visible; width: 100%; margin: 3px auto; padding: 2px 0; text-align: center; font-size: 10px; border-bottom: 1px solid var(--light-color);}
 .bar-table tr:first-child td { vertical-align: bottom; }
