@@ -989,6 +989,11 @@ h1, section header {border-bottom: 6px solid var(--light-color); width: 100%; ma
 .data-table td small { float: left; line-height: 1.3; }
 .data-table tfoot .data-table-sum td { border-top: 1px solid rgba(192,192,192,0.2); }
 .data-table-sum { font-size : clamp(0.938rem, -3vw + 3rem, 1.125rem) }
+.data-table tbody .B { font-size: 0.7rem; }
+.data-table tbody .KB { font-size: 0.7rem; font-weight: 900; }
+.data-table tbody .MB { font-size: 0.8rem; }
+.data-table tbody .GB { font-size: 0.9rem; font-weight: 900; }
+.data-table tbody .TB { font-size: 1rem; font-weight: 900; }
 .left-padding-separator { padding-left: 20px }
 .bar-table { visibility: visible; width: 100%; margin: 3px auto; padding: 2px 0; text-align: center; font-size: 10px; border-bottom: 1px solid var(--light-color);}
 .bar-table tr:first-child td { vertical-align: bottom; }
@@ -8555,19 +8560,19 @@ sub Format_Bytes {
 
 # Do not use exp/log function to calculate 1024power, function make segfault on some unix/perl versions
 	if ( $bytes >= ( $fudge << 40 ) ) {
-		return sprintf( "%.2f", $bytes / 1099511627776 ) . " $Message[180]";
+		return '<span class="TB">' . sprintf( "%.2f", $bytes / 1099511627776 ) . ' ' . $Message[180] . '</span>';
 	}
 	if ( $bytes >= ( $fudge << 30 ) ) {
-		return sprintf( "%.2f", $bytes / 1073741824 ) . " $Message[110]";
+		return '<span class="GB">' . sprintf( "%.2f", $bytes / 1073741824 ) . ' ' . $Message[110] . '</span>';
 	}
 	if ( $bytes >= ( $fudge << 20 ) ) {
-		return sprintf( "%.2f", $bytes / 1048576 ) . " $Message[109]";
+		return '<span class="MB">' . sprintf( "%.2f", $bytes / 1048576 ) . ' ' . $Message[109] . '</span>';
 	}
 	if ( $bytes >= ( $fudge << 10 ) ) {
-		return sprintf( "%.2f", $bytes / 1024 ) . " $Message[108]";
+		return '<span class="KB">' . sprintf( "%.2f", $bytes / 1024 ) . ' ' . $Message[108] . '</span>';
 	}
 	if ( $bytes < 0 ) { $bytes = "?"; }
-	return int($bytes) . ( int($bytes) ? " $Message[119]" : "" );
+	return '<span class="B">' . int($bytes) . ( int($bytes) ? ' &nbsp;' . $Message[119] : '' ) . '</span>';
 }
 
 #------------------------------------------------------------------------------
@@ -8620,7 +8625,7 @@ sub HtmlBar {
 	my $width = shift || 4;
 	my $height = ($max > 0) ? ( $data || 0 ) / $max : 0;
 
-	return '<div class="bar bar-vertical bg-' . $type . '" style="width: ' . $width . (($width =~ m/^\d+$/) ? 'px' : '') . ';height: calc( var(--bar-v-height) * var(--bar-v-grow) * ' . $height . 'px)" title="' . $title . ' : ' . $formattedData . '"></div>';
+	return '<div class="bar bar-vertical bg-' . $type . '" style="width: ' . $width . (($width =~ m/^\d+$/) ? 'px' : '') . ';height: calc( var(--bar-v-height) * var(--bar-v-grow) * ' . $height . 'px)"></div>';
 }
 
 #------------------------------------------------------------------------------
