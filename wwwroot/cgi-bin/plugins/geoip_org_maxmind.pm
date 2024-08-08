@@ -210,13 +210,19 @@ sub AddHTMLGraph_geoip_org_maxmind {
 # UNIQUE: NO (Several plugins using this function can be loaded)
 # Function called to add additionnal columns to the Hosts report.
 # This function is called when building rows of the report (One call for each
-# row). So it allows you to add a column in report, for example with code :
-#   print "<TD>This is a new cell for $param</TD>";
+# row). So it allows you to add a column in report.
+# The returned string is the content of the cell, the cell is build by AWStats.pl
+# return code example: ### return "This is a new content for $param";
+# 
 # Parameters: Host name or ip
 #-----------------------------------------------------------------------------
 sub ShowInfoHost_geoip_org_maxmind {
     my $param="$_[0]";
+    my $noRes = $Message[56];
+
 	# <-----
+	if(!$param){ return $noRes; }
+
 	if ($param eq '__title__') {
     	my $NewLinkParams=${QueryString};
     	$NewLinkParams =~ s/(^|&|&amp;)update(=\w*|$)//i;
@@ -233,74 +239,45 @@ sub ShowInfoHost_geoip_org_maxmind {
     	$NewLinkParams =~ s/^&amp;//; $NewLinkParams =~ s/&amp;$//;
     	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 
-		print "<th width=\"80\">";
-        print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=plugin_$PluginName"):"$StaticLinks.plugin_$PluginName.$StaticExt")."\"$NewLinkTarget>GeoIP<br />Org</a>";
-        print "</th>";
+        return "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=plugin_$PluginName"):"$StaticLinks.plugin_$PluginName.$StaticExt")."\"$NewLinkTarget>GeoIP Org</a>";
 	}
-	elsif ($param) {
-        my $ip=0;
-		my $key;
-		if ($param =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {	# IPv4 address
-		    $ip=4;
-			$key=$param;
-		}
-		elsif ($param =~ /^[0-9A-F]*:/i) {						# IPv6 address
-		    $ip=6;
-			$key=$param;
-		}
-		print "<td>";
-		if ($key && $ip==4) {
-			my $org = TmpLookup_geoip_org_maxmind($param);
-        	if (!$org && $type eq 'geoippureperl')
-			{
-        		# Function org_by_addr does not exists in PurePerl but org_by_name do same
-        		$org=$geoip_org_maxmind->org_by_name($param) if $geoip_org_maxmind;
-        	}
-        	elsif(!$org)
-        	{
-        		$org=$geoip_org_maxmind->org_by_addr($param) if $geoip_org_maxmind;
-        	}
-        	if ($Debug) { debug("  Plugin $PluginName: GetOrgByIp for $param: [$org]",5); }
-		    if ($org) {
-		        if (length($org) <= $MAXLENGTH) {
-		            print "$org";
-		        }
-		        else {
-		            print substr($org,0,$MAXLENGTH).'...';
-		        }
-		    }
-		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
-		}
-		if ($key && $ip==6) {
-		    print "<span style=\"color: #$color_other\">$Message[0]</span>";
-		}
-		if (! $key) {
-        	my $org = TmpLookup_geoip_org_maxmind($param);
-        	if (!$org && $type eq 'geoippureperl')
-			{
-        		$org=$geoip_org_maxmind->org_by_name($param) if $geoip_org_maxmind;
-        	}
-        	elsif(!$org)
-        	{
-        		$org=$geoip_org_maxmind->org_by_name($param) if $geoip_org_maxmind;
-        	}
-        	if ($Debug) { debug("  Plugin $PluginName: GetOrgByHostname for $param: [$org]",5); }
-		    if ($org) {
-		        if (length($org) <= $MAXLENGTH) {
-		            print "$org";
-		        }
-		        else {
-		            print substr($org,0,$MAXLENGTH).'...';
-		        }
-		    }
-		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
-		}
-		print "</td>";
+
+	if ($param =~ /^[0-9A-F]*:/i) { return $noRes; } # IPv6 address
+
+	my $org = TmpLookup_geoip_org_maxmind($param);
+
+	if ($param =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/)
+	{	# IPv4 address
+		if (!$org && $type eq 'geoippureperl')
+		{
+       		# Function org_by_addr does not exists in PurePerl but org_by_name do same
+       		$org=$geoip_org_maxmind->org_by_name($param) if $geoip_org_maxmind;
+       	}
+       	elsif(!$org)
+       	{
+       		$org=$geoip_org_maxmind->org_by_addr($param) if $geoip_org_maxmind;
+       	}
+       	if ($Debug) { debug("  Plugin $PluginName: GetOrgByIp for $param: [$org]",5); }
 	}
-	else {
-		print "<td>&nbsp;</td>";
+	else
+	{ #hostname
+       	if (!$org && $type eq 'geoippureperl')
+		{
+       		$org=$geoip_org_maxmind->org_by_name($param) if $geoip_org_maxmind;
+       	}
+       	elsif(!$org)
+       	{
+       		$org=$geoip_org_maxmind->org_by_name($param) if $geoip_org_maxmind;
+       	}
+       	if ($Debug) { debug("  Plugin $PluginName: GetOrgByHostname for $param: [$org]",5); }
 	}
-	return 1;
+
+	if ($org)
+	{
+	   return ((length($org) <= $MAXLENGTH) ? "$org" : substr($org,0,$MAXLENGTH).'...');
+	}
+
+	return $noRes;
 	# ----->
 }
 

@@ -139,14 +139,21 @@ sub GetCountryCodeByName_geoip {
 # UNIQUE: NO (Several plugins using this function can be loaded)
 # Function called to add additionnal columns to the Hosts report.
 # This function is called when building rows of the report (One call for each
-# row). So it allows you to add a column in report, for example with code :
-#   print "<TD>This is a new cell for $param</TD>";
+# row). So it allows you to add a column in report.
+# The returned string is the content of the cell, the cell is build by AWStats.pl
+# return code example: ### return "This is a new content for $param";
+# 
 # Parameters: Host name or ip
 #-----------------------------------------------------------------------------
 sub ShowInfoHost_geoip {
     my $param="$_[0]";
+    my $noRes = $Message[56];
+
 	# <-----
-	if ($param eq '__title__') {
+	if(!$param){ return $noRes; }
+
+	if ($param eq '__title__')
+	{
     	my $NewLinkParams=${QueryString};
     	$NewLinkParams =~ s/(^|&)update(=\w*|$)//i;
     	$NewLinkParams =~ s/(^|&)output(=\w*|$)//i;
@@ -161,45 +168,34 @@ sub ShowInfoHost_geoip {
     	$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
     	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 
-		print "<th width=\"80\">";
-        print "<a href=\"#countries\">GeoIP<br />Country</a>";
-        print "</th>";
+		return 'GeoIP Country';
 	}
-	elsif ($param) {
-        my $ip=0;
-		my $key;
-		if ($param =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {	# IPv4 address
-		    $ip=4;
-			$key=$param;
-		}
-		elsif ($param =~ /^[0-9A-F]*:/i) {						# IPv6 address
-		    $ip=6;
-			$key=$param;
-		}
-		print "<td>";
-		if ($key && $ip==4) {
-			my $res = TmpLookup_geoip($param);
-        	if (!$res){$res=lc($gi->country_code_by_addr($param)) if $gi;}
-        	if ($Debug) { debug("  Plugin $PluginName: GetCountryByIp for $param: [$res]",5); }
-		    if ($res) { print $DomainsHashIDLib{$res}?$DomainsHashIDLib{$res}:"<span style=\"color: #$color_other\">$Message[0]</span>"; }
-		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
-		}
-		if ($key && $ip==6) {
-		    print "<span style=\"color: #$color_other\">$Message[0]</span>";
-		}
-		if (! $key) {
-			my $res = TmpLookup_geoip($param);
-        	if (!$res){$res=lc($gi->country_code_by_name($param)) if $gi;}
-        	if ($Debug) { debug("  Plugin $PluginName: GetCountryByHostname for $param: [$res]",5); }
-		    if ($res) { print $DomainsHashIDLib{$res}?$DomainsHashIDLib{$res}:"<span style=\"color: #$color_other\">$Message[0]</span>"; }
-		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
-		}
-		print "</td>";
+	
+	if ($param =~ /^[0-9A-F]*:/i) { return $noRes; } # IPv6 address
+
+	if ($param !~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/)
+	{ # Not IPv4 address (hostname)
+		my $res = TmpLookup_geoip($param);
+       	if (!$res){$res=lc($gi->country_code_by_name($param)) if $gi;}
+       	if ($Debug) { debug("  Plugin $PluginName: GetCountryByHostname for $param: [$res]",5); }
+	    return (
+	    	($res)
+	    	? ($DomainsHashIDLib{$res} ? $DomainsHashIDLib{$res} : $noRes)
+	    	: $noRes
+	    );
 	}
-	else {
-		print "<td>&nbsp;</td>";
-	}
-	return 1;
+
+	my $res = TmpLookup_geoip($param);
+   	if (!$res){$res=lc($gi->country_code_by_addr($param)) if $gi;}
+   	if ($Debug) { debug("  Plugin $PluginName: GetCountryByIp for $param: [$res]",5); }
+
+    return (
+    	($res)
+    	? ($DomainsHashIDLib{$res} ? $DomainsHashIDLib{$res} : $noRes)
+    	: $noRes
+    );
+
+	return $noRes;
 	# ----->
 }
 

@@ -124,6 +124,7 @@ mkdir -p $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/icon/flags
 mkdir -p $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/icon/mime
 mkdir -p $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/icon/os
 mkdir -p $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/icon/other
+mkdir -p $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/img
 mkdir -p $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/js
 mkdir -p $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/cgi-bin/lang
 mkdir -p $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/cgi-bin/lang/tooltips_f
@@ -163,6 +164,7 @@ install -m 444 wwwroot/icon/flags/* $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/ic
 install -m 444 wwwroot/icon/mime/* $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/icon/mime
 install -m 444 wwwroot/icon/os/* $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/icon/os
 install -m 444 wwwroot/icon/other/* $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/icon/other
+install -m 444 wwwroot/img/* $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/img
 install -m 444 wwwroot/js/* $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/js
 install -m 444 wwwroot/cgi-bin/lang/tooltips_f/* $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/cgi-bin/lang/tooltips_f
 install -m 444 wwwroot/cgi-bin/lang/tooltips_m/* $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/cgi-bin/lang/tooltips_m
