@@ -933,7 +933,7 @@ sub html_head {
 
 			if ( !$StyleSheet ) {
 				print
-"body { font: 11px verdana, arial, helvetica, sans-serif; background-color: #$color_Background; margin-top: 0; margin-bottom: 0; }\n";
+"body { font: 1.2em verdana, arial, helvetica, sans-serif; background-color: #$color_Background; margin-top: 0; margin-bottom: 0; }\n";
 				print ".aws_bodyl  { }\n";
 				print
 ".aws_border { border-collapse: collapse; background-color: #$color_TableBG; padding: 1px 1px "
@@ -941,7 +941,7 @@ sub html_head {
 					  || $BuildReportFormat eq 'xml' ? "2px" : "1px" )
 				  . " 1px; margin-top: 0px; margin-bottom: 0px; }\n";
 				print
-".aws_title  { font: 13px verdana, arial, helvetica, sans-serif; font-weight: bold; background-color: #$color_TableBGTitle; text-align: center; margin-top: 0; margin-bottom: 0; padding: 1px 1px 1px 1px; color: #$color_TableTitle; }\n";
+".aws_title  { font: 1em verdana, arial, helvetica, sans-serif; font-weight: bold; background-color: #$color_TableBGTitle; text-align: center; margin-top: 0; margin-bottom: 0; padding: 5px; color: #$color_TableTitle; }\n";
 				print
 ".aws_blank  { font: 13px verdana, arial, helvetica, sans-serif; background-color: #$color_Background; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }\n";
 				print <<EOF;
@@ -961,14 +961,14 @@ sub html_head {
 }
 th		{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; font: 11px verdana, arial, helvetica, sans-serif; text-align:center; color: #$color_titletext; }
 th.aws	{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; font-size: 13px; font-weight: bold; }
-td		{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; font: 11px verdana, arial, helvetica, sans-serif; text-align:center; color: #$color_text; }
-td.aws	{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; font: 11px verdana, arial, helvetica, sans-serif; text-align:$dir; color: #$color_text; padding: 0px;}
-td.awsm	{ border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; border-bottom-width: 0px; font: 11px verdana, arial, helvetica, sans-serif; text-align:$dir; color: #$color_text; padding: 0px; }
+td		{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; font: 0.9em verdana, arial, helvetica, sans-serif; text-align:center; color: #$color_text; }
+td.aws	{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; text-align:$dir; color: #$color_text; padding: 6px;}
+td.awsm	{ border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; border-bottom-width: 0px; font: 0.8em verdana, arial, helvetica, sans-serif; text-align:$dir; color: #$color_text; padding: 0px; }
 b { font-weight: bold; }
-a { font: 11px verdana, arial, helvetica, sans-serif; }
 a:link    { color: #$color_link; text-decoration: none; }
 a:visited { color: #$color_link; text-decoration: none; }
 a:hover   { color: #$color_hover; text-decoration: underline; }
+.aws_data th { font-size: 0.9em; padding: 5px; }
 .currentday { font-weight: bold; }
 EOF
 			}
