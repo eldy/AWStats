@@ -57,7 +57,9 @@
 'vm',        'Virtual Machine image',
 'torrent',   'BitTorrent File',
 'gis',       'GIS File',
-'ebook',     'Ebook File'
+'ebook',     'Ebook File',
+'3dmodel',   '3D Model file',
+'3dprint',   '3D Print file'
 );
 
 # MimeHashLib
@@ -263,6 +265,13 @@
 'vdi',['vm','d'],
 'vhdx',['vm','d'],
 'vpc',['vm','d'],
+# 3D Model files
+'stl',['3dmodel','d'],
+'3mf',['3dmodel','d'],
+'obj',['3dmodel','d'],
+# 3D Print files
+'gcode',['3dprint','d'],
+'bgcode',['3dprint','d'],
 );
 
 
