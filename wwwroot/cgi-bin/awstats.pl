@@ -7797,7 +7797,7 @@ sub Read_DNS_Cache {
 		LoadCache_hashfiles( $filetoload, $hashtoload );
 	}
 	if ( !scalar keys %$hashtoload ) {
-		open( DNSFILE, "$filetoload" )
+		open( DNSFILE, "<", "$filetoload" )
 		  or error("Couldn't open DNS Cache file \"$filetoload\": $!");
 
 #binmode DNSFILE;		# If we set binmode here, it seems that the load is broken on ActiveState 5.8
