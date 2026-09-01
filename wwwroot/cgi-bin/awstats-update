@@ -1,0 +1,620 @@
+#!/bin/bash
+# ------------------------------------------------------------------------------
+# AWStats Update Script - Universal Version
+# 
+# Description: Update AWStats statistics for a domain
+# Supports: Apache, Nginx, Any web server with CGI support
+#
+# Usage: 
+#   ./awstats-update.sh <domain> [webroot] [stats_dir] [config_dir] [user]
+#
+# Examples:
+#   ./awstats-update.sh example.com
+#   ./awstats-update.sh example.com /var/www/html
+#   ./awstats-update.sh example.com /home/user/public_html /home/user/stats /etc/awstats
+# ------------------------------------------------------------------------------
+
+set -e
+
+#----------------------------------------------------------#
+#                Default Configuration                     #
+#----------------------------------------------------------#
+
+domain="$1"
+webroot="${2:-}"
+stats_dir="${3:-}"
+config_dir="${4:-/etc/awstats}"
+user="${5:-}"
+
+# IDN domain support (if idn command is available)
+if command -v idn >/dev/null 2>&1; then
+    domain_idn=$(idn -t "$domain" 2>/dev/null || echo "$domain")
+else
+    domain_idn="$domain"
+fi
+
+#----------------------------------------------------------#
+#                     Logging Setup                        #
+#----------------------------------------------------------#
+
+LOG_DIR="/var/log/awstats"
+LOG_FILE="$LOG_DIR/awstats-update-${domain}.log"
+mkdir -p "$LOG_DIR" 2>/dev/null
+chmod 755 "$LOG_DIR" 2>/dev/null
+> "$LOG_FILE" 2>/dev/null
+
+log_message() {
+    local level="$1"
+    local message="$2"
+    local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
+    echo "[$timestamp] [$level] $message" >> "$LOG_FILE"
+}
+
+log_message "INFO" "Starting AWStats update for domain: $domain"
+
+#----------------------------------------------------------#
+#              Auto-detect Webroot Function                #
+#----------------------------------------------------------#
+
+detect_webroot() {
+    local domain="$1"
+    local detected=""
+    
+    # Common webroot paths
+    local common_paths=(
+        "/var/www/$domain"
+        "/var/www/html/$domain"
+        "/var/www/vhosts/$domain/httpdocs"
+        "/home/$domain/public_html"
+        "/home/*/web/$domain/public_html"
+        "/home/*/public_html"
+    )
+    
+    # Try to parse from Nginx config
+    for conf in /etc/nginx/sites-enabled/* /etc/nginx/conf.d/* 2>/dev/null; do
+        if [ -f "$conf" ] && grep -q "$domain" "$conf" 2>/dev/null; then
+            detected=$(grep -E "^\s*root\s+" "$conf" 2>/dev/null | head -1 | awk '{print $2}' | tr -d ';' | tr -d '"')
+            [ -n "$detected" ] && echo "$detected" && return
+        fi
+    done
+    
+    # Try to parse from Apache config
+    for conf in /etc/apache2/sites-enabled/* /etc/httpd/conf.d/* 2>/dev/null; do
+        if [ -f "$conf" ] && grep -q "$domain" "$conf" 2>/dev/null; then
+            detected=$(grep -i "DocumentRoot" "$conf" 2>/dev/null | head -1 | awk '{print $2}' | tr -d '"')
+            [ -n "$detected" ] && echo "$detected" && return
+        fi
+    done
+    
+    # Check common paths
+    for path in "${common_paths[@]}"; do
+        # Expand wildcards
+        for expanded in $path; do
+            if [ -d "$expanded" ]; then
+                echo "$expanded"
+                return
+            fi
+        done
+    done
+    
+    # Default fallback
+    echo "/var/www/$domain"
+}
+
+#----------------------------------------------------------#
+#              Auto-detect User Function                   #
+#----------------------------------------------------------#
+
+detect_user() {
+    local webroot="$1"
+    
+    if [ -d "$webroot" ]; then
+        local owner=$(stat -c '%U' "$webroot" 2>/dev/null)
+        if [ -n "$owner" ] && [ "$owner" != "UNKNOWN" ]; then
+            echo "$owner"
+            return
+        fi
+    fi
+    
+    # Common web server users
+    for test_user in www-data apache nginx httpd nobody; do
+        if id "$test_user" >/dev/null 2>&1; then
+            echo "$test_user"
+            return
+        fi
+    done
+    
+    echo "nobody"
+}
+
+#----------------------------------------------------------#
+#              Auto-detect Statistics Dir                  #
+#----------------------------------------------------------#
+
+detect_stats_dir() {
+    local webroot="$1"
+    local domain="$2"
+    
+    local common_stats_paths=(
+        "$webroot/stats"
+        "$webroot/awstats"
+        "/var/lib/awstats/$domain"
+        "/var/www/stats/$domain"
+        "/usr/local/hestia/data/users/*/web/$domain/stats"
+    )
+    
+    for path in "${common_stats_paths[@]}"; do
+        for expanded in $path; do
+            if [ -d "$expanded" ] || [ ! -e "$expanded" ]; then
+                echo "$expanded"
+                return
+            fi
+        done
+    done
+    
+    echo "$webroot/stats"
+}
+
+#----------------------------------------------------------#
+#                 Detect Web Server Type                   #
+#----------------------------------------------------------#
+
+detect_web_server() {
+    if command -v nginx >/dev/null 2>&1 && pidof nginx >/dev/null 2>&1; then
+        echo "nginx"
+    elif command -v apache2ctl >/dev/null 2>&1 || command -v httpd >/dev/null 2>&1; then
+        echo "apache"
+    else
+        echo "unknown"
+    fi
+}
+
+#----------------------------------------------------------#
+#                     Lock Management                      #
+#----------------------------------------------------------#
+
+LOCK_FILE="/tmp/awstats-update-${domain}.lock"
+
+cleanup_lock() {
+    rm -f "$LOCK_FILE"
+    exec 200>&-
+    log_message "INFO" "Released lock file: $LOCK_FILE"
+}
+
+if [ -f "$LOCK_FILE" ]; then
+    LOCK_PID=$(cat "$LOCK_FILE" 2>/dev/null)
+    if [ -n "$LOCK_PID" ] && kill -0 "$LOCK_PID" 2>/dev/null; then
+        log_message "ERROR" "AWStats update already running (PID: $LOCK_PID)"
+        exit 1
+    else
+        log_message "WARNING" "Found stale lock file (PID: $LOCK_PID not exist), cleaning..."
+        rm -f "$LOCK_FILE"
+    fi
+fi
+
+exec 200>"$LOCK_FILE"
+flock -n 200 || {
+    log_message "ERROR" "Failed to acquire lock"
+    exit 1
+}
+
+echo $$ >&200
+log_message "INFO" "Acquired lock: $LOCK_FILE (PID: $$)"
+trap cleanup_lock EXIT
+
+#----------------------------------------------------------#
+#                Language Detection                       #
+#----------------------------------------------------------#
+
+detect_language() {
+    local lang="${LANG:-en_US.UTF-8}"
+    lang=$(echo "$lang" | cut -d'_' -f1 | tr '[:upper:]' '[:lower:]')
+    
+    case "$lang" in
+        zh-cn|zh-sg|zh)           echo "zh-cn" ;;
+        zh-tw|zh-hk|zh-mo)        echo "zh-tw" ;;
+        pt-br)                    echo "pt-br" ;;
+        no|nb|nn)                 echo "nb" ;;
+        *)                        echo "$lang" ;;
+    esac
+}
+
+AWSTATS_LANG=$(detect_language)
+log_message "INFO" "Language: $AWSTATS_LANG"
+
+#----------------------------------------------------------#
+#                Directory Setup & Validation              #
+#----------------------------------------------------------#
+
+setup_directories() {
+    # Auto-detect missing parameters
+    if [ -z "$webroot" ]; then
+        webroot=$(detect_webroot "$domain")
+        echo "  Auto-detected webroot: $webroot"
+        log_message "INFO" "Auto-detected webroot: $webroot"
+    fi
+    
+    if [ ! -d "$webroot" ]; then
+        echo "ERROR: Webroot directory does not exist: $webroot"
+        echo "Please specify correct path: $0 <domain> /path/to/webroot"
+        log_message "ERROR" "Webroot not found: $webroot"
+        exit 1
+    fi
+    
+    if [ -z "$stats_dir" ]; then
+        stats_dir=$(detect_stats_dir "$webroot" "$domain")
+        echo "  Auto-detected stats directory: $stats_dir"
+        log_message "INFO" "Auto-detected stats directory: $stats_dir"
+    fi
+    
+    if [ -z "$user" ]; then
+        user=$(detect_user "$webroot")
+        echo "  Auto-detected user: $user"
+        log_message "INFO" "Auto-detected user: $user"
+    fi
+    
+    # Get user group
+    user_group=$(id -gn "$user" 2>/dev/null || echo "$user")
+    
+    # Create stats directory
+    if [ ! -e "$stats_dir" ]; then
+        mkdir -p "$stats_dir"
+        chmod 755 "$stats_dir"
+        log_message "INFO" "Created stats directory: $stats_dir"
+    else
+        local current_perms=$(stat -c "%a" "$stats_dir" 2>/dev/null)
+        if [ "$current_perms" != "755" ]; then
+            log_message "INFO" "Fixed permissions on stats directory"
+            chmod 755 "$stats_dir"
+        fi
+    fi
+    
+    # Create config directory
+    mkdir -p "$config_dir" 2>/dev/null
+    
+    log_message "INFO" "Configuration:"
+    log_message "INFO" "  Domain: $domain"
+    log_message "INFO" "  Webroot: $webroot"
+    log_message "INFO" "  Stats directory: $stats_dir"
+    log_message "INFO" "  Config directory: $config_dir"
+    log_message "INFO" "  User: $user"
+    log_message "INFO" "  Group: $user_group"
+}
+
+#----------------------------------------------------------#
+#                Setup Index CGI Script                   #
+#----------------------------------------------------------#
+
+setup_index_cgi() {
+    local index_file="$stats_dir/index.cgi"
+    
+    if [ ! -f "$index_file" ]; then
+        log_message "INFO" "Creating index.cgi: $index_file"
+        
+        cat > "$index_file" << 'EOF'
+#!/usr/bin/perl
+use strict;
+use warnings;
+
+# Get current year and month
+my ($sec, $min, $hour, $day, $mon, $year_num) = localtime(time);
+my $year = $year_num + 1900;
+my $month = sprintf("%02d", $mon + 1);
+
+# Get the domain name from the configuration file
+my $config = "DOMAIN_PLACEHOLDER";
+
+# Build the target URL
+my $target = "/cgi-bin/awstats.pl?config=$config&framename=mainright&year=$year&month=$month";
+
+# Ensure output is refreshed immediately
+$| = 1;
+
+# Send HTTP redirect
+print "Status: 302 Found\r\n";
+print "Location: $target\r\n";
+print "Content-Type: text/html\r\n";
+print "\r\n";
+print "<!DOCTYPE html>";
+print "<html><head><title>Redirecting to AWStats...</title>";
+print "<meta http-equiv=\"refresh\" content=\"0;url=$target\">";
+print "</head><body>";
+print "Redirecting to <a href=\"$target\">AWStats</a>...</body></html>";
+EOF
+        
+        sed -i "s/DOMAIN_PLACEHOLDER/$domain/g" "$index_file"
+        chmod 755 "$index_file"
+        chown $user:$user_group "$index_file" 2>/dev/null
+        log_message "INFO" "Created index.cgi"
+    fi
+    
+    # Create .htaccess for Apache
+    local web_server=$(detect_web_server)
+    if [ "$web_server" = "apache" ]; then
+        local htaccess_file="$stats_dir/.htaccess"
+        if [ ! -f "$htaccess_file" ]; then
+            cat > "$htaccess_file" << EOF
+Options +ExecCGI
+AddHandler cgi-script .cgi
+DirectoryIndex index.cgi
+EOF
+            chmod 644 "$htaccess_file"
+            chown $user:$user_group "$htaccess_file" 2>/dev/null
+            log_message "INFO" "Created .htaccess"
+        fi
+    fi
+}
+
+#----------------------------------------------------------#
+#                Setup Symbolic Links                     #
+#----------------------------------------------------------#
+
+setup_symlinks() {
+    local wwwroot="/usr/share/awstats"
+    
+    # Docs symlink
+    if [ ! -e "$stats_dir/docs" ]; then
+        ln -sf /usr/share/doc/awstats/html/ "$stats_dir/docs" 2>/dev/null
+        log_message "INFO" "Created docs symlink"
+    fi
+    
+    # Icon symlink
+    if [ ! -e "$stats_dir/icon" ]; then
+        ln -sf "$wwwroot/icon" "$stats_dir/icon" 2>/dev/null
+        log_message "INFO" "Created icon symlink"
+    fi
+    
+    # Logo symlink - try to find existing logo
+    if [ ! -e "$stats_dir/logo.svg" ]; then
+        local logo_paths=(
+            "$webroot/logo.svg"
+            "$webroot/images/logo.svg"
+        )
+        for logo in "${logo_paths[@]}"; do
+            if [ -f "$logo" ]; then
+                ln -sf "$logo" "$stats_dir/logo.svg" 2>/dev/null
+                log_message "INFO" "Created logo symlink from: $logo"
+                break
+            fi
+        done
+    fi
+}
+
+#----------------------------------------------------------#
+#                   AWStats Update                        #
+#----------------------------------------------------------#
+
+build_awstats() {
+    local awstats="/usr/lib/cgi-bin/awstats.pl"
+    local current_year=$(date "+%Y")
+    local current_month=$(date "+%m")
+    local data_file="$stats_dir/awstats${current_month}${current_year}.${domain_idn}.txt"
+    
+    echo "----------------------------------------"
+    echo "AWStats Update"
+    echo "----------------------------------------"
+    echo "  Domain: $domain"
+    echo "  Stats directory: $stats_dir"
+    echo "  Data file: $data_file"
+    echo "  Period: $current_year-$current_month"
+    echo ""
+    
+    log_message "INFO" "AWStats binary: $awstats"
+    log_message "INFO" "Processing period: $current_year-$current_month"
+    log_message "INFO" "Data file: $data_file"
+    
+    if [ ! -x "$awstats" ]; then
+        echo "ERROR: AWStats not found or not executable: $awstats"
+        log_message "ERROR" "AWStats not found: $awstats"
+        return 1
+    fi
+    
+    # Setup web server configuration
+    setup_web_config
+    
+    # Setup symlinks
+    setup_symlinks
+    
+    # Setup index CGI
+    setup_index_cgi
+    
+    # Clean up stale AWStats lock file
+    local awstats_lock="/tmp/awstats.${domain_idn}.lock"
+    if [ -f "$awstats_lock" ]; then
+        local lock_pid=$(cat "$awstats_lock" 2>/dev/null)
+        if [ -n "$lock_pid" ] && ! kill -0 "$lock_pid" 2>/dev/null; then
+            log_message "INFO" "Cleaning stale AWStats lock: $awstats_lock"
+            rm -f "$awstats_lock"
+        fi
+    fi
+    
+    # Run AWStats update
+    local exit_code=0
+    if [ ! -f "$data_file" ]; then
+        echo "  First-time update (creating data file)..."
+        log_message "INFO" "First-time update for $current_year-$current_month"
+        
+        $awstats -config="$domain_idn" -lang="$AWSTATS_LANG" \
+            -year="$current_year" -month="$current_month" -update >> "$LOG_FILE" 2>&1
+        exit_code=$?
+    else
+        echo "  Incremental update (existing data file)..."
+        log_message "INFO" "Incremental update for $current_year-$current_month"
+        
+        $awstats -config="$domain_idn" -lang="$AWSTATS_LANG" \
+            -year="$current_year" -month="$current_month" -update -databasepath="$data_file" >> "$LOG_FILE" 2>&1
+        exit_code=$?
+    fi
+    
+    # Verify results
+    if [ -f "$data_file" ] && [ -s "$data_file" ]; then
+        local file_size=$(stat -c%s "$data_file" 2>/dev/null || echo 0)
+        echo "  ✅ Update completed successfully!"
+        echo "  Data file size: $file_size bytes"
+        log_message "INFO" "Update successful, data file size: $file_size bytes"
+        
+        # Fix ownership
+        chown $user:$user_group "$data_file" 2>/dev/null
+        [ -f "${data_file}.bak" ] && chown $user:$user_group "${data_file}.bak" 2>/dev/null
+        
+        return 0
+    else
+        echo "  ❌ Update failed! Check log: $LOG_FILE"
+        log_message "ERROR" "Update failed for $current_year-$current_month"
+        return 1
+    fi
+}
+
+#----------------------------------------------------------#
+#                Web Server Configuration                  #
+#----------------------------------------------------------#
+
+setup_web_config() {
+    local web_server=$(detect_web_server)
+    
+    case "$web_server" in
+        nginx)
+            setup_nginx_config
+            ;;
+        apache)
+            setup_apache_config
+            ;;
+        *)
+            log_message "INFO" "Web server not detected, skipping configuration"
+            ;;
+    esac
+}
+
+setup_apache_config() {
+    local apache_conf="$config_dir/awstats-${domain}.conf"
+    local wwwroot="/usr/share/awstats"
+    
+    if [ ! -f "$apache_conf" ]; then
+        log_message "INFO" "Creating Apache configuration: $apache_conf"
+        
+        cat > "$apache_conf" << EOF
+# AWStats configuration for $domain
+Alias /awstatsclasses "$wwwroot/classes/"
+Alias /awstatscss "$wwwroot/css/"
+Alias /awstatsicons "$wwwroot/icon/"
+
+ScriptAlias /awstats/ "$wwwroot/cgi-bin/"
+<Directory "$wwwroot/cgi-bin">
+    Options +ExecCGI -Indexes
+    Require all granted
+</Directory>
+
+ScriptAlias /vstats/ "$stats_dir/"
+<Directory "$stats_dir">
+    Options +ExecCGI -Indexes
+    AddHandler cgi-script .cgi
+    DirectoryIndex index.cgi
+    Require all granted
+</Directory>
+EOF
+        chmod 644 "$apache_conf"
+        log_message "INFO" "Apache configuration created"
+        
+        # Enable CGI module
+        if command -v a2enmod >/dev/null 2>&1; then
+            a2enmod cgi cgid >/dev/null 2>&1 || true
+            log_message "INFO" "Enabled CGI modules"
+        fi
+    fi
+}
+
+setup_nginx_config() {
+    local nginx_conf="/etc/nginx/sites-available/awstats-${domain}.conf"
+    
+    if [ ! -f "$nginx_conf" ]; then
+        log_message "INFO" "Creating Nginx configuration: $nginx_conf"
+        
+        cat > "$nginx_conf" << EOF
+# AWStats configuration for $domain
+location /vstats/ {
+    alias $stats_dir/;
+    index index.cgi;
+    
+    location ~ \.cgi$ {
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
+        fastcgi_pass unix:/var/run/fcgiwrap.socket;
+    }
+}
+EOF
+        
+        # Enable site if sites-enabled exists
+        if [ -d /etc/nginx/sites-enabled ]; then
+            ln -sf "$nginx_conf" /etc/nginx/sites-enabled/ 2>/dev/null
+            systemctl reload nginx 2>/dev/null || true
+            log_message "INFO" "Nginx configuration enabled"
+        fi
+    fi
+}
+
+#----------------------------------------------------------#
+#                     Main Function                       #
+#----------------------------------------------------------#
+
+main() {
+    echo ""
+    echo "----------------------------------------"
+    echo "  AWStats Universal Update Script"
+    echo "----------------------------------------"
+    echo ""
+    
+    # Validate domain
+    if [ -z "$domain" ]; then
+        echo "ERROR: Domain name required"
+        echo ""
+        echo "Usage: $0 <domain> [webroot] [stats_dir] [config_dir] [user]"
+        echo ""
+        echo "Examples:"
+        echo "  $0 example.com"
+        echo "  $0 example.com /var/www/html"
+        echo "  $0 example.com /home/user/public_html /home/user/stats /etc/awstats www-data"
+        echo ""
+        exit 1
+    fi
+    
+    # Setup directories and validate
+    setup_directories
+    
+    # Run AWStats update
+    if build_awstats; then
+        # Fix ownership of stats directory
+        chown -R $user:$user_group "$stats_dir" 2>/dev/null
+        log_message "INFO" "Set ownership: $stats_dir"
+        
+        echo ""
+        echo "----------------------------------------"
+        echo "  ✅ AWStats update completed!"
+        echo "----------------------------------------"
+        echo "  Domain: $domain"
+        echo "  Period: $(date '+%Y-%m')"
+        echo "  Stats URL: http://$domain/vstats/"
+        echo "  Log file: $LOG_FILE"
+        echo "----------------------------------------"
+        echo ""
+        
+        log_message "INFO" "Update completed for domain: $domain"
+        exit 0
+    else
+        echo ""
+        echo "----------------------------------------"
+        echo "  ❌ AWStats update failed!"
+        echo "----------------------------------------"
+        echo "  Check log: $LOG_FILE"
+        echo "----------------------------------------"
+        echo ""
+        
+        log_message "ERROR" "Update failed for domain: $domain"
+        exit 1
+    fi
+}
+
+#----------------------------------------------------------#
+#                       Run Script                         #
+#----------------------------------------------------------#
+
+main "$@"

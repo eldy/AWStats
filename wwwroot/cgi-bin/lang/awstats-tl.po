@@ -1,0 +1,3333 @@
+# AWStats Tagalog (tl) translations
+# Copyright (C) 2026 AWStats
+# This file is distributed under the same license as the AWStats package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: AWStats 8.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-10 12:00+0000\n"
+"PO-Revision-Date: 2026-05-10 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Tagalog\n"
+"Language: tl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#------------------------------------------------------------------------------
+# Mga Pangalan ng Buwan
+#------------------------------------------------------------------------------
+
+msgid "month_01"
+msgstr "Enero"
+
+msgid "month_02"
+msgstr "Pebrero"
+
+msgid "month_03"
+msgstr "Marso"
+
+msgid "month_04"
+msgstr "Abril"
+
+msgid "month_05"
+msgstr "Mayo"
+
+msgid "month_06"
+msgstr "Hunyo"
+
+msgid "month_07"
+msgstr "Hulyo"
+
+msgid "month_08"
+msgstr "Agosto"
+
+msgid "month_09"
+msgstr "Setyembre"
+
+msgid "month_10"
+msgstr "Oktubre"
+
+msgid "month_11"
+msgstr "Nobyembre"
+
+msgid "month_12"
+msgstr "Disyembre"
+
+#------------------------------------------------------------------------------
+# Mga Pangalan ng Araw sa Linggo
+#------------------------------------------------------------------------------
+
+msgid "DayOfWeek_0"
+msgstr "Linggo"
+
+msgid "DayOfWeek_1"
+msgstr "Lunes"
+
+msgid "DayOfWeek_2"
+msgstr "Martes"
+
+msgid "DayOfWeek_3"
+msgstr "Miyerkules"
+
+msgid "DayOfWeek_4"
+msgstr "Huwebes"
+
+msgid "DayOfWeek_5"
+msgstr "Biyernes"
+
+msgid "DayOfWeek_6"
+msgstr "Sabado"
+
+#------------------------------------------------------------------------------
+# Mga Elemento ng Interface
+#------------------------------------------------------------------------------
+
+msgid "Advanced Web Statistics for"
+msgstr "Advanced na Web Statistics para sa"
+
+msgid "Statistics for"
+msgstr "Statistics para sa"
+
+msgid "main"
+msgstr "Pangkalahatang-ideya"
+
+# Paglipat ng tema
+msgid "Switch to light mode"
+msgstr "Lumipat sa maliwanag na mode"
+
+msgid "Switch to dark mode"
+msgstr "Lumipat sa madilim na mode"
+
+# Mga yunit ng kapasidad
+msgid "TB"
+msgstr "TB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "Bytes"
+msgstr "Byte"
+
+# Mga elemento ng form
+msgid "Filter"
+msgstr "I-filter"
+
+msgid "Exclude filter"
+msgstr "I-filter ang hindi isasama"
+
+msgid "Top"
+msgstr "Top"
+
+msgid "Full list"
+msgstr "Buong listahan"
+
+msgid "Last"
+msgstr "Huling"
+
+msgid "Average"
+msgstr "Average"
+
+msgid "Export"
+msgstr "I-export"
+
+msgid "Details"
+msgstr "Mga Detalye"
+
+msgid "Version"
+msgstr "Bersyon"
+
+# Separator ng libu-libo
+msgid "thousands_separator"
+msgstr ","
+
+# Long date format (para sa huling update, unang bisita, atbp.)
+msgid "dateformat_long"
+msgstr "mm/dd/yyyy HH:MM:SS"
+
+# Short date format (para sa mga label ng graph, atbp.)
+msgid "dateformat_short"
+msgstr "mm/dd/yyyy HH:MM"
+
+msgid "date_format_year"
+msgstr "%s"
+
+msgid "date_format_month"
+msgstr "%1$s %2$s"
+
+#------------------------------------------------------------------------------
+# Navigation Menu
+#------------------------------------------------------------------------------
+
+msgid "AWStats Month Selector"
+msgstr "AWStats Pumili ng Buwan"
+
+msgid "nav_category_basic"
+msgstr "Batayang Dokumentasyon"
+
+msgid "nav_category_guide"
+msgstr "Mga Gabay sa Paggamit"
+
+msgid "nav_category_reference"
+msgstr "Mga Sanggunian"
+
+msgid "nav_category_integration"
+msgstr "Integrasyon at Extension"
+
+msgid "nav_category_dev"
+msgstr "Dokumentasyon ng Developer"
+
+msgid "nav_changelog"
+msgstr "Talaan ng mga Pagbabago"
+
+msgid "nav_what"
+msgstr "Ano ang AWStats"
+
+msgid "nav_license"
+msgstr "Lisensya"
+
+msgid "nav_glossary"
+msgstr "Glosaryo"
+
+msgid "nav_setup"
+msgstr "Pag-install at Config"
+
+msgid "nav_upgrade"
+msgstr "Gabay sa Pag-upgrade"
+
+msgid "nav_config"
+msgstr "Mga Parameter ng Configuration"
+
+msgid "nav_extra"
+msgstr "Karagdagang Seksyon"
+
+msgid "nav_tools"
+msgstr "Iba pang Kasangkapan"
+
+msgid "nav_faq"
+msgstr "FAQ"
+
+msgid "nav_security"
+msgstr "Mga Rekomendasyon sa Seguridad"
+
+msgid "nav_compare"
+msgstr "Paghahambing"
+
+msgid "nav_benchmark"
+msgstr "Benchmark Test"
+
+msgid "nav_webmin"
+msgstr "Webmin Module"
+
+msgid "nav_dolibarr"
+msgstr "Dolibarr Module"
+
+msgid "nav_contrib"
+msgstr "Mag-ambag"
+
+msgid "nav_plugins"
+msgstr "Pag-develop ng Plugin"
+
+msgid "nav_hooks"
+msgstr "Plugin Hooks"
+
+msgid "nav_graphs"
+msgstr "Mga Graph ng Plugin"
+
+msgid "Back to top"
+msgstr "Bumalik sa itaas"
+
+msgid "nav_select_month"
+msgstr "Pumili ng buwan"
+
+#------------------------------------------------------------------------------
+# Pangunahing Statistical Indicators
+#------------------------------------------------------------------------------
+
+# Mga pagbisita
+msgid "Unique visitors"
+msgstr "Natatanging bisita"
+
+msgid "Visits"
+msgstr "Mga pagbisita"
+
+msgid "Visits duration"
+msgstr "Tagal ng pagbisita"
+
+msgid "First visit"
+msgstr "Unang update"
+
+msgid "Last visit"
+msgstr "Huling update"
+
+msgid "Visits/Visitor"
+msgstr "Pagbisita/Bisita"
+
+msgid "Pages/Visit"
+msgstr "Pahina/Pagbisita"
+
+msgid "Hits/Visit"
+msgstr "Hit/Pagbisita"
+
+msgid "KB/Visit"
+msgstr "KB/Pagbisita"
+
+msgid "KB/Visits"
+msgstr "KB/Mga pagbisita"
+
+# Trapiko
+msgid "Pages"
+msgstr "Mga pahina"
+
+msgid "Hits"
+msgstr "Mga hit"
+
+msgid "Bandwidth"
+msgstr "Bandwidth"
+
+msgid "duration_format"
+msgstr "%s-%s"
+
+msgid "unit_s"
+msgstr "segundo"
+
+msgid "unit_min"
+msgstr "minuto"
+
+msgid "unit_h"
+msgstr "oras"
+
+msgid "and"
+msgstr "-"
+
+msgid "Device Types"
+msgstr "Mga Uri ng Device"
+
+msgid "Device Type"
+msgstr "Uri ng Device"
+
+msgid "Percent"
+msgstr "Porsyento"
+
+# Mga pangalan ng uri ng device
+msgid "Mobile"
+msgstr "Mobile phone"
+
+msgid "Pause & Go"
+msgstr "Resume download"
+
+msgid "Complete"
+msgstr "Nakumpleto"
+
+msgid "Tablet"
+msgstr "Tablet"
+
+msgid "Tv"
+msgstr "Telebisyon"
+
+msgid "Wearable"
+msgstr "Nasusuot na device"
+
+msgid "Bot"
+msgstr "Robot"
+
+msgid "Desktop"
+msgstr "Desktop computer"
+
+msgid "Normal browsing traffic"
+msgstr "Normal na trapiko sa pagba-browse"
+
+msgid "Abnormal browsing traffic"
+msgstr "Hindi normal na trapiko sa pagba-browse"
+
+msgid "Viewed"
+msgstr "Tiningnan"
+
+msgid "Not viewed"
+msgstr "Hindi tiningnan"
+
+msgid "Abnormal browsing traffic note"
+msgstr "Ang hindi normal na trapiko sa pagba-browse ay kinabibilangan ng: mga search engine robot, AI training robot, vulnerability scanner, at mga kahilingang hindi sumusunod sa HTTP/HTTPS specifications"
+
+# Mga file
+msgid "File size"
+msgstr "Laki ng file"
+
+msgid "File type"
+msgstr "Uri ng file"
+
+msgid "Downloads"
+msgstr "Mga download"
+
+msgid "Request time"
+msgstr "Oras ng kahilingan"
+
+msgid "Total requests"
+msgstr "Kabuuang kahilingan"
+
+msgid "Frequency"
+msgstr "Dalas"
+
+msgid "Average frequency"
+msgstr "Average na dalas"
+
+msgid "Seconds"
+msgstr "Segundo"
+
+# Email (para sa LogType eq 'M')
+msgid "First"
+msgstr "Una"
+
+msgid "Mails"
+msgstr "Mga mail"
+
+msgid "Size"
+msgstr "Laki"
+
+msgid "If you remove this file, all statistics for date"
+msgstr "Babala: Ang pagtanggal ng file na ito ay magreresulta sa permanenteng pagkawala/pag-reset ng lahat ng estadistika para sa petsang"
+
+msgid "will be lost/reset."
+msgstr "!"
+
+msgid "Last config file used to build this data file was"
+msgstr "Ang huling configuration file na ginamit upang buuin ang data file na ito ay"
+
+msgid "Position (offset in bytes) in this file for beginning of each section for"
+msgstr "Ang posisyon (offset sa bytes) sa file na ito para sa simula ng bawat seksyon para sa"
+
+msgid "direct I/O access. If you made changes somewhere in this file, you should"
+msgstr "direktang I/O access. Kung gumawa ka ng mga pagbabago saanman sa file na ito, dapat mong"
+
+msgid "also remove completely the MAP section (AWStats will rewrite it at next update)"
+msgstr "ganap ding tanggalin ang MAP section (muling isusulat ito ng AWStats sa susunod na update)."
+
+msgid "LastLine    = Date of last record processed - Last record line number in last log - Last record offset in last log - Last record signature value"
+msgstr "LastLine    = Petsa ng huling record na naproseso - Numero ng linya ng huling record sa huling log - Offset ng huling record sa huling log - Halaga ng lagda ng huling record"
+
+msgid "FirstTime   = Date of first visit for history file"
+msgstr "FirstTime   = Petsa ng unang pagbisita para sa history file"
+
+msgid "LastTime    = Date of last visit for history file"
+msgstr "LastTime    = Petsa ng huling pagbisita para sa history file"
+
+msgid "LastUpdate  = Date of last update - Nb of parsed records - Nb of parsed old records - Nb of parsed new records - Nb of parsed corrupted - Nb of parsed dropped"
+msgstr "LastUpdate  = Petsa ng huling update - Bilang ng na-parse na record - Bilang ng na-parse na lumang record - Bilang ng na-parse na bagong record - Bilang ng na-parse na corrupted - Bilang ng na-parse na na-drop"
+
+msgid "TotalVisits = Number of visits"
+msgstr "TotalVisits = Bilang ng mga pagbisita"
+
+msgid "TotalUnique = Number of unique visitors"
+msgstr "TotalUnique = Bilang ng natatanging bisita"
+
+msgid "MonthHostsKnown   = Number of hosts known"
+msgstr "MonthHostsKnown   = Bilang ng kilalang host"
+
+msgid "MonthHostsUnKnown = Number of hosts unknown"
+msgstr "MonthHostsUnKnown = Bilang ng hindi kilalang host"
+
+msgid "Cluster ID - Pages - Hits - Bandwidth"
+msgstr "Cluster ID - Bilang ng pahina - Bilang ng hit - Bandwidth"
+
+msgid "Hour - Pages - Hits - Bandwidth - Not viewed Pages - Not viewed Hits - Not viewed Bandwidth"
+msgstr "Oras - Bilang ng pahina - Bilang ng hit - Bandwidth - Hindi tiningnang pahina - Hindi tiningnang hit - Hindi tiningnang bandwidth"
+
+msgid "Date - Pages - Hits - Bandwidth - Visits"
+msgstr "Petsa - Bilang ng pahina - Bilang ng hit - Bandwidth - Bilang ng pagbisita"
+
+msgid "Domain - Pages - Hits - Bandwidth"
+msgstr "Domain - Bilang ng pahina - Bilang ng hit - Bandwidth"
+
+msgid "The %s first Pages must be first (order not required for others)"
+msgstr "Ang unang %s na pahina na may pinakamaraming view lang ang ipinapakita sa homepage. Tingnan ang buong listahan sa pahina ng detalye."
+
+msgid "Host - Pages - Hits - Bandwidth - Last visit date - [Start date of last visit] - [Last page of last visit]"
+msgstr "Host - Bilang ng pahina - Bilang ng hit - Bandwidth - Oras ng huling pagbisita - [Oras ng pagsisimula ng huling pagbisita] - [Huling pahina ng huling pagbisita]"
+
+msgid "[Start date of last visit] and [Last page of last visit] are saved only if session is not finished"
+msgstr "[Oras ng pagsisimula ng huling pagbisita] at [Huling pahina ng huling pagbisita] ay sine-save lamang kung hindi pa tapos ang session"
+
+msgid "The first %s items are sorted by hits in descending order; order of the remaining items is undefined."
+msgstr "Ang unang %s na mga item ay nakaayos ayon sa bilang ng mga hit sa pababang pagkakasunod-sunod; ang pagkakasunod-sunod ng natitirang mga item ay hindi natukoy."
+
+msgid "Login - Pages - Hits - Bandwidth - Last visit"
+msgstr "Nag-log in na user - Bilang ng pahina - Bilang ng hit - Bandwidth - Oras ng huling pagbisita"
+
+msgid "Robot ID - Hits - Bandwidth - Last visit - Hits on robots.txt"
+msgstr "ID ng robot - Bilang ng hit - Bandwidth - Oras ng huling pagbisita - Bilang ng hit para sa robots.txt"
+
+msgid "Worm ID - Hits - Bandwidth - Last visit"
+msgstr "ID ng worm - Bilang ng hit - Bandwidth - Oras ng huling pagbisita"
+
+msgid "EMail - Hits - Bandwidth - Last visit"
+msgstr "Email - Bilang ng hit - Bandwidth - Oras ng huling pagbisita"
+
+msgid "The first %s email addresses are sorted by hits in descending order; order of the remaining addresses is undefined."
+msgstr "Ang unang %s na mga email address ay nakaayos ayon sa bilang ng mga hit sa pababang pagkakasunod-sunod; ang pagkakasunod-sunod ng natitirang mga address ay hindi natukoy."
+
+msgid "URL - Pages - Bandwidth - Entry - Exit"
+msgstr "URL - Bilang ng pahina - Bandwidth - Entry - Exit"
+
+msgid "Files type - Hits - Bandwidth - Bandwidth without compression - Bandwidth after compression"
+msgstr "Uri ng file - Bilang ng hit - Bandwidth - Bandwidth bago ang compression - Bandwidth pagkatapos ng compression"
+
+msgid "Request Time Range - Request Time Frequency"
+msgstr "Saklaw ng oras ng kahilingan - Bilang ng kahilingan"
+
+msgid "Payload Range - Payload Frequency"
+msgstr "Saklaw ng laki ng file - Bilang ng file"
+
+msgid "Session range - Number of visits"
+msgstr "Saklaw ng tagal ng session - Bilang ng pagbisita"
+
+msgid "URL with %s errors - Hits"
+msgstr "URL na may %s error - Bilang ng hit"
+
+msgid "Last URL referrer"
+msgstr "Huling URL referrer"
+
+msgid "Errors - Hits - Bandwidth"
+msgstr "Error - Bilang ng hit - Bandwidth"
+
+msgid "Search keywords - Number of search"
+msgstr "Mga keyword sa paghahanap - Bilang ng paghahanap"
+
+msgid "Only top %s keywords shown on main page (sorted by search count). See full list on detail page."
+msgstr "Ang unang %s na keyword ayon sa bilang ng paghahanap lang ang ipinapakita sa homepage. Tingnan ang buong listahan sa pahina ng detalye."
+
+msgid "Search keyphrases - Number of search"
+msgstr "Mga keyphrase sa paghahanap - Bilang ng paghahanap"
+
+msgid "Only top %s keyphrases shown on main page (sorted by search count). See full list on detail page."
+msgstr "Ang unang %s na keyphrase ayon sa bilang ng paghahanap lang ang ipinapakita sa homepage. Tingnan ang buong listahan sa pahina ng detalye."
+
+msgid "External page referers - Pages - Hits"
+msgstr "External na pahina referrer - Bilang ng pahina - Bilang ng hit"
+
+msgid "Only top %s external referrers shown on main page (sorted by pages). See full list on detail page."
+msgstr "Ang unang %s na external referrer ayon sa bilang ng pahina lang ang ipinapakita sa homepage. Tingnan ang buong listahan sa pahina ng detalye."
+
+msgid "Search engine referers ID - Pages - Hits"
+msgstr "ID ng referrer ng search engine - Bilang ng pahina - Bilang ng hit"
+
+msgid "Origin - Pages - Hits"
+msgstr "Pinagmulan - Bilang ng pahina - Bilang ng hit"
+
+msgid "Unknown referer Browser - Last visit date"
+msgstr "Hindi kilalang referrer na browser - Oras ng huling pagbisita"
+
+msgid "Unknown referer OS - Last visit date"
+msgstr "Hindi kilalang referrer na OS - Oras ng huling pagbisita"
+
+msgid "Screen size - Hits"
+msgstr "Resolution ng screen - Bilang ng hit"
+
+msgid "Browser ID - Hits - Pages"
+msgstr "ID ng browser - Bilang ng hit - Bilang ng pahina"
+
+msgid "Downloads - Hits - Bandwidth"
+msgstr "Mga download - Bilang ng hit - Bandwidth"
+
+msgid "Protocol - Hits - Bandwidth"
+msgstr "Protocol - Bilang ng hit - Bandwidth"
+
+msgid "Icon Status - Type:200:404:Other"
+msgstr "Status ng icon - Uri:200:404:Iba pa"
+
+#------------------------------------------------------------------------------
+# Time Period Translations - Tagalog
+#------------------------------------------------------------------------------
+
+msgid "period_00"
+msgstr "Hatinggabi · Tulog na ang statistics, ikaw ay nagbabasa pa rin ng data? Tunay na dedikasyon"
+
+msgid "period_01"
+msgstr "Alas-1 ng umaga · Pumapasok ka sa oras na ito? Insomnia o galing lang sa trabaho"
+
+msgid "period_02"
+msgstr "Alas-2 ng umaga · Mas masipag pa ang mga robot, nagtatrabaho pa rin sila"
+
+msgid "period_03"
+msgstr "Alas-3 ng umaga · Tulog ang lungsod, overtime ang server, sino ang dehado?"
+
+msgid "period_04"
+msgstr "Alas-4 ng umaga · Ang pinakamaliwanag na bituin sa dilim ay ang iyong screen o ang indicator light ng server"
+
+msgid "period_05"
+msgstr "Alas-5 ng umaga · Maagang ibon nakakahuli ng uod, maagang robot nakakahuli ng data"
+
+msgid "period_06"
+msgstr "Alas-6 ng umaga · May gumising na, may hindi pa natutulog, ang internet ay hindi natutulog"
+
+msgid "period_07"
+msgstr "Alas-7 ng umaga · Oras ng trapiko sa kalsada, oras din para mag-browse sa web"
+
+msgid "period_08"
+msgstr "Alas-8 ng umaga · Unang gawain sa trabaho: tingnan ang data kahapon"
+
+msgid "period_09"
+msgstr "Alas-9 ng umaga · Golden hours, kahit ang pagre-relax ay may sariling alituntunin"
+
+msgid "period_10"
+msgstr "Alas-10 ng umaga · Oras na para sa kape, habang sinusuri kung tumaas ang trapiko"
+
+msgid "period_11"
+msgstr "Alas-11 ng umaga · Isang oras na lang bago ang tanghalian, konting tiis pa"
+
+msgid "period_12"
+msgstr "Tanghaling tapat · Server: lahat kayo ay kumakain na, magpapahinga na rin ako"
+
+msgid "period_13"
+msgstr "Alas-1 ng hapon · Antok sa hapon, pero ang data ay hindi inaantok"
+
+msgid "period_14"
+msgstr "Alas-2 ng hapon · Oras para sa meryenda, mas masarap kasabay ng data"
+
+msgid "period_15"
+msgstr "Alas-3 ng hapon · Graph ng trapiko ngayong araw, parang kurba ba ng iyong mood?"
+
+msgid "period_16"
+msgstr "Alas-4 ng hapon · X oras na lang bago matapos ang trabaho, bumibilis na ang trapiko"
+
+msgid "period_17"
+msgstr "Alas-5 ng hapon · Tapos na ang araw ng trabaho! Pero ang server ay patuloy sa pagtatrabaho"
+
+msgid "period_18"
+msgstr "Alas-6 ng gabi · Oras ng hapunan, mag-relax sa panonood ng video"
+
+msgid "period_19"
+msgstr "Alas-7 ng gabi · Prime time, peak ng trapiko, server: kaya ko pa"
+
+msgid "period_20"
+msgstr "Alas-8 ng gabi · Nakahiga sa sopa, ikaw ang 114514th na bisita"
+
+msgid "period_21"
+msgstr "Alas-9 ng gabi · Madaling araw na, pabirong tumitingin ng data +1"
+
+msgid "period_22"
+msgstr "Alas-10 ng gabi · Malapit na ang data ngayong araw, kinakabahan ka ba?"
+
+msgid "period_23"
+msgstr "Alas-11 ng gabi · AWStats: oras na para matulog, may trabaho pa bukas"
+
+#------------------------------------------------------------------------------
+# Time Dimensions
+#------------------------------------------------------------------------------
+
+msgid "Period"
+msgstr "Statistical period"
+
+msgid "Year"
+msgstr "Taon"
+
+msgid "Month"
+msgstr "Buwan"
+
+msgid "Months"
+msgstr "Mga buwan"
+
+msgid "Date"
+msgstr "Petsa"
+
+msgid "Day"
+msgstr "Araw"
+
+msgid "Hour"
+msgstr "Oras"
+
+msgid "Hours"
+msgstr "Mga oras"
+
+msgid "Day of week"
+msgstr "Araw ng linggo"
+
+msgid "When"
+msgstr "Kailan"
+
+msgid "%s Server Management Panel"
+msgstr "%s  Server Management Panel"
+
+msgid "Server Administration"
+msgstr "Simple at mahusay na solusyon sa server"
+
+#------------------------------------------------------------------------------
+# Visitor Dimension
+#------------------------------------------------------------------------------
+
+msgid "Invalid URL Parameters"
+msgstr "Hindi wastong URL parameter"
+
+msgid "The requested page cannot be loaded due to invalid or malformed URL parameters."
+msgstr "Hindi ma-load ang hinihiling na pahina dahil sa hindi wasto o maling pagkaka-format na URL parameter."
+
+msgid "This may be caused by typing an incorrect URL, missing parameter separators, or using an invalid configuration name."
+msgstr "Ito ay maaaring sanhi ng pag-type ng maling URL, nawawalang mga separator ng parameter, o paggamit ng hindi wastong pangalan ng configuration."
+
+msgid "Please check the URL you entered and ensure all parameters are correctly formatted."
+msgstr "Pakitingnan ang URL na iyong inilagay at tiyaking ang lahat ng parameter ay wastong naka-format."
+
+msgid "SiteDomain parameter not defined in your config/domain file, or you may not have execution permission on the file."
+msgstr "Ang parameter na SiteDomain ay hindi tinukoy sa iyong config/domain file, o maaaring wala kang pahintulot na magsagawa sa file."
+
+msgid "Please run as Administrator to set permissions"
+msgstr "Patakbuhin bilang Administrator upang itakda ang mga pahintulot"
+
+msgid "This directory lacks read permission"
+msgstr "Ang direktoryong ito ay walang pahintulot sa pagbasa"
+
+msgid "Please set read permission for directory"
+msgstr "Pakiusap itakda ang pahintulot sa pagbasa para sa direktoryo"
+
+msgid "Missing required parameter in config file"
+msgstr "Nawawala ang kinakailangang parameter sa configuration file"
+
+msgid "Please check that 'DirData' is defined."
+msgstr "Pakiusap suriin kung ang 'DirData' ay tinukoy."
+
+msgid "Domain name in browser address appears to be missing or incomplete"
+msgstr "Mukhang nawawala o hindi kumpleto ang pangalan ng domain sa address ng browser"
+
+msgid "Please check the URL parameter"
+msgstr "Pakiusap suriin ang parameter ng URL"
+
+msgid "Format description"
+msgstr "Paglalarawan ng format"
+
+msgid "Please set execute permission"
+msgstr "Pakii-set ang pahintulot sa pagpapatakbo (execute)"
+
+msgid "Or if you prefer numeric mode"
+msgstr "O kung mas gusto mo ang numeric mode"
+
+msgid "View Report Directly"
+msgstr "Tingnan ang ulat nang direkta"
+
+msgid "AWStats Log Viewer"
+msgstr "AWStats Log Viewer"
+
+msgid "Month Selection"
+msgstr "Pagpili ng buwan"
+
+msgid "Who"
+msgstr "Sino"
+
+msgid "Visitors"
+msgstr "Mga bisita"
+
+msgid "Countries"
+msgstr "Mga bansa/rehiyon"
+
+msgid "flag_icon"
+msgstr "Watawat"
+
+msgid "Country-Region-City"
+msgstr "Bansa/Rehiyon/Lungsod"
+
+msgid "Code"
+msgstr "Kodigo"
+
+msgid "Known"
+msgstr "Kilala"
+
+msgid "unknownos"
+msgstr "Hindi kilalang operating system"
+
+msgid "unknownbrowser"
+msgstr "Hindi kilalang browser"
+
+msgid "Unresolved IP Address"
+msgstr "Hindi naresolbang IP address"
+
+msgid "Unknown File Type"
+msgstr "Hindi kilalang uri ng file"
+
+msgid "Unknown Size"
+msgstr "Hindi kilalang laki"
+
+msgid "Unknown Time"
+msgstr "Hindi kilalang oras ng kahilingan"
+
+msgid "Unknown Browser"
+msgstr "Hindi kilalang browser"
+
+msgid "Unknown OS"
+msgstr "Hindi kilalang operating system"
+
+msgid "Unknown Visitor"
+msgstr "Hindi kilalang bisita"
+
+msgid "Unknown Visitor (Total)"
+msgstr "Hindi kilalang bisita (kabuuan)"
+
+msgid "Unknown Country"
+msgstr "Hindi kilalang bansa/rehiyon"
+
+msgid "Unknown Country (Region)"
+msgstr "Hindi kilalang bansa/rehiyon (kabuuan)"
+
+msgid "Unknown Visitor (Title)"
+msgstr "Hindi kilalang bisita (pamagat)"
+
+msgid "PageStayTime"
+msgstr "Hindi matantya ang oras ng pananatili sa pahina"
+
+msgid "Unknown OS (Link)"
+msgstr "Hindi kilalang operating system (link)"
+
+msgid "Unknown OS (Row)"
+msgstr "Hindi kilalang operating system (listahan)"
+
+msgid "Unknown Browser (Link)"
+msgstr "Hindi kilalang browser (link)"
+
+msgid "Unknown Browser (Row)"
+msgstr "Hindi kilalang browser (listahan)"
+
+msgid "Unknown Screen"
+msgstr "Hindi kilalang laki ng screen"
+
+msgid "Login"
+msgstr "Username"
+
+msgid "Anonymous"
+msgstr "Anonymous"
+
+msgid "Robots"
+msgstr "Mga robot"
+
+msgid "Different robots"
+msgstr "Iba't ibang robot"
+
+msgid "Hits on robots.txt"
+msgstr "Ang trapikong 'hindi normal na pagba-browse' na nabuo ng mga robot ng search engine na nakalista sa itaas ay hindi kasama sa iba pang mga graph. Ang bilang pagkatapos ng '+' ay kumakatawan sa matagumpay na pagbisita sa 'robots.txt' file"
+
+msgid "Worms"
+msgstr "Mga worm"
+
+msgid "Different worms"
+msgstr "Iba't ibang worm"
+
+msgid "Target"
+msgstr "Target"
+
+msgid "Grabber"
+msgstr "Grabber"
+
+#------------------------------------------------------------------------------
+# File Format Descriptions - Tagalog
+#------------------------------------------------------------------------------
+
+msgid "mime_text"
+msgstr "TXT plain text file (plain text na walang format na na-standardize ng ASCII encoding noong 1963. Bilang pangunahing pundasyon ng lahat ng source code, configuration file, at system log, ang mga cross-platform Windows (CRLF) at Unix (LF) line break control flow nito ay nananatiling pinaka-unibersal na pamantayan sa pagpapalitan ng data sa mundo ng kompyuter)"
+
+msgid "mime_log"
+msgstr "LOG system operation log (plain text asset na nagtatala ng runtime state ng operating system, kernel, at aplikasyon sa antas ng aplikasyon. Sumasaklaw sa Nginx/Apache access logs (Combined Log) at karaniwang syslog specification, ito ang pangunahing source ng data para sa troubleshooting, stream performance analysis, at security audit)"
+
+msgid "mime_page"
+msgstr "HTML hypertext web page (pundasyong bato ng World Wide Web na nilikha ni Tim Berners-Lee noong 1989. Bilang isang libreng magagamit na unibersal na hypertext markup language, ang HTML5 specification nito ay naging opisyal na pamantayan ng W3C noong 2014, na may native na suporta para sa structured multimedia, semantic interaction, at stream page layout. Nanalo ng Turing Award noong 2016)"
+
+msgid "mime_khtml"
+msgstr "KHTML web template engine (1998 KDE 2.0 browser rendering engine specification. Bilang isang open source community benchmark na naglatag ng pundasyon para sa modernong web rendering, ang teknolohikal na pamana nito ay direktang nagbigay inspirasyon at nag-evolve sa Apple WebKit at Google Blink kernels, na nagpapatuloy hanggang ngayon sa kanyang pinagbabatayan na landas sa pamamagitan ng modernong stream dynamic web architecture)"
+
+msgid "mime_script"
+msgstr "SCRIPT interpreted dynamic script (pangkalahatang klasipikasyon ng source code streams na hindi kailangang i-pre-compile at binabasa at isinasagawa ng linya sa linya ng isang partikular na runtime o interpreter. Sumasaklaw sa ASP, JSP, CGI at Tcl, atbp., malawakang ginagamit para sa server-side common gateway interface, automated process control, at system-level task glue)"
+
+msgid "mime_js"
+msgstr "JavaScript script (1995 Netscape browser's native programming environment. Itinatag ang ECMAScript industry standard noong 1997, ipinanganak ang Node.js runtime noong 2009 na sinira ang mga hangganan ng browser at lumikha ng full-stack asynchronous non-blocking architecture, na sinamahan ng pinakamalaking npm software package ecosystem sa mundo)"
+
+msgid "mime_py"
+msgstr "Python script (mataas na antas na interpreted scripting language na nilikha ni Guido van Rossum noong 1991. Dahil sa mandatoryong indentation para sa walang pagkawalang pagiging nababasa at multi-paradigm low-level na disenyo, ito ay ngayon ay naitatag bilang pamantayang pang-industriya na wika para sa modernong web architecture, full-stack data science, artificial intelligence (AI) model training, at cloud-native automated ops)"
+
+msgid "mime_sh"
+msgstr "Shell script (karaniwang command interpreter script mula sa Unix era noong 1971. Naglalaman ng kernel-level command specifications tulad ng Bash, Sh, Dash, karaniwang isinasagawa gamit ang .sh extension, ay isang unibersal na kernel-level glue para sa low-level process control, installation-free environment configuration, at automated deployment sa modernong Unix-like operating systems)"
+
+msgid "mime_rb"
+msgstr "Ruby script (object-oriented scripting language na nilikha ni Yukihiro Matsumoto noong 1995. Sa sobrang respeto sa karanasan ng developer bilang pangunahing disenyo ng pilosopiya, ang Ruby on Rails framework nito ay mapanghimagsik na nagtatag ng 'Convention over Configuration (CoC)' modernong mataas na antas na web architecture development paradigm)"
+
+msgid "mime_pl"
+msgstr "Perl script (pragmatic scripting language na nilikha ni Larry Wall noong 1987. Bilang ninuno ng modernong package managers (CPAN), ito ay tinaguriang 'Swiss Army knife' ng text processing. Sa modernong CGI mode, nagsisilbi pa rin itong mataas na maaasahang base sa larangan ng log parsing dahil sa napakababang pisikal na memory cost at mataas na kahusayan sa regular expression processing)"
+
+msgid "mime_php"
+msgstr "PHP dynamic web page (nilikha ni Rasmus Lerdorf noong 1995, espesyal na idinisenyo para sa web development. Bilang pangunahing teknolohiya na nagpapatakbo ng higit sa 70% ng mga website sa mundo, malalim nitong sinusuportahan ang malalaking production-level application tulad ng WordPress at Wikipedia. Mula noong ipinakilala ang JIT (Just-In-Time) compilation runtime engine sa PHP 8, nakamit nito ang pangunahing ebolusyon ng paradigma patungo sa high-performance full-stack server side)"
+
+msgid "mime_image"
+msgstr "IMAGE klasipikasyon ng image asset (sumasaklaw sa pangkalahatang klasipikasyon ng lossy/lossless compressed bitmap, modernong responsive web graphics, at vector graphics. Ito ay isang pangunahing tagapagpahiwatig para sa pagtatasa ng visual resource loading cost ng site, client-side cache hit rate, at pagkonsumo ng media network bandwidth)"
+
+msgid "mime_document"
+msgstr "DOCUMENT klasipikasyon ng structured na dokumento (sumasaklaw sa pangkalahatang klasipikasyon ng plain text, spreadsheet, fixed-format na dokumento (PDF), at lightweight markup language. Ito ay isang pangunahing tagapagpahiwatig para sa mga istatistika ng server-side static knowledge base distribution, enterprise information asset download, at text stream throughput capacity)"
+
+msgid "mime_package"
+msgstr "PACKAGE klasipikasyon ng compilation products at software package (sumasaklaw sa pangkalahatang klasipikasyon ng native executable program ng operating system, runtime link libraries (DLL/SO), at application distribution installation package. Kadalasang ginagamit bilang pangunahing tagapagpahiwatig para sa pagtatasa ng outbound traffic at download peak ng software distribution sites)"
+
+msgid "mime_archive"
+msgstr "ARCHIVE archive at compressed file (pangkalahatang klasipikasyon ng data compression package batay sa mga pangunahing algorithm tulad ng DEFLATE, LZMA. Sa network layer, bukod sa kumakatawan sa tradisyonal na package distribution, sumasaklaw din ito sa 1992 GNU project's Gzip dynamic response stream. Kahit na ang Brotli algorithm ay unti-unting ipinakikilala sa mga modernong senaryo, ang klasipikasyong ito ay nananatiling pangunahing tagapagpahiwatig para sa pagtatasa ng server bandwidth throughput rate at transport layer pressure reduction)"
+
+msgid "mime_audio"
+msgstr "AUDIO klasipikasyon ng digital audio stream (sumasaklaw sa pangkalahatang klasipikasyon ng compressed audio, audiobook, at streaming media audio container. Batay sa mga tiyak na audio codec standard, ginagamit para subaybayan ang throughput rate ng audio data stream ng multimedia site, kasabay na streaming bandwidth, at mahabang koneksyon na pagganap)"
+
+msgid "mime_video"
+msgstr "VIDEO klasipikasyon ng digital video stream (sumasaklaw sa pangkalahatang klasipikasyon ng high-resolution na video container, modernong web animation, at streaming media segment. Ito ay isang pangunahing tagapagpahiwatig para sa pagtatasa ng server bandwidth peak limit at epekto ng Content Delivery Network (CDN) acceleration sa ilalim ng mataas na load network environment)"
+
+msgid "mime_jscript"
+msgstr "JScript script (1996 Microsoft's reverse engineering proprietary implementation para sa Internet Explorer 3.0. Bilang isang maagang host competitor ng klasikong JavaScript, ito ay nagsilbing pangunahing engine ng Windows Script Host (WSH) at maagang ASP backend)"
+
+msgid "mime_json"
+msgstr "JSON structured data (lightweight data serialization exchange format na itinatag ni Douglas Crockford noong 2001. Batay sa text-based key-value pairs at array architecture, may napakataas na human-readability at walang pagkawalang stream parsing na katangian. Ito ang de facto na pamantayan para sa modernong web API, microservices architecture, at interaksyon sa malalaking modelo ng wika)"
+
+msgid "mime_vbs"
+msgstr "VBScript script (variant ng scripting language na inilabas ng Microsoft kasama ang IE 3.0 noong 1996. Dati ay pangunahing driver ng maagang ASP dynamic website at Windows system management, ngayon ay opisyal na itong hindi na ginagamit at inalis mula sa pinakabagong kernel ng Windows 11 ng Microsoft. Ito ay kabilang sa makasaysayang legacy na teknolohiya)"
+
+msgid "mime_conf"
+msgstr "CONF system configuration file (pangkalahatang klasipikasyon ng data file na permanenteng nag-iimbak ng software runtime environment parameters sa anyo ng plain text. Sumasaklaw sa INI at modernong YAML, TOML, JSON specifications, sa ilalim ng Linux system karamihan ay nakatutok sa /etc directory. Ito ay pangunahing dependency para sa system-level runtime state optimization)"
+
+msgid "mime_css"
+msgstr "CSS cascading style sheets (1996 W3C standard, kasama ang HTML/JS na tinatawag na tatlong pangunahing bahagi ng front-end. Dinaanan ang CSS2 positioning at CSS3 modular evolution, native na sumusuporta sa Flexbox, Grid, at media query responsive design. Ito ang ganap na nangingibabaw na pamantayan para sa pag-decouple ng presentasyon ng web page sa modernong browser)"
+
+msgid "mime_xsl"
+msgstr "XSL style sheet (1999 W3C standard, naglalaman ng XSLT transformation at XPath addressing language, ginagamit upang i-render ang structured XML data bilang HTML, PDF, o plain text. Sa modernong pag-unlad, ang ecosystem nito ay higit na pinalitan ng mas magaan na template engine at JSON data format)"
+
+msgid "mime_runtime"
+msgstr "Executable file (native execution format ng operating system tulad ng EXE, ELF, Mach-O, naglalaman ng compiled low-level machine code, entry point, at system loading information)"
+
+msgid "mime_library"
+msgstr "Library file (dynamic o static link libraries tulad ng DLL, SO, dylib, naglalaman ng shared symbols at relocation code para tawagin ng ibang programa at i-load sa runtime)"
+
+msgid "mime_swf"
+msgstr "Flash animation (binuo ng Macromedia noong 1996, binili ng Adobe noong 2005. Interactive web animation standard, minsang naghari sa internet animation at laro. Mga kahinaan: nakadepende sa plugin, hindi sinusuportahan sa mobile, mataas na panganib sa seguridad. Inanunsyo ng Adobe ang pagtatapos noong 2017, ganap na itinigil ang suporta noong 2020, pinalitan ng HTML5/CSS3/JS)"
+
+msgid "mime_dtd"
+msgstr "DTD document type definition (inilabas kasama ng XML 1.0 noong 1998, ginagamit upang tukuyin ang istraktura ng XML/HTML na dokumento at i-validate ang pagiging lehitimo. Sa modernong pag-unlad, ito ay unti-unting pinalitan ng mas nababaluktot na solusyon tulad ng XML Schema, RELAX NG)"
+
+msgid "mime_csv"
+msgstr "CSV data format (comma-separated values, unibersal na plain text table format mula sa mainframe era noong 1972 (IBM Fortran compiler). Opisyal na na-standardize ng RFC 4180 noong 2005, bilang isang cross-platform, cross-language lossless data exchange standard. Malawakang ginagamit para sa mahusay na pag-import/export sa Excel, relational database, data analysis (Pandas).)"
+
+msgid "mime_cur"
+msgstr "Mouse pointer file (.cur format, ginagamit upang i-customize ang estilo ng mouse, tulad ng finger cursor sa mga web page, hourglass waiting icon sa system. Ito ay 'kamag-anak' ng karaniwang .ico icon, ngunit mayroon itong karagdagang 'hotspot' na lokasyon — ang lokasyon kung saan talagang nagki-click ang mouse. Kasaysayan: ipinakilala kasama ng Windows 3.1 (1992), ito ay isang pangunahing bahagi sa paglipat ng graphical interface mula sa command line patungo sa mouse operation era)"
+
+msgid "mime_jnlp"
+msgstr "Java Web Start (2000s Java desktop application distribution technology, naglulunsad ng malalayong Java program sa pamamagitan ng .jnlp file. Dahil sa mga isyu sa seguridad at pagkalat ng modernong paraan ng pamamahagi, ito ay halos hindi na ginagamit)"
+
+msgid "mime_lit"
+msgstr "Microsoft Reader e-book (inilabas ng Microsoft noong 2000, LIT format. Hindi na ginagamit, maaari na ngayong i-convert sa EPUB o PDF gamit ang mga tool tulad ng Calibre)"
+
+msgid "mime_svg"
+msgstr "SVG vector graphics (1999 W3C standard, dalawang-dimensional na vector image format batay sa XML architecture. May bentahe ng arbitrary scaling nang walang pagkawala ng sharpness at text stream transmission. Lahat ng modernong browser ay native na sumusuporta dito. Malawakang ginagamit para sa high-resolution web icon, logo, at vector animation rendering. Ito ang pangunahing pamantayan para sa modernong web graphics)"
+
+msgid "mime_ai"
+msgstr "AI vector graphics (proprietary vector graphics format na independiyenteng binuo ng Adobe noong 1987. Bilang pangunahing pamantayan sa industriya para sa typography, print design, at brand identity design, sinusuportahan nito ang multi-layer at high-level layout vector data. Ito ang napiling carrier para sa propesyonal na visual art)"
+
+msgid "mime_phshop"
+msgstr "PSD layer image (proprietary raster image source file format na inilabas ng Adobe kasama ang Photoshop noong 1990. Sinusuportahan ang multi-layer layering, channel, mask, at lossless editing data. Ito ay naitatag bilang pandaigdigang pamantayan sa industriya para sa pagpoproseso ng imahe at digital painting)"
+
+msgid "mime_ttf"
+msgstr "TrueType font (digital contour font format na binuo nang magkasama ng Apple at Microsoft noong 1989. Batay sa quadratic Bézier curves, nakakamit nito ang ganap na pagkakapareho ng pixel sa pagitan ng display ng screen at print output. Ito ang native default font format ng modernong desktop operating system)"
+
+msgid "mime_fon"
+msgstr "FON bitmap font (maagang system-level dot matrix font format ng Microsoft Windows mula noong 1980s. Hindi sinusuportahan ang arbitraryong proporsyonal na lossless scaling. Karaniwang ginagamit kasama ng legacy system o maagang embedded device component para sa limitadong pixelated text rendering)"
+
+msgid "mime_pdf"
+msgstr "PDF electronic document (cross-platform fixed-layout document format na binuo ng Adobe noong 1993 at naging ISO 32000 international standard noong 2008. May ganap na katapatan sa layout at format. Ito ang unibersal na pamantayan para sa pandaigdigang pamamahagi ng elektronikong opisyal na dokumento at digital publishing)"
+
+msgid "mime_dotnet"
+msgstr "ASP.NET dynamic page (server-side dynamic web technology na inilabas ng Microsoft kasama ang .NET architecture noong 2002. Dinadala sa IIS rendering engine, ginagamit upang bumuo ng enterprise-level Windows server-side dynamic web application at distributed system)"
+
+msgid "mime_mdb"
+msgstr "MDB relational database (desktop-level relational database storage format na inilabas ng Microsoft kasama ang Access noong 1992. May built-in na Jet database engine, ginamit bilang relational database solution sa maagang pamamahala ng impormasyon ng personal computer at maliliit at katamtamang laki ng negosyo)"
+
+msgid "mime_md"
+msgstr "Markdown document (lightweight markup language na independiyenteng nilikha ni John Gruber noong 2004. Ang pangunahing disenyo ng pilosopiya ay 'nababasa ay nangangahulugang nare-render', na nagtutulak ng mga modernong derivative standard tulad ng GFM at CommonMark. Malawakang ginagamit bilang pangunahing pamantayan sa pagpapalitan para sa teknikal na dokumentasyon, knowledge base (Obsidian), at modernong static website generator)"
+
+msgid "mime_crystal"
+msgstr "Crystal Reports (propesyonal na enterprise-level report file format ng SAP Business Intelligence (BI) platform. May multi-data source low-level connection at kumplikadong dynamic chart rendering kakayahan, malawakang ginagamit para sa propesyonal na pagbuo ng ulat sa mga financial at data analysis system ng mga multinational na kumpanya)"
+
+msgid "mime_libreoffice"
+msgstr "LibreOffice document (proprietary format ng open source office suite na binuo ng The Document Foundation noong 2010 batay sa OpenOffice fork. Malalim na ipinatutupad ang internasyonal na pamantayan ng ODF (Open Document Format) ng W3C. Ito ang office foundation ng modernong open source ecosystem)"
+
+msgid "mime_encrypt"
+msgstr "ENCRYPT encrypted file (raw binary o text data na naproseso sa pamamagitan ng tiyak na simetriko o asimetrikong encryption algorithm. Naglalaman ng pangunahing derivative format tulad ng .enc, .pgp, .gpg. Sa network layer, ginagamit upang matiyak ang pagiging kompidensiyal at pag-verify ng integridad ng hindi pampublikong data)"
+
+msgid "mime_gpx"
+msgstr "GPX satellite track data (global positioning system exchange format batay sa XML architecture. Espesyal na ginagamit upang ilarawan ang mga heograpikal na coordinate, waypoint, ruta, at makasaysayang track. Ito ay isang karaniwang bukas na pamantayan ng data para sa modernong mobile sports device, car navigation, at Geographic Information System (GIS))"
+
+msgid "mime_diskimage"
+msgstr "Disk Image disk image (sumasaklaw sa byte-by-byte low-level sector image file ng pisikal na disk o optical media tulad ng ISO, DMG, IMG. Ginagamit para sa system low-level deployment, secure na pamamahagi ng software na may malaking kapasidad, at pisikal na antas ng kumpletong backup ng data ng storage media)"
+
+msgid "mime_vm"
+msgstr "VM virtual machine image (sumasaklaw sa virtualized physical disk image tulad ng VMDK, VDI, VHDX, OVA. Bilang batayan ng VMware, VirtualBox at Hyper-V platform, ginagamit para sa low-level system-level hardware emulation, instance snapshot, at cloud infrastructure distribution)"
+
+msgid "mime_torrent"
+msgstr "BitTorrent torrent file (P2P peer-to-peer distributed download index na dinisenyo ni Bram Cohen noong 2001. Batay sa Bencode encoding, nag-iimbak ng low-level checksum metadata ng orihinal na file at impormasyon sa pagtugon ng Tracker server. Ito ang pangunahing carrier para sa desentralisadong network flow distribution)"
+
+msgid "mime_gis"
+msgstr "GIS geospatial data (geographic information system data standard na may Shapefile at GeoJSON bilang pangunahing bahagi. Naglalaman ng multi-dimensional geometric coordinate, layer topology, at attribute data. Malawakang ginagamit para sa high-precision digital map rendering, satellite remote sensing, at spatial geometry analysis)"
+
+msgid "mime_ebook"
+msgstr "EBOOK e-book (digital publishing format na may W3C's EPUB open international standard at Amazon Kindle's proprietary MOBI/AZW architecture bilang pangunahing bahagi. Sinusuportahan ang adaptive stream layout, metadata encapsulation, at DRM digital rights protection. Ito ay isang unibersal na carrier para sa digital reading sa mobile device)"
+
+msgid "mime_avif"
+msgstr "AVIF high-efficiency image (susunod na henerasyon na ultra-high resolution image standard na ipinakilala ng Open Media Alliance (AOMedia) noong 2019. Batay sa AV1 video encoding key frame technology, ang compression rate ay 50% mas mahusay kaysa sa WebP at native na sumusuporta sa High Dynamic Range (HDR). Ito ang mainstream na pamantayan para sa modernong web image transmission)"
+
+msgid "mime_markdown"
+msgstr "Markdown lightweight document (text document markup language na independiyenteng nilikha ni John Gruber noong 2004. Gumagamit ng plain text declarative design, ang disenyo ng syntax nito ay inspirasyon ng reStructuredText. Malawakang ginagamit para sa mga proyekto sa GitHub, engineering-level technical documentation, at modernong static content management ecosystem)"
+
+msgid "mime_yaml"
+msgstr "YAML serialization configuration (human-readable data serialization format na dinisenyo ni Clark Evans at iba pa noong 2001. Batay sa hierarchical indentation at key-value mapping. Ito ngayon ay naitatag bilang cloud-native infrastructure configuration standard para sa Kubernetes container orchestration, Ansible automation, at Docker Compose)"
+
+msgid "mime_toml"
+msgstr "TOML semantic configuration (minimalist na wika na dinisenyo ni Tom Preston-Werner noong 2013. May mga low-level design advantages tulad ng strong typing, explicit mapping, at semantic clarity. Malawakang ginagamit ngayon bilang standardized configuration file para sa modernong toolchain ng Rust (Cargo), Python (pyproject.toml), at Go)"
+
+msgid "mime_vue"
+msgstr "Vue single-file component (proprietary SFC format ng progressive web framework na ipinakilala ni Evan You noong 2014. Sa isang file, ipinatutupad ang paghihiwalay ng mga alalahanin ng HTML/CSS/JS at reactive state binding, malalim na nagtutulak sa modernong web interactive front-end application at malakihang static site engine)"
+
+msgid "mime_wasm"
+msgstr "WebAssembly binary module (high-performance low-level bytecode standard para sa web na itinatag ng W3C noong 2017. Pinapayagan ang mga malakas na uri ng wika tulad ng C/C++/Rust na mag-compile sa target ng browser sandbox, na nagbibigay ng kahusayan sa pagpapatupad na malapit sa native hardware. Ito ay isang pundasyong bato para sa modernong web edge computing)"
+
+msgid "mime_jsx"
+msgstr "React JSX component (JavaScript XML syntax extension na inilabas ng Facebook kasama ang React framework noong 2013. Sinusuportahan ang declarative na pagbuo ng DOM virtual structure sa JavaScript, na ipinatutupad ang front-end na 'UI ay function ng estado' na component-based development paradigm)"
+
+msgid "mime_tsx"
+msgstr "TypeScript TSX component (kombinasyon ng stream ng TypeScript strong type syntax na binuo ng Microsoft noong 2012 at JSX. Nag-iinject ng static compile-time type checking at interface constraints sa pagbuo ng React component. Ito ay isang code standard para sa ligtas na pagbuo ng modernong malalaking front-end system)"
+
+msgid "mime_heif"
+msgstr "HEIF high-efficiency image (high-efficiency image file format na itinatag ng MPEG organization noong 2015. Batay sa HEVC (H.265) video encoding algorithm, sinusuportahan ang paglalagay ng maraming frame na imahe, depth map, at metadata sa napakaliit na volume. Ito ay isang proprietary storage standard para sa modernong mobile operating system at smart terminal device)"
+
+msgid "mime_heic"
+msgstr "HEIC high-efficiency image (proprietary bitmap format ng Apple na ipinatupad batay sa HEIF international standard. Bilang default na storage standard ng larawan para sa modernong iPhone, nakakakuha ito ng iOS/macOS hardware-level encoding/decoding at native operating system support. Habang tinitiyak ang mataas na kalidad ng imahe, lubos nitong binabawasan ang pinagbabatayan na espasyo sa imbakan)"
+
+msgid "mime_gltf"
+msgstr "glTF 3D asset model (GL transfer format standard na inilabas ng Khronos Group noong 2015. Gumagamit ng JSON architecture upang ilarawan ang tatlong-dimensional na eksena, na kilala bilang 'JPEG ng 3D domain'. Ito ay isang magaan na pamantayang pang-industriya para sa modernong WebGL/WebGPU at virtual reality rendering)"
+
+msgid "mime_glb"
+msgstr "GLB binary 3D model (buong binary, lossless encapsulation na bersyon ng glTF asset model. Pinagsasama ang istraktura ng eksena, low-level mesh vertex data, materyales, at texture map sa isang file. Espesyal na idinisenyo para sa mahusay na paghahatid at pamamahagi ng stream ng cross-platform web 3D asset)"
+
+msgid "mime_gls"
+msgstr "GLOSSARY data glossary (file ng kahulugan ng set ng terminolohiya na espesyal para sa mga sistema ng pamamahala ng dokumento at structured corpora. May built-in na standard na kahulugan ng termino, multi-language mapping, at metadata mapping. Ginagamit upang mapanatili ang konseptuwal na pagkakapare-pareho sa automated text analysis at mga sistema ng pag-publish ng nilalaman)"
+
+msgid "mime_cbz"
+msgstr "CBZ comic book (proprietary comic image archiving format batay sa ZIP compression structure. Sa loob, nag-encapsulate ito ng tuluy-tuloy na pagkakasunod-sunod ng static bitmap image. Ito ay isang unibersal na lightweight container standard para sa digital comic publishing at cross-platform local collection)"
+
+msgid "mime_cbr"
+msgstr "CBR comic book (proprietary comic image archiving format batay sa RAR compression structure. Gumagamit ng RAR algorithm upang i-encapsulate ang static bitmap sequence, may medyo mataas na compression rate, may malawak na suporta sa compatibility sa larangan ng digital comic distribution)"
+
+msgid "mime_fb2"
+msgstr "FB2 e-book (FictionBook 2.0 e-book standard mula sa unang bahagi ng 2000s. Gumagamit ng purong XML structure upang ilarawan ang mga katangian ng libro at hierarchy ng teksto. May malawak na suporta sa open source e-book ecosystem at legacy digital publishing reader)"
+
+msgid "mime_kepub"
+msgstr "KEPUB e-book (proprietary enhanced e-book format ng Kobo na nag-evolve mula sa EPUB standard. Nagsasagawa ng low-level rendering optimization para sa hardware-level e-book reader ng Kobo, na nagbibigay ng mas mahusay na layout ng pahina at interaksyon sa istatistika ng pagbabasa)"
+
+msgid "mime_m4b"
+msgstr "M4B audiobook (audiobook format batay sa MPEG-4 Part 14 (MP4) container architecture. Gumagamit ng AAC encoding, native na sumusuporta sa low-level bookmark location, resume playback mula sa breakpoint, at pag-embed ng kabanata. Dati ay standard format ng Apple iTunes ecosystem)"
+
+msgid "mime_kfx"
+msgstr "Kindle KFX format (proprietary enhanced digital publishing format na inilabas ng Amazon kasama ang Kindle noong 2015. Sinusuportahan ang advanced ligature layout, high-dynamic font rendering, at kernel-level stream page loading (Page Flip). Ito ang pangunahing pamantayan ng modernong Kindle platform)"
+
+msgid "mime_chm"
+msgstr "CHM compiled help file (compiled HTML help information system na inilabas ng Microsoft noong 1997. Nagpapakete ng hypertext data at pinagbabatayan na index sa iisang binary container. Matagal na itong naging standard format para sa lokal na offline help documentation para sa Windows software)"
+
+msgid "mime_mht"
+msgstr "MHT web page archive (MIME aggregated hypertext format na inilabas ng Microsoft noong 1999. Batay sa RFC 2557 standard, nag-encapsulate ng HTML source, CSS, JS, at naka-embed na mga imahe sa iisang text file. Ginagamit para sa offline web page saving sa legacy browser)"
+
+msgid "mime_wml"
+msgstr "WML wireless markup language (mobile markup standard na itinatag ng WAP (Wireless Application Protocol) forum noong 1999. Batay sa XML specification, espesyal na idinisenyo para sa mga unang narrow-band wireless cellular network at low-power feature phone. Sa modernong web ecosystem, ito ay kabilang sa retiradong legacy na teknolohiya)"
+
+msgid "mime_xhtml"
+msgstr "XHTML hypertext web page (2000 W3C standard, encapsulation ng mahigpit na hypertext markup language batay sa XML architecture. Noong 2009, itinigil ng W3C ang teknolohikal na ebolusyon nito at ganap na lumipat sa HTML5 specification. Ngayon ay pangunahing ginagamit para sa semantic web page rendering sa legacy system)"
+
+msgid "mime_xml"
+msgstr "XML structured document (extensible markup language mula sa W3C standard noong 1998. May self-describing tag architecture. Ito ay isang pundasyong format para sa network web services (SOAP/REST), system-level configuration files (XSD), at cross-platform data exchange)"
+
+msgid "mime_sgml"
+msgstr "SGML generalized markup language (1986 ISO 8879 international standard para sa standard generalized markup language. Bilang pioneer ng industriya sa structured na paglalarawan ng mga elektronikong dokumento, parehong XML at maagang HTML specifications ay nagmula sa standard meta-language na ito)"
+
+msgid "mime_apng"
+msgstr "APNG dynamic graphics (dynamic extension ng Portable Network Graphics (PNG) na binuo ng Mozilla noong 2004. Sinusuportahan ang 24-bit true colors at 8-bit Alpha channel semi-transparency. Ito ay isang high-definition na alternatibo sa GIF format sa modernong web scenario)"
+
+msgid "mime_bmp"
+msgstr "BMP native bitmap (device-independent bitmap format ng Microsoft platform na itinatag mula noong Windows 1.0 era. Gumagamit ng lossless, uncompressed storage, kahit na ang laki nito ay karaniwang 3-10 beses na mas malaki kaysa sa PNG, dahil sa kawalan ng encoding/decoding overhead, ito ay malawak pa ring naka-embed sa mga pangunahing bahagi ng Windows 11, mga segment ng resource ng EXE/MSI, at mga graphics buffer ng legacy driver)"
+
+msgid "mime_cdr"
+msgstr "CDR vector graphics (proprietary CorelDRAW professional vector design source file format ng kumpanyang Corel ng Canada. Sinusuportahan ang multi-layer color management, kumplikadong mathematical contour node, at print-grade layout data. Ito ay isang espesyal na format para sa propesyonal na flat printing at advertising design)"
+
+msgid "mime_gif"
+msgstr "GIF indexed color image (8-bit indexed color bitmap format na binuo ng CompuServe noong 1987. Batay sa LZW algorithm, limitado sa 256 na antas ng kulay at solong-kulay na transparency, nagiging bulky sa mataas na frame rate. Ngayon ay unti-unting pinapalitan ng modernong high-efficiency dynamic image standards tulad ng APNG, WebP)"
+
+msgid "mime_ico"
+msgstr "ICO system icon (Windows native icon resource encapsulation format. Sinusuportahan ang mixed embedding ng mga variant ng imahe na may maraming pixel resolution at color depth sa iisang container. Isa rin itong unibersal na pamantayan sa pamamahagi para sa pangunahing identifier ng site ng modernong web browser (Favicon))"
+
+msgid "mime_jpeg"
+msgstr "JPEG compressed image (lossy compression image format ng ISO 10918 international standard noong 1992. Batay sa Discrete Cosine Transform (DCT) algorithm, nakakamit ang mataas na compression ratio habang pinapanatili ang mahusay na makatotohanang kalidad ng imahe. Ito ang ganap na de facto standard para sa static na photography sa pandaigdigang internet)"
+
+msgid "mime_jpg"
+msgstr "JPEG compressed image (lossy compression image format ng ISO 10918 international standard noong 1992. Batay sa Discrete Cosine Transform (DCT) algorithm, nakakamit ang mataas na compression ratio habang pinapanatili ang mahusay na makatotohanang kalidad ng imahe. Ito ang ganap na de facto standard para sa static na photography sa pandaigdigang internet)"
+
+msgid "mime_png"
+msgstr "PNG lossless image (Portable Network Graphics standard na inirerekomenda ng W3C noong 1996. Gumagamit ng lossless compression algorithm, native na sumusuporta sa 24-bit true colors at 8-bit Alpha channel transparency. Bilang isang high-definition na alternatibo sa klasikong static GIF, ito ang ganap na de facto standard para sa lossless pixel image sa internet)"
+
+msgid "mime_ps"
+msgstr "PostScript page description file (stack-based page description language na ipinakilala ng Adobe noong 1985. Bilang teknolohikal na hinalinhan ng PDF format, ipinatutupad nito sa mababang antas ang hardware-independent typography at high-precision vector graphics rendering. Ito ay isang pundasyong pamantayan para sa propesyonal na pag-publish sa pag-imprenta at larangan ng laser printing)"
+
+msgid "mime_psb"
+msgstr "PSB large layer document (proprietary super-large source file encapsulation format ng Adobe Photoshop. Sinisira nito ang 2GB physical size at 30,000 pixel internal addressing limits ng standard PSD format. Espesyal na idinisenyo para sa pag-iimbak ng napakalaking, mataas na lalim ng layer na higanteng digital art asset)"
+
+msgid "mime_psd"
+msgstr "PSD layer design source file (proprietary layered image engineering format ng Adobe Photoshop. Bilang isang pang-industriya na standard container sa larangan ng graphics at imahe, native nitong ni-encapsulate ang kumpletong layer rendering tree, bitmap channel, vector clipping path, at composite blending mode, na sumusuporta sa lossless na buong pag-edit ng data)"
+
+msgid "mime_webp"
+msgstr "WebP high-efficiency image (universal web graphics encoding standard na ipinakilala ng Google noong 2010. Nagmula sa VP8 video key frame technology, perpektong tugma sa lossy, lossless, semi-transparent, at dynamic rendering. Binabawasan ang laki ng 25-35% kumpara sa PNG na may parehong kalidad. Ito ay isang pundasyong bato para sa high-performance loading ng modernong web page)"
+
+msgid "mime_woff"
+msgstr "WOFF web glyph file (open web font format na nilikha noong 2009 at naging W3C standard noong 2012. Sa esensya, ito ay isang stream lossless compression encapsulation ng standard TTF/OTF font structures, na lubhang nag-o-optimize sa gastos sa bandwidth ng network transmission. Ito ay isang unibersal na format para sa modernong website icon at cloud font)"
+
+msgid "mime_7z"
+msgstr "7z compressed archive (proprietary 7-Zip format na binuo ni Igor Pavlov noong 1999. Batay sa open source LZMA/LZMA2 algorithm, may napakataas na compression rate. Sa ilalim ng parehong mga kondisyon, ang laki nito ay karaniwang 30-50% na mas maliit kaysa sa ZIP. Ito ay isang unibersal na high-compression-ratio format para sa open source community at software distribution)"
+
+msgid "mime_ace"
+msgstr "ACE compressed archive (proprietary compression format ng WinACE mula noong 1990s. Minsang nakipagkumpitensya sa RAR format at may medyo mataas na compression rate. Pagkatapos ng 2007, tumigil ang teknolohikal na pag-ulit, ngayon ay pinalitan ng 7z at RAR format. Nabibilang sa legacy system archiving format)"
+
+msgid "mime_bz2"
+msgstr "BZIP2 compressed archive (block-sorting compression format na binuo ni Julian Seward noong 1996. Ang compression rate ng pinagbabatayan nitong algorithm ay 15-20% na mas mataas kaysa sa GZIP ngunit mas mataas ang computational cost. Kadalasang ginagamit para sa pamamahagi ng Linux kernel source code at open source software package. Ang karaniwang extension ay .bz2)"
+
+msgid "mime_cab"
+msgstr "CAB compressed archive (Cabinet archiving format na independiyenteng binuo ng Microsoft noong 1995. Bilang native installation package standard ng Windows system, ginagamit para sa pamamahagi ng driver at kernel file. Ito rin ang pinagbabatayan na storage container para sa Windows Installer (MSI))"
+
+msgid "mime_dmg"
+msgstr "DMG disk image (Disk Image format na binuo ng Apple noong 1980s. Bilang standard container para sa pamamahagi ng macOS software, sinusuportahan ang physical mounting bilang virtual file system, low-level compression, at data encryption. Ito ang mainstream na format para sa pamamahagi ng aplikasyon sa Mac ecosystem)"
+
+msgid "mime_emz"
+msgstr "EMZ compressed image (compressed na bersyon ng Windows Enhanced Metafile EMF. Sa esensya, ito ay binary vector graphics na na-compress sa pamamagitan ng GZIP algorithm. Malawakang ginagamit para sa pag-iimbak ng naka-embed na vector graphics sa mga dokumento ng Microsoft Office series)"
+
+msgid "mime_gz"
+msgstr "GZIP compressed archive (standard stream compression format na binuo nina Jean-loup Gailly at Mark Adler ng GNU project noong 1992. Bilang standard compression tool ng Unix/Linux, ito rin ang pangunahing pamantayan para sa HTTP transport layer compression (Gzip). Madalas gamitin kasama ng TAR archiving)"
+
+msgid "mime_jar"
+msgstr "JAR compressed archive (Java ARchive archiving format na ipinakilala ng Sun Microsystems noong 1997. Sa esensya, ito ay isang packaging container batay sa ZIP structure, ginagamit upang i-encapsulate ang Java class libraries at metadata. Ito ay isang pangunahing produkto ng compilation para sa Maven, Gradle, at maagang Android ecosystem)"
+
+msgid "mime_lzma"
+msgstr "LZMA compressed archive (Lempel-Ziv-Markov chain compression algorithm na binuo ni Igor Pavlov noong 1998. Bilang pangunahing engine ng 7z format, may napakataas na compression rate at high-speed decompression na katangian. Malawakang ginagamit para sa pamamahagi ng hardware firmware at embedded system)"
+
+msgid "mime_rar"
+msgstr "RAR compressed archive (proprietary WinRAR archiving format na binuo ni Eugene Roshal noong 1993. Sinusuportahan ang paghahati sa volume, physical recovery records (ECC), at high-strength encryption. Ang compression rate ay mas mahusay kaysa sa standard ZIP, at may malawak na suporta sa compatibility sa personal computer at komersyal na sektor)"
+
+msgid "mime_tar"
+msgstr "TAR archive package (Tape ARchive format mula sa Unix V7 era noong 1979. Isinasagawa lamang ang pag-package ng file stream nang walang data compression. Madalas na pinagsama sa GZIP/BZIP2/XZ, ito ay isang pinagbabatayan na pamantayan para sa mga pakete ng source code ng Linux at layered storage ng Docker image)"
+
+msgid "mime_tgz"
+msgstr "TGZ compressed archive (stream combination format ng TAR archiving at GZIP compression, mga extension na .tgz o .tar.gz. Bilang pinaka-unibersal na format ng pamamahagi ng software package sa kapaligiran ng Unix/Linux, malawakang ginagamit para sa deployment ng source code compilation at pamamahagi ng binary package na walang instalasyon)"
+
+msgid "mime_tbz2"
+msgstr "TBZ2 compressed archive (stream combination format ng TAR archiving at BZIP2 compression, mga extension na .tbz2 o .tar.bz2. Kung ikukumpara sa TGZ, maaari pang mapataas ang compression rate ng 15-20%, angkop para sa pagpapadala ng malalaking file, matagal na ginamit para sa pamamahagi ng source code ng Linux kernel)"
+
+msgid "mime_xz"
+msgstr "XZ compressed archive (susunod na henerasyon na high-compression-ratio format na ipinakilala noong 2009. Batay sa LZMA2 algorithm, ang compression rate ng data ay 30-50% na mas mataas kaysa sa GZIP habang pinapanatili ang high-speed decompression. Ito ay itinatag bilang inirerekomendang pamantayan sa pamamahagi ng Linux kernel at pangunahing mga manager ng package (tulad ng nasa loob ng Debian .deb))"
+
+msgid "mime_z"
+msgstr "Z compressed archive (LZW compression format ng Unix compress command noong 1985. Bilang isang maagang standard compression standard ng Unix system, ngayon ay ganap nang pinalitan ng mas mahusay na GZIP format. Sa modernong network traffic, ito ay isang bihirang makasaysayang legacy format)"
+
+msgid "mime_zip"
+msgstr "ZIP compressed archive (unibersal na PKZIP archiving format na binuo ni Phil Katz noong 1989. Nakakakuha ng native support mula sa mga pangunahing operating system. Ito ang pinakamalawak na ginagamit na container standard sa internet. Ang modernong Java's JAR, Android's APK, at Office documents (OOXML) ay lahat batay sa ZIP structure)"
+
+msgid "mime_zst"
+msgstr "Zstandard compressed archive (susunod na henerasyon na stream compression standard na dinisenyo ni Yann Collet ng Facebook noong 2015. Lumalapit sa compression rate ng LZMA habang may mas mataas na throughput kaysa sa GZIP. Malalim na pinagtibay ng Linux kernel (5.9+) at Arch/Debian package manager)"
+
+msgid "mime_lz4"
+msgstr "LZ4 compressed archive (napakabilis na stream compression algorithm na binuo ni Yann Collet noong 2011. Ang bilis ng throughput ay higit sa 10 beses na mas mabilis kaysa sa GZIP, na may napakababang CPU runtime cost. Malawakang ginagamit sa Linux kernel, OpenZFS file system, at Hadoop real-time data stream processing)"
+
+msgid "mime_lzo"
+msgstr "LZO compressed archive (Lempel-Ziv-Oberhumer algorithm na binuo ni Markus Oberhumer noong 1996. Nakatuon sa napakabilis na decompression performance. Malawak na naka-embed sa Linux kernel Squashfs image, OpenWrt firmware, at iba't ibang resource-limited embedded system)"
+
+msgid "mime_msi"
+msgstr "MSI system installation package (Windows Installer data encapsulation format na ipinakilala ng Microsoft noong 1999. Bilang isang standard deployment specification ng Windows application-level, native na sumusuporta sa low-level transaction rollback, component lifecycle management, at silent installation na walang batch processing. Ito ang pangunahing pamantayan para sa sentralisadong pamamahagi ng software sa antas ng enterprise at pagpapatupad ng patakaran)"
+
+msgid "mime_pkg"
+msgstr "PKG cross-platform software installation package. 1. FreeBSD software package: pkgng standard, extension .pkg o .txz, batay sa TAR+XZ/Zstd compression, sumusuporta sa dependency resolution at signature verification; 2. macOS installation package: batay sa Apple Installer format, sumusuporta sa custom components, installation script, at system-level uninstallation. Ang mga ito ay ang mga pangunahing carrier ng pamamahagi para sa BSD server at Mac system, ayon sa pagkakabanggit."
+
+msgid "mime_apk"
+msgstr "APK Android application package (tradisyonal na application installation package na inilabas ng Google kasama ang Android noong 2008. Batay sa ZIP archive structure, nagpapakete ng compiled Dalvik bytecode (DEX), metadata manifest, at global resources. Ngayon ay malawakang ginagamit para sa lokal na pag-debug sa pag-unlad, pamamahagi ng third-party, at side-loading installation ng device)"
+
+msgid "mime_ipa"
+msgstr "IPA Apple application package (exclusive packaging container para sa iOS/iPadOS na inilabas kasama ng iPhone SDK noong 2008. Sa esensya, ito ay isang ZIP archive na protektado ng FairPlay DRM o enterprise-level code signature, na naglalaman ng Mach-O binary executable, application resource tree, at Info.plist metadata configuration)"
+
+msgid "mime_hap"
+msgstr "HAP HarmonyOS application package (basic unit ng elastic deployment ng HarmonyOS na inilabas kasama ng HarmonyOS 2.0 noong 2020. Binubuo ng Entry main module o Feature extension functional modules. Ito ang pangunahing multi-end deployment format para sa pamamahagi ng smart terminal sa cross-end lahat ng mga sitwasyon (telepono, tablet, wearable device))"
+
+msgid "mime_har"
+msgstr "HAR HarmonyOS static shared package (proprietary static shared library archive file ng HarmonyOS. Ginagamit upang i-encapsulate ang mga karaniwang bahagi, low-level resource code, at compile-time dependencies, na static na naka-link at ibinahagi ng maraming HAP modules. Ito ang pangunahing pundasyon para sa component-based development at multi-module reuse ng HarmonyOS system)"
+
+msgid "mime_aab"
+msgstr "AAB Android application bundle (dynamic distribution format ng Google Play na ipinakilala ng Google noong 2018 at itinatag noong 2021. Bilang isang purong distribution entity, ito ay dynamic na pinuputol at kino-compile ng cloud ayon sa CPU architecture, screen density, at wika ng target na device, at bumubuo ng na-optimize na APK kung kinakailangan. Sa karaniwan, binabawasan nito ang gastos sa bandwidth ng paghahatid ng 35%)"
+
+msgid "mime_xapk"
+msgstr "XAPK extended application package (unofficial application extension standard na itinatag ng third-party Android community. Sa pamamagitan ng magkasanib na pag-encapsulate ng standard APK file at napakalaking OBB game data extension package, pisikal nitong nalalampasan ang 100MB na limitasyon sa laki ng independiyenteng file ng Google Play. Malawak na makikita sa mga platform ng pamamahagi ng laro)"
+
+msgid "mime_appx"
+msgstr "APPX modern application package (UWP application deployment specification na inilabas ng Microsoft kasama ang Windows 8 noong 2012. May sandbox isolation running at lightweight uninstallation feature. Bilang isang maagang nangingibabaw na pamantayan ng Microsoft Store, sa modernong Windows ecosystem ito ay pumasok sa huling yugto ng lifecycle na umuunlad patungo sa MSIX)"
+
+msgid "mime_msix"
+msgstr "MSIX next-generation application package (bagong standardized packaging specification para sa Windows na inilabas ng Microsoft noong 2018. Perpektong pinagsasama ang application security sandbox feature ng APPX at enterprise-level asset management advantages ng MSI. Ganap na katugma sa lahat ng uri ng Win32 application. Ito ang inirerekomendang pamantayan sa pamamahagi para sa Windows 11)"
+
+msgid "mime_appimage"
+msgstr "AppImage installation-free application package (Linux single executable archive specification na sinimulan noong 2004. Gumagamit ng self-contained architecture na 'isang application ay isang file'. Sa runtime, direktang ini-mount ito sa pamamagitan ng FUSE mechanism bilang read-only virtual file system upang isagawa, na nagbibigay-daan sa zero-dependency instant na paggamit sa lahat ng Linux distribution)"
+
+msgid "mime_flatpak"
+msgstr "Flatpak sandbox application package (Linux cross-distribution desktop application distribution standard na pinamunuan ng Red Hat at GNOME noong 2015. Sa mababang antas, umaasa ito sa Namespace at Cgroups mechanism ng Linux kernel upang makamit ang napakahigpit na application-level security sandbox isolation. Ito ang pundasyon ng modernong open source OS software center)"
+
+msgid "mime_snap"
+msgstr "Snap containerized application package (Linux universal deployment standard na ipinakilala ng Canonical, ang parent company ng Ubuntu, noong 2014. Gumagamit ng self-contained SquashFS image mounting architecture, sumusuporta sa automated incremental updates at mahigpit na AppArmor sandbox isolation. Ito ang pangunahing default na format ng Ubuntu Software Center ecosystem)"
+
+msgid "mime_deb"
+msgstr "DEB system software package (binary at source code encapsulation specification na itinatag ng Debian project noong 1993. Bilang pinagbabatayan na installation standard para sa Debian, Ubuntu, at lahat ng kanilang derivative system, umaasa ito sa dpkg core para sa unpacking at maintenance, at ginagamit ang APT bilang mahusay na front-end ng package manager. Ito ang pinaka-mature na pundasyon ng pamamahagi ng software sa Linux ecosystem)"
+
+msgid "mime_rpm"
+msgstr "RPM system software package (Red Hat package manager encapsulation specification na inilabas ng Red Hat noong 1997. Kasama ng DEB, ito ay itinuturing na isa sa dalawang pangunahing kampo ng tradisyonal na pamamahala ng package ng Linux. May native na built-in na transaction-level dependency checking at pinagbabatayan na software digital signature verification. Ito ay nananatiling ganap na mainstream distribution standard para sa Red Hat family ecosystem tulad ng RHEL, Fedora, at CentOS hanggang sa kasalukuyan)"
+
+msgid "mime_pacman"
+msgstr "Pacman archived software package (.pkg.tar.zst encapsulation format na itinatag ng Arch Linux kasama ang pacman manager noong 2002. Bilang pangunahing bahagi ng rolling update mechanism ng Arch, batay sa Zstandard high-speed high-compression algorithm, kasama ang AUR (Arch User Software Repository) ecosystem. Ito ay isang modernong pamantayan sa pamamahagi ng package na nagpapakita ng minimalist at KISS principles)"
+
+msgid "mime_exe"
+msgstr "EXE native executable file (Portable Executable (PE) binary program format ng Windows platform. Teknolohikal na nagmula sa MZ header structure mula sa MS-DOS era, at mula noong 1993 Windows NT ay ganap na itinatag bilang PE structure specification. Ito ang pinakamalawak na ginagamit na pamantayan sa pagpapatupad sa mundo para sa mga tagubilin ng machine code, static resource segment, at system kernel bootstrapping)"
+
+msgid "mime_dll"
+msgstr "DLL dynamic link library (Dynamic Link Library shared code library specification ng Windows platform. Sa pamamagitan ng dynamic na pag-load at pag-relocate ng simbolo sa runtime, malaki ang naipap tipid nito sa pisikal na memorya at espasyo sa disk. Bilang pangunahing anyo ng pagpapatupad ng Windows API, ang maagang DLL Hell na problema nito ay ganap na nalutas sa modernong panahon sa pamamagitan ng SxS parallel isolation mechanism)"
+
+msgid "mime_com"
+msgstr "COM classic executable file (pinakalumang memory image (Command) execution format mula sa MS-DOS era. Gumagamit ng unstructured pure code segment design, limitado sa itaas na hangganan ng 64KB physical memory addressing segment. Ngayon ay retirado na bilang isang makasaysayang legacy format, ngunit sa modernong Windows architecture ginagamit pa rin ito bilang isang partikular na interface ng bahagi para sa limitadong compatibility)"
+
+msgid "mime_aac"
+msgstr "AAC audio (MPEG standard 1997, Advanced Audio Coding. Kahalili ng MP3, kalidad ng tunog ay mas mahusay kaysa sa MP3 sa parehong bitrate, default na audio format para sa YouTube, iTunes, Nintendo Switch)"
+
+msgid "mime_alac"
+msgstr "ALAC audio (binuo ng Apple noong 2004, Apple Lossless Audio Codec. Apple lossless format, naging open source noong 2011, default na format para sa lossless audio sa iTunes at Apple Music)"
+
+msgid "mime_flac"
+msgstr "FLAC audio (binuo ng Xiph.Org Foundation noong 2001, Free Lossless Audio Codec. Lossless compression, kalidad ng tunog ay katulad ng CD, ang file ay humigit-kumulang kalahati ng laki ng orihinal na WAV. Open source at walang patent, unang pagpipilian para sa mga audiophile at collector ng digital music)"
+
+msgid "mime_mp3"
+msgstr "MP3 audio (binuo ng Fraunhofer Institute noong 1993, MPEG-1 Audio Layer 3. Lossy compression format, maliliit na file na may disenteng kalidad ng tunog, ay ang pangunahing format ng digital music revolution noong 2000s, responsable para sa iPod at Napster. Nag-expire ang patent noong 2017, naging public domain)"
+
+msgid "mime_oga"
+msgstr "Ogg Audio audio (binuo ng Xiph.Org Foundation, purong audio format ng Ogg container, gumagamit ng Vorbis codec. Open source at walang patent, kahusayan ng compression ay mas mahusay kaysa sa MP3, malawakang ginagamit sa open source projects)"
+
+msgid "mime_ogg"
+msgstr "OGG audio (binuo ng Xiph.Org Foundation noong 2000, Ogg Vorbis format. Open source at walang patent, kahusayan ng compression ay mas mahusay kaysa sa MP3, maagang ginamit ng Spotify, malawakang ginagamit sa sound effects para sa mga laro)"
+
+msgid "mime_opus"
+msgstr "Opus audio (IETF standardize noong 2012, open source at walang patent. Pinagsasama ang SILK at CELT na teknolohiya, napakababang latency, pinakamataas na kahusayan ng compression, default na audio format para sa WebRTC, WhatsApp, Discord)"
+
+msgid "mime_wav"
+msgstr "WAV audio (binuo ng Microsoft at IBM noong 1991, Windows native audio format. PCM encoding na walang compression, walang kapintasang kalidad, ngunit napakalaki ng mga file, standard na format para sa propesyonal na audio editing)"
+
+msgid "mime_wma"
+msgstr "WMA audio (binuo ng Microsoft noong 1999, Windows Media Audio. May lossy at lossless na bersyon, native na sinusuportahan ng Windows, naging tanyag sa Windows Media Player. Ngayon ay nasa gilid na, pinalitan ng MP3/AAC)"
+
+msgid "mime_dsf"
+msgstr "DSF audio (Direct Stream Digital format, binuo ng Sony at Philips. 1-bit high sampling rate, standard na format ng DSD audio, digital na bersyon ng SACD, high-end audio format para sa mga audiophile, napakalaking file)"
+
+msgid "mime_ape"
+msgstr "Audio APE (binuo ng Monkey's Audio noong 2000, lossless compression format. Mas mataas na compression kaysa FLAC ngunit mas mabagal na encoding, ginagamit pa rin sa Windows platform at sa mga mahilig sa audio)"
+
+msgid "mime_mid"
+msgstr "MIDI audio (itinatag ng MIDI Association ang standard noong 1983, Musical Instrument Digital Interface. Format ng musical score sa halip na recording, napakaliit na mga file, pamantayan para sa electronic musical instrument, ringtone ng mobile phone, sound effect sa mga laro. Na-standardize ang General MIDI noong 1991, tumutukoy ng 128 instrumento)"
+
+msgid "mime_m4a"
+msgstr "M4A audio (MPEG-4 Audio, container format para sa AAC. Standard na format para sa iTunes Music Store, pangunahing audio format sa Apple ecosystem, sumusuporta sa DRM protection)"
+
+msgid "mime_m3u"
+msgstr "M3U playlist (MP3 URL playlist format, plain text file, nagtatala ng mga path ng audio file. Standard mula sa Winamp era, ginagamit para sa internet radio, online music streaming. Ang M3U8 ay ang UTF-8 version nito, ginagamit para sa HTTP Live Streaming)"
+
+msgid "mime_asf"
+msgstr "ASF streaming media (binuo ng Microsoft noong 1996, Advanced Systems Format. Windows Media streaming container, sumusuporta sa synchronized na pagpapadala ng audio at video. Ginagamit para sa live broadcast at video on demand streaming, ang WMA/WMV ay batay sa ASF container)"
+
+msgid "mime_avi"
+msgstr "AVI video (inilunsad ng Microsoft noong 1992, maagang Windows video standard. 'Audio Video Interleave', audio at video ay interleaved, ay ang pinakasikat na video format noong 1990s at 2000s, ngayon ay pinalitan ng MP4/MKV)"
+
+msgid "mime_divx"
+msgstr "DivX video (binuo ng DivX company noong 1998, video codec batay sa MPEG-4. Ay ang pangunahing format para sa pagbabahagi ng video sa internet noong 2000s, unang nagbigay-daan sa compression ng DVD quality sa laki ng CD. Dahil sa kontrobersya sa copyright, kalaunan ay nagbago sa komersyal na codec)"
+
+msgid "mime_mp4"
+msgstr "MP4 video (MPEG standard 2001, MPEG-4 Part 14. Pinaka-unibersal na video format sa mundo, sumusuporta sa H.264/H.265 encoding, default na format para sa internet video, pagre-record ng mobile phone, YouTube)"
+
+msgid "mime_m4v"
+msgstr "M4V video (iTunes video format, variant ng MP4. Video format sa Apple ecosystem, standard na format para sa mga pelikula at TV series sa iTunes Store, sumusuporta sa DRM copyright protection)"
+
+msgid "mime_mpeg"
+msgstr "MPEG video (itinatag ng MPEG organization ang standard noong 1988, Moving Picture Experts Group. Pangunahing standard para sa digital video compression, ang MPEG-1 (VCD), MPEG-2 (DVD), MPEG-4 (internet video) ay may malalim na impluwensya)"
+
+msgid "mime_mkv"
+msgstr "MKV video (binuo ng Matroska project noong 2002, open source multimedia container format. Sumusuporta sa maraming audio track, maraming subtitle, kabanata, 'may kakayahang mag-package ng lahat', unang pagpipilian para sa pagbabahagi ng high-definition na pelikula)"
+
+msgid "mime_mpg"
+msgstr "MPEG video (extension para sa MPEG-1/MPEG-2 video, standard na format para sa VCD at DVD. Ay ang pangunahing format para sa video sa CD noong 1990s at 2000s, ngayon ay pinalitan ng H.264/H.265)"
+
+msgid "mime_ogv"
+msgstr "Ogg Video video (binuo ng Xiph.Org Foundation, video format ng Ogg container, gumagamit ng Theora codec. Open source at walang patent, ay isa sa mga unang standard para sa HTML5 video, native na sinusuportahan ng Firefox)"
+
+msgid "mime_ogx"
+msgstr "Ogg multimedia container (binuo ng Xiph.Org Foundation, pangkalahatang extension ng Ogg container, maaaring maglaman ng maraming track tulad ng audio, video, subtitle. Open source multimedia standard, ginagamit sa mga laro at streaming media)"
+
+msgid "mime_rm"
+msgstr "RealMedia video (binuo ng RealNetworks noong 1995, RealMedia format. Ay ang pioneer ng streaming media sa internet noong 1990s at 2000s, pangunahing format ng RealPlayer. Mga disadvantages: nangangailangan ng espesyal na player, mahinang kalidad ng compression, pinalitan ng Flash/MP4)"
+
+msgid "mime_flv"
+msgstr "Flash video (lumitaw ang format noong 2002, Flash Video format. Dati ay ang pangunahing anyo ng internet video, maagang ginamit ng YouTube. Mga disadvantages: nangangailangan ng Flash plugin, mahinang performance, maraming security hole. Mula 2015, lumipat ang mga pangunahing website sa HTML5 video, ngayon ay inalis na)"
+
+msgid "mime_f4v"
+msgstr "F4V video (Flash video format na binuo ng Adobe, kahalili ng FLV. Batay sa MPEG-4 standard, sumusuporta sa H.264 encoding. Inalis kasama ng Flash technology, winakasan ng Adobe ang suporta noong 2020)"
+
+msgid "mime_wmv"
+msgstr "WMV video (binuo ng Microsoft noong 1999, Windows Media Video. Native na sinusuportahan ng Windows, na-optimize para sa streaming media transmission, ay karaniwang format para sa online video noong 2000s, ngayon ay nasa gilid na)"
+
+msgid "mime_wmf"
+msgstr "WMF media format (Windows Media Format, Microsoft framework para sa media. Kabilang ang WMV video, WMA audio, native na sinusuportahan ng Windows Media Player)"
+
+msgid "mime_mov"
+msgstr "MOV video (binuo ng Apple noong 1991, QuickTime container format. Standard na format para sa propesyonal na video editing, sumusuporta sa maraming codec, native na sinusuportahan ng Final Cut Pro, Premiere)"
+
+msgid "mime_qt"
+msgstr "QuickTime video (inilunsad ng Apple noong 1991, QuickTime format. Standard para sa video sa Mac platform, ang MOV ay ang container nito, ang QuickTime player ay malawakang ginamit. Winakasan ng Apple ang pagbuo ng Windows version noong 2016, unti-unting pinalitan ng MP4)"
+
+msgid "mime_webm"
+msgstr "WebM video (inilunsad ng Google noong 2010, open source at walang patent. Batay sa Matroska container, VP8/VP9 encoding, standard na format para sa HTML5 video, default na format para sa YouTube Web player)"
+
+msgid "mime_3gp"
+msgstr "3GP video (itinatag ng 3GPP noong 2000, video format para sa mobile device. Napakaliit na mga file, mababang kalidad, format para sa pagre-record sa lumang feature phone, ginamit para sa pagpapadala sa pamamagitan ng MMS)"
+
+#------------------------------------------------------------------------------
+# Technical Dimension
+#------------------------------------------------------------------------------
+
+msgid "Operating Systems"
+msgstr "Mga Operating System"
+
+msgid "Top 5 Operating Systems"
+msgstr "Nangungunang 5 Operating System"
+
+msgid "Unknown Robot"
+msgstr "Hindi kilalang kliyente"
+
+msgid "User agent"
+msgstr "User agent"
+
+msgid "Browsers"
+msgstr "Mga Browser"
+
+msgid "Top 5 Browsers"
+msgstr "Nangungunang 5 Browser"
+
+msgid "Unknown Robot RH"
+msgstr "Hindi kilalang header ng kahilingan"
+
+msgid "Detailed"
+msgstr "Bersyon ng access device"
+
+msgid "DetailedOS"
+msgstr "Bersyon ng operating system"
+
+msgid "DetailedBS"
+msgstr "Bersyon ng browser"
+
+msgid "Screen sizes"
+msgstr "Mga laki ng screen"
+
+msgid "Compression"
+msgstr "Compression"
+
+msgid "In"
+msgstr "Input"
+
+msgid "Out"
+msgstr "Output"
+
+msgid "Saved"
+msgstr "Natipid"
+
+#------------------------------------------------------------------------------
+# Origin Dimension
+#------------------------------------------------------------------------------
+
+msgid "Origin"
+msgstr "Pinagmulan"
+
+msgid "Referers"
+msgstr "Mga Referrer"
+
+msgid "meta.description"
+msgstr "AWStats advanced web log analyzer - subaybayan ang trapiko ng website sa real-time, pagsusuri ng bisita, mga keyword ng search engine, istatistika ng error. Sumusuporta sa dark mode, multi-language interface, nagbibigay ng komprehensibong pagsusuri ng data para sa mga administrator ng website."
+
+msgid "meta.keywords"
+msgstr "AWStats,estadistika ng website,pagsusuri ng log,pagsubaybay sa trapiko,estadistika ng pagbisita,pagsusuri ng SEO,website analysis tool,Web Analytics,Log Analyzer"
+
+msgid "meta.author"
+msgstr "AWStats"
+
+msgid "og.title"
+msgstr "AWStats - Pagsusuri ng Web Log"
+
+msgid "og.description"
+msgstr "📊 Propesyonal na open source na tool sa estadistika ng website, suriin ang trapiko ng iyong website at pag-uugali ng bisita sa real-time."
+
+msgid "og.image.alt"
+msgstr "AWStats statistical chart"
+
+msgid "Created by"
+msgstr "Nilikha ni %s"
+
+msgid "plugins"
+msgstr "Mga plugin"
+
+msgid "dbip by"
+msgstr "Data mula sa"
+
+msgid "IPDB by"
+msgstr "Ang data ng geolocation ay ibinigay ng DB-IP"
+
+# Health
+msgid "Configured"
+msgstr "Na-configure"
+
+msgid "Missing"
+msgstr "Nawawala"
+
+msgid "OK"
+msgstr "Matagumpay"
+
+msgid "Unused"
+msgstr "Hindi ginagamit"
+
+# Other
+msgid "Overall Health"
+msgstr "Pangkalahatang Kalusugan"
+
+msgid "Excellent"
+msgstr "Napakahusay"
+
+msgid "Good"
+msgstr "Mabuti"
+
+msgid "Fair"
+msgstr "Katamtaman"
+
+msgid "Poor"
+msgstr "Mahina"
+
+msgid "Missing icon types"
+msgstr "Mga nawawalang uri ng icon"
+
+msgid "see detail column for file locations"
+msgstr "tingnan ang column para sa mga lokasyon ng file"
+
+msgid "Expected Path"
+msgstr "Inaasahang Path"
+
+msgid "Tip: If you need to generate related icons, you can use %s to upload a logo image, and it will automatically generate all the above related icon files"
+msgstr "Tip: Kung kailangan mong bumuo ng mga kaugnay na icon, maaari mong gamitin ang %s upang mag-upload ng isang logo na imahe, at awtomatiko itong bubuo ng lahat ng nasa itaas na kaugnay na mga icon file"
+
+msgid "200: success, 404: failure"
+msgstr "200 ay bilang ng tagumpay, 404 ay bilang ng kabiguan"
+
+# Inaasahang mga path
+msgid "_PATH_FAVICON"
+msgstr "/favicon.ico"
+
+msgid "_PATH_APPLE_TOUCH"
+msgstr "/apple-touch-icon.png o /apple-touch-icon-180x180.png"
+
+msgid "_PATH_LOGO"
+msgstr "/logo.svg o /logo.png (kailangang i-reference sa HTML/JSON-LD)"
+
+msgid "_PATH_WEBMANIFEST"
+msgstr "/site.webmanifest o /manifest.json"
+
+msgid "_PATH_BROWSERCONFIG"
+msgstr "/browserconfig.xml"
+
+msgid "_PATH_SAFARI_PINNED"
+msgstr "/safari-pinned-tab.svg"
+
+msgid "_PATH_SOCIAL_ICON"
+msgstr "/images/github.svg, /images/paypal.svg, atbp."
+
+# Mga pangalan ng uri ng icon
+msgid "Favicon"
+msgstr "Icon ng website"
+
+msgid "Apple Touch Icon (iOS/macOS)"
+msgstr "Apple Touch icon (iPhone/iPad/Mac)"
+
+msgid "Site Logo"
+msgstr "Logo ng website"
+
+msgid "Web App Manifest (Android/Chrome)"
+msgstr "Web App manifest (Android/Chrome)"
+
+msgid "Windows Browser Config"
+msgstr "Windows Browser configuration"
+
+msgid "Safari Pinned Tab"
+msgstr "Safari pinned tab icon"
+
+msgid "Social Icon"
+msgstr "Social media icon"
+
+# Mga header ng table
+msgid "Icon Files Status"
+msgstr "Status ng mga icon file"
+
+msgid "Icon Type"
+msgstr "Uri ng icon"
+
+msgid "Total"
+msgstr "Kabuuan"
+
+msgid "Advanced Web Statistics"
+msgstr "Advanced Web Statistics"
+
+msgid "Advanced Web Statistics %s"
+msgstr "%s Advanced Web Statistics"
+
+msgid "Your browser does not support frames. Please use a modern browser."
+msgstr "Hindi sinusuportahan ng iyong browser ang mga frame. Mangyaring gumamit ng modernong browser."
+
+msgid "View statistics directly"
+msgstr "Tingnan ang estadistika nang direkta"
+
+msgid "Close"
+msgstr "Isara"
+
+msgid "Documentation Viewer"
+msgstr "Documentation Viewer"
+
+msgid "Direct address / Bookmarks"
+msgstr "Direktang address / Mga Bookmark"
+
+msgid "Search Engines"
+msgstr "Mga Search Engine"
+
+msgid "Refering search engines"
+msgstr "Mga nagre-refer na search engine"
+
+msgid "External pages"
+msgstr "Mga panlabas na pahina"
+
+msgid "Refering pages"
+msgstr "Mga nagre-refer na pahina"
+
+msgid "Internal pages"
+msgstr "Mga panloob na pahina"
+
+msgid "UnknownAccessSource"
+msgstr "Hindi kilalang pinagmulan ng access"
+
+msgid "Different refering pages"
+msgstr "Iba't ibang nagre-refer na pahina"
+
+msgid "Keyphrases"
+msgstr "Mga Keyphrase"
+
+msgid "Keywords"
+msgstr "Mga Keyword"
+
+msgid "Keyphrases/Keywords"
+msgstr "Mga Keyphrase/Keyword"
+
+msgid "Different keyphrases"
+msgstr "Iba't ibang keyphrase"
+
+msgid "Different keywords"
+msgstr "Iba't ibang keyword"
+
+#------------------------------------------------------------------------------
+# Page Dimension
+#------------------------------------------------------------------------------
+
+msgid "Viewed pages"
+msgstr "Mga tiningnang pahina"
+
+msgid "Different pages"
+msgstr "Iba't ibang pahina"
+
+msgid "Entry"
+msgstr "Entry"
+
+msgid "Exit"
+msgstr "Exit"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Referer"
+msgstr "Referer"
+
+msgid "Host"
+msgstr "Host"
+
+#------------------------------------------------------------------------------
+# Errors and Status
+#------------------------------------------------------------------------------
+
+msgid "Error"
+msgstr "Error"
+
+msgid "HTTP Status Statistics"
+msgstr "HTTP Status Code Statistics"
+
+msgid "SMTP Error codes"
+msgstr "SMTP error code"
+
+msgid "Page not found"
+msgstr "Hindi mahanap ang hinihiling na pahina"
+
+msgid "Unknown error"
+msgstr "Hindi kilalang error"
+
+msgid "Abnormal traffic note"
+msgstr "Ang hindi normal na trapiko sa pagba-browse ay kinabibilangan ng: mga search engine robot, AI training robot, vulnerability scanner, at mga kahilingang hindi sumusunod sa mga detalye"
+
+msgid "Page detail"
+msgstr "Mga detalye ng pahina"
+
+# Mga detalye ng mensahe ng error
+msgid "AWStats did not found the"
+msgstr "Hindi nakita ng AWStats ang"
+
+msgid "in your log records."
+msgstr "sa iyong mga log record."
+
+msgid "AWStats did not find any valid log lines that match your"
+msgstr "Walang nakitang wastong linya ng log ang AWStats na tumutugma sa iyong"
+
+msgid "parameter, in the"
+msgstr "parameter, sa"
+
+msgid "th first non commented lines read of your log."
+msgstr "-th unang ilang hindi komento na linya na nabasa mula sa iyong log."
+
+msgid "Your log file"
+msgstr "Ang iyong log file"
+
+msgid "must have a bad format or"
+msgstr "ay malamang na may maling format o"
+
+msgid "parameter setup does not match this format."
+msgstr "ang setup ng parameter ay hindi tumutugma sa format na ito."
+
+msgid "Your AWStats"
+msgstr "Ang iyong AWStats"
+
+msgid "parameter is:"
+msgstr "parameter ay:"
+
+msgid "This means each line in your web server log file need to have:"
+msgstr "Ito ay nangangahulugan na ang bawat linya sa log file ng iyong web server ay kailangang maglaman ng:"
+
+msgid "combined log format"
+msgstr "pinagsamang log format"
+
+msgid "MSIE Extended W3C log format"
+msgstr "MSIE Extended W3C log format"
+
+msgid "WebStar native log format"
+msgstr "WebStar native log format"
+
+msgid "common log format"
+msgstr "karaniwang log format"
+
+msgid "Lotus Notes/Lotus Domino"
+msgstr "Lotus Notes/Lotus Domino"
+
+msgid "the following personalized log format:"
+msgstr "ang sumusunod na personalized na log format:"
+
+msgid "And this is an example of records AWStats found in your log file (the record number"
+msgstr "At ito ay isang halimbawa ng mga record na natagpuan ng AWStats sa iyong log file (ang record number"
+
+msgid "in your log):"
+msgstr "sa iyong log):"
+
+#------------------------------------------------------------------------------
+# Miscellaneous
+#------------------------------------------------------------------------------
+
+msgid "Extra/Marketing"
+msgstr "Karagdagan/Marketing"
+
+#------------------------------------------------------------------------------
+# Interface Text
+#------------------------------------------------------------------------------
+
+msgid "Current site"
+msgstr "Kasalukuyang site"
+
+msgid "Web Site"
+msgstr "Web Site"
+
+msgid "Last Update"
+msgstr "Huling Update"
+
+msgid "Never updated"
+msgstr "Hindi kailanman na-update"
+
+msgid "No qualified records found in log"
+msgstr "Walang nakitang kwalipikadong record sa log"
+
+msgid "corrupted"
+msgstr "corrupted"
+
+msgid "comments"
+msgstr "mga komento"
+
+msgid "Blank"
+msgstr "Blangko"
+
+msgid "dropped"
+msgstr "na-drop"
+
+msgid "Update now"
+msgstr "I-update ngayon"
+
+msgid "Back to main page"
+msgstr "Bumalik sa pangunahing pahina"
+
+msgid "Close window"
+msgstr "Isara ang window"
+
+msgid "Back page"
+msgstr "Bumalik sa nakaraang pahina"
+
+msgid "Navigation"
+msgstr "Navigation"
+
+msgid "Summary"
+msgstr "Buod"
+
+msgid "Local"
+msgstr "Lokal"
+
+msgid "External"
+msgstr "Panlabas"
+
+msgid "Others (email senders)"
+msgstr "Iba pa (mga nagpadala)"
+
+msgid "Others (email receivers)"
+msgstr "Iba pa (mga tumatanggap)"
+
+msgid "Others"
+msgstr "Iba pa"
+
+msgid "Only 10 lines of browser data are currently displayed"
+msgstr "10 linya lang ng data ng browser ang kasalukuyang ipinapakita, tingnan ang buong listahan para sa higit pa"
+
+msgid "Others (unknown browsers)"
+msgstr "Iba pa (hindi kilalang browser)"
+
+msgid "Others (operating systems)"
+msgstr "Iba pa (operating system)"
+
+msgid "Others (unknown OS)"
+msgstr "Iba pa (hindi kilalang sistema)"
+
+msgid "Others (search engines)"
+msgstr "Iba pa (search engine)"
+
+msgid "Others (referring pages)"
+msgstr "Iba pa (nagre-refer na mga pahina)"
+
+msgid "Others (keyphrases)"
+msgstr "Iba pa (mga parirala)"
+
+msgid "Others (keywords)"
+msgstr "Iba pa (mga keyword)"
+
+msgid "Only first 10 robots shown"
+msgstr "Unang 10 robot lang ang ipinapakita, tingnan ang buong listahan para sa higit pa"
+
+msgid "Failed to obtain access record"
+msgstr "Hindi makuha ang record ng pagpasok"
+
+msgid "Failed to obtain leave record"
+msgstr "Hindi makuha ang record ng pag-alis"
+
+msgid "Other pages"
+msgstr "Iba pang mga pahina"
+
+msgid "Low Traffic IP Summary"
+msgstr "Buod ng mababang trapiko ng hindi kilalang IP"
+
+msgid "Failed to obtain IP data"
+msgstr "Buod ng iba pang kilalang IP"
+
+msgid "Failed to obtain the relevant data"
+msgstr "Hindi nakuha ang nauugnay na data"
+
+msgid "Limited list of countries and regions"
+msgstr "Limitadong listahan ng mga bansa at rehiyon, tingnan ang buong listahan para sa higit pa"
+
+msgid "currentVisitorData"
+msgstr "Kasalukuyang 10 linya lamang ng data ng bisita ang ipinapakita, tingnan ang buong listahan para sa higit pa"
+
+msgid "Others (robots main)"
+msgstr "Iba pa (mga robot)"
+
+msgid "Others (worms)"
+msgstr "Iba pa (mga worm)"
+
+msgid "Displaying10RowsPageMorePleaseViewFullList"
+msgstr "10 linya ng pahina lamang ang kasalukuyang ipinapakita, tingnan ang buong listahan para sa higit pa"
+
+msgid "Others (OS main)"
+msgstr "Iba pa (mga sistema)"
+
+msgid "Others (browsers main)"
+msgstr "Iba pa (mga browser)"
+
+msgid "Others (screen sizes)"
+msgstr "Iba pa (mga laki)"
+
+msgid "Others (search engines main)"
+msgstr "Iba pa (mga search engine)"
+
+msgid "Others (referring pages main)"
+msgstr "Iba pa (mga pinagmulang pahina)"
+
+msgid "Others (keyphrases main)"
+msgstr "Iba pa (mga parirala)"
+
+msgid "Others (keywords main)"
+msgstr "Iba pa (mga keyword)"
+
+# 1xx
+msgid "Continue"
+msgstr "Magpatuloy sa pagpapadala ng natitirang nilalaman"
+
+msgid "Switching Protocols"
+msgstr "Lumilipat ng protocol"
+
+msgid "Processing (WebDAV)"
+msgstr "Pinoproseso (mangyaring maghintay)"
+
+msgid "Early Hints"
+msgstr "Naghahanda ang server ng mga mapagkukunan"
+
+# 2xx
+msgid "[Miscellaneous successes]"
+msgstr "Iba pang matagumpay na katayuan"
+
+msgid "Request successful"
+msgstr "Matagumpay ang kahilingan"
+
+msgid "Created successfully"
+msgstr "Matagumpay na nagawa"
+
+msgid "Accepted - processing"
+msgstr "Tinanggap, pinoproseso"
+
+msgid "Non-authoritative information (from cache) (from cache)"
+msgstr "Hindi awtoritatibong impormasyon (mula sa cache)"
+
+msgid "Success, no content returned"
+msgstr "Matagumpay, walang ibinalik na nilalaman"
+
+msgid "Reset content"
+msgstr "I-reset ang form"
+
+msgid "Partial content (resume download)"
+msgstr "Bahagyang nilalaman (sumusuporta sa pagpapatuloy ng pag-download)"
+
+msgid "Multi-status (WebDAV)"
+msgstr "Maramihang katayuan (WebDAV group operations)"
+
+msgid "Already reported (WebDAV)"
+msgstr "Naiulat na (iniiwasan ang pagdoble)"
+
+msgid "IM used"
+msgstr "Ginamit ang IM extended protocol"
+
+# 3xx
+msgid "[Miscellaneous redirections]"
+msgstr "Iba pang mga pag-redirect"
+
+msgid "Multiple choices"
+msgstr "Maramihang mga pagpipilian"
+
+msgid "Moved permanently - update your links"
+msgstr "Permanenteng inilipat, i-update ang iyong mga link"
+
+msgid "Temporary redirect - URL unchanged"
+msgstr "Pansamantalang pag-redirect, hindi nagbago ang address"
+
+msgid "See other"
+msgstr "Tingnan ang ibang address"
+
+msgid "Not modified - using cached version"
+msgstr "Hindi binago, ginagamit ang naka-cache na bersyon"
+
+msgid "Use proxy"
+msgstr "Gumamit ng proxy"
+
+msgid "Switch proxy"
+msgstr "Magpalit ng proxy"
+
+msgid "Temporary redirect (keep method)"
+msgstr "Pansamantalang pag-redirect (pinapanatili ang paraan ng kahilingan)"
+
+msgid "Permanent redirect - update your links"
+msgstr "Permanenteng pag-redirect, i-update ang iyong mga link"
+
+# 4xx
+msgid "[Miscellaneous client/user errors]"
+msgstr "Iba pang mga error sa panig ng kliyente/gumagamit"
+
+msgid "Bad request"
+msgstr "Maling format ng kahilingan"
+
+msgid "Unauthorized - please log in"
+msgstr "Hindi awtorisado, mangyaring mag-log in"
+
+msgid "Payment required"
+msgstr "Kinakailangan ang pagbabayad"
+
+msgid "Forbidden - access denied"
+msgstr "Pinagbawalan ang access, hindi sapat na pahintulot"
+
+msgid "Page not found (404) - check for broken links"
+msgstr "Hindi umiiral ang pahina, suriin ang mga sirang link"
+
+msgid "Method not allowed"
+msgstr "Hindi pinapayagan ang paraan ng kahilingan"
+
+msgid "Not acceptable"
+msgstr "Hindi katanggap-tanggap na format ng tugon"
+
+msgid "Proxy authentication required"
+msgstr "Kinakailangan ang pagpapatunay ng proxy"
+
+msgid "Request timeout"
+msgstr "Nag-expire ang oras ng kahilingan"
+
+msgid "Conflict - please try again"
+msgstr "Salungatan sa kahilingan, mangyaring subukang muli mamaya"
+
+msgid "Gone - permanently deleted"
+msgstr "Ang mapagkukunan ay permanenteng tinanggal"
+
+msgid "Length required"
+msgstr "Kailangang tukuyin ang haba ng nilalaman"
+
+msgid "Precondition failed"
+msgstr "Hindi natugunan ang mga kundisyon"
+
+msgid "Payload too large"
+msgstr "Masyadong malaki ang nilalaman ng kahilingan"
+
+msgid "URI too long"
+msgstr "Masyadong mahaba ang address ng kahilingan"
+
+msgid "Unsupported media type"
+msgstr "Hindi suportadong uri ng file"
+
+msgid "Range not satisfiable"
+msgstr "Ang hiniling na saklaw ay hindi wasto"
+
+msgid "Expectation failed"
+msgstr "Hindi matugunan ang Expect na kahilingan"
+
+msgid "I am a teapot (April Fools)"
+msgstr "Ako ay isang teapot (April Fools joke)"
+
+msgid "Page expired (Laravel)"
+msgstr "Nag-expire na ang pahina, i-refresh at subukang muli"
+
+msgid "Method failure (Spring)"
+msgstr "Nabigo ang pamamaraan"
+
+msgid "Misdirected request"
+msgstr "Ang kahilingan ay maling nakadirekta"
+
+msgid "Unprocessable entity (WebDAV)"
+msgstr "Tama ang format ng kahilingan ngunit hindi maproseso"
+
+msgid "Locked (WebDAV)"
+msgstr "Ang mapagkukunan ay naka-lock"
+
+msgid "Failed dependency (WebDAV)"
+msgstr "Nabigo ang dependent na operasyon"
+
+msgid "Too early"
+msgstr "Masyadong maagang ipinadala ang kahilingan"
+
+msgid "Upgrade required"
+msgstr "Kailangang i-upgrade ang protocol"
+
+msgid "Precondition required"
+msgstr "Kulang ang kinakailangang mga paunang kundisyon"
+
+msgid "Too many requests - slow down"
+msgstr "Masyadong madalas ang mga kahilingan, mangyaring subukang muli mamaya"
+
+msgid "Request header fields too large (Shopify)"
+msgstr "Masyadong malaki ang mga field ng header ng kahilingan"
+
+msgid "Request header too large"
+msgstr "Masyadong malaki ang header ng kahilingan"
+
+msgid "Login timeout (IIS)"
+msgstr "Nag-expire ang oras ng pag-login, mag-log in muli"
+
+msgid "No response (nginx)"
+msgstr "Walang tugon mula sa server"
+
+msgid "Retry with (IIS)"
+msgstr "Subukang muli mamaya"
+
+msgid "Blocked by Windows parental controls"
+msgstr "Hinarang ng Windows parental controls"
+
+msgid "Unavailable for legal reasons"
+msgstr "Hindi available para sa mga legal na dahilan"
+
+msgid "Client closed connection before idle timeout (AWS ELB)"
+msgstr "Aktibong tinapos ng kliyente ang koneksyon"
+
+msgid "X-Forwarded-For header with >30 IP addresses (AWS ELB)"
+msgstr "Lumampas sa 30 IP address ang forwarding chain"
+
+msgid "Incompatible protocol versions (AWS ELB)"
+msgstr "Hindi magkatugmang mga bersyon ng protocol"
+
+msgid "Request header too large (nginx)"
+msgstr "Masyadong malaki ang header ng kahilingan"
+
+msgid "SSL certificate error (nginx)"
+msgstr "Error sa SSL certificate"
+
+msgid "SSL certificate required (nginx)"
+msgstr "Kinakailangan ang SSL certificate"
+
+msgid "HTTP request sent to HTTPS port (nginx)"
+msgstr "HTTP request na ipinadala sa HTTPS port"
+
+msgid "Invalid token (ArcGIS)"
+msgstr "Di-wastong token"
+
+msgid "Token required (ArcGIS) / Client closed request (nginx)"
+msgstr "Kinakailangan ang token / Isinara ng kliyente ang kahilingan"
+
+msgid "Resource limit reached (cPanel)"
+msgstr "Naabot ang limitasyon ng mapagkukunan (CPU/memory)"
+
+msgid "Bandwidth limit exceeded (Apache/cPanel)"
+msgstr "Lumampas sa limitasyon ng bandwidth"
+
+# 5xx
+msgid "[Miscellaneous server errors]"
+msgstr "Iba pang mga error sa server"
+
+msgid "Internal server error - check logs"
+msgstr "Internal na error sa server, suriin ang mga log"
+
+msgid "Not implemented"
+msgstr "Hindi sinusuportahan ng server ang function na ito"
+
+msgid "Bad gateway - backend error"
+msgstr "Error sa gateway, hindi gumagana nang tama ang serbisyo sa backend"
+
+msgid "Service unavailable - maintenance or overload"
+msgstr "Hindi available ang serbisyo, pagpapanatili o labis na karga"
+
+msgid "Gateway timeout"
+msgstr "Nag-expire ang oras ng pagtugon ng gateway"
+
+msgid "HTTP version not supported"
+msgstr "Hindi suportadong bersyon ng HTTP protocol"
+
+msgid "Variant also negotiates"
+msgstr "Ang variant ay nakikilahok din sa negosasyon (maling configuration)"
+
+msgid "Insufficient storage (WebDAV)"
+msgstr "Hindi sapat na espasyo sa imbakan"
+
+msgid "Loop detected (WebDAV)"
+msgstr "Nakita ang circular reference"
+
+msgid "Not extended"
+msgstr "Kailangan ng karagdagang extension"
+
+msgid "Network authentication required"
+msgstr "Kinakailangan ang network authentication"
+
+# Cloudflare
+msgid "Unknown error (Cloudflare)"
+msgstr "Hindi kilalang error"
+
+msgid "Web server is down (Cloudflare)"
+msgstr "Naka-off ang web server"
+
+msgid "Connection timeout (Cloudflare)"
+msgstr "Nag-expire ang oras ng koneksyon"
+
+msgid "Origin is unreachable (Cloudflare)"
+msgstr "Hindi maabot ang pinagmulang server"
+
+msgid "A timeout occurred (Cloudflare)"
+msgstr "Nagkaroon ng timeout"
+
+msgid "SSL handshake failed (Cloudflare)"
+msgstr "Nabigo ang SSL handshake"
+
+msgid "Invalid SSL certificate (Cloudflare)"
+msgstr "Di-wastong SSL certificate"
+
+msgid "Railgun error (Cloudflare - obsolete)"
+msgstr "Railgun error (hindi na ginagamit)"
+
+msgid "Site is overloaded (SSLLabs)"
+msgstr "Ang site ay overloaded"
+
+msgid "Origin DNS error (Cloudflare) / Site is frozen (Pantheon)"
+msgstr "DNS error ng pinagmulang server / Ang site ay frozen"
+
+msgid "Temporarily disabled (Shopify)"
+msgstr "Pansamantalang hindi pinagana"
+
+msgid "Unauthorized (AWS ELB)"
+msgstr "Hindi awtorisado"
+
+msgid "Network read timeout error"
+msgstr "Timeout sa pagbabasa ng network"
+
+msgid "Network connect timeout error"
+msgstr "Timeout sa pagkonekta sa network"
+
+msgid "Unexpected token (Shopify)"
+msgstr "Hindi inaasahang token"
+
+msgid "Request denied (LinkedIn)"
+msgstr "Tinanggihan ang kahilingan"
+
+msgid "HTTP/2 GOAWAY (AWS ELB)"
+msgstr "HTTP/2 na koneksyon sarado"
+
+#------------------------------------------------------------------------------
+# SMTP Status Codes
+#------------------------------------------------------------------------------
+
+msgid "[Unknown]"
+msgstr "Hindi kilalang status code"
+
+msgid "Nonstandard success response (ESMTP)"
+msgstr "Di-karaniwang matagumpay na tugon (ESMTP)"
+
+msgid "System status, or system help reply"
+msgstr "Status ng system o tulong"
+
+msgid "Help message"
+msgstr "Mensage ng tulong"
+
+msgid "SMTP service ready (LMTP)"
+msgstr "SMTP serbisyo handa na (LMTP)"
+
+msgid "Service ready - server is ready to receive mail"
+msgstr "Handa na ang serbisyo - handa na ang email server na tumanggap ng mail"
+
+msgid "Service closing - connection is being closed"
+msgstr "Sinasara ang serbisyo - malapit nang matapos ang koneksyon"
+
+msgid "Authentication successful"
+msgstr "Matagumpay ang authentication"
+
+msgid "Requested mail action taken and completed"
+msgstr "Ang hiniling na aksyon sa mail ay isinagawa at natapos"
+
+msgid "User not local - will forward to another address"
+msgstr "Ang user ay wala sa server na ito - ipapasa sa ibang address"
+
+msgid "Cannot verify recipient, but will attempt delivery"
+msgstr "Hindi ma-verify ang tatanggap, ngunit susubukan ang paghahatid"
+
+msgid "Message accepted for delivery (DSN)"
+msgstr "Tinanggap ang mensahe para sa paghahatid (DSN)"
+
+msgid "User name is a mailbox"
+msgstr "Ang username ay isang mailbox"
+
+msgid "Authentication challenge - please respond"
+msgstr "Authentication challenge - mangyaring tumugon"
+
+msgid "Start mail input - end with <CRLF>.<CRLF>"
+msgstr "Simulan ang paglalagay ng nilalaman ng email - tapusin gamit ang <CRLF>.<CRLF>"
+
+msgid "Continue (LMTP)"
+msgstr "Magpatuloy (LMTP)"
+
+msgid "Service not available - connection closing, try again later"
+msgstr "Hindi available ang serbisyo - magsasara ang koneksyon, subukang muli mamaya"
+
+msgid "Mailbox busy or temporarily unavailable (Exchange)"
+msgstr "Abala ang mailbox o pansamantalang hindi available (Exchange)"
+
+msgid "Connection rate limit exceeded (Postfix)"
+msgstr "Lumampas sa limitasyon ng dalas ng pagkonekta (Postfix)"
+
+msgid "Too many concurrent connections (Postfix)"
+msgstr "Masyadong maraming sabay na koneksyon (Postfix)"
+
+msgid "Unable to establish connection (Postfix)"
+msgstr "Hindi maitatag ang koneksyon (Postfix)"
+
+msgid "Connection timed out (Postfix)"
+msgstr "Nag-expire ang oras ng koneksyon (Postfix)"
+
+msgid "Connection dropped due to error (Postfix)"
+msgstr "Naputol ang koneksyon dahil sa error (Postfix)"
+
+msgid "Mailbox temporarily locked (Exchange)"
+msgstr "Pansamantalang naka-lock ang mailbox (Exchange)"
+
+msgid "Too many recipients (Postfix/Exim)"
+msgstr "Masyadong maraming tatanggap (Postfix/Exim)"
+
+msgid "Mail server error (Exchange)"
+msgstr "Error sa email server (Exchange)"
+
+msgid "Received loop detected (Exim)"
+msgstr "Na-detect ang receive loop (Exim)"
+
+msgid "Too many hop count (Exim)"
+msgstr "Masyadong maraming hop (Exim)"
+
+msgid "DNS lookup failed (Postfix)"
+msgstr "Nabigo ang DNS lookup (Postfix)"
+
+msgid "Unable to authenticate (Postfix)"
+msgstr "Hindi magawa ang authentication (Postfix)"
+
+msgid "TLS handshake failed (Postfix)"
+msgstr "Nabigo ang TLS handshake (Postfix)"
+
+msgid "SMTP protocol violation (Postfix)"
+msgstr "Paglabag sa SMTP protocol (Postfix)"
+
+msgid "Message size exceeds limit (Exchange)"
+msgstr "Lumampas ang laki ng email sa limitasyon (Exchange)"
+
+msgid "Message rate limit exceeded (Postfix)"
+msgstr "Lumampas sa limitasyon ng dalas ng pagpapadala ng email (Postfix)"
+
+msgid "Mailbox quota exceeded - temporary"
+msgstr "Puno na ang quota ng mailbox - pansamantalang katayuan"
+
+msgid "Domain not found (Postfix)"
+msgstr "Hindi nahanap ang domain (Postfix)"
+
+msgid "Message header invalid (Postfix)"
+msgstr "Di-wasto ang header ng email (Postfix)"
+
+msgid "Bounce loop detected (Postfix)"
+msgstr "Na-detect ang bounce loop (Postfix)"
+
+msgid "Unable to route (Postfix)"
+msgstr "Hindi maruta (Postfix)"
+
+msgid "Sender domain not found (Postfix)"
+msgstr "Hindi nahanap ang domain ng nagpadala (Postfix)"
+
+msgid "Recipient domain not found (Postfix)"
+msgstr "Hindi nahanap ang domain ng tatanggap (Postfix)"
+
+msgid "Greylisting in progress - please try again (Postgrey)"
+msgstr "Ginagawa ang greylisting - subukang muli mamaya (Postgrey)"
+
+msgid "Spam filtering in progress (SpamAssassin)"
+msgstr "Ginagawa ang pag-filter ng spam (SpamAssassin)"
+
+msgid "Virus scanning in progress (ClamAV)"
+msgstr "Ginagawa ang pag-scan ng virus (ClamAV)"
+
+msgid "Mailbox unavailable - try again later"
+msgstr "Hindi available ang mailbox - subukang muli mamaya"
+
+msgid "Requested action aborted - error in processing"
+msgstr "Naabort ang hiniling na aksyon - error sa pagproseso"
+
+msgid "Insufficient system storage - try again later"
+msgstr "Hindi sapat na espasyo sa system - subukang muli mamaya"
+
+msgid "Too many messages for this recipient (Exchange)"
+msgstr "Masyadong maraming mensahe para sa tatanggap na ito (Exchange)"
+
+msgid "TLS not available (Postfix)"
+msgstr "Hindi available ang TLS (Postfix)"
+
+msgid "Server unable to accept messages (Postfix)"
+msgstr "Hindi matanggap ng server ang email (Postfix)"
+
+msgid "Temporary failure in DNS lookup (Exim)"
+msgstr "Pansamantalang kabiguan sa DNS lookup (Exim)"
+
+msgid "Quota exceeded - temporary"
+msgstr "Lumampas sa quota - pansamantalang katayuan"
+
+msgid "Message too big - temporary"
+msgstr "Masyadong malaki ang email - pansamantalang katayuan"
+
+msgid "Too many messages per connection"
+msgstr "Masyadong maraming mensahe bawat koneksyon"
+
+msgid "Load average too high (Postfix)"
+msgstr "Masyadong mataas ang average na load ng system (Postfix)"
+
+msgid "Connection refused (Postfix)"
+msgstr "Tinanggihan ang koneksyon (Postfix)"
+
+msgid "Send rate limit exceeded (Postfix)"
+msgstr "Lumampas sa limitasyon ng dalas ng pagpapadala (Postfix)"
+
+msgid "Recipient rate limit exceeded (Postfix)"
+msgstr "Lumampas sa limitasyon ng dalas para sa tatanggap (Postfix)"
+
+msgid "Sender rate limit exceeded (Postfix)"
+msgstr "Lumampas sa limitasyon ng dalas para sa nagpadala (Postfix)"
+
+msgid "IP address rate limit exceeded (Postfix)"
+msgstr "Lumampas sa limitasyon ng dalas para sa IP address (Postfix)"
+
+msgid "MX lookup failed (Postfix)"
+msgstr "Nabigo ang MX lookup (Postfix)"
+
+msgid "A record lookup failed (Postfix)"
+msgstr "Nabigo ang A record lookup (Postfix)"
+
+msgid "PTR record lookup failed (Postfix)"
+msgstr "Nabigo ang PTR record lookup (Postfix)"
+
+msgid "Greylisting active - please try again (Postgrey)"
+msgstr "Aktibo ang greylisting - subukang muli mamaya (Postgrey)"
+
+msgid "Sender address rejected - domain not verified (DMARC pending)"
+msgstr "Tinanggihan ang address ng nagpadala - hindi na-verify ang domain (DMARC pending)"
+
+msgid "Recipient address rejected - domain not verified (DMARC pending)"
+msgstr "Tinanggihan ang address ng tatanggap - hindi na-verify ang domain (DMARC pending)"
+
+msgid "DKIM verification pending - temporary failure"
+msgstr "Nakabinbin ang DKIM verification - pansamantalang kabiguan"
+
+msgid "SPF verification pending - temporary failure"
+msgstr "Nakabinbin ang SPF verification - pansamantalang kabiguan"
+
+msgid "DMARC verification pending - temporary failure"
+msgstr "Nakabinbin ang DMARC verification - pansamantalang kabiguan"
+
+msgid "DNSBL lookup temporary failure"
+msgstr "Pansamantalang kabiguan sa DNSBL lookup"
+
+msgid "RHSBL lookup temporary failure"
+msgstr "Pansamantalang kabiguan sa RHSBL lookup"
+
+msgid "URI DNSBL lookup temporary failure"
+msgstr "Pansamantalang kabiguan sa URI DNSBL lookup"
+
+msgid "Temporary authentication failure (Dovecot)"
+msgstr "Pansamantalang kabiguan sa authentication (Dovecot)"
+
+msgid "Temporary authorization failure (Sendmail)"
+msgstr "Pansamantalang kabiguan sa awtorisasyon (Sendmail)"
+
+msgid "Rate limit exceeded per sender (Exim)"
+msgstr "Lumampas sa limitasyon ng dalas para sa indibidwal na nagpadala (Exim)"
+
+msgid "Rate limit exceeded per recipient (Exim)"
+msgstr "Lumampas sa limitasyon ng dalas para sa indibidwal na tatanggap (Exim)"
+
+msgid "Rate limit exceeded per domain (Exim)"
+msgstr "Lumampas sa limitasyon ng dalas para sa indibidwal na domain (Exim)"
+
+msgid "Rate limit exceeded per IP (Exim)"
+msgstr "Lumampas sa limitasyon ng dalas para sa indibidwal na IP address (Exim)"
+
+msgid "Message queued for later delivery (Postfix)"
+msgstr "Inilagay ang email sa queue para sa susunod na paghahatid (Postfix)"
+
+msgid "Delivery delayed due to policy (Exchange)"
+msgstr "Naantala ang paghahatid dahil sa mga patakaran (Exchange)"
+
+msgid "Temporary failure in content filter"
+msgstr "Pansamantalang kabiguan sa filter ng nilalaman"
+
+msgid "Temporary failure in antivirus scanner"
+msgstr "Pansamantalang kabiguan sa antivirus scanner"
+
+msgid "Temporary failure in spam filter"
+msgstr "Pansamantalang kabiguan sa spam filter"
+
+msgid "Temporary failure in milter (Postfix)"
+msgstr "Pansamantalang kabiguan sa milter (Postfix)"
+
+msgid "Greylisting - try again later"
+msgstr "Greylisting - subukang muli mamaya"
+
+msgid "DDoS protection active - try again later"
+msgstr "Aktibo ang DDoS protection - subukang muli mamaya"
+
+msgid "SMTP policy violation - temporary"
+msgstr "Paglabag sa SMTP policy - pansamantalang katayuan"
+
+msgid "Temporary error in RCPT TO processing"
+msgstr "Pansamantalang error sa pagproseso ng RCPT TO"
+
+msgid "Temporary error in MAIL FROM processing"
+msgstr "Pansamantalang error sa pagproseso ng MAIL FROM"
+
+msgid "Temporary error in EHLO/HELO processing"
+msgstr "Pansamantalang error sa pagproseso ng EHLO/HELO"
+
+msgid "Temporary error in DATA processing"
+msgstr "Pansamantalang error sa pagproseso ng DATA"
+
+msgid "Temporary error - service busy, try again later"
+msgstr "Pansamantalang error - abala ang serbisyo, subukang muli mamaya"
+
+msgid "Syntax error - command unrecognized or too long"
+msgstr "Syntax error - hindi nakilala ang command o masyadong mahaba"
+
+msgid "Syntax error in parameters or arguments"
+msgstr "Syntax error sa mga parameter o argumento"
+
+msgid "Command not implemented"
+msgstr "Hindi na-implement ang command"
+
+msgid "Bad sequence of commands"
+msgstr "Maling pagkakasunud-sunod ng mga command"
+
+msgid "Command parameter not implemented"
+msgstr "Hindi na-implement ang parameter ng command"
+
+msgid "Version not supported (ESMTP)"
+msgstr "Hindi suportado ang bersyon (ESMTP)"
+
+msgid "Mailbox path invalid (LMTP)"
+msgstr "Di-wasto ang path ng mailbox (LMTP)"
+
+msgid "Too many commands in this session (Postfix)"
+msgstr "Masyadong maraming command sa session na ito (Postfix)"
+
+msgid "Recipient limit exceeded (Postfix)"
+msgstr "Lumampas sa limitasyon ng bilang ng mga tatanggap (Postfix)"
+
+msgid "Sender limit exceeded (Postfix)"
+msgstr "Lumampas sa limitasyon ng bilang ng mga nagpadala (Postfix)"
+
+msgid "Domain limit exceeded (Postfix)"
+msgstr "Lumampas sa limitasyon ng bilang ng mga domain (Postfix)"
+
+msgid "Mailbox does not exist (Exchange)"
+msgstr "Hindi umiiral ang mailbox (Exchange)"
+
+msgid "DNS failure - permanent"
+msgstr "DNS failure - permanenteng error"
+
+msgid "Address type not supported (Postfix)"
+msgstr "Hindi suportado ang uri ng address (Postfix)"
+
+msgid "Unable to open mailbox (Postfix)"
+msgstr "Hindi mabuksan ang mailbox (Postfix)"
+
+msgid "Mailbox locked - permanent"
+msgstr "Naka-lock ang mailbox - permanenteng katayuan"
+
+msgid "Message rejected due to policy (Exchange)"
+msgstr "Tinanggihan ang mensahe dahil sa mga patakaran (Exchange)"
+
+msgid "Content rejected - permanent"
+msgstr "Tinanggihan ang nilalaman - permanenteng katayuan"
+
+msgid "Attachment type not allowed"
+msgstr "Hindi pinapayagan ang uri ng attachment"
+
+msgid "Message encoding not supported"
+msgstr "Hindi suportado ang encoding ng mensahe"
+
+msgid "Sender domain does not exist - permanent"
+msgstr "Hindi umiiral ang domain ng nagpadala - permanenteng error"
+
+msgid "Domain does not accept mail or is closing"
+msgstr "Hindi tumatanggap ng email ang domain o nagsasara"
+
+msgid "Recipient domain does not exist - permanent"
+msgstr "Hindi umiiral ang domain ng tatanggap - permanenteng error"
+
+msgid "Mailbox quota exceeded - permanent"
+msgstr "Lumampas sa quota ng mailbox - permanenteng katayuan"
+
+msgid "Message size exceeds limit - permanent"
+msgstr "Lumampas ang laki ng mensahe sa limitasyon - permanenteng katayuan"
+
+msgid "Authentication required (Sendmail)"
+msgstr "Kinakailangan ang authentication (Sendmail)"
+
+msgid "Authentication failed (Sendmail)"
+msgstr "Nabigo ang authentication (Sendmail)"
+
+msgid "Authentication mechanism not supported"
+msgstr "Hindi suportado ang mekanismo ng authentication"
+
+msgid "Authentication credentials invalid"
+msgstr "Di-wasto ang mga kredensyal sa authentication"
+
+msgid "Authentication account expired"
+msgstr "Nag-expire na ang account sa authentication"
+
+msgid "Access denied - authentication required"
+msgstr "Tinanggihan ang access - kinakailangan ang authentication"
+
+msgid "Access denied (Sendmailism)"
+msgstr "Tinanggihan ang access (Sendmail)"
+
+msgid "Access denied - not authenticated"
+msgstr "Tinanggihan ang access - hindi ka naka-authenticate"
+
+msgid "Access denied - account locked"
+msgstr "Tinanggihan ang access - naka-lock ang account"
+
+msgid "Access denied - account disabled"
+msgstr "Tinanggihan ang access - hindi pinagana ang account"
+
+msgid "Authentication failed"
+msgstr "Nabigo ang authentication"
+
+msgid "Authentication required for relay (Postfix)"
+msgstr "Kinakailangan ang authentication para sa relay (Postfix)"
+
+msgid "Authentication failed for relay (Postfix)"
+msgstr "Nabigo ang authentication para sa relay (Postfix)"
+
+msgid "Encryption required (STARTTLS)"
+msgstr "Kinakailangan ang naka-encrypt na koneksyon (STARTTLS)"
+
+msgid "TLS required for this recipient"
+msgstr "Kinakailangan ang TLS encryption para sa tatanggap na ito"
+
+msgid "Encryption strength insufficient"
+msgstr "Hindi sapat ang lakas ng encryption"
+
+msgid "Certificate validation failed"
+msgstr "Nabigo ang pag-verify ng certificate"
+
+msgid "Invalid TLS certificate"
+msgstr "Di-wastong TLS certificate"
+
+msgid "TLS protocol version not supported"
+msgstr "Hindi suportado ang bersyon ng TLS protocol"
+
+msgid "Cipher suite not supported"
+msgstr "Hindi suportado ang cipher suite"
+
+msgid "Access denied - no valid recipient"
+msgstr "Tinanggihan ang access - walang wastong tatanggap"
+
+msgid "Access denied - no valid sender"
+msgstr "Tinanggihan ang access - walang wastong nagpadala"
+
+msgid "Access denied - domain not allowed"
+msgstr "Tinanggihan ang access - hindi pinapayagan ang domain"
+
+msgid "Access denied - IP address blocked (permanent)"
+msgstr "Tinanggihan ang access - permanenteng na-block ang IP address"
+
+msgid "Access denied - sender domain blacklisted"
+msgstr "Tinanggihan ang access - ang domain ng nagpadala ay nasa blacklist"
+
+msgid "Mailbox unavailable - requested action not taken"
+msgstr "Hindi available ang mailbox - hindi ginawa ang hiniling na aksyon"
+
+msgid "User not local - please try forwarding address"
+msgstr "Hindi lokal ang user - mangyaring subukan ang forwarding address"
+
+msgid "Requested action aborted - exceeded storage allocation"
+msgstr "Naabort ang hiniling na aksyon - lumampas sa inilaang storage"
+
+msgid "Mailbox name not allowed"
+msgstr "Hindi pinapayagan ang pangalan ng mailbox"
+
+msgid "Requested action rejected - access denied"
+msgstr "Tinanggihan ang hiniling na aksyon - tinanggihan ang access"
+
+msgid "MAIL FROM/RCPT TO parameters not recognized"
+msgstr "Hindi nakilala ang mga parameter ng MAIL FROM/RCPT TO"
+
+msgid "Domain not allowed to send (DMARC reject)"
+msgstr "Hindi pinapayagan ang domain na magpadala (DMARC reject)"
+
+msgid "Too many duplicate messages - permanent"
+msgstr "Masyadong maraming duplicate na mensahe - permanenteng katayuan"
+
+msgid "Sender address rejected - domain not in SPF"
+msgstr "Tinanggihan ang address ng nagpadala - wala sa SPF record ang domain"
+
+msgid "Sender address rejected - DKIM verification failed"
+msgstr "Tinanggihan ang address ng nagpadala - nabigo ang DKIM verification"
+
+msgid "Sender address rejected - DMARC policy reject"
+msgstr "Tinanggihan ang address ng nagpadala - pagtanggi ng DMARC policy"
+
+msgid "Recipient address rejected - DMARC policy reject"
+msgstr "Tinanggihan ang address ng tatanggap - pagtanggi ng DMARC policy"
+
+msgid "Message rejected due to spam content"
+msgstr "Tinanggihan ang mensahe dahil sa spam na nilalaman"
+
+msgid "Message rejected due to virus detected"
+msgstr "Tinanggihan ang mensahe dahil sa nakitang virus"
+
+msgid "Message rejected due to malicious content"
+msgstr "Tinanggihan ang mensahe dahil sa nakakapinsalang nilalaman"
+
+msgid "Message rejected due to phishing detection"
+msgstr "Tinanggihan ang mensahe dahil sa pagtuklas ng phishing"
+
+msgid "Message rejected due to malware detection"
+msgstr "Tinanggihan ang mensahe dahil sa pagtuklas ng malware"
+
+msgid "Message rejected due to policy - permanent"
+msgstr "Tinanggihan ang mensahe dahil sa mga patakaran - permanenteng katayuan"
+
+msgid "Message rejected due to content filtering"
+msgstr "Tinanggihan ang mensahe dahil sa pag-filter ng nilalaman"
+
+msgid "Message rejected due to reputation"
+msgstr "Tinanggihan ang mensahe dahil sa reputasyon"
+
+msgid "Access denied - access_map violation"
+msgstr "Tinanggihan ang access - paglabag sa access_map"
+
+msgid "Access denied - SMTP client listed in RBL"
+msgstr "Tinanggihan ang access - SMTP client ay nasa RBL"
+
+msgid "Access denied - relay not authorized"
+msgstr "Tinanggihan ang access - hindi awtorisado ang relay"
+
+msgid "Access denied - unknown SMTP client hostname"
+msgstr "Tinanggihan ang access - hindi kilalang hostname ng SMTP client"
+
+msgid "Access denied - bad syntax for client HELO hostname"
+msgstr "Tinanggihan ang access - maling syntax sa HELO hostname ng client"
+
+msgid "Access denied - SMTP client hostname rejected"
+msgstr "Tinanggihan ang access - tinanggihan ang hostname ng SMTP client"
+
+msgid "Access denied - unknown domain for sender or recipient"
+msgstr "Tinanggihan ang access - hindi kilalang domain ng nagpadala o tatanggap"
+
+msgid "Access denied - unknown client HELO hostname"
+msgstr "Tinanggihan ang access - hindi kilalang HELO hostname ng client"
+
+msgid "Access denied - invalid domain (not FQDN)"
+msgstr "Tinanggihan ang access - di-wastong domain (hindi FQDN)"
+
+msgid "Access denied - domain not qualified"
+msgstr "Tinanggihan ang access - hindi kwalipikado ang domain"
+
+msgid "Access denied - mail server misconfigured"
+msgstr "Tinanggihan ang access - mali ang configuration ng email server"
+
+msgid "Access denied - open relay not allowed"
+msgstr "Tinanggihan ang access - hindi pinapayagan ang open relay"
+
+msgid "Access denied - proxy not allowed"
+msgstr "Tinanggihan ang access - hindi pinapayagan ang proxy"
+
+msgid "Access denied - dynamic IP not allowed"
+msgstr "Tinanggihan ang access - hindi pinapayagan ang dynamic na IP"
+
+msgid "Access denied - residential IP not allowed"
+msgstr "Tinanggihan ang access - hindi pinapayagan ang residential IP"
+
+msgid "Access denied - VPN/Tor detected"
+msgstr "Tinanggihan ang access - nakita ang VPN/Tor"
+
+msgid "Access denied - Spamhaus DROP listed"
+msgstr "Tinanggihan ang access - IP address ay nasa Spamhaus DROP list"
+
+msgid "Access denied - URL listed in URIBL"
+msgstr "Tinanggihan ang access - URL ay nasa URIBL"
+
+msgid "Access denied - domain in RHSBL"
+msgstr "Tinanggihan ang access - domain ay nasa RHSBL"
+
+msgid "Access denied - IP in DNSWL (policy)"
+msgstr "Tinanggihan ang access - IP ay nasa DNSWL (policy)"
+
+msgid "Delivery failed - mailbox not found"
+msgstr "Nabigo ang paghahatid - hindi nahanap ang mailbox"
+
+msgid "Delivery failed - recipient not local"
+msgstr "Nabigo ang paghahatid - hindi lokal ang tatanggap"
+
+msgid "Delivery failed - recipient rejected"
+msgstr "Nabigo ang paghahatid - tinanggihan ang tatanggap"
+
+msgid "Delivery failed - sender rejected"
+msgstr "Nabigo ang paghahatid - tinanggihan ang nagpadala"
+
+msgid "Delivery failed - relay rejected"
+msgstr "Nabigo ang paghahatid - tinanggihan ang relay"
+
+msgid "Delivery failed - DNS permanent error"
+msgstr "Nabigo ang paghahatid - permanenteng DNS error"
+
+msgid "Delivery failed - MX permanent error"
+msgstr "Nabigo ang paghahatid - permanenteng MX error"
+
+msgid "Delivery failed - A record permanent error"
+msgstr "Nabigo ang paghahatid - permanenteng A record error"
+
+msgid "Delivery failed - PTR record permanent error"
+msgstr "Nabigo ang paghahatid - permanenteng PTR record error"
+
+msgid "Delivery failed - policy permanent error"
+msgstr "Nabigo ang paghahatid - permanenteng policy error"
+
+msgid "DSN: Success - delivery status notification"
+msgstr "DSN: Tagumpay - notipikasyon ng katayuan ng paghahatid"
+
+msgid "DSN: Delivery delayed"
+msgstr "DSN: Naantala ang paghahatid"
+
+msgid "DSN: Delivery failed - permanent"
+msgstr "DSN: Nabigo ang paghahatid - permanente"
+
+msgid "DSN: Delivery failed - temporary"
+msgstr "DSN: Nabigo ang paghahatid - pansamantala"
+
+msgid "DSN: Message expired"
+msgstr "DSN: Nag-expire ang mensahe"
+
+msgid "DSN: Message bounced"
+msgstr "DSN: Bounce ang mensahe"
+
+msgid "DSN: Message discarded"
+msgstr "DSN: Itinapon ang mensahe"
+
+msgid "DSN: Message filtered"
+msgstr "DSN: Sinala ang mensahe"
+
+msgid "DSN: Message quarantined"
+msgstr "DSN: Naka-quarantine ang mensahe"
+
+msgid "DSN: Message held for review"
+msgstr "DSN: Hinawakan ang mensahe para sa pagsusuri"
+
+msgid "MTA-STS policy required"
+msgstr "Kinakailangan ang MTA-STS policy"
+
+msgid "MTA-STS policy validation failed"
+msgstr "Nabigo ang pag-verify ng MTA-STS policy"
+
+msgid "TLS reporting required"
+msgstr "Kinakailangan ang TLS reporting"
+
+msgid "TLS report requested"
+msgstr "Hiniling ang TLS report"
+
+msgid "SMTP MTA Strict Transport Security active"
+msgstr "Aktibo ang SMTP MTA Strict Transport Security"
+
+msgid "DANE validation required"
+msgstr "Kinakailangan ang DANE validation"
+
+msgid "DANE validation failed"
+msgstr "Nabigo ang DANE validation"
+
+msgid "TLSA record missing"
+msgstr "Nawawala ang TLSA record"
+
+msgid "Certificate name mismatch"
+msgstr "Hindi tugma ang pangalan ng certificate"
+
+msgid "Certificate expired"
+msgstr "Nag-expire ang certificate"
+
+msgid "AUTH LOGIN required"
+msgstr "Kinakailangan ang AUTH LOGIN authentication"
+
+msgid "AUTH PLAIN required"
+msgstr "Kinakailangan ang AUTH PLAIN authentication"
+
+msgid "AUTH CRAM-MD5 required"
+msgstr "Kinakailangan ang AUTH CRAM-MD5 authentication"
+
+msgid "AUTH DIGEST-MD5 required"
+msgstr "Kinakailangan ang AUTH DIGEST-MD5 authentication"
+
+msgid "AUTH GSSAPI required"
+msgstr "Kinakailangan ang AUTH GSSAPI authentication"
+
+msgid "AUTH NTLM required"
+msgstr "Kinakailangan ang AUTH NTLM authentication"
+
+msgid "AUTH SCRAM required"
+msgstr "Kinakailangan ang AUTH SCRAM authentication"
+
+msgid "AUTH OAUTHBEARER required"
+msgstr "Kinakailangan ang AUTH OAUTHBEARER authentication"
+
+msgid "AUTH XOAUTH2 required"
+msgstr "Kinakailangan ang AUTH XOAUTH2 authentication"
+
+msgid "Exchange: Mailbox database error"
+msgstr "Exchange: Error sa database ng mailbox"
+
+msgid "Exchange: Store driver error"
+msgstr "Exchange: Error sa storage driver"
+
+msgid "Exchange: Transport agent error"
+msgstr "Exchange: Error sa transport agent"
+
+msgid "Exchange: Content conversion error"
+msgstr "Exchange: Error sa conversion ng nilalaman"
+
+msgid "Exchange: Routing error"
+msgstr "Exchange: Error sa routing"
+
+msgid "Exchange: Mail flow stalled"
+msgstr "Exchange: Tumigil ang daloy ng email"
+
+msgid "Exchange: Shadow redundancy error"
+msgstr "Exchange: Error sa shadow redundancy"
+
+msgid "Exchange: Safety net error"
+msgstr "Exchange: Error sa safety net"
+
+msgid "Exchange: Queue database error"
+msgstr "Exchange: Error sa database ng queue"
+
+msgid "Exchange: Message throttled"
+msgstr "Exchange: Na-limit ang mensahe"
+
+msgid "Postfix: Bounce queue error"
+msgstr "Postfix: Error sa bounce queue"
+
+msgid "Postfix: Deferred queue error"
+msgstr "Postfix: Error sa deferred queue"
+
+msgid "Postfix: Hold queue error"
+msgstr "Postfix: Error sa hold queue"
+
+msgid "Postfix: Incoming queue error"
+msgstr "Postfix: Error sa incoming queue"
+
+msgid "Postfix: Active queue error"
+msgstr "Postfix: Error sa active queue"
+
+msgid "Postfix: Corrupted queue file"
+msgstr "Postfix: Corrupted queue file"
+
+msgid "Sendmail: Queue runner error"
+msgstr "Sendmail: Error sa queue runner"
+
+msgid "Sendmail: Alias database error"
+msgstr "Sendmail: Error sa alias database"
+
+msgid "Sendmail: Virtuser table error"
+msgstr "Sendmail: Error sa virtuser table"
+
+msgid "Sendmail: Mailer definition error"
+msgstr "Sendmail: Error sa mailer definition"
+
+msgid "Exim: Router configuration error"
+msgstr "Exim: Error sa router configuration"
+
+msgid "Exim: Transport configuration error"
+msgstr "Exim: Error sa transport configuration"
+
+msgid "Exim: Director configuration error"
+msgstr "Exim: Error sa director configuration"
+
+msgid "Exim: Retry configuration error"
+msgstr "Exim: Error sa retry configuration"
+
+msgid "Exim: Rewrite configuration error"
+msgstr "Exim: Error sa rewrite configuration"
+
+msgid "Exim: Authentication configuration error"
+msgstr "Exim: Error sa authentication configuration"
+
+msgid "Exim: ACL configuration error"
+msgstr "Exim: Error sa ACL configuration"
+
+msgid "Exim: Local_scan configuration error"
+msgstr "Exim: Error sa Local_scan configuration"
+
+msgid "Exim: Lookup configuration error"
+msgstr "Exim: Error sa lookup configuration"
+
+msgid "Exim: Expansion configuration error"
+msgstr "Exim: Error sa expansion configuration"
+
+msgid "HTTP Protocol Versions"
+msgstr "Mga Bersyon ng HTTP Protocol"
+
+msgid "Protocol"
+msgstr "Protocol"
+
+msgid "Request %"
+msgstr "Bahagi ng mga kahilingan"
+
+msgid "Bandwidth %"
+msgstr "Bahagi ng bandwidth"
+
+msgid "Each request requires a new connection"
+msgstr "Ang bawat kahilingan ay nangangailangan ng bagong koneksyon"
+
+msgid "Multiple requests can reuse one connection"
+msgstr "Maraming kahilingan ay maaaring magbahagi ng iisang koneksyon"
+
+msgid "Multiple requests in parallel over one connection"
+msgstr "Maraming kahilingan ay maaaring iproseso nang magkatulad sa loob ng isang koneksyon"
+
+msgid "Faster connection, better performance on poor networks"
+msgstr "Mas mabilis na koneksyon, mas mahusay na pagganap sa mabagal na network"
+
+msgid "No protocol data available"
+msgstr "Walang available na data ng protocol"
+
+msgid "of requests use HTTP/1.0"
+msgstr "ng mga kahilingan ay gumagamit ng HTTP/1.0 protocol"
+
+msgid "From access logs"
+msgstr "Mula sa access logs"
+
+msgid "No HTTP/2 requests detected"
+msgstr "Walang nakitang HTTP/2 na kahilingan"
+
+msgid "All requests are HTTP/1.0, no HTTP/2 requests"
+msgstr "Lahat ng kasalukuyang kahilingan ay HTTP/1.0, walang HTTP/2 na kahilingan"
+
+msgid "HTTP/3 not detected"
+msgstr "Walang nakitang HTTP/3 na kahilingan"
+
+msgid "all requests do not include QUIC/HTTP/3 protocol requests"
+msgstr "Lahat ng kasalukuyang kahilingan ay hindi kasama ang QUIC/HTTP/3 protocol"
+
+msgid "Mail Authentication Statistics"
+msgstr "Mga Estadistika ng Authentication ng Email"
+
+msgid "Authentication"
+msgstr "Uri ng authentication"
+
+msgid "Pass"
+msgstr "Pumasa"
+
+msgid "Fail"
+msgstr "Nabigo"
+
+msgid "Softfail"
+msgstr "Malambot na kabiguan"
+
+msgid "Neutral"
+msgstr "Neutral"
+
+msgid "None"
+msgstr "Wala"
+
+msgid "Mail Queue Delay Statistics"
+msgstr "Mga Estadistika ng Pagka-antala sa Queue ng Email"
+
+msgid "Delay Range"
+msgstr "Saklaw ng pagka-antala"
+
+msgid "Count"
+msgstr "Bilang"
+
+msgid "Percentage"
+msgstr "Porsyento"
+
+msgid "TLS Encryption Statistics"
+msgstr "Mga Estadistika ng TLS Encryption"
+
+msgid "TLS Versions"
+msgstr "Mga Bersyon ng TLS"
+
+msgid "Top Ciphers"
+msgstr "Mga pinakakaraniwang cipher suite"
+
+msgid "robot_hits_detail_both"
+msgstr "Kabuuang kahilingan: %s (normal na pahina: %s, robots.txt: %s)"
+
+msgid "robot_hits_detail_only_robots"
+msgstr "Access lamang sa robots.txt: %s beses, hindi kumuha ng iba pang mga pahina"
+
+msgid "robot_hits_detail_normal"
+msgstr "Mga kahilingan para sa normal na pahina: %s"
+
+# Tulong at mga tip
+msgid "Troubleshooting"
+msgstr "Pag-troubleshoot"
+
+msgid "Did you use the correct URL?"
+msgstr "Ginamit mo ba ang tamang URL?"
+
+msgid "Example:"
+msgstr "Halimbawa:"
+
+msgid "Did you use correct config parameter?"
+msgstr "Ginamit mo ba ang tamang parameter ng configuration?"
+
+msgid "Example: If your config file is awstats.mysite.conf, use -config=mysite"
+msgstr "Halimbawa: Kung ang iyong configuration file ay awstats.mysite.conf, gamitin ang -config=mysite"
+
+msgid "Did you create your config file 'awstats.$SiteConfig.conf'?"
+msgstr "Nilikha mo ba ang iyong configuration file na 'awstats.$SiteConfig.conf'?"
+
+msgid "If not, you can run \"awstats_configure.pl\" from command line, or create it manually."
+msgstr "Kung hindi, maaari mong patakbuhin ang \"awstats_configure.pl\" mula sa command line, o manu-mano itong likhain."
+
+msgid "Setup"
+msgstr "Setup"
+
+msgid "file, web server or permissions may be wrong."
+msgstr "ang file, web server, o mga pahintulot ay maaaring mali."
+
+msgid "Check config file, permissions and AWStats documentation (in 'docs' directory)."
+msgstr "Suriin ang configuration file, mga pahintulot, at dokumentasyon ng AWStats (sa 'docs' directory)."
+
+msgid "Warning: Can't find language files for \"%s\". English will be used."
+msgstr "Babala: Hindi mahanap ang mga language file para sa \"%s\". Gagamitin ang Ingles."
+
+#------------------------------------------------------------------------------
+# Errors and Signals
+#------------------------------------------------------------------------------
+
+msgid "%s process (ID %s) interrupted by signal %s."
+msgstr "Ang %s process (ID %s) ay na-interrupt ng signal %s."
+
+msgid "An AWStats update process seems to be already running for this config file. Try later. If this is not true, remove manually lock file"
+msgstr "Mukhang mayroon nang tumatakbong proseso ng pag-update ng AWStats para sa configuration file na ito. Subukan mamaya. Kung hindi ito totoo, manu-manong tanggalin ang lock file"
+
+#------------------------------------------------------------------------------
+# Bagong Statistical Titles
+#------------------------------------------------------------------------------
+
+msgid "Report Overview"
+msgstr "Pangkalahatang-ideya ng Ulat"
+
+msgid "Monthly Statistics"
+msgstr "Mga Estadistika ayon sa Buwan"
+
+msgid "Daily Statistics"
+msgstr "Mga Estadistika ayon sa Petsa"
+
+msgid "Statistics by Day of Week"
+msgstr "Mga Estadistika ayon sa Araw ng Linggo"
+
+msgid "Hourly Page Views"
+msgstr "Mga Pagtingin sa Pahina ayon sa Oras"
+
+msgid "Traffic Sources"
+msgstr "Mga Pinagmulan ng Trapiko"
+
+msgid "Other Sources"
+msgstr "Iba pang mga Pinagmulan"
+
+msgid "tooltip_1"
+msgstr "Bilang ng mga session ng bisita sa website. Kapag ang isang bisita ay walang aktibidad nang higit sa 30 minuto, ang susunod na pagbisita ay binibilang bilang bago."
+
+msgid "tooltip_2"
+msgstr "Bilang ng iba't ibang mga bisita na bumisita sa iyong website sa napiling yugto ng panahon. Ang estadistika ay batay sa IP address."
+
+msgid "tooltip_3"
+msgstr "Ang bilang ng mga kahilingan na itinuturing na mga pahina (tulad ng HTML, PHP, ASP, atbp.), hindi kasama ang mga static na file tulad ng mga imahe, CSS, JS."
+
+msgid "tooltip_4"
+msgstr "Ang kabuuang bilang ng lahat ng mga kahilingang ipinadala sa server, kabilang ang mga pahina, imahe, CSS, JS, at lahat ng iba pang mga file."
+
+msgid "tooltip_5"
+msgstr "Ang kabuuang dami ng data na ipinadala ng server bilang tugon sa mga kahilingan ng user."
+
+msgid "tooltip_13"
+msgstr "Estadistika ng mga mapagkukunan na pumupunta sa iyong website sa pamamagitan ng mga search engine. Ipinapakita kung aling mga search engine ang nagdadala ng trapiko at kung anong mga termino sa paghahanap ang ginagamit ng mga bisita."
+
+msgid "tooltip_14"
+msgstr "Estadistika ng mga mapagkukunan na pumupunta sa iyong website sa pamamagitan ng mga panlabas na link mula sa ibang mga website. Ipinapakita kung aling mga website ang naka-link sa iyo at kung gaano karaming trapiko ang kanilang dinadala."
+
+msgid "tooltip_15"
+msgstr "Mga termino sa paghahanap na ginagamit ng mga bisita upang mahanap ang iyong website sa pamamagitan ng mga search engine. Ang mga keyword ay mga indibidwal na salita, ang mga keyphrase ay kombinasyon ng maraming salita."
+
+msgid "tooltip_16"
+msgstr "Mga automated na programa tulad ng mga search engine robot, AI training robot, vulnerability scanner, atbp. Ang numero sa panaklong ay kumakatawan sa bilang ng mga kahilingan para sa mga normal na pahina at robots.txt."
+
+msgid "tooltip_17"
+msgstr "Graph ng pamamahagi ng trapiko sa loob ng 24 na oras. Ipinapakita ang trapiko ng iyong website sa iba't ibang oras, tumutulong sa iyo na maunawaan ang oras ng aktibidad ng user."
+
+msgid "tooltip_18"
+msgstr "Ang column na ito ay nagpapakita ng average na mga halaga para sa bawat araw/linggo sa napiling yugto ng panahon, tumutulong sa iyo na maunawaan ang pangkalahatang trend."
+
+msgid "tooltip_19"
+msgstr "Mag-click sa mga item sa graph upang makita ang detalyadong impormasyon. Ang pag-hover ng mouse sa mga elemento ng graph ay nagpapakita ng mga tiyak na halaga."
+
+msgid "tooltip_20"
+msgstr "Data na hindi maaaring uriin sa mga umiiral na mga saklaw, kadalasan dahil sa hindi pangkaraniwang o nawawalang format ng data."
+
+msgid "tooltip_21"
+msgstr "Naitala ang mga pag-atake ng worm. Ang mga worm ay self-replicating na malisyosong programa na karaniwang kumakalat sa pamamagitan ng mga butas sa network."
+
+#------------------------------------------------------------------------------
+# Tulong na Impormasyon sa Pagpapakita - Community Edition
+#------------------------------------------------------------------------------
+
+msgid "AWStats %s - Advanced Web Statistics"
+msgstr "AWStats %s - Advanced Web Statistics"
+
+msgid "Copyright (c) 2000-2025 Laurent Destailleur"
+msgstr "Copyright (c) 2000-2025 Laurent Destailleur"
+
+msgid "Copyright (c) 2026-latest Community Edition"
+msgstr "Copyright (c) 2026-kasalukuyan Community Edition"
+
+msgid "AWStats comes with ABSOLUTELY NO WARRANTY. It's a free software distributed with a GNU General Public License (See LICENSE file for details)."
+msgstr "Ang AWStats ay ipinamamahagi NG WALANG KAHIT ANONG WARRANTY. Ito ay isang libreng software na ipinamamahagi sa ilalim ng GNU General Public License (Tingnan ang LICENSE file para sa mga detalye)."
+
+msgid "Syntax: %s -config=virtualhostname [options]"
+msgstr "Syntax: %s -config=virtualhostname [options]"
+
+msgid "This runs %s in command line to update statistics (-update option) of a web site, from the log file defined in AWStats config file, or build a HTML report (-output option)."
+msgstr "Ito ay nagpapatakbo ng %s sa command line upang i-update ang estadistika (-update option) ng isang website, mula sa log file na tinukoy sa AWStats configuration file, o bumuo ng HTML report (-output option)."
+
+msgid "First, %s tries to read %s.virtualhostname.conf as the config file. If not found, %s tries to read %s.conf, and finally the full path passed to -config="
+msgstr "Una, sinusubukan ng %s na basahin ang %s.virtualhostname.conf bilang configuration file. Kung hindi mahanap, sinusubukan ng %s na basahin ang %s.conf, at sa wakas ang buong path na ipinasa sa -config="
+
+msgid "Note 1: Config files (*.conf) must be in /etc/awstats, /usr/local/etc/awstats, /etc or same directory than awstats.pl script file."
+msgstr "Tandaan 1: Ang mga configuration file (*.conf) ay dapat nasa /etc/awstats, /usr/local/etc/awstats, /etc o parehong directory ng awstats.pl script file."
+
+msgid "Note 2: If AWSTATS_FORCE_CONFIG environment variable is defined, AWStats will use it as the 'config' value, whatever is the value on command line or URL."
+msgstr "Tandaan 2: Kung ang environment variable na AWSTATS_FORCE_CONFIG ay tinukoy, gagamitin ito ng AWStats bilang halaga ng 'config', anuman ang halaga sa command line o URL."
+
+msgid "See AWStats documentation for all setup instructions."
+msgstr "Tingnan ang dokumentasyon ng AWStats para sa lahat ng mga tagubilin sa pag-setup."
+
+msgid "Options to update statistics:"
+msgstr "Mga opsyon upang i-update ang estadistika:"
+
+msgid "  -update        to update statistics (default)"
+msgstr "  -update        i-update ang estadistika (default)"
+
+msgid "  -showsteps     to add benchmark information every %s lines processed"
+msgstr "  -showsteps     magdagdag ng impormasyon ng benchmark pagkatapos ng bawat %s na linya na naproseso"
+
+msgid "  -showcorrupted to add output for each corrupted lines found, with reason"
+msgstr "  -showcorrupted magpakita ng output para sa bawat nakitang corrupted na linya, kasama ang dahilan"
+
+msgid "  -showdropped   to add output for each dropped lines found, with reason"
+msgstr "  -showdropped   magpakita ng output para sa bawat nakitang na-drop na linya, kasama ang dahilan"
+
+msgid "  -showunknownorigin  to output referer when it can't be parsed"
+msgstr "  -showunknownorigin    magpakita ng referer kapag hindi ito ma-parse"
+
+msgid "  -showdirectorigin   to output log line when origin is a direct access"
+msgstr "  -showdirectorigin     magpakita ng linya ng log kapag ang pinagmulan ay direktang access"
+
+msgid "  -updatefor=n   to stop the update process after parsing n lines"
+msgstr "  -updatefor=n    ihinto ang proseso ng pag-update pagkatapos i-parse ang n linya"
+
+msgid "  -LogFile=x     to change log to analyze whatever is 'LogFile' in config file"
+msgstr "  -LogFile=x      baguhin ang log para sa pagsusuri anuman ang 'LogFile' sa configuration file"
+
+msgid "  Be care to process log files in chronological order when updating statistics."
+msgstr "  Mag-ingat na iproseso ang mga log file sa tamang pagkakasunod-sunod kapag nag-a-update ng estadistika."
+
+msgid "Options to show statistics:"
+msgstr "Mga opsyon upang ipakita ang estadistika:"
+
+msgid "  -output      to output main HTML report (no update made except with -update)"
+msgstr "  -output       ipakita ang pangunahing HTML report (walang pag-update maliban kung may -update)"
+
+msgid "  -output=x    to output other report pages where x is:"
+msgstr "  -output=x     ipakita ang iba pang mga pahina ng report kung saan ang x ay:"
+
+msgid "build page of all domains/countries"
+msgstr "bumuo ng pahina ng lahat ng domain/bansa"
+
+msgid "build page of all hosts"
+msgstr "bumuo ng pahina ng lahat ng host"
+
+msgid "build page of last hits for hosts"
+msgstr "bumuo ng pahina ng mga huling hit para sa mga host"
+
+msgid "build page of all unresolved IP"
+msgstr "bumuo ng pahina ng lahat ng hindi nalutas na IP"
+
+msgid "build page of all email senders (maillog)"
+msgstr "bumuo ng pahina ng lahat ng nagpadala ng email (maillog)"
+
+msgid "build page of last email senders (maillog)"
+msgstr "bumuo ng pahina ng mga huling nagpadala ng email (maillog)"
+
+msgid "build page of all email receivers (maillog)"
+msgstr "bumuo ng pahina ng lahat ng tumatanggap ng email (maillog)"
+
+msgid "build page of last email receivers (maillog)"
+msgstr "bumuo ng pahina ng mga huling tumatanggap ng email (maillog)"
+
+msgid "build page of all logins used"
+msgstr "bumuo ng pahina ng lahat ng ginamit na pag-login"
+
+msgid "build page of last hits for logins"
+msgstr "bumuo ng pahina ng mga huling hit para sa mga login"
+
+msgid "build page of all robots/spider visits"
+msgstr "bumuo ng pahina ng lahat ng pagbisita ng robot/spider"
+
+msgid "build page of last hits for robots"
+msgstr "bumuo ng pahina ng mga huling hit para sa mga robot"
+
+msgid "list most often viewed pages"
+msgstr "ipakita ang mga pinakamadalas na tiningnang pahina"
+
+msgid "list most often viewed pages matching filter"
+msgstr "ipakita ang mga pinakamadalas na tiningnang pahina na tumutugma sa filter"
+
+msgid "list entry pages"
+msgstr "ipakita ang mga entry page"
+
+msgid "list entry pages matching filter"
+msgstr "ipakita ang mga entry page na tumutugma sa filter"
+
+msgid "list exit pages"
+msgstr "ipakita ang mga exit page"
+
+msgid "list exit pages matching filter"
+msgstr "ipakita ang mga exit page na tumutugma sa filter"
+
+msgid "build page with os detailed versions"
+msgstr "bumuo ng pahina na may detalyadong mga bersyon ng operating system"
+
+msgid "build page with browsers detailed versions"
+msgstr "bumuo ng pahina na may detalyadong mga bersyon ng browser"
+
+msgid "list 'User Agents' with unknown browser"
+msgstr "ipakita ang 'User Agents' na may hindi kilalang browser"
+
+msgid "list 'User Agents' with unknown OS"
+msgstr "ipakita ang 'User Agents' na may hindi kilalang operating system"
+
+msgid "build page of all refering search engines"
+msgstr "bumuo ng pahina ng lahat ng nagre-refer na search engine"
+
+msgid "build page of all refering pages"
+msgstr "bumuo ng pahina ng lahat ng nagre-refer na pahina"
+
+msgid "list all keyphrases used on search engines"
+msgstr "ipakita ang lahat ng keyphrase na ginamit sa mga search engine"
+
+msgid "list all keywords used on search engines"
+msgstr "ipakita ang lahat ng keyword na ginamit sa mga search engine"
+
+msgid "list 'Referers' for 404 errors"
+msgstr "ipakita ang mga 'Referer' para sa 404 error"
+
+msgid "build page of all values for ExtraSection X"
+msgstr "bumuo ng pahina ng lahat ng halaga para sa ExtraSection X"
+
+msgid "  -staticlinks           to have static links in HTML report page"
+msgstr "  -staticlinks           gumamit ng mga static na link sa HTML report page"
+
+msgid "  -staticlinksext=xxx    to have static links with .xxx extension instead of .html"
+msgstr "  -staticlinksext=xxx    gumamit ng mga static na link na may .xxx extension sa halip na .html"
+
+msgid "  -lang=LL     to output a HTML report in language LL (en,de,es,fr,it,nl,tl,...)"
+msgstr "  -lang=LL     magpakita ng HTML report sa wikang LL (en,de,es,fr,it,nl,tl,...)"
+
+msgid "  -month=MM    to output a HTML report for an old month MM"
+msgstr "  -month=MM    magpakita ng HTML report para sa lumang buwan MM"
+
+msgid "  -year=YYYY   to output a HTML report for an old year YYYY"
+msgstr "  -year=YYYY   magpakita ng HTML report para sa lumang taon YYYY"
+
+msgid "  The 'date' options doesn't allow you to process old log file. They only allow you to see a past report for a chosen month/year period instead of current month/year."
+msgstr "  Ang mga opsyon sa 'petsa' ay hindi nagpapahintulot sa iyo na iproseso ang lumang log file. Pinapayagan ka lamang nilang makita ang isang nakaraang ulat para sa napiling buwan/taon sa halip na kasalukuyang buwan/taon."
+
+msgid "Other options:"
+msgstr "Iba pang mga opsyon:"
+
+msgid "  -debug=X     to add debug informations lesser than level X (speed reduced)"
+msgstr "  -debug=X     magdagdag ng impormasyon sa pag-debug na mas mababa sa antas X (nabawasan ang bilis)"
+
+msgid "  -version     show AWStats version"
+msgstr "  -version, -v      ipakita ang bersyon ng AWStats"
+
+msgid "Now supports/detects:"
+msgstr "Kasalukuyang sumusuporta/nakakakita:"
+
+msgid "  Web/Ftp/Mail/streaming server log analyzis (and load balanced log files)"
+msgstr "  Pagsusuri ng log ng web/FTP/mail/streaming server (at mga load balanced log file)"
+
+msgid "  Reverse DNS lookup (IPv4 and IPv6) and GeoIP lookup"
+msgstr "  Reverse DNS lookup (IPv4 at IPv6) at GeoIP lookup"
+
+msgid "  Number of visits, number of unique visitors"
+msgstr "  Bilang ng mga pagbisita, bilang ng mga natatanging bisita"
+
+msgid "  Visits duration and list of last visits"
+msgstr "  Tagal ng mga pagbisita at listahan ng mga huling pagbisita"
+
+msgid "  Authenticated users"
+msgstr "  Naka-authenticate na mga user"
+
+msgid "  Days of week and rush hours"
+msgstr "  Mga araw ng linggo at mga oras ng peak"
+
+msgid "  Hosts list and unresolved IP addresses list"
+msgstr "  Listahan ng mga host at listahan ng mga hindi nalutas na IP address"
+
+msgid "  Most viewed, entry and exit pages"
+msgstr "  Pinaka-tiningnang, entry at exit na mga pahina"
+
+msgid "  Files type and Web compression (mod_gzip, mod_deflate stats)"
+msgstr "  Mga uri ng file at web compression (mod_gzip, mod_deflate statistics)"
+
+msgid "  Configured Database Statistics"
+msgstr "  Naka-configure na Database Statistics"
+
+msgid "  %s domains/countries"
+msgstr "  %s na mga domain/bansa"
+
+msgid "  %s robots"
+msgstr "  %s na mga robot"
+
+msgid "  %s worm's families"
+msgstr "  %s na pamilya ng worm"
+
+msgid "  %s operating systems"
+msgstr "  %s na mga operating system"
+
+msgid "  %s browsers (%s with phone browsers database)"
+msgstr "  %s na mga browser (%s na may database ng mobile browser)"
+
+msgid "  %s search engines (and keyphrases/keywords used from them)"
+msgstr "  %s na mga search engine (at mga keyphrase/keyword na ginamit mula sa kanila)"
+
+msgid "  All HTTP errors with last referrer"
+msgstr "  Lahat ng HTTP error na may huling referrer"
+
+msgid "  Report by day/month/year"
+msgstr "  Ulat ayon sa araw/buwan/taon"
+
+msgid "  Dynamic or static HTML or XHTML reports, static PDF reports"
+msgstr "  Dinamiko o statikong HTML o XHTML na mga ulat, statikong PDF na mga ulat"
+
+msgid "  Indexed text or XML monthly database"
+msgstr "  Naka-index na text o XML buwanang database"
+
+msgid "  And a lot of other advanced features and options..."
+msgstr "  At marami pang ibang advanced na feature at opsyon..."
+
+msgid "  New versions and FAQ at http://www.awstats.org"
+msgstr "  Mga bagong bersyon at FAQ sa https://github.com/hestiacn/vstats/issues"

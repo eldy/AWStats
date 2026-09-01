@@ -1,0 +1,3317 @@
+# AWStats Albanian (sq) translations
+# Copyright (C) 2026 AWStats
+# This file is distributed under the same license as the AWStats package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: AWStats 8.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-10 12:00+0000\n"
+"PO-Revision-Date: 2026-05-10 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Albanian\n"
+"Language: sq\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#------------------------------------------------------------------------------
+# Emrat e muajve
+#------------------------------------------------------------------------------
+
+msgid "month_01"
+msgstr "jan"
+
+msgid "month_02"
+msgstr "shk"
+
+msgid "month_03"
+msgstr "mar"
+
+msgid "month_04"
+msgstr "pri"
+
+msgid "month_05"
+msgstr "maj"
+
+msgid "month_06"
+msgstr "qer"
+
+msgid "month_07"
+msgstr "kor"
+
+msgid "month_08"
+msgstr "gush"
+
+msgid "month_09"
+msgstr "sht"
+
+msgid "month_10"
+msgstr "tet"
+
+msgid "month_11"
+msgstr "nën"
+
+msgid "month_12"
+msgstr "dhj"
+
+#------------------------------------------------------------------------------
+# Emrat e ditëve të javës
+#------------------------------------------------------------------------------
+
+msgid "DayOfWeek_0"
+msgstr "die"
+
+msgid "DayOfWeek_1"
+msgstr "hën"
+
+msgid "DayOfWeek_2"
+msgstr "mar"
+
+msgid "DayOfWeek_3"
+msgstr "mër"
+
+msgid "DayOfWeek_4"
+msgstr "enj"
+
+msgid "DayOfWeek_5"
+msgstr "pre"
+
+msgid "DayOfWeek_6"
+msgstr "sht"
+
+#------------------------------------------------------------------------------
+# Elementet e ndërfaqes
+#------------------------------------------------------------------------------
+
+msgid "Advanced Web Statistics for"
+msgstr "Statistika të Avancuara Web për"
+
+msgid "Statistics for"
+msgstr "Statistikat për"
+
+msgid "main"
+msgstr "kryesore"
+
+msgid "Switch to light mode"
+msgstr "Kalo në modalitetin e dritës"
+
+msgid "Switch to dark mode"
+msgstr "Kalo në modalitetin e errët"
+
+msgid "TB"
+msgstr "TB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "Bytes"
+msgstr "Bajt"
+
+msgid "Filter"
+msgstr "Filtër"
+
+msgid "Exclude filter"
+msgstr "Filtër përjashtimi"
+
+msgid "Top"
+msgstr "Top"
+
+msgid "Full list"
+msgstr "Lista e plotë"
+
+msgid "Last"
+msgstr "Fundit"
+
+msgid "Average"
+msgstr "Mesatare"
+
+msgid "Export"
+msgstr "Eksporto"
+
+msgid "Details"
+msgstr "Detajet"
+
+msgid "Version"
+msgstr "Versioni"
+
+msgid "thousands_separator"
+msgstr "."
+
+msgid "dateformat_long"
+msgstr "dd.mm.yyyy HH:MM:SS"
+
+msgid "dateformat_short"
+msgstr "dd.mm.yyyy HH:MM"
+
+msgid "date_format_year"
+msgstr "%s"
+
+msgid "date_format_month"
+msgstr "%1$s %2$s"
+
+#------------------------------------------------------------------------------
+# Shiriti i navigimit
+#------------------------------------------------------------------------------
+
+msgid "AWStats Month Selector"
+msgstr "Zgjedhësi i Muajit AWStats"
+
+msgid "nav_category_basic"
+msgstr "Dokumentet Bazë"
+
+msgid "nav_category_guide"
+msgstr "Udhëzuesi i përdorimit"
+
+msgid "nav_category_reference"
+msgstr "Burimet e referencës"
+
+msgid "nav_category_integration"
+msgstr "Integrimi dhe Zgjerimet"
+
+msgid "nav_category_dev"
+msgstr "Dokumentacioni për Zhvillues"
+
+msgid "nav_changelog"
+msgstr "Regjistri i ndryshimeve"
+
+msgid "nav_what"
+msgstr "Çfarë është AWStats"
+
+msgid "nav_license"
+msgstr "Licenca"
+
+msgid "nav_glossary"
+msgstr "Glosari"
+
+msgid "nav_setup"
+msgstr "Instalimi dhe konfigurimi"
+
+msgid "nav_upgrade"
+msgstr "Udhëzuesi i përmirësimit"
+
+msgid "nav_config"
+msgstr "Parametrat e konfigurimit"
+
+msgid "nav_extra"
+msgstr "Seksionet shtesë"
+
+msgid "nav_tools"
+msgstr "Mjetet e tjera"
+
+msgid "nav_faq"
+msgstr "Pyetjet e shpeshta"
+
+msgid "nav_security"
+msgstr "Këshillat e sigurisë"
+
+msgid "nav_compare"
+msgstr "Krahasimi"
+
+msgid "nav_benchmark"
+msgstr "Testet e performancës"
+
+msgid "nav_webmin"
+msgstr "Moduli Webmin"
+
+msgid "nav_dolibarr"
+msgstr "Moduli Dolibarr"
+
+msgid "nav_contrib"
+msgstr "Burimet e kontributit"
+
+msgid "nav_plugins"
+msgstr "Zhvillimi i shtojcave"
+
+msgid "nav_hooks"
+msgstr "Grepat e shtojcave"
+
+msgid "nav_graphs"
+msgstr "Grafikët e shtojcave"
+
+msgid "Back to top"
+msgstr "Kthehu në krye"
+
+msgid "nav_select_month"
+msgstr "Zgjidhni muajin"
+
+#------------------------------------------------------------------------------
+# Treguesit kryesorë statistikorë
+#------------------------------------------------------------------------------
+
+msgid "Unique visitors"
+msgstr "Vizitorë unikë"
+
+msgid "Visits"
+msgstr "Vizitat"
+
+msgid "Visits duration"
+msgstr "Kohëzgjatja e vizitave"
+
+msgid "First visit"
+msgstr "Vizita e parë"
+
+msgid "Last visit"
+msgstr "Vizita e fundit"
+
+msgid "Visits/Visitor"
+msgstr "Vizitat/Vizitor"
+
+msgid "Pages/Visit"
+msgstr "Faqet/Vizitë"
+
+msgid "Hits/Visit"
+msgstr "Goditjet/Vizitë"
+
+msgid "KB/Visit"
+msgstr "KB/Vizitë"
+
+msgid "KB/Visits"
+msgstr "KB/Vizitat"
+
+msgid "Pages"
+msgstr "Faqet"
+
+msgid "Hits"
+msgstr "Goditjet"
+
+msgid "Bandwidth"
+msgstr "Gjerësia e brezit"
+
+msgid "duration_format"
+msgstr "%s-%s"
+
+msgid "unit_s"
+msgstr "sek"
+
+msgid "unit_min"
+msgstr "min"
+
+msgid "unit_h"
+msgstr "orë"
+
+msgid "and"
+msgstr "-"
+
+msgid "Device Types"
+msgstr "Llojet e pajisjeve"
+
+msgid "Device Type"
+msgstr "Lloji i pajisjes"
+
+msgid "Percent"
+msgstr "Përqindja"
+
+msgid "Mobile"
+msgstr "Celular"
+
+msgid "Pause & Go"
+msgstr "Ndalo dhe vazhdo"
+
+msgid "Complete"
+msgstr "Përfundo"
+
+msgid "Tablet"
+msgstr "Tablet"
+
+msgid "Tv"
+msgstr "TV"
+
+msgid "Wearable"
+msgstr "Pajisje e veshshme"
+
+msgid "Bot"
+msgstr "Bot"
+
+msgid "Desktop"
+msgstr "Kompjuter tavoline"
+
+msgid "Normal browsing traffic"
+msgstr "Trafiku normal i shfletimit"
+
+msgid "Abnormal browsing traffic"
+msgstr "Trafiku jonormal i shfletimit"
+
+msgid "Viewed"
+msgstr "E parë"
+
+msgid "Not viewed"
+msgstr "Nuk është parë"
+
+msgid "Abnormal browsing traffic note"
+msgstr "Trafiku jonormal i shfletimit përfshin: robotët e motorëve të kërkimit, robotët e trajnimit të AI, skanerët e dobësive dhe kërkesat që nuk përputhen me specifikimet HTTP/HTTPS"
+
+msgid "File size"
+msgstr "Madhësia e skedarit"
+
+msgid "File type"
+msgstr "Lloji i skedarit"
+
+msgid "Downloads"
+msgstr "Shkarkimet"
+
+msgid "Request time"
+msgstr "Koha e kërkesës"
+
+msgid "Total requests"
+msgstr "Kërkesat totale"
+
+msgid "Frequency"
+msgstr "Frekuenca"
+
+msgid "Average frequency"
+msgstr "Frekuenca mesatare"
+
+msgid "Seconds"
+msgstr "Sekonda"
+
+msgid "First"
+msgstr "I pari"
+
+msgid "Mails"
+msgstr "Postat elektronike"
+
+msgid "Size"
+msgstr "Madhësia"
+
+msgid "If you remove this file, all statistics for date"
+msgstr "Paralajmërim: Nëse e fshini këtë skedar, të gjitha statistikat për datën"
+
+msgid "will be lost/reset."
+msgstr "do të humbasin/rivendosen!"
+
+msgid "Last config file used to build this data file was"
+msgstr "Skedari i fundit i konfigurimit i përdorur për të ndërtuar këtë skedar të dhënash ishte"
+
+msgid "Position (offset in bytes) in this file for beginning of each section for"
+msgstr "Pozicioni (zhvendosja në bajt) në këtë skedar për fillimin e secilës pjesë për"
+
+msgid "direct I/O access. If you made changes somewhere in this file, you should"
+msgstr "qasje direkte I/O. Nëse keni bërë ndryshime diku në këtë skedar, ju duhet"
+
+msgid "also remove completely the MAP section (AWStats will rewrite it at next update)"
+msgstr "gjithashtu hiqni plotësisht seksionin MAP (AWStats do ta rishkruajë atë në përditësimin e ardhshëm)"
+
+msgid "LastLine    = Date of last record processed - Last record line number in last log - Last record offset in last log - Last record signature value"
+msgstr "LastLine    = Data e regjistrimit të fundit të përpunuar - Numri i rreshtit të regjistrimit të fundit në regjistrin e fundit - Zhvendosja e regjistrimit të fundit në regjistrin e fundit - Vlera e nënshkrimit të regjistrimit të fundit"
+
+msgid "FirstTime   = Date of first visit for history file"
+msgstr "FirstTime   = Data e vizitës së parë për skedarin e historikut"
+
+msgid "LastTime    = Date of last visit for history file"
+msgstr "LastTime    = Data e vizitës së fundit për skedarin e historikut"
+
+msgid "LastUpdate  = Date of last update - Nb of parsed records - Nb of parsed old records - Nb of parsed new records - Nb of parsed corrupted - Nb of parsed dropped"
+msgstr "LastUpdate  = Data e përditësimit të fundit - Numri i regjistrimeve të analizuara - Numri i regjistrimeve të vjetra të analizuara - Numri i regjistrimeve të reja të analizuara - Numri i regjistrimeve të korruptuara të analizuara - Numri i regjistrimeve të hedhura të analizuara"
+
+msgid "TotalVisits = Number of visits"
+msgstr "TotalVisits = Numri i vizitave"
+
+msgid "TotalUnique = Number of unique visitors"
+msgstr "TotalUnique = Numri i vizitorëve unikë"
+
+msgid "MonthHostsKnown   = Number of hosts known"
+msgstr "MonthHostsKnown   = Numri i pritësve të njohur"
+
+msgid "MonthHostsUnKnown = Number of hosts unknown"
+msgstr "MonthHostsUnKnown = Numri i pritësve të panjohur"
+
+msgid "Cluster ID - Pages - Hits - Bandwidth"
+msgstr "ID-ja e grupit - Faqet - Goditjet - Gjerësia e brezit"
+
+msgid "Hour - Pages - Hits - Bandwidth - Not viewed Pages - Not viewed Hits - Not viewed Bandwidth"
+msgstr "Ora - Faqet - Goditjet - Gjerësia e brezit - Faqet e pashikuara - Goditjet e pashikuara - Gjerësia e brezit e pashikuar"
+
+msgid "Date - Pages - Hits - Bandwidth - Visits"
+msgstr "Data - Faqet - Goditjet - Gjerësia e brezit - Vizitat"
+
+msgid "Domain - Pages - Hits - Bandwidth"
+msgstr "Fusha - Faqet - Goditjet - Gjerësia e brezit"
+
+msgid "The %s first Pages must be first (order not required for others)"
+msgstr "Faqja kryesore shfaq vetëm %s faqet e para sipas numrit të shfaqjeve, lista e plotë gjendet në faqen e detajeve."
+
+msgid "Host - Pages - Hits - Bandwidth - Last visit date - [Start date of last visit] - [Last page of last visit]"
+msgstr "Pritësi - Faqet - Goditjet - Gjerësia e brezit - Data e vizitës së fundit - [Data e fillimit të vizitës së fundit] - [Faqja e fundit e vizitës së fundit]"
+
+msgid "[Start date of last visit] and [Last page of last visit] are saved only if session is not finished"
+msgstr "[Data e fillimit të vizitës së fundit] dhe [Faqja e fundit e vizitës së fundit] ruhen vetëm nëse seanca nuk ka përfunduar"
+
+msgid "The first %s items are sorted by hits in descending order; order of the remaining items is undefined."
+msgstr "%s artikujt e parë janë renditur sipas numrit të goditjeve në rend zbritës; renditja e artikujve të mbetur nuk është e përcaktuar."
+
+msgid "Login - Pages - Hits - Bandwidth - Last visit"
+msgstr "Hyrja - Faqet - Goditjet - Gjerësia e brezit - Vizita e fundit"
+
+msgid "Robot ID - Hits - Bandwidth - Last visit - Hits on robots.txt"
+msgstr "ID-ja e robotit - Goditjet - Gjerësia e brezit - Vizita e fundit - Goditjet në robots.txt"
+
+msgid "Worm ID - Hits - Bandwidth - Last visit"
+msgstr "ID-ja e krimbit - Goditjet - Gjerësia e brezit - Vizita e fundit"
+
+msgid "EMail - Hits - Bandwidth - Last visit"
+msgstr "Posta elektronike - Goditjet - Gjerësia e brezit - Vizita e fundit"
+
+msgid "The first %s email addresses are sorted by hits in descending order; order of the remaining addresses is undefined."
+msgstr "%s adresat e para të emailit janë renditur sipas numrit të goditjeve në rend zbritës; renditja e adresave të mbetura nuk është e përcaktuar."
+
+msgid "URL - Pages - Bandwidth - Entry - Exit"
+msgstr "URL - Faqet - Gjerësia e brezit - Hyrja - Dalja"
+
+msgid "Files type - Hits - Bandwidth - Bandwidth without compression - Bandwidth after compression"
+msgstr "Lloji i skedarëve - Goditjet - Gjerësia e brezit - Gjerësia e brezit pa kompresim - Gjerësia e brezit pas kompresimit"
+
+msgid "Request Time Range - Request Time Frequency"
+msgstr "Intervali kohor i kërkesës - Frekuenca kohore e kërkesës"
+
+msgid "Payload Range - Payload Frequency"
+msgstr "Intervali i ngarkesës - Frekuenca e ngarkesës"
+
+msgid "Session range - Number of visits"
+msgstr "Intervali i sesionit - Numri i vizitave"
+
+msgid "URL with %s errors - Hits"
+msgstr "URL me gabime %s - Goditjet"
+
+msgid "Last URL referrer"
+msgstr "Referuesi i fundit URL"
+
+msgid "Errors - Hits - Bandwidth"
+msgstr "Gabimet - Goditjet - Gjerësia e brezit"
+
+msgid "Search keywords - Number of search"
+msgstr "Fjalët kyçe të kërkimit - Numri i kërkimeve"
+
+msgid "Only top %s keywords shown on main page (sorted by search count). See full list on detail page."
+msgstr "Faqja kryesore shfaq vetëm %s fjalët kyçe të para sipas numrit të kërkimeve, lista e plotë gjendet në faqen e detajeve."
+
+msgid "Search keyphrases - Number of search"
+msgstr "Fraza kyçe kërkimi - Numri i kërkimeve"
+
+msgid "Only top %s keyphrases shown on main page (sorted by search count). See full list on detail page."
+msgstr "Faqja kryesore shfaq vetëm %s frazat kyçe të para sipas numrit të kërkimeve, lista e plotë gjendet në faqen e detajeve."
+
+msgid "External page referers - Pages - Hits"
+msgstr "Referuesit e faqeve të jashtme - Faqet - Goditjet"
+
+msgid "Only top %s external referrers shown on main page (sorted by pages). See full list on detail page."
+msgstr "Faqja kryesore shfaq vetëm %s referuesit e parë të jashtëm sipas numrit të faqeve, lista e plotë gjendet në faqen e detajeve."
+
+msgid "Search engine referers ID - Pages - Hits"
+msgstr "ID-ja e referuesve të motorëve të kërkimit - Faqet - Goditjet"
+
+msgid "Origin - Pages - Hits"
+msgstr "Origjina - Faqet - Goditjet"
+
+msgid "Unknown referer Browser - Last visit date"
+msgstr "Shfletuesi i referuesit të panjohur - Data e vizitës së fundit"
+
+msgid "Unknown referer OS - Last visit date"
+msgstr "OS i referuesit të panjohur - Data e vizitës së fundit"
+
+msgid "Screen size - Hits"
+msgstr "Madhësia e ekranit - Goditjet"
+
+msgid "Browser ID - Hits - Pages"
+msgstr "ID-ja e shfletuesit - Goditjet - Faqet"
+
+msgid "Downloads - Hits - Bandwidth"
+msgstr "Shkarkimet - Goditjet - Gjerësia e brezit"
+
+msgid "Protocol - Hits - Bandwidth"
+msgstr "Protokolli - Goditjet - Gjerësia e brezit"
+
+msgid "Icon Status - Type:200:404:Other"
+msgstr "Statusi i ikonës - Lloji:200:404:Tjetër"
+
+#------------------------------------------------------------------------------
+# Përkthimet e periudhave kohore
+#------------------------------------------------------------------------------
+
+msgid "period_00"
+msgstr "Mesnata · AWStats po fle, ju akoma po shikoni të dhënat? E paimagjinueshme"
+
+msgid "period_01"
+msgstr "Ora 1 e mëngjesit · Nuk mund të flini apo sapo keni mbaruar punën?"
+
+msgid "period_02"
+msgstr "Ora 2 e mëngjesit · Edhe botët janë më punëtorë se ju"
+
+msgid "period_03"
+msgstr "Ora 3 e mëngjesit · Qyteti po fle, serveri punon jashtë orarit"
+
+msgid "period_04"
+msgstr "Ora 4 e mëngjesit · Çfarë është më e ndritshme, ekrani juaj apo drita e serverit?"
+
+msgid "period_05"
+msgstr "Ora 5 e mëngjesit · Zogu i hershëm kap krimbin"
+
+msgid "period_06"
+msgstr "Ora 6 e mëngjesit · Dikush zgjohet, dikush akoma nuk ka fjetur"
+
+msgid "period_07"
+msgstr "Ora 7 e mëngjesit · Koha për të shfletuar internetin gjatë rrugës për në punë"
+
+msgid "period_08"
+msgstr "Ora 8 e mëngjesit · Puna e parë: kontrolloni të dhënat e djeshme"
+
+msgid "period_09"
+msgstr "Ora 9 e mëngjesit · Koha e artë, koha më e mirë për të punuar"
+
+msgid "period_10"
+msgstr "Ora 10 e mëngjesit · Koha e kafesë, kontrolloni nëse trafiku është rritur"
+
+msgid "period_11"
+msgstr "Ora 11 e mëngjesit · Edhe një orë deri në drekë, qëndroni pak më gjatë"
+
+msgid "period_12"
+msgstr "Ora 12 e mesditës · Serveri: të gjithë shkuan për drekë, unë pushoj pak"
+
+msgid "period_13"
+msgstr "Ora 13 · Përgjumja po vjen, por të dhënat nuk flenë"
+
+msgid "period_14"
+msgstr "Ora 14 · Koha e çajit të pasdites, më e shijshme me të dhëna"
+
+msgid "period_15"
+msgstr "Ora 15 · Grafiku i trafikut të sotëm i ngjan ndryshimit të humorit tuaj"
+
+msgid "period_16"
+msgstr "Ora 16 · Kanë mbetur edhe X orë deri në fund të orarit të punës, trafiku po përshpejtohet"
+
+msgid "period_17"
+msgstr "Ora 17 · Orari i punës ka përfunduar! Por serveri ende po punon"
+
+msgid "period_18"
+msgstr "Ora 18 · Koha e darkës"
+
+msgid "period_19"
+msgstr "Ora 19 · Koha e artë, trafiku i pikut"
+
+msgid "period_20"
+msgstr "Ora 20 · I shtrirë në divan, ju jeni vizitori numër 114514"
+
+msgid "period_21"
+msgstr "Ora 21 · Nata po thellohet, bufat që shikojnë fshehurazi të dhënat +1"
+
+msgid "period_22"
+msgstr "Ora 22 · Të dhënat e sotme janë gati gati, jeni të tensionuar?"
+
+msgid "period_23"
+msgstr "Ora 23 · AWStats: është koha për të fjetur, nesër duhet të punoni përsëri"
+
+#------------------------------------------------------------------------------
+# Dimensionet kohore
+#------------------------------------------------------------------------------
+
+msgid "Period"
+msgstr "Periudha"
+
+msgid "Year"
+msgstr "Viti"
+
+msgid "Month"
+msgstr "Muaji"
+
+msgid "Months"
+msgstr "Muajt"
+
+msgid "Date"
+msgstr "Data"
+
+msgid "Day"
+msgstr "Dita"
+
+msgid "Hour"
+msgstr "Ora"
+
+msgid "Hours"
+msgstr "Orët"
+
+msgid "Day of week"
+msgstr "Dita e javës"
+
+msgid "When"
+msgstr "Kur"
+
+msgid "%s Server Management Panel"
+msgstr "Paneli i menaxhimit të serverit %s "
+
+msgid "Server Administration"
+msgstr "Zgjidhje e thjeshtë dhe efikase për server"
+
+#------------------------------------------------------------------------------
+# Dimensionet e vizitorit
+#------------------------------------------------------------------------------
+
+msgid "Invalid URL Parameters"
+msgstr "Parametra URL të pavlefshme"
+
+msgid "The requested page cannot be loaded due to invalid or malformed URL parameters."
+msgstr "Faqja e kërkuar nuk mund të ngarkohet për shkak të parametrave URL të pavlefshëm ose të formatuar gabim."
+
+msgid "This may be caused by typing an incorrect URL, missing parameter separators, or using an invalid configuration name."
+msgstr "Kjo mund të shkaktohet nga shtypja e një URL të pasaktë, mungesa e ndarësve të parametrave, ose përdorimi i një emri konfigurimi të pavlefshëm."
+
+msgid "Please check the URL you entered and ensure all parameters are correctly formatted."
+msgstr "Ju lutemi kontrolloni URL-në që keni futur dhe sigurohuni që të gjithë parametrat të jenë formatuar saktë."
+
+msgid "SiteDomain parameter not defined in your config/domain file, or you may not have execution permission on the file."
+msgstr "Parametri SiteDomain nuk është i përcaktuar në skedën tuaj config/domain, ose mund të mos keni leje ekzekutimi në skedë."
+
+msgid "Please run as Administrator to set permissions"
+msgstr "Ekzekutoni si Administrator për të vendosur lejet"
+
+msgid "This directory lacks read permission"
+msgstr "Kjo direktori nuk ka leje leximi"
+
+msgid "Please set read permission for directory"
+msgstr "Ju lutemi vendosni lejen e leximit për direktorinë"
+
+msgid "Missing required parameter in config file"
+msgstr "Mungon parametri i kërkuar në skedarin e konfigurimit"
+
+msgid "Please check that 'DirData' is defined."
+msgstr "Ju lutemi kontrolloni nëse 'DirData' është përcaktuar."
+
+msgid "Domain name in browser address appears to be missing or incomplete"
+msgstr "Emri i domainit në adresën e shfletuesit duket se mungon ose është i paplotë"
+
+msgid "Please check the URL parameter"
+msgstr "Ju lutemi kontrolloni parametrin URL"
+
+msgid "Format description"
+msgstr "Përshkrimi i formatit"
+
+msgid "Please set execute permission"
+msgstr "Ju lutemi vendosni lejen e ekzekutimit"
+
+msgid "Or if you prefer numeric mode"
+msgstr "Ose nëse preferoni modalitetin numerik"
+
+msgid "View Report Directly"
+msgstr "Shiko raportin drejtpërdrejt"
+
+msgid "AWStats Log Viewer"
+msgstr "Shikuesi i regjistrave AWStats"
+
+msgid "Month Selection"
+msgstr "Përzgjedhja e muajit"
+
+msgid "Who"
+msgstr "Kush"
+
+msgid "Visitors"
+msgstr "Vizitorët"
+
+msgid "Countries"
+msgstr "Vendet"
+
+msgid "flag_icon"
+msgstr "flamuri"
+
+msgid "Country-Region-City"
+msgstr "Vendi-Rajoni-Qyteti"
+
+msgid "Code"
+msgstr "Kodi"
+
+msgid "Known"
+msgstr "I njohur"
+
+msgid "unknownos"
+msgstr "OS i panjohur"
+
+msgid "unknownbrowser"
+msgstr "shfletues i panjohur"
+
+msgid "Unresolved IP Address"
+msgstr "Adresa IP e pazgjidhur"
+
+msgid "Unknown File Type"
+msgstr "Lloji i panjohur i skedarit"
+
+msgid "Unknown Size"
+msgstr "Madhësia e panjohur"
+
+msgid "Unknown Time"
+msgstr "Koha e panjohur"
+
+msgid "Unknown Browser"
+msgstr "Shfletues i panjohur"
+
+msgid "Unknown OS"
+msgstr "OS i panjohur"
+
+msgid "Unknown Visitor"
+msgstr "Vizitor i panjohur"
+
+msgid "Unknown Visitor (Total)"
+msgstr "Vizitor i panjohur (Total)"
+
+msgid "Unknown Country"
+msgstr "Vend i panjohur"
+
+msgid "Unknown Country (Region)"
+msgstr "Vend i panjohur (Rajoni)"
+
+msgid "Unknown Visitor (Title)"
+msgstr "Vizitor i panjohur (titulli)"
+
+msgid "PageStayTime"
+msgstr "Nuk mund të vlerësohet koha e qëndrimit në faqe"
+
+msgid "Unknown OS (Link)"
+msgstr "OS i panjohur (lidhja)"
+
+msgid "Unknown OS (Row)"
+msgstr "sistem operativ i panjohur"
+
+msgid "Unknown Browser (Link)"
+msgstr "Shfletues i panjohur (lidhja)"
+
+msgid "Unknown Browser (Row)"
+msgstr "shfletues i panjohur"
+
+msgid "Unknown Screen"
+msgstr "Madhësia e panjohur e ekranit"
+
+msgid "Login"
+msgstr "Identifikimi"
+
+msgid "Anonymous"
+msgstr "Anonim"
+
+msgid "Robots"
+msgstr "Robotët"
+
+msgid "Different robots"
+msgstr "Robotë të ndryshëm"
+
+msgid "Hits on robots.txt"
+msgstr "Trafiku nga robotët e motorëve të kërkimit të listuar më sipër, i kategorizuar si \"trafik jonormal i shfletimit\", nuk përfshihet në tabelat dhe grafikët e tjerë. Numri pas shenjës \"+\\" përfaqëson numrin e kërkesave të suksesshme për skedarin robots.txt"
+
+msgid "Worms"
+msgstr "Krimbat"
+
+msgid "Different worms"
+msgstr "Krimba të ndryshëm"
+
+msgid "Target"
+msgstr "Objektivi"
+
+msgid "Grabber"
+msgstr "Grabber"
+
+#------------------------------------------------------------------------------
+# Përshkrimet e formateve
+#------------------------------------------------------------------------------
+
+msgid "mime_text"
+msgstr "TXT skedar i tekstit të thjeshtë (tekst i thjeshtë pa format të standardizuar nga kodimi ASCII në vitin 1963. Si gur themeli i gjithë kodit burimor, skedarëve të konfigurimit dhe regjistrave të sistemit, rrjedhat e tij të kontrollit të ndarjes së rreshtave Windows (CRLF) dhe Unix (LF) ndër-platformë janë ende standardi më universal i shkëmbimit të të dhënave në botën kompjuterike)"
+
+msgid "mime_log"
+msgstr "LOG regjistër i funksionimit të sistemit (pasuri e tekstit të thjeshtë që regjistron gjendjen e ekzekutimit të sistemit operativ, bërthamës dhe aplikacioneve në nivel aplikacioni. Mbulon regjistrat e hyrjes Nginx/Apache (Regjistri i Kombinuar) dhe specifikimin standard syslog, është burimi kryesor i të dhënave për zgjidhjen e problemeve, analizën e performancës së rrjedhës dhe auditimin e sigurisë)"
+
+msgid "mime_page"
+msgstr "HTML faqe interneti me hipertekst (gur themeli i World Wide Web krijuar nga Tim Berners-Lee në vitin 1989. Si një gjuhë shënimi hipertekst universal falas dhe e hapur, specifikimi i tij HTML5 u bë standardi zyrtar i W3C në vitin 2014, me mbështetje vendase për multimedia të strukturuar, ndërveprim semantik dhe paraqitje të faqeve në rrjedhë. Fitoi çmimin Turing në vitin 2016)"
+
+msgid "mime_khtml"
+msgstr "KHTML motor shabllonesh në internet (specifikim i motorit të interpretimit të shfletuesit KDE 2.0 i vitit 1998. Si një pikë referimi e komunitetit me burim të hapur që hodhi themelet për interpretimin modern të uebit, trashëgimia e tij teknologjike frymëzoi dhe u zhvillua drejtpërdrejt në bërthamat Apple WebKit dhe Google Blink, të cilat edhe sot e kësaj dite vazhdojnë rrugën e tyre themelore përmes arkitekturës moderne dinamike të uebit në rrjedhë)"
+
+msgid "mime_script"
+msgstr "SCRIPT skript dinamik i interpretuar (klasifikim i përgjithshëm i rrjedhave të kodit burimor që nuk kanë nevojë të përpilohen paraprakisht dhe lexohen dhe ekzekutohen rresht pas rreshti nga një kohë e caktuar ekzekutimi ose interpretues. Mbulon ASP, JSP, CGI dhe Tcl, etj., përdoret gjerësisht për ndërfaqet e zakonshme të portës në anën e serverit, kontrollin e automatizuar të procesit dhe ngjitjen e detyrave në nivel sistemi)"
+
+msgid "mime_js"
+msgstr "Skript JavaScript (mjedis programimi vendas i shfletuesit Netscape i vitit 1995. Vendi standardin industrial ECMAScript në vitin 1997, koha e ekzekutimit Node.js lindi në vitin 2009, duke thyer kufijtë e shfletuesit dhe duke krijuar një arkitekturë asinkrone jo-bllokuese me pirg të plotë, e shoqëruar me ekosistemin më të madh të paketave softuerike npm në botë)"
+
+msgid "mime_py"
+msgstr "Skript Python (gjuhë skriptimi e interpretuar e nivelit të lartë e krijuar nga Guido van Rossum në vitin 1991. Falë dhëmbëzimit të detyrueshëm për lexueshmëri pa humbje dhe dizajnit të nivelit të ulët me shumë paradigmë, tani është vendosur si gjuhë standarde industriale për arkitekturën moderne të uebit, shkencën e të dhënave me pirg të plotë, trajnimin e modeleve të inteligjencës artificiale (AI) dhe operacionet e automatizuara vendase në re)"
+
+msgid "mime_sh"
+msgstr "Skript Shell (skript standard i interpretuesit të komandave nga epoka Unix e vitit 1971. Përfshin specifikime komandash në nivel bërthame si Bash, Sh, Dash, zakonisht ekzekutohet me prapashtesën .sh, është një ngjitës universal në nivel bërthame për kontrollin e proceseve të nivelit të ulët, konfigurimin e mjedisit pa instalim dhe vendosjen e automatizuar në sistemet operative moderne të ngjashme me Unix)"
+
+msgid "mime_rb"
+msgstr "Skript Ruby (gjuhë skriptimi e orientuar nga objekti e krijuar nga Yukihiro Matsumoto në vitin 1995. Me respekt ekstrem për përvojën e zhvilluesit si filozofi kryesore e dizajnit, korniza e tij Ruby on Rails vendosi në mënyrë revolucionare paradigmën moderne të zhvillimit të arkitekturës së uebit të nivelit të lartë 'Konventa mbi Konfigurimin (CoC)')"
+
+msgid "mime_pl"
+msgstr "Skript Perl (gjuhë skriptimi pragmatike e krijuar nga Larry Wall në vitin 1987. Si themeluesi i menaxherëve modernë të paketave (CPAN), njihet si 'thika zvicerane e ushtrisë' për përpunimin e tekstit. Në modalitetin modern CGI, ai ende shërben si një bazë me besueshmëri të lartë në fushën e analizimit të regjistrave falë kostove jashtëzakonisht të ulëta të memories fizike dhe përpunimit shumë efikas të shprehjeve të rregullta)"
+
+msgid "mime_php"
+msgstr "Faqe interneti dinamike PHP (krijuar nga Rasmus Lerdorf në vitin 1995, projektuar posaçërisht për zhvillimin e uebit. Si teknologji kryesore që fuqizon më shumë se 70% të faqeve të internetit në botë, mbështet thellësisht aplikacione të mëdha prodhimi si WordPress dhe Wikipedia. Që nga prezantimi i motorit të ekzekutimit të përpilimit JIT (Just-In-Time) në PHP 8, ai ka arritur një evolucion themelor të paradigmës drejt anës së serverit me pirg të plotë me performancë të lartë)"
+
+msgid "mime_image"
+msgstr "IMAGE klasifikim i aseteve të imazhit (përfshin klasifikimin e përgjithshëm të bitmap-eve të ngjeshura me humbje/pa humbje, grafikës moderne të përgjegjshme të uebit dhe grafikës vektoriale. Është një tregues kyç për vlerësimin e kostos së ngarkimit të burimeve vizuale të faqes, shkallës së goditjeve të cache-it në anën e klientit dhe konsumit të gjerësisë së brezit të rrjetit mediatik)"
+
+msgid "mime_document"
+msgstr "DOCUMENT klasifikim i dokumenteve të strukturuara (përfshin klasifikimin e përgjithshëm të tekstit të thjeshtë, fletëllogaritëseve, dokumenteve me format fiks (PDF) dhe gjuhëve të lehta të shënimit. Është një tregues kyç për statistikat e shpërndarjes së bazave të njohurive statike në anën e serverit, shkarkimit të aseteve të informacionit të ndërmarrjes dhe kapacitetit të përpunimit të rrjedhës së tekstit)"
+
+msgid "mime_package"
+msgstr "PACKAGE klasifikim i produkteve të përpilimit dhe paketave softuerike (përfshin klasifikimin e përgjithshëm të programeve vendase të ekzekutueshme të sistemit operativ, bibliotekave të lidhjes në kohë ekzekutimi (DLL/SO) dhe paketave të instalimit të shpërndarjes së aplikacioneve. Shpesh përdoret si tregues kyç për vlerësimin e trafikut në dalje dhe majave të shkarkimit të faqeve të shpërndarjes së softuerit)"
+
+msgid "mime_archive"
+msgstr "ARCHIVE skedarë arkivimi dhe të ngjeshur (klasifikim i përgjithshëm i paketave të ngjeshjes së të dhënave bazuar në algoritme kryesore si DEFLATE, LZMA. Në shtresën e rrjetit, përveç përfaqësimit të shpërndarjes tradicionale të paketave, mbulon gjithashtu rrjedhën dinamike të përgjigjes Gzip të projektit GNU të vitit 1992. Megjithëse algoritmi Brotli po futet gradualisht në skenarët modernë, ky klasifikim mbetet një tregues kyç për vlerësimin e shkallës së xhiros së gjerësisë së brezit të serverit dhe uljes së presionit në shtresën e transportit)"
+
+msgid "mime_audio"
+msgstr "AUDIO klasifikim i rrjedhës audio dixhitale (përfshin klasifikimin e përgjithshëm të audios së ngjeshur, librave audio dhe kontejnerëve audio të mediave të transmetimit. Bazuar në standarde specifike të kodekëve audio, përdoret për të monitoruar shkallën e xhiros së rrjedhave të të dhënave audio të faqeve multimediale, gjerësinë e brezit të transmetimit të njëkohshëm dhe performancën e lidhjeve të gjata)"
+
+msgid "mime_video"
+msgstr "VIDEO klasifikim i rrjedhës video dixhitale (përfshin klasifikimin e përgjithshëm të kontejnerëve të videos me rezolucion të lartë, animacioneve moderne të uebit dhe segmenteve të mediave të transmetimit. Është një tregues kyç për vlerësimin e kufirit maksimal të gjerësisë së brezit të serverit dhe efektit të përshpejtimit të Rrjetit të Shpërndarjes së Përmbajtjes (CDN) në mjedise rrjeti me ngarkesë të lartë)"
+
+msgid "mime_jscript"
+msgstr "Skript JScript (implementim pronësor i inxhinierisë së kundërt i zhvilluar nga Microsoft për Internet Explorer 3.0 në vitin 1996. Si një konkurrent i hershëm i JavaScript klasik, ai ishte motori kryesor i Windows Script Host (WSH) dhe pjesës së pasme të hershme ASP)"
+
+msgid "mime_json"
+msgstr "JSON të dhëna të strukturuara (format i lehtë i shkëmbimit të serializimit të të dhënave i vendosur nga Douglas Crockford në vitin 2001. Bazuar në çifte tekstuale kyç-vlerë dhe arkitekturë vargjesh, ka lexueshmëri jashtëzakonisht të lartë për njerëzit dhe veti të analizimit të rrjedhës pa humbje. Është standardi de facto për API-të moderne të uebit, arkitekturën e mikroshërbimeve dhe ndërveprimin me modelet e mëdha gjuhësore)"
+
+msgid "mime_vbs"
+msgstr "Skript VBScript (variant i gjuhës së skriptimit i lëshuar nga Microsoft së bashku me IE 3.0 në vitin 1996. Ishte dikur motori kryesor i faqeve të hershme dinamike ASP dhe menaxhimit të sistemit Windows, tani është zyrtarisht i ndërprerë dhe i hequr nga bërthama më e re e Windows 11 nga Microsoft. I përket teknologjisë së trashëguar historike)"
+
+msgid "mime_conf"
+msgstr "CONF skedar konfigurimi i sistemit (klasifikim i përgjithshëm i skedarëve të të dhënave që ruajnë përgjithmonë parametrat e mjedisit të ekzekutimit të softuerit në formën e tekstit të thjeshtë. Mbulon specifikimet INI dhe moderne YAML, TOML, JSON. Në sistemet Linux ato janë të përqendruara kryesisht në direktorinë /etc. Është varësia kryesore për optimizimin e gjendjes së ekzekutimit në nivel sistemi)"
+
+msgid "mime_css"
+msgstr "CSS fletë stilesh në kaskadë (standard W3C i vitit 1996, së bashku me HTML/JS quhet një nga tre komponentët kryesorë të pjesës së përparme. Kaloi nëpër pozicionimin CSS2 dhe evolucionin modular CSS3, duke mbështetur vendas Flexbox, Grid dhe dizajnin e përgjegjshëm me pyetje mediash. Është standardi absolutisht dominues për shkëputjen e paraqitjes së faqeve të internetit në shfletuesit modernë)"
+
+msgid "mime_xsl"
+msgstr "XSL fletë stili (standard W3C i vitit 1999, përmban gjuhën e transformimit XSLT dhe gjuhën e adresimit XPath, përdoret për të interpretuar të dhënat e strukturuara XML në HTML, PDF ose tekst të thjeshtë. Në zhvillimin modern, ekosistemi i tij është zëvendësuar kryesisht nga motorë më të lehtë shabllonesh dhe formati i të dhënave JSON)"
+
+msgid "mime_runtime"
+msgstr "Skedar i ekzekutueshëm (formate vendase të ekzekutimit të sistemit operativ si EXE, ELF, Mach-O, që përmbajnë kod makine të nivelit të ulët të përpiluar, pikën e hyrjes dhe informacionin e ngarkimit të sistemit)"
+
+msgid "mime_library"
+msgstr "Skedar bibliotekë (biblioteka lidhëse dinamike ose statike si DLL, SO, dylib, që përmbajnë simbole të përbashkëta dhe kod ripozicionimi për t'u thirrur nga programe të tjera dhe për t'u ngarkuar gjatë ekzekutimit)"
+
+msgid "mime_swf"
+msgstr "Animacion Flash (zhvilluar nga Macromedia në vitin 1996, blerë nga Adobe në vitin 2005. Standard interaktiv i animacionit në internet, dikur dominoi animacionin dhe lojërat në internet. Dobësitë: varësi nga shtojcat, mungesë mbështetjeje për celular, rrezik i lartë sigurie. Adobe shpalli ndërprerjen në vitin 2017, ndaloi plotësisht mbështetjen në vitin 2020, u zëvendësua nga HTML5/CSS3/JS)"
+
+msgid "mime_dtd"
+msgstr "DTD përkufizim i tipit të dokumentit (lëshuar së bashku me XML 1.0 në vitin 1998, përdoret për të përcaktuar strukturën e dokumentit XML/HTML dhe për të verifikuar ligjshmërinë. Në zhvillimin modern, është zëvendësuar gradualisht nga zgjidhje më fleksibël si XML Schema, RELAX NG)"
+
+msgid "mime_csv"
+msgstr "CSV format i të dhënave (vlera të ndara me presje, format universal i tabelës me tekst të thjeshtë nga epoka e mainframe-ve në vitin 1972 (përpiluesi IBM Fortran). I standardizuar zyrtarisht nga RFC 4180 në vitin 2005, si një standard i shkëmbimit të të dhënave pa humbje ndër-platformë dhe ndër-gjuhë. Përdoret gjerësisht për import/eksport efikas në Excel, baza të dhënash relacionale, analizë të dhënash (Pandas).)"
+
+msgid "mime_cur"
+msgstr "Skedar treguesi i miut (format .cur, përdoret për të personalizuar stilin e miut, për shembull kursorin e gishtit në faqet e internetit, ikonën e pritjes së orës së rërës në sistem. Është 'i afërm' i ikonës së zakonshme .ico, por ka një vendndodhje shtesë 'pika e nxehtë' - vendi ku miu klikon në të vërtetë. Historia: u prezantua me Windows 3.1 (1992), ishte një komponent kyç në kalimin e ndërfaqes grafike nga linja e komandës në epokën e operimit me miun)"
+
+msgid "mime_jnlp"
+msgstr "Java Web Start (teknologji e shpërndarjes së aplikacioneve desktop Java të viteve 2000, e cila nis programet Java në distancë përmes skedarëve .jnlp. Për shkak të problemeve të sigurisë dhe përhapjes së metodave moderne të shpërndarjes, tani është praktikisht e zhdukur)"
+
+msgid "mime_lit"
+msgstr "Libër elektronik Microsoft Reader (lëshuar nga Microsoft në vitin 2000, format LIT. I zhdukur, tani mund të konvertohet në EPUB ose PDF duke përdorur mjete si Calibre)"
+
+msgid "mime_svg"
+msgstr "SVG grafikë vektoriale (standard W3C i vitit 1999, format dydimensional i imazhit vektorial i bazuar në arkitekturën XML. Ka avantazhin e shkallëzimit arbitrar pa humbur mprehtësinë dhe transmetimin e rrjedhës së tekstit. Të gjithë shfletuesit modernë e mbështesin atë në mënyrë vendase. Përdoret gjerësisht për ikona ueb me rezolucion të lartë, logo dhe interpretim të animacioneve vektoriale. Është standardi kryesor për grafikën moderne të uebit)"
+
+msgid "mime_ai"
+msgstr "AI grafikë vektoriale (format pronësor i grafikës vektoriale i zhvilluar në mënyrë të pavarur nga Adobe në vitin 1987. Si standardi kryesor i industrisë për tipografinë, dizajnin e shtypit dhe dizajnin e identitetit të markës, mbështet të dhëna vektoriale të paraqitjes me shumë shtresa dhe të nivelit të lartë. Është bartësi i preferuar për artin profesional vizual)"
+
+msgid "mime_phshop"
+msgstr "PSD imazh me shtresa (format pronësor i skedarit burimor të imazhit raster i lëshuar nga Adobe së bashku me Photoshop në vitin 1990. Mbështet shtresimin me shumë shtresa, kanale, maska dhe të dhëna redaktimi pa humbje. Është vendosur si standardi global i industrisë për përpunimin e imazheve dhe pikturën dixhitale)"
+
+msgid "mime_ttf"
+msgstr "Font TrueType (format dixhital i fontit me kontur i zhvilluar bashkërisht nga Apple dhe Microsoft në vitin 1989. Bazuar në kthesat kuadratike të Bézier, arrin konsistencë absolute të pikselit midis shfaqjes në ekran dhe daljes së printimit. Është formati vendas i paracaktuar i fontit të sistemeve moderne operative desktop)"
+
+msgid "mime_fon"
+msgstr "FON font bitmap (format i hershëm i fontit me matricë pikash në nivel sistemi i Microsoft Windows nga vitet 1980. Nuk mbështet shkallëzim pa humbje të proporcionit arbitrar. Zakonisht përdoret me sisteme të trashëguara ose komponentë të hershëm të pajisjeve të ngulitura për interpretim të kufizuar të tekstit të pikselizuar)"
+
+msgid "mime_pdf"
+msgstr "PDF dokument elektronik (format dokumenti me paraqitje fikse ndër-platformë i zhvilluar nga Adobe në vitin 1993 dhe u bë standardi ndërkombëtar ISO 32000 në vitin 2008. Ka besnikëri absolute të paraqitjes dhe formatit. Është standardi universal për shpërndarjen globale të dokumenteve zyrtare elektronike dhe botimin dixhital)"
+
+msgid "mime_dotnet"
+msgstr "ASP.NET faqe dinamike (teknologji dinamike e uebit në anën e serverit e lëshuar nga Microsoft së bashku me arkitekturën .NET në vitin 2002. Bartet nga motori i interpretimit IIS, përdoret për të ndërtuar aplikacione dinamike të uebit në anën e serverit Windows në nivel ndërmarrje dhe sisteme të shpërndara)"
+
+msgid "mime_mdb"
+msgstr "MDB bazë të dhënash relacionale (format i ruajtjes së bazës së të dhënave relacionale në nivel desktop i lëshuar nga Microsoft së bashku me Access në vitin 1992. Me motorin e integruar të bazës së të dhënave Jet, u përdor si zgjidhje e bazës së të dhënave relacionale në menaxhimin e hershëm të informatizimit të kompjuterëve personalë dhe ndërmarrjeve të vogla dhe të mesme)"
+
+msgid "mime_md"
+msgstr "Dokument Markdown (gjuhë e lehtë shënimi e krijuar në mënyrë të pavarur nga John Gruber në vitin 2004. Filozofia kryesore e dizajnit është 'e lexueshme do të thotë e interpretueshme', e cila nxit standardet moderne derivative si GFM dhe CommonMark. Përdoret gjerësisht si një standard kryesor i shkëmbimit për dokumentacionin teknik, bazat e njohurive (Obsidian) dhe gjeneruesit modernë të faqeve të internetit statike)"
+
+msgid "mime_crystal"
+msgstr "Crystal Reports (format profesional i skedarit të raporteve në nivel ndërmarrje të platformës SAP Business Intelligence (BI). Ka lidhje të nivelit të ulët me burime të shumta të dhënash dhe aftësi komplekse të interpretimit dinamik të grafikëve, përdoret gjerësisht për gjenerimin profesional të raporteve në sistemet financiare dhe të analizës së të dhënave të kompanive shumëkombëshe)"
+
+msgid "mime_libreoffice"
+msgstr "Dokument LibreOffice (format pronësor i paketës së zyrës me burim të hapur të ndërtuar nga The Document Foundation në vitin 2010 bazuar në degëzimin e OpenOffice. Zbaton thellësisht standardin ndërkombëtar ODF (Open Document Format) të W3C. Është themeli i zyrës së ekosistemit modern me burim të hapur)"
+
+msgid "mime_encrypt"
+msgstr "ENCRYPT skedar i koduar (të dhëna të papërpunuara binare ose tekstuale të përpunuara përmes një algoritmi specifik të kodimit simetrik ose asimetrik. Përfshin formatet kryesore derivative si .enc, .pgp, .gpg. Në shtresën e rrjetit, përdoret për të siguruar konfidencialitetin dhe verifikimin e integritetit të të dhënave jo-publike)"
+
+msgid "mime_gpx"
+msgstr "GPX të dhëna të trajektores satelitore (format i shkëmbimit të sistemit global të pozicionimit i bazuar në arkitekturën XML. Përdoret posaçërisht për të përshkruar koordinatat gjeografike, pikat e rrugës, rrugët dhe trajektoret historike. Është një standard i hapur i të dhënave i përbashkët për pajisjet moderne sportive mobile, navigimin në automjete dhe Sistemet e Informacionit Gjeografik (GIS))"
+
+msgid "mime_diskimage"
+msgstr "Disk Image imazh disku (përfshin skedarët e imazhit të sektorit të nivelit të ulët bajt-për-bajt të disqeve fizike ose mediave optike si ISO, DMG, IMG. Përdoret për vendosje të sistemit në nivel të ulët, shpërndarje të sigurt të softuerit me kapacitet të madh dhe rezervë të plotë të të dhënave në nivel fizik të mediave të ruajtjes)"
+
+msgid "mime_vm"
+msgstr "VM imazh i makinerisë virtuale (përfshin imazhe të disqeve fizike të virtualizuara si VMDK, VDI, VHDX, OVA. Si bazë e platformave VMware, VirtualBox dhe Hyper-V, përdoret për emulimin e harduerit në nivel sistemi të nivelit të ulët, fotografi të shpejta të instancave dhe shpërndarje të infrastrukturës së resë kompjuterike)"
+
+msgid "mime_torrent"
+msgstr "BitTorrent skedar torrent (indeks i shkarkimit të shpërndarë P2P peer-to-peer i projektuar nga Bram Cohen në vitin 2001. Bazuar në kodimin Bencode, ruan metatë dhënat e kontrollit të nivelit të ulët të skedarit origjinal dhe informacionin e adresimit të serverit Tracker. Është bartësi kryesor për shpërndarjen e rrjedhës në rrjetet e decentralizuara)"
+
+msgid "mime_gis"
+msgstr "GIS të dhëna gjeohapësinore (standard i të dhënave të sistemit të informacionit gjeografik me Shapefile dhe GeoJSON si bërthamë. Përfshin koordinata gjeometrike shumëdimensionale, topologjinë e shtresave dhe të dhëna atributesh. Përdoret gjerësisht për interpretimin e hartave dixhitale me saktësi të lartë, ndjeshmërinë në distancë satelitore dhe analizën gjeometrike hapësinore)"
+
+msgid "mime_ebook"
+msgstr "EBOOK libër elektronik (format botimi dixhital me standardin ndërkombëtar të hapur EPUB të W3C dhe arkitekturën pronësore MOBI/AZW të Amazon Kindle si bërthamë. Mbështet paraqitje adaptive të rrjedhës, kapsulim të metatë dhënave dhe mbrojtje të të drejtave dixhitale DRM. Është bartësi universal për leximin dixhital në pajisjet celulare)"
+
+msgid "mime_avif"
+msgstr "AVIF imazh efikas (standard i imazhit me ultra-rezolucion të lartë i gjeneratës së ardhshme i prezantuar nga Open Media Alliance (AOMedia) në vitin 2019. Bazuar në teknologjinë e kornizave kyçe të kodimit të videos AV1, shkalla e ngjeshjes është 50% më e mirë se WebP dhe mbështet vendas Diapazonin e Lartë Dinamik (HDR). Është standardi kryesor për transmetimin e imazheve moderne të uebit)"
+
+msgid "mime_markdown"
+msgstr "Markdown dokument i lehtë (gjuhë shënimi e dokumentit të tekstit e krijuar në mënyrë të pavarur nga John Gruber në vitin 2004. Përdor dizajn deklarativ të tekstit të thjeshtë, dizajni i sintaksës së tij është i frymëzuar nga reStructuredText. Përdoret gjerësisht për projektet GitHub, dokumentacionin teknik në nivel inxhinierik dhe ekosistemin modern të menaxhimit të përmbajtjes statike)"
+
+msgid "mime_yaml"
+msgstr "YAML konfigurim serializimi (format i serializimit të të dhënave i lexueshëm nga njeriu i projektuar nga Clark Evans dhe të tjerë në vitin 2001. Bazuar në dhëmbëzim hierarkik dhe hartëzim çifti kyç-vlerë. Tani është vendosur si standardi i konfigurimit të infrastrukturës vendase në re për orkestrimin e kontejnerëve Kubernetes, automatizimin Ansible dhe Docker Compose)"
+
+msgid "mime_toml"
+msgstr "TOML konfigurim semantik (gjuhë minimaliste e projektuar nga Tom Preston-Werner në vitin 2013. Ka avantazhe të dizajnit të nivelit të ulët si tipizimi i fortë, hartëzimi eksplicit dhe qartësia semantike. Tani përdoret gjerësisht si një skedar konfigurimi i standardizuar për zinxhirët modernë të mjeteve të Rust (Cargo), Python (pyproject.toml) dhe Go)"
+
+msgid "mime_vue"
+msgstr "Vue komponent me një skedar (format pronësor SFC i kornizës progresive të uebit të prezantuar nga Evan You në vitin 2014. Në një skedar të vetëm realizon ndarjen e shqetësimeve të HTML/CSS/JS dhe lidhjen e gjendjes reaktive, duke drejtuar thellësisht aplikacionet moderne interaktive të pjesës së përparme dhe motorët e faqeve statike në shkallë të gjerë)"
+
+msgid "mime_wasm"
+msgstr "WebAssembly modul binar (standard i kodit bajt të nivelit të ulët me performancë të lartë për ueb i vendosur nga W3C në vitin 2017. Lejon gjuhët e tipizuara fort si C/C++/Rust të përpilohen në objektivin e sandbox-it të shfletuesit, duke siguruar efikasitet ekzekutimi afër harduerit vendas. Është gur themeli i informatikës moderne buzë uebit)"
+
+msgid "mime_jsx"
+msgstr "React JSX komponent (zgjerim i sintaksës JavaScript XML i lëshuar nga Facebook së bashku me kornizën React në vitin 2013. Mbështet ndërtimin deklarativ të strukturës virtuale DOM në JavaScript, duke realizuar paradigmën e zhvillimit të pjesës së përparme 'UI është funksion i gjendjes' të bazuar në komponentë)"
+
+msgid "mime_tsx"
+msgstr "TypeScript TSX komponent (kombinimi i rrjedhës së sintaksës së tipizuar fort të TypeScript të zhvilluar nga Microsoft në vitin 2012 dhe JSX. Injekton kontrollin statik të tipit në kohën e përpilimit dhe kufizimet e ndërfaqes në zhvillimin e komponentëve React. Është një standard kodi për zhvillimin e sigurt të sistemeve moderne të mëdha të pjesës së përparme)"
+
+msgid "mime_heif"
+msgstr "HEIF imazh efikas (format i skedarit të imazhit efikas i vendosur nga organizata MPEG në vitin 2015. Bazuar në algoritmin e kodimit të videos HEVC (H.265), mbështet vendosjen e imazheve me shumë korniza, hartave të thellësisë dhe metatë dhënave në një vëllim shumë të vogël. Është një standard ruajtjeje pronësor për sistemet operative moderne celulare dhe pajisjet inteligjente terminale)"
+
+msgid "mime_heic"
+msgstr "HEIC imazh efikas (format pronësor i bitmap-it i Apple i implementuar bazuar në standardin ndërkombëtar HEIF. Si standardi i paracaktuar i ruajtjes së fotove për iPhone-in modern, merr kodim/dekodim në nivel hardueri iOS/macOS dhe mbështetje vendase të sistemit operativ. Duke siguruar cilësi të lartë të imazhit, zvogëlon në mënyrë dramatike hapësirën themelore të ruajtjes)"
+
+msgid "mime_gltf"
+msgstr "glTF model aseti 3D (standard i formatit të transferimit GL i lëshuar nga Khronos Group në vitin 2015. Përdor arkitekturën JSON për të përshkruar skenat tredimensionale, i njohur si 'JPEG i fushës 3D'. Është një standard i lehtë industrial për interpretimin modern të WebGL/WebGPU dhe realitetit virtual)"
+
+msgid "mime_glb"
+msgstr "GLB model 3D binar (version i plotë binar, pa humbje i kapsulimit të modelit të asetit glTF. Kombinon strukturën e skenës, të dhënat e kulmeve të rrjetës së nivelit të ulët, materialet dhe hartat e teksturës në një skedar të vetëm. Projektuar posaçërisht për transmetim efikas dhe shpërndarje rrjedhëse të aseteve 3D të uebit ndër-platformë)"
+
+msgid "mime_gls"
+msgstr "GLOSSARY fjalor i të dhënave (skedar përcaktimi i grupit të terminologjisë posaçërisht për sistemet e menaxhimit të dokumenteve dhe korpuset e strukturuara. Përmban përkufizime standarde të termave të integruara, hartëzime shumëgjuhëshe dhe hartëzime metatë dhënash. Përdoret për të ruajtur qëndrueshmërinë konceptuale në analizën e automatizuar të tekstit dhe sistemet e publikimit të përmbajtjes)"
+
+msgid "mime_cbz"
+msgstr "CBZ libër stripash (format pronësor i arkivimit të imazheve të stripit i bazuar në strukturën e ngjeshjes ZIP. Brenda kapsulon një sekuencë të vazhdueshme të imazheve statike bitmap. Është një standard universal i kontejnerit të lehtë për botimin e stripit dixhital dhe koleksionimin lokal ndër-platformë)"
+
+msgid "mime_cbr"
+msgstr "CBR libër stripash (format pronësor i arkivimit të imazheve të stripit i bazuar në strukturën e ngjeshjes RAR. Përdor algoritmin RAR për të kapsuluar sekuencat statike të bitmap-it, ka një shkallë relativisht të lartë ngjeshjeje, ka mbështetje të gjerë të përputhshmërisë në fushën e shpërndarjes së stripave dixhitale)"
+
+msgid "mime_fb2"
+msgstr "FB2 libër elektronik (standard i librit elektronik FictionBook 2.0 nga fillimi i viteve 2000. Përdor strukturë të pastër XML për të përshkruar atributet e librit dhe hierarkinë e tekstit. Ka mbështetje të gjerë në ekosistemin e librave elektronikë me burim të hapur dhe në lexuesit e trashëguar të botimeve dixhitale)"
+
+msgid "mime_kepub"
+msgstr "KEPUB libër elektronik (format pronësor i përmirësuar i librit elektronik i Kobo që evoluoi nga standardi EPUB. Kryen optimizim të interpretimit të nivelit të ulët për lexuesit e librave elektronikë të nivelit harduerik të Kobo, duke ofruar paraqitje më efikase të faqeve dhe ndërveprim të statistikave të leximit)"
+
+msgid "mime_m4b"
+msgstr "M4B libër audio (format i librit audio i bazuar në arkitekturën e kontejnerit MPEG-4 Part 14 (MP4). Përdor kodimin AAC, mbështet vendas vendosjen e faqeshënuesve të nivelit të ulët, vazhdimin e riprodhimit nga pika e ndërprerjes dhe ngulitjen e kapitujve. Dikur ishte formati standard i ekosistemit Apple iTunes)"
+
+msgid "mime_kfx"
+msgstr "Kindle KFX format (format pronësor i përmirësuar i botimit dixhital i lëshuar nga Amazon së bashku me Kindle në vitin 2015. Mbështet paraqitje të avancuar të lidhurave, interpretim të fontit me dinamikë të lartë dhe ngarkim të faqeve në rrjedhë në nivel bërthame (Page Flip). Është standardi kryesor i platformës moderne Kindle)"
+
+msgid "mime_chm"
+msgstr "CHM skedar i përpiluar i ndihmës (sistem informacioni i ndihmës HTML i përpiluar i lëshuar nga Microsoft në vitin 1997. Paketoni të dhënat hipertekstuale dhe indeksin themelor në një kontejner të vetëm binar. Për një kohë të gjatë ishte formati standard për dokumentacionin lokal të ndihmës pa lidhje për softuerin Windows)"
+
+msgid "mime_mht"
+msgstr "MHT arkiv i faqes së internetit (format i hipertekstit të grumbulluar MIME i lëshuar nga Microsoft në vitin 1999. Bazuar në standardin RFC 2557, kapsulon kodin burimor HTML, CSS, JS dhe imazhet e ngulitura në një skedar të vetëm teksti. Përdoret për ruajtjen e faqeve të internetit pa lidhje në shfletuesit e trashëguar)"
+
+msgid "mime_wml"
+msgstr "WML gjuhë shënimi pa tel (standard shënimi celular i vendosur nga forumi WAP (Wireless Application Protocol) në vitin 1999. Bazuar në specifikimin XML, projektuar posaçërisht për rrjetet e hershme celulare pa tel me brez të ngushtë dhe telefonat me funksione me fuqi të ulët. Në ekosistemin modern të uebit, i përket teknologjisë së trashëguar të pensionuar)"
+
+msgid "mime_xhtml"
+msgstr "XHTML faqe interneti me hipertekst (standard W3C i vitit 2000, kapsulim i gjuhës strikte të shënimit hipertekstual të bazuar në arkitekturën XML. Në vitin 2009, W3C ndaloi evolucionin e tij teknologjik dhe kaloi plotësisht në specifikimin HTML5. Tani përdoret kryesisht për interpretimin semantik të faqeve të internetit në sistemet e trashëguara)"
+
+msgid "mime_xml"
+msgstr "XML dokument i strukturuar (gjuhë shënimi e zgjerueshme nga standardi W3C i vitit 1998. Ka një arkitekturë etiketash të vetë-përshkrueshme. Është një format themelor për shërbimet e uebit në rrjet (SOAP/REST), skedarët e konfigurimit në nivel sistemi (XSD) dhe shkëmbimin e të dhënave ndër-platformë)"
+
+msgid "mime_sgml"
+msgstr "SGML gjuhë e përgjithësuar shënimi (standard ndërkombëtar ISO 8879 i vitit 1986 për gjuhën standarde të përgjithësuar të shënimit. Si pionier i industrisë në përshkrimin e strukturuar të dokumenteve elektronike, si XML ashtu edhe specifikimet e hershme HTML rrjedhin nga kjo metagjuhë standarde)"
+
+msgid "mime_apng"
+msgstr "APNG grafikë dinamike (zgjerim dinamik i Grafikës së Rrjetit Portativ (PNG) i zhvilluar nga Mozilla në vitin 2004. Mbështet ngjyra reale 24-bit dhe gjysmë-transparencë të kanalit Alfa 8-bit. Është një alternativë me rezolucion të lartë të formatit GIF në skenarët modernë të uebit)"
+
+msgid "mime_bmp"
+msgstr "BMP bitmap vendas (format bitmap i pavarur nga pajisja e platformës Microsoft i vendosur që nga epoka e Windows 1.0. Përdor ruajtje pa humbje, të pangjeshur, megjithëse vëllimi i tij është zakonisht 3-10 herë më i madh se PNG, për shkak të mungesës së kostove të kodimit/dekodimit, ai është ende i ngulitur gjerësisht në komponentët kryesorë të Windows 11, segmentet e burimeve EXE/MSI dhe tamponët grafikë të drejtuesve të trashëguar)"
+
+msgid "mime_cdr"
+msgstr "CDR grafikë vektoriale (format pronësor i skedarit burimor të dizajnit vektorial profesional CorelDRAW i kompanisë kanadeze Corel. Mbështet menaxhimin e ngjyrave me shumë shtresa, nyje komplekse matematikore të konturit dhe të dhëna të paraqitjes në nivel shtypi. Është një format i specializuar për shtypjen e sheshtë profesionale dhe dizajnin e reklamave)"
+
+msgid "mime_gif"
+msgstr "GIF imazh me ngjyra të indeksuara (format bitmap me ngjyra të indeksuara 8-bit i zhvilluar nga CompuServe në vitin 1987. Bazuar në algoritmin LZW, i kufizuar në 256 nivele ngjyrash dhe transparencë me një ngjyrë, në shpejtësi të lartë të kornizave bëhet i madh. Tani po zëvendësohet gradualisht nga standardet moderne të imazhit dinamik efikas si APNG, WebP)"
+
+msgid "mime_ico"
+msgstr "ICO ikonë sistemi (format vendas i kapsulimit të burimeve të ikonave të Windows. Mbështet ngulitjen e përzier të varianteve të imazhit me shumë rezolucione pikselësh dhe thellësi ngjyrash në një kontejner të vetëm. Është gjithashtu një standard universal i shpërndarjes për identifikuesin kryesor të faqeve të shfletuesve modernë të uebit (Favicon))"
+
+msgid "mime_jpeg"
+msgstr "JPEG imazh i ngjeshur (format imazhi me ngjeshje me humbje i standardit ndërkombëtar ISO 10918 i vitit 1992. Bazuar në algoritmin e Transformimit të Diskret të Kosinusit (DCT), arrin një raport të lartë ngjeshjeje duke ruajtur cilësinë e shkëlqyer realiste të imazhit. Është standardi absolut de facto për fotografinë statike në internetin global)"
+
+msgid "mime_jpg"
+msgstr "JPEG imazh i ngjeshur (format imazhi me ngjeshje me humbje i standardit ndërkombëtar ISO 10918 i vitit 1992. Bazuar në algoritmin e Transformimit të Diskret të Kosinusit (DCT), arrin një raport të lartë ngjeshjeje duke ruajtur cilësinë e shkëlqyer realiste të imazhit. Është standardi absolut de facto për fotografinë statike në internetin global)"
+
+msgid "mime_png"
+msgstr "PNG imazh pa humbje (standard i Grafikës së Rrjetit Portativ i rekomanduar nga W3C në vitin 1996. Përdor një algoritëm ngjeshjeje pa humbje, mbështet vendas ngjyra reale 24-bit dhe transparencë të kanalit Alfa 8-bit. Si një alternativë me rezolucion të lartë të GIF statik klasik, është standardi absolut de facto për imazhet e pikselëve pa humbje në internet)"
+
+msgid "mime_ps"
+msgstr "PostScript skedar përshkrimi i faqes (gjuhë përshkrimi i faqes e bazuar në pirg e prezantuar nga Adobe në vitin 1985. Si paraardhësi teknologjik i formatit PDF, në nivel të ulët realizon tipografi të pavarur nga hardueri dhe interpretim të grafikës vektoriale me saktësi të lartë. Është një standard themelor për botimin profesional të shtypit dhe fushën e printimit me lazer)"
+
+msgid "mime_psb"
+msgstr "PSB dokument me shtresa të mëdha (format pronësor i kapsulimit të skedarit burimor shumë të madh i Adobe Photoshop. Ai thyen madhësinë fizike prej 2 GB dhe kufijtë e brendshëm të adresimit prej 30.000 pikselësh të formatit standard PSD. Projektuar posaçërisht për të ruajtur asete gjigante të artit dixhital në shkallë shumë të madhe me thellësi të lartë shtresash)"
+
+msgid "mime_psd"
+msgstr "PSD skedar burimor i dizajnit të shtresave (format pronësor i inxhinierisë së imazhit me shtresa i Adobe Photoshop. Si një kontejner standard industrial në fushën e grafikës dhe imazhit, ai kapsulon në mënyrë vendase pemën e plotë të interpretimit të shtresave, kanalet e bitmap-it, shtigjet vektoriale të prerjes dhe mënyrat e përbëra të përzierjes, duke mbështetur redaktimin e plotë të të dhënave pa humbje)"
+
+msgid "mime_webp"
+msgstr "WebP imazh efikas (standard universal i kodimit të grafikës së uebit i prezantuar nga Google në vitin 2010. Rrjedh nga teknologjia e kornizave kyçe të videos VP8, i përputhshëm në mënyrë të përkryer me interpretimin me humbje, pa humbje, gjysmë transparente dhe dinamike. Zvogëlon madhësinë me 25-35% në krahasim me PNG të së njëjtës cilësi. Është gur themeli i ngarkimit të performancës së lartë të faqeve moderne të internetit)"
+
+msgid "mime_woff"
+msgstr "WOFF skedar glifi i uebit (format i hapur i fontit të uebit i krijuar në vitin 2009 dhe u bë standard W3C në vitin 2012. Në thelb, është një kapsulim i ngjeshjes pa humbje në rrjedhë të strukturave standarde të fontit TTF/OTF, i cili optimizon ndjeshëm koston e gjerësisë së brezit të transmetimit në rrjet. Është një format universal për ikonat e faqeve moderne të internetit dhe fontet në re)"
+
+msgid "mime_7z"
+msgstr "7z arkiv i ngjeshur (format pronësor i 7-Zip i zhvilluar nga Igor Pavlov në vitin 1999. Bazuar në algoritmet me burim të hapur LZMA/LZMA2, ka një shkallë jashtëzakonisht të lartë ngjeshjeje. Në kushte të barabarta, madhësia e tij është zakonisht 30-50% më e vogël se ZIP. Është një format universal me raport të lartë ngjeshjeje për komunitetin me burim të hapur dhe shpërndarjen e softuerit)"
+
+msgid "mime_ace"
+msgstr "ACE arkiv i ngjeshur (format pronësor i ngjeshjes WinACE nga vitet 1990. Dikur konkurronte me formatin RAR dhe kishte një shkallë relativisht të lartë ngjeshjeje. Pas vitit 2007, përsëritja teknologjike u ndal, tani është zëvendësuar nga formatet 7z dhe RAR. I përket formateve të arkivimit të sistemeve të trashëguara)"
+
+msgid "mime_bz2"
+msgstr "BZIP2 arkiv i ngjeshur (format ngjeshjeje me renditje blloqesh i zhvilluar nga Julian Seward në vitin 1996. Shkalla e ngjeshjes së algoritmit të tij themelor është 15-20% më e lartë se GZIP, por kostoja e llogaritjes është më e madhe. Përdoret shpesh për shpërndarjen e kodit burimor të bërthamës Linux dhe paketave të softuerit me burim të hapur. Zgjerimi standard është .bz2)"
+
+msgid "mime_cab"
+msgstr "CAB arkiv i ngjeshur (format arkivimi Cabinet i zhvilluar në mënyrë të pavarur nga Microsoft në vitin 1995. Si standardi vendas i paketës së instalimit të sistemit Windows, përdoret për shpërndarjen e drejtuesve dhe skedarëve të bërthamës. Është gjithashtu kontejneri themelor i ruajtjes për Instaluesin e Windows (MSI))"
+
+msgid "mime_dmg"
+msgstr "DMG imazh disku (format i Imazhit të Diskut i evoluar nga Apple në vitet 1980. Si kontejneri standard për shpërndarjen e softuerit macOS, mbështet montimin fizik si një sistem skedarësh virtual, ngjeshje të nivelit të ulët dhe kodim të të dhënave. Është formati kryesor për shpërndarjen e aplikacioneve në ekosistemin Mac)"
+
+msgid "mime_emz"
+msgstr "EMZ imazh i ngjeshur (version i ngjeshur i Metaskedarit të Përmirësuar të Windows EMF. Në thelb, është grafikë vektoriale binare e ngjeshur përmes algoritmit GZIP. Përdoret gjerësisht për ruajtjen e grafikës vektoriale të ngulitur në dokumentet e serisë Microsoft Office)"
+
+msgid "mime_gz"
+msgstr "GZIP arkiv i ngjeshur (format standard i ngjeshjes së rrjedhës i zhvilluar nga Jean-loup Gailly dhe Mark Adler të projektit GNU në vitin 1992. Si mjet standard i ngjeshjes Unix/Linux, është gjithashtu standardi kryesor për ngjeshjen e shtresës së transportit HTTP (Gzip). Shpesh përdoret së bashku me arkivimin TAR)"
+
+msgid "mime_jar"
+msgstr "JAR arkiv i ngjeshur (format arkivimi Java ARchive i prezantuar nga Sun Microsystems në vitin 1997. Në thelb, është një kontejner paketimi i bazuar në strukturën ZIP, i përdorur për të kapsuluar bibliotekat e klasave Java dhe metatë dhënat. Është një produkt kryesor i përpilimit për Maven, Gradle dhe ekosistemin e hershëm Android)"
+
+msgid "mime_lzma"
+msgstr "LZMA arkiv i ngjeshur (algoritmi i ngjeshjes së zinxhirit Lempel-Ziv-Markov i zhvilluar nga Igor Pavlov në vitin 1998. Si motori kryesor i formatit 7z, ka një shkallë jashtëzakonisht të lartë ngjeshjeje dhe veçori të shpejta të çngjeshjes. Përdoret gjerësisht për shpërndarjen e firmuerit të harduerit dhe sistemeve të ngulitura)"
+
+msgid "mime_rar"
+msgstr "RAR arkiv i ngjeshur (format pronësor i arkivimit WinRAR i zhvilluar nga Eugene Roshal në vitin 1993. Mbështet ndarjen në vëllime, regjistrime fizike të rikuperimit (ECC) dhe kodim të forcës së lartë. Shkalla e ngjeshjes është më e mirë se ZIP standard, dhe ka mbështetje të gjerë të përputhshmërisë në kompjuterët personalë dhe sektorin komercial)"
+
+msgid "mime_tar"
+msgstr "TAR paketë arkivimi (format arkivimi në kasetë nga epoka Unix V7 e vitit 1979. Kryen vetëm paketimin e rrjedhës së skedarëve pa ngjeshje të të dhënave. Shpesh kombinohet me GZIP/BZIP2/XZ, është standardi themelor për paketat e kodit burimor Linux dhe ruajtjen e shtresuar të imazheve Docker)"
+
+msgid "mime_tgz"
+msgstr "TGZ arkiv i ngjeshur (format i kombinuar i rrjedhës së arkivimit TAR dhe ngjeshjes GZIP, zgjerimet .tgz ose .tar.gz. Si formati më universal i shpërndarjes së paketave të softuerit në mjedisin Unix/Linux, përdoret gjerësisht për vendosjen e përpilimit të kodit burimor dhe shpërndarjen e paketave binare pa instalim)"
+
+msgid "mime_tbz2"
+msgstr "TBZ2 arkiv i ngjeshur (format i kombinuar i rrjedhës së arkivimit TAR dhe ngjeshjes BZIP2, zgjerimet .tbz2 ose .tar.bz2. Krahasuar me TGZ, mund të rrisë më tej shkallën e ngjeshjes me 15-20%, i përshtatshëm për transmetimin e skedarëve të mëdhenj, u përdor për një kohë të gjatë për shpërndarjen e kodit burimor të bërthamës Linux)"
+
+msgid "mime_xz"
+msgstr "XZ arkiv i ngjeshur (format me raport të lartë ngjeshjeje i gjeneratës së ardhshme i prezantuar në vitin 2009. Bazuar në algoritmin LZMA2, shkalla e ngjeshjes së të dhënave është 30-50% më e lartë se GZIP duke ruajtur çngjeshje të shpejtë. Është vendosur si standard i rekomanduar i shpërndarjes nga bërthama Linux dhe menaxherët kryesorë të paketave (si brenda Debian .deb))"
+
+msgid "mime_z"
+msgstr "Z arkiv i ngjeshur (format i ngjeshjes LZW i komandës Unix compress i vitit 1985. Si një standard i hershëm i ngjeshjes së sistemeve Unix, tani është zëvendësuar plotësisht nga formati më efikas GZIP. Në trafikun modern të rrjetit, është një format i rrallë historik i trashëguar)"
+
+msgid "mime_zip"
+msgstr "ZIP arkiv i ngjeshur (format universal i arkivimit PKZIP i zhvilluar nga Phil Katz në vitin 1989. Ka mbështetje vendase nga sistemet operative kryesore. Është standardi më i përdorur i kontejnerëve në internet. JAR modern i Java, APK i Android dhe dokumentet e Office (OOXML) bazohen në strukturën ZIP)"
+
+msgid "mime_zst"
+msgstr "Zstandard arkiv i ngjeshur (standard i ngjeshjes së rrjedhës së gjeneratës së re i projektuar nga Yann Collet i Facebook në vitin 2015. I afrohet shkallës së ngjeshjes LZMA duke pasur një xhiro shumë më të lartë se GZIP. Është adoptuar thellësisht nga bërthama Linux (5.9+) dhe menaxherët e paketave Arch/Debian)"
+
+msgid "mime_lz4"
+msgstr "LZ4 arkiv i ngjeshur (algoritëm i jashtëzakonshëm i shpejtë i ngjeshjes së rrjedhës i zhvilluar nga Yann Collet në vitin 2011. Shpejtësia e xhiros është më shumë se 10 herë më e shpejtë se GZIP, me kosto jashtëzakonisht të ulëta të CPU-së gjatë ekzekutimit. Përdoret gjerësisht në bërthamën Linux, sistemin e skedarëve OpenZFS dhe përpunimin e rrjedhës së të dhënave në kohë reale të Hadoop)"
+
+msgid "mime_lzo"
+msgstr "LZO arkiv i ngjeshur (algoritmi Lempel-Ziv-Oberhumer i zhvilluar nga Markus Oberhumer në vitin 1996. Fokusohet në performancën jashtëzakonisht të shpejtë të çngjeshjes. Është ngulitur gjerësisht në imazhet Squashfs të bërthamës Linux, firmuerin OpenWrt dhe sisteme të ndryshme të ngulitura me burime të kufizuara)"
+
+msgid "mime_msi"
+msgstr "MSI paketë instalimi i sistemit (format i kapsulimit të të dhënave të Instaluesit të Windows i prezantuar nga Microsoft në vitin 1999. Si një specifikim standard i vendosjes së aplikacioneve në Windows, mbështet vendas kthimin e transaksioneve të nivelit të ulët, menaxhimin e ciklit jetësor të komponentëve dhe instalimin e heshtur pa përpunim grupi. Është standardi kryesor për shpërndarjen e centralizuar të softuerit në nivel ndërmarrje dhe vendosjen e politikave)"
+
+msgid "mime_pkg"
+msgstr "PKG paketë instalimi softueri ndër-platformë. 1. Paketa softuerike FreeBSD: standardi pkgng, zgjerimi .pkg ose .txz, bazuar në ngjeshjen TAR+XZ/Zstd, mbështet zgjidhjen e varësive dhe verifikimin e nënshkrimit; 2. Paketa e instalimit macOS: bazuar në formatin e Instaluesit Apple, mbështet komponentë të personalizuar, skripta instalimi dhe çinstalim në nivel sistemi. Janë përkatësisht bartësit kryesorë të shpërndarjes për serverët BSD dhe sistemet Mac."
+
+msgid "mime_apk"
+msgstr "APK paketë aplikacioni Android (paketë tradicionale e instalimit të aplikacioneve e lëshuar nga Google së bashku me Android në vitin 2008. Bazuar në strukturën e arkivit ZIP, paketon kodin e përpiluar të bajtit Dalvik (DEX), manifestin e metatë dhënave dhe burimet globale. Tani përdoret gjerësisht për korrigjimin e zhvillimit lokal, shpërndarjen nga palët e treta dhe instalimin anësor në pajisje)"
+
+msgid "mime_ipa"
+msgstr "IPA paketë aplikacioni Apple (kontejner i posaçëm paketimi për iOS/iPadOS i lëshuar së bashku me SDK-në e iPhone në vitin 2008. Në thelb, është një arkiv ZIP i mbrojtur nga DRM FairPlay ose nënshkrimi i kodit në nivel ndërmarrje, që përmban një skedar binar të ekzekutueshëm Mach-O, pemën e burimeve të aplikacionit dhe konfigurimin e metatë dhënave Info.plist)"
+
+msgid "mime_hap"
+msgstr "HAP paketë aplikacioni HarmonyOS (njësi themelore e vendosjes elastike të HarmonyOS e lëshuar së bashku me HarmonyOS 2.0 në vitin 2020. E përbërë nga moduli kryesor Entry ose modulet funksionale të zgjerimit Feature. Është formati kryesor i vendosjes me shumë skaje për shpërndarjen e terminaleve inteligjente në të gjitha skenarët ndër-skaje (telefonë, tableta, pajisje të veshshme))"
+
+msgid "mime_har"
+msgstr "HAR paketë e përbashkët statike HarmonyOS (skedar arkivi i bibliotekës së përbashkët statike pronësore e HarmonyOS. Përdoret për të kapsuluar komponentët e përbashkët, kodin e burimeve të nivelit të ulët dhe varësitë në kohën e përpilimit, të cilat lidhen statikisht dhe ndahen nga shumë module HAP. Është baza kryesore për zhvillimin e bazuar në komponentë dhe ripërdorimin e shumë moduleve të sistemit HarmonyOS)"
+
+msgid "mime_aab"
+msgstr "AAB paketë aplikacioni Android (format dinamik i shpërndarjes së Google Play i prezantuar nga Google në vitin 2018 dhe i vendosur në vitin 2021. Si një entitet i pastër shpërndarjeje, ai shkurtohet dhe përpilohet në mënyrë dinamike nga reja sipas arkitekturës së CPU-së, densitetit të ekranit dhe gjuhës së pajisjes synuese, duke gjeneruar APK të optimizuara sipas kërkesës. Ul koston e gjerësisë së brezit të transmetimit mesatarisht me 35%)"
+
+msgid "mime_xapk"
+msgstr "XAPK paketë aplikacioni e zgjeruar (standard jozyrtar i zgjerimit të aplikacioneve i vendosur nga komuniteti Android i palëve të treta. Duke kapsuluar bashkërisht skedarin standard APK me paketën e zgjerimit të të dhënave të lojërave OBB shumë të madhe, ai thyen fizikisht kufirin e madhësisë së skedarit të pavarur prej 100 MB të Google Play. Shihet gjerësisht në platformat e shpërndarjes së lojërave)"
+
+msgid "mime_appx"
+msgstr "APPX paketë aplikacioni moderne (specifikim i vendosjes së aplikacioneve UWP i lëshuar nga Microsoft së bashku me Windows 8 në vitin 2012. Ka izolim në sandbox dhe veçori të lehta çinstalimi. Si një standard i hershëm dominues i Microsoft Store, në ekosistemin modern Windows ka hyrë në fazën përfundimtare të ciklit jetësor duke evoluar drejt MSIX)"
+
+msgid "mime_msix"
+msgstr "MSIX paketë aplikacioni e gjeneratës së re (specifikim krejtësisht i ri i standardizuar i paketimit për Windows i lëshuar nga Microsoft në vitin 2018. Bashkon në mënyrë të përkryer veçoritë e sandbox-it të sigurisë së aplikacioneve të APPX me avantazhet e menaxhimit të aseteve në nivel ndërmarrje të MSI. Plotësisht i përputhshëm me të gjitha llojet e aplikacioneve Win32. Është standardi i rekomanduar i shpërndarjes për Windows 11)"
+
+msgid "mime_appimage"
+msgstr "AppImage paketë aplikacioni pa instalim (specifikim i arkivit të vetëm të ekzekutueshëm për Linux i nisur në vitin 2004. Përdor një arkitekturë të vetë-mjaftueshme 'një aplikacion është një skedar'. Gjatë ekzekutimit, ai montohet direkt përmes mekanizmit FUSE si një sistem skedarësh virtual vetëm për lexim për t'u ekzekutuar, duke arritur përdorim të menjëhershëm pa varësi në të gjitha shpërndarjet Linux)"
+
+msgid "mime_flatpak"
+msgstr "Flatpak paketë aplikacioni në sandbox (standard i shpërndarjes së aplikacioneve desktop ndër-shpërndarje Linux i udhëhequr nga Red Hat dhe GNOME në vitin 2015. Në nivel të ulët mbështetet në mekanizmat Namespace dhe Cgroups të bërthamës Linux për të arritur izolim jashtëzakonisht të rreptë të sandbox-it të sigurisë në nivel aplikacioni. Është baza e qendrave moderne të softuerit OS me burim të hapur)"
+
+msgid "mime_snap"
+msgstr "Snap paketë aplikacioni e kontejnerizuar (standard universal i vendosjes për Linux i prezantuar nga Canonical, kompania mëmë e Ubuntu, në vitin 2014. Përdor një arkitekturë të vetë-mjaftueshme të montimit të imazhit SquashFS, mbështet përditësime automatike incrementale dhe izolim të rreptë të sandbox-it AppArmor. Është formati kryesor i paracaktuar i ekosistemit të Qendrës Softuerike të Ubuntu)"
+
+msgid "mime_deb"
+msgstr "DEB paketë softuerike sistemi (specifikim i kapsulimit të kodit binar dhe burimor i vendosur nga projekti Debian në vitin 1993. Si standardi themelor i instalimit për Debian, Ubuntu dhe të gjitha sistemet e tyre derivative, mbështetet në bërthamën dpkg për shpaketim dhe mirëmbajtje, duke përdorur APT si ndërfaqen e përparme efikase të menaxherit të paketave. Është baza më e pjekur e shpërndarjes së softuerit në ekosistemin Linux)"
+
+msgid "mime_rpm"
+msgstr "RPM paketë softuerike sistemi (specifikim i kapsulimit të menaxherit të paketave Red Hat i lëshuar nga Red Hat në vitin 1997. Së bashku me DEB, konsiderohet si një nga dy kampe të mëdha të menaxhimit tradicional të paketave Linux. Ka të integruar në mënyrë vendase kontrollin e varësive në nivel transaksioni dhe verifikimin themelor të nënshkrimit dixhital të softuerit. Ende është standardi absolut kryesor i shpërndarjes për ekosistemet e familjes Red Hat si RHEL, Fedora dhe CentOS)"
+
+msgid "mime_pacman"
+msgstr "Pacman paketë softuerike e arkivuar (format kapsulimi .pkg.tar.zst i vendosur nga Arch Linux së bashku me menaxherin pacman në vitin 2002. Si bërthama e mekanizmit të përditësimit rrotullues të Arch, bazuar në algoritmin e ngjeshjes së lartë me shpejtësi të lartë Zstandard, së bashku me ekosistemin AUR (Depoja e Softuerit të Përdoruesit Arch). Është një standard modern i shpërndarjes së paketave që mishëron parimet minimaliste dhe KISS)"
+
+msgid "mime_exe"
+msgstr "EXE skedar i ekzekutueshëm vendas (format i programit binar Portativ i Ekzekutueshëm (PE) i platformës Windows. Teknologjikisht rrjedh nga struktura e kokës MZ nga epoka e MS-DOS, dhe që nga Windows NT i vitit 1993 u vendos plotësisht si specifikim i strukturës PE. Është standardi më i përdorur i ekzekutimit në botë për udhëzimet e kodit të makinës, segmentet e burimeve statike dhe nisjen e bërthamës së sistemit)"
+
+msgid "mime_dll"
+msgstr "DLL bibliotekë dinamike lidhëse (specifikim i bibliotekës së kodit të përbashkët Dynamic Link Library i platformës Windows. Duke u ngarkuar në mënyrë dinamike dhe duke ripozicionuar simbolet gjatë ekzekutimit, kursen ndjeshëm memorien fizike dhe hapësirën në disk. Si forma kryesore e implementimit të API-së së Windows, problemi i saj i hershëm 'DLL Hell' u zhduk në kohët moderne përmes mekanizmit të izolimit paralel SxS)"
+
+msgid "mime_com"
+msgstr "COM skedar klasik i ekzekutueshëm (formati më i vjetër i ekzekutimit të imazhit të memories (Command) nga epoka e MS-DOS. Përdor një dizajn të pastër të segmentit të kodit të pastrukturuar, i kufizuar në kufirin e sipërm të segmentit të adresimit të memories fizike prej 64 KB. Tani është pensionuar si një format historik i trashëguar, por në arkitekturën moderne të Windows përdoret ende si një ndërfaqe specifike komponentësh për përputhshmëri të kufizuar)"
+
+msgid "mime_aac"
+msgstr "Audio AAC (standard MPEG nga 1997, Advanced Audio Coding. Pasardhësi i MP3, cilësia e zërit superiore ndaj MP3 me të njëjtin bitrate, format i paracaktuar i audios për YouTube, iTunes, Nintendo Switch)"
+
+msgid "mime_alac"
+msgstr "Audio ALAC (zhvilluar nga Apple në 2004, Apple Lossless Audio Codec. Format i humbjes së Apple, burim i hapur në 2011, format i paracaktuar për audio pa humbje në iTunes dhe Apple Music)"
+
+msgid "mime_flac"
+msgstr "Audio FLAC (zhvilluar nga Fondacioni Xiph.Org në 2001, Free Lossless Audio Codec. Ngjeshje pa humbje, cilësi e zërit e njëjtë me CD-në, madhësia e skedarit rreth gjysma e WAV origjinal. Burim i hapur pa patenta, format i preferuar për audiofilët dhe koleksionistët e muzikës dixhitale)"
+
+msgid "mime_mp3"
+msgstr "Audio MP3 (zhvilluar nga Instituti Fraunhofer në 1993, MPEG-1 Audio Layer 3. Format ngjeshjeje me humbje, madhësi e vogël e skedarit, cilësi e pranueshme, formati kryesor i revolucionit të muzikës dixhitale të viteve 2000, shtytësi i iPod dhe Napster. Patenta skadoi në 2017, u bë format i domenit publik)"
+
+msgid "mime_oga"
+msgstr "Audio Ogg Audio (zhvilluar nga Fondacioni Xiph.Org, format i pastër audio i kontejnerit Ogg, përdor kodimin Vorbis. Burim i hapur pa patenta, efikasiteti i ngjeshjes më i mirë se MP3, përdoret gjerësisht në projektet me burim të hapur)"
+
+msgid "mime_ogg"
+msgstr "Audio OGG (zhvilluar nga Fondacioni Xiph.Org në 2000, format Ogg Vorbis. Burim i hapur pa patenta, efikasiteti i ngjeshjes më i mirë se MP3, përdorues i hershëm ishte Spotify, përdoret gjerësisht për efekte zanore në lojëra)"
+
+msgid "mime_opus"
+msgstr "Audio Opus (standardizuar nga IETF në 2012, format audio me burim të hapur pa patenta. Kombinon teknologjitë SILK dhe CELT, vonesë jashtëzakonisht e ulët, efikasiteti më i lartë i ngjeshjes, format i paracaktuar i audios për WebRTC, WhatsApp, Discord)"
+
+msgid "mime_wav"
+msgstr "Audio WAV (zhvilluar nga Microsoft dhe IBM në 1991, format i paracaktuar i audios në Windows. Kodim PCM pa ngjeshje, cilësi e zërit pa humbje, por madhësi e madhe e skedarit, format standard për redaktimin profesional të audios)"
+
+msgid "mime_wma"
+msgstr "Audio WMA (zhvilluar nga Microsoft në 1999, Windows Media Audio. Dy versione: me humbje dhe pa humbje, i mbështetur në mënyrë vendase nga Windows, u përhap me Windows Media Player. Tani i margjinalizuar, i zëvendësuar nga MP3/AAC)"
+
+msgid "mime_dsf"
+msgstr "Audio DSF (format Direct Stream Digital, zhvilluar nga Sony dhe Philips. Frekuencë e lartë e kampionimit 1-bit, format standard për audio DSD, versioni dixhital i SACD, format audio i nivelit të lartë për audiofilët, madhësia e skedarit të madhe)"
+
+msgid "mime_ape"
+msgstr "Audio APE (zhvilluar nga Monkey's Audio në vitin 2000, format kompresimi pa humbje. Kompresim më i lartë se FLAC por kodim më i ngadalshëm, ende në përdorim në platformën Windows dhe në mesin e entuziastëve të audios)"
+
+msgid "mime_mid"
+msgstr "Audio MIDI (krijuar nga Asociacioni MIDI në 1983, Musical Instrument Digital Interface. Format i partiturës muzikore, jo regjistrim, madhësia e skedarit shumë e vogël, standard për instrumentet elektronike, tonet e ziles së telefonave celularë, efektet zanore në lojëra. Në 1991 General MIDI u standardizua, duke përcaktuar 120 timbra instrumentesh)"
+
+msgid "mime_m4a"
+msgstr "Audio M4A (Audio MPEG-4, format kontejneri për AAC. Format standard i dyqanit të muzikës iTunes, format kryesor i audios në ekosistemin Apple, mbështet mbrojtjen DRM)"
+
+msgid "mime_m3u"
+msgstr "Listë për luajtje M3U (format i listës së luajtjes me URL MP3, skedar i thjeshtë teksti, regjistron shtigjet e skedarëve audio. Standard nga epoka e Winamp, përdoret për radio në internet, transmetim muzikor në internet. M3U8 është versioni i tij UTF-8, përdoret për HTTP Live Streaming)"
+
+msgid "mime_asf"
+msgstr "Transmetim ASF (zhvilluar nga Microsoft në 1996, Advanced Systems Format. Kontejner transmetimi i Windows Media, mbështet transmetimin sinkron të audios dhe videos. Përdoret për transmetime të drejtpërdrejta dhe video në kërkesë, WMA/WMV bazohen në kontejnerin ASF)"
+
+msgid "mime_avi"
+msgstr "Video AVI (lëshuar nga Microsoft në 1992, standard i hershëm video për Windows. \"Audio Video Interleave\", ruajtje e ndërthurur e audios dhe videos, formati më i popullarizuar i videos në vitet 1990-2000, tani i zëvendësuar nga MP4/MKV)"
+
+msgid "mime_divx"
+msgstr "Video DivX (zhvilluar nga kompania DivX në 1998, format kodimi video i bazuar në MPEG-4. Format kryesor i ndarjes së videove në internet në vitet 2000, teknologjia e parë që ngjeshi cilësinë DVD në madhësinë e CD-së. Për shkak të mosmarrëveshjeve mbi të drejtat e autorit, më vonë u shndërrua në një kodues komercial)"
+
+msgid "mime_mp4"
+msgstr "Video MP4 (standard MPEG nga 2001, MPEG-4 Pjesa 14. Formati më universal i videos në botë, mbështet kodimin H.264/H.265, format i paracaktuar për video në internet, regjistrime në telefon, YouTube)"
+
+msgid "mime_m4v"
+msgstr "Video M4V (format video i iTunes, variant i MP4. Format video në ekosistemin Apple, format standard për filma, emisione televizive në iTunes Store, mbështet mbrojtjen e të drejtave të autorit DRM)"
+
+msgid "mime_mpeg"
+msgstr "Video MPEG (krijuar nga organizata MPEG në 1988, Moving Picture Experts Group. Themelues i standardeve të ngjeshjes dixhitale të videos, ndikim i thellë i MPEG-1 (VCD), MPEG-2 (DVD), MPEG-4 (video në internet))"
+
+msgid "mime_mkv"
+msgstr "Video MKV (zhvilluar nga projekti Matroska në 2002, kontejner multimedial me burim të hapur. Mbështet shumë pista audio, shumë titra, kapituj, \"mjet ambalazhimi\", format i preferuar për ndarjen e filmave HD)"
+
+msgid "mime_mpg"
+msgstr "Video MPEG (zgjerim i videos MPEG-1/MPEG-2, format standard për VCD dhe DVD. Format kryesor i videos në disqet optike në vitet 1990-2000, tani i zëvendësuar nga H.264/H.265)"
+
+msgid "mime_ogv"
+msgstr "Video Ogg Video (zhvilluar nga Fondacioni Xiph.Org, format video i kontejnerit Ogg, përdor kodimin Theora. Burim i hapur pa patenta, një nga standardet e hershme për video HTML5, i mbështetur në mënyrë vendase nga Firefox)"
+
+msgid "mime_ogx"
+msgstr "Kontejner multimedial Ogg (zhvilluar nga Fondacioni Xiph.Org, zgjerim universal i kontejnerit Ogg, mund të përmbajë shumë pista: audio, video, titra etj. Standard multimedial me burim të hapur, përdoret për lojëra, transmetim)"
+
+msgid "mime_rm"
+msgstr "Video RealMedia (zhvilluar nga RealNetworks në 1995, format RealMedia. Pionier i transmetimit në internet në vitet 1990-2000, format bazë i luajtësit RealPlayer. Dobësitë: kërkon luajtës të veçantë, cilësi e dobët e ngjeshjes, më vonë u zëvendësua nga Flash/MP4)"
+
+msgid "mime_flv"
+msgstr "Video Flash (formati u shfaq në 2002, format Flash Video. Dikur ishte format kryesor për videot në internet, përdorues i hershëm ishte YouTube. Dobësitë: kërkon plugin Flash, performancë e dobët, shumë vrima sigurie. Nga viti 2015 faqet kryesore të internetit kaluan në videon HTML5, tani i hequr)"
+
+msgid "mime_f4v"
+msgstr "Video F4V (format video Flash i zhvilluar nga Adobe, pasardhës i FLV. Bazuar në standardin MPEG-4, mbështet kodimin H.264. Së bashku me teknologjinë Flash u hoq, Adobe ndërpreu mbështetjen në 2020)"
+
+msgid "mime_wmv"
+msgstr "Video WMV (zhvilluar nga Microsoft në 1999, Windows Media Video. I mbështetur në mënyrë vendase nga Windows, i optimizuar për transmetim, format i zakonshëm për videot e hershme në internet, tani i margjinalizuar)"
+
+msgid "mime_wmf"
+msgstr "Format mediatik WMF (Windows Media Format, platforma mediatike e Microsoft. Përfshin emrin e përgjithshëm për videon WMV dhe audion WMA, i mbështetur në mënyrë vendase nga Windows Media Player)"
+
+msgid "mime_mov"
+msgstr "Video MOV (zhvilluar nga Apple në 1991, format kontejneri QuickTime. Format standard për redaktimin profesional të videos, mbështet shumë kodekë, i mbështetur në mënyrë vendase nga Final Cut Pro, Premiere)"
+
+msgid "mime_qt"
+msgstr "Video QuickTime (lëshuar nga Apple në 1991, format QuickTime. Standard video për platformën Mac, MOV është kontejneri i tij, luajtësi QuickTime u përdor gjerësisht. Në 2016 Apple ndërpreu zhvillimin e versionit për Windows, duke u zëvendësuar gradualisht nga MP4)"
+
+msgid "mime_webm"
+msgstr "Video WebM (lëshuar nga Google në 2010, format video me burim të hapur pa patenta. Bazuar në kontejnerin Matroska, kodimin VP8/VP9, format standard për videon HTML5, format i paracaktuar i luajtjes në ueb për YouTube)"
+
+msgid "mime_3gp"
+msgstr "Video 3GP (krijuar nga 3GPP në 2000, format video për pajisjet celulare. Madhësia e skedarit shumë e vogël, cilësi e ulët, format për regjistrimet video të telefonave celularë të hershëm, përdoret për dërgimin e MMS)"
+
+#------------------------------------------------------------------------------
+# Dimensionet teknike
+#------------------------------------------------------------------------------
+
+msgid "Operating Systems"
+msgstr "Sistemet Operative"
+
+msgid "Top 5 Operating Systems"
+msgstr "5 Sistemet Operative më të mira"
+
+msgid "Unknown Robot"
+msgstr "Klient i panjohur"
+
+msgid "User agent"
+msgstr "Agjent përdoruesi"
+
+msgid "Browsers"
+msgstr "Shfletuesit"
+
+msgid "Top 5 Browsers"
+msgstr "5 Shfletuesit më të mirë"
+
+msgid "Unknown Robot RH"
+msgstr "Kokë kërkese e panjohur"
+
+msgid "Detailed"
+msgstr "I detajuar"
+
+msgid "DetailedOS"
+msgstr "Versioni i sistemit operativ"
+
+msgid "DetailedBS"
+msgstr "Versioni i shfletuesit"
+
+msgid "Screen sizes"
+msgstr "Madhësitë e ekranit"
+
+msgid "Compression"
+msgstr "Ngjeshja"
+
+msgid "In"
+msgstr "Në hyrje"
+
+msgid "Out"
+msgstr "Në dalje"
+
+msgid "Saved"
+msgstr "Ruajtur"
+
+#------------------------------------------------------------------------------
+# Dimensionet e burimit
+#------------------------------------------------------------------------------
+
+msgid "Origin"
+msgstr "Origjina"
+
+msgid "Referers"
+msgstr "Referuesit"
+
+msgid "meta.description"
+msgstr "AWStats analizues i avancuar i regjistrave të ueb-it - monitorim në kohë reale i trafikut të faqes së internetit, analizë e vizitorëve, fjalë kyçe të motorëve të kërkimit, statistika të faqeve të gabimit. Mbështet modalitetin e errët, ndërfaqe shumëgjuhëshe, ofron analizë gjithëpërfshirëse të të dhënave për administratorët e faqeve të internetit."
+
+msgid "meta.keywords"
+msgstr "AWStats,statistika të ueb-it,analizë e regjistrave,monitorim i trafikut,statistika vizitash,analizë SEO,mjet analizë faqesh interneti,Web Analytics,Analizues Regjistri"
+
+msgid "meta.author"
+msgstr "AWStats"
+
+msgid "og.title"
+msgstr "AWStats - Analizë e Regjistrave të Ueb-it"
+
+msgid "og.description"
+msgstr "📊 Mjet profesional i statistikave të faqeve të internetit me burim të hapur, analizon trafikun e faqes suaj të internetit dhe sjelljen e vizitorëve në kohë reale."
+
+msgid "og.image.alt"
+msgstr "Grafikët statistikorë të AWStats"
+
+msgid "Created by"
+msgstr "Krijuar nga %s"
+
+msgid "plugins"
+msgstr "shtojcat"
+
+msgid "dbip by"
+msgstr "të dhëna nga"
+
+msgid "IPDB by"
+msgstr "Të dhënat e vendndodhjes gjeografike ofrohen nga DB-IP"
+
+# Shëndeti
+msgid "Configured"
+msgstr "Konfiguruar"
+
+msgid "Missing"
+msgstr "Mungon"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Unused"
+msgstr "I papërdorur"
+
+msgid "Overall Health"
+msgstr "Shëndeti i Përgjithshëm"
+
+msgid "Excellent"
+msgstr "Shkëlqyeshëm"
+
+msgid "Good"
+msgstr "Mirë"
+
+msgid "Fair"
+msgstr "Mesatar"
+
+msgid "Poor"
+msgstr "Keq"
+
+msgid "Missing icon types"
+msgstr "Llojet e ikonave që mungojnë"
+
+msgid "See"
+msgstr "Shih"
+
+msgid "Expected Path"
+msgstr "Rruga e Pritur"
+
+msgid "column for file locations"
+msgstr "kolona për të marrë vendndodhjet e skedarëve"
+
+msgid "Tip: If you need to generate related icons, you can use %s to upload a logo image, and it will automatically generate all the above related icon files"
+msgstr "Këshillë: Nëse keni nevojë të gjeneroni ikona të lidhura, mund të përdorni %s për të ngarkuar një imazh logoje, dhe ai do të gjenerojë automatikisht të gjithë skedarët e ikonave të lidhura më sipër"
+
+msgid "200: success, 404: failure"
+msgstr "200 është numri i sukseseve, 404 është numri i dështimeve"
+
+msgid "_PATH_FAVICON"
+msgstr "/favicon.ico"
+
+msgid "_PATH_APPLE_TOUCH"
+msgstr "/apple-touch-icon.png ose /apple-touch-icon-180x180.png"
+
+msgid "_PATH_LOGO"
+msgstr "/logo.svg ose /logo.png (duhet referuar në HTML/JSON-LD)"
+
+msgid "_PATH_WEBMANIFEST"
+msgstr "/site.webmanifest ose /manifest.json"
+
+msgid "_PATH_BROWSERCONFIG"
+msgstr "/browserconfig.xml"
+
+msgid "_PATH_SAFARI_PINNED"
+msgstr "/safari-pinned-tab.svg"
+
+msgid "_PATH_SOCIAL_ICON"
+msgstr "/images/github.svg, /images/paypal.svg, etj."
+
+msgid "Favicon"
+msgstr "Ikonë e faqes së internetit"
+
+msgid "Apple Touch Icon (iOS/macOS)"
+msgstr "Ikonë Apple Touch (iPhone/iPad/Mac)"
+
+msgid "Site Logo"
+msgstr "Logo e faqes së internetit"
+
+msgid "Web App Manifest (Android/Chrome)"
+msgstr "Manifesti i Aplikacionit të Ueb-it (Android/Chrome)"
+
+msgid "Windows Browser Config"
+msgstr "Konfigurimi i Shfletuesit të Windows"
+
+msgid "Safari Pinned Tab"
+msgstr "Ikonë e skedës së fiksuar të Safari"
+
+msgid "Social Icon"
+msgstr "Ikonë e platformës sociale"
+
+msgid "Icon Files Status"
+msgstr "Statusi i Skedarëve të Ikonave"
+
+msgid "Icon Type"
+msgstr "Lloji i Ikonës"
+
+msgid "Total"
+msgstr "Totali"
+
+msgid "Advanced Web Statistics"
+msgstr "Analizues i avancuar i regjistrave"
+
+msgid "Advanced Web Statistics %s"
+msgstr "%s Analizues i avancuar i regjistrave"
+
+msgid "Your browser does not support frames. Please use a modern browser."
+msgstr "Shfletuesi juaj nuk mbështet korniza. Ju lutemi përdorni një shfletues modern."
+
+msgid "View statistics directly"
+msgstr "Shikoni statistikat drejtpërdrejt"
+
+msgid "Close"
+msgstr "Mbyll"
+
+msgid "Documentation Viewer"
+msgstr "Shikues i Dokumentacionit"
+
+msgid "Direct address / Bookmarks"
+msgstr "Adresa direkte / Faqerojtësit"
+
+msgid "Search Engines"
+msgstr "Motorët e kërkimit"
+
+msgid "Refering search engines"
+msgstr "Motorët e kërkimit që referojnë"
+
+msgid "External pages"
+msgstr "Faqet e jashtme"
+
+msgid "Refering pages"
+msgstr "Faqet që referojnë"
+
+msgid "Internal pages"
+msgstr "Faqet e brendshme"
+
+msgid "UnknownAccessSource"
+msgstr "Burimi i panjohur i hyrjes"
+
+msgid "Different refering pages"
+msgstr "Faqe të ndryshme që referojnë"
+
+msgid "Keyphrases"
+msgstr "Fraza kyçe"
+
+msgid "Keywords"
+msgstr "Fjalë kyçe"
+
+msgid "Keyphrases/Keywords"
+msgstr "Fraza kyçe/Fjalë kyçe"
+
+msgid "Different keyphrases"
+msgstr "Fraza kyçe të ndryshme"
+
+msgid "Different keywords"
+msgstr "Fjalë kyçe të ndryshme"
+
+#------------------------------------------------------------------------------
+# Dimensionet e faqes
+#------------------------------------------------------------------------------
+
+msgid "Viewed pages"
+msgstr "Faqet e shikuara"
+
+msgid "Different pages"
+msgstr "Faqe të ndryshme"
+
+msgid "Entry"
+msgstr "Hyrja"
+
+msgid "Exit"
+msgstr "Dalja"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Referer"
+msgstr "Referuesi"
+
+msgid "Host"
+msgstr "Pritësi"
+
+#------------------------------------------------------------------------------
+# Gabimet dhe statuset
+#------------------------------------------------------------------------------
+
+msgid "Error"
+msgstr "Gabim"
+
+msgid "HTTP Status Statistics"
+msgstr "Statistikat e kodeve të statusit HTTP"
+
+msgid "SMTP Error codes"
+msgstr "Kodet e gabimit SMTP"
+
+msgid "Page not found"
+msgstr "Faqja e kërkuar nuk u gjet"
+
+msgid "Unknown error"
+msgstr "Gabim i panjohur"
+
+msgid "Abnormal traffic note"
+msgstr "Trafiku jonormal i shfletimit përfshin: robotët e motorëve të kërkimit, robotët e trajnimit të AI, skanerët e dobësive dhe kërkesat që nuk përputhen me standardet"
+
+msgid "Page detail"
+msgstr "Detajet e faqes"
+
+# Mesazhe të detajuara gabimi
+msgid "AWStats did not found the"
+msgstr "AWStats nuk gjeti"
+
+msgid "in your log records."
+msgstr "në regjistrat tuaj."
+
+msgid "AWStats did not find any valid log lines that match your"
+msgstr "AWStats nuk gjeti asnjë rresht të vlefshëm regjistri që përputhet me"
+
+msgid "parameter, in the"
+msgstr "parametrin, në"
+
+msgid "th first non commented lines read of your log."
+msgstr " rreshtat e parë të pakomentuar të lexuar të regjistrit tuaj."
+
+msgid "Your log file"
+msgstr "Skedari juaj i regjistrit"
+
+msgid "must have a bad format or"
+msgstr "duhet të ketë një format të keq ose"
+
+msgid "parameter setup does not match this format."
+msgstr "konfigurimi i parametrit nuk përputhet me këtë format."
+
+msgid "Your AWStats"
+msgstr "Parametri juaj i AWStats"
+
+msgid "parameter is:"
+msgstr "është:"
+
+msgid "This means each line in your web server log file need to have:"
+msgstr "Kjo do të thotë se çdo rresht në skedarin e regjistrit të serverit tuaj të internetit duhet të ketë:"
+
+msgid "combined log format"
+msgstr "format i kombinuar i regjistrit"
+
+msgid "MSIE Extended W3C log format"
+msgstr "Format i zgjeruar i regjistrit W3C MSIE"
+
+msgid "WebStar native log format"
+msgstr "Format vendas i regjistrit WebStar"
+
+msgid "common log format"
+msgstr "format i zakonshëm i regjistrit"
+
+msgid "Lotus Notes/Lotus Domino"
+msgstr "Lotus Notes/Lotus Domino"
+
+msgid "the following personalized log format:"
+msgstr "formati i mëposhtëm i personalizuar i regjistrit:"
+
+msgid "And this is an example of records AWStats found in your log file (the record number"
+msgstr "Dhe ky është një shembull i regjistrimeve që AWStats gjeti në skedarin tuaj të regjistrit (numri i regjistrimit"
+
+msgid "in your log):"
+msgstr "në regjistrin tuaj):"
+
+#------------------------------------------------------------------------------
+# Të ndryshme
+#------------------------------------------------------------------------------
+
+msgid "Extra/Marketing"
+msgstr "Shtesë/Marketing"
+
+#------------------------------------------------------------------------------
+# Tekste të ndërfaqes
+#------------------------------------------------------------------------------
+
+msgid "Current site"
+msgstr "Sajti aktual"
+
+msgid "Web Site"
+msgstr "Faqja e internetit"
+
+msgid "Last Update"
+msgstr "Përditësimi i fundit"
+
+msgid "Never updated"
+msgstr "Asnjëherë i përditësuar"
+
+msgid "No qualified records found in log"
+msgstr "Nuk u gjetën regjistrime të kualifikuara në regjistër"
+
+msgid "corrupted"
+msgstr "të korruptuara"
+
+msgid "comments"
+msgstr "komente"
+
+msgid "Blank"
+msgstr "Bosh"
+
+msgid "dropped"
+msgstr "të hedhura"
+
+msgid "Update now"
+msgstr "Përditëso tani"
+
+msgid "Back to main page"
+msgstr "Kthehu te faqja kryesore"
+
+msgid "Close window"
+msgstr "Mbyll dritaren"
+
+msgid "Back page"
+msgstr "Faqja e mëparshme"
+
+msgid "Navigation"
+msgstr "Navigimi"
+
+msgid "Summary"
+msgstr "Përmbledhje"
+
+msgid "Local"
+msgstr "Lokale"
+
+msgid "External"
+msgstr "E jashtme"
+
+msgid "Others (email senders)"
+msgstr "Të tjerë (dërgues)"
+
+msgid "Others (email receivers)"
+msgstr "Të tjerë (marrës)"
+
+msgid "Others"
+msgstr "Të tjerë"
+
+msgid "Only 10 lines of browser data are currently displayed"
+msgstr "Vetëm 10 rreshta të dhënash të shfletuesit janë shfaqur aktualisht, lista e plotë gjendet në faqen e detajeve"
+
+msgid "Others (unknown browsers)"
+msgstr "Të tjerë (shfletues të panjohur)"
+
+msgid "Others (operating systems)"
+msgstr "Të tjerë (sisteme operative)"
+
+msgid "Others (unknown OS)"
+msgstr "Të tjerë (OS i panjohur)"
+
+msgid "Others (search engines)"
+msgstr "Të tjerë (motorë kërkimi)"
+
+msgid "Others (referring pages)"
+msgstr "Të tjerë (faqe referuese)"
+
+msgid "Others (keyphrases)"
+msgstr "Të tjerë (fraza)"
+
+msgid "Others (keywords)"
+msgstr "Të tjerë (fjalë kyçe)"
+
+msgid "Only first 10 robots shown"
+msgstr "Vetëm 10 robotët e parë janë shfaqur, lista e plotë gjendet në faqen e detajeve"
+
+msgid "Failed to obtain access record"
+msgstr "Dështoi në marrjen e regjistrimit të hyrjes"
+
+msgid "Failed to obtain leave record"
+msgstr "Dështoi në marrjen e regjistrimit të daljes"
+
+msgid "Other pages"
+msgstr "Faqe të tjera"
+
+msgid "Low Traffic IP Summary"
+msgstr "Përmbledhje e IP-ve të panjohura me trafik të ulët"
+
+msgid "Failed to obtain IP data"
+msgstr "Përmbledhje e IP-ve të tjera të njohura"
+
+msgid "Failed to obtain the relevant data"
+msgstr "Dështoi në marrjen e të dhënave përkatëse"
+
+msgid "Limited list of countries and regions"
+msgstr "Vetëm 10 rreshta të dhënash janë shfaqur aktualisht, lista e plotë për më shumë vende dhe rajone gjendet në faqen e detajeve"
+
+msgid "currentVisitorData"
+msgstr "Vetëm 10 rreshta të dhënash të vizitorëve janë shfaqur aktualisht, lista e plotë gjendet në faqen e detajeve"
+
+msgid "Others (robots main)"
+msgstr "Të tjerë (robotë)"
+
+msgid "Others (worms)"
+msgstr "Të tjerë (krimba)"
+
+msgid "Displaying10RowsPageMorePleaseViewFullList"
+msgstr "Vetëm 10 faqe janë shfaqur aktualisht, lista e plotë gjendet në faqen e detajeve"
+
+msgid "Others (OS main)"
+msgstr "Të tjerë (sisteme)"
+
+msgid "Others (browsers main)"
+msgstr "Të tjerë (shfletues)"
+
+msgid "Others (screen sizes)"
+msgstr "Të tjerë (madhësi)"
+
+msgid "Others (search engines main)"
+msgstr "Të tjerë (motorë kërkimi)"
+
+msgid "Others (referring pages main)"
+msgstr "Të tjerë (faqe referuese)"
+
+msgid "Others (keyphrases main)"
+msgstr "Të tjerë (fraza)"
+
+msgid "Others (keywords main)"
+msgstr "Të tjerë (fjalë kyçe)"
+
+# 1xx
+msgid "Continue"
+msgstr "Vazhdo"
+
+msgid "Switching Protocols"
+msgstr "Ndryshimi i Protokolleve"
+
+msgid "Processing (WebDAV)"
+msgstr "Duke përpunuar (WebDAV)"
+
+msgid "Early Hints"
+msgstr "Këshilla të hershme"
+
+# 2xx
+msgid "[Miscellaneous successes]"
+msgstr "[Suksese të ndryshme]"
+
+msgid "Request successful"
+msgstr "Kërkesa e suksesshme"
+
+msgid "Created successfully"
+msgstr "Krijuar me sukses"
+
+msgid "Accepted - processing"
+msgstr "Pranuar - duke përpunuar"
+
+msgid "Non-authoritative information (from cache) (from cache)"
+msgstr "Informacion jo-autoritativ (nga cache)"
+
+msgid "Success, no content returned"
+msgstr "Sukses, nuk u kthye asnjë përmbajtje"
+
+msgid "Reset content"
+msgstr "Rivendos përmbajtjen"
+
+msgid "Partial content (resume download)"
+msgstr "Përmbajtje e pjesshme (vazhdo shkarkimin)"
+
+msgid "Multi-status (WebDAV)"
+msgstr "Shumë-status (WebDAV)"
+
+msgid "Already reported (WebDAV)"
+msgstr "Raportuar tashmë (WebDAV)"
+
+msgid "IM used"
+msgstr "IM i përdorur"
+
+# 3xx
+msgid "[Miscellaneous redirections]"
+msgstr "[Ridrejtime të ndryshme]"
+
+msgid "Multiple choices"
+msgstr "Zgjedhje të shumëfishta"
+
+msgid "Moved permanently - update your links"
+msgstr "Zhvendosur përgjithmonë - përditësoni lidhjet tuaja"
+
+msgid "Temporary redirect - URL unchanged"
+msgstr "Ridrejtim i përkohshëm - URL e pandryshuar"
+
+msgid "See other"
+msgstr "Shih tjetrën"
+
+msgid "Not modified - using cached version"
+msgstr "Nuk është modifikuar - duke përdorur versionin e cache"
+
+msgid "Use proxy"
+msgstr "Përdorni përfaqësues"
+
+msgid "Switch proxy"
+msgstr "Ndryshoni përfaqësuesin"
+
+msgid "Temporary redirect (keep method)"
+msgstr "Ridrejtim i përkohshëm (mbaj metodën)"
+
+msgid "Permanent redirect - update your links"
+msgstr "Ridrejtim i përhershëm - përditësoni lidhjet tuaja"
+
+# 4xx
+msgid "[Miscellaneous client/user errors]"
+msgstr "[Gabime të ndryshme të klientit/përdoruesit]"
+
+msgid "Bad request"
+msgstr "Kërkesë e gabuar"
+
+msgid "Unauthorized - please log in"
+msgstr "I paautorizuar - ju lutemi identifikohuni"
+
+msgid "Payment required"
+msgstr "Kërkohet pagesa"
+
+msgid "Forbidden - access denied"
+msgstr "E ndaluar - qasja e mohuar"
+
+msgid "Page not found (404) - check for broken links"
+msgstr "Faqja nuk u gjet (404) - kontrolloni për lidhje të thyera"
+
+msgid "Method not allowed"
+msgstr "Metoda nuk lejohet"
+
+msgid "Not acceptable"
+msgstr "E papranueshme"
+
+msgid "Proxy authentication required"
+msgstr "Kërkohet vërtetimi i përfaqësuesit"
+
+msgid "Request timeout"
+msgstr "Koha e kërkesës mbaroi"
+
+msgid "Conflict - please try again"
+msgstr "Konflikt - ju lutemi provoni përsëri"
+
+msgid "Gone - permanently deleted"
+msgstr "U largua - u fshi përgjithmonë"
+
+msgid "Length required"
+msgstr "Kërkohet gjatësia"
+
+msgid "Precondition failed"
+msgstr "Parakushti dështoi"
+
+msgid "Payload too large"
+msgstr "Ngarkesa shumë e madhe"
+
+msgid "URI too long"
+msgstr "URI shumë e gjatë"
+
+msgid "Unsupported media type"
+msgstr "Lloji i medias nuk mbështetet"
+
+msgid "Range not satisfiable"
+msgstr "Gama nuk mund të plotësohet"
+
+msgid "Expectation failed"
+msgstr "Pritja dështoi"
+
+msgid "I am a teapot (April Fools)"
+msgstr "Unë jam një çajnik (Shaka e 1 Prillit)"
+
+msgid "Page expired (Laravel)"
+msgstr "Faqja ka skaduar (Laravel)"
+
+msgid "Method failure (Spring)"
+msgstr "Dështim i metodës (Spring)"
+
+msgid "Misdirected request"
+msgstr "Kërkesë e drejtuar gabimisht"
+
+msgid "Unprocessable entity (WebDAV)"
+msgstr "Entitet i papërpunueshëm (WebDAV)"
+
+msgid "Locked (WebDAV)"
+msgstr "I kyçur (WebDAV)"
+
+msgid "Failed dependency (WebDAV)"
+msgstr "Varësia e dështuar (WebDAV)"
+
+msgid "Too early"
+msgstr "Shumë herët"
+
+msgid "Upgrade required"
+msgstr "Kërkohet përmirësim"
+
+msgid "Precondition required"
+msgstr "Kërkohet parakusht"
+
+msgid "Too many requests - slow down"
+msgstr "Shumë kërkesa - ngadalësoni"
+
+msgid "Request header fields too large (Shopify)"
+msgstr "Fushat e kokës së kërkesës janë shumë të mëdha (Shopify)"
+
+msgid "Request header too large"
+msgstr "Koka e kërkesës shumë e madhe"
+
+msgid "Login timeout (IIS)"
+msgstr "Afati i identifikimit mbaroi (IIS)"
+
+msgid "No response (nginx)"
+msgstr "Nuk ka përgjigje (nginx)"
+
+msgid "Retry with (IIS)"
+msgstr "Riprovoni me (IIS)"
+
+msgid "Blocked by Windows parental controls"
+msgstr "I bllokuar nga kontrollet prindërore të Windows"
+
+msgid "Unavailable for legal reasons"
+msgstr "I padisponueshëm për arsye ligjore"
+
+msgid "Client closed connection before idle timeout (AWS ELB)"
+msgstr "Klienti mbylli lidhjen para përfundimit të kohës së papunësisë (AWS ELB)"
+
+msgid "X-Forwarded-For header with >30 IP addresses (AWS ELB)"
+msgstr "Koka X-Forwarded-For me >30 adresa IP (AWS ELB)"
+
+msgid "Incompatible protocol versions (AWS ELB)"
+msgstr "Versione të papajtueshme të protokollit (AWS ELB)"
+
+msgid "Request header too large (nginx)"
+msgstr "Koka e kërkesës shumë e madhe (nginx)"
+
+msgid "SSL certificate error (nginx)"
+msgstr "Gabim i certifikatës SSL (nginx)"
+
+msgid "SSL certificate required (nginx)"
+msgstr "Kërkohet certifikatë SSL (nginx)"
+
+msgid "HTTP request sent to HTTPS port (nginx)"
+msgstr "Kërkesa HTTP u dërgua në portin HTTPS (nginx)"
+
+msgid "Invalid token (ArcGIS)"
+msgstr "Token i pavlefshëm (ArcGIS)"
+
+msgid "Token required (ArcGIS) / Client closed request (nginx)"
+msgstr "Kërkohet token (ArcGIS) / Klienti mbylli kërkesën (nginx)"
+
+msgid "Resource limit reached (cPanel)"
+msgstr "Kufiri i burimit u arrit (cPanel)"
+
+msgid "Bandwidth limit exceeded (Apache/cPanel)"
+msgstr "Kufiri i gjerësisë së brezit u tejkalua (Apache/cPanel)"
+
+# 5xx
+msgid "[Miscellaneous server errors]"
+msgstr "[Gabime të ndryshme të serverit]"
+
+msgid "Internal server error - check logs"
+msgstr "Gabim i brendshëm i serverit - kontrolloni regjistrat"
+
+msgid "Not implemented"
+msgstr "Nuk është implementuar"
+
+msgid "Bad gateway - backend error"
+msgstr "Portë e keqe - gabim i prapavijës"
+
+msgid "Service unavailable - maintenance or overload"
+msgstr "Shërbimi i padisponueshëm - mirëmbajtje ose mbingarkesë"
+
+msgid "Gateway timeout"
+msgstr "Afati i portës mbaroi"
+
+msgid "HTTP version not supported"
+msgstr "Versioni HTTP nuk mbështetet"
+
+msgid "Variant also negotiates"
+msgstr "Varianti gjithashtu negocion"
+
+msgid "Insufficient storage (WebDAV)"
+msgstr "Hapësirë e pamjaftueshme ruajtëse (WebDAV)"
+
+msgid "Loop detected (WebDAV)"
+msgstr "Lak i zbuluar (WebDAV)"
+
+msgid "Not extended"
+msgstr "Nuk është zgjeruar"
+
+msgid "Network authentication required"
+msgstr "Kërkohet vërtetimi i rrjetit"
+
+# Cloudflare
+msgid "Unknown error (Cloudflare)"
+msgstr "Gabim i panjohur (Cloudflare)"
+
+msgid "Web server is down (Cloudflare)"
+msgstr "Serveri i ueb-it është i fikur (Cloudflare)"
+
+msgid "Connection timeout (Cloudflare)"
+msgstr "Afati i lidhjes mbaroi (Cloudflare)"
+
+msgid "Origin is unreachable (Cloudflare)"
+msgstr "Origjina është e paarritshme (Cloudflare)"
+
+msgid "A timeout occurred (Cloudflare)"
+msgstr "Ndodhi një afat i skaduar (Cloudflare)"
+
+msgid "SSL handshake failed (Cloudflare)"
+msgstr "Shtrëngimi i duarve SSL dështoi (Cloudflare)"
+
+msgid "Invalid SSL certificate (Cloudflare)"
+msgstr "Certifikatë SSL e pavlefshme (Cloudflare)"
+
+msgid "Railgun error (Cloudflare - obsolete)"
+msgstr "Gabim Railgun (Cloudflare - i vjetëruar)"
+
+msgid "Site is overloaded (SSLLabs)"
+msgstr "Faqja është e mbingarkuar (SSLLabs)"
+
+msgid "Origin DNS error (Cloudflare) / Site is frozen (Pantheon)"
+msgstr "Gabim DNS i origjinës (Cloudflare) / Faqja është e ngrirë (Pantheon)"
+
+msgid "Temporarily disabled (Shopify)"
+msgstr "Çaktivizuar përkohësisht (Shopify)"
+
+msgid "Unauthorized (AWS ELB)"
+msgstr "I paautorizuar (AWS ELB)"
+
+msgid "Network read timeout error"
+msgstr "Gabim i afatit të leximit të rrjetit"
+
+msgid "Network connect timeout error"
+msgstr "Gabim i afatit të lidhjes së rrjetit"
+
+msgid "Unexpected token (Shopify)"
+msgstr "Token i papritur (Shopify)"
+
+msgid "Request denied (LinkedIn)"
+msgstr "Kërkesa e refuzuar (LinkedIn)"
+
+msgid "HTTP/2 GOAWAY (AWS ELB)"
+msgstr "HTTP/2 GOAWAY (AWS ELB)"
+
+msgid "[Unknown]"
+msgstr "[I panjohur]"
+
+msgid "Nonstandard success response (ESMTP)"
+msgstr "Përgjigje suksesi jo standarde (ESMTP)"
+
+msgid "System status, or system help reply"
+msgstr "Statusi i sistemit, ose përgjigje ndihme e sistemit"
+
+msgid "Help message"
+msgstr "Mesazh ndihme"
+
+msgid "SMTP service ready (LMTP)"
+msgstr "Shërbimi SMTP gati (LMTP)"
+
+msgid "Service ready - server is ready to receive mail"
+msgstr "Shërbimi gati - serveri është gati të marrë postë"
+
+msgid "Service closing - connection is being closed"
+msgstr "Shërbimi mbyllet - lidhja po mbyllet"
+
+msgid "Authentication successful"
+msgstr "Vërtetimi i suksesshëm"
+
+msgid "Requested mail action taken and completed"
+msgstr "Veprimi i kërkuar i postës u ndërmor dhe u përfundua"
+
+msgid "User not local - will forward to another address"
+msgstr "Përdoruesi nuk është lokal - do të përcillet në një adresë tjetër"
+
+msgid "Cannot verify recipient, but will attempt delivery"
+msgstr "Nuk mund të verifikojë marrësin, por do të përpiqet të dorëzojë"
+
+msgid "Message accepted for delivery (DSN)"
+msgstr "Mesazhi u pranua për dorëzim (DSN)"
+
+msgid "User name is a mailbox"
+msgstr "Emri i përdoruesit është një kuti postare"
+
+msgid "Authentication challenge - please respond"
+msgstr "Sfidë vërtetimi - ju lutemi përgjigjuni"
+
+msgid "Start mail input - end with <CRLF>.<CRLF>"
+msgstr "Filloni hyrjen e postës - përfundoni me <CRLF>.<CRLF>"
+
+msgid "Continue (LMTP)"
+msgstr "Vazhdo (LMTP)"
+
+msgid "Service not available - connection closing, try again later"
+msgstr "Shërbimi i padisponueshëm - lidhja mbyllet, provoni përsëri më vonë"
+
+msgid "Mailbox busy or temporarily unavailable (Exchange)"
+msgstr "Kutia postare është e zënë ose përkohësisht e padisponueshme (Exchange)"
+
+msgid "Connection rate limit exceeded (Postfix)"
+msgstr "Kufiri i shpejtësisë së lidhjes u tejkalua (Postfix)"
+
+msgid "Too many concurrent connections (Postfix)"
+msgstr "Shumë lidhje të njëkohshme (Postfix)"
+
+msgid "Unable to establish connection (Postfix)"
+msgstr "Nuk mund të vendoset lidhja (Postfix)"
+
+msgid "Connection timed out (Postfix)"
+msgstr "Lidhja skadoi (Postfix)"
+
+msgid "Connection dropped due to error (Postfix)"
+msgstr "Lidhja u ndërpre për shkak të një gabimi (Postfix)"
+
+msgid "Mailbox temporarily locked (Exchange)"
+msgstr "Kutia postare u kyç përkohësisht (Exchange)"
+
+msgid "Too many recipients (Postfix/Exim)"
+msgstr "Shumë marrës (Postfix/Exim)"
+
+msgid "Mail server error (Exchange)"
+msgstr "Gabim i serverit të postës (Exchange)"
+
+msgid "Received loop detected (Exim)"
+msgstr "U zbulua një lak marrjeje (Exim)"
+
+msgid "Too many hop count (Exim)"
+msgstr "Numri i kërcimeve shumë i madh (Exim)"
+
+msgid "DNS lookup failed (Postfix)"
+msgstr "Kërkimi DNS dështoi (Postfix)"
+
+msgid "Unable to authenticate (Postfix)"
+msgstr "Nuk mund të vërtetohet (Postfix)"
+
+msgid "TLS handshake failed (Postfix)"
+msgstr "Shtrëngimi i duarve TLS dështoi (Postfix)"
+
+msgid "SMTP protocol violation (Postfix)"
+msgstr "Shkelje e protokollit SMTP (Postfix)"
+
+msgid "Message size exceeds limit (Exchange)"
+msgstr "Madhësia e mesazhit tejkalon kufirin (Exchange)"
+
+msgid "Message rate limit exceeded (Postfix)"
+msgstr "Kufiri i shpejtësisë së mesazheve u tejkalua (Postfix)"
+
+msgid "Mailbox quota exceeded - temporary"
+msgstr "Kuota e kutisë postare u tejkalua - e përkohshme"
+
+msgid "Domain not found (Postfix)"
+msgstr "Fusha nuk u gjet (Postfix)"
+
+msgid "Message header invalid (Postfix)"
+msgstr "Koka e mesazhit e pavlefshme (Postfix)"
+
+msgid "Bounce loop detected (Postfix)"
+msgstr "U zbulua një lak kthimi (Postfix)"
+
+msgid "Unable to route (Postfix)"
+msgstr "Nuk mund të drejtohet (Postfix)"
+
+msgid "Sender domain not found (Postfix)"
+msgstr "Fusha e dërguesit nuk u gjet (Postfix)"
+
+msgid "Recipient domain not found (Postfix)"
+msgstr "Fusha e marrësit nuk u gjet (Postfix)"
+
+msgid "Greylisting in progress - please try again (Postgrey)"
+msgstr "Listimi gri në vazhdim - ju lutemi provoni përsëri (Postgrey)"
+
+msgid "Spam filtering in progress (SpamAssassin)"
+msgstr "Filtrimi i spam-it në vazhdim (SpamAssassin)"
+
+msgid "Virus scanning in progress (ClamAV)"
+msgstr "Skanimi i viruseve në vazhdim (ClamAV)"
+
+msgid "Mailbox unavailable - try again later"
+msgstr "Kutia postare e padisponueshme - provoni përsëri më vonë"
+
+msgid "Requested action aborted - error in processing"
+msgstr "Veprimi i kërkuar u ndërpre - gabim në përpunim"
+
+msgid "Insufficient system storage - try again later"
+msgstr "Hapësirë e pamjaftueshme e sistemit - provoni përsëri më vonë"
+
+msgid "Too many messages for this recipient (Exchange)"
+msgstr "Shumë mesazhe për këtë marrës (Exchange)"
+
+msgid "TLS not available (Postfix)"
+msgstr "TLS nuk është i disponueshëm (Postfix)"
+
+msgid "Server unable to accept messages (Postfix)"
+msgstr "Serveri nuk mund të pranojë mesazhe (Postfix)"
+
+msgid "Temporary failure in DNS lookup (Exim)"
+msgstr "Dështim i përkohshëm në kërkimin DNS (Exim)"
+
+msgid "Quota exceeded - temporary"
+msgstr "Kuota u tejkalua - e përkohshme"
+
+msgid "Message too big - temporary"
+msgstr "Mesazhi shumë i madh - i përkohshëm"
+
+msgid "Too many messages per connection"
+msgstr "Shumë mesazhe për lidhje"
+
+msgid "Load average too high (Postfix)"
+msgstr "Mesatarja e ngarkesës shumë e lartë (Postfix)"
+
+msgid "Connection refused (Postfix)"
+msgstr "Lidhja u refuzua (Postfix)"
+
+msgid "Send rate limit exceeded (Postfix)"
+msgstr "Kufiri i shpejtësisë së dërgimit u tejkalua (Postfix)"
+
+msgid "Recipient rate limit exceeded (Postfix)"
+msgstr "Kufiri i shpejtësisë së marrësit u tejkalua (Postfix)"
+
+msgid "Sender rate limit exceeded (Postfix)"
+msgstr "Kufiri i shpejtësisë së dërguesit u tejkalua (Postfix)"
+
+msgid "IP address rate limit exceeded (Postfix)"
+msgstr "Kufiri i shpejtësisë së adresës IP u tejkalua (Postfix)"
+
+msgid "MX lookup failed (Postfix)"
+msgstr "Kërkimi MX dështoi (Postfix)"
+
+msgid "A record lookup failed (Postfix)"
+msgstr "Kërkimi i regjistrit A dështoi (Postfix)"
+
+msgid "PTR record lookup failed (Postfix)"
+msgstr "Kërkimi i regjistrit PTR dështoi (Postfix)"
+
+msgid "Greylisting active - please try again (Postgrey)"
+msgstr "Listimi gri aktiv - ju lutemi provoni përsëri (Postgrey)"
+
+msgid "Sender address rejected - domain not verified (DMARC pending)"
+msgstr "Adresa e dërguesit u refuzua - fusha nuk u verifikua (DMARC në pritje)"
+
+msgid "Recipient address rejected - domain not verified (DMARC pending)"
+msgstr "Adresa e marrësit u refuzua - fusha nuk u verifikua (DMARC në pritje)"
+
+msgid "DKIM verification pending - temporary failure"
+msgstr "Verifikimi DKIM në pritje - dështim i përkohshëm"
+
+msgid "SPF verification pending - temporary failure"
+msgstr "Verifikimi SPF në pritje - dështim i përkohshëm"
+
+msgid "DMARC verification pending - temporary failure"
+msgstr "Verifikimi DMARC në pritje - dështim i përkohshëm"
+
+msgid "DNSBL lookup temporary failure"
+msgstr "Dështim i përkohshëm i kërkimit DNSBL"
+
+msgid "RHSBL lookup temporary failure"
+msgstr "Dështim i përkohshëm i kërkimit RHSBL"
+
+msgid "URI DNSBL lookup temporary failure"
+msgstr "Dështim i përkohshëm i kërkimit URI DNSBL"
+
+msgid "Temporary authentication failure (Dovecot)"
+msgstr "Dështim i përkohshëm i vërtetimit (Dovecot)"
+
+msgid "Temporary authorization failure (Sendmail)"
+msgstr "Dështim i përkohshëm i autorizimit (Sendmail)"
+
+msgid "Rate limit exceeded per sender (Exim)"
+msgstr "Kufiri i shpejtësisë u tejkalua për dërgues (Exim)"
+
+msgid "Rate limit exceeded per recipient (Exim)"
+msgstr "Kufiri i shpejtësisë u tejkalua për marrës (Exim)"
+
+msgid "Rate limit exceeded per domain (Exim)"
+msgstr "Kufiri i shpejtësisë u tejkalua për fushë (Exim)"
+
+msgid "Rate limit exceeded per IP (Exim)"
+msgstr "Kufiri i shpejtësisë u tejkalua për IP (Exim)"
+
+msgid "Message queued for later delivery (Postfix)"
+msgstr "Mesazhi u vendos në radhë për dorëzim më vonë (Postfix)"
+
+msgid "Delivery delayed due to policy (Exchange)"
+msgstr "Dorëzimi u vonua për shkak të politikës (Exchange)"
+
+msgid "Temporary failure in content filter"
+msgstr "Dështim i përkohshëm në filtrin e përmbajtjes"
+
+msgid "Temporary failure in antivirus scanner"
+msgstr "Dështim i përkohshëm në skanerin antivirus"
+
+msgid "Temporary failure in spam filter"
+msgstr "Dështim i përkohshëm në filtrin e spam-it"
+
+msgid "Temporary failure in milter (Postfix)"
+msgstr "Dështim i përkohshëm në milter (Postfix)"
+
+msgid "Greylisting - try again later"
+msgstr "Listimi gri - provoni përsëri më vonë"
+
+msgid "DDoS protection active - try again later"
+msgstr "Mbrojtja DDoS aktive - provoni përsëri më vonë"
+
+msgid "SMTP policy violation - temporary"
+msgstr "Shkelje e politikës SMTP - e përkohshme"
+
+msgid "Temporary error in RCPT TO processing"
+msgstr "Gabim i përkohshëm në përpunimin e RCPT TO"
+
+msgid "Temporary error in MAIL FROM processing"
+msgstr "Gabim i përkohshëm në përpunimin e MAIL FROM"
+
+msgid "Temporary error in EHLO/HELO processing"
+msgstr "Gabim i përkohshëm në përpunimin e EHLO/HELO"
+
+msgid "Temporary error in DATA processing"
+msgstr "Gabim i përkohshëm në përpunimin e DATA"
+
+msgid "Temporary error - service busy, try again later"
+msgstr "Gabim i përkohshëm - shërbimi i zënë, provoni përsëri më vonë"
+
+msgid "Syntax error - command unrecognized or too long"
+msgstr "Gabim sintakse - komandë e panjohur ose shumë e gjatë"
+
+msgid "Syntax error in parameters or arguments"
+msgstr "Gabim sintakse në parametra ose argumente"
+
+msgid "Command not implemented"
+msgstr "Komanda nuk është e implementuar"
+
+msgid "Bad sequence of commands"
+msgstr "Sekuencë e keqe e komandave"
+
+msgid "Command parameter not implemented"
+msgstr "Parametri i komandës nuk është i implementuar"
+
+msgid "Version not supported (ESMTP)"
+msgstr "Versioni nuk mbështetet (ESMTP)"
+
+msgid "Mailbox path invalid (LMTP)"
+msgstr "Rruga e kutisë postare e pavlefshme (LMTP)"
+
+msgid "Too many commands in this session (Postfix)"
+msgstr "Shumë komanda në këtë sesion (Postfix)"
+
+msgid "Recipient limit exceeded (Postfix)"
+msgstr "Kufiri i marrësve u tejkalua (Postfix)"
+
+msgid "Sender limit exceeded (Postfix)"
+msgstr "Kufiri i dërguesve u tejkalua (Postfix)"
+
+msgid "Domain limit exceeded (Postfix)"
+msgstr "Kufiri i fushës u tejkalua (Postfix)"
+
+msgid "Mailbox does not exist (Exchange)"
+msgstr "Kutia postare nuk ekziston (Exchange)"
+
+msgid "DNS failure - permanent"
+msgstr "Dështim DNS - i përhershëm"
+
+msgid "Address type not supported (Postfix)"
+msgstr "Lloji i adresës nuk mbështetet (Postfix)"
+
+msgid "Unable to open mailbox (Postfix)"
+msgstr "Nuk mund të hapet kutia postare (Postfix)"
+
+msgid "Mailbox locked - permanent"
+msgstr "Kutia postare e kyçur - e përhershme"
+
+msgid "Message rejected due to policy (Exchange)"
+msgstr "Mesazhi u refuzua për shkak të politikës (Exchange)"
+
+msgid "Content rejected - permanent"
+msgstr "Përmbajtja e refuzuar - e përhershme"
+
+msgid "Attachment type not allowed"
+msgstr "Lloji i bashkëngjitjes nuk lejohet"
+
+msgid "Message encoding not supported"
+msgstr "Kodimi i mesazhit nuk mbështetet"
+
+msgid "Sender domain does not exist - permanent"
+msgstr "Fusha e dërguesit nuk ekziston - e përhershme"
+
+msgid "Domain does not accept mail or is closing"
+msgstr "Fusha nuk pranon postë ose po mbyllet"
+
+msgid "Recipient domain does not exist - permanent"
+msgstr "Fusha e marrësit nuk ekziston - e përhershme"
+
+msgid "Mailbox quota exceeded - permanent"
+msgstr "Kuota e kutisë postare u tejkalua - e përhershme"
+
+msgid "Message size exceeds limit - permanent"
+msgstr "Madhësia e mesazhit tejkalon kufirin - i përhershëm"
+
+msgid "Authentication required (Sendmail)"
+msgstr "Kërkohet vërtetim (Sendmail)"
+
+msgid "Authentication failed (Sendmail)"
+msgstr "Vërtetimi dështoi (Sendmail)"
+
+msgid "Authentication mechanism not supported"
+msgstr "Mekanizmi i vërtetimit nuk mbështetet"
+
+msgid "Authentication credentials invalid"
+msgstr "Kredencialet e vërtetimit të pavlefshme"
+
+msgid "Authentication account expired"
+msgstr "Llogaria e vërtetimit ka skaduar"
+
+msgid "Access denied - authentication required"
+msgstr "Qasja e mohuar - kërkohet vërtetimi"
+
+msgid "Access denied (Sendmailism)"
+msgstr "Qasja e mohuar (Sendmail)"
+
+msgid "Access denied - not authenticated"
+msgstr "Qasja e mohuar - nuk është vërtetuar"
+
+msgid "Access denied - account locked"
+msgstr "Qasja e mohuar - llogaria e kyçur"
+
+msgid "Access denied - account disabled"
+msgstr "Qasja e mohuar - llogaria e çaktivizuar"
+
+msgid "Authentication failed"
+msgstr "Vërtetimi dështoi"
+
+msgid "Authentication required for relay (Postfix)"
+msgstr "Kërkohet vërtetim për përcjellësin (Postfix)"
+
+msgid "Authentication failed for relay (Postfix)"
+msgstr "Vërtetimi për përcjellësin dështoi (Postfix)"
+
+msgid "Encryption required (STARTTLS)"
+msgstr "Kërkohet enkriptimi (STARTTLS)"
+
+msgid "TLS required for this recipient"
+msgstr "Kërkohet TLS për këtë marrës"
+
+msgid "Encryption strength insufficient"
+msgstr "Forca e enkriptimit e pamjaftueshme"
+
+msgid "Certificate validation failed"
+msgstr "Verifikimi i certifikatës dështoi"
+
+msgid "Invalid TLS certificate"
+msgstr "Certifikatë TLS e pavlefshme"
+
+msgid "TLS protocol version not supported"
+msgstr "Versioni i protokollit TLS nuk mbështetet"
+
+msgid "Cipher suite not supported"
+msgstr "Kompleti i shifrave nuk mbështetet"
+
+msgid "Access denied - no valid recipient"
+msgstr "Qasja e mohuar - nuk ka marrës të vlefshëm"
+
+msgid "Access denied - no valid sender"
+msgstr "Qasja e mohuar - nuk ka dërgues të vlefshëm"
+
+msgid "Access denied - domain not allowed"
+msgstr "Qasja e mohuar - fusha nuk lejohet"
+
+msgid "Access denied - IP address blocked (permanent)"
+msgstr "Qasja e mohuar - adresa IP e bllokuar (e përhershme)"
+
+msgid "Access denied - sender domain blacklisted"
+msgstr "Qasja e mohuar - fusha e dërguesit në listën e zezë"
+
+msgid "Mailbox unavailable - requested action not taken"
+msgstr "Kutia postare e padisponueshme - veprimi i kërkuar nuk u ndërmor"
+
+msgid "User not local - please try forwarding address"
+msgstr "Përdoruesi nuk është lokal - ju lutemi provoni adresën e përcjelljes"
+
+msgid "Requested action aborted - exceeded storage allocation"
+msgstr "Veprimi i kërkuar u ndërpre - tejkaloi ndarjen e ruajtjes"
+
+msgid "Mailbox name not allowed"
+msgstr "Emri i kutisë postare nuk lejohet"
+
+msgid "Requested action rejected - access denied"
+msgstr "Veprimi i kërkuar u refuzua - qasja e mohuar"
+
+msgid "MAIL FROM/RCPT TO parameters not recognized"
+msgstr "Parametrat MAIL FROM/RCPT TO nuk njihen"
+
+msgid "Domain not allowed to send (DMARC reject)"
+msgstr "Fusha nuk lejohet të dërgojë (refuzim DMARC)"
+
+msgid "Too many duplicate messages - permanent"
+msgstr "Shumë mesazhe të dyfishuara - të përhershëm"
+
+msgid "Sender address rejected - domain not in SPF"
+msgstr "Adresa e dërguesit u refuzua - fusha nuk është në SPF"
+
+msgid "Sender address rejected - DKIM verification failed"
+msgstr "Adresa e dërguesit u refuzua - verifikimi DKIM dështoi"
+
+msgid "Sender address rejected - DMARC policy reject"
+msgstr "Adresa e dërguesit u refuzua - politika DMARC refuzoi"
+
+msgid "Recipient address rejected - DMARC policy reject"
+msgstr "Adresa e marrësit u refuzua - politika DMARC refuzoi"
+
+msgid "Message rejected due to spam content"
+msgstr "Mesazhi u refuzua për shkak të përmbajtjes së spam-it"
+
+msgid "Message rejected due to virus detected"
+msgstr "Mesazhi u refuzua për shkak të virusit të zbuluar"
+
+msgid "Message rejected due to malicious content"
+msgstr "Mesazhi u refuzua për shkak të përmbajtjes me qëllim të keq"
+
+msgid "Message rejected due to phishing detection"
+msgstr "Mesazhi u refuzua për shkak të zbulimit të phishing-ut"
+
+msgid "Message rejected due to malware detection"
+msgstr "Mesazhi u refuzua për shkak të zbulimit të malware"
+
+msgid "Message rejected due to policy - permanent"
+msgstr "Mesazhi u refuzua për shkak të politikës - i përhershëm"
+
+msgid "Message rejected due to content filtering"
+msgstr "Mesazhi u refuzua për shkak të filtrimit të përmbajtjes"
+
+msgid "Message rejected due to reputation"
+msgstr "Mesazhi u refuzua për shkak të reputacionit"
+
+msgid "Access denied - access_map violation"
+msgstr "Qasja e mohuar - shkelje e access_map"
+
+msgid "Access denied - SMTP client listed in RBL"
+msgstr "Qasja e mohuar - klienti SMTP i listuar në RBL"
+
+msgid "Access denied - relay not authorized"
+msgstr "Qasja e mohuar - përcjellësi nuk është i autorizuar"
+
+msgid "Access denied - unknown SMTP client hostname"
+msgstr "Qasja e mohuar - emër hosti i panjohur i klientit SMTP"
+
+msgid "Access denied - bad syntax for client HELO hostname"
+msgstr "Qasja e mohuar - sintaksë e gabuar për emrin e hostit HELO të klientit"
+
+msgid "Access denied - SMTP client hostname rejected"
+msgstr "Qasja e mohuar - emri i hostit të klientit SMTP u refuzua"
+
+msgid "Access denied - unknown domain for sender or recipient"
+msgstr "Qasja e mohuar - fushë e panjohur për dërguesin ose marrësin"
+
+msgid "Access denied - unknown client HELO hostname"
+msgstr "Qasja e mohuar - emër hosti i panjohur i klientit HELO"
+
+msgid "Access denied - invalid domain (not FQDN)"
+msgstr "Qasja e mohuar - fushë e pavlefshme (jo FQDN)"
+
+msgid "Access denied - domain not qualified"
+msgstr "Qasja e mohuar - fusha nuk është e kualifikuar"
+
+msgid "Access denied - mail server misconfigured"
+msgstr "Qasja e mohuar - serveri i postës i konfiguruar gabimisht"
+
+msgid "Access denied - open relay not allowed"
+msgstr "Qasja e mohuar - përcjellësi i hapur nuk lejohet"
+
+msgid "Access denied - proxy not allowed"
+msgstr "Qasja e mohuar - përfaqësuesi nuk lejohet"
+
+msgid "Access denied - dynamic IP not allowed"
+msgstr "Qasja e mohuar - IP dinamike nuk lejohet"
+
+msgid "Access denied - residential IP not allowed"
+msgstr "Qasja e mohuar - IP rezidenciale nuk lejohet"
+
+msgid "Access denied - VPN/Tor detected"
+msgstr "Qasja e mohuar - VPN/Tor i zbuluar"
+
+msgid "Access denied - Spamhaus DROP listed"
+msgstr "Qasja e mohuar - i listuar në Spamhaus DROP"
+
+msgid "Access denied - URL listed in URIBL"
+msgstr "Qasja e mohuar - URL e listuar në URIBL"
+
+msgid "Access denied - domain in RHSBL"
+msgstr "Qasja e mohuar - fusha në RHSBL"
+
+msgid "Access denied - IP in DNSWL (policy)"
+msgstr "Qasja e mohuar - IP në DNSWL (politikë)"
+
+msgid "Delivery failed - mailbox not found"
+msgstr "Dorëzimi dështoi - kutia postare nuk u gjet"
+
+msgid "Delivery failed - recipient not local"
+msgstr "Dorëzimi dështoi - marrësi nuk është lokal"
+
+msgid "Delivery failed - recipient rejected"
+msgstr "Dorëzimi dështoi - marrësi u refuzua"
+
+msgid "Delivery failed - sender rejected"
+msgstr "Dorëzimi dështoi - dërguesi u refuzua"
+
+msgid "Delivery failed - relay rejected"
+msgstr "Dorëzimi dështoi - përcjellësi u refuzua"
+
+msgid "Delivery failed - DNS permanent error"
+msgstr "Dorëzimi dështoi - gabim i përhershëm DNS"
+
+msgid "Delivery failed - MX permanent error"
+msgstr "Dorëzimi dështoi - gabim i përhershëm MX"
+
+msgid "Delivery failed - A record permanent error"
+msgstr "Dorëzimi dështoi - gabim i përhershëm i regjistrit A"
+
+msgid "Delivery failed - PTR record permanent error"
+msgstr "Dorëzimi dështoi - gabim i përhershëm i regjistrit PTR"
+
+msgid "Delivery failed - policy permanent error"
+msgstr "Dorëzimi dështoi - gabim i përhershëm i politikës"
+
+msgid "DSN: Success - delivery status notification"
+msgstr "DSN: Sukses - njoftim i statusit të dorëzimit"
+
+msgid "DSN: Delivery delayed"
+msgstr "DSN: Dorëzimi u vonua"
+
+msgid "DSN: Delivery failed - permanent"
+msgstr "DSN: Dorëzimi dështoi - i përhershëm"
+
+msgid "DSN: Delivery failed - temporary"
+msgstr "DSN: Dorëzimi dështoi - i përkohshëm"
+
+msgid "DSN: Message expired"
+msgstr "DSN: Mesazhi ka skaduar"
+
+msgid "DSN: Message bounced"
+msgstr "DSN: Mesazhi u kthye"
+
+msgid "DSN: Message discarded"
+msgstr "DSN: Mesazhi u hodh"
+
+msgid "DSN: Message filtered"
+msgstr "DSN: Mesazhi u filtrua"
+
+msgid "DSN: Message quarantined"
+msgstr "DSN: Mesazhi u vu në karantinë"
+
+msgid "DSN: Message held for review"
+msgstr "DSN: Mesazhi u mbajt për shqyrtim"
+
+msgid "MTA-STS policy required"
+msgstr "Kërkohet politika MTA-STS"
+
+msgid "MTA-STS policy validation failed"
+msgstr "Verifikimi i politikës MTA-STS dështoi"
+
+msgid "TLS reporting required"
+msgstr "Kërkohet raportimi TLS"
+
+msgid "TLS report requested"
+msgstr "Raporti TLS i kërkuar"
+
+msgid "SMTP MTA Strict Transport Security active"
+msgstr "Siguria e Rreptë e Transportit MTA SMTP aktive"
+
+msgid "DANE validation required"
+msgstr "Kërkohet verifikimi DANE"
+
+msgid "DANE validation failed"
+msgstr "Verifikimi DANE dështoi"
+
+msgid "TLSA record missing"
+msgstr "Regjistri TLSA mungon"
+
+msgid "Certificate name mismatch"
+msgstr "Mospërputhje e emrit të certifikatës"
+
+msgid "Certificate expired"
+msgstr "Certifikata ka skaduar"
+
+msgid "AUTH LOGIN required"
+msgstr "Kërkohet AUTH LOGIN"
+
+msgid "AUTH PLAIN required"
+msgstr "Kërkohet AUTH PLAIN"
+
+msgid "AUTH CRAM-MD5 required"
+msgstr "Kërkohet AUTH CRAM-MD5"
+
+msgid "AUTH DIGEST-MD5 required"
+msgstr "Kërkohet AUTH DIGEST-MD5"
+
+msgid "AUTH GSSAPI required"
+msgstr "Kërkohet AUTH GSSAPI"
+
+msgid "AUTH NTLM required"
+msgstr "Kërkohet AUTH NTLM"
+
+msgid "AUTH SCRAM required"
+msgstr "Kërkohet AUTH SCRAM"
+
+msgid "AUTH OAUTHBEARER required"
+msgstr "Kërkohet AUTH OAUTHBEARER"
+
+msgid "AUTH XOAUTH2 required"
+msgstr "Kërkohet AUTH XOAUTH2"
+
+msgid "Exchange: Mailbox database error"
+msgstr "Exchange: Gabim i bazës së të dhënave të kutisë postare"
+
+msgid "Exchange: Store driver error"
+msgstr "Exchange: Gabim i drejtuesit të ruajtjes"
+
+msgid "Exchange: Transport agent error"
+msgstr "Exchange: Gabim i agjentit të transportit"
+
+msgid "Exchange: Content conversion error"
+msgstr "Exchange: Gabim i konvertimit të përmbajtjes"
+
+msgid "Exchange: Routing error"
+msgstr "Exchange: Gabim i drejtimit"
+
+msgid "Exchange: Mail flow stalled"
+msgstr "Exchange: Rrjedha e postës u ndal"
+
+msgid "Exchange: Shadow redundancy error"
+msgstr "Exchange: Gabim i tepricës së hijes"
+
+msgid "Exchange: Safety net error"
+msgstr "Exchange: Gabim i rrjetit të sigurisë"
+
+msgid "Exchange: Queue database error"
+msgstr "Exchange: Gabim i bazës së të dhënave të radhës"
+
+msgid "Exchange: Message throttled"
+msgstr "Exchange: Mesazhi u kufizua"
+
+msgid "Postfix: Bounce queue error"
+msgstr "Postfix: Gabim i radhës së kthimit"
+
+msgid "Postfix: Deferred queue error"
+msgstr "Postfix: Gabim i radhës së shtyrë"
+
+msgid "Postfix: Hold queue error"
+msgstr "Postfix: Gabim i radhës së mbajtjes"
+
+msgid "Postfix: Incoming queue error"
+msgstr "Postfix: Gabim i radhës hyrëse"
+
+msgid "Postfix: Active queue error"
+msgstr "Postfix: Gabim i radhës aktive"
+
+msgid "Postfix: Corrupted queue file"
+msgstr "Postfix: Skedar i radhës i korruptuar"
+
+msgid "Sendmail: Queue runner error"
+msgstr "Sendmail: Gabim i ekzekutuesit të radhës"
+
+msgid "Sendmail: Alias database error"
+msgstr "Sendmail: Gabim i bazës së të dhënave të alias-eve"
+
+msgid "Sendmail: Virtuser table error"
+msgstr "Sendmail: Gabim i tabelës së përdoruesve virtualë"
+
+msgid "Sendmail: Mailer definition error"
+msgstr "Sendmail: Gabim i përkufizimit të dërguesit të postës"
+
+msgid "Exim: Router configuration error"
+msgstr "Exim: Gabim i konfigurimit të drejtuesit"
+
+msgid "Exim: Transport configuration error"
+msgstr "Exim: Gabim i konfigurimit të transportit"
+
+msgid "Exim: Director configuration error"
+msgstr "Exim: Gabim i konfigurimit të drejtorit"
+
+msgid "Exim: Retry configuration error"
+msgstr "Exim: Gabim i konfigurimit të ripërpjekjes"
+
+msgid "Exim: Rewrite configuration error"
+msgstr "Exim: Gabim i konfigurimit të rishkrimit"
+
+msgid "Exim: Authentication configuration error"
+msgstr "Exim: Gabim i konfigurimit të vërtetimit"
+
+msgid "Exim: ACL configuration error"
+msgstr "Exim: Gabim i konfigurimit të ACL"
+
+msgid "Exim: Local_scan configuration error"
+msgstr "Exim: Gabim i konfigurimit të Local_scan"
+
+msgid "Exim: Lookup configuration error"
+msgstr "Exim: Gabim i konfigurimit të kërkimit"
+
+msgid "Exim: Expansion configuration error"
+msgstr "Exim: Gabim i konfigurimit të zgjerimit"
+
+msgid "HTTP Protocol Versions"
+msgstr "Versionet e Protokollit HTTP"
+
+msgid "Protocol"
+msgstr "Protokolli"
+
+msgid "Request %"
+msgstr "% e kërkesave"
+
+msgid "Bandwidth %"
+msgstr "% e gjerësisë së brezit"
+
+msgid "Each request requires a new connection"
+msgstr "Çdo kërkesë kërkon një lidhje të re"
+
+msgid "Multiple requests can reuse one connection"
+msgstr "Kërkesat e shumëfishta mund të ripërdorin një lidhje"
+
+msgid "Multiple requests in parallel over one connection"
+msgstr "Kërkesa të shumëfishta paralele përmes një lidhjeje"
+
+msgid "Faster connection, better performance on poor networks"
+msgstr "Lidhje më e shpejtë, performancë më e mirë në rrjete të dobëta"
+
+msgid "No protocol data available"
+msgstr "Nuk ka të dhëna protokolli të disponueshme"
+
+msgid "of requests use HTTP/1.0"
+msgstr "e kërkesave përdorin HTTP/1.0"
+
+msgid "From access logs"
+msgstr "Nga regjistrat e hyrjes"
+
+msgid "No HTTP/2 requests detected"
+msgstr "Nuk u zbuluan kërkesa HTTP/2"
+
+msgid "All requests are HTTP/1.0, no HTTP/2 requests"
+msgstr "Të gjitha kërkesat janë HTTP/1.0, pa kërkesa HTTP/2"
+
+msgid "HTTP/3 not detected"
+msgstr "HTTP/3 nuk u zbulua"
+
+msgid "all requests do not include QUIC/HTTP/3 protocol requests"
+msgstr "të gjitha kërkesat nuk përfshijnë kërkesa të protokollit QUIC/HTTP/3"
+
+msgid "Mail Authentication Statistics"
+msgstr "Statistikat e Vërtetimit të Postës"
+
+msgid "Authentication"
+msgstr "Lloji i vërtetimit"
+
+msgid "Pass"
+msgstr "Kaloi"
+
+msgid "Fail"
+msgstr "Dështoi"
+
+msgid "Softfail"
+msgstr "Dështim i butë"
+
+msgid "Neutral"
+msgstr "Neutral"
+
+msgid "None"
+msgstr "Asnjë"
+
+msgid "Mail Queue Delay Statistics"
+msgstr "Statistikat e Vonesës së Radhës së Postës"
+
+msgid "Delay Range"
+msgstr "Gama e vonesës"
+
+msgid "Count"
+msgstr "Numri"
+
+msgid "Percentage"
+msgstr "Përqindja"
+
+msgid "TLS Encryption Statistics"
+msgstr "Statistikat e Enkriptimit TLS"
+
+msgid "TLS Versions"
+msgstr "Versionet TLS"
+
+msgid "Top Ciphers"
+msgstr "Shifrat më të mira"
+
+msgid "robot_hits_detail_both"
+msgstr "Kërkesat totale: %s (faqe normale: %s, robots.txt: %s)"
+
+msgid "robot_hits_detail_only_robots"
+msgstr "Vetëm kërkesa robots.txt: %s, pa faqe të tjera"
+
+msgid "robot_hits_detail_normal"
+msgstr "Kërkesa normale për faqe: %s"
+
+# Ndihmë dhe këshilla
+msgid "Troubleshooting"
+msgstr "Zgjidhja e problemeve"
+
+msgid "Did you use the correct URL?"
+msgstr "A keni përdorur URL-në e saktë?"
+
+msgid "Example:"
+msgstr "Shembull:"
+
+msgid "Did you use correct config parameter?"
+msgstr "A keni përdorur parametrin e saktë të konfigurimit?"
+
+msgid "Example: If your config file is awstats.mysite.conf, use -config=mysite"
+msgstr "Shembull: Nëse skedari juaj i konfigurimit është awstats.mysite.conf, përdorni -config=mysite"
+
+msgid "Did you create your config file 'awstats.$SiteConfig.conf'?"
+msgstr "A keni krijuar skedarin tuaj të konfigurimit 'awstats.$SiteConfig.conf'?"
+
+msgid "If not, you can run \"awstats_configure.pl\" from command line, or create it manually."
+msgstr "Nëse jo, mund të ekzekutoni \"awstats_configure.pl\" nga rreshti i komandës, ose ta krijoni manualisht."
+
+msgid "Setup"
+msgstr "Konfigurimi"
+
+msgid "file, web server or permissions may be wrong."
+msgstr "skedari, serveri i ueb-it ose lejet mund të jenë të gabuara."
+
+msgid "Check config file, permissions and AWStats documentation (in 'docs' directory)."
+msgstr "Kontrolloni skedarin e konfigurimit, lejet dhe dokumentacionin e AWStats (në direktorinë 'docs')."
+
+msgid "Warning: Can't find language files for \"%s\". English will be used."
+msgstr "Paralajmërim: Nuk mund të gjenden skedarët e gjuhës për \"%s\". Do të përdoret anglishtja."
+
+#------------------------------------------------------------------------------
+# Përpunimi i gabimeve dhe sinjaleve
+#------------------------------------------------------------------------------
+
+msgid "%s process (ID %s) interrupted by signal %s."
+msgstr "Procesi %s (ID %s) u ndërpre nga sinjali %s."
+
+msgid "An AWStats update process seems to be already running for this config file. Try later. If this is not true, remove manually lock file"
+msgstr "Një proces përditësimi i AWStats duket se tashmë po funksionon për këtë skedar konfigurimi. Provoni më vonë. Nëse kjo nuk është e vërtetë, hiqni manualisht skedarin e kyçjes"
+
+#------------------------------------------------------------------------------
+# Tituj të rinj statistikorë
+#------------------------------------------------------------------------------
+
+msgid "Report Overview"
+msgstr "Përmbledhje e Raportit"
+
+msgid "Monthly Statistics"
+msgstr "Statistikat Mujore"
+
+msgid "Daily Statistics"
+msgstr "Statistikat Ditore"
+
+msgid "Statistics by Day of Week"
+msgstr "Statistikat sipas Ditës së Javës"
+
+msgid "Hourly Page Views"
+msgstr "Shikimet e Faqeve për Orë"
+
+msgid "Traffic Sources"
+msgstr "Burimet e Trafikut"
+
+msgid "Other Sources"
+msgstr "Burime të Tjera"
+
+msgid "tooltip_1"
+msgstr "Numri i seancave të vizitorëve në faqen e internetit. Një seancë e re llogaritet nëse një vizitor vjen përsëri pas më shumë se 30 minutash pasivitet."
+
+msgid "tooltip_2"
+msgstr "Numri i vizitorëve të ndryshëm që kanë vizituar faqen tuaj të internetit në periudhën e zgjedhur. Bazuar në adresën IP."
+
+msgid "tooltip_3"
+msgstr "Numri i kërkesave që konsiderohen faqe (HTML, PHP, ASP, etj.), duke përjashtuar imazhet, CSS, JS."
+
+msgid "tooltip_4"
+msgstr "Numri i përgjithshëm i të gjitha kërkesave drejt serverit, duke përfshirë faqet, imazhet, CSS, JS dhe të gjithë skedarët."
+
+msgid "tooltip_5"
+msgstr "Sasia totale e të dhënave të transmetuara nga serveri në përgjigje të kërkesave të përdoruesve."
+
+msgid "tooltip_13"
+msgstr "Statistikat e burimeve të trafikut nga motorët e kërkimit. Tregon se cilët motorë kërkimi ju sjellin trafik dhe cilat terma kërkimi përdorin vizitorët."
+
+msgid "tooltip_14"
+msgstr "Statistikat e burimeve të trafikut nga lidhjet e jashtme nga faqet e tjera të internetit. Tregon se cilat faqe lidhen me ju dhe trafikun që sjellin."
+
+msgid "tooltip_15"
+msgstr "Termat e kërkimit të përdorur nga vizitorët për t'ju gjetur përmes motorëve të kërkimit. Fjalët kyçe janë fjalë të vetme, frazat kyçe janë kombinime fjalësh."
+
+msgid "tooltip_16"
+msgstr "Programe të automatizuara si robotët e motorëve të kërkimit, robotët e trajnimit të AI, skanerët e dobësive, etj. Numrat në kllapa tregojnë numrin e kërkesave normale për faqe dhe kërkesave për robots.txt."
+
+msgid "tooltip_17"
+msgstr "Shpërndarja e trafikut 24-orëshe. Tregon se kur faqja juaj e internetit është më e vizituar, duke ndihmuar të kuptoni kohët aktive të përdoruesve."
+
+msgid "tooltip_18"
+msgstr "Kjo kolonë tregon vlerat mesatare ditore/javore për periudhën kohore të zgjedhur, duke ndihmuar të kuptoni trendin e përgjithshëm."
+
+msgid "tooltip_19"
+msgstr "Klikoni mbi artikujt në grafik për të parë informacion të detajuar. Vendosni miun mbi elementët e grafikut për të parë vlerat."
+
+msgid "tooltip_20"
+msgstr "Të dhëna që nuk mund të kategorizohen në intervalet ekzistuese, zakonisht për shkak të një formati të dhënash të pazakontë ose që mungon."
+
+msgid "tooltip_21"
+msgstr "Regjistrime të sulmeve të krimbave të zbuluar. Krimbi është një program me qëllim të keq që riprodhohet vetë, zakonisht përhapet përmes dobësive të rrjetit."
+
+#------------------------------------------------------------------------------
+# Shfaqja e informacionit të ndihmës - Botimi i Komunitetit
+#------------------------------------------------------------------------------
+
+msgid "AWStats %s - Advanced Web Statistics"
+msgstr "AWStats %s - Statistika të Avancuara Web"
+
+msgid "Copyright (c) 2000-2025 Laurent Destailleur"
+msgstr "E drejta e autorit (c) 2000-2025 Laurent Destailleur"
+
+msgid "Copyright (c) 2026-latest Community Edition"
+msgstr "E drejta e autorit (c) 2026-më i fundit Botimi i Komunitetit"
+
+msgid "AWStats comes with ABSOLUTELY NO WARRANTY. It's a free software distributed with a GNU General Public License (See LICENSE file for details)."
+msgstr "AWStats vjen PA ASNJË GARANCI. Është një softuer i lirë i shpërndarë me një Licencë Publike të Përgjithshme GNU (Shihni skedarin LICENSE për detaje)."
+
+msgid "Syntax: %s -config=virtualhostname [options]"
+msgstr "Sintaksa: %s -config=emri_host_virtual [opsionet]"
+
+msgid "This runs %s in command line to update statistics (-update option) of a web site, from the log file defined in AWStats config file, or build a HTML report (-output option)."
+msgstr "Kjo ekzekuton %s në rreshtin e komandës për të përditësuar statistikat (opsioni -update) të një faqeje interneti, nga skedari i regjistrit i përcaktuar në skedarin e konfigurimit të AWStats, ose për të ndërtuar një raport HTML (opsioni -output)."
+
+msgid "First, %s tries to read %s.virtualhostname.conf as the config file. If not found, %s tries to read %s.conf, and finally the full path passed to -config="
+msgstr "Së pari, %s përpiqet të lexojë %s.emri_host_virtual.conf si skedarin e konfigurimit. Nëse nuk gjendet, %s përpiqet të lexojë %s.conf, dhe në fund rrugën e plotë të kaluar në -config="
+
+msgid "Note 1: Config files (*.conf) must be in /etc/awstats, /usr/local/etc/awstats, /etc or same directory than awstats.pl script file."
+msgstr "Shënim 1: Skedarët e konfigurimit (*.conf) duhet të jenë në /etc/awstats, /usr/local/etc/awstats, /etc ose në të njëjtën direktori me skedarin e skriptit awstats.pl."
+
+msgid "Note 2: If AWSTATS_FORCE_CONFIG environment variable is defined, AWStats will use it as the 'config' value, whatever is the value on command line or URL."
+msgstr "Shënim 2: Nëse është përcaktuar ndryshorja e mjedisit AWSTATS_FORCE_CONFIG, AWStats do ta përdorë atë si vlerën 'config', pavarësisht se cila është vlera në rreshtin e komandës ose URL."
+
+msgid "See AWStats documentation for all setup instructions."
+msgstr "Shihni dokumentacionin e AWStats për të gjitha udhëzimet e konfigurimit."
+
+msgid "Options to update statistics:"
+msgstr "Opsionet për përditësimin e statistikave:"
+
+msgid "  -update        to update statistics (default)"
+msgstr "  -update        për të përditësuar statistikat (parazgjedhje)"
+
+msgid "  -showsteps     to add benchmark information every %s lines processed"
+msgstr "  -showsteps     për të shtuar informacion referencë çdo %s rresht të përpunuar"
+
+msgid "  -showcorrupted to add output for each corrupted lines found, with reason"
+msgstr "  -showcorrupted për të shtuar dalje për çdo rresht të korruptuar të gjetur, me arsye"
+
+msgid "  -showdropped   to add output for each dropped lines found, with reason"
+msgstr "  -showdropped   për të shtuar dalje për çdo rresht të hedhur të gjetur, me arsye"
+
+msgid "  -showunknownorigin  to output referer when it can't be parsed"
+msgstr "  -showunknownorigin  për të nxjerrë referuesin kur nuk mund të analizohet"
+
+msgid "  -showdirectorigin   to output log line when origin is a direct access"
+msgstr "  -showdirectorigin   për të nxjerrë rreshtin e regjistrit kur origjina është një hyrje direkte"
+
+msgid "  -updatefor=n   to stop the update process after parsing n lines"
+msgstr "  -updatefor=n   për të ndaluar procesin e përditësimit pas analizimit të n rreshtave"
+
+msgid "  -LogFile=x     to change log to analyze whatever is 'LogFile' in config file"
+msgstr "  -LogFile=x     për të ndryshuar regjistrin që të analizojë çfarëdo që është 'LogFile' në skedarin e konfigurimit"
+
+msgid "  Be care to process log files in chronological order when updating statistics."
+msgstr "  Kujdesuni të përpunoni skedarët e regjistrit sipas rendit kronologjik kur përditësoni statistikat."
+
+msgid "Options to show statistics:"
+msgstr "Opsionet për të treguar statistikat:"
+
+msgid "  -output      to output main HTML report (no update made except with -update)"
+msgstr "  -output      për të nxjerrë raportin kryesor HTML (nuk bëhet asnjë përditësim përveç me -update)"
+
+msgid "  -output=x    to output other report pages where x is:"
+msgstr "  -output=x    për të nxjerrë faqe të tjera raporti ku x është:"
+
+msgid "build page of all domains/countries"
+msgstr "ndërto faqen e të gjitha fushave/vendeve"
+
+msgid "build page of all hosts"
+msgstr "ndërto faqen e të gjithë pritësve"
+
+msgid "build page of last hits for hosts"
+msgstr "ndërto faqen e goditjeve të fundit për pritësit"
+
+msgid "build page of all unresolved IP"
+msgstr "ndërto faqen e të gjitha IP-ve të pazgjidhura"
+
+msgid "build page of all email senders (maillog)"
+msgstr "ndërto faqen e të gjithë dërguesve të postës elektronike (regjistri i postës)"
+
+msgid "build page of last email senders (maillog)"
+msgstr "ndërto faqen e dërguesve të fundit të postës elektronike (regjistri i postës)"
+
+msgid "build page of all email receivers (maillog)"
+msgstr "ndërto faqen e të gjithë marrësve të postës elektronike (regjistri i postës)"
+
+msgid "build page of last email receivers (maillog)"
+msgstr "ndërto faqen e marrësve të fundit të postës elektronike (regjistri i postës)"
+
+msgid "build page of all logins used"
+msgstr "ndërto faqen e të gjitha identifikimeve të përdorura"
+
+msgid "build page of last hits for logins"
+msgstr "ndërto faqen e goditjeve të fundit për identifikimet"
+
+msgid "build page of all robots/spider visits"
+msgstr "ndërto faqen e të gjitha vizitave të robotëve/merimangave"
+
+msgid "build page of last hits for robots"
+msgstr "ndërto faqen e goditjeve të fundit për robotët"
+
+msgid "list most often viewed pages"
+msgstr "listo faqet më të shikuara shpesh"
+
+msgid "list most often viewed pages matching filter"
+msgstr "listo faqet më të shikuara shpesh që përputhen me filtrin"
+
+msgid "list entry pages"
+msgstr "listo faqet e hyrjes"
+
+msgid "list entry pages matching filter"
+msgstr "listo faqet e hyrjes që përputhen me filtrin"
+
+msgid "list exit pages"
+msgstr "listo faqet e daljes"
+
+msgid "list exit pages matching filter"
+msgstr "listo faqet e daljes që përputhen me filtrin"
+
+msgid "build page with os detailed versions"
+msgstr "ndërto faqen me versione të detajuara të sistemit operativ"
+
+msgid "build page with browsers detailed versions"
+msgstr "ndërto faqen me versione të detajuara të shfletuesve"
+
+msgid "list 'User Agents' with unknown browser"
+msgstr "listo 'Agjentët e Përdoruesit' me shfletues të panjohur"
+
+msgid "list 'User Agents' with unknown OS"
+msgstr "listo 'Agjentët e Përdoruesit' me OS të panjohur"
+
+msgid "build page of all refering search engines"
+msgstr "ndërto faqen e të gjithë motorëve të kërkimit që referojnë"
+
+msgid "build page of all refering pages"
+msgstr "ndërto faqen e të gjitha faqeve që referojnë"
+
+msgid "list all keyphrases used on search engines"
+msgstr "listo të gjitha frazat kyçe të përdorura në motorët e kërkimit"
+
+msgid "list all keywords used on search engines"
+msgstr "listo të gjitha fjalët kyçe të përdorura në motorët e kërkimit"
+
+msgid "list 'Referers' for 404 errors"
+msgstr "listo 'Referuesit' për gabimet 404"
+
+msgid "build page of all values for ExtraSection X"
+msgstr "ndërto faqen e të gjitha vlerave për Seksionin Shtesë X"
+
+msgid "  -staticlinks           to have static links in HTML report page"
+msgstr "  -staticlinks           për të pasur lidhje statike në faqen e raportit HTML"
+
+msgid "  -staticlinksext=xxx    to have static links with .xxx extension instead of .html"
+msgstr "  -staticlinksext=xxx    për të pasur lidhje statike me zgjerimin .xxx në vend të .html"
+
+msgid "  -lang=LL     to output a HTML report in language LL (en,de,es,fr,it,nl,zh-cn,...)"
+msgstr "  -lang=LL     për të nxjerrë një raport HTML në gjuhën LL (sq,en,de,fr,...)"
+
+msgid "  -month=MM    to output a HTML report for an old month MM"
+msgstr "  -month=MM    për të nxjerrë një raport HTML për një muaj të vjetër MM"
+
+msgid "  -year=YYYY   to output a HTML report for an old year YYYY"
+msgstr "  -year=YYYY   për të nxjerrë një raport HTML për një vit të vjetër YYYY"
+
+msgid "  The 'date' options doesn't allow you to process old log file. They only allow you to see a past report for a chosen month/year period instead of current month/year."
+msgstr "  Opsionet 'date' nuk ju lejojnë të përpunoni skedarë të vjetër regjistri. Ato ju lejojnë vetëm të shihni një raport të kaluar për një periudhë muaj/vit të zgjedhur në vend të muajit/vitit aktual."
+
+msgid "Other options:"
+msgstr "Opsione të tjera:"
+
+msgid "  -debug=X     to add debug informations lesser than level X (speed reduced)"
+msgstr "  -debug=X     për të shtuar informacione korrigjimi më të vogla se niveli X (shpejtësia e reduktuar)"
+
+msgid "  -version     show AWStats version"
+msgstr "  -version, -v     tregon versionin e AWStats"
+
+msgid "Now supports/detects:"
+msgstr "Tani mbështet/zbulon:"
+
+msgid "  Web/Ftp/Mail/streaming server log analyzis (and load balanced log files)"
+msgstr "  Analiza e regjistrave të serverit Web/Ftp/Postë/transmetim (dhe skedarët e regjistrit të balancuar të ngarkesës)"
+
+msgid "  Reverse DNS lookup (IPv4 and IPv6) and GeoIP lookup"
+msgstr "  Kërkimi i kundërt DNS (IPv4 dhe IPv6) dhe kërkimi GeoIP"
+
+msgid "  Number of visits, number of unique visitors"
+msgstr "  Numri i vizitave, numri i vizitorëve unikë"
+
+msgid "  Visits duration and list of last visits"
+msgstr "  Kohëzgjatja e vizitave dhe lista e vizitave të fundit"
+
+msgid "  Authenticated users"
+msgstr "  Përdoruesit e vërtetuar"
+
+msgid "  Days of week and rush hours"
+msgstr "  Ditët e javës dhe orët e pikut"
+
+msgid "  Hosts list and unresolved IP addresses list"
+msgstr "  Lista e pritësve dhe lista e adresave IP të pazgjidhura"
+
+msgid "  Most viewed, entry and exit pages"
+msgstr "  Faqet më të shikuara, të hyrjes dhe të daljes"
+
+msgid "  Files type and Web compression (mod_gzip, mod_deflate stats)"
+msgstr "  Lloji i skedarëve dhe kompresimi në Web (statistikat mod_gzip, mod_deflate)"
+
+msgid "  Configured Database Statistics"
+msgstr "  Statistikat e Bazës së të Dhënave të Konfiguruara"
+
+msgid "  %s domains/countries"
+msgstr "  %s fusha/vende"
+
+msgid "  %s robots"
+msgstr "  %s robotë"
+
+msgid "  %s worm's families"
+msgstr "  %s familje krimbash"
+
+msgid "  %s operating systems"
+msgstr "  %s sisteme operative"
+
+msgid "  %s browsers (%s with phone browsers database)"
+msgstr "  %s shfletues (%s me bazën e të dhënave të shfletuesve të telefonit)"
+
+msgid "  %s search engines (and keyphrases/keywords used from them)"
+msgstr "  %s motorë kërkimi (dhe fraza kyçe/fjalë kyçe të përdorura prej tyre)"
+
+msgid "  All HTTP errors with last referrer"
+msgstr "  Të gjitha gabimet HTTP me referuesin e fundit"
+
+msgid "  Report by day/month/year"
+msgstr "  Raport sipas ditës/muajit/vitit"
+
+msgid "  Dynamic or static HTML or XHTML reports, static PDF reports"
+msgstr "  Raporte HTML ose XHTML dinamike ose statike, raporte PDF statike"
+
+msgid "  Indexed text or XML monthly database"
+msgstr "  Bazë të dhënash mujore me tekst të indeksuar ose XML"
+
+msgid "  And a lot of other advanced features and options..."
+msgstr "  Dhe shumë karakteristika dhe opsione të tjera të avancuara..."
+
+msgid "  New versions and FAQ at http://www.awstats.org"
+msgstr "  Versione të reja dhe Pyetje të Shpeshta në https://github.com/hestiacn/vstats/issues"

@@ -1,0 +1,3332 @@
+# AWStats Finnish (fi) translations
+# Copyright (C) 2026 AWStats
+# This file is distributed under the same license as the AWStats package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: AWStats 8.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-10 12:00+0000\n"
+"PO-Revision-Date: 2026-05-10 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Finnish\n"
+"Language: fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#------------------------------------------------------------------------------
+# Kuukausien nimet
+#------------------------------------------------------------------------------
+
+msgid "month_01"
+msgstr "Tammikuu"
+
+msgid "month_02"
+msgstr "Helmikuu"
+
+msgid "month_03"
+msgstr "Maaliskuu"
+
+msgid "month_04"
+msgstr "Huhtikuu"
+
+msgid "month_05"
+msgstr "Toukokuu"
+
+msgid "month_06"
+msgstr "Kesäkuu"
+
+msgid "month_07"
+msgstr "Heinäkuu"
+
+msgid "month_08"
+msgstr "Elokuu"
+
+msgid "month_09"
+msgstr "Syyskuu"
+
+msgid "month_10"
+msgstr "Lokakuu"
+
+msgid "month_11"
+msgstr "Marraskuu"
+
+msgid "month_12"
+msgstr "Joulukuu"
+
+#------------------------------------------------------------------------------
+# Viikonpäivien nimet
+#------------------------------------------------------------------------------
+
+msgid "DayOfWeek_0"
+msgstr "Sunnuntai"
+
+msgid "DayOfWeek_1"
+msgstr "Maanantai"
+
+msgid "DayOfWeek_2"
+msgstr "Tiistai"
+
+msgid "DayOfWeek_3"
+msgstr "Keskiviikko"
+
+msgid "DayOfWeek_4"
+msgstr "Torstai"
+
+msgid "DayOfWeek_5"
+msgstr "Perjantai"
+
+msgid "DayOfWeek_6"
+msgstr "Lauantai"
+
+#------------------------------------------------------------------------------
+# Käyttöliittymäelementit
+#------------------------------------------------------------------------------
+
+msgid "Advanced Web Statistics for"
+msgstr "Kehittyneet verkkotilastot kohteelle"
+
+msgid "Statistics for"
+msgstr "Tilastot kohteelle"
+
+msgid "main"
+msgstr "Yleiskatsaus"
+
+# Teeman vaihto
+msgid "Switch to light mode"
+msgstr "Vaihda vaaleaan tilaan"
+
+msgid "Switch to dark mode"
+msgstr "Vaihda tummaan tilaan"
+
+# Kapasiteettiyksiköt
+msgid "TB"
+msgstr "TB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "Bytes"
+msgstr "Tavua"
+
+# Lomake-elementit
+msgid "Filter"
+msgstr "Suodata"
+
+msgid "Exclude filter"
+msgstr "Poista suodatin"
+
+msgid "Top"
+msgstr "Top"
+
+msgid "Full list"
+msgstr "Koko lista"
+
+msgid "Last"
+msgstr "Viimeisin"
+
+msgid "Average"
+msgstr "Keskiarvo"
+
+msgid "Total"
+msgstr "Yhteensä"
+
+msgid "Percent"
+msgstr "Prosenttiosuus"
+
+msgid "Export"
+msgstr "Vie"
+
+msgid "Details"
+msgstr "Tiedot"
+
+msgid "Version"
+msgstr "Versio"
+
+# Tuhaterotin
+msgid "thousands_separator"
+msgstr " "
+
+# Pitkä päivämäärämuoto (viimeiselle päivitykselle, ensimmäiselle käynnille jne.)
+msgid "dateformat_long"
+msgstr "dd.mm.yyyy HH:MM:SS"
+
+# Lyhyt päivämäärämuoto (kaaviomerkinnöille jne.)
+msgid "dateformat_short"
+msgstr "dd.mm.yyyy HH:MM"
+
+msgid "date_format_year"
+msgstr "%s"
+
+msgid "date_format_month"
+msgstr "%1$s %2$s"
+
+#------------------------------------------------------------------------------
+# Navigointipalkki
+#------------------------------------------------------------------------------
+
+msgid "AWStats Month Selector"
+msgstr "AWStats kuukausivalitsin"
+
+msgid "nav_category_basic"
+msgstr "Perusdokumentaatio"
+
+msgid "nav_category_guide"
+msgstr "Käyttöopas"
+
+msgid "nav_category_reference"
+msgstr "Viiteresurssit"
+
+msgid "nav_category_integration"
+msgstr "Integrointi ja laajennus"
+
+msgid "nav_category_dev"
+msgstr "Kehittäjädokumentaatio"
+
+msgid "nav_changelog"
+msgstr "Muutosloki"
+
+msgid "nav_what"
+msgstr "Mikä on AWStats"
+
+msgid "nav_license"
+msgstr "Lisenssi"
+
+msgid "nav_glossary"
+msgstr "Sanasto"
+
+msgid "nav_setup"
+msgstr "Asennus ja konfigurointi"
+
+msgid "nav_upgrade"
+msgstr "Päivitysopas"
+
+msgid "nav_config"
+msgstr "Konfigurointiparametrit"
+
+msgid "nav_extra"
+msgstr "Lisäosiot"
+
+msgid "nav_tools"
+msgstr "Muut työkalut"
+
+msgid "nav_faq"
+msgstr "UKK"
+
+msgid "nav_security"
+msgstr "Turvallisuussuositukset"
+
+msgid "nav_compare"
+msgstr "Vertailu"
+
+msgid "nav_benchmark"
+msgstr "Suorituskykytestaus"
+
+msgid "nav_webmin"
+msgstr "Webmin-moduuli"
+
+msgid "nav_dolibarr"
+msgstr "Dolibarr-moduuli"
+
+msgid "nav_contrib"
+msgstr "Osallistumisresurssit"
+
+msgid "nav_plugins"
+msgstr "Laajennusten kehitys"
+
+msgid "nav_hooks"
+msgstr "Laajennusten koukkuja"
+
+msgid "nav_graphs"
+msgstr "Laajennusten kaaviot"
+
+msgid "Back to top"
+msgstr "Takaisin ylös"
+
+msgid "nav_select_month"
+msgstr "Valitse kuukausi"
+
+#------------------------------------------------------------------------------
+# Tärkeimmät tilastolliset mittarit
+#------------------------------------------------------------------------------
+
+# Käynnit
+msgid "Unique visitors"
+msgstr "Yksilölliset vierailijat"
+
+msgid "Visits"
+msgstr "Käynnit"
+
+msgid "Visits duration"
+msgstr "Käyntien kesto"
+
+msgid "First visit"
+msgstr "Ensimmäinen päivitys"
+
+msgid "Last visit"
+msgstr "Viimeisin päivitys"
+
+msgid "Visits/Visitor"
+msgstr "Käyntiä/Vierailija"
+
+msgid "Pages/Visit"
+msgstr "Sivua/Käynti"
+
+msgid "Hits/Visit"
+msgstr "Pyyntöä/Käynti"
+
+msgid "KB/Visit"
+msgstr "KB/Käynti"
+
+msgid "KB/Visits"
+msgstr "KB/Käyntiä"
+
+# Liikenne
+msgid "Pages"
+msgstr "Sivumäärä"
+
+msgid "Hits"
+msgstr "Pyyntöjen määrä"
+
+msgid "Bandwidth"
+msgstr "Kaistanleveys"
+
+msgid "duration_format"
+msgstr "%s-%s"
+
+msgid "unit_s"
+msgstr "s"
+
+msgid "unit_min"
+msgstr "min"
+
+msgid "unit_h"
+msgstr "h"
+
+msgid "and"
+msgstr "-"
+
+msgid "Device Types"
+msgstr "Laitetyypit"
+
+msgid "Device Type"
+msgstr "Laitetyyppi"
+
+# Laitetyyppien nimet
+msgid "Mobile"
+msgstr "Matkapuhelin"
+
+msgid "Pause & Go"
+msgstr "Keskeytä ja jatka"
+
+msgid "Complete"
+msgstr "Valmis"
+
+msgid "Tablet"
+msgstr "Tabletti"
+
+msgid "Tv"
+msgstr "Televisio"
+
+msgid "Wearable"
+msgstr "Puettava laite"
+
+msgid "Bot"
+msgstr "Botti"
+
+msgid "Desktop"
+msgstr "Pöytätietokone"
+
+msgid "Normal browsing traffic"
+msgstr "Normaali selausliikenne"
+
+msgid "Abnormal browsing traffic"
+msgstr "Epänormaali selausliikenne"
+
+msgid "Viewed"
+msgstr "Katsottu"
+
+msgid "Not viewed"
+msgstr "Ei katsottu"
+
+msgid "Abnormal browsing traffic note"
+msgstr "Epänormaali selausliikenne sisältää: hakurobotit, tekoälyn koulutusbotit, haavoittuvuusskannerit ja pyynnöt, jotka eivät noudata HTTP/HTTPS-määrityksiä"
+
+# Tiedostot
+msgid "File size"
+msgstr "Tiedostokoko"
+
+msgid "File type"
+msgstr "Tiedostotyyppi"
+
+msgid "Downloads"
+msgstr "Lataukset"
+
+msgid "Request time"
+msgstr "Pyynnön aika"
+
+msgid "Total requests"
+msgstr "Pyynnöt yhteensä"
+
+msgid "Frequency"
+msgstr "Taajuus"
+
+msgid "Average frequency"
+msgstr "Keskimääräinen taajuus"
+
+msgid "Seconds"
+msgstr "Sekuntia"
+
+# Sähköposti (varten LogType eq 'M')
+msgid "First"
+msgstr "Ensimmäinen"
+
+msgid "Mails"
+msgstr "Sähköpostien määrä"
+
+msgid "Size"
+msgstr "Koko"
+
+msgid "If you remove this file, all statistics for date"
+msgstr "Varoitus: Jos poistat tämän tiedoston, kaikki tilastot päivämäärälle"
+
+msgid "will be lost/reset."
+msgstr "menetetään/nollataan pysyvästi."
+
+msgid "Last config file used to build this data file was"
+msgstr "Viimeisin tämän datatiedoston rakentamiseen käytetty konfigurointitiedosto oli"
+
+msgid "Position (offset in bytes) in this file for beginning of each section for"
+msgstr "MAP-osio tässä tiedostossa tallentaa tavun siirtymäpaikat kunkin osion alulle, jotta"
+
+msgid "direct I/O access. If you made changes somewhere in this file, you should"
+msgstr "AWStats voi nopeasti käyttää tietoja. Jos olet tehnyt manuaalisia muutoksia tähän tiedostoon, sinun tulisi"
+
+msgid "also remove completely the MAP section (AWStats will rewrite it at next update)"
+msgstr "poistaa kokonaan MAP-osio (AWStats kirjoittaa sen uudelleen seuraavassa päivityksessä)."
+
+msgid "LastLine    = Date of last record processed - Last record line number in last log - Last record offset in last log - Last record signature value"
+msgstr "LastLine    = Viimeksi käsitellyn tietueen päivämäärä - Viimeisen tietueen rivinumero viimeisessä lokissa - Viimeisen tietueen siirtymä viimeisessä lokissa - Viimeisen tietueen allekirjoitusarvo"
+
+msgid "FirstTime   = Date of first visit for history file"
+msgstr "FirstTime   = Ensimmäisen käynnin päivämäärä historiatiedostolle"
+
+msgid "LastTime    = Date of last visit for history file"
+msgstr "LastTime    = Viimeisen käynnin päivämäärä historiatiedostolle"
+
+msgid "LastUpdate  = Date of last update - Nb of parsed records - Nb of parsed old records - Nb of parsed new records - Nb of parsed corrupted - Nb of parsed dropped"
+msgstr "LastUpdate  = Viimeisen päivityksen päivämäärä - Käsiteltyjen tietueiden määrä - Käsiteltyjen vanhojen tietueiden määrä - Käsiteltyjen uusien tietueiden määrä - Käsiteltyjen vioittuneiden määrä - Käsiteltyjen hylättyjen määrä"
+
+msgid "TotalVisits = Number of visits"
+msgstr "TotalVisits = Käyntien määrä"
+
+msgid "TotalUnique = Number of unique visitors"
+msgstr "TotalUnique = Yksilöllisten vierailijoiden määrä"
+
+msgid "MonthHostsKnown   = Number of hosts known"
+msgstr "MonthHostsKnown   = Tunnettujen isäntien määrä"
+
+msgid "MonthHostsUnKnown = Number of hosts unknown"
+msgstr "MonthHostsUnKnown = Tuntemattomien isäntien määrä"
+
+msgid "Cluster ID - Pages - Hits - Bandwidth"
+msgstr "Klusterin tunnus - Sivumäärä - Pyyntöjen määrä - Kaistanleveys"
+
+msgid "Hour - Pages - Hits - Bandwidth - Not viewed Pages - Not viewed Hits - Not viewed Bandwidth"
+msgstr "Tunti - Sivumäärä - Pyyntöjen määrä - Kaistanleveys - Ei katsotut sivut - Ei katsotut pyynnöt - Ei katsottu kaistanleveys"
+
+msgid "Date - Pages - Hits - Bandwidth - Visits"
+msgstr "Päivämäärä - Sivumäärä - Pyyntöjen määrä - Kaistanleveys - Käynnit"
+
+msgid "Domain - Pages - Hits - Bandwidth"
+msgstr "Verkkotunnus - Sivumäärä - Pyyntöjen määrä - Kaistanleveys"
+
+msgid "The %s first Pages must be first (order not required for others)"
+msgstr "Pääsivu näyttää vain ensimmäiset %s sivua, joilla on eniten katselukertoja. Katso koko luettelo yksityiskohtaiselta sivulta."
+
+msgid "Host - Pages - Hits - Bandwidth - Last visit date - [Start date of last visit] - [Last page of last visit]"
+msgstr "Isäntä - Sivumäärä - Pyyntöjen määrä - Kaistanleveys - Viimeisen käynnin päivämäärä - [Viimeisen käynnin alkamispäivämäärä] - [Viimeisen käynnin viimeinen sivu]"
+
+msgid "[Start date of last visit] and [Last page of last visit] are saved only if session is not finished"
+msgstr "[Viimeisen käynnin alkamispäivämäärä] ja [Viimeisen käynnin viimeinen sivu] tallennetaan vain, jos istuntoa ei ole päätetty"
+
+msgid "The first %s items are sorted by hits in descending order; order of the remaining items is undefined."
+msgstr "Ensimmäiset %s kohdetta on lajiteltu osumamäärän mukaan laskevassa järjestyksessä; jäljellä olevien kohteiden järjestystä ei ole määritelty."
+
+msgid "Login - Pages - Hits - Bandwidth - Last visit"
+msgstr "Kirjautunut käyttäjä - Sivumäärä - Pyyntöjen määrä - Kaistanleveys - Viimeisen käynnin aika"
+
+msgid "Robot ID - Hits - Bandwidth - Last visit - Hits on robots.txt"
+msgstr "Robotin tunnus - Pyyntöjen määrä - Kaistanleveys - Viimeisen käynnin aika - Pyynnöt robots.txt-tiedostoon"
+
+msgid "Worm ID - Hits - Bandwidth - Last visit"
+msgstr "Madon tunnus - Pyyntöjen määrä - Kaistanleveys - Viimeisen käynnin aika"
+
+msgid "EMail - Hits - Bandwidth - Last visit"
+msgstr "Sähköposti - Pyyntöjen määrä - Kaistanleveys - Viimeisen käynnin aika"
+
+msgid "The first %s email addresses are sorted by hits in descending order; order of the remaining addresses is undefined."
+msgstr "Ensimmäiset %s sähköpostiosoitetta on lajiteltu osumamäärän mukaan laskevassa järjestyksessä; jäljellä olevien osoitteiden järjestystä ei ole määritelty."
+
+msgid "URL - Pages - Bandwidth - Entry - Exit"
+msgstr "URL - Sivumäärä - Kaistanleveys - Sisäänkäynti - Poistuminen"
+
+msgid "Files type - Hits - Bandwidth - Bandwidth without compression - Bandwidth after compression"
+msgstr "Tiedostotyyppi - Pyyntöjen määrä - Kaistanleveys - Kaistanleveys ennen pakkausta - Kaistanleveys pakkauksen jälkeen"
+
+msgid "Request Time Range - Request Time Frequency"
+msgstr "Pyynnön aikaväli - Pyynnön ajan tiheys"
+
+msgid "Payload Range - Payload Frequency"
+msgstr "Tiedostokokoväli - Tiedostojen lukumäärä"
+
+msgid "Session range - Number of visits"
+msgstr "Istunnon keston väli - Käyntien määrä"
+
+msgid "URL with %s errors - Hits"
+msgstr "URL, jossa %s virhettä - Pyyntöjen määrä"
+
+msgid "Last URL referrer"
+msgstr "Viimeinen URL-viittaaja"
+
+msgid "Errors - Hits - Bandwidth"
+msgstr "Virheet - Pyyntöjen määrä - Kaistanleveys"
+
+msgid "Search keywords - Number of search"
+msgstr "Avainsanat - Hakujen määrä"
+
+msgid "Only top %s keywords shown on main page (sorted by search count). See full list on detail page."
+msgstr "Pääsivu näyttää vain ensimmäiset %s avainsanaa (lajiteltu hakumäärän mukaan). Katso koko luettelo yksityiskohtaiselta sivulta."
+
+msgid "Search keyphrases - Number of search"
+msgstr "Avainlauseet - Hakujen määrä"
+
+msgid "Only top %s keyphrases shown on main page (sorted by search count). See full list on detail page."
+msgstr "Pääsivu näyttää vain ensimmäiset %s avainlausetta (lajiteltu hakumäärän mukaan). Katso koko luettelo yksityiskohtaiselta sivulta."
+
+msgid "External page referers - Pages - Hits"
+msgstr "Ulkoiset sivuviittaajat - Sivumäärä - Pyyntöjen määrä"
+
+msgid "Only top %s external referrers shown on main page (sorted by pages). See full list on detail page."
+msgstr "Pääsivu näyttää vain ensimmäiset %s ulkoista viittaajaa (lajiteltu sivumäärän mukaan). Katso koko luettelo yksityiskohtaiselta sivulta."
+
+msgid "Search engine referers ID - Pages - Hits"
+msgstr "Hakukoneviittaajan tunnus - Sivumäärä - Pyyntöjen määrä"
+
+msgid "Origin - Pages - Hits"
+msgstr "Alkuperä - Sivumäärä - Pyyntöjen määrä"
+
+msgid "Unknown referer Browser - Last visit date"
+msgstr "Tuntematon viittaajaselain - Viimeisen käynnin päivämäärä"
+
+msgid "Unknown referer OS - Last visit date"
+msgstr "Tuntematon viittaaja-käyttöjärjestelmä - Viimeisen käynnin päivämäärä"
+
+msgid "Screen size - Hits"
+msgstr "Näytön resoluutio - Pyyntöjen määrä"
+
+msgid "Browser ID - Hits - Pages"
+msgstr "Selaimen tunnus - Klikkausten määrä - Sivumäärä"
+
+msgid "Downloads - Hits - Bandwidth"
+msgstr "Lataukset - Pyyntöjen määrä - Kaistanleveys"
+
+msgid "Protocol - Hits - Bandwidth"
+msgstr "Protokolla - Pyyntöjen määrä - Kaistanleveys"
+
+msgid "Icon Status - Type:200:404:Other"
+msgstr "Kuvakkeen tila - Tyyppi:200:404:Muut"
+
+#------------------------------------------------------------------------------
+# Aikajaksojen käännökset
+#------------------------------------------------------------------------------
+
+msgid "period_00"
+msgstr "Keskiyö · AWStats nukkuu, mutta sinä vielä katsot tietoja? Todellista rakkautta"
+
+msgid "period_01"
+msgstr "1. tunti · Käyt tähän aikaan? Unettomuutta vai juuri töistä päässyt"
+
+msgid "period_02"
+msgstr "2. tunti · Botit ovat ahkerampia kuin sinä, ne työskentelevät vielä"
+
+msgid "period_03"
+msgstr "3. tunti · Kaupunki nukkuu, palvelin tekee ylitöitä, kuka on huonommassa asemassa?"
+
+msgid "period_04"
+msgstr "4. tunti · Kirkkain tähti pimeydessä, sinun näyttösi vai palvelimen merkkivalo"
+
+msgid "period_05"
+msgstr "5. tunti · Aikainen lintu madon nappaa, aikainen botti kerää tiedot"
+
+msgid "period_06"
+msgstr "6. tunti · Joku herää, joku ei ole vielä nukkunut, internet ei koskaan sulkeudu"
+
+msgid "period_07"
+msgstr "7. tunti · Aikaa tungokselle metrossa, myös aikaa surffata verkossa"
+
+msgid "period_08"
+msgstr "8. tunti · Ensimmäinen asia työpäivän alkaessa: vilkaise eilisiä tietoja"
+
+msgid "period_09"
+msgstr "9. tunti · Kulta-aika, jopa laiskottelulla on sääntönsä"
+
+msgid "period_10"
+msgstr "10. tunti · Kahviaika, samalla tarkista onko liikenne lisääntynyt"
+
+msgid "period_11"
+msgstr "11. tunti · Tunti lounaaseen, jaksa vielä vähän"
+
+msgid "period_12"
+msgstr "12. tunti · Palvelin: Olette kaikki menneet lounaalle, minä lepään hieman"
+
+msgid "period_13"
+msgstr "13. tunti · Uneliaisuus lounaan jälkeen, mutta tiedot eivät nuku"
+
+msgid "period_14"
+msgstr "14. tunti · Iltapäivän välipala-aika, datan kanssa se on maukkaampaa"
+
+msgid "period_15"
+msgstr "15. tunti · Tämän päivän liikenteen trendikäyrä, muistuttaako se mielialakäyrääsi?"
+
+msgid "period_16"
+msgstr "16. tunti · Töiden loppuun on X tuntia, liikenne alkaa kiriä"
+
+msgid "period_17"
+msgstr "17. tunti · Työpäivä ohi! Mutta palvelimen on jatkettava työtä"
+
+msgid "period_18"
+msgstr "18. tunti · Päivällisaika, katso video rentoutuaksesi"
+
+msgid "period_19"
+msgstr "19. tunti · Paras lähetysaika, liikenteen huippu, palvelin: Kestän kyllä"
+
+msgid "period_20"
+msgstr "20. tunti · Löhöillä sohvalla, olet vierailija numero 114514"
+
+msgid "period_21"
+msgstr "21. tunti · Myöhään yöllä, salaa tietoja katsovat yökyöpeli +1"
+
+msgid "period_22"
+msgstr "22. tunti · Tämän päivän tiedot ovat pian valmiit, jännittääkö?"
+
+msgid "period_23"
+msgstr "23. tunti · AWStats: Aika mennä nukkumaan, huomenna taas töitä"
+
+#------------------------------------------------------------------------------
+# Aikaulottuvuudet
+#------------------------------------------------------------------------------
+
+msgid "Period"
+msgstr "Tilastokausi"
+
+msgid "Year"
+msgstr "Vuosi"
+
+msgid "Month"
+msgstr "Kuukausi"
+
+msgid "Months"
+msgstr "Kuukaudet"
+
+msgid "Date"
+msgstr "Päivämäärä"
+
+msgid "Day"
+msgstr "Päivä"
+
+msgid "Hour"
+msgstr "Tunti"
+
+msgid "Hours"
+msgstr "Tunnit"
+
+msgid "Day of week"
+msgstr "Viikonpäivä"
+
+msgid "When"
+msgstr "Milloin"
+
+msgid "%s Server Management Panel"
+msgstr "%s -palvelimen hallintapaneeli"
+
+msgid "Server Administration"
+msgstr "Yksinkertainen ja tehokas palvelinratkaisu"
+
+#------------------------------------------------------------------------------
+# Kävijän ulottuvuudet
+#------------------------------------------------------------------------------
+
+msgid "Invalid URL Parameters"
+msgstr "Virheelliset URL-parametrit"
+
+msgid "The requested page cannot be loaded due to invalid or malformed URL parameters."
+msgstr "Pyydettyä sivua ei voida ladata virheellisten tai väärin muotoiltujen URL-parametrien vuoksi."
+
+msgid "This may be caused by typing an incorrect URL, missing parameter separators, or using an invalid configuration name."
+msgstr "Tämä voi johtua virheellisen URL-osoitteen kirjoittamisesta, puuttuvista parametrien erottimista tai virheellisen kokoonpanonimen käytöstä."
+
+msgid "Please check the URL you entered and ensure all parameters are correctly formatted."
+msgstr "Tarkista antamasi URL-osoite ja varmista, että kaikki parametrit on muotoiltu oikein."
+
+msgid "SiteDomain parameter not defined in your config/domain file, or you may not have execution permission on the file."
+msgstr "SiteDomain-parametria ei ole määritetty config/domain-tiedostossasi, tai sinulla ei ehkä ole suoritusoikeutta tiedostoon."
+
+msgid "Please run as Administrator to set permissions"
+msgstr "Suorita järjestelmänvalvojana asettaaksesi käyttöoikeudet"
+
+msgid "This directory lacks read permission"
+msgstr "Tällä hakemistolla ei ole lukuoi kutta"
+
+msgid "Please set read permission for directory"
+msgstr "Aseta hakemistolle lukuoi kus, kiitos"
+
+msgid "Missing required parameter in config file"
+msgstr "Pakollinen parametri puuttuu asetustiedostosta"
+
+msgid "Please check that 'DirData' is defined."
+msgstr "Tarkista, että 'DirData' on määritetty."
+
+msgid "Domain name in browser address appears to be missing or incomplete"
+msgstr "Selaimen osoitteessa oleva verkkotunnus näyttää puuttuvan tai olevan epätäydellinen"
+
+msgid "Please check the URL parameter"
+msgstr "Tarkista URL-parametri, kiitos"
+
+msgid "Format description"
+msgstr "Muodon kuvaus"
+
+msgid "Please set execute permission"
+msgstr "Aseta suoritusoikeus"
+
+msgid "Or if you prefer numeric mode"
+msgstr "Tai jos haluat käyttää numeerista tilaa"
+
+msgid "View Report Directly"
+msgstr "Näytä raportti suoraan"
+
+msgid "AWStats Log Viewer"
+msgstr "AWStats-lokien katselija"
+
+msgid "Month Selection"
+msgstr "Kuukauden valinta"
+
+msgid "Who"
+msgstr "Kuka"
+
+msgid "Visitors"
+msgstr "Vierailijat"
+
+msgid "Countries"
+msgstr "Maat/Alueet"
+
+msgid "flag_icon"
+msgstr "Lippu"
+
+msgid "Country-Region-City"
+msgstr "Maa/Alue/Kaupunki"
+
+msgid "Code"
+msgstr "Koodi"
+
+msgid "Known"
+msgstr "Tunnettu"
+
+msgid "unknownos"
+msgstr "Tuntematon käyttöjärjestelmä"
+
+msgid "unknownbrowser"
+msgstr "Tuntematon selain"
+
+msgid "Unresolved IP Address"
+msgstr "Ratkaisematon IP-osoite"
+
+msgid "Unknown File Type"
+msgstr "Tuntematon tiedostotyyppi"
+
+msgid "Unknown Size"
+msgstr "Tuntematon koko"
+
+msgid "Unknown Time"
+msgstr "Tuntematon pyynnön aika"
+
+msgid "Unknown Browser"
+msgstr "Tuntematon selain"
+
+msgid "Unknown OS"
+msgstr "Tuntematon käyttöjärjestelmä"
+
+msgid "Unknown Visitor"
+msgstr "Tuntematon vierailija"
+
+msgid "Unknown Visitor (Total)"
+msgstr "Tuntematon vierailija (yhteensä)"
+
+msgid "Unknown Country"
+msgstr "Tuntematon maa/alue"
+
+msgid "Unknown Country (Region)"
+msgstr "Tuntematon maa/alue (yhteensä)"
+
+msgid "Unknown Visitor (Title)"
+msgstr "Tuntematon vierailija (otsikko)"
+
+msgid "PageStayTime"
+msgstr "Sivulla vietettyä aikaa ei voida arvioida"
+
+msgid "Unknown OS (Link)"
+msgstr "Tuntematon käyttöjärjestelmä (linkki)"
+
+msgid "Unknown OS (Row)"
+msgstr "Tuntematon käyttöjärjestelmä (luettelo)"
+
+msgid "Unknown Browser (Link)"
+msgstr "Tuntematon selain (linkki)"
+
+msgid "Unknown Browser (Row)"
+msgstr "Tuntematon selain (luettelo)"
+
+msgid "Unknown Screen"
+msgstr "Tuntematon näytön koko"
+
+msgid "Login"
+msgstr "Käyttäjätunnus"
+
+msgid "Anonymous"
+msgstr "Anonyymi"
+
+msgid "Robots"
+msgstr "Robotit"
+
+msgid "Different robots"
+msgstr "Eri robotit"
+
+msgid "Hits on robots.txt"
+msgstr "Edellä mainitut hakukonerobotit tuottavat \"epänormaalia\" selausliikennettä, jota ei sisällytetä muihin kaavioihin. '+' merkin jälkeinen luku on onnistuneiden \"robots.txt\"-tiedoston käyttökertojen määrä."
+
+msgid "Worms"
+msgstr "Madot"
+
+msgid "Different worms"
+msgstr "Eri madot"
+
+msgid "Target"
+msgstr "Kohde"
+
+msgid "Grabber"
+msgstr "Noutotyökalu"
+
+#------------------------------------------------------------------------------
+# Muotoilukuvaukset
+#------------------------------------------------------------------------------
+
+msgid "mime_text"
+msgstr "TXT pelkkä tekstitiedosto (vuonna 1963 ASCII-standardin mukainen muotoilematon pelkkä teksti. Kaiken lähdekoodin, asetustiedostojen ja järjestelmälokien perustana oleva, sen alustariippumaton rivinvaihto-ohjausvirta (CRLF Windowsissa, LF Unixissa) on edelleen tietotekniikan yleisin tiedonsiirtostandardi)"
+
+msgid "mime_log"
+msgstr "LOG järjestelmän lokitiedosto (tallentaa käyttöjärjestelmän, ytimen ja sovellustason ajonaikaiset tilat pelkkänä tekstinä. Sisältää Nginx/Apache-pääsy lokit (yhdistetty loki) ja vakio syslog-määrittelyn, on keskeinen tietolähde vianmäärityksessä, suoratoiston suorituskykyanalyysissä ja tietoturva-auditoinneissa)"
+
+msgid "mime_page"
+msgstr "HTML hypertekstinen verkkosivu (Tim Berners-Leen luoma vuonna 1989, World Wide Webin kulmakivi. Ilmaisena, avoimena yleisenä hypertekstin merkintäkielenä HTML5-määrittelystä tuli virallinen W3C-standardi vuonna 2014, se tukee natiivisti rakenteista multimediaa, semanttista vuorovaikutusta ja juoksevaa sivuasettelua, sai Turing-palkinnon vuonna 2016)"
+
+msgid "mime_khtml"
+msgstr "KHTML verkkopohjamoottori (vuoden 1998 KDE 2.0 -selaimen renderöintimoottorin määrittely. Avoimen lähdekoodin mittapuuna, joka loi perustan nykyaikaiselle verkkorenderöinnille, sen tekninen perintö inspiroi suoraan Applen WebKitiä ja Googlen Blink-ydintä, ja se elää edelleen modernien virtaavien dynaamisten verkkoarkkitehtuurien alla)"
+
+msgid "mime_script"
+msgstr "SCRIPT tulkattava dynaaminen skripti (yleinen luokka lähdekoodivirroille, joita tietty ajonaikainen ympäristö tai tulkki suorittaa rivi riviltä ilman ennakko kääntämistä. Kattaa ASP:n, JSP:n, CGI:n ja Tcl:n, laajalti käytetty palvelinpuolen yleisissä yhdyskäytävissä, automaatioprosessien ohjauksessa ja järjestelmätason tehtävien liimaamisessa)"
+
+msgid "mime_js"
+msgstr "JavaScript skripti (vuoden 1995 Netscape-selaimen natiivi ohjelmointiympäristö. Vuonna 1997 perustettiin ECMAScript-teollisuusstandardi, vuonna 2009 syntyi Node.js ajonaikainen ympäristö, joka rikkoi selaimen rajat ja loi asynkronisen, ei-tukkeutuvan koko pinnon arkkitehtuurin, mukana maailman suurin npm-ohjelmistopakettien ekosysteemi)"
+
+msgid "mime_py"
+msgstr "Python skripti (Guido van Rossumin vuonna 1991 luoma korkean tason tulkattava skriptikieli. Pakollisen sisennyslukutaitonsa ja moniparadigmamaisen suunnittelunsa ansiosta se on vakiinnuttanut asemansa teollisuusstandardikielenä modernissa verkkoarkkitehtuurissa, koko pinnon datatieteessä, tekoälymallien koulutuksessa ja pilvi natiivissa automaatiotoiminnassa)"
+
+msgid "mime_sh"
+msgstr "Shell skripti (vuoden 1971 Unix-ajan standardi komentotulkin skripti. Sisältää ydintason komentoja, kuten Bash, Sh, Dash, tyypillisesti suoritetaan .sh-päätteellä, on yleinen ydintason liima-aine prosessien ohjaukseen, asennusvapaaseen ympäristön määritykseen ja automaattiseen käyttöönottoon moderneissa Unixin kaltaisissa käyttöjärjestelmissä)"
+
+msgid "mime_rb"
+msgstr "Ruby skripti (Yukihiro Matsumoton vuonna 1995 luoma olio-ohjelmointi skriptikieli. Sen keskeisenä suunnittelufilosofiana on äärimmäinen kunnioitus kehittäjäkokemusta kohtaan, ja sen Ruby on Rails -sovelluskehys mullisti modernin korkean tason verkkoarkkitehtuurin vahvistamalla 'Konventio ennen konfigurointia (CoC) -paradigman)"
+
+msgid "mime_pl"
+msgstr "Perl skripti (Larry Wallin vuonna 1987 luoma pragmaattinen skriptikieli. Nykyaikaisten pakettien hallinnan (CPAN) edelläkävijänä, sitä kutsutaan tekstinkäsittelyn 'Sveitsin armeijan veitseksi'. Nykyaikaisessa CGI-tilassa se toimii erittäin luotettavana pohjana lokien jäsentämiseen erittäin alhaisen fyysisen muistin kulutuksensa ja tehokkaan säännöllisten lausekkeiden käsittelynsä ansiosta)"
+
+msgid "mime_php"
+msgstr "PHP dynaaminen verkkosivu (Rasmus Lerdorfin vuonna 1995 luoma, erityisesti verkkokehitykseen suunniteltu. Yli 70%:n maailman verkkosivustoista käyttävänä ydinteknologiana se on suurten tuotantosovellusten, kuten WordPressin ja Wikipedian, perusta. PHP 8:sta lähtien, JIT (Just-In-Time) -ajonaikaisen moottorin käyttöönoton myötä, se on kehittynyt kohti korkean suorituskyvyn koko pinon palvelinarkkitehtuuria)"
+
+msgid "mime_image"
+msgstr "IMAGE kuvavaran luokittelu (kattaa häviöllisesti/häviöttömästi pakatut bittikartat, modernin responsiivisen verkkografiikan ja vektorit. Keskeinen indikaattori sivuston visuaalisen resurssikuormituksen, asiakaspuolen välimuistin osumatiheyden ja median verkkokaistan kulutuksen arvioinnissa)"
+
+msgid "mime_document"
+msgstr "DOCUMENT rakenteellisen asiakirjan luokitus (kattaa pelkän tekstin, taulukkolaskennan, kiinteämuotoiset viralliset asiakirjat (PDF) ja kevyet merkintäkielet. Keskeinen indikaattori palvelinpuolen staattisen tietopohjan jaon, yritysresurssien latausten ja tekstivirran läpäisykyvyn tilastoinnissa)"
+
+msgid "mime_package"
+msgstr "PACKAGE käännettyjen tuotteiden ja ohjelmistopakettien luokittelu (kattaa käyttöjärjestelmän natiivisti suoritettavat ohjelmat, ajonaikaiset linkityskirjastot (DLL/SO) ja sovellusten jakelun asennuspaketit. Toimii usein indikaattorina ohjelmistojenjakelusivustojen lähtevän liikenteen ja lataushuippujen arvioinnissa)"
+
+msgid "mime_archive"
+msgstr "ARCHIVE arkistoidut ja pakatut tiedostot (yleinen luokka DEFLATE-, LZMA- jne. ydinalgoritmeihin perustuville tiedonpakkauspaketeille. Verkkokerroksella se kattaa perinteisen pakettijaon lisäksi myös GNU-projektin vuoden 1992 Gzip-dynaamiset vastausvirrat. Vaikka Brotli-algoritmia otetaan asteittain käyttöön joissakin nykyaikaisissa skenaarioissa, tämä luokitus on edelleen keskeinen indikaattori palvelimen kaistanleveyden suorituskyvyn ja siirtokerroksen pakkaustehokkuuden arvioinnissa)"
+
+msgid "mime_audio"
+msgstr "AUDIO digitaalisen äänivirran luokitus (kattaa pakatun äänen, äänikirjat ja suoratoistoäänisäiliöt. Perustuen tiettyihin äänikoodekkistandardeihin, sitä käytetään äänidatavirran läpäisykyvyn, samanaikaisen suoratoistokaistan ja pitkien yhteyksien käyttäytymisen seurantaan multimedia-sivustoilla)"
+
+msgid "mime_video"
+msgstr "VIDEO digitaalisen videovirran luokitus (kattaa teräväpiirtovideosäiliöt, modernin verkkoanimaation ja suoratoistofragmentit. Keskeinen indikaattori palvelimen kaistanleveyden huippurajan ja sisällönjakeluverkon (CDN) kiihdytyksen tehokkuuden arvioinnissa korkeassa verkkokuormituksessa)"
+
+msgid "mime_jscript"
+msgstr "JScript skripti (Microsoftin vuonna 1996 kehittämä käänteistekniikalla toteutettu omisteinen toteutus Internet Explorer 3.0:lle. Varhaisena isäntäkilpailijana klassiselle JavaScriptille se toimi Windows Script Hostin (WSH) ja varhaisen ASP-taustajärjestelmän keskeisenä moottorina)"
+
+msgid "mime_json"
+msgstr "JSON rakenteellinen data (Douglas Crockfordin vuonna 2001 vahvistama kevyt tiedon sarjallistamisvaihtomuoto. Perustuu tekstipohjaisiin avain-arvo-pareihin ja taulukkorakenteisiin, sillä on korkea ihmisen luettavuus ja häviötön virran jäsennysominaisuudet, ja se on de facto -standardi moderneille web-APIlle, mikropalveluarkkitehtuureille ja suurten kielimallien vuorovaikutukselle)"
+
+msgid "mime_vbs"
+msgstr "VBScript skripti (Microsoftin vuonna 1996 IE 3.0:n kanssa julkaisema skriptikielimuunnos. Se toimi keskeisenä ajurina varhaisille dynaamisille ASP-verkkosivustoille ja Windows-järjestelmän hallinnalle, mutta se on nyt virallisesti vanhentunut ja poistettu Windows 11:n uusimmista ytimistä, ja se kuuluu historialliseen perintötekniikkaan)"
+
+msgid "mime_conf"
+msgstr "CONF järjestelmän asetustiedosto (yleinen luokka datatiedostoille, jotka tallentavat ohjelmiston ajonaikaiset ympäristöparametrit pelkkänä tekstinä. Kattaa INI- ja modernit YAML-, TOML- ja JSON-määrittelyt. Linux-järjestelmissä ne ovat enimmäkseen /etc-hakemistossa, ja ne ovat keskeinen riippuvuus järjestelmätason ajonaikaisen tilan optimoinnissa)"
+
+msgid "mime_css"
+msgstr "CSS porrastettu tyylisivu (vuoden 1996 W3C-standardi, yksi kolmesta frontendin ydinteknologiasta HTML/JS:n rinnalla. Kehittyen CSS2:n asettelusta CSS3:n modulaariseen kehitykseen, se tukee natiivisti Flexboxia, Gridiä ja responsiivista suunnittelua medialuokkien avulla, ja se on hallitseva standardi verkkosivujen esityksen irrottamiseksi moderneissa selaimissa)"
+
+msgid "mime_xsl"
+msgstr "XSL tyylisivu (vuoden 1999 W3C-standardi, sisältää XSLT-muunnoksen ja XPath-osoituskielet, joita käytetään jäsennellyn XML-datan renderöintiin HTML:ksi, PDF:ksi tai pelkäksi tekstiksi. Nykyaikaisessa kehityksessä sen ekosysteemi on suurelta osin korvattu kevyemmillä pohjamoottoreilla ja JSON-datamuodolla)"
+
+msgid "mime_runtime"
+msgstr "suoritettava tiedosto (EXE, ELF, Mach-O jne. käyttöjärjestelmän natiivit suoritettavat muodot, jotka sisältävät käännetyn matalan tason konekoodin, sisääntulopisteen ja järjestelmän lataustiedot)"
+
+msgid "mime_library"
+msgstr "kirjastotiedosto (DLL, SO, dylib jne. dynaamiset tai staattiset linkityskirjastot, jotka sisältävät jaettuja symboleja ja sijainninmuutoskoodia muiden ohjelmien kutsuttavaksi ja ladattavaksi ajonaikaisesti)"
+
+msgid "mime_swf"
+msgstr "Flash-animaatio (Macromedia 1996, Adoben ostama 2005. Interaktiivinen verkkostandardi, hallitsi aikoinaan internetin animaatioita ja pelejä. Haitat: riippuvuus lisäosista, ei tukea mobiilille, korkea tietoturvariski. Adobe ilmoitti sen käytöstäpoistosta 2017, tuki loppui kokonaan 2020, korvattu HTML5/CSS3/JS:llä)"
+
+msgid "mime_dtd"
+msgstr "DTD asiakirjatyypin määritelmä (julkaistu XML 1.0:n kanssa vuonna 1998, käytetään XML/HTML-asiakirjan rakenteen määrittelyyn ja laillisuuden varmistamiseen. Nykyaikaisessa kehityksessä se on suurelta osin korvattu joustavammilla ratkaisuilla, kuten XML Schema, RELAX NG jne.)"
+
+msgid "mime_csv"
+msgstr "CSV datamuoto (pilkulla erotetut arvot, yleinen pelkän tekstin taulukkomuoto suurtietokoneiden aikakaudelta (IBM Fortranin kääntäjä) vuodelta 1972. RFC 4180 -standardi määritteli sen vuonna 2005 häviöttömäksi, alustariippumattomaksi ja kieliriippumattomaksi tiedonsiirtostandardiksi. Laajalti käytetty tehokkaaseen tuontiin/vientiin Excelissä, relaatiotietokannoissa ja data-analyysissä (Pandas))"
+
+msgid "mime_cur"
+msgstr "hiiren osoitintiedosto (.cur-muoto, jota käytetään hiiren osoittimen tyylin mukauttamiseen, kuten sormiosoitin verkkosivuilla tai tiimalasi-odotuskuvake. Se on sukua yleiselle .ico-kuvakkeelle, mutta siinä on ylimääräinen 'kuuma piste' – todellinen napsautuskohta. Historia: esiteltiin Windows 3.1:n (1992) mukana, keskeinen osa siirtymässä komentoriviltä hiirellä toimivaan graafiseen käyttöliittymään)"
+
+msgid "mime_jnlp"
+msgstr "Java Web Start (2000-luvun Java-työpöytäsovellusten jakelutekniikka, käynnistää etä-Java-ohjelmia .jnlp-tiedostojen avulla. Turvallisuusongelmien ja nykyaikaisten jakelutapojen yleistymisen vuoksi se on nyt suurelta osin vanhentunut)"
+
+msgid "mime_lit"
+msgstr "Microsoft Reader e-kirja (2000 Microsoft, LIT-muoto. Vanhentunut, voidaan nyt muuntaa EPUB- tai PDF-muotoon työkaluilla, kuten Calibre)"
+
+msgid "mime_svg"
+msgstr "SVG vektorigrafiikka (vuoden 1999 W3C-standardi, XML-pohjainen 2D-vektorikuvamuoto. Tarjoaa häviöttömän skaalauksen ja tekstin suoratoistoedut. Kaikki nykyaikaiset selaimet tukevat sitä natiivisti, sitä käytetään laajalti teräväpiirtoisiin verkkokuvakkeisiin, logoihin ja vektorianimaatioihin, ja se on modernin verkkografiikan keskeinen standardi)"
+
+msgid "mime_ai"
+msgstr "AI vektorigrafiikka (Adoben vuonna 1987 kehittämä omisteinen vektorimuoto. Teollisuusstandardina taitossa, painosuunnittelussa ja brändi-identiteetissä se tukee useita kerroksia ja kehittynyttä taittovektoridataa, ja se on ammattimaisen visuaalisen taiteen ensisijainen väline)"
+
+msgid "mime_phshop"
+msgstr "PSD kerroskuva (Adoben Photoshopin kanssa vuonna 1990 julkaisema omisteinen bittikarttalähdemuoto. Tukee useita kerroksia, kanavia, maskeja ja häviötöntä muokkausdataa, ja siitä on tullut maailmanlaajuinen teollisuusstandardi kuvankäsittelyssä ja digitaalisessa maalauksessa)"
+
+msgid "mime_ttf"
+msgstr "TrueType fontti (Applen ja Microsoftin yhteisesti vuonna 1989 kehittämä digitaalinen ääriviivafonttimuoto. Perustuu neliöllisiin Bézier-käyriin, se saavuttaa absoluuttisen pikseliyhdenmukaisuuden näytöllä ja tulostettuna, ja se on modernien työpöytäkäyttöjärjestelmien natiivi oletusfonttimuoto)"
+
+msgid "mime_fon"
+msgstr "FON bittikarttafontti (1980-luvun Microsoftin varhainen järjestelmätason pistematriisifonttimuoto. Ei tue häviötöntä suhteellista skaalausta, tyypillisesti rajoittuu pikselipohjaiseen tekstin renderöintiin perintöjärjestelmissä tai varhaisissa sulautetuissa laitekomponenteissa)"
+
+msgid "mime_pdf"
+msgstr "PDF sähköinen asiakirja (Adoben vuonna 1993 kehittämä, vuonna 2008 ISO 32000 -kansainväliseksi standardiksi tullut. Alustariippumaton kiinteäsivuinen asiakirjamuoto, jolla on absoluuttinen tarkkuus asettelussa ja muotoilussa, se on maailmanlaajuinen standardi sähköisten asiakirjojen jakeluun ja digitaaliseen julkaisuun)"
+
+msgid "mime_dotnet"
+msgstr "ASP.NET dynaaminen sivu (Microsoftin vuonna 2002 .NET-arkkitehtuurin kanssa julkaisema palvelinpuolen dynaaminen verkkosivutekniikka. IIS-moottorilla isännöitynä sitä käytetään yritystason Windows-palvelinpuolen dynaamisten verkkosovellusten ja hajautettujen järjestelmien rakentamiseen)"
+
+msgid "mime_mdb"
+msgstr "MDB relaatiotietokanta (Microsoftin Accessin kanssa vuonna 1992 julkaisema työpöytätason relaatiotietokannan tallennusmuoto. Sisältää Jet-tietokantamoottorin, ja se oli varhaisen henkilökohtaisen tietokoneen ja pienten ja keskisuurten yritysten tietojenkäsittelyn relaatiotietokantaratinen ratkaisu)"
+
+msgid "mime_md"
+msgstr "Markdown asiakirja (John Gruberin vuonna 2004 luoma kevyt merkintäkieli. Sen keskeinen suunnittelufilosofia 'luettava on renderöity' ohjaa moderneja johdannaisia kuten GFM ja CommonMark. Laajalti käytetty vaihtostandardina teknisessä dokumentaatiossa, tietokannoissa (Obsidian) ja moderneissa staattisten verkkosivustojen generaattoreissa)"
+
+msgid "mime_crystal"
+msgstr "Crystal Reports raportti (SAP Business Intelligence (BI) -alustan ammattimainen yritystason raporttitiedostomuoto. Tukee useita tietolähteitä ja monimutkaista dynaamista kaavioiden renderöintiä, ja sitä käytetään laajalti ammattimaiseen raporttien luontiin monikansallisten yritysten talous- ja data-analyysijärjestelmissä)"
+
+msgid "mime_libreoffice"
+msgstr "LibreOffice asiakirja (OpenOfficeen perustuvan avoimen lähdekoodin toimisto-ohjelmiston omisteinen muoto, jonka perusti The Document Foundation vuonna 2010. Se toteuttaa syvällisesti W3C:n ODF (OpenDocument Format) -kansainvälisen standardin, ja se on modernin avoimen lähdekoodin ekosysteemin toimistotyön kulmakivi)"
+
+msgid "mime_encrypt"
+msgstr "ENCRYPT salattu tiedosto (alkuperäinen binaari- tai tekstidata, jota on käsitelty tietyillä symmetrisillä tai epäsymmetrisillä salausalgoritmeilla. Sisältää keskeiset johdetut muodot, kuten .enc, .pgp, .gpg jne., ja sitä käytetään verkkokerroksessa ei-julkisen tiedon luottamuksellisuuden ja eheyden varmistamiseen)"
+
+msgid "mime_gpx"
+msgstr "GPX satelliittiseurantadata (XML-pohjainen maailmanlaajuisen paikannusjärjestelmän vaihtomuoto. Se on erikoistunut maantieteellisten koordinaattien, reittipisteiden, reittilinjojen ja historiallisten reittien kuvaamiseen, ja se on yleinen avoin datastandardi moderneille mobiiliurheilulaitteille, autonavigoinnille ja maantieteellisille tietojärjestelmille (GIS))"
+
+msgid "mime_diskimage"
+msgstr "Disk Image levykuva (ISO, DMG, IMG jne. fyysisen levyn tai optisen median sektori sektorilta matalan tason kuvatiedosto. Sitä käytetään matalan tason järjestelmän käyttöönottoon, suurten ohjelmistojen turvalliseen jakeluun ja tallennusvälineiden täydelliseen fyysisen tason varmuuskopiointiin)"
+
+msgid "mime_vm"
+msgstr "VM virtuaalikoneen kuva (VMDK, VDI, VHDX, OVA jne. virtualisoitu fyysinen levykuva. VMware-, VirtualBox- ja Hyper-V-alustojen perusta, jota käytetään matalan tason laitteistoemulointiin, instanssien tilannevedoksiin ja pilvi-infrastruktuurin jakeluun)"
+
+msgid "mime_torrent"
+msgstr "BitTorrent torrent-tiedosto (Bram Cohenin vuonna 2001 suunnittelema P2P-vertaisverkko hajautettu latausindeksi. Perustuu Bencode-koodaukseen, se tallentaa alkuperäisen tiedoston varmennuksen metatiedot ja Tracker-palvelimen osoitetiedot, ja se on hajautetun verkkovirran jakelun keskeinen kantaja)"
+
+msgid "mime_gis"
+msgstr "GIS paikkatieto (Shapefile- ja GeoJSON-keskeinen maantieteellisen tietojärjestelmän datastandardi. Sisältää moniulotteisia geometrisia koordinaatteja, kerrostopologiaa ja attribuuttidataa, ja sitä käytetään laajalti teräväpiirtoisten digitaalisten karttojen renderöintiin, satelliittien kaukokartoitukseen ja spatiaaliseen geometrian analyysiin)"
+
+msgid "mime_ebook"
+msgstr "EBOOK e-kirja (digitaalinen julkaisumuoto, jonka ytimenä on W3C:n EPUB-kansainvälinen avoin standardi ja Amazon Kindlen omisteinen MOBI/AZW-arkkitehtuuri. Se tukee mukautuvaa virtaavaa asettelua, metatietojen kapselointia ja DRM-digitaalista oikeuksien hallintaa, ja se on mobiilin digitaalisen lukemisen universaali väline)"
+
+msgid "mime_avif"
+msgstr "AVIF tehokas kuva (Open Media Alliancen (AOMedia) vuonna 2019 julkaisema seuraavan sukupolven erittäin teräväpiirtoinen kuvastandardi. Perustuu AV1-videokoodauksen avainkuvatekniikkaan, sen pakkaussuhde on 50 % parempi kuin WebP:llä, ja se tukee natiivisti suurta dynaamista aluetta (HDR), ja se on nykyaikaisen verkkokuvasiirron valtavirran standardi)"
+
+msgid "mime_markdown"
+msgstr "Markdown kevyt asiakirja (John Gruberin vuonna 2004 luoma tekstiasiakirjan merkintäkieli. Käyttää deklaratiivista pelkkää tekstiä, sen syntaksi on saanut vaikutteita reStructuredTextistä, ja sitä käytetään laajalti GitHub-projekteissa, teknisessä dokumentaatiossa ja moderneissa staattisen sisällön hallinnan ekosysteemeissä)"
+
+msgid "mime_yaml"
+msgstr "YAML sarjoitettu määritys (Clark Evansin ym. vuonna 2001 suunnittelema ihmisen luettava tiedon sarjallistamismuoto. Perustuu hierarkkiseen sisentämiseen ja avain-arvo-kartoitukseen, ja se on vakiinnuttanut asemansa pilvinatiivin infrastruktuurin määritysstandardina Kubernetesille, Ansible-automaatiolle ja Docker Composelle)"
+
+msgid "mime_toml"
+msgstr "TOML semanttinen määritys (Tom Preston-Wernerin vuonna 2013 suunnittelema minimalistinen kieli. Sillä on matalan tason suunnitteluetuja, kuten vahva tyypitys, eksplisiittinen kartoitus ja selkeä semantiikka, ja sitä käytetään nyt laajalti standardoituna määritystiedostona nykyaikaisille Rust- (Cargo), Python- (pyproject.toml) ja Go-työkaluketjuille)"
+
+msgid "mime_vue"
+msgstr "Vue yhden tiedoston komponentti (Evan Yun vuonna 2014 julkaiseman progressiivisen verkkokehyksen omisteinen SFC-muoto. Se toteuttaa HTML/CSS/JS-huolen erottelun ja reaktiivisen tilan sidonnan yhdessä tiedostossa, ja se ohjaa syvästi moderneja interaktiivisia frontend-verkkosovelluksia ja laajamittaisia staattisten sivustojen moottoreita)"
+
+msgid "mime_wasm"
+msgstr "WebAssembly binaarimoduuli (W3C:n vuonna 2017 vahvistama korkean suorituskyvyn matalan tason tavukoodistandardi verkolle. Sallii vahvasti tyypitettyjen kielten, kuten C/C++/Rust, kääntämisen selaimen hiekkalaatikkoympäristöön, tarjoten lähes natiivin laitteiston suorituskyvyn, ja se on modernin verkon reunalaskennan kulmakivi)"
+
+msgid "mime_jsx"
+msgstr "React JSX komponentti (Facebookin vuonna 2013 React-kehyksen kanssa julkaisema JavaScript XML -syntaksilaajennus. Se tukee deklaratiivista virtuaalisten DOM-rakenteiden rakentamista JavaScriptin sisällä, mahdollistaen frontendin 'Käyttöliittymä tilan funktiona' -komponenttipohjaisen kehitysparadigman)"
+
+msgid "mime_tsx"
+msgstr "TypeScript TSX komponentti (Microsoftin TypeScriptin vahvan tyyppisyntaksin (2012) ja JSX:n virtaava yhdistelmä. Se lisää staattista käännösaikaista tyyppitarkistusta ja rajapintarajoituksia React-komponenttien kehitykseen, ja se on koodistandardi nykyaikaisten suurten frontend-järjestelmien turvalliselle kehitykselle)"
+
+msgid "mime_heif"
+msgstr "HEIF tehokas kuva (MPEG-järjestön vuonna 2015 vahvistama tehokas kuvatiedostomuoto. Perustuu HEVC (H.265) -videokoodausalgoritmiin, se tukee useita kuvakehyksiä, syvyyskarttoja ja metatietoja erittäin pienessä tilavuudessa, ja se on omisteinen tallennusstandardi moderneille mobiilikäyttöjärjestelmille ja älylaitteille)"
+
+msgid "mime_heic"
+msgstr "HEIC tehokas kuva (Applen kansainväliseen HEIF-standardiin perustuva omisteinen bittikarttamuoto. Nykyaikaisten iPhone-puhelimien oletusvalokuvien tallennusmuotona se sisältää iOS-/macOS-laitteistotason koodauksen/purkamisen ja käyttöjärjestelmän natiivin tuen, mikä vähentää dramaattisesti taustalla olevaa tallennustilaa samalla kun ylläpidetään korkeaa kuvanlaatua)"
+
+msgid "mime_gltf"
+msgstr "glTF 3D-malli (Khronos Groupin vuonna 2015 julkaisema GL-siirtomuotostandardi. Se käyttää JSON-arkkitehtuuria kolmiulotteisten kohtausten kuvaamiseen, ja sitä kutsutaan '3D:n JPEG:ksi', ja se on kevyt teollisuusstandardi modernille WebGL/WebGPU- ja virtuaalitodellisuusrenderöinnille)"
+
+msgid "mime_glb"
+msgstr "GLB binaarinen 3D-malli (glTF-mallin häviötön binaarinen kapselointiversio. Se yhdistää kohtausrakenteen, alemman tason meshin kärkipistetiedot, materiaalit ja tekstuurit yhdeksi tiedostoksi, ja se on suunniteltu erityisesti web-3D-varojen tehokkaaseen siirtoon ja suoratoistojakeluun alustojen välillä)"
+
+msgid "mime_gls"
+msgstr "GLOSSARY datasanasto (erityisesti asiakirjanhallintajärjestelmille ja rakenteellisille tekstikokoelmille tarkoitettu termien määrittelytiedosto. Sisältää vakiotermien määritelmät, monikieliset kartoitukset ja metatietokartoitukset, ja sitä käytetään käsitteellisen johdonmukaisuuden ylläpitämiseen automatisoidussa teksti analyysissä ja sisällönjulkaisujärjestelmissä)"
+
+msgid "mime_cbz"
+msgstr "CBZ sarjakuva (ZIP-pakkaamiseen perustuva omisteinen sarjakuvakuvien arkistointimuoto. Se sisältää jatkuvan sekvenssin staattisia bittikarttakuvia, ja se on yleinen kevyt säiliöstandardi digitaaliselle sarjakuvajulkaisulle ja alustojen väliselle paikalliselle kokoelmalle)"
+
+msgid "mime_cbr"
+msgstr "CBR sarjakuva (RAR-pakkaamiseen perustuva omisteinen sarjakuvakuvien arkistointimuoto. Se käyttää RAR-algoritmia staattisten bittikarttasekvenssien kapselointiin, ja sillä on korkea pakkaussuhde ja laaja yhteensopivuustuki digitaalisten sarjakuvien jakelussa)"
+
+msgid "mime_fb2"
+msgstr "FB2 e-kirja (2000-luvun alun FictionBook 2.0 -e-kirjastandardi. Se käyttää puhdasta XML-rakennetta kirjan ominaisuuksien ja tekstihierarkian kuvaamiseen, ja sillä on laaja tuki avoimen lähdekoodin e-kirjaekosysteemissä ja perinteisissä digitaalisen julkaisun lukijoissa)"
+
+msgid "mime_kepub"
+msgstr "KEPUB e-kirja (Kobon omisteinen parannettu e-kirjamuoto, joka perustuu EPUB-standardiin. Laitteistotasolla optimoitu Kobon e-kirjalukijoille, se tarjoaa tehokkaamman sivuasettelun ja lukutilastojen vuorovaikutuksen)"
+
+msgid "mime_m4b"
+msgstr "M4B äänikirja (MPEG-4 Part 14 (MP4) -säiliöarkkitehtuuriin perustuva äänikirjamuoto. Se käyttää AAC-koodausta, tukee natiivisti matalan tason kirjanmerkkejä, toiston jatkamista keskeytyksestä ja lukujen upottamista, ja se oli aikoinaan Apple iTunes -ekosysteemin vakiotekijä)"
+
+msgid "mime_kfx"
+msgstr "Kindle KFX -muoto (Amazonin vuonna 2015 Kindlen kanssa julkaisema omisteinen parannettu digitaalinen julkaisumuoto. Se tukee kehittynyttä typografista ligatuuria, korkean dynamiikan fontin renderöintiä ja ydintason virtaavaa sivulatausta (Page Flip), ja se on modernin Kindle-alustan keskeinen standardi)"
+
+msgid "mime_chm"
+msgstr "CHM käännetty ohjetiedosto (Microsoftin vuonna 1997 julkaisema käännetty HTML-ohjetietojärjestelmä. Se pakkaa hypertekstitiedot ja alemman tason hakemistot yhdeksi binaariseksi säiliöksi, ja se on pitkään ollut Windows-ohjelmistojen paikallisen offline-ohjedokumentaation standardimuoto)"
+
+msgid "mime_mht"
+msgstr "MHT verkkoarkisto (Microsoftin vuonna 1999 julkaisema MIME-yhdistelmän hypertekstimuoto. Se perustuu RFC 2557 -standardiin, ja se pakkaa HTML-lähdekoodin, CSS:n, JS:n ja upotetut kuvat yhdeksi tekstitiedostoksi, ja sitä käytetään vanhemmissa selaimissa offline-verkkosivujen tallentamiseen)"
+
+msgid "mime_wml"
+msgstr "WML langaton merkintäkieli (WAP (Wireless Application Protocol) -foorumin vuonna 1999 vahvistama mobiili merkintästandardi. Se perustuu XML-määrittelyyn, ja se on suunniteltu erityisesti varhaisille kapeakaistaisille langattomille matkapuhelinverkoille ja vähätehoisille peruspuhelimille, ja se on eläkkeelle jäänyt perintöteknologia nykyaikaisessa verkkoympäristössä)"
+
+msgid "mime_xhtml"
+msgstr "XHTML hypertekstinen verkkosivu (vuoden 2000 W3C-standardi, XML-arkkitehtuuriin perustuva tiukka hypertekstin merkintäkieli. Vuonna 2009 W3C lopetti sen teknisen kehityksen ja siirtyi täysin HTML5-määrittelyyn, nykyään sitä käytetään lähinnä semanttiseen verkkosivujen renderöintiin perintöjärjestelmissä)"
+
+msgid "mime_xml"
+msgstr "XML rakenteellinen asiakirja (vuoden 1998 W3C-standardi laajennettava merkintäkieli. Sen itseään kuvaava tagiarkkitehtuuri tekee siitä perustan verkkopalveluille (SOAP/REST), järjestelmätason määritystiedostoille (XSD) ja alustojen väliselle tiedonsiirrolle)"
+
+msgid "mime_sgml"
+msgstr "SGML standardi yleistetty merkintäkieli (vuoden 1986 ISO 8879 -kansainvälinen standardi. Sähköisten asiakirjojen rakenteellisen kuvauksen edelläkävijänä, sekä XML että varhaiset HTML-määrittelyt ovat peräisin tästä standardista metakielestä)"
+
+msgid "mime_apng"
+msgstr "APNG dynaaminen grafiikka (Mozillan vuonna 2004 kehittämä PNG-dynaaminen laajennus. Se tukee 24-bittistä täysväriä ja 8-bittistä alfakanavan läpinäkyvyyttä, ja se on moderni teräväpiirtoinen vaihtoehto GIF-muodolle verkkoskenaarioissa)"
+
+msgid "mime_bmp"
+msgstr "BMP natiivi bittikartta (Microsoft-alustan laiteriippumaton bittikarttamuoto, joka on vahvistettu Windows 1.0 -aikakaudelta lähtien. Se käyttää häviötöntä pakkaamatonta tallennusta, joten sen tilavuus on tyypillisesti 3-10 kertaa PNG:tä suurempi, mutta koska se ei vaadi koodaus/purkukustannuksia, se on edelleen laajalti upotettuna Windows 11:n ydinkomponentteihin, EXE/MSI-resurssiosioihin ja vanhojen ajurien grafiikkapuskureihin)"
+
+msgid "mime_cdr"
+msgstr "CDR vektorigrafiikka (Corel Corporationin omisteinen CorelDRAW-ammattimainen vektorisuunnittelun lähdemuoto. Se tukee monitasoista värinhallintaa, monimutkaisia matemaattisia käyräsolmuja ja painotason asettelutietoja, ja se on erikoistunut ammattimaiseen graafiseen painatukseen ja mainossuunnitteluun)"
+
+msgid "mime_gif"
+msgstr "GIF indeksoitu värikuva (CompuServen vuonna 1987 kehittämä 8-bittinen indeksoitu väribittikarttamuoto. Se perustuu LZW-algoritmiin, ja se on rajattu 256 väritasoon ja yksiväriseen läpinäkyvyyteen. Suurella kuvataajuudella sen tilavuus kasvaa, ja se korvataan vähitellen moderneilla, tehokkailla animaatiostandardeilla, kuten APNG, WebP jne.)"
+
+msgid "mime_ico"
+msgstr "ICO järjestelmäkuvake (Windows-alustan natiivi kuvakeresurssien kapselointimuoto. Se tukee useiden eri pikselitarkkuuksien ja värisyvyyksien kuvamuunnelmien sekoittamista yhdessä säiliössä, ja se on myös nykyaikaisten verkkoselainten sivustotunnisteen (Favicon) yleinen jakelustandardi)"
+
+msgid "mime_jpeg"
+msgstr "JPEG pakattu kuva (vuoden 1992 ISO 10918 -kansainvälinen standardi häviölliselle pakkaukselle. Se perustuu diskreettiin kosinimuunnokseen (DCT), ja se saavuttaa korkean pakkaussuhteen säilyttäen samalla erinomaisen realistisen kuvanlaadun. Se on absoluuttinen de facto -standardi staattisille valokuville maailmanlaajuisessa internetissä)"
+
+msgid "mime_jpg"
+msgstr "JPEG pakattu kuva (vuoden 1992 ISO 10918 -kansainvälinen standardi häviölliselle pakkaukselle. Se perustuu diskreettiin kosinimuunnokseen (DCT), ja se saavuttaa korkean pakkaussuhteen säilyttäen samalla erinomaisen realistisen kuvanlaadun. Se on absoluuttinen de facto -standardi staattisille valokuville maailmanlaajuisessa internetissä)"
+
+msgid "mime_png"
+msgstr "PNG häviötön kuva (W3C:n vuonna 1996 suosittelema kannettava verkkografiikan standardi. Se käyttää häviötöntä pakkausalgoritmia, ja se tukee natiivisti 24-bittistä täysväriä ja 8-bittistä alfakanavan läpinäkyvyyttä. Klassisen staattisen GIF-tiedoston teräväpiirtoisena vaihtoehtona se on häviöttömien pikselikuvien absoluuttinen de facto -standardi internetissä)"
+
+msgid "mime_ps"
+msgstr "PostScript sivunkuvailutiedosto (Adoben vuonna 1985 julkaisema pino-pohjainen sivunkuvailukieli. PDF-muodon teknologisena edeltäjänä se mahdollistaa matalalla tasolla laitteistosta riippumattoman tekstin asettelun ja erittäin tarkan vektorigrafiikan renderöinnin, ja se on perustavanlaatuinen standardi ammattimaisessa painatuksessa ja lasertulostuksessa)"
+
+msgid "mime_psb"
+msgstr "PSB suuri kerrosasiakirja (Adoben Photoshopin omisteinen erittäin suuren lähdetiedoston kapselointimuoto. Se rikkoo vakio-PSD-muodon 2 Gt:n fyysisen tilavuuden ja 30 000 pikselin sisäisen osoittamisen rajoitukset, ja se on suunniteltu erityisesti erittäin suurten, syvästi kerrostettujen massiivisten digitaalisten taidevarojen tallentamiseen)"
+
+msgid "mime_psd"
+msgstr "PSD kerrossuunnittelun lähdetiedosto (Adoben Photoshopin omisteinen kerrosrakenteisen kuvan suunnittelusäiliö. Graafisen kuvan alan teollisuusstandardisäiliönä se kapseloi natiivisti täyden kerroksen renderöintipuun, bittikarttakanavat, vektorileikkauspolut ja monimutkaiset sekoitustilat, ja se tukee häviötöntä täyden datan muokkausta)"
+
+msgid "mime_webp"
+msgstr "WebP tehokas kuva (Googlen vuonna 2010 julkaisema yleinen verkkografiikan koodausstandardi. Se on peräisin VP8-videon avainkuvatekniikasta, ja se on täysin yhteensopiva häviöllisen, häviöttömän, puoliksi läpinäkyvän ja dynaamisen renderöinnin kanssa. Samassa laadussa se on 25-35 % pienempi kuin PNG, ja se on modernien verkkosivujen korkean suorituskyvyn latauksen kulmakivi)"
+
+msgid "mime_woff"
+msgstr "WOFF web-glyfi-tiedosto (vuonna 2009 luotu ja vuonna 2012 W3C-standardiksi tullut Web Open Font -muoto. Sen olemus on vakio-TTF/OTF-fonttirakenteiden häviötön pakkaaminen virraksi, mikä optimoi dramaattisesti verkon kaistanleveyden kustannuksia, ja se on yleinen muoto nykyaikaisten verkkosivustojen kuvakkeille ja pilvifonteille)"
+
+msgid "mime_7z"
+msgstr "7z pakattu paketti (Igor Pavlovin vuonna 1999 kehittämä 7-Zip -omisteinen muoto. Se perustuu avoimen lähdekoodin LZMA/LZMA2-algoritmeihin, ja sen pakkaussuhde on erittäin korkea. Vastaavissa olosuhteissa se on tyypillisesti 30-50 % pienempi kuin ZIP, ja se on avoimen lähdekoodin yhteisön ja ohjelmistojen jakelun yleinen korkean pakkaussuhteen muoto)"
+
+msgid "mime_ace"
+msgstr "ACE pakattu paketti (1990-luvun WinACE-omisteinen pakkausmuoto. Se kilpaili aikoinaan RAR-muodon kanssa ja saavutti korkean pakkaussuhteen. Tekninen kehitys pysähtyi vuoden 2007 jälkeen, ja nykyään se on korvattu 7z- ja RAR-muodoilla, ja se kuuluu perintöjärjestelmien arkistomuotoihin)"
+
+msgid "mime_bz2"
+msgstr "BZIP2 pakattu paketti (Julian Sewardin vuonna 1996 kehittämä lohkolajittelupakkausmuoto. Sen alemman tason algoritmin pakkaussuhde on 15-20 % korkeampi kuin GZIPillä, mutta laskentakustannukset ovat suuremmat. Sitä käytetään usein Linux-ytimen lähdekoodin ja avoimen lähdekoodin ohjelmistopakettien jakeluun, ja sen vakiotiedostopääte on .bz2)"
+
+msgid "mime_cab"
+msgstr "CAB pakattu paketti (Microsoftin vuonna 1995 kehittämä Cabinet-arkistomuoto. Windows-järjestelmän natiivina asennusstandardina sitä käytetään ohjainten ja ydintiedostojen jakeluun, ja se toimii myös Windows Installerin (MSI) alemman tason tallennussäiliönä)"
+
+msgid "mime_dmg"
+msgstr "DMG levykuva (Applen 1980-luvulta lähtien kehittämä levykuvamuoto. macOS-ohjelmistojen jakelun vakiosäiliönä se tukee asentamista virtuaalisena tiedostojärjestelmänä, matalan tason pakkausta ja tiedon salausta, ja se on Mac-ekosysteemin sovellusjakelun valtavirran muoto)"
+
+msgid "mime_emz"
+msgstr "EMZ pakattu kuva (Windows Enhanced Metafile EMF:n pakattu versio. Se on olemukseltaan GZIP-algoritmilla pakattua binaarista vektorigrafiikkaa, ja sitä käytetään laajalti upotetun vektorigrafiikan tallentamiseen Microsoft Office -sarjan asiakirjoissa)"
+
+msgid "mime_gz"
+msgstr "GZIP pakattu paketti (GNU-projektin Jean-loup Gaillyn ja Mark Adlerin vuonna 1992 kehittämä vakio virtapakkausmuoto. Unix/Linuxin vakiona pakkaustyökaluna se on myös HTTP-siirtokerroksen pakkauksen (Gzip) keskeinen standardi, ja sitä käytetään usein yhdessä TAR-arkistojen kanssa)"
+
+msgid "mime_jar"
+msgstr "JAR pakattu paketti (Sun Microsystemsin vuonna 1997 julkaisema Java-arkistomuoto. Se on olemukseltaan ZIP-rakenteeseen perustuva pakkaussäiliö Java-luokkakirjastojen ja metatietojen kapselointiin, ja se on keskeinen käännetty tuote Mavenille, Gradlelle ja varhaiselle Android-ekosysteemille)"
+
+msgid "mime_lzma"
+msgstr "LZMA pakattu paketti (Igor Pavlovin vuonna 1998 kehittämä Lempel-Ziv-Markov-ketjun pakkausalgoritmi. 7z-muodon keskeisenä moottorina sillä on erittäin korkea pakkaussuhde ja nopea purku, ja sitä käytetään laajalti laiteohjelmistojen ja sulautettujen järjestelmien jakeluun)"
+
+msgid "mime_rar"
+msgstr "RAR pakattu paketti (Eugene Roshalin vuonna 1993 kehittämä WinRAR-omisteinen arkistomuoto. Se tukee osiin jakoa, fyysisiä palautustietueita (ECC) ja vahvaa salausta. Sen pakkaussuhde on parempi kuin vakio ZIPillä, ja sillä on laaja yhteensopivuustuki henkilökohtaisilla ja kaupallisilla aloilla)"
+
+msgid "mime_tar"
+msgstr "TAR arkistopaketti (vuoden 1979 Unix V7 -ajan nauha-arkistomuoto. Se tekee vain tiedostovirran pakkaamisen ilman tiedon pakkausta, ja sitä yhdistetään usein GZIP/BZIP2/XZ-muotoihin. Se on Linuxin lähdekoodin ja Docker-kuvien kerrostetun tallennuksen alemman tason standardi)"
+
+msgid "mime_tgz"
+msgstr "TGZ pakattu paketti (TAR-arkiston ja GZIP-pakkauksen virtaava yhdistelmämuoto, tiedostopääte .tgz tai .tar.gz. Unix/Linux-ympäristöjen yleisimpänä ohjelmistopakettien jakelumuotona sitä käytetään laajalti lähdekoodin kääntämiseen perustuvaan käyttöönottoon ja asennusvapaiden binaaripakettien jakeluun)"
+
+msgid "mime_tbz2"
+msgstr "TBZ2 pakattu paketti (TAR-arkiston ja BZIP2-pakkauksen virtaava yhdistelmämuoto, tiedostopääte .tbz2 tai .tar.bz2. Verrattuna TGZ-muotoon, se voi parantaa pakkaussuhdetta vielä 15-20 %, ja se sopii suurten tiedostojen siirtoon. Sitä käytettiin pitkään Linux-ytimen lähdekoodin jakeluun)"
+
+msgid "mime_xz"
+msgstr "XZ pakattu paketti (vuonna 2009 julkaistu seuraavan sukupolven korkean pakkaussuhteen muoto. Se perustuu LZMA2-algoritmiin, ja sen tiedon pakkaussuhde on 30-50 % parempi kuin GZIPillä samalla kun se säilyttää nopean purun. Linux-ydin ja valtavirran pakettihallinnat (kuten Debian .deb -paketin sisällä) ovat vahvistaneet sen suositeltavaksi jakelustandardiksi)"
+
+msgid "mime_z"
+msgstr "Z pakattu paketti (vuoden 1985 Unixin compress-komennon LZW-pakkausmuoto. Se oli varhaisten Unix-järjestelmien vakio pakkausstandardi, mutta nykyään se on täysin korvattu tehokkaammalla GZIP-muodolla, ja se on harvinainen historiallinen perintömuoto nykyaikaisessa verkkoliikenteessä)"
+
+msgid "mime_zip"
+msgstr "ZIP pakattu paketti (Phil Katzin vuonna 1989 kehittämä PKZIP-yleisarkistomuoto. Sitä tukevat natiivisti kaikki tärkeimmät käyttöjärjestelmät, ja se on internetin laajimmin käytetty säiliöstandardi. Modernin Javan JAR, Androidin APK ja Office-asiakirjat (OOXML) perustuvat kaikki ZIP-rakenteeseen)"
+
+msgid "mime_zst"
+msgstr "Zstandard pakattu paketti (Facebookin Yann Colletin vuonna 2015 suunnittelema seuraavan sukupolven virtaava pakkausstandardi. Se lähestyy LZMA:n pakkaussuhdetta ja sillä on samalla huomattavasti suurempi suorituskyky kuin GZIPillä. Linux-ydin (5.9+) ja Arch/Debian-pakettihallinnat ovat ottaneet sen syvällisesti käyttöön)"
+
+msgid "mime_lz4"
+msgstr "LZ4 pakattu paketti (Yann Colletin vuonna 2011 kehittämä erittäin nopea virtaava pakkausalgoritmi. Sen läpäisynopeus on yli 10 kertaa nopeampi kuin GZIPillä, ja sen CPU:n aikakustannukset ovat erittäin alhaiset. Sitä käytetään laajalti Linux-ytimessä, OpenZFS-tiedostojärjestelmässä ja Hadoop-reaaliaikaisessa datavirran käsittelyssä)"
+
+msgid "mime_lzo"
+msgstr "LZO pakattu paketti (Markus Oberhumerin vuonna 1996 kehittämä Lempel-Ziv-Oberhumer-algoritmi. Se keskittyy erittäin nopeaan purkutulokseen. Sitä on upotettu laajalti Linux-ytimen Squashfs-kuviin, OpenWrt-laiteohjelmistoon ja erilaisiin resurssirajoitteisiin sulautettuihin järjestelmiin)"
+
+msgid "mime_msi"
+msgstr "MSI järjestelmän asennuspaketti (Microsoftin vuonna 1999 julkaisema Windows Installer -datan kapselointimuoto. Windows-sovellustason käyttöönottostandardina se tukee natiivisti alemman tason tapahtumien peruutusta, komponenttien elinkaaren hallintaa ja eräjousta hiljaista asennusta, ja se on keskeinen standardi yritysohjelmistojen keskitetylle jakelulle ja politiikkapohjaiselle käyttöönotolle)"
+
+msgid "mime_pkg"
+msgstr "PKG alustariippumaton ohjelmiston asennuspaketti. 1. FreeBSD-ohjelmistopaketti: pkgng-standardi, tiedostopääte .pkg tai .txz, perustuu TAR+XZ/Zstd-pakkaukseen, tukee riippuvuuksien ratkaisua ja allekirjoituksen varmennusta; 2. macOS-asennuspaketti: perustuu Apple Installer -muotoon, tukee mukautettuja komponentteja, asennusskriptejä ja järjestelmätason poistoa. Ne ovat ensisijaisia jakelualustoja BSD-palvelimille ja Mac-järjestelmälle."
+
+msgid "mime_apk"
+msgstr "APK Android-sovelluspaketti (Googlen Androidin kanssa vuonna 2008 julkaisema perinteinen sovellusten asennuspaketti. Se perustuu alemman tason ZIP-arkistorakenteeseen, ja se pakkaa käännetyn Dalvik-tavukoodin (DEX), metatietojen manifestin ja globaalit resurssit. Sitä käytetään nyt laajalti paikalliseen kehitysvirheenkorjaukseen, kolmannen osapuolen jakeluun ja laitteisiin sivuttaisasennukseen)"
+
+msgid "mime_ipa"
+msgstr "IPA Apple-sovelluspaketti (vuonna 2008 iPhone SDK:n kanssa julkaistu iOS/iPadOS-yksinoikeussäiliö. Se on olemukseltaan FairPlay DRM:llä tai yrityssertifikaatilla allekirjoitettu ZIP-arkisto, joka sisältää Mach-O -binaarisen suoritettavan tiedoston, sovellusresurssipuun ja Info.plist-metatietojen määrityksen)"
+
+msgid "mime_hap"
+msgstr "HAP HarmonyOS-sovelluspaketti (HarmonyOS 2.0:n kanssa vuonna 2020 julkaistu HarmonyOS-kehys, elastisen käyttöönoton perusyksikkö. Se koostuu Entry-päämoduulista tai Feature-laajennetuista toimintomoduuleista, ja se on usean päätelaitteen (puhelimet, tabletit, puettavat laitteet) välinen jakelumuoto älypäätelaitteiden jakeluun)"
+
+msgid "mime_har"
+msgstr "HAR HarmonyOS staattinen jaettu paketti (HarmonyOS-omisteinen staattisen jaetun kirjaston arkistotiedosto. Sitä käytetään yhteisten komponenttien, alemman tason resurssikoodin ja käännösaikaisten riippuvuuksien kapselointiin, ja useat HAP-moduulit linkittävät sen staattisesti jaetusti. Se on HarmonyOS-järjestelmän komponenttipohjaisen kehityksen ja monimoduulisen uudelleenkäytön perusta)"
+
+msgid "mime_aab"
+msgstr "AAB Android-sovellusniputus (Googlen vuonna 2018 lanseeraama ja vuonna 2021 vahvistama Google Play -dynaaminen jakelumuoto. Puhtaana jakeluyksikkönä pilvi räätälöi ja kääntää dynaamisesti kohdelaitteen CPU-arkkitehtuurin, näytön tiheyden ja kielen perusteella, ja tuottaa optimoituja APK-paketteja tarpeen mukaan, vähentäen siirtokaistanleveyden kustannuksia keskimäärin 35%)"
+
+msgid "mime_xapk"
+msgstr "XAPK laajennettu sovelluspaketti (kolmannen osapuolen Android-yhteisön vahvistama epävirallinen sovelluslaajennusstandardi. Se yhdistää vakio APK-tiedoston suuren OBB-pelin tiedonlaajennuspaketin kanssa, fyysisesti ylittäen Google Playn 100 Mt:n yksittäisen tiedostokokorajoituksen, ja sitä nähdään laajalti pelienjakelualustoilla)"
+
+msgid "mime_appx"
+msgstr "APPX moderni sovelluspaketti (Microsoftin Windows 8:n kanssa vuonna 2012 julkaisema UWP-sovellusten käyttöönottostandardi. Sillä on hiekkalaatikossa eristetty suoritus ja kevyt poistoominaisuus, ja se oli Microsoft Storen varhainen hallitseva standardi, mutta modernissa Windows-ekosysteemissä se on siirtynyt elinkaaren loppuvaiheeseen kehittyen kohti MSIX-muotoa)"
+
+msgid "mime_msix"
+msgstr "MSIX seuraavan sukupolven sovelluspaketti (Microsoftin vuonna 2018 julkaisema uusi täysin standardoitu Windowsin pakkausmäärittely. Se sulauttaa täydellisesti APPX:n sovellusturvallisuuden hiekkalaatikko-ominaisuudet ja MSI:n yritystason resurssienhallintaedut, se on täysin yhteensopiva kaikkien Win32-sovellustyyppien kanssa, ja se on Windows 11:n suositeltu jakelustandardi)"
+
+msgid "mime_appimage"
+msgstr "AppImage itsenäinen sovelluspaketti (vuonna 2004 aloitettu Linuxin yksittäinen suoritettava arkistomäärittely. Se käyttää 'yksi sovellus on yksi tiedosto' -itsensä sisältävää arkkitehtuuria, joka liitetään suorituksen aikana FUSE-mekanismin kautta suoraan kirjoitussuojatuksi virtuaaliseksi tiedostojärjestelmäksi, saavuttaen nollariippuvaisen, käyttövalmiin suorituksen useissa Linux-jakeluissa)"
+
+msgid "mime_flatpak"
+msgstr "Flatpak hiekkalaatikon sovelluspaketti (Red Hatin ja GNOMEn vuonna 2015 johtama Linux-jakelurajapintainen työpöytäsovellusten jakelustandardi. Se perustuu Linux-ytimen Namespace- ja Cgroups-mekanismeihin erittäin tiukan sovellustason tietoturvahiekkalaatikon eristyksen saavuttamiseksi, ja se on modernien avoimen lähdekoodin käyttöjärjestelmien ohjelmistokeskusten perusta)"
+
+msgid "mime_snap"
+msgstr "Snap kontitettu sovelluspaketti (Ubuntun emoyhtiö Canonicalin vuonna 2014 julkaisema Linuxin yleinen käyttöönottostandardi. Se käyttää sovelluksen itsensä sisältävän SquashFS-kuvan liittämisarkkitehtuuria, ja se tukee automaattisia inkrementaalisia päivityksiä ja tiukkaa AppArmor-hiekkalaatikon eristystä. Se on Ubuntu-ohjelmistokeskuksen ekosysteemin oletusmuoto)"
+
+msgid "mime_deb"
+msgstr "DEB järjestelmäohjelmistopaketti (Debian-projektin vuonna 1993 vahvistama binaari- ja lähdekoodin pakkausmäärittely. Debianin, Ubuntun ja kaikkien niiden johdannaisten alemman tason asennusstandardina se perustuu dpkg:hen pakkausta ylläpidettäessä ja käyttää APT:tä tehokkaana pakettihallinnan etupäänä, ja se on Linux-ekosysteemin kypsin ohjelmistojakelun kulmakivi)"
+
+msgid "mime_rpm"
+msgstr "RPM järjestelmäohjelmistopaketti (Red Hatin vuonna 1997 julkaisema Red Hat Package Manager -pakkausmäärittely. Yhdessä DEB-muodon kanssa ne muodostavat kaksi perinteisen Linux-pakettihallinnan pääsuuntausta. Ne sisältävät natiivisti transaktioihin perustuvan riippuvuustarkistuksen ja alemman tason ohjelmiston digitaalisen allekirjoituksen varmennuksen, ja ne ovat edelleen ehdoton valtavirran jakelustandardi Red Hatin ekosysteemin jakeluissa, kuten RHEL, Fedora ja CentOS)"
+
+msgid "mime_pacman"
+msgstr "Pacman arkisto-ohjelmistopaketti (Arch Linuxin pacman-hallinnan vuonna 2002 vahvistama .pkg.tar.zst-pakkausmuoto. Arch Linuxin rullaavan päivitysmekanismin ytimenä se perustuu nopeaan Zstandard-korkean pakkauksen algoritmiin, ja yhdessä AUR-ekosysteemin (Arch User Software Repository) kanssa se on moderni pakettijakelustandardi, joka ilmentää minimalismia ja KISS-periaatetta (Keep It Simple, Stupid))"
+
+msgid "mime_exe"
+msgstr "EXE natiivi suoritettava tiedosto (Windows-alustan Portable Executable (PE) -binaariohjelmamuoto. Sen tekninen sukujuuret juontavat MS-DOS-ajan MZ-otsikkorakenteeseen, ja vuodesta 1993 Windows NT alkaen se vakiintui täysin PE-rakennemäärittelyksi. Se on maailman laajimmin käytetty suoritusstandardi konekoodiohjeille, staattisille resurssiosioille ja järjestelmän ytimen käynnistykselle)"
+
+msgid "mime_dll"
+msgstr "DLL dynaaminen linkityskirjasto (Windows-alustan Dynamic Link Library -jaetun koodikirjaston määrittely. Dynaamisen latauksen ja symbolien uudelleensijoituksen kautta suorituksen aikana se säästää merkittävästi fyysistä muistia ja levytilaa. Windows-API:n keskeisenä toteutusmuotona varhainen 'DLL-helvetti' ongelma ratkaistiin nykyaikana SxS-rinnakkaiseristysmekanismilla)"
+
+msgid "mime_com"
+msgstr "COM klassinen suoritettava tiedosto (MS-DOS-ajan vanhin muistikuva (Command) -suoritusmuoto. Se käyttää rakenteetonta puhdasta koodisegmenttisuunnittelua, ja se on rajoitettu 64 KB:n fyysisen muistin osoitussegmenttiin. Nykyään se on eläkkeellä historiallisena perintömuotona, mutta moderneissa Windows-arkkitehtuureissa se säilyttää rajoitetun yhteensopivuuden tiettynä komponenttirajapintana)"
+
+msgid "mime_aac"
+msgstr "AAC-ääni (MPEG-standardi vuodelta 1997, Advanced Audio Coding. MP3:n seuraaja, äänenlaatu parempi kuin MP3 samalla bittinopeudella, oletusäänimuoto YouTubelle, iTunesille, Nintendo Switchille)"
+
+msgid "mime_alac"
+msgstr "ALAC-ääni (Apple kehitti vuonna 2004, Apple Lossless Audio Codec. Applen häviötön muoto, avoimeksi lähdekoodiksi 2011, oletushäviötön muoto iTunesille ja Apple Musicille)"
+
+msgid "mime_flac"
+msgstr "FLAC-ääni (Xiph.Org Foundation kehitti vuonna 2001, Free Lossless Audio Codec. Häviötön pakkaus, äänenlaatu sama kuin CD:llä, tiedostokoko noin puolet alkuperäisestä WAV:stä. Avoimen lähdekoodin ja patenttivapaa, ensisijainen muoto audiofiileille ja digitaalisille musiikkikokoelmille)"
+
+msgid "mime_mp3"
+msgstr "MP3-ääni (Fraunhofer Institute kehitti vuonna 1993, MPEG-1 Audio Layer 3. Häviöllinen pakkausmuoto, pieni tiedosto hyväksyttävällä äänenlaadulla, 2000-luvun digitaalisen musiikin vallankumouksen päämuoto, vastuussa iPodista ja Napsterista. Patentit vanhenivat vuonna 2017, tuli julkisen omistuksen muodoksi)"
+
+msgid "mime_oga"
+msgstr "Ogg Audio -ääni (Xiph.Org Foundation kehitti, puhtaan äänen muoto Ogg-säiliöstä, käyttää Vorbis-koodausta. Avoimen lähdekoodin ja patenttivapaa, pakkausteho parempi kuin MP3:lla, laajalti käytetty avoimen lähdekoodin projekteissa)"
+
+msgid "mime_ogg"
+msgstr "OGG-ääni (Xiph.Org Foundation kehitti vuonna 2000, Ogg Vorbis -muoto. Avoimen lähdekoodin ja patenttivapaa, pakkausteho parempi kuin MP3:lla, varhainen Spotify käytti sitä, laajalti käytetty pelien äänitehosteissa)"
+
+msgid "mime_opus"
+msgstr "Opus-ääni (IETF standardoi vuonna 2012, avoin ja patenttivapaa äänimuoto, yhdistää SILK- ja CELT-tekniikat, erittäin matala latenssi, korkein pakkausteho, oletusäänimuoto WebRTC:lle, WhatsAppille, Discordille)"
+
+msgid "mime_wav"
+msgstr "WAV-ääni (Microsoft ja IBM kehittivät vuonna 1991, Windowsin natiivi äänimuoto. PCM-koodaus, pakkaamaton, häviötön äänenlaatu mutta erittäin suuri tiedosto, ammattimaisen äänieditoinnin standardimuoto)"
+
+msgid "mime_wma"
+msgstr "WMA-ääni (Microsoft kehitti vuonna 1999, Windows Media Audio. On häviöllisiä/häviöttömiä versioita, Windows tukee natiivisti, levisi Windows Media Playerin mukana. Nyt marginaalissa, korvattu MP3/AAC:lla)"
+
+msgid "mime_dsf"
+msgstr "DSF-ääni (Direct Stream Digital -muoto, kehittäneet Sony ja Philips. 1-bittinen korkea näytteenottotaajuus, DSD-äänen standardimuoto, SACD:n digitaalinen versio, huippulaatuinen äänimuoto audiofiileille, hyvin suuri tiedosto)"
+
+msgid "mime_ape"
+msgstr "APE Audio (Monkey's Audion kehittämä vuonna 2000, häviötön pakkausmuoto. Korkeampi pakkaussuhde kuin FLAC, mutta hitaampi koodaus, käytössä edelleen Windows-alustalla ja audioharrastajien keskuudessa)"
+
+msgid "mime_mid"
+msgstr "MIDI-ääni (MIDI Association määritteli 1983, Musical Instrument Digital Interface. Nuottimuoto, ei tallenne, tiedosto hyvin pieni, standardi elektronisille soittimille, puhelimen soittoäänille, pelien äänitehosteille. General MIDI standardoitiin vuonna 1991, määrittelee 128 soitinta)"
+
+msgid "mime_m4a"
+msgstr "M4A-ääni (MPEG-4 Audio, säiliömuoto AAC:lle. iTunes-musiikkikaupan standardimuoto, Applen ekosysteemin tärkein äänimuoto, tukee DRM-suojausta)"
+
+msgid "mime_m3u"
+msgstr "M3U-soittolista (MP3 URL -soittolistamuoto, pelkkä tekstitiedosto, tallentaa äänitiedostojen polut. Winamp-aikakauden standardi, käytetään Internet-radioon, verkkosuoratoistoon. M3U8 on sen UTF-8-versio, käytetään HTTP Live Streamingissä)"
+
+msgid "mime_asf"
+msgstr "ASF-suoratoisto (Microsoft kehitti vuonna 1996, Advanced Systems Format. Windows Media -suoratoistosäiliö, tukee äänen ja videon synkronoitua siirtoa. Käytetään suorissa verkkolähetyksissä ja video suoratoistona, WMA/WMV perustuvat ASF-säiliöön)"
+
+msgid "mime_avi"
+msgstr "AVI-video (Microsoft julkaisi 1992, varhainen Windows-videostandardi. 'Audio Video Interleave', vuorottelee ääntä ja videota, oli suosituin videoformaatti 1990-2000 -luvuilla, nyt korvattu MP4/MKV:llä)"
+
+msgid "mime_divx"
+msgstr "DivX-video (DivX Corporation kehitti 1998, MPEG-4-pohjainen videokoodekkiformaatti. Päämuoto verkkovideon jakamiseen 2000-luvulla, ensimmäinen tekniikka, joka pakkasi DVD-laadun CD-kokoon. Tekijänoikeuskiistojen vuoksi muuttui myöhemmin kaupalliseksi koodekiksi)"
+
+msgid "mime_mp4"
+msgstr "MP4-video (MPEG-standardi vuodelta 2001, MPEG-4 Part 14. Maailman yleisin videoformaatti, tukee H.264/H.265-koodausta, oletusmuoto verkkovideolle, kännykkäkuvaukselle, YouTubelle)"
+
+msgid "mime_m4v"
+msgstr "M4V-video (iTunes-videoformaatti, MP4:n variantti. Videoformaatti Applen ekosysteemissä, iTunes Store -elokuvien ja televisio-ohjelmien standardimuoto, tukee DRM-tekijänoikeussuojausta)"
+
+msgid "mime_mpeg"
+msgstr "MPEG-video (MPEG-järjestö määritteli 1988, Moving Picture Experts Group. Asetti perustan digitaalisen videon pakkausstandardeille, MPEG-1 (VCD), MPEG-2 (DVD), MPEG-4 (verkkokuvaus) vaikuttavat syvästi)"
+
+msgid "mime_mkv"
+msgstr "MKV-video (Matroska-projekti kehitti 2002, avoimen lähdekoodin multimediasäiliö. Tukee useita ääniraitoja, useita tekstityksiä, lukuja, 'paketointityökalu', ensisijainen muoto korkearesoluutioisten elokuvien jakamiseen)"
+
+msgid "mime_mpg"
+msgstr "MPEG-video (MPEG-1/MPEG-2-videotarkenteet, VCD:n ja DVD:n standardimuoto. Optisten levyjen videoiden päämuoto 1990-2000 -luvuilla, nyt korvattu H.264/H.265:llä)"
+
+msgid "mime_ogv"
+msgstr "Ogg Video -video (Xiph.Org Foundation kehitti, Ogg-säiliön videomuoto, käyttää Theora-koodausta. Avoimen lähdekoodin ja patenttivapaa, yksi HTML5-videon varhaisista standardeista, Firefox tukee natiivisti)"
+
+msgid "mime_ogx"
+msgstr "Ogg-multimediasäiliö (Xiph.Org Foundation kehitti, Ogg-säiliön yleinen laajennus, voi sisältää useita raitoja kuten ääntä, videota, tekstityksiä. Avoimen lähdekoodin multimediasstandardi, käytetään peleissä, suoratoistossa)"
+
+msgid "mime_rm"
+msgstr "RealMedia-video (RealNetworks kehitti 1995, RealMedia-muoto. Internet-suoratoiston edelläkävijä 1990-2000 -luvuilla, RealPlayer-soittimen päämuoto. Haitat: vaatii erikoissoittimen, huono pakkauslaatu, myöhemmin korvattu Flash/MP4:llä)"
+
+msgid "mime_flv"
+msgstr "Flash-video (muoto ilmestyi 2002, Flash Video -muoto. Olipa kerran verkkokuvauksen päämuoto. Varhainen YouTube käytti sitä. Haitat: vaatii Flash-laajennuksen, heikko suorituskyky, paljon tietoturva-aukkoja. Vuodesta 2015 alkaen suuret verkkosivustot siirtyivät HTML5-videoon, nyt vanhentunut)"
+
+msgid "mime_f4v"
+msgstr "F4V-video (Flash-videoformaatti, jonka Adobe kehitti, FLV:n seuraaja. Perustuu MPEG-4-standardiin, tukee H.264-koodausta. Vanhentunut Flash-tekniikan mukana, Adobe lopetti tuen vuonna 2020)"
+
+msgid "mime_wmv"
+msgstr "WMV-video (Microsoft kehitti 1999, Windows Media Video. Windows tukee natiivisti, optimoitu suoratoistoon, oli yleinen muoto varhaisessa verkkokuvauksessa, nyt marginaalissa)"
+
+msgid "mime_wmf"
+msgstr "WMF-mediamuoto (Windows Media Format, Microsoft-median kehys, sisältää WMV-videon, WMA-äänen, Windows Media Player tukee natiivisti)"
+
+msgid "mime_mov"
+msgstr "MOV-video (Apple kehitti 1991, QuickTime-säiliömuoto. Standardimuoto ammattimaiseen videoleikkaukseen, tukee useita koodekkeja, Final Cut Pro ja Premiere tukevat natiivisti)"
+
+msgid "mime_qt"
+msgstr "QuickTime-video (Apple julkaisi 1991, QuickTime-muoto. Videostandardi Mac-alustalla, MOV on sen säiliö, QuickTime-soitin oli laajalti käytössä. Apple lopetti Windows-version kehityksen 2016, korvaa sitä asteittain MP4:llä)"
+
+msgid "mime_webm"
+msgstr "WebM-video (Google julkaisi 2010, avoin ja patenttivapaa videoformaatti. Perustuu Matroska-säiliöön, VP8/VP9-koodaukseen, HTML5-videostandardimuoto, YouTuben oletusmuoto verkossa toistamiseen)"
+
+msgid "mime_3gp"
+msgstr "3GP-video (3GPP määritteli 2000, videomuoto mobiililaitteille. Erittäin pieni tiedosto, alhainen laatu, varhaisten älypuhelinten videokuvausmuoto, käytettiin MMS-viestien lähettämiseen)"
+
+#------------------------------------------------------------------------------
+# Tekniset ulottuvuudet
+#------------------------------------------------------------------------------
+
+msgid "Operating Systems"
+msgstr "Käyttöjärjestelmät"
+
+msgid "Top 5 Operating Systems"
+msgstr "5 parasta käyttöjärjestelmää"
+
+msgid "Unknown Robot"
+msgstr "Tuntematon asiakas"
+
+msgid "User agent"
+msgstr "Käyttäjäagentti"
+
+msgid "Browsers"
+msgstr "Selaimet"
+
+msgid "Top 5 Browsers"
+msgstr "5 parasta selainta"
+
+msgid "Unknown Robot RH"
+msgstr "Tuntematon pyynnön otsake"
+
+msgid "Detailed"
+msgstr "Käyttävän laitteen versio"
+
+msgid "DetailedOS"
+msgstr "Käyttöjärjestelmän versio"
+
+msgid "DetailedBS"
+msgstr "Selaimen versio"
+
+msgid "Screen sizes"
+msgstr "Näytön koot"
+
+msgid "Compression"
+msgstr "Pakkaus"
+
+msgid "In"
+msgstr "Sisään"
+
+msgid "Out"
+msgstr "Ulos"
+
+msgid "Saved"
+msgstr "Tallennettu"
+
+#------------------------------------------------------------------------------
+# Lähdeulottuvuudet
+#------------------------------------------------------------------------------
+
+msgid "Origin"
+msgstr "Alkuperä"
+
+msgid "Referers"
+msgstr "Viittaajat"
+
+msgid "meta.description"
+msgstr "AWStats edistynyt verkkolokien analysointityökalu - seuraa verkkosivustosi liikennettä reaaliajassa, vierailijoiden analysointia, hakukoneiden avainsanoja, virhesivujen tilastoja. Tukee tummaa tilaa ja monikielistä käyttöliittymää, tarjoaa kattavan data-analyysin verkkosivustojen ylläpitäjille."
+
+msgid "meta.keywords"
+msgstr "AWStats,verkkotilastot,lokianalyysi,liikenteenseuranta,käyttötilastot,SEO-analyysi,verkkosivuston analysointityökalu,Web Analytics,Log Analyzer"
+
+msgid "meta.author"
+msgstr "AWStats"
+
+msgid "og.title"
+msgstr "AWStats - Verkkolokien analysointi"
+
+msgid "og.description"
+msgstr "📊 Ammattimainen avoimen lähdekoodin verkkotilastotyökalu, analysoi verkkosivustosi liikennettä ja vierailijoiden käyttäytymistä reaaliajassa."
+
+msgid "og.image.alt"
+msgstr "AWStats tilastokaaviot"
+
+msgid "Created by"
+msgstr "Luonut %s"
+
+msgid "plugins"
+msgstr "laajennukset"
+
+msgid "dbip by"
+msgstr "tiedot palvelusta"
+
+msgid "IPDB by"
+msgstr "maantieteelliset sijaintitiedot tarjoaa DB-IP"
+
+# Terveys
+msgid "Configured"
+msgstr "Määritetty"
+
+msgid "Missing"
+msgstr "Puuttuu"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Unused"
+msgstr "Käyttämätön"
+
+# Muut
+msgid "Overall Health"
+msgstr "Yleinen kunto"
+
+msgid "Excellent"
+msgstr "Erinomainen"
+
+msgid "Good"
+msgstr "Hyvä"
+
+msgid "Fair"
+msgstr "Kohtalainen"
+
+msgid "Poor"
+msgstr "Huono"
+
+msgid "Missing icon types"
+msgstr "Puuttuvat kuvaketyypit"
+
+msgid "See"
+msgstr "Katso tiedot"
+
+msgid "Expected Path"
+msgstr "Polun kuvaus"
+
+msgid "column for file locations"
+msgstr "sarake tiedostosijaintien saamiseksi"
+
+# Vinkki
+msgid "Tip: If you need to generate related icons, you can use %s to upload a logo image, and it will automatically generate all the above related icon files"
+msgstr "Vinkki: Jos sinun täytyy luoda aiheeseen liittyviä kuvakkeita, voit käyttää %s:aa ladataksesi logokuvan, ja se luo automaattisesti kaikki yllä olevat kuvakkeisiin liittyvät tiedostot"
+
+msgid "200: success, 404: failure"
+msgstr "200 on onnistumisten määrä, 404 on epäonnistumisten määrä"
+
+# Odotetut polut
+msgid "_PATH_FAVICON"
+msgstr "/favicon.ico"
+
+msgid "_PATH_APPLE_TOUCH"
+msgstr "/apple-touch-icon.png tai /apple-touch-icon-180x180.png"
+
+msgid "_PATH_LOGO"
+msgstr "/logo.svg tai /logo.png (täytyy viitata HTML/JSON-LD:ssä)"
+
+msgid "_PATH_WEBMANIFEST"
+msgstr "/site.webmanifest tai /manifest.json"
+
+msgid "_PATH_BROWSERCONFIG"
+msgstr "/browserconfig.xml"
+
+msgid "_PATH_SAFARI_PINNED"
+msgstr "/safari-pinned-tab.svg"
+
+msgid "_PATH_SOCIAL_ICON"
+msgstr "/images/github.svg, /images/paypal.svg jne."
+
+# Kuvaketyyppien nimet
+msgid "Favicon"
+msgstr "Verkkosivuston kuvake"
+
+msgid "Apple Touch Icon (iOS/macOS)"
+msgstr "Apple Touch -kuvake (iPhone/iPad/Mac)"
+
+msgid "Site Logo"
+msgstr "Sivuston logo"
+
+msgid "Web App Manifest (Android/Chrome)"
+msgstr "Web-sovelluksen manifestitiedosto (Android/Chrome)"
+
+msgid "Windows Browser Config"
+msgstr "Windows-selaimen konfigurointi"
+
+msgid "Safari Pinned Tab"
+msgstr "Safari kiinnitetty välilehti -kuvake"
+
+msgid "Social Icon"
+msgstr "Sosiaalisen median kuvake"
+
+# Otsikot
+msgid "Icon Files Status"
+msgstr "Kuvaketiedostojen tila"
+
+msgid "Icon Type"
+msgstr "Kuvaketyyppi"
+
+msgid "Advanced Web Statistics"
+msgstr "Edistynyt logianalysointityökalu"
+
+msgid "Advanced Web Statistics %s"
+msgstr "Edistynyt logianalysointityökalu %s"
+
+msgid "Your browser does not support frames. Please use a modern browser."
+msgstr "Selaimesi ei tue kehyksiä. Käytä modernia selainta."
+
+msgid "View statistics directly"
+msgstr "Näytä tilastot suoraan"
+
+msgid "Close"
+msgstr "Sulje"
+
+msgid "Documentation Viewer"
+msgstr "Dokumentaation katselin"
+
+msgid "Direct address / Bookmarks"
+msgstr "Suora osoite / Kirjanmerkit"
+
+msgid "Search Engines"
+msgstr "Hakukoneet"
+
+msgid "Refering search engines"
+msgstr "Viittaavat hakukoneet"
+
+msgid "External pages"
+msgstr "Ulkoiset sivut"
+
+msgid "Refering pages"
+msgstr "Viittaavat sivut"
+
+msgid "Internal pages"
+msgstr "Sisäiset sivut"
+
+msgid "UnknownAccessSource"
+msgstr "Tuntematon käyttölähde"
+
+msgid "Different refering pages"
+msgstr "Eri viittaavat sivut"
+
+msgid "Keyphrases"
+msgstr "Avainlauseet"
+
+msgid "Keywords"
+msgstr "Avainsanat"
+
+msgid "Keyphrases/Keywords"
+msgstr "Avainlauseet/Avainsanat"
+
+msgid "Different keyphrases"
+msgstr "Eri avainlauseet"
+
+msgid "Different keywords"
+msgstr "Eri avainsanat"
+
+#------------------------------------------------------------------------------
+# Sivuulottuvuudet
+#------------------------------------------------------------------------------
+
+msgid "Viewed pages"
+msgstr "Katsotut sivut"
+
+msgid "Different pages"
+msgstr "Eri sivut"
+
+msgid "Entry"
+msgstr "Sisääntulokohta"
+
+msgid "Exit"
+msgstr "Poistumiskohta"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Referer"
+msgstr "Viittaaja"
+
+msgid "Host"
+msgstr "Isäntä"
+
+#------------------------------------------------------------------------------
+# Virheet ja tilat
+#------------------------------------------------------------------------------
+
+msgid "Error"
+msgstr "Virhe"
+
+msgid "HTTP Status Statistics"
+msgstr "HTTP-tilakoodi tilastot"
+
+msgid "SMTP Error codes"
+msgstr "SMTP-virhekoodit"
+
+msgid "Page not found"
+msgstr "Pyydettyä sivua ei löydy"
+
+msgid "Unknown error"
+msgstr "Tuntematon virhe"
+
+msgid "Abnormal traffic note"
+msgstr "Epänormaali selausliikenne sisältää: hakurobotit, tekoälyn koulutusbotit, haavoittuvuusskannerit ja pyynnöt, jotka eivät ole määritysten mukaisia"
+
+msgid "Page detail"
+msgstr "Sivun tiedot"
+
+# Virheviestin yksityiskohdat
+msgid "AWStats did not found the"
+msgstr "AWStats ei löytänyt"
+
+msgid "in your log records."
+msgstr "lokitietueistasi."
+
+msgid "AWStats did not find any valid log lines that match your"
+msgstr "AWStats ei löytänyt yhtään kelvollista lokiriviä, joka vastaa"
+
+msgid "parameter, in the"
+msgstr "parametria, "
+
+msgid "th first non commented lines read of your log."
+msgstr ". ensimmäisellä ei-kommentoidulla rivillä, joka luettiin lokistasi."
+
+msgid "Your log file"
+msgstr "Lokitiedostosi"
+
+msgid "must have a bad format or"
+msgstr "on todennäköisesti väärässä muodossa tai"
+
+msgid "parameter setup does not match this format."
+msgstr "parametrin asetus ei vastaa tätä muotoa."
+
+msgid "Your AWStats"
+msgstr "AWStatsisi"
+
+msgid "parameter is:"
+msgstr "parametri on:"
+
+msgid "This means each line in your web server log file need to have:"
+msgstr "Tämä tarkoittaa, että jokaisen verkkopalvelimesi lokitiedoston rivin täytyy sisältää:"
+
+msgid "combined log format"
+msgstr "yhdistetty lokimuoto"
+
+msgid "MSIE Extended W3C log format"
+msgstr "MSIE laajennettu W3C-lokimuoto"
+
+msgid "WebStar native log format"
+msgstr "WebStar natiivi lokimuoto"
+
+msgid "common log format"
+msgstr "yleinen lokimuoto"
+
+msgid "Lotus Notes/Lotus Domino"
+msgstr "Lotus Notes/Lotus Domino"
+
+msgid "the following personalized log format:"
+msgstr "seuraava henkilökohtainen lokimuoto:"
+
+msgid "And this is an example of records AWStats found in your log file (the record number"
+msgstr "Ja tämä on esimerkki tietueista, jotka AWStats löysi lokitiedostostasi (tietueen numero"
+
+msgid "in your log):"
+msgstr "lokissasi):"
+
+#------------------------------------------------------------------------------
+# Sekalaista
+#------------------------------------------------------------------------------
+
+msgid "Extra/Marketing"
+msgstr "Lisä/Markkinointi"
+
+#------------------------------------------------------------------------------
+# Käyttöliittymän teksti
+#------------------------------------------------------------------------------
+
+msgid "Current site"
+msgstr "Nykyinen sivusto"
+
+msgid "Web Site"
+msgstr "Verkkosivusto"
+
+msgid "Last Update"
+msgstr "Viimeisin päivitys"
+
+msgid "Never updated"
+msgstr "Ei koskaan päivitetty"
+
+msgid "No qualified records found in log"
+msgstr "Lokista ei löytynyt kelvollisia tietueita"
+
+msgid "corrupted"
+msgstr "vioittunut"
+
+msgid "comments"
+msgstr "kommentit"
+
+msgid "Blank"
+msgstr "Tyhjä"
+
+msgid "dropped"
+msgstr "hylätty"
+
+msgid "Update now"
+msgstr "Päivitä nyt"
+
+msgid "Back to main page"
+msgstr "Takaisin pääsivulle"
+
+msgid "Close window"
+msgstr "Sulje ikkuna"
+
+msgid "Back page"
+msgstr "Takaisin edelliselle sivulle"
+
+msgid "Navigation"
+msgstr "Navigointi"
+
+msgid "Summary"
+msgstr "Yhteenveto"
+
+msgid "Local"
+msgstr "Paikallinen"
+
+msgid "External"
+msgstr "Ulkoinen"
+
+msgid "Others (email senders)"
+msgstr "Muut (sähköpostin lähettäjät)"
+
+msgid "Others (email receivers)"
+msgstr "Muut (sähköpostin vastaanottajat)"
+
+msgid "Others"
+msgstr "Muut"
+
+msgid "Only 10 lines of browser data are currently displayed"
+msgstr "Tällä hetkellä näytetään vain 10 selaintietoriviä, katso koko luettelo"
+
+msgid "Others (unknown browsers)"
+msgstr "Muut (tuntemattomat selaimet)"
+
+msgid "Others (operating systems)"
+msgstr "Muut (käyttöjärjestelmät)"
+
+msgid "Others (unknown OS)"
+msgstr "Muut (tuntematon käyttöjärjestelmä)"
+
+msgid "Others (search engines)"
+msgstr "Muut (hakukoneet)"
+
+msgid "Others (referring pages)"
+msgstr "Muut (viittaavat sivut)"
+
+msgid "Others (keyphrases)"
+msgstr "Muut (avainlauseet)"
+
+msgid "Others (keywords)"
+msgstr "Muut (avainsanat)"
+
+msgid "Only first 10 robots shown"
+msgstr "Tämänhetkinen luettelo näyttää vain 10 robottia, katso koko luettelo"
+
+msgid "Failed to obtain access record"
+msgstr "Sisääntulotietueen hankinta epäonnistui"
+
+msgid "Failed to obtain leave record"
+msgstr "Poistumistietueen hankinta epäonnistui"
+
+msgid "Other pages"
+msgstr "Muut sivut"
+
+msgid "Low Traffic IP Summary"
+msgstr "Yhteenveto tuntemattomista IP-osoitteista, joissa on vähän liikennettä"
+
+msgid "Failed to obtain IP data"
+msgstr "Yhteenveto muista tunnetuista IP-osoitteista"
+
+msgid "Failed to obtain the relevant data"
+msgstr "Asiaankuuluvien tietojen hankinta epäonnistui"
+
+msgid "Limited list of countries and regions"
+msgstr "Tällä hetkellä näytetään vain 10 riviä, katso koko luettelo lisää maista/alueista"
+
+msgid "currentVisitorData"
+msgstr "Tällä hetkellä näytetään vain 10 riviä vierailijatietoja, katso koko luettelo"
+
+msgid "Others (robots main)"
+msgstr "Muut (robotit)"
+
+msgid "Others (worms)"
+msgstr "Muut (madot)"
+
+msgid "Displaying10RowsPageMorePleaseViewFullList"
+msgstr "Tämänhetkinen luettelo näyttää vain 10 sivua, katso koko luettelo"
+
+msgid "Others (OS main)"
+msgstr "Muut (järjestelmä)"
+
+msgid "Others (browsers main)"
+msgstr "Muut (selaimet)"
+
+msgid "Others (screen sizes)"
+msgstr "Muut (koko)"
+
+msgid "Others (search engines main)"
+msgstr "Muut (hakukoneet)"
+
+msgid "Others (referring pages main)"
+msgstr "Muut (viittaavat sivut)"
+
+msgid "Others (keyphrases main)"
+msgstr "Muut (avainlauseet)"
+
+msgid "Others (keywords main)"
+msgstr "Muut (avainsanat)"
+
+# 1xx
+msgid "Continue"
+msgstr "Jatka jäljellä olevan sisällön lähettämistä"
+
+msgid "Switching Protocols"
+msgstr "Vaihdetaan protokollaa"
+
+msgid "Processing (WebDAV)"
+msgstr "Käsitellään (odota hetki)"
+
+msgid "Early Hints"
+msgstr "Palvelin valmistelee resursseja"
+
+# 2xx
+msgid "[Miscellaneous successes]"
+msgstr "Muut onnistuneet tilat"
+
+msgid "Request successful"
+msgstr "Pyyntö onnistui"
+
+msgid "Created successfully"
+msgstr "Luotu onnistuneesti"
+
+msgid "Accepted - processing"
+msgstr "Hyväksytty, käsitellään"
+
+msgid "Non-authoritative information (from cache) (from cache)"
+msgstr "Ei-autoritatiivinen tieto (välimuistista)"
+
+msgid "Success, no content returned"
+msgstr "Onnistui, sisältöä ei palautettu"
+
+msgid "Reset content"
+msgstr "Nollaa lomake"
+
+msgid "Partial content (resume download)"
+msgstr "Osittainen sisältö (tukee latauksen jatkamista)"
+
+msgid "Multi-status (WebDAV)"
+msgstr "Monitilanne (WebDAV-erätoiminnot)"
+
+msgid "Already reported (WebDAV)"
+msgstr "Jo raportoitu (estää päällekkäisyydet)"
+
+msgid "IM used"
+msgstr "Käytettiin IM-protokollalaajennusta"
+
+# 3xx
+msgid "[Miscellaneous redirections]"
+msgstr "Muut uudelleenohjaukset"
+
+msgid "Multiple choices"
+msgstr "Useita vaihtoehtoja"
+
+msgid "Moved permanently - update your links"
+msgstr "Siirretty pysyvästi, päivitä linkkisi"
+
+msgid "Temporary redirect - URL unchanged"
+msgstr "Väliaikainen uudelleenohjaus, osoite ei muutu"
+
+msgid "See other"
+msgstr "Katso toinen osoite"
+
+msgid "Not modified - using cached version"
+msgstr "Ei muutettu, käytetään välimuistissa olevaa versiota"
+
+msgid "Use proxy"
+msgstr "Käytä välityspalvelinta"
+
+msgid "Switch proxy"
+msgstr "Vaihda välityspalvelinta"
+
+msgid "Temporary redirect (keep method)"
+msgstr "Väliaikainen uudelleenohjaus (säilyttää pyynnön menetelmän)"
+
+msgid "Permanent redirect - update your links"
+msgstr "Pysyvä uudelleenohjaus, päivitä linkkisi"
+
+# 4xx
+msgid "[Miscellaneous client/user errors]"
+msgstr "Muut asiakasvirheet"
+
+msgid "Bad request"
+msgstr "Pyynnön muoto on virheellinen"
+
+msgid "Unauthorized - please log in"
+msgstr "Ei valtuutettu, kirjaudu ensin sisään"
+
+msgid "Payment required"
+msgstr "Maksu vaaditaan"
+
+msgid "Forbidden - access denied"
+msgstr "Pääsy kielletty, oikeudet eivät riitä"
+
+msgid "Page not found (404) - check for broken links"
+msgstr "Sivua ei ole olemassa, tarkista rikkinäiset linkit"
+
+msgid "Method not allowed"
+msgstr "Pyynnön menetelmä ei ole sallittu"
+
+msgid "Not acceptable"
+msgstr "Vastauksen muoto ei ole hyväksyttävä"
+
+msgid "Proxy authentication required"
+msgstr "Välityspalvelimen todennus vaaditaan"
+
+msgid "Request timeout"
+msgstr "Pyynnön aikaraja ylittyi"
+
+msgid "Conflict - please try again"
+msgstr "Pyyntöristiriita, yritä myöhemmin uudelleen"
+
+msgid "Gone - permanently deleted"
+msgstr "Resurssi on poistettu pysyvästi"
+
+msgid "Length required"
+msgstr "Sisällön pituus on ilmoitettava"
+
+msgid "Precondition failed"
+msgstr "Edellytyksiä ei täytetty"
+
+msgid "Payload too large"
+msgstr "Pyynnön sisältö on liian suuri"
+
+msgid "URI too long"
+msgstr "Pyynnön osoite on liian pitkä"
+
+msgid "Unsupported media type"
+msgstr "Tiedostotyyppi ei ole tuettu"
+
+msgid "Range not satisfiable"
+msgstr "Pyynnön alue ei ole kelvollinen"
+
+msgid "Expectation failed"
+msgstr "Odotusta ei voida täyttää"
+
+msgid "I am a teapot (April Fools)"
+msgstr "Olen teekannu (aprillipila)"
+
+msgid "Page expired (Laravel)"
+msgstr "Sivu on vanhentunut, päivitä ja yritä uudelleen"
+
+msgid "Method failure (Spring)"
+msgstr "Menetelmä epäonnistui"
+
+msgid "Misdirected request"
+msgstr "Pyyntö ohjattiin väärin"
+
+msgid "Unprocessable entity (WebDAV)"
+msgstr "Pyynnön muoto on oikea, mutta sitä ei voida käsitellä"
+
+msgid "Locked (WebDAV)"
+msgstr "Resurssi on lukittu"
+
+msgid "Failed dependency (WebDAV)"
+msgstr "Riippuvainen toiminto epäonnistui"
+
+msgid "Too early"
+msgstr "Pyyntö lähetettiin liian aikaisin"
+
+msgid "Upgrade required"
+msgstr "Protokollan päivitys vaaditaan"
+
+msgid "Precondition required"
+msgstr "Tarvittavat edellytykset puuttuvat"
+
+msgid "Too many requests - slow down"
+msgstr "Pyynnöt ovat liian tiheitä, yritä myöhemmin uudelleen"
+
+msgid "Request header fields too large (Shopify)"
+msgstr "Pyynnön otsakekentät ovat liian suuria"
+
+msgid "Request header too large"
+msgstr "Pyynnön otsake on liian suuri"
+
+msgid "Login timeout (IIS)"
+msgstr "Sisäänkirjautumisen aikaraja ylittyi, kirjaudu uudelleen sisään"
+
+msgid "No response (nginx)"
+msgstr "Palvelin ei vastaa"
+
+msgid "Retry with (IIS)"
+msgstr "Yritä myöhemmin uudelleen"
+
+msgid "Blocked by Windows parental controls"
+msgstr "Windowsin vanhempien valvonnan estämä"
+
+msgid "Unavailable for legal reasons"
+msgstr "Ei saatavilla laillisista syistä"
+
+msgid "Client closed connection before idle timeout (AWS ELB)"
+msgstr "Asiakas sulki yhteyden ennen joutoajan aikarajan ylittymistä"
+
+msgid "X-Forwarded-For header with >30 IP addresses (AWS ELB)"
+msgstr "Välitysketjussa on enemmän kuin 30 IP-osoitetta"
+
+msgid "Incompatible protocol versions (AWS ELB)"
+msgstr "Protokollaversiot eivät ole yhteensopivia"
+
+msgid "Request header too large (nginx)"
+msgstr "Pyynnön otsake on liian suuri"
+
+msgid "SSL certificate error (nginx)"
+msgstr "SSL-sertifikaattivirhe"
+
+msgid "SSL certificate required (nginx)"
+msgstr "SSL-sertifikaatti vaaditaan"
+
+msgid "HTTP request sent to HTTPS port (nginx)"
+msgstr "HTTP-pyyntö lähetettiin HTTPS-porttiin"
+
+msgid "Invalid token (ArcGIS)"
+msgstr "Virheellinen tunniste"
+
+msgid "Token required (ArcGIS) / Client closed request (nginx)"
+msgstr "Tunniste vaaditaan / Asiakas sulki pyynnön"
+
+msgid "Resource limit reached (cPanel)"
+msgstr "Resurssiraja saavutettu (CPU/muisti)"
+
+msgid "Bandwidth limit exceeded (Apache/cPanel)"
+msgstr "Kaistanleveysraja ylitetty"
+
+# 5xx
+msgid "[Miscellaneous server errors]"
+msgstr "Muut palvelinvirheet"
+
+msgid "Internal server error - check logs"
+msgstr "Sisäinen palvelinvirhe, tarkista lokit"
+
+msgid "Not implemented"
+msgstr "Toimintoa ei tueta palvelimella"
+
+msgid "Bad gateway - backend error"
+msgstr "Yhdyskäytävävirhe, taustapalvelu on epänormaali"
+
+msgid "Service unavailable - maintenance or overload"
+msgstr "Palvelu ei ole käytettävissä, huolto tai ylikuormitus"
+
+msgid "Gateway timeout"
+msgstr "Yhdyskäytävän aikaraja ylittyi"
+
+msgid "HTTP version not supported"
+msgstr "HTTP-protokollaversiota ei tueta"
+
+msgid "Variant also negotiates"
+msgstr "Variantti osallistuu myös neuvotteluun (konfigurointivirhe)"
+
+msgid "Insufficient storage (WebDAV)"
+msgstr "Tallennustila ei riitä"
+
+msgid "Loop detected (WebDAV)"
+msgstr "Havaittu syklinen viittaus"
+
+msgid "Not extended"
+msgstr "Lisälaajennus vaaditaan"
+
+msgid "Network authentication required"
+msgstr "Verkon todennus vaaditaan"
+
+# Cloudflare
+msgid "Unknown error (Cloudflare)"
+msgstr "Tuntematon virhe"
+
+msgid "Web server is down (Cloudflare)"
+msgstr "Web-palvelin on alas"
+
+msgid "Connection timeout (Cloudflare)"
+msgstr "Yhteyden aikaraja ylittyi"
+
+msgid "Origin is unreachable (Cloudflare)"
+msgstr "Alkuperä ei ole tavoitettavissa"
+
+msgid "A timeout occurred (Cloudflare)"
+msgstr "Aikakatkaisu tapahtui"
+
+msgid "SSL handshake failed (Cloudflare)"
+msgstr "SSL-kättely epäonnistui"
+
+msgid "Invalid SSL certificate (Cloudflare)"
+msgstr "Virheellinen SSL-sertifikaatti"
+
+msgid "Railgun error (Cloudflare - obsolete)"
+msgstr "Railgun-virhe (vanhentunut)"
+
+msgid "Site is overloaded (SSLLabs)"
+msgstr "Sivusto on ylikuormitettu"
+
+msgid "Origin DNS error (Cloudflare) / Site is frozen (Pantheon)"
+msgstr "Alkuperän DNS-virhe (Cloudflare) / Sivusto on jäädytetty (Pantheon)"
+
+msgid "Temporarily disabled (Shopify)"
+msgstr "Väliaikaisesti pois käytöstä"
+
+msgid "Unauthorized (AWS ELB)"
+msgstr "Ei valtuutettu"
+
+msgid "Network read timeout error"
+msgstr "Verkon lukemisen aikakatkaisu"
+
+msgid "Network connect timeout error"
+msgstr "Verkkoon yhdistämisen aikakatkaisu"
+
+msgid "Unexpected token (Shopify)"
+msgstr "Odottamaton tunniste"
+
+msgid "Request denied (LinkedIn)"
+msgstr "Pyyntö evättiin"
+
+msgid "HTTP/2 GOAWAY (AWS ELB)"
+msgstr "HTTP/2-yhteyden sulkeminen"
+
+msgid "[Unknown]"
+msgstr "Tuntematon tilakoodi"
+
+# SMTP ja sähköposti
+msgid "Nonstandard success response (ESMTP)"
+msgstr "Epästandardi onnistunut vastaus (ESMTP)"
+
+msgid "System status, or system help reply"
+msgstr "Järjestelmän tila tai järjestelmän apuvastaus"
+
+msgid "Help message"
+msgstr "Ohjeviesti"
+
+msgid "SMTP service ready (LMTP)"
+msgstr "SMTP-palvelu valmis (LMTP)"
+
+msgid "Service ready - server is ready to receive mail"
+msgstr "Palvelu valmis - sähköpostipalvelin on valmis vastaanottamaan sähköpostia"
+
+msgid "Service closing - connection is being closed"
+msgstr "Palvelu sulkeutuu - yhteyttä suljetaan"
+
+msgid "Authentication successful"
+msgstr "Todennus onnistui"
+
+msgid "Requested mail action taken and completed"
+msgstr "Pyydetty sähköpostitoiminto suoritettu ja valmis"
+
+msgid "User not local - will forward to another address"
+msgstr "Käyttäjä ei ole paikallinen - ohjataan toiseen osoitteeseen"
+
+msgid "Cannot verify recipient, but will attempt delivery"
+msgstr "Vastaanottajaa ei voida varmistaa, mutta toimitus yritetään"
+
+msgid "Message accepted for delivery (DSN)"
+msgstr "Sähköposti hyväksytty toimitettavaksi (DSN)"
+
+msgid "User name is a mailbox"
+msgstr "Käyttäjätunnus on postilaatikko"
+
+msgid "Authentication challenge - please respond"
+msgstr "Todennushaaste - vastaa"
+
+msgid "Start mail input - end with <CRLF>.<CRLF>"
+msgstr "Aloita sähköpostin sisällön syöttäminen - lopeta <CRLF>.<CRLF>"
+
+msgid "Continue (LMTP)"
+msgstr "Jatka (LMTP)"
+
+msgid "Service not available - connection closing, try again later"
+msgstr "Palvelu ei käytettävissä - yhteys suljetaan, yritä myöhemmin uudelleen"
+
+msgid "Mailbox busy or temporarily unavailable (Exchange)"
+msgstr "Postilaatikko on varattu tai tilapäisesti poissa käytöstä (Exchange)"
+
+msgid "Connection rate limit exceeded (Postfix)"
+msgstr "Yhteyden tiheysraja ylitetty (Postfix)"
+
+msgid "Too many concurrent connections (Postfix)"
+msgstr "Liian monta samanaikaista yhteyttä (Postfix)"
+
+msgid "Unable to establish connection (Postfix)"
+msgstr "Yhteyttä ei voida muodostaa (Postfix)"
+
+msgid "Connection timed out (Postfix)"
+msgstr "Yhteyden aikaraja ylittyi (Postfix)"
+
+msgid "Connection dropped due to error (Postfix)"
+msgstr "Yhteys katkesi virheen vuoksi (Postfix)"
+
+msgid "Mailbox temporarily locked (Exchange)"
+msgstr "Postilaatikko tilapäisesti lukittu (Exchange)"
+
+msgid "Too many recipients (Postfix/Exim)"
+msgstr "Liian monta vastaanottajaa (Postfix/Exim)"
+
+msgid "Mail server error (Exchange)"
+msgstr "Sähköpostipalvelinvirhe (Exchange)"
+
+msgid "Received loop detected (Exim)"
+msgstr "Havaittu vastaanottosilmukka (Exim)"
+
+msgid "Too many hop count (Exim)"
+msgstr "Liian monta hyppyä (Exim)"
+
+msgid "DNS lookup failed (Postfix)"
+msgstr "DNS-haku epäonnistui (Postfix)"
+
+msgid "Unable to authenticate (Postfix)"
+msgstr "Todennus ei onnistu (Postfix)"
+
+msgid "TLS handshake failed (Postfix)"
+msgstr "TLS-kättely epäonnistui (Postfix)"
+
+msgid "SMTP protocol violation (Postfix)"
+msgstr "SMTP-protokollan rikkominen (Postfix)"
+
+msgid "Message size exceeds limit (Exchange)"
+msgstr "Sähköpostin koko ylittää rajan (Exchange)"
+
+msgid "Message rate limit exceeded (Postfix)"
+msgstr "Sähköpostin tiheysraja ylitetty (Postfix)"
+
+msgid "Mailbox quota exceeded - temporary"
+msgstr "Postilaatikon kiintiö täynnä - väliaikainen tila"
+
+msgid "Domain not found (Postfix)"
+msgstr "Verkkotunnusta ei löydy (Postfix)"
+
+msgid "Message header invalid (Postfix)"
+msgstr "Sähköpostin otsikko on virheellinen (Postfix)"
+
+msgid "Bounce loop detected (Postfix)"
+msgstr "Havaittu palautussilmukka (Postfix)"
+
+msgid "Unable to route (Postfix)"
+msgstr "Reititys ei onnistu (Postfix)"
+
+msgid "Sender domain not found (Postfix)"
+msgstr "Lähettäjän verkkotunnusta ei löydy (Postfix)"
+
+msgid "Recipient domain not found (Postfix)"
+msgstr "Vastaanottajan verkkotunnusta ei löydy (Postfix)"
+
+msgid "Greylisting in progress - please try again (Postgrey)"
+msgstr "Greylisting käynnissä - yritä uudelleen (Postgrey)"
+
+msgid "Spam filtering in progress (SpamAssassin)"
+msgstr "Roskapostisuodatus käynnissä (SpamAssassin)"
+
+msgid "Virus scanning in progress (ClamAV)"
+msgstr "Virustarkistus käynnissä (ClamAV)"
+
+msgid "Mailbox unavailable - try again later"
+msgstr "Postilaatikko ei käytettävissä - yritä myöhemmin uudelleen"
+
+msgid "Requested action aborted - error in processing"
+msgstr "Pyydetty toiminto keskeytettiin - virhe käsittelyssä"
+
+msgid "Insufficient system storage - try again later"
+msgstr "Järjestelmän tallennustila ei riitä - yritä myöhemmin uudelleen"
+
+msgid "Too many messages for this recipient (Exchange)"
+msgstr "Liian monta viestiä tälle vastaanottajalle (Exchange)"
+
+msgid "TLS not available (Postfix)"
+msgstr "TLS ei käytettävissä (Postfix)"
+
+msgid "Server unable to accept messages (Postfix)"
+msgstr "Palvelin ei voi vastaanottaa viestejä (Postfix)"
+
+msgid "Temporary failure in DNS lookup (Exim)"
+msgstr "Väliaikainen virhe DNS-haussa (Exim)"
+
+msgid "Quota exceeded - temporary"
+msgstr "Kiintiö ylitetty - väliaikainen tila"
+
+msgid "Message too big - temporary"
+msgstr "Sähköposti liian suuri - väliaikainen tila"
+
+msgid "Too many messages per connection"
+msgstr "Liian monta sähköpostia yhteyttä kohti"
+
+msgid "Load average too high (Postfix)"
+msgstr "Järjestelmän keskimääräinen kuorma on liian korkea (Postfix)"
+
+msgid "Connection refused (Postfix)"
+msgstr "Yhteys evättiin (Postfix)"
+
+msgid "Send rate limit exceeded (Postfix)"
+msgstr "Lähetystiheysraja ylitetty (Postfix)"
+
+msgid "Recipient rate limit exceeded (Postfix)"
+msgstr "Vastaanottajatiheysraja ylitetty (Postfix)"
+
+msgid "Sender rate limit exceeded (Postfix)"
+msgstr "Lähettäjätiheysraja ylitetty (Postfix)"
+
+msgid "IP address rate limit exceeded (Postfix)"
+msgstr "IP-osoitteen tiheysraja ylitetty (Postfix)"
+
+msgid "MX lookup failed (Postfix)"
+msgstr "MX-haku epäonnistui (Postfix)"
+
+msgid "A record lookup failed (Postfix)"
+msgstr "A-tietueen haku epäonnistui (Postfix)"
+
+msgid "PTR record lookup failed (Postfix)"
+msgstr "PTR-tietueen haku epäonnistui (Postfix)"
+
+msgid "Greylisting active - please try again (Postgrey)"
+msgstr "Greylisting aktiivinen - yritä uudelleen (Postgrey)"
+
+msgid "Access denied - unknown SMTP client hostname"
+msgstr "Pääsy estetty - tuntematon SMTP-asiakkaan isäntänimi"
+
+msgid "Access denied - bad syntax for client HELO hostname"
+msgstr "Pääsy estetty - virheellinen syntaksi asiakkaan HELO-isäntänimessä"
+
+msgid "Access denied - SMTP client hostname rejected"
+msgstr "Pääsy estetty - SMTP-asiakkaan isäntänimi hylättiin"
+
+msgid "Access denied - unknown domain for sender or recipient"
+msgstr "Pääsy estetty - lähettäjän tai vastaanottajan verkkotunnus tuntematon"
+
+msgid "Sender address rejected - domain not verified (DMARC pending)"
+msgstr "Lähettäjän osoite hylätty - verkkotunnusta ei varmennettu (DMARC odottaa)"
+
+msgid "Recipient address rejected - domain not verified (DMARC pending)"
+msgstr "Vastaanottajan osoite hylätty - verkkotunnusta ei varmennettu (DMARC odottaa)"
+
+msgid "DKIM verification pending - temporary failure"
+msgstr "DKIM-varmentaminen odottaa - väliaikainen virhe"
+
+msgid "SPF verification pending - temporary failure"
+msgstr "SPF-varmentaminen odottaa - väliaikainen virhe"
+
+msgid "DMARC verification pending - temporary failure"
+msgstr "DMARC-varmentaminen odottaa - väliaikainen virhe"
+
+msgid "DNSBL lookup temporary failure"
+msgstr "DNSBL-haku - väliaikainen virhe"
+
+msgid "RHSBL lookup temporary failure"
+msgstr "RHSBL-haku - väliaikainen virhe"
+
+msgid "URI DNSBL lookup temporary failure"
+msgstr "URI DNSBL-haku - väliaikainen virhe"
+
+msgid "Temporary authentication failure (Dovecot)"
+msgstr "Väliaikainen todennusvirhe (Dovecot)"
+
+msgid "Temporary authorization failure (Sendmail)"
+msgstr "Väliaikainen valtuutusvirhe (Sendmail)"
+
+msgid "Rate limit exceeded per sender (Exim)"
+msgstr "Tiheysraja ylitetty lähettäjää kohti (Exim)"
+
+msgid "Rate limit exceeded per recipient (Exim)"
+msgstr "Tiheysraja ylitetty vastaanottajaa kohti (Exim)"
+
+msgid "Rate limit exceeded per domain (Exim)"
+msgstr "Tiheysraja ylitetty verkkotunnusta kohti (Exim)"
+
+msgid "Rate limit exceeded per IP (Exim)"
+msgstr "Tiheysraja ylitetty IP-osoitetta kohti (Exim)"
+
+msgid "Message queued for later delivery (Postfix)"
+msgstr "Sähköposti asetettu jonoon myöhempää toimitusta varten (Postfix)"
+
+msgid "Delivery delayed due to policy (Exchange)"
+msgstr "Toimitus viivästynyt käytännön vuoksi (Exchange)"
+
+msgid "Temporary failure in content filter"
+msgstr "Väliaikainen virhe sisältösuodattimessa"
+
+msgid "Temporary failure in antivirus scanner"
+msgstr "Väliaikainen virhe virustorjunnassa"
+
+msgid "Temporary failure in spam filter"
+msgstr "Väliaikainen virhe roskapostisuodattimessa"
+
+msgid "Temporary failure in milter (Postfix)"
+msgstr "Väliaikainen virhe milterissä (Postfix)"
+
+msgid "Greylisting - try again later"
+msgstr "Greylisting - yritä myöhemmin uudelleen"
+
+msgid "DDoS protection active - try again later"
+msgstr "DDoS-suojaus aktiivinen - yritä myöhemmin uudelleen"
+
+msgid "SMTP policy violation - temporary"
+msgstr "SMTP-käytännön rikkominen - väliaikainen tila"
+
+msgid "Temporary error in RCPT TO processing"
+msgstr "Väliaikainen virhe RCPT TO -käsittelyssä"
+
+msgid "Temporary error in MAIL FROM processing"
+msgstr "Väliaikainen virhe MAIL FROM -käsittelyssä"
+
+msgid "Temporary error in EHLO/HELO processing"
+msgstr "Väliaikainen virhe EHLO/HELO-käsittelyssä"
+
+msgid "Temporary error in DATA processing"
+msgstr "Väliaikainen virhe DATA-käsittelyssä"
+
+msgid "Temporary error - service busy, try again later"
+msgstr "Väliaikainen virhe - palvelu on varattu, yritä myöhemmin uudelleen"
+
+msgid "Syntax error - command unrecognized or too long"
+msgstr "Syntaksivirhe - komentoa ei tunnistettu tai se on liian pitkä"
+
+msgid "Syntax error in parameters or arguments"
+msgstr "Syntaksivirhe parametreissa tai argumenteissa"
+
+msgid "Command not implemented"
+msgstr "Komentoa ei toteutettu"
+
+msgid "Bad sequence of commands"
+msgstr "Huono komentojen järjestys"
+
+msgid "Command parameter not implemented"
+msgstr "Komentoparametria ei toteutettu"
+
+msgid "Version not supported (ESMTP)"
+msgstr "Versiota ei tueta (ESMTP)"
+
+msgid "Mailbox path invalid (LMTP)"
+msgstr "Postilaatikon polku on virheellinen (LMTP)"
+
+msgid "Too many commands in this session (Postfix)"
+msgstr "Liian monta komentoa tässä istunnossa (Postfix)"
+
+msgid "Recipient limit exceeded (Postfix)"
+msgstr "Vastaanottajaraja ylitetty (Postfix)"
+
+msgid "Sender limit exceeded (Postfix)"
+msgstr "Lähettäjäraja ylitetty (Postfix)"
+
+msgid "Domain limit exceeded (Postfix)"
+msgstr "Verkkotunnusraja ylitetty (Postfix)"
+
+msgid "Mailbox does not exist (Exchange)"
+msgstr "Postilaatikkoa ei ole olemassa (Exchange)"
+
+msgid "DNS failure - permanent"
+msgstr "DNS-virhe - pysyvä"
+
+msgid "Address type not supported (Postfix)"
+msgstr "Osoitetyyppiä ei tueta (Postfix)"
+
+msgid "Unable to open mailbox (Postfix)"
+msgstr "Postilaatikkoa ei voi avata (Postfix)"
+
+msgid "Mailbox locked - permanent"
+msgstr "Postilaatikko lukittu - pysyvä tila"
+
+msgid "Message rejected due to policy (Exchange)"
+msgstr "Sähköposti hylätty käytännön vuoksi (Exchange)"
+
+msgid "Content rejected - permanent"
+msgstr "Sisältö hylätty - pysyvä"
+
+msgid "Attachment type not allowed"
+msgstr "Liitteen tyyppi ei ole sallittu"
+
+msgid "Message encoding not supported"
+msgstr "Sähköpostin koodausta ei tueta"
+
+msgid "Sender domain does not exist - permanent"
+msgstr "Lähettäjän verkkotunnusta ei ole olemassa - pysyvä"
+
+msgid "Domain does not accept mail or is closing"
+msgstr "Verkkotunnus ei hyväksy sähköpostia tai on sulkeutumassa"
+
+msgid "Recipient domain does not exist - permanent"
+msgstr "Vastaanottajan verkkotunnusta ei ole olemassa - pysyvä"
+
+msgid "Mailbox quota exceeded - permanent"
+msgstr "Postilaatikon kiintiö täynnä - pysyvä"
+
+msgid "Message size exceeds limit - permanent"
+msgstr "Sähköpostin koko ylittää rajan - pysyvä"
+
+msgid "Authentication required (Sendmail)"
+msgstr "Todennus vaaditaan (Sendmail)"
+
+msgid "Authentication failed (Sendmail)"
+msgstr "Todennus epäonnistui (Sendmail)"
+
+msgid "Authentication mechanism not supported"
+msgstr "Todennusmekanismia ei tueta"
+
+msgid "Authentication credentials invalid"
+msgstr "Todennustiedot ovat virheellisiä"
+
+msgid "Authentication account expired"
+msgstr "Todennustili on vanhentunut"
+
+msgid "Access denied - authentication required"
+msgstr "Pääsy estetty - todennus vaaditaan"
+
+msgid "Access denied (Sendmailism)"
+msgstr "Pääsy estetty (Sendmail)"
+
+msgid "Access denied - not authenticated"
+msgstr "Pääsy estetty - ei todennettu"
+
+msgid "Access denied - account locked"
+msgstr "Pääsy estetty - tili on lukittu"
+
+msgid "Access denied - account disabled"
+msgstr "Pääsy estetty - tili on poistettu käytöstä"
+
+msgid "Authentication failed"
+msgstr "Todennus epäonnistui"
+
+msgid "Authentication required for relay (Postfix)"
+msgstr "Todennus vaaditaan relay-palvelulle (Postfix)"
+
+msgid "Authentication failed for relay (Postfix)"
+msgstr "Todennus relay-palvelulle epäonnistui (Postfix)"
+
+msgid "Encryption required (STARTTLS)"
+msgstr "Salattu yhteys vaaditaan (STARTTLS)"
+
+msgid "TLS required for this recipient"
+msgstr "Tämä vastaanottaja vaatii TLS-salauksen"
+
+msgid "Encryption strength insufficient"
+msgstr "Salauksen vahvuus on riittämätön"
+
+msgid "Certificate validation failed"
+msgstr "Sertifikaatin varmentaminen epäonnistui"
+
+msgid "Invalid TLS certificate"
+msgstr "Virheellinen TLS-sertifikaatti"
+
+msgid "TLS protocol version not supported"
+msgstr "TLS-protokollaversiota ei tueta"
+
+msgid "Cipher suite not supported"
+msgstr "Salauspakettia ei tueta"
+
+msgid "Access denied - no valid recipient"
+msgstr "Pääsy estetty - ei kelvollista vastaanottajaa"
+
+msgid "Access denied - no valid sender"
+msgstr "Pääsy estetty - ei kelvollista lähettäjää"
+
+msgid "Access denied - domain not allowed"
+msgstr "Pääsy estetty - verkkotunnus ei sallittu"
+
+msgid "Access denied - IP address blocked (permanent)"
+msgstr "Pääsy estetty - IP-osoite estetty (pysyvä)"
+
+msgid "Access denied - sender domain blacklisted"
+msgstr "Pääsy estetty - lähettäjän verkkotunnus mustalla listalla"
+
+msgid "Mailbox unavailable - requested action not taken"
+msgstr "Postilaatikko ei käytettävissä - pyydettyä toimintoa ei suoritettu"
+
+msgid "User not local - please try forwarding address"
+msgstr "Käyttäjä ei ole paikallinen - kokeile lähetysosoitetta"
+
+msgid "Requested action aborted - exceeded storage allocation"
+msgstr "Pyydetty toiminto keskeytettiin - tallennustilan jako ylittyi"
+
+msgid "Mailbox name not allowed"
+msgstr "Postilaatikon nimi ei ole sallittu"
+
+msgid "Requested action rejected - access denied"
+msgstr "Pyydetty toiminto hylättiin - pääsy estetty"
+
+msgid "MAIL FROM/RCPT TO parameters not recognized"
+msgstr "MAIL FROM/RCPT TO -parametreja ei tunnistettu"
+
+msgid "Domain not allowed to send (DMARC reject)"
+msgstr "Verkkotunnus ei saa lähettää (DMARC-hylkäys)"
+
+msgid "Too many duplicate messages - permanent"
+msgstr "Liian monta päällekkäistä viestiä - pysyvä"
+
+msgid "Sender address rejected - domain not in SPF"
+msgstr "Lähettäjän osoite hylätty - verkkotunnus ei SPF:ssä"
+
+msgid "Sender address rejected - DKIM verification failed"
+msgstr "Lähettäjän osoite hylätty - DKIM-varmentaminen epäonnistui"
+
+msgid "Sender address rejected - DMARC policy reject"
+msgstr "Lähettäjän osoite hylätty - DMARC-käytäntö hylkää"
+
+msgid "Recipient address rejected - DMARC policy reject"
+msgstr "Vastaanottajan osoite hylätty - DMARC-käytäntö hylkää"
+
+msgid "Message rejected due to spam content"
+msgstr "Sähköposti hylätty roskapostisisällön vuoksi"
+
+msgid "Message rejected due to virus detected"
+msgstr "Sähköposti hylätty viruksen havaitsemisen vuoksi"
+
+msgid "Message rejected due to malicious content"
+msgstr "Sähköposti hylätty haitallisen sisällön vuoksi"
+
+msgid "Message rejected due to phishing detection"
+msgstr "Sähköposti hylätty kalastelun havaitsemisen vuoksi"
+
+msgid "Message rejected due to malware detection"
+msgstr "Sähköposti hylätty haittaohjelman havaitsemisen vuoksi"
+
+msgid "Message rejected due to policy - permanent"
+msgstr "Sähköposti hylätty käytännön vuoksi - pysyvä"
+
+msgid "Message rejected due to content filtering"
+msgstr "Sähköposti hylätty sisällön suodatuksen vuoksi"
+
+msgid "Message rejected due to reputation"
+msgstr "Sähköposti hylätty maineen vuoksi"
+
+msgid "Access denied - access_map violation"
+msgstr "Pääsy estetty - access_map-rikkomus"
+
+msgid "Access denied - SMTP client listed in RBL"
+msgstr "Pääsy estetty - SMTP-asiakas RBL-listalla"
+
+msgid "Access denied - relay not authorized"
+msgstr "Pääsy estetty - relay ei ole valtuutettu"
+
+msgid "Access denied - unknown client HELO hostname"
+msgstr "Pääsy estetty - tuntematon asiakkaan HELO-isäntänimi"
+
+msgid "Access denied - invalid domain (not FQDN)"
+msgstr "Pääsy estetty - virheellinen verkkotunnus (ei FQDN)"
+
+msgid "Access denied - domain not qualified"
+msgstr "Pääsy estetty - verkkotunnus ei ole hyväksytty"
+
+msgid "Access denied - mail server misconfigured"
+msgstr "Pääsy estetty - sähköpostipalvelin on väärin määritetty"
+
+msgid "Access denied - open relay not allowed"
+msgstr "Pääsy estetty - avoin relay ei sallittu"
+
+msgid "Access denied - proxy not allowed"
+msgstr "Pääsy estetty - välityspalvelin ei sallittu"
+
+msgid "Access denied - dynamic IP not allowed"
+msgstr "Pääsy estetty - dynaaminen IP-osoite ei sallittu"
+
+msgid "Access denied - residential IP not allowed"
+msgstr "Pääsy estetty - asuinalueen IP-osoite ei sallittu"
+
+msgid "Access denied - VPN/Tor detected"
+msgstr "Pääsy estetty - VPN/Tor havaittu"
+
+msgid "Access denied - Spamhaus DROP listed"
+msgstr "Pääsy estetty - Spamhaus DROP -listalla"
+
+msgid "Access denied - URL listed in URIBL"
+msgstr "Pääsy estetty - URL URIBL-listalla"
+
+msgid "Access denied - domain in RHSBL"
+msgstr "Pääsy estetty - verkkotunnus RHSBL-listalla"
+
+msgid "Access denied - IP in DNSWL (policy)"
+msgstr "Pääsy estetty - IP-osoite DNSWL-listalla (käytäntö)"
+
+msgid "Delivery failed - mailbox not found"
+msgstr "Toimitus epäonnistui - postilaatikkoa ei löydy"
+
+msgid "Delivery failed - recipient not local"
+msgstr "Toimitus epäonnistui - vastaanottaja ei ole paikallinen"
+
+msgid "Delivery failed - recipient rejected"
+msgstr "Toimitus epäonnistui - vastaanottaja hylätty"
+
+msgid "Delivery failed - sender rejected"
+msgstr "Toimitus epäonnistui - lähettäjä hylätty"
+
+msgid "Delivery failed - relay rejected"
+msgstr "Toimitus epäonnistui - relay hylätty"
+
+msgid "Delivery failed - DNS permanent error"
+msgstr "Toimitus epäonnistui - pysyvä DNS-virhe"
+
+msgid "Delivery failed - MX permanent error"
+msgstr "Toimitus epäonnistui - pysyvä MX-virhe"
+
+msgid "Delivery failed - A record permanent error"
+msgstr "Toimitus epäonnistui - pysyvä A-tietuevirhe"
+
+msgid "Delivery failed - PTR record permanent error"
+msgstr "Toimitus epäonnistui - pysyvä PTR-tietuevirhe"
+
+msgid "Delivery failed - policy permanent error"
+msgstr "Toimitus epäonnistui - pysyvä käytäntövirhe"
+
+msgid "DSN: Success - delivery status notification"
+msgstr "DSN: Onnistui - toimituksen tilailmoitus"
+
+msgid "DSN: Delivery delayed"
+msgstr "DSN: Toimitus viivästynyt"
+
+msgid "DSN: Delivery failed - permanent"
+msgstr "DSN: Toimitus epäonnistui - pysyvä"
+
+msgid "DSN: Delivery failed - temporary"
+msgstr "DSN: Toimitus epäonnistui - väliaikainen"
+
+msgid "DSN: Message expired"
+msgstr "DSN: Viesti vanhentui"
+
+msgid "DSN: Message bounced"
+msgstr "DSN: Viesti palautui"
+
+msgid "DSN: Message discarded"
+msgstr "DSN: Viesti hylättiin"
+
+msgid "DSN: Message filtered"
+msgstr "DSN: Viesti suodatettiin"
+
+msgid "DSN: Message quarantined"
+msgstr "DSN: Viesti laitettiin karanteeniin"
+
+msgid "DSN: Message held for review"
+msgstr "DSN: Viesti pidettiin tarkistettavana"
+
+msgid "MTA-STS policy required"
+msgstr "MTA-STS-käytäntö vaaditaan"
+
+msgid "MTA-STS policy validation failed"
+msgstr "MTA-STS-käytännön validointi epäonnistui"
+
+msgid "TLS reporting required"
+msgstr "TLS-raportointi vaaditaan"
+
+msgid "TLS report requested"
+msgstr "TLS-raporttia pyydetty"
+
+msgid "SMTP MTA Strict Transport Security active"
+msgstr "SMTP MTA Strict Transport Security aktiivinen"
+
+msgid "DANE validation required"
+msgstr "DANE-validointi vaaditaan"
+
+msgid "DANE validation failed"
+msgstr "DANE-validointi epäonnistui"
+
+msgid "TLSA record missing"
+msgstr "TLSA-tietue puuttuu"
+
+msgid "Certificate name mismatch"
+msgstr "Sertifikaatin nimi ei täsmää"
+
+msgid "Certificate expired"
+msgstr "Sertifikaatti on vanhentunut"
+
+msgid "AUTH LOGIN required"
+msgstr "AUTH LOGIN vaaditaan"
+
+msgid "AUTH PLAIN required"
+msgstr "AUTH PLAIN vaaditaan"
+
+msgid "AUTH CRAM-MD5 required"
+msgstr "AUTH CRAM-MD5 vaaditaan"
+
+msgid "AUTH DIGEST-MD5 required"
+msgstr "AUTH DIGEST-MD5 vaaditaan"
+
+msgid "AUTH GSSAPI required"
+msgstr "AUTH GSSAPI vaaditaan"
+
+msgid "AUTH NTLM required"
+msgstr "AUTH NTLM vaaditaan"
+
+msgid "AUTH SCRAM required"
+msgstr "AUTH SCRAM vaaditaan"
+
+msgid "AUTH OAUTHBEARER required"
+msgstr "AUTH OAUTHBEARER vaaditaan"
+
+msgid "AUTH XOAUTH2 required"
+msgstr "AUTH XOAUTH2 vaaditaan"
+
+msgid "Exchange: Mailbox database error"
+msgstr "Exchange: Postilaatikon tietokantavirhe"
+
+msgid "Exchange: Store driver error"
+msgstr "Exchange: Tallennusajurivirhe"
+
+msgid "Exchange: Transport agent error"
+msgstr "Exchange: Kuljetusagenttivirhe"
+
+msgid "Exchange: Content conversion error"
+msgstr "Exchange: Sisällön muunnosvirhe"
+
+msgid "Exchange: Routing error"
+msgstr "Exchange: Reititysvirhe"
+
+msgid "Exchange: Mail flow stalled"
+msgstr "Exchange: Sähköpostivirta pysähtyi"
+
+msgid "Exchange: Shadow redundancy error"
+msgstr "Exchange: Varjoredundanssivirhe"
+
+msgid "Exchange: Safety net error"
+msgstr "Exchange: Turvaverkkovirhe"
+
+msgid "Exchange: Queue database error"
+msgstr "Exchange: Jonotietokantavirhe"
+
+msgid "Exchange: Message throttled"
+msgstr "Exchange: Viestiä rajoitettu"
+
+msgid "Postfix: Bounce queue error"
+msgstr "Postfix: Palautusjonovirhe"
+
+msgid "Postfix: Deferred queue error"
+msgstr "Postfix: Lykätyn jonon virhe"
+
+msgid "Postfix: Hold queue error"
+msgstr "Postfix: Jonon pito virhe"
+
+msgid "Postfix: Incoming queue error"
+msgstr "Postfix: Saapuvan jonon virhe"
+
+msgid "Postfix: Active queue error"
+msgstr "Postfix: Aktiivisen jonon virhe"
+
+msgid "Postfix: Corrupted queue file"
+msgstr "Postfix: Vioittunut jonotiedosto"
+
+msgid "Sendmail: Queue runner error"
+msgstr "Sendmail: Jonon suorittajan virhe"
+
+msgid "Sendmail: Alias database error"
+msgstr "Sendmail: Alias-tietokantavirhe"
+
+msgid "Sendmail: Virtuser table error"
+msgstr "Sendmail: Virtuaalikäyttäjätaulukon virhe"
+
+msgid "Sendmail: Mailer definition error"
+msgstr "Sendmail: Lähettäjän määrittelyvirhe"
+
+msgid "Exim: Router configuration error"
+msgstr "Exim: Reitittimen konfigurointivirhe"
+
+msgid "Exim: Transport configuration error"
+msgstr "Exim: Kuljetuksen konfigurointivirhe"
+
+msgid "Exim: Director configuration error"
+msgstr "Exim: Ohjaajan konfigurointivirhe"
+
+msgid "Exim: Retry configuration error"
+msgstr "Exim: Uudelleenyrityksen konfigurointivirhe"
+
+msgid "Exim: Rewrite configuration error"
+msgstr "Exim: Uudelleenkirjoituksen konfigurointivirhe"
+
+msgid "Exim: Authentication configuration error"
+msgstr "Exim: Todennuksen konfigurointivirhe"
+
+msgid "Exim: ACL configuration error"
+msgstr "Exim: ACL-konfigurointivirhe"
+
+msgid "Exim: Local_scan configuration error"
+msgstr "Exim: Local_scan-konfigurointivirhe"
+
+msgid "Exim: Lookup configuration error"
+msgstr "Exim: Haun konfigurointivirhe"
+
+msgid "Exim: Expansion configuration error"
+msgstr "Exim: Laajennuksen konfigurointivirhe"
+
+msgid "HTTP Protocol Versions"
+msgstr "HTTP-protokollaversiot"
+
+msgid "Protocol"
+msgstr "Protokolla"
+
+msgid "Request %"
+msgstr "Pyyntöjen osuus"
+
+msgid "Bandwidth %"
+msgstr "Kaistanleveyden osuus"
+
+msgid "Each request requires a new connection"
+msgstr "Jokainen pyyntö vaatii uuden yhteyden"
+
+msgid "Multiple requests can reuse one connection"
+msgstr "Useat pyynnöt voivat käyttää uudelleen yhtä yhteyttä"
+
+msgid "Multiple requests in parallel over one connection"
+msgstr "Useita pyyntöjä rinnakkain yhden yhteyden yli"
+
+msgid "Faster connection, better performance on poor networks"
+msgstr "Nopeampi yhteys, parempi suorituskyky huonoissa verkoissa"
+
+msgid "No protocol data available"
+msgstr "Protokollatietoja ei ole saatavilla"
+
+msgid "of requests use HTTP/1.0"
+msgstr "pyynnöistä käyttää HTTP/1.0-protokollaa"
+
+msgid "From access logs"
+msgstr "Käyttölokeista"
+
+msgid "No HTTP/2 requests detected"
+msgstr "HTTP/2-pyyntöjä ei havaittu"
+
+msgid "All requests are HTTP/1.0, no HTTP/2 requests"
+msgstr "Kaikki nykyiset pyynnöt ovat HTTP/1.0, ei HTTP/2-pyyntöjä"
+
+msgid "HTTP/3 not detected"
+msgstr "HTTP/3-pyyntöjä ei havaittu"
+
+msgid "all requests do not include QUIC/HTTP/3 protocol requests"
+msgstr "kaikki nykyiset pyynnöt eivät sisällä QUIC/HTTP/3-protokollapyyntöjä"
+
+msgid "Mail Authentication Statistics"
+msgstr "Sähköpostin todennustilastot"
+
+msgid "Authentication"
+msgstr "Todennustyyppi"
+
+msgid "Pass"
+msgstr "Onnistui"
+
+msgid "Fail"
+msgstr "Epäonnistui"
+
+msgid "Softfail"
+msgstr "Pehmeä epäonnistuminen"
+
+msgid "Neutral"
+msgstr "Neutraali"
+
+msgid "None"
+msgstr "Ei mitään"
+
+msgid "Mail Queue Delay Statistics"
+msgstr "Sähköpostijonon viivetilastot"
+
+msgid "Delay Range"
+msgstr "Viivealue"
+
+msgid "Count"
+msgstr "Määrä"
+
+msgid "Percentage"
+msgstr "Prosenttiosuus"
+
+msgid "TLS Encryption Statistics"
+msgstr "TLS-salauksen tilastot"
+
+msgid "TLS Versions"
+msgstr "TLS-versiot"
+
+msgid "Top Ciphers"
+msgstr "Yleisimmät salauspaketit"
+
+msgid "robot_hits_detail_both"
+msgstr "Pyynnöt yhteensä: %s (normaalit sivut: %s, robots.txt: %s)"
+
+msgid "robot_hits_detail_only_robots"
+msgstr "Vain robots.txt: %s kertaa, muita sivuja ei haettu"
+
+msgid "robot_hits_detail_normal"
+msgstr "Pyynnöt normaaleille sivuille: %s"
+
+# Apua ja vinkkejä
+msgid "Troubleshooting"
+msgstr "Vianetsintä"
+
+msgid "Did you use the correct URL?"
+msgstr "Käytitkö oikeaa URL-osoitetta?"
+
+msgid "Example:"
+msgstr "Esimerkki:"
+
+msgid "Did you use correct config parameter?"
+msgstr "Käytitkö oikeaa konfigurointiparametria?"
+
+msgid "Example: If your config file is awstats.mysite.conf, use -config=mysite"
+msgstr "Esimerkki: Jos konfigurointitiedostosi on awstats.mysite.conf, käytä -config=mysite"
+
+msgid "Did you create your config file 'awstats.$SiteConfig.conf'?"
+msgstr "Loitko konfigurointitiedoston 'awstats.$SiteConfig.conf'?"
+
+msgid "If not, you can run \"awstats_configure.pl\" from command line, or create it manually."
+msgstr "Jos et, voit suorittaa \"awstats_configure.pl\" -komentoriviltä tai luoda sen manuaalisesti."
+
+msgid "Setup"
+msgstr "Asennus"
+
+msgid "file, web server or permissions may be wrong."
+msgstr "tiedosto, verkkopalvelin tai käyttöoikeudet voivat olla väärin."
+
+msgid "Check config file, permissions and AWStats documentation (in 'docs' directory)."
+msgstr "Tarkista konfigurointitiedosto, käyttöoikeudet ja AWStats-dokumentaatio ('docs'-hakemistossa)."
+
+msgid "Warning: Can't find language files for \"%s\". English will be used."
+msgstr "Varoitus: Kielitiedostoa \"%s\" ei löydy. Käytetään englantia."
+
+#------------------------------------------------------------------------------
+# Virhe- ja signaalinkäsittely
+#------------------------------------------------------------------------------
+
+msgid "%s process (ID %s) interrupted by signal %s."
+msgstr "%s-prosessi (ID %s) keskeytettiin signaalilla %s."
+
+msgid "An AWStats update process seems to be already running for this config file. Try later. If this is not true, remove manually lock file"
+msgstr "AWStats-päivitysprosessi näyttää jo olevan käynnissä tälle konfigurointitiedostolle. Yritä myöhemmin uudelleen. Jos tämä ei pidä paikkaansa, poista lukitustiedosto manuaalisesti"
+
+#------------------------------------------------------------------------------
+# Uudet tilasto-otsikot
+#------------------------------------------------------------------------------
+msgid "Report Overview"
+msgstr "Raportin yleiskuva"
+
+msgid "Monthly Statistics"
+msgstr "Kuukausittaiset tilastot"
+
+msgid "Daily Statistics"
+msgstr "Päivittäiset tilastot"
+
+msgid "Statistics by Day of Week"
+msgstr "Tilastot viikonpäivittäin"
+
+msgid "Hourly Page Views"
+msgstr "Sivunäyttöjä tunnissa"
+
+msgid "Traffic Sources"
+msgstr "Liikenteen lähteet"
+
+msgid "Other Sources"
+msgstr "Muut lähteet"
+
+msgid "tooltip_1"
+msgstr "Vierailijoiden istuntojen määrä sivustolla. Jos sama vierailija palaa yli 30 minuutin tauon jälkeen, se lasketaan uudeksi käynniksi"
+
+msgid "tooltip_2"
+msgstr "Niiden eri vierailijoiden määrä, jotka vierailivat sivustollasi valitulla aikavälillä. Tilastot perustuvat IP-osoitteisiin"
+
+msgid "tooltip_3"
+msgstr "Niiden pyyntöjen määrä, joita pidetään sivuina (esim. HTML, PHP, ASP), ei sisällä staattisia tiedostoja kuten kuvia, CSS, JS"
+
+msgid "tooltip_4"
+msgstr "Kaikkien palvelimelle lähetettyjen pyyntöjen kokonaismäärä, mukaan lukien sivut, kuvat, CSS, JS ja kaikki muut tiedostot"
+
+msgid "tooltip_5"
+msgstr "Tiedon kokonaismäärä, joka siirrettiin palvelimen vastatessa käyttäjien pyyntöihin"
+
+msgid "tooltip_13"
+msgstr "Tilastot hakukoneista tulevista lähteistä. Näyttää, mitkä hakukoneet tuovat liikennettä ja mitä hakusanoja vierailijat käyttävät."
+
+msgid "tooltip_14"
+msgstr "Tilastot lähteistä, jotka tulevat muiden verkkosivustojen ulkoisista linkeistä. Näyttää, mitkä sivustot linkittävät sinuun ja kuinka paljon liikennettä ne tuovat."
+
+msgid "tooltip_15"
+msgstr "Sanat, joita vierailijat käyttävät löytääkseen sinut hakukoneiden kautta. Avainsanat ovat yksittäisiä sanoja, avainlauseet ovat useiden sanojen yhdistelmiä."
+
+msgid "tooltip_16"
+msgstr "Automaattiset ohjelmat, kuten hakurobotit, tekoälyn koulutusbotit, haavoittuvuusskannerit. Suluissa olevat numerot osoittavat normaaleja sivupyyntöjä ja robots.txt-pyyntöjä."
+
+msgid "tooltip_17"
+msgstr "24 tunnin liikenteen jakautumiskaavio. Näyttää sivustosi käynnit eri vuorokaudenaikoina, auttaa ymmärtämään käyttäjien aktiivisia aikoja."
+
+msgid "tooltip_18"
+msgstr "Tämä sarake näyttää päivittäiset/viikoittaiset keskiarvot valitulla aikavälillä, auttaa ymmärtämään kokonaistrendiä."
+
+msgid "tooltip_19"
+msgstr "Napsauta kaavion kohdetta nähdäksesi yksityiskohdat. Vie hiiren osoitin kaavion elementin päälle nähdäksesi tarkat arvot."
+
+msgid "tooltip_20"
+msgstr "Tietoja, joita ei voida luokitella olemassa oleviin luokkiin, yleensä epänormaalin tietomuodon tai puuttuvien tietojen vuoksi."
+
+msgid "tooltip_21"
+msgstr "Havaittuja matohyökkäyksiä. Madot ovat itsestään monistuvia haittaohjelmia, jotka yleensä leviävät verkon haavoittuvuuksien kautta."
+
+#------------------------------------------------------------------------------
+# Ohjetietojen näyttäminen - Community Edition
+#------------------------------------------------------------------------------
+msgid "AWStats %s - Advanced Web Statistics"
+msgstr "AWStats %s - Kehittyneet verkkotilastot"
+
+msgid "Copyright (c) 2000-2025 Laurent Destailleur"
+msgstr "Copyright (c) 2000-2025 Laurent Destailleur"
+
+msgid "Copyright (c) 2026-latest Community Edition"
+msgstr "Copyright (c) 2026-uusin Yhteisöpainos"
+
+msgid "AWStats comes with ABSOLUTELY NO WARRANTY. It's a free software distributed with a GNU General Public License (See LICENSE file for details)."
+msgstr "AWStats EI TAKUU MITÄÄN. Se on ilmainen ohjelmisto, joka on jaettu GNU General Public License -lisenssillä (katso LICENSE-tiedosto yksityiskohtia varten)."
+
+msgid "Syntax: %s -config=virtualhostname [options]"
+msgstr "Syntaksi: %s -config=virtuaali_isäntänimi [valinnat]"
+
+msgid "This runs %s in command line to update statistics (-update option) of a web site, from the log file defined in AWStats config file, or build a HTML report (-output option)."
+msgstr "Tämä komento suorittaa %:n komentorivillä päivittääkseen verkkosivuston tilastoja (-update-valinta) AWStatsin konfigurointitiedostossa määritellystä lokitiedostosta tai rakentaakseen HTML-raportin (-output-valinta)."
+
+msgid "First, %s tries to read %s.virtualhostname.conf as the config file. If not found, %s tries to read %s.conf, and finally the full path passed to -config="
+msgstr "Ensin %s yrittää lukea %s.virtuaali_isäntänimi.conf -tiedoston konfigurointitiedostoksi. Jos sitä ei löydy, %s yrittää lukea %s.conf-tiedoston ja lopuksi -config= -parametrille annetun täyden polun"
+
+msgid "Note 1: Config files (*.conf) must be in /etc/awstats, /usr/local/etc/awstats, /etc or same directory than awstats.pl script file."
+msgstr "Huomautus 1: Konfigurointitiedostojen (*.conf) on oltava kohdassa /etc/awstats, /usr/local/etc/awstats, /etc tai samassa hakemistossa kuin awstats.pl-skriptitiedosto."
+
+msgid "Note 2: If AWSTATS_FORCE_CONFIG environment variable is defined, AWStats will use it as the 'config' value, whatever is the value on command line or URL."
+msgstr "Huomautus 2: Jos AWSTATS_FORCE_CONFIG-ympäristömuuttuja on määritetty, AWStats käyttää sitä 'config'-arvona riippumatta komentorivin tai URL-osoitteen arvosta."
+
+msgid "See AWStats documentation for all setup instructions."
+msgstr "Kaikki asennusohjeet löytyvät AWStats-dokumentaatiosta."
+
+msgid "Options to update statistics:"
+msgstr "Valinnat tilastojen päivittämiseksi:"
+
+msgid "  -update        to update statistics (default)"
+msgstr "  -update        päivittää tilastot (oletus)"
+
+msgid "  -showsteps     to add benchmark information every %s lines processed"
+msgstr "  -showsteps     lisää suorituskykytietoja joka %s käsitellyn rivin jälkeen"
+
+msgid "  -showcorrupted to add output for each corrupted lines found, with reason"
+msgstr "  -showcorrupted tulostaa jokaisesta löydetystä vioittuneesta rivistä syyn kanssa"
+
+msgid "  -showdropped   to add output for each dropped lines found, with reason"
+msgstr "  -showdropped   tulostaa jokaisesta löydetystä hylätystä rivistä syyn kanssa"
+
+msgid "  -showunknownorigin  to output referer when it can't be parsed"
+msgstr "  -showunknownorigin   tulostaa viittauksen, kun sitä ei voida jäsentää"
+
+msgid "  -showdirectorigin   to output log line when origin is a direct access"
+msgstr "  -showdirectorigin    tulostaa lokirivin, kun alkuperä on suora käyttö"
+
+msgid "  -updatefor=n   to stop the update process after parsing n lines"
+msgstr "  -updatefor=n   pysäyttää päivitysprosessin n rivin jäsentämisen jälkeen"
+
+msgid "  -LogFile=x     to change log to analyze whatever is 'LogFile' in config file"
+msgstr "  -LogFile=x     muuttaa analysoitavan lokitiedoston riippumatta konfigurointitiedoston 'LogFile'-arvosta"
+
+msgid "  Be care to process log files in chronological order when updating statistics."
+msgstr "  Käsittele lokitiedostot aikajärjestyksessä tilastoja päivittäessäsi."
+
+msgid "Options to show statistics:"
+msgstr "Valinnat tilastojen näyttämiseksi:"
+
+msgid "  -output      to output main HTML report (no update made except with -update)"
+msgstr "  -output       tulostaa pääraportin HTML-muodossa (ei päivitystä, paitsi -update-valinnalla)"
+
+msgid "  -output=x    to output other report pages where x is:"
+msgstr "  -output=x     tulostaa muita raporttisivuja, joissa x on:"
+
+msgid "build page of all domains/countries"
+msgstr "rakentaa sivun kaikista verkkotunnuksista/maista"
+
+msgid "build page of all hosts"
+msgstr "rakentaa sivun kaikista isännistä"
+
+msgid "build page of last hits for hosts"
+msgstr "rakentaa sivun isäntien viimeisistä osumista"
+
+msgid "build page of all unresolved IP"
+msgstr "rakentaa sivun kaikista ratkaisemattomista IP-osoitteista"
+
+msgid "build page of all email senders (maillog)"
+msgstr "rakentaa sivun kaikista sähköpostin lähettäjistä (maillog)"
+
+msgid "build page of last email senders (maillog)"
+msgstr "rakentaa sivun viimeisistä sähköpostin lähettäjistä (maillog)"
+
+msgid "build page of all email receivers (maillog)"
+msgstr "rakentaa sivun kaikista sähköpostin vastaanottajista (maillog)"
+
+msgid "build page of last email receivers (maillog)"
+msgstr "rakentaa sivun viimeisistä sähköpostin vastaanottajista (maillog)"
+
+msgid "build page of all logins used"
+msgstr "rakentaa sivun kaikista käytetyistä kirjautumisista"
+
+msgid "build page of last hits for logins"
+msgstr "rakentaa sivun kirjautumisten viimeisistä osumista"
+
+msgid "build page of all robots/spider visits"
+msgstr "rakentaa sivun kaikista robottien/hämähäkkien käynneistä"
+
+msgid "build page of last hits for robots"
+msgstr "rakentaa sivun robottien viimeisistä osumista"
+
+msgid "list most often viewed pages"
+msgstr "näyttää useimmin katsotut sivut"
+
+msgid "list most often viewed pages matching filter"
+msgstr "näyttää useimmin katsotut sivut, jotka vastaavat suodatinta"
+
+msgid "list entry pages"
+msgstr "näyttää sisääntulosivut"
+
+msgid "list entry pages matching filter"
+msgstr "näyttää sisääntulosivut, jotka vastaavat suodatinta"
+
+msgid "list exit pages"
+msgstr "näyttää poistumissivut"
+
+msgid "list exit pages matching filter"
+msgstr "näyttää poistumissivut, jotka vastaavat suodatinta"
+
+msgid "build page with os detailed versions"
+msgstr "rakentaa sivun käyttöjärjestelmän tarkemmista versioista"
+
+msgid "build page with browsers detailed versions"
+msgstr "rakentaa sivun selaimien tarkemmista versioista"
+
+msgid "list 'User Agents' with unknown browser"
+msgstr "näyttää 'Käyttäjäagentit', joilla on tuntematon selain"
+
+msgid "list 'User Agents' with unknown OS"
+msgstr "näyttää 'Käyttäjäagentit', joilla on tuntematon käyttöjärjestelmä"
+
+msgid "build page of all refering search engines"
+msgstr "rakentaa sivun kaikista viittaavista hakukoneista"
+
+msgid "build page of all refering pages"
+msgstr "rakentaa sivun kaikista viittaavista sivuista"
+
+msgid "list all keyphrases used on search engines"
+msgstr "näyttää kaikki hakukoneissa käytetyt avainlauseet"
+
+msgid "list all keywords used on search engines"
+msgstr "näyttää kaikki hakukoneissa käytetyt avainsanat"
+
+msgid "list 'Referers' for 404 errors"
+msgstr "näyttää 'Viittaukset' 404-virheille"
+
+msgid "build page of all values for ExtraSection X"
+msgstr "rakentaa sivun kaikista ExtraSection X -arvoista"
+
+msgid "  -staticlinks           to have static links in HTML report page"
+msgstr "  -staticlinks           käyttää staattisia linkkejä HTML-raporttisivulla"
+
+msgid "  -staticlinksext=xxx    to have static links with .xxx extension instead of .html"
+msgstr "  -staticlinksext=xxx    käyttää staattisia linkkejä .xxx-päätteellä .html:n sijaan"
+
+msgid "  -lang=LL     to output a HTML report in language LL (en,de,es,fr,it,nl,zh-cn,...)"
+msgstr "  -lang=LL     tulostaa HTML-raportin kielellä LL (fi,en,de,es,fr,it,nl,zh-cn,...)"
+
+msgid "  -month=MM    to output a HTML report for an old month MM"
+msgstr "  -month=MM    tulostaa HTML-raportin vanhalta kuukaudelta MM"
+
+msgid "  -year=YYYY   to output a HTML report for an old year YYYY"
+msgstr "  -year=YYYY   tulostaa HTML-raportin vanhalta vuodelta YYYY"
+
+msgid "  The 'date' options doesn't allow you to process old log file. They only allow you to see a past report for a chosen month/year period instead of current month/year."
+msgstr "  'date'-valinnat eivät anna sinun käsitellä vanhaa lokitiedostoa. Ne sallivat sinun nähdä vain menneen raportin valitulta kuukausi/vuosi -jaksolta nykyisen kuukauden/vuoden sijasta."
+
+msgid "Other options:"
+msgstr "Muut valinnat:"
+
+msgid "  -debug=X     to add debug informations lesser than level X (speed reduced)"
+msgstr "  -debug=X     lisää virheenkorjaustietoja, jotka ovat pienempiä kuin taso X (nopeus heikkenee)"
+
+msgid "  -version     show AWStats version"
+msgstr "  -version, -v     näyttää AWStats-version"
+
+msgid "Now supports/detects:"
+msgstr "Tukee/havaitsee nyt:"
+
+msgid "  Web/Ftp/Mail/streaming server log analyzis (and load balanced log files)"
+msgstr "  Web/FTP/sähköposti/streaming-palvelimen lokianalyysi (ja kuormantasatut lokitiedostot)"
+
+msgid "  Reverse DNS lookup (IPv4 and IPv6) and GeoIP lookup"
+msgstr "  Käänteinen DNS-haku (IPv4 ja IPv6) ja GeoIP-haku"
+
+msgid "  Number of visits, number of unique visitors"
+msgstr "  Käyntien määrä, yksilöllisten vierailijoiden määrä"
+
+msgid "  Visits duration and list of last visits"
+msgstr "  Käyntien kesto ja luettelo viimeisistä käynneistä"
+
+msgid "  Authenticated users"
+msgstr "  Autentikoidut käyttäjät"
+
+msgid "  Days of week and rush hours"
+msgstr "  Viikonpäivät ja ruuhka-ajat"
+
+msgid "  Hosts list and unresolved IP addresses list"
+msgstr "  Isäntäluettelo ja luettelo ratkaisemattomista IP-osoitteista"
+
+msgid "  Most viewed, entry and exit pages"
+msgstr "  Eniten katsotut, sisääntulo- ja poistumissivut"
+
+msgid "  Files type and Web compression (mod_gzip, mod_deflate stats)"
+msgstr "  Tiedostotyypit ja verkkopakkaus (mod_gzip, mod_deflate -tilastot)"
+
+msgid "  Configured Database Statistics"
+msgstr "  Määritetyt tietokantatilastot"
+
+msgid "  %s domains/countries"
+msgstr "  %s verkkotunnusta/maata"
+
+msgid "  %s robots"
+msgstr "  %s robottia"
+
+msgid "  %s worm's families"
+msgstr "  %s matoperhettä"
+
+msgid "  %s operating systems"
+msgstr "  %s käyttöjärjestelmää"
+
+msgid "  %s browsers (%s with phone browsers database)"
+msgstr "  %s selainta (mukaan lukien mobiiliselainten tietokanta %s)"
+
+msgid "  %s search engines (and keyphrases/keywords used from them)"
+msgstr "  %s hakukonetta (ja niistä käytetyt avainlauseet/avainsanat)"
+
+msgid "  All HTTP errors with last referrer"
+msgstr "  Kaikki HTTP-virheet viimeisimmällä viittaajalla"
+
+msgid "  Report by day/month/year"
+msgstr "  Raportti päivän/kuukauden/vuoden mukaan"
+
+msgid "  Dynamic or static HTML or XHTML reports, static PDF reports"
+msgstr "  Dynaamiset tai staattiset HTML- tai XHTML-raportit, staattiset PDF-raportit"
+
+msgid "  Indexed text or XML monthly database"
+msgstr "  Indeksoitu teksti- tai XML-kuukausitietokanta"
+
+msgid "  And a lot of other advanced features and options..."  
+msgstr "  Ja monia muita edistyneitä ominaisuuksia ja valintoja..."
+
+msgid "  New versions and FAQ at http://www.awstats.org"
+msgstr "  Uudet versiot ja usein kysytyt kysymykset osoitteessa https://github.com/hestiacn/vstats/issues"

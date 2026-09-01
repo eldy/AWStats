@@ -1,368 +1,877 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-<meta name="description" content="AWStats Documentation - Using the Extra Sections features">
-<meta name="keywords" content="awstats, awstat, extra, section, sections, feature, features, report, extrasection">
-<meta name="robots" content="index,follow">
-<meta name="title" content="AWStats Documentation - Using the Extra Sections features">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>AWStats Documentation - Using the Extra Sections features</title>
-<link rel="stylesheet" href="styles.css" type="text/css">
-<link href="https://plus.google.com/+LaurentDestailleur-Open-Source-Expert" rel="publisher" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWStats · 额外部分功能</title>
+    <meta name="description" content="AWStats Documentation - Using the Extra Sections features (中文/English)">
+    <meta name="keywords" content="awstats, extra, sections, reports, 额外部分, 自定义报告">
+    <meta name="author" content="Laurent Destailleur (多语言重构)">
+    <meta name="robots" content="index,follow">
+    <style>
+        /* ========== 现代化全局设计 ========== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-page: #f8fafc; --surface: #ffffff; --surface-secondary: #f1f5f9;
+            --text-primary: #0f172a; --text-secondary: #475569; --accent: #4f46e5;
+            --accent-light: #818cf8; --accent-soft: #eef2ff; --border: #e2e8f0;
+            --card-shadow: 0 20px 25px -5px rgba(0,0,0,0.05), 0 10px 10px -5px rgba(0,0,0,0.02);
+            --header-bg: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            --footer-bg: #eef2ff; --link-color: #4f46e5; --link-visited: #7c3aed;
+            --code-bg: #f1f5f9; --success: #10b981; --warning: #f59e0b; --danger: #ef4444;
+            --example-table-bg: #f8fafc;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-page: #0f172a; --surface: #1e293b; --surface-secondary: #334155;
+                --text-primary: #f1f5f9; --text-secondary: #cbd5e1; --accent: #818cf8;
+                --accent-light: #a5b4fc; --accent-soft: #2d3a5e; --border: #475569;
+                --card-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
+                --header-bg: linear-gradient(135deg, #4f46e5 0%, #6d28d9 100%);
+                --footer-bg: #1e293b; --link-color: #a5b4fc; --link-visited: #c4b5fd;
+                --code-bg: #334155; --success: #34d399; --warning: #fbbf24; --danger: #f87171;
+                --example-table-bg: #1e293b;
+            }
+        }
+
+        body {
+            background-color: var(--bg-page); color: var(--text-primary);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6; margin: 0; padding: 0;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            display: flex; flex-direction: column; min-height: 100vh;
+        }
+        .container { max-width: 1300px; margin: 0 auto; padding: 0 28px; width: 100%; }
+
+        /* 现代化导航栏 */
+        .nav-bar {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+            background-color: rgba(var(--surface-rgb), 0.8);
+        }
+        .nav-container {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 20px;
+        }
+        .nav-home {
+            font-weight: 700; font-size: 1.3rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-decoration: none; display: flex; align-items: center; gap: 8px;
+        }
+        .nav-links {
+            display: flex; gap: 8px; flex-wrap: wrap;
+        }
+        .nav-links a {
+            color: var(--text-secondary); text-decoration: none;
+            font-weight: 500; padding: 8px 16px; border-radius: 40px;
+            transition: all 0.2s; font-size: 0.95rem;
+        }
+        .nav-links a:hover {
+            background: var(--accent-soft); color: var(--accent);
+        }
+        .nav-links a.active {
+            background: var(--accent); color: white;
+        }
+        .breadcrumb {
+            display: flex; gap: 8px; align-items: center;
+            color: var(--text-secondary); font-size: 0.9rem;
+        }
+        .breadcrumb a { color: var(--link-color); text-decoration: none; }
+
+        /* 现代化头部 */
+        .header {
+            background: var(--header-bg); color: white; border-radius: 0 0 40px 40px;
+            padding: 24px 0 32px; box-shadow: var(--card-shadow); margin-bottom: 30px;
+        }
+        .header-row {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 20px;
+        }
+        .logo-area { display: flex; align-items: center; gap: 16px; }
+        .logo-area img { height: 56px; width: auto; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
+        .site-title {
+            font-size: 2rem; font-weight: 700; background: rgba(255,255,255,0.1);
+            padding: 8px 24px; border-radius: 60px; backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .header-center {
+            flex: 1; text-align: center; font-weight: 500; font-size: 1.2rem;
+            background: rgba(0,0,0,0.1); padding: 8px 24px; border-radius: 60px;
+            backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.15);
+        }
+        .header-right { display: flex; gap: 12px; align-items: center; }
+        .lang-switch {
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 40px; padding: 6px 16px; color: white; font-weight: 500;
+            display: flex; align-items: center; gap: 8px; backdrop-filter: blur(8px);
+        }
+        .lang-switch select {
+            background: transparent; border: none; color: white; font-weight: 500;
+            outline: none; font-size: 0.95rem; cursor: pointer;
+        }
+        .lang-switch select option { background: var(--accent); color: white; }
+        .theme-toggle {
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 40px; padding: 8px 20px; font-size: 0.95rem; color: white;
+            cursor: pointer; display: flex; align-items: center; gap: 8px; backdrop-filter: blur(8px);
+        }
+
+        /* 现代化文档卡片 */
+        .doc-card {
+            background-color: var(--surface); border-radius: 40px;
+            padding: 3rem; box-shadow: var(--card-shadow);
+            border: 1px solid var(--border); margin: 20px 0 40px;
+        }
+        h1 {
+            font-size: 2.5rem; font-weight: 700; letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin: 0 0 25px 0;
+        }
+        h2 {
+            font-size: 1.8rem; font-weight: 600; margin: 2.5rem 0 1.5rem;
+            color: var(--text-primary); border-bottom: 3px solid var(--accent-soft);
+            padding-bottom: 12px;
+        }
+        h3 {
+            font-size: 1.3rem; font-weight: 600; margin: 2rem 0 1rem;
+            color: var(--accent);
+        }
+
+        /* 目录样式 */
+        .example-toc {
+            background: var(--surface-secondary);
+            border-radius: 30px;
+            padding: 25px;
+            margin: 30px 0;
+            border: 1px solid var(--border);
+        }
+        .example-toc-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .example-toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 12px;
+        }
+        .example-toc-item {
+            padding: 8px 12px;
+            background: var(--surface);
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+        .example-toc-item:hover {
+            background: var(--accent-soft);
+            transform: translateX(5px);
+        }
+        .example-toc-item a {
+            color: var(--text-primary);
+            text-decoration: none;
+            display: block;
+            font-size: 0.95rem;
+        }
+
+        /* 代码块样式 */
+        .code-block {
+            background: var(--code-bg);
+            padding: 20px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 20px 0;
+            line-height: 1.5;
+        }
+        .code-inline {
+            background: var(--code-bg);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            border: 1px solid var(--border);
+        }
+
+        /* 示例表格样式 */
+        .example-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: var(--example-table-bg);
+        }
+        .example-table th {
+            background: var(--accent-soft);
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .example-table td {
+            padding: 10px 12px;
+            border-top: 1px solid var(--border);
+        }
+        .example-table tr:hover td {
+            background: var(--accent-soft);
+        }
+
+        /* 配置块样式 */
+        .config-block {
+            background: var(--surface-secondary);
+            padding: 20px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            margin: 20px 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+        .config-comment {
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        /* 示例结果样式 */
+        .result-demo {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .result-demo table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .result-demo th {
+            background: var(--accent-soft);
+            padding: 8px;
+            text-align: left;
+        }
+        .result-demo td {
+            padding: 6px 8px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* 现代化页脚 */
+        .footer {
+            background-color: var(--footer-bg); margin-top: 60px;
+            padding: 32px 24px; border-radius: 40px 40px 0 0;
+            border-top: 1px solid var(--border); color: var(--text-secondary);
+        }
+        .footer-content {
+            display: flex; flex-wrap: wrap; justify-content: space-between;
+            align-items: center; gap: 20px; max-width: 1300px; margin: 0 auto;
+        }
+        .footer-copyright {
+            background: var(--surface); padding: 8px 24px; border-radius: 60px;
+            border: 1px solid var(--border); font-size: 0.95rem;
+        }
+        
+        .back-to-top {
+            position: fixed; bottom: 30px; right: 30px;
+            background: var(--accent); color: white;
+            width: 56px; height: 56px; border-radius: 28px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; border: none; box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
+            transition: all 0.2s; z-index: 99; font-size: 1.2rem;
+        }
+        .back-to-top:hover {
+            transform: scale(1.1); background: var(--accent-light);
+        }
+        
+        @media (max-width: 700px) {
+            .header-row { flex-direction: column; }
+            .doc-card { padding: 1.8rem; }
+            h1 { font-size: 2rem; }
+            .example-toc-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
+<body>
+    <!-- 导航栏 -->
+    <div class="nav-bar">
+        <div class="container nav-container">
+            <a href="index.html" class="nav-home">
+                <span>🏠</span> AWStats 文档
+            </a>
+            <div class="nav-links">
+                <a href="index.html" data-i18n="navHome">主页</a>
+                <a href="awstats_what.html" data-i18n="navWhat">什么是AWStats</a>
+                <a href="awstats_setup.html" data-i18n="navSetup">安装配置</a>
+                <a href="awstats_webmin.html" data-i18n="navWebmin">Webmin模块</a>
+                <a href="awstats_upgrade.html" data-i18n="navUpgrade">升级指南</a>
+                <a href="awstats_tools.html" data-i18n="navTools">其他工具</a>
+                <a href="awstats_security.html" data-i18n="navSecurity">安全建议</a>
+                <a href="awstats_license.html" data-i18n="navLicense">许可证</a>
+                <a href="awstats_glossary.html" data-i18n="navGlossary">术语表</a>
+                <a href="awstats_faq.html" data-i18n="navFAQ">FAQ</a>
+                <a href="awstats_extra.html" class="active" data-i18n="navExtra">额外部分</a>
+            </div>
+            <div class="breadcrumb">
+                <a href="index.html" data-i18n="home">主页</a>
+                <span>›</span>
+                <span data-i18n="currentPage">额外部分功能</span>
+            </div>
+        </div>
+    </div>
 
-<body topmargin=10 leftmargin=5>
+    <header class="header">
+        <div class="container header-row">
+            <div class="logo-area">
+                <img src="images/awstats_logo6.png" alt="AWStats" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'56\' height=\'56\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%234f46e5\' rx=\'20\'/%3E%3Ctext x=\'20\' y=\'68\' fill=\'%23ffffff\' font-size=\'60\' font-weight=\'bold\'%3EAW%3C/text%3E%3C/svg%3E';">
+                <span class="site-title" data-i18n="siteTitle">AWStats 8.1</span>
+            </div>
+            <div class="header-center" data-i18n="headerSlogan">
+                ⚡ 先进的日志分析器 · 官方文档
+            </div>
+            <div class="header-right">
+                <div class="lang-switch">
+                    <span>🌐</span>
+                    <select id="langSelector">
+                        <option value="zh" selected>中文</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+                <button class="theme-toggle" id="themeToggleBtn">
+                    <span>🌓</span> <span class="theme-text" data-i18n="themeAuto">自动</span>
+                </button>
+            </div>
+        </div>
+    </header>
 
+    <main class="container">
+        <div class="doc-card">
+            <h1 data-i18n="mainTitle">📊 使用额外部分功能添加自定义报告</h1>
 
-<table style="font: 10pt arial,helvetica,verdana" cellpadding=0 cellspacing=0 border=0 bgcolor=#FFFFFF width=100%>
+            <p data-i18n="intro">AWStats 的额外部分功能是强大的配置选项，允许您添加 AWStats 默认未提供的自定义报告。您可以用它来构建特殊报告，如特定产品的销售数量、营销报告、特定用户或代理的计数等。</p>
 
-<!-- Large -->
-<tr style="font: 10pt arial,helvetica,verdana">
-<td bgcolor=#9999cc align=center><a href="/"><img src="images/awstats_logo6.png" border=0></a></td>
-<td bgcolor=#9999cc align=center>
-<br>
-<font style="font: 16pt arial,helvetica,sans-serif" color=#EEEEFF><b>AWStats logfile analyzer 8.0 Documentation</b></font><br>
-<br>
-</td>
-<td bgcolor=#9999cc align=center>
-&nbsp;
-</td>
-</tr>
+            <!-- 示例目录 -->
+            <div class="example-toc">
+                <div class="example-toc-title">
+                    <span>📋</span>
+                    <span data-i18n="examples">配置示例</span>
+                </div>
+                <div class="example-toc-grid">
+                    <div class="example-toc-item"><a href="#productorders" data-i18n="example1">示例 1：跟踪产品订单</a></div>
+                    <div class="example-toc-item"><a href="#bugzilla" data-i18n="example2">示例 2：跟踪 Bugzilla 最常查看的 Bug</a></div>
+                    <div class="example-toc-item"><a href="#awredir" data-i18n="example3">示例 3：跟踪退出点击</a></div>
+                    <div class="example-toc-item"><a href="#aborted" data-i18n="example4">示例 4：跟踪中止下载</a></div>
+                    <div class="example-toc-item"><a href="#domainaliases" data-i18n="example5">示例 5：跟踪最常请求的域名别名</a></div>
+                    <div class="example-toc-item"><a href="#level2dir" data-i18n="example6">示例 6：/mydir 目录下的二级路径列表</a></div>
+                </div>
+            </div>
 
-</table>
+            <div class="config-block">
+                <p><strong data-i18n="configExplanation">在配置文件中添加/编辑额外报告的说明：</strong></p>
+                <p data-i18n="configNote">查看 AWStats 配置文件中的以下部分，了解如何通过添加 ExtraSection 配置来添加额外报告，或点击<a href="#extraconfig">此处</a>跳转到配置说明副本。</p>
+                <p data-i18n="configExampleNote">以下示例是宝贵的教程...</p>
+            </div>
 
-
-<br><br><H1 style="font: 26px arial,helvetica,sans-serif">Adding extra reports using the ExtraSection feature</H1>
-
-<br>
-The AWStats ExtraSection features are powerfull setup options to allow you to add your own
-report not provided by default with AWStats. You can use it to build special reports, like
-number of sales for a particular product, marketing reports, counting for a particular
-user or agent, etc...<br>
-<br>
-
-<br><br>
-<u><b>Explanation on how to add/edit an Extra report in your config file</b></u><br>
-Take a look inside the AWStats config file to find the following part:<br>
-<i>
-#-----------------------------------------------------------------------------<br>
-# EXTRA SECTIONS<br>
-#-----------------------------------------------------------------------------<br>
-<br>
-</i>
-Read all explanation in config file after this point, they will explain you
-how to add an Extra report by adding an ExtraSection configuration in your config file,<br>
-or just click <a href="#extraconfig">here</a> to jump to a copy of this explanation.<br>
-<br>
-Following examples are precious tutorials...<br>
-
-<a name="examples">&nbsp;</a>
-<br><br>
-<u><b>Some examples of ExtraSection setup you can follow to build your own personalized reports:</b></u><br>
-<br>
-<li><a href="#productorders">Example 1: Tracking Product orders</a><br>
-<li><a href="#bugzilla">Example 2: Tracking Bugzilla most frequently viewed bugs</a><br>
-<li><a href="#awredir">Example 3: Tracking Exit clicks</a><br>
-<li><a href="#aborted">Example 4: Tracking aborted download</a><br>
-<li><a href="#domainaliases">Example 5: Tracking most requested domain aliases</a><br>
-<li><a href="#level2dir">Example 6: List of top level 2 path under a directory /mydir</a><br>
-<br>
-
-<br>
-<br><a name="productorders"><H2 style="font: 18px arial,helvetica,sans-serif color: #606060"><u>Example 1: Tracking Product orders</u></H2></a>
-Image your web site is an e-store that sells 80 different products. Each of them has an id.
-Imagine each time, someone make an order for product 49, the order.cgi script or order2.cgi script
-is called with, in URL query parameter, the id of the product, meanings that you get in your log
-file a hit that looks like this:<br>
-<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
-GET /cgi-bin/order.cgi?productid=49&session=A0B1C2
-</td></tr></table>
-<br>
-So this is how you need to setup your ExtraSection to track your product orders:<br>
-<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
+            <!-- 示例 1：产品订单 -->
+            <a name="productorders"></a>
+            <h2 data-i18n="example1Title">📦 示例 1：跟踪产品订单</h2>
+            <div class="config-block">
+                <p data-i18n="example1Desc">假设您的网站是一个销售 80 种不同产品的电子商店。每个产品都有 ID。假设每次有人订购产品 49 时，order.cgi 或 order2.cgi 脚本被调用，URL 查询参数中包含产品 ID，日志文件中会出现如下记录：</p>
+                <div class="code-block">
+                    GET /cgi-bin/order.cgi?productid=49&session=A0B1C2
+                </div>
+                <p data-i18n="example1Setup">以下是设置 ExtraSection 跟踪产品订单的方法：</p>
+                <div class="code-block">
 ExtraSectionName1="Product orders"
-<br>ExtraSectionCodeFilter1="200 304"
-<br>ExtraSectionCondition1="URL,\/cgi\-bin\/order\.cgi|URL,\/cgi\-bin\/order2\.cgi"
-<br>ExtraSectionFirstColumnTitle1="Product ID"
-<br>ExtraSectionFirstColumnValues1="QUERY_STRING,productid=([^&]+)"
-<br>ExtraSectionFirstColumnFormat1="%s"
-<br>ExtraSectionStatTypes1=PL
-<br>ExtraSectionAddAverageRow1=0
-<br>ExtraSectionAddSumRow1=1
-<br>MaxNbOfExtra1=100
-<br>MinHitExtra1=1
-</td></tr></table>
-<br>
+ExtraSectionCodeFilter1="200 304"
+ExtraSectionCondition1="URL,\/cgi\-bin\/order\.cgi|URL,\/cgi\-bin\/order2\.cgi"
+ExtraSectionFirstColumnTitle1="Product ID"
+ExtraSectionFirstColumnValues1="QUERY_STRING,productid=([^&]+)"
+ExtraSectionFirstColumnFormat1="%s"
+ExtraSectionStatTypes1=PL
+ExtraSectionAddAverageRow1=0
+ExtraSectionAddSumRow1=1
+MaxNbOfExtra1=100
+MinHitExtra1=1
+                </div>
+            </div>
 
-
-<br>
-<br><a name="bugzilla"><H2 style="font: 18px arial,helvetica,sans-serif color: #606060"><u>Example 2: Tracking Bugzilla most frequently viewed bugs</u></H2></a>
-This is an example on how to setup your ExtraSection:<br>
-<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
+            <!-- 示例 2：Bugzilla -->
+            <a name="bugzilla"></a>
+            <h2 data-i18n="example2Title">🐛 示例 2：跟踪 Bugzilla 最常查看的 Bug</h2>
+            <div class="config-block">
+                <p data-i18n="example2Setup">设置 ExtraSection 的示例：</p>
+                <div class="code-block">
 ExtraSectionName1="Bugzilla: Most frequently viewed bugs"
-<br>ExtraSectionCodeFilter1="200 304"
-<br>ExtraSectionCondition1="URL,\/bugzilla\/show_bug\.cgi"
-<br>ExtraSectionFirstColumnTitle1="Bug ID"
-<br>ExtraSectionFirstColumnValues1="QUERY_STRING,id=([^&]+)"
-<br>ExtraSectionFirstColumnFormat1="&lt;a href='/bugzilla/show_bug.cgi?id=%s' target=new&gt;%s&lt;/a&gt;"
-<br>ExtraSectionStatTypes1=PL
-<br>ExtraSectionAddAverageRow1=0
-<br>ExtraSectionAddSumRow1=1
-<br>MaxNbOfExtra1=500
-<br>MinHitExtra1=1
-</td></tr></table>
-<br>
+ExtraSectionCodeFilter1="200 304"
+ExtraSectionCondition1="URL,\/bugzilla\/show_bug\.cgi"
+ExtraSectionFirstColumnTitle1="Bug ID"
+ExtraSectionFirstColumnValues1="QUERY_STRING,id=([^&]+)"
+ExtraSectionFirstColumnFormat1="&lt;a href='/bugzilla/show_bug.cgi?id=%s' target='_blank'&gt;%s&lt;/a&gt;"
+ExtraSectionStatTypes1=PL
+ExtraSectionAddAverageRow1=0
+ExtraSectionAddSumRow1=1
+MaxNbOfExtra1=500
+MinHitExtra1=1
+                </div>
+            </div>
 
-
-<br>
-<br><a name="awredir"><H2 style="font: 18px arial,helvetica,sans-serif color: #606060"><u>Example 3: Tracking Exit clicks</u></H2></a>
-AWStats shows you naturally the exit pages. However, you don't know where you visitor go
-after exiting your site since clicking on a link that point to an external link will log
-the viewed page on the external server and not on yours.
-If you want to track this, you can, using the ExtraSection and the <b>awredir.pl</b> tool
-(provided with AWStats).<br>
-This tools must be used as a CGI wrapper. When called on 'A HREF' link, it returns to
-browser a redirector to tell it to show the required page.
-So, to use this script, you must replace HTML href tags that points to external web sites
-onto your HTML pages from<br>
-<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
+            <!-- 示例 3：退出点击 -->
+            <a name="awredir"></a>
+            <h2 data-i18n="example3Title">🔗 示例 3：跟踪退出点击</h2>
+            <div class="config-block">
+                <p data-i18n="example3Desc">AWStats 自然会显示退出页面。但您不知道访客离开您的网站后去了哪里，因为点击指向外部链接的链接会在外部服务器上记录页面，而不是您的服务器。如果您想跟踪这一点，可以使用 ExtraSection 和 <b>awredir.pl</b> 工具（随 AWStats 提供）。</p>
+                <p data-i18n="example3Step1">此工具必须作为 CGI 包装器使用。当在 'A HREF' 链接中调用时，它会向浏览器返回一个重定向器，告诉它显示所需页面。因此，要使用此脚本，您必须将 HTML 页面中指向外部网站的 href 标签从：</p>
+                <div class="code-block">
 &lt;a href="http://externalsite/pagelinked"&gt;Link&lt;/a&gt;
-</td></tr></table>
-to<br>
-<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
-&lt;a href="http://yoursite/cgi-bin/awredir.pl?url=http://externalsite/pagelinked">Link&lt;/a&gt;
-</td></tr></table>
-<br>
-For your web visitor, there is no difference. However this allow you to track
-clicks done on links onto your web pages that point to external web sites,
-because an entry will be seen in your own server log like this record:<br>
-<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
-80.1.2.3 - - [01/Jan/2001:16:00:00 -0300] "GET /cgi-bin/awredir.pl?url=http://externalsite/pagelinked HTTP/1.1" 302 70476 "http://yoursite/pagewithlink.html" "FireBird/0.7"<br>
-</td></tr></table>
-<br>
-Then, you can add in AWStats a chart to track all call to <i>awredir.pl</i> with
-keys values taken from the "url=" parameter. You will get an independant chart, counting
-all external pages viewed by your visitor after exiting your site.<br>
-To have this chart, this is how you must setup your ExtraSection:<br>
-<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
+                </div>
+                <p data-i18n="example3Step2">替换为：</p>
+                <div class="code-block">
+&lt;a href="http://yoursite/cgi-bin/awredir.pl?url=http://externalsite/pagelinked"&gt;Link&lt;/a&gt;
+                </div>
+                <p data-i18n="example3Step3">对于您的网站访客来说，没有区别。但这允许您跟踪指向外部网站的链接上的点击，因为您的服务器日志中会出现如下记录：</p>
+                <div class="code-block">
+80.1.2.3 - - [01/Jan/2001:16:00:00 -0300] "GET /cgi-bin/awredir.pl?url=http://externalsite/pagelinked HTTP/1.1" 302 70476 "http://yoursite/pagewithlink.html" "FireBird/0.7"
+                </div>
+                <p data-i18n="example3Step4">然后，您可以在 AWStats 中添加一个图表，跟踪所有对 <i>awredir.pl</i> 的调用，键值从 "url=" 参数中提取。您将获得一个独立的图表，统计访客离开您网站后查看的所有外部页面。要添加此图表，设置 ExtraSection 如下：</p>
+                <div class="code-block">
 ExtraSectionName1="Redirected Hit"
-<br>ExtraSectionCodeFilter1="302"
-<br>ExtraSectionCondition1="URL,\/cgi\-bin\/awredir\.pl"
-<br>ExtraSectionFirstColumnTitle1="Url"
-<br>ExtraSectionFirstColumnValues1="QUERY_STRING,url=([^&]+)"
-<br>ExtraSectionStatTypes1=HL
-<br>MaxNbOfExtra1=500
-<br>MinHitExtra1=1
-<br>ExtraSectionAddSumRow1=1
-</td></tr></table>
-<br><br>
+ExtraSectionCodeFilter1="302"
+ExtraSectionCondition1="URL,\/cgi\-bin\/awredir\.pl"
+ExtraSectionFirstColumnTitle1="Url"
+ExtraSectionFirstColumnValues1="QUERY_STRING,url=([^&]+)"
+ExtraSectionStatTypes1=HL
+MaxNbOfExtra1=500
+MinHitExtra1=1
+ExtraSectionAddSumRow1=1
+                </div>
+            </div>
 
-
-<br><a name="aborted"><H2 style="font: 18px arial,helvetica,sans-serif color: #606060"><u>Example 4: Tracking aborted download</u></H2></a>
-Aborted downloads are reported in a log file by a 206 error, so this is how you need to setup your ExtraSection to add a chart for a such tracking:<br>
-<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
+            <!-- 示例 4：中止下载 -->
+            <a name="aborted"></a>
+            <h2 data-i18n="example4Title">⏹️ 示例 4：跟踪中止下载</h2>
+            <div class="config-block">
+                <p data-i18n="example4Desc">中止下载在日志文件中由 206 错误报告，因此设置 ExtraSection 添加此类跟踪图表的方法如下：</p>
+                <div class="code-block">
 ExtraSectionName1="List of aborted download"
-<br>ExtraSectionCodeFilter1="206"
-<br>ExtraSectionCondition1=""
-<br>ExtraSectionFirstColumnTitle1="URL"
-<br>ExtraSectionFirstColumnValues1="URL,(.*)"
-<br>ExtraSectionStatTypes1=PHB
-<br>MaxNbOfExtra1=100
-<br>MinHitExtra1=1
-</td></tr></table>
-<br><br>
+ExtraSectionCodeFilter1="206"
+ExtraSectionCondition1=""
+ExtraSectionFirstColumnTitle1="URL"
+ExtraSectionFirstColumnValues1="URL,(.*)"
+ExtraSectionStatTypes1=PHB
+MaxNbOfExtra1=100
+MinHitExtra1=1
+                </div>
+            </div>
 
-
-<br><a name="domainaliases"><H2 style="font: 18px arial,helvetica,sans-serif color: #606060"><u>Example 5: Tracking most requested domain aliases</u></H2></a>
-You have one website, but this web site has several domains named (for example the same site domain.com can be
-reached with urls domain.com,www.domain.com,www.otherdomainname.com,www.againadomainname.org,...).
-You want to know which domain alias is the most used.<br>
-<br>
-The first thing to do is to be sure the domain alias is recorded inside your log file.
-If you use Apache, you must use a personalized Apache log file that contains the <i>%V</i> tag.
-For example you can add in your Apache httpd.conf file a new Apache log format (This is
-the Apache directive, not AWStats, to define an Apache log format that contains
-the virtual domain):<br>
-<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
+            <!-- 示例 5：域名别名 -->
+            <a name="domainaliases"></a>
+            <h2 data-i18n="example5Title">🌐 示例 5：跟踪最常请求的域名别名</h2>
+            <div class="config-block">
+                <p data-i18n="example5Desc">您有一个网站，但这个网站有多个域名（例如，同一个网站 domain.com 可以通过 urls domain.com, www.domain.com, www.otherdomainname.com, www.againadomainname.org 等访问）。您想知道哪个域名别名使用最多。</p>
+                <p data-i18n="example5Step1">首先要确保域名别名记录在您的日志文件中。如果您使用 Apache，必须使用包含 <i>%V</i> 标签的自定义 Apache 日志格式。例如，您可以在 Apache httpd.conf 文件中添加新的 Apache 日志格式：</p>
+                <div class="code-block">
 LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %V" combinedv
-</td></tr></table>
-Then check that your Apache CustomLog directives are defined like this:<br>
-<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
+                </div>
+                <p data-i18n="example5Step2">然后检查您的 Apache CustomLog 指令定义如下：</p>
+                <div class="code-block">
 CustomLog pathtoyourlog/yourlog.log combinedv
-</td></tr></table>
-<br>
-After restarting Apache, your log format should look like this<br>
-<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
-66.130.77.181 - - [09/Aug/2004:03:01:05 +0200] "GET /index.php HTTP/1.1" 200 1473 "-" "Firefox 1.0" www.otherdomainname.com<br>
-</td></tr></table>
-<br>
-
-When your web server log file contains the domain alias, you can now setup AWStats
-to use it. For this use a personalised AWStats log format and use the <i>%extra1</i> tag at
-the same position where the domain alias is. For example, for your combinedv Apache log format,
-we will use:<br>
-<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
+                </div>
+                <p data-i18n="example5Step3">重启 Apache 后，您的日志格式应如下所示：</p>
+                <div class="code-block">
+66.130.77.181 - - [09/Aug/2004:03:01:05 +0200] "GET /index.php HTTP/1.1" 200 1473 "-" "Firefox 1.0" www.otherdomainname.com
+                </div>
+                <p data-i18n="example5Step4">当日志文件包含域名别名后，您可以设置 AWStats 使用它。为此，使用自定义 AWStats 日志格式，并在域名别名所在的位置使用 <i>%extra1</i> 标签。例如，对于 combinedv Apache 日志格式，我们将使用：</p>
+                <div class="code-block">
 LogFormat="%host %other %logname %time1 %methodurl %code %bytesd %refererquot %uaquot %extra1"
-</td></tr></table>
-<br>
-Every tag defined by name <i>extraZ</i> (Z is a number, you can use as many tags as you need)
-can be used in any ExtraSection to extract the parameter. You can use the name <i>extraZ</i> as
-a criteria in the <i>ExtraSectionFirstColumnValuesX</i> parameter (X is number of the extra report, you can
-add as many report as you need) to tell AWStats to use value in log file at the place of
-the tag, as the key for your report. For example:<br>
-<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
+                </div>
+                <p data-i18n="example5Step5">每个名为 <i>extraZ</i>（Z 是数字，您可以根据需要使用任意数量的标签）的标签可以在任何 ExtraSection 中用于提取参数。您可以在 <i>ExtraSectionFirstColumnValuesX</i> 参数中使用 <i>extraZ</i> 作为条件，告诉 AWStats 使用标签位置的值作为报告的键。例如：</p>
+                <div class="code-block">
 ExtraSectionName1="Domains aliases"
-<br>ExtraSectionCodeFilter1="200 304" 
-<br>ExtraSectionCondition1=""
-<br>ExtraSectionFirstColumnTitle1="Domain alias"
-<br>ExtraSectionFirstColumnValues1="extra1,([^&]+)"
-<br>ExtraSectionFirstColumnFormat1="%s"
-<br>ExtraSectionStatTypes1=HL
-<br>ExtraSectionAddAverageRow1=0
-<br>ExtraSectionAddSumRow1=1
-<br>MaxNbOfExtra1=20
-<br>MinHitExtra1=1
-</td></tr></table>
-<br><br>
-And result will be:
-<style type="text/css">
-<!--
-.aws_bodyl  { }
-.aws_border { background-color: #CCCCDD; padding: 1px 1px 1px 1px; margin-top: 0; margin-bottom: 0; }
-.aws_title  { font: 13px verdana, arial, helvetica, sans-serif; font-weight: bold; background-color: #CCCCDD; text-align: center; margin-top: 0; margin-bottom: 0; padding: 1px 1px 1px 1px; color: #000000; }
-.aws_blank  { font: 13px verdana, arial, helvetica, sans-serif; background-color: #CCCCDD; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }
-.aws_data {
-	background-color: #FFFFFF;
-	border-top-width: 1px;   
-	border-left-width: 0px;  
-	border-right-width: 0px; 
-	border-bottom-width: 0px;
-}
-.aws_formfield { font: 13px verdana, arial, helvetica; }
-.aws_button {
-	font-family: arial,verdana,helvetica, sans-serif;
-	font-size: 12px;
-	border: 1px solid #ccd7e0;
-	background-image : url(/awstatsicons/other/button.gif);
-}
-th		{ border-color: #ECECEC; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; font: 11px verdana, arial, helvetica, sans-serif; text-align:center; color: #000000; }
-th.aws	{ border-color: #ECECEC; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; font-size: 13px; font-weight: bold; }
-td	{ border-color: #ECECEC; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; font: 11px verdana, arial, helvetica, sans-serif; color: #000000; padding: 0px;}
-td.awsm	{ border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; border-bottom-width: 0px; font: 11px verdana, arial, helvetica, sans-serif; text-align:left; color: #000000; padding: 0px; }
-//-->
-</style>
-<a name="extra6">&nbsp;</a><br /><table class="aws_border" border="0" cellpadding="2" cellspacing="0" width="100%">
-<tr><td class="aws_title" width="70%">Domains aliases</td><td class="aws_blank">&nbsp;</td></tr>
-<tr><td colspan="2">
-<table class="aws_data" border="1" bordercolor="#ECECEC" cellpadding="2" cellspacing="0" width="100%">
-<tr bgcolor="#ECECEC"><th>Domain alias</th><th align="center" bgcolor="#66F0FF" width="80">Hits</th><th width="120" align="center">Last visit</th></tr>
-<tr><td class="aws">www.domain.com</td><td align="center">1757131</td><td align="center">08 August 2004 - 13:01</td></tr>
-<tr><td class="aws">www.otherdomainname.com</td><td align="center">98518</td><td align="center">08 August 2004 - 12:54</td></tr>
-<tr><td class="aws">domain.com</td><td align="center">19107</td><td align="center">08 August 2004 - 12:42</td></tr>
-<tr><td class="aws">www.againadomainname.org</td><td align="center">7609</td><td align="center">08 August 2004 - 11:56</td></tr>
-<tr><td class="aws"><b>Total</b></td><td align="center">1883986</td><td>&nbsp;</td></tr>
-</table></td></tr></table><br />
+ExtraSectionCodeFilter1="200 304" 
+ExtraSectionCondition1=""
+ExtraSectionFirstColumnTitle1="Domain alias"
+ExtraSectionFirstColumnValues1="extra1,([^&]+)"
+ExtraSectionFirstColumnFormat1="%s"
+ExtraSectionStatTypes1=HL
+ExtraSectionAddAverageRow1=0
+ExtraSectionAddSumRow1=1
+MaxNbOfExtra1=20
+MinHitExtra1=1
+                </div>
+                <p data-i18n="example5Result">结果将是：</p>
+                <div class="result-demo">
+                    <table>
+                        <tr><th>Domain alias</th><th>Hits</th><th>Last visit</th></tr>
+                        <tr><td>www.domain.com</td><td>1757131</td><td>08 August 2004 - 13:01</td></tr>
+                        <tr><td>www.otherdomainname.com</td><td>98518</td><td>08 August 2004 - 12:54</td></tr>
+                        <tr><td>domain.com</td><td>19107</td><td>08 August 2004 - 12:42</td></tr>
+                        <tr><td>www.againadomainname.org</td><td>7609</td><td>08 August 2004 - 11:56</td></tr>
+                        <tr><td><b>Total</b></td><td>1883986</td><td></td></tr>
+                    </table>
+                </div>
+            </div>
 
-
-
-
-<br><a name="level2dir"><H2 style="font: 18px arial,helvetica,sans-serif color: #606060"><u>Example 6: List of top level 2 path under a directory /mydir</u></H2></a>
-So this is how you need to setup your ExtraSection to add a chart for such a tracking:<br>
-<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
+            <!-- 示例 6：二级目录路径 -->
+            <a name="level2dir"></a>
+            <h2 data-i18n="example6Title">📁 示例 6：/mydir 目录下的二级路径列表</h2>
+            <div class="config-block">
+                <p data-i18n="example6Desc">设置 ExtraSection 添加此类跟踪图表的方法如下：</p>
+                <div class="code-block">
 ExtraSectionName1="List of top level 2 path under /mydir"
-<br>ExtraSectionCodeFilter1="200 304"
-<br>ExtraSectionCondition1="URL,^\/mydir\/.*"
-<br>ExtraSectionFirstColumnTitle1="Directory name"
-<br>ExtraSectionFirstColumnValues1="URL,^\/mydir\/([\w]+)\/"
-<br>ExtraSectionStatTypes1=PHK
-<br>MaxNbOfExtra1=50
-<br>MinHitExtra1=1
-</td></tr></table>
-<br><br>
+ExtraSectionCodeFilter1="200 304"
+ExtraSectionCondition1="URL,^\/mydir\/.*"
+ExtraSectionFirstColumnTitle1="Directory name"
+ExtraSectionFirstColumnValues1="URL,^\/mydir\/([\w]+)\/"
+ExtraSectionStatTypes1=PHK
+MaxNbOfExtra1=50
+MinHitExtra1=1
+                </div>
+            </div>
 
+            <p data-i18n="moreExamples">还有更多其他可能的额外部分用法...</p>
 
-<br><br>
-There is a lot of other possible use for Extra Sections ...<br>
-<br>
+            <!-- 配置说明 -->
+            <a name="extraconfig"></a>
+            <h2 data-i18n="configTitle">⚙️ 额外部分配置参数说明</h2>
+            <div class="config-block">
+                <p class="config-comment" data-i18n="configcomment1">#-----------------------------------------------------------------------------</p>
+                <p class="config-comment" data-i18n="configcomment2"># 额外部分</p>
+                <p class="config-comment" data-i18n="configcomment1">#-----------------------------------------------------------------------------</p>
+                <p class="config-comment" data-i18n="configcomment4"># 您可以定义自己的图表，选择行和列的键。此功能特别适用于营销目的，</p>
+                <p class="config-comment" data-i18n="configcomment5"># 例如跟踪产品订单。</p>
+                <p class="config-comment" data-i18n="configcomment6"># 为此，编辑 Extra 部分的所有参数。每组参数是一个不同的图表。</p>
+                <p class="config-comment" data-i18n="configcomment7"># 如需多个图表，复制部分并更改编号。</p>
+                <p class="config-comment" data-i18n="configcomment8"># 注意：每个 Extra 部分会使 AWStats 速度降低 8%。</p>
+                <p class="config-comment" data-i18n="configcomment9">#</p>
+                <p class="config-comment" data-i18n="configcomment10"># 警告：Extra 部分的错误设置可能导致数组过大，消耗所有内存，</p>
+                <p class="config-comment" data-i18n="configcomment11"># 使 AWStats 在多次更新后无法使用，因此请确保正确设置。</p>
+                <p class="config-comment" data-i18n="configcomment12"># 大多数情况下，您不需要此功能。</p>
+                <p class="config-comment" data-i18n="configcomment13">#</p>
+                <p><strong>ExtraSectionNameX</strong> <span data-i18n="paramName">自定义图表的标题。</span></p>
+                <p><strong>ExtraSectionCodeFilterX</strong> <span data-i18n="paramCodeFilter">记录代码字段必须匹配的代码列表。留空表示不测试代码。</span></p>
+                <p><strong>ExtraSectionConditionX</strong> <span data-i18n="paramCondition">用于判断是否计数的条件，使用字段条件（URL,URLWITHQUERY,QUERY_STRING,REFERER,UA,HOSTINLOG,HOST,VHOST,extraX）和要匹配的正则表达式，用逗号分隔。使用 "||" 表示"或"。</span></p>
+                <p><strong>ExtraSectionFirstColumnTitleX</strong> <span data-i18n="paramFirstColumnTitle">图表的第一列标题。</span></p>
+                <p><strong>ExtraSectionFirstColumnValuesX</strong> <span data-i18n="paramFirstColumnValues">告诉 AWStats 从哪个字段提取值（URL,URLWITHQUERY,QUERY_STRING,REFERER,UA,HOSTINLOG,HOST,VHOST,extraX）以及如何提取（使用正则表达式语法）。找到的每个不同值将出现在报告的第一行的不同行中。确保不同可能值的列表不会无限增长。</span></p>
+                <p><strong>ExtraSectionFirstColumnFormatX</strong> <span data-i18n="paramFirstColumnFormat">用于写入值的字符串。</span></p>
+                <p><strong>ExtraSectionStatTypesX</strong> <span data-i18n="paramStatTypes">要计数的内容。可以使用标准代码字母（P 表示页面，H 表示文件数，B 表示带宽，L 表示最后访问）。</span></p>
+                <p><strong>ExtraSectionAddAverageRowX</strong> <span data-i18n="paramAddAverage">在图表底部添加平均值行。</span></p>
+                <p><strong>ExtraSectionAddSumRowX</strong> <span data-i18n="paramAddSum">在图表底部添加总和行。</span></p>
+                <p><strong>MaxNbOfExtraX</strong> <span data-i18n="paramMaxNb">图表中显示的最大行数。</span></p>
+                <p><strong>MinHitExtraX</strong> <span data-i18n="paramMinHit">在图表中显示所需的最小文件数。</span></p>
+            </div>
 
-<br>
-<br>
-<br>
+            <div class="config-block" style="background: var(--warning); color: var(--text-primary);">
+                <p><strong data-i18n="warning">警告：</strong> <span data-i18n="warningNote">自 AWStats 6.0 起，ExtraSectionConditionX 必须使用正则表达式值。ExtraSectionFirstColumnValuesX 在所有 AWStats 版本中也需要正则表达式值。</span></p>
+            </div>
 
+            <hr>
 
-<a name="extraconfig"></a>
-<br>
-<u><b>The following explanation is same than the one found in AWStats config file:</b></u><br>
-<br>#-----------------------------------------------------------------------------
-<br># EXTRA SECTIONS
-<br>#-----------------------------------------------------------------------------
-<br># You can define your own charts, you choose here what are rows and columns
-<br># keys. This feature is particularly usefull for marketing purpose, tracking
-<br># products orders for example.
-<br># For this, edit all parameters of Extra section. Each set of parameter is a
-<br># different chart. For several charts, duplicate section changing the number.
-<br># Note: Each Extra section reduces AWStats speed by 8%.
-<br>#
-<br># WARNING: A wrong setup of Extra section might result in too large arrays
-<br># that will consume all your memory, making AWStats unusable after several
-<br># updates, so be sure to setup it correctly.
-<br># In most cases, you don't need this feature.
-<br>#
-<br># ExtraSectionNameX is title of your personalized chart.
-<br># ExtraSectionCodeFilterX is list of codes the record code field must match.
-<br>#   Put an empty string for no test on code.
-<br># ExtraSectionConditionX are conditions you can use to count or not the hit,
-<br>#   Use one of the field condition
-<br>#   (URL,URLWITHQUERY,QUERY_STRING,REFERER,UA,HOSTINLOG,HOST,VHOST,extraX)
-<br>#   and a regex to match, after a coma. Use "||" for "OR".
-<br># ExtraSectionFirstColumnTitleX is the first column title of the chart.
-<br># ExtraSectionFirstColumnValuesX is a string to tell AWStats which field to
-<br>#   extract value from
-<br>#   (URL,URLWITHQUERY,QUERY_STRING,REFERER,UA,HOSTINLOG,HOST,VHOST,extraX)
-<br>#   and how to extract the value (using regex syntax). Each different value
-<br>#   found will appear in first column of report on a different row. Be sure
-<br>#   that list of different possible values will not grow indefinitely.
-<br># ExtraSectionFirstColumnFormatX is the string used to write value.
-<br># ExtraSectionStatTypesX are things you want to count. You can use standard
-<br>#   code letters (P for pages,H for hits,B for bandwidth,L for last access).
-<br># ExtraSectionAddAverageRowX add a row at bottom of chart with average values.
-<br># ExtraSectionAddSumRowX add a row at bottom of chart with sum values.
-<br># MaxNbOfExtraX is maximum number of rows shown in chart.
-<br># MinHitExtraX is minimum number of hits required to be shown in chart.
+            <!-- 署名 -->
+            <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-top: 20px;">
+                <span style="color: var(--text-secondary);" data-i18n="writtenBy">文章作者：<a href="https://www.destailleur.fr" rel="author" style="color: var(--accent);">Laurent Destailleur</a>。</span>
+                <span class="code-inline" style="background: var(--accent); color: white; padding: 4px 12px; border-radius: 30px;" data-i18n="version">版本 8.1</span>
+            </div>
+        </div>
+    </main>
 
-<br><br>
-Warning: the ExtraSectionConditionX MUST use regex values since AWStats 6.0.<br>
-ExtraSectionFirstColumnValuesX also need REGEX value for all AWStats versions.<br>
-Return to <a href="#examples">examples</a> for examples on syntax use.<br>
-<br>
+    <!-- 返回顶部按钮 -->
+    <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="返回顶部">
+        ↑
+    </button>
 
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-copyright">
+                © 1997 - <span id="currentYear"></span> Laurent Destailleur & AWStats <span data-i18n="copyright">团队</span>
+            </div>
+            <div class="footer-license">
+                <a href="awstats_license.html" data-i18n="licenseLink">GNU General Public License</a> · 
+                <a href="https://github.com/eldy/AWStats" rel="publisher" target="_blank" style="display: inline-flex; align-items: center;"><a data-i18n="authorLink"></a> 
+                </a>
+                    <img src="images/favicon.pub/github.svg" style="width: 24px; height: 24px;">
+                </div>
+            <div class="attribution" data-i18n="darkAttr">
+                🌓 自适应暗黑 · 现代化重构
+            </div>
+        </div>
+    </footer>
 
+    <script>
+        (function() {
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
 
+            // 完整翻译资源
+            const translations = {
+                zh: {
+                    navHome: "主页",
+                    navWhat: "什么是AWStats",
+                    navSetup: "安装配置",
+                    navWebmin: "Webmin模块",
+                    navUpgrade: "升级指南",
+                    navTools: "其他工具",
+                    navSecurity: "安全建议",
+                    navLicense: "许可证",
+                    navGlossary: "术语表",
+                    navFAQ: "FAQ",
+                    navExtra: "额外部分",
+                    home: "主页",
+                    currentPage: "额外部分功能",
+                    
+                    siteTitle: "AWStats 8.1",
+                    headerSlogan: "⚡ 先进的日志分析器 · 官方文档",
+                    themeAuto: "自动",
+                    mainTitle: "📊 使用额外部分功能添加自定义报告",
+                    
+                    intro: "AWStats 的额外部分功能是强大的配置选项，允许您添加 AWStats 默认未提供的自定义报告。您可以用它来构建特殊报告，如特定产品的销售数量、营销报告、特定用户或代理的计数等。",
+                    
+                    examples: "配置示例",
+                    example1: "示例 1：跟踪产品订单",
+                    example2: "示例 2：跟踪 Bugzilla 最常查看的 Bug",
+                    example3: "示例 3：跟踪退出点击",
+                    example4: "示例 4：跟踪中止下载",
+                    example5: "示例 5：跟踪最常请求的域名别名",
+                    example6: "示例 6：/mydir 目录下的二级路径列表",
+                    
+                    configExplanation: "在配置文件中添加/编辑额外报告的说明：",
+                    configNote: "查看 AWStats 配置文件中的以下部分，了解如何通过添加 ExtraSection 配置来添加额外报告，或点击<a href=\"#extraconfig\">此处</a>跳转到配置说明副本。",
+                    configExampleNote: "以下示例是宝贵的教程...",
+                    
+                    example1Title: "📦 示例 1：跟踪产品订单",
+                    example1Desc: "假设您的网站是一个销售 80 种不同产品的电子商店。每个产品都有 ID。假设每次有人订购产品 49 时，order.cgi 或 order2.cgi 脚本被调用，URL 查询参数中包含产品 ID，日志文件中会出现如下记录：",
+                    example1Setup: "以下是设置 ExtraSection 跟踪产品订单的方法：",
+                    
+                    example2Title: "🐛 示例 2：跟踪 Bugzilla 最常查看的 Bug",
+                    example2Setup: "设置 ExtraSection 的示例：",
+                    
+                    example3Title: "🔗 示例 3：跟踪退出点击",
+                    example3Desc: "AWStats 自然会显示退出页面。但您不知道访客离开您的网站后去了哪里，因为点击指向外部链接的链接会在外部服务器上记录页面，而不是您的服务器。如果您想跟踪这一点，可以使用 ExtraSection 和 <b>awredir.pl</b> 工具（随 AWStats 提供）。",
+                    example3Step1: "此工具必须作为 CGI 包装器使用。当在 'A HREF' 链接中调用时，它会向浏览器返回一个重定向器，告诉它显示所需页面。因此，要使用此脚本，您必须将 HTML 页面中指向外部网站的 href 标签从：",
+                    example3Step2: "替换为：",
+                    example3Step3: "对于您的网站访客来说，没有区别。但这允许您跟踪指向外部网站的链接上的点击，因为您的服务器日志中会出现如下记录：",
+                    example3Step4: "然后，您可以在 AWStats 中添加一个图表，跟踪所有对 <i>awredir.pl</i> 的调用，键值从 \"url=\" 参数中提取。您将获得一个独立的图表，统计访客离开您网站后查看的所有外部页面。要添加此图表，设置 ExtraSection 如下：",
+                    
+                    example4Title: "⏹️ 示例 4：跟踪中止下载",
+                    example4Desc: "中止下载在日志文件中由 206 错误报告，因此设置 ExtraSection 添加此类跟踪图表的方法如下：",
+                    
+                    example5Title: "🌐 示例 5：跟踪最常请求的域名别名",
+                    example5Desc: "您有一个网站，但这个网站有多个域名（例如，同一个网站 domain.com 可以通过 urls domain.com, www.domain.com, www.otherdomainname.com, www.againadomainname.org 等访问）。您想知道哪个域名别名使用最多。",
+                    example5Step1: "首先要确保域名别名记录在您的日志文件中。如果您使用 Apache，必须使用包含 <i>%V</i> 标签的自定义 Apache 日志格式。例如，您可以在 Apache httpd.conf 文件中添加新的 Apache 日志格式：",
+                    example5Step2: "然后检查您的 Apache CustomLog 指令定义如下：",
+                    example5Step3: "重启 Apache 后，您的日志格式应如下所示：",
+                    example5Step4: "当日志文件包含域名别名后，您可以设置 AWStats 使用它。为此，使用自定义 AWStats 日志格式，并在域名别名所在的位置使用 <i>%extra1</i> 标签。例如，对于 combinedv Apache 日志格式，我们将使用：",
+                    example5Step5: "每个名为 <i>extraZ</i>（Z 是数字，您可以根据需要使用任意数量的标签）的标签可以在任何 ExtraSection 中用于提取参数。您可以在 <i>ExtraSectionFirstColumnValuesX</i> 参数中使用 <i>extraZ</i> 作为条件，告诉 AWStats 使用标签位置的值作为报告的键。例如：",
+                    example5Result: "结果将是：",
+                    
+                    example6Title: "📁 示例 6：/mydir 目录下的二级路径列表",
+                    example6Desc: "设置 ExtraSection 添加此类跟踪图表的方法如下：",
+                    
+                    moreExamples: "还有更多其他可能的额外部分用法...",
+                    
+                    configTitle: "⚙️ 额外部分配置参数说明",
+                    
+                    paramName: "自定义图表的标题。",
+                    paramCodeFilter: "记录代码字段必须匹配的代码列表。留空表示不测试代码。",
+                    paramCondition: "用于判断是否计数的条件，使用字段条件（URL,URLWITHQUERY,QUERY_STRING,REFERER,UA,HOSTINLOG,HOST,VHOST,extraX）和要匹配的正则表达式，用逗号分隔。使用 \"||\" 表示\"或\"。",
+                    paramFirstColumnTitle: "图表的第一列标题。",
+                    paramFirstColumnValues: "告诉 AWStats 从哪个字段提取值（URL,URLWITHQUERY,QUERY_STRING,REFERER,UA,HOSTINLOG,HOST,VHOST,extraX）以及如何提取（使用正则表达式语法）。找到的每个不同值将出现在报告的第一行的不同行中。确保不同可能值的列表不会无限增长。",
+                    paramFirstColumnFormat: "用于写入值的字符串。",
+                    paramStatTypes: "要计数的内容。可以使用标准代码字母（P 表示页面，H 表示文件数，B 表示带宽，L 表示最后访问）。",
+                    paramAddAverage: "在图表底部添加平均值行。",
+                    paramAddSum: "在图表底部添加总和行。",
+                    paramMaxNb: "图表中显示的最大行数。",
+                    paramMinHit: "在图表中显示所需的最小文件数。",
+                    
+                    warning: "警告：",
+                    warningNote: "自 AWStats 6.0 起，ExtraSectionConditionX 必须使用正则表达式值。ExtraSectionFirstColumnValuesX 在所有 AWStats 版本中也需要正则表达式值。",
+                    
+                    writtenBy: "文章作者：<a href=\"https://www.destailleur.fr\" rel=\"author\" style=\"color: var(--accent);\">Laurent Destailleur</a>。",
+                    version: "版本 8.1",
+                    copyright: "© 2000 - {year} Laurent Destailleur & AWStats 团队",
+                    licenseLink: "GNU通用公共许可证",
+                    authorLink: "原作者",
+                    darkAttr: "🌓 自适应暗黑 · 中文/English",
+                },
+                en: {
+                    navHome: "Home",
+                    navWhat: "What is AWStats",
+                    navSetup: "Setup",
+                    navWebmin: "Webmin Module",
+                    navUpgrade: "Upgrade Guide",
+                    navTools: "Other Tools",
+                    navSecurity: "Security Tips",
+                    navLicense: "License",
+                    navGlossary: "Glossary",
+                    navFAQ: "FAQ",
+                    navExtra: "Extra Sections",
+                    home: "Home",
+                    currentPage: "Extra Sections",
+                    
+                    siteTitle: "AWStats 8.1",
+                    headerSlogan: "⚡ Advanced Log Analyzer · Official Docs",
+                    themeAuto: "Auto",
+                    mainTitle: "📊 Adding extra reports using the ExtraSection feature",
+                    
+                    intro: "The AWStats ExtraSection features are powerful setup options to allow you to add your own report not provided by default with AWStats. You can use it to build special reports, like number of sales for a particular product, marketing reports, counting for a particular user or agent, etc.",
+                    
+                    examples: "Configuration Examples",
+                    example1: "Example 1: Tracking Product orders",
+                    example2: "Example 2: Tracking Bugzilla most frequently viewed bugs",
+                    example3: "Example 3: Tracking Exit clicks",
+                    example4: "Example 4: Tracking aborted download",
+                    example5: "Example 5: Tracking most requested domain aliases",
+                    example6: "Example 6: List of top level 2 path under /mydir",
+                    
+                    configExplanation: "Explanation on how to add/edit an Extra report in your config file:",
+                    configNote: "Take a look inside the AWStats config file to find the following part to learn how to add an Extra report by adding an ExtraSection configuration, or click <a href=\"#extraconfig\">here</a> to jump to a copy of this explanation.",
+                    configExampleNote: "Following examples are precious tutorials...",
+                    
+                    example1Title: "📦 Example 1: Tracking Product orders",
+                    example1Desc: "Imagine your web site is an e-store that sells 80 different products. Each of them has an id. Imagine each time, someone make an order for product 49, the order.cgi script or order2.cgi script is called with, in URL query parameter, the id of the product, meaning that you get in your log file a hit that looks like this:",
+                    example1Setup: "So this is how you need to setup your ExtraSection to track your product orders:",
+                    
+                    example2Title: "🐛 Example 2: Tracking Bugzilla most frequently viewed bugs",
+                    example2Setup: "This is an example on how to setup your ExtraSection:",
+                    
+                    example3Title: "🔗 Example 3: Tracking Exit clicks",
+                    example3Desc: "AWStats shows you naturally the exit pages. However, you don't know where your visitor go after exiting your site since clicking on a link that point to an external link will log the viewed page on the external server and not on yours. If you want to track this, you can use the ExtraSection and the <b>awredir.pl</b> tool (provided with AWStats).",
+                    example3Step1: "This tool must be used as a CGI wrapper. When called on 'A HREF' link, it returns to browser a redirector to tell it to show the required page. So, to use this script, you must replace HTML href tags that points to external web sites onto your HTML pages from:",
+                    example3Step2: "to:",
+                    example3Step3: "For your web visitor, there is no difference. However this allows you to track clicks done on links onto your web pages that point to external web sites, because an entry will be seen in your own server log like this record:",
+                    example3Step4: "Then, you can add in AWStats a chart to track all call to <i>awredir.pl</i> with keys values taken from the \"url=\" parameter. You will get an independent chart, counting all external pages viewed by your visitor after exiting your site. To have this chart, this is how you must setup your ExtraSection:",
+                    
+                    example4Title: "⏹️ Example 4: Tracking aborted download",
+                    example4Desc: "Aborted downloads are reported in a log file by a 206 error, so this is how you need to setup your ExtraSection to add a chart for such tracking:",
+                    
+                    example5Title: "🌐 Example 5: Tracking most requested domain aliases",
+                    example5Desc: "You have one website, but this web site has several domains named (for example the same site domain.com can be reached with urls domain.com, www.domain.com, www.otherdomainname.com, www.againadomainname.org,...). You want to know which domain alias is the most used.",
+                    example5Step1: "The first thing to do is to be sure the domain alias is recorded inside your log file. If you use Apache, you must use a personalized Apache log file that contains the <i>%V</i> tag. For example you can add in your Apache httpd.conf file a new Apache log format:",
+                    example5Step2: "Then check that your Apache CustomLog directives are defined like this:",
+                    example5Step3: "After restarting Apache, your log format should look like this:",
+                    example5Step4: "When your web server log file contains the domain alias, you can now setup AWStats to use it. For this use a personalised AWStats log format and use the <i>%extra1</i> tag at the same position where the domain alias is. For example, for your combinedv Apache log format, we will use:",
+                    example5Step5: "Every tag defined by name <i>extraZ</i> (Z is a number, you can use as many tags as you need) can be used in any ExtraSection to extract the parameter. You can use the name <i>extraZ</i> as a criteria in the <i>ExtraSectionFirstColumnValuesX</i> parameter to tell AWStats to use value in log file at the place of the tag, as the key for your report. For example:",
+                    example5Result: "And result will be:",
+                    
+                    example6Title: "📁 Example 6: List of top level 2 path under /mydir",
+                    example6Desc: "So this is how you need to setup your ExtraSection to add a chart for such a tracking:",
+                    
+                    moreExamples: "There is a lot of other possible use for Extra Sections ...",
+                    
+                    configTitle: "⚙️ Extra Section Configuration Parameters",
+                    configcomment1: "#-----------------------------------------------------------------------------",
+					configcomment2: "# Extra Sections",
+					configcomment3: "#-----------------------------------------------------------------------------",
+					configcomment4: "# You can define your own charts, choosing the keys for rows and",
+					configcomment5: "# columns. This feature is especially useful for marketing purposes,",
+					configcomment6: "# for example to track orders of products.",
+					configcomment7: "# To do this, edit all parameters of the Extra section. Each set of",
+					configcomment8: "# parameters is a different chart.",
+					configcomment9: "# If you want several charts, copy the section and change the number.",
+					configcomment10: "# Note: Each Extra section slows down AWStats by 8%.",
+					configcomment11: "#",
+					configcomment12: "# Warning: Wrong setup of Extra sections can lead to too big arrays",
+					configcomment13: "# that consume all memory and make AWStats unusable after several updates, so be sure to setup it correctly.",
+					configcomment14: "#",
+                    paramName: "Title of your personalized chart.",
+                    paramCodeFilter: "List of codes the record code field must match. Put an empty string for no test on code.",
+                    paramCondition: "Conditions you can use to count or not the hit, use one of the field condition (URL,URLWITHQUERY,QUERY_STRING,REFERER,UA,HOSTINLOG,HOST,VHOST,extraX) and a regex to match, after a coma. Use \"||\" for \"OR\".",
+                    paramFirstColumnTitle: "The first column title of the chart.",
+                    paramFirstColumnValues: "A string to tell AWStats which field to extract value from (URL,URLWITHQUERY,QUERY_STRING,REFERER,UA,HOSTINLOG,HOST,VHOST,extraX) and how to extract the value (using regex syntax). Each different value found will appear in first column of report on a different row. Be sure that list of different possible values will not grow indefinitely.",
+                    paramFirstColumnFormat: "The string used to write value.",
+                    paramStatTypes: "Things you want to count. You can use standard code letters (P for pages, H for hits, B for bandwidth, L for last access).",
+                    paramAddAverage: "Add a row at bottom of chart with average values.",
+                    paramAddSum: "Add a row at bottom of chart with sum values.",
+                    paramMaxNb: "Maximum number of rows shown in chart.",
+                    paramMinHit: "Minimum number of hits required to be shown in chart.",
+                    
+                    warning: "Warning:",
+                    warningNote: "ExtraSectionConditionX MUST use regex values since AWStats 6.0. ExtraSectionFirstColumnValuesX also need REGEX value for all AWStats versions.",
+                    
+                    writtenBy: "Article written by <a href=\"https://www.destailleur.fr\" rel=\"author\" style=\"color: var(--accent);\">Laurent Destailleur</a>.",
+                    version: "Version 8.1",
+                    copyright: "© 2000 - {year} Laurent Destailleur & AWStats Team",
+                    licenseLink: "GNU General Public License",
+                    authorLink: "Author",
+                    darkAttr: "🌓 Adaptive dark mode · 中文/English",
+                }
+            };
 
-<br>
-<hr>
+            const i18nElements = document.querySelectorAll('[data-i18n]');
+            const langSelector = document.getElementById('langSelector');
+            let currentLang = localStorage.getItem('awstats_lang') || 'zh';
+            langSelector.value = currentLang;
 
-<!-- You can remove this part if you distribution need documentation without external tags -->
-<!-- BEGIN_SOCIAL_NETWORKS -->
-<div class="htmldoc-ignore">
-<!-- google plus -->
-<span style="color: #bbb; font-weight: normal;">Article written by <a href="https://www.destailleur.fr" rel="author" style="color: #ccc; font-weight: normal;">Laurent Destailleur</a>.</span><br>
-<br>
-<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-<g:plusone></g:plusone>
-<!-- facebook -->
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/fr_FR/all.js#xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-<div class="fb-like" data-href="http://www.awstats.org/docs/awstats_extra.html" data-layout="button_count" data-action="recommend" data-show-faces="false" data-share="true"></div>
-</div>
-<!-- END_SOCIAL_NETWORKS -->
+            function applyLanguage(lang) {
+                const t = translations[lang] || translations.zh;
+                i18nElements.forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (t[key] !== undefined) {
+                        if (key === 'copyright') {
+                            const year = new Date().getFullYear();
+                            el.innerHTML = t[key].replace('{year}', year);
+                        } else if (key === 'writtenBy' || key.includes('Desc') || key.includes('Note') || key.includes('Step') || key.includes('Result') || key.includes('Example') || key.includes('configNote')) {
+                            el.innerHTML = t[key];
+                        } else {
+                            el.textContent = t[key];
+                        }
+                    }
+                });
+                localStorage.setItem('awstats_lang', lang);
+                
+                const themeState = localStorage.getItem('awstats_theme') || 'auto';
+                const themeText = document.querySelector('.theme-text');
+                if (themeText) {
+                    if (themeState === 'auto') themeText.textContent = t.themeAuto;
+                    else if (themeState === 'light') themeText.textContent = (lang === 'zh' ? '浅色' : 'Light');
+                    else themeText.textContent = (lang === 'zh' ? '深色' : 'Dark');
+                }
+            }
 
+            applyLanguage(currentLang);
 
+            langSelector.addEventListener('change', (e) => {
+                currentLang = e.target.value;
+                applyLanguage(currentLang);
+            });
+
+            // 暗黑模式切换
+            const root = document.documentElement;
+            const themeBtn = document.getElementById('themeToggleBtn');
+            let themeState = localStorage.getItem('awstats_theme') || 'auto';
+
+            function applyTheme(state) {
+                root.classList.remove('force-light', 'force-dark');
+                if (state === 'light') root.classList.add('force-light');
+                else if (state === 'dark') root.classList.add('force-dark');
+                const themeText = document.querySelector('.theme-text');
+                if (themeText) {
+                    const lang = currentLang;
+                    const t = translations[lang];
+                    if (state === 'auto') themeText.textContent = t.themeAuto;
+                    else if (state === 'light') themeText.textContent = (lang === 'zh' ? '浅色' : 'Light');
+                    else themeText.textContent = (lang === 'zh' ? '深色' : 'Dark');
+                }
+                localStorage.setItem('awstats_theme', state);
+            }
+            applyTheme(themeState);
+            themeBtn.addEventListener('click', () => {
+                if (themeState === 'auto') themeState = 'light';
+                else if (themeState === 'light') themeState = 'dark';
+                else themeState = 'auto';
+                applyTheme(themeState);
+            });
+        })();
+    </script>
 </body>
 </html>

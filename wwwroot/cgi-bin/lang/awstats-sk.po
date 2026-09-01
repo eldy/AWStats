@@ -1,0 +1,3316 @@
+# AWStats Slovak (sk) translations
+# Copyright (C) 2026 AWStats
+# This file is distributed under the same license as the AWStats package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: AWStats 8.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-10 12:00+0000\n"
+"PO-Revision-Date: 2026-05-10 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Slovak\n"
+"Language: sk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#------------------------------------------------------------------------------
+# Názvy mesiacov
+#------------------------------------------------------------------------------
+
+msgid "month_01"
+msgstr "jan"
+
+msgid "month_02"
+msgstr "feb"
+
+msgid "month_03"
+msgstr "mar"
+
+msgid "month_04"
+msgstr "apr"
+
+msgid "month_05"
+msgstr "máj"
+
+msgid "month_06"
+msgstr "jún"
+
+msgid "month_07"
+msgstr "júl"
+
+msgid "month_08"
+msgstr "aug"
+
+msgid "month_09"
+msgstr "sep"
+
+msgid "month_10"
+msgstr "okt"
+
+msgid "month_11"
+msgstr "nov"
+
+msgid "month_12"
+msgstr "dec"
+
+#------------------------------------------------------------------------------
+# Názvy dní v týždni
+#------------------------------------------------------------------------------
+
+msgid "DayOfWeek_0"
+msgstr "ne"
+
+msgid "DayOfWeek_1"
+msgstr "po"
+
+msgid "DayOfWeek_2"
+msgstr "ut"
+
+msgid "DayOfWeek_3"
+msgstr "st"
+
+msgid "DayOfWeek_4"
+msgstr "št"
+
+msgid "DayOfWeek_5"
+msgstr "pi"
+
+msgid "DayOfWeek_6"
+msgstr "so"
+
+#------------------------------------------------------------------------------
+# Prvky rozhrania
+#------------------------------------------------------------------------------
+
+msgid "Advanced Web Statistics for"
+msgstr "Rozšírené webové štatistiky pre"
+
+msgid "Statistics for"
+msgstr "Štatistiky pre"
+
+msgid "main"
+msgstr "hlavné"
+
+msgid "Switch to light mode"
+msgstr "Prepni na svetlý režim"
+
+msgid "Switch to dark mode"
+msgstr "Prepni na tmavý režim"
+
+msgid "TB"
+msgstr "TB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "Bytes"
+msgstr "Bajtov"
+
+msgid "Filter"
+msgstr "Filter"
+
+msgid "Exclude filter"
+msgstr "Filter vylúčenia"
+
+msgid "Top"
+msgstr "Najvyššie"
+
+msgid "Full list"
+msgstr "Úplný zoznam"
+
+msgid "Last"
+msgstr "Posledné"
+
+msgid "Average"
+msgstr "Priemer"
+
+msgid "Export"
+msgstr "Exportovať"
+
+msgid "Details"
+msgstr "Podrobnosti"
+
+msgid "Version"
+msgstr "Verzia"
+
+msgid "thousands_separator"
+msgstr " "
+
+msgid "dateformat_long"
+msgstr "dd.mm.yyyy HH:MM:SS"
+
+msgid "dateformat_short"
+msgstr "dd.mm.yyyy HH:MM"
+
+msgid "date_format_year"
+msgstr "%s"
+
+msgid "date_format_month"
+msgstr "%1$s %2$s"
+
+#------------------------------------------------------------------------------
+# Navigačný panel
+#------------------------------------------------------------------------------
+
+msgid "AWStats Month Selector"
+msgstr "Výber mesiaca AWStats"
+
+msgid "nav_category_basic"
+msgstr "Základné dokumenty"
+
+msgid "nav_category_guide"
+msgstr "Používateľská príručka"
+
+msgid "nav_category_reference"
+msgstr "Referenčné zdroje"
+
+msgid "nav_category_integration"
+msgstr "Integrácia a rozšírenia"
+
+msgid "nav_category_dev"
+msgstr "Dokumentácia pre vývojárov"
+
+msgid "nav_changelog"
+msgstr "Zoznam zmien"
+
+msgid "nav_what"
+msgstr "Čo je AWStats"
+
+msgid "nav_license"
+msgstr "Licencia"
+
+msgid "nav_glossary"
+msgstr "Slovník pojmov"
+
+msgid "nav_setup"
+msgstr "Inštalácia a konfigurácia"
+
+msgid "nav_upgrade"
+msgstr "Sprievodca aktualizáciou"
+
+msgid "nav_config"
+msgstr "Parametre konfigurácie"
+
+msgid "nav_extra"
+msgstr "Extra časti"
+
+msgid "nav_tools"
+msgstr "Iné nástroje"
+
+msgid "nav_faq"
+msgstr "Často kladené otázky"
+
+msgid "nav_security"
+msgstr "Bezpečnostné rady"
+
+msgid "nav_compare"
+msgstr "Porovnanie"
+
+msgid "nav_benchmark"
+msgstr "Výkonnostné testy"
+
+msgid "nav_webmin"
+msgstr "Modul Webmin"
+
+msgid "nav_dolibarr"
+msgstr "Modul Dolibarr"
+
+msgid "nav_contrib"
+msgstr "Zdroje príspevkov"
+
+msgid "nav_plugins"
+msgstr "Vývoj pluginov"
+
+msgid "nav_hooks"
+msgstr "Háky pluginov"
+
+msgid "nav_graphs"
+msgstr "Grafy pluginov"
+
+msgid "Back to top"
+msgstr "Späť na začiatok"
+
+msgid "nav_select_month"
+msgstr "Vyberte mesiac"
+
+#------------------------------------------------------------------------------
+# Hlavné štatistické ukazovatele
+#------------------------------------------------------------------------------
+
+msgid "Unique visitors"
+msgstr "Jedineční návštevníci"
+
+msgid "Visits"
+msgstr "Návštevy"
+
+msgid "Visits duration"
+msgstr "Trvanie návštev"
+
+msgid "First visit"
+msgstr "Prvá návšteva"
+
+msgid "Last visit"
+msgstr "Posledná návšteva"
+
+msgid "Visits/Visitor"
+msgstr "Návštevy/Návštevník"
+
+msgid "Pages/Visit"
+msgstr "Stránky/Návšteva"
+
+msgid "Hits/Visit"
+msgstr "Zásahy/Návšteva"
+
+msgid "KB/Visit"
+msgstr "KB/Návšteva"
+
+msgid "KB/Visits"
+msgstr "KB/Návštevy"
+
+msgid "Pages"
+msgstr "Stránky"
+
+msgid "Hits"
+msgstr "Zásahy"
+
+msgid "Bandwidth"
+msgstr "Šírka pásma"
+
+msgid "duration_format"
+msgstr "%s-%s"
+
+msgid "unit_s"
+msgstr "s"
+
+msgid "unit_min"
+msgstr "min"
+
+msgid "unit_h"
+msgstr "h"
+
+msgid "and"
+msgstr "-"
+
+msgid "Device Types"
+msgstr "Typy zariadení"
+
+msgid "Device Type"
+msgstr "Typ zariadenia"
+
+msgid "Percent"
+msgstr "Percento"
+
+msgid "Mobile"
+msgstr "Mobil"
+
+msgid "Pause & Go"
+msgstr "Pozastaviť a pokračovať"
+
+msgid "Complete"
+msgstr "Dokončiť"
+
+msgid "Tablet"
+msgstr "Tablet"
+
+msgid "Tv"
+msgstr "Televízor"
+
+msgid "Wearable"
+msgstr "Nositeľné zariadenie"
+
+msgid "Bot"
+msgstr "Bot"
+
+msgid "Desktop"
+msgstr "Stolný počítač"
+
+msgid "Normal browsing traffic"
+msgstr "Normálna návštevnosť"
+
+msgid "Abnormal browsing traffic"
+msgstr "Abnormálna návštevnosť"
+
+msgid "Viewed"
+msgstr "Zobrazené"
+
+msgid "Not viewed"
+msgstr "Nezobrazené"
+
+msgid "Abnormal browsing traffic note"
+msgstr "Abnormálna návštevnosť zahŕňa: roboty vyhľadávačov, roboty na trénovanie AI, skenery zraniteľností a požiadavky, ktoré nespĺňajú špecifikácie HTTP/HTTPS"
+
+msgid "File size"
+msgstr "Veľkosť súboru"
+
+msgid "File type"
+msgstr "Typ súboru"
+
+msgid "Downloads"
+msgstr "Stiahnutia"
+
+msgid "Request time"
+msgstr "Čas požiadavky"
+
+msgid "Total requests"
+msgstr "Celkový počet požiadaviek"
+
+msgid "Frequency"
+msgstr "Frekvencia"
+
+msgid "Average frequency"
+msgstr "Priemerná frekvencia"
+
+msgid "Seconds"
+msgstr "Sekundy"
+
+msgid "First"
+msgstr "Prvý"
+
+msgid "Mails"
+msgstr "E-maily"
+
+msgid "Size"
+msgstr "Veľkosť"
+
+msgid "If you remove this file, all statistics for date"
+msgstr "Upozornenie: Odstránením tohto súboru sa všetky štatistiky pre dátum"
+
+msgid "will be lost/reset."
+msgstr "stratia/resetujú!"
+
+msgid "Last config file used to build this data file was"
+msgstr "Posledný konfiguračný súbor použitý na vytvorenie tohto dátového súboru bol"
+
+msgid "Position (offset in bytes) in this file for beginning of each section for"
+msgstr "Pozícia (posun v bajtoch) v tomto súbore pre začiatok každej sekcie pre"
+
+msgid "direct I/O access. If you made changes somewhere in this file, you should"
+msgstr "priamy I/O prístup. Ak ste niekde v tomto súbore vykonali zmeny, mali by ste"
+
+msgid "also remove completely the MAP section (AWStats will rewrite it at next update)"
+msgstr "tiež úplne odstrániť sekciu MAP (AWStats ju prepíše pri ďalšej aktualizácii)"
+
+msgid "LastLine    = Date of last record processed - Last record line number in last log - Last record offset in last log - Last record signature value"
+msgstr "LastLine    = Dátum posledného spracovaného záznamu - Číslo riadku posledného záznamu v poslednom denníku - Posun posledného záznamu v poslednom denníku - Hodnota podpisu posledného záznamu"
+
+msgid "FirstTime   = Date of first visit for history file"
+msgstr "FirstTime   = Dátum prvej návštevy pre historický súbor"
+
+msgid "LastTime    = Date of last visit for history file"
+msgstr "LastTime    = Dátum poslednej návštevy pre historický súbor"
+
+msgid "LastUpdate  = Date of last update - Nb of parsed records - Nb of parsed old records - Nb of parsed new records - Nb of parsed corrupted - Nb of parsed dropped"
+msgstr "LastUpdate  = Dátum poslednej aktualizácie - Počet spracovaných záznamov - Počet spracovaných starých záznamov - Počet spracovaných nových záznamov - Počet spracovaných poškodených - Počet spracovaných zahodených"
+
+msgid "TotalVisits = Number of visits"
+msgstr "TotalVisits = Počet návštev"
+
+msgid "TotalUnique = Number of unique visitors"
+msgstr "TotalUnique = Počet jedinečných návštevníkov"
+
+msgid "MonthHostsKnown   = Number of hosts known"
+msgstr "MonthHostsKnown   = Počet známych hostiteľov"
+
+msgid "MonthHostsUnKnown = Number of hosts unknown"
+msgstr "MonthHostsUnKnown = Počet neznámych hostiteľov"
+
+msgid "Cluster ID - Pages - Hits - Bandwidth"
+msgstr "ID klastra - Stránky - Zásahy - Šírka pásma"
+
+msgid "Hour - Pages - Hits - Bandwidth - Not viewed Pages - Not viewed Hits - Not viewed Bandwidth"
+msgstr "Hodina - Stránky - Zásahy - Šírka pásma - Nezobrazené stránky - Nezobrazené zásahy - Nezobrazená šírka pásma"
+
+msgid "Date - Pages - Hits - Bandwidth - Visits"
+msgstr "Dátum - Stránky - Zásahy - Šírka pásma - Návštevy"
+
+msgid "Domain - Pages - Hits - Bandwidth"
+msgstr "Doména - Stránky - Zásahy - Šírka pásma"
+
+msgid "The %s first Pages must be first (order not required for others)"
+msgstr "Hlavná stránka zobrazuje iba prvých %s stránok podľa počtu zobrazení, úplný zoznam je na stránke podrobností."
+
+msgid "Host - Pages - Hits - Bandwidth - Last visit date - [Start date of last visit] - [Last page of last visit]"
+msgstr "Hostiteľ - Stránky - Zásahy - Šírka pásma - Dátum poslednej návštevy - [Dátum začiatku poslednej návštevy] - [Posledná stránka poslednej návštevy]"
+
+msgid "[Start date of last visit] and [Last page of last visit] are saved only if session is not finished"
+msgstr "[Dátum začiatku poslednej návštevy] a [Posledná stránka poslednej návštevy] sa ukladajú iba vtedy, ak relácia nie je ukončená"
+
+msgid "The first %s items are sorted by hits in descending order; order of the remaining items is undefined."
+msgstr "Prvých %s položiek je zoradených podľa počtu zásahov zostupne; poradie zvyšných položiek nie je definované."
+
+msgid "Login - Pages - Hits - Bandwidth - Last visit"
+msgstr "Prihlásenie - Stránky - Zásahy - Šírka pásma - Posledná návšteva"
+
+msgid "Robot ID - Hits - Bandwidth - Last visit - Hits on robots.txt"
+msgstr "ID robota - Zásahy - Šírka pásma - Posledná návšteva - Zásahy na robots.txt"
+
+msgid "Worm ID - Hits - Bandwidth - Last visit"
+msgstr "ID červa - Zásahy - Šírka pásma - Posledná návšteva"
+
+msgid "EMail - Hits - Bandwidth - Last visit"
+msgstr "E-mail - Zásahy - Šírka pásma - Posledná návšteva"
+
+msgid "The first %s email addresses are sorted by hits in descending order; order of the remaining addresses is undefined."
+msgstr "Prvých %s e-mailových adries je zoradených podľa počtu zásahov zostupne; poradie zvyšných adries nie je definované."
+
+msgid "URL - Pages - Bandwidth - Entry - Exit"
+msgstr "URL - Stránky - Šírka pásma - Vstup - Výstup"
+
+msgid "Files type - Hits - Bandwidth - Bandwidth without compression - Bandwidth after compression"
+msgstr "Typ súborov - Zásahy - Šírka pásma - Šírka pásma bez kompresie - Šírka pásma po kompresii"
+
+msgid "Request Time Range - Request Time Frequency"
+msgstr "Rozsah času požiadavky - Frekvencia času požiadavky"
+
+msgid "Payload Range - Payload Frequency"
+msgstr "Rozsah užitočného zaťaženia - Frekvencia užitočného zaťaženia"
+
+msgid "Session range - Number of visits"
+msgstr "Rozsah relácie - Počet návštev"
+
+msgid "URL with %s errors - Hits"
+msgstr "URL s chybami %s - Zásahy"
+
+msgid "Last URL referrer"
+msgstr "Posledný odkazujúci URL"
+
+msgid "Errors - Hits - Bandwidth"
+msgstr "Chyby - Zásahy - Šírka pásma"
+
+msgid "Search keywords - Number of search"
+msgstr "Kľúčové slová vyhľadávania - Počet vyhľadávaní"
+
+msgid "Only top %s keywords shown on main page (sorted by search count). See full list on detail page."
+msgstr "Hlavná stránka zobrazuje iba prvých %s kľúčových slov podľa počtu vyhľadávaní, úplný zoznam je na stránke podrobností."
+
+msgid "Search keyphrases - Number of search"
+msgstr "Kľúčové frázy vyhľadávania - Počet vyhľadávaní"
+
+msgid "Only top %s keyphrases shown on main page (sorted by search count). See full list on detail page."
+msgstr "Hlavná stránka zobrazuje iba prvých %s kľúčových fráz podľa počtu vyhľadávaní, úplný zoznam je na stránke podrobností."
+
+msgid "External page referers - Pages - Hits"
+msgstr "Odkazujúce externé stránky - Stránky - Zásahy"
+
+msgid "Only top %s external referrers shown on main page (sorted by pages). See full list on detail page."
+msgstr "Hlavná stránka zobrazuje iba prvých %s externých odkazov podľa počtu stránok, úplný zoznam je na stránke podrobností."
+
+msgid "Search engine referers ID - Pages - Hits"
+msgstr "ID odkazov vyhľadávacích nástrojov - Stránky - Zásahy"
+
+msgid "Origin - Pages - Hits"
+msgstr "Pôvod - Stránky - Zásahy"
+
+msgid "Unknown referer Browser - Last visit date"
+msgstr "Neznámy prehliadač odkazovača - Dátum poslednej návštevy"
+
+msgid "Unknown referer OS - Last visit date"
+msgstr "Neznámy OS odkazovača - Dátum poslednej návštevy"
+
+msgid "Screen size - Hits"
+msgstr "Veľkosť obrazovky - Zásahy"
+
+msgid "Browser ID - Hits - Pages"
+msgstr "ID prehliadača - Zásahy - Stránky"
+
+msgid "Downloads - Hits - Bandwidth"
+msgstr "Stiahnutia - Zásahy - Šírka pásma"
+
+msgid "Protocol - Hits - Bandwidth"
+msgstr "Protokol - Zásahy - Šírka pásma"
+
+msgid "Icon Status - Type:200:404:Other"
+msgstr "Stav ikony - Typ:200:404:Iné"
+
+#------------------------------------------------------------------------------
+# Preklady časových období
+#------------------------------------------------------------------------------
+
+msgid "period_00"
+msgstr "Polnoc · AWStats spí, vy sa ešte pozeráte na údaje? Neuveriteľné"
+
+msgid "period_01"
+msgstr "1:00 · Nemôžete spať alebo ste práve skončili v práci?"
+
+msgid "period_02"
+msgstr "2:00 · Dokonca aj boti sú pracovitejší ako vy"
+
+msgid "period_03"
+msgstr "3:00 · Mesto spí, server pracuje nadčas"
+
+msgid "period_04"
+msgstr "4:00 · Čo je jasnejšie, vaša obrazovka alebo kontrolka servera?"
+
+msgid "period_05"
+msgstr "5:00 · Ranný vtáča chytá červa"
+
+msgid "period_06"
+msgstr "6:00 · Niekto vstáva, niekto ešte nešiel spať"
+
+msgid "period_07"
+msgstr "7:00 · Čas na surfovanie počas cesty do práce"
+
+msgid "period_08"
+msgstr "8:00 · Prvá úloha: skontrolovať včerajšie údaje"
+
+msgid "period_09"
+msgstr "9:00 · Zlatý čas, najlepší čas na prácu"
+
+msgid "period_10"
+msgstr "10:00 · Čas na kávu, skontrolovať, či sa návštevnosť zvýšila"
+
+msgid "period_11"
+msgstr "11:00 · Ešte hodina do obeda, vydržte"
+
+msgid "period_12"
+msgstr "12:00 · Server: všetci išli na obed, ja si oddýchnem"
+
+msgid "period_13"
+msgstr "13:00 · Únava prichádza, ale údaje nespia"
+
+msgid "period_14"
+msgstr "14:00 · Čas na olovrant, s údajmi chutí lepšie"
+
+msgid "period_15"
+msgstr "15:00 · Dnešný graf návštevnosti pripomína vašu náladu"
+
+msgid "period_16"
+msgstr "16:00 · Do konca pracovnej doby zostáva X hodín, návštevnosť zrýchľuje"
+
+msgid "period_17"
+msgstr "17:00 · Práca skončila! Ale server stále pracuje"
+
+msgid "period_18"
+msgstr "18:00 · Čas večere"
+
+msgid "period_19"
+msgstr "19:00 · Hlavný vysielací čas, špičková návštevnosť"
+
+msgid "period_20"
+msgstr "20:00 · Povaľujete sa na gauči, ste 114514. návštevník"
+
+msgid "period_21"
+msgstr "21:00 · Noc sa prehlbuje, nočná sova, ktorá tajne pozerá údaje +1"
+
+msgid "period_22"
+msgstr "22:00 · Dnešné údaje budú čoskoro hotové, ste nervózny?"
+
+msgid "period_23"
+msgstr "23:00 · AWStats: je čas spať, zajtra musíte znova pracovať"
+
+#------------------------------------------------------------------------------
+# Časové dimenzie
+#------------------------------------------------------------------------------
+
+msgid "Period"
+msgstr "Obdobie"
+
+msgid "Year"
+msgstr "Rok"
+
+msgid "Month"
+msgstr "Mesiac"
+
+msgid "Months"
+msgstr "Mesiace"
+
+msgid "Date"
+msgstr "Dátum"
+
+msgid "Day"
+msgstr "Deň"
+
+msgid "Hour"
+msgstr "Hodina"
+
+msgid "Hours"
+msgstr "Hodiny"
+
+msgid "Day of week"
+msgstr "Deň v týždni"
+
+msgid "When"
+msgstr "Kedy"
+
+msgid "%s Server Management Panel"
+msgstr "%s  ovládací panel servera"
+
+msgid "Server Administration"
+msgstr "Jednoduché a efektívne serverové riešenie"
+
+#------------------------------------------------------------------------------
+# Rozmery návštevníka
+#------------------------------------------------------------------------------
+
+msgid "Invalid URL Parameters"
+msgstr "Neplatné parametre URL"
+
+msgid "The requested page cannot be loaded due to invalid or malformed URL parameters."
+msgstr "Požadovanú stránku nie je možné načítať kvôli neplatným alebo chybne naformátovaným parametrom URL."
+
+msgid "This may be caused by typing an incorrect URL, missing parameter separators, or using an invalid configuration name."
+msgstr "To môže byť spôsobené zadaním nesprávnej URL, chýbajúcimi oddeľovačmi parametrov alebo použitím neplatného názvu konfigurácie."
+
+msgid "Please check the URL you entered and ensure all parameters are correctly formatted."
+msgstr "Skontrolujte zadanú URL a uistite sa, že všetky parametre sú správne naformátované."
+
+msgid "SiteDomain parameter not defined in your config/domain file, or you may not have execution permission on the file."
+msgstr "Parameter SiteDomain nie je definovaný vo vašom konfiguračnom súbore config/domain, alebo nemáte oprávnenie na spustenie tohto súboru."
+
+msgid "Please run as Administrator to set permissions"
+msgstr "Spustite ako správca na nastavenie oprávnení"
+
+msgid "This directory lacks read permission"
+msgstr "Tento adresár nemá povolenie na čítanie"
+
+msgid "Please set read permission for directory"
+msgstr "Nastavte povolenie na čítanie pre adresár"
+
+msgid "Missing required parameter in config file"
+msgstr "Chýba požadovaný parameter v konfiguračnom súbore"
+
+msgid "Please check that 'DirData' is defined."
+msgstr "Skontrolujte, či je definovaný parameter 'DirData'."
+
+msgid "Domain name in browser address appears to be missing or incomplete"
+msgstr "Názov domény v adrese prehliadača chýba alebo je neúplný"
+
+msgid "Please check the URL parameter"
+msgstr "Skontrolujte parameter URL"
+
+msgid "Format description"
+msgstr "Popis formátu"
+
+msgid "Please set execute permission"
+msgstr "Nastavte prosím oprávnenie na spustenie"
+
+msgid "Or if you prefer numeric mode"
+msgstr "Alebo ak uprednostňujete číselný režim"
+
+msgid "View Report Directly"
+msgstr "Zobraziť správu priamo"
+
+msgid "AWStats Log Viewer"
+msgstr "Prehliadač protokolov AWStats"
+
+msgid "Month Selection"
+msgstr "Výber mesiaca"
+
+msgid "Who"
+msgstr "Kto"
+
+msgid "Visitors"
+msgstr "Návštevníci"
+
+msgid "Countries"
+msgstr "Krajiny"
+
+msgid "flag_icon"
+msgstr "vlajka"
+
+msgid "Country-Region-City"
+msgstr "Krajina-Región-Mesto"
+
+msgid "Code"
+msgstr "Kód"
+
+msgid "Known"
+msgstr "Známy"
+
+msgid "unknownos"
+msgstr "neznámy OS"
+
+msgid "unknownbrowser"
+msgstr "neznámy prehliadač"
+
+msgid "Unresolved IP Address"
+msgstr "Nevyriešená IP adresa"
+
+msgid "Unknown File Type"
+msgstr "Neznámy typ súboru"
+
+msgid "Unknown Size"
+msgstr "Neznáma veľkosť"
+
+msgid "Unknown Time"
+msgstr "Neznámy čas"
+
+msgid "Unknown Browser"
+msgstr "Neznámy prehliadač"
+
+msgid "Unknown OS"
+msgstr "Neznámy OS"
+
+msgid "Unknown Visitor"
+msgstr "Neznámy návštevník"
+
+msgid "Unknown Visitor (Total)"
+msgstr "Neznámy návštevník (Celkom)"
+
+msgid "Unknown Country"
+msgstr "Neznáma krajina"
+
+msgid "Unknown Country (Region)"
+msgstr "Neznáma krajina (Región)"
+
+msgid "Unknown Visitor (Title)"
+msgstr "Neznámy návštevník (názov)"
+
+msgid "PageStayTime"
+msgstr "Nie je možné odhadnúť čas strávený na stránke"
+
+msgid "Unknown OS (Link)"
+msgstr "Neznámy OS (odkaz)"
+
+msgid "Unknown OS (Row)"
+msgstr "neznámy operačný systém"
+
+msgid "Unknown Browser (Link)"
+msgstr "Neznámy prehliadač (odkaz)"
+
+msgid "Unknown Browser (Row)"
+msgstr "neznámy prehliadač"
+
+msgid "Unknown Screen"
+msgstr "Neznáma veľkosť obrazovky"
+
+msgid "Login"
+msgstr "Prihlasovacie meno"
+
+msgid "Anonymous"
+msgstr "Anonymný"
+
+msgid "Robots"
+msgstr "Roboti"
+
+msgid "Different robots"
+msgstr "Rôzni roboti"
+
+msgid "Hits on robots.txt"
+msgstr "Prevádzka od vyššie uvedených robotov vyhľadávacích nástrojov, kategorizovaná ako „abnormálna návštevnosť“, nie je zahrnutá v iných tabuľkách a grafoch. Číslo za znakom „+“ predstavuje počet úspešných požiadaviek na súbor robots.txt"
+
+msgid "Worms"
+msgstr "Červy"
+
+msgid "Different worms"
+msgstr "Rôzne červy"
+
+msgid "Target"
+msgstr "Cieľ"
+
+msgid "Grabber"
+msgstr "Grabber"
+
+#------------------------------------------------------------------------------
+# Popisy formátov
+#------------------------------------------------------------------------------
+
+msgid "mime_text"
+msgstr "TXT obyčajný textový súbor (neformátovaný obyčajný text štandardizovaný kódovaním ASCII v roku 1963. Ako základný kameň všetkých zdrojových kódov, konfiguračných súborov a systémových protokolov, jeho medziplatformové riadenie toku znakov nového riadku Windows (CRLF) a Unix (LF) je dodnes najuniverzálnejším štandardom výmeny údajov v počítačovom svete)"
+
+msgid "mime_log"
+msgstr "LOG systémový prevádzkový protokol (textový majetok zaznamenávajúci stav operačného systému, jadra a aplikácií počas behu. Zahŕňa prístupové protokoly Nginx/Apache (kombinovaný protokol) a štandardnú špecifikáciu syslog, je hlavným zdrojom údajov na riešenie problémov, analýzu výkonu toku a bezpečnostný audit)"
+
+msgid "mime_page"
+msgstr "HTML hypertextová webová stránka (základný kameň World Wide Web vytvorený Timom Bernersom-Leem v roku 1989. Ako bezplatne dostupný univerzálny hypertextový značkovací jazyk sa jeho špecifikácia HTML5 v roku 2014 stala oficiálnym štandardom W3C s natívnou podporou štruktúrovaných multimédií, sémantickej interakcie a tokového usporiadania stránok. V roku 2016 získal Turingovu cenu)"
+
+msgid "mime_khtml"
+msgstr "KHTML motor webových šablón (špecifikácia vykresľovacieho motora prehliadača KDE 2.0 z roku 1998. Ako referenčná hodnota komunity s otvoreným zdrojovým kódom, ktorá položila základy moderného vykresľovania webu, jej technologické dedičstvo priamo inšpirovalo a vyvinulo sa do jadier Apple WebKit a Google Blink, ktoré dodnes pokračujú vo svojej základnej línii prostredníctvom modernej dynamickej webovej architektúry založenej na tokoch)"
+
+msgid "mime_script"
+msgstr "SCRIPT interpretovaný dynamický skript (všeobecná klasifikácia tokov zdrojového kódu, ktoré nevyžadujú predbežnú kompiláciu a sú čítané a vykonávané riadok po riadku špecifickým runtime alebo interpretom. Zahŕňa ASP, JSP, CGI a Tcl atď., široko používaný na serverové spoločné bránové rozhrania, automatizované riadenie procesov a systémové lepenie úloh)"
+
+msgid "mime_js"
+msgstr "Skript JavaScript (natívne programovacie prostredie prehliadača Netscape z roku 1995. V roku 1997 bol stanovený priemyselný štandard ECMAScript, v roku 2009 sa zrodil runtime Node.js, ktorý prelomil hranice prehliadača a vytvoril asynchrónnu neblokujúcu architektúru plného zásobníka, sprevádzanú najväčším ekosystémom softvérových balíkov npm na svete)"
+
+msgid "mime_py"
+msgstr "Skript Python (vysokoúrovňový interpretovaný skriptovací jazyk vytvorený Guido van Rossumom v roku 1991. Vďaka povinnému odsadzovaniu pre nezábudnú čitateľnosť a viacparadigmovému nízkodrovňovému dizajnu je teraz etablovaný ako priemyselný štandardný jazyk pre modernú webovú architektúru, vedu o údajoch plného zásobníka, trénovanie modelov umelej inteligencie (AI) a cloudovú natívnu automatizovanú prevádzku)"
+
+msgid "mime_sh"
+msgstr "Skript Shell (štandardný skript interpreta príkazov z éry Unixu v roku 1971. Obsahuje špecifikácie príkazov na úrovni jadra ako Bash, Sh, Dash, zvyčajne sa spúšťa s príponou .sh, je univerzálnym lepidlom na úrovni jadra pre nízkodrovňové riadenie procesov, konfiguráciu prostredia bez inštalácie a automatizované nasadzovanie v moderných operačných systémoch podobných Unixu)"
+
+msgid "mime_rb"
+msgstr "Skript Ruby (objektovo orientovaný skriptovací jazyk vytvorený Yukihiro Matsumotom v roku 1995. S extrémnym rešpektom k skúsenostiam vývojára ako základnou filozofiou dizajnu, jeho framework Ruby on Rails revolučne stanovil moderný vývojový paradigma webovej architektúry vysokej úrovne „Konvencia nad konfiguráciou (CoC)')"
+
+msgid "mime_pl"
+msgstr "Skript Perl (pragmatický skriptovací jazyk vytvorený Larrym Wallom v roku 1987. Ako zakladateľ moderných správcov balíkov (CPAN) je známy ako „švajčiarsky armádny nôž“ na spracovanie textu. V modernom režime CGI stále slúži ako vysoko spoľahlivá základňa v oblasti analýzy protokolov vďaka veľmi nízkym nákladom na fyzickú pamäť a vysoko efektívnemu spracovaniu regulárnych výrazov)"
+
+msgid "mime_php"
+msgstr "PHP dynamická webová stránka (vytvorená Rasmusom Lerdorfom v roku 1995, špeciálne navrhnutá pre vývoj webu. Ako kľúčová technológia poháňajúca viac ako 70% webových stránok sveta, hlboko podporuje veľké produkčné aplikácie ako WordPress a Wikipedia. Od zavedenia runtime enginu kompilácie JIT (Just-In-Time) v PHP 8 dosiahol základnú evolučnú zmenu paradigmy smerom k vysoko výkonnej serverovej strane plného zásobníka)"
+
+msgid "mime_image"
+msgstr "IMAGE klasifikácia obrazových aktív (zahŕňa všeobecnú klasifikáciu stratových/bezstratových komprimovaných bitmap, modernej responzívnej webovej grafiky a vektorovej grafiky. Je kľúčovým ukazovateľom na posúdenie nákladov na načítanie vizuálnych zdrojov stránky, miery zásahu vyrovnávacej pamäte na strane klienta a spotreby šírky pásma mediálnej siete)"
+
+msgid "mime_document"
+msgstr "DOCUMENT klasifikácia štruktúrovaných dokumentov (zahŕňa všeobecnú klasifikáciu obyčajného textu, tabuliek, dokumentov s pevným formátom (PDF) a ľahkých značkovacích jazykov. Je kľúčovým ukazovateľom pre štatistiky distribúcie statických znalostných báz na strane servera, sťahovanie podnikových informačných aktív a priepustnosť toku textu)"
+
+msgid "mime_package"
+msgstr "PACKAGE klasifikácia produktov kompilácie a softvérových balíkov (zahŕňa všeobecnú klasifikáciu natívnych spustiteľných programov operačného systému, runtime knižníc (DLL/SO) a inštalačných balíkov distribúcie aplikácií. Často sa používa ako kľúčový ukazovateľ na posúdenie odchádzajúcej prevádzky a špičiek sťahovania stránok distribúcie softvéru)"
+
+msgid "mime_archive"
+msgstr "ARCHIVE archivačné a komprimované súbory (všeobecná klasifikácia balíkov kompresie údajov založených na základných algoritmoch ako DEFLATE, LZMA. V sieťovej vrstve okrem reprezentácie tradičnej distribúcie balíkov zahŕňa aj dynamický reakčný prúd Gzip projektu GNU z roku 1992. Hoci sa v moderných scenároch postupne zavádza algoritmus Brotli, táto klasifikácia zostáva kľúčovým ukazovateľom na posúdenie priepustnosti šírky pásma servera a zníženia tlaku v transportnej vrstve)"
+
+msgid "mime_audio"
+msgstr "AUDIO klasifikácia digitálneho zvukového toku (zahŕňa všeobecnú klasifikáciu komprimovaného zvuku, audiokníh a kontajnerov streamovaného zvuku. Na základe špecifických štandardov zvukových kodekov sa používa na monitorovanie priepustnosti zvukových údajových tokov multimediálnych stránok, súčasnej šírky pásma streamovania a výkonu dlhých spojení)"
+
+msgid "mime_video"
+msgstr "VIDEO klasifikácia digitálneho video toku (zahŕňa všeobecnú klasifikáciu kontajnerov videa s vysokým rozlíšením, modernej webovej animácie a segmentov streamovaných médií. Je kľúčovým ukazovateľom na posúdenie hornej hranice šírky pásma servera a účinku zrýchlenia sietí na doručovanie obsahu (CDN) v prostredí s vysokým sieťovým zaťažením)"
+
+msgid "mime_jscript"
+msgstr "Skript JScript (proprietárna implementácia reverzného inžinierstva spoločnosti Microsoft pre Internet Explorer 3.0 z roku 1996. Ako skorý konkurent klasického JavaScriptu bol hlavným motorom Windows Script Host (WSH) a skorého backendu ASP)"
+
+msgid "mime_json"
+msgstr "JSON štruktúrované údaje (ľahký formát výmeny serializácie údajov stanovený Douglasom Crockfordom v roku 2001. Založený na textových pároch kľúč-hodnota a architektúre polí, má extrémne vysokú čitateľnosť pre človeka a vlastnosť bezstratovej analýzy toku. Je de facto štandardom pre moderné webové API, architektúru mikroslužieb a interakciu s veľkými jazykovými modelmi)"
+
+msgid "mime_vbs"
+msgstr "Skript VBScript (varianta skriptovacieho jazyka vydaná spoločnosťou Microsoft spolu s prehliadačom IE 3.0 v roku 1996. Bol kedysi hlavným ovládačom skorých dynamických webových stránok ASP a správy systému Windows, teraz je oficiálne ukončený a odstránený z najnovšieho jadra Windows 11 spoločnosťou Microsoft. Patrí k historickej dedičnej technológii)"
+
+msgid "mime_conf"
+msgstr "CONF systémový konfiguračný súbor (všeobecná klasifikácia údajových súborov, ktoré trvale ukladajú parametre prostredia runtime softvéru vo forme obyčajného textu. Zahŕňa špecifikácie INI a moderné YAML, TOML, JSON. V systémoch Linux sú sústredené najmä v adresári /etc. Je kľúčovou závislosťou pre optimalizáciu stavu runtime na systémovej úrovni)"
+
+msgid "mime_css"
+msgstr "CSS kaskádové štýly (štandard W3C z roku 1996, spolu s HTML/JS tvoriaci tri hlavné časti front-endu. Prešiel umiestňovaním CSS2 a modulárnym vývojom CSS3, natívne podporuje Flexbox, Grid a responzívny dizajn s mediálnymi dopytmi. Je absolútne dominantným štandardom na oddelenie prezentácie webových stránok v moderných prehliadačoch)"
+
+msgid "mime_xsl"
+msgstr "XSL štýl (štandard W3C z roku 1999, obsahuje transformačný jazyk XSLT a adresovací jazyk XPath, používa sa na vykreslenie štruktúrovaných údajov XML do HTML, PDF alebo obyčajného textu. V modernom vývoji bol jeho ekosystém do značnej miery nahradený ľahšími šablónovacími motormi a formátom údajov JSON)"
+
+msgid "mime_runtime"
+msgstr "Spustiteľný súbor (natívne formáty spúšťania operačného systému ako EXE, ELF, Mach-O, obsahujúce skompilovaný nízkodrovňový strojový kód, vstupný bod a informácie o načítaní systému)"
+
+msgid "mime_library"
+msgstr "Knižničný súbor (dynamické alebo statické linkovacie knižnice ako DLL, SO, dylib, obsahujúce zdieľané symboly a presúvací kód na volanie inými programami a načítanie počas behu)"
+
+msgid "mime_swf"
+msgstr "Flash animácia (vyvinutá spoločnosťou Macromedia v roku 1996, kúpená spoločnosťou Adobe v roku 2005. Interaktívny štandard webovej animácie, kedysi dominoval internetovým animáciám a hrám. Slabé stránky: závislosť na zásuvných moduloch, nepodpora mobilných zariadení, vysoké bezpečnostné riziko. Spoločnosť Adobe v roku 2017 oznámila ukončenie, v roku 2020 úplne zastavila podporu, nahradené HTML5/CSS3/JS)"
+
+msgid "mime_dtd"
+msgstr "DTD definícia typu dokumentu (vydané spolu s XML 1.0 v roku 1998, používa sa na definovanie štruktúry dokumentu XML/HTML a overenie platnosti. V modernom vývoji bol postupne nahradený flexibilnejšími riešeniami ako XML Schema, RELAX NG)"
+
+msgid "mime_csv"
+msgstr "CSV formát údajov (hodnoty oddelené čiarkami, univerzálny formát tabuľky obyčajného textu z éry mainframeov z roku 1972 (kompilátor IBM Fortran). Oficiálne štandardizovaný RFC 4180 v roku 2005 ako bezstratový štandard výmeny údajov medzi platformami a jazykmi. Široko používaný na efektívny import/export do Excelu, relačných databáz, analýzy údajov (Pandas).)"
+
+msgid "mime_cur"
+msgstr "Súbor kurzora myši (formát .cur, používa sa na prispôsobenie štýlu myši, napríklad kurzor prsta na webových stránkach, ikona presýpacích hodín čakania v systéme. Je to „príbuzný“ bežnej ikony .ico, ale má dodatočné umiestnenie „horúceho bodu“ – miesto, kam myš skutočne klikne. História: predstavený s Windows 3.1 (1992), bol kľúčovou súčasťou prechodu grafického rozhrania z príkazového riadka do éry ovládania myšou)"
+
+msgid "mime_jnlp"
+msgstr "Java Web Start (technológia distribúcie desktopových aplikácií Java z 2000-tych rokov, ktorá spúšťa vzdialené programy Java prostredníctvom súborov .jnlp. Kvôli bezpečnostným problémom a rozšíreniu moderných spôsobov distribúcie je dnes prakticky zaniknutá)"
+
+msgid "mime_lit"
+msgstr "Microsoft Reader elektronická kniha (vydaná spoločnosťou Microsoft v roku 2000, formát LIT. Zaniknutá, teraz ju možno konvertovať do EPUB alebo PDF pomocou nástrojov ako Calibre)"
+
+msgid "mime_svg"
+msgstr "SVG vektorová grafika (štandard W3C z roku 1999, dvojrozmerný formát vektorových obrázkov založený na architektúre XML. Má výhodu ľubovoľného zväčšovania bez straty ostrosti a prenosu textového toku. Všetky moderné prehliadače ho natívne podporujú. Široko používaný pre webové ikony s vysokým rozlíšením, logá a vykresľovanie vektorových animácií. Je základným štandardom modernej webovej grafiky)"
+
+msgid "mime_ai"
+msgstr "AI vektorová grafika (proprietárny formát vektorovej grafiky nezávisle vyvinutý spoločnosťou Adobe v roku 1987. Ako kľúčový priemyselný štandard pre typografiu, dizajn tlače a dizajn identity značky podporuje viacvrstvové a vysokoúrovňové vektorové údaje rozloženia. Je preferovaným nosičom pre profesionálne vizuálne umenie)"
+
+msgid "mime_phshop"
+msgstr "PSD vrstvený obrázok (proprietárny formát zdrojového súboru rastrovaného obrázka vydaný spoločnosťou Adobe spolu s Photoshopom v roku 1990. Podporuje viacvrstvové vrstvenie, kanály, masky a údaje na úpravu bez straty. Bol stanovený ako globálny priemyselný štandard pre spracovanie obrazu a digitálne maľovanie)"
+
+msgid "mime_ttf"
+msgstr "Písmo TrueType (digitálny formát obrysových písem vyvinutý spoločne spoločnosťami Apple a Microsoft v roku 1989. Založený na kvadratických Bézierových krivkách, dosahuje absolútnu zhodu pixelov medzi zobrazením na obrazovke a výstupom tlače. Je natívnym predvoleným formátom písma moderných desktopových operačných systémov)"
+
+msgid "mime_fon"
+msgstr "FON bitmapové písmo (skorý systémový formát bodového maticového písma Microsoft Windows z 80. rokov. Nepodporuje ľubovoľné bezstratové škálovanie proporcií. Zvyčajne sa používa s dedičnými systémami alebo skorými komponentmi vstavaných zariadení na obmedzené vykreslenie textu v pixeloch)"
+
+msgid "mime_pdf"
+msgstr "PDF elektronický dokument (medziplatformový formát dokumentov s pevným rozložením vyvinutý spoločnosťou Adobe v roku 1993, ktorý sa v roku 2008 stal medzinárodným štandardom ISO 32000. Má absolútnu vernosť rozloženia a formátu. Je univerzálnym štandardom pre globálnu distribúciu elektronických úradných dokumentov a digitálne vydavateľstvo)"
+
+msgid "mime_dotnet"
+msgstr "ASP.NET dynamická stránka (serverová dynamická webová technológia vydaná spoločnosťou Microsoft spolu s architektúrou .NET v roku 2002. Beží na vykresľovacom engine IIS, používa sa na vytváranie podnikových dynamických webových aplikácií na strane servera Windows a distribuovaných systémov)"
+
+msgid "mime_mdb"
+msgstr "MDB relačná databáza (formát ukladania relačnej databázy na úrovni pracovnej plochy vydaný spoločnosťou Microsoft spolu s Accessom v roku 1992. S vstavaným databázovým enginom Jet sa používal ako relačné databázové riešenie v skorom informačnom manažmente osobných počítačov a malých a stredných podnikov)"
+
+msgid "mime_md"
+msgstr "Dokument Markdown (ľahký značkovací jazyk nezávisle vytvorený Johnom Gruberom v roku 2004. Základnou filozofiou dizajnu je „čitateľné znamená vykresliteľné“, ktorá poháňa moderné odvodené štandardy ako GFM a CommonMark. Široko používaný ako kľúčový výmenný štandard pre technickú dokumentáciu, znalostné bázy (Obsidian) a moderné generátory statických webových stránok)"
+
+msgid "mime_crystal"
+msgstr "Crystal Reports (profesionálny formát súboru zostáv na úrovni podniku platformy SAP Business Intelligence (BI). Má nízkodrovňové pripojenie k viacerým zdrojom údajov a zložité možnosti dynamického vykresľovania grafov, široko používaný na profesionálne generovanie správ vo finančných systémoch a systémoch analýzy údajov nadnárodných spoločností)"
+
+msgid "mime_libreoffice"
+msgstr "Dokument LibreOffice (proprietárny formát kancelárskeho balíka s otvoreným zdrojovým kódom vytvorený organizáciou The Document Foundation v roku 2010 na základe vetvy OpenOffice. Hlboko implementuje medzinárodný štandard ODF (Open Document Format) W3C. Je kancelárskym základom modernej ekosystému s otvoreným zdrojovým kódom)"
+
+msgid "mime_encrypt"
+msgstr "ENCRYPT šifrovaný súbor (surové binárne alebo textové údaje spracované prostredníctvom špecifického symetrického alebo asymetrického šifrovacieho algoritmu. Zahŕňa hlavné odvodené formáty ako .enc, .pgp, .gpg. V sieťovej vrstve sa používa na zabezpečenie dôvernosti a overenie integrity neverejných údajov)"
+
+msgid "mime_gpx"
+msgstr "GPX satelitné trajektórie (formát výmeny globálneho polohovacieho systému založený na architektúre XML. Špeciálne používaný na opis geografických súradníc, smerových bodov, trás a historických trajektórií. Je spoločným otvoreným štandardom údajov pre moderné mobilné športové zariadenia, automobilovú navigáciu a geografické informačné systémy (GIS))"
+
+msgid "mime_diskimage"
+msgstr "Disk Image obraz disku (zahŕňa bajt po byte obrazy sektorov nízkej úrovne fyzických diskov alebo optických médií ako ISO, DMG, IMG. Používa sa na nízkodrovňové nasadenie systému, bezpečnú distribúciu softvéru s veľkou kapacitou a úplnú fyzickú zálohu údajov na úrovni pamäťových médií)"
+
+msgid "mime_vm"
+msgstr "VM obraz virtuálneho počítača (zahŕňa virtualizované obrazy fyzických diskov ako VMDK, VDI, VHDX, OVA. Ako základ platforiem VMware, VirtualBox a Hyper-V sa používa na nízkodrovňovú emuláciu hardvéru na systémovej úrovni, snímky inštancií a distribúciu cloudovej infraštruktúry)"
+
+msgid "mime_torrent"
+msgstr "BitTorrent torrentový súbor (distribuovaný index sťahovania P2P peer-to-peer navrhnutý Bramom Cohenom v roku 2001. Založený na kódovaní Bencode, ukladá nízkoúrovňové kontrolné metadáta pôvodného súboru a informácie o adresovaní servera Tracker. Je hlavným nosičom decentralizovaného toku sietí)"
+
+msgid "mime_gis"
+msgstr "GIS geopriestorové údaje (štandard údajov geografického informačného systému so Shapefile a GeoJSON ako jadrom. Zahŕňa viacrozmerné geometrické súradnice, topológiu vrstiev a atribútové údaje. Široko používaný na vykresľovanie digitálnych máp s vysokou presnosťou, satelitné diaľkové snímanie a priestorovú geometrickú analýzu)"
+
+msgid "mime_ebook"
+msgstr "EBOOK elektronická kniha (digitálny publikačný formát s otvoreným medzinárodným štandardom EPUB W3C a proprietárnou architektúrou MOBI/AZW Amazon Kindle ako jadrom. Podporuje adaptívne tokové rozloženie, zapuzdrenie metadát a ochranu digitálnych práv DRM. Je univerzálnym nosičom digitálneho čítania na mobilných zariadeniach)"
+
+msgid "mime_avif"
+msgstr "AVIF efektívny obraz (štandard obrazu ultra-vysokého rozlíšenia novej generácie predstavený organizáciou Open Media Alliance (AOMedia) v roku 2019. Založený na technológii kľúčových snímok kódovania videa AV1, miera kompresie je o 50% lepšia ako WebP a natívne podporuje vysoký dynamický rozsah (HDR). Je hlavným štandardom pre prenos moderných webových obrázkov)"
+
+msgid "mime_markdown"
+msgstr "Markdown ľahký dokument (jazyk na značkovanie textových dokumentov nezávisle vytvorený Johnom Gruberom v roku 2004. Používa deklaratívny dizajn obyčajného textu, jeho návrh syntaxe je inšpirovaný reStructuredText. Široko používaný pre projekty GitHub, technickú dokumentáciu na úrovni inžinierstva a moderný ekosystém správy statického obsahu)"
+
+msgid "mime_yaml"
+msgstr "YAML konfigurácia serializácie (formát serializácie údajov čitateľný pre človeka navrhnutý Clarkom Evansom a ďalšími v roku 2001. Založený na hierarchickom odsadzovaní a mapovaní kľúč-hodnota. Teraz bol stanovený ako štandard konfigurácie cloudovej natívnej infraštruktúry pre orchestraciu kontajnerov Kubernetes, automatizáciu Ansible a Docker Compose)"
+
+msgid "mime_toml"
+msgstr "TOML sémantická konfigurácia (minimalistický jazyk navrhnutý Tomom Prestonom-Wernerom v roku 2013. Má výhody nízkoúrovňového dizajnu ako silné typovanie, explicitné mapovanie a sémantická jasnosť. Teraz je široko používaný ako štandardizovaný konfiguračný súbor pre moderné nástrojové reťazce Rust (Cargo), Python (pyproject.toml) a Go)"
+
+msgid "mime_vue"
+msgstr "Vue jednosúborový komponent (proprietárny formát SFC progresívneho webového rámca predstavený Evom You v roku 2014. V jednom súbore realizuje oddelenie záujmov HTML/CSS/JS a reaktívne viazanie stavu, čím hlboko poháňa moderné interaktívne front-endové aplikácie a motory statických stránok vo veľkom meradle)"
+
+msgid "mime_wasm"
+msgstr "WebAssembly binárny modul (vysokovýkonný nízkodrovňový štandard bajtového kódu pre web stanovený W3C v roku 2017. Umožňuje kompiláciu silne typovaných jazykov ako C/C++/Rust do cieľa sandboxu prehliadača, čím poskytuje efektivitu vykonávania blízku natívnemu hardvéru. Je základným kameňom moderných okrajových výpočtov na webe)"
+
+msgid "mime_jsx"
+msgstr "React JSX komponent (rozšírenie syntaxe JavaScript XML vydané spoločnosťou Facebook spolu s rámcom React v roku 2013. Podporuje deklaratívne vytváranie virtuálnej štruktúry DOM v JavaScripte, čím implementuje front-endový vývojový paradigma založený na komponentoch „UI je funkcia stavu“)"
+
+msgid "mime_tsx"
+msgstr "TypeScript TSX komponent (kombinácia toku silnej typovej syntaxe TypeScript vyvinutého spoločnosťou Microsoft v roku 2012 a JSX. Vstrekuje statickú kontrolu typov v čase kompilácie a obmedzenia rozhraní do vývoja komponentov React. Je štandardom kódu pre bezpečný vývoj moderných veľkých front-endových systémov)"
+
+msgid "mime_heif"
+msgstr "HEIF efektívny obraz (formát súboru efektívneho obrazu stanovený organizáciou MPEG v roku 2015. Založený na algoritme kódovania videa HEVC (H.265), podporuje umiestnenie viacsnímkových obrázkov, hĺbkových máp a metadát vo veľmi malom objeme. Je proprietárnym štandardom ukladania pre moderné mobilné operačné systémy a inteligentné koncové zariadenia)"
+
+msgid "mime_heic"
+msgstr "HEIC efektívny obraz (proprietárny bitmapový formát Apple implementovaný na základe medzinárodného štandardu HEIF. Ako predvolený štandard ukladania fotografií moderných iPhoneov získava hardvérové kódovanie/dekódovanie na úrovni iOS/macOS a natívnu podporu operačného systému. Pri zachovaní vysokej kvality obrazu dramaticky znižuje základné úložné miesto)"
+
+msgid "mime_gltf"
+msgstr "glTF 3D model aktív (štandard formátu prenosu GL vydaný skupinou Khronos Group v roku 2015. Používa architektúru JSON na opis trojrozmerných scén, známy ako „JPEG pre oblasť 3D“. Je ľahkým priemyselným štandardom pre moderné vykresľovanie WebGL/WebGPU a virtuálnej reality)"
+
+msgid "mime_glb"
+msgstr "GLB binárny 3D model (úplne binárna, bezstratová zapuzdrená verzia modelu aktív glTF. Kombinuje štruktúru scény, nízkoúrovňové údaje vrcholov sietí, materiály a textúrové mapy do jedného súboru. Špeciálne navrhnutý na efektívny prenos a distribúciu toku medziplatformových webových 3D aktív)"
+
+msgid "mime_gls"
+msgstr "GLOSSARY dátový slovník (súbor definície súboru terminológie špeciálne pre systémy správy dokumentov a štruktúrované korpusy. Obsahuje vstavané štandardné definície pojmov, viacjazyčné mapovania a mapovania metadát. Používa sa na udržanie koncepčnej konzistentnosti v automatizovanej analýze textu a systémoch publikovania obsahu)"
+
+msgid "mime_cbz"
+msgstr "CBZ komiksová kniha (proprietárny formát archivácie obrázkov komiksov založený na štruktúre kompresie ZIP. Vnútorne zapuzdruje nepretržitú sekvenciu statických bitmapových obrázkov. Je univerzálnym ľahkým štandardom kontajnera pre digitálne vydávanie komiksov a miestne zbieranie naprieč platformami)"
+
+msgid "mime_cbr"
+msgstr "CBR komiksová kniha (proprietárny formát archivácie obrázkov komiksov založený na štruktúre kompresie RAR. Používa algoritmus RAR na zapuzdrenie sekvencií statických bitmap, má relatívne vysokú mieru kompresie, má širokú podporu kompatibility v oblasti distribúcie digitálnych komiksov)"
+
+msgid "mime_fb2"
+msgstr "FB2 elektronická kniha (štandard elektronickej knihy FictionBook 2.0 z začiatku 21. storočia. Používa čistú štruktúru XML na opis atribútov knihy a textovej hierarchie. Má širokú podporu v ekosystéme elektronických kníh s otvoreným zdrojovým kódom a v dedičných čítačkách digitálnych publikácií)"
+
+msgid "mime_kepub"
+msgstr "KEPUB elektronická kniha (proprietárny vylepšený formát elektronických kníh Kobo, ktorý sa vyvinul zo štandardu EPUB. Vykonáva nízkodrovňovú optimalizáciu vykresľovania pre hardvérové čítačky elektronických kníh Kobo, čím poskytuje efektívnejšie rozloženie stránok a interakciu so štatistikami čítania)"
+
+msgid "mime_m4b"
+msgstr "M4B audiokniha (formát audioknihy založený na architektúre kontajnera MPEG-4 Part 14 (MP4). Používa kódovanie AAC, natívne podporuje nízkoúrovňové umiestnenie záložiek, obnovenie prehrávania od bodu prerušenia a vkladanie kapitol. Kedysi bol štandardným formátom ekosystému Apple iTunes)"
+
+msgid "mime_kfx"
+msgstr "Kindle KFX formát (proprietárny vylepšený formát digitálneho vydavateľstva vydaný spoločnosťou Amazon spolu s Kindle v roku 2015. Podporuje pokročilé ligatúrne rozloženie, vykresľovanie písem s vysokou dynamikou a načítanie stránok v toku na úrovni jadra (Page Flip). Je základným štandardom modernej platformy Kindle)"
+
+msgid "mime_chm"
+msgstr "CHM skompilovaný súbor pomoci (skompilovaný informačný systém pomoci HTML vydaný spoločnosťou Microsoft v roku 1997. Balí hypertextové údaje a základný index do jedného binárneho kontajnera. Dlho bol štandardným formátom lokálnej offline pomocnej dokumentácie pre softvér Windows)"
+
+msgid "mime_mht"
+msgstr "MHT webový archív (agregovaný hypertextový formát MIME vydaný spoločnosťou Microsoft v roku 1999. Na základe štandardu RFC 2557 zapuzdruje zdrojový kód HTML, CSS, JS a vložené obrázky do jedného textového súboru. Používa sa na offline ukladanie webových stránok v starších prehliadačoch)"
+
+msgid "mime_wml"
+msgstr "WML bezdrôtový značkovací jazyk (mobilný štandard značkovania stanovený fórom WAP v roku 1999. Založený na špecifikácii XML, špeciálne navrhnutý pre skoré úzkopásmové bezdrôtové mobilné siete a nízko výkonné feature telefóny. V modernom webovom ekosystéme patrí k už zaniknutej dedičnej technológii)"
+
+msgid "mime_xhtml"
+msgstr "XHTML hypertextová webová stránka (štandard W3C z roku 2000, zapuzdrenie prísneho hypertextového značkovacieho jazyka založeného na architektúre XML. V roku 2009 W3C zastavilo jeho technický vývoj a úplne prešlo na špecifikáciu HTML5. Teraz sa používa hlavne na sémantické vykresľovanie webových stránok v dedičných systémoch)"
+
+msgid "mime_xml"
+msgstr "XML štruktúrovaný dokument (rozšíriteľný značkovací jazyk zo štandardu W3C z roku 1998. Má samoopisnú architektúru značiek. Je základným formátom pre sieťové webové služby (SOAP/REST), systémové konfiguračné súbory (XSD) a medziplatformovú výmenu údajov)"
+
+msgid "mime_sgml"
+msgstr "SGML zovšeobecnený značkovací jazyk (medzinárodný štandard ISO 8879 z roku 1986 pre štandardný zovšeobecnený značkovací jazyk. Ako priemyselný priekopník štruktúrovaného opisu elektronických dokumentov, XML aj skoré špecifikácie HTML pochádzajú z tohto štandardného metajazyka)"
+
+msgid "mime_apng"
+msgstr "APNG dynamická grafika (dynamické rozšírenie prenosnej sieťovej grafiky (PNG) vyvinuté spoločnosťou Mozilla v roku 2004. Podporuje 24-bitové skutočné farby a 8-bitovú polopriehľadnosť alfa kanála. Je vysokorozlíškovou alternatívou k formátu GIF v moderných webových scenároch)"
+
+msgid "mime_bmp"
+msgstr "BMP natívna bitmapa (na zariadení nezávislý formát bitmapy platformy Microsoft stanovený už od éry Windows 1.0. Používa bezstratové, nekomprimované ukladanie, hoci jeho veľkosť je zvyčajne 3-10 krát väčšia ako PNG, kvôli chýbajúcim nákladom na kódovanie/dekódovanie je dodnes široko vložený do základných komponentov Windows 11, segmentov zdrojov EXE/MSI a grafických vyrovnávacích pamätí starších ovládačov)"
+
+msgid "mime_cdr"
+msgstr "CDR vektorová grafika (proprietárny formát zdrojového súboru profesionálneho vektorového dizajnu CorelDRAW kanadskej spoločnosti Corel. Podporuje viacvrstvovú správu farieb, zložité matematické uzly obrysov a údaje rozloženia na úrovni tlače. Je špecializovaným formátom pre profesionálnu plochú tlač a reklamný dizajn)"
+
+msgid "mime_gif"
+msgstr "GIF indexovaný farebný obrázok (8-bitový formát bitmapy s indexovanými farbami vyvinutý spoločnosťou CompuServe v roku 1987. Založený na algoritme LZW, obmedzený na 256 úrovní farieb a jednofarebnú priehľadnosť, pri vysokej snímkovej frekvencii je objemný. Teraz je postupne nahradzovaný modernými vysoko efektívnymi štandardmi dynamických obrázkov ako APNG, WebP)"
+
+msgid "mime_ico"
+msgstr "ICO systémová ikona (natívny formát zapuzdrenia zdrojov ikon Windows. Podporuje zmiešané vkladanie variantov obrázkov s viacerými rozlíšeniami pixelov a farebnými hĺbkami do jedného kontajnera. Je tiež univerzálnym distribučným štandardom pre hlavný identifikátor stránok moderných webových prehliadačov (Favicon))"
+
+msgid "mime_jpeg"
+msgstr "JPEG komprimovaný obrázok (stratový kompresný formát obrázka podľa medzinárodného štandardu ISO 10918 z roku 1992. Založený na algoritme diskrétnej kosínusovej transformácie (DCT), dosahuje vysoký kompresný pomer pri zachovaní vynikajúcej realistickej kvality obrazu. Je absolútnym de facto štandardom pre statickú fotografiu na globálnom internete)"
+
+msgid "mime_jpg"
+msgstr "JPEG komprimovaný obrázok (stratový kompresný formát obrázka podľa medzinárodného štandardu ISO 10918 z roku 1992. Založený na algoritme diskrétnej kosínusovej transformácie (DCT), dosahuje vysoký kompresný pomer pri zachovaní vynikajúcej realistickej kvality obrazu. Je absolútnym de facto štandardom pre statickú fotografiu na globálnom internete)"
+
+msgid "mime_png"
+msgstr "PNG bezstratový obrázok (štandard prenosnej sieťovej grafiky odporúčaný W3C v roku 1996. Používa bezstratový kompresný algoritmus, natívne podporuje 24-bitové skutočné farby a 8-bitovú priehľadnosť alfa kanála. Ako vysokorozlíšková alternatíva klasického statického GIF je absolútnym de facto štandardom pre bezstratové pixelové obrázky na internete)"
+
+msgid "mime_ps"
+msgstr "PostScript súbor opisu stránky (na zásobníku založený jazyk opisu stránky predstavený spoločnosťou Adobe v roku 1985. Ako technologický predchodca formátu PDF implementuje na nízkej úrovni na hardvéri nezávislú typografiu a vysoko presné vykresľovanie vektorovej grafiky. Je základným štandardom pre profesionálnu polygrafickú výrobu a laserovú tlač)"
+
+msgid "mime_psb"
+msgstr "PSB dokument s veľkými vrstvami (proprietárny formát zapuzdrenia veľmi veľkého zdrojového súboru Adobe Photoshop. Prelomuje fyzickú veľkosť 2 GB a interné obmedzenia adresovania 30 000 pixelov štandardného formátu PSD. Špeciálne navrhnutý na ukladanie gigantických digitálnych umeleckých aktív v mimoriadne veľkom rozsahu s vysokou hĺbkou vrstiev)"
+
+msgid "mime_psd"
+msgstr "PSD zdrojový súbor dizajnu vrstiev (proprietárny formát vrstveného obrazového inžinierstva Adobe Photoshop. Ako priemyselný štandardný kontajner v oblasti grafiky a obrazu natívne zapuzdruje úplný strom vykresľovania vrstiev, bitmapové kanály, vektorové cesty orezania a zložité režimy miešania, čím podporuje bezstratovú úpravu všetkých údajov)"
+
+msgid "mime_webp"
+msgstr "WebP efektívny obrázok (univerzálny štandard kódovania webovej grafiky predstavený spoločnosťou Google v roku 2010. Odvodený z technológie kľúčových snímok videa VP8, dokonale kompatibilný so stratovým, bezstratovým, polopriehľadným a dynamickým vykresľovaním. V porovnaní s PNG rovnakej kvality zmenšuje veľkosť o 25-35%. Je základným kameňom vysokovýkonného načítavania moderných webových stránok)"
+
+msgid "mime_woff"
+msgstr "WOFF webový súbor glifov (otvorený formát webových písiem vytvorený v roku 2009, ktorý sa v roku 2012 stal štandardom W3C. V podstate ide o bezstratové kompresné zapuzdrenie toku štandardných štruktúr písiem TTF/OTF, ktoré výrazne optimalizuje náklady na šírku pásma sieťového prenosu. Je univerzálnym formátom pre moderné ikony webových stránok a cloudové písma)"
+
+msgid "mime_7z"
+msgstr "7z komprimovaný archív (proprietárny formát 7-Zip vyvinutý Igorom Pavlovom v roku 1999. Založený na otvorených algoritmoch LZMA/LZMA2, má extrémne vysoký kompresný pomer. Za rovnakých podmienok je jeho veľkosť zvyčajne o 30-50% menšia ako ZIP. Je univerzálnym formátom s vysokým kompresným pomerom pre komunitu s otvoreným zdrojovým kódom a distribúciu softvéru)"
+
+msgid "mime_ace"
+msgstr "ACE komprimovaný archív (proprietárny kompresný formát WinACE z 90. rokov. Kedysi konkuroval formátu RAR a mal relatívne vysoký kompresný pomer. Po roku 2007 sa technologický vývoj zastavil, teraz je nahradený formátmi 7z a RAR. Patrí do formátov archivácie dedičných systémov)"
+
+msgid "mime_bz2"
+msgstr "BZIP2 komprimovaný archív (formát kompresie triedenia blokov vyvinutý Julianom Sewardom v roku 1996. Jeho základný algoritmus má kompresný pomer o 15-20% vyšší ako GZIP, ale vyššie výpočtové náklady. Často sa používa na distribúciu zdrojového kódu jadra Linux a balíkov s otvoreným zdrojovým kódom. Štandardná prípona je .bz2)"
+
+msgid "mime_cab"
+msgstr "CAB komprimovaný archív (formát archivácie Cabinet nezávisle vyvinutý spoločnosťou Microsoft v roku 1995. Ako natívny štandard inštalačného balíka systému Windows sa používa na distribúciu ovládačov a súborov jadra. Je tiež základným úložným kontajnerom pre Inštalátor Windows (MSI))"
+
+msgid "mime_dmg"
+msgstr "DMG obraz disku (formát obrazu disku vyvinutý spoločnosťou Apple v 80. rokoch. Ako štandardný kontajner distribúcie softvéru macOS podporuje fyzické pripojenie ako virtuálny súborový systém, nízkoúrovňovú kompresiu a šifrovanie údajov. Je hlavným formátom distribúcie aplikácií v ekosystéme Mac)"
+
+msgid "mime_emz"
+msgstr "EMZ komprimovaný obrázok (komprimovaná verzia rozšíreného metafilu Windows EMF. V podstate ide o binárnu vektorovú grafiku komprimovanú pomocou algoritmu GZIP. Široko používaná na ukladanie vloženej vektorovej grafiky v dokumentoch balíka Microsoft Office)"
+
+msgid "mime_gz"
+msgstr "GZIP komprimovaný archív (štandardný formát kompresie toku vyvinutý Jean-loup Gaillym a Markom Adlerom z projektu GNU v roku 1992. Ako štandardný kompresný nástroj Unix/Linux je tiež základným štandardom pre kompresiu transportnej vrstvy HTTP (Gzip). Často sa používa v kombinácii s archiváciou TAR)"
+
+msgid "mime_jar"
+msgstr "JAR komprimovaný archív (formát archivácie Java ARchive predstavený spoločnosťou Sun Microsystems v roku 1997. V podstate ide o baliaci kontajner založený na štruktúre ZIP, používaný na zapuzdrenie knižníc tried Java a metadát. Je hlavným produktom kompilácie pre Maven, Gradle a raný ekosystém Android)"
+
+msgid "mime_lzma"
+msgstr "LZMA komprimovaný archív (algoritmus kompresie reťazca Lempel-Ziv-Markov vyvinutý Igorom Pavlovom v roku 1998. Ako hlavný motor formátu 7z má extrémne vysoký kompresný pomer a vysokorýchlostnú dekompresiu. Široko používaný na distribúciu firmvéru hardvéru a vstavaných systémov)"
+
+msgid "mime_rar"
+msgstr "RAR komprimovaný archív (proprietárny archivačný formát WinRAR vyvinutý Eugenom Roshalom v roku 1993. Podporuje rozdelenie na zväzky, fyzické záznamy obnovy (ECC) a vysokopevnostné šifrovanie. Kompresný pomer je lepší ako štandardný ZIP, má širokú podporu kompatibility v osobných počítačoch a komerčnej oblasti)"
+
+msgid "mime_tar"
+msgstr "TAR archivačný balík (formát pásovej archivácie z éry Unix V7 z roku 1979. Vykonáva iba balenie toku súborov bez kompresie údajov. Často sa kombinuje s GZIP/BZIP2/XZ, je základným štandardom pre balíky zdrojového kódu Linux a vrstvené ukladanie obrazov Docker)"
+
+msgid "mime_tgz"
+msgstr "TGZ komprimovaný archív (kombinovaný formát toku archivácie TAR a kompresie GZIP, prípony .tgz alebo .tar.gz. Ako najuniverzálnejší formát distribúcie softvérových balíkov v prostredí Unix/Linux sa široko používa na nasadzovanie z kompilácie zdrojového kódu a distribúciu binárnych balíkov bez inštalácie)"
+
+msgid "mime_tbz2"
+msgstr "TBZ2 komprimovaný archív (kombinovaný formát toku archivácie TAR a kompresie BZIP2, prípony .tbz2 alebo .tar.bz2. V porovnaní s TGZ môže ďalej zvýšiť kompresný pomer o 15-20%, vhodný na prenos veľkých súborov, dlho sa používal na distribúciu zdrojového kódu jadra Linux)"
+
+msgid "mime_xz"
+msgstr "XZ komprimovaný archív (formát s vysokým kompresným pomerom novej generácie predstavený v roku 2009. Založený na algoritme LZMA2, kompresný pomer údajov je o 30-50% vyšší ako GZIP pri zachovaní vysokej rýchlosti dekompresie. Bol stanovený ako odporúčaný distribučný štandard jadrom Linux a hlavnými správcami balíkov (napr. vnútri Debian .deb))"
+
+msgid "mime_z"
+msgstr "Z komprimovaný archív (LZW kompresný formát príkazu Unix compress z roku 1985. Ako skorý štandard kompresie systémov Unix bol teraz úplne nahradený efektívnejším formátom GZIP. V modernej sieťovej prevádzke je to zriedkavý historický dedičný formát)"
+
+msgid "mime_zip"
+msgstr "ZIP komprimovaný archív (univerzálny archivačný formát PKZIP vyvinutý Philom Katzom v roku 1989. Má natívnu podporu hlavných operačných systémov. Je najpoužívanejším štandardom kontajnerov na internete. Moderný JAR Javy, APK Androidu a dokumenty balíka Office (OOXML) sú založené na štruktúre ZIP)"
+
+msgid "mime_zst"
+msgstr "Zstandard komprimovaný archív (štandard kompresie toku novej generácie navrhnutý Yannom Colletom z Facebooku v roku 2015. Približuje sa kompresnému pomeru LZMA a zároveň má oveľa vyššiu priepustnosť ako GZIP. Bol hlboko prijatý jadrom Linux (5.9+) a správcami balíkov Arch/Debian)"
+
+msgid "mime_lz4"
+msgstr "LZ4 komprimovaný archív (extrémne rýchly algoritmus kompresie toku vyvinutý Yannom Colletom v roku 2011. Rýchlosť priepustnosti je viac ako 10-krát rýchlejšia ako GZIP, s extrémne nízkymi nákladmi na CPU počas behu. Široko používaný v jadre Linux, súborovom systéme OpenZFS a spracovaní údajových tokov v reálnom čase Hadoop)"
+
+msgid "mime_lzo"
+msgstr "LZO komprimovaný archív (algoritmus Lempel-Ziv-Oberhumer vyvinutý Markusom Oberhumerom v roku 1996. Zameriava sa na extrémne rýchly výkon dekompresie. Je široko vložený do obrazov Squashfs jadra Linux, firmvéru OpenWrt a rôznych vstavaných systémov s obmedzenými zdrojmi)"
+
+msgid "mime_msi"
+msgstr "MSI systémový inštalačný balík (formát zapuzdrenia údajov Inštalátora Windows predstavený spoločnosťou Microsoft v roku 1999. Ako štandardná špecifikácia nasadzovania aplikácií Windows natívne podporuje nízkoúrovňové vrátenie transakcií, správu životného cyklu komponentov a tichú inštaláciu bez dávkového spracovania. Je základným štandardom pre centralizovanú distribúciu softvéru na podnikovej úrovni a implementáciu politík)"
+
+msgid "mime_pkg"
+msgstr "PKG medziplatformový inštalačný balík softvéru. 1. Softvérový balík FreeBSD: štandard pkgng, prípona .pkg alebo .txz, založený na kompresii TAR+XZ/Zstd, podporuje rozlíšenie závislostí a overenie podpisu; 2. Inštalačný balík macOS: založený na formáte Apple Installer, podporuje vlastné komponenty, inštalačné skripty a odinštalovanie na systémovej úrovni. Sú hlavnými distribučnými nosičmi pre servery BSD a systémy Mac."
+
+msgid "mime_apk"
+msgstr "APK balík aplikácií pre Android (tradičný inštalačný balík aplikácií vydaný spoločnosťou Google spolu s Androidom v roku 2008. Založený na štruktúre archívu ZIP, balí skompilovaný bajtový kód Dalvik (DEX), manifest metadát a globálne zdroje. Teraz je široko používaný na lokálne ladenie vývoja, distribúciu tretími stranami a bočnú inštaláciu na zariadeniach)"
+
+msgid "mime_ipa"
+msgstr "IPA balík aplikácií pre Apple (exkluzívny baliaci kontajner pre iOS/iPadOS vydaný spolu so SDK iPhone v roku 2008. V podstate ide o archív ZIP chránený DRM FairPlay alebo podpisom kódu na úrovni podniku, obsahujúci binárny spustiteľný súbor Mach-O, strom zdrojov aplikácie a konfiguráciu metadát Info.plist)"
+
+msgid "mime_hap"
+msgstr "HAP balík aplikácií HarmonyOS (základná jednotka elastického nasadenia HarmonyOS vydaná spolu s HarmonyOS 2.0 v roku 2020. Pozostáva z hlavného modulu Entry alebo funkčných modulov rozšírenia Feature. Je hlavným viackoncovým formátom nasadenia pre distribúciu inteligentných terminálov vo viackoncových scenároch (telefóny, tablety, nositeľné zariadenia))"
+
+msgid "mime_har"
+msgstr "HAR statický zdieľaný balík HarmonyOS (proprietárny archívny súbor statickej zdieľanej knižnice HarmonyOS. Používa sa na zapuzdrenie spoločných komponentov, nízkodrovňového zdrojového kódu a závislostí v čase kompilácie, ktoré sú staticky prepojené a zdieľané viacerými modulmi HAP. Je základným základom pre vývoj založený na komponentoch a opätovné použitie viacerých modulov systému HarmonyOS)"
+
+msgid "mime_aab"
+msgstr "AAB balík aplikácií pre Android (dynamický distribučný formát Google Play predstavený spoločnosťou Google v roku 2018 a stanovený v roku 2021. Ako čistá distribučná entita je dynamicky orezávaná a kompilovaná v cloude podľa architektúry CPU, hustoty obrazovky a jazyka cieľového zariadenia a na požiadanie generuje optimalizované APK. Priemerné zníženie nákladov na prenosovú šírku pásma o 35%)"
+
+msgid "mime_xapk"
+msgstr "XAPK rozšírený balík aplikácií (neoficiálny štandard rozšírenia aplikácií stanovený komunitou tretích strán Android. Spoločným zapuzdrením štandardného súboru APK a veľmi veľkého rozširujúceho balíka herných údajov OBB fyzicky prelamuje limit 100 MB veľkosti samostatného súboru Google Play. Široko sa vyskytuje na platformách distribúcie hier)"
+
+msgid "mime_appx"
+msgstr "APPX moderný balík aplikácií (špecifikácia nasadenia aplikácií UWP vydaná spoločnosťou Microsoft spolu s Windows 8 v roku 2012. Má izolované spúšťanie v sandboxe a ľahké odinštalovanie. Ako skorý dominantný štandard Microsoft Store v modernom ekosystéme Windows vstúpil do záverečnej fázy životného cyklu vývoja smerom k MSIX)"
+
+msgid "mime_msix"
+msgstr "MSIX balík aplikácií novej generácie (úplne nová štandardizovaná špecifikácia balenia pre Windows vydaná spoločnosťou Microsoft v roku 2018. Dokonale spája funkcie sandboxu zabezpečenia aplikácií APPX s výhodami správy podnikových aktív MSI. Plne kompatibilný so všetkými typmi aplikácií Win32. Je odporúčaným distribučným štandardom pre Windows 11)"
+
+msgid "mime_appimage"
+msgstr "AppImage balík aplikácií bez inštalácie (špecifikácia jedného spustiteľného archívu pre Linux iniciovaná v roku 2004. Používa samostatnú architektúru „jedna aplikácia je jeden súbor“. Počas behu sa priamo pripája cez mechanizmus FUSE ako virtuálny súborový systém iba na čítanie na spustenie, čím sa dosahuje okamžité použitie bez závislostí naprieč všetkými distribúciami Linuxu)"
+
+msgid "mime_flatpak"
+msgstr "Flatpak balík aplikácií v sandboxe (štandard distribúcie desktopových aplikácií naprieč distribúciami Linuxu, ktorý viedli Red Hat a GNOME v roku 2015. Na nízkej úrovni sa spolieha na mechanizmy Namespace a Cgroups jadra Linux na dosiahnutie extrémne prísnej izolácie bezpečnostného sandboxu na úrovni aplikácií. Je základom moderných centier softvéru OS s otvoreným zdrojovým kódom)"
+
+msgid "mime_snap"
+msgstr "Snap kontajnerizovaný balík aplikácií (univerzálny štandard nasadenia pre Linux predstavený spoločnosťou Canonical, materskou spoločnosťou Ubuntu, v roku 2014. Používa samostatnú architektúru pripájania obrazu SquashFS, podporuje automatické inkrementálne aktualizácie a prísnu izoláciu sandboxu AppArmor. Je základným predvoleným formátom ekosystému Centra softvéru Ubuntu)"
+
+msgid "mime_deb"
+msgstr "DEB systémový softvérový balík (špecifikácia zapuzdrenia binárnych kódov a zdrojových kódov stanovená projektom Debian v roku 1993. Ako základný inštalačný štandard pre Debian, Ubuntu a všetky ich odvodené systémy sa spolieha na jadro dpkg na rozbaľovanie a údržbu, pričom ako efektívne frontové rozhranie správcu balíkov používa APT. Je najvyspelejším základom distribúcie softvéru v ekosystéme Linux)"
+
+msgid "mime_rpm"
+msgstr "RPM systémový softvérový balík (špecifikácia zapuzdrenia správcu balíkov Red Hat vydaná spoločnosťou Red Hat v roku 1997. Spolu s DEB je považovaný za jeden z dvoch hlavných táborov tradičnej správy balíkov Linuxu. Natívne má vstavanú kontrolu závislostí na úrovni transakcií a základné overovanie digitálnych podpisov softvéru. Dodnes je absolútnym hlavným distribučným štandardom pre ekosystémy rodiny Red Hat ako RHEL, Fedora a CentOS)"
+
+msgid "mime_pacman"
+msgstr "Pacman archivovaný softvérový balík (formát zapuzdrenia .pkg.tar.zst stanovený spoločnosťou Arch Linux spolu so správcom pacman v roku 2002. Ako jadro mechanizmu priebežných aktualizácií Archu, založený na vysokorýchlostnom vysoko kompresnom algoritme Zstandard, spolu s ekosystémom AUR (Arch User Software Repository). Je moderným štandardom distribúcie balíkov, ktorý stelesňuje minimalistické a KISS princípy)"
+
+msgid "mime_exe"
+msgstr "EXE natívny spustiteľný súbor (formát binárneho programu Portable Executable (PE) platformy Windows. Technologicky pochádza zo štruktúry hlavičky MZ z éry MS-DOS a od Windows NT v roku 1993 bol úplne stanovený ako špecifikácia štruktúry PE. Je najpoužívanejším štandardom vykonávania na svete pre inštrukcie strojového kódu, segmenty statických zdrojov a spúšťanie jadra systému)"
+
+msgid "mime_dll"
+msgstr "DLL dynamická linkovacia knižnica (špecifikácia knižnice zdieľaného kódu Dynamic Link Library platformy Windows. Dynamickým načítaním a presunom symbolov počas behu výrazne šetrí fyzickú pamäť a miesto na disku. Ako základná implementačná forma Windows API bol jej skorý problém „DLL peklo“ v modernej dobe vykorenený mechanizmom paralelnej izolácie SxS)"
+
+msgid "mime_com"
+msgstr "COM klasický spustiteľný súbor (najstarší formát vykonávania obrazu pamäte (Command) z éry MS-DOS. Používa neštruktúrovaný dizajn čistého segmentu kódu, obmedzený na hornú hranicu segmentu adresovania fyzickej pamäte 64KB. Teraz je vyradený ako historický dedičný formát, ale v modernej architektúre Windows sa stále používa ako špecifické rozhranie komponentov na obmedzenú kompatibilitu)"
+
+msgid "mime_aac"
+msgstr "Zvuk AAC (štandard MPEG z roku 1997, Advanced Audio Coding. Nástupca MP3, kvalita zvuku lepšia ako MP3 pri rovnakej bitovej rýchlosti, predvolený formát zvuku pre YouTube, iTunes, Nintendo Switch)"
+
+msgid "mime_alac"
+msgstr "Zvuk ALAC (vyvinutý spoločnosťou Apple v roku 2004, Apple Lossless Audio Codec. Bezstratový formát Apple, otvorený zdrojový kód v roku 2011, predvolený formát pre bezstratový zvuk v iTunes a Apple Music)"
+
+msgid "mime_flac"
+msgstr "Zvuk FLAC (vyvinutý nadáciou Xiph.Org v roku 2001, Free Lossless Audio Codec. Bezstratová kompresia, kvalita zvuku rovnaká ako CD, veľkosť súboru približne polovičná oproti pôvodnému WAV. Otvorený zdrojový kód bez patentov, preferovaný formát pre audiofilov a zberateľov digitálnej hudby)"
+
+msgid "mime_mp3"
+msgstr "Zvuk MP3 (vyvinutý Fraunhoferovým inštitútom v roku 1993, MPEG-1 Audio Layer 3. Stratový kompresný formát, malá veľkosť súboru, prijateľná kvalita, kľúčový formát digitálnej hudobnej revolúcie v roku 2000, hybná sila iPodu a Napsteru. Patent vypršal v roku 2017, stal sa formátom verejnej domény)"
+
+msgid "mime_oga"
+msgstr "Zvuk Ogg Audio (vyvinutý nadáciou Xiph.Org, čistý zvukový formát kontajnera Ogg, používa kódovanie Vorbis. Otvorený zdrojový kód bez patentov, účinnosť kompresie lepšia ako MP3, široko používaný v projektoch s otvoreným zdrojovým kódom)"
+
+msgid "mime_ogg"
+msgstr "Zvuk OGG (vyvinutý nadáciou Xiph.Org v roku 2000, formát Ogg Vorbis. Otvorený zdrojový kód bez patentov, účinnosť kompresie lepšia ako MP3, skorý používateľ bol Spotify, široko používaný na zvukové efekty v hrách)"
+
+msgid "mime_opus"
+msgstr "Zvuk Opus (štandardizovaný IETF v roku 2012, otvorený zdrojový kód bez patentového zvukového formátu. Kombinuje technológie SILK a CELT, extrémne nízka latencia, najvyššia účinnosť kompresie, predvolený zvukový formát pre WebRTC, WhatsApp, Discord)"
+
+msgid "mime_wav"
+msgstr "Zvuk WAV (vyvinutý spoločnosťami Microsoft a IBM v roku 1991, natívny zvukový formát Windows. Kódovanie PCM bez kompresie, bezstratová kvalita zvuku, ale veľká veľkosť súboru, štandardný formát profesionálneho úpravy zvuku)"
+
+msgid "mime_wma"
+msgstr "Zvuk WMA (vyvinutý spoločnosťou Microsoft v roku 1999, Windows Media Audio. Dve verzie: stratová a bezstratová, natívne podporovaná systémom Windows, rozšírená spolu s Windows Media Player. Teraz marginalizovaný, nahradený MP3/AAC)"
+
+msgid "mime_dsf"
+msgstr "Zvuk DSF (formát Direct Stream Digital, vyvinutý spoločnosťami Sony a Philips. 1-bit vysoká vzorkovacia frekvencia, štandardný formát audio DSD, digitálna verzia SACD, audiofilský high-endový zvukový formát, veľkosť súboru obrovská)"
+
+msgid "mime_ape"
+msgstr "APE Audio (vyvinutý Monkey's Audio v roku 2000, bezstratový kompresný formát. Vyššia kompresia ako FLAC, ale pomalšie kódovanie, stále sa používa na platforme Windows a medzi audio nadšencami)"
+
+msgid "mime_mid"
+msgstr "Zvuk MIDI (stanovený asociáciou MIDI v roku 1983, Musical Instrument Digital Interface. Formát notového záznamu, nie nahrávka, veľkosť súboru veľmi malá, štandard pre elektronické hudobné nástroje, vyzváňacie tóny mobilných telefónov, zvukové efekty v hrách. V roku 1991 bol General MIDI štandardizovaný, definujúci 128 nástrojových farieb)"
+
+msgid "mime_m4a"
+msgstr "Zvuk M4A (MPEG-4 Audio, kontajnerový formát AAC. Štandardný formát obchodu iTunes Music Store, hlavný zvukový formát v ekosystéme Apple, podporuje ochranu DRM)"
+
+msgid "mime_m3u"
+msgstr "Zoznam skladieb M3U (formát zoznamu skladieb URL MP3, čistý textový súbor, zaznamenáva cesty zvukových súborov. Štandard z éry Winampu, používaný pre internetové rádio, online streamovanie hudby. M3U8 je jeho UTF-8 verzia, používaná pre HTTP Live Streaming)"
+
+msgid "mime_asf"
+msgstr "Streamovanie ASF (vyvinuté spoločnosťou Microsoft v roku 1996, Advanced Systems Format. Streamovací kontajner Windows Media, podporuje synchronný prenos zvuku a videa. Používa sa pre živé vysielanie a streamovanie videa na požiadanie, WMA/WMV sú založené na kontajneri ASF)"
+
+msgid "mime_avi"
+msgstr "Video AVI (vydané spoločnosťou Microsoft v roku 1992, skorý video štandard Windows. „Audio Video Interleave“, prekladané ukladanie zvuku a videa, najpopulárnejší formát videa v rokoch 1990-2000, teraz nahradený MP4/MKV)"
+
+msgid "mime_divx"
+msgstr "Video DivX (vyvinuté spoločnosťou DivX v roku 1998, formát kódovania videa založený na MPEG-4. Hlavný formát zdieľania videí na internete v roku 2000, prvá technológia, ktorá skomprimovala kvalitu DVD na veľkosť CD. Kvôli sporom o autorské práva sa neskôr transformovala na komerčný kodér)"
+
+msgid "mime_mp4"
+msgstr "Video MP4 (štandard MPEG z roku 2001, MPEG-4 Časť 14. Najuniverzálnejší formát videa na svete, podporuje kódovanie H.264/H.265, predvolený formát pre internetové videá, nahrávanie telefónom, YouTube)"
+
+msgid "mime_m4v"
+msgstr "Video M4V (formát videa iTunes, variant MP4. Formát videa v ekosystéme Apple, štandardný formát pre filmy, televízne programy v iTunes Store, podporuje ochranu autorských práv DRM)"
+
+msgid "mime_mpeg"
+msgstr "Video MPEG (stanovené organizáciou MPEG v roku 1988, Moving Picture Experts Group. Zakladateľ štandardov digitálnej kompresie videa, hlboký vplyv MPEG-1 (VCD), MPEG-2 (DVD), MPEG-4 (internetové video))"
+
+msgid "mime_mkv"
+msgstr "Video MKV (vyvinuté projektom Matroska v roku 2002, otvorený zdrojový kód multimediálny kontajner. Podporuje viacero zvukových stôp, viacero titulkov, kapitoly, „nástroj na balenie“, preferovaný formát na zdieľanie HD filmov)"
+
+msgid "mime_mpg"
+msgstr "Video MPEG (prípona videa MPEG-1/MPEG-2, štandardný formát pre VCD a DVD. Hlavný formát videa na optických diskoch v rokoch 1990-2000, teraz nahradený H.264/H.265)"
+
+msgid "mime_ogv"
+msgstr "Video Ogg Video (vyvinuté nadáciou Xiph.Org, video formát kontajnera Ogg, používa kódovanie Theora. Otvorený zdrojový kód bez patentov, jeden z prvých štandardov pre video HTML5, natívne podporovaný Firefoxom)"
+
+msgid "mime_ogx"
+msgstr "Multimediálny kontajner Ogg (vyvinutý nadáciou Xiph.Org, univerzálne rozšírenie kontajnera Ogg, môže obsahovať viacero stôp: zvuk, video, titulky atď. Otvorený zdrojový kód multimediálny štandard, používaný pre hry, streamovanie)"
+
+msgid "mime_rm"
+msgstr "Video RealMedia (vyvinuté spoločnosťou RealNetworks v roku 1995, formát RealMedia. Priekopník internetového streamovania v rokoch 1990-2000, základný formát prehrávača RealPlayer. Slabiny: vyžaduje špeciálny prehrávač, slabá kvalita kompresie, neskôr nahradený Flash/MP4)"
+
+msgid "mime_flv"
+msgstr "Video Flash (formát sa objavil v roku 2002, formát Flash Video. Kedysi bol hlavným formátom pre internetové videá, skorý používateľ bol YouTube. Slabiny: vyžaduje plugin Flash, slabý výkon, veľa bezpečnostných dier. Od roku 2015 hlavné webové stránky prešli na video HTML5, teraz vyradený)
+
+msgid "mime_f4v"
+msgstr "Video F4V (formát Flash videa vyvinutý spoločnosťou Adobe, nástupca FLV. Založený na štandarde MPEG-4, podporuje kódovanie H.264. Spolu s technológiou Flash bol vyradený, Adobe ukončilo podporu v roku 2020)"
+
+msgid "mime_wmv"
+msgstr "Video WMV (vyvinuté spoločnosťou Microsoft v roku 1999, Windows Media Video. Natívne podporované systémom Windows, optimalizované na streamovanie, bežný formát pre skoré online videá, teraz marginalizovaný)"
+
+msgid "mime_wmf"
+msgstr "Formát médií WMF (Windows Media Format, mediálny rámec Microsoftu. Zahŕňa súhrnný názov pre video WMV a zvuk WMA, natívne podporovaný prehrávačom Windows Media Player)"
+
+msgid "mime_mov"
+msgstr "Video MOV (vyvinuté spoločnosťou Apple v roku 1991, formát kontajnera QuickTime. Štandardný formát profesionálneho strihu videa, podporuje viacero kodekov, natívne podporovaný Final Cut Pro, Premiere)"
+
+msgid "mime_qt"
+msgstr "Video QuickTime (vydané spoločnosťou Apple v roku 1991, formát QuickTime. Video štandard pre platformu Mac, MOV je jeho kontajner, prehrávač QuickTime bol široko používaný. V roku 2016 Apple zastavil vývoj verzie pre Windows, postupne nahradzovaný MP4)"
+
+msgid "mime_webm"
+msgstr "Video WebM (vydané spoločnosťou Google v roku 2010, otvorený zdrojový kód bez patentov video formát. Založený na kontajneri Matroska, kódovanie VP8/VP9, štandardný formát pre video HTML5, predvolený formát prehrávania na webe YouTube)"
+
+msgid "mime_3gp"
+msgstr "Video 3GP (stanovené organizáciou 3GPP v roku 2000, video formát pre mobilné zariadenia. Veľkosť súboru veľmi malá, nízka kvalita, formát nahrávania videa na starých mobilných telefónoch, používaný na odosielanie MMS)"
+
+#------------------------------------------------------------------------------
+# Technické dimenzie
+#------------------------------------------------------------------------------
+
+msgid "Operating Systems"
+msgstr "Operačné systémy"
+
+msgid "Top 5 Operating Systems"
+msgstr "Top 5 operačných systémov"
+
+msgid "Unknown Robot"
+msgstr "Neznámy klient"
+
+msgid "User agent"
+msgstr "User agent"
+
+msgid "Browsers"
+msgstr "Prehliadače"
+
+msgid "Top 5 Browsers"
+msgstr "Top 5 prehliadačov"
+
+msgid "Unknown Robot RH"
+msgstr "Neznáma hlavička požiadavky"
+
+msgid "Detailed"
+msgstr "Podrobné"
+
+msgid "DetailedOS"
+msgstr "Verzia operačného systému"
+
+msgid "DetailedBS"
+msgstr "Verzia prehliadača"
+
+msgid "Screen sizes"
+msgstr "Veľkosti obrazoviek"
+
+msgid "Compression"
+msgstr "Kompresia"
+
+msgid "In"
+msgstr "Vstup"
+
+msgid "Out"
+msgstr "Výstup"
+
+msgid "Saved"
+msgstr "Uložené"
+
+#------------------------------------------------------------------------------
+# Dimenzie pôvodu
+#------------------------------------------------------------------------------
+
+msgid "Origin"
+msgstr "Pôvod"
+
+msgid "Referers"
+msgstr "Odkazovače"
+
+msgid "meta.description"
+msgstr "AWStats pokročilý analyzátor webových denníkov - monitorovanie návštevnosti webových stránok v reálnom čase, analýza návštevníkov, kľúčové slová vyhľadávačov, štatistiky chybových stránok. Podporuje tmavý režim, viacjazyčné rozhranie, poskytuje komplexnú analýzu údajov pre správcov webových stránok."
+
+msgid "meta.keywords"
+msgstr "AWStats,webové štatistiky,analýza denníkov,monitorovanie návštevnosti,štatistiky návštev,analýza SEO,nástroj na analýzu webových stránok,Web Analytics,Log Analyzer"
+
+msgid "meta.author"
+msgstr "AWStats"
+
+msgid "og.title"
+msgstr "AWStats - Analýza webových denníkov"
+
+msgid "og.description"
+msgstr "📊 Profesionálny open source nástroj na štatistiku webových stránok, ktorý v reálnom čase analyzuje návštevnosť a správanie návštevníkov vašej webovej stránky."
+
+msgid "og.image.alt"
+msgstr "Štatistické grafy AWStats"
+
+msgid "Created by"
+msgstr "Vytvoril %s"
+
+msgid "plugins"
+msgstr "pluginy"
+
+msgid "dbip by"
+msgstr "údaje z"
+
+msgid "IPDB by"
+msgstr "Údaje o geografickej polohe poskytuje DB-IP"
+
+# Zdravie
+msgid "Configured"
+msgstr "Nakonfigurované"
+
+msgid "Missing"
+msgstr "Chýba"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Unused"
+msgstr "Nepoužité"
+
+msgid "Overall Health"
+msgstr "Celkový zdravotný stav"
+
+msgid "Excellent"
+msgstr "Výborne"
+
+msgid "Good"
+msgstr "Dobre"
+
+msgid "Fair"
+msgstr "Uspokojivé"
+
+msgid "Poor"
+msgstr "Slabé"
+
+msgid "Missing icon types"
+msgstr "Chýbajúce typy ikon"
+
+msgid "See"
+msgstr "Pozri"
+
+msgid "Expected Path"
+msgstr "Očakávaná cesta"
+
+msgid "column for file locations"
+msgstr "stĺpec na získanie umiestnení súborov"
+
+msgid "Tip: If you need to generate related icons, you can use %s to upload a logo image, and it will automatically generate all the above related icon files"
+msgstr "Tip: Ak potrebujete vygenerovať súvisiace ikony, môžete použiť %s na nahranie loga a automaticky vygeneruje všetky vyššie uvedené súvisiace súbory ikon"
+
+msgid "200: success, 404: failure"
+msgstr "200 je počet úspechov, 404 je počet neúspechov"
+
+msgid "_PATH_FAVICON"
+msgstr "/favicon.ico"
+
+msgid "_PATH_APPLE_TOUCH"
+msgstr "/apple-touch-icon.png alebo /apple-touch-icon-180x180.png"
+
+msgid "_PATH_LOGO"
+msgstr "/logo.svg alebo /logo.png (musí byť uvedené v HTML/JSON-LD)"
+
+msgid "_PATH_WEBMANIFEST"
+msgstr "/site.webmanifest alebo /manifest.json"
+
+msgid "_PATH_BROWSERCONFIG"
+msgstr "/browserconfig.xml"
+
+msgid "_PATH_SAFARI_PINNED"
+msgstr "/safari-pinned-tab.svg"
+
+msgid "_PATH_SOCIAL_ICON"
+msgstr "/images/github.svg, /images/paypal.svg atď."
+
+msgid "Favicon"
+msgstr "Ikona webovej stránky"
+
+msgid "Apple Touch Icon (iOS/macOS)"
+msgstr "Ikona Apple Touch (iPhone/iPad/Mac)"
+
+msgid "Site Logo"
+msgstr "Logo webovej stránky"
+
+msgid "Web App Manifest (Android/Chrome)"
+msgstr "Manifest webovej aplikácie (Android/Chrome)"
+
+msgid "Windows Browser Config"
+msgstr "Konfigurácia prehliadača Windows"
+
+msgid "Safari Pinned Tab"
+msgstr "Ikona pripnutej karty Safari"
+
+msgid "Social Icon"
+msgstr "Ikona sociálnej platformy"
+
+msgid "Icon Files Status"
+msgstr "Stav súborov ikon"
+
+msgid "Icon Type"
+msgstr "Typ ikony"
+
+msgid "Total"
+msgstr "Celkom"
+
+msgid "Advanced Web Statistics"
+msgstr "Pokročilý analyzátor denníkov"
+
+msgid "Advanced Web Statistics %s"
+msgstr "%s Pokročilý analyzátor denníkov"
+
+msgid "Your browser does not support frames. Please use a modern browser."
+msgstr "Váš prehliadač nepodporuje rámce. Použite moderný prehliadač."
+
+msgid "View statistics directly"
+msgstr "Zobraziť štatistiky priamo"
+
+msgid "Close"
+msgstr "Zavrieť"
+
+msgid "Documentation Viewer"
+msgstr "Prehliadač dokumentácie"
+
+msgid "Direct address / Bookmarks"
+msgstr "Priama adresa / Záložky"
+
+msgid "Search Engines"
+msgstr "Vyhľadávacie nástroje"
+
+msgid "Refering search engines"
+msgstr "Odkazujúce vyhľadávacie nástroje"
+
+msgid "External pages"
+msgstr "Externé stránky"
+
+msgid "Refering pages"
+msgstr "Odkazujúce stránky"
+
+msgid "Internal pages"
+msgstr "Interné stránky"
+
+msgid "UnknownAccessSource"
+msgstr "Neznámy zdroj prístupu"
+
+msgid "Different refering pages"
+msgstr "Rôzne odkazujúce stránky"
+
+msgid "Keyphrases"
+msgstr "Kľúčové frázy"
+
+msgid "Keywords"
+msgstr "Kľúčové slová"
+
+msgid "Keyphrases/Keywords"
+msgstr "Kľúčové frázy/Kľúčové slová"
+
+msgid "Different keyphrases"
+msgstr "Rôzne kľúčové frázy"
+
+msgid "Different keywords"
+msgstr "Rôzne kľúčové slová"
+
+#------------------------------------------------------------------------------
+# Dimenzie stránky
+#------------------------------------------------------------------------------
+
+msgid "Viewed pages"
+msgstr "Zobrazené stránky"
+
+msgid "Different pages"
+msgstr "Rôzne stránky"
+
+msgid "Entry"
+msgstr "Vstup"
+
+msgid "Exit"
+msgstr "Výstup"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Referer"
+msgstr "Odkazovač"
+
+msgid "Host"
+msgstr "Hostiteľ"
+
+#------------------------------------------------------------------------------
+# Chyby a stavy
+#------------------------------------------------------------------------------
+
+msgid "Error"
+msgstr "Chyba"
+
+msgid "HTTP Status Statistics"
+msgstr "Štatistiky stavových kódov HTTP"
+
+msgid "SMTP Error codes"
+msgstr "Kódy chýb SMTP"
+
+msgid "Page not found"
+msgstr "Požadovaná stránka nebola nájdená"
+
+msgid "Unknown error"
+msgstr "Neznáma chyba"
+
+msgid "Abnormal traffic note"
+msgstr "Abnormálna návštevnosť zahŕňa: roboty vyhľadávacích nástrojov, roboty na trénovanie AI, skenery zraniteľností a požiadavky, ktoré nespĺňajú štandardy"
+
+msgid "Page detail"
+msgstr "Podrobnosti stránky"
+
+# Podrobné chybové správy
+msgid "AWStats did not found the"
+msgstr "AWStats nenašiel"
+
+msgid "in your log records."
+msgstr "vo vašich záznamoch denníka."
+
+msgid "AWStats did not find any valid log lines that match your"
+msgstr "AWStats nenašiel žiadne platné riadky denníka, ktoré by zodpovedali vášmu"
+
+msgid "parameter, in the"
+msgstr "parametru, v"
+
+msgid "th first non commented lines read of your log."
+msgstr " prvých nekomentovaných riadkov načítaných z vášho denníka."
+
+msgid "Your log file"
+msgstr "Váš súbor denníka"
+
+msgid "must have a bad format or"
+msgstr "musí mať nesprávny formát alebo"
+
+msgid "parameter setup does not match this format."
+msgstr "nastavenie parametra nezodpovedá tomuto formátu."
+
+msgid "Your AWStats"
+msgstr "Váš parameter AWStats"
+
+msgid "parameter is:"
+msgstr "je:"
+
+msgid "This means each line in your web server log file need to have:"
+msgstr "To znamená, že každý riadok v súbore denníka vášho webového servera musí obsahovať:"
+
+msgid "combined log format"
+msgstr "kombinovaný formát denníka"
+
+msgid "MSIE Extended W3C log format"
+msgstr "Rozšírený formát denníka W3C MSIE"
+
+msgid "WebStar native log format"
+msgstr "Natívny formát denníka WebStar"
+
+msgid "common log format"
+msgstr "bežný formát denníka"
+
+msgid "Lotus Notes/Lotus Domino"
+msgstr "Lotus Notes/Lotus Domino"
+
+msgid "the following personalized log format:"
+msgstr "nasledujúci prispôsobený formát denníka:"
+
+msgid "And this is an example of records AWStats found in your log file (the record number"
+msgstr "Toto je príklad záznamov, ktoré AWStats našiel vo vašom súbore denníka (číslo záznamu"
+
+msgid "in your log):"
+msgstr "vo vašom denníku):"
+
+#------------------------------------------------------------------------------
+# Rôzne
+#------------------------------------------------------------------------------
+
+msgid "Extra/Marketing"
+msgstr "Extra/Marketing"
+
+#------------------------------------------------------------------------------
+# Texty rozhrania
+#------------------------------------------------------------------------------
+
+msgid "Current site"
+msgstr "Aktuálne miesto"
+
+msgid "Web Site"
+msgstr "Webová stránka"
+
+msgid "Last Update"
+msgstr "Posledná aktualizácia"
+
+msgid "Never updated"
+msgstr "Nikdy neaktualizované"
+
+msgid "No qualified records found in log"
+msgstr "V denníku sa nenašli žiadne kvalifikované záznamy"
+
+msgid "corrupted"
+msgstr "poškodené"
+
+msgid "comments"
+msgstr "komentáre"
+
+msgid "Blank"
+msgstr "Prázdne"
+
+msgid "dropped"
+msgstr "zahodené"
+
+msgid "Update now"
+msgstr "Aktualizovať teraz"
+
+msgid "Back to main page"
+msgstr "Späť na hlavnú stránku"
+
+msgid "Close window"
+msgstr "Zavrieť okno"
+
+msgid "Back page"
+msgstr "Predchádzajúca stránka"
+
+msgid "Navigation"
+msgstr "Navigácia"
+
+msgid "Summary"
+msgstr "Zhrnutie"
+
+msgid "Local"
+msgstr "Lokálne"
+
+msgid "External"
+msgstr "Externé"
+
+msgid "Others (email senders)"
+msgstr "Iné (odosielatelia)"
+
+msgid "Others (email receivers)"
+msgstr "Iné (príjemcovia)"
+
+msgid "Others"
+msgstr "Iné"
+
+msgid "Only 10 lines of browser data are currently displayed"
+msgstr "Momentálne sa zobrazuje iba 10 riadkov údajov o prehliadači, úplný zoznam nájdete na stránke podrobností"
+
+msgid "Others (unknown browsers)"
+msgstr "Iné (neznáme prehliadače)"
+
+msgid "Others (operating systems)"
+msgstr "Iné (operačné systémy)"
+
+msgid "Others (unknown OS)"
+msgstr "Iné (neznámy OS)"
+
+msgid "Others (search engines)"
+msgstr "Iné (vyhľadávacie nástroje)"
+
+msgid "Others (referring pages)"
+msgstr "Iné (odkazujúce stránky)"
+
+msgid "Others (keyphrases)"
+msgstr "Iné (frázy)"
+
+msgid "Others (keywords)"
+msgstr "Iné (kľúčové slová)"
+
+msgid "Only first 10 robots shown"
+msgstr "Zobrazí sa iba prvých 10 robotov, úplný zoznam nájdete na stránke podrobností"
+
+msgid "Failed to obtain access record"
+msgstr "Nepodarilo sa získať záznam o vstupe"
+
+msgid "Failed to obtain leave record"
+msgstr "Nepodarilo sa získať záznam o výstupe"
+
+msgid "Other pages"
+msgstr "Iné stránky"
+
+msgid "Low Traffic IP Summary"
+msgstr "Zhrnutie neznámych IP adries s nízkou návštevnosťou"
+
+msgid "Failed to obtain IP data"
+msgstr "Zhrnutie iných známych IP adries"
+
+msgid "Failed to obtain the relevant data"
+msgstr "Nepodarilo sa získať príslušné údaje"
+
+msgid "Limited list of countries and regions"
+msgstr "Momentálne sa zobrazuje iba 10 riadkov údajov, úplný zoznam krajín a regiónov nájdete na stránke podrobností"
+
+msgid "currentVisitorData"
+msgstr "Momentálne sa zobrazuje iba 10 riadkov údajov o návštevníkoch, úplný zoznam nájdete na stránke podrobností"
+
+msgid "Others (robots main)"
+msgstr "Iné (roboti)"
+
+msgid "Others (worms)"
+msgstr "Iné (červy)"
+
+msgid "Displaying10RowsPageMorePleaseViewFullList"
+msgstr "Momentálne sa zobrazuje iba 10 stránok, úplný zoznam nájdete na stránke podrobností"
+
+msgid "Others (OS main)"
+msgstr "Iné (systémy)"
+
+msgid "Others (browsers main)"
+msgstr "Iné (prehliadače)"
+
+msgid "Others (screen sizes)"
+msgstr "Iné (veľkosti)"
+
+msgid "Others (search engines main)"
+msgstr "Iné (vyhľadávacie nástroje)"
+
+msgid "Others (referring pages main)"
+msgstr "Iné (odkazujúce stránky)"
+
+msgid "Others (keyphrases main)"
+msgstr "Iné (frázy)"
+
+msgid "Others (keywords main)"
+msgstr "Iné (kľúčové slová)"
+
+# 1xx
+msgid "Continue"
+msgstr "Pokračovať"
+
+msgid "Switching Protocols"
+msgstr "Prepínanie protokolov"
+
+msgid "Processing (WebDAV)"
+msgstr "Spracúva sa (WebDAV)"
+
+msgid "Early Hints"
+msgstr "Skoré rady"
+
+# 2xx
+msgid "[Miscellaneous successes]"
+msgstr "[Iné úspechy]"
+
+msgid "Request successful"
+msgstr "Požiadavka bola úspešná"
+
+msgid "Created successfully"
+msgstr "Úspešne vytvorené"
+
+msgid "Accepted - processing"
+msgstr "Prijaté - spracúva sa"
+
+msgid "Non-authoritative information (from cache) (from cache)"
+msgstr "Neautoritatívne informácie (z vyrovnávacej pamäte)"
+
+msgid "Success, no content returned"
+msgstr "Úspech, nebol vrátený žiadny obsah"
+
+msgid "Reset content"
+msgstr "Resetovať obsah"
+
+msgid "Partial content (resume download)"
+msgstr "Čiastočný obsah (obnoviť sťahovanie)"
+
+msgid "Multi-status (WebDAV)"
+msgstr "Viaceré stavy (WebDAV)"
+
+msgid "Already reported (WebDAV)"
+msgstr "Už nahlásené (WebDAV)"
+
+msgid "IM used"
+msgstr "IM použitý"
+
+# 3xx
+msgid "[Miscellaneous redirections]"
+msgstr "[Iné presmerovania]"
+
+msgid "Multiple choices"
+msgstr "Viacero možností"
+
+msgid "Moved permanently - update your links"
+msgstr "Trvalo presunuté - aktualizujte svoje odkazy"
+
+msgid "Temporary redirect - URL unchanged"
+msgstr "Dočasné presmerovanie - URL nezmenené"
+
+msgid "See other"
+msgstr "Pozri iné"
+
+msgid "Not modified - using cached version"
+msgstr "Neupravené - používa sa verzia z vyrovnávacej pamäte"
+
+msgid "Use proxy"
+msgstr "Použiť proxy"
+
+msgid "Switch proxy"
+msgstr "Zmeniť proxy"
+
+msgid "Temporary redirect (keep method)"
+msgstr "Dočasné presmerovanie (ponechať metódu)"
+
+msgid "Permanent redirect - update your links"
+msgstr "Trvalé presmerovanie - aktualizujte svoje odkazy"
+
+# 4xx
+msgid "[Miscellaneous client/user errors]"
+msgstr "[Iné chyby klienta/používateľa]"
+
+msgid "Bad request"
+msgstr "Chybná požiadavka"
+
+msgid "Unauthorized - please log in"
+msgstr "Neautorizované - prihláste sa"
+
+msgid "Payment required"
+msgstr "Vyžaduje sa platba"
+
+msgid "Forbidden - access denied"
+msgstr "Zakázané - prístup zamietnutý"
+
+msgid "Page not found (404) - check for broken links"
+msgstr "Stránka sa nenašla (404) - skontrolujte nefunkčné odkazy"
+
+msgid "Method not allowed"
+msgstr "Metóda nie je povolená"
+
+msgid "Not acceptable"
+msgstr "Neakceptovateľné"
+
+msgid "Proxy authentication required"
+msgstr "Vyžaduje sa overenie proxy"
+
+msgid "Request timeout"
+msgstr "Vypršal časový limit požiadavky"
+
+msgid "Conflict - please try again"
+msgstr "Konflikt - skúste to znova"
+
+msgid "Gone - permanently deleted"
+msgstr "Pryč - natrvalo odstránené"
+
+msgid "Length required"
+msgstr "Vyžaduje sa dĺžka"
+
+msgid "Precondition failed"
+msgstr "Predpoklad zlyhal"
+
+msgid "Payload too large"
+msgstr "Užitočné zaťaženie je príliš veľké"
+
+msgid "URI too long"
+msgstr "URI je príliš dlhé"
+
+msgid "Unsupported media type"
+msgstr "Nepodporovaný typ média"
+
+msgid "Range not satisfiable"
+msgstr "Rozsah nie je možné splniť"
+
+msgid "Expectation failed"
+msgstr "Očakávanie zlyhalo"
+
+msgid "I am a teapot (April Fools)"
+msgstr "Som čajník (prvoaprílový žart)"
+
+msgid "Page expired (Laravel)"
+msgstr "Platnosť stránky vypršala (Laravel)"
+
+msgid "Method failure (Spring)"
+msgstr "Zlyhanie metódy (Spring)"
+
+msgid "Misdirected request"
+msgstr "Nesprávne nasmerovaná požiadavka"
+
+msgid "Unprocessable entity (WebDAV)"
+msgstr "Nespracovateľná entita (WebDAV)"
+
+msgid "Locked (WebDAV)"
+msgstr "Zamknuté (WebDAV)"
+
+msgid "Failed dependency (WebDAV)"
+msgstr "Zlyhaná závislosť (WebDAV)"
+
+msgid "Too early"
+msgstr "Príliš skoro"
+
+msgid "Upgrade required"
+msgstr "Vyžaduje sa aktualizácia"
+
+msgid "Precondition required"
+msgstr "Vyžaduje sa predpoklad"
+
+msgid "Too many requests - slow down"
+msgstr "Príliš veľa požiadaviek - spomaľte"
+
+msgid "Request header fields too large (Shopify)"
+msgstr "Polia hlavičky požiadavky sú príliš veľké (Shopify)"
+
+msgid "Request header too large"
+msgstr "Hlavička požiadavky je príliš veľká"
+
+msgid "Login timeout (IIS)"
+msgstr "Vypršal časový limit prihlásenia (IIS)"
+
+msgid "No response (nginx)"
+msgstr "Žiadna odpoveď (nginx)"
+
+msgid "Retry with (IIS)"
+msgstr "Skúste to znova s (IIS)"
+
+msgid "Blocked by Windows parental controls"
+msgstr "Blokované rodičovskou kontrolou Windows"
+
+msgid "Unavailable for legal reasons"
+msgstr "Nedostupné z právnych dôvodov"
+
+msgid "Client closed connection before idle timeout (AWS ELB)"
+msgstr "Klient uzavrel spojenie pred uplynutím časového limitu nečinnosti (AWS ELB)"
+
+msgid "X-Forwarded-For header with >30 IP addresses (AWS ELB)"
+msgstr "Hlavička X-Forwarded-For s >30 IP adresami (AWS ELB)"
+
+msgid "Incompatible protocol versions (AWS ELB)"
+msgstr "Nekompatibilné verzie protokolu (AWS ELB)"
+
+msgid "Request header too large (nginx)"
+msgstr "Hlavička požiadavky je príliš veľká (nginx)"
+
+msgid "SSL certificate error (nginx)"
+msgstr "Chyba certifikátu SSL (nginx)"
+
+msgid "SSL certificate required (nginx)"
+msgstr "Vyžaduje sa certifikát SSL (nginx)"
+
+msgid "HTTP request sent to HTTPS port (nginx)"
+msgstr "HTTP požiadavka odoslaná na port HTTPS (nginx)"
+
+msgid "Invalid token (ArcGIS)"
+msgstr "Neplatný token (ArcGIS)"
+
+msgid "Token required (ArcGIS) / Client closed request (nginx)"
+msgstr "Vyžaduje sa token (ArcGIS) / Klient uzavrel požiadavku (nginx)"
+
+msgid "Resource limit reached (cPanel)"
+msgstr "Dosiahnutý limit zdrojov (cPanel)"
+
+msgid "Bandwidth limit exceeded (Apache/cPanel)"
+msgstr "Prekročený limit šírky pásma (Apache/cPanel)"
+
+# 5xx
+msgid "[Miscellaneous server errors]"
+msgstr "[Iné chyby servera]"
+
+msgid "Internal server error - check logs"
+msgstr "Interná chyba servera - skontrolujte denníky"
+
+msgid "Not implemented"
+msgstr "Neimplementované"
+
+msgid "Bad gateway - backend error"
+msgstr "Chybná brána - chyba backendu"
+
+msgid "Service unavailable - maintenance or overload"
+msgstr "Služba nedostupná - údržba alebo preťaženie"
+
+msgid "Gateway timeout"
+msgstr "Vypršal časový limit brány"
+
+msgid "HTTP version not supported"
+msgstr "Verzia HTTP nie je podporovaná"
+
+msgid "Variant also negotiates"
+msgstr "Variant tiež vyjednáva"
+
+msgid "Insufficient storage (WebDAV)"
+msgstr "Nedostatočné úložisko (WebDAV)"
+
+msgid "Loop detected (WebDAV)"
+msgstr "Zistená slučka (WebDAV)"
+
+msgid "Not extended"
+msgstr "Nerozšírené"
+
+msgid "Network authentication required"
+msgstr "Vyžaduje sa sieťové overenie"
+
+# Cloudflare
+msgid "Unknown error (Cloudflare)"
+msgstr "Neznáma chyba (Cloudflare)"
+
+msgid "Web server is down (Cloudflare)"
+msgstr "Webový server nebeží (Cloudflare)"
+
+msgid "Connection timeout (Cloudflare)"
+msgstr "Vypršal časový limit pripojenia (Cloudflare)"
+
+msgid "Origin is unreachable (Cloudflare)"
+msgstr "Pôvod je nedosiahnuteľný (Cloudflare)"
+
+msgid "A timeout occurred (Cloudflare)"
+msgstr "Došlo k časovému limitu (Cloudflare)"
+
+msgid "SSL handshake failed (Cloudflare)"
+msgstr "SSL handshake zlyhal (Cloudflare)"
+
+msgid "Invalid SSL certificate (Cloudflare)"
+msgstr "Neplatný certifikát SSL (Cloudflare)"
+
+msgid "Railgun error (Cloudflare - obsolete)"
+msgstr "Chyba Railgun (Cloudflare - zastarané)"
+
+msgid "Site is overloaded (SSLLabs)"
+msgstr "Stránka je preťažená (SSLLabs)"
+
+msgid "Origin DNS error (Cloudflare) / Site is frozen (Pantheon)"
+msgstr "Chyba DNS pôvodu (Cloudflare) / Stránka je zmrazená (Pantheon)"
+
+msgid "Temporarily disabled (Shopify)"
+msgstr "Dočasne zakázané (Shopify)"
+
+msgid "Unauthorized (AWS ELB)"
+msgstr "Neautorizované (AWS ELB)"
+
+msgid "Network read timeout error"
+msgstr "Chyba časového limitu čítania siete"
+
+msgid "Network connect timeout error"
+msgstr "Chyba časového limitu pripojenia k sieti"
+
+msgid "Unexpected token (Shopify)"
+msgstr "Neočakávaný token (Shopify)"
+
+msgid "Request denied (LinkedIn)"
+msgstr "Požiadavka zamietnutá (LinkedIn)"
+
+msgid "HTTP/2 GOAWAY (AWS ELB)"
+msgstr "HTTP/2 GOAWAY (AWS ELB)"
+
+msgid "[Unknown]"
+msgstr "[Neznáme]"
+
+msgid "Nonstandard success response (ESMTP)"
+msgstr "Neštandardná úspešná odpoveď (ESMTP)"
+
+msgid "System status, or system help reply"
+msgstr "Stav systému alebo odpoveď systémovej pomoci"
+
+msgid "Help message"
+msgstr "Správa pomocníka"
+
+msgid "SMTP service ready (LMTP)"
+msgstr "Služba SMTP pripravená (LMTP)"
+
+msgid "Service ready - server is ready to receive mail"
+msgstr "Služba pripravená - server je pripravený prijímať poštu"
+
+msgid "Service closing - connection is being closed"
+msgstr "Služba sa zatvára - spojenie sa zatvára"
+
+msgid "Authentication successful"
+msgstr "Overenie bolo úspešné"
+
+msgid "Requested mail action taken and completed"
+msgstr "Požadovaná akcia pošty bola vykonaná a dokončená"
+
+msgid "User not local - will forward to another address"
+msgstr "Používateľ nie je lokálny - bude presmerovaný na inú adresu"
+
+msgid "Cannot verify recipient, but will attempt delivery"
+msgstr "Nie je možné overiť príjemcu, ale pokúsi sa o doručenie"
+
+msgid "Message accepted for delivery (DSN)"
+msgstr "Správa prijatá na doručenie (DSN)"
+
+msgid "User name is a mailbox"
+msgstr "Používateľské meno je poštová schránka"
+
+msgid "Authentication challenge - please respond"
+msgstr "Výzva na overenie - odpovedzte"
+
+msgid "Start mail input - end with <CRLF>.<CRLF>"
+msgstr "Spustite vstup pošty - ukončite pomocou <CRLF>.<CRLF>"
+
+msgid "Continue (LMTP)"
+msgstr "Pokračovať (LMTP)"
+
+msgid "Service not available - connection closing, try again later"
+msgstr "Služba nie je k dispozícii - spojenie sa zatvára, skúste to znova neskôr"
+
+msgid "Mailbox busy or temporarily unavailable (Exchange)"
+msgstr "Poštová schránka je zaneprázdnená alebo dočasne nedostupná (Exchange)"
+
+msgid "Connection rate limit exceeded (Postfix)"
+msgstr "Prekročený limit rýchlosti pripojenia (Postfix)"
+
+msgid "Too many concurrent connections (Postfix)"
+msgstr "Príliš veľa súbežných spojení (Postfix)"
+
+msgid "Unable to establish connection (Postfix)"
+msgstr "Nie je možné nadviazať spojenie (Postfix)"
+
+msgid "Connection timed out (Postfix)"
+msgstr "Vypršal časový limit pripojenia (Postfix)"
+
+msgid "Connection dropped due to error (Postfix)"
+msgstr "Spojenie bolo prerušené kvôli chybe (Postfix)"
+
+msgid "Mailbox temporarily locked (Exchange)"
+msgstr "Poštová schránka je dočasne uzamknutá (Exchange)"
+
+msgid "Too many recipients (Postfix/Exim)"
+msgstr "Príliš veľa príjemcov (Postfix/Exim)"
+
+msgid "Mail server error (Exchange)"
+msgstr "Chyba poštového servera (Exchange)"
+
+msgid "Received loop detected (Exim)"
+msgstr "Zistená slučka prijímania (Exim)"
+
+msgid "Too many hop count (Exim)"
+msgstr "Príliš veľa hopov (Exim)"
+
+msgid "DNS lookup failed (Postfix)"
+msgstr "Vyhľadávanie DNS zlyhalo (Postfix)"
+
+msgid "Unable to authenticate (Postfix)"
+msgstr "Nie je možné overiť (Postfix)"
+
+msgid "TLS handshake failed (Postfix)"
+msgstr "TLS handshake zlyhal (Postfix)"
+
+msgid "SMTP protocol violation (Postfix)"
+msgstr "Porušenie protokolu SMTP (Postfix)"
+
+msgid "Message size exceeds limit (Exchange)"
+msgstr "Veľkosť správy presahuje limit (Exchange)"
+
+msgid "Message rate limit exceeded (Postfix)"
+msgstr "Prekročený limit rýchlosti správ (Postfix)"
+
+msgid "Mailbox quota exceeded - temporary"
+msgstr "Prekročená kvóta poštovej schránky - dočasné"
+
+msgid "Domain not found (Postfix)"
+msgstr "Doména sa nenašla (Postfix)"
+
+msgid "Message header invalid (Postfix)"
+msgstr "Hlavička správy je neplatná (Postfix)"
+
+msgid "Bounce loop detected (Postfix)"
+msgstr "Zistená návratová slučka (Postfix)"
+
+msgid "Unable to route (Postfix)"
+msgstr "Nie je možné smerovať (Postfix)"
+
+msgid "Sender domain not found (Postfix)"
+msgstr "Doména odosielateľa nebola nájdená (Postfix)"
+
+msgid "Recipient domain not found (Postfix)"
+msgstr "Doména príjemcu nebola nájdená (Postfix)"
+
+msgid "Greylisting in progress - please try again (Postgrey)"
+msgstr "Greylisting prebieha - skúste to znova (Postgrey)"
+
+msgid "Spam filtering in progress (SpamAssassin)"
+msgstr "Filtrovanie spamu prebieha (SpamAssassin)"
+
+msgid "Virus scanning in progress (ClamAV)"
+msgstr "Kontrola vírusov prebieha (ClamAV)"
+
+msgid "Mailbox unavailable - try again later"
+msgstr "Poštová schránka nedostupná - skúste to znova neskôr"
+
+msgid "Requested action aborted - error in processing"
+msgstr "Požadovaná akcia bola prerušená - chyba pri spracovaní"
+
+msgid "Insufficient system storage - try again later"
+msgstr "Nedostatočné systémové úložisko - skúste to znova neskôr"
+
+msgid "Too many messages for this recipient (Exchange)"
+msgstr "Príliš veľa správ pre tohto príjemcu (Exchange)"
+
+msgid "TLS not available (Postfix)"
+msgstr "TLS nie je k dispozícii (Postfix)"
+
+msgid "Server unable to accept messages (Postfix)"
+msgstr "Server nemôže prijímať správy (Postfix)"
+
+msgid "Temporary failure in DNS lookup (Exim)"
+msgstr "Dočasné zlyhanie pri vyhľadávaní DNS (Exim)"
+
+msgid "Quota exceeded - temporary"
+msgstr "Kvóta prekročená - dočasné"
+
+msgid "Message too big - temporary"
+msgstr "Správa je príliš veľká - dočasné"
+
+msgid "Too many messages per connection"
+msgstr "Príliš veľa správ na jedno spojenie"
+
+msgid "Load average too high (Postfix)"
+msgstr "Priemerné zaťaženie je príliš vysoké (Postfix)"
+
+msgid "Connection refused (Postfix)"
+msgstr "Pripojenie bolo odmietnuté (Postfix)"
+
+msgid "Send rate limit exceeded (Postfix)"
+msgstr "Prekročený limit rýchlosti odosielania (Postfix)"
+
+msgid "Recipient rate limit exceeded (Postfix)"
+msgstr "Prekročený limit rýchlosti príjemcu (Postfix)"
+
+msgid "Sender rate limit exceeded (Postfix)"
+msgstr "Prekročený limit rýchlosti odosielateľa (Postfix)"
+
+msgid "IP address rate limit exceeded (Postfix)"
+msgstr "Prekročený limit rýchlosti IP adresy (Postfix)"
+
+msgid "MX lookup failed (Postfix)"
+msgstr "Vyhľadávanie MX zlyhalo (Postfix)"
+
+msgid "A record lookup failed (Postfix)"
+msgstr "Vyhľadávanie záznamu A zlyhalo (Postfix)"
+
+msgid "PTR record lookup failed (Postfix)"
+msgstr "Vyhľadávanie záznamu PTR zlyhalo (Postfix)"
+
+msgid "Greylisting active - please try again (Postgrey)"
+msgstr "Greylisting je aktívny - skúste to znova (Postgrey)"
+
+msgid "Sender address rejected - domain not verified (DMARC pending)"
+msgstr "Adresa odosielateľa zamietnutá - doména neoverená (čaká sa na DMARC)"
+
+msgid "Recipient address rejected - domain not verified (DMARC pending)"
+msgstr "Adresa príjemcu zamietnutá - doména neoverená (čaká sa na DMARC)"
+
+msgid "DKIM verification pending - temporary failure"
+msgstr "Overenie DKIM čaká - dočasné zlyhanie"
+
+msgid "SPF verification pending - temporary failure"
+msgstr "Overenie SPF čaká - dočasné zlyhanie"
+
+msgid "DMARC verification pending - temporary failure"
+msgstr "Overenie DMARC čaká - dočasné zlyhanie"
+
+msgid "DNSBL lookup temporary failure"
+msgstr "Dočasné zlyhanie vyhľadávania DNSBL"
+
+msgid "RHSBL lookup temporary failure"
+msgstr "Dočasné zlyhanie vyhľadávania RHSBL"
+
+msgid "URI DNSBL lookup temporary failure"
+msgstr "Dočasné zlyhanie vyhľadávania URI DNSBL"
+
+msgid "Temporary authentication failure (Dovecot)"
+msgstr "Dočasné zlyhanie overenia (Dovecot)"
+
+msgid "Temporary authorization failure (Sendmail)"
+msgstr "Dočasné zlyhanie autorizácie (Sendmail)"
+
+msgid "Rate limit exceeded per sender (Exim)"
+msgstr "Prekročený limit rýchlosti na odosielateľa (Exim)"
+
+msgid "Rate limit exceeded per recipient (Exim)"
+msgstr "Prekročený limit rýchlosti na príjemcu (Exim)"
+
+msgid "Rate limit exceeded per domain (Exim)"
+msgstr "Prekročený limit rýchlosti na doménu (Exim)"
+
+msgid "Rate limit exceeded per IP (Exim)"
+msgstr "Prekročený limit rýchlosti na IP (Exim)"
+
+msgid "Message queued for later delivery (Postfix)"
+msgstr "Správa zaradená do frontu na neskoršie doručenie (Postfix)"
+
+msgid "Delivery delayed due to policy (Exchange)"
+msgstr "Doručenie oneskorené z dôvodu politiky (Exchange)"
+
+msgid "Temporary failure in content filter"
+msgstr "Dočasné zlyhanie filtra obsahu"
+
+msgid "Temporary failure in antivirus scanner"
+msgstr "Dočasné zlyhanie antivírusového skenera"
+
+msgid "Temporary failure in spam filter"
+msgstr "Dočasné zlyhanie filtra spamu"
+
+msgid "Temporary failure in milter (Postfix)"
+msgstr "Dočasné zlyhanie v milter (Postfix)"
+
+msgid "Greylisting - try again later"
+msgstr "Greylisting - skúste to znova neskôr"
+
+msgid "DDoS protection active - try again later"
+msgstr "Ochrana DDoS je aktívna - skúste to znova neskôr"
+
+msgid "SMTP policy violation - temporary"
+msgstr "Porušenie politiky SMTP - dočasné"
+
+msgid "Temporary error in RCPT TO processing"
+msgstr "Dočasná chyba pri spracovaní RCPT TO"
+
+msgid "Temporary error in MAIL FROM processing"
+msgstr "Dočasná chyba pri spracovaní MAIL FROM"
+
+msgid "Temporary error in EHLO/HELO processing"
+msgstr "Dočasná chyba pri spracovaní EHLO/HELO"
+
+msgid "Temporary error in DATA processing"
+msgstr "Dočasná chyba pri spracovaní DATA"
+
+msgid "Temporary error - service busy, try again later"
+msgstr "Dočasná chyba - služba je zaneprázdnená, skúste to znova neskôr"
+
+msgid "Syntax error - command unrecognized or too long"
+msgstr "Chyba syntaxe - príkaz nebol rozpoznaný alebo je príliš dlhý"
+
+msgid "Syntax error in parameters or arguments"
+msgstr "Chyba syntaxe v parametroch alebo argumentoch"
+
+msgid "Command not implemented"
+msgstr "Príkaz nie je implementovaný"
+
+msgid "Bad sequence of commands"
+msgstr "Zlé poradie príkazov"
+
+msgid "Command parameter not implemented"
+msgstr "Parameter príkazu nie je implementovaný"
+
+msgid "Version not supported (ESMTP)"
+msgstr "Verzia nie je podporovaná (ESMTP)"
+
+msgid "Mailbox path invalid (LMTP)"
+msgstr "Cesta poštovej schránky je neplatná (LMTP)"
+
+msgid "Too many commands in this session (Postfix)"
+msgstr "Príliš veľa príkazov v tejto relácii (Postfix)"
+
+msgid "Recipient limit exceeded (Postfix)"
+msgstr "Prekročený limit príjemcov (Postfix)"
+
+msgid "Sender limit exceeded (Postfix)"
+msgstr "Prekročený limit odosielateľov (Postfix)"
+
+msgid "Domain limit exceeded (Postfix)"
+msgstr "Prekročený limit domén (Postfix)"
+
+msgid "Mailbox does not exist (Exchange)"
+msgstr "Poštová schránka neexistuje (Exchange)"
+
+msgid "DNS failure - permanent"
+msgstr "Zlyhanie DNS - trvalé"
+
+msgid "Address type not supported (Postfix)"
+msgstr "Typ adresy nie je podporovaný (Postfix)"
+
+msgid "Unable to open mailbox (Postfix)"
+msgstr "Nie je možné otvoriť poštovú schránku (Postfix)"
+
+msgid "Mailbox locked - permanent"
+msgstr "Poštová schránka uzamknutá - trvalé"
+
+msgid "Message rejected due to policy (Exchange)"
+msgstr "Správa zamietnutá z dôvodu politiky (Exchange)"
+
+msgid "Content rejected - permanent"
+msgstr "Obsah zamietnutý - trvalé"
+
+msgid "Attachment type not allowed"
+msgstr "Typ prílohy nie je povolený"
+
+msgid "Message encoding not supported"
+msgstr "Kódovanie správy nie je podporované"
+
+msgid "Sender domain does not exist - permanent"
+msgstr "Doména odosielateľa neexistuje - trvalé"
+
+msgid "Domain does not accept mail or is closing"
+msgstr "Doména neprijíma poštu alebo sa zatvára"
+
+msgid "Recipient domain does not exist - permanent"
+msgstr "Doména príjemcu neexistuje - trvalé"
+
+msgid "Mailbox quota exceeded - permanent"
+msgstr "Prekročená kvóta poštovej schránky - trvalé"
+
+msgid "Message size exceeds limit - permanent"
+msgstr "Veľkosť správy presahuje limit - trvalé"
+
+msgid "Authentication required (Sendmail)"
+msgstr "Vyžaduje sa overenie (Sendmail)"
+
+msgid "Authentication failed (Sendmail)"
+msgstr "Overenie zlyhalo (Sendmail)"
+
+msgid "Authentication mechanism not supported"
+msgstr "Mechanizmus overenia nie je podporovaný"
+
+msgid "Authentication credentials invalid"
+msgstr "Overovacie údaje sú neplatné"
+
+msgid "Authentication account expired"
+msgstr "Platnosť overovacieho účtu vypršala"
+
+msgid "Access denied - authentication required"
+msgstr "Prístup zamietnutý - vyžaduje sa overenie"
+
+msgid "Access denied (Sendmailism)"
+msgstr "Prístup zamietnutý (Sendmail)"
+
+msgid "Access denied - not authenticated"
+msgstr "Prístup zamietnutý - neoverený"
+
+msgid "Access denied - account locked"
+msgstr "Prístup zamietnutý - účet je uzamknutý"
+
+msgid "Access denied - account disabled"
+msgstr "Prístup zamietnutý - účet je deaktivovaný"
+
+msgid "Authentication failed"
+msgstr "Overenie zlyhalo"
+
+msgid "Authentication required for relay (Postfix)"
+msgstr "Vyžaduje sa overenie pre relé (Postfix)"
+
+msgid "Authentication failed for relay (Postfix)"
+msgstr "Overenie pre relé zlyhalo (Postfix)"
+
+msgid "Encryption required (STARTTLS)"
+msgstr "Vyžaduje sa šifrovanie (STARTTLS)"
+
+msgid "TLS required for this recipient"
+msgstr "Vyžaduje sa TLS pre tohto príjemcu"
+
+msgid "Encryption strength insufficient"
+msgstr "Sila šifrovania je nedostatočná"
+
+msgid "Certificate validation failed"
+msgstr "Overenie certifikátu zlyhalo"
+
+msgid "Invalid TLS certificate"
+msgstr "Neplatný certifikát TLS"
+
+msgid "TLS protocol version not supported"
+msgstr "Verzia protokolu TLS nie je podporovaná"
+
+msgid "Cipher suite not supported"
+msgstr "Sada šifier nie je podporovaná"
+
+msgid "Access denied - no valid recipient"
+msgstr "Prístup zamietnutý - žiadny platný príjemca"
+
+msgid "Access denied - no valid sender"
+msgstr "Prístup zamietnutý - žiadny platný odosielateľ"
+
+msgid "Access denied - domain not allowed"
+msgstr "Prístup zamietnutý - doména nie je povolená"
+
+msgid "Access denied - IP address blocked (permanent)"
+msgstr "Prístup zamietnutý - IP adresa zablokovaná (trvalé)"
+
+msgid "Access denied - sender domain blacklisted"
+msgstr "Prístup zamietnutý - doména odosielateľa na čiernej listine"
+
+msgid "Mailbox unavailable - requested action not taken"
+msgstr "Poštová schránka nedostupná - požadovaná akcia nebola vykonaná"
+
+msgid "User not local - please try forwarding address"
+msgstr "Používateľ nie je lokálny - skúste adresu na presmerovanie"
+
+msgid "Requested action aborted - exceeded storage allocation"
+msgstr "Požadovaná akcia bola prerušená - prekročená alokácia úložiska"
+
+msgid "Mailbox name not allowed"
+msgstr "Názov poštovej schránky nie je povolený"
+
+msgid "Requested action rejected - access denied"
+msgstr "Požadovaná akcia bola zamietnutá - prístup zamietnutý"
+
+msgid "MAIL FROM/RCPT TO parameters not recognized"
+msgstr "Parametre MAIL FROM/RCPT TO neboli rozpoznané"
+
+msgid "Domain not allowed to send (DMARC reject)"
+msgstr "Doména nemôže odosielať (odmietnutie DMARC)"
+
+msgid "Too many duplicate messages - permanent"
+msgstr "Príliš veľa duplicitných správ - trvalé"
+
+msgid "Sender address rejected - domain not in SPF"
+msgstr "Adresa odosielateľa zamietnutá - doména nie je v SPF"
+
+msgid "Sender address rejected - DKIM verification failed"
+msgstr "Adresa odosielateľa zamietnutá - overenie DKIM zlyhalo"
+
+msgid "Sender address rejected - DMARC policy reject"
+msgstr "Adresa odosielateľa zamietnutá - politika DMARC zamietnutá"
+
+msgid "Recipient address rejected - DMARC policy reject"
+msgstr "Adresa príjemcu zamietnutá - politika DMARC zamietnutá"
+
+msgid "Message rejected due to spam content"
+msgstr "Správa zamietnutá z dôvodu spamu"
+
+msgid "Message rejected due to virus detected"
+msgstr "Správa zamietnutá z dôvodu detekcie vírusu"
+
+msgid "Message rejected due to malicious content"
+msgstr "Správa zamietnutá z dôvodu škodlivého obsahu"
+
+msgid "Message rejected due to phishing detection"
+msgstr "Správa zamietnutá z dôvodu detekcie phishingu"
+
+msgid "Message rejected due to malware detection"
+msgstr "Správa zamietnutá z dôvodu detekcie malvéru"
+
+msgid "Message rejected due to policy - permanent"
+msgstr "Správa zamietnutá z dôvodu politiky - trvalé"
+
+msgid "Message rejected due to content filtering"
+msgstr "Správa zamietnutá z dôvodu filtrovania obsahu"
+
+msgid "Message rejected due to reputation"
+msgstr "Správa zamietnutá z dôvodu reputácie"
+
+msgid "Access denied - access_map violation"
+msgstr "Prístup zamietnutý - porušenie access_map"
+
+msgid "Access denied - SMTP client listed in RBL"
+msgstr "Prístup zamietnutý - klient SMTP je uvedený v RBL"
+
+msgid "Access denied - relay not authorized"
+msgstr "Prístup zamietnutý - relé nie je autorizované"
+
+msgid "Access denied - unknown SMTP client hostname"
+msgstr "Prístup zamietnutý - neznámy názov hostiteľa klienta SMTP"
+
+msgid "Access denied - bad syntax for client HELO hostname"
+msgstr "Prístup zamietnutý - chybná syntax názvu hostiteľa HELO klienta"
+
+msgid "Access denied - SMTP client hostname rejected"
+msgstr "Prístup zamietnutý - názov hostiteľa klienta SMTP zamietnutý"
+
+msgid "Access denied - unknown domain for sender or recipient"
+msgstr "Prístup zamietnutý - neznáma doména pre odosielateľa alebo príjemcu"
+
+msgid "Access denied - unknown client HELO hostname"
+msgstr "Prístup zamietnutý - neznámy názov hostiteľa HELO klienta"
+
+msgid "Access denied - invalid domain (not FQDN)"
+msgstr "Prístup zamietnutý - neplatná doména (nie FQDN)"
+
+msgid "Access denied - domain not qualified"
+msgstr "Prístup zamietnutý - doména nie je kvalifikovaná"
+
+msgid "Access denied - mail server misconfigured"
+msgstr "Prístup zamietnutý - poštový server je nesprávne nakonfigurovaný"
+
+msgid "Access denied - open relay not allowed"
+msgstr "Prístup zamietnutý - otvorené relé nie je povolené"
+
+msgid "Access denied - proxy not allowed"
+msgstr "Prístup zamietnutý - proxy nie je povolená"
+
+msgid "Access denied - dynamic IP not allowed"
+msgstr "Prístup zamietnutý - dynamická IP adresa nie je povolená"
+
+msgid "Access denied - residential IP not allowed"
+msgstr "Prístup zamietnutý - rezidenčná IP adresa nie je povolená"
+
+msgid "Access denied - VPN/Tor detected"
+msgstr "Prístup zamietnutý - zistená VPN/Tor"
+
+msgid "Access denied - Spamhaus DROP listed"
+msgstr "Prístup zamietnutý - uvedený v Spamhaus DROP"
+
+msgid "Access denied - URL listed in URIBL"
+msgstr "Prístup zamietnutý - URL uvedené v URIBL"
+
+msgid "Access denied - domain in RHSBL"
+msgstr "Prístup zamietnutý - doména v RHSBL"
+
+msgid "Access denied - IP in DNSWL (policy)"
+msgstr "Prístup zamietnutý - IP v DNSWL (politika)"
+
+msgid "Delivery failed - mailbox not found"
+msgstr "Doručenie zlyhalo - poštová schránka nebola nájdená"
+
+msgid "Delivery failed - recipient not local"
+msgstr "Doručenie zlyhalo - príjemca nie je lokálny"
+
+msgid "Delivery failed - recipient rejected"
+msgstr "Doručenie zlyhalo - príjemca zamietnutý"
+
+msgid "Delivery failed - sender rejected"
+msgstr "Doručenie zlyhalo - odosielateľ zamietnutý"
+
+msgid "Delivery failed - relay rejected"
+msgstr "Doručenie zlyhalo - relé zamietnuté"
+
+msgid "Delivery failed - DNS permanent error"
+msgstr "Doručenie zlyhalo - trvalá chyba DNS"
+
+msgid "Delivery failed - MX permanent error"
+msgstr "Doručenie zlyhalo - trvalá chyba MX"
+
+msgid "Delivery failed - A record permanent error"
+msgstr "Doručenie zlyhalo - trvalá chyba záznamu A"
+
+msgid "Delivery failed - PTR record permanent error"
+msgstr "Doručenie zlyhalo - trvalá chyba záznamu PTR"
+
+msgid "Delivery failed - policy permanent error"
+msgstr "Doručenie zlyhalo - trvalá chyba politiky"
+
+msgid "DSN: Success - delivery status notification"
+msgstr "DSN: Úspech - oznámenie o stave doručenia"
+
+msgid "DSN: Delivery delayed"
+msgstr "DSN: Doručenie oneskorené"
+
+msgid "DSN: Delivery failed - permanent"
+msgstr "DSN: Doručenie zlyhalo - trvalé"
+
+msgid "DSN: Delivery failed - temporary"
+msgstr "DSN: Doručenie zlyhalo - dočasné"
+
+msgid "DSN: Message expired"
+msgstr "DSN: Správa expirovala"
+
+msgid "DSN: Message bounced"
+msgstr "DSN: Správa bola vrátená"
+
+msgid "DSN: Message discarded"
+msgstr "DSN: Správa bola zahodená"
+
+msgid "DSN: Message filtered"
+msgstr "DSN: Správa bola filtrovaná"
+
+msgid "DSN: Message quarantined"
+msgstr "DSN: Správa bola umiestnená do karantény"
+
+msgid "DSN: Message held for review"
+msgstr "DSN: Správa bola pozastavená na preskúmanie"
+
+msgid "MTA-STS policy required"
+msgstr "Vyžaduje sa politika MTA-STS"
+
+msgid "MTA-STS policy validation failed"
+msgstr "Overenie politiky MTA-STS zlyhalo"
+
+msgid "TLS reporting required"
+msgstr "Vyžaduje sa nahlasovanie TLS"
+
+msgid "TLS report requested"
+msgstr "Požadovaná správa TLS"
+
+msgid "SMTP MTA Strict Transport Security active"
+msgstr "SMTP MTA prísna bezpečnosť prenosu je aktívna"
+
+msgid "DANE validation required"
+msgstr "Vyžaduje sa overenie DANE"
+
+msgid "DANE validation failed"
+msgstr "Overenie DANE zlyhalo"
+
+msgid "TLSA record missing"
+msgstr "Záznam TLSA chýba"
+
+msgid "Certificate name mismatch"
+msgstr "Názov certifikátu sa nezhoduje"
+
+msgid "Certificate expired"
+msgstr "Certifikát expiroval"
+
+msgid "AUTH LOGIN required"
+msgstr "Vyžaduje sa AUTH LOGIN"
+
+msgid "AUTH PLAIN required"
+msgstr "Vyžaduje sa AUTH PLAIN"
+
+msgid "AUTH CRAM-MD5 required"
+msgstr "Vyžaduje sa AUTH CRAM-MD5"
+
+msgid "AUTH DIGEST-MD5 required"
+msgstr "Vyžaduje sa AUTH DIGEST-MD5"
+
+msgid "AUTH GSSAPI required"
+msgstr "Vyžaduje sa AUTH GSSAPI"
+
+msgid "AUTH NTLM required"
+msgstr "Vyžaduje sa AUTH NTLM"
+
+msgid "AUTH SCRAM required"
+msgstr "Vyžaduje sa AUTH SCRAM"
+
+msgid "AUTH OAUTHBEARER required"
+msgstr "Vyžaduje sa AUTH OAUTHBEARER"
+
+msgid "AUTH XOAUTH2 required"
+msgstr "Vyžaduje sa AUTH XOAUTH2"
+
+msgid "Exchange: Mailbox database error"
+msgstr "Exchange: Chyba databázy poštových schránok"
+
+msgid "Exchange: Store driver error"
+msgstr "Exchange: Chyba ovládača úložiska"
+
+msgid "Exchange: Transport agent error"
+msgstr "Exchange: Chyba transportného agenta"
+
+msgid "Exchange: Content conversion error"
+msgstr "Exchange: Chyba konverzie obsahu"
+
+msgid "Exchange: Routing error"
+msgstr "Exchange: Chyba smerovania"
+
+msgid "Exchange: Mail flow stalled"
+msgstr "Exchange: Tok pošty sa zastavil"
+
+msgid "Exchange: Shadow redundancy error"
+msgstr "Exchange: Chyba tieňovej redundancie"
+
+msgid "Exchange: Safety net error"
+msgstr "Exchange: Chyba bezpečnostnej siete"
+
+msgid "Exchange: Queue database error"
+msgstr "Exchange: Chyba databázy frontu"
+
+msgid "Exchange: Message throttled"
+msgstr "Exchange: Správa obmedzená"
+
+msgid "Postfix: Bounce queue error"
+msgstr "Postfix: Chyba frontu vrátených správ"
+
+msgid "Postfix: Deferred queue error"
+msgstr "Postfix: Chyba frontu odložených správ"
+
+msgid "Postfix: Hold queue error"
+msgstr "Postfix: Chyba frontu podržaných správ"
+
+msgid "Postfix: Incoming queue error"
+msgstr "Postfix: Chyba prichádzajúceho frontu"
+
+msgid "Postfix: Active queue error"
+msgstr "Postfix: Chyba aktívneho frontu"
+
+msgid "Postfix: Corrupted queue file"
+msgstr "Postfix: Poškodený súbor frontu"
+
+msgid "Sendmail: Queue runner error"
+msgstr "Sendmail: Chyba spúšťača frontu"
+
+msgid "Sendmail: Alias database error"
+msgstr "Sendmail: Chyba databázy aliasov"
+
+msgid "Sendmail: Virtuser table error"
+msgstr "Sendmail: Chyba tabuľky virtuálnych používateľov"
+
+msgid "Sendmail: Mailer definition error"
+msgstr "Sendmail: Chyba definície odosielateľa pošty"
+
+msgid "Exim: Router configuration error"
+msgstr "Exim: Chyba konfigurácie smerovača"
+
+msgid "Exim: Transport configuration error"
+msgstr "Exim: Chyba konfigurácie transportu"
+
+msgid "Exim: Director configuration error"
+msgstr "Exim: Chyba konfigurácie riaditeľa"
+
+msgid "Exim: Retry configuration error"
+msgstr "Exim: Chyba konfigurácie opakovaní"
+
+msgid "Exim: Rewrite configuration error"
+msgstr "Exim: Chyba konfigurácie prepisovania"
+
+msgid "Exim: Authentication configuration error"
+msgstr "Exim: Chyba konfigurácie overovania"
+
+msgid "Exim: ACL configuration error"
+msgstr "Exim: Chyba konfigurácie ACL"
+
+msgid "Exim: Local_scan configuration error"
+msgstr "Exim: Chyba konfigurácie Local_scan"
+
+msgid "Exim: Lookup configuration error"
+msgstr "Exim: Chyba konfigurácie vyhľadávania"
+
+msgid "Exim: Expansion configuration error"
+msgstr "Exim: Chyba konfigurácie rozšírenia"
+
+msgid "HTTP Protocol Versions"
+msgstr "Verzie protokolu HTTP"
+
+msgid "Protocol"
+msgstr "Protokol"
+
+msgid "Request %"
+msgstr "Podiel požiadaviek"
+
+msgid "Bandwidth %"
+msgstr "Podiel šírky pásma"
+
+msgid "Each request requires a new connection"
+msgstr "Každá požiadavka vyžaduje nové spojenie"
+
+msgid "Multiple requests can reuse one connection"
+msgstr "Viaceré požiadavky môžu znovu použiť jedno spojenie"
+
+msgid "Multiple requests in parallel over one connection"
+msgstr "Viaceré požiadavky paralelne cez jedno spojenie"
+
+msgid "Faster connection, better performance on poor networks"
+msgstr "Rýchlejšie spojenie, lepší výkon v slabých sieťach"
+
+msgid "No protocol data available"
+msgstr "Nie sú k dispozícii žiadne údaje o protokole"
+
+msgid "of requests use HTTP/1.0"
+msgstr "požiadaviek používa HTTP/1.0"
+
+msgid "From access logs"
+msgstr "Z denníkov prístupov"
+
+msgid "No HTTP/2 requests detected"
+msgstr "Neboli zistené žiadne požiadavky HTTP/2"
+
+msgid "All requests are HTTP/1.0, no HTTP/2 requests"
+msgstr "Všetky požiadavky sú HTTP/1.0, žiadne požiadavky HTTP/2"
+
+msgid "HTTP/3 not detected"
+msgstr "HTTP/3 nebol zistený"
+
+msgid "all requests do not include QUIC/HTTP/3 protocol requests"
+msgstr "všetky požiadavky neobsahujú požiadavky protokolu QUIC/HTTP/3"
+
+msgid "Mail Authentication Statistics"
+msgstr "Štatistiky overovania pošty"
+
+msgid "Authentication"
+msgstr "Typ overenia"
+
+msgid "Pass"
+msgstr "Úspešné"
+
+msgid "Fail"
+msgstr "Zlyhanie"
+
+msgid "Softfail"
+msgstr "Mäkké zlyhanie"
+
+msgid "Neutral"
+msgstr "Neutrálne"
+
+msgid "None"
+msgstr "Žiadne"
+
+msgid "Mail Queue Delay Statistics"
+msgstr "Štatistiky oneskorenia frontu pošty"
+
+msgid "Delay Range"
+msgstr "Rozsah oneskorenia"
+
+msgid "Count"
+msgstr "Počet"
+
+msgid "Percentage"
+msgstr "Percento"
+
+msgid "TLS Encryption Statistics"
+msgstr "Štatistiky šifrovania TLS"
+
+msgid "TLS Versions"
+msgstr "Verzie TLS"
+
+msgid "Top Ciphers"
+msgstr "Najpoužívanejšie šifry"
+
+msgid "robot_hits_detail_both"
+msgstr "Celkový počet požiadaviek: %s (normálne stránky: %s, robots.txt: %s)"
+
+msgid "robot_hits_detail_only_robots"
+msgstr "Iba požiadavky na robots.txt: %s, žiadne iné stránky"
+
+msgid "robot_hits_detail_normal"
+msgstr "Normálne požiadavky na stránky: %s"
+
+msgid "Troubleshooting"
+msgstr "Riešenie problémov"
+
+msgid "Did you use the correct URL?"
+msgstr "Použili ste správnu adresu URL?"
+
+msgid "Example:"
+msgstr "Príklad:"
+
+msgid "Did you use correct config parameter?"
+msgstr "Použili ste správny konfiguračný parameter?"
+
+msgid "Example: If your config file is awstats.mysite.conf, use -config=mysite"
+msgstr "Príklad: Ak je váš konfiguračný súbor awstats.mysite.conf, použite -config=mysite"
+
+msgid "Did you create your config file 'awstats.$SiteConfig.conf'?"
+msgstr "Vytvorili ste svoj konfiguračný súbor 'awstats.$SiteConfig.conf'?"
+
+msgid "If not, you can run \"awstats_configure.pl\" from command line, or create it manually."
+msgstr "Ak nie, môžete spustiť \"awstats_configure.pl\" z príkazového riadka alebo ho vytvoriť ručne."
+
+msgid "Setup"
+msgstr "Nastavenie"
+
+msgid "file, web server or permissions may be wrong."
+msgstr "súbor, webový server alebo povolenia môžu byť nesprávne."
+
+msgid "Check config file, permissions and AWStats documentation (in 'docs' directory)."
+msgstr "Skontrolujte konfiguračný súbor, povolenia a dokumentáciu AWStats (v adresári 'docs')."
+
+msgid "Warning: Can't find language files for \"%s\". English will be used."
+msgstr "Upozornenie: Nemožno nájsť jazykové súbory pre „%s“. Bude použitá angličtina."
+
+#------------------------------------------------------------------------------
+# Spracovanie chýb a signálov
+#------------------------------------------------------------------------------
+
+msgid "%s process (ID %s) interrupted by signal %s."
+msgstr "Proces %s (ID %s) bol prerušený signálom %s."
+
+msgid "An AWStats update process seems to be already running for this config file. Try later. If this is not true, remove manually lock file"
+msgstr "Zdá sa, že proces aktualizácie AWStats už beží pre tento konfiguračný súbor. Skúste to neskôr. Ak to nie je pravda, manuálne odstráňte súbor zámku"
+
+#------------------------------------------------------------------------------
+# Nové štatistické nadpisy
+#------------------------------------------------------------------------------
+
+msgid "Report Overview"
+msgstr "Prehľad správy"
+
+msgid "Monthly Statistics"
+msgstr "Mesačné štatistiky"
+
+msgid "Daily Statistics"
+msgstr "Denné štatistiky"
+
+msgid "Statistics by Day of Week"
+msgstr "Štatistiky podľa dňa v týždni"
+
+msgid "Hourly Page Views"
+msgstr "Zobrazenia stránok za hodinu"
+
+msgid "Traffic Sources"
+msgstr "Zdroje návštevnosti"
+
+msgid "Other Sources"
+msgstr "Iné zdroje"
+
+msgid "tooltip_1"
+msgstr "Počet relácií návštevníkov na stránke. Nová relácia sa počíta, ak návštevník príde znova po viac ako 30 minútach nečinnosti."
+
+msgid "tooltip_2"
+msgstr "Počet rôznych návštevníkov, ktorí navštívili vašu stránku vo vybranom období. Na základe IP adresy."
+
+msgid "tooltip_3"
+msgstr "Počet požiadaviek, ktoré sa považujú za stránky (HTML, PHP, ASP atď.), s výnimkou obrázkov, CSS, JS."
+
+msgid "tooltip_4"
+msgstr "Celkový počet všetkých požiadaviek na server vrátane stránok, obrázkov, CSS, JS a všetkých súborov."
+
+msgid "tooltip_5"
+msgstr "Celkové množstvo údajov prenesených serverom ako odpoveď na požiadavky používateľov."
+
+msgid "tooltip_13"
+msgstr "Štatistiky zdrojov návštevnosti z vyhľadávacích nástrojov. Zobrazuje, ktoré vyhľadávacie nástroje vám prinášajú návštevnosť a aké vyhľadávacie výrazy používajú návštevníci."
+
+msgid "tooltip_14"
+msgstr "Štatistiky zdrojov návštevnosti z externých odkazov z iných webových stránok. Zobrazuje, ktoré stránky na vás odkazujú a akú návštevnosť prinášajú."
+
+msgid "tooltip_15"
+msgstr "Vyhľadávacie výrazy, ktoré návštevníci použili na nájdenie vašej stránky prostredníctvom vyhľadávacích nástrojov. Kľúčové slová sú jednotlivé slová, kľúčové frázy sú kombinácie slov."
+
+msgid "tooltip_16"
+msgstr "Automatizované programy, ako sú roboty vyhľadávacích nástrojov, roboty na trénovanie AI, skenery zraniteľností atď. Čísla v zátvorkách označujú počet bežných požiadaviek na stránky a požiadaviek na robots.txt."
+
+msgid "tooltip_17"
+msgstr "Rozloženie návštevnosti počas 24 hodín. Zobrazuje, kedy je vaša stránka najviac navštevovaná, čo pomáha pochopiť aktívne časy používateľov."
+
+msgid "tooltip_18"
+msgstr "Tento stĺpec zobrazuje priemerné denné/týždenné hodnoty pre vybrané časové obdobie, čo pomáha pochopiť celkový trend."
+
+msgid "tooltip_19"
+msgstr "Kliknutím na položky v grafe zobrazíte podrobné informácie. Umiestnite kurzor myši na prvky grafu a zobrazte hodnoty."
+
+msgid "tooltip_20"
+msgstr "Údaje, ktoré nemožno zaradiť do existujúcich rozsahov, zvyčajne kvôli abnormálnemu alebo chýbajúcemu formátu údajov."
+
+msgid "tooltip_21"
+msgstr "Záznamy o útokoch červov. Červ je samo sa replikujúci škodlivý program, ktorý sa zvyčajne šíri prostredníctvom sietových zraniteľností."
+
+#------------------------------------------------------------------------------
+# Zobrazenie informácií o pomocníkovi - komunitné vydanie
+#------------------------------------------------------------------------------
+
+msgid "AWStats %s - Advanced Web Statistics"
+msgstr "AWStats %s - Rozšírené webové štatistiky"
+
+msgid "Copyright (c) 2000-2025 Laurent Destailleur"
+msgstr "Autorské práva (c) 2000-2025 Laurent Destailleur"
+
+msgid "Copyright (c) 2026-latest Community Edition"
+msgstr "Autorské práva (c) 2026-najnovšie komunitné vydanie"
+
+msgid "AWStats comes with ABSOLUTELY NO WARRANTY. It's a free software distributed with a GNU General Public License (See LICENSE file for details)."
+msgstr "AWStats sa dodáva ABSOLÚTNE BEZ ZÁRUKY. Je to slobodný softvér distribuovaný s licenciou GNU General Public License (Podrobnosti nájdete v súbore LICENSE)."
+
+msgid "Syntax: %s -config=virtualhostname [options]"
+msgstr "Syntax: %s -config=názov_virtuálneho_hostiteľa [možnosti]"
+
+msgid "This runs %s in command line to update statistics (-update option) of a web site, from the log file defined in AWStats config file, or build a HTML report (-output option)."
+msgstr "Toto spúšťa %s v príkazovom riadku na aktualizáciu štatistík (možnosť -update) webovej stránky zo súboru denníka definovaného v konfiguračnom súbore AWStats alebo na vytvorenie zostavy HTML (možnosť -output)."
+
+msgid "First, %s tries to read %s.virtualhostname.conf as the config file. If not found, %s tries to read %s.conf, and finally the full path passed to -config="
+msgstr "Najprv sa %s pokúsi prečítať %s.názov_virtuálneho_hostiteľa.conf ako konfiguračný súbor. Ak sa nenájde, %s sa pokúsi prečítať %s.conf a nakoniec úplnú cestu odovzdanú do -config="
+
+msgid "Note 1: Config files (*.conf) must be in /etc/awstats, /usr/local/etc/awstats, /etc or same directory than awstats.pl script file."
+msgstr "Poznámka 1: Konfiguračné súbory (*.conf) musia byť v /etc/awstats, /usr/local/etc/awstats, /etc alebo v rovnakom adresári ako súbor skriptu awstats.pl."
+
+msgid "Note 2: If AWSTATS_FORCE_CONFIG environment variable is defined, AWStats will use it as the 'config' value, whatever is the value on command line or URL."
+msgstr "Poznámka 2: Ak je definovaná premenná prostredia AWSTATS_FORCE_CONFIG, AWStats ju použije ako hodnotu 'config', bez ohľadu na hodnotu v príkazovom riadku alebo adrese URL."
+
+msgid "See AWStats documentation for all setup instructions."
+msgstr "Všetky pokyny na nastavenie nájdete v dokumentácii AWStats."
+
+msgid "Options to update statistics:"
+msgstr "Možnosti aktualizácie štatistík:"
+
+msgid "  -update        to update statistics (default)"
+msgstr "  -update        aktualizovať štatistiky (predvolené)"
+
+msgid "  -showsteps     to add benchmark information every %s lines processed"
+msgstr "  -showsteps     pridať informácie o porovnávaní každých %s spracovaných riadkov"
+
+msgid "  -showcorrupted to add output for each corrupted lines found, with reason"
+msgstr "  -showcorrupted pridať výstup pre každý nájdený poškodený riadok s dôvodom"
+
+msgid "  -showdropped   to add output for each dropped lines found, with reason"
+msgstr "  -showdropped   pridať výstup pre každý nájdený zahodený riadok s dôvodom"
+
+msgid "  -showunknownorigin  to output referer when it can't be parsed"
+msgstr "  -showunknownorigin  vypísať odkazovač, keď ho nemožno analyzovať"
+
+msgid "  -showdirectorigin   to output log line when origin is a direct access"
+msgstr "  -showdirectorigin   vypísať riadok denníka, keď je pôvodom priamy prístup"
+
+msgid "  -updatefor=n   to stop the update process after parsing n lines"
+msgstr "  -updatefor=n   zastaviť proces aktualizácie po spracovaní n riadkov"
+
+msgid "  -LogFile=x     to change log to analyze whatever is 'LogFile' in config file"
+msgstr "  -LogFile=x     zmeniť denník na analýzu bez ohľadu na to, čo je 'LogFile' v konfiguračnom súbore"
+
+msgid "  Be care to process log files in chronological order when updating statistics."
+msgstr "  Pri aktualizácii štatistík dbajte na spracovanie súborov denníka v chronologickom poradí."
+
+msgid "Options to show statistics:"
+msgstr "Možnosti zobrazenia štatistík:"
+
+msgid "  -output      to output main HTML report (no update made except with -update)"
+msgstr "  -output      vypísať hlavnú zostavu HTML (nevykoná sa žiadna aktualizácia okrem -update)"
+
+msgid "  -output=x    to output other report pages where x is:"
+msgstr "  -output=x    vypísať iné stránky zostavy, kde x je:"
+
+msgid "build page of all domains/countries"
+msgstr "vytvoriť stránku všetkých domén/krajín"
+
+msgid "build page of all hosts"
+msgstr "vytvoriť stránku všetkých hostiteľov"
+
+msgid "build page of last hits for hosts"
+msgstr "vytvoriť stránku posledných zásahov pre hostiteľov"
+
+msgid "build page of all unresolved IP"
+msgstr "vytvoriť stránku všetkých nevyriešených IP adries"
+
+msgid "build page of all email senders (maillog)"
+msgstr "vytvoriť stránku všetkých odosielateľov e-mailov (denník pošty)"
+
+msgid "build page of last email senders (maillog)"
+msgstr "vytvoriť stránku posledných odosielateľov e-mailov (denník pošty)"
+
+msgid "build page of all email receivers (maillog)"
+msgstr "vytvoriť stránku všetkých príjemcov e-mailov (denník pošty)"
+
+msgid "build page of last email receivers (maillog)"
+msgstr "vytvoriť stránku posledných príjemcov e-mailov (denník pošty)"
+
+msgid "build page of all logins used"
+msgstr "vytvoriť stránku všetkých použitých prihlásení"
+
+msgid "build page of last hits for logins"
+msgstr "vytvoriť stránku posledných zásahov pre prihlásenia"
+
+msgid "build page of all robots/spider visits"
+msgstr "vytvoriť stránku všetkých návštev robotov/pavúkov"
+
+msgid "build page of last hits for robots"
+msgstr "vytvoriť stránku posledných zásahov pre robotov"
+
+msgid "list most often viewed pages"
+msgstr "zoznam najčastejšie zobrazovaných stránok"
+
+msgid "list most often viewed pages matching filter"
+msgstr "zoznam najčastejšie zobrazovaných stránok zodpovedajúcich filtru"
+
+msgid "list entry pages"
+msgstr "zoznam vstupných stránok"
+
+msgid "list entry pages matching filter"
+msgstr "zoznam vstupných stránok zodpovedajúcich filtru"
+
+msgid "list exit pages"
+msgstr "zoznam výstupných stránok"
+
+msgid "list exit pages matching filter"
+msgstr "zoznam výstupných stránok zodpovedajúcich filtru"
+
+msgid "build page with os detailed versions"
+msgstr "vytvoriť stránku s podrobnými verziami operačného systému"
+
+msgid "build page with browsers detailed versions"
+msgstr "vytvoriť stránku s podrobnými verziami prehliadačov"
+
+msgid "list 'User Agents' with unknown browser"
+msgstr "zoznam 'User Agents' s neznámym prehliadačom"
+
+msgid "list 'User Agents' with unknown OS"
+msgstr "zoznam 'User Agents' s neznámym OS"
+
+msgid "build page of all refering search engines"
+msgstr "vytvoriť stránku všetkých odkazujúcich vyhľadávacích nástrojov"
+
+msgid "build page of all refering pages"
+msgstr "vytvoriť stránku všetkých odkazujúcich stránok"
+
+msgid "list all keyphrases used on search engines"
+msgstr "zoznam všetkých kľúčových fráz použitých na vyhľadávacích nástrojoch"
+
+msgid "list all keywords used on search engines"
+msgstr "zoznam všetkých kľúčových slov použitých na vyhľadávacích nástrojoch"
+
+msgid "list 'Referers' for 404 errors"
+msgstr "zoznam 'Odkazovačov' pre chyby 404"
+
+msgid "build page of all values for ExtraSection X"
+msgstr "vytvoriť stránku všetkých hodnôt pre ExtraSection X"
+
+msgid "  -staticlinks           to have static links in HTML report page"
+msgstr "  -staticlinks           mať statické odkazy v stránke zostavy HTML"
+
+msgid "  -staticlinksext=xxx    to have static links with .xxx extension instead of .html"
+msgstr "  -staticlinksext=xxx    mať statické odkazy s príponou .xxx namiesto .html"
+
+msgid "  -lang=LL     to output a HTML report in language LL (en,de,es,fr,it,nl,zh-cn,...)"
+msgstr "  -lang=LL     vypísať zostavu HTML v jazyku LL (sk,en,de,fr,...)"
+
+msgid "  -month=MM    to output a HTML report for an old month MM"
+msgstr "  -month=MM    vypísať zostavu HTML pre starý mesiac MM"
+
+msgid "  -year=YYYY   to output a HTML report for an old year YYYY"
+msgstr "  -year=YYYY   vypísať zostavu HTML pre starý rok YYYY"
+
+msgid "  The 'date' options doesn't allow you to process old log file. They only allow you to see a past report for a chosen month/year period instead of current month/year."
+msgstr "  Možnosti 'date' vám neumožňujú spracovať starý súbor denníka. Umožňujú vám iba zobraziť minulú správu pre vybrané obdobie mesiac/rok namiesto aktuálneho mesiaca/roku."
+
+msgid "Other options:"
+msgstr "Iné možnosti:"
+
+msgid "  -debug=X     to add debug informations lesser than level X (speed reduced)"
+msgstr "  -debug=X     pridať informácie o ladení menšie ako úroveň X (znížená rýchlosť)"
+
+msgid "  -version     show AWStats version"
+msgstr "  -version, -v     zobraziť verziu AWStats"
+
+msgid "Now supports/detects:"
+msgstr "Teraz podporuje/zisťuje:"
+
+msgid "  Web/Ftp/Mail/streaming server log analyzis (and load balanced log files)"
+msgstr "  Analýza denníkov servera Web/Ftp/Mail/streamovanie (a vyvážené súbory denníkov)"
+
+msgid "  Reverse DNS lookup (IPv4 and IPv6) and GeoIP lookup"
+msgstr "  Spätné vyhľadávanie DNS (IPv4 a IPv6) a vyhľadávanie GeoIP"
+
+msgid "  Number of visits, number of unique visitors"
+msgstr "  Počet návštev, počet jedinečných návštevníkov"
+
+msgid "  Visits duration and list of last visits"
+msgstr "  Trvanie návštev a zoznam posledných návštev"
+
+msgid "  Authenticated users"
+msgstr "  Overení používatelia"
+
+msgid "  Days of week and rush hours"
+msgstr "  Dni v týždni a špičkové hodiny"
+
+msgid "  Hosts list and unresolved IP addresses list"
+msgstr "  Zoznam hostiteľov a zoznam nevyriešených IP adries"
+
+msgid "  Most viewed, entry and exit pages"
+msgstr "  Najčastejšie zobrazované, vstupné a výstupné stránky"
+
+msgid "  Files type and Web compression (mod_gzip, mod_deflate stats)"
+msgstr "  Typ súborov a kompresia webu (štatistiky mod_gzip, mod_deflate)"
+
+msgid "  Configured Database Statistics"
+msgstr "  Nakonfigurované štatistiky databázy"
+
+msgid "  %s domains/countries"
+msgstr "  %s domén/krajín"
+
+msgid "  %s robots"
+msgstr "  %s robotov"
+
+msgid "  %s worm's families"
+msgstr "  %s rodín červov"
+
+msgid "  %s operating systems"
+msgstr "  %s operačných systémov"
+
+msgid "  %s browsers (%s with phone browsers database)"
+msgstr "  %s prehliadačov (%s s databázou telefónnych prehliadačov)"
+
+msgid "  %s search engines (and keyphrases/keywords used from them)"
+msgstr "  %s vyhľadávacích nástrojov (a kľúčových fráz/kľúčových slov z nich použitých)"
+
+msgid "  All HTTP errors with last referrer"
+msgstr "  Všetky chyby HTTP s posledným odkazovačom"
+
+msgid "  Report by day/month/year"
+msgstr "  Správa podľa dňa/mesiaca/roku"
+
+msgid "  Dynamic or static HTML or XHTML reports, static PDF reports"
+msgstr "  Dynamické alebo statické zostavy HTML alebo XHTML, statické zostavy PDF"
+
+msgid "  Indexed text or XML monthly database"
+msgstr "  Indexovaná textová alebo XML mesačná databáza"
+
+msgid "  And a lot of other advanced features and options..."
+msgstr "  A veľa ďalších pokročilých funkcií a možností..."
+
+msgid "  New versions and FAQ at http://www.awstats.org"
+msgstr "  Nové verzie a často kladené otázky na https://github.com/hestiacn/vstats/issues"

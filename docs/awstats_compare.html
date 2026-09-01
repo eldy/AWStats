@@ -1,750 +1,2308 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html><head>
-<meta name="description" content="AWStats Documentation - Log File analyzer comparison">
-<meta name="keywords" content="awstats, awstat, log, file, analyzer, differences, compare, comparison, analog, webalizer, market">
-<meta name="robots" content="index,follow">
-<meta name="title" content="AWStats Documentation - Log File analyzer comparison"><title>AWStats Documentation - Log File analyzer comparison</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<link rel="stylesheet" href="styles.css" type="text/css">
-<link href="https://plus.google.com/+LaurentDestailleur-Open-Source-Expert" rel="publisher" />
-<style type="text/css">
-<!--
-.style1 {color: #4444cc}
-.style2 {color: #660000}
--->
-</style>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="pageTitle">AWStats · 日志分析器对比</title>
+    <meta name="description" content="AWStats Documentation - Log File analyzer comparison (中文/English)">
+    <meta name="keywords" content="awstats, log analyzer, comparison, analog, webalizer, sawmill, 日志分析器对比">
+    <meta name="author" content="Laurent Destailleur (多语言重构)">
+    <meta name="robots" content="index,follow">
+    <style>
+	/* ========== 现代化全局设计 ========== */
+	* { 
+		margin: 0; 
+		padding: 0; 
+		box-sizing: border-box; 
+	}
+
+	/* ===== 主题变量 ===== */
+	:root {
+		--bg-page: #f8fafc; 
+		--surface: #ffffff; 
+		--surface-secondary: #f1f5f9;
+		--text-primary: #0f172a; 
+		--text-secondary: #475569; 
+		--accent: #4f46e5;
+		--accent-light: #818cf8; 
+		--accent-soft: #eef2ff; 
+		--border: #e2e8f0;
+		--card-shadow: 0 20px 25px -5px rgba(0,0,0,0.05), 0 10px 10px -5px rgba(0,0,0,0.02);
+		--header-bg: linear-gradient(135deg, #4f46e5 0%, #4f46e5 100%);
+		--footer-bg: #eef2ff; 
+		--link-color: #4f46e5; 
+		--link-visited: #4f46e5;
+		--code-bg: #f1f5f9; 
+		--success: #10b981; 
+		--warning: #f59e0b; 
+		--danger: #ef4444;
+		--star-color: #fbbf24;
+        --yes-color: #10b981;
+        --no-color: #ef4444;
+        --maybe-color: #f59e0b;
+	}
+
+	/* 深色模式 */
+	@media (prefers-color-scheme: dark) {
+		:root {
+			--bg-page: #0f172a; 
+			--surface: #1e293b; 
+			--surface-secondary: #334155;
+			--text-primary: #f1f5f9; 
+			--text-secondary: #cbd5e1; 
+			--accent: #818cf8;
+			--accent-light: #a5b4fc; 
+			--accent-soft: #2d3a5e; 
+			--border: #475569;
+			--card-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
+			--header-bg: linear-gradient(135deg, #4f46e5 0%, #4f46e5 100%);
+			--footer-bg: #1e293b; 
+			--link-color: #a5b4fc; 
+			--link-visited: #a5b4fc;
+			--code-bg: #334155; 
+			--success: #34d399; 
+			--warning: #fbbf24; 
+			--danger: #f87171;
+            --yes-color: #34d399;
+            --no-color: #f87171;
+            --maybe-color: #fbbf24;
+		}
+	}
+
+	/* 强制浅色模式 */
+	.force-light,
+	.force-light :root {
+		--bg-page: #f8fafc; 
+		--surface: #ffffff; 
+		--surface-secondary: #f1f5f9;
+		--text-primary: #0f172a; 
+		--text-secondary: #475569; 
+		--accent: #4f46e5;
+		--accent-light: #818cf8; 
+		--accent-soft: #eef2ff; 
+		--border: #e2e8f0;
+		--card-shadow: 0 20px 25px -5px rgba(0,0,0,0.05), 0 10px 10px -5px rgba(0,0,0,0.02);
+		--header-bg: linear-gradient(135deg, #4f46e5 0%, #4f46e5 100%);
+		--footer-bg: #eef2ff; 
+		--link-color: #4f46e5; 
+		--link-visited: #4f46e5;
+		--code-bg: #f1f5f9; 
+		--success: #10b981; 
+		--warning: #f59e0b; 
+		--danger: #ef4444;
+        --yes-color: #10b981;
+        --no-color: #ef4444;
+        --maybe-color: #f59e0b;
+	}
+
+	/* 强制深色模式 */
+	.force-dark,
+	.force-dark :root {
+		--bg-page: #0f172a; 
+		--surface: #1e293b; 
+		--surface-secondary: #334155;
+		--text-primary: #f1f5f9; 
+		--text-secondary: #cbd5e1; 
+		--accent: #818cf8;
+		--accent-light: #a5b4fc; 
+		--accent-soft: #2d3a5e; 
+		--border: #475569;
+		--card-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
+		--header-bg: linear-gradient(135deg, #4f46e5 0%, #4f46e5 100%);
+		--footer-bg: #1e293b; 
+		--link-color: #a5b4fc; 
+		--link-visited: #a5b4fc;
+		--code-bg: #334155; 
+		--success: #34d399; 
+		--warning: #fbbf24; 
+		--danger: #f87171;
+        --yes-color: #34d399;
+        --no-color: #f87171;
+        --maybe-color: #fbbf24;
+	}
+
+	/* ===== 基础样式 ===== */
+	body {
+		background-color: var(--bg-page); 
+		color: var(--text-primary);
+		font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+		line-height: 1.6; 
+		margin: 0; 
+		padding: 0;
+		transition: background-color 0.2s ease, color 0.2s ease;
+		display: flex; 
+		flex-direction: column; 
+		min-height: 100vh;
+	}
+
+	.container { 
+		max-width: 1300px; 
+		margin: 0 auto; 
+		padding: 0 28px; 
+		width: 100%; 
+	}
+
+	/* ===== 链接全局样式 - 移除下划线和访问颜色变化 ===== */
+	a, a:link, a:visited {
+		text-decoration: none;
+		color: var(--link-color);
+		transition: color 0.2s ease;
+	}
+
+	a:hover {
+		color: var(--accent);
+	}
+
+	/* ===== 导航栏基础 ===== */
+	.nav-bar {
+		background: var(--surface);
+		border-bottom: 1px solid var(--border);
+		padding: 12px 0;
+		position: sticky;
+		top: 0;
+		z-index: 100;
+		backdrop-filter: blur(12px);
+		background-color: rgba(var(--surface-rgb), 0.8);
+	}
+
+	/* ===== 桌面端样式 (≥701px) ===== */
+	@media (min-width: 701px) {
+		.nav-container {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			gap: 20px;
+		}
+		
+		.nav-header {
+			display: flex;
+			align-items: center;
+			gap: 20px;
+			flex-shrink: 0;
+		}
+		
+		.nav-left {
+			display: flex;
+			align-items: center;
+			gap: 20px;
+		}
+		
+		.nav-home {
+			font-weight: 700;
+			font-size: 1.3rem;
+			background: linear-gradient(135deg, var(--accent), var(--accent-light));
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			white-space: nowrap;
+		}
+		
+		.breadcrumb {
+			display: flex;
+			gap: 8px;
+			align-items: center;
+			color: var(--text-secondary);
+			font-size: 0.9rem;
+			white-space: nowrap;
+		}
+		
+		.dropdown-menu {
+			display: flex;
+			align-items: center;
+			gap: 4px;
+			flex-wrap: nowrap;
+			margin-top: 0;
+		}
+		
+		.dropdown-item {
+			position: relative;
+			flex-shrink: 0;
+		}
+		
+		.dropdown-title {
+			padding: 6px 12px;
+			background: var(--surface-secondary);
+			border: 1px solid var(--border);
+			border-radius: 30px;
+			font-weight: 500;
+			font-size: 0.95rem;
+			color: var(--text-primary);
+			cursor: pointer;
+			transition: all 0.2s;
+			white-space: nowrap;
+			user-select: none;
+		}
+		
+		.dropdown-title:hover {
+			background: var(--accent-soft);
+			color: var(--accent);
+			border-color: var(--accent-light);
+		}
+		
+		.dropdown-content {
+			position: absolute;
+			top: 100%;
+			left: 0;
+			min-width: 220px;
+			background: var(--surface);
+			border: 1px solid var(--border);
+			border-radius: 16px;
+			padding: 12px;
+			box-shadow: var(--card-shadow);
+			display: none;
+			z-index: 1000;
+			margin-top: 5px;
+		}
+		
+		.mobile-menu-toggle {
+			display: none;
+		}
+	}
+
+	/* ===== 移动端样式 (≤700px) ===== */
+	@media (max-width: 700px) {
+		.nav-container {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+		}
+		
+		.nav-header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			width: 100%;
+			gap: 10px;
+		}
+		
+		.nav-left {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			flex: 1;
+		}
+		
+		.nav-home {
+			font-weight: 700;
+			font-size: 1.1rem;
+			background: linear-gradient(135deg, var(--accent), var(--accent-light));
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			white-space: nowrap;
+		}
+		
+		.breadcrumb {
+			display: flex;
+			gap: 8px;
+			align-items: center;
+			color: var(--text-secondary);
+			font-size: 0.8rem;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			max-width: 150px;
+		}
+		
+		/* 汉堡菜单按钮 */
+		.mobile-menu-toggle {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 40px;
+			height: 40px;
+			background: var(--surface-secondary);
+			border: 1px solid var(--border);
+			border-radius: 40px;
+			color: var(--text-primary);
+			font-size: 1.2rem;
+			cursor: pointer;
+			transition: all 0.2s;
+			margin-left: auto;
+		}
+		
+		.mobile-menu-toggle:hover {
+			background: var(--accent-soft);
+			color: var(--accent);
+		}
+		
+		/* 导航菜单 - 默认隐藏 */
+		.dropdown-menu {
+			display: none;
+			flex-direction: column;
+			width: 100%;
+			gap: 8px;
+			margin-top: 5px;
+		}
+		
+		/* 菜单展开时显示 */
+		.dropdown-menu.mobile-active {
+			display: flex;
+		}
+		
+		.dropdown-item {
+			width: 100%;
+			position: relative;
+		}
+		
+		.dropdown-title {
+			width: 100%;
+			padding: 12px 16px;
+			background: var(--surface-secondary);
+			border: 1px solid var(--border);
+			border-radius: 40px;
+			font-weight: 500;
+			color: var(--text-primary);
+			cursor: pointer;
+			transition: all 0.2s;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			user-select: none;
+			font-size: 0.95rem;
+		}
+		
+		.dropdown-title:hover {
+			background: var(--accent-soft);
+			color: var(--accent);
+		}
+		
+		.dropdown-title::after {
+			content: "▼";
+			font-size: 0.7rem;
+			transition: transform 0.2s;
+		}
+		
+		.dropdown-item.active .dropdown-title::after {
+			transform: rotate(180deg);
+		}
+		
+		.dropdown-content {
+			position: static;
+			width: 100%;
+			margin-top: 5px;
+			background: var(--surface);
+			border: 1px solid var(--border);
+			border-radius: 16px;
+			padding: 8px;
+			box-shadow: none;
+			display: none;
+		}
+		
+		.dropdown-content a {
+			width: 100%;
+			text-align: center;
+			padding: 10px;
+			color: var(--text-secondary);
+			font-weight: 500;
+			border-radius: 30px;
+			transition: all 0.2s;
+			font-size: 0.95rem;
+			background: var(--surface-secondary);
+			border: 1px solid var(--border);
+			white-space: nowrap;
+			margin: 2px 0;
+		}
+		
+		.dropdown-content a:hover {
+			background: var(--accent-soft);
+			color: var(--accent);
+		}
+		
+		.dropdown-content a.active {
+			background: var(--accent);
+			color: white;
+			border-color: var(--accent);
+		}
+	}
+
+	/* ===== 下拉菜单通用样式 ===== */
+	.dropdown-item.active .dropdown-content {
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+		width: auto;
+		min-width: auto;
+	}
+
+	.dropdown-content a {
+		color: var(--text-secondary);
+		font-weight: 500;
+		padding: 8px 12px;
+		border-radius: 30px;
+		transition: all 0.2s;
+		font-size: 0.95rem;
+		background: var(--surface-secondary);
+		border: 1px solid var(--border);
+		white-space: nowrap;
+	}
+
+	.dropdown-content a:hover {
+		background: var(--accent-soft);
+		color: var(--accent);
+	}
+
+	.dropdown-content a.active {
+		background: var(--accent);
+		color: white;
+		border-color: var(--accent);
+	}
+
+	/* ===== 头部样式 ===== */
+	.header {
+		background: var(--header-bg); 
+		color: white; 
+		border-radius: 0 0 40px 40px;
+		padding: 24px 0 32px; 
+		box-shadow: var(--card-shadow); 
+		margin-bottom: 30px;
+	}
+
+	.header-row {
+		display: flex; 
+		align-items: center; 
+		justify-content: space-between;
+		flex-wrap: wrap; 
+		gap: 20px;
+	}
+
+	.logo-area { 
+		display: flex; 
+		align-items: center; 
+		gap: 16px; 
+	}
+
+	.logo-area img { 
+		height: 56px; 
+		width: auto; 
+	}
+
+	.site-title {
+		font-size: 1.5rem; 
+		font-weight: 700; 
+		background: rgba(255,255,255,0.1);
+		padding: 8px 24px; 
+		border-radius: 60px; 
+		backdrop-filter: blur(8px);
+		border: 1px solid rgba(255,255,255,0.2);
+		color: white;
+		text-decoration: none;
+	}
+
+	.header-center {
+		flex: 1; 
+		text-align: center; 
+		font-weight: 500; 
+		font-size: 1.5rem;
+		background: rgba(0,0,0,0.1); 
+		padding: 8px 24px; 
+		border-radius: 60px;
+		backdrop-filter: blur(8px); 
+		border: 1px solid rgba(255,255,255,0.15);
+	}
+
+	.header-right { 
+		display: flex; 
+		gap: 12px; 
+		align-items: center; 
+	}
+
+	/* ===== 自定义语言切换 ===== */
+	.custom-select {
+		position: relative;
+		background: rgba(255,255,255,0.15);
+		border: 1px solid rgba(255,255,255,0.3);
+		border-radius: 40px;
+		padding: 6px 16px;
+		color: white;
+		font-weight: 500;
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		backdrop-filter: blur(8px);
+		cursor: pointer;
+		min-width: 100px;
+	}
+
+	.custom-select:hover {
+		background: rgba(255,255,255,0.25);
+		border-color: rgba(255,255,255,0.5);
+	}
+
+	.select-selected {
+		flex: 1;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	.select-selected::after {
+		content: "▼";
+		font-size: 0.7rem;
+		margin-left: 8px;
+		opacity: 0.8;
+		transition: transform 0.2s;
+	}
+
+	.custom-select.active .select-selected::after {
+		transform: rotate(180deg);
+	}
+
+	.select-items {
+		position: absolute;
+		top: 100%;
+		right: 0;
+		left: 0;
+		margin-top: 5px;
+		background: var(--surface);
+		border: 1px solid var(--border);
+		border-radius: 20px;
+		overflow: hidden;
+		box-shadow: var(--card-shadow);
+		z-index: 1000;
+		display: none;
+	}
+
+	.custom-select.active .select-items {
+		display: block;
+	}
+
+	.select-items div {
+		padding: 10px 16px;
+		color: var(--text-primary);
+		cursor: pointer;
+		transition: all 0.2s;
+		text-align: center;
+	}
+
+	.select-items div:hover {
+		background: var(--accent-soft);
+		color: var(--accent);
+	}
+
+	.select-items div.selected {
+		background: var(--accent);
+		color: white;
+	}
+
+	/* ===== 主题切换按钮 ===== */
+	.theme-toggle {
+		background: rgba(255,255,255,0.15); 
+		border: 1px solid rgba(255,255,255,0.3);
+		border-radius: 40px; 
+		padding: 8px 20px; 
+		font-size: 0.95rem; 
+		color: white;
+		cursor: pointer; 
+		display: flex; 
+		align-items: center; 
+		gap: 8px; 
+		backdrop-filter: blur(8px);
+		transition: all 0.2s;
+	}
+
+	.theme-toggle:hover {
+		background: rgba(255,255,255,0.25);
+		border-color: rgba(255,255,255,0.5);
+	}
+
+	/* ===== 文档卡片 ===== */
+	.doc-card {
+		background-color: var(--surface); 
+		border-radius: 40px;
+		padding: 3rem; 
+		box-shadow: var(--card-shadow);
+		border: 1px solid var(--border); 
+		margin: 20px 0 40px;
+	}
+
+	h1 {
+		font-size: 2.5rem; 
+		font-weight: 700; 
+		letter-spacing: -0.02em;
+		background: linear-gradient(135deg, var(--accent), var(--accent-light));
+		-webkit-background-clip: text;
+		margin: 0 0 25px 0;
+	}
+
+	h2 {
+		font-size: 2rem; 
+		font-weight: 600; 
+		margin: 2.5rem 0 1.5rem;
+		color: var(--text-primary); 
+		border-bottom: 3px solid var(--accent-soft);
+		padding-bottom: 12px;
+	}
+
+	h3 {
+		font-size: 1.5rem; 
+		font-weight: 600; 
+		margin: 2rem 0 1rem;
+		color: var(--accent);
+	}
+
+	/* ===== 星标建议 ===== */
+	.advice-item {
+		display: flex;
+		gap: 15px;
+		margin: 20px 0;
+		padding: 20px;
+		background: var(--surface-secondary);
+		border-radius: 20px;
+		border: 1px solid var(--border);
+	}
+
+	.stars {
+		display: flex;
+		gap: 2px;
+		color: var(--star-color);
+		font-size: 1.2rem;
+		min-width: 60px;
+	}
+
+	.advice-item a {
+		color: var(--accent);
+	}
+
+	.advice-item a:hover {
+		color: var(--accent-light);
+	}
+
+	/* ===== 信息卡片 ===== */
+	.info-card {
+		background: var(--accent-soft);
+		border-radius: 20px;
+		padding: 20px;
+		margin: 20px 0;
+		border-left: 6px solid var(--accent);
+	}
+
+	.info-card a {
+		color: var(--accent);
+	}
+
+	.info-card a:hover {
+		color: var(--accent-light);
+	}
+
+	/* ===== 注意框 ===== */
+	.note-box {
+		background: var(--surface-secondary);
+		padding: 15px 20px;
+		border-radius: 16px;
+		border-left: 4px solid var(--warning);
+		margin: 20px 0;
+		font-size: 0.9rem;
+	}
+
+	.note-box a {
+		color: var(--accent);
+	}
+
+	.note-box a:hover {
+		color: var(--accent-light);
+	}
+
+	/* ===== 返回顶部按钮 ===== */
+	.back-to-top {
+		position: fixed;
+		bottom: 30px;
+		right: 30px;
+		background: var(--accent);
+		color: white;
+		width: 56px;
+		height: 56px;
+		border-radius: 28px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		border: none;
+		box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
+		transition: all 0.2s;
+		z-index: 99;
+		font-size: 1.2rem;
+	}
+
+	.back-to-top:hover {
+		transform: scale(1.1);
+		background: var(--accent-light);
+	}
+
+	/* ===== 页脚 ===== */
+	.footer {
+		background-color: var(--footer-bg); 
+		margin-top: 60px;
+		padding: 32px 24px; 
+		border-radius: 40px 40px 0 0;
+		border-top: 1px solid var(--border); 
+		color: var(--text-secondary);
+	}
+
+	.footer-content {
+		display: flex; 
+		flex-wrap: wrap; 
+		justify-content: space-between;
+		align-items: center; 
+		gap: 20px; 
+		max-width: 1300px; 
+		margin: 0 auto;
+	}
+
+	.footer-copyright {
+		background: var(--surface); 
+		padding: 8px 24px; 
+		border-radius: 60px;
+		border: 1px solid var(--border); 
+		font-size: 0.95rem;
+	}
+
+	.footer-license {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+	}
+
+	.footer-license img {
+		width: 24px;
+		height: 24px;
+		vertical-align: middle;
+	}
+
+	/* ===== 移动端响应式调整 ===== */
+	@media (max-width: 700px) {
+		.header-row { 
+			flex-direction: column; 
+			text-align: center;
+		}
+		
+		.header-center {
+			width: 100%;
+		}
+		
+		.header-right {
+			width: 100%;
+			justify-content: center;
+		}
+		
+		.doc-card { 
+			padding: 1.8rem; 
+		}
+		
+		h1 { 
+			font-size: 2rem; 
+		}
+		
+		.back-to-top {
+			bottom: 20px;
+			right: 20px;
+			width: 48px;
+			height: 48px;
+			border-radius: 24px;
+			font-size: 1rem;
+			opacity: 0.9;
+		}
+		
+		.footer {
+			padding: 24px 16px;
+		}
+		
+		.footer-content {
+			flex-direction: column;
+			text-align: center;
+			gap: 15px;
+		}
+		
+		.footer-copyright {
+			width: 100%;
+			text-align: center;
+		}
+		
+		.footer-license {
+			justify-content: center;
+		}
+	}
+    .comparison-container {
+        overflow-x: auto;
+        margin: 30px 0;
+        border-radius: 24px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        box-shadow: var(--card-shadow);
+    }
+    .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+        min-width: 1000px;
+    }
+    .comparison-table th {
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-weight: 700;
+        padding: 16px 12px;
+        text-align: center;
+        border-bottom: 2px solid var(--border);
+        font-size: 1rem;
+    }
+    .comparison-table td {
+        padding: 12px 10px;
+        border-bottom: 1px solid var(--border);
+        vertical-align: middle;
+    }
+    .comparison-table tr:last-child td {
+        border-bottom: none;
+    }
+    .comparison-table tr:hover td {
+        background: var(--accent-soft);
+    }
+    .feature-cell {
+        font-weight: 600;
+        color: var(--text-primary);
+        background: var(--surface-secondary);
+        border-right: 1px solid var(--border);
+    }
+    .yes-cell {
+        color: var(--yes-color);
+        font-weight: 600;
+        text-align: center;
+    }
+    .no-cell {
+        color: var(--no-color);
+        font-weight: 600;
+        text-align: center;
+    }
+    .maybe-cell {
+        color: var(--maybe-color);
+        font-weight: 600;
+        text-align: center;
+    }
+    .version-cell {
+        text-align: center;
+        color: var(--text-secondary);
+    }
+    .tool-badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 30px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        background: var(--accent-soft);
+        color: var(--accent);
+    }
+
+    /* 注脚卡片 */
+    .footnote-card {
+        background: var(--surface-secondary);
+        border-radius: 24px;
+        padding: 25px;
+        margin: 30px 0;
+        border: 1px solid var(--border);
+    }
+
+    .footnote-item {
+        display: flex;
+        gap: 15px;
+        margin: 15px 0;
+        padding: 10px;
+        background: var(--surface);
+        border-radius: 16px;
+        border: 1px solid var(--border);
+        align-items: flex-start;
+    }
+
+    .footnote-marker {
+        display: inline-block;
+        min-width: 30px;
+        height: 30px;
+        background: var(--accent);
+        color: white;
+        border-radius: 15px;
+        text-align: center;
+        line-height: 30px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        flex-shrink: 0;
+    }
+
+    .footnote-label {
+        font-weight: 600;
+        color: var(--accent);
+        margin-right: 5px;
+        white-space: nowrap;
+    }
+
+    .footnote-item span:last-child {
+        flex: 1;
+        line-height: 1.6;
+    }
+
+    /* 赞助商链接 */
+    .sponsor-link {
+        display: inline-block;
+        padding: 8px 16px;
+        background: var(--accent-soft);
+        color: var(--accent);
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: 500;
+        margin: 10px 0;
+    }
+    .sponsor-link:hover {
+        background: var(--accent);
+        color: white;
+    }
+    </style>
 </head>
+<body>
+    <!-- 导航栏 - 悬浮下拉式 -->
+    <div class="nav-bar">
+        <div class="container nav-container">
+            <div class="nav-header">
+              <span class="home-icon">🏠</span>
+                <div class="nav-left">
+                    <a href="index.html" class="nav-home">
+                        
+                        <span class="home-text" data-i18n="navHome">AWStats 文档</span>
+                    </a>
+                </div>
+                <div class="breadcrumb">
+                    <a href="index.html" data-i18n="home">主页</a>
+                    <span>›</span>
+                    <span data-i18n="currentPage">日志分析器对比</span>
+                </div>
+                <div class="mobile-menu-toggle" id="mobileMenuToggle">
+                    ☰
+                </div>
+            </div>
+            
+            <!-- 悬浮下拉菜单 -->
+            <div class="dropdown-menu" id="mobileMenu">
+                <!-- 📌 基础文档 -->
+                <div class="dropdown-item">
+                    <div class="dropdown-title" data-i18n="categoryBasic">📌 基础文档</div>
+                    <div class="dropdown-content">
+                        <a href="index.html" data-i18n="navHome">主页</a>
+                        <a href="awstats_what.html" data-i18n="navWhat">什么是AWStats</a>
+                        <a href="awstats_license.html" data-i18n="navLicense">许可证</a>
+                        <a href="awstats_glossary.html" data-i18n="navGlossary">术语表</a>
+                    </div>
+                </div>
+                
+                <!-- 📘 使用指南 -->
+                <div class="dropdown-item">
+                    <div class="dropdown-title" data-i18n="categoryGuide">📘 使用指南</div>
+                    <div class="dropdown-content">
+                        <a href="awstats_setup.html" data-i18n="navSetup">安装配置</a>
+                        <a href="awstats_upgrade.html" data-i18n="navUpgrade">升级指南</a>
+                        <a href="awstats_config.html" data-i18n="navConfig">配置参数</a>
+                        <a href="awstats_extra.html" data-i18n="navExtra">额外部分</a>
+                        <a href="awstats_tools.html" data-i18n="navTools">其他工具</a>
+                    </div>
+                </div>
+                
+                <!-- 📚 参考资源 -->
+                <div class="dropdown-item">
+                    <div class="dropdown-title" data-i18n="categoryReference">📚 参考资源</div>
+                    <div class="dropdown-content">
+                        <a href="awstats_faq.html" data-i18n="navFAQ">FAQ</a>
+                        <a href="awstats_security.html" data-i18n="navSecurity">安全建议</a>
+                        <a href="awstats_compare.html" class="active" data-i18n="navCompare">对比</a>
+                        <a href="awstats_benchmark.html" data-i18n="navBenchmark">基准测试</a>
+                        <a href="awstats_changelog.html" data-i18n="navChangelog">更新日志</a>
+                    </div>
+                </div>
+                
+                <!-- 🧩 集成与扩展 -->
+                <div class="dropdown-item">
+                    <div class="dropdown-title" data-i18n="categoryIntegration">🧩 集成与扩展</div>
+                    <div class="dropdown-content">
+                        <a href="awstats_webmin.html" data-i18n="navWebmin">Webmin模块</a>
+                        <a href="awstats_dolibarr.html" data-i18n="navDolibarr">Dolibarr模块</a>
+                        <a href="awstats_contrib.html" data-i18n="navContrib">贡献资源</a>
+                    </div>
+                </div>
+                
+                <!-- 💻 开发者文档 -->
+                <div class="dropdown-item">
+                    <div class="dropdown-title" data-i18n="categoryDev">💻 开发者文档</div>
+                    <div class="dropdown-content">
+                        <a href="awstats_dev_plugins.html" data-i18n="navPlugins">插件开发</a>
+                        <a href="awstats_dev_plugins_hooks.html" data-i18n="navHooks">插件钩子</a>
+                        <a href="awstats_dev_plugins_graphs.html" data-i18n="navGraphs">插件图形</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<body topmargin="10" leftmargin="5">
-<table style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10pt; line-height: normal; font-size-adjust: none; font-stretch: normal;" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" width="100%">
-<!-- Large -->
-<tbody>
-<tr style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">
-<td align="center" bgcolor="#9999cc"><a href="/"><img src="images/awstats_logo6.png" border="0"></a></td>
+    <header class="header">
+        <div class="container header-row">
+            <div class="logo-area">
+                <img src="images/favicon.pub/logo.svg" alt="AWStats logo">
+                <span class="site-title" data-i18n="siteTitle">AWStats 8.1</span>
+            </div>
+            <div class="header-center" data-i18n="headerSlogan">
+                ⚡ 先进的日志分析器 · 官方文档
+            </div>
+            <div class="header-right">
+                <!-- 自定义语言切换 -->
+                <div class="lang-switch custom-select">
+                    <span>🌐</span>
+                    <div class="select-selected" data-value="zh" data-i18n="langZh">中文</div>
+                    <div class="select-items">
+                        <div data-value="zh" class="selected" data-i18n="langZh">中文</div>
+                        <div data-value="en" data-i18n="langEn">English</div>
+                    </div>
+                    <!-- 隐藏的原生 select，用于保持功能 -->
+                    <select id="langSelector" style="display: none;">
+                        <option value="zh" selected>中文</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+                
+                <button class="theme-toggle" id="themeToggleBtn">
+                    <span>🌓</span> <span class="theme-text" data-i18n="themeAuto">自动</span>
+                </button>
+            </div>
+        </div>
+    </header>
 
-<td align="center" bgcolor="#9999cc">
-<br>
-<font style="font-family: arial,helvetica,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 16pt; line-height: normal; font-size-adjust: none; font-stretch: normal;" color="#eeeeff"><b>AWStats logfile analyzer 8.0 Documentation</b></font><br>
-<br>
-</td>
-<td align="center" bgcolor="#9999cc">&nbsp;
+    <main class="container">
+        <div class="doc-card">
+            <h1 data-i18n="mainTitle">📊 日志分析器对比</h1>
 
-</td>
-</tr>
-</tbody>
-</table>
-<br>
-<br>
-<h1 style="font-family: arial,helvetica,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 26px; line-height: normal; font-size-adjust: none; font-stretch: normal;">Log
-analyzers Comparisons</h1>
-<br>
+            <a name="COMPARISON"></a>
+            <h2>🔍 <span data-i18n="comparisonTitle">AWStats 与其他著名统计工具的对比</span></h2>
+            <hr>
 
-<a name="COMPARISON"></a><br>
-<font color="#665544" size="3"><b>Comparison
-between AWStats and other famous statistics tools</b></font><br>
-<hr>
-<table style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 11px; line-height: normal; font-size-adjust: none; font-stretch: normal; width: 100%;" border="0" cellpadding="4" cellspacing="0">
-<!-- Info -->
-<tbody>
-<tr align="center" bgcolor="#eeeeee">
-<td align="left" width="33%"><b>Features/Softwares</b></td>
-<td width="14%"><b>AWStats</b></td>
-<td width="13%"><b>Analog</b></td>
-<td width="15%"><b><a href="http://www.mrunix.net/webalizer/" target="_blank">Webalizer</a></b></td>
-<!-- <td width="12%"><b><a href="http://www.hitbox.com" target="_blank">HitBox</a></b></td>-->
+            <div class="comparison-container">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th data-i18n="feature">功能特性</th>
+                            <th data-i18n="toolAwstats">AWStats</th>
+                            <th data-i18n="toolAnalog">Analog</th>
+                            <th data-i18n="toolWebalizer">Webalizer</th>
+                            <th data-i18n="toolSawmill">Sawmill Analytics</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 基本信息 -->
+                        <tr>
+                            <td class="feature-cell" data-i18n="versionDate">版本 - 日期</td>
+                            <td class="version-cell" data-i18n="awstatsVersion">7.2 - 2013年7月</td>
+                            <td class="version-cell" data-i18n="analogVersion">6.0 - 2004年12月</td>
+                            <td class="version-cell" data-i18n="webalizerVersion">2.01-10 - 2002年4月</td>
+                            <td class="version-cell" data-i18n="sawmillVersion">8.5 - 2011年7月</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="language">编程语言</td>
+                            <td class="version-cell" data-i18n="langPerl">Perl</td>
+                            <td class="version-cell" data-i18n="langC">C</td>
+                            <td class="version-cell" data-i18n="langC">C</td>
+                            <td class="version-cell" data-i18n="langCSalang">C/Salang</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="allPlatforms">支持所有平台</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="sourceAvailable">可读源代码可用</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="no-cell" data-i18n="noWithNote">✗ 否（仅编译用的混淆代码）</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="priceLicense">价格/许可证</td>
+                            <td class="yes-cell" data-i18n="freeGpl">免费/GPL</td>
+                            <td class="yes-cell" data-i18n="freeGpl">免费/GPL</td>
+                            <td class="yes-cell" data-i18n="freeGpl">免费/GPL</td>
+                            <td class="maybe-cell" data-i18n="sawmillPrice">每个配置文件 $99起<br>精简版/专业版/企业版</td>
+                        </tr>
 
-<td width="13%"><b><a href="http://www.sawmill.co.uk?ref=awstats" target="_blank">Sawmill
-Analytics</a></b></td>
-</tr>
-<tr align="center">
-<td align="left">Version - Date</td>
-<td>7.2 - July 2013</td>
-<td>6.0 - December 2004</td>
-<td>2.01-10 - April 2002</td>
-<!-- <td>NA</td> --> <td>8.5 - July 2011</td>
-</tr>
+                        <!-- 日志格式支持 -->
+                        <tr>
+                            <td class="feature-cell" data-i18n="apacheCombined">支持 Apache combined (XLF/ELF)</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="apacheCommon">支持 Apache common (CLF)</td>
+                            <td class="yes-cell" data-i18n="allFeaturesWithNote">✓ 所有功能可用 (b)</td>
+                            <td class="yes-cell" data-i18n="allFeaturesWithNote">✓ 所有功能可用 (b)</td>
+                            <td class="yes-cell" data-i18n="allFeaturesWithNote">✓ 所有功能可用 (b)</td>
+                            <td class="yes-cell" data-i18n="allFeaturesWithNote">✓ 所有功能可用 (b)</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="iisW3c">支持 IIS (W3C) 日志格式</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="no-cell" data-i18n="needsPatch">✗ 需要补丁</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="personalizedFormat">支持个性化日志格式</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                        </tr>
 
-<tr align="center" bgcolor="#eeeeee">
-<td align="left">Language</td>
-<td>Perl</td>
-<td>C</td>
-<td>C</td>
-<!-- <td>Embedded HTML tag</td> --> <td>C/Salang</td>
-</tr>
-<tr align="center">
-<td align="left">Available on all platforms</td>
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#4444cc">Yes</font></td>
-<!-- <td>NA</td> --> <td><font color="#4444cc">Yes</font></td>
-</tr>
-<tr align="center" bgcolor="#eeeeee">
-<td align="left">Readable sources available</td>
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#4444cc">Yes</font></td>
+                        <!-- 分析类型 -->
+                        <tr>
+                            <td class="feature-cell" data-i18n="analyzeTypes">分析 Web/FTP/邮件日志</td>
+                            <td class="yes-cell" data-i18n="yesYesYes">✓/✓/✓</td>
+                            <td class="maybe-cell" data-i18n="yesNoNo">✓/✗/✗</td>
+                            <td class="maybe-cell" data-i18n="yesNoNo">✓/✗/✗</td>
+                            <td class="yes-cell" data-i18n="yesYesYesPlus">✓/✓/✓ (850+)</td>
+                        </tr>
 
-<!-- <td><font color=#660000>No</font></td> --> <td><font color="#660000">No (obfuscated sources for compilation only)</font></td>
-</tr>
-<tr align="center">
-<td align="left">Price/Licence</td>
-<td><font color="#4444cc">Free/GPL</font></td>
-<td><font color="#4444cc">Free/GPL</font></td>
-<td><font color="#4444cc">Free/GPL</font></td>
-<!-- <td><font color=#660000>Free with adverts/Proprietary</font></td> -->
-<td>From $99 Per Profile<br>
-<a href="http://www.sawmill.co.uk/pricing.html" target="_blank"><font style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 11px; line-height: normal; font-size-adjust: none; font-stretch: normal;">Lite/Pro/Ent</font></a></td>
+                        <!-- 运行方式 -->
+                        <tr>
+                            <td class="feature-cell" data-i18n="runFrom">统计报告和更新方式</td>
+                            <td class="yes-cell" data-i18n="cliAndCgi">命令行 和/或<br>浏览器 (CGI)</td>
+                            <td class="yes-cell" data-i18n="cliAndCgi">命令行 和/或<br>浏览器 (CGI)</td>
+                            <td class="no-cell" data-i18n="cliOnly">✗ 命令行</td>
+                            <td class="yes-cell" data-i18n="cliCgiApi">命令行 和/或<br>浏览器 (CGI)<br>和/或 HTTP API</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="scheduler">调度器</td>
+                            <td data-i18n="externalScheduler">外部 (crontab, windows任务计划)</td>
+                            <td data-i18n="externalScheduler">外部 (crontab, windows任务计划)</td>
+                            <td data-i18n="externalScheduler">外部 (crontab, windows任务计划)</td>
+                            <td data-i18n="builtin">内置</td>
+                        </tr>
 
-</tr>
-<tr align="center" bgcolor="#eeeeee">
-<td align="left">Works with Apache combined (XLF/ELF)</td>
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#4444cc">Yes</font></td>
-<!-- <td>NA</td> --> <td><font color="#4444cc">Yes</font></td>
-</tr>
-<tr align="center">
-<td align="left">Works with Apache common (CLF) log
-format</td>
+                        <!-- DNS功能 -->
+                        <tr>
+                            <td class="feature-cell" data-i18n="reverseDNS">内部反向 DNS 查找</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="dnsCache">DNS 缓存文件</td>
+                            <td class="yes-cell" data-i18n="staticDynamic">静态和动态</td>
+                            <td class="maybe-cell" data-i18n="staticOrDynamic">静态 或 动态</td>
+                            <td class="maybe-cell" data-i18n="staticOrDynamic">静态 或 动态</td>
+                            <td class="yes-cell" data-i18n="yesPerUpdate">是 (每次更新或自定义)</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="loadBalancing">处理负载均衡系统分割的日志</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                        </tr>
 
-<td><font color="#4444cc">All features
-available with log format (b)</font></td>
-<td><font color="#4444cc">All features
-available with log format (b)</font></td>
-<td><font color="#4444cc">All features
-available with log format (b)</font></td>
-<!-- <td>NA</td> --> <td><font color="#4444cc">All
-features available with log format (b)</font></td>
-</tr>
-<tr align="center" bgcolor="#eeeeee">
-<td align="left">Works with IIS (W3C) log format</td>
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#4444cc">Yes</font></td>
+                        <!-- 访问统计 -->
+                        <tr>
+                            <td class="feature-cell" data-i18n="humanVisits">报告"人类"访问次数</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yesSession">✓ 是 (会话)</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="humanVisitors">报告唯一"人类"访客</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="yes-cell" data-i18n="yesVisitors">✓ 是 (访客)</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="sessionDuration">报告会话时长</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="unorderedTolerance">无序记录容忍和重排</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="no-cell" data-i18n="noVisitsSupport">✗ 不支持访问</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="visitsBasedOn">访问统计基于</td>
+                            <td class="yes-cell" data-i18n="pagesNote">页面 *****</td>
+                            <td class="no-cell" data-i18n="notSupported">✗ 不支持</td>
+                            <td class="yes-cell" data-i18n="pagesNote">页面 *****</td>
+                            <td class="yes-cell" data-i18n="pagesNote">页面 *****</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="visitorsBasedOn">唯一访客统计基于</td>
+                            <td class="yes-cell" data-i18n="pagesNote">页面 *****</td>
+                            <td class="no-cell" data-i18n="notSupported">✗ 不支持</td>
+                            <td class="no-cell" data-i18n="notSupported">✗ 不支持</td>
+                            <td class="yes-cell" data-i18n="clientIpCookie">客户端 IP / Cookie<br>自定义 *****</td>
+                        </tr>
 
-<td><font color="#660000">Need a patch</font></td>
-<!-- <td>NA</td> --> <td><font color="#4444cc">Yes</font></td>
-</tr>
-<tr align="center">
-<td align="left">Works with personalized log format</td>
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#660000">No</font></td>
-<!-- <td>NA</td> --> <td><font color="#4444cc">Yes</font></td>
+                        <!-- 地理位置 -->
+                        <tr>
+                            <td class="feature-cell" data-i18n="reportCountries">报告国家</td>
+                            <td class="yes-cell" data-i18n="fromIpOrDomain">来自 IP 位置 或 域名</td>
+                            <td class="no-cell" data-i18n="domainOnly">✗ 域名</td>
+                            <td class="no-cell" data-i18n="domainOnly">✗ 域名</td>
+                            <td class="yes-cell" data-i18n="fromIpOrDomain">来自 IP 位置 或 域名</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="reportRegions">报告地区（美国和加拿大州）</td>
+                            <td data-i18n="needMaxmindRegions">需要 Maxmind Regions 数据库</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="yes-cell" data-i18n="yesIncludeGeolite">✓ 是<br>包含 GeoLite City</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="reportCities">报告城市和主要国家地区</td>
+                            <td data-i18n="needMaxmindCities">需要 Maxmind Cities 数据库</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="yes-cell" data-i18n="yesIncludeGeolite">✓ 是<br>包含 GeoLite City</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="reportISP">报告 ISP</td>
+                            <td data-i18n="needMaxmindIsp">需要 Maxmind ISP 数据库</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td data-i18n="needMaxmindIsp">需要 Maxmind ISP 数据库</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="reportOrg">报告组织名称</td>
+                            <td data-i18n="needMaxmindOrg">需要 Maxmind Org 数据库</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td data-i18n="needMaxmindOrg">需要 Maxmind Org 数据库</td>
+                        </tr>
 
-</tr>
-<tr align="center" bgcolor="#eeeeee">
-<td align="left">Analyze Web/Ftp/Mail log files</td>
-<td><font color="#4444cc">Yes/Yes/Yes</font></td>
-<td><font color="#4444cc">Yes</font>/<font color="#660000">No/No</font></td>
-<td><font color="#4444cc">Yes</font>/<font color="#660000">No/No</font></td>
-<!-- <td>NA<font color=#660000>No/No</font></td> --> <td><font color="#4444cc">Yes/Yes/Yes (850+) </font></td>
+                        <!-- 主机相关 -->
+                        <tr>
+                            <td class="feature-cell" data-i18n="reportHosts">报告主机</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="whoisInfo">报告 Whois 信息</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="authUsers">报告认证用户</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="robots">报告/过滤机器人（检测数量）</td>
+                            <td class="yes-cell" data-i18n="robotsAwstats">✓/✓ (793**)</td>
+                            <td class="maybe-cell" data-i18n="robotsAnalog">✓/✓ (8**)</td>
+                            <td class="no-cell" data-i18n="no">✗/✗</td>
+                            <td class="yes-cell" data-i18n="robotsSawmill">✓/✓ (250**)</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="worms">报告/过滤蠕虫（检测家族数）</td>
+                            <td class="yes-cell" data-i18n="wormsAwstats">✓/✓ (5)</td>
+                            <td class="no-cell" data-i18n="no">✗/✗</td>
+                            <td class="no-cell" data-i18n="no">✗/✗</td>
+                            <td class="yes-cell" data-i18n="wormsSawmill">✓/✓ (4)</td>
+                        </tr>
 
-</tr>
-<tr align="center">
-<td align="left">Report and update of statistics from</td>
-<td><font color="#4444cc">Command line (CLI)
-and/or<br>
-a browser (CGI)</font></td>
-<td><font color="#4444cc">Command line (CLI)
-and/or<br>
-a browser (CGI)</font></td>
-<td><font color="#660000">Command line</font></td>
-<!-- <td>NA</td> --> <td><font color="#4444cc">Command
-line (CLI) and/or<br>
-a browser (CGI)<br>
-and/or HTTP API</font><br>
-</td>
-</tr>
-<tr align="center">
-<td align="left">Scheduler</td>
-<td>External (crontab, windows task manager)</td>
-<td>External (crontab, windows task manager)</td>
-<td>External (crontab, windows task manager)</td>
-<!-- <td>NA</td> --> <td>Built-in</td>
-</tr>
+                        <!-- 时间统计 -->
+                        <tr>
+                            <td class="feature-cell" data-i18n="rushHours">报告高峰时段</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="daysOfWeek">报告星期分布</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                        </tr>
 
-<tr align="center" bgcolor="#eeeeee">
-<td align="left">Internal reverse DNS lookup</td>
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#4444cc">Yes</font></td>
-<!-- <td>NA</td> --> <td><font color="#4444cc">Yes</font></td>
-</tr>
-<tr align="center">
-<td align="left">DNS cache file</td>
-<td><font color="#4444cc">Static and dynamic</font></td>
+                        <!-- 页面统计 -->
+                        <tr>
+                            <td class="feature-cell" data-i18n="topPages">报告最常查看页面</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="entryPages">报告入口页面</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="exitPages">报告出口页面</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="unorderedEntryExit">无序记录容忍和重排（入口/出口）</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="no-cell" data-i18n="noEntryExit">✗ 不支持入口/出口</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="cgiAsPages">将 CGI 页面作为页面（不仅仅是请求）</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="no-cell" data-i18n="onlyIfEndsWith">✗ 仅当程序以定义值结尾</td>
+                            <td class="no-cell" data-i18n="onlyIfEndsWith">✗ 仅当程序以定义值结尾</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="pagesByDir">按目录报告页面</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="pagesLastAccess">报告页面的最后访问时间/平均大小</td>
+                            <td class="yes-cell" data-i18n="yesYes">✓/✓</td>
+                            <td class="maybe-cell" data-i18n="yesNo">✓/✗</td>
+                            <td class="no-cell" data-i18n="noNo">✗/✗</td>
+                            <td class="maybe-cell" data-i18n="yesNo">✓/✗</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="dynamicFilter">动态过滤（主机/页面/引用）</td>
+                            <td class="yes-cell" data-i18n="yesYesYes">✓/✓/✓</td>
+                            <td class="no-cell" data-i18n="noNoNo">✗/✗/✗</td>
+                            <td class="no-cell" data-i18n="noNoNo">✗/✗/✗</td>
+                            <td class="yes-cell" data-i18n="yesYesYes">✓/✓/✓</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="compressionStats">报告 Web 压缩统计 (mod_gzip,mod_deflate)</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                        </tr>
 
-<td><font color="#4444cc">Static </font><font color="#660000">or</font> <font color="#4444cc">dynamic</font></td>
-<td><font color="#4444cc">Static </font><font color="#660000">or</font> <font color="#4444cc">dynamic</font></td>
-<!-- <td>NA</td> --> <td><font color="#4444cc">Yes
-(per update, or custom)</font></td>
-</tr>
-<tr align="center" bgcolor="#eeeeee">
-<td align="left">Process logs spitted by load
-balancing systems</td>
+                        <!-- 文件类型 -->
+                        <tr>
+                            <td class="feature-cell" data-i18n="fileTypes">报告文件类型</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="fileSizes">按文件大小报告</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                        </tr>
 
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#660000">No</font></td>
-<!-- <td><font color=#660000>No</font></td> --> <td><font color="#4444cc">Yes</font></td>
-</tr>
-<!-- Who -->
-<tr align="center">
-<td align="left">Report number of "human" visits</td>
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#660000">No</font></td>
+                        <!-- 操作系统和浏览器 -->
+                        <tr>
+                            <td class="feature-cell" data-i18n="osDetection">报告操作系统（检测数量）</td>
+                            <td class="yes-cell" data-i18n="osAwstats">✓ (84)</td>
+                            <td class="maybe-cell" data-i18n="osAnalog">✓ (29)</td>
+                            <td class="no-cell" data-i18n="osWebalizer">✗ (0)</td>
+                            <td class="yes-cell" data-i18n="yes">✓</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="browserDetection">报告浏览器（检测数量）</td>
+                            <td class="yes-cell" data-i18n="browserAwstats">✓ (210*)</td>
+                            <td class="maybe-cell" data-i18n="browserAnalog">✓ (9*)</td>
+                            <td class="maybe-cell" data-i18n="browserWebalizer">✓ (4*)</td>
+                            <td class="maybe-cell" data-i18n="browserSawmill">✓ (~20*)</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="browserVersions">报告浏览器版本详情</td>
+                            <td class="yes-cell" data-i18n="majorMinor">主要和次要版本</td>
+                            <td class="yes-cell" data-i18n="analogVersions">默认主要版本，<br>SUBBROW选项可显示次要</td>
+                            <td class="yes-cell" data-i18n="majorMinor">主要和次要版本</td>
+                            <td class="yes-cell" data-i18n="majorMinor">主要和次要版本</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="screenSizes">报告屏幕尺寸</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="yes-cell" data-i18n="yesWithDepth">✓ 是及色彩深度</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="techSupport">浏览器技术支持（Java/Flash/PDF）</td>
+                            <td class="yes-cell" data-i18n="yesYesYes">✓/✓/✓</td>
+                            <td class="no-cell" data-i18n="noNoNo">✗/✗/✗</td>
+                            <td class="no-cell" data-i18n="noNoNo">✗/✗/✗</td>
+                            <td class="no-cell" data-i18n="noNoNo">✗/✗/✗</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="audioSupport">音频格式支持（Real/QuickTime/Mediaplayer）</td>
+                            <td class="yes-cell" data-i18n="yesYesYes">✓/✓/✓</td>
+                            <td class="no-cell" data-i18n="noNoNo">✗/✗/✗</td>
+                            <td class="no-cell" data-i18n="noNoNo">✗/✗/✗</td>
+                            <td class="no-cell" data-i18n="noNoNo">✗/✗/✗</td>
+                        </tr>
 
-<td><font color="#4444cc">Yes</font></td>
-<!-- <td><font color=#4444cc>Yes</font></td> --> <td><font color="#4444cc">Yes (Sessions)</font></td>
-</tr>
-<tr align="center" bgcolor="#eeeeee">
-<td align="left">Report unique "human" visitors</td>
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#660000">No</font></td>
-<td><font color="#660000">No</font></td>
-<!-- <td><font color=#4444cc>Yes</font></td> --> <td><font color="#4444cc">Yes (Visitors)</font></td>
+                        <!-- 来源统计 -->
+                        <tr>
+                            <td class="feature-cell" data-i18n="searchEngines">报告使用的搜索引擎（检测数量）</td>
+                            <td class="yes-cell" data-i18n="searchAwstats">✓ (228***)</td>
+                            <td class="maybe-cell" data-i18n="searchAnalog">✓ (24)</td>
+                            <td class="no-cell" data-i18n="searchWebalizer">✗ (0)</td>
+                            <td class="yes-cell" data-i18n="searchSawmill">✓ (67***)</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="keywords">报告关键词/关键短语（检测数量）</td>
+                            <td class="yes-cell" data-i18n="keywordsAwstats">✓/✓ (118***)</td>
+                            <td class="maybe-cell" data-i18n="keywordsAnalog">✓/✗ (29***)</td>
+                            <td class="maybe-cell" data-i18n="keywordsWebalizer">✗/✓ (14***)</td>
+                            <td class="yes-cell" data-i18n="keywordsSawmill">✓/✓ (67***)</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="externalReferer">报告外部引用网页（带/不带查询）</td>
+                            <td class="yes-cell" data-i18n="yesYes">✓/✓</td>
+                            <td class="no-cell" data-i18n="noNo">✗/✗</td>
+                            <td class="maybe-cell" data-i18n="noYes">✗/✓</td>
+                            <td class="yes-cell" data-i18n="yesYes">✓/✓</td>
+                        </tr>
 
-</tr>
-<tr align="center">
-<td align="left">Report session duration</td>
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#660000">No</font></td>
-<td><font color="#660000">No</font></td>
-<!-- <td><font color=#4444cc>Yes</font></td> --> <td><font color="#4444cc">Yes</font></td>
-</tr>
-<tr align="center" bgcolor="#eeeeee">
-<td align="left">Not ordered records tolerance and
-reorder for visits</td>
+                        <!-- 错误统计 -->
+                        <tr>
+                            <td class="feature-cell" data-i18n="httpErrors">报告 HTTP 错误</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="errors404">报告 404 错误</td>
+                            <td class="yes-cell" data-i18n="countAndReferer">数量 + 引用列表</td>
+                            <td class="no-cell" data-i18n="countOnly">✗ 仅数量</td>
+                            <td class="no-cell" data-i18n="countOnly">✗ 仅数量</td>
+                            <td class="yes-cell" data-i18n="countAndDateReferer">数量 + 最后日期/引用列表</td>
+                        </tr>
 
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#660000">Visits not supported</font></td>
-<td><font color="#660000">No</font></td>
-<!-- <td>?</td> --> <td><font color="#4444cc">Yes</font></td>
-</tr>
-<tr align="center">
-<td align="left">Statistics for visits are based on</td>
-<td><font color="#4444cc">Pages *****</font></td>
-<td><font color="#660000">Not supported</font></td>
+                        <!-- 自定义报告 -->
+                        <tr>
+                            <td class="feature-cell" data-i18n="customReports">其他个性化报告（杂项/营销目的）</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                        </tr>
 
-<td><font color="#4444cc">Pages *****</font></td>
-<!-- <td><font color=#4444cc>Pages *****</font></td> --> <td><font color="#4444cc">Pages *****</font></td>
-</tr>
-<tr align="center" bgcolor="#eeeeee">
-<td align="left">Statistics for unique visitors are
-based on</td>
-<td><font color="#4444cc">Pages *****</font></td>
-<td><font color="#660000">Not supported</font></td>
-<td><font color="#660000">Not supported</font></td>
-<!-- <td><font color=#4444cc>Pages *****</font></td> --> <td><font color="#4444cc">Client IP / Cookie<br>
+                        <!-- 时间范围 -->
+                        <tr>
+                            <td class="feature-cell" data-i18n="dailyStats">每日统计</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="weeklyStats">每周统计</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="monthlyStats">每月统计</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="yearlyStats">每年统计</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="customDateRange">自定义日期范围</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="yes-cell" data-i18n="yes">✓ 是</td>
+                        </tr>
 
-Custom *****</font></td>
-</tr>
-<tr align="center">
-<td align="left">Report countries</td>
-<td><font color="#4444cc">From IP location<br>
- or domain name</font></td>
-<td><font color="#660000">Domain name</font></td>
-<td><font color="#660000">Domain name</font></td>
-<!-- <td>?</td> --> <td><font color="#4444cc">From
-IP location<br>
-or domain name</font></td>
-</tr>
-<tr align="center" bgcolor="#eeeeee">
-<td align="left">Report regions (US and Canada states)</td>
-<td>Need <a href="http://www.maxmind.com/en/city?rId=awstats"><font style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 11px; line-height: normal; font-size-adjust: none; font-stretch: normal;">Maxmind
-Regions</font></a> database</td>
-<td><font color="#660000">No</font></td>
-<td><font color="#660000">No</font></td>
-<!-- <td><font color=#660000>No</font></td> --> <td><font color="#4444cc">Yes</font><br>
+                        <!-- 性能 -->
+                        <tr>
+                            <td class="feature-cell" data-i18n="benchmarkNoDNS">基准测试（无DNS查找）<br>行/秒（全部功能启用，XLF格式，cygwin Perl 5.8, Athlon 1Ghz）</td>
+                            <td class="no-cell" data-i18n="benchmarkAwstatsNoDns">5200****</td>
+                            <td class="yes-cell" data-i18n="benchmarkAnalogNoDns">39000****</td>
+                            <td class="no-cell" data-i18n="benchmarkWebalizerNoDns">12000****</td>
+                            <td class="maybe-cell" data-i18n="notCalculated">未计算</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="benchmarkWithDNS">基准测试（有DNS查找）<br>行/秒（全部功能启用，XLF格式，cygwin Perl 5.8, Athlon 1Ghz）</td>
+                            <td class="yes-cell" data-i18n="benchmarkWithDns">80****</td>
+                            <td class="yes-cell" data-i18n="benchmarkWithDns">80****</td>
+                            <td class="yes-cell" data-i18n="benchmarkWithDns">80****</td>
+                            <td class="maybe-cell" data-i18n="notCalculated">未计算</td>
+                        </tr>
 
-GeoLite City included</td>
-</tr>
-<tr align="center">
-<td align="left">Report cities and major countries
-regions</td>
-<td>Need <a href="http://www.maxmind.com/en/city?rId=awstats"><font style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 11px; line-height: normal; font-size-adjust: none; font-stretch: normal;">Maxmind
-Cities</font></a> database</td>
-<td><font color="#660000">No</font></td>
-<td><font color="#660000">No</font></td>
-<!-- <td><font color=#660000>No</font></td> --> <td><font color="#4444cc">Yes</font><br>
+                        <!-- 数据格式 -->
+                        <tr>
+                            <td class="feature-cell" data-i18n="dataFormat">分析数据保存格式（供第三方工具使用）</td>
+                            <td class="yes-cell" data-i18n="structuredTextOrXml">结构化文本文件或 XML</td>
+                            <td class="yes-cell" data-i18n="textWithOutput">带 OUTPUT 选项的文本文件</td>
+                            <td class="no-cell" data-i18n="flatText">✗ 纯文本文件</td>
+                            <td class="maybe-cell" data-i18n="flatTextOrSql">纯文本文件 / MySQL/MS SQL/Oracle</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-cell" data-i18n="pdfExport">导出统计到 PDF</td>
+                            <td class="maybe-cell" data-i18n="experimental">实验性</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="no-cell" data-i18n="no">✗ 否</td>
+                            <td class="yes-cell" data-i18n="yesAndMore">是 &amp; HTML（静态/邮件）&amp; CSV</td>
+                        </tr>
 
-GeoLite City included</td>
-</tr>
-<tr align="center" bgcolor="#eeeeee">
-<td align="left">Report ISP</td>
-<td>Need <a href="http://www.maxmind.com/en/city?rId=awstats"><font style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 11px; line-height: normal; font-size-adjust: none; font-stretch: normal;">Maxmind
-ISP</font></a> database</td>
-<td><font color="#660000">No</font></td>
-<td><font color="#660000">No</font></td>
-<!-- <td><font color=#660000>No</font></td> --> <td>Need
+                        <!-- 显示方式 -->
+                        <tr>
+                            <td class="feature-cell" data-i18n="graphicalDisplay">图形统计显示方式</td>
+                            <td class="yes-cell" data-i18n="onePageMultiFrame">单页/多页/框架</td>
+                            <td class="maybe-cell" data-i18n="onePageOnly">单页/✗/✗</td>
+                            <td class="maybe-cell" data-i18n="onePageMulti">单页/多页/✗</td>
+                            <td class="yes-cell" data-i18n="onePageMultiFrame">单页/多页/框架</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-<a href="http://www.maxmind.com/en/city?rId=awstats"><font style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 11px; line-height: normal; font-size-adjust: none; font-stretch: normal;">Maxmind
-ISP</font></a> database</td>
-</tr>
-<tr align="center">
-<td align="left">Report Organizations name</td>
-<td>Need <a href="http://www.maxmind.com/en/city?rId=awstats"><font style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 11px; line-height: normal; font-size-adjust: none; font-stretch: normal;">Maxmind
-Org</font></a> database</td>
-<td><font color="#660000">No</font></td>
-<td><font color="#660000">No</font></td>
+            <!-- 注脚 -->
+            <div class="footnote-card">
+                <div class="footnote-item">
+                    <span class="footnote-marker">*</span>
+                    <span class="footnote-label" data-i18n="footnoteLabel1">浏览器检测数量：</span>
+                    <span data-i18n="footnote1">此数字不是检测到的浏览器实际数量。所有浏览器（已知和未知）都可以通过支持用户代理列表的产品检测到（AWStats, Analog, Webalizer, Sawmill）。"浏览器检测功能"和数字是指已知浏览器的数量，这些浏览器的不同版本/ID默认被分组为同一浏览器名称。</span>
+                </div>
+                <div class="footnote-item">
+                    <span class="footnote-marker">**</span>
+                    <span class="footnote-label" data-i18n="footnoteLabel2">机器人检测：</span>
+                    <span data-i18n="footnote2">AWStats 可以检测机器人访问：所有最常见的机器人都会被检测到，列表在 robotslist.txt (250Kb) 中。无法做到这一点的产品会给您错误的信息，特别是如果您的网站访问者较少。例如，如果您的网站被提交到所有著名搜索引擎，机器人每月可能进行500次访问，以查找更新或查看您的网站是否仍在运行。因此，如果您每月只有2000次访问，没有机器人检测能力的产品将报告2500次访问（25%的错误！）。AWStats 将报告500次来自机器人的访问和2000次来自人类访客的访问。Sawmill Analytics 使用基于 robotstxt.org 数据库的"当前活跃"机器人列表。</span>
+                </div>
+                <div class="footnote-item">
+                    <span class="footnote-marker">***</span>
+                    <span class="footnote-label" data-i18n="footnoteLabel3">搜索引擎检测：</span>
+                    <span data-i18n="footnote3">AWStats 对最流行的搜索引擎有 URL 语法规则（这就是"检测数量"）。这些规则随 AWStats 更新而更新。但 AWStats 也有算法检测具有未知 URL 语法规则的未知搜索引擎的关键词。Sawmill 使用独特语法检测67个搜索引擎，您可以添加任意数量的自定义搜索引擎。</span>
+                </div>
+                <div class="footnote-item">
+                    <span class="footnote-marker">****</span>
+                    <span class="footnote-label" data-i18n="footnoteLabel4">基准测试说明：</span>
+                    <span data-i18n="footnote4">大多数日志分析器的机器人、搜索引擎、操作系统或浏览器检测能力较弱（或根本没有），功能较少（没有或很少的访问计数，没有过滤规则等）。不可能将所有 AWStats 功能添加到其他日志分析器，所以不要忘记基准测试结果是针对"不同功能"的。对于此基准测试，我只是用部分 AWStats 数据库完善了 Webalizer 和 Analog 的机器人或搜索引擎数据库。Webalizer 配置文件用此文件补充，Analog 配置文件用此文件补充。请注意，如果没有这个非常轻量的添加（使用默认配置文件），Webalizer 速度快3倍，Analog 快15%。基准测试在 Athlon 1GHz 上对 combined (XLF/CLF) 日志记录进行。您必须记住，所有这些时间都是没有反向 DNS 查找的。DNS 查找速度取决于您的系统、网络和互联网，但不取决于您使用的日志分析器。因此，在所有日志分析器基准测试中都禁用了 DNS 查找。不要忘记 DNS 查找占用了日志分析器95%的时间（即使有查找缓存），所以如果您的日志文件中主机尚未解析并且启用了 DNS 查找，无论日志分析器的速度如何，整个过程的总时间将几乎相同。</span>
+                </div>
+                <div class="footnote-item">
+                    <span class="footnote-marker">*****</span>
+                    <span class="footnote-label" data-i18n="footnoteLabel5">访客统计方法：</span>
+                    <span data-i18n="footnote5">一些访客使用大量代理服务器上网（例如 AOL 用户），这意味着可能有多个主机（多个 IP 地址）被用来访问您的网站，但只有一个访客（例如，一个代理服务器下载页面，另外两个服务器下载所有图像）。因此，如果唯一访客统计基于"请求数"，会报告3个用户，但这是错误的。所以 AWStats 只考虑 HTML 页面来计数唯一访客。这减少了错误（不是完全消除，因为仍然可能有一个代理服务器下载一个 HTML 框架，另一个下载另一个框架）。Sawmill Analytics 允许您选择定义访客的方式 - 默认使用客户端 IP，但您可以使用 cookie（持久或会话）或任何自定义字符串，或日志数据的字符串组合。</span>
+                </div>
+                <div class="footnote-item">
+                    <span class="footnote-marker">(a)</span>
+                    <span class="footnote-label" data-i18n="footnoteLabelA">数据来源：</span>
+                    <span data-i18n="footnoteA">数据由 Sawmill 公司提供（Graham Smith）。</span>
+                </div>
+                <div class="footnote-item">
+                    <span class="footnote-marker">(b)</span>
+                    <span class="footnote-label" data-i18n="footnoteLabelB">日志格式限制：</span>
+                    <span data-i18n="footnoteB">使用此类日志格式，日志文件中没有用户代理信息，因此某些报告无法使用。例如，无法生成浏览器或操作系统报告（信息未存储在日志文件中）。要解决此问题，请使用其他日志格式（如 combined 格式）。</span>
+                </div>
+            </div>
 
-<!-- <td><font color=#660000>No</font></td> --> <td>Need
-<a href="http://www.maxmind.com/en/city?rId=awstats"><font style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 11px; line-height: normal; font-size-adjust: none; font-stretch: normal;">Maxmind
-Org</font></a> database</td>
-</tr>
-<tr align="center" bgcolor="#eeeeee">
-<td align="left">Report hosts</td>
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#4444cc">Yes</font></td>
-<!-- <td><font color=#4444cc>Yes</font></td> --> <td><font color="#4444cc">Yes</font></td>
+            <!-- 赞助商链接 -->
+            <div style="text-align: center; margin: 30px 0;">
+                <a href="https://uptimepal.net" target="_blank" class="sponsor-link" data-i18n="sponsorThanks">感谢 UptimePal 提供的网站监控服务</a>
+            </div>
 
-</tr>
-<tr align="center">
-<td align="left">Report WhoIs informations on hosts</td>
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#660000">No</font></td>
-<!-- <td><font color=#660000>No</font></td> --> <td><font color="#660000">No</font></td>
-<td><font color="#660000">No</font></td>
-</tr>
-<tr align="center" bgcolor="#eeeeee">
-<td align="left">Report authenticated users</td>
+            <hr>
 
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#660000">No</font></td>
-<!-- <td><font color=#660000>No</font></td> --> <td><font color="#4444cc">Yes</font></td>
-</tr>
-<tr align="center">
-<td align="left">Report/Filter robots (nb detected)</td>
-<td><font color="#4444cc">Yes/Yes (793**)</font></td>
-<td><font color="#4444cc">Yes / Yes</font><font color="#660000">(8**)</font></td>
-<td><font color="#660000">No/No</font></td>
-<!-- <td><font color=#660000>No/No</font></td> --> <td><font color="#4444cc">Yes/Yes (250**)</font></td>
-</tr>
-<tr align="center" bgcolor="#eeeeee">
-<td align="left">Report/Filter worms (nb of families detected)</td>
-<td><font color="#4444cc">Yes/Yes (5)</font></td>
-<td><font color="#660000">No / No</font></td>
-<td><font color="#660000">No/No</font></td>
+            <!-- 署名 -->
+            <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-top: 20px;">
+                <span style="color: var(--text-secondary);" data-i18n="writtenBy">文章作者：<a href="https://www.destailleur.fr" rel="author" style="color: var(--accent);">Laurent Destailleur</a>。</span>
+                <span class="tool-badge" style="background: var(--accent); color: white;" data-i18n="version">版本 8.1</span>
+            </div>
+        </div>
+    </main>
 
-<!-- <td><font color=#660000>No/No</font></td> --> <td><font color="#4444cc">Yes/Yes (4)</font></td>
-</tr>
-<!-- When -->
-<tr align="center">
-<td align="left">Report rush hours</td>
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#4444cc">Yes</font></td>
-<!-- <td><font color=#4444cc>Yes</font></td> --> <td><font color="#4444cc">Yes</font></td>
+    <!-- 返回顶部按钮 -->
+    <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="返回顶部" data-i18n="backToTop">
+        ↑
+    </button>
 
-</tr>
-<tr align="center" bgcolor="#eeeeee">
-<td align="left">Report days of week</td>
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#4444cc">Yes</font></td>
-<!-- <td><font color=#4444cc>Yes</font></td> --> <td><font color="#4444cc">Yes</font></td>
-</tr>
-<!-- What -->
-<tr align="center">
-<td align="left">Report most often viewed pages</td>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-copyright" data-i18n="footerCopyright">
+                © 1997 - <span id="currentYear"></span> Laurent Destailleur & AWStats 团队
+            </div>
+            <div class="footer-license">
+                <a href="awstats_license.html" data-i18n="footerLicense">GNU General Public License</a> · 
+                <a href="https://github.com/eldy/AWStats" rel="publisher" target="_blank" style="display: inline-flex; align-items: center;">
+                    <span data-i18n="footerGitHub">GitHub</span>
+                    <img src="images/favicon.pub/github.svg" style="width: 24px; height: 24px; margin-left: 5px;" alt="GitHub">
+                </a>
+            </div>
+            <div class="attribution" data-i18n="darkAttr">
+                🌓 自适应暗黑 · 现代化重构
+            </div>
+        </div>
+    </footer>
 
-<td><font color="#4444cc">Yes<br>
-</font></td>
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#4444cc">Yes</font></td>
-<!-- <td><font color=#4444cc>Yes</font></td> --> <td><font color="#4444cc">Yes</font></td>
-</tr>
-<tr align="center" bgcolor="#eeeeee">
-<td align="left">Report entry pages</td>
-<td><font color="#4444cc">Yes<br>
-</font></td>
+    <script>
+        (function() {
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-<td><font color="#660000">No</font></td>
-<td><font color="#4444cc">Yes</font></td>
-<!-- <td><font color=#4444cc>Yes</font></td> --> <td><font color="#4444cc">Yes</font></td>
-</tr>
-<tr align="center">
-<td align="left">Report exit pages</td>
-<td><font color="#4444cc">Yes<br></font></td>
-<td><font color="#660000">No</font></td>
-<td><font color="#4444cc">Yes</font></td>
+            // 完整翻译资源
+            const translations = {
+                zh: {
+                    pageTitle: "AWStats · 日志分析器对比",
+                    navHome: "主页",
+                    navWhat: "什么是AWStats",
+                    navSetup: "安装配置",
+                    navWebmin: "Webmin模块",
+                    navUpgrade: "升级指南",
+                    navTools: "其他工具",
+                    navSecurity: "安全建议",
+                    navLicense: "许可证",
+                    navGlossary: "术语表",
+                    navFAQ: "FAQ",
+                    navExtra: "额外部分",
+                    navDolibarr: "Dolibarr模块",
+                    navPlugins: "插件开发",
+                    navHooks: "插件钩子",
+                    navGraphs: "插件图形",
+                    navContrib: "贡献资源",
+                    navConfig: "配置参数",
+                    navCompare: "对比",
+                    navBenchmark: "基准测试",
+                    navChangelog: "更新日志",
+                    home: "主页",
+                    currentPage: "日志分析器对比",
+                    categoryBasic: "📌 基础文档",
+                    categoryGuide: "📘 使用指南",
+                    categoryReference: "📚 参考资源",
+                    categoryIntegration: "🧩 集成与扩展",
+                    categoryDev: "💻 开发者文档",
+                    
+                    siteTitle: "AWStats 8.1",
+                    headerSlogan: "⚡ 先进的日志分析器 · 官方文档",
+                    themeAuto: "自动",
+                    langZh: "中文",
+                    langEn: "English",
+                    mainTitle: "📊 日志分析器对比",
+                    
+                    comparisonTitle: "AWStats 与其他著名统计工具的对比",
+                    feature: "功能特性",
+                    toolAwstats: "AWStats",
+                    toolAnalog: "Analog",
+                    toolWebalizer: "Webalizer",
+                    toolSawmill: "Sawmill Analytics",
+                    
+                    versionDate: "版本 - 日期",
+                    language: "编程语言",
+                    allPlatforms: "支持所有平台",
+                    sourceAvailable: "可读源代码可用",
+                    priceLicense: "价格/许可证",
+                    apacheCombined: "支持 Apache combined (XLF/ELF)",
+                    apacheCommon: "支持 Apache common (CLF)",
+                    iisW3c: "支持 IIS (W3C) 日志格式",
+                    personalizedFormat: "支持个性化日志格式",
+                    analyzeTypes: "分析 Web/FTP/邮件日志",
+                    runFrom: "统计报告和更新方式",
+                    scheduler: "调度器",
+                    reverseDNS: "内部反向 DNS 查找",
+                    dnsCache: "DNS 缓存文件",
+                    loadBalancing: "处理负载均衡系统分割的日志",
+                    humanVisits: "报告'人类'访问次数",
+                    humanVisitors: "报告唯一'人类'访客",
+                    sessionDuration: "报告会话时长",
+                    unorderedTolerance: "无序记录容忍和重排",
+                    visitsBasedOn: "访问统计基于",
+                    visitorsBasedOn: "唯一访客统计基于",
+                    reportCountries: "报告国家",
+                    reportRegions: "报告地区（美国和加拿大州）",
+                    reportCities: "报告城市和主要国家地区",
+                    reportISP: "报告 ISP",
+                    reportOrg: "报告组织名称",
+                    reportHosts: "报告主机",
+                    whoisInfo: "报告 Whois 信息",
+                    authUsers: "报告认证用户",
+                    robots: "报告/过滤机器人（检测数量）",
+                    worms: "报告/过滤蠕虫（检测家族数）",
+                    rushHours: "报告高峰时段",
+                    daysOfWeek: "报告星期分布",
+                    topPages: "报告最常查看页面",
+                    entryPages: "报告入口页面",
+                    exitPages: "报告出口页面",
+                    unorderedEntryExit: "无序记录容忍和重排（入口/出口）",
+                    cgiAsPages: "将 CGI 页面作为页面（不仅仅是请求）",
+                    pagesByDir: "按目录报告页面",
+                    pagesLastAccess: "报告页面的最后访问时间/平均大小",
+                    dynamicFilter: "动态过滤（主机/页面/引用）",
+                    compressionStats: "报告 Web 压缩统计 (mod_gzip,mod_deflate)",
+                    fileTypes: "报告文件类型",
+                    fileSizes: "按文件大小报告",
+                    osDetection: "报告操作系统（检测数量）",
+                    browserDetection: "报告浏览器（检测数量）",
+                    browserVersions: "报告浏览器版本详情",
+                    screenSizes: "报告屏幕尺寸",
+                    techSupport: "浏览器技术支持（Java/Flash/PDF）",
+                    audioSupport: "音频格式支持（Real/QuickTime/Mediaplayer）",
+                    searchEngines: "报告使用的搜索引擎（检测数量）",
+                    keywords: "报告关键词/关键短语（检测数量）",
+                    externalReferer: "报告外部引用网页（带/不带查询）",
+                    httpErrors: "报告 HTTP 错误",
+                    errors404: "报告 404 错误",
+                    customReports: "其他个性化报告（杂项/营销目的）",
+                    dailyStats: "每日统计",
+                    weeklyStats: "每周统计",
+                    monthlyStats: "每月统计",
+                    yearlyStats: "每年统计",
+                    customDateRange: "自定义日期范围",
+                    benchmarkNoDNS: "基准测试（无DNS查找）<br>行/秒（全部功能启用，XLF格式，cygwin Perl 5.8, Athlon 1Ghz）",
+                    benchmarkWithDNS: "基准测试（有DNS查找）<br>行/秒（全部功能启用，XLF格式，cygwin Perl 5.8, Athlon 1Ghz）",
+                    dataFormat: "分析数据保存格式（供第三方工具使用）",
+                    pdfExport: "导出统计到 PDF",
+                    graphicalDisplay: "图形统计显示方式",
+                    
+                    awstatsVersion: "7.2 - 2013年7月",
+                    analogVersion: "6.0 - 2004年12月",
+                    webalizerVersion: "2.01-10 - 2002年4月",
+                    sawmillVersion: "8.5 - 2011年7月",
+                    langPerl: "Perl",
+                    langC: "C",
+                    langCSalang: "C/Salang",
+                    yes: "✓ 是",
+                    no: "✗ 否",
+                    yesWithNote: "✓ 是 (b)",
+                    noWithNote: "✗ 否（仅编译用的混淆代码）",
+                    freeGpl: "免费/GPL",
+                    sawmillPrice: "每个配置文件 $99起<br>精简版/专业版/企业版",
+                    allFeaturesWithNote: "✓ 所有功能可用 (b)",
+                    needsPatch: "✗ 需要补丁",
+                    yesYesYes: "✓/✓/✓",
+                    yesNoNo: "✓/✗/✗",
+                    yesYesYesPlus: "✓/✓/✓ (850+)",
+                    cliAndCgi: "命令行 和/或<br>浏览器 (CGI)",
+                    cliOnly: "✗ 命令行",
+                    cliCgiApi: "命令行 和/或<br>浏览器 (CGI)<br>和/或 HTTP API",
+                    externalScheduler: "外部 (crontab, windows任务计划)",
+                    builtin: "内置",
+                    staticDynamic: "静态和动态",
+                    staticOrDynamic: "静态 或 动态",
+                    yesPerUpdate: "是 (每次更新或自定义)",
+                    yesSession: "✓ 是 (会话)",
+                    yesVisitors: "✓ 是 (访客)",
+                    noVisitsSupport: "✗ 不支持访问",
+                    notSupported: "✗ 不支持",
+                    pagesNote: "页面 *****",
+                    clientIpCookie: "客户端 IP / Cookie<br>自定义 *****",
+                    fromIpOrDomain: "来自 IP 位置 或 域名",
+                    domainOnly: "✗ 域名",
+                    needMaxmindRegions: "需要 Maxmind Regions 数据库",
+                    needMaxmindCities: "需要 Maxmind Cities 数据库",
+                    needMaxmindIsp: "需要 Maxmind ISP 数据库",
+                    needMaxmindOrg: "需要 Maxmind Org 数据库",
+                    yesIncludeGeolite: "✓ 是<br>包含 GeoLite City",
+                    robotsAwstats: "✓/✓ (793**)",
+                    robotsAnalog: "✓/✓ (8**)",
+                    robotsSawmill: "✓/✓ (250**)",
+                    wormsAwstats: "✓/✓ (5)",
+                    wormsSawmill: "✓/✓ (4)",
+                    osAwstats: "✓ (84)",
+                    osAnalog: "✓ (29)",
+                    osWebalizer: "✗ (0)",
+                    browserAwstats: "✓ (210*)",
+                    browserAnalog: "✓ (9*)",
+                    browserWebalizer: "✓ (4*)",
+                    browserSawmill: "✓ (~20*)",
+                    majorMinor: "主要和次要版本",
+                    analogVersions: "默认主要版本，<br>SUBBROW选项可显示次要",
+                    yesWithDepth: "✓ 是及色彩深度",
+                    yesYes: "✓/✓",
+                    noNo: "✗/✗",
+                    noYes: "✗/✓",
+                    yesNo: "✓/✗",
+                    noNoNo: "✗/✗/✗",
+                    yesYesYes: "✓/✓/✓",
+                    onlyIfEndsWith: "✗ 仅当程序以定义值结尾",
+                    noEntryExit: "✗ 不支持入口/出口",
+                    countOnly: "✗ 仅数量",
+                    countAndReferer: "数量 + 引用列表",
+                    countAndDateReferer: "数量 + 最后日期/引用列表",
+                    benchmarkAwstatsNoDns: "5200****",
+                    benchmarkAnalogNoDns: "39000****",
+                    benchmarkWebalizerNoDns: "12000****",
+                    benchmarkWithDns: "80****",
+                    notCalculated: "未计算",
+                    structuredTextOrXml: "结构化文本文件或 XML",
+                    textWithOutput: "带 OUTPUT 选项的文本文件",
+                    flatText: "✗ 纯文本文件",
+                    flatTextOrSql: "纯文本文件 / MySQL/MS SQL/Oracle",
+                    experimental: "实验性",
+                    yesAndMore: "是 &amp; HTML（静态/邮件）&amp; CSV",
+                    onePageOnly: "单页/✗/✗",
+                    onePageMulti: "单页/多页/✗",
+                    onePageMultiFrame: "单页/多页/框架",
+                    searchAwstats: "✓ (228***)",
+                    searchAnalog: "✓ (24)",
+                    searchWebalizer: "✗ (0)",
+                    searchSawmill: "✓ (67***)",
+                    keywordsAwstats: "✓/✓ (118***)",
+                    keywordsAnalog: "✓/✗ (29***)",
+                    keywordsWebalizer: "✗/✓ (14***)",
+                    keywordsSawmill: "✓/✓ (67***)",
+                    
+                    footnoteLabel1: "浏览器检测数量：",
+                    footnoteLabel2: "机器人检测：",
+                    footnoteLabel3: "搜索引擎检测：",
+                    footnoteLabel4: "基准测试说明：",
+                    footnoteLabel5: "访客统计方法：",
+                    footnoteLabelA: "数据来源：",
+                    footnoteLabelB: "日志格式限制：",
+                    
+                    footnote1: "此数字不是检测到的浏览器实际数量。所有浏览器（已知和未知）都可以通过支持用户代理列表的产品检测到（AWStats, Analog, Webalizer, Sawmill）。\"浏览器检测功能\"和数字是指已知浏览器的数量，这些浏览器的不同版本/ID默认被分组为同一浏览器名称。",
+                    footnote2: "AWStats 可以检测机器人访问：所有最常见的机器人都会被检测到，列表在 robotslist.txt (250Kb) 中。无法做到这一点的产品会给您错误的信息，特别是如果您的网站访问者较少。例如，如果您的网站被提交到所有著名搜索引擎，机器人每月可能进行500次访问，以查找更新或查看您的网站是否仍在运行。因此，如果您每月只有2000次访问，没有机器人检测能力的产品将报告2500次访问（25%的错误！）。AWStats 将报告500次来自机器人的访问和2000次来自人类访客的访问。Sawmill Analytics 使用基于 robotstxt.org 数据库的\"当前活跃\"机器人列表。",
+                    footnote3: "AWStats 对最流行的搜索引擎有 URL 语法规则（这就是\"检测数量\"）。这些规则随 AWStats 更新而更新。但 AWStats 也有算法检测具有未知 URL 语法规则的未知搜索引擎的关键词。Sawmill 使用独特语法检测67个搜索引擎，您可以添加任意数量的自定义搜索引擎。",
+                    footnote4: "大多数日志分析器的机器人、搜索引擎、操作系统或浏览器检测能力较弱（或根本没有），功能较少（没有或很少的访问计数，没有过滤规则等）。不可能将所有 AWStats 功能添加到其他日志分析器，所以不要忘记基准测试结果是针对\"不同功能\"的。对于此基准测试，我只是用部分 AWStats 数据库完善了 Webalizer 和 Analog 的机器人或搜索引擎数据库。Webalizer 配置文件用此文件补充，Analog 配置文件用此文件补充。请注意，如果没有这个非常轻量的添加（使用默认配置文件），Webalizer 速度快3倍，Analog 快15%。基准测试在 Athlon 1GHz 上对 combined (XLF/CLF) 日志记录进行。您必须记住，所有这些时间都是没有反向 DNS 查找的。DNS 查找速度取决于您的系统、网络和互联网，但不取决于您使用的日志分析器。因此，在所有日志分析器基准测试中都禁用了 DNS 查找。不要忘记 DNS 查找占用了日志分析器95%的时间（即使有查找缓存），所以如果您的日志文件中主机尚未解析并且启用了 DNS 查找，无论日志分析器的速度如何，整个过程的总时间将几乎相同。",
+                    footnote5: "一些访客使用大量代理服务器上网（例如 AOL 用户），这意味着可能有多个主机（多个 IP 地址）被用来访问您的网站，但只有一个访客（例如，一个代理服务器下载页面，另外两个服务器下载所有图像）。因此，如果唯一访客统计基于\"请求数\"，会报告3个用户，但这是错误的。所以 AWStats 只考虑 HTML 页面来计数唯一访客。这减少了错误（不是完全消除，因为仍然可能有一个代理服务器下载一个 HTML 框架，另一个下载另一个框架）。Sawmill Analytics 允许您选择定义访客的方式 - 默认使用客户端 IP，但您可以使用 cookie（持久或会话）或任何自定义字符串，或日志数据的字符串组合。",
+                    footnoteA: "数据由 Sawmill 公司提供（Graham Smith）。",
+                    footnoteB: "使用此类日志格式，日志文件中没有用户代理信息，因此某些报告无法使用。例如，无法生成浏览器或操作系统报告（信息未存储在日志文件中）。要解决此问题，请使用其他日志格式（如 combined 格式）。",
+                    
+                    sponsorThanks: "感谢 UptimePal 提供的网站监控服务",
+                    
+                    writtenBy: "文章作者：<a href=\"https://www.destailleur.fr\" rel=\"author\" style=\"color: var(--accent);\">Laurent Destailleur</a>。",
+                    version: "版本 8.1",
+                    backToTop: "返回顶部",
+                    footerCopyright: "© 1997 - {year} Laurent Destailleur & AWStats 团队",
+                    footerLicense: "GNU General Public License",
+                    footerGitHub: "GitHub",
+                    darkAttr: "🌓 自适应暗黑 · 现代化重构",
+                },
+                en: {
+                    pageTitle: "AWStats · Log Analyzer Comparison",
+                    navHome: "Home",
+                    navWhat: "What is AWStats",
+                    navSetup: "Setup",
+                    navWebmin: "Webmin Module",
+                    navUpgrade: "Upgrade Guide",
+                    navTools: "Other Tools",
+                    navSecurity: "Security Tips",
+                    navLicense: "License",
+                    navGlossary: "Glossary",
+                    navFAQ: "FAQ",
+                    navExtra: "Extra Sections",
+                    navDolibarr: "Dolibarr Module",
+                    navPlugins: "Plugin Development",
+                    navHooks: "Plugin Hooks",
+                    navGraphs: "Plugin Graphs",
+                    navContrib: "Contrib",
+                    navConfig: "Config",
+                    navCompare: "Compare",
+                    navBenchmark: "Benchmark",
+                    navChangelog: "Changelog",
+                    home: "Home",
+                    currentPage: "Log Analyzer Comparison",
+                    categoryBasic: "📌 Basic Docs",
+                    categoryGuide: "📘 User Guide",
+                    categoryReference: "📚 Reference",
+                    categoryIntegration: "🧩 Integration",
+                    categoryDev: "💻 Developer",
+                    
+                    siteTitle: "AWStats 8.1",
+                    headerSlogan: "⚡ Advanced Log Analyzer · Official Docs",
+                    themeAuto: "Auto",
+                    langZh: "中文",
+                    langEn: "English",
+                    mainTitle: "📊 Log Analyzer Comparison",
+                    
+                    comparisonTitle: "Comparison between AWStats and other famous statistics tools",
+                    feature: "Features/Softwares",
+                    toolAwstats: "AWStats",
+                    toolAnalog: "Analog",
+                    toolWebalizer: "Webalizer",
+                    toolSawmill: "Sawmill Analytics",
+                    
+                    versionDate: "Version - Date",
+                    language: "Language",
+                    allPlatforms: "Available on all platforms",
+                    sourceAvailable: "Readable sources available",
+                    priceLicense: "Price/Licence",
+                    apacheCombined: "Works with Apache combined (XLF/ELF)",
+                    apacheCommon: "Works with Apache common (CLF) log format",
+                    iisW3c: "Works with IIS (W3C) log format",
+                    personalizedFormat: "Works with personalized log format",
+                    analyzeTypes: "Analyze Web/Ftp/Mail log files",
+                    runFrom: "Report and update of statistics from",
+                    scheduler: "Scheduler",
+                    reverseDNS: "Internal reverse DNS lookup",
+                    dnsCache: "DNS cache file",
+                    loadBalancing: "Process logs spitted by load balancing systems",
+                    humanVisits: "Report number of 'human' visits",
+                    humanVisitors: "Report unique 'human' visitors",
+                    sessionDuration: "Report session duration",
+                    unorderedTolerance: "Not ordered records tolerance and reorder for visits",
+                    visitsBasedOn: "Statistics for visits are based on",
+                    visitorsBasedOn: "Statistics for unique visitors are based on",
+                    reportCountries: "Report countries",
+                    reportRegions: "Report regions (US and Canada states)",
+                    reportCities: "Report cities and major countries regions",
+                    reportISP: "Report ISP",
+                    reportOrg: "Report Organizations name",
+                    reportHosts: "Report hosts",
+                    whoisInfo: "Report WhoIs informations on hosts",
+                    authUsers: "Report authenticated users",
+                    robots: "Report/Filter robots (nb detected)",
+                    worms: "Report/Filter worms (nb of families detected)",
+                    rushHours: "Report rush hours",
+                    daysOfWeek: "Report days of week",
+                    topPages: "Report most often viewed pages",
+                    entryPages: "Report entry pages",
+                    exitPages: "Report exit pages",
+                    unorderedEntryExit: "Not ordered records tolerance and reorder for entry/exit pages",
+                    cgiAsPages: "Detection of CGI pages as pages (and not just hits)",
+                    pagesByDir: "Report pages by directory",
+                    pagesLastAccess: "Report pages with last access time/average size",
+                    dynamicFilter: "Dynamic filter on hosts/pages/referers report",
+                    compressionStats: "Report web compression statistics (mod_gzip,mod_deflate)",
+                    fileTypes: "Report file types",
+                    fileSizes: "Report by file size",
+                    osDetection: "Report OS (nb detected)",
+                    browserDetection: "Report browsers (nb detected)",
+                    browserVersions: "Report details of browsers versions",
+                    screenSizes: "Report screen sizes",
+                    techSupport: "Report tech supported by browser for Java/Flash/PDF",
+                    audioSupport: "Report audio format supported by browser for Real/QuickTime/Mediaplayer",
+                    searchEngines: "Report search engines used (nb detected)",
+                    keywords: "Report keywords/keyphrases used on search engines (nb detected)",
+                    externalReferer: "Report external refering web page with/without query",
+                    httpErrors: "Report HTTP Errors",
+                    errors404: "Report 404 Errors",
+                    customReports: "Other personalized reports for miscellanous/marketing purpose",
+                    dailyStats: "Daily statistics",
+                    weeklyStats: "Weekly statistics",
+                    monthlyStats: "Monthly statistics",
+                    yearlyStats: "Yearly statistics",
+                    customDateRange: "Custom date range",
+                    benchmarkNoDNS: "Benchmark with no DNS lookup in lines/seconds<br>(full features enabled, with XLF format, cygwin Perl 5.8, Athlon 1Ghz)",
+                    benchmarkWithDNS: "Benchmark with DNS lookup in lines/seconds<br>(full features enabled, with XLF format, cygwin Perl 5.8, Athlon 1Ghz)",
+                    dataFormat: "Analyzed data save format (to use with third tools)",
+                    pdfExport: "Export statistics to PDF",
+                    graphicalDisplay: "Graphical statistics in one page / several / or frames",
+                    
+                    awstatsVersion: "7.2 - July 2013",
+                    analogVersion: "6.0 - Dec 2004",
+                    webalizerVersion: "2.01-10 - Apr 2002",
+                    sawmillVersion: "8.5 - July 2011",
+                    langPerl: "Perl",
+                    langC: "C",
+                    langCSalang: "C/Salang",
+                    yes: "✓ Yes",
+                    no: "✗ No",
+                    yesWithNote: "✓ Yes (b)",
+                    noWithNote: "✗ No (obfuscated sources only)",
+                    freeGpl: "Free/GPL",
+                    sawmillPrice: "From $99 Per Profile<br>Lite/Pro/Ent",
+                    allFeaturesWithNote: "✓ All features available (b)",
+                    needsPatch: "✗ Needs patch",
+                    yesYesYes: "✓/✓/✓",
+                    yesNoNo: "✓/✗/✗",
+                    yesYesYesPlus: "✓/✓/✓ (850+)",
+                    cliAndCgi: "Command line (CLI) and/or<br>browser (CGI)",
+                    cliOnly: "✗ Command line",
+                    cliCgiApi: "Command line (CLI) and/or<br>browser (CGI)<br>and/or HTTP API",
+                    externalScheduler: "External (crontab, windows task manager)",
+                    builtin: "Built-in",
+                    staticDynamic: "Static and dynamic",
+                    staticOrDynamic: "Static or dynamic",
+                    yesPerUpdate: "Yes (per update, or custom)",
+                    yesSession: "✓ Yes (Sessions)",
+                    yesVisitors: "✓ Yes (Visitors)",
+                    noVisitsSupport: "✗ Visits not supported",
+                    notSupported: "✗ Not supported",
+                    pagesNote: "Pages *****",
+                    clientIpCookie: "Client IP / Cookie<br>Custom *****",
+                    fromIpOrDomain: "From IP location or domain name",
+                    domainOnly: "✗ Domain name",
+                    needMaxmindRegions: "Need Maxmind Regions database",
+                    needMaxmindCities: "Need Maxmind Cities database",
+                    needMaxmindIsp: "Need Maxmind ISP database",
+                    needMaxmindOrg: "Need Maxmind Org database",
+                    yesIncludeGeolite: "✓ Yes<br>GeoLite City included",
+                    robotsAwstats: "✓/✓ (793**)",
+                    robotsAnalog: "✓/✓ (8**)",
+                    robotsSawmill: "✓/✓ (250**)",
+                    wormsAwstats: "✓/✓ (5)",
+                    wormsSawmill: "✓/✓ (4)",
+                    osAwstats: "✓ (84)",
+                    osAnalog: "✓ (29)",
+                    osWebalizer: "✗ (0)",
+                    browserAwstats: "✓ (210*)",
+                    browserAnalog: "✓ (9*)",
+                    browserWebalizer: "✓ (4*)",
+                    browserSawmill: "✓ (~20*)",
+                    majorMinor: "Major and minor versions",
+                    analogVersions: "Major versions by default,<br>minor with SUBBROW option",
+                    yesWithDepth: "✓ Yes & Depths",
+                    yesYes: "✓/✓",
+                    noNo: "✗/✗",
+                    noYes: "✗/✓",
+                    yesNo: "✓/✗",
+                    noNoNo: "✗/✗/✗",
+                    yesYesYes: "✓/✓/✓",
+                    onlyIfEndsWith: "✗ Only if prog ends by a defined value",
+                    noEntryExit: "✗ Entry/Exit not supported",
+                    countOnly: "✗ Nb only",
+                    countAndReferer: "Nb + List referer",
+                    countAndDateReferer: "Nb + List last date/referer",
+                    benchmarkAwstatsNoDns: "5200****",
+                    benchmarkAnalogNoDns: "39000****",
+                    benchmarkWebalizerNoDns: "12000****",
+                    benchmarkWithDns: "80****",
+                    notCalculated: "Not calculated",
+                    structuredTextOrXml: "Structured text file or XML",
+                    textWithOutput: "Text files with OUTPUT option",
+                    flatText: "✗ Flat text file",
+                    flatTextOrSql: "Flat text file / MySQL/MS SQL/Oracle",
+                    experimental: "Experimental",
+                    yesAndMore: "Yes &amp; HTML (static/email) &amp; CSV",
+                    onePageOnly: "One page / ✗ / ✗",
+                    onePageMulti: "One page / several / ✗",
+                    onePageMultiFrame: "One page / several / frames",
+                    searchAwstats: "✓ (228***)",
+                    searchAnalog: "✓ (24)",
+                    searchWebalizer: "✗ (0)",
+                    searchSawmill: "✓ (67***)",
+                    keywordsAwstats: "✓/✓ (118***)",
+                    keywordsAnalog: "✓/✗ (29***)",
+                    keywordsWebalizer: "✗/✓ (14***)",
+                    keywordsSawmill: "✓/✓ (67***)",
+                    
+                    footnoteLabel1: "Number of Browser Detections:",
+                    footnoteLabel2: "Bot Detection:",
+                    footnoteLabel3: "Search Engine Detection:",
+                    footnoteLabel4: "Benchmark Test Description:",
+                    footnoteLabel5: "Visitor Statistics Method:",
+                    footnoteLabelA: "Data Source:",
+                    footnoteLabelB: "Log Format Restrictions:",
+                    
+                    footnote1: "This number is not really the number of browsers detected. All browsers (known and unknown) can be detected by products that support user agent listing (AWStats,Analog,Webalizer,Sawmill). The 'browser detection feature' and number is the number of known browsers for which different versions/ids of same browser are grouped by default in one browser name.",
+                    footnote2: "AWStats can detect robots visits: All robots among the most common are detected, list is in robotslist.txt (250Kb). Products that are not able to do this give you false information, above all if your site has few visitors. For example, if you're site was submitted to all famous search engines, robots can make 500 visits a month, to find updates or to see if your site is still online. So, if you have only 2000 visits a month, products with no robot detection capabilities will report 2500 visits (A 25% error !). AWStats will report 500 visits from robots and 2000 visits from human visitors. Sawmill Analytics uses a 'currently active' list of robots based on the robotstxt.org database.",
+                    footnote3: "AWStats has url syntax rules for the most popular search engines (that's the 'number detected'). Those rules are updated with AWStats updates. But AWStats has also an algorithm to detect keywords of unknown search engines with unknown url syntax rules. Sawmill uses unique syntax to detect 67 search engines, and you can add any number of custom SE's.",
+                    footnote4: "Most log analyzers have poor (or not at all) robots, search engines, os or browsers detection capabilities and less features (no or poor visits count, no filter rules, etc...). It is not possible to add all AWStats features to other log analyzers, so don't forget that benchmarks results are for 'different features'. For this benchmark, I did just complete Webalizer and Analog robots or search engines databases with part of AWStats database. So Webalizer config file was completed with this file, Analog config file was completed with this file. Note that without this very light add (using default conf file), Webalizer speed is 3 times faster, Analog is 15% faster). Benchmark was made on a combined (XLF/CLF) log record on an Athlon 1GHz. You must keep in mind that all this times are without reverse DNS lookup. DNS lookup speed depends on your system, network and Internet but not on the log analyzer you use. For this reason, DNS lookup is disabled in all log analyzer benchmarks. Don't forget that DNS lookup is 95% (even with a lookup cache) of the time used by a log analyzer, so if your host is not already resolved in log file and DNS lookup is enable, the total time of the process will be nearly the same whatever is the speed of the log analyzer.",
+                    footnote5: "Some visitors use a lot of proxy servers to surf (ie: AOL users), this means it's possible that several hosts (with several IP addresses) are used to reach your site for only one visitor (ie: one proxy server download the page and 2 other servers download all images). Because of this, if stats of unique visitors are made on 'Hits', 3 users are reported but it's wrong. So AWStats, considers only HTML pages to count unique visitors. This decrease the error (not totally, because it's always possible that a proxy server download one HTML frame and another one download another frame). Sawmill Analytics allows you to choose what you define as a visitor - by default the client IP is used, but you can use a cookie (persistant or session) or any custom string, or combination of string from the log data.",
+                    footnoteA: "Data were provided by Sawmill company (Graham Smith).",
+                    footnoteB: "With such log format, there is no user agent information in log file, so some reports are broken. For example, it's not possible to make reports on browser or os for (information is not stored in log file). To solve this, use another log format (like the combined format).",
+                    
+                    sponsorThanks: "Thanks to Website monitoring furnished by UptimePal",
+                    
+                    writtenBy: "Article written by <a href=\"https://www.destailleur.fr\" rel=\"author\" style=\"color: var(--accent);\">Laurent Destailleur</a>.",
+                    version: "Version 8.1",
+                    backToTop: "Back to top",
+                    footerCopyright: "© 1997 - {year} Laurent Destailleur & AWStats Team",
+                    footerLicense: "GNU General Public License",
+                    footerGitHub: "GitHub",
+                    darkAttr: "🌓 Adaptive dark mode · Modern refactor",
+                }
+            };
 
-<!-- <td><font color=#4444cc>Yes</font></td> --> <td><font color="#4444cc">Yes</font></td>
-</tr>
-<tr align="center" bgcolor="#eeeeee">
-<td align="left">Not ordered records tolerance and reorder for entry/exit pages</td>
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#660000">Entry/Exit not supported</font></td>
-<td><font color="#660000">No</font></td>
-<!-- <td>?</td> --> <td><font color="#4444cc">Yes</font></td>
-</tr>
+            const i18nElements = document.querySelectorAll('[data-i18n]');
+            const langSelector = document.getElementById('langSelector');
+            let currentLang = localStorage.getItem('awstats_lang') || 'zh';
+            langSelector.value = currentLang;
 
-<tr align="center">
-<td align="left">Detection of CGI pages as pages (and not just hits)</td>
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#660000">Only if prog ends by a defined value</font></td>
-<td><font color="#660000">Only if prog ends by a defined value</font></td>
-<!-- <td><font color=#4444cc>Yes</font></td> --> <td><font color="#4444cc">Yes</font></td>
-</tr>
-<tr align="center" bgcolor="#eeeeee">
-<td align="left">Report pages by directory</td>
-<td><font color="#660000">No</font></td>
+            function applyLanguage(lang) {
+                const t = translations[lang] || translations.zh;
+                i18nElements.forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (t[key] !== undefined) {
+                        if (key === 'footerCopyright' || key === 'copyright') {
+                            const year = new Date().getFullYear();
+                            el.innerHTML = t[key].replace('{year}', year);
+                        } else if (key === 'writtenBy') {
+                            el.innerHTML = t[key];
+                        } else {
+                            el.textContent = t[key];
+                        }
+                    }
+                });
+                localStorage.setItem('awstats_lang', lang);
+                
+                const themeState = localStorage.getItem('awstats_theme') || 'auto';
+                const themeText = document.querySelector('.theme-text');
+                if (themeText) {
+                    if (themeState === 'auto') themeText.textContent = t.themeAuto;
+                    else if (themeState === 'light') themeText.textContent = (lang === 'zh' ? '浅色' : 'Light');
+                    else themeText.textContent = (lang === 'zh' ? '深色' : 'Dark');
+                }
+            }
+            
+            // 自定义下拉菜单功能
+            document.addEventListener('DOMContentLoaded', function() {
+                const customSelect = document.querySelector('.custom-select');
+                if (customSelect) {
+                    const selected = customSelect.querySelector('.select-selected');
+                    const items = customSelect.querySelectorAll('.select-items div');
+                    
+                    selected.addEventListener('click', function() {
+                        customSelect.classList.toggle('active');
+                    });
+                    
+                    items.forEach(item => {
+                        item.addEventListener('click', function() {
+                            const value = this.getAttribute('data-value');
+                            const text = this.textContent;
+                            
+                            // 更新显示
+                            selected.textContent = text;
+                            selected.setAttribute('data-value', value);
+                            
+                            // 更新实际 select 的值
+                            document.getElementById('langSelector').value = value;
+                            
+                            // 触发 change 事件
+                            document.getElementById('langSelector').dispatchEvent(new Event('change'));
+                            
+                            // 关闭下拉菜单
+                            customSelect.classList.remove('active');
+                        });
+                    });
+                    
+                    // 点击其他地方关闭
+                    document.addEventListener('click', function(e) {
+                        if (!customSelect.contains(e.target)) {
+                            customSelect.classList.remove('active');
+                        }
+                    });
+                }
+            });
+            
+            // 点击展开下拉菜单功能
+            document.addEventListener('DOMContentLoaded', function() {
+                const dropdownItems = document.querySelectorAll('.dropdown-item');
+                
+                // 点击其他地方关闭所有下拉菜单
+                document.addEventListener('click', function(event) {
+                    if (!event.target.closest('.dropdown-item')) {
+                        dropdownItems.forEach(item => {
+                            item.classList.remove('active');
+                        });
+                    }
+                });
+                
+                // 点击下拉菜单标题切换显示
+                dropdownItems.forEach(item => {
+                    const title = item.querySelector('.dropdown-title');
+                    title.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        
+                        // 关闭其他打开的下拉菜单
+                        dropdownItems.forEach(otherItem => {
+                            if (otherItem !== item) {
+                                otherItem.classList.remove('active');
+                            }
+                        });
+                        
+                        // 切换当前菜单的显示状态
+                        item.classList.toggle('active');
+                    });
+                    
+                    // 防止点击下拉内容时关闭菜单
+                    const content = item.querySelector('.dropdown-content');
+                    if (content) {
+                        content.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                        });
+                    }
+                    
+                    // 按 ESC 键关闭所有菜单
+                    document.addEventListener('keydown', function(e) {
+                        if (e.key === 'Escape') {
+                            dropdownItems.forEach(item => {
+                                item.classList.remove('active');
+                            });
+                        }
+                    });
+                });
+            });
+            
+            // 手机端汉堡菜单功能
+            document.addEventListener('DOMContentLoaded', function() {
+                const mobileToggle = document.getElementById('mobileMenuToggle');
+                const mobileMenu = document.getElementById('mobileMenu');
+                
+                if (mobileToggle && mobileMenu) {
+                    mobileToggle.addEventListener('click', function() {
+                        mobileMenu.classList.toggle('mobile-active');
+                        
+                        // 改变图标样式
+                        if (mobileMenu.classList.contains('mobile-active')) {
+                            mobileToggle.innerHTML = '✕';
+                        } else {
+                            mobileToggle.innerHTML = '☰';
+                        }
+                    });
+                }
+            });
+            
+            applyLanguage(currentLang);
 
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#660000">No</font></td>
-<!-- <td><font color=#660000>No</font></td> --> <td><font color="#4444cc">Yes</font></td>
-</tr>
-<tr align="center">
-<td align="left">Report pages with last access time/average size</td>
-<td><font color="#4444cc">Yes/Yes</font></td>
-<td><font color="#4444cc">Yes</font>/<font color="#660000">No</font></td>
+            langSelector.addEventListener('change', (e) => {
+                currentLang = e.target.value;
+                applyLanguage(currentLang);
+            });
 
-<td><font color="#660000">No/No</font></td>
-<!-- <td><font color=#660000>No/No</font></td> --> <td><font color="#4444cc">Yes</font>/<font color="#660000">No</font></td>
-</tr>
-<tr align="center" bgcolor="#eeeeee">
-<td align="left">Dynamic filter on hosts/pages/referers report</td>
-<td><font color="#4444cc">Yes/Yes/Yes</font></td>
-<td><font color="#660000">No/No/No</font></td>
-<td><font color="#660000">No/No/No</font></td>
+            // 暗黑模式切换
+            const root = document.documentElement;
+            const themeBtn = document.getElementById('themeToggleBtn');
+            let themeState = localStorage.getItem('awstats_theme') || 'auto';
 
-<!-- <td><font color=#660000>No/No/No</font></td> --> <td><font color="#4444cc">Yes/Yes/Yes</font></td>
-</tr>
-<tr align="center">
-<td align="left">Report web compression statistics (mod_gzip,mod_deflate)</td>
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#660000">No</font></td>
-<td><font color="#660000">No</font></td>
-<!-- <td><font color=#660000>No</font></td> --> <td><span class="style2">No</span></td>
-</tr>
-
-<tr align="center" bgcolor="#eeeeee">
-<td align="left">Report file types</td>
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#660000">No</font></td>
-<!-- <td><font color=#660000>No</font></td> --> <td><font color="#4444cc">Yes</font></td>
-</tr>
-<tr align="center">
-<td align="left">Report by file size</td>
-<td><font color="#660000">No</font></td>
-
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#660000">No</font></td>
-<!-- <td><font color=#660000>No</font></td> --> <td><font color="#4444cc">Yes</font></td>
-</tr>
-<tr align="center" bgcolor="#eeeeee">
-<td align="left">Report OS (nb detected)</td>
-<td><font color="#4444cc">Yes (84)</font></td>
-<td><font color="#4444cc">Yes</font><font color="#660000"> (29)</font></td>
-
-<td><font color="#660000">No (0)</font></td>
-<!-- <td>?</td> --> <td><font color="#4444cc">Yes</font></td>
-</tr>
-<tr align="center">
-<td align="left">Report browsers (nb detected)</td>
-<td><font color="#4444cc">Yes (210*)</font></td>
-<td><font color="#4444cc">Yes</font><font color="#660000"> (9*)</font></td>
-<td><font color="#4444cc">Yes</font><font color="#660000"> (4*)</font></td>
-
-<!-- <td><font color=#4444cc>Yes</font><font color=#660000> (<20*)</font></td> -->
-<td><font color="#4444cc">Yes (~20*) </font></td>
-</tr>
-<tr align="center" bgcolor="#eeeeee">
-<td align="left">Report details of browsers versions</td>
-<td><font color="#4444cc">Major and minor
-versions</font></td>
-<td><font color="#4444cc">Major versions by
-default,<br>
-minor with SUBBROW option</font></td>
-<td><font color="#4444cc">Major an minor
-versions</font></td>
-<!-- <td><font color=#4444cc>Major and minor versions</font></td> -->
-<td><font color="#4444cc">Major and minor
-versions</font></td>
-
-</tr>
-<tr align="center">
-<td align="left">Report screen sizes</td>
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#660000">No</font></td>
-<td><font color="#660000">No</font></td>
-<!-- <td><font color=#4444cc>Yes</font></td> --> <td><font color="#4444cc">Yes &amp; Depths</font></td>
-</tr>
-<tr align="center" bgcolor="#eeeeee">
-
-<td align="left">Report tech supported by browser
-for Java/Flash/PDF</td>
-<td><font color="#4444cc">Yes/Yes/Yes</font></td>
-<td><font color="#660000">No/No/No</font></td>
-<td><font color="#660000">No/No/No</font></td>
-<!-- <td><font color=#660000>No/No/No</font></td> --> <td><font color="#660000">No/No/No</font></td>
-</tr>
-<tr align="center">
-<td align="left">Report audio format supported by
-browser for Real/QuickTime/Mediaplayer</td>
-<td><font color="#4444cc">Yes/Yes/Yes</font></td>
-
-<td><font color="#660000">No/No/No</font></td>
-<td><font color="#660000">No/No/No</font></td>
-<!-- <td><font color=#660000>No/No/No</font></td> --> <td><font color="#660000">No/No/No</font></td>
-</tr>
-<!-- Referrer -->
-<tr align="center" bgcolor="#eeeeee">
-<td align="left">Report search engines used (nb
-detected)</td>
-<td><font color="#4444cc">Yes (228***)</font></td>
-<td><font color="#4444cc">Yes </font><font color="#660000">(24)</font></td>
-
-<td><font color="#660000">No (0)</font></td>
-<!-- <td><font color=#4444cc>Yes</font><font color=#660000> (<20 ***)</font></td> -->
-<td><font color="#4444cc">Yes (67***)</font></td>
-</tr>
-<tr align="center">
-<td align="left">Report keywords/keyphrases used on
-search engines (nb detected)</td>
-<td><font color="#4444cc">Yes/Yes (118***)</font></td>
-<td><font color="#4444cc">Yes</font>/<font color="#660000">No</font><font color="#660000">
-(29***)</font></td>
-
-<td><font color="#660000">No</font>/<font color="#4444cc">Yes</font><font color="#660000">
-(14***)</font></td>
-<!-- <td><font color=#4444cc>Yes</font>/<font color=#660000>No (<20***)</font></td> -->
-<td><font color="#4444cc">Yes/Yes (67***)</font></td>
-</tr>
-<tr align="center" bgcolor="#eeeeee">
-<td align="left">Report external refering web page
-with/without query</td>
-<td><font color="#4444cc">Yes/Yes</font></td>
-<td><font color="#660000">No/No</font></td>
-
-<td><font color="#660000">No</font>/<font color="#4444cc">Yes</font></td>
-<!-- <td><font color=#4444cc>Yes</font>/<font color=#660000>No</font></td> -->
-<td><font color="#4444cc">Yes/Yes</font></td>
-</tr>
-<!-- Misc -->
-<tr align="center">
-<td align="left">Report HTTP Errors</td>
-<td><font color="#4444cc">Yes<br>
-</font></td>
-<td><font color="#4444cc">Yes</font></td>
-
-<td><font color="#4444cc">Yes</font></td>
-<!-- <td><font color=#660000>No</font></td> --> <td><font color="#4444cc">Yes</font></td>
-</tr>
-<tr align="center" bgcolor="#eeeeee">
-<td align="left">Report 404 Errors</td>
-<td><font color="#4444cc">Nb +
-List&nbsp;referer<br>
-</font></td>
-<td><font color="#660000">Nb only</font></td>
-<td><font color="#660000">Nb only</font></td>
-
-<!-- <td><font color=#660000>No</font></td> --> <td><font color="#4444cc">Nb + List last date/referer</font></td>
-</tr>
-<tr align="center">
-<td align="left">Other personalized reports for
-miscellanous/marketing purpose</td>
-<td><font color="#4444cc">Yes<br>
-</font></td>
-<td><font color="#660000">No</font></td>
-<td><font color="#660000">No</font></td>
-<!-- <td><font color=#660000>No</font></td> --> <td><font color="#4444cc">Yes</font></td>
-
-</tr>
-<tr align="center" bgcolor="#eeeeee">
-<td align="left">Daily statistics </td>
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#4444cc">Yes</font></td>
-<!-- <td><font color=#4444cc>Yes</font></td> --> <td><font color="#4444cc">Yes</font></td>
-</tr>
-<tr align="center">
-<td align="left">Weekly statistics </td>
-
-<td><font color="#660000">No</font></td>
-<td><font color="#660000">No</font></td>
-<td><font color="#660000">No</font></td>
-<!-- <td>?</td> --> <td><font color="#4444cc">Yes</font></td>
-</tr>
-<tr align="center" bgcolor="#eeeeee">
-<td align="left">Monthly statistics </td>
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#4444cc">Yes</font></td>
-
-<td><font color="#4444cc">Yes</font></td>
-<!-- <td><font color=#4444cc>Yes</font></td> --> <td><font color="#4444cc">Yes</font></td>
-</tr>
-<tr align="center">
-<td align="left">Yearly statistics </td>
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#4444cc">Yes</font></td>
-<td><font color="#4444cc">Yes</font></td>
-<!-- <td><font color=#4444cc>Yes</font></td> --> <td><font color="#4444cc">Yes</font></td>
-
-</tr>
-<tr align="center" bgcolor="#eeeeee">
-<td align="left">Custom date range </td>
-<td><font color="#660000">No</font></td>
-<td><font color="#660000">No</font></td>
-<td><font color="#660000">No</font></td>
-<!-- <td>?</td> --> <td><font color="#4444cc">Yes</font></td>
-</tr>
-<tr align="center">
-<td align="left">Benchmark with no DNS lookup in
-lines/seconds<br>
-
-(full features enabled, with XLF format, cygwin Perl 5.8, Athlon 1Ghz)</td>
-<td><font color="#660000">5200****</font></td>
-<td><font color="#4444cc">39000****</font></td>
-<td><font color="#660000">12000****</font></td>
-<!-- <td>NA<br>No program to run</td> --> <td>Not
-calculated</td>
-</tr>
-<tr align="center" bgcolor="#eeeeee">
-<td align="left">Benchmark with DNS lookup in
-lines/seconds<br>
-(full features enabled, with XLF format, cygwin Perl 5.8, Athlon 1Ghz)</td>
-
-<td><font color="#4444cc">80****</font></td>
-<td><font color="#4444cc">80****</font></td>
-<td><font color="#4444cc">80****</font></td>
-<!-- <td>NA<br>No program to run</td> --> <td>Not
-calculated</td>
-</tr>
-<tr align="center">
-<td align="left">Analyzed data save format (to use
-with third tools)</td>
-<td><font color="#4444cc">Structured text file
-or XML</font></td>
-<td><font color="#4444cc">Text files with
-OUTPUT option</font></td>
-
-<td><font color="#660000">Flat text file</font></td>
-<!-- <td><font color=#660000>Not possible</font></td> --> <td><font color="#660000">Flat text file</font>/<font color="#4444cc">MySQL/MS SQL/Oracle</font></td>
-</tr>
-<tr align="center" bgcolor="#eeeeee">
-<td align="left">Export statistics to PDF</td>
-<td>Experimental</td>
-<td><font color="#660000">No</font></td>
-<td><font color="#660000">No</font></td>
-
-<!-- <td><font color=#660000>No</font></td> --> <td><span class="style1">Yes</span><font color="#660000"> &amp; <br>
-HTML (static/email) &amp; CSV</font></td>
-</tr>
-<tr align="center">
-<td align="left">Graphical statistics in one page /
-several / or frames</td>
-<td><font color="#4444cc">Yes/Yes/Yes</font></td>
-<td><font color="#4444cc">Yes</font>/<font color="#660000">No/No</font></td>
-
-<td><font color="#4444cc">Yes/Yes</font>/<font color="#660000">No</font></td>
-<!-- <td><font color=#660000>No</font>/<font color=#4444cc>Yes/Yes</font></td> -->
-<td><font color="#4444cc">Yes/Yes/Yes</font></td>
-</tr>
-</tbody>
-</table>
-<br>
-<font style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 8pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">
-* This number is not really the number of browsers detected. All
-browsers (known and unknown) can be detected by products that support
-user agent listing (AWStats,Analog,Webalizer,Sawmill). The 'browser
-detection feature' and number is the number of known browsers for which
-different versions/ids of same browser are grouped by default in one
-browser name.<br>
-<br>
-** AWStats can detect robots visits: All robots among the most common
-are detected, list is in <a href="http://www.robotstxt.org/wc/active/all.txt">robotslist.txt</a>
-
-(250Kb). Products that are not able to do this give you false
-information, above all if your site has few visitors. For example, if
-you're site was submitted to all famous search engines, robots can make
-500 visits a month, to find updates or to see if your site is still
-online. So, if you have only 2000 visits a month, products with no
-robot detection capabilities will report 2500 visits (A 25% error !).
-AWStats will report 500 visits from robots and 2000 visits from human
-visitors.Sawmill Analytics uses a "currently active" list of robots
-based on the <a href="http://www.robotstxt.org/db.html" target="_blank">robotstxt.org</a> database.<br>
-<br>
-*** AWStats has url syntax rules for the most popular search engines
-(that's the 'number detected'). Those rules are updated with AWStats
-updates. But AWStats has also an algorithm to detect keywords of
-unknown search engines with unknown url syntax rules. Sawmill uses
-unique syntax to detect 67 search engines, and you can add any number
-of custom SE's. <br>
-<br>
-**** Most log analyzers have poor (or not at all) robots, search
-engines, os or browsers detection capabilities and less features (no or
-poor visits count, no filter rules, etc...).<br>
-It is not possible to add all AWStats features to other log analyzers,
-so don't forget that benchmarks results are for 'different features'.
-For this benchmark, I did just complete Webalizer and Analog robots or
-search engines databases with part of AWStats database. So Webalizer
-config file was completed with this <a href="http://www.awstats.org/files/webalizeradd.txt">file</a>,
-Analog config file was completed with this <a href="http://www.awstats.org/files/analogadd.txt">file</a>.
-Note that without this very light add (using default conf file),
-Webalizer speed is 3 times faster, Analog is 15% faster).<br>
-
-Benchmark was made on a combined (XLF/CLF) log record on an Athlon 1GHz.<br>
-You must keep in mind that all this times are without reverse DNS
-lookup. DNS lookup speed depends on your system, network and Internet
-but not on the log analyzer you use. For this reason, DNS lookup is
-disabled in all log analyzer benchmarks. Don't forget that DNS lookup
-is 95% (even with a lookup cache) of the time used by a log analyzer,
-so if your host is not already resolved in log file and DNS lookup is
-enable, the total time of the process will be nearly the same whatever
-is the speed of the log analyzer.<br>
-<br>
-***** Some visitors
-use a lot of proxy servers to surf (ie: AOL users), this means it's
-possible that several hosts (with several IP addresses) are used to
-reach your site for only one visitor (ie: one proxy server download the
-page and 2 other servers download all images). Because of this, if
-stats of unique visitors are made on "Hits", 3 users are reported but
-it's wrong. So AWStats, considers only HTML pages to count unique
-visitors. This decrease the error (not totally, because
-it's always possible that a proxy server download one HTML frame and
-another one download another frame).</font><font style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 8pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">
-Sawmill Analytics allows you to choose what you define as a visitor -
-by default the client IP is used, but you can use a cookie (persistant
-or session) or any custom string, or combination of string from teh log
-data. <br>
-<br>
-(a) Data were provided by Sawmill company (Graham Smith).<br>
-<br>
-(b) With such log format, there is no user agent information in log
-file, so some reports are broken. For example, it's not possible to
-make reports on browser or os for (information is not stored in log
-file). To solve this, use another log format (like the combined
-format). </font>
-<hr>
-
-
-<!-- You can remove this part if you distribution need documentation without external tags -->
-<!-- BEGIN_SOCIAL_NETWORKS -->
-<div class="htmldoc-ignore">
-<!-- google plus -->
-<span style="color: #bbb; font-weight: normal;">Article written by <a href="https://www.destailleur.fr" rel="author" style="color: #ccc; font-weight: normal;">Laurent Destailleur</a>.</span><br>
-<br>
-<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-<g:plusone></g:plusone>
-<!-- facebook -->
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/fr_FR/all.js#xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-<div class="fb-like" data-href="http://www.awstats.org/docs/awstats_compare.html" data-layout="button_count" data-action="recommend" data-show-faces="false" data-share="true"></div>
-</div>
-<br>
-<!-- Link from 2016-05-11 to 2017-05-11 -->
-Thanks to <a href="https://uptimepal.net" target="_blank">Website monitoring</a> furnished by UptimePal.<br> 
-<!-- END_SOCIAL_NETWORKS -->
-
-
-</body></html>
+            function applyTheme(state) {
+                root.classList.remove('force-light', 'force-dark');
+                if (state === 'light') root.classList.add('force-light');
+                else if (state === 'dark') root.classList.add('force-dark');
+                const themeText = document.querySelector('.theme-text');
+                if (themeText) {
+                    const lang = currentLang;
+                    const t = translations[lang];
+                    if (state === 'auto') themeText.textContent = t.themeAuto;
+                    else if (state === 'light') themeText.textContent = (lang === 'zh' ? '浅色' : 'Light');
+                    else themeText.textContent = (lang === 'zh' ? '深色' : 'Dark');
+                }
+                localStorage.setItem('awstats_theme', state);
+            }
+            applyTheme(themeState);
+            themeBtn.addEventListener('click', () => {
+                if (themeState === 'auto') themeState = 'light';
+                else if (themeState === 'light') themeState = 'dark';
+                else themeState = 'auto';
+                applyTheme(themeState);
+            });
+        })();
+    </script>
+</body>
+</html>

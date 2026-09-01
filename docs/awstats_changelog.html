@@ -1,0 +1,3185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWStats · 更新日志</title>
+    <meta name="description" content="AWStats Documentation - Changelog (中文/English)">
+    <meta name="keywords" content="awstats, changelog, history, versions, 更新日志">
+    <meta name="author" content="Laurent Destailleur (多语言重构)">
+    <meta name="robots" content="index,follow">
+    <style>
+	* { 
+		margin: 0; 
+		padding: 0; 
+		box-sizing: border-box; 
+	}
+
+	/* ===== 主题变量 ===== */
+	:root {
+		--bg-page: #f8fafc; 
+		--surface: #ffffff; 
+		--surface-secondary: #f1f5f9;
+		--text-primary: #0f172a; 
+		--text-secondary: #475569; 
+		--accent: #4f46e5;
+		--accent-light: #818cf8; 
+		--accent-soft: #eef2ff; 
+		--border: #e2e8f0;
+		--card-shadow: 0 20px 25px -5px rgba(0,0,0,0.05), 0 10px 10px -5px rgba(0,0,0,0.02);
+		--header-bg: linear-gradient(135deg, #4f46e5 0%, #4f46e5 100%);
+		--footer-bg: #eef2ff; 
+		--link-color: #4f46e5; 
+		--link-visited: #4f46e5; /* 统一为 link-color，移除紫色 */
+		--code-bg: #f1f5f9; 
+		--success: #10b981; 
+		--warning: #f59e0b; 
+		--danger: #ef4444;
+		--star-color: #fbbf24;
+        --timeline-left-width: 180px;
+        --timeline-line: var(--accent);
+        --timeline-dot-size: 16px;
+        --timeline-dot: var(--accent);
+        --era-concept: #f59e0b;
+        --era-foundation: #10b981;
+        --era-logic: #8b5cf6;
+        --era-preopen: #ec4899;
+	}
+
+	/* 深色模式 */
+	@media (prefers-color-scheme: dark) {
+		:root {
+			--bg-page: #0f172a; 
+			--surface: #1e293b; 
+			--surface-secondary: #334155;
+			--text-primary: #f1f5f9; 
+			--text-secondary: #cbd5e1; 
+			--accent: #818cf8;
+			--accent-light: #a5b4fc; 
+			--accent-soft: #2d3a5e; 
+			--border: #475569;
+			--card-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
+			--header-bg: linear-gradient(135deg, #4f46e5 0%, #4f46e5 100%);
+			--footer-bg: #1e293b; 
+			--link-color: #a5b4fc; 
+			--link-visited: #a5b4fc;
+			--code-bg: #334155; 
+			--success: #34d399; 
+			--warning: #fbbf24; 
+			--danger: #f87171;
+            --tag-refactor-bg: #8b5cf6;
+            --tag-refactor-text: #ffffff;
+            --timeline-line: var(--accent);
+            --timeline-dot: var(--accent);
+		}
+	}
+
+	/* 强制浅色模式 */
+	.force-light,
+	.force-light :root {
+		--bg-page: #f8fafc; 
+		--surface: #ffffff; 
+		--surface-secondary: #f1f5f9;
+		--text-primary: #0f172a; 
+		--text-secondary: #475569; 
+		--accent: #4f46e5;
+		--accent-light: #818cf8; 
+		--accent-soft: #eef2ff; 
+		--border: #e2e8f0;
+		--card-shadow: 0 20px 25px -5px rgba(0,0,0,0.05), 0 10px 10px -5px rgba(0,0,0,0.02);
+		--header-bg: linear-gradient(135deg, #4f46e5 0%, #4f46e5 100%);
+		--footer-bg: #eef2ff; 
+		--link-color: #4f46e5; 
+		--link-visited: #4f46e5;
+		--code-bg: #f1f5f9;
+		--success: #10b981; 
+		--warning: #f59e0b; 
+		--danger: #ef4444;
+	}
+
+	/* 强制深色模式 */
+	.force-dark,
+	.force-dark :root {
+		--bg-page: #0f172a; 
+		--surface: #1e293b; 
+		--surface-secondary: #334155;
+		--text-primary: #f1f5f9; 
+		--text-secondary: #cbd5e1; 
+		--accent: #818cf8;
+		--accent-light: #a5b4fc; 
+		--accent-soft: #2d3a5e; 
+		--border: #475569;
+		--card-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
+		--header-bg: linear-gradient(135deg, #4f46e5 0%, #4f46e5 100%);
+		--footer-bg: #1e293b; 
+		--link-color: #a5b4fc; 
+		--link-visited: #a5b4fc;
+		--code-bg: #334155; 
+        --tag-refactor-bg: #a78bfa;
+        --tag-refactor-text: #000000;
+		--success: #34d399; 
+		--warning: #fbbf24; 
+		--danger: #f87171;
+	}
+
+	/* ===== 基础样式 ===== */
+	body {
+		background-color: var(--bg-page); 
+		color: var(--text-primary);
+		font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+		line-height: 1.6; 
+		margin: 0; 
+		padding: 0;
+		transition: background-color 0.2s ease, color 0.2s ease;
+		display: flex; 
+		flex-direction: column; 
+		min-height: 100vh;
+	}
+
+	.container { 
+		max-width: 1300px; 
+		margin: 0 auto; 
+		padding: 0 28px; 
+		width: 100%; 
+	}
+    .tag-refactor {
+        background: var(--tag-refactor-bg);
+        color: var(--tag-refactor-text);
+    }
+	/* ===== 链接全局样式 - 移除下划线和访问颜色变化 ===== */
+	a, a:link, a:visited {
+		text-decoration: none;
+		color: var(--link-color);
+		transition: color 0.2s ease;
+	}
+
+	a:hover {
+		color: var(--accent);
+	}
+
+	/* ===== 导航栏基础 ===== */
+	.nav-bar {
+		background: var(--surface);
+		border-bottom: 1px solid var(--border);
+		padding: 12px 0;
+		position: sticky;
+		top: 0;
+		z-index: 100;
+		backdrop-filter: blur(12px);
+		background-color: rgba(var(--surface-rgb), 0.8);
+	}
+
+	/* ===== 桌面端样式 (≥701px) ===== */
+	@media (min-width: 701px) {
+		.nav-container {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			gap: 20px;
+		}
+		
+		.nav-header {
+			display: flex;
+			align-items: center;
+			gap: 20px;
+			flex-shrink: 0;
+		}
+		
+		.nav-left {
+			display: flex;
+			align-items: center;
+			gap: 20px;
+		}
+		
+		.nav-home {
+			font-weight: 700;
+			font-size: 1.3rem;
+			background: linear-gradient(135deg, var(--accent), var(--accent-light));
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			white-space: nowrap;
+		}
+		
+		.breadcrumb {
+			display: flex;
+			gap: 8px;
+			align-items: center;
+			color: var(--text-secondary);
+			font-size: 0.9rem;
+			white-space: nowrap;
+		}
+		
+		.dropdown-menu {
+			display: flex;
+			align-items: center;
+			gap: 4px;
+			flex-wrap: nowrap;
+			margin-top: 0;
+		}
+		
+		.dropdown-item {
+			position: relative;
+			flex-shrink: 0;
+		}
+		
+		.dropdown-title {
+			padding: 6px 12px;
+			background: var(--surface-secondary);
+			border: 1px solid var(--border);
+			border-radius: 30px;
+			font-weight: 500;
+			font-size: 0.95rem;
+			color: var(--text-primary);
+			cursor: pointer;
+			transition: all 0.2s;
+			white-space: nowrap;
+			user-select: none;
+		}
+		
+		.dropdown-title:hover {
+			background: var(--accent-soft);
+			color: var(--accent);
+			border-color: var(--accent-light);
+		}
+		
+		.dropdown-content {
+			position: absolute;
+			top: 100%;
+			left: 0;
+			min-width: 220px;
+			background: var(--surface);
+			border: 1px solid var(--border);
+			border-radius: 16px;
+			padding: 12px;
+			box-shadow: var(--card-shadow);
+			display: none;
+			z-index: 1000;
+			margin-top: 5px;
+		}
+		
+		.mobile-menu-toggle {
+			display: none;
+		}
+	}
+
+	/* ===== 移动端样式 (≤700px) ===== */
+	@media (max-width: 700px) {
+		.nav-container {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+		}
+		
+		.nav-header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			width: 100%;
+			gap: 10px;
+		}
+		
+		.nav-left {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			flex: 1;
+		}
+		
+		.nav-home {
+			font-weight: 700;
+			font-size: 1.1rem;
+			background: linear-gradient(135deg, var(--accent), var(--accent-light));
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			white-space: nowrap;
+		}
+		
+		.breadcrumb {
+			display: flex;
+			gap: 8px;
+			align-items: center;
+			color: var(--text-secondary);
+			font-size: 0.8rem;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			max-width: 150px;
+		}
+		
+		/* 汉堡菜单按钮 */
+		.mobile-menu-toggle {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 40px;
+			height: 40px;
+			background: var(--surface-secondary);
+			border: 1px solid var(--border);
+			border-radius: 40px;
+			color: var(--text-primary);
+			font-size: 1.2rem;
+			cursor: pointer;
+			transition: all 0.2s;
+			margin-left: auto;
+		}
+		
+		.mobile-menu-toggle:hover {
+			background: var(--accent-soft);
+			color: var(--accent);
+		}
+		
+		/* 导航菜单 - 默认隐藏 */
+		.dropdown-menu {
+			display: none;
+			flex-direction: column;
+			width: 100%;
+			gap: 8px;
+			margin-top: 5px;
+		}
+		
+		/* 菜单展开时显示 */
+		.dropdown-menu.mobile-active {
+			display: flex;
+		}
+		
+		.dropdown-item {
+			width: 100%;
+			position: relative;
+		}
+		
+		.dropdown-title {
+			width: 100%;
+			padding: 12px 16px;
+			background: var(--surface-secondary);
+			border: 1px solid var(--border);
+			border-radius: 40px;
+			font-weight: 500;
+			color: var(--text-primary);
+			cursor: pointer;
+			transition: all 0.2s;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			user-select: none;
+			font-size: 0.95rem;
+		}
+		
+		.dropdown-title:hover {
+			background: var(--accent-soft);
+			color: var(--accent);
+		}
+		
+		.dropdown-title::after {
+			content: "▼";
+			font-size: 0.7rem;
+			transition: transform 0.2s;
+		}
+		
+		.dropdown-item.active .dropdown-title::after {
+			transform: rotate(180deg);
+		}
+		
+		.dropdown-content {
+			position: static;
+			width: 100%;
+			margin-top: 5px;
+			background: var(--surface);
+			border: 1px solid var(--border);
+			border-radius: 16px;
+			padding: 8px;
+			box-shadow: none;
+			display: none;
+		}
+		
+		.dropdown-content a {
+			width: 100%;
+			text-align: center;
+			padding: 10px;
+			color: var(--text-secondary);
+			font-weight: 500;
+			border-radius: 30px;
+			transition: all 0.2s;
+			font-size: 0.95rem;
+			background: var(--surface-secondary);
+			border: 1px solid var(--border);
+			white-space: nowrap;
+			margin: 2px 0;
+		}
+		
+		.dropdown-content a:hover {
+			background: var(--accent-soft);
+			color: var(--accent);
+		}
+		
+		.dropdown-content a.active {
+			background: var(--accent);
+			color: white;
+			border-color: var(--accent);
+		}
+	}
+
+	/* ===== 下拉菜单通用样式 ===== */
+	.dropdown-item.active .dropdown-content {
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+		width: auto;
+		min-width: auto;
+	}
+
+	.dropdown-content a {
+		color: var(--text-secondary);
+		font-weight: 500;
+		padding: 8px 12px;
+		border-radius: 30px;
+		transition: all 0.2s;
+		font-size: 0.95rem;
+		background: var(--surface-secondary);
+		border: 1px solid var(--border);
+		white-space: nowrap;
+	}
+
+	.dropdown-content a:hover {
+		background: var(--accent-soft);
+		color: var(--accent);
+	}
+
+	.dropdown-content a.active {
+		background: var(--accent);
+		color: white;
+		border-color: var(--accent);
+	}
+
+	/* ===== 头部样式 ===== */
+	.header {
+		background: var(--header-bg); 
+		color: white; 
+		border-radius: 0 0 40px 40px;
+		padding: 24px 0 32px; 
+		box-shadow: var(--card-shadow); 
+		margin-bottom: 30px;
+	}
+
+	.header-row {
+		display: flex; 
+		align-items: center; 
+		justify-content: space-between;
+		flex-wrap: wrap; 
+		gap: 20px;
+	}
+
+	.logo-area { 
+		display: flex; 
+		align-items: center; 
+		gap: 16px; 
+	}
+
+	.logo-area img { 
+		height: 60px; 
+		width: auto; 
+	}
+
+	.site-title {
+		font-size: 1.5rem; 
+		font-weight: 700; 
+		background: rgba(255,255,255,0.1);
+		padding: 8px 24px; 
+		border-radius: 60px; 
+		backdrop-filter: blur(8px);
+		border: 1px solid rgba(255,255,255,0.2);
+		color: white;
+		text-decoration: none;
+	}
+
+	.header-center {
+		flex: 1; 
+		text-align: center; 
+		font-weight: 500; 
+		font-size: 1.5rem;
+		background: rgba(0,0,0,0.1); 
+		padding: 8px 24px; 
+		border-radius: 60px;
+		backdrop-filter: blur(8px); 
+		border: 1px solid rgba(255,255,255,0.15);
+	}
+
+	.header-right { 
+		display: flex; 
+		gap: 12px; 
+		align-items: center; 
+	}
+
+	/* ===== 自定义语言切换 ===== */
+	.custom-select {
+		position: relative;
+		background: rgba(255,255,255,0.15);
+		border: 1px solid rgba(255,255,255,0.3);
+		border-radius: 40px;
+		padding: 6px 16px;
+		color: white;
+		font-weight: 500;
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		backdrop-filter: blur(8px);
+		cursor: pointer;
+		min-width: 100px;
+	}
+
+	.custom-select:hover {
+		background: rgba(255,255,255,0.25);
+		border-color: rgba(255,255,255,0.5);
+	}
+
+	.select-selected {
+		flex: 1;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	.select-selected::after {
+		content: "▼";
+		font-size: 0.7rem;
+		margin-left: 8px;
+		opacity: 0.8;
+		transition: transform 0.2s;
+	}
+
+	.custom-select.active .select-selected::after {
+		transform: rotate(180deg);
+	}
+
+	.select-items {
+		position: absolute;
+		top: 100%;
+		right: 0;
+		left: 0;
+		margin-top: 5px;
+		background: var(--surface);
+		border: 1px solid var(--border);
+		border-radius: 20px;
+		overflow: hidden;
+		box-shadow: var(--card-shadow);
+		z-index: 1000;
+		display: none;
+	}
+
+	.custom-select.active .select-items {
+		display: block;
+	}
+
+	.select-items div {
+		padding: 10px 16px;
+		color: var(--text-primary);
+		cursor: pointer;
+		transition: all 0.2s;
+		text-align: center;
+	}
+
+	.select-items div:hover {
+		background: var(--accent-soft);
+		color: var(--accent);
+	}
+
+	.select-items div.selected {
+		background: var(--accent);
+		color: white;
+	}
+
+	/* ===== 主题切换按钮 ===== */
+	.theme-toggle {
+		background: rgba(255,255,255,0.15); 
+		border: 1px solid rgba(255,255,255,0.3);
+		border-radius: 40px; 
+		padding: 8px 20px; 
+		font-size: 0.95rem; 
+		color: white;
+		cursor: pointer; 
+		display: flex; 
+		align-items: center; 
+		gap: 8px; 
+		backdrop-filter: blur(8px);
+		transition: all 0.2s;
+	}
+
+	.theme-toggle:hover {
+		background: rgba(255,255,255,0.25);
+		border-color: rgba(255,255,255,0.5);
+	}
+
+	/* ===== 文档卡片 ===== */
+	.doc-card {
+		background-color: var(--surface); 
+		border-radius: 40px;
+		padding: 3rem; 
+		box-shadow: var(--card-shadow);
+		border: 1px solid var(--border); 
+		margin: 20px 0 40px;
+	}
+
+	h1 {
+		font-size: 2.5rem; 
+		font-weight: 700; 
+		letter-spacing: -0.02em;
+		background: linear-gradient(135deg, var(--accent), var(--accent-light));
+		-webkit-background-clip: text;
+		margin: 0 0 25px 0;
+	}
+
+	h2 {
+		font-size: 2rem; 
+		font-weight: 600; 
+		margin: 2.5rem 0 1.5rem;
+		color: var(--text-primary); 
+		border-bottom: 3px solid var(--accent-soft);
+		padding-bottom: 12px;
+	}
+
+	h3 {
+		font-size: 1.5rem; 
+		font-weight: 600; 
+		margin: 2rem 0 1rem;
+		color: var(--accent);
+	}
+
+	/* ===== 星标建议 ===== */
+	.advice-item {
+		display: flex;
+		gap: 15px;
+		margin: 20px 0;
+		padding: 20px;
+		background: var(--surface-secondary);
+		border-radius: 20px;
+		border: 1px solid var(--border);
+	}
+
+	.stars {
+		display: flex;
+		gap: 2px;
+		color: var(--star-color);
+		font-size: 1.2rem;
+		min-width: 60px;
+	}
+
+	.advice-item a {
+		color: var(--accent);
+	}
+
+	.advice-item a:hover {
+		color: var(--accent-light);
+	}
+
+	/* ===== 信息卡片 ===== */
+	.info-card {
+		background: var(--accent-soft);
+		border-radius: 20px;
+		padding: 20px;
+		margin: 20px 0;
+		border-left: 6px solid var(--accent);
+	}
+
+	.info-card a {
+		color: var(--accent);
+	}
+
+	.info-card a:hover {
+		color: var(--accent-light);
+	}
+
+	/* ===== 注意框 ===== */
+	.note-box {
+		background: var(--surface-secondary);
+		padding: 15px 20px;
+		border-radius: 16px;
+		border-left: 4px solid var(--warning);
+		margin: 20px 0;
+		font-size: 0.9rem;
+	}
+
+	.note-box a {
+		color: var(--accent);
+	}
+
+	.note-box a:hover {
+		color: var(--accent-light);
+	}
+
+	/* ===== 返回顶部按钮 ===== */
+	.back-to-top {
+		position: fixed;
+		bottom: 30px;
+		right: 30px;
+		background: var(--accent);
+		color: white;
+		width: 56px;
+		height: 56px;
+		border-radius: 28px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		border: none;
+		box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
+		transition: all 0.2s;
+		z-index: 99;
+		font-size: 1.2rem;
+	}
+
+	.back-to-top:hover {
+		transform: scale(1.1);
+		background: var(--accent-light);
+	}
+
+	/* ===== 页脚 ===== */
+	.footer {
+		background-color: var(--footer-bg); 
+		margin-top: 60px;
+		padding: 32px 24px; 
+		border-radius: 40px 40px 0 0;
+		border-top: 1px solid var(--border); 
+		color: var(--text-secondary);
+	}
+
+	.footer-content {
+		display: flex; 
+		flex-wrap: wrap; 
+		justify-content: space-between;
+		align-items: center; 
+		gap: 20px; 
+		max-width: 1300px; 
+		margin: 0 auto;
+	}
+
+	.footer-copyright {
+		background: var(--surface); 
+		padding: 8px 24px; 
+		border-radius: 60px;
+		border: 1px solid var(--border); 
+		font-size: 0.95rem;
+	}
+
+	.footer-license {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+	}
+
+	.footer-license img {
+		width: 24px;
+		height: 24px;
+		vertical-align: middle;
+	}
+
+	/* ===== 移动端响应式调整 ===== */
+	@media (max-width: 700px) {
+		.header-row { 
+			flex-direction: column; 
+			text-align: center;
+		}
+		
+		.header-center {
+			width: 100%;
+		}
+		
+		.header-right {
+			width: 100%;
+			justify-content: center;
+		}
+		
+		.doc-card { 
+			padding: 1.8rem; 
+		}
+		
+		h1 { 
+			font-size: 2rem; 
+		}
+		
+		.back-to-top {
+			bottom: 20px;
+			right: 20px;
+			width: 48px;
+			height: 48px;
+			border-radius: 24px;
+			font-size: 1rem;
+			opacity: 0.9;
+		}
+		
+		.footer {
+			padding: 24px 16px;
+		}
+		
+		.footer-content {
+			flex-direction: column;
+			text-align: center;
+			gap: 15px;
+		}
+		
+		.footer-copyright {
+			width: 100%;
+			text-align: center;
+		}
+		
+		.footer-license {
+			justify-content: center;
+		}
+	}
+
+    /* ===== 时间线布局（倒序） ===== */
+    .timeline {
+        position: relative;
+        margin: 50px 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* 中央竖线 */
+    .timeline::before {
+        content: '';
+        position: absolute;
+        left: var(--timeline-left-width);
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: var(--timeline-line);
+        z-index: 1;
+    }
+
+    /* 时间线项目 */
+    .timeline-item {
+        position: relative;
+        display: flex;
+        margin-bottom: 25px;
+        min-height: 70px;
+    }
+
+    /* 左侧版本信息 */
+    .timeline-left {
+        width: var(--timeline-left-width);
+        padding-right: 30px;
+        text-align: right;
+        position: relative;
+        z-index: 2;
+    }
+
+    .timeline-version {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--accent);
+        line-height: 1.3;
+    }
+
+    .timeline-era {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        margin-bottom: 4px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .timeline-date {
+        font-size: 0.95rem;
+        color: var(--text-secondary);
+        margin-top: 4px;
+        font-family: monospace;
+    }
+
+    .timeline-filesize {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        opacity: 0.8;
+        margin-top: 2px;
+    }
+
+    .timeline-badge {
+        display: inline-block;
+        background: var(--accent);
+        color: white;
+        padding: 2px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-top: 6px;
+        text-transform: uppercase;
+    }
+
+    .timeline-badge.end {
+        background: var(--danger);
+    }
+
+    .timeline-badge.latest {
+        background: var(--success);
+    }
+
+    .timeline-badge.concept {
+        background: var(--era-concept);
+    }
+
+    .timeline-badge.foundation {
+        background: var(--era-foundation);
+    }
+
+    .timeline-badge.logic {
+        background: var(--era-logic);
+    }
+
+    .timeline-badge.preopen {
+        background: var(--era-preopen);
+    }
+
+    /* 时间线圆点 */
+    .timeline-dot {
+        position: absolute;
+        left: var(--timeline-left-width);
+        transform: translateX(-50%);
+        width: var(--timeline-dot-size);
+        height: var(--timeline-dot-size);
+        border-radius: 50%;
+        background: var(--timeline-dot);
+        border: 3px solid var(--surface);
+        box-shadow: 0 0 0 2px var(--timeline-line);
+        z-index: 3;
+        top: 10px;
+    }
+
+    /* 右侧内容 */
+    .timeline-right {
+        flex: 1;
+        padding-left: 40px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .timeline-content {
+        background: var(--surface-secondary);
+        border-radius: 20px;
+        padding: 15px 22px;
+        border: 1px solid var(--border);
+        transition: all 0.3s ease;
+    }
+
+    .timeline-content:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--card-shadow);
+        border-color: var(--accent-light);
+    }
+
+    .timeline-list {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .timeline-list li {
+        margin: 8px 0;
+        padding-left: 25px;
+        position: relative;
+        color: var(--text-secondary);
+        line-height: 1.5;
+        font-size: 0.95rem;
+    }
+
+    .timeline-list li:before {
+        content: "•";
+        color: var(--accent);
+        font-weight: bold;
+        position: absolute;
+        left: 5px;
+        font-size: 1.2rem;
+    }
+
+    .timeline-list strong {
+        color: var(--accent);
+    }
+
+    .timeline-note {
+        margin: 12px 0 0 0;
+        padding: 10px 15px;
+        background: rgba(239, 68, 68, 0.1);
+        border-left: 4px solid var(--danger);
+        border-radius: 8px;
+        font-weight: 500;
+        font-size: 0.95rem;
+        color: var(--text-primary);
+    }
+
+    /* 标签 */
+    .tag {
+        display: inline-block;
+        padding: 2px 10px;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        margin-left: 8px;
+        color: white;
+        text-transform: uppercase;
+        vertical-align: middle;
+    }
+
+    .tag-security { background: var(--danger); }
+    .tag-new { background: var(--success); }
+    .tag-fix { background: var(--warning); }
+
+    /* 系列分隔线 */
+    .series-break {
+        margin: 40px 0 20px;
+        padding-left: calc(var(--timeline-left-width) + 30px);
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--accent-light);
+        letter-spacing: -0.02em;
+        position: relative;
+    }
+    .series-break::before {
+        content: '';
+        position: absolute;
+        left: var(--timeline-left-width);
+        right: 0;
+        bottom: -10px;
+        height: 2px;
+        background: linear-gradient(90deg, var(--accent-light), transparent);
+    }
+
+    /* 早期开发阶段特殊样式 */
+    .early-era .timeline-content {
+        background: rgba(100, 116, 139, 0.1);
+        border-left: 4px solid var(--era-concept);
+    }
+
+    /* 最终版（原作者）注记 */
+    .final-note {
+        background: linear-gradient(135deg, var(--accent-soft), var(--surface));
+        padding: 25px;
+        border-radius: 30px;
+        margin: 30px 0 50px;
+        border: 2px solid var(--accent);
+        text-align: center;
+    }
+
+    .final-note p {
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: var(--accent);
+    }
+
+    /* 移动端适配 */
+    @media (max-width: 700px) {
+        .timeline::before {
+            left: 130px;
+        }
+        
+        .timeline-left {
+            width: 130px;
+            padding-right: 15px;
+        }
+        
+        .timeline-version {
+            font-size: 1.2rem;
+        }
+        
+        .timeline-era {
+            font-size: 0.8rem;
+        }
+        
+        .timeline-date {
+            font-size: 0.8rem;
+        }
+        
+        .timeline-dot {
+            left: 130px;
+            width: 12px;
+            height: 12px;
+        }
+        
+        .timeline-right {
+            padding-left: 20px;
+        }
+        
+        .series-break {
+            padding-left: 130px;
+            font-size: 1.5rem;
+        }
+    }
+
+    @media (max-width: 500px) {
+        .timeline::before {
+            display: none;
+        }
+        
+        .timeline-item {
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+        
+        .timeline-left {
+            width: 100%;
+            text-align: left;
+            padding-right: 0;
+            margin-bottom: 5px;
+        }
+        
+        .timeline-dot {
+            display: none;
+        }
+        
+        .timeline-right {
+            padding-left: 0;
+        }
+        
+        .series-break {
+            padding-left: 0;
+            text-align: center;
+        }
+        .series-break::before {
+            left: 0;
+        }
+    }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 - 悬浮下拉式 -->
+    <div class="nav-bar">
+        <div class="container nav-container">
+            <div class="nav-header">
+              <span class="home-icon">🏠</span>
+                <div class="nav-left">
+                    <a href="index.html" class="nav-home">
+                        <span class="home-text" data-i18n="navHome">AWStats 文档</span>
+                    </a>
+                </div>
+                <div class="breadcrumb">
+                    <a href="index.html" data-i18n="home">主页</a>
+                    <span>›</span>
+                    <span data-i18n="currentPage">基准测试</span>
+                </div>
+                <div class="mobile-menu-toggle" id="mobileMenuToggle">
+                    ☰
+                </div>
+            </div>
+            
+            <!-- 悬浮下拉菜单 -->
+            <div class="dropdown-menu" id="mobileMenu">
+                <!-- 📌 基础文档 -->
+                <div class="dropdown-item">
+                    <div class="dropdown-title" data-i18n="categoryBasic">📌 基础文档</div>
+                    <div class="dropdown-content">
+                        <a href="index.html" data-i18n="navHome">主页</a>
+                        <a href="awstats_what.html" data-i18n="navWhat">什么是AWStats</a>
+                        <a href="awstats_license.html" data-i18n="navLicense">许可证</a>
+                        <a href="awstats_glossary.html" data-i18n="navGlossary">术语表</a>
+                    </div>
+                </div>
+                
+                <!-- 📘 使用指南 -->
+                <div class="dropdown-item">
+                    <div class="dropdown-title" data-i18n="categoryGuide">📘 使用指南</div>
+                    <div class="dropdown-content">
+                        <a href="awstats_setup.html" data-i18n="navSetup">安装配置</a>
+                        <a href="awstats_upgrade.html" data-i18n="navUpgrade">升级指南</a>
+                        <a href="awstats_config.html" data-i18n="navConfig">配置参数</a>
+                        <a href="awstats_extra.html" data-i18n="navExtra">额外部分</a>
+                        <a href="awstats_tools.html" data-i18n="navTools">其他工具</a>
+                    </div>
+                </div>
+                
+                <!-- 📚 参考资源 -->
+                <div class="dropdown-item">
+                    <div class="dropdown-title" data-i18n="categoryReference">📚 参考资源</div>
+                    <div class="dropdown-content">
+                        <a href="awstats_faq.html" data-i18n="navFAQ">FAQ</a>
+                        <a href="awstats_security.html" data-i18n="navSecurity">安全建议</a>
+                        <a href="awstats_compare.html" data-i18n="navCompare">对比</a>
+                        <a href="awstats_benchmark.html" class="active" data-i18n="navBenchmark">基准测试</a>
+                        <a href="awstats_changelog.html" data-i18n="navChangelog">更新日志</a>
+                    </div>
+                </div>
+                
+                <!-- 🧩 集成与扩展 -->
+                <div class="dropdown-item">
+                    <div class="dropdown-title" data-i18n="categoryIntegration">🧩 集成与扩展</div>
+                    <div class="dropdown-content">
+                        <a href="awstats_webmin.html" data-i18n="navWebmin">Webmin模块</a>
+                        <a href="awstats_dolibarr.html" data-i18n="navDolibarr">Dolibarr模块</a>
+                        <a href="awstats_contrib.html" data-i18n="navContrib">贡献资源</a>
+                    </div>
+                </div>
+                
+                <!-- 💻 开发者文档 -->
+                <div class="dropdown-item">
+                    <div class="dropdown-title" data-i18n="categoryDev">💻 开发者文档</div>
+                    <div class="dropdown-content">
+                        <a href="awstats_dev_plugins.html" data-i18n="navPlugins">插件开发</a>
+                        <a href="awstats_dev_plugins_hooks.html" data-i18n="navHooks">插件钩子</a>
+                        <a href="awstats_dev_plugins_graphs.html" data-i18n="navGraphs">插件图形</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="container header-row">
+            <div class="logo-area">
+                <img src="images/favicon.pub/logo.svg" alt="AWStats logo">
+                <span class="site-title" data-i18n="siteTitle">AWStats 8.1</span>
+            </div>
+            <div class="header-center" data-i18n="headerSlogan">
+                ⚡ 先进的日志分析器 · 官方文档
+            </div>
+            <div class="header-right">
+                <!-- 自定义语言切换 -->
+                <div class="lang-switch custom-select">
+                    <span>🌐</span>
+                    <div class="select-selected" data-value="zh" data-i18n="langZh">中文</div>
+                    <div class="select-items">
+                        <div data-value="zh" class="selected" data-i18n="langZh">中文</div>
+                        <div data-value="en" data-i18n="langEn">English</div>
+                    </div>
+                    <!-- 隐藏的原生 select，用于保持功能 -->
+                    <select id="langSelector" style="display: none;">
+                        <option value="zh" selected data-i18n="langZh">中文</option>
+                        <option value="en" data-i18n="langEn">English</option>
+                    </select>
+                </div>
+                
+                <button class="theme-toggle" id="themeToggleBtn">
+                    <span>🌓</span> <span class="theme-text" data-i18n="themeAuto">自动</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="doc-card">
+            <h1 data-i18n="pageTitle">📋 AWStats 版本更新发布记录</h1>
+            <p style="margin-bottom: 30px; color: var(--text-secondary);" data-i18n="timelineIntro">基于官方文档、SourceForge 记录和作者历史资料整理</p>
+
+            <!-- 最终版（原作者）注记 -->
+            <div class="final-note">
+                <p data-i18n="finalNote">⚠️ AWStats 8.0 将是原作者（Laurent Destailleur）维护的最后一个版本，后续版本由社区维护。</p>
+            </div>
+
+            <!-- 时间线布局（倒序：最新的在上） -->
+            <div class="timeline">
+
+                <!-- ========== 8.x 系列 (2023-latest) ========== -->
+                <div class="series-break" data-i18n="series8x">8.x 系列</div>
+
+                <!-- 8.1 (latest) - 社区版本 -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version81">AWStats 8.1</div>
+                        <div class="timeline-date">2025-08-26</div>
+                        <span class="timeline-badge timeline-badge-latest" data-i18n="badgeRefactor">社区版</span>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-refactor" data-i18n="tagRefactor">重构</span> <strong data-i18n="v81I18n">多语言系统重构</strong> <span data-i18n="v81I18nDesc">- 将 GBK 编码的 txt 语言文件调整为全新的utf-8 PO 格式，支持更好的国际化</span></li>
+                                <li><span class="tag tag-fix" data-i18n="tagFix">修复</span> <strong data-i18n="v81Ipv6">修复 IPv6 兼容性问题</strong> <span data-i18n="v81Ipv6Desc">- hestia服务器面板自带配置好的AWStats，您不需要进行任何修改，只需要在web端添加域名的时候启用即可。</span></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v81Robots">更新 robots.pm 数据库</strong> <span data-i18n="v81RobotsDesc">- 添加新机器人识别</span></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v81Json">改进 JSON 日志解析</strong> <span data-i18n="v81JsonDesc">- 更好地处理 JSON 格式日志</span></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v81Browser">更新浏览器检测</strong> <span data-i18n="v81BrowserDesc">- 添加 Edge 新版、Chrome 新版检测</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8.0 (2025) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version80">AWStats 8.0</div>
+                        <div class="timeline-date">2025-08-26</div>
+                        <span class="timeline-badge timeline-badge-end" data-i18n="badgeFinal">最终版（原作者）</span>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v80Css">更好的 CSS</strong> <span data-i18n="v80CssDesc">- 改进样式表</span></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v80Robots">更新 robots.pm</strong></li>
+                                <li><span class="tag tag-fix" data-i18n="tagFix">修复</span> <strong data-i18n="v80Fix248">修复 #248</strong></li>
+                                <li><span class="tag tag-fix" data-i18n="tagFix">修复</span> <strong data-i18n="v80TradChinese">更新繁体中文翻译到 UTF-8</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v80Json">允许处理 JSON 格式日志</strong></li>
+                            </ul>
+                            <div class="timeline-note" data-i18n="v80Note">原作者维护的最后一个版本</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== 7.x 系列 (2011-2023) ========== -->
+                <div class="series-break" data-i18n="series7x">7.x 系列</div>
+
+                <!-- 7.9 (2023) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version79">AWStats 7.9</div>
+                        <div class="timeline-date">2023-01-17</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v79Win11">添加 Windows 11 和 Android 13 检测</strong></li>
+                                <li><span class="tag tag-security" data-i18n="tagSecurity">安全</span> <strong data-i18n="v79Cve">修复 CVE-2020-35176</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v79Tajik">添加塔吉克语支持</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7.8 (2020) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version78">AWStats 7.8</div>
+                        <div class="timeline-date">2020-04-30</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v78DatabaseBreak">DatabaseBreak 模式选择</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v78Time6">添加 %time6 标签</strong></li>
+                                <li><span class="tag tag-fix" data-i18n="tagFix">修复</span> <strong data-i18n="v78Geoip2">geoip2 格式化问题</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7.7 (2018) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version77">AWStats 7.7</div>
+                        <div class="timeline-date">2018-01-07</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-security" data-i18n="tagSecurity">安全</span> <strong data-i18n="v77Cve">修复 CVE-2017-1000501</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v77DynamicDns">动态 DNS 查找</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7.6 (2016) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version76">AWStats 7.6</div>
+                        <div class="timeline-date">2016-12-07</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-security" data-i18n="tagSecurity">安全</span> <strong data-i18n="v76DirLang">DirLang 参数安全限制</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v76MacOs">支持 macOS Sierra</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7.5 (2016) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version75">AWStats 7.5</div>
+                        <div class="timeline-date">2016-04-29</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v75Perl">兼容 Perl 5.22</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v75Edge">Edge 浏览器检测</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v75Time5">添加 %time5 标签</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7.4 (2015) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version74">AWStats 7.4</div>
+                        <div class="timeline-date">2015-11-11</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v74Geoip6">geoip6 插件</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v74Aws">支持 Amazon AWS 日志</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7.3 (2015) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version73">AWStats 7.3</div>
+                        <div class="timeline-date">2015-11-11</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v73Version">添加 -version 选项</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v73Win81">Windows 8.1 和 IE11 检测</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7.2 (2013) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version72">AWStats 7.2</div>
+                        <div class="timeline-date">2013-07-09</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v72Gpl">升级到 GPL v3+</strong></li>
+                                <li><span class="tag tag-fix" data-i18n="tagFix">修复</span> <strong data-i18n="v72Webmin">Webmin 模块布局</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7.1.1 (2013) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version711">AWStats 7.1.1</div>
+                        <div class="timeline-date">2013-03-08</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-fix" data-i18n="tagFix">修复</span> <strong data-i18n="v711Perl">Perl 兼容性修复</strong></li>
+                                <li><span class="tag tag-fix" data-i18n="tagFix">修复</span> <strong data-i18n="v711Awredir">awredir.pl 安全问题</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7.1 (2012) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version71">AWStats 7.1</div>
+                        <div class="timeline-date">2012-12-20</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v71Win8">Windows 8 检测</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v71Nginx">nginx 配置示例</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7.0 (2011) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version70">AWStats 7.0</div>
+                        <div class="timeline-date">2011-01-08</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v70Win7">Windows 7 检测</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v70GeoipAsn">geoip_asn_maxmind 插件</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v70GoogleChart">Google Chart API 插件</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== 6.x 系列 (2001-2009) ========== -->
+                <div class="series-break" data-i18n="series6x">6.x 系列</div>
+
+                <!-- 6.95 (2009) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version695">AWStats 6.95</div>
+                        <div class="timeline-date">2009-10-28</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-security" data-i18n="tagSecurity">安全</span> <strong data-i18n="v695Awredir">awredir.pl 安全增强</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v695Chrome">Chrome 浏览器检测</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v695AdobeAir">AdobeAir 检测</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6.9 (2008) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version69">AWStats 6.9</div>
+                        <div class="timeline-date">2008-12-28</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v69Maillog">maillogconvert.pl 支持 DSN</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v69Logresolvemerge">logresolvemerge.pl 支持 FreeRADIUS</strong></li>
+                            </ul>
+                            <div class="timeline-note" data-i18n="v69Note">需要 Perl 5.007+</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6.8 (2008) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version68">AWStats 6.8</div>
+                        <div class="timeline-date">2008-07-20</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v68OnlyUsers">OnlyUsers 选项</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v68MetaRobot">MetaRobot 选项</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6.7 (2007) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version67">AWStats 6.7</div>
+                        <div class="timeline-date">2007-07-07</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v67Day">完全支持 -day 选项</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v67NotPageList">NotPageList 选项</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6.6 (2006) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version66">AWStats 6.6</div>
+                        <div class="timeline-date">2006-12-24</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v66Geoip">geoip 支持 PurePerl</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v66Ie7">IE7 支持</strong></li>
+                                <li><span class="tag tag-security" data-i18n="tagSecurity">安全</span> <strong data-i18n="v66Xss">XSS 漏洞修复</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6.5 (2005) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version65">AWStats 6.5</div>
+                        <div class="timeline-date">2005-12-24</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v65Logresolvemerge">logresolvemerge.pl 速度提升 30 倍</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v65LinuxBsd">Linux/BSD 发行版检测</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v65SkipReferrers">SkipReferrersBlackList 选项</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6.4 (2005) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version64">AWStats 6.4</div>
+                        <div class="timeline-date">2005-02-25</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v64ShowSummary">ShowSummary 选项</strong></li>
+                                <li><span class="tag tag-fix" data-i18n="tagFix">修复</span> <strong data-i18n="v64Security">安全漏洞修复</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6.3 (2005) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version63">AWStats 6.3</div>
+                        <div class="timeline-date">2005-02-25</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v63GeoipIsp">geoip_isp/org_maxmind 插件</strong></li>
+                                <li><span class="tag tag-fix" data-i18n="tagFix">修复</span> <strong data-i18n="v63Security">安全漏洞修复</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6.2 (2004) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version62">AWStats 6.2</div>
+                        <div class="timeline-date">2004-11-06</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v62GeoipRegion">geoip_region/city_maxmind 插件</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v62Maillog">maillogconvert.pl 支持 postfix 2.1</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v62ExtraX">%extraX 标签</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6.1 (2004) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version61">AWStats 6.1</div>
+                        <div class="timeline-date">2004-05-15</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v61BuildHistory">BuildHistoryFormat 支持 XML</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v61IncludeInternal">IncludeInternalLinksInOriginSection</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6.0 (2004) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version60">AWStats 6.0</div>
+                        <div class="timeline-date">2004-01-25</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v60Speed">速度提升 10-20%</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v60Worms">蠕虫报告</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v60Xml">XML 输出支持</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v60DecodeUtf">decodeUTFkeys 插件</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v60Configure">configure.pl 脚本</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== 5.x 系列 (2002-2003) ========== -->
+                <div class="series-break" data-i18n="series5x">5.x 系列</div>
+
+                <!-- 5.9 (2003) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version59">AWStats 5.9</div>
+                        <div class="timeline-date">2003-09-22</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v59Webmin">Webmin 模块更新</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v59AllowFullYear">AllowFullYearView 参数</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5.8 (2003) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version58">AWStats 5.8</div>
+                        <div class="timeline-date">2003-09-16</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v58Webmin">Webmin 模块</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v58OnlyUserAgents">OnlyUserAgents 参数</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v58Cluster">集群报告</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5.7 (2003) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version57">AWStats 5.7</div>
+                        <div class="timeline-date">2003-08-23</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v57Rawlog">rawlog 插件</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v57MaillogConvert">maillogconvert.pl</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v57Darwin">Darwin streaming 支持</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v57LogType">LogType 参数</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5.6 (2003) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version56">AWStats 5.6</div>
+                        <div class="timeline-date">2003-06-28</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v56ModDeflate">mod_deflate 压缩报告</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v56Regex">正则表达式参数支持</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v56Misc">杂项图表</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5.5 (2003) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version55">AWStats 5.5</div>
+                        <div class="timeline-date">2003-05-25</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v55ScreenSize">屏幕尺寸报告</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v55GeoipFree">geoipfree 插件</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v55Ipv6">ipv6 插件</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5.4 (2003) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version54">AWStats 5.4</div>
+                        <div class="timeline-date">2003-02-23</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v54UrlaliasBuilder">urlaliasbuilder.pl 工具</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v54UrlWithAnchor">URLWithAnchor 参数</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v54LogresolvemergeGz">logresolvemerge.pl 支持 .gz/.bz2</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5.3 (2003) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version53">AWStats 5.3</div>
+                        <div class="timeline-date">2003-01-02</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v53Exportlib">awstats_exportlib.pl</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v53AuthNotCaseSensitive">AuthenticatedUsersNotCaseSensitive</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5.2 (2002) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version52">AWStats 5.2</div>
+                        <div class="timeline-date">2002-12-03</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v52Urlalias">urlalias 插件</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v52Geoip">geoip 插件</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v52Postfix">postfix 邮件日志支持</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v52OnlyHosts">OnlyHosts 参数</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5.1 (2002) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version51">AWStats 5.1</div>
+                        <div class="timeline-date">2002-10-26</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v51FtpMail">FTP/邮件日志支持改进</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v51Wms">Windows Media Server 支持</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v51SkipUserAgents">SkipUserAgents 参数</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v51UrlNotCaseSensitive">URLNotCaseSensitive 参数</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5.0 (2002) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version50">AWStats 5.0</div>
+                        <div class="timeline-date">2002-10-06</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v50Rewrite">更新过程完全重写</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v50DnsCache">DNS 缓存文件支持</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v50Plugins">插件支持</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v50UseFrames">UseFramesWhenCGI 参数</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== 4.x 系列 (2002) ========== -->
+                <div class="series-break" data-i18n="series4x">4.x 系列</div>
+
+                <!-- 4.1 (2002) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version41">AWStats 4.1</div>
+                        <div class="timeline-date">2002-07-09</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v41Virtualname">%virtualname 标签</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v41Keyphrases">关键词和关键短语报告</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v41ExitPages">出口页面报告</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v41VisitDuration">访问时长报告</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4.0 (2002) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version40">AWStats 4.0</div>
+                        <div class="timeline-date">2002-04-21</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-warning" data-i18n="tagWarning">警告</span> <strong data-i18n="v40Incompatible">与旧历史文件不兼容</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v40Speed">速度提升和内存优化</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v40Security">安全/隐私参数添加</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== 3.x 系列 (2001) ========== -->
+                <div class="series-break" data-i18n="series3x">3.x 系列</div>
+
+                <!-- 3.2 (2001) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version32">AWStats 3.2</div>
+                        <div class="timeline-date">2001-12-29</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v32Speed">速度提升 19%</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v32NotPageList">NotPageList 参数</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v32KeepBackup">KeepBackupOfHistoricFiles 选项</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3.1 (2001) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version31">AWStats 3.1</div>
+                        <div class="timeline-date">2001-09</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v31Speed">大幅提高更新速度</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v31NcsaCommon">支持 NCSA common 日志文件</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3.0 (2001) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version30">AWStats 3.0</div>
+                        <div class="timeline-date">2001-07-22</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v30Look">全新外观</strong></li>
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v30Daily">添加每日报告</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== 2.x 系列 (2001) ========== -->
+                <div class="series-break" data-i18n="series2x">2.x 系列</div>
+
+                <!-- 2.24 (2001) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version224">AWStats 2.24</div>
+                        <div class="timeline-date">2001-03-09</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v224Keywords">新的关键词检测算法</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2.23 (2001) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version223">AWStats 2.23</div>
+                        <div class="timeline-date">2001-02-10</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v223Config">使用配置文件</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2.1 (2001) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version21">AWStats 2.1</div>
+                        <div class="timeline-date">2001-01-01</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v21Iis">支持 IIS</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== 1.x 系列 (2000) ========== -->
+                <div class="series-break" data-i18n="series1x">1.x 系列</div>
+
+                <!-- 1.0 (2000) -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="timeline-version" data-i18n="version10">AWStats 1.0</div>
+                        <div class="timeline-date">2000-05-02</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <ul class="timeline-list">
+                                <li><span class="tag tag-new" data-i18n="tagNew">新功能</span> <strong data-i18n="v10FirstRelease">首次在 SourceForge 公开发布 1.0 版本</strong></li>
+                                <li data-i18n="v10Apache">支持 Apache 日志格式</li>
+                                <li data-i18n="v10BasicStats">基本统计功能：访问量、页面数、文件数</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== 早期开发阶段 (1995-1999) ========== -->
+                <div class="series-break" data-i18n="seriesEarly">📜 早期开发阶段 (1995-1999) <br data-i18n="earlyNote" /><span data-i18n="earlyNote">社区版本进行补充的仅供参考</span></div>
+
+                <!-- 4. 产品演变期：开源前夜阶段 (1999) -->
+                <div class="timeline-item early-era">
+                    <div class="timeline-left">
+                        <div class="timeline-era" data-i18n="eraEvolution">产品演变期</div>
+                        <div class="timeline-version" data-i18n="eraPreOpen">开源前夜</div>
+                        <div class="timeline-date">1999</div>
+                        <span class="timeline-badge timeline-badge-preopen" data-i18n="badgePreOpen">开源前夜</span>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <p style="font-weight: 600; color: var(--accent); margin-bottom: 8px;" data-i18n="devGoal">🎯 开发任务</p>
+                            <ul class="timeline-list">
+                                <li data-i18n="evolutionGoal1">标准化架构以适应不同服务器环境，完成从“个人工具”向“标准化产品”的最后蜕变</li>
+                            </ul>
+                            <p style="font-weight: 600; color: var(--accent); margin: 12px 0 8px;" data-i18n="coreImprovements">🔧 核心改进</p>
+                            <ul class="timeline-list">
+                                <li><strong data-i18n="evolutionImprove1">识别增强：</strong> <span data-i18n="evolutionImprove1Desc">大幅扩充了爬虫识别库，能够更精准地过滤非人类流量</span></li>
+                                <li><strong data-i18n="evolutionImprove2">模式固定：</strong> <span data-i18n="evolutionImprove2Desc">完善了 CGI 脚本运行模式，支持用户通过浏览器实时触发更新</span></li>
+                                <li><strong data-i18n="evolutionImprove3">社区内测：</strong> <span data-i18n="evolutionImprove3Desc">在小范围同行中进行测试，根据反馈完成了代码混淆清理和文档初步撰写</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. 逻辑成型期：功能深耕阶段 (1998) -->
+                <div class="timeline-item early-era">
+                    <div class="timeline-left">
+                        <div class="timeline-era" data-i18n="eraLogic">逻辑成型期</div>
+                        <div class="timeline-version" data-i18n="eraDeepening">功能深耕</div>
+                        <div class="timeline-date">1998</div>
+                        <span class="timeline-badge timeline-badge-logic" data-i18n="badgeInternal">内部迭代</span>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <p style="font-weight: 600; color: var(--accent); margin-bottom: 8px;" data-i18n="devFocus">🎯 开发重点</p>
+                            <ul class="timeline-list">
+                                <li data-i18n="logicFocus">细化数据维度与提升处理效率，进入高频的内部私有迭代</li>
+                            </ul>
+                            <p style="font-weight: 600; color: var(--accent); margin: 12px 0 8px;" data-i18n="techMilestone">🔧 技术里程碑</p>
+                            <ul class="timeline-list">
+                                <li><strong data-i18n="logicMilestone1">异步处理：</strong> <span data-i18n="logicMilestone1Desc">确定了“日志离线解析”逻辑，确保统计过程不占用 Web 服务器实时资源</span></li>
+                                <li><strong data-i18n="logicMilestone2">维度扩展：</strong> <span data-i18n="logicMilestone2Desc">新增对 <strong>浏览器类型（User-Agent）</strong>、<strong>操作系统（OS）</strong> 以及 <strong>HTTP 状态码</strong>（如 404 错误追踪）的识别能力</span></li>
+                                <li><strong data-i18n="logicMilestone3">代码优化：</strong> <span data-i18n="logicMilestone3Desc">利用 Perl 的跨平台特性，开始测试在 Unix/Linux 和 Windows 环境下的兼容性</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. 引擎奠基期：系统整合阶段 (1997) -->
+                <div class="timeline-item early-era">
+                    <div class="timeline-left">
+                        <div class="timeline-era" data-i18n="eraFoundation">引擎奠基期</div>
+                        <div class="timeline-version" data-i18n="eraIntegration">系统整合</div>
+                        <div class="timeline-date">1997</div>
+                        <span class="timeline-badge timeline-badge-foundation" data-i18n="badgeFirstYear">项目元年</span>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <p style="font-weight: 600; color: var(--accent); margin-bottom: 8px;" data-i18n="devTarget">🎯 开发目标</p>
+                            <ul class="timeline-list">
+                                <li data-i18n="foundationTarget1">官方文档公认的项目立项元年，从“零散脚本”向“分析引擎”的质变</li>
+                                <li data-i18n="foundationTarget2">解决传统工具（如 Analog）报表美观度不足的问题</li>
+                            </ul>
+                            <p style="font-weight: 600; color: var(--accent); margin: 12px 0 8px;" data-i18n="keyUpdates">🔧 关键更新</p>
+                            <ul class="timeline-list">
+                                <li><strong data-i18n="foundationUpdate1">架构定义：</strong> <span data-i18n="foundationUpdate1Desc">确立了静态报告生成模式，首次实现将分析结果输出为带图形界面的 HTML 页面</span></li>
+                                <li><strong data-i18n="foundationUpdate2">特征库建设：</strong> <span data-i18n="foundationUpdate2Desc">开始建立最初的 Search Engines（搜索引擎）与 Robots（机器人）识别规则库</span></li>
+                                <li><strong data-i18n="foundationUpdate3">环境适配：</strong> <span data-i18n="foundationUpdate3Desc">受益于 Common Log Format (CLF) 的标准化，脚本开始具备通用化基础</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 1. 概念萌芽期：私有脚本阶段 (1995-1996) -->
+                <div class="timeline-item early-era">
+                    <div class="timeline-left">
+                        <div class="timeline-era" data-i18n="eraConcept">概念萌芽期</div>
+                        <div class="timeline-version" data-i18n="eraPrivate">私有脚本</div>
+                        <div class="timeline-date">1995 - 1996</div>
+                        <span class="timeline-badge timeline-badge-concept" data-i18n="badgePrivate">私有阶段</span>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-right">
+                        <div class="timeline-content">
+                            <p style="font-weight: 600; color: var(--accent); margin-bottom: 8px;" data-i18n="devBackground">🎯 开发背景</p>
+                            <ul class="timeline-list">
+                                <li data-i18n="conceptBackground1">应对 <strong>Apache HTTP Server (1995)</strong> 流行后的 access.log 分析需求</li>
+                                <li data-i18n="conceptBackground2">尚无正式项目名称，主要为作者 Laurent Destailleur 的实验性代码片段</li>
+                            </ul>
+                            <p style="font-weight: 600; color: var(--accent); margin: 12px 0 8px;" data-i18n="techFeatures">🔧 技术特征</p>
+                            <ul class="timeline-list">
+                                <li><strong data-i18n="conceptFeature1">底层工具：</strong> <span data-i18n="conceptFeature1Desc">基于早期 Perl 5 编写</span></li>
+                                <li><strong data-i18n="conceptFeature2">核心功能：</strong> <span data-i18n="conceptFeature2Desc">实现基础的正则匹配（Regex），用于统计总点击量及简单的文件类型过滤（如区分 .html 与 .gif）</span></li>
+                                <li><strong data-i18n="conceptFeature3">应用场景：</strong> <span data-i18n="conceptFeature3Desc">仅用于作者个人网站（如早期 chiensderace.com 雏形）的内部流量观测</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- 署名 -->
+            <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-top: 20px;">
+                <span style="color: var(--text-secondary);" data-i18n="writtenBy">文章作者：<a href="https://www.destailleur.fr" rel="author" style="color: var(--accent);">Laurent Destailleur</a>。</span>
+                <span class="timeline-badge" style="background: var(--accent); color: white; padding: 4px 16px;" data-i18n="version81">版本 8.1</span>
+            </div>
+        </div>
+    </main>
+
+    <!-- 返回顶部按钮 -->
+    <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="返回顶部" data-i18n="backToTop">↑</button>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-copyright">
+                <span data-i18n="copyrightStart">© 1997 - </span><span id="currentYear"></span><span data-i18n="copyrightTeam"> Laurent Destailleur & AWStats 团队</span>
+            </div>
+            <div class="footer-license">
+                <a href="awstats_license.html" data-i18n="licenseLink">GNU General Public License</a> · 
+                <a href="https://github.com/eldy/AWStats" rel="publisher" target="_blank" style="display: inline-flex; align-items: center;" data-i18n="authorLink">GitHub</a>
+                <img src="images/favicon.pub/github.svg" style="width: 24px; height: 24px;" alt="GitHub">
+            </div>
+            <div class="attribution" data-i18n="darkAttr">
+                🌓 自适应暗黑 · 现代化重构
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            // 完整的翻译资源
+            const translations = {
+                zh: {
+                    // 页面基础
+                    pageTitle: "AWStats · 版本更新发布记录",
+                    timelineIntro: "基于官方文档、SourceForge 记录和作者历史资料整理",
+                    finalNote: "⚠️ AWStats 8.0 将是原作者（Laurent Destailleur）维护的最后一个版本，后续版本由社区维护。",
+                    
+                    // 导航
+                    navHome: "AWStats 文档",
+                    home: "主页",
+                    currentPage: "完整开发演进史",
+                    menuToggle: "☰",
+                    
+                    // 分类标题
+                    categoryBasic: "📌 基础文档",
+                    categoryGuide: "📘 使用指南",
+                    categoryReference: "📚 参考资源",
+                    categoryIntegration: "🧩 集成与扩展",
+                    categoryDev: "💻 开发者文档",
+                    
+                    // 导航链接
+                    navWhat: "什么是AWStats",
+                    navLicense: "许可证",
+                    navGlossary: "术语表",
+                    navSetup: "安装配置",
+                    navUpgrade: "升级指南",
+                    navConfig: "配置参数",
+                    navExtra: "额外部分",
+                    navTools: "其他工具",
+                    navFAQ: "FAQ",
+                    navSecurity: "安全建议",
+                    navCompare: "对比",
+                    navBenchmark: "基准测试",
+                    navChangelog: "更新日志",
+                    navWebmin: "Webmin模块",
+                    navDolibarr: "Dolibarr模块",
+                    navContrib: "贡献资源",
+                    navPlugins: "插件开发",
+                    navHooks: "插件钩子",
+                    navGraphs: "插件图形",
+                    
+                    // 头部
+                    siteTitle: "AWStats 8.1",
+                    headerSlogan: "⚡ 先进的日志分析器 · 官方文档",
+                    langZh: "中文",
+                    langEn: "English",
+                    themeAuto: "自动",
+                    
+                    // 系列标题
+                    series8x: "8.x 系列",
+                    series7x: "7.x 系列",
+                    series6x: "6.x 系列",
+                    series5x: "5.x 系列",
+                    series4x: "4.x 系列",
+                    series3x: "3.x 系列",
+                    series2x: "2.x 系列",
+                    series1x: "1.x 系列",
+                    seriesEarly: "📜 早期开发阶段 (1995-1999)",
+                    earlyNote: "社区版本进行补充的仅供参考",
+                    
+                    // 版本名称
+                    version81: "AWStats 8.1",
+                    version80: "AWStats 8.0",
+                    version79: "AWStats 7.9",
+                    version78: "AWStats 7.8",
+                    version77: "AWStats 7.7",
+                    version76: "AWStats 7.6",
+                    version75: "AWStats 7.5",
+                    version74: "AWStats 7.4",
+                    version73: "AWStats 7.3",
+                    version72: "AWStats 7.2",
+                    version711: "AWStats 7.1.1",
+                    version71: "AWStats 7.1",
+                    version70: "AWStats 7.0",
+                    version695: "AWStats 6.95",
+                    version69: "AWStats 6.9",
+                    version68: "AWStats 6.8",
+                    version67: "AWStats 6.7",
+                    version66: "AWStats 6.6",
+                    version65: "AWStats 6.5",
+                    version64: "AWStats 6.4",
+                    version63: "AWStats 6.3",
+                    version62: "AWStats 6.2",
+                    version61: "AWStats 6.1",
+                    version60: "AWStats 6.0",
+                    version59: "AWStats 5.9",
+                    version58: "AWStats 5.8",
+                    version57: "AWStats 5.7",
+                    version56: "AWStats 5.6",
+                    version55: "AWStats 5.5",
+                    version54: "AWStats 5.4",
+                    version53: "AWStats 5.3",
+                    version52: "AWStats 5.2",
+                    version51: "AWStats 5.1",
+                    version50: "AWStats 5.0",
+                    version41: "AWStats 4.1",
+                    version40: "AWStats 4.0",
+                    version32: "AWStats 3.2",
+                    version31: "AWStats 3.1",
+                    version30: "AWStats 3.0",
+                    version224: "AWStats 2.24",
+                    version223: "AWStats 2.23",
+                    version21: "AWStats 2.1",
+                    version10: "AWStats 1.0",
+                    
+                    // 早期阶段名称
+                    eraEvolution: "产品演变期",
+                    eraPreOpen: "开源前夜",
+                    eraLogic: "逻辑成型期",
+                    eraDeepening: "功能深耕",
+                    eraFoundation: "引擎奠基期",
+                    eraIntegration: "系统整合",
+                    eraConcept: "概念萌芽期",
+                    eraPrivate: "私有脚本",
+                    
+                    // 徽章
+                    badgeRefactor: "社区版",
+                    badgeFinal: "最终版（原作者）",
+                    badgeLatest: "最新",
+                    badgePreOpen: "开源前夜",
+                    badgeInternal: "内部迭代",
+                    badgeFirstYear: "项目元年",
+                    badgePrivate: "私有阶段",
+                    
+                    // 标签
+                    tagNew: "新功能",
+                    tagFix: "修复",
+                    tagSecurity: "安全",
+                    tagRefactor: "重构",
+                    tagWarning: "警告",
+                    
+                    // 8.1 版本详情
+                    v81I18n: "多语言系统重构",
+                    v81I18nDesc: "- 将 GBK 编码的 txt 语言文件迁移为 PO 格式，支持更好的国际化",
+                    v81Ipv6: "修复 IPv6 兼容性问题",
+                    v81Ipv6Desc: "- 改进 IPv6 地址处理",
+                    v81Robots: "更新 robots.pm 数据库",
+                    v81RobotsDesc: "- 添加新机器人识别",
+                    v81Json: "改进 JSON 日志解析",
+                    v81JsonDesc: "- 更好地处理 JSON 格式日志",
+                    v81Browser: "更新浏览器检测",
+                    v81BrowserDesc: "- 添加 Edge 新版、Chrome 新版检测",
+                    
+                    // 8.0 版本详情
+                    v80Css: "更好的 CSS",
+                    v80CssDesc: "- 改进样式表",
+                    v80Robots: "更新 robots.pm",
+                    v80Fix248: "修复 #248",
+                    v80TradChinese: "更新繁体中文翻译到 UTF-8",
+                    v80Json: "允许处理 JSON 格式日志",
+                    v80Note: "原作者维护的最后一个版本",
+                    
+                    // 7.9 版本详情
+                    v79Win11: "添加 Windows 11 和 Android 13 检测",
+                    v79Cve: "修复 CVE-2020-35176",
+                    v79Tajik: "添加塔吉克语支持",
+                    
+                    // 7.8 版本详情
+                    v78DatabaseBreak: "DatabaseBreak 模式选择",
+                    v78Time6: "添加 %time6 标签",
+                    v78Geoip2: "geoip2 格式化问题",
+                    
+                    // 7.7 版本详情
+                    v77Cve: "修复 CVE-2017-1000501",
+                    v77DynamicDns: "动态 DNS 查找",
+                    
+                    // 7.6 版本详情
+                    v76DirLang: "DirLang 参数安全限制",
+                    v76MacOs: "支持 macOS Sierra",
+                    
+                    // 7.5 版本详情
+                    v75Perl: "兼容 Perl 5.22",
+                    v75Edge: "Edge 浏览器检测",
+                    v75Time5: "添加 %time5 标签",
+                    
+                    // 7.4 版本详情
+                    v74Geoip6: "geoip6 插件",
+                    v74Aws: "支持 Amazon AWS 日志",
+                    
+                    // 7.3 版本详情
+                    v73Version: "添加 -version 选项",
+                    v73Win81: "Windows 8.1 和 IE11 检测",
+                    
+                    // 7.2 版本详情
+                    v72Gpl: "升级到 GPL v3+",
+                    v72Webmin: "Webmin 模块布局",
+                    
+                    // 7.1.1 版本详情
+                    v711Perl: "Perl 兼容性修复",
+                    v711Awredir: "awredir.pl 安全问题",
+                    
+                    // 7.1 版本详情
+                    v71Win8: "Windows 8 检测",
+                    v71Nginx: "nginx 配置示例",
+                    
+                    // 7.0 版本详情
+                    v70Win7: "Windows 7 检测",
+                    v70GeoipAsn: "geoip_asn_maxmind 插件",
+                    v70GoogleChart: "Google Chart API 插件",
+                    
+                    // 6.95 版本详情
+                    v695Awredir: "awredir.pl 安全增强",
+                    v695Chrome: "Chrome 浏览器检测",
+                    v695AdobeAir: "AdobeAir 检测",
+                    
+                    // 6.9 版本详情
+                    v69Maillog: "maillogconvert.pl 支持 DSN",
+                    v69Logresolvemerge: "logresolvemerge.pl 支持 FreeRADIUS",
+                    v69Note: "需要 Perl 5.007+",
+                    
+                    // 6.8 版本详情
+                    v68OnlyUsers: "OnlyUsers 选项",
+                    v68MetaRobot: "MetaRobot 选项",
+                    
+                    // 6.7 版本详情
+                    v67Day: "完全支持 -day 选项",
+                    v67NotPageList: "NotPageList 选项",
+                    
+                    // 6.6 版本详情
+                    v66Geoip: "geoip 支持 PurePerl",
+                    v66Ie7: "IE7 支持",
+                    v66Xss: "XSS 漏洞修复",
+                    
+                    // 6.5 版本详情
+                    v65Logresolvemerge: "logresolvemerge.pl 速度提升 30 倍",
+                    v65LinuxBsd: "Linux/BSD 发行版检测",
+                    v65SkipReferrers: "SkipReferrersBlackList 选项",
+                    
+                    // 6.4 版本详情
+                    v64ShowSummary: "ShowSummary 选项",
+                    v64Security: "安全漏洞修复",
+                    
+                    // 6.3 版本详情
+                    v63GeoipIsp: "geoip_isp/org_maxmind 插件",
+                    v63Security: "安全漏洞修复",
+                    
+                    // 6.2 版本详情
+                    v62GeoipRegion: "geoip_region/city_maxmind 插件",
+                    v62Maillog: "maillogconvert.pl 支持 postfix 2.1",
+                    v62ExtraX: "%extraX 标签",
+                    
+                    // 6.1 版本详情
+                    v61BuildHistory: "BuildHistoryFormat 支持 XML",
+                    v61IncludeInternal: "IncludeInternalLinksInOriginSection",
+                    
+                    // 6.0 版本详情
+                    v60Speed: "速度提升 10-20%",
+                    v60Worms: "蠕虫报告",
+                    v60Xml: "XML 输出支持",
+                    v60DecodeUtf: "decodeUTFkeys 插件",
+                    v60Configure: "configure.pl 脚本",
+                    
+                    // 5.9 版本详情
+                    v59Webmin: "Webmin 模块更新",
+                    v59AllowFullYear: "AllowFullYearView 参数",
+                    
+                    // 5.8 版本详情
+                    v58Webmin: "Webmin 模块",
+                    v58OnlyUserAgents: "OnlyUserAgents 参数",
+                    v58Cluster: "集群报告",
+                    
+                    // 5.7 版本详情
+                    v57Rawlog: "rawlog 插件",
+                    v57MaillogConvert: "maillogconvert.pl",
+                    v57Darwin: "Darwin streaming 支持",
+                    v57LogType: "LogType 参数",
+                    
+                    // 5.6 版本详情
+                    v56ModDeflate: "mod_deflate 压缩报告",
+                    v56Regex: "正则表达式参数支持",
+                    v56Misc: "杂项图表",
+                    
+                    // 5.5 版本详情
+                    v55ScreenSize: "屏幕尺寸报告",
+                    v55GeoipFree: "geoipfree 插件",
+                    v55Ipv6: "ipv6 插件",
+                    
+                    // 5.4 版本详情
+                    v54UrlaliasBuilder: "urlaliasbuilder.pl 工具",
+                    v54UrlWithAnchor: "URLWithAnchor 参数",
+                    v54LogresolvemergeGz: "logresolvemerge.pl 支持 .gz/.bz2",
+                    
+                    // 5.3 版本详情
+                    v53Exportlib: "awstats_exportlib.pl",
+                    v53AuthNotCaseSensitive: "AuthenticatedUsersNotCaseSensitive",
+                    
+                    // 5.2 版本详情
+                    v52Urlalias: "urlalias 插件",
+                    v52Geoip: "geoip 插件",
+                    v52Postfix: "postfix 邮件日志支持",
+                    v52OnlyHosts: "OnlyHosts 参数",
+                    
+                    // 5.1 版本详情
+                    v51FtpMail: "FTP/邮件日志支持改进",
+                    v51Wms: "Windows Media Server 支持",
+                    v51SkipUserAgents: "SkipUserAgents 参数",
+                    v51UrlNotCaseSensitive: "URLNotCaseSensitive 参数",
+                    
+                    // 5.0 版本详情
+                    v50Rewrite: "更新过程完全重写",
+                    v50DnsCache: "DNS 缓存文件支持",
+                    v50Plugins: "插件支持",
+                    v50UseFrames: "UseFramesWhenCGI 参数",
+                    
+                    // 4.1 版本详情
+                    v41Virtualname: "%virtualname 标签",
+                    v41Keyphrases: "关键词和关键短语报告",
+                    v41ExitPages: "出口页面报告",
+                    v41VisitDuration: "访问时长报告",
+                    
+                    // 4.0 版本详情
+                    v40Incompatible: "与旧历史文件不兼容",
+                    v40Speed: "速度提升和内存优化",
+                    v40Security: "安全/隐私参数添加",
+                    
+                    // 3.2 版本详情
+                    v32Speed: "速度提升 19%",
+                    v32NotPageList: "NotPageList 参数",
+                    v32KeepBackup: "KeepBackupOfHistoricFiles 选项",
+                    
+                    // 3.1 版本详情
+                    v31Speed: "大幅提高更新速度",
+                    v31NcsaCommon: "支持 NCSA common 日志文件",
+                    
+                    // 3.0 版本详情
+                    v30Look: "全新外观",
+                    v30Daily: "添加每日报告",
+                    
+                    // 2.24 版本详情
+                    v224Keywords: "新的关键词检测算法",
+                    
+                    // 2.23 版本详情
+                    v223Config: "使用配置文件",
+                    
+                    // 2.1 版本详情
+                    v21Iis: "支持 IIS",
+                    
+                    // 1.0 版本详情
+                    v10FirstRelease: "首次在 SourceForge 公开发布 1.0 版本",
+                    v10Apache: "支持 Apache 日志格式",
+                    v10BasicStats: "基本统计功能：访问量、页面数、文件数",
+                    
+                    // 早期阶段标题
+                    devGoal: "🎯 开发任务",
+                    coreImprovements: "🔧 核心改进",
+                    devFocus: "🎯 开发重点",
+                    techMilestone: "🔧 技术里程碑",
+                    devTarget: "🎯 开发目标",
+                    keyUpdates: "🔧 关键更新",
+                    devBackground: "🎯 开发背景",
+                    techFeatures: "🔧 技术特征",
+                    
+                    // 产品演变期
+                    evolutionGoal1: "标准化架构以适应不同服务器环境，完成从“个人工具”向“标准化产品”的最后蜕变",
+                    evolutionImprove1: "识别增强：",
+                    evolutionImprove1Desc: "大幅扩充了爬虫识别库，能够更精准地过滤非人类流量",
+                    evolutionImprove2: "模式固定：",
+                    evolutionImprove2Desc: "完善了 CGI 脚本运行模式，支持用户通过浏览器实时触发更新",
+                    evolutionImprove3: "社区内测：",
+                    evolutionImprove3Desc: "在小范围同行中进行测试，根据反馈完成了代码混淆清理和文档初步撰写",
+                    
+                    // 逻辑成型期
+                    logicFocus: "细化数据维度与提升处理效率，进入高频的内部私有迭代",
+                    logicMilestone1: "异步处理：",
+                    logicMilestone1Desc: "确定了“日志离线解析”逻辑，确保统计过程不占用 Web 服务器实时资源",
+                    logicMilestone2: "维度扩展：",
+                    logicMilestone2Desc: "新增对 浏览器类型（User-Agent）、操作系统（OS） 以及 HTTP 状态码（如 404 错误追踪）的识别能力",
+                    logicMilestone3: "代码优化：",
+                    logicMilestone3Desc: "利用 Perl 的跨平台特性，开始测试在 Unix/Linux 和 Windows 环境下的兼容性",
+                    
+                    // 引擎奠基期
+                    foundationTarget1: "官方文档公认的项目立项元年，从“零散脚本”向“分析引擎”的质变",
+                    foundationTarget2: "解决传统工具（如 Analog）报表美观度不足的问题",
+                    foundationUpdate1: "架构定义：",
+                    foundationUpdate1Desc: "确立了静态报告生成模式，首次实现将分析结果输出为带图形界面的 HTML 页面",
+                    foundationUpdate2: "特征库建设：",
+                    foundationUpdate2Desc: "开始建立最初的 Search Engines（搜索引擎）与 Robots（机器人）识别规则库",
+                    foundationUpdate3: "环境适配：",
+                    foundationUpdate3Desc: "受益于 Common Log Format (CLF) 的标准化，脚本开始具备通用化基础",
+                    
+                    // 概念萌芽期
+                    conceptBackground1: "应对 Apache HTTP Server (1995) 流行后的 access.log 分析需求",
+                    conceptBackground2: "尚无正式项目名称，主要为作者 Laurent Destailleur 的实验性代码片段",
+                    conceptFeature1: "底层工具：",
+                    conceptFeature1Desc: "基于早期 Perl 5 编写",
+                    conceptFeature2: "核心功能：",
+                    conceptFeature2Desc: "实现基础的正则匹配（Regex），用于统计总点击量及简单的文件类型过滤（如区分 .html 与 .gif）",
+                    conceptFeature3: "应用场景：",
+                    conceptFeature3Desc: "仅用于作者个人网站（如早期 chiensderace.com 雏形）的内部流量观测",
+                    
+                    // 署名
+                    writtenBy: "文章作者：<a href=\"https://www.destailleur.fr\" rel=\"author\" style=\"color: var(--accent);\">Laurent Destailleur</a>。",
+                    backToTop: "↑",
+                    
+                    // 页脚
+                    copyrightStart: "© 1997 - ",
+                    copyrightTeam: " Laurent Destailleur & AWStats 团队",
+                    licenseLink: "GNU General Public License",
+                    authorLink: "GitHub",
+                    darkAttr: "🌓 自适应暗黑 · 现代化重构",
+                },
+                en: {
+                    // Page basics
+                    pageTitle: "AWStats Release History",
+                    timelineIntro: "Based on official documentation, SourceForge records and author's historical data",
+                    finalNote: "⚠️ AWStats 8.0 will be the last version maintained by the original author (Laurent Destailleur), subsequent versions maintained by the community.",
+                    
+                    // Navigation
+                    navHome: "AWStats Docs",
+                    home: "Home",
+                    currentPage: "Development History",
+                    menuToggle: "☰",
+                    
+                    // Category titles
+                    categoryBasic: "📌 Basic Docs",
+                    categoryGuide: "📘 User Guide",
+                    categoryReference: "📚 Reference",
+                    categoryIntegration: "🧩 Integration",
+                    categoryDev: "💻 Developer",
+                    
+                    // Navigation links
+                    navWhat: "What is AWStats",
+                    navLicense: "License",
+                    navGlossary: "Glossary",
+                    navSetup: "Setup",
+                    navUpgrade: "Upgrade Guide",
+                    navConfig: "Config",
+                    navExtra: "Extra Sections",
+                    navTools: "Other Tools",
+                    navFAQ: "FAQ",
+                    navSecurity: "Security",
+                    navCompare: "Compare",
+                    navBenchmark: "Benchmark",
+                    navChangelog: "Changelog",
+                    navWebmin: "Webmin Module",
+                    navDolibarr: "Dolibarr Module",
+                    navContrib: "Contrib",
+                    navPlugins: "Plugin Dev",
+                    navHooks: "Plugin Hooks",
+                    navGraphs: "Plugin Graphs",
+                    
+                    // Header
+                    siteTitle: "AWStats 8.1",
+                    headerSlogan: "⚡ Advanced Log Analyzer · Official Docs",
+                    langZh: "中文",
+                    langEn: "English",
+                    themeAuto: "Auto",
+                    
+                    // Series titles
+                    series8x: "8.x Series",
+                    series7x: "7.x Series",
+                    series6x: "6.x Series",
+                    series5x: "5.x Series",
+                    series4x: "4.x Series",
+                    series3x: "3.x Series",
+                    series2x: "2.x Series",
+                    series1x: "1.x Series",
+                    seriesEarly: "📜 Early Development (1995-1999)",
+                    earlyNote: "Supplemented by reconstruction version for reference only",
+                    
+                    // Version names
+                    version81: "AWStats 8.1",
+                    version80: "AWStats 8.0",
+                    version79: "AWStats 7.9",
+                    version78: "AWStats 7.8",
+                    version77: "AWStats 7.7",
+                    version76: "AWStats 7.6",
+                    version75: "AWStats 7.5",
+                    version74: "AWStats 7.4",
+                    version73: "AWStats 7.3",
+                    version72: "AWStats 7.2",
+                    version711: "AWStats 7.1.1",
+                    version71: "AWStats 7.1",
+                    version70: "AWStats 7.0",
+                    version695: "AWStats 6.95",
+                    version69: "AWStats 6.9",
+                    version68: "AWStats 6.8",
+                    version67: "AWStats 6.7",
+                    version66: "AWStats 6.6",
+                    version65: "AWStats 6.5",
+                    version64: "AWStats 6.4",
+                    version63: "AWStats 6.3",
+                    version62: "AWStats 6.2",
+                    version61: "AWStats 6.1",
+                    version60: "AWStats 6.0",
+                    version59: "AWStats 5.9",
+                    version58: "AWStats 5.8",
+                    version57: "AWStats 5.7",
+                    version56: "AWStats 5.6",
+                    version55: "AWStats 5.5",
+                    version54: "AWStats 5.4",
+                    version53: "AWStats 5.3",
+                    version52: "AWStats 5.2",
+                    version51: "AWStats 5.1",
+                    version50: "AWStats 5.0",
+                    version41: "AWStats 4.1",
+                    version40: "AWStats 4.0",
+                    version32: "AWStats 3.2",
+                    version31: "AWStats 3.1",
+                    version30: "AWStats 3.0",
+                    version224: "AWStats 2.24",
+                    version223: "AWStats 2.23",
+                    version21: "AWStats 2.1",
+                    version10: "AWStats 1.0",
+                    
+                    // Early era names
+                    eraEvolution: "Product Evolution",
+                    eraPreOpen: "Pre-Open Source",
+                    eraLogic: "Logic Formation",
+                    eraDeepening: "Feature Deepening",
+                    eraFoundation: "Engine Foundation",
+                    eraIntegration: "System Integration",
+                    eraConcept: "Concept Germination",
+                    eraPrivate: "Private Scripts",
+                    
+                    // Badges
+                    badgeRefactor: "Refactor",
+                    badgeFinal: "Final",
+                    badgeLatest: "Latest",
+                    badgePreOpen: "Pre-Open",
+                    badgeInternal: "Internal",
+                    badgeFirstYear: "First Year",
+                    badgePrivate: "Private",
+                    
+                    // Tags
+                    tagNew: "New",
+                    tagFix: "Fix",
+                    tagSecurity: "Security",
+                    tagRefactor: "Refactor",
+                    tagWarning: "Warning",
+                    
+                    // 8.1 details
+                    v81I18n: "i18n System Refactor",
+                    v81I18nDesc: "- Migrate GBK txt language files to PO format for better internationalization",
+                    v81Ipv6: "Fix IPv6 compatibility",
+                    v81Ipv6Desc: "- Improve IPv6 address handling",
+                    v81Robots: "Update robots.pm database",
+                    v81RobotsDesc: "- Add new bot detection",
+                    v81Json: "Improve JSON log parsing",
+                    v81JsonDesc: "- Better handling of JSON format logs",
+                    v81Browser: "Update browser detection",
+                    v81BrowserDesc: "- Add new Edge, Chrome versions",
+                    
+                    // 8.0 details
+                    v80Css: "Better CSS",
+                    v80CssDesc: "- Improved stylesheets",
+                    v80Robots: "Update robots.pm",
+                    v80Fix248: "Fix #248",
+                    v80TradChinese: "Update Traditional Chinese translation to UTF-8",
+                    v80Json: "Allow JSON log processing",
+                    v80Note: "Last version maintained by original author",
+                    
+                    // 7.9 details
+                    v79Win11: "Add Windows 11 and Android 13 detection",
+                    v79Cve: "Fix CVE-2020-35176",
+                    v79Tajik: "Add Tajik language support",
+                    
+                    // 7.8 details
+                    v78DatabaseBreak: "DatabaseBreak mode selection",
+                    v78Time6: "Add %time6 tag",
+                    v78Geoip2: "geoip2 formatting issues",
+                    
+                    // 7.7 details
+                    v77Cve: "Fix CVE-2017-1000501",
+                    v77DynamicDns: "Dynamic DNS lookup",
+                    
+                    // 7.6 details
+                    v76DirLang: "DirLang parameter security restrictions",
+                    v76MacOs: "Support macOS Sierra",
+                    
+                    // 7.5 details
+                    v75Perl: "Compatible with Perl 5.22",
+                    v75Edge: "Edge browser detection",
+                    v75Time5: "Add %time5 tag",
+                    
+                    // 7.4 details
+                    v74Geoip6: "geoip6 plugin",
+                    v74Aws: "Support Amazon AWS logs",
+                    
+                    // 7.3 details
+                    v73Version: "Add -version option",
+                    v73Win81: "Windows 8.1 and IE11 detection",
+                    
+                    // 7.2 details
+                    v72Gpl: "Upgrade to GPL v3+",
+                    v72Webmin: "Webmin module layout",
+                    
+                    // 7.1.1 details
+                    v711Perl: "Perl compatibility fixes",
+                    v711Awredir: "awredir.pl security issues",
+                    
+                    // 7.1 details
+                    v71Win8: "Windows 8 detection",
+                    v71Nginx: "nginx configuration example",
+                    
+                    // 7.0 details
+                    v70Win7: "Windows 7 detection",
+                    v70GeoipAsn: "geoip_asn_maxmind plugin",
+                    v70GoogleChart: "Google Chart API plugin",
+                    
+                    // 6.95 details
+                    v695Awredir: "awredir.pl security enhancement",
+                    v695Chrome: "Chrome browser detection",
+                    v695AdobeAir: "AdobeAir detection",
+                    
+                    // 6.9 details
+                    v69Maillog: "maillogconvert.pl DSN support",
+                    v69Logresolvemerge: "logresolvemerge.pl FreeRADIUS support",
+                    v69Note: "Requires Perl 5.007+",
+                    
+                    // 6.8 details
+                    v68OnlyUsers: "OnlyUsers option",
+                    v68MetaRobot: "MetaRobot option",
+                    
+                    // 6.7 details
+                    v67Day: "Full -day option support",
+                    v67NotPageList: "NotPageList option",
+                    
+                    // 6.6 details
+                    v66Geoip: "geoip PurePerl support",
+                    v66Ie7: "IE7 support",
+                    v66Xss: "XSS vulnerability fix",
+                    
+                    // 6.5 details
+                    v65Logresolvemerge: "logresolvemerge.pl 30x speed improvement",
+                    v65LinuxBsd: "Linux/BSD distribution detection",
+                    v65SkipReferrers: "SkipReferrersBlackList option",
+                    
+                    // 6.4 details
+                    v64ShowSummary: "ShowSummary option",
+                    v64Security: "Security fixes",
+                    
+                    // 6.3 details
+                    v63GeoipIsp: "geoip_isp/org_maxmind plugins",
+                    v63Security: "Security fixes",
+                    
+                    // 6.2 details
+                    v62GeoipRegion: "geoip_region/city_maxmind plugins",
+                    v62Maillog: "maillogconvert.pl postfix 2.1 support",
+                    v62ExtraX: "%extraX tag",
+                    
+                    // 6.1 details
+                    v61BuildHistory: "BuildHistoryFormat XML support",
+                    v61IncludeInternal: "IncludeInternalLinksInOriginSection",
+                    
+                    // 6.0 details
+                    v60Speed: "10-20% speed improvement",
+                    v60Worms: "Worm report",
+                    v60Xml: "XML output support",
+                    v60DecodeUtf: "decodeUTFkeys plugin",
+                    v60Configure: "configure.pl script",
+                    
+                    // 5.9 details
+                    v59Webmin: "Webmin module update",
+                    v59AllowFullYear: "AllowFullYearView parameter",
+                    
+                    // 5.8 details
+                    v58Webmin: "Webmin module",
+                    v58OnlyUserAgents: "OnlyUserAgents parameter",
+                    v58Cluster: "Cluster report",
+                    
+                    // 5.7 details
+                    v57Rawlog: "rawlog plugin",
+                    v57MaillogConvert: "maillogconvert.pl",
+                    v57Darwin: "Darwin streaming support",
+                    v57LogType: "LogType parameter",
+                    
+                    // 5.6 details
+                    v56ModDeflate: "mod_deflate compression report",
+                    v56Regex: "Regex parameter support",
+                    v56Misc: "Miscellaneous charts",
+                    
+                    // 5.5 details
+                    v55ScreenSize: "Screen size report",
+                    v55GeoipFree: "geoipfree plugin",
+                    v55Ipv6: "ipv6 plugin",
+                    
+                    // 5.4 details
+                    v54UrlaliasBuilder: "urlaliasbuilder.pl tool",
+                    v54UrlWithAnchor: "URLWithAnchor parameter",
+                    v54LogresolvemergeGz: "logresolvemerge.pl .gz/.bz2 support",
+                    
+                    // 5.3 details
+                    v53Exportlib: "awstats_exportlib.pl",
+                    v53AuthNotCaseSensitive: "AuthenticatedUsersNotCaseSensitive",
+                    
+                    // 5.2 details
+                    v52Urlalias: "urlalias plugin",
+                    v52Geoip: "geoip plugin",
+                    v52Postfix: "postfix mail log support",
+                    v52OnlyHosts: "OnlyHosts parameter",
+                    
+                    // 5.1 details
+                    v51FtpMail: "FTP/mail log improvements",
+                    v51Wms: "Windows Media Server support",
+                    v51SkipUserAgents: "SkipUserAgents parameter",
+                    v51UrlNotCaseSensitive: "URLNotCaseSensitive parameter",
+                    
+                    // 5.0 details
+                    v50Rewrite: "Complete update process rewrite",
+                    v50DnsCache: "DNS cache file support",
+                    v50Plugins: "Plugin support",
+                    v50UseFrames: "UseFramesWhenCGI parameter",
+                    
+                    // 4.1 details
+                    v41Virtualname: "%virtualname tag",
+                    v41Keyphrases: "Keyphrases report",
+                    v41ExitPages: "Exit pages report",
+                    v41VisitDuration: "Visit duration report",
+                    
+                    // 4.0 details
+                    v40Incompatible: "Incompatible with old history files",
+                    v40Speed: "Speed and memory optimizations",
+                    v40Security: "Security/privacy parameters added",
+                    
+                    // 3.2 details
+                    v32Speed: "19% speed improvement",
+                    v32NotPageList: "NotPageList parameter",
+                    v32KeepBackup: "KeepBackupOfHistoricFiles option",
+                    
+                    // 3.1 details
+                    v31Speed: "Major update speed improvement",
+                    v31NcsaCommon: "NCSA common log support",
+                    
+                    // 3.0 details
+                    v30Look: "New look",
+                    v30Daily: "Daily reports added",
+                    
+                    // 2.24 details
+                    v224Keywords: "New keyword detection algorithm",
+                    
+                    // 2.23 details
+                    v223Config: "Configuration file support",
+                    
+                    // 2.1 details
+                    v21Iis: "IIS support",
+                    
+                    // 1.0 details
+                    v10FirstRelease: "First public release on SourceForge",
+                    v10Apache: "Apache log format support",
+                    v10BasicStats: "Basic stats: visits, pages, hits",
+                    
+                    // Early stage headings
+                    devGoal: "🎯 Development Goals",
+                    coreImprovements: "🔧 Core Improvements",
+                    devFocus: "🎯 Development Focus",
+                    techMilestone: "🔧 Technical Milestones",
+                    devTarget: "🎯 Development Targets",
+                    keyUpdates: "🔧 Key Updates",
+                    devBackground: "🎯 Background",
+                    techFeatures: "🔧 Technical Features",
+                    
+                    // Evolution period
+                    evolutionGoal1: "Standardize architecture for different server environments, final transformation from \"personal tool\" to \"standardized product\"",
+                    evolutionImprove1: "Enhanced detection:",
+                    evolutionImprove1Desc: "Significantly expanded crawler detection database for more accurate non-human traffic filtering",
+                    evolutionImprove2: "Mode stabilization:",
+                    evolutionImprove2Desc: "Completed CGI script operation mode, supporting browser-triggered updates",
+                    evolutionImprove3: "Community testing:",
+                    evolutionImprove3Desc: "Tested with small group of peers, completed code cleanup and initial documentation based on feedback",
+                    
+                    // Logic period
+                    logicFocus: "Refine data dimensions and improve processing efficiency, entering high-frequency internal private iterations",
+                    logicMilestone1: "Async processing:",
+                    logicMilestone1Desc: "Established \"offline log parsing\" logic to ensure statistics don't consume web server resources",
+                    logicMilestone2: "Dimension expansion:",
+                    logicMilestone2Desc: "Added browser type (User-Agent), operating system (OS), and HTTP status code (e.g., 404 tracking) detection",
+                    logicMilestone3: "Code optimization:",
+                    logicMilestone3Desc: "Leveraged Perl's cross-platform capabilities, began testing compatibility on Unix/Linux and Windows",
+                    
+                    // Foundation period
+                    foundationTarget1: "Officially recognized project inception year, transformation from \"scattered scripts\" to \"analysis engine\"",
+                    foundationTarget2: "Solve the problem of insufficient visual appeal in reports from traditional tools (such as Analog)",
+                    foundationUpdate1: "Architecture definition:",
+                    foundationUpdate1Desc: "Established static report generation mode, first output analysis results as HTML pages with graphical interface",
+                    foundationUpdate2: "Feature library:",
+                    foundationUpdate2Desc: "Began building initial Search Engines and Robots recognition rule libraries",
+                    foundationUpdate3: "Environment adaptation:",
+                    foundationUpdate3Desc: "Benefited from Common Log Format (CLF) standardization, scripts began to have通用基础",
+                    
+                    // Concept period
+                    conceptBackground1: "Addressing access.log analysis needs after Apache HTTP Server (1995) became popular",
+                    conceptBackground2: "There is no official project name yet; it mainly consists of experimental code snippets by author Laurent Destailleur.",
+                    conceptFeature1: "Base tools:",
+                    conceptFeature1Desc: "Written in early Perl 5",
+                    conceptFeature2: "Core functions:",
+                    conceptFeature2Desc: "Basic regex matching for total hits and simple file type filtering (e.g., .html vs .gif)",
+                    conceptFeature3: "Application:",
+                    conceptFeature3Desc: "Internal traffic monitoring for author's personal websites (e.g., early chiensderace.com prototype)",
+                    
+                    // Signature
+                    writtenBy: "Written by: <a href=\"https://www.destailleur.fr\" rel=\"author\" style=\"color: var(--accent);\">Laurent Destailleur</a>.",
+                    backToTop: "↑",
+                    
+                    // Footer
+                    copyrightStart: "© 1997 - ",
+                    copyrightTeam: " Laurent Destailleur & AWStats Team",
+                    licenseLink: "GNU General Public License",
+                    authorLink: "GitHub",
+                    darkAttr: "🌓 Adaptive dark mode · Modern refactor",
+                }
+            };
+
+            const i18nElements = document.querySelectorAll('[data-i18n]');
+            const langSelector = document.getElementById('langSelector');
+            let currentLang = localStorage.getItem('awstats_lang') || 'zh';
+            langSelector.value = currentLang;
+
+            function applyLanguage(lang) {
+                const t = translations[lang] || translations.zh;
+                i18nElements.forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (t[key] !== undefined) {
+                        if (key === 'copyright') {
+                            const year = new Date().getFullYear();
+                            el.innerHTML = t[key].replace('{year}', year);
+                        } else if (key === 'info1' || key === 'info2' || key === 'info3' || key === 'dnsNoteStar' || key === 'dnsNoteStar3' || key === 'advice1' || key === 'advice2' || key === 'advice3' || key === 'advice4' || key === 'writtenBy') {
+                            el.innerHTML = t[key];
+                        } else {
+                            el.textContent = t[key];
+                        }
+                    }
+                });
+                localStorage.setItem('awstats_lang', lang);
+                
+                const themeState = localStorage.getItem('awstats_theme') || 'auto';
+                const themeText = document.querySelector('.theme-text');
+                if (themeText) {
+                    if (themeState === 'auto') themeText.textContent = t.themeAuto;
+                    else if (themeState === 'light') themeText.textContent = (lang === 'zh' ? '浅色' : 'Light');
+                    else themeText.textContent = (lang === 'zh' ? '深色' : 'Dark');
+                }
+            }
+            // 自定义下拉菜单功能
+            document.addEventListener('DOMContentLoaded', function() {
+                const customSelect = document.querySelector('.custom-select');
+                if (customSelect) {
+                    const selected = customSelect.querySelector('.select-selected');
+                    const items = customSelect.querySelectorAll('.select-items div');
+                    
+                    selected.addEventListener('click', function() {
+                        customSelect.classList.toggle('active');
+                    });
+                    
+                    items.forEach(item => {
+                        item.addEventListener('click', function() {
+                            const value = this.getAttribute('data-value');
+                            const text = this.textContent;
+                            
+                            // 更新显示
+                            selected.textContent = text;
+                            selected.setAttribute('data-value', value);
+                            
+                            // 更新实际 select 的值
+                            document.getElementById('langSelector').value = value;
+                            
+                            // 触发 change 事件
+                            document.getElementById('langSelector').dispatchEvent(new Event('change'));
+                            
+                            // 关闭下拉菜单
+                            customSelect.classList.remove('active');
+                        });
+                    });
+                    
+                    // 点击其他地方关闭
+                    document.addEventListener('click', function(e) {
+                        if (!customSelect.contains(e.target)) {
+                            customSelect.classList.remove('active');
+                        }
+                    });
+                }
+            });
+            // 点击展开下拉菜单功能
+            document.addEventListener('DOMContentLoaded', function() {
+                const dropdownItems = document.querySelectorAll('.dropdown-item');
+                
+                // 点击其他地方关闭所有下拉菜单
+                document.addEventListener('click', function(event) {
+                    if (!event.target.closest('.dropdown-item')) {
+                        dropdownItems.forEach(item => {
+                            item.classList.remove('active');
+                        });
+                    }
+                });
+                
+                // 点击下拉菜单标题切换显示
+                dropdownItems.forEach(item => {
+                    const title = item.querySelector('.dropdown-title');
+                    title.addEventListener('click', function(e) {
+                        e.stopPropagation(); // 阻止事件冒泡
+                        
+                        // 关闭其他打开的下拉菜单
+                        dropdownItems.forEach(otherItem => {
+                            if (otherItem !== item) {
+                                otherItem.classList.remove('active');
+                            }
+                        });
+                        
+                        // 切换当前菜单的显示状态
+                        item.classList.toggle('active');
+                    });
+                    
+                    // 防止点击下拉内容时关闭菜单
+                    const content = item.querySelector('.dropdown-content');
+                    if (content) {
+                        content.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                        });
+                    }
+                    // 按 ESC 键关闭所有菜单
+                    document.addEventListener('keydown', function(e) {
+                        if (e.key === 'Escape') {
+                            dropdownItems.forEach(item => {
+                                item.classList.remove('active');
+                            });
+                        }
+                    });
+                });
+            });
+            applyLanguage(currentLang);
+
+            langSelector.addEventListener('change', (e) => {
+                currentLang = e.target.value;
+                applyLanguage(currentLang);
+            });
+          // 手机端汉堡菜单功能
+          document.addEventListener('DOMContentLoaded', function() {
+              const mobileToggle = document.getElementById('mobileMenuToggle');
+              const mobileMenu = document.getElementById('mobileMenu');
+              
+              if (mobileToggle && mobileMenu) {
+                  mobileToggle.addEventListener('click', function() {
+                      mobileMenu.classList.toggle('mobile-active');
+                      
+                      // 改变图标样式
+                      if (mobileMenu.classList.contains('mobile-active')) {
+                          mobileToggle.innerHTML = '✕'; // 关闭图标
+                      } else {
+                          mobileToggle.innerHTML = '☰'; // 菜单图标
+                      }
+                  });
+                  
+                  // 点击菜单项后自动关闭菜单（可选）
+                  const menuItems = mobileMenu.querySelectorAll('.dropdown-title');
+                  menuItems.forEach(item => {
+                      item.addEventListener('click', function() {
+                          // 注意：这里不关闭主菜单，只处理子菜单的展开/收起
+                          // 如果需要点击后关闭主菜单，可以取消下面的注释
+                          // mobileMenu.classList.remove('mobile-active');
+                          // mobileToggle.innerHTML = '☰';
+                      });
+                  });
+              }
+          });
+            // 暗黑模式切换
+            const root = document.documentElement;
+            const themeBtn = document.getElementById('themeToggleBtn');
+            let themeState = localStorage.getItem('awstats_theme') || 'auto';
+
+            function applyTheme(state) {
+                root.classList.remove('force-light', 'force-dark');
+                if (state === 'light') root.classList.add('force-light');
+                else if (state === 'dark') root.classList.add('force-dark');
+                const themeText = document.querySelector('.theme-text');
+                if (themeText) {
+                    const lang = currentLang;
+                    const t = translations[lang];
+                    if (state === 'auto') themeText.textContent = t.themeAuto;
+                    else if (state === 'light') themeText.textContent = (lang === 'zh' ? '浅色' : 'Light');
+                    else themeText.textContent = (lang === 'zh' ? '深色' : 'Dark');
+                }
+                localStorage.setItem('awstats_theme', state);
+            }
+            applyTheme(themeState);
+            themeBtn.addEventListener('click', () => {
+                if (themeState === 'auto') themeState = 'light';
+                else if (themeState === 'light') themeState = 'dark';
+                else themeState = 'auto';
+                applyTheme(themeState);
+            });
+        })();
+    </script>
+</body>
+</html>

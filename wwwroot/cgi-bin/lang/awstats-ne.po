@@ -1,0 +1,3312 @@
+# AWStats Nepali (ne) translations
+# Copyright (C) 2026 AWStats
+# This file is distributed under the same license as the AWStats package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: AWStats 8.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-10 12:00+0000\n"
+"PO-Revision-Date: 2026-05-10 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Nepali\n"
+"Language: ne\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#------------------------------------------------------------------------------
+# महिनाका नामहरू
+#------------------------------------------------------------------------------
+
+msgid "month_01"
+msgstr "जनवरी"
+
+msgid "month_02"
+msgstr "फेब्रुअरी"
+
+msgid "month_03"
+msgstr "मार्च"
+
+msgid "month_04"
+msgstr "अप्रिल"
+
+msgid "month_05"
+msgstr "मे"
+
+msgid "month_06"
+msgstr "जुन"
+
+msgid "month_07"
+msgstr "जुलाई"
+
+msgid "month_08"
+msgstr "अगस्ट"
+
+msgid "month_09"
+msgstr "सेप्टेम्बर"
+
+msgid "month_10"
+msgstr "अक्टोबर"
+
+msgid "month_11"
+msgstr "नोभेम्बर"
+
+msgid "month_12"
+msgstr "डिसेम्बर"
+
+#------------------------------------------------------------------------------
+# हप्ताका दिनहरूको नाम
+#------------------------------------------------------------------------------
+
+msgid "DayOfWeek_0"
+msgstr "आइतबार"
+
+msgid "DayOfWeek_1"
+msgstr "सोमबार"
+
+msgid "DayOfWeek_2"
+msgstr "मङ्गलबार"
+
+msgid "DayOfWeek_3"
+msgstr "बुधबार"
+
+msgid "DayOfWeek_4"
+msgstr "बिहीबार"
+
+msgid "DayOfWeek_5"
+msgstr "शुक्रबार"
+
+msgid "DayOfWeek_6"
+msgstr "शनिबार"
+
+#------------------------------------------------------------------------------
+# प्रयोगकर्ता इन्टरफेस तत्वहरू
+#------------------------------------------------------------------------------
+
+msgid "Advanced Web Statistics for"
+msgstr "को लागि उन्नत वेब तथ्याङ्क"
+
+msgid "Statistics for"
+msgstr "को लागि तथ्याङ्क"
+
+msgid "main"
+msgstr "सिंहावलोकन"
+
+msgid "Switch to light mode"
+msgstr "उज्यालो मोडमा स्विच गर्नुहोस्"
+
+msgid "Switch to dark mode"
+msgstr "अध्यारो मोडमा स्विच गर्नुहोस्"
+
+msgid "TB"
+msgstr "TB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "Bytes"
+msgstr "बाइट"
+
+msgid "Filter"
+msgstr "फिल्टर"
+
+msgid "Exclude filter"
+msgstr "फिल्टर बहिष्कार गर्नुहोस्"
+
+msgid "Top"
+msgstr "शीर्ष"
+
+msgid "Full list"
+msgstr "पूर्ण सूची"
+
+msgid "Last"
+msgstr "अन्तिम"
+
+msgid "Average"
+msgstr "औसत"
+
+msgid "Export"
+msgstr "निर्यात गर्नुहोस्"
+
+msgid "Details"
+msgstr "विवरणहरू"
+
+msgid "Version"
+msgstr "संस्करण"
+
+msgid "thousands_separator"
+msgstr ","
+
+msgid "dateformat_long"
+msgstr "yyyy/mm/dd HH:MM:SS"
+
+msgid "dateformat_short"
+msgstr "yyyy/mm/dd HH:MM"
+
+msgid "date_format_year"
+msgstr "वर्ष %s"
+
+msgid "date_format_month"
+msgstr "%1$s %2$s"
+
+#------------------------------------------------------------------------------
+# नेभिगेसन पट्टी
+#------------------------------------------------------------------------------
+
+msgid "AWStats Month Selector"
+msgstr "AWStats महिना चयनकर्ता"
+
+msgid "nav_category_basic"
+msgstr "आधारभूत कागजात"
+
+msgid "nav_category_guide"
+msgstr "प्रयोग गाइड"
+
+msgid "nav_category_reference"
+msgdir "सन्दर्भ स्रोतहरू"
+
+msgid "nav_category_integration"
+msgstr "एकीकरण र विस्तारहरू"
+
+msgid "nav_category_dev"
+msgstr "विकासकर्ता कागजात"
+
+msgid "nav_changelog"
+msgstr "परिवर्तन लग"
+
+msgid "nav_what"
+msgstr "AWStats के हो"
+
+msgid "nav_license"
+msgstr "इजाजतपत्र"
+
+msgid "nav_glossary"
+msgstr "शब्दावली"
+
+msgid "nav_setup"
+msgstr "स्थापना र कन्फिगरेसन"
+
+msgid "nav_upgrade"
+msgstr "अपग्रेड गाइड"
+
+msgid "nav_config"
+msgstr "कन्फिगरेसन प्यारामिटरहरू"
+
+msgid "nav_extra"
+msgstr "अतिरिक्त भाग"
+
+msgid "nav_tools"
+msgstr "अन्य उपकरणहरू"
+
+msgid "nav_faq"
+msgstr "बारम्बार सोधिने प्रश्नहरू"
+
+msgid "nav_security"
+msgstr "सुरक्षा सुझावहरू"
+
+msgid "nav_compare"
+msgstr "तुलना"
+
+msgid "nav_benchmark"
+msgstr "बेन्चमार्क"
+
+msgid "nav_webmin"
+msgstr "Webmin मोड्युल"
+
+msgid "nav_dolibarr"
+msgstr "Dolibarr मोड्युल"
+
+msgid "nav_contrib"
+msgstr "योगदानकर्ता स्रोतहरू"
+
+msgid "nav_plugins"
+msgstr "प्लगइन विकास"
+
+msgid "nav_hooks"
+msgstr "प्लगइन हुकहरू"
+
+msgid "nav_graphs"
+msgstr "प्लगइन ग्राफहरू"
+
+msgid "Back to top"
+msgstr "माथि फर्कनुहोस्"
+
+msgid "nav_select_month"
+msgstr "महिना चयन गर्नुहोस्"
+
+#------------------------------------------------------------------------------
+# मुख्य सूचकहरू
+#------------------------------------------------------------------------------
+
+msgid "Unique visitors"
+msgstr "अद्वितीय आगन्तुकहरू"
+
+msgid "Visits"
+msgstr "भ्रमणहरू"
+
+msgid "Visits duration"
+msgstr "भ्रमण अवधि"
+
+msgid "First visit"
+msgstr "पहिलो अद्यावधिक"
+
+msgid "Last visit"
+msgstr "अन्तिम अद्यावधिक"
+
+msgid "Visits/Visitor"
+msgstr "भ्रमण/आगन्तुक"
+
+msgid "Pages/Visit"
+msgstr "पृष्ठ/भ्रमण"
+
+msgid "Hits/Visit"
+msgstr "अनुरोध/भ्रमण"
+
+msgid "KB/Visit"
+msgstr "KB/भ्रमण"
+
+msgid "KB/Visits"
+msgstr "KB/भ्रमण संख्या"
+
+msgid "Pages"
+msgstr "पृष्ठ संख्या"
+
+msgid "Hits"
+msgstr "अनुरोध संख्या"
+
+msgid "Bandwidth"
+msgstr "ब्यान्डविथ"
+
+msgid "duration_format"
+msgstr "%s-%s"
+
+msgid "unit_s"
+msgstr "सेकेन्ड"
+
+msgid "unit_min"
+msgstr "मिनेट"
+
+msgid "unit_h"
+msgstr "घण्टा"
+
+msgid "and"
+msgstr "-"
+
+msgid "Device Types"
+msgstr "यन्त्र प्रकारहरू"
+
+msgid "Device Type"
+msgstr "यन्त्र प्रकार"
+
+msgid "Percent"
+msgstr "प्रतिशत"
+
+msgid "Mobile"
+msgstr "मोबाइल फोन"
+
+msgid "Pause & Go"
+msgstr "रोक्नुहोस् र जारी राख्नुहोस्"
+
+msgid "Complete"
+msgstr "पूर्ण"
+
+msgid "Tablet"
+msgstr "ट्याब्लेट"
+
+msgid "Tv"
+msgstr "टेलिभिजन"
+
+msgid "Wearable"
+msgstr "लगाउन मिल्ने यन्त्र"
+
+msgid "Bot"
+msgstr "बोट"
+
+msgid "Desktop"
+msgstr "डेस्कटप"
+
+msgid "Normal browsing traffic"
+msgstr "सामान्य ब्राउजिङ ट्राफिक"
+
+msgid "Abnormal browsing traffic"
+msgstr "असामान्य ब्राउजिङ ट्राफिक"
+
+msgid "Viewed"
+msgstr "हेरिएको"
+
+msgid "Not viewed"
+msgstr "नहेरिएको"
+
+msgid "Abnormal browsing traffic note"
+msgstr "असामान्य ब्राउजिङ ट्राफिकमा समावेश छ: खोज बोटहरू, AI तालिम बोटहरू, कमजोरी स्क्यानरहरू र HTTP/HTTPS मापदण्डहरूसँग नमिल्ने अनुरोधहरू"
+
+msgid "File size"
+msgstr "फाइल आकार"
+
+msgid "File type"
+msgstr "फाइल प्रकार"
+
+msgid "Downloads"
+msgstr "डाउनलोडहरू"
+
+msgid "Request time"
+msgstr "अनुरोध समय"
+
+msgid "Total requests"
+msgstr "कुल अनुरोधहरू"
+
+msgid "Frequency"
+msgstr "आवृत्ति"
+
+msgid "Average frequency"
+msgstr "औसत आवृत्ति"
+
+msgid "Seconds"
+msgstr "सेकेन्ड"
+
+msgid "First"
+msgstr "पहिलो"
+
+msgid "Mails"
+msgstr "इमेल संख्या"
+
+msgid "Size"
+msgstr "आकार"
+
+msgid "If you remove this file, all statistics for date"
+msgstr "चेतावनी: यो फाइल हटाउँदा मितिको सबै तथ्याङ्क"
+
+msgid "will be lost/reset."
+msgstr "स्थायी रूपमा हराउने/रिसेट हुनेछ!"
+
+msgid "Last config file used to build this data file was"
+msgstr "यो डाटा फाइल निर्माण गर्न प्रयोग गरिएको अन्तिम कन्फिगरेसन फाइल थियो"
+
+msgid "Position (offset in bytes) in this file for beginning of each section for"
+msgstr "यस फाइलको MAP खण्डले प्रत्येक खण्डको सुरुवातको लागि बाइट अफसेट स्थिति रेकर्ड गर्दछ"
+
+msgid "direct I/O access. If you made changes somewhere in this file, you should"
+msgstr "AWStats ले प्रत्यक्ष रूपमा डाटा पहुँच गर्न सकोस् भनेर। यदि तपाईंले यस फाइलमा कतै परिवर्तन गर्नुभयो भने, तपाईंले"
+
+msgid "also remove completely the MAP section (AWStats will rewrite it at next update)"
+msgstr "MAP खण्ड पूर्ण रूपमा हटाउनुहोस् (AWStats ले अर्को अद्यावधिकमा यसलाई पुन: लेख्नेछ)"
+
+msgid "LastLine    = Date of last record processed - Last record line number in last log - Last record offset in last log - Last record signature value"
+msgstr "LastLine    = प्रशोधन गरिएको अन्तिम रेकर्डको मिति - अन्तिम लगमा अन्तिम रेकर्डको रेखा नम्बर - अन्तिम लगमा अन्तिम रेकर्डको अफसेट - अन्तिम रेकर्डको हस्ताक्षर मान"
+
+msgid "FirstTime   = Date of first visit for history file"
+msgstr "FirstTime   = इतिहास फाइलको लागि पहिलो भ्रमणको मिति"
+
+msgid "LastTime    = Date of last visit for history file"
+msgstr "LastTime    = इतिहास फाइलको लागि अन्तिम भ्रमणको मिति"
+
+msgid "LastUpdate  = Date of last update - Nb of parsed records - Nb of parsed old records - Nb of parsed new records - Nb of parsed corrupted - Nb of parsed dropped"
+msgstr "LastUpdate  = अन्तिम अद्यावधिकको मिति - पार्स गरिएको रेकर्डको संख्या - पार्स गरिएको पुरानो रेकर्डको संख्या - पार्स गरिएको नयाँ रेकर्डको संख्या - पार्स गरिएको बिग्रिएकोको संख्या - पार्स गरिएको हटाइएकोको संख्या"
+
+msgid "TotalVisits = Number of visits"
+msgstr "TotalVisits = भ्रमणको संख्या"
+
+msgid "TotalUnique = Number of unique visitors"
+msgstr "TotalUnique = अद्वितीय आगन्तुकको संख्या"
+
+msgid "MonthHostsKnown   = Number of hosts known"
+msgstr "MonthHostsKnown   = ज्ञात होस्टको संख्या"
+
+msgid "MonthHostsUnKnown = Number of hosts unknown"
+msgstr "MonthHostsUnKnown = अज्ञात होस्टको संख्या"
+
+msgid "Cluster ID - Pages - Hits - Bandwidth"
+msgstr "क्लस्टर ID - पृष्ठ संख्या - अनुरोध संख्या - ब्यान्डविथ"
+
+msgid "Hour - Pages - Hits - Bandwidth - Not viewed Pages - Not viewed Hits - Not viewed Bandwidth"
+msgstr "घण्टा - पृष्ठ संख्या - अनुरोध संख्या - ब्यान्डविथ - नहेरिएको पृष्ठहरू - नहेरिएको अनुरोधहरू - नहेरिएको ब्यान्डविथ"
+
+msgid "Date - Pages - Hits - Bandwidth - Visits"
+msgstr "मिति - पृष्ठ संख्या - अनुरोध संख्या - ब्यान्डविथ - भ्रमणहरू"
+
+msgid "Domain - Pages - Hits - Bandwidth"
+msgstr "डोमेन - पृष्ठ संख्या - अनुरोध संख्या - ब्यान्डविथ"
+
+msgid "The %s first Pages must be first (order not required for others)"
+msgstr "मुख्य पृष्ठले मात्र %s शीर्ष पृष्ठहरू देखाउनेछ, कृपया विवरण पृष्ठमा पूर्ण सूची हेर्नुहोस्"
+
+msgid "Host - Pages - Hits - Bandwidth - Last visit date - [Start date of last visit] - [Last page of last visit]"
+msgstr "होस्ट - पृष्ठ संख्या - अनुरोध संख्या - ब्यान्डविथ - अन्तिम भ्रमण समय - [अन्तिम भ्रमणको सुरु समय] - [अन्तिम भ्रमणको अन्तिम पृष्ठ]"
+
+msgid "[Start date of last visit] and [Last page of last visit] are saved only if session is not finished"
+msgstr "[अन्तिम भ्रमणको सुरु समय] र [अन्तिम भ्रमणको अन्तिम पृष्ठ] session समाप्त नभएसम्म मात्र सङ्ग्रह गरिनेछ"
+
+msgid "The first %s items are sorted by hits in descending order; order of the remaining items is undefined."
+msgstr "पहिलो %s वस्तुहरू हिट्सको संख्याको आधारमा अवरोही क्रममा क्रमबद्ध गरिएका छन्; बाँकी वस्तुहरूको क्रम अपरिभाषित छ।"
+
+msgid "Login - Pages - Hits - Bandwidth - Last visit"
+msgstr "प्रवेश गरेको प्रयोगकर्ता - पृष्ठ संख्या - अनुरोध संख्या - ब्यान्डविथ - अन्तिम भ्रमण समय"
+
+msgid "Robot ID - Hits - Bandwidth - Last visit - Hits on robots.txt"
+msgstr "रोबोट ID - अनुरोध संख्या - ब्यान्डविथ - अन्तिम भ्रमण समय - robots.txt अनुरोधहरू"
+
+msgid "Worm ID - Hits - Bandwidth - Last visit"
+msgstr "किरा ID - अनुरोध संख्या - ब्यान्डविथ - अन्तिम भ्रमण समय"
+
+msgid "EMail - Hits - Bandwidth - Last visit"
+msgstr "इमेल - अनुरोध संख्या - ब्यान्डविथ - अन्तिम भ्रमण समय"
+
+msgid "The first %s email addresses are sorted by hits in descending order; order of the remaining addresses is undefined."
+msgstr "पहिलो %s इमेल ठेगानाहरू हिट्सको संख्याको आधारमा अवरोही क्रममा क्रमबद्ध गरिएका छन्; बाँकी ठेगानाहरूको क्रम अपरिभाषित छ।"
+
+msgid "URL - Pages - Bandwidth - Entry - Exit"
+msgstr "URL - पृष्ठ संख्या - ब्यान्डविथ - प्रवेश - निकास"
+
+msgid "Files type - Hits - Bandwidth - Bandwidth without compression - Bandwidth after compression"
+msgstr "फाइल प्रकार - अनुरोध संख्या - ब्यान्डविथ - कम्प्रेसन अघि ब्यान्डविथ - कम्प्रेसन पछि ब्यान्डविथ"
+
+msgid "Request Time Range - Request Time Frequency"
+msgstr "अनुरोध समय दायरा - अनुरोध समय आवृत्ति"
+
+msgid "Payload Range - Payload Frequency"
+msgstr "फाइल आकार दायरा - फाइल संख्या"
+
+msgid "Session range - Number of visits"
+msgstr "session अवधि दायरा - भ्रमण संख्या"
+
+msgid "URL with %s errors - Hits"
+msgstr "%s त्रुटिहरू भएको URL - अनुरोध संख्या"
+
+msgid "Last URL referrer"
+msgstr "अन्तिम URL रेफरर"
+
+msgid "Errors - Hits - Bandwidth"
+msgstr "त्रुटिहरू - अनुरोध संख्या - ब्यान्डविथ"
+
+msgid "Search keywords - Number of search"
+msgstr "कुञ्जी शब्दहरू - खोजी संख्या"
+
+msgid "Only top %s keywords shown on main page (sorted by search count). See full list on detail page."
+msgstr "मुख्य पृष्ठले मात्र %s शीर्ष कुञ्जी शब्दहरू देखाउनेछ (खोजी संख्या अनुसार क्रमबद्ध)। कृपया विवरण पृष्ठमा पूर्ण सूची हेर्नुहोस्"
+
+msgid "Search keyphrases - Number of search"
+msgstr "कुञ्जी वाक्यांशहरू - खोजी संख्या"
+
+msgid "Only top %s keyphrases shown on main page (sorted by search count). See full list on detail page."
+msgstr "मुख्य पृष्ठले मात्र %s शीर्ष कुञ्जी वाक्यांशहरू देखाउनेछ (खोजी संख्या अनुसार क्रमबद्ध)। कृपया विवरण पृष्ठमा पूर्ण सूची हेर्नुहोस्"
+
+msgid "External page referers - Pages - Hits"
+msgstr "बाह्य पृष्ठ रेफररहरू - पृष्ठ संख्या - अनुरोध संख्या"
+
+msgid "Only top %s external referrers shown on main page (sorted by pages). See full list on detail page."
+msgstr "मुख्य पृष्ठले मात्र %s शीर्ष बाह्य रेफररहरू देखाउनेछ (पृष्ठ संख्या अनुसार क्रमबद्ध)। कृपया विवरण पृष्ठमा पूर्ण सूची हेर्नुहोस्"
+
+msgid "Search engine referers ID - Pages - Hits"
+msgstr "खोज इन्जिन रेफरर ID - पृष्ठ संख्या - अनुरोध संख्या"
+
+msgid "Origin - Pages - Hits"
+msgstr "स्रोत - पृष्ठ संख्या - अनुरोध संख्या"
+
+msgid "Unknown referer Browser - Last visit date"
+msgstr "अज्ञात रेफरर ब्राउजर - अन्तिम भ्रमण समय"
+
+msgid "Unknown referer OS - Last visit date"
+msgstr "अज्ञात रेफरर अपरेटिङ सिस्टम - अन्तिम भ्रमण समय"
+
+msgid "Screen size - Hits"
+msgstr "स्क्रिन रिजोल्युसन - अनुरोध संख्या"
+
+msgid "Browser ID - Hits - Pages"
+msgstr "ब्राउजर ID - क्लिक संख्या - पृष्ठ संख्या"
+
+msgid "Downloads - Hits - Bandwidth"
+msgstr "डाउनलोडहरू - अनुरोध संख्या - ब्यान्डविथ"
+
+msgid "Protocol - Hits - Bandwidth"
+msgstr "प्रोटोकल - अनुरोध संख्या - ब्यान्डविथ"
+
+msgid "Icon Status - Type:200:404:Other"
+msgstr "आइकन स्थिति - प्रकार:200:404:अन्य"
+
+#------------------------------------------------------------------------------
+# समय अवधि अनुवाद
+#------------------------------------------------------------------------------
+
+msgid "period_00"
+msgstr "मध्यरात · AWStats सबै सुतिसके, तिमी अझै डाटा हेरिरहेको? साँचो माया"
+
+msgid "period_01"
+msgstr "बिहान १ बजे · यो समयमा भ्रमण? निद्रा नलागेको वा कामबाट भर्खर निस्केको"
+
+msgid "period_02"
+msgstr "बिहान २ बजे · बोट तिमीभन्दा पनि मेहनती छ, यो अझै काम गरिरहेको छ"
+
+msgid "period_03"
+msgstr "बिहान ३ बजे · सहर सुतिरहेको छ, सर्भर ओभरटाइम गरिरहेको छ, को बढी खराब?"
+
+msgid "period_04"
+msgstr "बिहान ४ बजे · अन्धकारमा सबैभन्दा उज्यालो तारा, तिम्रो स्क्रिन हो वा सर्भर सूचक बत्ती"
+
+msgid "period_05"
+msgstr "बिहान ५ बजे · चाँडै उठ्ने चरा कीरा खान्छ, चाँडै उठ्ने बोट डाटा सङ्कलन गर्छ"
+
+msgid "period_06"
+msgstr "बिहान ६ बजे · कोही उठ्छ, कोही अझै सुतेको छैन, इन्टरनेट कहिल्यै बन्द हुँदैन"
+
+msgid "period_07"
+msgstr "बिहान ७ बजे · रेल च्यापिने समय, वेब घुम्ने समय पनि हो"
+
+msgid "period_08"
+msgstr "बिहान ८ बजे · काम सुरु गर्दा पहिलो काम: हिजोको डाटा हेर्नु"
+
+msgid "period_09"
+msgstr "बिहान ९ बजे · सुनौलो समय, काम छल्न पनि नियम हुन्छ"
+
+msgid "period_10"
+msgstr "बिहान १० बजे · कफी समय, ट्राफिक बढ्यो कि हेर"
+
+msgid "period_11"
+msgstr "बिहान ११ बजे · एक घण्टापछि खाना समय आउँछ, अलिकति सहन गर"
+
+msgid "period_12"
+msgstr "दिउँसो १२ बजे · सर्भर: तिमीहरू सबै खाना खान गयौ, म अलिकति आराम गर्छु"
+
+msgid "period_13"
+msgstr "दिउँसो १ बजे · खानापछि निद्रा लाग्छ, तर डाटा भने सुत्दैन"
+
+msgid "period_14"
+msgstr "दिउँसो २ बजे · चिया समय"
+
+msgid "period_15"
+msgstr "दिउँसो ३ बजे · आजको ट्राफिक प्रवृत्ति ग्राफ, तिम्रो भावना ग्राफ जस्तो छैन?"
+
+msgid "period_16"
+msgstr "दिउँसो ४ बजे · अर्को X घण्टापछि काम सकिन्छ, ट्राफिक दौडन सुरु हुन्छ"
+
+msgid "period_17"
+msgstr "बेलुका ५ बजे · काम सकियो! तर सर्भरले अझै काम गर्नुपर्छ"
+
+msgid "period_18"
+msgstr "बेलुका ६ बजे · खाना खाने समय, अलिकति भिडियो हेर, आराम गर"
+
+msgid "period_19"
+msgstr "बेलुका ७ बजे · सुनौलो समय, ट्राफिक धेरै हुन्छ, सर्भर: म सहन्छु"
+
+msgid "period_20"
+msgstr "बेलुका ८ बजे · सोफामा पल्टिएर, तिमी आगन्तुक नम्बर ११४५१४ हौ"
+
+msgid "period_21"
+msgstr "बेलुका ९ बजे · शान्त रात, लुकेर डाटा हेर्ने राती उल्लू +१"
+
+msgid "period_22"
+msgstr "बेलुका १० बजे · आजको डाटा आउँदैछ, उत्तेजित छैनौ?"
+
+msgid "period_23"
+msgstr "बेलुका ११ बजे · AWStats: सुत्ने समय भयो, भोलि पनि काम गर्नुपर्छ"
+
+#------------------------------------------------------------------------------
+# समय आयाम
+#------------------------------------------------------------------------------
+
+msgid "Period"
+msgstr "तथ्याङ्क अवधि"
+
+msgid "Year"
+msgstr "वर्ष"
+
+msgid "Month"
+msgstr "महिना"
+
+msgid "Months"
+msgstr "महिनाहरू"
+
+msgid "Date"
+msgstr "मिति"
+
+msgid "Day"
+msgstr "दिन"
+
+msgid "Hour"
+msgstr "घण्टा"
+
+msgid "Hours"
+msgstr "घण्टाहरू"
+
+msgid "Day of week"
+msgstr "हप्ताको दिन"
+
+msgid "When"
+msgstr "कहिले"
+
+msgid "%s Server Management Panel"
+msgstr "%s  सर्भर व्यवस्थापन प्यानल"
+
+msgid "Server Administration"
+msgstr "सरल र प्रभावकारी सर्भर समाधान"
+
+#------------------------------------------------------------------------------
+# आगन्तुक आयामहरू
+#------------------------------------------------------------------------------
+
+msgid "Invalid URL Parameters"
+msgstr "अमान्य URL प्यारामिटरहरू"
+
+msgid "The requested page cannot be loaded due to invalid or malformed URL parameters."
+msgstr "अमान्य वा गलत ढाँचाको URL प्यारामिटरहरूको कारणले अनुरोध गरिएको पृष्ठ लोड गर्न सकिएन।"
+
+msgid "This may be caused by typing an incorrect URL, missing parameter separators, or using an invalid configuration name."
+msgstr "यो गलत URL टाइप गर्दा, प्यारामिटर सेपरेटरहरू छुट्दा, वा अमान्य कन्फिगरेसन नाम प्रयोग गर्दा हुन सक्छ।"
+
+msgid "Please check the URL you entered and ensure all parameters are correctly formatted."
+msgstr "कृपया तपाईंले प्रविष्ट गर्नुभएको URL जाँच गर्नुहोस् र सबै प्यारामिटरहरू सही ढाँचामा छन् भनी सुनिश्चित गर्नुहोस्।"
+
+msgid "SiteDomain parameter not defined in your config/domain file, or you may not have execution permission on the file."
+msgstr "तपाईंको config/domain फाइलमा SiteDomain प्यारामिटर परिभाषित गरिएको छैन, वा तपाईंसँग फाइलमा कार्यान्वयन अनुमति नहुन सक्छ।"
+
+msgid "Please run as Administrator to set permissions"
+msgstr "अनुमतिहरू सेट गर्न कृपया प्रशासकको रूपमा चलाउनुहोस्"
+
+msgid "This directory lacks read permission"
+msgstr "यस निर्देशिकामा पढ्ने अनुमति छैन"
+
+msgid "Please set read permission for directory"
+msgstr "कृपया निर्देशिकाको लागि पढ्ने अनुमति सेट गर्नुहोस्"
+
+msgid "Missing required parameter in config file"
+msgstr "कन्फिगरेसन फाइलमा आवश्यक प्यारामिटर हराइरहेको छ"
+
+msgid "Please check that 'DirData' is defined."
+msgstr "कृपया 'DirData' परिभाषित गरिएको छ भनी जाँच गर्नुहोस्।"
+
+msgid "Domain name in browser address appears to be missing or incomplete"
+msgstr "ब्राउजर ठेगानामा डोमेन नाम हराइरहेको वा अपूर्ण देखिन्छ"
+
+msgid "Please check the URL parameter"
+msgstr "कृपया URL प्यारामिटर जाँच गर्नुहोस्"
+
+msgid "Format description"
+msgstr "ढाँचा विवरण"
+
+msgid "Please set execute permission"
+msgstr "कृपया कार्यान्वयन अनुमति सेट गर्नुहोस्"
+
+msgid "Or if you prefer numeric mode"
+msgstr "वा यदि तपाईं संख्यात्मक मोड मन पराउनुहुन्छ भने"
+
+msgid "View Report Directly"
+msgstr "प्रत्यक्ष रिपोर्ट हेर्नुहोस्"
+
+msgid "AWStats Log Viewer"
+msgstr "AWStats लग दर्शक"
+
+msgid "Month Selection"
+msgstr "महिना चयन"
+
+msgid "Who"
+msgstr "को"
+
+msgid "Visitors"
+msgstr "आगन्तुकहरू"
+
+msgid "Countries"
+msgstr "देश/क्षेत्र"
+
+msgid "flag_icon"
+msgstr "राष्ट्रिय झण्डा"
+
+msgid "Country-Region-City"
+msgstr "देश/क्षेत्र/सहर"
+
+msgid "Code"
+msgstr "कोड"
+
+msgid "Known"
+msgstr "ज्ञात"
+
+msgid "unknownos"
+msgstr "अज्ञात अपरेटिङ सिस्टम"
+
+msgid "unknownbrowser"
+msgstr "अज्ञात ब्राउजर"
+
+msgid "Unresolved IP Address"
+msgstr "अनिर्धारित आईपी ठेगाना"
+
+msgid "Unknown File Type"
+msgstr "अज्ञात फाइल प्रकार"
+
+msgid "Unknown Size"
+msgstr "अज्ञात फाइल आकार"
+
+msgid "Unknown Time"
+msgstr "अज्ञात अनुरोध समय"
+
+msgid "Unknown Browser"
+msgstr "अज्ञात ब्राउजर"
+
+msgid "Unknown OS"
+msgstr "अज्ञात अपरेटिङ सिस्टम"
+
+msgid "Unknown Visitor"
+msgstr "अज्ञात आगन्तुक"
+
+msgid "Unknown Visitor (Total)"
+msgstr "अज्ञात आगन्तुक (जम्मा)"
+
+msgid "Unknown Country"
+msgstr "अज्ञात देश/क्षेत्र"
+
+msgid "Unknown Country (Region)"
+msgstr "अज्ञात देश/क्षेत्र (जम्मा)"
+
+msgid "Unknown Visitor (Title)"
+msgstr "अज्ञात आगन्तुक (शीर्षक)"
+
+msgid "PageStayTime"
+msgstr "पृष्ठमा बस्ने समय अनुमान गर्न सकिएन"
+
+msgid "Unknown OS (Link)"
+msgstr "अज्ञात अपरेटिङ सिस्टम (लिङ्क)"
+
+msgid "Unknown OS (Row)"
+msgstr "अज्ञात अपरेटिङ सिस्टम (सूची)"
+
+msgid "Unknown Browser (Link)"
+msgstr "अज्ञात ब्राउजर (लिङ्क)"
+
+msgid "Unknown Browser (Row)"
+msgstr "अज्ञात ब्राउजर (सूची)"
+
+msgid "Unknown Screen"
+msgstr "अज्ञात स्क्रिन आकार"
+
+msgid "Login"
+msgstr "प्रयोगकर्ता नाम"
+
+msgid "Anonymous"
+msgstr "बेनाम"
+
+msgid "Robots"
+msgstr "रोबोटहरू"
+
+msgid "Different robots"
+msgstr "विभिन्न रोबोटहरू"
+
+msgid "Hits on robots.txt"
+msgstr "माथि देखाइएका खोज इन्जिन रोबोटहरूबाट असामान्य ट्राफिक अन्य चार्टहरूमा समावेश गरिएको छैन। '+' पछिको संख्या 'robots.txt' मा सफल पहुँच रेकर्डको संख्या हो"
+
+msgid "Worms"
+msgstr "किराहरू"
+
+msgid "Different worms"
+msgstr "विभिन्न किराहरू"
+
+msgid "Target"
+msgstr "लक्ष्य"
+
+msgid "Grabber"
+msgstr "डाटा तान्ने उपकरण"
+
+#------------------------------------------------------------------------------
+# ढाँचा विवरण
+#------------------------------------------------------------------------------
+
+msgid "mime_text"
+msgstr "TXT सादा पाठ फाइल (1963 मा ASCII एन्कोडिङद्वारा मानकीकृत ढाँचा नभएको सादा पाठ। सबै स्रोत कोडहरू, कन्फिगरेसन फाइलहरू र प्रणाली लगहरूको आधारभूत जगको रूपमा, यसको क्रस-प्लेटफर्म विन्डोज (CRLF) र युनिक्स (LF) लाइन ब्रेक नियन्त्रण प्रवाहहरू, आज पनि कम्प्युटर संसारको सबैभन्दा सार्वभौमिक डाटा आदानप्रदान मानक हो)"
+
+msgid "mime_log"
+msgstr "LOG प्रणाली सञ्चालन लग (अपरेटिङ सिस्टम, कर्नेल र एप्लिकेसन-स्तर रनटाइम अवस्थाहरू रेकर्ड गर्ने सादा पाठ सम्पत्ति। Nginx/Apache पहुँच लगहरू (संयुक्त लग) र मानक syslog विशिष्टता समेट्छ। समस्या निवारण, स्ट्रिम प्रदर्शन विश्लेषण र सुरक्षा लेखापरीक्षणको लागि मुख्य डाटा स्रोत हो)"
+
+msgid "mime_page"
+msgstr "HTML हाइपरटेक्स्ट वेब पृष्ठ (1989 मा टिम बर्नर्स-लीले सिर्जना गरेको विश्वव्यापी वेबको आधारशिला। नि:शुल्क खुला सार्वभौमिक हाइपरटेक्स्ट मार्कअप भाषाको रूपमा, यसको HTML5 विशिष्टता 2014 मा W3C आधिकारिक मानक बन्यो। संरचित मल्टिमिडिया, शब्दार्थ अन्तरक्रिया र स्ट्रिम पृष्ठ लेआउटको लागि मूल समर्थन गर्दछ। 2016 मा ट्युरिङ पुरस्कार प्राप्त गर्यो)"
+
+msgid "mime_khtml"
+msgstr "KHTML वेब टेम्प्लेट इन्जिन (1998 KDE 2.0 ब्राउजर रेन्डरिङ इन्जिन विशिष्टता। आधुनिक वेब रेन्डरिङको जग बसाल्ने खुला स्रोत समुदायको बेन्चमार्कको रूपमा, यसको प्राविधिक सम्पदाले प्रत्यक्ष रूपमा एप्पल वेबकिट र गुगल ब्लिंक कर्नेलहरूमा प्रेरणा दियो र विकसित भयो। आज पनि आधुनिक स्ट्रिम डाइनामिक वेब आर्किटेक्चर मार्फत आफ्नो अन्तर्निहित मार्गलाई जारी राख्छ)"
+
+msgid "mime_script"
+msgstr "SCRIPT व्याख्या गरिएको गतिशील स्क्रिप्ट (पहिलेदेखि कम्पाइल गर्न आवश्यक नपर्ने र विशेष रनटाइम वा व्याख्याकर्ताद्वारा लाइन पङ्क्ति पढेर कार्यान्वयन गरिने स्रोत कोड प्रवाहहरूको सामान्य वर्गीकरण। ASP, JSP, CGI र Tcl, आदि समेट्छ। सर्भर-साइड साझा गेटवे इन्टरफेसहरू, स्वचालित प्रक्रिया नियन्त्रण र प्रणाली-स्तर कार्य टाँस्नको लागि व्यापक रूपमा प्रयोग गरिन्छ)"
+
+msgid "mime_js"
+msgstr "JavaScript स्क्रिप्ट (1995 नेटस्केप ब्राउजरको मूल प्रोग्रामिङ वातावरण। 1997 मा ECMAScript उद्योग मानक स्थापना गरियो, 2009 मा Node.js रनटाइम जन्मियो, ब्राउजर सीमाहरू तोड्दै र पूर्ण-स्ट्याक एसिन्क्रोनस गैर-ब्लकिङ आर्किटेक्चर सिर्जना गर्यो। विश्वको सबैभन्दा ठुलो npm सफ्टवेयर प्याकेज इकोसिस्टमको साथ)"
+
+msgid "mime_py"
+msgstr "Python स्क्रिप्ट (1991 मा Guido van Rossum द्वारा सिर्जित उच्च-स्तरीय व्याख्या गरिएको स्क्रिप्टिङ भाषा। अनिवार्य इन्डेन्टेसनको कारण नगुम्ने पठनीयता र बहु-प्रतिमान न्यून-स्तर डिजाइनको कारण, यो अब आधुनिक वेब आर्किटेक्चर, पूर्ण-स्ट्याक डाटा विज्ञान, कृत्रिम बुद्धिमत्ता (AI) मोडेल प्रशिक्षण र क्लाउड-मूल स्वचालित अप्सको लागि उद्योग मानक भाषाको रूपमा स्थापित भएको छ)"
+
+msgid "mime_sh"
+msgstr "Shell स्क्रिप्ट (1971 युनिक्स युगको मानक कमाण्ड व्याख्याकर्ता स्क्रिप्ट। Bash, Sh, Dash जस्ता कर्नेल-स्तर कमाण्ड विशिष्टताहरू समावेश गर्दछ। सामान्यतया .sh एक्सटेन्सनको साथ कार्यान्वयन गरिन्छ। आधुनिक युनिक्स-जस्तो अपरेटिङ सिस्टमहरूमा न्यून-स्तर प्रक्रिया नियन्त्रण, स्थापना-मुक्त वातावरण कन्फिगरेसन र स्वचालित तैनातीको लागि सार्वभौमिक कर्नेल-स्तर टाँस्ने हो)"
+
+msgid "mime_rb"
+msgstr "Ruby स्क्रिप्ट (1995 मा Yukihiro Matsumoto द्वारा सिर्जित वस्तु-उन्मुख स्क्रिप्टिङ भाषा। विकासकर्ता अनुभवको अत्यधिक सम्मान यसको केन्द्रिय डिजाइन दर्शन हो। यसको Ruby on Rails फ्रेमवर्कले 'कन्भेन्सन ओभर कन्फिगरेसन (CoC)' को आधुनिक उच्च-स्तरीय वेब आर्किटेक्चर विकास प्रतिमानलाई क्रान्तिकारी रूपमा स्थापित गर्यो)"
+
+msgid "mime_pl"
+msgstr "Perl स्क्रिप्ट (1987 मा Larry Wall द्वारा सिर्जित व्यावहारिक स्क्रिप्टिङ भाषा। आधुनिक प्याकेज प्रबन्धक (CPAN) को जनकको रूपमा, यसलाई पाठ प्रशोधनको 'स्विस आर्मी चक्कु' भनिन्छ। आधुनिक CGI मोडमा अत्यन्त कम भौतिक मेमोरी लागत, उच्च दक्षता नियमित अभिव्यक्ति प्रशोधनको कारण लग पार्सिङ क्षेत्रमा उच्च विश्वसनीय आधारको रूपमा कार्य गर्दछ)"
+
+msgid "mime_php"
+msgstr "PHP गतिशील वेब पृष्ठ (1995 मा Rasmus Lerdorf द्वारा सिर्जित, वेब विकासको लागि डिजाइन गरिएको। विश्वको 70% भन्दा बढी वेबसाइटहरू सञ्चालन गर्ने मुख्य प्रविधिको रूपमा, वर्डप्रेस, विकिपिडिया जस्ता ठुला उत्पादन एप्लिकेसनहरूलाई गहिरो रूपमा समर्थन गर्दछ। PHP 8 देखि JIT (जस्ट-इन-टाइम) कम्पाइलेसन रनटाइम इन्जिनको परिचय पछि, यसले उच्च-प्रदर्शन पूर्ण-स्ट्याक सर्भर साइडमा आधारभूत प्रतिमान विकास हासिल गरेको छ)"
+
+msgid "mime_image"
+msgstr "IMAGE छवि सम्पत्ति वर्गीकरण (हानियुक्त/हानिरहित कम्प्रेसन बिटम्याप, आधुनिक उत्तरदायी वेब ग्राफिक्स र भेक्टर ग्राफिक्सको सामान्य वर्गीकरण समेट्छ। साइटको दृश्य स्रोत लोडिङ लागत, क्लाइन्ट-साइड क्यास हिट दर र मिडिया नेटवर्क ब्यान्डविथ खपत मूल्याङ्कन गर्नको लागि मुख्य सूचक हो)"
+
+msgid "mime_document"
+msgstr "DOCUMENT संरचित कागजात वर्गीकरण (सादा पाठ, स्प्रेडसिटहरू, निश्चित-ढाँचा कागजातहरू (PDF) र हल्का मार्कअप भाषाहरूको सामान्य वर्गीकरण समेट्छ। सर्भर-साइड स्थिर ज्ञान आधार वितरण, उद्यम सूचना सम्पत्ति डाउनलोड र पाठ स्ट्रिम थ्रुपुट क्षमताको तथ्याङ्कको लागि मुख्य सूचक हो)"
+
+msgid "mime_package"
+msgstr "PACKAGE कम्पाइलेसन उत्पादन र सफ्टवेयर प्याकेज वर्गीकरण (अपरेटिङ सिस्टमको मूल कार्यान्वयन योग्य प्रोग्रामहरू, रनटाइम लिङ्क पुस्तकालयहरू (DLL/SO) र एप्लिकेसन वितरण स्थापना प्याकेजको सामान्य वर्गीकरण समेट्छ। सफ्टवेयर वितरण साइटहरूको आउटबाउन्ड ट्राफिक र डाउनलोड चुचुरोहरूको मूल्याङ्कन गर्नको लागि मुख्य सूचकको रूपमा प्रयोग गरिन्छ)"
+
+msgid "mime_archive"
+msgstr "ARCHIVE अभिलेख र कम्प्रेस्ड फाइलहरू (DEFLATE, LZMA जस्ता मुख्य एल्गोरिदमहरूमा आधारित डाटा कम्प्रेसन प्याकेजको सामान्य वर्गीकरण। नेटवर्क तहमा परम्परागत प्याकेज वितरणको प्रतिनिधित्व गर्नुको साथै, 1992 GNU परियोजनाको Gzip गतिशील प्रतिक्रिया स्ट्रिम पनि समेट्छ। यद्यपि आधुनिक परिदृश्यहरूमा Brotli एल्गोरिदम क्रमशः परिचय गराइँदै छ, तर यो वर्गीकरण सर्भर ब्यान्डविथ थ्रुपुट दर र यातायात तह दबाब कमीको मूल्याङ्कन गर्नको लागि मुख्य सूचकको रूपमा जारी छ)"
+
+msgid "mime_audio"
+msgstr "AUDIO डिजिटल अडियो स्ट्रिम वर्गीकरण (कम्प्रेस्ड अडियो, अडियो पुस्तकहरू र स्ट्रिमिङ मिडिया अडियो कन्टेनरको सामान्य वर्गीकरण समेट्छ। विशिष्ट अडियो कोडेक मापदण्डहरूमा आधारित, बहु-मिडिया साइटहरूको अडियो डाटा स्ट्रिमको थ्रुपुट दर, समवर्ती स्ट्रिमिङ ब्यान्डविथ र लामो जडान प्रदर्शनको अनुगमन गर्न प्रयोग गरिन्छ)"
+
+msgid "mime_video"
+msgstr "VIDEO डिजिटल भिडियो स्ट्रिम वर्गीकरण (उच्च-रिजोल्युसन भिडियो कन्टेनर, आधुनिक वेब एनिमेसन र स्ट्रिमिङ मिडिया खण्डहरूको सामान्य वर्गीकरण समेट्छ। उच्च-लोड नेटवर्क वातावरणमा सर्भर ब्यान्डविथ चुचुरो सीमा, सामग्री वितरण नेटवर्क (CDN) त्वरण प्रभावको मूल्याङ्कन गर्नको लागि मुख्य सूचक हो)"
+
+msgid "mime_jscript"
+msgstr "JScript स्क्रिप्ट (1996 मा Microsoft द्वारा Internet Explorer 3.0 को लागि विकसित रिभर्स इन्जिनियरिङ स्वामित्व कार्यान्वयन। प्रारम्भिक शास्त्रीय JavaScript को होस्ट प्रतिद्वन्द्वीको रूपमा, यो Windows स्क्रिप्ट होस्ट (WSH) र प्रारम्भिक ASP ब्याकएन्डको मुख्य इन्जिनको रूपमा थियो)"
+
+msgid "mime_json"
+msgstr "JSON संरचित डाटा (2001 मा Douglas Crockford द्वारा स्थापित हल्का डाटा सिरियलाइजेसन आदानप्रदान ढाँचा। पाठ-आधारित कुञ्जी-मान जोडी र एरे आर्किटेक्चरमा आधारित, अत्यन्त उच्च मानव-पठनीयता र नगुम्ने स्ट्रिम पार्सिङ विशेषता छ। आधुनिक वेब API, माइक्रोसर्भिसेस आर्किटेक्चर र ठुला भाषा मोडेलहरूसँग अन्तरक्रियाको लागि वास्तविक मानक हो)"
+
+msgid "mime_vbs"
+msgstr "VBScript स्क्रिप्ट (1996 मा Microsoft द्वारा IE 3.0 सँग जारी गरिएको स्क्रिप्टिङ भाषा भिन्नता। प्रारम्भिक ASP गतिशील वेबसाइटहरू र Windows प्रणाली व्यवस्थापनको मुख्य चालक थियो। अब Windows 11 को नवीनतम कर्नेलबाट Microsoft द्वारा आधिकारिक रूपमा बहिष्कृत र हटाइएको छ। यो ऐतिहासिक पैतृक प्रविधि हो)"
+
+msgid "mime_conf"
+msgstr "CONF प्रणाली कन्फिगरेसन फाइल (सफ्टवेयर रनटाइम वातावरण प्यारामिटरहरू सादा पाठको रूपमा स्थायी रूपमा भण्डारण गर्ने डाटा फाइलहरूको सामान्य वर्गीकरण। INI र आधुनिक YAML, TOML, JSON विशिष्टताहरू समेट्छ। Linux प्रणालीहरूमा प्रायः /etc निर्देशिकामा केन्द्रित हुन्छ। प्रणाली-स्तर रनटाइम अवस्था अनुकूलनको मुख्य निर्भरता हो)"
+
+msgid "mime_css"
+msgstr "CSS कास्केडिङ स्टाइल पाना (1996 W3C मानक, HTML/JS सँगै फ्रन्ट-एन्डको तीन मुख्य मध्ये एक। CSS2 पोजिसनिङ र CSS3 मोड्युलर विकास मार्फत गयो। फ्लेक्सबक्स, ग्रिड र मिडिया क्वेरी उत्तरदायी डिजाइनको लागि मूल समर्थन गर्दछ। आधुनिक ब्राउजरहरूमा वेब पृष्ठ प्रस्तुतीकरण डिकपल गर्नको लागि पूर्ण प्रभावशाली मानक हो)"
+
+msgid "mime_xsl"
+msgstr "XSL स्टाइल पाना (1999 W3C मानक, XSLT रूपान्तरण र XPath एड्रेसिङ भाषा समावेश गर्दछ, XML संरचित डाटालाई HTML, PDF वा सादा पाठमा रेन्डर गर्न प्रयोग गरिन्छ। आधुनिक विकासमा यसको पारिस्थितिकी तंत्र प्रायः हल्का टेम्प्लेट इन्जिन र JSON डाटा ढाँचाले प्रतिस्थापन गरेको छ)"
+
+msgid "mime_runtime"
+msgstr "कार्यान्वयन योग्य फाइल (EXE, ELF, Mach-O आदि अपरेटिङ सिस्टमको मूल कार्यान्वयन ढाँचाहरू, कम्पाइल गरिएको न्यून-स्तर मेसिन कोड, प्रवेश बिन्दु र प्रणाली लोडिङ जानकारी समावेश गर्दछ)"
+
+msgid "mime_library"
+msgstr "पुस्तकालय फाइल (DLL, SO, dylib आदि गतिशील वा स्थिर लिङ्क पुस्तकालयहरू, अन्य प्रोग्रामहरूले कल गर्न र रनटाइममा लोड गर्नको लागि साझा प्रतीकहरू र स्थानान्तरण कोड समावेश गर्दछ)"
+
+msgid "mime_swf"
+msgstr "Flash एनिमेसन (1996 मा Macromedia द्वारा विकसित, 2005 मा Adobe द्वारा अधिग्रहण गरियो। अन्तरक्रियात्मक वेब एनिमेसन मानक, एक पटक इन्टरनेट एनिमेसन र खेलहरूमा प्रभुत्व जमायो। कमजोरीहरू: प्लगइनमा निर्भर, मोबाइलमा समर्थन छैन, उच्च सुरक्षा जोखिम। 2017 मा Adobe ले बहिष्कार घोषणा गर्यो, 2020 मा पूर्ण समर्थन बन्द गर्यो, HTML5/CSS3/JS द्वारा प्रतिस्थापन गरियो)"
+
+msgid "mime_dtd"
+msgstr "DTD कागजात प्रकार परिभाषा (1998 मा XML 1.0 सँग जारी गरियो, XML/HTML कागजात संरचना परिभाषित गर्न र वैधता प्रमाणित गर्न प्रयोग गरिन्छ। आधुनिक विकासमा, यसलाई XML Schema, RELAX NG जस्ता थप लचिलो समाधानहरूले क्रमशः प्रतिस्थापन गरेका छन्)"
+
+msgid "mime_csv"
+msgstr "CSV डाटा ढाँचा (अल्पविराम-पृथक मानहरू, 1972 मेनफ्रेम युग (IBM फोर्ट्रान कम्पाइलर) को सार्वभौमिक सादा पाठ तालिका ढाँचा। 2005 मा RFC 4180 द्वारा आधिकारिक रूपमा मानकीकृत गरियो। क्रस-प्लेटफर्म, क्रस-भाषा नगुम्ने डाटा आदानप्रदान मानकको रूपमा। एक्सेल, सम्बन्धपरक डाटाबेस, डाटा विश्लेषण (Pandas) मा कुशल आयात/निर्यातको लागि व्यापक रूपमा प्रयोग गरिन्छ।)"
+
+msgid "mime_cur"
+msgstr "माउस पोइन्टर फाइल (.cur ढाँचा, माउस शैली अनुकूलित गर्न प्रयोग गरिन्छ। जस्तै वेब पृष्ठमा औंला कर्सर, प्रणालीमा बालुवा घडी प्रतीक्षा आइकन। सामान्य .ico आइकनको 'नातेदार' हो, तर यसमा 'हटस्पट' स्थान थपिएको छ - जुन माउसले वास्तवमा क्लिक गर्ने स्थान हो। इतिहास: Windows 3.1 सँगै (1992) परिचय गरिएको थियो। आदेश रेखाबाट माउस सञ्चालन युगमा ग्राफिकल इन्टरफेसको संक्रमणको मुख्य घटक थियो)"
+
+msgid "mime_jnlp"
+msgstr "Java Web Start (2000 को दशक Java डेस्कटप एप्लिकेसन वितरण प्रविधि, .jnlp फाइल मार्फत टाढाको Java प्रोग्राम सुरु गर्दछ। सुरक्षा समस्या र आधुनिक वितरण विधिहरूको प्रसारको कारण, अब आधारभूत रूपमा बहिष्कृत भइसकेको छ)"
+
+msgid "mime_lit"
+msgstr "Microsoft Reader इ-पुस्तक (2000 मा Microsoft द्वारा जारी, LIT ढाँचा। बहिष्कृत, अब Calibre जस्ता उपकरणहरू प्रयोग गरी EPUB वा PDF मा रूपान्तरण गर्न सकिन्छ)"
+
+msgid "mime_svg"
+msgstr "SVG भेक्टर ग्राफिक्स (1999 W3C मानक, XML आर्किटेक्चरमा आधारित द्वि-आयामी भेक्टर छवि ढाँचा। इच्छित मापनमा नबिग्रिने र पाठ स्ट्रिम प्रसारणको फाइदा छ। सबै आधुनिक ब्राउजरहरूले यसलाई मूल रूपमा समर्थन गर्दछ। उच्च-रिजोल्युसन वेब आइकनहरू, लोगोहरू र भेक्टर एनिमेसन रेन्डरिङको लागि व्यापक रूपमा प्रयोग गरिन्छ। यो आधुनिक वेब ग्राफिक्सको मुख्य मानक हो)"
+
+msgid "mime_ai"
+msgstr "AI भेक्टर ग्राफिक्स (1987 मा Adobe द्वारा स्वतन्त्र रूपमा विकसित स्वामित्व भेक्टर ग्राफिक्स ढाँचा। टाइपोग्राफी, मुद्रण डिजाइन र ब्रान्ड पहिचान डिजाइनको लागि उद्योग मुख्य मानकको रूपमा, बहु-तह र उच्च-स्तरीय लेआउट भेक्टर डाटालाई समर्थन गर्दछ। व्यावसायिक दृश्य कलाको लागि छनौट गरिएको वाहक हो)"
+
+msgid "mime_phshop"
+msgstr "PSD तह छवि (1990 मा Adobe द्वारा Photoshop सँगै जारी गरिएको स्वामित्व रास्टर छवि स्रोत फाइल ढाँचा। बहु-तह तह लगाउने, च्यानलहरू, मास्कहरू र नगुम्ने सम्पादन डाटालाई समर्थन गर्दछ। यो विश्वव्यापी छवि प्रशोधन र डिजिटल पेन्टिङको लागि उद्योग मानकको रूपमा स्थापित भएको छ)"
+
+msgid "mime_ttf"
+msgstr "TrueType फन्ट (1989 मा Apple र Microsoft द्वारा संयुक्त रूपमा विकसित डिजिटल कन्टूर फन्ट ढाँचा। द्विघात बेजियर वक्रहरूमा आधारित, स्क्रिन प्रदर्शन र मुद्रण आउटपुट बीचको पूर्ण पिक्सेल एकरूपता प्राप्त गर्दछ। यो आधुनिक डेस्कटप अपरेटिङ सिस्टमहरूको मूल पूर्वनिर्धारित फन्ट ढाँचा हो)"
+
+msgid "mime_fon"
+msgstr "FON बिटम्याप फन्ट (1980 को दशक Microsoft Windows को प्रारम्भिक प्रणाली-स्तर डट म्याट्रिक्स फन्ट ढाँचा। कुनै पनि समानुपातिक नगुम्ने मापनलाई समर्थन गर्दैन। सामान्यतया पैतृक प्रणाली वा प्रारम्भिक इम्बेडेड यन्त्र घटकहरूसँग सीमित पिक्सेलयुक्त पाठ रेन्डरिङको लागि प्रयोग गरिन्छ)"
+
+msgid "mime_pdf"
+msgstr "PDF इलेक्ट्रोनिक कागजात (1993 मा Adobe द्वारा विकसित र 2008 मा ISO 32000 अन्तर्राष्ट्रिय मानक भएको क्रस-प्लेटफर्म निश्चित-लेआउट कागजात ढाँचा। पूर्ण लेआउट र ढाँचा निष्ठा छ। यो विश्वव्यापी इलेक्ट्रोनिक सरकारी कागजात वितरण र डिजिटल प्रकाशनको सार्वभौमिक मानक हो)"
+
+msgid "mime_dotnet"
+msgstr "ASP.NET गतिशील पृष्ठ (2002 मा Microsoft द्वारा .NET आर्किटेक्चर सँगै जारी गरिएको सर्भर-साइड गतिशील वेब प्रविधि। IIS रेन्डरिङ इन्जिनमा वहन गरिन्छ। उद्यम-स्तरीय Windows सर्भर-साइड गतिशील वेब एप्लिकेसनहरू र वितरित प्रणालीहरू निर्माण गर्न प्रयोग गरिन्छ)"
+
+msgid "mime_mdb"
+msgstr "MDB सम्बन्धपरक डाटाबेस (1992 मा Microsoft द्वारा Access सँगै जारी गरिएको डेस्कटप-स्तरीय सम्बन्धपरक डाटाबेस भण्डारण ढाँचा। निर्मित Jet डाटाबेस इन्जिन छ। व्यक्तिगत कम्प्युटर र साना तथा मझौला उद्यमहरूको प्रारम्भिक सूचना व्यवस्थापनमा सम्बन्धपरक डाटाबेस समाधानको रूपमा प्रयोग गरिएको थियो)"
+
+msgid "mime_md"
+msgstr "Markdown कागजात (2004 मा John Gruber द्वारा स्वतन्त्र रूपमा सिर्जित हल्का मार्कअप भाषा। मुख्य डिजाइन दर्शन 'पठनीय भनेको रेन्डर हो' हो, जसले GFM र CommonMark जस्ता आधुनिक व्युत्पन्न मानकहरूलाई प्रेरित गर्दछ। प्राविधिक कागजात, ज्ञान आधार (Obsidian) र आधुनिक स्थिर वेबसाइट जनरेटरहरूको लागि मुख्य आदानप्रदान मानकको रूपमा व्यापक रूपमा प्रयोग गरिन्छ)"
+
+msgid "mime_crystal"
+msgstr "Crystal Reports (SAP व्यापार बुद्धिमत्ता (BI) प्लेटफर्मको व्यावसायिक उद्यम-स्तरीय रिपोर्ट फाइल ढाँचा। बहु-डाटा स्रोत न्यून-स्तर जडान र जटिल गतिशील चार्ट रेन्डरिङ क्षमताहरू छ। बहुराष्ट्रिय कम्पनीहरूको वित्तीय र डाटा विश्लेषण प्रणालीहरूमा व्यावसायिक रिपोर्ट उत्पादनको लागि व्यापक रूपमा प्रयोग गरिन्छ)"
+
+msgid "mime_libreoffice"
+msgstr "LibreOffice कागजात (2010 मा The Document Foundation द्वारा OpenOffice फोर्कमा आधारित निर्मित खुला स्रोत कार्यालय सुइटको स्वामित्व ढाँचा। W3C को ODP (खुला कागजात ढाँचा) अन्तर्राष्ट्रिय मानकलाई गहिरो रूपमा कार्यान्वयन गर्दछ। यो आधुनिक खुला स्रोत पारिस्थितिकी तंत्रको कार्यालय आधार हो)"
+
+msgid "mime_encrypt"
+msgstr "ENCRYPT एन्क्रिप्टेड फाइल (विशिष्ट सममित वा असममित एन्क्रिप्सन एल्गोरिदम मार्फत प्रशोधन गरिएको कच्चा बाइनरी वा पाठ डाटा। .enc, .pgp, .gpg जस्ता मुख्य व्युत्पन्न ढाँचाहरू समावेश गर्दछ। नेटवर्क तहमा गैर-सार्वजनिक डाटाको गोपनीयता र अखण्डता प्रमाणीकरण सुनिश्चित गर्न प्रयोग गरिन्छ)"
+
+msgid "mime_gpx"
+msgstr "GPX उपग्रह ट्रयाक डाटा (XML आर्किटेक्चरमा आधारित विश्वव्यापी स्थिति निर्धारण प्रणाली आदानप्रदान ढाँचा। भौगोलिक निर्देशांकहरू, वेपोइन्टहरू, मार्गहरू र ऐतिहासिक ट्रयाकहरू वर्णन गर्नको लागि विशेष रूपमा प्रयोग गरिन्छ। यो आधुनिक मोबाइल खेल यन्त्रहरू, कार नेभिगेसन र भौगोलिक सूचना प्रणाली (GIS) को लागि साझा खुला डाटा मानक हो)"
+
+msgid "mime_diskimage"
+msgstr "Disk Image डिस्क छवि (ISO, DMG, IMG सहित भौतिक डिस्क वा अप्टिकल मिडियाको बाइट-दर-बाइट न्यून-स्तर सेक्टर छवि फाइलहरू समावेश गर्दछ। प्रणाली न्यून-स्तर तैनाती, ठुलो क्षमता सफ्टवेयर सुरक्षित वितरण र भण्डारण मिडियाको भौतिक-स्तरीय पूर्ण डाटा ब्याकअपको लागि प्रयोग गरिन्छ)"
+
+msgid "mime_vm"
+msgstr "VM भर्चुअल मेसिन छवि (VMDK, VDI, VHDX, OVA सहित भर्चुअलाइज्ड भौतिक डिस्क छविहरू समावेश गर्दछ। VMware, VirtualBox र Hyper-V प्लेटफर्महरूको आधारको रूपमा, न्यून-स्तर प्रणाली-स्तरीय हार्डवेयर इमुलेसन, उदाहरण स्न्यापसट र क्लाउड पूर्वाधार वितरणको लागि प्रयोग गरिन्छ)"
+
+msgid "mime_torrent"
+msgstr "BitTorrent टोरेन्ट फाइल (2001 मा Bram Cohen द्वारा डिजाइन गरिएको P2P पियर-टु-पियर वितरित डाउनलोड सूचकांक। Bencode एन्कोडिङमा आधारित, मूल फाइलको न्यून-स्तर चेकसम मेटाडाटा र ट्र्याकर सर्भर एड्रेसिङ जानकारी भण्डारण गर्दछ। विकेन्द्रीकृत नेटवर्क प्रवाह वितरणको मुख्य वाहक हो)"
+
+msgid "mime_gis"
+msgstr "GIS भौगोलिक स्थानिय डाटा (Shapefile र GeoJSON लाई केन्द्र बनाउने भौगोलिक सूचना प्रणाली डाटा मानक। बहु-आयामी ज्यामितीय निर्देशांकहरू, तह टोपोलोजी र विशेषता डाटा समावेश गर्दछ। उच्च-परिशुद्धता डिजिटल नक्सा रेन्डरिङ, उपग्रह रिमोट सेन्सिङ र स्थानिय ज्यामिति विश्लेषणको लागि व्यापक रूपमा प्रयोग गरिन्छ)"
+
+msgid "mime_ebook"
+msgstr "EBOOK इ-पुस्तक (W3C को EPUB खुला अन्तर्राष्ट्रिय मानक, Amazon Kindle को स्वामित्व MOBI/AZW आर्किटेक्चरलाई केन्द्र बनाएको डिजिटल प्रकाशन ढाँचा। अनुकूली स्ट्रिम लेआउट, मेटाडाटा समाहितकरण र DRM डिजिटल अधिकार संरक्षण समर्थन गर्दछ। मोबाइल यन्त्रहरूमा डिजिटल पठनको सार्वभौमिक वाहक हो)"
+
+msgid "mime_avif"
+msgstr "AVIF उच्च-दक्षता छवि (2019 मा ओपन मिडिया गठबन्धन (AOMedia) द्वारा प्रस्तुत गरिएको अर्को पुस्ताको अल्ट्रा-उच्च रिजोल्युसन छवि मानक। AV1 भिडियो एन्कोडिङ कुञ्जी फ्रेम प्रविधिमा आधारित, कम्प्रेसन दर WebP भन्दा 50% राम्रो छ र उच्च गतिशील दायरा (HDR) लाई मूल समर्थन गर्दछ। आधुनिक वेब छवि प्रसारणको मुख्यधारा मानक हो)"
+
+msgid "mime_markdown"
+msgstr "Markdown हल्का कागजात (2004 मा John Gruber द्वारा स्वतन्त्र रूपमा सिर्जित पाठ कागजात मार्कअप भाषा। सादा पाठ घोषणात्मक डिजाइन प्रयोग गर्दछ, सिन्ट्याक्स डिजाइन reStructuredText बाट प्रेरित छ। GitHub परियोजनाहरू, इन्जिनियरिङ-स्तरीय प्राविधिक कागजात र आधुनिक स्थिर सामग्री व्यवस्थापन पारिस्थितिकी तंत्रको लागि व्यापक रूपमा प्रयोग गरिन्छ)"
+
+msgid "mime_yaml"
+msgstr "YAML सिरियलाइजेसन कन्फिगरेसन (2001 मा Clark Evans र अन्य द्वारा डिजाइन गरिएको मानव-पठनीय डाटा सिरियलाइजेसन ढाँचा। पदानुक्रमित इन्डेन्टेसन र कुञ्जी-मान म्यापिङमा आधारित। अब यो Kubernetes कन्टेनर अर्केस्ट्रेसन, Ansible स्वचालन र Docker Compose को लागि क्लाउड-मूल पूर्वाधार कन्फिगरेसन मानकको रूपमा स्थापित भएको छ)"
+
+msgid "mime_toml"
+msgstr "TOML शब्दार्थ कन्फिगरेसन (2013 मा Tom Preston-Werner द्वारा डिजाइन गरिएको अत्यन्त न्यूनतम भाषा। बलियो टाइपिङ, स्पष्ट म्यापिङ र शब्दार्थ स्पष्टता जस्ता न्यून-स्तर डिजाइन फाइदाहरू छन्। अब यो Rust (Cargo), Python (pyproject.toml) र Go को आधुनिक उपकरण श्रृंखलाको लागि मानकीकृत कन्फिगरेसन फाइलको रूपमा व्यापक रूपमा प्रयोग गरिन्छ)"
+
+msgid "mime_vue"
+msgstr "Vue एकल-फाइल कम्पोनेन्ट (2014 मा Evan You द्वारा प्रस्तुत गरिएको प्रगतिशील वेब फ्रेमवर्कको स्वामित्व SFC ढाँचा। एकल फाइलमा HTML/CSS/JS को चिन्ता पृथकीकरण र प्रतिक्रियाशील अवस्था बाइन्डिङ कार्यान्वयन गर्दछ। आधुनिक वेब अन्तरक्रियात्मक फ्रन्ट-एन्ड एप्लिकेसनहरू र ठुलो-स्तरीय स्थिर साइट इन्जिनहरूलाई गहिरो रूपमा चलाउँदछ)"
+
+msgid "mime_wasm"
+msgstr "WebAssembly बाइनरी मोड्युल (2017 मा W3C द्वारा स्थापित वेबको लागि उच्च-प्रदर्शन न्यून-स्तर बाइटकोड मानक। C/C++/Rust जस्ता बलियो प्रकार भाषाहरूलाई ब्राउजर स्यान्डबक्स लक्ष्यमा कम्पाइल गर्न अनुमति दिन्छ, मूल हार्डवेयरको नजिकको कार्यान्वयन दक्षता प्रदान गर्दछ। यो आधुनिक वेब एज कम्प्युटिङको आधारशिला हो)"
+
+msgid "mime_jsx"
+msgstr "React JSX कम्पोनेन्ट (2013 मा Facebook द्वारा React फ्रेमवर्क सँगै जारी गरिएको JavaScript XML सिन्ट्याक्स विस्तार। JavaScript मा DOM भर्चुअल संरचना घोषणात्मक रूपमा निर्माण गर्न समर्थन गर्दछ, फ्रन्ट-एन्ड विकासमा 'UI अवस्थाको प्रकार्य हो' कम्पोनेन्ट-आधारित विकास प्रतिमान कार्यान्वयन गर्यो)"
+
+msgid "mime_tsx"
+msgstr "TypeScript TSX कम्पोनेन्ट (2012 मा Microsoft द्वारा विकसित TypeScript बलियो प्रकार सिन्ट्याक्स र JSX को स्ट्रिम संयोजन। React कम्पोनेन्ट विकासमा स्थिर कम्पाइल-समय प्रकार जाँच र इन्टरफेस बाधाहरू इन्जेक्ट गर्दछ। यो आधुनिक ठुलो फ्रन्ट-एन्ड प्रणालीहरूको सुरक्षित विकासको लागि कोड मानक हो)"
+
+msgid "mime_heif"
+msgstr "HEIF उच्च-दक्षता छवि (2015 मा MPEG संगठन द्वारा स्थापित उच्च-दक्षता छवि फाइल ढाँचा। HEVC (H.265) भिडियो एन्कोडिङ एल्गोरिदममा आधारित, धेरै सानो मात्रामा बहु-फ्रेम छविहरू, गहिराई नक्सा र मेटाडाटा समावेश गर्न समर्थन गर्दछ। यो आधुनिक मोबाइल अपरेटिङ सिस्टमहरू र स्मार्ट टर्मिनल यन्त्रहरूको लागि स्वामित्व भण्डारण मानक हो)"
+
+msgid "mime_heic"
+msgstr "HEIC उच्च-दक्षता छवि (HEIF अन्तर्राष्ट्रिय मानकमा आधारित Apple द्वारा कार्यान्वयन गरिएको स्वामित्व बिटम्याप ढाँचा। आधुनिक iPhone को पूर्वनिर्धारित फोटो भण्डारण मानकको रूपमा, यसले iOS/macOS हार्डवेयर-स्तरीय एन्कोडिङ/डिकोडिङ र मूल अपरेटिङ सिस्टम समर्थन प्राप्त गर्दछ। उच्च छवि गुणस्तर सुनिश्चित गर्दै, अन्तर्निहित भण्डारण ठाउँ नाटकीय रूपमा घटाउँदछ)"
+
+msgid "mime_gltf"
+msgstr "glTF 3D सम्पत्ति मोडेल (2015 मा Khronos Group द्वारा जारी GL स्थानान्तरण ढाँचा मानक। त्रि-आयामी दृश्य वर्णन गर्न JSON आर्किटेक्चर प्रयोग गर्दछ, '3D क्षेत्रको JPEG' को रूपमा प्रशंसा गरिन्छ। यो आधुनिक WebGL/WebGPU र भर्चुअल वास्तविकता रेन्डरिङको लागि हल्का औद्योगिक मानक हो)"
+
+msgid "mime_glb"
+msgstr "GLB बाइनरी 3D मोडेल (glTF सम्पत्ति मोडेलको पूर्ण बाइनरी, नगुम्ने समाहितकरण संस्करण। दृश्य संरचना, न्यून-स्तर जाल शिखर डाटा, सामग्री र बनावट नक्साहरू एकल फाइलमा संयोजन गर्दछ। क्रस-प्लेटफर्म वेब 3D सम्पत्तिहरूको उच्च-दक्षता प्रसारण र स्ट्रिम वितरणको लागि विशेष रूपमा डिजाइन गरिएको)"
+
+msgid "mime_gls"
+msgstr "GLOSSARY डाटा शब्दावली (कागजात व्यवस्थापन प्रणाली र संरचित कोर्पोराको लागि विशेष शब्दावली सेट परिभाषा फाइल। निर्मित मानक शब्द परिभाषाहरू, बहुभाषी म्यापिङहरू र मेटाडाटा म्यापिङहरू समावेश गर्दछ। स्वचालित पाठ विश्लेषण र सामग्री प्रकाशन प्रणालीहरूको लागि अवधारणात्मक स्थिरता कायम राख्न प्रयोग गरिन्छ)"
+
+msgid "mime_cbz"
+msgstr "CBZ कमिक पुस्तक (ZIP कम्प्रेसन संरचनामा आधारित स्वामित्व कमिक छवि अभिलेख ढाँचा। भित्री रूपमा निरन्तर स्थिर बिटम्याप अनुक्रमहरू समाहित गर्दछ। यो डिजिटल कमिक प्रकाशन र क्रस-प्लेटफर्म स्थानीय संग्रहको लागि सार्वभौमिक हल्का कन्टेनर मानक हो)"
+
+msgid "mime_cbr"
+msgstr "CBR कमिक पुस्तक (RAR कम्प्रेसन संरचनामा आधारित स्वामित्व कमिक छवि अभिलेख ढाँचा। स्थिर बिटम्याप अनुक्रमहरू समाहित गर्न RAR एल्गोरिदम प्रयोग गर्दछ, उच्च कम्प्रेसन दर छ। डिजिटल कमिक वितरण क्षेत्रमा व्यापक अनुकूलता समर्थन छ)"
+
+msgid "mime_fb2"
+msgstr "FB2 इ-पुस्तक (2000 को दशकको प्रारम्भको FictionBook 2.0 इ-पुस्तक मानक। पुस्तक विशेषताहरू र पाठ पदानुक्रम वर्णन गर्न शुद्ध XML संरचना प्रयोग गर्दछ। खुला स्रोत इ-पुस्तक पारिस्थितिकी तंत्र र पैतृक डिजिटल प्रकाशन पाठकहरूमा व्यापक समर्थन छ)"
+
+msgid "mime_kepub"
+msgstr "KEPUB इ-पुस्तक (Kobo द्वारा EPUB मानकमा आधारित विकसित स्वामित्व परिष्कृत इ-पुस्तक ढाँचा। Kobo को हार्डवेयर-स्तरीय इ-पुस्तक पाठकहरूको लागि न्यून-स्तर रेन्डरिङ अनुकूलन गर्दछ, अधिक प्रभावकारी पृष्ठ लेआउट र पठन तथ्याङ्क अन्तरक्रिया प्रदान गर्दछ)"
+
+msgid "mime_m4b"
+msgstr "M4B अडियो पुस्तक (MPEG-4 Part 14 (MP4) कन्टेनर आर्किटेक्चरमा आधारित अडियो पुस्तक ढाँचा। AAC एन्कोडिङ प्रयोग गर्दछ, न्यून-स्तर बुकमार्क स्थान, ब्रेकपोइन्टबाट पुन: सुरु गरेर प्लेब्याक र अध्याय सम्मिलनलाई मूल समर्थन गर्दछ। एक पटक Apple iTunes पारिस्थितिकी तंत्रको मानक ढाँचा थियो)"
+
+msgid "mime_kfx"
+msgstr "Kindle KFX ढाँचा (2015 मा Amazon द्वारा Kindle सँगै जारी गरिएको स्वामित्व परिष्कृत डिजिटल प्रकाशन ढाँचा। उन्नत लिगेचर लेआउट, उच्च-गतिशील फन्ट रेन्डरिङ र कर्नेल-स्तरीय स्ट्रिम पृष्ठ लोडिङ (पृष्ठ फ्लिप) समर्थन गर्दछ। यो आधुनिक Kindle प्लेटफर्मको मुख्य मानक हो)"
+
+msgid "mime_chm"
+msgstr "CHM कम्पाइल गरिएको सहायता फाइल (1997 मा Microsoft द्वारा जारी गरिएको कम्पाइल गरिएको HTML सहायता सूचना प्रणाली। हाइपरटेक्स्ट डाटा र अन्तर्निहित सूचकांकलाई एकल बाइनरी कन्टेनरमा प्याक गर्दछ। लामो समयसम्म Windows सफ्टवेयरको स्थानीय अफलाइन सहायता कागजातको मानक ढाँचाको रूपमा थियो)"
+
+msgid "mime_mht"
+msgstr "MHT वेब पृष्ठ अभिलेख (1999 मा Microsoft द्वारा जारी MIME एकत्रित हाइपरटेक्स्ट ढाँचा। RFC 2557 मानकमा आधारित, HTML स्रोत, CSS, JS र इम्बेडेड छविहरूलाई एकल पाठ फाइलमा समाहित गर्दछ। पैतृक ब्राउजरहरूमा अफलाइन वेब पृष्ठ सुरक्षित गर्न प्रयोग गरिन्छ)"
+
+msgid "mime_wml"
+msgstr "WML ताररहित मार्कअप भाषा (1999 मा WAP (ताररहित एप्लिकेसन प्रोटोकल) फोरम द्वारा स्थापित मोबाइल मार्कअप मानक। XML विशिष्टता मा आधारित, विशेष गरी प्रारम्भिक साँघुरो-ब्यान्ड ताररहित सेलुलर सञ्जाल र कम क्षमता सुविधा फोनहरूको लागि डिजाइन गरिएको। आधुनिक वेब पारिस्थितिकी तंत्रमा यो सेवानिवृत्त पैतृक प्रविधि हो)"
+
+msgid "mime_xhtml"
+msgstr "XHTML हाइपरटेक्स्ट वेब पृष्ठ (2000 W3C मानक, XML आर्किटेक्चरमा आधारित कडा प्रकारको हाइपरटेक्स्ट मार्कअप भाषाको समाहितकरण। 2009 मा W3C ले यसको प्राविधिक विकास रोक्यो र पूर्ण रूपमा HTML5 विशिष्टतामा परिवर्तन भयो। अब पैतृक प्रणालीहरूमा शब्दार्थ वेब पृष्ठ रेन्डरिङको लागि प्रयोग गरिन्छ)"
+
+msgid "mime_xml"
+msgstr "XML संरचित कागजात (1998 W3C मानकको विस्तार योग्य मार्कअप भाषा। आत्म-वर्णनात्मक ट्याग आर्किटेक्चर छ। नेटवर्क वेब सेवाहरू (SOAP/REST), प्रणाली-स्तरीय कन्फिगरेसन फाइलहरू (XSD) र क्रस-प्लेटफर्म डाटा आदानप्रदानको लागि आधारभूत आधार ढाँचा हो)"
+
+msgid "mime_sgml"
+msgstr "SGML साधारणीकृत मार्कअप भाषा (1986 ISO 8879 अन्तर्राष्ट्रिय मानकको मानक साधारणीकृत मार्कअप भाषा। इलेक्ट्रोनिक कागजातहरूको संरचित वर्णनको उद्योग अग्रगामीको रूपमा, XML र प्रारम्भिक HTML विशिष्टताहरू यस मानक मेटा-भाषाबाट व्युत्पन्न भएका हुन्)"
+
+msgid "mime_apng"
+msgstr "APNG गतिशील ग्राफिक्स (2004 मा Mozilla द्वारा विकसित पोर्टेबल नेटवर्क ग्राफिक्स (PNG) गतिशील विस्तार। 24-बिट साँचो रङ र 8-बिट अल्फा च्यानल अर्ध-पारदर्शिता समर्थन गर्दछ। आधुनिक वेब परिदृश्यहरूमा GIF ढाँचाको उच्च-परिभाषा विकल्प हो)"
+
+msgid "mime_bmp"
+msgstr "BMP मूल बिटम्याप (Windows 1.0 युग देखि स्थापित Microsoft प्लेटफर्मको यन्त्र-स्वतन्त्र बिटम्याप ढाँचा। नगुम्ने, अकम्प्रेस्ड भण्डारण प्रयोग गर्दछ, यद्यपि यसको आकार सामान्यतया PNG भन्दा 3-10 गुणा ठुलो हुन्छ, तर एन्कोडिङ/डिकोडिङ ओभरहेड नभएको कारण, अहिले पनि Windows 11 को मुख्य घटकहरू, EXE/MSI स्रोत खण्डहरू र पैतृक ड्राइभरहरूको ग्राफिक्स बफरहरूमा व्यापक रूपमा इम्बेड गरिएको छ)"
+
+msgid "mime_cdr"
+msgstr "CDR भेक्टर ग्राफिक्स (क्यानाडाको कोरेल कम्पनीको स्वामित्व CorelDRAW व्यावसायिक भेक्टर डिजाइन स्रोत फाइल ढाँचा। बहु-तह रङ व्यवस्थापन, जटिल गणितीय समोच्च नोडहरू र मुद्रण-स्तरीय लेआउट डाटालाई समर्थन गर्दछ। यो व्यावसायिक समतल मुद्रण र विज्ञापन डिजाइन क्षेत्रको लागि विशेष ढाँचा हो)"
+
+msgid "mime_gif"
+msgstr "GIF अनुक्रमित रङ छवि (1987 मा CompuServe द्वारा विकसित 8-बिट अनुक्रमित रङ बिटम्याप ढाँचा। LZW एल्गोरिदममा आधारित, 256 रङ स्तर र एकल-रङ पारदर्शितामा सीमित। उच्च फ्रेम दरमा आकार ठुलो हुन्छ। अब APNG, WebP जस्ता आधुनिक उच्च-दक्षता गतिशील छवि मानकहरूले क्रमशः प्रतिस्थापन गर्दै छन्)"
+
+msgid "mime_ico"
+msgstr "ICO प्रणाली आइकन (Windows मूल आइकन स्रोत समाहितकरण ढाँचा। एकल कन्टेनर भित्र धेरै पिक्सेल रिजोल्युसन र रङ गहिराइका छवि भिन्नताहरूको मिश्रित सम्मिलनलाई समर्थन गर्दछ। आधुनिक वेब ब्राउजर साइटको मुख्य पहिचानकर्ता (Favicon) को लागि सार्वभौमिक वितरण मानक पनि हो)"
+
+msgid "mime_jpeg"
+msgstr "JPEG कम्प्रेस्ड छवि (1992 ISO 10918 अन्तर्राष्ट्रिय मानकको हानियुक्त कम्प्रेसन छवि ढाँचा। डिस्क्रिट कोसाइन ट्रान्सफर्म (DCT) एल्गोरिदममा आधारित, उच्च कम्प्रेसन अनुपात हासिल गर्दै उत्कृष्ट यथार्थवादी छवि गुणस्तर कायम राख्छ। यो विश्वव्यापी इन्टरनेट स्थिर फोटोग्राफीको पूर्ण वास्तविक मानक हो)"
+
+msgid "mime_jpg"
+msgstr "JPEG कम्प्रेस्ड छवि (1992 ISO 10918 अन्तर्राष्ट्रिय मानकको हानियुक्त कम्प्रेसन छवि ढाँचा। डिस्क्रिट कोसाइन ट्रान्सफर्म (DCT) एल्गोरिदममा आधारित, उच्च कम्प्रेसन अनुपात हासिल गर्दै उत्कृष्ट यथार्थवादी छवि गुणस्तर कायम राख्छ। यो विश्वव्यापी इन्टरनेट स्थिर फोटोग्राफीको पूर्ण वास्तविक मानक हो)"
+
+msgid "mime_png"
+msgstr "PNG नगुम्ने छवि (1996 मा W3C द्वारा सिफारिस गरिएको पोर्टेबल नेटवर्क ग्राफिक्स मानक। नगुम्ने कम्प्रेसन एल्गोरिदम प्रयोग गर्दछ, 24-बिट साँचो रङ र 8-बिट अल्फा च्यानल पारदर्शितालाई मूल समर्थन गर्दछ। शास्त्रीय स्थिर GIF को उच्च-परिभाषा विकल्पको रूपमा, यो इन्टरनेटमा नगुम्ने पिक्सेल छविहरूको पूर्ण वास्तविक मानक हो)"
+
+msgid "mime_ps"
+msgstr "PostScript पृष्ठ विवरण फाइल (1985 मा Adobe द्वारा प्रस्तुत गरिएको स्ट्याक-आधारित पृष्ठ विवरण भाषा। PDF ढाँचाको प्राविधिक पूर्ववर्तीको रूपमा, यसले न्यून-स्तरमा हार्डवेयर-स्वतन्त्र टाइपोग्राफी र उच्च-परिशुद्धता भेक्टर ग्राफिक्स रेन्डरिङ कार्यान्वयन गर्दछ। यो व्यावसायिक मुद्रण प्रकाशन र लेजर मुद्रण क्षेत्रहरूको लागि आधारभूत मानक हो)"
+
+msgid "mime_psb"
+msgstr "PSB ठुलो तह कागजात (Adobe Photoshop को स्वामित्व अति-ठुलो स्रोत फाइल समाहितकरण ढाँचा। यसले मानक PSD ढाँचाको 2GB भौतिक आकार र 30,000 पिक्सेलको आन्तरिक एड्रेसिङ सीमाहरू तोड्दछ। अति-ठुलो मात्रा, उच्च तह गहिराइ भएको विशाल डिजिटल कला सम्पत्तिहरू भण्डारण गर्नको लागि विशेष रूपमा डिजाइन गरिएको)"
+
+msgid "mime_psd"
+msgstr "PSD तह डिजाइन स्रोत फाइल (Adobe Photoshop को स्वामित्व तहयुक्त छवि इन्जिनियरिङ ढाँचा। ग्राफिक्स र छवि डोमेनमा उद्योग मानक कन्टेनरको रूपमा, यसले पूर्ण तह रेन्डरिङ ट्री, बिटम्याप च्यानलहरू, भेक्टर क्लिपिङ पथहरू र मिश्रित मिश्रण मोडहरूलाई मूल रूपमा समाहित गर्दछ, नगुम्ने पूर्ण डाटा सम्पादन समर्थन गर्दछ)"
+
+msgid "mime_webp"
+msgstr "WebP उच्च-दक्षता छवि (2010 मा Google द्वारा प्रस्तुत गरिएको सार्वभौमिक वेब ग्राफिक्स एन्कोडिङ मानक। VP8 भिडियो कुञ्जी फ्रेम प्रविधिबाट व्युत्पन्न, हानियुक्त, नगुम्ने, अर्ध-पारदर्शी र गतिशील रेन्डरिङसँग पूर्ण रूपमा अनुकूल छ। समान गुणस्तरको PNG भन्दा 25-35% आकार घटाउँदछ। यो आधुनिक वेब पृष्ठको उच्च-प्रदर्शन लोडिङको आधारशिला हो)"
+
+msgid "mime_woff"
+msgstr "WOFF वेब ग्लिफ फाइल (2009 मा सिर्जना गरिएको र 2012 मा W3C मानक भएको खुला वेब फन्ट ढाँचा। सारमा, यो मानक TTF/OTF फन्ट संरचनाहरूको स्ट्रिम नगुम्ने कम्प्रेसन समाहितकरण हो, जसले नेटवर्क प्रसारण ब्यान्डविथ लागतलाई नाटकीय रूपमा अनुकूलन गर्दछ। यो आधुनिक वेबसाइट आइकनहरू र क्लाउड फन्टहरूको लागि सार्वभौमिक ढाँचा हो)"
+
+msgid "mime_7z"
+msgstr "7z कम्प्रेस्ड अभिलेख (1999 मा Igor Pavlov द्वारा विकसित 7-Zip को स्वामित्व ढाँचा। खुला स्रोत LZMA/LZMA2 एल्गोरिदमहरूमा आधारित, अत्यन्त उच्च कम्प्रेसन दर छ। समान अवस्थाहरूमा यसको आकार सामान्यतया ZIP भन्दा 30-50% सानो हुन्छ। यो खुला स्रोत समुदाय र सफ्टवेयर वितरणको लागि सार्वभौमिक उच्च-कम्प्रेसन-अनुपात ढाँचा हो)"
+
+msgid "mime_ace"
+msgstr "ACE कम्प्रेस्ड अभिलेख (1990 को दशक WinACE को स्वामित्व कम्प्रेसन ढाँचा। एक पटक RAR ढाँचासँग प्रतिस्पर्धा गर्यो र उच्च कम्प्रेसन दर थियो। 2007 पछि प्राविधिक पुनरावृत्ति रोकियो, अब 7z र RAR ढाँचाले प्रतिस्थापन गरेको छ। पैतृक प्रणाली अभिलेख ढाँचा हो)"
+
+msgid "mime_bz2"
+msgstr "BZIP2 कम्प्रेस्ड अभिलेख (1996 मा Julian Seward द्वारा विकसित ब्लक-सोर्टिङ कम्प्रेसन ढाँचा। यसको अन्तर्निहित एल्गोरिदमको कम्प्रेसन दर GZIP भन्दा 15-20% उच्च छ तर गणना लागत ठुलो छ। Linux कर्नेल स्रोत कोड र खुला स्रोत सफ्टवेयर प्याकेजहरूको वितरणको लागि प्रयोग गरिन्छ। मानक एक्सटेन्सन .bz2 हो)"
+
+msgid "mime_cab"
+msgstr "CAB कम्प्रेस्ड अभिलेख (1995 मा Microsoft द्वारा स्वतन्त्र रूपमा विकसित Cabinet अभिलेख ढाँचा। Windows प्रणालीको मूल स्थापना प्याकेज मानकको रूपमा, ड्राइभरहरू र कर्नेल फाइलहरू वितरणको लागि प्रयोग गरिन्छ। Windows Installer (MSI) को लागि अन्तर्निहित भण्डारण कन्टेनर पनि हो)"
+
+msgid "mime_dmg"
+msgstr "DMG डिस्क छवि (1980 को दशकमा Apple द्वारा विकसित Disk Image ढाँचा। macOS सफ्टवेयर वितरणको मानक कन्टेनरको रूपमा, भर्चुअल फाइल प्रणालीको रूपमा भौतिक माउन्टिङ, न्यून-स्तर कम्प्रेसन र डाटा एन्क्रिप्सनलाई समर्थन गर्दछ। यो Mac पारिस्थितिकी तंत्र एप्लिकेसन वितरणको मुख्यधारा ढाँचा हो)"
+
+msgid "mime_emz"
+msgstr "EMZ कम्प्रेस्ड छवि (Windows उन्नत मेटाफाइल EMF को कम्प्रेस्ड संस्करण। सारमा, GZIP एल्गोरिदम मार्फत कम्प्रेस गरिएको बाइनरी भेक्टर ग्राफिक्स हो। Microsoft Office श्रृंखला कागजातहरूमा इम्बेडेड भेक्टर ग्राफिक्स भण्डारणको लागि व्यापक रूपमा प्रयोग गरिन्छ)"
+
+msgid "mime_gz"
+msgstr "GZIP कम्प्रेस्ड अभिलेख (1992 GNU परियोजनाको Jean-loup Gailly र Mark Adler द्वारा विकसित मानक स्ट्रिम कम्प्रेसन ढाँचा। Unix/Linux मानक कम्प्रेसन उपकरणको रूपमा, यो HTTP यातायात तह कम्प्रेसन (Gzip) को मुख्य मानक पनि हो। प्रायः TAR अभिलेखसँग संयोजनमा प्रयोग गरिन्छ)"
+
+msgid "mime_jar"
+msgstr "JAR कम्प्रेस्ड अभिलेख (1997 मा Sun Microsystems द्वारा प्रस्तुत Java ARchive अभिलेख ढाँचा। सारमा, ZIP संरचनामा आधारित प्याकेजिङ कन्टेनर हो, Java वर्ग पुस्तकालयहरू र मेटाडाटा समाहित गर्न प्रयोग गरिन्छ। यो Maven, Gradle र प्रारम्भिक Android पारिस्थितिकी तंत्रको मुख्य कम्पाइलेसन उत्पादन हो)"
+
+msgid "mime_lzma"
+msgstr "LZMA कम्प्रेस्ड अभिलेख (1998 मा Igor Pavlov द्वारा विकसित Lempel-Ziv-Markov श्रृंखला कम्प्रेसन एल्गोरिदम। 7z ढाँचाको मुख्य इन्जिनको रूपमा, अत्यन्त उच्च कम्प्रेसन दर र उच्च-गति डिकम्प्रेसन सुविधाहरू छन्। हार्डवेयर फर्मवेयर र इम्बेडेड प्रणाली वितरणको लागि व्यापक रूपमा प्रयोग गरिन्छ)"
+
+msgid "mime_rar"
+msgstr "RAR कम्प्रेस्ड अभिलेख (1993 मा Eugene Roshal द्वारा विकसित WinRAR को स्वामित्व अभिलेख ढाँचा। भोल्युम विभाजन, भौतिक पुन:प्राप्ति रेकर्ड (ECC) र उच्च-शक्ति एन्क्रिप्सन समर्थन गर्दछ। कम्प्रेसन दर मानक ZIP भन्दा उत्तम छ, व्यक्तिगत कम्प्युटर र व्यावसायिक क्षेत्रमा व्यापक अनुकूलता समर्थन छ)"
+
+msgid "mime_tar"
+msgstr "TAR अभिलेख प्याकेज (1979 Unix V7 युगको टेप अभिलेख ढाँचा। केवल फाइल स्ट्रिम प्याकिङ गर्दछ, डाटा कम्प्रेसन गर्दैन। प्रायः GZIP/BZIP2/XZ सँग संयोजन गरिन्छ। यो Linux स्रोत कोड प्याकेज र डकर छवि तह भण्डारणको लागि अन्तर्निहित मानक हो)"
+
+msgid "mime_tgz"
+msgstr "TGZ कम्प्रेस्ड अभिलेख (TAR अभिलेख र GZIP कम्प्रेसनको स्ट्रिम संयोजन ढाँचा, एक्सटेन्सन .tgz वा .tar.gz। Unix/Linux वातावरणमा सबैभन्दा सार्वभौमिक सफ्टवेयर प्याकेज वितरण ढाँचाको रूपमा, स्रोत कोड कम्पाइलेसन तैनाती र स्थापना-मुक्त बाइनरी प्याकेज वितरणको लागि व्यापक रूपमा प्रयोग गरिन्छ)"
+
+msgid "mime_tbz2"
+msgstr "TBZ2 कम्प्रेस्ड अभिलेख (TAR अभिलेख र BZIP2 कम्प्रेसनको स्ट्रिम संयोजन ढाँचा, एक्सटेन्सन .tbz2 वा .tar.bz2। TGZ को तुलनामा थप 15-20% कम्प्रेसन दर प्राप्त गर्न सकिन्छ, ठुलो फाइल प्रसारणको लागि उपयुक्त। लामो समय Linux कर्नेल स्रोत कोडको वितरणको लागि प्रयोग गरिएको थियो)"
+
+msgid "mime_xz"
+msgstr "XZ कम्प्रेस्ड अभिलेख (2009 मा प्रस्तुत गरिएको अर्को पुस्ताको उच्च-कम्प्रेसन-अनुपात ढाँचा। LZMA2 एल्गोरिदममा आधारित, डाटा कम्प्रेसन दर GZIP भन्दा 30-50% उच्च छ र उच्च-गति डिकम्प्रेसन कायम राख्छ। Linux कर्नेल र मुख्यधारा प्याकेज प्रबन्धकहरू (जस्तै Debian .deb भित्र) द्वारा सिफारिस गरिएको वितरण मानकको रूपमा स्थापित भएको छ)"
+
+msgid "mime_z"
+msgstr "Z कम्प्रेस्ड अभिलेख (1985 Unix compress कमाण्डको LZW कम्प्रेसन ढाँचा। प्रारम्भिक Unix प्रणालीको मानक कम्प्रेसन मानकको रूपमा, अब थप प्रभावकारी GZIP ढाँचाले पूर्ण रूपमा प्रतिस्थापन गरेको छ। आधुनिक नेटवर्क ट्राफिकमा, यो दुर्लभ ऐतिहासिक पैतृक ढाँचा हो)"
+
+msgid "mime_zip"
+msgstr "ZIP कम्प्रेस्ड अभिलेख (1989 मा Phil Katz द्वारा विकसित PKZIP सार्वभौमिक अभिलेख ढाँचा। मुख्यधारा अपरेटिङ सिस्टमहरूको मूल समर्थन प्राप्त गर्दछ। यो इन्टरनेटमा सबैभन्दा व्यापक रूपमा प्रयोग हुने कन्टेनर मानक हो। आधुनिक Java को JAR, Android को APK र Office कागजातहरू (OOXML) सबै ZIP संरचनामा आधारित छन्)"
+
+msgid "mime_zst"
+msgstr "Zstandard कम्प्रेस्ड अभिलेख (2015 Facebook Yann Collet द्वारा डिजाइन गरिएको नयाँ पुस्ताको स्ट्रिम कम्प्रेसन मानक। LZMA कम्प्रेसन दरको नजिक पुग्दै GZIP भन्दा धेरै उच्च थ्रुपुट छ। Linux कर्नेल (5.9+) र Arch/Debian प्याकेज प्रबन्धकहरूले गहिरो रूपमा अङ्गीकार गरेको छ)"
+
+msgid "mime_lz4"
+msgstr "LZ4 कम्प्रेस्ड अभिलेख (2011 मा Yann Collet द्वारा विकसित अत्यन्त तीव्र स्ट्रिम कम्प्रेसन एल्गोरिदम। थ्रुपुट गति GZIP भन्दा 10 गुणा भन्दा छिटो छ, अत्यन्त कम CPU रनटाइम लागत छ। Linux कर्नेल, OpenZFS फाइल प्रणाली र Hadoop वास्तविक-समय डाटा स्ट्रिम प्रशोधनमा व्यापक रूपमा प्रयोग गरिन्छ)"
+
+msgid "mime_lzo"
+msgstr "LZO कम्प्रेस्ड अभिलेख (1996 मा Markus Oberhumer द्वारा विकसित Lempel-Ziv-Oberhumer एल्गोरिदम। अत्यन्त तीव्र डिकम्प्रेसन प्रदर्शनमा केन्द्रित छ। Linux कर्नेल Squashfs छविहरू, OpenWrt फर्मवेयर र विभिन्न स्रोत-सीमित इम्बेडेड प्रणालीहरूमा व्यापक रूपमा इम्बेड गरिएको छ)"
+
+msgid "mime_msi"
+msgstr "MSI प्रणाली स्थापना प्याकेज (1999 मा Microsoft द्वारा प्रस्तुत Windows Installer डाटा समाहितकरण ढाँचा। Windows एप्लिकेसन-स्तरीय मानक तैनाती विशिष्टताको रूपमा, न्यून-स्तर लेनदेन रोलब्याक, कम्पोनेन्ट जीवनचक्र व्यवस्थापन र ब्याच प्रशोधन बिना मौन स्थापनालाई मूल समर्थन गर्दछ। यो उद्यम-स्तरीय केन्द्रीकृत सफ्टवेयर वितरण र नीति तैनातीको मुख्य मानक हो)"
+
+msgid "mime_pkg"
+msgstr "PKG क्रस-प्लेटफर्म सफ्टवेयर स्थापना प्याकेज। 1. FreeBSD सफ्टवेयर प्याकेज: pkgng मानक, एक्सटेन्सन .pkg वा .txz, TAR+XZ/Zstd कम्प्रेसनमा आधारित, निर्भरता समाधान र हस्ताक्षर प्रमाणीकरण समर्थन गर्दछ; 2. macOS स्थापना प्याकेज: Apple Installer ढाँचामा आधारित, अनुकूलन कम्पोनेन्टहरू, स्थापना स्क्रिप्टहरू र प्रणाली-स्तरीय हटाउने समर्थन गर्दछ। क्रमशः BSD सर्भर र Mac प्रणालीहरूको मुख्य वितरण वाहकहरू हुन्।"
+
+msgid "mime_apk"
+msgstr "APK एन्ड्रोइड एप्लिकेसन प्याकेज (2008 मा Google द्वारा Android सँगै जारी गरिएको परम्परागत एप्लिकेसन स्थापना प्याकेज। ZIP अभिलेख संरचनामा आधारित, कम्पाइल गरिएको Dalvik बाइटकोड (DEX), मेटाडाटा घोषणापत्र र विश्वव्यापी स्रोतहरू प्याक गर्दछ। अब स्थानीय विकास डिबगिङ, तेस्रो-पक्ष वितरण र यन्त्र साइड-लोडिङ स्थापनाको लागि व्यापक रूपमा प्रयोग गरिन्छ)"
+
+msgid "mime_ipa"
+msgstr "IPA एप्पल एप्लिकेसन प्याकेज (2008 मा iPhone SDK सँगै जारी गरिएको iOS/iPadOS-विशिष्ट प्याकेजिङ कन्टेनर। सारमा, यो FairPlay DRM वा उद्यम-स्तरीय कोड हस्ताक्षर द्वारा संरक्षित ZIP अभिलेख हो, जसमा Mach-O बाइनरी कार्यान्वयन योग्य, एप्लिकेसन स्रोत रूख र Info.plist मेटाडाटा कन्फिगरेसन समावेश छ)"
+
+msgid "mime_hap"
+msgstr "HAP HarmonyOS एप्लिकेसन प्याकेज (2020 मा HarmonyOS 2.0 सँगै जारी गरिएको HarmonyOS को लोचदार तैनाती आधार इकाई। प्रविष्टि मुख्य मोड्युल वा सुविधा विस्तार प्रकार्यात्मक मोड्युलहरू मिलेर बनेको छ। यो क्रस-एण्ड सबै परिदृश्यहरू (फोन, ट्याब्लेट, लगाउन मिल्ने यन्त्रहरू) स्मार्ट टर्मिनल वितरणको लागि मुख्य बहु-एण्ड ढाँचा हो)"
+
+msgid "mime_har"
+msgstr "HAR HarmonyOS स्थिर साझा प्याकेज (HarmonyOS को स्वामित्व स्थिर साझा पुस्तकालय अभिलेख फाइल। सामान्य कम्पोनेन्टहरू, न्यून-स्तर स्रोत कोड र कम्पाइल-समय निर्भरताहरू समाहित गर्नको लागि प्रयोग गरिन्छ, जुन धेरै HAP मोड्युलहरूद्वारा स्थिर रूपमा लिङ्क गरिन्छ। यो HarmonyOS प्रणालीको कम्पोनेन्ट-आधारित विकास र बहु-मोड्युल पुन: प्रयोगको मुख्य आधार हो)"
+
+msgid "mime_aab"
+msgstr "AAB एन्ड्रोइड एप्लिकेसन बन्डल (2018 मा Google द्वारा प्रस्तुत र 2021 मा स्थापित Google Play गतिशील वितरण ढाँचा। शुद्ध वितरण इकाईको रूपमा, लक्ष्य यन्त्रको CPU आर्किटेक्चर, स्क्रिन घनत्व र भाषा अनुसार क्लाउडद्वारा गतिशील रूपमा क्रप गरिन्छ र कम्पाइल गरिन्छ, र आवश्यकता अनुसार अनुकूलित APK उत्पन्न गर्दछ। औसत 35% प्रसारण ब्यान्डविथ लागत घटाउँदछ)"
+
+msgid "mime_xapk"
+msgstr "XAPK विस्तारित एप्लिकेसन प्याकेज (तेस्रो-पक्ष एन्ड्रोइड समुदाय द्वारा स्थापित अनाधिकारिक एप्लिकेसन विस्तार मानक। मानक APK फाइललाई ठुलो OBB खेल डाटा विस्तार प्याकेजसँग संयुक्त रूपमा समाहित गरेर, Google Play को 100MB स्वतन्त्र फाइल आकार सीमालाई भौतिक रूपमा तोड्दछ। खेल वितरण प्लेटफर्महरूमा व्यापक रूपमा देखिन्छ)"
+
+msgid "mime_appx"
+msgstr "APPX आधुनिक एप्लिकेसन प्याकेज (2012 मा Microsoft द्वारा Windows 8 सँगै जारी गरिएको UWP एप्लिकेसन तैनाती विशिष्टता। स्यान्डबक्स आइसोलेसन रनिङ र हल्का हटाउने सुविधाहरू छन्। Microsoft Store को प्रारम्भिक प्रभावशाली मानकको रूपमा, आधुनिक Windows पारिस्थितिकी तंत्रमा यो MSIX मा विकास हुने जीवनचक्रको अन्तिम चरणमा प्रवेश गरेको छ)"
+
+msgid "mime_msix"
+msgstr "MSIX नयाँ पुस्ता एप्लिकेसन प्याकेज (2018 मा Microsoft द्वारा जारी गरिएको Windows को पूर्ण नयाँ मानकीकृत प्याकेजिङ विशिष्टता। APPX को एप्लिकेसन सुरक्षा स्यानडबक्स सुविधाहरू र MSI को उद्यम-स्तरीय सम्पत्ति व्यवस्थापन फाइदाहरूलाई पूर्ण रूपमा मिश्रण गर्दछ। सबै Win32 एप्लिकेसन प्रकारहरूसँग पूर्ण रूपमा अनुकूल छ। यो Windows 11 को लागि सिफारिस गरिएको वितरण मानक हो)"
+
+msgid "mime_appimage"
+msgstr "AppImage स्थापना-मुक्त एप्लिकेसन प्याकेज (2004 मा सुरु गरिएको Linux एकल कार्यान्वयन योग्य अभिलेख विशिष्टता। 'एउटा एप्लिकेसन एउटा फाइल हो' को स्व-निहित आर्किटेक्चर प्रयोग गर्दछ। रनटाइममा, यसलाई FUSE संयन्त्र मार्फत पढ्न-मात्र भर्चुअल फाइल प्रणालीको रूपमा प्रत्यक्ष रूपमा माउन्ट गरी कार्यान्वयन गरिन्छ, Linux वितरणहरूमा शून्य-निर्भरता तत्काल प्रयोग योग्यता हासिल गर्दछ)"
+
+msgid "mime_flatpak"
+msgstr "Flatpak स्यान्डबक्स एप्लिकेसन प्याकेज (2015 मा रेड ह्याट र GNOME द्वारा नेतृत्व गरिएको Linux क्रस-वितरण डेस्कटप एप्लिकेसन वितरण मानक। अन्तर्निहित रूपमा Linux कर्नेलको नेमस्पेस र Cgroups संयन्त्रहरूमा निर्भर रहेर अत्यन्त कडा एप्लिकेसन-स्तरीय सुरक्षा स्यान्डबक्स आइसोलेसन कार्यान्वयन गर्दछ। यो आधुनिक खुला स्रोत OS सफ्टवेयर केन्द्रको आधार हो)"
+
+msgid "mime_snap"
+msgstr "Snap कन्टेनराइज्ड एप्लिकेसन प्याकेज (2014 मा Ubuntu को अभिभावक कम्पनी Canonical द्वारा प्रस्तुत गरिएको Linux सार्वभौमिक तैनाती मानक। स्व-निहित SquashFS छवि माउन्टिङ आर्किटेक्चर प्रयोग गर्दछ, स्वचालित वृद्धिशील अद्यावधिकहरू र कडा AppArmor स्यान्डबक्स आइसोलेसन समर्थन गर्दछ। यो Ubuntu सफ्टवेयर केन्द्र पारिस्थितिकी तंत्रको मुख्य पूर्वनिर्धारित ढाँचा हो)"
+
+msgid "mime_deb"
+msgstr "DEB प्रणाली सफ्टवेयर प्याकेज (1993 मा Debian परियोजना द्वारा स्थापित बाइनरी र स्रोत कोड समाहितकरण विशिष्टता। Debian, Ubuntu र तिनीहरूका सबै व्युत्पन्न प्रणालीहरूको लागि अन्तर्निहित स्थापना मानकको रूपमा, अनप्याकिङ र मर्मतका लागि dpkg कोरमा निर्भर गर्दछ, र APT लाई प्रभावकारी प्याकेज प्रबन्धक फ्रन्ट-एन्डको रूपमा प्रयोग गर्दछ। यो Linux पारिस्थितिकी तंत्रमा सबैभन्दा परिपक्व सफ्टवेयर वितरण आधार हो)"
+
+msgid "mime_rpm"
+msgstr "RPM प्रणाली सफ्टवेयर प्याकेज (1997 मा Red Hat द्वारा प्रस्तुत रेड ह्याट प्याकेज प्रबन्धक समाहितकरण विशिष्टता। DEB सँगै Linux परम्परागत प्याकेज व्यवस्थापनको दुई प्रमुख शिविरहरू मध्ये एक मानिन्छ। मूल रूपमा लेनदेन-स्तरीय निर्भरता जाँच र अन्तर्निहित सफ्टवेयर डिजिटल हस्ताक्षर प्रमाणीकरणको लागि निर्मित छ। यो अहिले पनि RHEL, Fedora र CentOS जस्ता Red Hat परिवार पारिस्थितिकी तंत्रहरूको लागि पूर्ण मुख्यधारा वितरण मानक हो)"
+
+msgid "mime_pacman"
+msgstr "Pacman अभिलेखित सफ्टवेयर प्याकेज (2002 मा Arch Linux द्वारा pacman प्रबन्धकसँगै स्थापित .pkg.tar.zst समाहितकरण ढाँचा। Arch को रोलिङ अपडेट संयन्त्रको मुख्य भागको रूपमा, Zstandard उच्च-गति उच्च-कम्प्रेसन एल्गोरिदममा आधारित, AUR (Arch प्रयोगकर्ता सफ्टवेयर भण्डार) पारिस्थितिकी तंत्रसँग जोडिएको। यो अत्यन्त सरल र KISS सिद्धान्तहरू मूर्त रूप दिने आधुनिक प्याकेज वितरण मानक हो)"
+
+msgid "mime_exe"
+msgstr "EXE मूल कार्यान्वयन योग्य फाइल (Windows प्लेटफर्मको पोर्टेबल कार्यान्वयन योग्य (PE) बाइनरी प्रोग्राम ढाँचा। प्रविधि MS-DOS युगको MZ हेडर संरचनाबाट विकसित भएको हो, र 1993 Windows NT देखि PE संरचना विशिष्टताको रूपमा पूर्ण रूपमा स्थापित भयो। मेसिन कोड निर्देशनहरू, स्थिर स्रोत खण्डहरू र प्रणाली कर्नेल बुटिङको लागि विश्वको सबैभन्दा व्यापक रूपमा प्रयोग हुने कार्यान्वयन मानक हो)"
+
+msgid "mime_dll"
+msgstr "DLL गतिशील लिङ्क पुस्तकालय (Windows प्लेटफर्मको गतिशील लिङ्क पुस्तकालय साझा कोड पुस्तकालय विशिष्टता। रनटाइममा गतिशील रूपमा लोड गरेर र प्रतीक पुन: स्थानान्तरण गरेर, यसले भौतिक मेमोरी र डिस्क स्थान ठुलो मात्रामा बचत गर्दछ। Windows API को मुख्य कार्यान्वयन रूपको रूपमा, यसको प्रारम्भिक DLL Hell पीडालाई आधुनिक समयमा SxS समानान्तर आइसोलेसन संयन्त्र मार्फत समाधान गरिएको छ)"
+
+msgid "mime_com"
+msgstr "COM शास्त्रीय कार्यान्वयन योग्य फाइल (MS-DOS युगको सबैभन्दा पुरानो मेमोरी छवि (कमाण्ड) कार्यान्वयन ढाँचा। असंरचित शुद्ध कोड खण्ड डिजाइन प्रयोग गर्दछ, 64KB भौतिक मेमोरी एड्रेसिङ खण्डको उच्च सीमामा सीमित छ। अब ऐतिहासिक पैतृक ढाँचाको रूपमा सेवानिवृत्त भइसकेको छ, तर आधुनिक Windows आर्किटेक्चरमा सीमित अनुकूलताको लागि विशिष्ट कम्पोनेन्ट इन्टरफेसको रूपमा प्रयोग भइरहेको छ)"
+
+msgid "mime_aac"
+msgstr "AAC अडियो (सन् १९९७ मा MPEG मापदण्ड, Advanced Audio Coding। MP3 को उत्तराधिकारी, समान बिट दरमा MP3 भन्दा राम्रो अडियो गुणस्तर, YouTube, iTunes, Nintendo Switch को पूर्वनिर्धारित अडियो ढाँचा)"
+
+msgid "mime_alac"
+msgstr "ALAC अडियो (Apple ले सन् २००४ मा विकास गरेको, Apple Lossless Audio Codec। Apple को हानीरहित ढाँचा, सन् २०११ मा खुला स्रोत बन्यो, iTunes र Apple Music मा हानीरहित अडियोको लागि पूर्वनिर्धारित ढाँचा)"
+
+msgid "mime_flac"
+msgstr "FLAC अडियो (Xiph.Org Foundation ले सन् २००१ मा विकास गरेको, Free Lossless Audio Codec। हानीरहित कम्प्रेसन, अडियो गुणस्तर CD सरह, फाइल आकार मूल WAV को लगभग आधा। खुला स्रोत र पेटेन्ट-मुक्त, अडियो उत्साही र डिजिटल संगीत सङ्कलनको लागि पहिलो छनौट ढाँचा)"
+
+msgid "mime_mp3"
+msgstr "MP3 अडियो (Fraunhofer Institute ले सन् १९९३ मा विकास गरेको, MPEG-1 Audio Layer 3। हानीयुक्त कम्प्रेसन ढाँचा, सानो फाइल तर स्वीकार्य अडियो गुणस्तर, सन् २००० को दशकको डिजिटल संगीत क्रान्तिको मुख्य ढाँचा, iPod र Napster को योगदानकर्ता। पेटेन्ट सन् २०१७ मा समाप्त भयो, सार्वजनिक डोमेन ढाँचा बन्यो)"
+
+msgid "mime_oga"
+msgstr "Ogg Audio अडियो (Xiph.Org Foundation द्वारा विकसित, Ogg कन्टेनरको शुद्ध अडियो ढाँचा, Vorbis कोडेक प्रयोग गर्दछ। खुला स्रोत र पेटेन्ट-मुक्त, कम्प्रेसन दक्षता MP3 भन्दा राम्रो, खुला स्रोत परियोजनाहरूमा व्यापक रूपमा प्रयोग गरिन्छ)"
+
+msgid "mime_ogg"
+msgstr "OGG अडियो (Xiph.Org Foundation ले सन् २००० मा विकास गरेको, Ogg Vorbis ढाँचा। खुला स्रोत र पेटेन्ट-मुक्त, कम्प्रेसन दक्षता MP3 भन्दा राम्रो, प्रारम्भिक Spotify ले प्रयोग गर्यो, खेल अडियो प्रभावहरूमा व्यापक रूपमा प्रयोग गरिन्छ)"
+
+msgid "mime_opus"
+msgstr "Opus अडियो (IETF ले सन् २०१२ मा मापदण्डीकृत गरेको, खुला स्रोत र पेटेन्ट-मुक्त अडियो ढाँचा, SILK र CELT प्रविधिहरूको संयोजन, धेरै कम विलम्बता, उच्चतम कम्प्रेसन दक्षता, WebRTC, WhatsApp, Discord को पूर्वनिर्धारित अडियो ढाँचा)"
+
+msgid "mime_wav"
+msgstr "WAV अडियो (Microsoft र IBM ले सन् १९९१ मा विकास गरेको, Windows को मूल अडियो ढाँचा। PCM इन्कोडिङ, कम्प्रेस नगरिएको, हानीरहित अडियो गुणस्तर तर फाइल धेरै ठूलो, पेशेवर अडियो सम्पादनको लागि मानक ढाँचा)"
+
+msgid "mime_wma"
+msgstr "WMA अडियो (Microsoft ले सन् १९९९ मा विकास गरेको, Windows Media Audio। हानीयुक्त/हानीरहित दुवै संस्करणहरू छन्, Windows मा मूल रूपमा समर्थित, Windows Media Player सँगै फैलियो। अहिले सीमान्तकृत भएको छ, MP3/AAC द्वारा प्रतिस्थापित भयो)"
+
+msgid "mime_dsf"
+msgstr "DSF अडियो (Direct Stream Digital ढाँचा, Sony र Philips द्वारा विकसित। १-बिट उच्च नमूना दर, DSD अडियो मानक ढाँचा, SACD को डिजिटल संस्करण, अडियो उत्साहीहरूको लागि उच्च-स्तरीय अडियो ढाँचा, फाइल धेरै ठूलो)"
+
+msgid "mime_ape"
+msgstr "APE अडियो (सन् २००० मा Monkey's Audio द्वारा विकसित, दोषरहित संकुचन ढाँचा। FLAC भन्दा उच्च संकुचन तर ढिलो एन्कोडिङ, अझै पनि Windows प्लेटफर्म र अडियो उत्साहीहरू बीच प्रयोग गरिन्छ)"
+
+msgid "mime_mid"
+msgstr "MIDI अडियो (MIDI Association ले सन् १९८३ मा तोकेको, Musical Instrument Digital Interface। रेकर्डिङ नभई संगीत नोट ढाँचा, फाइल धेरै सानो, इलेक्ट्रोनिक संगीत वाद्ययन्त्रहरू, फोन घण्टी, खेल अडियो प्रभावहरूको लागि मानक। General MIDI सन् १९९१ मा मापदण्डीकृत भयो, १२८ वाद्ययन्त्र ध्वनिहरू परिभाषित गर्यो)"
+
+msgid "mime_m4a"
+msgstr "M4A अडियो (MPEG-4 Audio, AAC को कन्टेनर ढाँचा। iTunes Music Store को मानक ढाँचा, Apple पारिस्थितिकी तंत्रको मुख्य अडियो ढाँचा, DRM संरक्षण समर्थन गर्दछ)"
+
+msgid "mime_m3u"
+msgstr "M3U प्लेलिस्ट (MP3 URL प्लेलिस्ट ढाँचा, सादा पाठ फाइल, अडियो फाइल मार्गहरू रेकर्ड गर्दछ। Winamp युगको मानक, अनलाइन रेडियो, अनलाइन संगीत स्ट्रिमिङको लागि प्रयोग गरिन्छ। M3U8 यसको UTF-8 संस्करण हो, HTTP Live Streaming को लागि प्रयोग गरिन्छ)"
+
+msgid "mime_asf"
+msgstr "ASF स्ट्रिमिङ मिडिया (Microsoft ले सन् १९९६ मा विकास गरेको, Advanced Systems Format। Windows Media स्ट्रिमिङ कन्टेनर, अडियो र भिडियो सिङ्क्रोनस प्रसारण समर्थन गर्दछ। अनलाइन लाइभ प्रसारण र भिडियो-अन-डिमान्ड स्ट्रिमिङको लागि प्रयोग गरिन्छ, WMA/WMV दुवै ASF कन्टेनरमा आधारित छन्)"
+
+msgid "mime_avi"
+msgstr "AVI भिडियो (Microsoft ले सन् १९९२ मा लन्च गरेको, Windows को प्रारम्भिक भिडियो मानक। 'Audio Video Interleave', अडियो र भिडियो वैकल्पिक रूपमा भण्डारण गर्दछ, सन् १९९०-२००० को दशकमा सबैभन्दा लोकप्रिय भिडियो ढाँचा थियो, अहिले MP4/MKV द्वारा प्रतिस्थापित भयो)"
+
+msgid "mime_divx"
+msgstr "DivX भिडियो (DivX Corporation ले सन् १९९८ मा विकास गरेको, MPEG-4 मा आधारित भिडियो कोडेक ढाँचा। सन् २००० को दशकको अनलाइन भिडियो साझेदारीको मुख्य ढाँचा, DVD गुणस्तरलाई CD आकारमा कम्प्रेस गर्ने पहिलो प्रविधि। प्रतिलिपि अधिकार विवादको कारण, पछि व्यावसायिक एन्कोडरमा परिणत भयो)"
+
+msgid "mime_mp4"
+msgstr "MP4 भिडियो (सन् २००१ मा MPEG मापदण्ड, MPEG-4 Part 14। विश्वको सबैभन्दा साधारण भिडियो ढाँचा, H.264/H.265 इन्कोडिङ समर्थन गर्दछ, इन्टरनेट भिडियो, फोन रेकर्डिङ, YouTube को पूर्वनिर्धारित ढाँचा)"
+
+msgid "mime_m4v"
+msgstr "M4V भिडियो (iTunes को भिडियो ढाँचा, MP4 को भिन्नता। Apple पारिस्थितिकी तंत्रमा भिडियो ढाँचा, iTunes Store चलचित्र र टेलिभिजन कार्यक्रमहरूको मानक ढाँचा, DRM प्रतिलिपि अधिकार संरक्षण समर्थन गर्दछ)"
+
+msgid "mime_mpeg"
+msgstr "MPEG भिडियो (MPEG संगठनले सन् १९८८ मा तोकेको, Moving Picture Experts Group। डिजिटल भिडियो कम्प्रेसन मापदण्डहरूको जग बसाउने, MPEG-1 (VCD), MPEG-2 (DVD), MPEG-4 (अनलाइन भिडियो) को गहिरो प्रभाव छ)"
+
+msgid "mime_mkv"
+msgstr "MKV भिडियो (Matroska परियोजनाले सन् २००२ मा विकास गरेको, खुला स्रोत मल्टिमिडिया कन्टेनर ढाँचा। धेरै अडियो ट्र्याकहरू, धेरै उपशीर्षकहरू, अध्यायहरू समर्थन गर्दछ, 'रेयापर उपकरण', उच्च-रिजोल्युसन चलचित्र साझेदारीको लागि पहिलो छनौट ढाँचा)"
+
+msgid "mime_mpg"
+msgstr "MPEG भिडियो (MPEG-1/MPEG-2 भिडियो एक्सटेन्सन, VCD र DVD को लागि मानक ढाँचा। सन् १९९०-२००० को दशकमा डिस्कमा भिडियोको लागि मुख्य ढाँचा थियो, अहिले H.264/H.265 द्वारा प्रतिस्थापित भयो)"
+
+msgid "mime_ogv"
+msgstr "Ogg Video भिडियो (Xiph.Org Foundation द्वारा विकसित, Ogg कन्टेनरको भिडियो ढाँचा, Theora कोडेक प्रयोग गर्दछ। खुला स्रोत र पेटेन्ट-मुक्त, HTML5 भिडियोको प्रारम्भिक मानकहरू मध्ये एक, Firefox द्वारा मूल रूपमा समर्थित)"
+
+msgid "mime_ogx"
+msgstr "Ogg मल्टिमिडिया कन्टेनर (Xiph.Org Foundation द्वारा विकसित, Ogg कन्टेनरको साधारण एक्सटेन्सन, अडियो, भिडियो, उपशीर्षक जस्ता धेरै ट्र्याकहरू समावेश गर्न सक्छ। खुला स्रोत मल्टिमिडिया मानक, गेमहरू, स्ट्रिमिङको लागि प्रयोग गरिन्छ)"
+
+msgid "mime_rm"
+msgstr "RealMedia भिडियो (RealNetworks ले सन् १९९५ मा विकास गरेको, RealMedia ढाँचा। सन् १९९०-२००० को दशकमा अनलाइन स्ट्रिमिङको अग्रदूत, RealPlayer प्लेयरको मुख्य ढाँचा। कमजोरीहरू: विशेष प्लेयर चाहिन्छ, कम्प्रेसन गुणस्तर खराब, पछि Flash/MP4 द्वारा प्रतिस्थापित भयो)"
+
+msgid "mime_flv"
+msgstr "Flash भिडियो (सन् २००२ मा ढाँचा देखा पर्यो, Flash Video ढाँचा। एक पटक अनलाइन भिडियोको मुख्य ढाँचा थियो, प्रारम्भिक YouTube ले प्रयोग गर्यो। कमजोरीहरू: Flash प्लगइनको आवश्यकता, कमजोर प्रदर्शन, धेरै सुरक्षा कमजोरीहरू। सन् २०१५ देखि मुख्य वेबसाइटहरू HTML5 भिडियोमा परिवर्तन भए, अहिले हटाइसकिएको छ)"
+
+msgid "mime_f4v"
+msgstr "F4V भिडियो (Adobe द्वारा विकसित Flash भिडियो ढाँचा, FLV को उत्तराधिकारी। MPEG-4 मापदण्डमा आधारित, H.264 इन्कोडिङ समर्थन गर्दछ। Flash प्रविधिसँगै हटाइयो, Adobe ले सन् २०२० मा समर्थन बन्द गर्यो)"
+
+msgid "mime_wmv"
+msgstr "WMV भिडियो (Microsoft ले सन् १९९९ मा विकास गरेको, Windows Media Video। Windows मा मूल रूपमा समर्थित, स्ट्रिमिङ प्रसारणको लागि अनुकूलित, प्रारम्भिक अनलाइन भिडियोहरूमा सामान्य ढाँचा थियो, अहिले सीमान्तकृत भएको छ)"
+
+msgid "mime_wmf"
+msgstr "WMF मिडिया ढाँचा (Windows Media Format, Microsoft को मिडिया फ्रेमवर्क, WMV भिडियो, WMA अडियो समावेश गर्दछ, Windows Media Player द्वारा मूल रूपमा समर्थित)"
+
+msgid "mime_mov"
+msgstr "MOV भिडियो (Apple ले सन् १९९१ मा विकास गरेको, QuickTime कन्टेनर ढाँचा। पेशेवर भिडियो सम्पादनको लागि मानक ढाँचा, धेरै कोडेकहरू समर्थन गर्दछ, Final Cut Pro, Premiere द्वारा मूल रूपमा समर्थित)"
+
+msgid "mime_qt"
+msgstr "QuickTime भिडियो (Apple ले सन् १९९१ मा लन्च गरेको, QuickTime ढाँचा। Mac प्लेटफर्मको भिडियो मानक, MOV यसको कन्टेनर हो, QuickTime प्लेयर एक पटक व्यापक रूपमा प्रयोग गरिन्थ्यो। Apple ले सन् २०१६ मा Windows संस्करण विकास बन्द गर्यो, बिस्तारै MP4 द्वारा प्रतिस्थापित भयो)"
+
+msgid "mime_webm"
+msgstr "WebM भिडियो (Google ले सन् २०१० मा लन्च गरेको, खुला स्रोत र पेटेन्ट-मुक्त भिडियो ढाँचा। Matroska कन्टेनरमा आधारित, VP8/VP9 इन्कोडिङ, HTML5 भिडियो मानक ढाँचा, YouTube को वेबमा पूर्वनिर्धारित प्लेब्याक ढाँचा)"
+
+msgid "mime_3gp"
+msgstr "3GP भिडियो (3GPP ले सन् २००० मा तोकेको, मोबाइल यन्त्रहरूको लागि भिडियो ढाँचा। फाइल धेरै सानो, कम गुणस्तर, प्रारम्भिक सुविधा फोनहरूको भिडियो रेकर्डिङ ढाँचा, MMS पठाउनको लागि प्रयोग गरिन्थ्यो)"
+
+#------------------------------------------------------------------------------
+# प्राविधिक आयाम
+#------------------------------------------------------------------------------
+
+msgid "Operating Systems"
+msgstr "अपरेटिङ सिस्टमहरू"
+
+msgid "Top 5 Operating Systems"
+msgstr "शीर्ष ५ अपरेटिङ सिस्टमहरू"
+
+msgid "Unknown Robot"
+msgstr "अज्ञात क्लाइन्ट"
+
+msgid "User agent"
+msgstr "User agent"
+
+msgid "Browsers"
+msgstr "ब्राउजरहरू"
+
+msgid "Top 5 Browsers"
+msgstr "शीर्ष ५ ब्राउजरहरू"
+
+msgid "Unknown Robot RH"
+msgstr "अज्ञात अनुरोध हेडर"
+
+msgid "Detailed"
+msgstr "पहुँच गर्ने यन्त्रको संस्करण"
+
+msgid "DetailedOS"
+msgstr "अपरेटिङ सिस्टम संस्करण"
+
+msgid "DetailedBS"
+msgstr "ब्राउजर संस्करण"
+
+msgid "Screen sizes"
+msgstr "स्क्रिन आकारहरू"
+
+msgid "Compression"
+msgstr "कम्प्रेसन"
+
+msgid "In"
+msgstr "इनपुट"
+
+msgid "Out"
+msgstr "आउटपुट"
+
+msgid "Saved"
+msgstr "बचत"
+
+#------------------------------------------------------------------------------
+# स्रोत आयाम
+#------------------------------------------------------------------------------
+
+msgid "Origin"
+msgstr "स्रोत"
+
+msgid "Referers"
+msgstr "स्रोतहरू"
+
+msgid "meta.description"
+msgstr "AWStats उन्नत वेब लग विश्लेषक - वास्तविक समयमा वेब ट्राफिक निगरानी, आगन्तुक विश्लेषण, खोज इन्जिन कुञ्जी शब्दहरू, त्रुटि पृष्ठ तथ्याङ्क। अँध्यारो मोड, बहुभाषा इन्टरफेस समर्थन गर्दछ, वेब प्रशासकहरूको लागि व्यापक डाटा विश्लेषण प्रदान गर्दछ।"
+
+msgid "meta.keywords"
+msgstr "AWStats,वेब तथ्याङ्क,लग विश्लेषण,ट्राफिक निगरानी,पहुँच तथ्याङ्क,SEO विश्लेषण,वेब विश्लेषण उपकरण,Web Analytics,Log Analyzer"
+
+msgid "meta.author"
+msgstr "AWStats"
+
+msgid "og.title"
+msgstr "AWStats - वेब लग विश्लेषण"
+
+msgid "og.description"
+msgstr "📊 पेशेवर खुला स्रोत वेब तथ्याङ्क उपकरण, तपाईंको वेबसाइटको ट्राफिक र आगन्तुक व्यवहार वास्तविक समयमा विश्लेषण गर्दछ।"
+
+msgid "og.image.alt"
+msgstr "AWStats तथ्याङ्क चार्टहरू"
+
+msgid "Created by"
+msgstr "%s द्वारा सिर्जित"
+
+msgid "plugins"
+msgstr "प्लगइनहरू"
+
+msgid "dbip by"
+msgstr "बाट डाटा"
+
+msgid "IPDB by"
+msgstr "भौगोलिक स्थान डाटा DB-IP द्वारा"
+
+msgid "Configured"
+msgstr "कन्फिगर गरियो"
+
+msgid "Missing"
+msgstr "हराइरहेको छ"
+
+msgid "OK"
+msgstr "सफल"
+
+msgid "Unused"
+msgstr "प्रयोग नगरिएको"
+
+msgid "Overall Health"
+msgstr "समग्र स्वास्थ्य"
+
+msgid "Excellent"
+msgstr "उत्कृष्ट"
+
+msgid "Good"
+msgstr "राम्रो"
+
+msgid "Fair"
+msgstr "मध्यम"
+
+msgid "Poor"
+msgstr "कमजोर"
+
+msgid "Missing icon types"
+msgstr "हराइरहेको आइकन प्रकारहरू"
+
+msgid "See"
+msgstr "विवरण हेर्नुहोस्"
+
+msgid "Expected Path"
+msgstr "मार्ग विवरण"
+
+msgid "column for file locations"
+msgstr "फाइल स्थानहरू प्राप्त गर्नको लागि स्तम्भ"
+
+msgid "Tip: If you need to generate related icons, you can use %s to upload a logo image, and it will automatically generate all the above related icon files"
+msgstr "सुझाव: यदि तपाईंलाई सम्बन्धित आइकनहरू उत्पन्न गर्न आवश्यक छ भने, तपाईं लोगो छवि अपलोड गर्न %s प्रयोग गर्न सक्नुहुन्छ, र यसले स्वचालित रूपमा माथिका सबै सम्बन्धित आइकन फाइलहरू उत्पन्न गर्नेछ"
+
+msgid "200: success, 404: failure"
+msgstr "२०० सफलता संख्या हो ४०४ असफलता संख्या हो"
+
+msgid "_PATH_FAVICON"
+msgstr "/favicon.ico"
+
+msgid "_PATH_APPLE_TOUCH"
+msgstr "/apple-touch-icon.png वा /apple-touch-icon-180x180.png"
+
+msgid "_PATH_LOGO"
+msgstr "/logo.svg वा /logo.png (HTML/JSON-LD मा सन्दर्भ गर्न आवश्यक छ)"
+
+msgid "_PATH_WEBMANIFEST"
+msgstr "/site.webmanifest वा /manifest.json"
+
+msgid "_PATH_BROWSERCONFIG"
+msgstr "/browserconfig.xml"
+
+msgid "_PATH_SAFARI_PINNED"
+msgstr "/safari-pinned-tab.svg"
+
+msgid "_PATH_SOCIAL_ICON"
+msgstr "/images/github.svg, /images/paypal.svg आदि"
+
+msgid "Favicon"
+msgstr "वेबसाइट आइकन"
+
+msgid "Apple Touch Icon (iOS/macOS)"
+msgstr "Apple Touch आइकन (iPhone/iPad/Mac)"
+
+msgid "Site Logo"
+msgstr "साइट लोगो"
+
+msgid "Web App Manifest (Android/Chrome)"
+msgstr "वेब अनुप्रयोग म्यानिफेस्ट फाइल (Android/Chrome)"
+
+msgid "Windows Browser Config"
+msgstr "Windows ब्राउजर कन्फिगरेसन"
+
+msgid "Safari Pinned Tab"
+msgstr "Safari पिन गरिएको ट्याब आइकन"
+
+msgid "Social Icon"
+msgstr "सामाजिक सञ्जाल आइकन"
+
+msgid "Icon Files Status"
+msgstr "आइकन फाइल स्थिति"
+
+msgid "Icon Type"
+msgstr "आइकन प्रकार"
+
+msgid "Total"
+msgstr "जम्मा"
+
+msgid "Advanced Web Statistics"
+msgstr "उन्नत लग विश्लेषक"
+
+msgid "Advanced Web Statistics %s"
+msgstr "उन्नत लग विश्लेषक %s"
+
+msgid "Your browser does not support frames. Please use a modern browser."
+msgstr "तपाईंको ब्राउजरले फ्रेमहरू समर्थन गर्दैन। कृपया आधुनिक ब्राउजर प्रयोग गर्नुहोस्।"
+
+msgid "View statistics directly"
+msgstr "प्रत्यक्ष तथ्याङ्क हेर्नुहोस्"
+
+msgid "Close"
+msgstr "बन्द गर्नुहोस्"
+
+msgid "Documentation Viewer"
+msgstr "कागजात दर्शक"
+
+msgid "Direct address / Bookmarks"
+msgstr "प्रत्यक्ष ठेगाना / बुकमार्कहरू"
+
+msgid "Search Engines"
+msgstr "खोज इन्जिनहरू"
+
+msgid "Refering search engines"
+msgstr "सन्दर्भ गर्ने खोज इन्जिनहरू"
+
+msgid "External pages"
+msgstr "बाह्य पृष्ठहरू"
+
+msgid "Refering pages"
+msgstr "सन्दर्भ पृष्ठहरू"
+
+msgid "Internal pages"
+msgstr "आन्तरिक पृष्ठहरू"
+
+msgid "UnknownAccessSource"
+msgstr "अज्ञात पहुँच स्रोत"
+
+msgid "Different refering pages"
+msgstr "विभिन्न सन्दर्भ पृष्ठहरू"
+
+msgid "Keyphrases"
+msgstr "कुञ्जी वाक्यांशहरू"
+
+msgid "Keywords"
+msgstr "कुञ्जी शब्दहरू"
+
+msgid "Keyphrases/Keywords"
+msgstr "कुञ्जी वाक्यांशहरू/कुञ्जी शब्दहरू"
+
+msgid "Different keyphrases"
+msgstr "विभिन्न कुञ्जी वाक्यांशहरू"
+
+msgid "Different keywords"
+msgstr "विभिन्न कुञ्जी शब्दहरू"
+
+#------------------------------------------------------------------------------
+# पृष्ठ आयाम
+#------------------------------------------------------------------------------
+
+msgid "Viewed pages"
+msgstr "हेरिएको पृष्ठहरू"
+
+msgid "Different pages"
+msgstr "विभिन्न पृष्ठहरू"
+
+msgid "Entry"
+msgstr "प्रवेश स्थान"
+
+msgid "Exit"
+msgstr "निकास स्थान"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Referer"
+msgstr "रेफरर"
+
+msgid "Host"
+msgstr "होस्ट"
+
+#------------------------------------------------------------------------------
+# त्रुटिहरू र स्थितिहरू
+#------------------------------------------------------------------------------
+
+msgid "Error"
+msgstr "त्रुटि"
+
+msgid "HTTP Status Statistics"
+msgstr "HTTP स्थिति कोड तथ्याङ्क"
+
+msgid "SMTP Error codes"
+msgstr "SMTP त्रुटि कोडहरू"
+
+msgid "Page not found"
+msgstr "अनुरोध गरिएको पृष्ठ भेटिएन"
+
+msgid "Unknown error"
+msgstr "अज्ञात त्रुटि"
+
+msgid "Abnormal traffic note"
+msgstr "असामान्य ट्राफिकमा समावेश छ: खोज बोटहरू, AI तालिम बोटहरू, कमजोरी स्क्यानरहरू र विशिष्टता विपरीत अनुरोधहरू"
+
+msgid "Page detail"
+msgstr "पृष्ठ विवरण"
+
+msgid "AWStats did not found the"
+msgstr "AWStats ले भेटेन"
+
+msgid "in your log records."
+msgstr "तपाईंको लग रेकर्डहरूमा"
+
+msgid "AWStats did not find any valid log lines that match your"
+msgstr "AWStats ले तपाईंको सँग मिल्ने कुनै पनि मान्य लग लाइनहरू भेटेन"
+
+msgid "parameter, in the"
+msgstr "प्यारामिटर, मा"
+
+msgid "th first non commented lines read of your log."
+msgstr "तपाईंको लगबाट पढिएको पहिलो गैर-टिप्पणी लाइनहरू"
+
+msgid "Your log file"
+msgstr "तपाईंको लग फाइल"
+
+msgid "must have a bad format or"
+msgstr "खराब ढाँचा हुन सक्छ वा"
+
+msgid "parameter setup does not match this format."
+msgstr "प्यारामिटर सेटअप यस ढाँचासँग मेल खाँदैन"
+
+msgid "Your AWStats"
+msgstr "तपाईंको AWStats"
+
+msgid "parameter is:"
+msgstr "प्यारामिटर हो:"
+
+msgid "This means each line in your web server log file need to have:"
+msgstr "यसको मतलब तपाईंको वेब सर्भर लग फाइलको प्रत्येक लाइनमा हुनु आवश्यक छ:"
+
+msgid "combined log format"
+msgstr "संयुक्त लग ढाँचा"
+
+msgid "MSIE Extended W3C log format"
+msgstr "MSIE विस्तारित W3C लग ढाँचा"
+
+msgid "WebStar native log format"
+msgstr "WebStar मूल लग ढाँचा"
+
+msgid "common log format"
+msgstr "साधारण लग ढाँचा"
+
+msgid "Lotus Notes/Lotus Domino"
+msgstr "Lotus Notes/Lotus Domino"
+
+msgid "the following personalized log format:"
+msgstr "निम्न व्यक्तिगत लग ढाँचा:"
+
+msgid "And this is an example of records AWStats found in your log file (the record number"
+msgstr "र यो AWStats ले तपाईंको लग फाइलमा भेट्टाएको रेकर्डहरूको उदाहरण हो (रेकर्ड नम्बर"
+
+msgid "in your log):"
+msgstr "तपाईंको लगमा):"
+
+#------------------------------------------------------------------------------
+# विविध
+#------------------------------------------------------------------------------
+
+msgid "Extra/Marketing"
+msgstr "अतिरिक्त/मार्केटिङ"
+
+#------------------------------------------------------------------------------
+# इन्टरफेस पाठ
+#------------------------------------------------------------------------------
+
+msgid "Current site"
+msgstr "हालको साइट"
+
+msgid "Web Site"
+msgstr "वेबसाइट"
+
+msgid "Last Update"
+msgstr "अन्तिम अद्यावधिक"
+
+msgid "Never updated"
+msgstr "कहिल्यै अद्यावधिक गरिएन"
+
+msgid "No qualified records found in log"
+msgstr "लगमा कुनै योग्य रेकर्ड भेटिएन"
+
+msgid "corrupted"
+msgstr "बिग्रिएको"
+
+msgid "comments"
+msgstr "टिप्पणीहरू"
+
+msgid "Blank"
+msgstr "खाली"
+
+msgid "dropped"
+msgstr "हटाइएको"
+
+msgid "Update now"
+msgstr "अहिले अद्यावधिक गर्नुहोस्"
+
+msgid "Back to main page"
+msgstr "मुख्य पृष्ठमा फर्कनुहोस्"
+
+msgid "Close window"
+msgstr "सञ्झ्याल बन्द गर्नुहोस्"
+
+msgid "Back page"
+msgstr "अघिल्लो पृष्ठमा फर्कनुहोस्"
+
+msgid "Navigation"
+msgstr "नेभिगेसन"
+
+msgid "Summary"
+msgstr "सारांश"
+
+msgid "Local"
+msgstr "स्थानीय"
+
+msgid "External"
+msgstr "बाह्य"
+
+msgid "Others (email senders)"
+msgstr "अन्य (इमेल पठाउनेहरू)"
+
+msgid "Others (email receivers)"
+msgstr "अन्य (इमेल प्राप्त गर्नेहरू)"
+
+msgid "Others"
+msgstr "अन्य"
+
+msgid "Only 10 lines of browser data are currently displayed"
+msgstr "हाल ब्राउजर डाटाको मात्र १० लाइनहरू देखाइएको छ, कृपया पूर्ण सूची हेर्नुहोस्"
+
+msgid "Others (unknown browsers)"
+msgstr "अन्य (अज्ञात ब्राउजरहरू)"
+
+msgid "Others (operating systems)"
+msgstr "अन्य (अपरेटिङ सिस्टमहरू)"
+
+msgid "Others (unknown OS)"
+msgstr "अन्य (अज्ञात अपरेटिङ सिस्टम)"
+
+msgid "Others (search engines)"
+msgstr "अन्य (खोज इन्जिनहरू)"
+
+msgid "Others (referring pages)"
+msgstr "अन्य (सन्दर्भ पृष्ठहरू)"
+
+msgid "Others (keyphrases)"
+msgstr "अन्य (कुञ्जी वाक्यांशहरू)"
+
+msgid "Others (keywords)"
+msgstr "अन्य (कुञ्जी शब्दहरू)"
+
+msgid "Only first 10 robots shown"
+msgstr "हालको सूचीले मात्र १० रोबोटहरू देखाउँदछ, कृपया पूर्ण सूची हेर्नुहोस्"
+
+msgid "Failed to obtain access record"
+msgstr "प्रवेश रेकर्ड प्राप्त गर्न असफल"
+
+msgid "Failed to obtain leave record"
+msgstr "बाहिरिने रेकर्ड प्राप्त गर्न असफल"
+
+msgid "Other pages"
+msgstr "अन्य पृष्ठहरू"
+
+msgid "Low Traffic IP Summary"
+msgstr "कम ट्राफिक अज्ञात IP सारांश"
+
+msgid "Failed to obtain IP data"
+msgstr "अन्य ज्ञात IP सारांश"
+
+msgid "Failed to obtain the relevant data"
+msgstr "सान्दर्भिक डाटा प्राप्त गर्न असफल"
+
+msgid "Limited list of countries and regions"
+msgstr "हाल मात्र १० लाइनहरू देखाइएको छ, कृपया थप देशहरू र क्षेत्रहरूको लागि पूर्ण सूची हेर्नुहोस्"
+
+msgid "currentVisitorData"
+msgstr "हाल मात्र १० लाइन आगन्तुक डाटा देखाइएको छ, कृपया पूर्ण सूची हेर्नुहोस्"
+
+msgid "Others (robots main)"
+msgstr "अन्य (रोबोटहरू)"
+
+msgid "Others (worms)"
+msgstr "अन्य (किराहरू)"
+
+msgid "Displaying10RowsPageMorePleaseViewFullList"
+msgstr "हालको सूचीले मात्र १० पृष्ठहरू देखाउँदछ, कृपया पूर्ण सूची हेर्नुहोस्"
+
+msgid "Others (OS main)"
+msgstr "अन्य (प्रणाली)"
+
+msgid "Others (browsers main)"
+msgstr "अन्य (ब्राउजरहरू)"
+
+msgid "Others (screen sizes)"
+msgstr "अन्य (आकार)"
+
+msgid "Others (search engines main)"
+msgstr "अन्य (खोज इन्जिनहरू)"
+
+msgid "Others (referring pages main)"
+msgstr "अन्य (सन्दर्भ पृष्ठहरू)"
+
+msgid "Others (keyphrases main)"
+msgstr "अन्य (कुञ्जी वाक्यांशहरू)"
+
+msgid "Others (keywords main)"
+msgstr "अन्य (कुञ्जी शब्दहरू)"
+
+# 1xx
+msgid "Continue"
+msgstr "बाँकी सामग्री पठाउन जारी राख्नुहोस्"
+
+msgid "Switching Protocols"
+msgstr "प्रोटोकल परिवर्तन गर्दै"
+
+msgid "Processing (WebDAV)"
+msgstr "प्रक्रियामा (कृपया पर्खनुहोस्)"
+
+msgid "Early Hints"
+msgstr "सर्भरले स्रोतहरू तयार गर्दैछ"
+
+# 2xx
+msgid "[Miscellaneous successes]"
+msgstr "अन्य सफलता स्थितिहरू"
+
+msgid "Request successful"
+msgstr "अनुरोध सफल भयो"
+
+msgid "Created successfully"
+msgstr "सफलतापूर्वक सिर्जना गरियो"
+
+msgid "Accepted - processing"
+msgstr "स्वीकार गरियो, प्रक्रियामा"
+
+msgid "Non-authoritative information (from cache) (from cache)"
+msgstr "गैर-आधिकारिक जानकारी (क्यासबाट)"
+
+msgid "Success, no content returned"
+msgstr "सफल, कुनै सामग्री फिर्ता भएन"
+
+msgid "Reset content"
+msgstr "कृपया फारम रिसेट गर्नुहोस्"
+
+msgid "Partial content (resume download)"
+msgstr "आंशिक सामग्री (डाउनलोड पुन: सुरु समर्थन गर्दछ)"
+
+msgid "Multi-status (WebDAV)"
+msgstr "बहु-स्थिति (WebDAV समूह सञ्चालनहरू)"
+
+msgid "Already reported (WebDAV)"
+msgstr "पहिले नै रिपोर्ट गरियो (दोहोरिनबाट बच्न)"
+
+msgid "IM used"
+msgstr "IM प्रोटोकल विस्तार प्रयोग गरियो"
+
+# 3xx
+msgid "[Miscellaneous redirections]"
+msgstr "अन्य पुन:निर्देशनहरू"
+
+msgid "Multiple choices"
+msgstr "धेरै विकल्पहरू"
+
+msgid "Moved permanently - update your links"
+msgstr "स्थायी रूपमा सारियो, कृपया तपाईंको लिङ्कहरू अद्यावधिक गर्नुहोस्"
+
+msgid "Temporary redirect - URL unchanged"
+msgstr "अस्थायी पुन:निर्देशन, ठेगाना परिवर्तन भएन"
+
+msgid "See other"
+msgstr "कृपया अर्को ठेगाना हेर्नुहोस्"
+
+msgid "Not modified - using cached version"
+msgstr "परिमार्जित भएन, क्यास गरिएको संस्करण प्रयोग गर्दै"
+
+msgid "Use proxy"
+msgstr "कृपया प्रोक्सी प्रयोग गर्नुहोस्"
+
+msgid "Switch proxy"
+msgstr "कृपया प्रोक्सी परिवर्तन गर्नुहोस्"
+
+msgid "Temporary redirect (keep method)"
+msgstr "अस्थायी पुन:निर्देशन (अनुरोध विधि राख्ने)"
+
+msgid "Permanent redirect - update your links"
+msgstr "स्थायी पुन:निर्देशन, कृपया तपाईंको लिङ्कहरू अद्यावधिक गर्नुहोस्"
+
+# 4xx
+msgid "[Miscellaneous client/user errors]"
+msgstr "अन्य क्लाइन्ट त्रुटिहरू"
+
+msgid "Bad request"
+msgstr "अनुरोध ढाँचा गलत छ"
+
+msgid "Unauthorized - please log in"
+msgstr "अधिकृत छैन, कृपया पहिले लग इन गर्नुहोस्"
+
+msgid "Payment required"
+msgstr "भुक्तानी आवश्यक छ"
+
+msgid "Forbidden - access denied"
+msgstr "पहुँच निषेध गरियो, अनुमति पर्याप्त छैन"
+
+msgid "Page not found (404) - check for broken links"
+msgstr "पृष्ठ अवस्थित छैन, कृपया भाँचिएका लिङ्कहरू जाँच गर्नुहोस्"
+
+msgid "Method not allowed"
+msgstr "अनुरोध विधि अनुमति छैन"
+
+msgid "Not acceptable"
+msgstr "स्वीकार्य प्रतिक्रिया ढाँचा होइन"
+
+msgid "Proxy authentication required"
+msgstr "प्रोक्सी मार्फत प्रमाणीकरण आवश्यक छ"
+
+msgid "Request timeout"
+msgstr "अनुरोध समय सीमा समाप्त भयो"
+
+msgid "Conflict - please try again"
+msgstr "अनुरोध द्वन्द्व छ, कृपया पछि फेरि प्रयास गर्नुहोस्"
+
+msgid "Gone - permanently deleted"
+msgstr "स्रोत स्थायी रूपमा हटाइएको छ"
+
+msgid "Length required"
+msgstr "सामग्रीको लम्बाइ निर्दिष्ट गर्नुपर्छ"
+
+msgid "Precondition failed"
+msgstr "पूर्व शर्तहरू पूरा भएनन्"
+
+msgid "Payload too large"
+msgstr "अनुरोध सामग्री धेरै ठूलो छ"
+
+msgid "URI too long"
+msgstr "अनुरोध ठेगाना धेरै लामो छ"
+
+msgid "Unsupported media type"
+msgstr "फाइल प्रकार समर्थित छैन"
+
+msgid "Range not satisfiable"
+msgstr "अनुरोध दायरा अमान्य छ"
+
+msgid "Expectation failed"
+msgstr "अपेक्षा पूरा गर्न सकिएन"
+
+msgid "I am a teapot (April Fools)"
+msgstr "म एउटा चिया कोतलो हुँ (अप्रिल फुलको मजाक)"
+
+msgid "Page expired (Laravel)"
+msgstr "पृष्ठको म्याद सकियो, कृपया पुन: लोड गरी फेरि प्रयास गर्नुहोस्"
+
+msgid "Method failure (Spring)"
+msgstr "विधि असफल भयो"
+
+msgid "Misdirected request"
+msgstr "अनुरोध गलत तरिकाले पुन: निर्देशित गरियो"
+
+msgid "Unprocessable entity (WebDAV)"
+msgstr "अनुरोध ढाँचा सही छ तर प्रशोधन गर्न सकिँदैन"
+
+msgid "Locked (WebDAV)"
+msgstr "स्रोत लक गरिएको छ (WebDAV)"
+
+msgid "Failed dependency (WebDAV)"
+msgstr "आश्रित सञ्चालन असफल भयो"
+
+msgid "Too early"
+msgstr "अनुरोध धेरै चाँडो पठाइयो"
+
+msgid "Upgrade required"
+msgstr "प्रोटोकल स्तरवृद्धि आवश्यक छ"
+
+msgid "Precondition required"
+msgstr "आवश्यक पूर्व शर्तहरू हराइरहेको छ"
+
+msgid "Too many requests - slow down"
+msgstr "अनुरोधहरू अत्यधिक बारम्बार छन्, कृपया पछि फेरि प्रयास गर्नुहोस्"
+
+msgid "Request header fields too large (Shopify)"
+msgstr "अनुरोध हेडर फिल्डहरू धेरै ठूला छन्"
+
+msgid "Request header too large"
+msgstr "अनुरोध हेडर धेरै ठूलो छ"
+
+msgid "Login timeout (IIS)"
+msgstr "प्रवेश समय सीमा समाप्त भयो, कृपया पुन: प्रवेश गर्नुहोस्"
+
+msgid "No response (nginx)"
+msgstr "सर्भरले प्रतिक्रिया दिँदैन"
+
+msgid "Retry with (IIS)"
+msgstr "कृपया पछि फेरि प्रयास गर्नुहोस्"
+
+msgid "Blocked by Windows parental controls"
+msgstr "Windows अभिभावकीय नियन्त्रण द्वारा ब्लक गरियो"
+
+msgid "Unavailable for legal reasons"
+msgstr "कानूनी कारणहरूले पहुँच गर्न सकिँदैन"
+
+msgid "Client closed connection before idle timeout (AWS ELB)"
+msgstr "क्लाइन्टले निष्क्रियता समय सीमा समाप्त हुनु अघि जडान बन्द गर्यो (AWS ELB)"
+
+msgid "X-Forwarded-For header with >30 IP addresses (AWS ELB)"
+msgstr "फर्वार्डिङ श्रृंखलामा ३० भन्दा बढी IP ठेगानाहरू छन्"
+
+msgid "Incompatible protocol versions (AWS ELB)"
+msgstr "प्रोटोकल संस्करणहरू असंगत छन्"
+
+msgid "Request header too large (nginx)"
+msgstr "अनुरोध हेडर धेरै ठूलो छ"
+
+msgid "SSL certificate error (nginx)"
+msgstr "SSL प्रमाणपत्र त्रुटि"
+
+msgid "SSL certificate required (nginx)"
+msgstr "SSL प्रमाणपत्र आवश्यक छ"
+
+msgid "HTTP request sent to HTTPS port (nginx)"
+msgstr "HTTP अनुरोध HTTPS पोर्टमा पठाइयो"
+
+msgid "Invalid token (ArcGIS)"
+msgstr "टोकन अमान्य छ"
+
+msgid "Token required (ArcGIS) / Client closed request (nginx)"
+msgstr "टोकन आवश्यक छ / क्लाइन्टले अनुरोध बन्द गर्यो"
+
+msgid "Resource limit reached (cPanel)"
+msgstr "स्रोत सीमा (CPU/मेमोरी) पुग्यो"
+
+msgid "Bandwidth limit exceeded (Apache/cPanel)"
+msgstr "ब्यान्डविथ सीमा नाघ्यो"
+
+# 5xx
+msgid "[Miscellaneous server errors]"
+msgstr "अन्य सर्भर त्रुटिहरू"
+
+msgid "Internal server error - check logs"
+msgstr "आन्तरिक सर्भर त्रुटि, कृपया लगहरू जाँच गर्नुहोस्"
+
+msgid "Not implemented"
+msgstr "सर्भरले यो प्रकार्य समर्थन गर्दैन"
+
+msgid "Bad gateway - backend error"
+msgstr "गेटवे त्रुटि, ब्याकएन्ड सेवा असामान्य छ"
+
+msgid "Service unavailable - maintenance or overload"
+msgstr "सेवा उपलब्ध छैन, मर्मत वा ओभरलोड भइरहेको छ"
+
+msgid "Gateway timeout"
+msgstr "गेटवे प्रतिक्रिया समय सीमा समाप्त भयो"
+
+msgid "HTTP version not supported"
+msgstr "HTTP प्रोटोकल संस्करण समर्थित छैन"
+
+msgid "Variant also negotiates"
+msgstr "भेरियन्ट पनि वार्तामा सहभागी हुन्छ (कन्फिगरेसन त्रुटि)"
+
+msgid "Insufficient storage (WebDAV)"
+msgstr "भण्डारण ठाउँ पर्याप्त छैन"
+
+msgid "Loop detected (WebDAV)"
+msgstr "लूप सन्दर्भ पत्ता लाग्यो"
+
+msgid "Not extended"
+msgstr "थप विस्तार आवश्यक छ"
+
+msgid "Network authentication required"
+msgstr "नेटवर्क प्रमाणीकरण आवश्यक छ"
+
+# Cloudflare
+msgid "Unknown error (Cloudflare)"
+msgstr "अज्ञात त्रुटि"
+
+msgid "Web server is down (Cloudflare)"
+msgstr "वेब सर्भर बन्द छ"
+
+msgid "Connection timeout (Cloudflare)"
+msgstr "जडान समय सीमा समाप्त भयो"
+
+msgid "Origin is unreachable (Cloudflare)"
+msgstr "स्रोत पहुँच गर्न सकिँदैन"
+
+msgid "A timeout occurred (Cloudflare)"
+msgstr "समय सीमा समाप्ति भयो"
+
+msgid "SSL handshake failed (Cloudflare)"
+msgstr "SSL ह्यान्डसेक असफल भयो"
+
+msgid "Invalid SSL certificate (Cloudflare)"
+msgstr "SSL प्रमाणपत्र अमान्य छ"
+
+msgid "Railgun error (Cloudflare - obsolete)"
+msgstr "Railgun त्रुटि (अप्रचलित)"
+
+msgid "Site is overloaded (SSLLabs)"
+msgstr "वेबसाइट ओभरलोड छ"
+
+msgid "Origin DNS error (Cloudflare) / Site is frozen (Pantheon)"
+msgstr "स्रोत DNS त्रुटि (Cloudflare) / वेबसाइट फ्रिज गरियो (Pantheon)"
+
+msgid "Temporarily disabled (Shopify)"
+msgstr "अस्थायी रूपमा निष्क्रिय गरियो"
+
+msgid "Unauthorized (AWS ELB)"
+msgstr "अधिकृत छैन"
+
+msgid "Network read timeout error"
+msgstr "नेटवर्क पढाइ समय सीमा त्रुटि"
+
+msgid "Network connect timeout error"
+msgstr "नेटवर्क जडान समय सीमा त्रुटि"
+
+msgid "Unexpected token (Shopify)"
+msgstr "अप्रत्याशित टोकन"
+
+msgid "Request denied (LinkedIn)"
+msgstr "अनुरोध अस्वीकार गरियो"
+
+msgid "HTTP/2 GOAWAY (AWS ELB)"
+msgstr "HTTP/2 जडान बन्द गर्दै"
+
+msgid "[Unknown]"
+msgstr "अज्ञात स्थिति कोड"
+
+msgid "Nonstandard success response (ESMTP)"
+msgstr "गैर-मानक सफलता प्रतिक्रिया (ESMTP)"
+
+msgid "System status, or system help reply"
+msgstr "प्रणाली स्थिति वा प्रणाली सहायता सन्देश"
+
+msgid "Help message"
+msgstr "सहायता सन्देश"
+
+msgid "SMTP service ready (LMTP)"
+msgstr "SMTP सेवा तयार छ (LMTP)"
+
+msgid "Service ready - server is ready to receive mail"
+msgstr "सेवा तयार छ - इमेल सर्भर इमेल प्राप्त गर्न तयार छ"
+
+msgid "Service closing - connection is being closed"
+msgstr "सेवा बन्द हुँदैछ - जडान बन्द हुँदैछ"
+
+msgid "Authentication successful"
+msgstr "प्रमाणीकरण सफल भयो"
+
+msgid "Requested mail action taken and completed"
+msgstr "अनुरोध गरिएको इमेल कार्य गरियो र पूरा भयो"
+
+msgid "User not local - will forward to another address"
+msgstr "प्रयोगकर्ता यस सर्भरमा छैन - अर्को ठेगानामा फर्वार्ड गरिनेछ"
+
+msgid "Cannot verify recipient, but will attempt delivery"
+msgstr "प्राप्तकर्ता प्रमाणित गर्न सकिएन, तर पठाउने प्रयास गरिनेछ"
+
+msgid "Message accepted for delivery (DSN)"
+msgstr "इमेल पठाउन स्वीकार गरियो (DSN)"
+
+msgid "User name is a mailbox"
+msgstr "प्रयोगकर्ता नाम मेलबक्स हो"
+
+msgid "Authentication challenge - please respond"
+msgstr "प्रमाणीकरण चुनौती - कृपया प्रतिक्रिया दिनुहोस्"
+
+msgid "Start mail input - end with <CRLF>.<CRLF>"
+msgstr "इमेल सामग्री प्रविष्टि सुरु गर्नुहोस् - <CRLF>.<CRLF> संग अन्त्य गर्नुहोस्"
+
+msgid "Continue (LMTP)"
+msgstr "जारी राख्नुहोस् (LMTP)"
+
+msgid "Service not available - connection closing, try again later"
+msgstr "सेवा उपलब्ध छैन - जडान बन्द हुँदैछ, कृपया पछि फेरि प्रयास गर्नुहोस्"
+
+msgid "Mailbox busy or temporarily unavailable (Exchange)"
+msgstr "मेलबक्स व्यस्त छ वा अस्थायी रूपमा उपलब्ध छैन (Exchange)"
+
+msgid "Connection rate limit exceeded (Postfix)"
+msgstr "जडान दर सीमा नाघ्यो (Postfix)"
+
+msgid "Too many concurrent connections (Postfix)"
+msgstr "एकै पटक धेरै जडानहरू छन् (Postfix)"
+
+msgid "Unable to establish connection (Postfix)"
+msgstr "जडान स्थापित गर्न सकिएन (Postfix)"
+
+msgid "Connection timed out (Postfix)"
+msgstr "जडान समय सीमा समाप्त भयो (Postfix)"
+
+msgid "Connection dropped due to error (Postfix)"
+msgstr "त्रुटिका कारण जडान काटियो (Postfix)"
+
+msgid "Mailbox temporarily locked (Exchange)"
+msgstr "मेलबक्स अस्थायी रूपमा लक गरियो (Exchange)"
+
+msgid "Too many recipients (Postfix/Exim)"
+msgstr "प्राप्तकर्ता संख्या धेरै छ (Postfix/Exim)"
+
+msgid "Mail server error (Exchange)"
+msgstr "इमेल सर्भर त्रुटि (Exchange)"
+
+msgid "Received loop detected (Exim)"
+msgstr "लूप प्राप्ति पत्ता लाग्यो (Exim)"
+
+msgid "Too many hop count (Exim)"
+msgstr "हप संख्या धेरै छ (Exim)"
+
+msgid "DNS lookup failed (Postfix)"
+msgstr "DNS खोजी असफल भयो (Postfix)"
+
+msgid "Unable to authenticate (Postfix)"
+msgstr "प्रमाणीकरण गर्न सकिएन (Postfix)"
+
+msgid "TLS handshake failed (Postfix)"
+msgstr "TLS ह्यान्डसेक असफल भयो (Postfix)"
+
+msgid "SMTP protocol violation (Postfix)"
+msgstr "SMTP प्रोटोकल उल्लङ्घन (Postfix)"
+
+msgid "Message size exceeds limit (Exchange)"
+msgstr "इमेल आकार सीमा नाघ्यो (Exchange)"
+
+msgid "Message rate limit exceeded (Postfix)"
+msgstr "इमेल दर सीमा नाघ्यो (Postfix)"
+
+msgid "Mailbox quota exceeded - temporary"
+msgstr "मेलबक्स कोटा भरियो - अस्थायी स्थिति"
+
+msgid "Domain not found (Postfix)"
+msgstr "डोमेन भेटिएन (Postfix)"
+
+msgid "Message header invalid (Postfix)"
+msgstr "इमेल हेडर अमान्य छ (Postfix)"
+
+msgid "Bounce loop detected (Postfix)"
+msgstr "बाउन्स लूप पत्ता लाग्यो (Postfix)"
+
+msgid "Unable to route (Postfix)"
+msgstr "रूट गर्न सकिएन (Postfix)"
+
+msgid "Sender domain not found (Postfix)"
+msgstr "पठाउने डोमेन भेटिएन (Postfix)"
+
+msgid "Recipient domain not found (Postfix)"
+msgstr "प्राप्तकर्ता डोमेन भेटिएन (Postfix)"
+
+msgid "Greylisting in progress - please try again (Postgrey)"
+msgstr "Greylisting जाँच भइरहेको छ - कृपया पछि फेरि प्रयास गर्नुहोस् (Postgrey)"
+
+msgid "Spam filtering in progress (SpamAssassin)"
+msgstr "स्प्याम फिल्टर गर्दै (SpamAssassin)"
+
+msgid "Virus scanning in progress (ClamAV)"
+msgstr "भाइरस स्क्यान गर्दै (ClamAV)"
+
+msgid "Mailbox unavailable - try again later"
+msgstr "मेलबक्स उपलब्ध छैन - कृपया पछि फेरि प्रयास गर्नुहोस्"
+
+msgid "Requested action aborted - error in processing"
+msgstr "अनुरोध गरिएको कार्य रद्द गरियो - प्रशोधन क्रममा त्रुटि"
+
+msgid "Insufficient system storage - try again later"
+msgstr "प्रणाली भण्डारण ठाउँ पर्याप्त छैन - कृपया पछि फेरि प्रयास गर्नुहोस्"
+
+msgid "Too many messages for this recipient (Exchange)"
+msgstr "यस प्राप्तकर्ताको लागि धेरै इमेलहरू छन् (Exchange)"
+
+msgid "TLS not available (Postfix)"
+msgstr "TLS उपलब्ध छैन (Postfix)"
+
+msgid "Server unable to accept messages (Postfix)"
+msgstr "सर्भरले इमेल प्राप्त गर्न सक्दैन (Postfix)"
+
+msgid "Temporary failure in DNS lookup (Exim)"
+msgstr "DNS खोजीमा अस्थायी असफलता (Exim)"
+
+msgid "Quota exceeded - temporary"
+msgstr "कोटा नाघ्यो - अस्थायी स्थिति"
+
+msgid "Message too big - temporary"
+msgstr "इमेल धेरै ठूलो छ - अस्थायी स्थिति"
+
+msgid "Too many messages per connection"
+msgstr "प्रति जडान धेरै इमेलहरू छन्"
+
+msgid "Load average too high (Postfix)"
+msgstr "औसत भार धेरै उच्च छ (Postfix)"
+
+msgid "Connection refused (Postfix)"
+msgstr "जडान अस्वीकार गरियो (Postfix)"
+
+msgid "Send rate limit exceeded (Postfix)"
+msgstr "पठाउने दर सीमा नाघ्यो (Postfix)"
+
+msgid "Recipient rate limit exceeded (Postfix)"
+msgstr "प्राप्तकर्ता दर सीमा नाघ्यो (Postfix)"
+
+msgid "Sender rate limit exceeded (Postfix)"
+msgstr "पठाउने दर सीमा नाघ्यो (Postfix)"
+
+msgid "IP address rate limit exceeded (Postfix)"
+msgstr "IP ठेगाना दर सीमा नाघ्यो (Postfix)"
+
+msgid "MX lookup failed (Postfix)"
+msgstr "MX खोजी असफल भयो (Postfix)"
+
+msgid "A record lookup failed (Postfix)"
+msgstr "A रेकर्ड खोजी असफल भयो (Postfix)"
+
+msgid "PTR record lookup failed (Postfix)"
+msgstr "PTR रेकर्ड खोजी असफल भयो (Postfix)"
+
+msgid "Greylisting active - please try again (Postgrey)"
+msgstr "Greylisting सक्रिय छ - कृपया पछि फेरि प्रयास गर्नुहोस् (Postgrey)"
+
+msgid "Access denied - unknown domain for sender or recipient"
+msgstr "पहुँच अस्वीकार गरियो - पठाउने वा प्राप्त गर्नेको लागि डोमेन अज्ञात छ"
+
+msgid "Sender address rejected - domain not verified (DMARC pending)"
+msgstr "पठाउने ठेगाना अस्वीकार गरियो - डोमेन प्रमाणित भएन (DMARC पेन्डिङ)"
+
+msgid "Recipient address rejected - domain not verified (DMARC pending)"
+msgstr "प्राप्तकर्ता ठेगाना अस्वीकार गरियो - डोमेन प्रमाणित भएन (DMARC पेन्डिङ)"
+
+msgid "DKIM verification pending - temporary failure"
+msgstr "DKIM प्रमाणीकरण पेन्डिङ - अस्थायी असफलता"
+
+msgid "SPF verification pending - temporary failure"
+msgstr "SPF प्रमाणीकरण पेन्डिङ - अस्थायी असफलता"
+
+msgid "DMARC verification pending - temporary failure"
+msgstr "DMARC प्रमाणीकरण पेन्डिङ - अस्थायी असफलता"
+
+msgid "DNSBL lookup temporary failure"
+msgstr "DNSBL खोजी अस्थायी असफलता"
+
+msgid "RHSBL lookup temporary failure"
+msgstr "RHSBL खोजी अस्थायी असफलता"
+
+msgid "URI DNSBL lookup temporary failure"
+msgstr "URI DNSBL खोजी अस्थायी असफलता"
+
+msgid "Temporary authentication failure (Dovecot)"
+msgstr "प्रमाणीकरण अस्थायी असफलता (Dovecot)"
+
+msgid "Temporary authorization failure (Sendmail)"
+msgstr "अधिकार अस्थायी असफलता (Sendmail)"
+
+msgid "Rate limit exceeded per sender (Exim)"
+msgstr "प्रति पठाउने दर सीमा नाघ्यो (Exim)"
+
+msgid "Rate limit exceeded per recipient (Exim)"
+msgstr "प्रति प्राप्तकर्ता दर सीमा नाघ्यो (Exim)"
+
+msgid "Rate limit exceeded per domain (Exim)"
+msgstr "प्रति डोमेन दर सीमा नाघ्यो (Exim)"
+
+msgid "Rate limit exceeded per IP (Exim)"
+msgstr "प्रति IP दर सीमा नाघ्यो (Exim)"
+
+msgid "Message queued for later delivery (Postfix)"
+msgstr "इमेल पछि पठाउन क्यू गरियो (Postfix)"
+
+msgid "Delivery delayed due to policy (Exchange)"
+msgstr "नीतिका कारण पठाउन ढिलाइ भयो (Exchange)"
+
+msgid "Temporary failure in content filter"
+msgstr "सामग्री फिल्टरमा अस्थायी असफलता"
+
+msgid "Temporary failure in antivirus scanner"
+msgstr "एन्टिभाइरस स्क्यानरमा अस्थायी असफलता"
+
+msgid "Temporary failure in spam filter"
+msgstr "स्प्याम फिल्टरमा अस्थायी असफलता"
+
+msgid "Temporary failure in milter (Postfix)"
+msgstr "Milter मा अस्थायी असफलता (Postfix)"
+
+msgid "Greylisting - try again later"
+msgstr "Greylisting - कृपया पछि फेरि प्रयास गर्नुहोस्"
+
+msgid "DDoS protection active - try again later"
+msgstr "DDoS सुरक्षा सक्रिय छ - कृपया पछि फेरि प्रयास गर्नुहोस्"
+
+msgid "SMTP policy violation - temporary"
+msgstr "SMTP नीति उल्लङ्घन - अस्थायी स्थिति"
+
+msgid "Temporary error in RCPT TO processing"
+msgstr "RCPT TO प्रशोधनमा अस्थायी त्रुटि"
+
+msgid "Temporary error in MAIL FROM processing"
+msgstr "MAIL FROM प्रशोधनमा अस्थायी त्रुटि"
+
+msgid "Temporary error in EHLO/HELO processing"
+msgstr "EHLO/HELO प्रशोधनमा अस्थायी त्रुटि"
+
+msgid "Temporary error in DATA processing"
+msgstr "DATA प्रशोधनमा अस्थायी त्रुटि"
+
+msgid "Temporary error - service busy, try again later"
+msgstr "अस्थायी त्रुटि - सेवा व्यस्त छ, कृपया पछि फेरि प्रयास गर्नुहोस्"
+
+msgid "Syntax error - command unrecognized or too long"
+msgstr "सिन्ट्याक्स त्रुटि - आदेश अज्ञात वा धेरै लामो छ"
+
+msgid "Syntax error in parameters or arguments"
+msgstr "प्यारामिटर वा आर्गुमेन्टहरूमा सिन्ट्याक्स त्रुटि"
+
+msgid "Command not implemented"
+msgstr "आदेश प्रयोग गरिएको छैन"
+
+msgid "Bad sequence of commands"
+msgstr "आदेशहरूको क्रम गलत छ"
+
+msgid "Command parameter not implemented"
+msgstr "आदेश प्यारामिटर प्रयोग गरिएको छैन"
+
+msgid "Version not supported (ESMTP)"
+msgstr "संस्करण समर्थित छैन (ESMTP)"
+
+msgid "Mailbox path invalid (LMTP)"
+msgstr "मेलबक्स मार्ग अमान्य छ (LMTP)"
+
+msgid "Too many commands in this session (Postfix)"
+msgstr "यस सेसनमा धेरै आदेशहरू छन् (Postfix)"
+
+msgid "Recipient limit exceeded (Postfix)"
+msgstr "प्राप्तकर्ता सीमा नाघ्यो (Postfix)"
+
+msgid "Sender limit exceeded (Postfix)"
+msgstr "पठाउने सीमा नाघ्यो (Postfix)"
+
+msgid "Domain limit exceeded (Postfix)"
+msgstr "डोमेन सीमा नाघ्यो (Postfix)"
+
+msgid "Mailbox does not exist (Exchange)"
+msgstr "मेलबक्स अवस्थित छैन (Exchange)"
+
+msgid "DNS failure - permanent"
+msgstr "DNS असफल भयो - स्थायी त्रुटि"
+
+msgid "Address type not supported (Postfix)"
+msgstr "ठेगाना प्रकार समर्थित छैन (Postfix)"
+
+msgid "Unable to open mailbox (Postfix)"
+msgstr "मेलबक्स खोल्न सकिएन (Postfix)"
+
+msgid "Mailbox locked - permanent"
+msgstr "मेलबक्स लक गरियो - स्थायी स्थिति"
+
+msgid "Message rejected due to policy (Exchange)"
+msgstr "नीतिका कारण इमेल अस्वीकार गरियो (Exchange)"
+
+msgid "Content rejected - permanent"
+msgstr "सामग्री अस्वीकार गरियो - स्थायी स्थिति"
+
+msgid "Attachment type not allowed"
+msgstr "संलग्न फाइल प्रकार अनुमति छैन"
+
+msgid "Message encoding not supported"
+msgstr "इमेल एन्कोडिङ समर्थित छैन"
+
+msgid "Sender domain does not exist - permanent"
+msgstr "पठाउने डोमेन अवस्थित छैन - स्थायी स्थिति"
+
+msgid "Domain does not accept mail or is closing"
+msgstr "डोमेनले इमेल स्वीकार गर्दैन वा बन्द हुँदैछ"
+
+msgid "Recipient domain does not exist - permanent"
+msgstr "प्राप्तकर्ता डोमेन अवस्थित छैन - स्थायी स्थिति"
+
+msgid "Mailbox quota exceeded - permanent"
+msgstr "मेलबक्स कोटा भरियो - स्थायी स्थिति"
+
+msgid "Message size exceeds limit - permanent"
+msgstr "इमेल आकार सीमा नाघ्यो - स्थायी स्थिति"
+
+msgid "Authentication required (Sendmail)"
+msgstr "प्रमाणीकरण आवश्यक छ (Sendmail)"
+
+msgid "Authentication failed (Sendmail)"
+msgstr "प्रमाणीकरण असफल भयो (Sendmail)"
+
+msgid "Authentication mechanism not supported"
+msgstr "प्रमाणीकरण संयन्त्र समर्थित छैन"
+
+msgid "Authentication credentials invalid"
+msgstr "प्रमाणीकरण प्रमाणपत्र अमान्य छ"
+
+msgid "Authentication account expired"
+msgstr "प्रमाणीकरण खाता म्याद सकियो"
+
+msgid "Access denied - authentication required"
+msgstr "पहुँच अस्वीकार गरियो - प्रमाणीकरण आवश्यक छ"
+
+msgid "Access denied (Sendmailism)"
+msgstr "पहुँच अस्वीकार गरियो (Sendmail)"
+
+msgid "Access denied - not authenticated"
+msgstr "पहुँच अस्वीकार गरियो - प्रमाणित भएन"
+
+msgid "Access denied - account locked"
+msgstr "पहुँच अस्वीकार गरियो - खाता लक गरियो"
+
+msgid "Access denied - account disabled"
+msgstr "पहुँच अस्वीकार गरियो - खाता निष्क्रिय गरियो"
+
+msgid "Authentication failed"
+msgstr "प्रमाणीकरण असफल भयो"
+
+msgid "Authentication required for relay (Postfix)"
+msgstr "रिले गर्न प्रमाणीकरण आवश्यक छ (Postfix)"
+
+msgid "Authentication failed for relay (Postfix)"
+msgstr "रिलेको लागि प्रमाणीकरण असफल भयो (Postfix)"
+
+msgid "Encryption required (STARTTLS)"
+msgstr "एन्क्रिप्टेड जडान आवश्यक छ (STARTTLS)"
+
+msgid "TLS required for this recipient"
+msgstr "यस प्राप्तकर्तालाई TLS एन्क्रिप्सन चाहिन्छ"
+
+msgid "Encryption strength insufficient"
+msgstr "एन्क्रिप्सन बल पर्याप्त छैन"
+
+msgid "Certificate validation failed"
+msgstr "प्रमाणपत्र प्रमाणीकरण असफल भयो"
+
+msgid "Invalid TLS certificate"
+msgstr "TLS प्रमाणपत्र अमान्य छ"
+
+msgid "TLS protocol version not supported"
+msgstr "TLS प्रोटोकल संस्करण समर्थित छैन"
+
+msgid "Cipher suite not supported"
+msgstr "सिफर सुइट समर्थित छैन"
+
+msgid "Access denied - no valid recipient"
+msgstr "पहुँच अस्वीकार गरियो - कुनै मान्य प्राप्तकर्ता छैन"
+
+msgid "Access denied - no valid sender"
+msgstr "पहुँच अस्वीकार गरियो - कुनै मान्य पठाउने छैन"
+
+msgid "Access denied - domain not allowed"
+msgstr "पहुँच अस्वीकार गरियो - डोमेन अनुमति छैन"
+
+msgid "Access denied - IP address blocked (permanent)"
+msgstr "पहुँच अस्वीकार गरियो - IP ठेगाना ब्लक गरियो (स्थायी)"
+
+msgid "Access denied - sender domain blacklisted"
+msgstr "पहुँच अस्वीकार गरियो - पठाउने डोमेन ब्ल्याकलिस्टमा छ"
+
+msgid "Mailbox unavailable - requested action not taken"
+msgstr "मेलबक्स उपलब्ध छैन - अनुरोध गरिएको कार्य गरिएन"
+
+msgid "User not local - please try forwarding address"
+msgstr "प्रयोगकर्ता यस सर्भरमा छैन - कृपया फर्वार्डिङ ठेगाना प्रयोग गर्नुहोस्"
+
+msgid "Requested action aborted - exceeded storage allocation"
+msgstr "अनुरोध गरिएको कार्य रद्द गरियो - भण्डारण आवंटन नाघ्यो"
+
+msgid "Mailbox name not allowed"
+msgstr "मेलबक्स नाम अनुमति छैन"
+
+msgid "Requested action rejected - access denied"
+msgstr "अनुरोध गरिएको कार्य अस्वीकार गरियो - पहुँच अस्वीकार गरियो"
+
+msgid "MAIL FROM/RCPT TO parameters not recognized"
+msgstr "MAIL FROM/RCPT TO प्यारामिटरहरू चिन्न सकिएन"
+
+msgid "Domain not allowed to send (DMARC reject)"
+msgstr "डोमेनलाई पठाउन अनुमति छैन (DMARC अस्वीकार)"
+
+msgid "Too many duplicate messages - permanent"
+msgstr "धेरै दोहोरिने इमेलहरू छन् - स्थायी स्थिति"
+
+msgid "Sender address rejected - domain not in SPF"
+msgstr "पठाउने ठेगाना अस्वीकार गरियो - डोमेन SPF मा छैन"
+
+msgid "Sender address rejected - DKIM verification failed"
+msgstr "पठाउने ठेगाना अस्वीकार गरियो - DKIM प्रमाणीकरण असफल भयो"
+
+msgid "Sender address rejected - DMARC policy reject"
+msgstr "पठाउने ठेगाना अस्वीकार गरियो - DMARC नीतिले अस्वीकार गर्यो"
+
+msgid "Recipient address rejected - DMARC policy reject"
+msgstr "प्राप्तकर्ता ठेगाना अस्वीकार गरियो - DMARC नीतिले अस्वीकार गर्यो"
+
+msgid "Message rejected due to spam content"
+msgstr "स्प्याम सामग्रीका कारण इमेल अस्वीकार गरियो"
+
+msgid "Message rejected due to virus detected"
+msgstr "भाइरस पत्ता लागेको कारण इमेल अस्वीकार गरियो"
+
+msgid "Message rejected due to malicious content"
+msgstr "दुर्भावनापूर्ण सामग्रीको कारण इमेल अस्वीकार गरियो"
+
+msgid "Message rejected due to phishing detection"
+msgstr "फिसिङ पत्ता लागेको कारण इमेल अस्वीकार गरियो"
+
+msgid "Message rejected due to malware detection"
+msgstr "मालवेयर पत्ता लागेको कारण इमेल अस्वीकार गरियो"
+
+msgid "Message rejected due to policy - permanent"
+msgstr "नीतिका कारण इमेल अस्वीकार गरियो - स्थायी स्थिति"
+
+msgid "Message rejected due to content filtering"
+msgstr "सामग्री फिल्टरिङका कारण इमेल अस्वीकार गरियो"
+
+msgid "Message rejected due to reputation"
+msgstr "प्रतिष्ठाका कारण इमेल अस्वीकार गरियो"
+
+msgid "Access denied - access_map violation"
+msgstr "पहुँच अस्वीकार गरियो - access_map उल्लङ्घन"
+
+msgid "Access denied - SMTP client listed in RBL"
+msgstr "पहुँच अस्वीकार गरियो - SMTP क्लाइन्ट RBL मा छ"
+
+msgid "Access denied - relay not authorized"
+msgstr "पहुँच अस्वीकार गरियो - रिले अधिकृत छैन"
+
+msgid "Access denied - unknown SMTP client hostname"
+msgstr "पहुँच अस्वीकार गरियो - SMTP क्लाइन्ट होस्टनाम अज्ञात छ"
+
+msgid "Access denied - bad syntax for client HELO hostname"
+msgstr "पहुँच अस्वीकार गरियो - क्लाइन्ट HELO होस्टनामको लागि गलत सिन्ट्याक्स"
+
+msgid "Access denied - SMTP client hostname rejected"
+msgstr "पहुँच अस्वीकार गरियो - SMTP क्लाइन्ट होस्टनाम अस्वीकार गरियो"
+
+msgid "Access denied - unknown client HELO hostname"
+msgstr "पहुँच अस्वीकार गरियो - क्लाइन्ट HELO होस्टनाम अज्ञात छ"
+
+msgid "Access denied - invalid domain (not FQDN)"
+msgstr "पहुँच अस्वीकार गरियो - डोमेन अमान्य छ (FQDN होइन)"
+
+msgid "Access denied - domain not qualified"
+msgstr "पहुँच अस्वीकार गरियो - डोमेन योग्य छैन"
+
+msgid "Access denied - mail server misconfigured"
+msgstr "पहुँच अस्वीकार गरियो - इमेल सर्भर कन्फिगरेसन गलत छ"
+
+msgid "Access denied - open relay not allowed"
+msgstr "पहुँच अस्वीकार गरियो - खुला रिले अनुमति छैन"
+
+msgid "Access denied - proxy not allowed"
+msgstr "पहुँच अस्वीकार गरियो - प्रोक्सी प्रयोग अनुमति छैन"
+
+msgid "Access denied - dynamic IP not allowed"
+msgstr "पहुँच अस्वीकार गरियो - गतिशील IP अनुमति छैन"
+
+msgid "Access denied - residential IP not allowed"
+msgstr "पहुँच अस्वीकार गरियो - आवासीय IP अनुमति छैन"
+
+msgid "Access denied - VPN/Tor detected"
+msgstr "पहुँच अस्वीकार गरियो - VPN/Tor पत्ता लाग्यो"
+
+msgid "Access denied - Spamhaus DROP listed"
+msgstr "पहुँच अस्वीकार गरियो - Spamhaus DROP सूचीमा छ"
+
+msgid "Access denied - URL listed in URIBL"
+msgstr "पहुँच अस्वीकार गरियो - URL URIBL मा छ"
+
+msgid "Access denied - domain in RHSBL"
+msgstr "पहुँच अस्वीकार गरियो - डोमेन RHSBL मा छ"
+
+msgid "Access denied - IP in DNSWL (policy)"
+msgstr "पहुँच अस्वीकार गरियो - IP DNSWL मा छ (नीति)"
+
+msgid "Delivery failed - mailbox not found"
+msgstr "पठाउन असफल - मेलबक्स भेटिएन"
+
+msgid "Delivery failed - recipient not local"
+msgstr "पठाउन असफल - प्राप्तकर्ता यस सर्भरमा छैन"
+
+msgid "Delivery failed - recipient rejected"
+msgstr "पठाउन असफल - प्राप्तकर्ता अस्वीकार गरियो"
+
+msgid "Delivery failed - sender rejected"
+msgstr "पठाउन असफल - पठाउने अस्वीकार गरियो"
+
+msgid "Delivery failed - relay rejected"
+msgstr "पठाउन असफल - रिले अस्वीकार गरियो"
+
+msgid "Delivery failed - DNS permanent error"
+msgstr "पठाउन असफल - स्थायी DNS त्रुटि"
+
+msgid "Delivery failed - MX permanent error"
+msgstr "पठाउन असफल - स्थायी MX त्रुटि"
+
+msgid "Delivery failed - A record permanent error"
+msgstr "पठाउन असफल - स्थायी A रेकर्ड त्रुटि"
+
+msgid "Delivery failed - PTR record permanent error"
+msgstr "पठाउन असफल - स्थायी PTR रेकर्ड त्रुटि"
+
+msgid "Delivery failed - policy permanent error"
+msgstr "पठाउन असफल - स्थायी नीति त्रुटि"
+
+msgid "DSN: Success - delivery status notification"
+msgstr "DSN: सफल - पठाउने स्थिति सूचना"
+
+msgid "DSN: Delivery delayed"
+msgstr "DSN: पठाउन ढिलाइ भयो"
+
+msgid "DSN: Delivery failed - permanent"
+msgstr "DSN: पठाउन असफल - स्थायी"
+
+msgid "DSN: Delivery failed - temporary"
+msgstr "DSN: पठाउन असफल - अस्थायी"
+
+msgid "DSN: Message expired"
+msgstr "DSN: इमेलको म्याद सकियो"
+
+msgid "DSN: Message bounced"
+msgstr "DSN: इमेल फर्कियो"
+
+msgid "DSN: Message discarded"
+msgstr "DSN: इमेल हटाइयो"
+
+msgid "DSN: Message filtered"
+msgstr "DSN: इमेल फिल्टर गरियो"
+
+msgid "DSN: Message quarantined"
+msgstr "DSN: इमेल क्वारेन्टाइन गरियो"
+
+msgid "DSN: Message held for review"
+msgstr "DSN: समीक्षाको लागि इमेल रोकियो"
+
+msgid "MTA-STS policy required"
+msgstr "MTA-STS नीति आवश्यक छ"
+
+msgid "MTA-STS policy validation failed"
+msgstr "MTA-STS नीति प्रमाणीकरण असफल भयो"
+
+msgid "TLS reporting required"
+msgstr "TLS रिपोर्ट आवश्यक छ"
+
+msgid "TLS report requested"
+msgstr "TLS रिपोर्ट अनुरोध गरियो"
+
+msgid "SMTP MTA Strict Transport Security active"
+msgstr "SMTP MTA Strict Transport Security सक्रिय छ"
+
+msgid "DANE validation required"
+msgstr "DANE प्रमाणीकरण आवश्यक छ"
+
+msgid "DANE validation failed"
+msgstr "DANE प्रमाणीकरण असफल भयो"
+
+msgid "TLSA record missing"
+msgstr "TLSA रेकर्ड हराइरहेको छ"
+
+msgid "Certificate name mismatch"
+msgstr "प्रमाणपत्र नाम मेल खाएन"
+
+msgid "Certificate expired"
+msgstr "प्रमाणपत्रको म्याद सकियो"
+
+msgid "AUTH LOGIN required"
+msgstr "AUTH LOGIN आवश्यक छ"
+
+msgid "AUTH PLAIN required"
+msgstr "AUTH PLAIN आवश्यक छ"
+
+msgid "AUTH CRAM-MD5 required"
+msgstr "AUTH CRAM-MD5 आवश्यक छ"
+
+msgid "AUTH DIGEST-MD5 required"
+msgstr "AUTH DIGEST-MD5 आवश्यक छ"
+
+msgid "AUTH GSSAPI required"
+msgstr "AUTH GSSAPI आवश्यक छ"
+
+msgid "AUTH NTLM required"
+msgstr "AUTH NTLM आवश्यक छ"
+
+msgid "AUTH SCRAM required"
+msgstr "AUTH SCRAM आवश्यक छ"
+
+msgid "AUTH OAUTHBEARER required"
+msgstr "AUTH OAUTHBEARER आवश्यक छ"
+
+msgid "AUTH XOAUTH2 required"
+msgstr "AUTH XOAUTH2 आवश्यक छ"
+
+msgid "Exchange: Mailbox database error"
+msgstr "Exchange: मेलबक्स डाटाबेस त्रुटि"
+
+msgid "Exchange: Store driver error"
+msgstr "Exchange: स्टोर ड्राइभर त्रुटि"
+
+msgid "Exchange: Transport agent error"
+msgstr "Exchange: ट्रान्सपोर्ट एजेन्ट त्रुटि"
+
+msgid "Exchange: Content conversion error"
+msgstr "Exchange: सामग्री रूपान्तरण त्रुटि"
+
+msgid "Exchange: Routing error"
+msgstr "Exchange: रुटिङ त्रुटि"
+
+msgid "Exchange: Mail flow stalled"
+msgstr "Exchange: इमेल प्रवाह रोकियो"
+
+msgid "Exchange: Shadow redundancy error"
+msgstr "Exchange: छाया अतिरेक त्रुटि"
+
+msgid "Exchange: Safety net error"
+msgstr "Exchange: सुरक्षा जाल त्रुटि"
+
+msgid "Exchange: Queue database error"
+msgstr "Exchange: क्यू डाटाबेस त्रुटि"
+
+msgid "Exchange: Message throttled"
+msgstr "Exchange: इमेल दर सीमित गरियो"
+
+msgid "Postfix: Bounce queue error"
+msgstr "Postfix: बाउन्स क्यू त्रुटि"
+
+msgid "Postfix: Deferred queue error"
+msgstr "Postfix: स्थगित क्यू त्रुटि"
+
+msgid "Postfix: Hold queue error"
+msgstr "Postfix: होल्ड क्यू त्रुटि"
+
+msgid "Postfix: Incoming queue error"
+msgstr "Postfix: आगमन क्यू त्रुटि"
+
+msgid "Postfix: Active queue error"
+msgstr "Postfix: सक्रिय क्यू त्रुटि"
+
+msgid "Postfix: Corrupted queue file"
+msgstr "Postfix: बिग्रिएको क्यू फाइल"
+
+msgid "Sendmail: Queue runner error"
+msgstr "Sendmail: क्यू चलाउने त्रुटि"
+
+msgid "Sendmail: Alias database error"
+msgstr "Sendmail: उपनाम डाटाबेस त्रुटि"
+
+msgid "Sendmail: Virtuser table error"
+msgstr "Sendmail: भर्चुअल प्रयोगकर्ता तालिका त्रुटि"
+
+msgid "Sendmail: Mailer definition error"
+msgstr "Sendmail: मेलर परिभाषा त्रुटि"
+
+msgid "Exim: Router configuration error"
+msgstr "Exim: राउटर कन्फिगरेसन त्रुटि"
+
+msgid "Exim: Transport configuration error"
+msgstr "Exim: ट्रान्सपोर्ट कन्फिगरेसन त्रुटि"
+
+msgid "Exim: Director configuration error"
+msgstr "Exim: निर्देशक कन्फिगरेसन त्रुटि"
+
+msgid "Exim: Retry configuration error"
+msgstr "Exim: पुन: प्रयास कन्फिगरेसन त्रुटि"
+
+msgid "Exim: Rewrite configuration error"
+msgstr "Exim: पुन: लेखन कन्फिगरेसन त्रुटि"
+
+msgid "Exim: Authentication configuration error"
+msgstr "Exim: प्रमाणीकरण कन्फिगरेसन त्रुटि"
+
+msgid "Exim: ACL configuration error"
+msgstr "Exim: ACL कन्फिगरेसन त्रुटि"
+
+msgid "Exim: Local_scan configuration error"
+msgstr "Exim: Local_scan कन्फिगरेसन त्रुटि"
+
+msgid "Exim: Lookup configuration error"
+msgstr "Exim: खोजी कन्फिगरेसन त्रुटि"
+
+msgid "Exim: Expansion configuration error"
+msgstr "Exim: विस्तार कन्फिगरेसन त्रुटि"
+
+msgid "HTTP Protocol Versions"
+msgstr "HTTP प्रोटोकल संस्करणहरू"
+
+msgid "Protocol"
+msgstr "प्रोटोकल"
+
+msgid "Request %"
+msgstr "अनुरोध प्रतिशत"
+
+msgid "Bandwidth %"
+msgstr "ब्यान्डविथ प्रतिशत"
+
+msgid "Each request requires a new connection"
+msgstr "प्रत्येक अनुरोधको लागि नयाँ जडान सिर्जना गर्न आवश्यक छ"
+
+msgid "Multiple requests can reuse one connection"
+msgstr "धेरै अनुरोधहरूले एउटै जडान पुन: प्रयोग गर्न सक्छन्"
+
+msgid "Multiple requests in parallel over one connection"
+msgstr "एउटै जडान मार्फत धेरै अनुरोधहरू समानान्तर प्रशोधन गर्न सकिन्छ"
+
+msgid "Faster connection, better performance on poor networks"
+msgstr "छिटो जडान, कमजोर नेटवर्कमा राम्रो प्रदर्शन"
+
+msgid "No protocol data available"
+msgstr "कुनै प्रोटोकल डाटा उपलब्ध छैन"
+
+msgid "of requests use HTTP/1.0"
+msgstr "को अनुरोधहरूले HTTP/1.0 प्रोटोकल प्रयोग गर्छन्"
+
+msgid "From access logs"
+msgstr "पहुँच लगहरूबाट"
+
+msgid "No HTTP/2 requests detected"
+msgstr "HTTP/2 प्रोटोकल अनुरोधहरू पत्ता लागेन"
+
+msgid "All requests are HTTP/1.0, no HTTP/2 requests"
+msgstr "सबै अनुरोधहरू HTTP/1.0 छन्, HTTP/2 अनुरोधहरू छैनन्"
+
+msgid "HTTP/3 not detected"
+msgstr "HTTP/3 प्रोटोकल अनुरोधहरू पत्ता लागेन"
+
+msgid "all requests do not include QUIC/HTTP/3 protocol requests"
+msgstr "सबै अनुरोधहरूमा QUIC/HTTP/3 प्रोटोकल अनुरोधहरू समावेश छैनन्"
+
+msgid "Mail Authentication Statistics"
+msgstr "इमेल प्रमाणीकरण तथ्याङ्क"
+
+msgid "Authentication"
+msgstr "प्रमाणीकरण प्रकार"
+
+msgid "Pass"
+msgstr "पास"
+
+msgid "Fail"
+msgstr "असफल"
+
+msgid "Softfail"
+msgstr "नरम असफल"
+
+msgid "Neutral"
+msgstr "तटस्थ"
+
+msgid "None"
+msgstr "कुनै छैन"
+
+msgid "Mail Queue Delay Statistics"
+msgstr "इमेल क्यू ढिलाइ तथ्याङ्क"
+
+msgid "Delay Range"
+msgstr "ढिलाइ दायरा"
+
+msgid "Count"
+msgstr "संख्या"
+
+msgid "Percentage"
+msgstr "प्रतिशत"
+
+msgid "TLS Encryption Statistics"
+msgstr "TLS एन्क्रिप्सन तथ्याङ्क"
+
+msgid "TLS Versions"
+msgstr "TLS संस्करणहरू"
+
+msgid "Top Ciphers"
+msgstr "साधारण सिफर सुइटहरू"
+
+msgid "robot_hits_detail_both"
+msgstr "कुल अनुरोध: %s पटक (सामान्य पृष्ठ: %s पटक, robots.txt: %s पटक)"
+
+msgid "robot_hits_detail_only_robots"
+msgstr "केवल robots.txt मा पहुँच गरियो: %s पटक, अन्य पृष्ठ डाटा प्राप्त भएन"
+
+msgid "robot_hits_detail_normal"
+msgstr "सामान्य पृष्ठ अनुरोध: %s पटक"
+
+msgid "Troubleshooting"
+msgstr "समस्या निवारण"
+
+msgid "Did you use the correct URL?"
+msgstr "के तपाईंले सही URL प्रयोग गर्नुभयो?"
+
+msgid "Example:"
+msgstr "उदाहरण:"
+
+msgid "Did you use correct config parameter?"
+msgstr "के तपाईंले सही कन्फिगरेसन प्यारामिटर प्रयोग गर्नुभयो?"
+
+msgid "Example: If your config file is awstats.mysite.conf, use -config=mysite"
+msgstr "उदाहरण: यदि तपाईंको कन्फिगरेसन फाइल awstats.mysite.conf छ भने, -config=mysite प्रयोग गर्नुहोस्"
+
+msgid "Did you create your config file 'awstats.$SiteConfig.conf'?"
+msgstr "के तपाईंले 'awstats.$SiteConfig.conf' कन्फिगरेसन फाइल सिर्जना गर्नुभयो?"
+
+msgid "If not, you can run \"awstats_configure.pl\" from command line, or create it manually."
+msgstr "यदि छैन भने, तपाईं कमाण्ड लाइनबाट \"awstats_configure.pl\" चलाउन सक्नुहुन्छ, वा यसलाई म्यानुअल रूपमा सिर्जना गर्न सक्नुहुन्छ।"
+
+msgid "Setup"
+msgstr "सेटअप"
+
+msgid "file, web server or permissions may be wrong."
+msgstr "फाइल, वेब सर्भर वा अनुमतिहरू गलत हुन सक्छन्।"
+
+msgid "Check config file, permissions and AWStats documentation (in 'docs' directory)."
+msgstr "कन्फिगरेसन फाइल, अनुमतिहरू र AWStats कागजात ('docs' निर्देशिकामा) जाँच गर्नुहोस्।"
+
+msgid "Warning: Can't find language files for \"%s\". English will be used."
+msgstr "चेतावनी: \"%s\" को लागि भाषा फाइलहरू भेटिएन। अङ्ग्रेजी प्रयोग गरिनेछ।"
+
+#------------------------------------------------------------------------------
+# त्रुटि र सिग्नल व्यवस्थापन
+#------------------------------------------------------------------------------
+
+msgid "%s process (ID %s) interrupted by signal %s."
+msgstr "%s प्रक्रिया (ID %s) सिग्नल %s द्वारा अवरुद्ध गरियो।"
+
+msgid "An AWStats update process seems to be already running for this config file. Try later. If this is not true, remove manually lock file"
+msgstr "यो कन्फिगरेसन फाइलको लागि AWStats अद्यावधिक प्रक्रिया पहिले नै चलिरहेको देखिन्छ। कृपया पछि प्रयास गर्नुहोस्। यदि सत्य होइन भने, लक फाइल म्यानुअल रूपमा हटाउनुहोस्"
+
+#------------------------------------------------------------------------------
+# नयाँ तथ्याङ्क शीर्षकहरू
+#------------------------------------------------------------------------------
+msgid "Report Overview"
+msgstr "रिपोर्ट सिंहावलोकन"
+
+msgid "Monthly Statistics"
+msgstr "मासिक तथ्याङ्क"
+
+msgid "Daily Statistics"
+msgstr "दैनिक तथ्याङ्क"
+
+msgid "Statistics by Day of Week"
+msgstr "हप्ताको दिन अनुसार तथ्याङ्क"
+
+msgid "Hourly Page Views"
+msgstr "प्रति घण्टा दृश्य संख्या"
+
+msgid "Traffic Sources"
+msgstr "ट्राफिक स्रोतहरू"
+
+msgid "Other Sources"
+msgstr "अन्य स्रोतहरू"
+
+msgid "tooltip_1"
+msgstr "वेबसाइटमा आगन्तुकको सेसनको संख्या। एउटै आगन्तुक ३० मिनेट भन्दा बढी निष्क्रियता पछि फेरि भ्रमण गरेमा नयाँ भ्रमणको रूपमा गणना गरिन्छ"
+
+msgid "tooltip_2"
+msgstr "चयन गरिएको समय अवधिमा तपाईंको वेबसाइटमा भ्रमण गरेका विभिन्न आगन्तुकहरूको संख्या। IP ठेगानामा आधारित"
+
+msgid "tooltip_3"
+msgstr "पृष्ठको रूपमा गणना गरिने अनुरोधहरूको संख्या (जस्तै HTML, PHP, ASP आदि), छविहरू, CSS, JS जस्ता स्थिर फाइलहरू समावेश छैनन्"
+
+msgid "tooltip_4"
+msgstr "सर्भरमा पठाइएको कुल अनुरोधहरूको संख्या, सबै पृष्ठहरू, छविहरू, CSS, JS र अन्य फाइलहरू समावेश छन्"
+
+msgid "tooltip_5"
+msgstr "प्रयोगकर्ताको अनुरोधको जवाफ दिँदा सर्भरले पठाउने कुल डाटा मात्रा"
+
+msgid "tooltip_13"
+msgstr "खोज इन्जिनहरू मार्फत तपाईंको वेबसाइटमा आउने ट्राफिकको स्रोत तथ्याङ्क। कुन खोज इन्जिनले तपाईंलाई ट्राफिक ल्यायो र प्रयोगकर्ताहरूले प्रयोग गरेको खोज शब्दहरू देखाउँदछ"
+
+msgid "tooltip_14"
+msgstr "अन्य वेबसाइटहरूबाट बाह्य लिङ्कहरू मार्फत तपाईंको वेबसाइटमा आउने ट्राफिकको स्रोत तथ्याङ्क। कुन वेबसाइटहरूले तपाईंलाई लिङ्क गरेका छन् र तिनीहरूले ल्याएको ट्राफिकको मात्रा देखाउँदछ"
+
+msgid "tooltip_15"
+msgstr "प्रयोगकर्ताहरूले खोज इन्जिनहरू मार्फत तपाईंको वेबसाइट खोज्दा प्रयोग गर्ने खोज शब्दहरू। कुञ्जी शब्द एउटा शब्द हो, कुञ्जी वाक्यांश धेरै शब्दहरूको संयोजन हो"
+
+msgid "tooltip_16"
+msgstr "स्वचालित प्रोग्रामहरू जस्तै खोज बोटहरू, AI तालिम बोटहरू, कमजोरी स्क्यानरहरू। कोष्ठक भित्रको संख्याले सामान्य पृष्ठ अनुरोधहरू र robots.txt अनुरोधहरूको संख्या देखाउँदछ"
+
+msgid "tooltip_17"
+msgstr "२४ घण्टा ट्राफिक वितरण चार्ट। दिनको प्रत्येक समयमा तपाईंको वेबसाइटको ट्राफिक देखाउँदछ, प्रयोगकर्ताहरूको सक्रिय समय बुझ्न मद्दत गर्दछ"
+
+msgid "tooltip_18"
+msgstr "यो स्तम्भले चयन गरिएको समय अवधिमा दैनिक/साप्ताहिक औसत मानहरू देखाउँदछ, समग्र प्रवृत्ति बुझ्न मद्दत गर्दछ"
+
+msgid "tooltip_19"
+msgstr "विवरण हेर्न चार्टमा रहेको वस्तुमा क्लिक गर्नुहोस्। विशिष्ट मान हेर्न माउसलाई चार्ट तत्वमा राख्नुहोस्"
+
+msgid "tooltip_20"
+msgstr "अवस्थित दायरामा वर्गीकरण गर्न नसकिने डाटा, सामान्यतया असामान्य डाटा ढाँचा वा हराइरहेको कारणले हुन्छ"
+
+msgid "tooltip_21"
+msgstr "पत्ता लागेका किरा आक्रमणहरूको रेकर्ड। किरा एक हानिकारक प्रोग्राम हो जुन आफैं फैलिन्छ, सामान्यतया नेटवर्क कमजोरीहरू मार्फत फैलिन्छ"
+
+#------------------------------------------------------------------------------
+# सहायता सन्देश देखाउनुहोस् - सामुदायिक संस्करण
+#------------------------------------------------------------------------------
+msgid "AWStats %s - Advanced Web Statistics"
+msgstr "AWStats %s - उन्नत वेब तथ्याङ्क"
+
+msgid "Copyright (c) 2000-2025 Laurent Destailleur"
+msgstr "प्रतिलिपि अधिकार (c) 2000-2025 Laurent Destailleur"
+
+msgid "Copyright (c) 2026-latest Community Edition"
+msgstr "प्रतिलिपि अधिकार (c) 2026-हालसम्म सामुदायिक संस्करण"
+
+msgid "AWStats comes with ABSOLUTELY NO WARRANTY. It's a free software distributed with a GNU General Public License (See LICENSE file for details)."
+msgstr "AWStats कुनै पनि वारेन्टी बिना आउँछ। यो GNU General Public License अन्तर्गत वितरित एक स्वतन्त्र सफ्टवेयर हो (विवरणको लागि LICENSE फाइल हेर्नुहोस्)।"
+
+msgid "Syntax: %s -config=virtualhostname [options]"
+msgstr "सिन्ट्याक्स: %s -config=भर्चुअल होस्टनाम [विकल्पहरू]"
+
+msgid "This runs %s in command line to update statistics (-update option) of a web site, from the log file defined in AWStats config file, or build a HTML report (-output option)."
+msgstr "यसले कमाण्ड लाइनमा %s चलाउँदछ AWStats कन्फिगरेसन फाइलमा परिभाषित लग फाइलबाट वेबसाइटको तथ्याङ्क अद्यावधिक गर्न (-update option), वा HTML रिपोर्ट निर्माण गर्न (-output option)।"
+
+msgid "First, %s tries to read %s.virtualhostname.conf as the config file. If not found, %s tries to read %s.conf, and finally the full path passed to -config="
+msgstr "पहिले, %s ले %s.भर्चुअल होस्टनाम.conf लाई कन्फिगरेसन फाइलको रूपमा पढ्न प्रयास गर्दछ। भेटिएन भने, %s ले %s.conf पढ्न प्रयास गर्दछ, र अन्तमा -config= मा पठाइएको पूरै पथ पढ्दछ"
+
+msgid "Note 1: Config files (*.conf) must be in /etc/awstats, /usr/local/etc/awstats, /etc or same directory than awstats.pl script file."
+msgstr "नोट १: कन्फिगरेसन फाइलहरू (*.conf) /etc/awstats, /usr/local/etc/awstats, /etc वा awstats.pl स्क्रिप्ट फाइल भएको सोही निर्देशिकामा हुनुपर्छ।"
+
+msgid "Note 2: If AWSTATS_FORCE_CONFIG environment variable is defined, AWStats will use it as the 'config' value, whatever is the value on command line or URL."
+msgstr "नोट २: यदि AWSTATS_FORCE_CONFIG वातावरण चर परिभाषित गरिएको छ भने, AWStats ले यसलाई 'config' मानको रूपमा प्रयोग गर्नेछ, कमाण्ड लाइन वा URL मा जे भए पनि।"
+
+msgid "See AWStats documentation for all setup instructions."
+msgstr "सबै सेटअप निर्देशनहरूको लागि AWStats कागजात हेर्नुहोस्।"
+
+msgid "Options to update statistics:"
+msgstr "तथ्याङ्क अद्यावधिक गर्न विकल्पहरू:"
+
+msgid "  -update        to update statistics (default)"
+msgstr "  -update        तथ्याङ्क अद्यावधिक गर्नुहोस् (पूर्वनिर्धारित)"
+
+msgid "  -showsteps     to add benchmark information every %s lines processed"
+msgstr "  -showsteps     प्रत्येक %s लाइन प्रशोधनपछि बेन्चमार्क जानकारी थप्नुहोस्"
+
+msgid "  -showcorrupted to add output for each corrupted lines found, with reason"
+msgstr "  -showcorrupted भेटिएको प्रत्येक बिग्रिएको लाइनको लागि कारण सहित आउटपुट थप्नुहोस्"
+
+msgid "  -showdropped   to add output for each dropped lines found, with reason"
+msgstr "  -showdropped   भेटिएको प्रत्येक हटाइएको लाइनको लागि कारण सहित आउटपुट थप्नुहोस्"
+
+msgid "  -showunknownorigin  to output referer when it can't be parsed"
+msgstr "  -showunknownorigin   रेफरर पार्स गर्न नसक्दा आउटपुट गर्नुहोस्"
+
+msgid "  -showdirectorigin   to output log line when origin is a direct access"
+msgstr "  -showdirectorigin    स्रोत प्रत्यक्ष पहुँच भएको बेला लग लाइन आउटपुट गर्नुहोस्"
+
+msgid "  -updatefor=n   to stop the update process after parsing n lines"
+msgstr "  -updatefor=n    n लाइनहरू पार्स गरेपछि अद्यावधिक प्रक्रिया रोक्नुहोस्"
+
+msgid "  -LogFile=x     to change log to analyze whatever is 'LogFile' in config file"
+msgstr "  -LogFile=x      कन्फिगरेसन फाइलमा 'LogFile' जे छ त्यसलाई विश्लेषण गर्न लग परिवर्तन गर्नुहोस्"
+
+msgid "  Be care to process log files in chronological order when updating statistics."
+msgstr "  तथ्याङ्क अद्यावधिक गर्दा लग फाइलहरू कालक्रम अनुसार प्रशोधन गर्न ध्यान दिनुहोस्।"
+
+msgid "Options to show statistics:"
+msgstr "तथ्याङ्क देखाउन विकल्पहरू:"
+
+msgid "  -output      to output main HTML report (no update made except with -update)"
+msgstr "  -output      मुख्य HTML रिपोर्ट आउटपुट गर्नुहोस् (-update बाहेक कुनै अद्यावधिक गरिने छैन)"
+
+msgid "  -output=x    to output other report pages where x is:"
+msgstr "  -output=x    अन्य रिपोर्ट पृष्ठहरू आउटपुट गर्नुहोस् जहाँ x हो:"
+
+msgid "build page of all domains/countries"
+msgstr "सबै डोमेन/देशहरूको पृष्ठ निर्माण गर्नुहोस्"
+
+msgid "build page of all hosts"
+msgstr "सबै होस्टहरूको पृष्ठ निर्माण गर्नुहोस्"
+
+msgid "build page of last hits for hosts"
+msgstr "होस्टहरूको लागि अन्तिम अनुरोधहरूको पृष्ठ निर्माण गर्नुहोस्"
+
+msgid "build page of all unresolved IP"
+msgstr "सबै अनिर्धारित IPहरूको पृष्ठ निर्माण गर्नुहोस्"
+
+msgid "build page of all email senders (maillog)"
+msgstr "सबै इमेल पठाउनेहरूको पृष्ठ निर्माण गर्नुहोस् (maillog)"
+
+msgid "build page of last email senders (maillog)"
+msgstr "अन्तिम इमेल पठाउनेहरूको पृष्ठ निर्माण गर्नुहोस् (maillog)"
+
+msgid "build page of all email receivers (maillog)"
+msgstr "सबै इमेल प्राप्त गर्नेहरूको पृष्ठ निर्माण गर्नुहोस् (maillog)"
+
+msgid "build page of last email receivers (maillog)"
+msgstr "अन्तिम इमेल प्राप्त गर्नेहरूको पृष्ठ निर्माण गर्नुहोस् (maillog)"
+
+msgid "build page of all logins used"
+msgstr "प्रयोग गरिएका सबै प्रवेश नामहरूको पृष्ठ निर्माण गर्नुहोस्"
+
+msgid "build page of last hits for logins"
+msgstr "प्रवेश नामहरूको लागि अन्तिम अनुरोधहरूको पृष्ठ निर्माण गर्नुहोस्"
+
+msgid "build page of all robots/spider visits"
+msgstr "सबै रोबोट/स्पाइडर भ्रमणहरूको पृष्ठ निर्माण गर्नुहोस्"
+
+msgid "build page of last hits for robots"
+msgstr "रोबोटहरूको लागि अन्तिम अनुरोधहरूको पृष्ठ निर्माण गर्नुहोस्"
+
+msgid "list most often viewed pages"
+msgstr "सबैभन्दा धेरै हेरिएका पृष्ठहरू सूचीबद्ध गर्नुहोस्"
+
+msgid "list most often viewed pages matching filter"
+msgstr "फिल्टरसँग मिल्ने सबैभन्दा धेरै हेरिएका पृष्ठहरू सूचीबद्ध गर्नुहोस्"
+
+msgid "list entry pages"
+msgstr "प्रवेश पृष्ठहरू सूचीबद्ध गर्नुहोस्"
+
+msgid "list entry pages matching filter"
+msgstr "फिल्टरसँग मिल्ने प्रवेश पृष्ठहरू सूचीबद्ध गर्नुहोस्"
+
+msgid "list exit pages"
+msgstr "निकास पृष्ठहरू सूचीबद्ध गर्नुहोस्"
+
+msgid "list exit pages matching filter"
+msgstr "फिल्टरसँग मिल्ने निकास पृष्ठहरू सूचीबद्ध गर्नुहोस्"
+
+msgid "build page with os detailed versions"
+msgstr "अपरेटिङ सिस्टमको विस्तृत संस्करणहरू सहितको पृष्ठ निर्माण गर्नुहोस्"
+
+msgid "build page with browsers detailed versions"
+msgstr "ब्राउजरहरूको विस्तृत संस्करणहरू सहितको पृष्ठ निर्माण गर्नुहोस्"
+
+msgid "list 'User Agents' with unknown browser"
+msgstr "अज्ञात ब्राउजर भएका 'User Agents' सूचीबद्ध गर्नुहोस्"
+
+msgid "list 'User Agents' with unknown OS"
+msgstr "अज्ञात अपरेटिङ सिस्टम भएका 'User Agents' सूचीबद्ध गर्नुहोस्"
+
+msgid "build page of all refering search engines"
+msgstr "सबै सन्दर्भित खोज इन्जिनहरूको पृष्ठ निर्माण गर्नुहोस्"
+
+msgid "build page of all refering pages"
+msgstr "सबै सन्दर्भ पृष्ठहरूको पृष्ठ निर्माण गर्नुहोस्"
+
+msgid "list all keyphrases used on search engines"
+msgstr "खोज इन्जिनहरूमा प्रयोग गरिएका सबै कुञ्जी वाक्यांशहरू सूचीबद्ध गर्नुहोस्"
+
+msgid "list all keywords used on search engines"
+msgstr "खोज इन्जिनहरूमा प्रयोग गरिएका सबै कुञ्जी शब्दहरू सूचीबद्ध गर्नुहोस्"
+
+msgid "list 'Referers' for 404 errors"
+msgstr "४०४ त्रुटिहरूको लागि 'Referers' सूचीबद्ध गर्नुहोस्"
+
+msgid "build page of all values for ExtraSection X"
+msgstr "ExtraSection X को लागि सबै मानहरूको पृष्ठ निर्माण गर्नुहोस्"
+
+msgid "  -staticlinks           to have static links in HTML report page"
+msgstr "  -staticlinks           HTML रिपोर्ट पृष्ठमा स्थिर लिङ्कहरू राख्नुहोस्"
+
+msgid "  -staticlinksext=xxx    to have static links with .xxx extension instead of .html"
+msgstr "  -staticlinksext=xxx    .html को सट्टा .xxx एक्सटेन्सन भएको स्थिर लिङ्कहरू राख्नुहोस्"
+
+msgid "  -lang=LL     to output a HTML report in language LL (en,de,es,fr,it,nl,zh-cn,...)"
+msgstr "  -lang=LL     LL भाषामा HTML रिपोर्ट आउटपुट गर्नुहोस् (en,de,es,fr,it,nl,ne,...)"
+
+msgid "  -month=MM    to output a HTML report for an old month MM"
+msgstr "  -month=MM    पुरानो महिना MM को लागि HTML रिपोर्ट आउटपुट गर्नुहोस्"
+
+msgid "  -year=YYYY   to output a HTML report for an old year YYYY"
+msgstr "  -year=YYYY   पुरानो वर्ष YYYY को लागि HTML रिपोर्ट आउटपुट गर्नुहोस्"
+
+msgid "  The 'date' options doesn't allow you to process old log file. They only allow you to see a past report for a chosen month/year period instead of current month/year."
+msgstr "  'date' विकल्पहरूले तपाईंलाई पुरानो लग फाइल प्रशोधन गर्न अनुमति दिँदैन। तिनीहरूले तपाईंलाई हालको महिना/वर्षको सट्टा चयन गरिएको महिना/वर्ष अवधिको लागि विगतको रिपोर्ट हेर्न मात्र अनुमति दिन्छन्।"
+
+msgid "Other options:"
+msgstr "अन्य विकल्पहरू:"
+
+msgid "  -debug=X     to add debug informations lesser than level X (speed reduced)"
+msgstr "  -debug=X     स्तर X भन्दा कम डिबग जानकारीहरू थप्नुहोस् (गति घट्छ)"
+
+msgid "  -version     show AWStats version"
+msgstr "  -version, -v     AWStats संस्करण देखाउनुहोस्"
+
+msgid "Now supports/detects:"
+msgstr "अहिले समर्थन गर्दछ/पत्ता लगाउँदछ:"
+
+msgid "  Web/Ftp/Mail/streaming server log analyzis (and load balanced log files)"
+msgstr "  Web/FTP/इमेल/स्ट्रिमिङ सर्भर लग विश्लेषण (र लोड ब्यालेन्स लग फाइलहरू)"
+
+msgid "  Reverse DNS lookup (IPv4 and IPv6) and GeoIP lookup"
+msgstr "  रिभर्स DNS खोजी (IPv4 र IPv6) र GeoIP खोजी"
+
+msgid "  Number of visits, number of unique visitors"
+msgstr "  भ्रमणहरूको संख्या, अद्वितीय आगन्तुकहरूको संख्या"
+
+msgid "  Visits duration and list of last visits"
+msgstr "  भ्रमण अवधि र अन्तिम भ्रमणहरूको सूची"
+
+msgid "  Authenticated users"
+msgstr "  प्रमाणित प्रयोगकर्ताहरू"
+
+msgid "  Days of week and rush hours"
+msgstr "  हप्ताका दिनहरू र व्यस्त समयहरू"
+
+msgid "  Hosts list and unresolved IP addresses list"
+msgstr "  होस्टहरूको सूची र अनिर्धारित IP ठेगाना सूची"
+
+msgid "  Most viewed, entry and exit pages"
+msgstr "  सबैभन्दा धेरै हेरिएका, प्रवेश र निकास पृष्ठहरू"
+
+msgid "  Files type and Web compression (mod_gzip, mod_deflate stats)"
+msgstr "  फाइल प्रकार र वेब कम्प्रेसन (mod_gzip, mod_deflate तथ्याङ्क)"
+
+msgid "  Configured Database Statistics"
+msgstr "  कन्फिगर गरिएको डाटाबेस तथ्याङ्क"
+
+msgid "  %s domains/countries"
+msgstr "  %s डोमेन/देशहरू"
+
+msgid "  %s robots"
+msgstr "  %s रोबोटहरू"
+
+msgid "  %s worm's families"
+msgstr "  %s किरा परिवारहरू"
+
+msgid "  %s operating systems"
+msgstr "  %s अपरेटिङ सिस्टमहरू"
+
+msgid "  %s browsers (%s with phone browsers database)"
+msgstr "  %s ब्राउजरहरू (फोन ब्राउजर डाटाबेस सहित %s)"
+
+msgid "  %s search engines (and keyphrases/keywords used from them)"
+msgstr "  %s खोज इन्जिनहरू (र तिनीहरूबाट प्रयोग गरिएका कुञ्जी वाक्यांशहरू/कुञ्जी शब्दहरू)"
+
+msgid "  All HTTP errors with last referrer"
+msgstr "  अन्तिम रेफरर सहित सबै HTTP त्रुटिहरू"
+
+msgid "  Report by day/month/year"
+msgstr "  दिन/महिना/वर्ष अनुसार रिपोर्ट"
+
+msgid "  Dynamic or static HTML or XHTML reports, static PDF reports"
+msgstr "  गतिशील वा स्थिर HTML वा XHTML रिपोर्टहरू, स्थिर PDF रिपोर्टहरू"
+
+msgid "  Indexed text or XML monthly database"
+msgstr "  अनुक्रमित पाठ वा XML मासिक डाटाबेस"
+
+msgid "  And a lot of other advanced features and options..."  
+msgstr "  र अन्य धेरै उन्नत सुविधाहरू र विकल्पहरू..."
+
+msgid "  New versions and FAQ at http://www.awstats.org"
+msgstr "  नयाँ संस्करणहरू र FAQ https://github.com/hestiacn/vstats/issues मा हेर्नुहोस्"

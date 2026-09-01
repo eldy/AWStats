@@ -1,104 +1,589 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta name="description" content="AWStats Documentation - Using AWStats Webmin module">
-<meta name="keywords" content="awstats, awstat, webmin, module, wbm">
-<meta name="robots" content="index,follow">
-<meta name="title" content="AWStats Documentation - AWStats Webmin module">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>AWStats Documentation - AWStats Webmin module</title>
-<link rel="stylesheet" href="styles.css" type="text/css">
-<link href="https://plus.google.com/+LaurentDestailleur-Open-Source-Expert" rel="publisher" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWStats · Webmin 模块文档</title>
+    <meta name="description" content="AWStats Documentation - Using AWStats Webmin module (多语言版)">
+    <meta name="keywords" content="awstats, webmin, module, administration, 管理模块">
+    <meta name="author" content="Laurent Destailleur (多语言重构)">
+    <meta name="robots" content="index,follow">
+    <style>
+        /* ========== 全局设计 ========== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-page: #f8f9fc; --surface: #ffffff; --surface-secondary: #f1f3f8;
+            --text-primary: #1e293b; --text-secondary: #334155; --accent: #5b5f97;
+            --accent-light: #7f83b0; --border: #d0d5e0; --card-shadow: 0 8px 20px rgba(0,0,0,0.03), 0 2px 6px rgba(0,20,40,0.05);
+            --header-bg: linear-gradient(135deg, #7f83b0 0%, #5b5f97 100%);
+            --footer-bg: #ecedf2; --logo-filter: none; --link-color: #4f46e5;
+            --link-visited: #7c3aed; --code-bg: #e9e9f2;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-page: #12131f; --surface: #1f2130; --surface-secondary: #2a2c3e;
+                --text-primary: #edf2f7; --text-secondary: #cbd5e1; --accent: #a9acd9;
+                --accent-light: #b9bce6; --border: #3c405a; --card-shadow: 0 8px 20px rgba(0,0,0,0.6);
+                --header-bg: linear-gradient(145deg, #353a60, #222544);
+                --footer-bg: #1a1c2c; --logo-filter: brightness(1.1) drop-shadow(0 0 4px #aeaef0);
+                --link-color: #b1b3ff; --link-visited: #caa5ff; --code-bg: #2c2f44;
+            }
+        }
+        .force-light { --bg-page: #f8f9fc !important; --surface: #ffffff !important; --surface-secondary: #f1f3f8 !important; --text-primary: #1e293b !important; --text-secondary: #334155 !important; --accent: #5b5f97 !important; --border: #d0d5e0 !important; --footer-bg: #ecedf2 !important; --link-color: #4f46e5 !important; }
+        .force-dark { --bg-page: #12131f !important; --surface: #1f2130 !important; --surface-secondary: #2a2c3e !important; --text-primary: #edf2f7 !important; --text-secondary: #cbd5e1 !important; --accent: #a9acd9 !important; --border: #3c405a !important; --footer-bg: #1a1c2c !important; --link-color: #b1b3ff !important; }
+
+        body {
+            background-color: var(--bg-page); color: var(--text-primary);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6; margin: 0; padding: 0;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            display: flex; flex-direction: column; min-height: 100vh;
+        }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 28px; width: 100%; }
+
+        /* ========== 导航栏（新增！让您能返回主页） ========== */
+        .nav-bar {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background-color: rgba(var(--surface-rgb), 0.8);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        /* 为了支持rgba变量，我们使用不透明后备 */
+        .nav-bar {
+            background-color: var(--surface);
+        }
+        @supports (backdrop-filter: blur(10px)) {
+            .nav-bar {
+                background-color: color-mix(in srgb, var(--surface) 80%, transparent);
+                backdrop-filter: blur(10px);
+            }
+        }
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 30px;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .nav-links a:hover {
+            background: var(--surface-secondary);
+            color: var(--accent);
+        }
+        .nav-links a.active {
+            background: var(--accent);
+            color: white;
+        }
+        .nav-home {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: var(--accent);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .breadcrumb {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        .breadcrumb a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        .breadcrumb .separator {
+            color: var(--border);
+        }
+
+        /* 头部 */
+        .header {
+            background: var(--header-bg); color: white; border-radius: 0 0 32px 32px;
+            padding: 16px 0 20px; box-shadow: var(--card-shadow); margin-bottom: 20px;
+        }
+        .header-row {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 16px;
+        }
+        .logo-area { display: flex; align-items: center; gap: 12px; }
+        .logo-area img { height: 52px; width: auto; filter: var(--logo-filter); }
+        .site-title {
+            font-size: 1.75rem; font-weight: 600; background: rgba(255,255,255,0.1);
+            padding: 6px 18px; border-radius: 60px; backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .header-center {
+            flex: 1; text-align: center; font-weight: 500; font-size: 1.2rem;
+            background: rgba(0,0,0,0.1); padding: 8px 16px; border-radius: 40px;
+            backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.15);
+        }
+        .header-right { display: flex; gap: 12px; align-items: center; }
+        .lang-switch {
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 40px; padding: 6px 12px; color: white; font-weight: 500;
+            display: flex; align-items: center; gap: 6px; backdrop-filter: blur(4px);
+        }
+        .lang-switch select {
+            background: transparent; border: none; color: white; font-weight: 500;
+            outline: none; font-size: 0.95rem; cursor: pointer;
+        }
+        .lang-switch select option { background: #5b5f97; color: white; }
+        .theme-toggle {
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 40px; padding: 8px 16px; font-size: 0.9rem; color: white;
+            cursor: pointer; display: flex; align-items: center; gap: 6px; backdrop-filter: blur(4px);
+        }
+
+        /* 文档卡片样式 */
+        .doc-card {
+            background-color: var(--surface); border-radius: 32px;
+            padding: 2.5rem 2.8rem; box-shadow: var(--card-shadow);
+            border: 1px solid var(--border); margin: 20px 0 30px;
+        }
+        h1 {
+            font-size: 2.2rem; font-weight: 600; letter-spacing: -0.02em;
+            border-left: 10px solid var(--accent); padding-left: 24px;
+            margin: 0 0 25px 0; color: var(--text-primary);
+        }
+        h2 {
+            font-size: 1.8rem; font-weight: 600; margin: 2rem 0 1rem;
+            color: var(--accent); border-bottom: 2px solid var(--border); padding-bottom: 6px;
+        }
+        hr { border: none; border-top: 2px dashed var(--border); margin: 2rem 0; }
+        ul, ol { padding-left: 1.8rem; margin: 1rem 0; }
+        li { margin: 0.6rem 0; color: var(--text-secondary); }
+        a { color: var(--link-color); text-decoration: none; border-bottom: 1px dotted var(--accent-light); }
+        a:hover { color: var(--accent-light); border-bottom-style: solid; }
+        code, .file-path {
+            background: var(--code-bg); padding: 0.2rem 0.6rem; border-radius: 20px;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.9rem;
+            border: 1px solid var(--border); color: var(--text-primary);
+        }
+        .badge {
+            background: var(--accent); color: white; font-size: 0.9rem;
+            padding: 2px 10px; border-radius: 30px; display: inline-block;
+        }
+        .footer {
+            background-color: var(--footer-bg); margin-top: 48px;
+            padding: 28px 24px; border-radius: 30px 30px 0 0;
+            border-top: 1px solid var(--border); color: var(--text-secondary);
+        }
+        .footer-content {
+            display: flex; flex-wrap: wrap; justify-content: space-between;
+            align-items: center; gap: 16px; max-width: 1200px; margin: 0 auto;
+        }
+        .footer-copyright {
+            background: var(--surface); padding: 6px 18px; border-radius: 60px;
+            border: 1px solid var(--border);
+        }
+        
+        /* 返回顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.2s, background 0.2s;
+            z-index: 99;
+        }
+        .back-to-top:hover {
+            transform: scale(1.1);
+            background: var(--accent-light);
+        }
+        
+        @media (max-width: 700px) {
+            .header-row { flex-direction: column; }
+            .doc-card { padding: 1.8rem; }
+            h1 { font-size: 1.8rem; }
+            .nav-container { flex-direction: column; align-items: flex-start; }
+            .nav-links { justify-content: center; width: 100%; }
+            .back-to-top { bottom: 20px; right: 20px; }
+        }
+    </style>
 </head>
+<body>
+    <!-- ========== 导航栏（新增！可返回主页） ========== -->
+    <div class="nav-bar">
+        <div class="container nav-container">
+            <a href="index.html" class="nav-home">
+                <span>🏠</span> AWStats 文档
+            </a>
+            <div class="nav-links">
+                <a href="index.html" data-i18n="navHome">主页</a>
+                <a href="awstats_what.html" data-i18n="navWhat">什么是AWStats</a>
+                <a href="awstats_webmin.html" class="active" data-i18n="navWebmin">Webmin模块</a>
+                <a href="awstats_faq.html" data-i18n="navFAQ">FAQ</a>
+                <a href="awstats_config.html" data-i18n="navConfig">配置</a>
+                <a href="awstats_contrib.html" data-i18n="navPlugins">插件</a>
+            </div>
+            <!-- 面包屑导航，显示当前位置 -->
+            <div class="breadcrumb">
+                <a href="index.html" data-i18n="home">主页</a>
+                <span class="separator">›</span>
+                <span data-i18n="currentPage">Webmin模块</span>
+            </div>
+        </div>
+    </div>
 
-<body topmargin=10 leftmargin=5>
+    <header class="header">
+        <div class="container header-row">
+            <div class="logo-area">
+                <img src="images/awstats_logo6.png" alt="AWStats" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'52\' height=\'52\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%235b5f97\'/%3E%3Ctext x=\'20\' y=\'68\' fill=\'%23ffffff\' font-size=\'60\' font-weight=\'bold\'%3EAW%3C/text%3E%3C/svg%3E';">
+                <span class="site-title" data-i18n="siteTitle">AWStats 8.1</span>
+            </div>
+            <div class="header-center" data-i18n="headerSlogan">
+                ⚡ 先进的日志分析器 · 官方文档
+            </div>
+            <div class="header-right">
+                <div class="lang-switch">
+                    <span>🌐</span>
+                    <select id="langSelector">
+                        <option value="en" selected>English</option>
+                        <option value="zh">中文</option>
+                    </select>
+                </div>
+                <button class="theme-toggle" id="themeToggleBtn">
+                    <span>🌓</span> <span class="theme-text" data-i18n="themeAuto">自动</span>
+                </button>
+            </div>
+        </div>
+    </header>
 
+    <main class="container">
+        <div class="doc-card">
+            <h1 data-i18n="mainTitle">AWStats Webmin 模块</h1>
 
-<table style="font: 10pt arial,helvetica,verdana" cellpadding=0 cellspacing=0 border=0 bgcolor=#FFFFFF width=100%>
+            <p data-i18n="intro">此页面旨在帮助使用 'Webmin' 管理工具 (<a href="http://www.webmin.com">www.webmin.com</a>) 的用户管理其 AWStats 配置/工具。如果您不使用它，则无需阅读此处内容。</p>
+            
+            <!-- 添加快速目录链接，方便跳转 -->
+            <div style="background: var(--surface-secondary); padding: 15px 20px; border-radius: 50px; margin: 20px 0;">
+                <span style="font-weight: bold; margin-right: 20px;" data-i18n="quickNav">📑 快速跳转：</span>
+                <a href="#ADDMODULE" style="margin-right: 15px;" data-i18n="toc1">添加模块</a>
+                <a href="#SETUPMODULE" style="margin-right: 15px;" data-i18n="toc2">配置模块</a>
+                <a href="#USEMODULE" data-i18n="toc3">使用模块</a>
+            </div>
 
-<!-- Large -->
-<tr style="font: 10pt arial,helvetica,verdana">
-<td bgcolor=#9999cc align=center><a href="/"><img src="images/awstats_logo6.png" border=0></a></td>
-<td bgcolor=#9999cc align=center>
-<br>
-<font style="font: 16pt arial,helvetica,sans-serif" color=#EEEEFF><b>AWStats logfile analyzer 8.0 Documentation</b></font><br>
-<br>
-</td>
-<td bgcolor=#9999cc align=center>
-&nbsp;
-</td>
-</tr>
+            <!-- 添加模块 -->
+            <a name="ADDMODULE"></a>
+            <h2 data-i18n="addTitle"><u>将 AWStats Webmin 模块添加到 Webmin 界面</u></h2>
+            <ul>
+                <li data-i18n="add1">运行 Webmin，进入 "Webmin 配置"。</li>
+                <li data-i18n="add2">点击 "Webmin 模块"。</li>
+                <li data-i18n="add3">在 "安装模块" 中，输入 <code>awstats-x.x.wbm</code> 文件的路径（此文件随 AWStats 提供，位于 <i>tools/webmin</i> 目录中，或可从 AWStats 网站单独下载），然后点击 "安装模块"。</li>
+                <li data-i18n="add4">之后，您的 Webmin 菜单中应出现一个新条目 "AWStats 日志文件分析"。</li>
+            </ul>
+            
+            <!-- 添加一个返回顶部的锚点 -->
+            <div style="text-align: right; margin-top: 10px;">
+                <a href="#" style="font-size: 0.9rem;" data-i18n="backToTop">↑ 返回顶部</a>
+            </div>
+            <br>
 
-</table>
+            <!-- 配置模块 -->
+            <a name="SETUPMODULE"></a>
+            <h2 data-i18n="setupTitle"><u>配置 AWStats Webmin 模块</u></h2>
+            <ul>
+                <li data-i18n="setup1">运行 Webmin，进入 "AWStats 日志文件分析" 菜单。</li>
+                <li data-i18n="setup2">点击 "模块配置"。</li>
+                <li data-i18n="setup3">现在您必须在此处输入以下值：</li>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li style="margin-bottom: 15px;">
+                        <strong data-i18n="setupPathCliLabel">AWStats (CLI) 的绝对文件系统路径</strong><br>
+                        <span data-i18n="setupPathCliDesc">即 <i>awstats.pl</i> 脚本的完整路径。路径取决于您使用的软件包。</span><br>
+                        <code data-i18n="setupPathCliExample">/usr/local/awstats/wwwroot/cgi-bin/awstats.pl</code>
+                    </li>
+                    <li style="margin-bottom: 15px;">
+                        <strong data-i18n="setupPathCgiLabel">AWStats (CGI) 的绝对或相对 URL 路径</strong><br>
+                        <span data-i18n="setupPathCgiDesc">运行 AWStats 作为 CGI 时必须输入的绝对或相对 URL。这取决于您设置 Web 服务器和 cgi 目录的方式。</span><br>
+                        <code data-i18n="setupPathCgiExample">/cgi-bin/awstats.pl</code> 或 <code>http://127.0.0.1/awstats/awstats.pl</code>
+                    </li>
+                    <li style="margin-bottom: 15px;">
+                        <strong data-i18n="setupSampleLabel">AWStats 示例配置文件</strong><br>
+                        <span data-i18n="setupSampleDesc">用于创建新配置文件的示例文件。</span><br>
+                        <code data-i18n="setupSampleExample">/etc/awstats/awstats.model.conf</code>
+                    </li>
+                </ul>
+            </ul>
+            
+            <div style="text-align: right; margin-top: 10px;">
+                <a href="#" style="font-size: 0.9rem;" data-i18n="backToTop">↑ 返回顶部</a>
+            </div>
+            <br>
 
+            <!-- 使用模块 -->
+            <a name="USEMODULE"></a>
+            <h2 data-i18n="useTitle"><u>使用 AWStats Webmin 模块</u></h2>
+            <ul>
+                <li data-i18n="use1">只需运行 Webmin，进入 "AWStats 日志文件分析" 菜单。</li>
+                <li data-i18n="use2">现在您可以添加、编辑或删除配置文件。</li>
+                <li data-i18n="use3">您还可以更新或查看特定配置文件的统计信息。</li>
+            </ul>
+            
+            <div style="text-align: right; margin-top: 10px;">
+                <a href="#" style="font-size: 0.9rem;" data-i18n="backToTop">↑ 返回顶部</a>
+            </div>
+            <br>
 
-<br><br><H1 style="font: 26px arial,helvetica,sans-serif">AWStats Webmin module</H1>
+            <hr>
 
-This page is designed to help users of the 'Webmin' administration
-tool (<a href="http://www.webmin.com">www.webmin.com</a>) to manage their AWStats config/tools.
-If you don't use it, you don't need to read what is described here.<br>
-<ul>
-<li>Adding the AWStats Webmin module to Webmin interface<br>
-<li>Setup of the AWStats Webmin module<br>
-<li>Using the AWStats Webmin module<br>
-</ul>
-<br>
+            <!-- 相关链接推荐 -->
+            <div style="background: var(--surface-secondary); padding: 20px; border-radius: 20px; margin-top: 20px;">
+                <h3 style="margin-top: 0; color: var(--accent);" data-i18n="relatedLinks">📎 相关文档</h3>
+                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                    <a href="awstats_what.html" data-i18n="linkWhat">什么是AWStats</a>
+                    <a href="awstats_config.html" data-i18n="linkConfig">配置指南</a>
+                    <a href="awstats_faq.html" data-i18n="linkFaq">常见问题</a>
+                    <a href="awstats_contrib.html" data-i18n="linkContrib">插件资源</a>
+                </div>
+            </div>
 
-<br><a name="ADDMODULE"><H2 style="font: 22px arial,helvetica,sans-serif color: #606060"><u>Adding the AWStats Webmin module to Webmin interface</u></H2></a>
-<li> Run Webmin, go to "Webmin Configuration".<br>
-<li> Click on "Webmin Modules".<br>
-<li> Enter in the "Install module", the path of the awstats-x.x.wbm file (this file is provided
-with AWStats in <i>tools/webmin</i> directory or can be downloaded separately from AWStats
-web site) and click "Install module".<br>
-After that a new entry "AWStats LogFile Analysis" should appear in your Webmin menu.<br>
-<br>
+            <!-- 署名 -->
+            <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-top: 20px;">
+                <span style="color: var(--text-secondary);" data-i18n="writtenBy">文章作者：<a href="https://www.destailleur.fr" rel="author">Laurent Destailleur</a>。</span>
+                <span class="badge" data-i18n="webminBadge">Webmin 集成</span>
+            </div>
+        </div>
+    </main>
 
+    <!-- 返回顶部按钮 -->
+    <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="返回顶部">
+        ↑
+    </button>
 
-<br><a name="SETUPMODULE"><H2 style="font: 22px arial,helvetica,sans-serif color: #606060"><u>Setup of the AWStats Webmin module</u></H2></a>
-<li> Run Webmin, go to the "AWStats LogFile Analysis" menu.<br>
-<li> Click on the "Module configuration".<br>
-<li> You must now enter here values for:<br>
-- Absolute filesystem path to AWStats (CLI)<br>   
-It's the full path of the <i>awstats.pl</i> script. Path depends on package you use.<br>
-It could be <i>/usr/local/awstats/wwwroot/cgi-bin/awstats.pl</i><br>
-- Absolute or relative URL path to AWStats (CGI)<br>
-It's absolute or relative URL you must enter to run AWStats as a CGI. This depends on the way
-you setup your web server and cgi directories.<br>
-It could be <i>/cgi-bin/awstats.pl</i> or <i>http://127.0.0.1/awstats/awstats.pl</i>.<br>
-- Sample AWStats configuration file<br>
-This is the sample file used to create a new config file.<br>
-In most cases it must be <i>/etc/awstats/awstats.model.conf</i>.<br>
-<br>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-copyright">
+                © 1997 - <span id="currentYear"></span> Laurent Destailleur & AWStats <span data-i18n="copyright">团队</span>
+            </div>
+            <div class="footer-license">
+                <a href="awstats_license.html" data-i18n="licenseLink">GNU General Public License</a> · 
+                <a href="https://github.com/eldy/AWStats" rel="publisher" target="_blank" style="display: inline-flex; align-items: center;"><a data-i18n="authorLink"></a> 
+                </a>
+                    <img src="images/favicon.pub/github.svg" style="width: 24px; height: 24px;">
+                </div>
+            <div class="attribution" data-i18n="darkAttr">
+                🌓 自适应暗黑 · 现代化重构
+            </div>
+        </div>
+    </footer>
 
+    <script>
+        (function() {
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-<br><a name="USEMODULE"><H2 style="font: 22px arial,helvetica,sans-serif color: #606060"><u>Using the AWStats Webmin module</u></H2></a>
-<li> Just run Webmin, go to the "AWStats LogFile Analysis" menu.<br>
-<li> You can now, add, edit or delete config files.<br>
-<li> You can also update or view statistics for a particular config file.<br>
-<br>
+            // 翻译资源
+            const translations = {
+                en: {
+                    // 导航
+                    navHome: "Home",
+                    navWhat: "What is AWStats",
+                    navWebmin: "Webmin Module",
+                    navFAQ: "FAQ",
+                    navConfig: "Configuration",
+                    navPlugins: "Plugins",
+                    home: "Home",
+                    currentPage: "Webmin Module",
+                    quickNav: "Quick Jump:",
+                    backToTop: "↑ Back to top",
+                    relatedLinks: "📎 Related Documents",
+                    
+                    siteTitle: "AWStats 8.1",
+                    headerSlogan: "⚡ Advanced Log Analyzer · Official Docs",
+                    themeAuto: "Auto",
+                    mainTitle: "AWStats Webmin Module",
+                    intro: "This page is designed to help users of the 'Webmin' administration tool (<a href=\"http://www.webmin.com\">www.webmin.com</a>) to manage their AWStats config/tools. If you don't use it, you don't need to read what is described here.",
+                    toc1: "Add Module",
+                    toc2: "Setup Module",
+                    toc3: "Use Module",
+                    addTitle: "Adding the AWStats Webmin module to Webmin interface",
+                    add1: "Run Webmin, go to \"Webmin Configuration\".",
+                    add2: "Click on \"Webmin Modules\".",
+                    add3: "Enter in the \"Install module\", the path of the awstats-x.x.wbm file (this file is provided with AWStats in <i>tools/webmin</i> directory or can be downloaded separately from AWStats web site) and click \"Install module\".",
+                    add4: "After that a new entry \"AWStats LogFile Analysis\" should appear in your Webmin menu.",
+                    setupTitle: "Setup of the AWStats Webmin module",
+                    setup1: "Run Webmin, go to the \"AWStats LogFile Analysis\" menu.",
+                    setup2: "Click on the \"Module configuration\".",
+                    setup3: "You must now enter here values for:",
+                    setupPathCliLabel: "Absolute filesystem path to AWStats (CLI)",
+                    setupPathCliDesc: "It's the full path of the <i>awstats.pl</i> script. Path depends on package you use.",
+                    setupPathCliExample: "/usr/local/awstats/wwwroot/cgi-bin/awstats.pl",
+                    setupPathCgiLabel: "Absolute or relative URL path to AWStats (CGI)",
+                    setupPathCgiDesc: "It's absolute or relative URL you must enter to run AWStats as a CGI. This depends on the way you setup your web server and cgi directories.",
+                    setupPathCgiExample: "/cgi-bin/awstats.pl",
+                    setupSampleLabel: "Sample AWStats configuration file",
+                    setupSampleDesc: "This is the sample file used to create a new config file.",
+                    setupSampleExample: "/etc/awstats/awstats.model.conf",
+                    useTitle: "Using the AWStats Webmin module",
+                    use1: "Just run Webmin, go to the \"AWStats LogFile Analysis\" menu.",
+                    use2: "You can now, add, edit or delete config files.",
+                    use3: "You can also update or view statistics for a particular config file.",
+                    writtenBy: "Article written by <a href=\"https://www.destailleur.fr\" rel=\"author\">Laurent Destailleur</a>.",
+                    webminBadge: "Webmin integration",
+                    copyright: "© 2000 - {year} Laurent Destailleur & AWStats Team",
+                    licenseLink: "GNU General Public License",
+                    authorLink: "Author",
+                    darkAttr: "🌓 Adaptive dark mode · Multilingual docs",
+                    linkWhat: "What is AWStats",
+                    linkConfig: "Configuration Guide",
+                    linkFaq: "FAQ",
+                    linkContrib: "Plugins",
+                },
+                zh: {
+                    navHome: "主页",
+                    navWhat: "什么是AWStats",
+                    navWebmin: "Webmin模块",
+                    navFAQ: "常见问题",
+                    navConfig: "配置指南",
+                    navPlugins: "插件",
+                    home: "主页",
+                    currentPage: "Webmin模块",
+                    quickNav: "📑 快速跳转：",
+                    backToTop: "↑ 返回顶部",
+                    relatedLinks: "📎 相关文档",
+                    
+                    siteTitle: "AWStats 8.1",
+                    headerSlogan: "⚡ 先进的日志分析器 · 官方文档",
+                    themeAuto: "自动",
+                    mainTitle: "AWStats Webmin 模块",
+                    intro: "此页面旨在帮助使用 'Webmin' 管理工具 (<a href=\"http://www.webmin.com\">www.webmin.com</a>) 的用户管理其 AWStats 配置/工具。如果您不使用它，则无需阅读此处内容。",
+                    toc1: "添加模块",
+                    toc2: "配置模块",
+                    toc3: "使用模块",
+                    addTitle: "将 AWStats Webmin 模块添加到 Webmin 界面",
+                    add1: "运行 Webmin，进入 \"Webmin 配置\"。",
+                    add2: "点击 \"Webmin 模块\"。",
+                    add3: "在 \"安装模块\" 中，输入 awstats-x.x.wbm 文件的路径（此文件随 AWStats 提供，位于 <i>tools/webmin</i> 目录中，或可从 AWStats 网站单独下载），然后点击 \"安装模块\"。",
+                    add4: "之后，您的 Webmin 菜单中应出现一个新条目 \"AWStats 日志文件分析\"。",
+                    setupTitle: "配置 AWStats Webmin 模块",
+                    setup1: "运行 Webmin，进入 \"AWStats 日志文件分析\" 菜单。",
+                    setup2: "点击 \"模块配置\"。",
+                    setup3: "现在您必须在此处输入以下值：",
+                    setupPathCliLabel: "AWStats (CLI) 的绝对文件系统路径",
+                    setupPathCliDesc: "即 <i>awstats.pl</i> 脚本的完整路径。路径取决于您使用的软件包。",
+                    setupPathCliExample: "/usr/local/awstats/wwwroot/cgi-bin/awstats.pl",
+                    setupPathCgiLabel: "AWStats (CGI) 的绝对或相对 URL 路径",
+                    setupPathCgiDesc: "运行 AWStats 作为 CGI 时必须输入的绝对或相对 URL。这取决于您设置 Web 服务器和 cgi 目录的方式。",
+                    setupPathCgiExample: "/cgi-bin/awstats.pl",
+                    setupSampleLabel: "AWStats 示例配置文件",
+                    setupSampleDesc: "用于创建新配置文件的示例文件。",
+                    setupSampleExample: "/etc/awstats/awstats.model.conf",
+                    useTitle: "使用 AWStats Webmin 模块",
+                    use1: "只需运行 Webmin，进入 \"AWStats 日志文件分析\" 菜单。",
+                    use2: "现在您可以添加、编辑或删除配置文件。",
+                    use3: "您还可以更新或查看特定配置文件的统计信息。",
+                    writtenBy: "文章作者：<a href=\"https://www.destailleur.fr\" rel=\"author\">Laurent Destailleur</a>。",
+                    webminBadge: "Webmin 集成",
+                    copyright: "© 2000 - {year} Laurent Destailleur & AWStats 团队",
+                    licenseLink: "GNU通用公共许可证",
+                    authorLink: "原作者",
+                    darkAttr: "🌓 自适应暗黑 · 多语言文档",
+                    linkWhat: "什么是AWStats",
+                    linkConfig: "配置指南",
+                    linkFaq: "常见问题",
+                    linkContrib: "插件资源",
+                }
+            };
 
-<hr>
+            const i18nElements = document.querySelectorAll('[data-i18n]');
+            const langSelector = document.getElementById('langSelector');
+            let currentLang = localStorage.getItem('awstats_lang') || 'en';
+            langSelector.value = currentLang;
 
-<!-- You can remove this part if you distribution need documentation without external tags -->
-<!-- BEGIN_SOCIAL_NETWORKS -->
-<div class="htmldoc-ignore">
-<!-- google plus -->
-<span style="color: #bbb; font-weight: normal;">Article written by <a href="https://www.destailleur.fr" rel="author" style="color: #ccc; font-weight: normal;">Laurent Destailleur</a>.</span><br>
-<br>
-<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-<g:plusone></g:plusone>
-<!-- facebook -->
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/fr_FR/all.js#xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-<div class="fb-like" data-href="http://www.awstats.org/docs/awstats_webmin.html" data-layout="button_count" data-action="recommend" data-show-faces="false" data-share="true"></div>
-</div>
-<!-- END_SOCIAL_NETWORKS -->
+            function applyLanguage(lang) {
+                const t = translations[lang] || translations.en;
+                i18nElements.forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (t[key] !== undefined) {
+                        if (key === 'copyright') {
+                            const year = new Date().getFullYear();
+                            el.innerHTML = t[key].replace('{year}', year);
+                        } else if (key === 'intro' || key === 'writtenBy' || key.includes('Desc') || key.includes('Example') || key === 'add3') {
+                            el.innerHTML = t[key];
+                        } else {
+                            el.textContent = t[key];
+                        }
+                    }
+                });
+                localStorage.setItem('awstats_lang', lang);
+                
+                const themeState = localStorage.getItem('awstats_theme') || 'auto';
+                const themeText = document.querySelector('.theme-text');
+                if (themeText) {
+                    if (themeState === 'auto') themeText.textContent = t.themeAuto;
+                    else if (themeState === 'light') themeText.textContent = (lang === 'zh' ? '浅色' : 'Light');
+                    else themeText.textContent = (lang === 'zh' ? '深色' : 'Dark');
+                }
+            }
 
+            applyLanguage(currentLang);
+
+            langSelector.addEventListener('change', (e) => {
+                currentLang = e.target.value;
+                applyLanguage(currentLang);
+            });
+
+            // 暗黑模式切换
+            const root = document.documentElement;
+            const themeBtn = document.getElementById('themeToggleBtn');
+            let themeState = localStorage.getItem('awstats_theme') || 'auto';
+
+            function applyTheme(state) {
+                root.classList.remove('force-light', 'force-dark');
+                if (state === 'light') root.classList.add('force-light');
+                else if (state === 'dark') root.classList.add('force-dark');
+                const themeText = document.querySelector('.theme-text');
+                if (themeText) {
+                    const lang = currentLang;
+                    const t = translations[lang];
+                    if (state === 'auto') themeText.textContent = t.themeAuto;
+                    else if (state === 'light') themeText.textContent = (lang === 'zh' ? '浅色' : 'Light');
+                    else themeText.textContent = (lang === 'zh' ? '深色' : 'Dark');
+                }
+                localStorage.setItem('awstats_theme', state);
+            }
+            applyTheme(themeState);
+            themeBtn.addEventListener('click', () => {
+                if (themeState === 'auto') themeState = 'light';
+                else if (themeState === 'light') themeState = 'dark';
+                else themeState = 'auto';
+                applyTheme(themeState);
+            });
+        })();
+    </script>
 </body>
 </html>

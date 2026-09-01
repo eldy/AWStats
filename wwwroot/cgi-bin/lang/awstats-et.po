@@ -1,0 +1,3313 @@
+# AWStats Estonian (et) translations
+# Copyright (C) 2026 AWStats
+# This file is distributed under the same license as the AWStats package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: AWStats 8.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-10 12:00+0000\n"
+"PO-Revision-Date: 2026-05-10 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Estonian\n"
+"Language: et\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#------------------------------------------------------------------------------
+# Kuude nimed
+#------------------------------------------------------------------------------
+
+msgid "month_01"
+msgstr "Jaanuar"
+
+msgid "month_02"
+msgstr "Veebruar"
+
+msgid "month_03"
+msgstr "Märts"
+
+msgid "month_04"
+msgstr "Aprill"
+
+msgid "month_05"
+msgstr "Mai"
+
+msgid "month_06"
+msgstr "Juuni"
+
+msgid "month_07"
+msgstr "Juuli"
+
+msgid "month_08"
+msgstr "August"
+
+msgid "month_09"
+msgstr "September"
+
+msgid "month_10"
+msgstr "Oktoober"
+
+msgid "month_11"
+msgstr "November"
+
+msgid "month_12"
+msgstr "Detsember"
+
+#------------------------------------------------------------------------------
+# Nädalapäevade nimed
+#------------------------------------------------------------------------------
+
+msgid "DayOfWeek_0"
+msgstr "Pühapäev"
+
+msgid "DayOfWeek_1"
+msgstr "Esmaspäev"
+
+msgid "DayOfWeek_2"
+msgstr "Teisipäev"
+
+msgid "DayOfWeek_3"
+msgstr "Kolmapäev"
+
+msgid "DayOfWeek_4"
+msgstr "Neljapäev"
+
+msgid "DayOfWeek_5"
+msgstr "Reede"
+
+msgid "DayOfWeek_6"
+msgstr "Laupäev"
+
+#------------------------------------------------------------------------------
+# Liidese elemendid
+#------------------------------------------------------------------------------
+
+msgid "Advanced Web Statistics for"
+msgstr "Täpsemad veebistatistikad"
+
+msgid "Statistics for"
+msgstr "Statistika"
+
+msgid "main"
+msgstr "Ülevaade"
+
+# Teema vahetamine
+msgid "Switch to light mode"
+msgstr "Lülitu heledale režiimile"
+
+msgid "Switch to dark mode"
+msgstr "Lülitu tumedale režiimile"
+
+# Mahuühikud
+msgid "TB"
+msgstr "TB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "Bytes"
+msgstr "Baiti"
+
+# Vormi elemendid
+msgid "Filter"
+msgstr "Filter"
+
+msgid "Exclude filter"
+msgstr "Väljaarvamise filter"
+
+msgid "Top"
+msgstr "Top"
+
+msgid "Full list"
+msgstr "Täielik nimekiri"
+
+msgid "Last"
+msgstr "Viimane"
+
+msgid "Average"
+msgstr "Keskmine"
+
+msgid "Export"
+msgstr "Ekspordi"
+
+msgid "Details"
+msgstr "Üksikasjad"
+
+msgid "Version"
+msgstr "Versioon"
+
+# Tuhandete eraldaja
+msgid "thousands_separator"
+msgstr " "
+
+# Pikk kuupäeva vorming (viimase uuenduse, esimese külastuse jne jaoks)
+msgid "dateformat_long"
+msgstr "dd.mm.yyyy HH:MM:SS"
+
+# Lühike kuupäeva vorming (graafikute siltide jne jaoks)
+msgid "dateformat_short"
+msgstr "dd.mm.yyyy HH:MM"
+
+msgid "date_format_year"
+msgstr "%s"
+
+msgid "date_format_month"
+msgstr "%1$s %2$s"
+
+#------------------------------------------------------------------------------
+# Navigeerimismenüü
+#------------------------------------------------------------------------------
+
+msgid "AWStats Month Selector"
+msgstr "AWStats kuu valija"
+
+msgid "nav_category_basic"
+msgstr "Põhidokumentatsioon"
+
+msgid "nav_category_guide"
+msgstr "Kasutusjuhendid"
+
+msgid "nav_category_reference"
+msgstr "Viiteallikad"
+
+msgid "nav_category_integration"
+msgstr "Integratsioon ja laiendused"
+
+msgid "nav_category_dev"
+msgstr "Arendaja dokumentatsioon"
+
+msgid "nav_changelog"
+msgstr "Muudatuste logi"
+
+msgid "nav_what"
+msgstr "Mis on AWStats"
+
+msgid "nav_license"
+msgstr "Litsents"
+
+msgid "nav_glossary"
+msgstr "Sõnastik"
+
+msgid "nav_setup"
+msgstr "Paigaldus ja seadistus"
+
+msgid "nav_upgrade"
+msgstr "Uuendamise juhend"
+
+msgid "nav_config"
+msgstr "Konfiguratsiooni parameetrid"
+
+msgid "nav_extra"
+msgstr "Lisajaotised"
+
+msgid "nav_tools"
+msgstr "Muud tööriistad"
+
+msgid "nav_faq"
+msgstr "KKK"
+
+msgid "nav_security"
+msgstr "Turvasoovitused"
+
+msgid "nav_compare"
+msgstr "Võrdlus"
+
+msgid "nav_benchmark"
+msgstr "Jõudluse test"
+
+msgid "nav_webmin"
+msgstr "Webmini moodul"
+
+msgid "nav_dolibarr"
+msgstr "Dolibarr moodul"
+
+msgid "nav_contrib"
+msgstr "Panustamine"
+
+msgid "nav_plugins"
+msgstr "Pluginate arendus"
+
+msgid "nav_hooks"
+msgstr "Pluginate konksud"
+
+msgid "nav_graphs"
+msgstr "Pluginate graafikud"
+
+msgid "Back to top"
+msgstr "Tagasi algusesse"
+
+msgid "nav_select_month"
+msgstr "Vali kuu"
+
+#------------------------------------------------------------------------------
+# Peamised statistilised näitajad
+#------------------------------------------------------------------------------
+
+msgid "Unique visitors"
+msgstr "Unikaalsed külastajad"
+
+msgid "Visits"
+msgstr "Külastused"
+
+msgid "Visits duration"
+msgstr "Külastuste kestus"
+
+msgid "First visit"
+msgstr "Esimene uuendus"
+
+msgid "Last visit"
+msgstr "Viimane uuendus"
+
+msgid "Visits/Visitor"
+msgstr "Külastust/külastaja"
+
+msgid "Pages/Visit"
+msgstr "Lehte/külastust"
+
+msgid "Hits/Visit"
+msgstr "Päringut/külastust"
+
+msgid "KB/Visit"
+msgstr "KB/külastust"
+
+msgid "KB/Visits"
+msgstr "KB/külastusi"
+
+msgid "Pages"
+msgstr "Lehed"
+
+msgid "Hits"
+msgstr "Päringud"
+
+msgid "Bandwidth"
+msgstr "Lairiba"
+
+msgid "duration_format"
+msgstr "%s-%s"
+
+msgid "unit_s"
+msgstr "sekundit"
+
+msgid "unit_min"
+msgstr "minutit"
+
+msgid "unit_h"
+msgstr "tundi"
+
+msgid "and"
+msgstr "-"
+
+msgid "Device Types"
+msgstr "Seadmete tüübid"
+
+msgid "Device Type"
+msgstr "Seadme tüüp"
+
+msgid "Percent"
+msgstr "Protsent"
+
+msgid "Mobile"
+msgstr "Mobiiltelefon"
+
+msgid "Pause & Go"
+msgstr "Katkestuse jätkamine"
+
+msgid "Complete"
+msgstr "Lõpetatud"
+
+msgid "Tablet"
+msgstr "Tahvelarvuti"
+
+msgid "Tv"
+msgstr "Televiisor"
+
+msgid "Wearable"
+msgstr "Kantav seade"
+
+msgid "Bot"
+msgstr "Robot"
+
+msgid "Desktop"
+msgstr "Lauaarvuti"
+
+msgid "Normal browsing traffic"
+msgstr "Tavaline sirvimisliiklus"
+
+msgid "Abnormal browsing traffic"
+msgstr "Ebanormaalne sirvimisliiklus"
+
+msgid "Viewed"
+msgstr "Vaadatud"
+
+msgid "Not viewed"
+msgstr "Pole vaadatud"
+
+msgid "Abnormal browsing traffic note"
+msgstr "Ebanormaalne sirvimisliiklus hõlmab: otsingumootori robotid, AI treeningrobotid, haavatavuse skannerid ja päringud, mis ei järgi HTTP/HTTPS spetsifikatsioone"
+
+msgid "File size"
+msgstr "Faili suurus"
+
+msgid "File type"
+msgstr "Faili tüüp"
+
+msgid "Downloads"
+msgstr "Allalaadimised"
+
+msgid "Request time"
+msgstr "Päringu aeg"
+
+msgid "Total requests"
+msgstr "Päringuid kokku"
+
+msgid "Frequency"
+msgstr "Sagedus"
+
+msgid "Average frequency"
+msgstr "Keskmine sagedus"
+
+msgid "Seconds"
+msgstr "Sekundit"
+
+msgid "First"
+msgstr "Esimene"
+
+msgid "Mails"
+msgstr "Kirjad"
+
+msgid "Size"
+msgstr "Suurus"
+
+msgid "If you remove this file, all statistics for date"
+msgstr "Hoiatus: selle faili kustutamine põhjustab kuupäeva"
+
+msgid "will be lost/reset."
+msgstr "kõigi statistiliste andmete jääva kadumise/lähtestamise!"
+
+msgid "Last config file used to build this data file was"
+msgstr "Viimane selle andmefaili koostamiseks kasutatud konfiguratsioonifail oli"
+
+msgid "Position (offset in bytes) in this file for beginning of each section for"
+msgstr "Asukoht (nihe baitides) selles failis iga jaotise alguse jaoks"
+
+msgid "direct I/O access. If you made changes somewhere in this file, you should"
+msgstr "otsene I/O juurdepääs. Kui olete selles failis kuskil muudatusi teinud, peaksite"
+
+msgid "also remove completely the MAP section (AWStats will rewrite it at next update)"
+msgstr "ka MAP jaotise täielikult eemaldama (AWStats kirjutab selle järgmisel uuendamisel uuesti)."
+
+msgid "LastLine    = Date of last record processed - Last record line number in last log - Last record offset in last log - Last record signature value"
+msgstr "LastLine    = Viimati töödeldud kirje kuupäev - Viimase kirje rea number viimases logis - Viimase kirje nihe viimases logis - Viimase kirje allkirja väärtus"
+
+msgid "FirstTime   = Date of first visit for history file"
+msgstr "FirstTime   = Esimese külastuse kuupäev ajaloofaili jaoks"
+
+msgid "LastTime    = Date of last visit for history file"
+msgstr "LastTime    = Viimase külastuse kuupäev ajaloofaili jaoks"
+
+msgid "LastUpdate  = Date of last update - Nb of parsed records - Nb of parsed old records - Nb of parsed new records - Nb of parsed corrupted - Nb of parsed dropped"
+msgstr "LastUpdate  = Viimase uuenduse kuupäev - Parcitud kirjete arv - Parcitud vanade kirjete arv - Parcitud uute kirjete arv - Parcitud rikutud kirjete arv - Parcitud kõrvalejäetud kirjete arv"
+
+msgid "TotalVisits = Number of visits"
+msgstr "TotalVisits = Külastuste arv"
+
+msgid "TotalUnique = Number of unique visitors"
+msgstr "TotalUnique = Unikaalsete külastajate arv"
+
+msgid "MonthHostsKnown   = Number of hosts known"
+msgstr "MonthHostsKnown   = Teadaolevate hostide arv"
+
+msgid "MonthHostsUnKnown = Number of hosts unknown"
+msgstr "MonthHostsUnKnown = Tundmatute hostide arv"
+
+msgid "Cluster ID - Pages - Hits - Bandwidth"
+msgstr "Klastri ID - Lehtede arv - Päringute arv - Lairiba"
+
+msgid "Hour - Pages - Hits - Bandwidth - Not viewed Pages - Not viewed Hits - Not viewed Bandwidth"
+msgstr "Tund - Lehtede arv - Päringute arv - Lairiba - Vaatamata lehed - Vaatamata päringud - Vaatamata lairiba"
+
+msgid "Date - Pages - Hits - Bandwidth - Visits"
+msgstr "Kuupäev - Lehtede arv - Päringute arv - Lairiba - Külastuste arv"
+
+msgid "Domain - Pages - Hits - Bandwidth"
+msgstr "Domeen - Lehtede arv - Päringute arv - Lairiba"
+
+msgid "The %s first Pages must be first (order not required for others)"
+msgstr "Avalehel kuvatakse ainult esimest %s lehte, mida on kõige rohkem vaadatud. Täieliku nimekirja vaatamiseks vaadake üksikasjade lehte."
+
+msgid "Host - Pages - Hits - Bandwidth - Last visit date - [Start date of last visit] - [Last page of last visit]"
+msgstr "Host - Lehtede arv - Päringute arv - Lairiba - Viimase külastuse aeg - [Viimase külastuse algusaeg] - [Viimase külastuse viimane leht]"
+
+msgid "[Start date of last visit] and [Last page of last visit] are saved only if session is not finished"
+msgstr "[Viimase külastuse algusaeg] ja [Viimase külastuse viimane leht] salvestatakse ainult siis, kui seanss pole lõppenud"
+
+msgid "The first %s items are sorted by hits in descending order; order of the remaining items is undefined."
+msgstr "Esimesed %s üksust on sorteeritud tabamuste arvu järgi kahanevas järjekorras; ülejäänud üksuste järjekord on määratlemata."
+
+msgid "Login - Pages - Hits - Bandwidth - Last visit"
+msgstr "Sisseloginud kasutaja - Lehtede arv - Päringute arv - Lairiba - Viimase külastuse aeg"
+
+msgid "Robot ID - Hits - Bandwidth - Last visit - Hits on robots.txt"
+msgstr "Roboti ID - Päringute arv - Lairiba - Viimase külastuse aeg - robots.txt päringute arv"
+
+msgid "Worm ID - Hits - Bandwidth - Last visit"
+msgstr "Ussi ID - Päringute arv - Lairiba - Viimase külastuse aeg"
+
+msgid "EMail - Hits - Bandwidth - Last visit"
+msgstr "E-post - Päringute arv - Lairiba - Viimase külastuse aeg"
+
+msgid "The first %s email addresses are sorted by hits in descending order; order of the remaining addresses is undefined."
+msgstr "Esimesed %s e-posti aadressid on sorteeritud tabamuste arvu järgi kahanevas järjekorras; ülejäänud aadresside järjekord on määratlemata."
+
+msgid "URL - Pages - Bandwidth - Entry - Exit"
+msgstr "URL - Lehtede arv - Lairiba - Sisenemine - Väljumine"
+
+msgid "Files type - Hits - Bandwidth - Bandwidth without compression - Bandwidth after compression"
+msgstr "Faili tüüp - Päringute arv - Lairiba - Lairiba enne tihendamist - Lairiba pärast tihendamist"
+
+msgid "Request Time Range - Request Time Frequency"
+msgstr "Päringu aja vahemik - Päringute arv"
+
+msgid "Payload Range - Payload Frequency"
+msgstr "Faili suuruse vahemik - Failide arv"
+
+msgid "Session range - Number of visits"
+msgstr "Seansi kestuse vahemik - Külastuste arv"
+
+msgid "URL with %s errors - Hits"
+msgstr "URL %s veaga - Päringute arv"
+
+msgid "Last URL referrer"
+msgstr "Viimane URL-i viitaja"
+
+msgid "Errors - Hits - Bandwidth"
+msgstr "Vead - Päringute arv - Lairiba"
+
+msgid "Search keywords - Number of search"
+msgstr "Otsingumärksõnad - Otsingute arv"
+
+msgid "Only top %s keywords shown on main page (sorted by search count). See full list on detail page."
+msgstr "Avalehel kuvatakse ainult esimest %s märksõna otsingute arvu järgi. Täieliku nimekirja vaatamiseks vaadake üksikasjade lehte."
+
+msgid "Search keyphrases - Number of search"
+msgstr "Otsinguvõtmelaused - Otsingute arv"
+
+msgid "Only top %s keyphrases shown on main page (sorted by search count). See full list on detail page."
+msgstr "Avalehel kuvatakse ainult esimest %s võtmelauset otsingute arvu järgi. Täieliku nimekirja vaatamiseks vaadake üksikasjade lehte."
+
+msgid "External page referers - Pages - Hits"
+msgstr "Väline lehe viitaja - Lehtede arv - Päringute arv"
+
+msgid "Only top %s external referrers shown on main page (sorted by pages). See full list on detail page."
+msgstr "Avalehel kuvatakse ainult esimest %s välist viitajat lehtede arvu järgi. Täieliku nimekirja vaatamiseks vaadake üksikasjade lehte."
+
+msgid "Search engine referers ID - Pages - Hits"
+msgstr "Otsingumootori viitaja ID - Lehtede arv - Päringute arv"
+
+msgid "Origin - Pages - Hits"
+msgstr "Päritolu - Lehtede arv - Päringute arv"
+
+msgid "Unknown referer Browser - Last visit date"
+msgstr "Tundmatu viitaja brauser - Viimase külastuse aeg"
+
+msgid "Unknown referer OS - Last visit date"
+msgstr "Tundmatu viitaja OS - Viimase külastuse aeg"
+
+msgid "Screen size - Hits"
+msgstr "Ekraani eraldusvõime - Päringute arv"
+
+msgid "Browser ID - Hits - Pages"
+msgstr "Brauseri ID - Päringute arv - Lehtede arv"
+
+msgid "Downloads - Hits - Bandwidth"
+msgstr "Allalaadimised - Päringute arv - Lairiba"
+
+msgid "Protocol - Hits - Bandwidth"
+msgstr "Protokoll - Päringute arv - Lairiba"
+
+msgid "Icon Status - Type:200:404:Other"
+msgstr "Ikooni olek - Tüüp:200:404:Muu"
+
+#------------------------------------------------------------------------------
+# Ajaperioodide tõlked
+#------------------------------------------------------------------------------
+
+msgid "period_00"
+msgstr "Kesköö · Statistika magab, teie loete ikka andmeid? Tõeline pühendumus"
+
+msgid "period_01"
+msgstr "Kell üks öösel · Kas te külastate sel ajal? Unetus või just töölt tulnud"
+
+msgid "period_02"
+msgstr "Kell kaks öösel · Isegi robotid on usinamad, nad töötavad ikka"
+
+msgid "period_03"
+msgstr "Kell kolm öösel · Linn magab, server teeb ületunde, kes on kahjumis?"
+
+msgid "period_04"
+msgstr "Kell neli öösel · Kõige heledam täht pimeduses on teie ekraan või serveri indikaatortuli"
+
+msgid "period_05"
+msgstr "Kell viis hommikul · Varajane lind püüab ussi, varajane robot püüab andmeid"
+
+msgid "period_06"
+msgstr "Kell kuus hommikul · Keegi on ärganud, keegi pole veel magama läinud, internet ei maga kunagi"
+
+msgid "period_07"
+msgstr "Kell seitse hommikul · Liiklusummikute aeg, aeg ka veebis sirvimiseks"
+
+msgid "period_08"
+msgstr "Kell kaheksa hommikul · Esimene asi tööl: vaadake eilseid andmeid"
+
+msgid "period_09"
+msgstr "Kell üheksa hommikul · Kuldne aeg, isegi lõõgastumisel on omad reeglid"
+
+msgid "period_10"
+msgstr "Kell kümme hommikul · Kohviaeg, samal ajal kontrollin, kas liiklus on kasvanud"
+
+msgid "period_11"
+msgstr "Kell üksteist hommikul · Veel üks tund lõunani, kannatage veel veidi"
+
+msgid "period_12"
+msgstr "Keskpäev · Server: kõik on lõunale läinud, puhkan mina ka"
+
+msgid "period_13"
+msgstr "Kell üks pärastlõunal · Pärastlõunane unisus, aga andmed ei uinunud"
+
+msgid "period_14"
+msgstr "Kell kaks pärastlõunal · Pärastlõunase suupiste aeg, andmetega veel maitsvam"
+
+msgid "period_15"
+msgstr "Kell kolm pärastlõunal · Tänase liikluse graafik, kas meenutab teie tuju kõverat?"
+
+msgid "period_16"
+msgstr "Kell neli pärastlõunal · Veel X tundi tööpäeva lõpuni, liiklus hakkab kiirenema"
+
+msgid "period_17"
+msgstr "Kell viis pärastlõunal · Tööpäev läbi! Aga server jätkab tööd"
+
+msgid "period_18"
+msgstr "Kell kuus õhtul · Õhtusöögiaeg, lõõgastuge video vaatamisega"
+
+msgid "period_19"
+msgstr "Kell seitse õhtul · Parim aeg, liikluse tipptund, server: ma pean vastu"
+
+msgid "period_20"
+msgstr "Kell kaheksa õhtul · Diivanil lesides, teie olete 114514. külastaja"
+
+msgid "period_21"
+msgstr "Kell üheksa õhtul · Hilisõhtu, salaja andmeid vaatav öökull +1"
+
+msgid "period_22"
+msgstr "Kell kümme õhtul · Tänased andmed on tulemas, närvis?"
+
+msgid "period_23"
+msgstr "Kell üksteist õhtul · AWStats: aeg magama minna, homme on jälle töö"
+
+#------------------------------------------------------------------------------
+# Aja mõõtmed
+#------------------------------------------------------------------------------
+
+msgid "Period"
+msgstr "Statistikaperiood"
+
+msgid "Year"
+msgstr "Aasta"
+
+msgid "Month"
+msgstr "Kuu"
+
+msgid "Months"
+msgstr "Kuud"
+
+msgid "Date"
+msgstr "Kuupäev"
+
+msgid "Day"
+msgstr "Päev"
+
+msgid "Hour"
+msgstr "Tund"
+
+msgid "Hours"
+msgstr "Tunde"
+
+msgid "Day of week"
+msgstr "Nädalapäev"
+
+msgid "When"
+msgstr "Millal"
+
+msgid "%s Server Management Panel"
+msgstr "%s  serveri halduspaneel"
+
+msgid "Server Administration"
+msgstr "Lihtne ja tõhus serverilahendus"
+
+#------------------------------------------------------------------------------
+# Külastajate mõõde
+#------------------------------------------------------------------------------
+
+msgid "Invalid URL Parameters"
+msgstr "Kehtetud URL-i parameetrid"
+
+msgid "The requested page cannot be loaded due to invalid or malformed URL parameters."
+msgstr "Taotletud lehte ei saa laadida kehtetute või valesti vormindatud URL-i parameetrite tõttu."
+
+msgid "This may be caused by typing an incorrect URL, missing parameter separators, or using an invalid configuration name."
+msgstr "Selle põhjuseks võib olla vale URL-i sisestamine, parameetrite eraldajate puudumine või kehtetu konfiguratsiooninime kasutamine."
+
+msgid "Please check the URL you entered and ensure all parameters are correctly formatted."
+msgstr "Palun kontrollige sisestatud URL-i ja veenduge, et kõik parameetrid on õigesti vormindatud."
+
+msgid "SiteDomain parameter not defined in your config/domain file, or you may not have execution permission on the file."
+msgstr "SiteDomaini parameeter pole teie config/domain failis määratletud või pole teil faili täitmisõigusi."
+
+msgid "Please run as Administrator to set permissions"
+msgstr "Õiguste määramiseks käivitage administraatorina"
+
+msgid "This directory lacks read permission"
+msgstr "Sellel kataloogil puudub lugemisõigus"
+
+msgid "Please set read permission for directory"
+msgstr "Palun määrake kataloogile lugemisõigus"
+
+msgid "Missing required parameter in config file"
+msgstr "Konfiguratsioonifailist puudub nõutav parameeter"
+
+msgid "Please check that 'DirData' is defined."
+msgstr "Palun kontrollige, et 'DirData' on määratletud."
+
+msgid "Domain name in browser address appears to be missing or incomplete"
+msgstr "Brauseri aadressis olev domeeninimi näib puuduvat või mittetäielik"
+
+msgid "Please check the URL parameter"
+msgstr "Palun kontrollige URL-i parameetrit"
+
+msgid "Format description"
+msgstr "Vormingu kirjeldus"
+
+msgid "Please set execute permission"
+msgstr "Palun määrake täitmisõigus"
+
+msgid "Or if you prefer numeric mode"
+msgstr "Või kui eelistate numbrilist režiimi"
+
+msgid "View Report Directly"
+msgstr "Vaata aruannet otse"
+
+msgid "AWStats Log Viewer"
+msgstr "AWStats logivaatur"
+
+msgid "Month Selection"
+msgstr "Kuu valik"
+
+msgid "Who"
+msgstr "Kes"
+
+msgid "Visitors"
+msgstr "Külastajad"
+
+msgid "Countries"
+msgstr "Riigid/piirkonnad"
+
+msgid "flag_icon"
+msgstr "Lipp"
+
+msgid "Country-Region-City"
+msgstr "Riik/piirkond/linn"
+
+msgid "Code"
+msgstr "Kood"
+
+msgid "Known"
+msgstr "Teada"
+
+msgid "unknownos"
+msgstr "tundmatu operatsioonisüsteem"
+
+msgid "unknownbrowser"
+msgstr "tundmatu brauser"
+
+msgid "Unresolved IP Address"
+msgstr "Lahendamata IP-aadress"
+
+msgid "Unknown File Type"
+msgstr "Tundmatu failitüüp"
+
+msgid "Unknown Size"
+msgstr "Tundmatu suurus"
+
+msgid "Unknown Time"
+msgstr "Päringu tundmatu aeg"
+
+msgid "Unknown Browser"
+msgstr "Tundmatu brauser"
+
+msgid "Unknown OS"
+msgstr "Tundmatu operatsioonisüsteem"
+
+msgid "Unknown Visitor"
+msgstr "Tundmatu külastaja"
+
+msgid "Unknown Visitor (Total)"
+msgstr "Tundmatud külastajad (kokku)"
+
+msgid "Unknown Country"
+msgstr "Tundmatu riik/piirkond"
+
+msgid "Unknown Country (Region)"
+msgstr "Tundmatu riik/piirkond (kokku)"
+
+msgid "Unknown Visitor (Title)"
+msgstr "Tundmatu külastaja (pealkiri)"
+
+msgid "PageStayTime"
+msgstr "Lehel viibimise aega ei saa hinnata"
+
+msgid "Unknown OS (Link)"
+msgstr "Tundmatu operatsioonisüsteem (link)"
+
+msgid "Unknown OS (Row)"
+msgstr "Tundmatu operatsioonisüsteem (loend)"
+
+msgid "Unknown Browser (Link)"
+msgstr "Tundmatu brauser (link)"
+
+msgid "Unknown Browser (Row)"
+msgstr "Tundmatu brauser (loend)"
+
+msgid "Unknown Screen"
+msgstr "Tundmatu ekraani suurus"
+
+msgid "Login"
+msgstr "Kasutajanimi"
+
+msgid "Anonymous"
+msgstr "Anonüümne"
+
+msgid "Robots"
+msgstr "Robotid"
+
+msgid "Different robots"
+msgstr "Erinevad robotid"
+
+msgid "Hits on robots.txt"
+msgstr "Eespool loetletud otsingumootorite robotite tekitatud 'ebanormaalse sirvimise' liiklust ei ole teistel graafikutel arvesse võetud. '+' järel olev number tähistab õnnestunud külastusi failile 'robots.txt'"
+
+msgid "Worms"
+msgstr "Ussid"
+
+msgid "Different worms"
+msgstr "Erinevad ussid"
+
+msgid "Target"
+msgstr "Sihtmärk"
+
+msgid "Grabber"
+msgstr "Haaraja"
+
+#------------------------------------------------------------------------------
+# Failivormingute kirjeldused
+#------------------------------------------------------------------------------
+
+msgid "mime_text"
+msgstr "TXT lihttekstifail (1963. aastal ASCII standarditud vormindamata lihttekst. Kogu lähtekoodi, konfiguratsioonifailide ja süsteemilogide aluskihina on selle platvormideülene reavahetuste juhtimisvoog (CRLF Windowsis, LF Unixis) tänaseni kõige universaalsem andmevahetusstandard arvutimaailmas)"
+
+msgid "mime_log"
+msgstr "LOG süsteemi töölogi (salvestab operatsioonisüsteemi, tuuma ja rakenduste taseme olekud lihttekstina. Hõlmab Nginx/Apache juurdepääsuloge (Combined Log) ja standardset syslogi spetsifikatsiooni, on peamiseks andmeallikaks veaotsingul, voogesituse jõudluse analüüsil ja turvaauditites)"
+
+msgid "mime_page"
+msgstr "HTML hüperteksti veebileht (loodud Tim Berners-Lee poolt 1989. aastal, veebi nurgakivi. Tasuta ligipääsetava universaalse hüperteksti märgistuskeelena sai HTML5 spetsifikatsioon 2014. aastal ametlikuks W3C standardiks, toetab natiivselt struktureeritud multimeediat, semantilist interaktsiooni ja dünaamilist lehekülje paigutust, pälvis Turingi auhinna 2016. aastal)"
+
+msgid "mime_khtml"
+msgstr "KHTML veebi mallimootor (1998. aasta KDE 2.0 brauseri renderdusmootori spetsifikatsioon. Avatud lähtekoodi alusena, mis pani aluse kaasaegsele veebirenderdusele, inspireeris selle tehniline pärand otseselt Apple WebKiti ja Google Blinki tuumasid ning jätkab tänaseni kaasaegsete dünaamiliste voogveebiarhitektuuride alusvooluna)"
+
+msgid "mime_script"
+msgstr "SCRIPT interpreteeritav dünaamiline skript (üldine kategooria lähtekoodi voogudele, mida täidetakse rida-realt konkreetse käituskeskkonna või interpretaatori poolt ilma eelneva kompileerimiseta. Hõlmab ASP, JSP, CGI ja Tcl, mida kasutatakse laialdaselt serveripoolsetes üldliidestes, automatiseerimise protsessijuhtimises ja süsteemitasandi ülesannete sidumisel)"
+
+msgid "mime_js"
+msgstr "JavaScript skript (1995. aasta Netscape'i brauseri algne programmeerimiskeskkond. 1997. aastal kehtestati ECMAScripti tööstusstandard, 2009. aastal sündis Node.js käituskeskkond, mis murdis brauseri piirid ja lõi asünkroonse mitteblokeeriva täisvirna arhitektuuri, millega kaasneb maailma suurim npm tarkvarapakettide ökosüsteem)"
+
+msgid "mime_py"
+msgstr "Python skript (1991. aastal Guido van Rossumi loodud kõrgetasemeline interpreteeritav skriptikeel. Tänu kohustuslikule taandusele, mis tagab kadudeta loetavuse, ja mitme paradigmaga disainile on see kehtestatud tööstusstandardi keelena kaasaegse veebiarhitektuuri, täisvirna andmeteaduse, tehisintellekti (AI) mudelite treenimise ja pilvepõhise automatiseeritud toimimise jaoks)"
+
+msgid "mime_sh"
+msgstr "Shell skript (1971. aasta Unixi ajastu standardne käskeinterpreteerija skript. Sisaldab tuumatasandi käske nagu Bash, Sh, Dash, mida täidetakse tavaliselt .sh laiendiga, on universaalne tuumatasandi sideaine protsesside juhtimiseks, installimisvaba keskkonna seadistamiseks ja automatiseeritud juurutamiseks kaasaegsetes Unixi-laadsetes operatsioonisüsteemides)"
+
+msgid "mime_rb"
+msgstr "Ruby skript (1995. aastal Yukihiro Matsumoto loodud objektorienteeritud skriptikeel. Oma põhifilosoofiaga, mis keskendub äärmuslikule austusele arendaja kogemuse vastu, tegi selle Ruby on Railsi raamistik revolutsiooni kaasaegses kõrgetasemelises veebiarhitektuuris, kehtestades 'Konventsioon konfiguratsiooni ees (CoC)' paradigma)"
+
+msgid "mime_pl"
+msgstr "Perl skript (1987. aastal Larry Walli loodud pragmaatiline skriptikeel. Kaasaegsete paketihaldurite (CPAN) pioneerina tuntud kui tekstitöötluse 'Šveitsi armee nuga'. Kaasaegses CGI-režiimis toimib see väga madala füüsilise mälukuluga ja tõhusa regulaaravaldiste töötlusega logide analüüsimisel ülitöökindla aluskihina)"
+
+msgid "mime_php"
+msgstr "PHP dünaamiline veebileht (loodud Rasmus Lerdorfi poolt 1995. aastal, loodud spetsiaalselt veebiarenduseks. Põhitehnoloogiana, mis käivitab üle 70% maailma veebisaitidest, on see aluseks suuremahulistele tootmisrakendustele nagu WordPress ja Wikipedia. Alates PHP 8-st, JIT (just-in-time) käitusmootori kasutuselevõtuga, on see arenenud kõrge jõudlusega täisvirna serveriarhitektuuriks)"
+
+msgid "mime_image"
+msgstr "IMAGE pildivara klassifikatsioon (hõlmab kadudega/kadudeta pakitud bitmapte, kaasaegset responsiivset veebigraafikat ja vektorgraafikat. Oluline näitaja veebisaidi visuaalse ressursikoormuse, kliendipoolse puhvri tabamuse määra ja meedia võrgulindiriba tarbimise hindamisel)"
+
+msgid "mime_document"
+msgstr "DOCUMENT struktureeritud dokumendi klassifikatsioon (hõlmab lihtteksti, arvutustabeleid, ametlikke PDF-dokumente ja kergeid märgistuskeeli. Oluline näitaja serveripoolse staatilise teadmusbaasi jaotuse, ettevõtte varade allalaadimise ja tekstivoo läbilaskevõime statistika jaoks)"
+
+msgid "mime_package"
+msgstr "PACKAGE kompileeritud toodete ja tarkvarapakettide klassifikatsioon (hõlmab operatsioonisüsteemi jaoks loodud käivitatavaid programme, käitusaja teegifailid (DLL/SO) ja rakenduste levitamise installipakette. Kasutatakse sageli tarkvara levitamise saitide väljamineva liikluse ja allalaadimise tippude hindamiseks)"
+
+msgid "mime_archive"
+msgstr "ARCHIVE arhiveeritud ja pakitud failid (üldine kategooria DEFLATE, LZMA jms põhialgoritmidele tuginevatele andmepakkimispakettidele. Võrgukihil hõlmab see lisaks traditsioonilisele pakettide levitamisele ka GNU projekti 1992. aasta Gzip dünaamilisi vastusevooge. Kuigi Brotli algoritmi võetakse tänapäevastes stsenaariumides järk-järgult kasutusele, on see klassifikatsioon endiselt oluline näitaja serveri lindiriba läbilaskevõime ja transpordikihi pakkimise efektiivsuse hindamiseks)"
+
+msgid "mime_audio"
+msgstr "AUDIO digitaalse helivoo klassifikatsioon (hõlmab pakitud heli, heliraamatuid ja voogedastuse heli konteinereid. Põhineb konkreetsetel heli kodeki standarditel, kasutatakse heli andmevoo läbilaskevõime jälgimiseks multimeediasaitidel, samaaegse voogedastuse lindiriba ja pikkade ühenduste käitumise jälgimiseks)"
+
+msgid "mime_video"
+msgstr "VIDEO digitaalse videovoo klassifikatsioon (hõlmab kõrglahutusega videokonteinereid, kaasaegset veebianimatsiooni ja voogedastuse fragmente. Oluline näitaja serveri lindiriba tipplimiidi ja sisu kohaletoimetamise võrgu (CDN) kiirenduse efektiivsuse hindamiseks kõrge võrgukoormuse tingimustes)"
+
+msgid "mime_jscript"
+msgstr "JScript skript (1996. aastal Microsofti poolt Internet Explorer 3.0 jaoks loodud pöördtehnoloogial põhinev eravalduses teostus. Klassikalise JavaScripti varajase majandaja konkurendina oli see Windows Script Host (WSH) ja varajaste ASP-i taustaprogrammide põhimootoriks)"
+
+msgid "mime_json"
+msgstr "JSON struktureeritud andmed (2001. aastal Douglas Crockfordi loodud kergekaaluline andmete serialiseerimise vahetusvorming. Põhineb tekstipõhistel võtme-väärtuse paaridel ja massiivistruktuuridel, suure inimese loetavuse ja kadudeta voogparsimise omadustega, on de facto standard kaasaegsete veebi-API-de, mikroteenuste arhitektuuri ja suurte keelemudelitega suhtlemise jaoks)"
+
+msgid "mime_vbs"
+msgstr "VBScript skript (Microsofti poolt 1996. aastal IE 3.0-ga välja antud skriptikeele variant. Oli varajaste ASP-i dünaamiliste veebisaitide ja Windowsi süsteemihalduse põhiliikumapanevaks jõuks, kuid on nüüd ametlikult kasutusest kõrvaldatud ja eemaldatud uusimatest Windows 11 tuumadest, kuuludes ajaloolise pärandtehnoloogia hulka)"
+
+msgid "mime_conf"
+msgstr "CONF süsteemi konfiguratsioonifail (üldine kategooria andmefailidele, mis salvestavad tarkvara käitusaja keskkonna parameetreid lihtteksti kujul. Hõlmab INI ja kaasaegseid YAMLi, TOMLi ja JSONi spetsifikatsioone. Linuxi süsteemides asuvad enamasti /etc kataloogis, on süsteemitasandi käitusoleku häälestamise põhiline sõltuvus)"
+
+msgid "mime_css"
+msgstr "CSS kaskaadlaadistik (1996. aasta W3C standard, koos HTML/JS-iga üks kolmest esiosa arenduse põhitehnoloogiast. Alates CSS2 positsioneerimisest kuni CSS3 modulaarse arenguni toetab see natiivselt paindlikke kaste (Flexbox), võrgustikku (Grid) ja meediapäringutega responsiivset disaini, olles kaasaegsetes brauserites veebilehtede esituse lahtisidumise domineeriv standard)"
+
+msgid "mime_xsl"
+msgstr "XSL laadistik (1999. aasta W3C standard, sisaldab XSLT teisendus- ja XPathi aadressikeelt, struktureeritud XML-andmete renderdamiseks HTML-i, PDF-i või lihttekstina. Kaasaegses arenduses on selle ökosüsteem suures osas asendatud kergemate mallimootorite ja JSON-andmevorminguga)"
+
+msgid "mime_runtime"
+msgstr "käivitatav fail (EXE, ELF, Mach-O jms operatsioonisüsteemi põhised käivitatavad vormingud, mis sisaldavad kompileeritud madala taseme masinkoodi, sisenemispunkti ja süsteemi laadimise teavet)"
+
+msgid "mime_library"
+msgstr "teegi fail (DLL, SO, dylib jms dünaamilised või staatilised lingiteegid, mis sisaldavad jagatud sümboleid ja ümberpaigutuskoodi, mida teised programmid saavad kutsuda ja käitusajal laadida)"
+
+msgid "mime_swf"
+msgstr "Flash animatsioon (1996 Macromedia, omandas Adobe 2005. Interaktiivne veebianimatsiooni standard, domineeris kunagi interneti animatsioonide ja mängude üle. Puudused: sõltuvus lisamoodulitest, mobiilse toe puudumine, kõrge turvarisk. Adobe teatas selle kasutamise lõpetamisest 2017, tugi lõpetati täielikult 2020, asendati HTML5/CSS3/JS-iga)"
+
+msgid "mime_dtd"
+msgstr "DTD dokumendi tüübi määratlus (välja antud XML 1.0-ga 1998. aastal, kasutatakse XML/HTML dokumendi struktuuri määratlemiseks ja selle seaduslikkuse kontrollimiseks. Kaasaegses arenduses on see suures osas asendatud paindlikumate lahendustega nagu XML Schema, RELAX NG jne)"
+
+msgid "mime_csv"
+msgstr "CSV andmevorming (komaga eraldatud väärtused, universaalne lihttekstiga tabelivorming peaarvesti ajastust (IBM Fortrani kompilaator) 1972. aastast. Vormistati 2005. aastal RFC 4180 poolt kui platvormide- ja keelteülene kadudeta andmevahetuse standard. Kasutatakse laialdaselt tõhusaks importimiseks/eksportimiseks Excelis, relatsioonilistes andmebaasides ja andmeanalüüsis (Pandas))"
+
+msgid "mime_cur"
+msgstr "hiirekursori fail (.cur vorming, kasutatakse hiirekursori stiili kohandamiseks, nt sõrme kursor veebilehtedel või liivakella ootamise ikoon. On seotud tavalise .ico ikooniga, kuid sellel on täiendav 'kuum punkt' – tegelik klõpsamise koht. Ajalugu: võeti kasutusele Windows 3.1-ga (1992), oluline komponent graafilise kasutajaliidese hiirega juhtimise ajastu üleminekul käsurealt)"
+
+msgid "mime_jnlp"
+msgstr "Java Web Start (2000. aastate Java töölauarakenduste levitamise tehnoloogia, käivitab kaug-Java programme .jnlp failide kaudu. Turvaprobleemide ja tänapäevaste levitamismeetodite tõttu on see nüüd suures osas kasutusest kõrvaldatud)"
+
+msgid "mime_lit"
+msgstr "Microsoft Reader e-raamat (2000 Microsoft, LIT vorming. Kasutusest kõrvaldatud, saab nüüd teisendada EPUB- või PDF-vormingusse tööriistadega nagu Calibre)"
+
+msgid "mime_svg"
+msgstr "SVG vektorgraafika (1999. aasta W3C standard, XML-il põhinev 2D vektorpildi vorming. Skaalub kadudeta ja toetab teksti voogedastuse eeliseid. Kõik kaasaegsed brauserid toetavad seda natiivselt, kasutatakse laialdaselt kõrglahutusega veebi-ikoonide, logode ja vektoranimatsioonide jaoks, on kaasaegse veebigraafika keskne standard)"
+
+msgid "mime_ai"
+msgstr "AI vektorgraafika (1987. aasta Adobe eravalduses vektorvorming. Tööstuse standardina paigutuse, trükidisaini ja kaubamärgi identiteedi jaoks toetab see mitmeid kihte ja täiustatud paigutuse vektorandmeid, olles professionaalse visuaalkunsti eelistatud kandja)"
+
+msgid "mime_phshop"
+msgstr "PSD kihiga pilt (1990. aasta Adobe Photoshopiga välja antud eravalduses bitmap lähtevorming. Toetab mitmeid kihte, kanaleid, maske ja kadudeta redigeerimise andmeid, on kehtestatud ülemaailmse tööstuse standardina pilditöötluses ja digitaalsel maalimisel)"
+
+msgid "mime_ttf"
+msgstr "TrueType font (1989. aastal Apple'i ja Microsofti poolt ühiselt välja töötatud digitaalne kontuurfondi vorming. Põhineb ruutkeskmistel Bézier' kõveratel, tagades absoluutse piksli vastavuse ekraanil kuvamise ja prindiväljundi vahel, on kaasaegsete töölaua operatsioonisüsteemide vaikimisi põhifondi vorming)"
+
+msgid "mime_fon"
+msgstr "FON bitmap font (1980. aastate Microsofti varajane süsteemitasandi täppmaatriksfondi vorming. Ei toeta kadudeta proportsionaalset skaleerimist, kasutatakse tavaliselt ainult pikslipõhiseks tekstirenderdamiseks pärandsüsteemides või varajastes manussüsteemide komponentides)"
+
+msgid "mime_pdf"
+msgstr "PDF elektrooniline dokument (Adobe poolt 1993. aastal välja töötatud, sai 2008. aastal ISO 32000 rahvusvaheliseks standardiks. Platvormideülene fikseeritud paigutusega dokumendivorming absoluutse paigutuse ja vormingu täpsusega, on ülemaailmne standard elektrooniliste dokumentide levitamiseks ja digitaalseks kirjastamiseks)"
+
+msgid "mime_dotnet"
+msgstr "ASP.NET dünaamiline leht (2002. aastal Microsofti poolt .NET arhitektuuriga välja antud serveripoolne dünaamiliste veebilehtede tehnoloogia. Töötab IIS-i mootoris ettevõtte tasandi Windowsi serveripoolsete dünaamiliste veebirakenduste ja hajutatud süsteemide loomiseks)"
+
+msgid "mime_mdb"
+msgstr "MDB relatsiooniline andmebaas (1992. aastal Microsofti poolt Accessiga välja antud töölaua tasandi relatsioonilise andmebaasi salvestusvorming. Sisaldab Jet-andmebaasimootorit, olles relatsioonilise andmebaasi lahenduseks varajases isikliku arvuti ja väikeste ja keskmiste ettevõtete infohalduses)"
+
+msgid "mime_md"
+msgstr "Markdown dokument (2004. aastal John Gruberi loodud kerge märgistuskeel. Selle põhidisaini filosoofia 'loehtav on renderdatav' käivitab kaasaegsed tuletatud spetsifikatsioonid nagu GFM ja CommonMark. Kasutatakse laialdaselt vahetusstandardina tehnilises dokumentatsioonis, teadmusbaasides (Obsidian) ja kaasaegsetes staatiliste veebisaitide generaatorites)"
+
+msgid "mime_crystal"
+msgstr "Crystal Reports aruanne (SAP Business Intelligence (BI) platvormi professionaalne ettevõtte tasandi aruandefaili vorming. Omab mitme andmeallika ühenduse võimalust ja keerukat dünaamiliste diagrammide renderdamise võimekust, kasutatakse laialdaselt professionaalseks aruannete genereerimiseks rahvusvaheliste ettevõtete finants- ja andmeanalüüsi süsteemides)"
+
+msgid "mime_libreoffice"
+msgstr "LibreOffice dokument (2010. aastal The Document Foundationi poolt OpenOffice'ile tuginev avatud lähtekoodiga kontoritarkvara eravalduses vorming. Rakendab sügavuti W3C ODF (OpenDocument Format) rahvusvahelist standardit, olles kaasaegse avatud lähtekoodiga ökosüsteemi kontoritarkvara nurgakivi)"
+
+msgid "mime_encrypt"
+msgstr "ENCRYPT krüptitud fail (algne binaar- või tekstandmed, mida on töödeldud konkreetsete sümmeetriliste või asümmeetriliste krüptimisalgoritmidega. Sisaldab põhilisi tuletatud vorminguid nagu .enc, .pgp, .gpg jne, mida kasutatakse võrgukihil mitteavalike andmete konfidentsiaalsuse ja tervikluse kontrolli tagamiseks)"
+
+msgid "mime_gpx"
+msgstr "GPX satelliidi jälgimise andmed (XML-il põhinev ülemaailmse positsioneerimissüsteemi vahetusvorming. Spetsialiseerunud geograafiliste koordinaatide, teepunktide, marsruutide ja ajalooliste jälgede kirjeldamisele, on see avatud andmestandard kaasaegsetele mobiilsetele spordiseadmetele, autonavigatsioonile ja geograafilistele infosüsteemidele (GIS))"
+
+msgid "mime_diskimage"
+msgstr "Disk Image kettakujutis (ISO, DMG, IMG jms füüsilise ketta või optilise kandja sektorite kaupa madala taseme kujutise fail. Kasutatakse madala taseme süsteemi juurutamisel, suuremahulise tarkvara turvalisel levitamisel ja salvestuskandjate füüsilisel tasemel täielikuks varundamiseks)"
+
+msgid "mime_vm"
+msgstr "VM virtuaalmasina kujutis (VMDK, VDI, VHDX, OVA jms virtualiseeritud füüsilise ketta kujutised. VMware'i, VirtualBoxi ja Hyper-V platvormide alus, kasutatakse madala taseme riistvara emuleerimiseks, instantsi hetketõmmiste tegemiseks ja pilveinfrastruktuuri levitamiseks)"
+
+msgid "mime_torrent"
+msgstr "BitTorrent torrentifail (2001. aastal Bram Coheni loodud P2P hajutatud allalaadimise indeks. Põhineb Bencode kodeeringul, salvestab algse faili kontrollimise metaandmed ja Trackeri serveri adresseerimise teabe, on detsentraliseeritud võrguvoo levitamise keskne kandja)"
+
+msgid "mime_gis"
+msgstr "GIS georuumilised andmed (Shapefile ja GeoJSON-i keskne geograafilise teabesüsteemi andmestandard. Sisaldab mitmemõõtmelisi geomeetrilisi koordinaate, kihi topoloogiat ja atribuutandmeid, kasutatakse laialdaselt kõrglahutusega digitaalse kaardi renderdamisel, satelliitide kaugseirel ja ruumilise geomeetria analüüsil)"
+
+msgid "mime_ebook"
+msgstr "EBOOK e-raamat (digitaalse kirjastamise vorming, mille keskmes on W3C EPUB rahvusvaheline avatud standard ja Amazon Kindle'i eravalduses MOBI/AZW arhitektuur. Toetab kohanduvat voogesituse paigutust, metaandmete kapseldamist ja DRM digitaalse õiguste haldust, on üldine kandja mobiilseks digitaalseks lugemiseks)"
+
+msgid "mime_avif"
+msgstr "AVIF tõhus pilt (2019. aasta Avatud Meedia Liidu (AOMedia) järgmise põlvkonna ülimalt kõrglahutusega pildistandard. Põhineb AV1 video kodeerimise võtmekaadrite tehnoloogial, kompressioonimäär on 50% parem kui WebP-l ja toetab natiivselt suurt dünaamilist ulatust (HDR), on kaasaegse veebipiltide edastamise peamine standard)"
+
+msgid "mime_markdown"
+msgstr "Markdown kerge dokument (2004. aastal John Gruberi loodud tekstdokumendi märgistuskeel. Kasutab deklaratiivset lihtteksti disaini, selle süntaksi inspireeris reStructuredText, kasutatakse laialdaselt GitHubi projektides, inseneritaseme tehnilises dokumentatsioonis ja kaasaegsetes staatilise sisuhalduse ökosüsteemides)"
+
+msgid "mime_yaml"
+msgstr "YAML serialiseeritud konfiguratsioon (2001. aastal Clark Evansi jt loodud inimloetav andmete serialiseerimise vorming. Põhineb hierarhilisel taandusel ja võtme-väärtuse vastendusel, on nüüdseks kehtestatud kui pilvepõhise infrastruktuuri konfiguratsiooni standard Kubernetes, Ansible automatiseerimise ja Docker Compose jaoks)"
+
+msgid "mime_toml"
+msgstr "TOML semantiline konfiguratsioon (2013. aastal Tom Preston-Werneri loodud minimalistlik keel. Omades madala taseme disaini eeliseid nagu tugev tüüpimine, selge vastendus ja selge semantika, kasutatakse seda nüüd laialdaselt standardiseeritud konfiguratsioonifailina kaasaegsete Rust (Cargo), Python (pyproject.toml) ja Go tööriistakettide jaoks)"
+
+msgid "mime_vue"
+msgstr "Vue ühefaililine komponent (2014. aastal Evan You välja antud progressiivse veebiraamistiku eravalduses SFC vorming. Saavutab ühes failis murede eraldamise (HTML/CSS/JS) ja reageeriva oleku sidumise, olles sügavalt kaasaegsete interaktiivsete eesotsa veebirakenduste ja suuremahuliste staatiliste saitide mootorite liikumapanevaks jõuks)"
+
+msgid "mime_wasm"
+msgstr "WebAssembly binaarmoodul (2017. aastal W3C poolt kehtestatud veebi kõrge jõudlusega madala taseme baitkoodi standard. Lubab tugevalt tüüpitud keeltel nagu C/C++/Rust kompileerida brauseri liivakasti keskkonda, pakkudes peaaegu pärisma riistvara täitmise efektiivsust, olles kaasaegse veebi servaandmetöötluse (edge computing) nurgakivi)"
+
+msgid "mime_jsx"
+msgstr "React JSX komponent (2013. aastal Facebooki poolt React raamistikuga välja antud JavaScript XML süntaksi laiendus. Toetab deklaratiivselt virtuaalsete DOM-i struktuuride ehitamist JavaScripti sees, võimaldades eesotsas komponentide arendamise paradigmat 'UI oleku funktsioonina')"
+
+msgid "mime_tsx"
+msgstr "TypeScript TSX komponent (2012. aastal Microsofti TypeScripti tugeva tüübisüntaksi ja JSX-i ühendamine. Süstib staatilise kompileerimisaja tüübikontrolli ja liidese piirangud Reacti komponentide arendusse, olles koodistandardiks kaasaegsete suurte eesotsa süsteemide turvaliseks arendamiseks)"
+
+msgid "mime_heif"
+msgstr "HEIF tõhus pilt (2015. aastal MPEG organisatsiooni poolt kehtestatud tõhus pildivorming. Põhineb HEVC (H.265) videokodeerimise algoritmil, toetab mitut pildikaadrit, sügavuskaarte ja metaandmeid väga väikeses mahus, olles eravalduses salvestusstandardiks kaasaegsetele mobiilsetele operatsioonisüsteemidele ja nutiseadmetele)"
+
+msgid "mime_heic"
+msgstr "HEIC tõhus pilt (Apple'i eravalduses bitmap-vorming, mis põhineb rahvusvahelisel HEIF standardil. Kaasaegsete iPhone'ide vaikimisi fotode salvestusvorminguna omab see iOS/macOS riistvarataseme kodeerimist/dekodeerimist ja operatsioonisüsteemi natiivset tuge, vähendades oluliselt aluspoolset salvestusruumi, säilitades samas kõrge pildikvaliteedi)"
+
+msgid "mime_gltf"
+msgstr "glTF 3D varamudel (2015. aastal Khronose Grupi poolt välja antud GL edastusvormingu standard. Kasutab JSON arhitektuuri kolmemõõtmeliste stseenide kirjeldamiseks, tuntud kui 'JPEG 3D maailma jaoks', on kergekaaluline tööstusstandard kaasaegseks WebGL/WebGPU ja virtuaalreaalsuse renderdamiseks)"
+
+msgid "mime_glb"
+msgstr "GLB binaarne 3D mudel (glTF varamudeli kadudeta binaarne kapseldusversioon. Ühendab stseeni struktuuri, aluspoolse võrgu tipuandmed, materjalid ja tekstuurid ühte faili, mis on spetsiaalselt loodud tõhusaks edastamiseks ja voogesituse levitamiseks veebi 3D varadele platvormideüleselt)"
+
+msgid "mime_gls"
+msgstr "GLOSSARY andmeleksika (spetsiaalne terminite määratluste fail dokumendihaldussüsteemidele ja struktureeritud korpustele. Sisaldab standardseid terminite määratlusi, mitmekeelseid vastendusi ja metaandmete vastendusi, kasutatakse kontseptuaalse järjepidevuse säilitamiseks automatiseeritud teksti analüüsis ja sisu avaldamise süsteemides)"
+
+msgid "mime_cbz"
+msgstr "CBZ koomiksiraamat (ZIP-pakkimisel põhinev eravalduses koomiksipiltide arhiveerimisvorming. Sisaldab pidevat jada staatilisi bitmapi pilte, olles universaalne kerge konteineri standard digitaalsete koomiksite väljaandmiseks ja platvormideüleseks kohalikuks kogumiseks)"
+
+msgid "mime_cbr"
+msgstr "CBR koomiksiraamat (RAR-pakkimisel põhinev eravalduses koomiksipiltide arhiveerimisvorming. Kasutab RAR algoritmi staatiliste bitmapi jadade kapseldamiseks, omades kõrget pakkimismäära ja laia ühilduvuse tuge digitaalsete koomiksite levitamise valdkonnas)"
+
+msgid "mime_fb2"
+msgstr "FB2 e-raamat (2000. aastate alguse FictionBook 2.0 e-raamatu standard. Kasutab puhast XML struktuuri raamatu omaduste ja teksti hierarhia kirjeldamiseks, omades laia tuge avatud lähtekoodiga e-raamatu ökosüsteemis ja vanemates digitaalsete väljaannete lugejates)"
+
+msgid "mime_kepub"
+msgstr "KEPUB e-raamat (Kobo eravalduses täiustatud e-raamatu vorming, mis põhineb EPUB standardil. Optimeeritud Kobo riistvaraliste e-raamatu lugejate jaoks madalal tasemel, pakkudes tõhusamat lehekülje paigutust ja lugemisstatistika interaktsiooni)"
+
+msgid "mime_m4b"
+msgstr "M4B heliraamat (MPEG-4 Part 14 (MP4) konteineri arhitektuuril põhinev heliraamatu vorming. Kasutab AAC kodeeringut, toetab natiivselt aluspoolset järjehoidjate positsioneerimist, katkestuskohalt jätkamist ja peatükkide manustamist, oli kunagi Apple iTunes ökosüsteemi standardvorming)"
+
+msgid "mime_kfx"
+msgstr "Kindle KFX vorming (2015. aastal Amazoni poolt Kindle'iga välja antud eravalduses täiustatud digitaalse kirjastamise vorming. Toetab täiustatud tüpograafilisi ligatuure, kõrge dünaamikaga fondi renderdamist ja tuumatasandil lehekülgede voogesituse laadimist (Page Flip), on kaasaegse Kindle platvormi keskne standard)"
+
+msgid "mime_chm"
+msgstr "CHM kompileeritud abifail (1997. aastal Microsofti poolt välja antud kompileeritud HTML-i abiteabe süsteem. Pakib hüperteksti andmed ja aluspoolse indeksi ühte binaarkonteinerisse, on pikaajaline standardvorming Windowsi tarkvara kohalikuks võrguväliseks abidokumentatsiooniks)"
+
+msgid "mime_mht"
+msgstr "MHT veebiarhiiv (1999. aastal Microsofti poolt välja antud MIME agregatsiooni hüperteksti vorming. Põhineb RFC 2557 standardil, pakib HTML-i lähtekoodi, CSS-i, JS-i ja manustatud pildid ühte teksti faili, kasutatakse vanemates brauserites veebilehtede võrguväliseks salvestamiseks)"
+
+msgid "mime_wml"
+msgstr "WML juhtmevaba märgistuskeel (1999. aasta WAP (Wireless Application Protocol) foorumi poolt kehtestatud mobiilne märgistusstandard. Põhineb XML-i spetsifikatsioonil, mis on spetsiaalselt loodud varajaste kitsaribaliste juhtmevabade mobiilivõrkude ja madala arvutusvõimega funktsioonikõnede jaoks, kuulub kaasaegses veebiökosüsteemis pensionile läinud pärandtehnoloogia hulka)"
+
+msgid "mime_xhtml"
+msgstr "XHTML hüperteksti veebileht (2000. aasta W3C standard, XML-i arhitektuuril põhinev range hüperteksti märgistuskeel. 2009. aastal peatas W3C selle tehnilise arenduse ja pöördus täielikult HTML5 spetsifikatsiooni poole, nüüd kasutatakse seda peamiselt semantiliseks veebilehtede renderdamiseks pärandsüsteemides)"
+
+msgid "mime_xml"
+msgstr "XML struktureeritud dokument (1998. aasta W3C standard laiendatav märgistuskeel. Omades isekirjeldavat sildi arhitektuuri, on see alusvorming võrguveebiteenuste (SOAP/REST), süsteemitaseme konfiguratsioonifailide (XSD) ja platvormideüleseks andmevahetuseks)"
+
+msgid "mime_sgml"
+msgstr "SGGL-i üldine märgistuskeel (1986. aasta ISO 8879 rahvusvaheline standard. Elektrooniliste dokumentide struktureeritud kirjelduse tööstuse pioneerina tulenevad nii XML kui ka varajased HTML-i spetsifikatsioonid sellest standardse metakeele alusel)"
+
+msgid "mime_apng"
+msgstr "APNG dünaamiline graafika (2004. aastal Mozilla poolt arendatud PNG dünaamiline laiendus. Toetab 24-bitist täisvärvi ja 8-bitist alfa kanali poolläbipaistvust, olles kaasaegsetes veebistsenaariumides GIF-vormingu kõrglahutusega alternatiiv)"
+
+msgid "mime_bmp"
+msgstr "BMP põhine bitmap (Microsofti platvormi seadmest sõltumatu bitmapi vorming, mis on kehtestatud alates Windows 1.0 ajastust. Kasutab kadudeta pakkimata salvestust, on tavaliselt 3-10 korda mahukam kui PNG, kuid kuna see ei vaja kodeerimise/dekodeerimise üldkulusid, on see endiselt laialdaselt manustatud Windows 11 põhikomponentidesse, EXE/MSI ressursilõikudesse ja päranddraiverite graafika puhvritesse)"
+
+msgid "mime_cdr"
+msgstr "CDR vektorgraafika (Corel Corporationi eravalduses CorelDRAW professionaalne vektordisaini lähtevorming. Toetab mitmekihilist värvijuhtimist, keerukaid matemaatilisi kõvera sõlmi ja trükitasandi paigutuse andmeid, on spetsialiseerunud vorming professionaalseks graafikatrükkimiseks ja reklaamide kujundamise valdkonnas)"
+
+msgid "mime_gif"
+msgstr "GIF indekseeritud värvi pilt (1987. aasta CompuServe'i 8-bitine indekseeritud värvi bitmapi vorming. Põhineb LZW algoritmil, piiratud 256 värvi taseme ja ühevärvilise läbipaistvusega, on kõrge kaadrisageduse korral mahukas, asendatakse järk-järgult APNG, WebP jms kaasaegsete tõhusate animatsiooni standarditega)"
+
+msgid "mime_ico"
+msgstr "ICO süsteemiikoon (Windowsi põhine ikooniressursi kapseldamise vorming. Toetab mitme piksli eraldusvõime ja värvisügavusega pildivariantide segamist ühes konteineris, on ühtlasi kaasaegsete veebibrauserite saidi identifikaatori (Favicon) üldine levitamise standard)"
+
+msgid "mime_jpeg"
+msgstr "JPEG pakitud pilt (1992. aasta ISO 10918 rahvusvaheline standard kadudega pakkimise vorming. Põhineb diskreetse koosinusteisenduse (DCT) algoritmil, saavutades kõrge pakkimissuhte, säilitades samas suurepärase realistliku pildikvaliteedi, on ülemaailmse interneti staatiliste fotode absoluutne de facto standard)"
+
+msgid "mime_jpg"
+msgstr "JPEG pakitud pilt (1992. aasta ISO 10918 rahvusvaheline standard kadudega pakkimise vorming. Põhineb diskreetse koosinusteisenduse (DCT) algoritmil, saavutades kõrge pakkimissuhte, säilitades samas suurepärase realistliku pildikvaliteedi, on ülemaailmse interneti staatiliste fotode absoluutne de facto standard)"
+
+msgid "mime_png"
+msgstr "PNG kadudeta pilt (1996. aastal W3C poolt soovitatud kaasaskantava võrgugraafika standard. Kasutab kadudeta pakkimise algoritmi, toetab natiivselt 24-bitist täisvärvi ja 8-bitist alfa kanali läbipaistvust, olles klassikalise staatilise GIF-i kõrglahutusega alternatiiv, on internetis kadudeta piksligraafika absoluutne de facto standard)"
+
+msgid "mime_ps"
+msgstr "PostScript lehe kirjelduse fail (1985. aastal Adobe'i poolt välja antud virnapõhine lehe kirjelduse keel. PDF-vormingu tehnoloogilise eelkäijana saavutab see madalal tasemel riistvarast sõltumatu teksti paigutuse ja ülitäpse vektorgraafika renderdamise, olles alusstandardiks professionaalse trüki- ja laserprintimise valdkondades)"
+
+msgid "mime_psb"
+msgstr "PSB suur kihiline dokument (Adobe Photoshopi eravalduses ülisuure lähtefaili kapseldamise vorming. Murrab standardse PSD-vormingu 2 GB füüsilise mahu ja 30 000 piksli sisemise adresseerimise piirangud, mis on loodud spetsiaalselt ülisuurte, sügavalt kihiliste massiivsete digitaalsete kunstivarade salvestamiseks)"
+
+msgid "mime_psd"
+msgstr "PSD kihilise kujunduse lähtefail (Adobe Photoshopi eravalduses kihilise pildi inseneri konteiner. Graafiliste piltide valdkonna tööstusliku standardkonteinerina kapseldab see natiivselt täieliku kihi renderduspuu, bitmapi kanalid, vektori lõikamise teed ja keerukad segamisrežiimid, toetades kadudeta täielikku andmete redigeerimist)"
+
+msgid "mime_webp"
+msgstr "WebP tõhus pilt (2010. aastal Google'i poolt välja antud universaalne veebigraafika kodeerimise standard. Tuleneb VP8 video võtmekaadrite tehnoloogiast, täiesti ühilduv kadudega, kadudeta, poolläbipaistva ja dünaamilise renderdamisega, 25-35% väiksem kui PNG sama kvaliteedi juures, on kaasaegsete veebilehtede suure jõudlusega laadimise nurgakivi)"
+
+msgid "mime_woff"
+msgstr "WOFF veebiglüüfide fail (2009. aastal loodud ja 2012. aastal W3C standardiks saanud veebi avatud fondi vorming. Selle olemus on standardse TTF/OTF fondistruktuuride kadudeta pakkimine voogedastuseks, vähendades dramaatiliselt võrgu lindiriba kulu, on kaasaegsete veebisaitide ikoonide ja pilvefontide universaalne vorming)"
+
+msgid "mime_7z"
+msgstr "7z pakitud pakett (1999. aastal Igor Pavlovi 7-Zip eravalduses vorming. Põhineb avatud lähtekoodiga LZMA/LZMA2 algoritmidel, omades ülikõrget pakkimissuhet. Samaväärsetes tingimustes on see tavaliselt 30-50% väiksem kui ZIP, on avatud lähtekoodiga kogukonna ja tarkvara levitamise universaalne kõrge pakkimissuhtega vorming)"
+
+msgid "mime_ace"
+msgstr "ACE pakitud pakett (1990. aastate WinACE eravalduses pakkimisvorming. Konkureeris kunagi RAR-vorminguga ja omas kõrget pakkimissuhet. Pärast 2007. aastat tehniline areng peatus, nüüd on see asendatud 7z ja RAR vormingutega, kuuludes pärandsüsteemide arhiveerimisvormingute hulka)"
+
+msgid "mime_bz2"
+msgstr "BZIP2 pakitud pakett (1996. aastal Julian Sewardi poolt välja töötatud plokkide sorteerimise pakkimisvorming. Selle aluspoolse algoritmi pakkimissuhe on 15-20% kõrgem kui GZIP-il, kuid suurema arvutusliku üldkuluga. Kasutatakse sageli Linuxi tuuma lähtekoodi ja avatud lähtekoodiga tarkvara pakettide levitamisel, standardne faililaiend on .bz2)"
+
+msgid "mime_cab"
+msgstr "CAB pakitud pakett (1995. aastal Microsofti poolt välja töötatud Cabinet arhiveerimisvorming. Windowsi süsteemi põhise installistandardina, mida kasutatakse draiverite ja tuumafailide levitamiseks, on see ka Windows Installeri (MSI) aluspoolne salvestuskonteiner)"
+
+msgid "mime_dmg"
+msgstr "DMG kettakujutis (1980. aastatel Apple'i poolt arendatud kettakujutise vorming. macOS-i tarkvara levitamise standardkonteinerina toetab see virtuaalse failisüsteemina ühendamist, madala taseme pakkimist ja andmete krüptimist, on Maci ökosüsteemis rakenduste levitamise peamine vorming)"
+
+msgid "mime_emz"
+msgstr "EMZ pakitud pilt (Windowsi Enhanced Metafile EMF-i pakitud versioon. Olemuselt GZIP algoritmi kaudu pakitud binaarne vektorgraafika, mida kasutatakse laialdaselt manustatud vektorgraafika salvestamiseks Microsoft Office'i dokumendikogumis)"
+
+msgid "mime_gz"
+msgstr "GZIP pakitud pakett (1992. aasta GNU projekti Jean-loup Gailly ja Mark Adleri standardne voo pakkimise vorming. Unixi/Linuxi standardse pakkimistööriistana on see ka HTTP transpordikihi pakkimise (Gzip) keskne standard, mida kasutatakse sageli koos TAR-arhiiviga)"
+
+msgid "mime_jar"
+msgstr "JAR pakitud pakett (1997. aastal Sun Microsystemsi Java ARchive arhiivivorming. Olemuselt ZIP-struktuuril põhinev pakkimiskonteiner Java klassiteekide ja metaandmete kapseldamiseks, on Maveni, Gradle ja varase Androidi ökosüsteemi keskne kompileerimistoode)"
+
+msgid "mime_lzma"
+msgstr "LZMA pakitud pakett (1998. aastal Igor Pavlovi Lempel-Ziv-Markov ahela pakkimisalgoritm. 7z-vormingu keskse mootorina omab see ülikõrget pakkimissuhet ja kiiret lahtipakkimist, mida kasutatakse laialdaselt riistvara püsivara ja manussüsteemide levitamiseks)"
+
+msgid "mime_rar"
+msgstr "RAR pakitud pakett (1993. aastal Eugene Roshali WinRAR eravalduses arhiivivorming. Toetab köidete jagamist, füüsilisi taastekirjeid (ECC) ja tugevat krüptimist. Selle pakkimissuhe on parem kui standardse ZIP-i omal, omades laia ühilduvuse tuge isiklikus ja ärivaldkonnas)"
+
+msgid "mime_tar"
+msgstr "TAR arhiivipakett (1979. aasta Unix V7 ajastu lindiarhiivi (Tape ARchive) vorming. Teostab ainult failivoo pakkimist ilma andmete pakkimiseta, sageli kombineeritakse GZIP/BZIP2/XZ-iga, on Linuxi lähtekoodi ja Dockeri pildi kihilise salvestamise aluspoolne standard)"
+
+msgid "mime_tgz"
+msgstr "TGZ pakitud pakett (TAR-arhiivi ja GZIP-pakkimise voo kombineeritud vorming, faililaiend .tgz või .tar.gz. Unixi/Linuxi keskkondades kõige universaalsema tarkvarapaketi levitamise vorminguna kasutatakse seda laialdaselt lähtekoodi kompileerimise juurutamisel ja installimisvabade binaarpakettide levitamisel)"
+
+msgid "mime_tbz2"
+msgstr "TBZ2 pakitud pakett (TAR-arhiivi ja BZIP2-pakkimise voo kombineeritud vorming, faililaiend .tbz2 või .tar.bz2. Võrreldes TGZ-iga võib see parandada pakkimissuhet veel 15-20%, sobib suurte failide edastamiseks, kasutati pikka aega Linuxi tuuma lähtekoodi levitamiseks)"
+
+msgid "mime_xz"
+msgstr "XZ pakitud pakett (2009. aastal välja antud järgmise põlvkonna kõrge pakkimissuhtega vorming. Põhineb LZMA2 algoritmil, andmete pakkimissuhe on 30-50% parem kui GZIP-il, säilitades samas kiire lahtipakkimise. Linuxi tuuma ja peamiste paketihaldurite (nt Debian .deb sees) poolt on see kehtestatud soovitatud levitamise standardina)"
+
+msgid "mime_z"
+msgstr "Z pakitud pakett (1985. aasta Unixi compress käsuraamatu LZW pakkimisvorming. Varajaste Unixi süsteemide standardse pakkimisstandardina on see nüüd täielikult asendatud tõhusama GZIP-vorminguga, olles kaasaegses võrguliikluses haruldane ajalooline pärandvorming)"
+
+msgid "mime_zip"
+msgstr "ZIP pakitud pakett (1989. aastal Phil Katzi PKZIP universaalne arhiivivorming. Kõigi peamiste operatsioonisüsteemide poolt natiivselt toetatud, on see internetis kõige laialdasemalt kasutatav konteineri standard. Kaasaegne Java JAR, Androidi APK ja Office dokumendid (OOXML) põhinevad kõik ZIP-struktuuril)"
+
+msgid "mime_zst"
+msgstr "Zstandard pakitud pakett (2015. aastal Facebooki Yann Colleti loodud järgmise põlvkonna voo pakkimise standard. Läheneb LZMA pakkimissuhtele, omades samal ajal tunduvalt suuremat läbilaskevõimet kui GZIP. Seda on sügavalt kasutusele võtnud Linuxi kernel (5.9+) ja Archi/Debiani paketihaldurid)"
+
+msgid "mime_lz4"
+msgstr "LZ4 pakitud pakett (2011. aastal Yann Colleti loodud ülikiire voo pakkimise algoritm. Läbilaskevõime kiirus on üle 10 korra kiirem kui GZIP-il, äärmiselt madala CPU käitusaja üldkuluga. Kasutatakse laialdaselt Linuxi tuumas, OpenZFS failisüsteemis ja Hadoopi reaalajas andmevoo töötlemisel)"
+
+msgid "mime_lzo"
+msgstr "LZO pakitud pakett (1996. aastal Markus Oberhumeri Lempel-Ziv-Oberhumeri algoritm. Keskendub ülikiirele lahtipakkimise jõudlusele. Laiaslt manustatud Linuxi tuuma Squashfsi kujutistesse, OpenWrt püsivarasse ja mitmesugustesse ressursipiirangutega manussüsteemidesse)"
+
+msgid "mime_msi"
+msgstr "MSI süsteemi installipakett (1999. aastal Microsofti Windows Installeri andmete kapseldamise vorming. Windowsi rakenduse tasandi juurutamise standardina toetab see natiivselt madala taseme tehingu tagasipööramist, komponentide elutsükli haldust ja partiivaba vaikset installimist, on ettevõtte tarkvara tsentraliseeritud levitamise ja poliitikapõhise juurutamise keskne standard)"
+
+msgid "mime_pkg"
+msgstr "PKG platvormideülene tarkvara installipakett. 1. FreeBSD tarkvarapakett: pkgng standard, faililaiend .pkg või .txz, põhineb TAR+XZ/Zstd pakkimisel, toetab sõltuvuste lahendamist ja allkirjade kontrolli; 2. macOS-i installipakett: põhineb Apple Installeri vormingul, toetab kohandatud komponente, installiskripte ja süsteemitaseme eemaldamist. Need on vastavalt BSD-serverite ja Maci süsteemi peamised levitamise kandjad."
+
+msgid "mime_apk"
+msgstr "APK Androidi rakenduse pakett (2008. aastal Google'i poolt Androidiga välja antud traditsiooniline rakenduste installipakett. Aluspoolselt põhineb ZIP-arhiivi struktuuril, pakib kompileeritud Dalviki baitkoodi (DEX), metaandmete manifesti ja globaalsed ressursid, mida kasutatakse nüüd laialdaselt kohalikuks arenduse silumiseks, kolmanda osapoole levitamiseks ja seadmetesse külgpaigaldamiseks)"
+
+msgid "mime_ipa"
+msgstr "IPA Apple'i rakenduse pakett (2008. aastal iPhone SDK-ga välja antud iOS/iPadOS eksklusiivne pakkimiskonteiner. Olemuselt FairPlay DRM-i või ettevõtte sertifikaadiga allkirjastatud ZIP-arhiiv, mis sisaldab Mach-O binaarset käivitatavat faili, rakenduse ressursipuud ja Info.plisti metaandmete konfiguratsiooni)"
+
+msgid "mime_hap"
+msgstr "HAP HarmonyOS rakenduse pakett (2020. aastal HarmonyOS 2.0-ga välja antud HarmonyOS-i elastse juurutamise põhiüksus. Koosneb Entry põhimoodulist või Feature laiendatud funktsioonimoodulitest, on see mitme otspunkti (telefonid, tahvelarvutid, kantavad seadmed) seadmeülene levitamise vorming nutiseadmete levitamiseks)"
+
+msgid "mime_har"
+msgstr "HAR HarmonyOS staatiline jagatud pakett (HarmonyOS-i eravalduses staatilise jagatud teegi arhiivifail. Kasutatakse ühiste komponentide, aluspoolse lähtekoodi ja kompileerimisaja sõltuvuste kapseldamiseks, mida mitmed HAP-moodulid staatiliselt jagamiseks lingivad, on HarmonyOS-i komponendipõhise arenduse ja mitme mooduli taaskasutuse alusvundament)"
+
+msgid "mime_aab"
+msgstr "AAB Androidi rakenduste kogum (2018. aastal Google'i poolt turule toodud ja 2021. aastal kehtestatud Google Play dünaamiline levitamise vorming. Puhta levitamise üksusena kohandab pilv dünaamiliselt ja kompileerib vastavalt sihtseadme CPU arhitektuurile, ekraani tihedusele ja keelele, et luua vastavalt vajadusele optimeeritud APK-d, vähendades edastuse lindiriba kulu keskmiselt 35%)"
+
+msgid "mime_xapk"
+msgstr "XAPK laiendatud rakenduse pakett (kolmanda osapoole Androidi kogukonna poolt kehtestatud mitteametlik rakenduse laiendamise standard. Ühendab standardse APK-faili suure OBB mänguandmete laienduspaketiga, ületades füüsiliselt Google Play 100 MB individuaalse faili suuruse piirangu, mida on laialdaselt näha mängude levitamise platvormidel)"
+
+msgid "mime_appx"
+msgstr "APPX kaasaegne rakenduse pakett (2012. aastal Microsofti poolt Windows 8-ga välja antud UWP rakenduste juurutamise standard. Omab liivakastis isoleeritud täitmise ja kergekaalulise eemaldamise omadusi, olles Microsoft Store'i varajane domineeriv standard, kuid kaasaegses Windowsi ökosüsteemis on see jõudnud MSIX-i poole areneva elutsükli lõppfaasi)"
+
+msgid "mime_msix"
+msgstr "MSIX järgmise põlvkonna rakenduse pakett (2018. aastal Microsofti poolt välja antud uus täielikult standardiseeritud Windowsi pakkimise spetsifikatsioon. Sulandab suurepäraselt APPX-i rakenduse turvaliivakasti omadused MSI-i ettevõtte varade haldamise eelistega, on täielikult ühilduv kõigi Win32 rakenduse tüüpidega, ja on Windows 11 soovitatud levitamise standard)"
+
+msgid "mime_appimage"
+msgstr "AppImage isesisaldav rakenduse pakett (2004. aastal algatatud Linuxi ühekordse käivitatava arhiivi spetsifikatsioon. Kasutab 'üks rakendus on üks fail' isesisaldavat arhitektuuri, mis ühendatakse käitusajal FUSe mehhanismi kaudu otse kirjutuskaitstud virtuaalse failisüsteemina, saavutades null-sõltuvusega käivitamise erinevates Linuxi distributsioonides)"
+
+msgid "mime_flatpak"
+msgstr "Flatpak liivakasti rakenduse pakett (2015. aastal Red Hati ja GNOME'i juhitud Linuxi erinevate distributsioonide töölauarakenduste levitamise standard. Toetudes Linuxi tuuma nimeruumi ja Cgroups mehhanismidele, saavutab see äärmiselt range rakenduse taseme turvaliivakasti isolatsiooni, olles kaasaegsete avatud lähtekoodiga OS-i tarkvarakeskuste alus)"
+
+msgid "mime_snap"
+msgstr "Snap konteineriseeritud rakenduse pakett (2014. aastal Ubuntu emaettevõtte Canonicali Linuxi universaalne juurutamise standard. Kasutab rakenduse isesisaldavat SquashFS-kujutise ühendamise arhitektuuri, toetades automaatseid juurdekasvulisi uuendusi ja ranget AppArmori liivakasti isolatsiooni, ning on Ubuntu tarkvarakeskuse ökosüsteemi vaikimisi põhivorming)"
+
+msgid "mime_deb"
+msgstr "DEB süsteemi tarkvarapakett (1993. aastal Debiani projekti poolt kehtestatud binaar- ja lähtekoodi pakkimise spetsifikatsioon. Debiani, Ubuntu ja kõigi nende tuletiste aluspaigalduse standardina tugineb see dpkg-le pakendi lahtipakkimiseks ja hoolduseks, kasutades APT-d tõhusa paketihalduri esiosa, on Linuxi ökosüsteemi kõige küpsem tarkvara levitamise nurgakivi)"
+
+msgid "mime_rpm"
+msgstr "RPM süsteemi tarkvarapakett (1997. aastal Red Hati poolt välja antud Red Hat Package Manageri pakkimise spetsifikatsioon. Koos DEB-ga moodustavad nad kaks peamist traditsioonilise Linuxi paketihalduse leeri, omavad natiivselt tehingupõhist sõltuvuste kontrolli ja madala taseme tarkvara digitaalse allkirja kontrolli, olles endiselt absoluutselt domineeriv levitamise standard Red Hati ökosüsteemi distributsioonides nagu RHEL, Fedora ja CentOS)"
+
+msgid "mime_pacman"
+msgstr "Pacman arhiivi tarkvarapakett (2002. aastal Arch Linuxi pacman halduri poolt kehtestatud .pkg.tar.zst pakkimisvorming. Archi pideva uuendamise mehhanismi keskmena, põhineb kiirel Zstandard kõrge pakkimise algoritmil, koos AUR (Arch User Software Repository) ökosüsteemiga, on see kaasaegne pakkide levitamise standard, mis kehastab minimalismi ja KISS põhimõtet)"
+
+msgid "mime_exe"
+msgstr "EXE põhine käivitatav fail (Windowsi platvormi teisaldatava käivitatava (PE) binaarse programmi vorming. Selle tehniline põlvnemine tuleneb MS-DOS-i ajastu MZ päisestruktuurist ning alates 1993. aasta Windows NT-st kehtestati see täielikult PE struktuuri spetsifikatsioonina, olles kõige laialdasemalt kasutatav täitmise standard maailmas masinkoodi juhiste, staatiliste ressursilõikude ja süsteemi tuuma käivitamise jaoks)"
+
+msgid "mime_dll"
+msgstr "DLL dünaamiline lingiteek (Windowsi platvormi dünaamilise lingiteegi jagatud kooditeegi spetsifikatsioon. Läbi dünaamilise laadimise ja sümbolite ümberpaigutamise käitusajal, säästab see oluliselt füüsilist mälu ja kettaruumi, kui Windowsi API põhiline teostusvorm. Varajane 'DLL Hell' probleem sai kaasaegsel ajal lahendatud SxS paralleelse isolatsiooni mehhanismiga)"
+
+msgid "mime_com"
+msgstr "COM klassikaline käivitatav fail (MS-DOS-i ajastu vanim mälukujutise (Command) täitmise vorming. Kasutab struktuurita puhast koodisegmendi disaini, piiratud 64KB füüsilise mälu adresseerimise segmendi piiranguga, on nüüd pensionile viidud ajaloolise pärandvorminguna, kuid kaasaegsetes Windowsi arhitektuurides säilitatakse see siiski piiratud ühilduvusena konkreetse komponendi liidesena)"
+
+msgid "mime_aac"
+msgstr "AAC-heli (MPEG standard 1997, Advanced Audio Coding. MP3 järeltulija, helikvaliteet on parem kui MP3-l sama bitikiiruse juures, vaikimisi helivorming YouTube'i, iTunes'i, Nintendo Switchi jaoks)"
+
+msgid "mime_alac"
+msgstr "ALAC-heli (Apple töötas välja 2004. aastal, Apple Lossless Audio Codec. Apple'i kadudeta vorming, muutus avatud lähtekoodiliseks 2011. aastal, vaikimisi kadudeta helivorming iTunes'is ja Apple Musicus)"
+
+msgid "mime_flac"
+msgstr "FLAC-heli (Xiph.Org Foundation töötas välja 2001. aastal, Free Lossless Audio Codec. Kadudeta tihendus, helikvaliteet on sama, mis CD-l, fail on umbes poole väiksem kui originaalne WAV. Avatud lähtekoodiga ja patendivaba, esimene valik audiofiilidele ja digitaalse muusika kogujatele)"
+
+msgid "mime_mp3"
+msgstr "MP3-heli (Fraunhofer Institute töötas välja 1993. aastal, MPEG-1 Audio Layer 3. Kadudega tihendusvorming, väikesed failid mõistliku helikvaliteediga, oli 2000. aastate digitaalse muusika revolutsiooni peamine vorming, vastutab iPod ja Napster. Patent aegus 2017. aastal, muutudes avalikuks omandiks)"
+
+msgid "mime_oga"
+msgstr "Ogg Audio heli (Xiph.Org Foundation töötas välja, Ogg konteineri puhas helivorming, kasutab Vorbis koodekit. Avatud lähtekoodiga ja patendivaba, tihenduse tõhusus on parem kui MP3-l, mida kasutatakse laialdaselt avatud lähtekoodiga projektides)"
+
+msgid "mime_ogg"
+msgstr "OGG-heli (Xiph.Org Foundation töötas välja 2000. aastal, Ogg Vorbis vorming. Avatud lähtekoodiga ja patendivaba, tihenduse tõhusus on parem kui MP3-l, seda kasutas varakult Spotify, mida kasutatakse laialdaselt heliefektide jaoks mängudes)"
+
+msgid "mime_opus"
+msgstr "Opus-heli (IETF standardiseeris 2012. aastal, avatud lähtekoodiga ja patendivaba. Ühendab SILK ja CELT tehnoloogiad, äärmiselt madal latentsusaeg, kõrgeim tihenduse tõhusus, vaikimisi helivorming WebRTC, WhatsApp, Discord jaoks)"
+
+msgid "mime_wav"
+msgstr "WAV-heli (Microsoft ja IBM töötasid välja 1991. aastal, Windowsi algne helivorming. PCM-kodeering ilma tihenduseta, veatu kvaliteet, kuid failid on tohutud, standardvorming professionaalseks helitöötluseks)"
+
+msgid "mime_wma"
+msgstr "WMA-heli (Microsoft töötas välja 1999. aastal, Windows Media Audio. Sellel on kadudega ja kadudeta versioonid, Windows toetab seda natiivselt, populaarseks sai koos Windows Media Playeriga. Tänapäeval on see marginaalne, asendatud MP3/AAC-ga)"
+
+msgid "mime_dsf"
+msgstr "DSF-heli (Direct Stream Digital vorming, töötasid välja Sony ja Philips. 1-bitine kõrge diskreetimissagedus, DSD-heli standardvorming, SACD digitaalversioon, tipptasemel helivorming audiofiilidele, tohutud failid)"
+
+msgid "mime_ape"
+msgstr "APE Heli (Monkey's Audio poolt 2000. aastal loodud, kadudeta pakkimisvorming. Kõrgem pakkimissuhe kui FLAC-il, kuid aeglasem kodeerimine, kasutusel endiselt Windowsi platvormil ja audioentusiastide seas)"
+
+msgid "mime_mid"
+msgstr "MIDI-heli (MIDI Association kehtestas standardi 1983. aastal, Musical Instrument Digital Interface. Noodikirja formaat, mitte salvestus, äärmiselt väikesed failid, standard elektrooniliste muusikainstrumentide, mobiiltelefonide helinate, heliefektide jaoks mängudes. General MIDI standardiseeriti 1991. aastal, määratleb 128 instrumenti)"
+
+msgid "mime_m4a"
+msgstr "M4A-heli (MPEG-4 Audio, AAC konteinerivorming. Standardvorming iTunes Music Store'i jaoks, peamine helivorming Apple'i ökosüsteemis, toetab DRM-kaitset)"
+
+msgid "mime_m3u"
+msgstr "M3U esitusloend (MP3 URL-ide esitusloendi vorming, tavaline tekstifail, salvestab helifailide teed. Standard Winampi ajastust, mida kasutatakse Interneti-raadio, veebimuusika voogedastuse jaoks. M3U8 on selle UTF-8 versioon, mida kasutatakse HTTP Live Streamingi jaoks)"
+
+msgid "mime_asf"
+msgstr "ASF voogedastusmeedia (Microsoft töötas välja 1996. aastal, Advanced Systems Format. Windows Media voogedastuse konteiner, toetab sünkroniseeritud heli ja video edastamist. Kasutatakse otseülekannete ja video nõudmisel voogedastuse jaoks, WMA/WMV põhinevad ASF-konteineril)"
+
+msgid "mime_avi"
+msgstr "AVI-video (Microsoft tutvustas 1992. aastal, varajane Windowsi videostandard. 'Audio Video Interleave', heli ja video on põimitud, oli kõige populaarsem video vorming 1990ndatel ja 2000ndatel, tänapäeval on selle asendanud MP4/MKV)"
+
+msgid "mime_divx"
+msgstr "DivX-video (DivX ettevõte töötas välja 1998. aastal, MPEG-4 põhinev videokoodek. Oli peamine vorming Internetis videote jagamiseks 2000ndatel, esimene, mis võimaldas DVD-kvaliteedi tihendamise CD-suurusele. Autoriõiguse vaidluste tõttu muudeti hiljem kaubanduslikuks koodekiks)"
+
+msgid "mime_mp4"
+msgstr "MP4-video (MPEG standard 2001, MPEG-4 Part 14. Maailma kõige universaalsem videovorming, toetab H.264/H.265 kodeeringut, vaikimisi vorming Interneti-video, mobiiltelefoniga salvestamise, YouTube'i jaoks)"
+
+msgid "mime_m4v"
+msgstr "M4V-video (iTunesi videovorming, MP4 variant. Videovorming Apple'i ökosüsteemis, standardvorming filmide ja telesaadete jaoks iTunes Store'is, toetab DRM-autoriõiguse kaitset)"
+
+msgid "mime_mpeg"
+msgstr "MPEG-video (MPEG organisatsioon kehtestas standardi 1988. aastal, Moving Picture Experts Group. Digitaalse videotihenduse peamised standardid, MPEG-1 (VCD), MPEG-2 (DVD), MPEG-4 (Interneti-video) on olnud sügava mõjuga)"
+
+msgid "mime_mkv"
+msgstr "MKV-video (Matroska projekt töötas välja 2002. aastal, avatud lähtekoodiga multimeedia konteinerivorming. Toetab mitut heliriba, mitut subtiitrite rada, peatükke, 'võimeline pakkima kõike', esimene valik kõrglahutusega filmide jagamiseks)"
+
+msgid "mime_mpg"
+msgstr "MPEG-video (MPEG-1/MPEG-2 video laiend, standardvorming VCD ja DVD jaoks. Oli peamine vorming videote jaoks CD-del 1990ndatel ja 2000ndatel, tänapäeval on selle asendanud H.264/H.265)"
+
+msgid "mime_ogv"
+msgstr "Ogg Video video (Xiph.Org Foundation töötas välja, Ogg konteineri video vorming, kasutab Theora koodekit. Avatud lähtekoodiga ja patendivaba, oli üks varajasi standardeid HTML5-video jaoks, Firefox toetab seda natiivselt)"
+
+msgid "mime_ogx"
+msgstr "Ogg multimeedia konteiner (Xiph.Org Foundation töötas välja, Ogg konteineri universaalne laiendus, võib sisaldada mitut rada nagu heli, video, subtiitrid. Avatud lähtekoodiga multimeedia standard, mida kasutatakse mängudes ja voogedastuses)"
+
+msgid "mime_rm"
+msgstr "RealMedia video (RealNetworks töötas välja 1995. aastal, RealMedia vorming. Oli Interneti voogedastuse pioneer 1990ndatel ja 2000ndatel, RealPlayeri põhivorming. Puudused: vajab spetsiaalset mängijat, halb tihenduskvaliteet, asendatud Flash/MP4-ga)"
+
+msgid "mime_flv"
+msgstr "Flashi video (vorming ilmus 2002. aastal, Flashi video vorming. Oli kunagi Interneti-video peamine vorm, mida kasutas varakult YouTube. Puudused: vajab Flashi pistikprogrammi, halb jõudlus, palju turvaauke. Alates 2015. aastast läksid peamised veebisaidid üle HTML5-videole, tänapäeval on see kasutusest kõrvaldatud)"
+
+msgid "mime_f4v"
+msgstr "F4V video (Adobe'i välja töötatud Flashi videovorming, FLV järeltulija. Põhineb MPEG-4 standardil, toetab H.264 kodeeringut. Koos Flashi tehnoloogiaga kasutusest kõrvaldatud, Adobe lõpetas toe 2020. aastal)"
+
+msgid "mime_wmv"
+msgstr "WMV video (Microsoft töötas välja 1999. aastal, Windows Media Video. Windows toetab seda natiivselt, optimeeritud voogedastuse edastamiseks, oli tavaline vorming veebivideote jaoks 2000ndatel, tänapäeval on see marginaalne)"
+
+msgid "mime_wmf"
+msgstr "WMF meedia vorming (Windows Media Format, Microsofti meediumiraamistik. Sisaldab WMV videot, WMA heli, Windows Media Player toetab seda natiivselt)"
+
+msgid "mime_mov"
+msgstr "MOV video (Apple töötas välja 1991. aastal, QuickTime konteinerivorming. Standardvorming professionaalseks video redigeerimiseks, toetab mitut koodekit, Final Cut Pro, Premiere toetavad seda natiivselt)"
+
+msgid "mime_qt"
+msgstr "QuickTime video (Apple tutvustas 1991. aastal, QuickTime vorming. Standard Maci platvormi video jaoks, MOV on selle konteiner, QuickTime'i mängijat kasutati laialdaselt. Apple lõpetas Windowsi versiooni arendamise 2016. aastal, asendatakse järk-järgult MP4-ga)"
+
+msgid "mime_webm"
+msgstr "WebM video (Google tutvustas 2010. aastal, avatud lähtekoodiga ja patendivaba. Põhineb Matroska konteineril, VP8/VP9 kodeering, HTML5-video standardvorming, YouTube'i veebiesitaja vaikimisi vorming)"
+
+msgid "mime_3gp"
+msgstr "3GP video (3GPP kehtestas 2000. aastal, mobiilseadme video vorming. Äärmiselt väikesed failid, madal kvaliteet, vorming salvestamiseks vanade funktsioonidega telefonides, kasutati MMS-i kaudu saatmiseks)"
+
+#------------------------------------------------------------------------------
+# Tehniline mõõde
+#------------------------------------------------------------------------------
+
+msgid "Operating Systems"
+msgstr "Operatsioonisüsteemid"
+
+msgid "Top 5 Operating Systems"
+msgstr "5 parimat operatsioonisüsteemi"
+
+msgid "Unknown Robot"
+msgstr "Tundmatu klient"
+
+msgid "User agent"
+msgstr "Kasutajaagent"
+
+msgid "Browsers"
+msgstr "Brauserid"
+
+msgid "Top 5 Browsers"
+msgstr "5 parimat brauserit"
+
+msgid "Unknown Robot RH"
+msgstr "Tundmatu päringu päis"
+
+msgid "Detailed"
+msgstr "Juurdepääsuseadme versioon"
+
+msgid "DetailedOS"
+msgstr "Operatsioonisüsteemi versioon"
+
+msgid "DetailedBS"
+msgstr "Brauseri versioon"
+
+msgid "Screen sizes"
+msgstr "Ekraani suurused"
+
+msgid "Compression"
+msgstr "Tihendamine"
+
+msgid "In"
+msgstr "Sisend"
+
+msgid "Out"
+msgstr "Väljund"
+
+msgid "Saved"
+msgstr "Salvestatud"
+
+#------------------------------------------------------------------------------
+# Päritolu mõõde
+#------------------------------------------------------------------------------
+
+msgid "Origin"
+msgstr "Päritolu"
+
+msgid "Referers"
+msgstr "Viitajad"
+
+msgid "meta.description"
+msgstr "AWStats täiustatud veebilogide analüsaator - jälgige veebisaidi liiklust reaalajas, külastajate analüüsi, otsingumootorite märksõnu, veastatistikat. Toetab tumedat režiimi, mitmekeelset liidest, pakub põhjalikku andmeanalüüsi veebisaidi administraatoritele."
+
+msgid "meta.keywords"
+msgstr "AWStats,veebistatistika,logianalüüs,liikluse jälgimine,külastusstatistika,SEO analüüs,veebisaidi analüüsi tööriist,Web Analytics,Log Analyzer"
+
+msgid "meta.author"
+msgstr "AWStats"
+
+msgid "og.title"
+msgstr "AWStats - veebilogide analüüs"
+
+msgid "og.description"
+msgstr "📊 Professionaalne avatud lähtekoodiga veebisaidi statistika tööriist, analüüsige oma veebisaidi liiklust ja külastajate käitumist reaalajas."
+
+msgid "og.image.alt"
+msgstr "AWStats statistiline diagramm"
+
+msgid "Created by"
+msgstr "Loodud %s poolt"
+
+msgid "plugins"
+msgstr "Pistikprogrammid"
+
+msgid "dbip by"
+msgstr "Andmed"
+
+msgid "IPDB by"
+msgstr "Geolokatsiooni andmed on esitanud DB-IP"
+
+# Tervis
+msgid "Configured"
+msgstr "Konfigureeritud"
+
+msgid "Missing"
+msgstr "Puudub"
+
+msgid "OK"
+msgstr "Edu"
+
+msgid "Unused"
+msgstr "Kasutamata"
+
+# Muu
+msgid "Overall Health"
+msgstr "Üldine tervislik seisund"
+
+msgid "Excellent"
+msgstr "Suurepärane"
+
+msgid "Good"
+msgstr "Hea"
+
+msgid "Fair"
+msgstr "Keskmine"
+
+msgid "Poor"
+msgstr "Halb"
+
+msgid "Missing icon types"
+msgstr "Puuduvad ikoonitüübid"
+
+msgid "See"
+msgstr "Vaata detailsemalt"
+
+msgid "Expected Path"
+msgstr "Oodatud tee"
+
+msgid "column for file locations"
+msgstr "failide asukohtade veerg"
+
+msgid "Tip: If you need to generate related icons, you can use %s to upload a logo image, and it will automatically generate all the above related icon files"
+msgstr "Näpunäide: Kui teil on vaja luua seotud ikoone, võite kasutada %s logo pildi üleslaadimiseks, see loob automaatselt kõik ülaltoodud seotud ikoonifailid"
+
+msgid "200: success, 404: failure"
+msgstr "200 on õnnestumiste arv, 404 on ebaõnnestumiste arv"
+
+msgid "_PATH_FAVICON"
+msgstr "/favicon.ico"
+
+msgid "_PATH_APPLE_TOUCH"
+msgstr "/apple-touch-icon.png või /apple-touch-icon-180x180.png"
+
+msgid "_PATH_LOGO"
+msgstr "/logo.svg või /logo.png (vaja viidata HTML/JSON-LD-s)"
+
+msgid "_PATH_WEBMANIFEST"
+msgstr "/site.webmanifest või /manifest.json"
+
+msgid "_PATH_BROWSERCONFIG"
+msgstr "/browserconfig.xml"
+
+msgid "_PATH_SAFARI_PINNED"
+msgstr "/safari-pinned-tab.svg"
+
+msgid "_PATH_SOCIAL_ICON"
+msgstr "/images/github.svg, /images/paypal.svg jne"
+
+msgid "Favicon"
+msgstr "Veebisaidi ikoon"
+
+msgid "Apple Touch Icon (iOS/macOS)"
+msgstr "Apple Touch ikoon (iPhone/iPad/Mac)"
+
+msgid "Site Logo"
+msgstr "Veebisaidi logo"
+
+msgid "Web App Manifest (Android/Chrome)"
+msgstr "Veebirakenduse manifest (Android/Chrome)"
+
+msgid "Windows Browser Config"
+msgstr "Windowsi brauseri konfiguratsioon"
+
+msgid "Safari Pinned Tab"
+msgstr "Safari kinnitatud vahekaardi ikoon"
+
+msgid "Social Icon"
+msgstr "Sotsiaalmeedia ikoon"
+
+msgid "Icon Files Status"
+msgstr "Ikoonifailide olek"
+
+msgid "Icon Type"
+msgstr "Ikooni tüüp"
+
+msgid "Total"
+msgstr "Kokku"
+
+msgid "Advanced Web Statistics"
+msgstr "Täpsemad veebistatistikad"
+
+msgid "Advanced Web Statistics %s"
+msgstr "%s täpsemad veebistatistikad"
+
+msgid "Your browser does not support frames. Please use a modern browser."
+msgstr "Teie brauser ei toeta raame. Palun kasutage kaasaegset brauserit."
+
+msgid "View statistics directly"
+msgstr "Vaata statistikat otse"
+
+msgid "Close"
+msgstr "Sule"
+
+msgid "Documentation Viewer"
+msgstr "Dokumentatsiooni vaatur"
+
+msgid "Direct address / Bookmarks"
+msgstr "Otsene aadress / Järjehoidjad"
+
+msgid "Search Engines"
+msgstr "Otsingumootorid"
+
+msgid "Refering search engines"
+msgstr "Viitavad otsingumootorid"
+
+msgid "External pages"
+msgstr "Välised lehed"
+
+msgid "Refering pages"
+msgstr "Viitavad lehed"
+
+msgid "Internal pages"
+msgstr "Sisemised lehed"
+
+msgid "UnknownAccessSource"
+msgstr "Tundmatu juurdepääsu allikas"
+
+msgid "Different refering pages"
+msgstr "Erinevad viitavad lehed"
+
+msgid "Keyphrases"
+msgstr "Võtmelaused"
+
+msgid "Keywords"
+msgstr "Märksõnad"
+
+msgid "Keyphrases/Keywords"
+msgstr "Võtmelaused/Märksõnad"
+
+msgid "Different keyphrases"
+msgstr "Erinevad võtmelaused"
+
+msgid "Different keywords"
+msgstr "Erinevad märksõnad"
+
+#------------------------------------------------------------------------------
+# Lehe mõõde
+#------------------------------------------------------------------------------
+
+msgid "Viewed pages"
+msgstr "Vaadatud lehed"
+
+msgid "Different pages"
+msgstr "Erinevad lehed"
+
+msgid "Entry"
+msgstr "Sisenemine"
+
+msgid "Exit"
+msgstr "Väljumine"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Referer"
+msgstr "Viitaja"
+
+msgid "Host"
+msgstr "Host"
+
+#------------------------------------------------------------------------------
+# Vead ja olekud
+#------------------------------------------------------------------------------
+
+msgid "Error"
+msgstr "Viga"
+
+msgid "HTTP Status Statistics"
+msgstr "HTTP olekukoodide statistika"
+
+msgid "SMTP Error codes"
+msgstr "SMTP veakoodid"
+
+msgid "Page not found"
+msgstr "Taotletud lehte ei leitud"
+
+msgid "Unknown error"
+msgstr "Tundmatu viga"
+
+msgid "Abnormal traffic note"
+msgstr "Ebanormaalne sirvimisliiklus hõlmab: otsingumootorite robotid, AI treeningrobotid, haavatavuse skannerid ja päringud, mis ei järgi spetsifikatsioone"
+
+msgid "Page detail"
+msgstr "Lehe üksikasjad"
+
+msgid "AWStats did not found the"
+msgstr "AWStats ei leidnud"
+
+msgid "in your log records."
+msgstr "teie logikirjetest."
+
+msgid "AWStats did not find any valid log lines that match your"
+msgstr "AWStats ei leidnud ühtegi kehtivat logirida, mis vastaks teie"
+
+msgid "parameter, in the"
+msgstr "parameetrile, fails"
+
+msgid "th first non commented lines read of your log."
+msgstr "-s esimest kommenteerimata rida, mis loeti teie logist."
+
+msgid "Your log file"
+msgstr "Teie logifail"
+
+msgid "must have a bad format or"
+msgstr "peab olema vale vorminguga või"
+
+msgid "parameter setup does not match this format."
+msgstr "parameetri seadistus ei vasta sellele vormingule."
+
+msgid "Your AWStats"
+msgstr "Teie AWStats"
+
+msgid "parameter is:"
+msgstr "parameeter on:"
+
+msgid "This means each line in your web server log file need to have:"
+msgstr "See tähendab, et igal real teie veebiserveri logifailis peab olema:"
+
+msgid "combined log format"
+msgstr "kombineeritud logivorming"
+
+msgid "MSIE Extended W3C log format"
+msgstr "MSIE laiendatud W3C logivorming"
+
+msgid "WebStar native log format"
+msgstr "WebStar algne logivorming"
+
+msgid "common log format"
+msgstr "tavaline logivorming"
+
+msgid "Lotus Notes/Lotus Domino"
+msgstr "Lotus Notes/Lotus Domino"
+
+msgid "the following personalized log format:"
+msgstr "järgmine isikupärastatud logivorming:"
+
+msgid "And this is an example of records AWStats found in your log file (the record number"
+msgstr "Ja see on näide kirjetest, mille AWStats leidis teie logifailist (kirje number"
+
+msgid "in your log):"
+msgstr "teie logis):"
+
+#------------------------------------------------------------------------------
+# Varia
+#------------------------------------------------------------------------------
+
+msgid "Extra/Marketing"
+msgstr "Lisa/Turundus"
+
+#------------------------------------------------------------------------------
+# Liidese tekst
+#------------------------------------------------------------------------------
+
+msgid "Current site"
+msgstr "Praegune sait"
+
+msgid "Web Site"
+msgstr "Veebisait"
+
+msgid "Last Update"
+msgstr "Viimane uuendus"
+
+msgid "Never updated"
+msgstr "Pole kunagi uuendatud"
+
+msgid "No qualified records found in log"
+msgstr "Logist ei leitud sobivaid kirjeid"
+
+msgid "corrupted"
+msgstr "rikutud"
+
+msgid "comments"
+msgstr "kommentaarid"
+
+msgid "Blank"
+msgstr "Tühi"
+
+msgid "dropped"
+msgstr "kõrvalejäetud"
+
+msgid "Update now"
+msgstr "Uuenda kohe"
+
+msgid "Back to main page"
+msgstr "Tagasi avalehele"
+
+msgid "Close window"
+msgstr "Sulge aken"
+
+msgid "Back page"
+msgstr "Tagasi eelmisele lehele"
+
+msgid "Navigation"
+msgstr "Navigeerimine"
+
+msgid "Summary"
+msgstr "Kokkuvõte"
+
+msgid "Local"
+msgstr "Kohalik"
+
+msgid "External"
+msgstr "Väline"
+
+msgid "Others (email senders)"
+msgstr "Muud (saatjad)"
+
+msgid "Others (email receivers)"
+msgstr "Muud (vastuvõtjad)"
+
+msgid "Others"
+msgstr "Muud"
+
+msgid "Only 10 lines of browser data are currently displayed"
+msgstr "Praegu kuvatakse ainult 10 rida brauseri andmeid, täieliku loendi vaatamiseks vaadake täielikku nimekirja"
+
+msgid "Others (unknown browsers)"
+msgstr "Muud (tundmatud brauserid)"
+
+msgid "Others (operating systems)"
+msgstr "Muud (operatsioonisüsteemid)"
+
+msgid "Others (unknown OS)"
+msgstr "Muud (tundmatu süsteem)"
+
+msgid "Others (search engines)"
+msgstr "Muud (otsingumootorid)"
+
+msgid "Others (referring pages)"
+msgstr "Muud (viitavad lehed)"
+
+msgid "Others (keyphrases)"
+msgstr "Muud (fraasid)"
+
+msgid "Others (keywords)"
+msgstr "Muud (märksõnad)"
+
+msgid "Only first 10 robots shown"
+msgstr "Praegu kuvatakse ainult 10 rida robotite andmeid, täieliku loendi vaatamiseks vaadake täielikku nimekirja"
+
+msgid "Failed to obtain access record"
+msgstr "Ei õnnestunud hankida sisenemise kirjet"
+
+msgid "Failed to obtain leave record"
+msgstr "Ei õnnestunud hankida väljumise kirjet"
+
+msgid "Other pages"
+msgstr "Muud lehed"
+
+msgid "Low Traffic IP Summary"
+msgstr "Madala liiklusega tundmatu IP kokkuvõte"
+
+msgid "Failed to obtain IP data"
+msgstr "Muude teadaolevate IP-de kokkuvõte"
+
+msgid "Failed to obtain the relevant data"
+msgstr "Ei õnnestunud hankida asjakohaseid andmeid"
+
+msgid "Limited list of countries and regions"
+msgstr "Piiratud nimekiri riikidest ja piirkondadest, täieliku loendi vaatamiseks vaadake täielikku nimekirja"
+
+msgid "currentVisitorData"
+msgstr "Praegu kuvatakse ainult 10 rida külastajate andmeid, täieliku loendi vaatamiseks vaadake täielikku nimekirja"
+
+msgid "Others (robots main)"
+msgstr "Muud (robotid)"
+
+msgid "Others (worms)"
+msgstr "Muud (ussid)"
+
+msgid "Displaying10RowsPageMorePleaseViewFullList"
+msgstr "Praegu kuvatakse ainult 10 rida lehti, täieliku loendi vaatamiseks vaadake täielikku nimekirja"
+
+msgid "Others (OS main)"
+msgstr "Muud (süsteemid)"
+
+msgid "Others (browsers main)"
+msgstr "Muud (brauserid)"
+
+msgid "Others (screen sizes)"
+msgstr "Muud (suurused)"
+
+msgid "Others (search engines main)"
+msgstr "Muud (otsingumootorid)"
+
+msgid "Others (referring pages main)"
+msgstr "Muud (lähtelehed)"
+
+msgid "Others (keyphrases main)"
+msgstr "Muud (fraasid)"
+
+msgid "Others (keywords main)"
+msgstr "Muud (märksõnad)"
+
+msgid "Continue"
+msgstr "Jätka ülejäänud sisu saatmist"
+
+msgid "Switching Protocols"
+msgstr "Protokolli vahetamine"
+
+msgid "Processing (WebDAV)"
+msgstr "Töötlemisel (palun oodake)"
+
+msgid "Early Hints"
+msgstr "Server valmistab ressursse ette"
+
+msgid "[Miscellaneous successes]"
+msgstr "Muud õnnestumise olekud"
+
+msgid "Request successful"
+msgstr "Päring õnnestus"
+
+msgid "Created successfully"
+msgstr "Edukalt loodud"
+
+msgid "Accepted - processing"
+msgstr "Vastu võetud, töötlemisel"
+
+msgid "Non-authoritative information (from cache) (from cache)"
+msgstr "Mitteautoriteetne teave (vahemälust)"
+
+msgid "Success, no content returned"
+msgstr "Edu, sisu ei tagastatud"
+
+msgid "Reset content"
+msgstr "Lähtesta vorm"
+
+msgid "Partial content (resume download)"
+msgstr "Osaline sisu (toetab allalaadimise jätkamist)"
+
+msgid "Multi-status (WebDAV)"
+msgstr "Mitu olekut (WebDAV rühmatoimingud)"
+
+msgid "Already reported (WebDAV)"
+msgstr "Juba teatatud (väldib dubleerimist)"
+
+msgid "IM used"
+msgstr "Kasutatud on IM laiendatud protokolli"
+
+msgid "[Miscellaneous redirections]"
+msgstr "Muud ümbersuunamised"
+
+msgid "Multiple choices"
+msgstr "Mitu valikut"
+
+msgid "Moved permanently - update your links"
+msgstr "Alaliselt teisaldatud - uuendage oma linke"
+
+msgid "Temporary redirect - URL unchanged"
+msgstr "Ajutine ümbersuunamine - aadress ei ole muutunud"
+
+msgid "See other"
+msgstr "Vaadake muud aadressi"
+
+msgid "Not modified - using cached version"
+msgstr "Ei ole muudetud - kasutatakse vahemällu salvestatud versiooni"
+
+msgid "Use proxy"
+msgstr "Kasutage proksit"
+
+msgid "Switch proxy"
+msgstr "Vahetage proksit"
+
+msgid "Temporary redirect (keep method)"
+msgstr "Ajutine ümbersuunamine (säilitab päringu meetodi)"
+
+msgid "Permanent redirect - update your links"
+msgstr "Alaline ümbersuunamine - uuendage oma linke"
+
+msgid "[Miscellaneous client/user errors]"
+msgstr "Muud kliendi/kasutaja vead"
+
+msgid "Bad request"
+msgstr "Päringu vale vorming"
+
+msgid "Unauthorized - please log in"
+msgstr "Volitamata - palun logige sisse"
+
+msgid "Payment required"
+msgstr "Makse nõutav"
+
+msgid "Forbidden - access denied"
+msgstr "Juurdepääs keelatud, ebapiisavad õigused"
+
+msgid "Page not found (404) - check for broken links"
+msgstr "Lehte ei eksisteeri, kontrollige katkenud linke"
+
+msgid "Method not allowed"
+msgstr "Päringu meetod ei ole lubatud"
+
+msgid "Not acceptable"
+msgstr "Vastuse vorming ei ole vastuvõetav"
+
+msgid "Proxy authentication required"
+msgstr "Vaja on proksi autentimist"
+
+msgid "Request timeout"
+msgstr "Päringu aeg on möödunud"
+
+msgid "Conflict - please try again"
+msgstr "Päringu konflikt - palun proovige hiljem uuesti"
+
+msgid "Gone - permanently deleted"
+msgstr "Ressurss on alaliselt kustutatud"
+
+msgid "Length required"
+msgstr "Sisu pikkus tuleb määrata"
+
+msgid "Precondition failed"
+msgstr "Tingimused ei ole täidetud"
+
+msgid "Payload too large"
+msgstr "Päringu sisu on liiga suur"
+
+msgid "URI too long"
+msgstr "Päringu aadress on liiga pikk"
+
+msgid "Unsupported media type"
+msgstr "Failitüüp ei ole toetatud"
+
+msgid "Range not satisfiable"
+msgstr "Taotletud vahemik ei ole kehtiv"
+
+msgid "Expectation failed"
+msgstr "Expect taotlust ei saa täita"
+
+msgid "I am a teapot (April Fools)"
+msgstr "Ma olen teekann (aprillinali)"
+
+msgid "Page expired (Laravel)"
+msgstr "Leht on aegunud, värskendage ja proovige uuesti"
+
+msgid "Method failure (Spring)"
+msgstr "Meetod ebaõnnestus"
+
+msgid "Misdirected request"
+msgstr "Päring on valesti suunatud"
+
+msgid "Unprocessable entity (WebDAV)"
+msgstr "Päringu vorming on õige, kuid seda ei saa töödelda"
+
+msgid "Locked (WebDAV)"
+msgstr "Ressurss on lukustatud"
+
+msgid "Failed dependency (WebDAV)"
+msgstr "Sõltuv toiming ebaõnnestus"
+
+msgid "Too early"
+msgstr "Päring saadeti liiga vara"
+
+msgid "Upgrade required"
+msgstr "Protokolli on vaja uuendada"
+
+msgid "Precondition required"
+msgstr "Vajalikud tingimused puuduvad"
+
+msgid "Too many requests - slow down"
+msgstr "Päringud on liiga sagedased, palun proovige hiljem uuesti"
+
+msgid "Request header fields too large (Shopify)"
+msgstr "Päringu päise väljad on liiga suured"
+
+msgid "Request header too large"
+msgstr "Päringu päis on liiga suur"
+
+msgid "Login timeout (IIS)"
+msgstr "Sisselogimise aeg on möödunud, logige uuesti sisse"
+
+msgid "No response (nginx)"
+msgstr "Serverilt vastus puudub"
+
+msgid "Retry with (IIS)"
+msgstr "Proovige hiljem uuesti"
+
+msgid "Blocked by Windows parental controls"
+msgstr "Windowsi lapsevanemate kontrolli poolt blokeeritud"
+
+msgid "Unavailable for legal reasons"
+msgstr "Pole seaduslikel põhjustel saadaval"
+
+msgid "Client closed connection before idle timeout (AWS ELB)"
+msgstr "Klient katkestas ühenduse aktiivselt"
+
+msgid "X-Forwarded-For header with >30 IP addresses (AWS ELB)"
+msgstr "Edastusahel ületab 30 IP-aadressi"
+
+msgid "Incompatible protocol versions (AWS ELB)"
+msgstr "Protokolli versioonid ei ühildu"
+
+msgid "Request header too large (nginx)"
+msgstr "Päringu päis on liiga suur"
+
+msgid "SSL certificate error (nginx)"
+msgstr "SSL-sertifikaadi viga"
+
+msgid "SSL certificate required (nginx)"
+msgstr "SSL-sertifikaat on nõutav"
+
+msgid "HTTP request sent to HTTPS port (nginx)"
+msgstr "HTTP päring saadeti HTTPS pordile"
+
+msgid "Invalid token (ArcGIS)"
+msgstr "Vigane märk"
+
+msgid "Token required (ArcGIS) / Client closed request (nginx)"
+msgstr "Märk on nõutav / Klient sulges päringu"
+
+msgid "Resource limit reached (cPanel)"
+msgstr "Ressursi piirang on saavutatud (CPU/mälu)"
+
+msgid "Bandwidth limit exceeded (Apache/cPanel)"
+msgstr "Lairiba piirang on ületatud"
+
+msgid "[Miscellaneous server errors]"
+msgstr "Muud serverivead"
+
+msgid "Internal server error - check logs"
+msgstr "Serveri sisemine viga - kontrollige logisid"
+
+msgid "Not implemented"
+msgstr "Server ei toeta seda funktsiooni"
+
+msgid "Bad gateway - backend error"
+msgstr "Gateway viga - taustateenus ei tööta korralikult"
+
+msgid "Service unavailable - maintenance or overload"
+msgstr "Teenus pole saadaval - hooldus või ülekoormus"
+
+msgid "Gateway timeout"
+msgstr "Gateway vastamise aeg on möödunud"
+
+msgid "HTTP version not supported"
+msgstr "HTTP protokolli versiooni ei toetata"
+
+msgid "Variant also negotiates"
+msgstr "Variandid osalevad ka läbirääkimistel (vale konfiguratsioon)"
+
+msgid "Insufficient storage (WebDAV)"
+msgstr "Pole piisavalt salvestusruumi"
+
+msgid "Loop detected (WebDAV)"
+msgstr "Tuvastati ringviide"
+
+msgid "Not extended"
+msgstr "Vajalik on edasine laiendus"
+
+msgid "Network authentication required"
+msgstr "Vajalik on võrgu autentimine"
+
+msgid "Unknown error (Cloudflare)"
+msgstr "Tundmatu viga"
+
+msgid "Web server is down (Cloudflare)"
+msgstr "Veebiserver on välja lülitatud"
+
+msgid "Connection timeout (Cloudflare)"
+msgstr "Ühenduse aeg on möödunud"
+
+msgid "Origin is unreachable (Cloudflare)"
+msgstr "Päritolu serverini ei pääse"
+
+msgid "A timeout occurred (Cloudflare)"
+msgstr "Toimus ajastus"
+
+msgid "SSL handshake failed (Cloudflare)"
+msgstr "SSL-i käepigistus ebaõnnestus"
+
+msgid "Invalid SSL certificate (Cloudflare)"
+msgstr "Vigane SSL-sertifikaat"
+
+msgid "Railgun error (Cloudflare - obsolete)"
+msgstr "Railguni viga (aegunud)"
+
+msgid "Site is overloaded (SSLLabs)"
+msgstr "Saidi koormus on liiga suur (SSLLabs)"
+
+msgid "Origin DNS error (Cloudflare) / Site is frozen (Pantheon)"
+msgstr "Päritolu serveri DNS-i viga / Said on külmutatud (Pantheon)"
+
+msgid "Temporarily disabled (Shopify)"
+msgstr "Ajutiselt keelatud (Shopify)"
+
+msgid "Unauthorized (AWS ELB)"
+msgstr "Volitamata (AWS ELB)"
+
+msgid "Network read timeout error"
+msgstr "Võrgu lugemise ajalõpu viga"
+
+msgid "Network connect timeout error"
+msgstr "Võrguga ühenduse loomise ajalõpu viga"
+
+msgid "Unexpected token (Shopify)"
+msgstr "Ootamatu märk (Shopify)"
+
+msgid "Request denied (LinkedIn)"
+msgstr "Päring keelati (LinkedIn)"
+
+msgid "HTTP/2 GOAWAY (AWS ELB)"
+msgstr "HTTP/2 ühendus suleti (AWS ELB)"
+
+#------------------------------------------------------------------------------
+# SMTP olekukoodid
+#------------------------------------------------------------------------------
+
+msgid "[Unknown]"
+msgstr "Tundmatu olekukood"
+
+msgid "Nonstandard success response (ESMTP)"
+msgstr "Mittestandardne edukas vastus (ESMTP)"
+
+msgid "System status, or system help reply"
+msgstr "Süsteemi olek või abi"
+
+msgid "Help message"
+msgstr "Abisõnum"
+
+msgid "SMTP service ready (LMTP)"
+msgstr "SMTP teenus on valmis (LMTP)"
+
+msgid "Service ready - server is ready to receive mail"
+msgstr "Teenus on valmis - meiliserver on valmis meili vastu võtma"
+
+msgid "Service closing - connection is being closed"
+msgstr "Teenus sulgub - ühendus katkestatakse"
+
+msgid "Authentication successful"
+msgstr "Autentimine õnnestus"
+
+msgid "Requested mail action taken and completed"
+msgstr "Taotletud meili toiming sooritati ja lõpetati"
+
+msgid "User not local - will forward to another address"
+msgstr "Kasutaja ei ole sellel serveril - suunatakse edasi teisele aadressile"
+
+msgid "Cannot verify recipient, but will attempt delivery"
+msgstr "Saajat ei saa kontrollida, kuid kohaletoimetamist proovitakse"
+
+msgid "Message accepted for delivery (DSN)"
+msgstr "Sõnum võeti kohaletoimetamiseks vastu (DSN)"
+
+msgid "User name is a mailbox"
+msgstr "Kasutajanimi on postkast"
+
+msgid "Authentication challenge - please respond"
+msgstr "Autentimise väljakutse - palun vastake"
+
+msgid "Start mail input - end with <CRLF>.<CRLF>"
+msgstr "Alustage meili sisu sisestamist - lõpetage <CRLF>.<CRLF>-ga"
+
+msgid "Continue (LMTP)"
+msgstr "Jätka (LMTP)"
+
+msgid "Service not available - connection closing, try again later"
+msgstr "Teenus pole saadaval - ühendus sulgub, proovige hiljem uuesti"
+
+msgid "Mailbox busy or temporarily unavailable (Exchange)"
+msgstr "Postkast on hõivatud või ajutiselt kättesaamatu (Exchange)"
+
+msgid "Connection rate limit exceeded (Postfix)"
+msgstr "Ühenduse sageduse piirang on ületatud (Postfix)"
+
+msgid "Too many concurrent connections (Postfix)"
+msgstr "Liiga palju samaaegseid ühendusi (Postfix)"
+
+msgid "Unable to establish connection (Postfix)"
+msgstr "Ühendust ei saa luua (Postfix)"
+
+msgid "Connection timed out (Postfix)"
+msgstr "Ühenduse ajalõpp (Postfix)"
+
+msgid "Connection dropped due to error (Postfix)"
+msgstr "Ühendus katkestati vea tõttu (Postfix)"
+
+msgid "Mailbox temporarily locked (Exchange)"
+msgstr "Postkast on ajutiselt lukustatud (Exchange)"
+
+msgid "Too many recipients (Postfix/Exim)"
+msgstr "Liiga palju saajaid (Postfix/Exim)"
+
+msgid "Mail server error (Exchange)"
+msgstr "Meiliserveri viga (Exchange)"
+
+msgid "Received loop detected (Exim)"
+msgstr "Tuvastati vastuvõtu silmus (Exim)"
+
+msgid "Too many hop count (Exim)"
+msgstr "Liiga palju hüppeid (Exim)"
+
+msgid "DNS lookup failed (Postfix)"
+msgstr "DNS-i päring ebaõnnestus (Postfix)"
+
+msgid "Unable to authenticate (Postfix)"
+msgstr "Autentimine ebaõnnestus (Postfix)"
+
+msgid "TLS handshake failed (Postfix)"
+msgstr "TLS-i käepigistus ebaõnnestus (Postfix)"
+
+msgid "SMTP protocol violation (Postfix)"
+msgstr "SMTP protokolli rikkumine (Postfix)"
+
+msgid "Message size exceeds limit (Exchange)"
+msgstr "Meili suurus ületab piirangu (Exchange)"
+
+msgid "Message rate limit exceeded (Postfix)"
+msgstr "Meili saatmise sageduse piirang on ületatud (Postfix)"
+
+msgid "Mailbox quota exceeded - temporary"
+msgstr "Postkasti kvoot on täis - ajutine olek"
+
+msgid "Domain not found (Postfix)"
+msgstr "Domeeni ei leitud (Postfix)"
+
+msgid "Message header invalid (Postfix)"
+msgstr "Meili päis on vigane (Postfix)"
+
+msgid "Bounce loop detected (Postfix)"
+msgstr "Tuvastati tagasilöögi silmus (Postfix)"
+
+msgid "Unable to route (Postfix)"
+msgstr "Ei saa suunata (Postfix)"
+
+msgid "Sender domain not found (Postfix)"
+msgstr "Saatja domeeni ei leitud (Postfix)"
+
+msgid "Recipient domain not found (Postfix)"
+msgstr "Saaja domeeni ei leitud (Postfix)"
+
+msgid "Greylisting in progress - please try again (Postgrey)"
+msgstr "Hall nimekiri koostamisel - proovige hiljem uuesti (Postgrey)"
+
+msgid "Spam filtering in progress (SpamAssassin)"
+msgstr "Rämpsposti filtreerimine käib (SpamAssassin)"
+
+msgid "Virus scanning in progress (ClamAV)"
+msgstr "Viiruste skaneerimine käib (ClamAV)"
+
+msgid "Mailbox unavailable - try again later"
+msgstr "Postkast pole saadaval - proovige hiljem uuesti"
+
+msgid "Requested action aborted - error in processing"
+msgstr "Taotletud toiming katkestati - viga töötlemisel"
+
+msgid "Insufficient system storage - try again later"
+msgstr "Pole piisavalt süsteemi salvestusruumi - proovige hiljem uuesti"
+
+msgid "Too many messages for this recipient (Exchange)"
+msgstr "Liiga palju sõnumeid sellele saajale (Exchange)"
+
+msgid "TLS not available (Postfix)"
+msgstr "TLS pole saadaval (Postfix)"
+
+msgid "Server unable to accept messages (Postfix)"
+msgstr "Server ei saa meili vastu võtta (Postfix)"
+
+msgid "Temporary failure in DNS lookup (Exim)"
+msgstr "Ajutine rike DNS-i päringus (Exim)"
+
+msgid "Quota exceeded - temporary"
+msgstr "Kvoot ületatud - ajutine olek"
+
+msgid "Message too big - temporary"
+msgstr "Meil on liiga suur - ajutine olek"
+
+msgid "Too many messages per connection"
+msgstr "Liiga palju sõnumeid ühenduse kohta"
+
+msgid "Load average too high (Postfix)"
+msgstr "Süsteemi keskmine koormus on liiga kõrge (Postfix)"
+
+msgid "Connection refused (Postfix)"
+msgstr "Ühendus keelati (Postfix)"
+
+msgid "Send rate limit exceeded (Postfix)"
+msgstr "Saatmise sageduse piirang on ületatud (Postfix)"
+
+msgid "Recipient rate limit exceeded (Postfix)"
+msgstr "Saaja sageduse piirang on ületatud (Postfix)"
+
+msgid "Sender rate limit exceeded (Postfix)"
+msgstr "Saatja sageduse piirang on ületatud (Postfix)"
+
+msgid "IP address rate limit exceeded (Postfix)"
+msgstr "IP-aadressi sageduse piirang on ületatud (Postfix)"
+
+msgid "MX lookup failed (Postfix)"
+msgstr "MX-i päring ebaõnnestus (Postfix)"
+
+msgid "A record lookup failed (Postfix)"
+msgstr "A-kirje päring ebaõnnestus (Postfix)"
+
+msgid "PTR record lookup failed (Postfix)"
+msgstr "PTR-kirje päring ebaõnnestus (Postfix)"
+
+msgid "Greylisting active - please try again (Postgrey)"
+msgstr "Hall nimekiri on aktiivne - proovige hiljem uuesti (Postgrey)"
+
+msgid "Sender address rejected - domain not verified (DMARC pending)"
+msgstr "Saatja aadress lükati tagasi - domeeni pole kinnitatud (DMARC ootel)"
+
+msgid "Recipient address rejected - domain not verified (DMARC pending)"
+msgstr "Saaja aadress lükati tagasi - domeeni pole kinnitatud (DMARC ootel)"
+
+msgid "DKIM verification pending - temporary failure"
+msgstr "DKIM-i kontroll ootel - ajutine rike"
+
+msgid "SPF verification pending - temporary failure"
+msgstr "SPF-i kontroll ootel - ajutine rike"
+
+msgid "DMARC verification pending - temporary failure"
+msgstr "DMARC-i kontroll ootel - ajutine rike"
+
+msgid "DNSBL lookup temporary failure"
+msgstr "DNSBL-i päringu ajutine rike"
+
+msgid "RHSBL lookup temporary failure"
+msgstr "RHSBL-i päringu ajutine rike"
+
+msgid "URI DNSBL lookup temporary failure"
+msgstr "URI DNSBL-i päringu ajutine rike"
+
+msgid "Temporary authentication failure (Dovecot)"
+msgstr "Ajutine autentimise rike (Dovecot)"
+
+msgid "Temporary authorization failure (Sendmail)"
+msgstr "Ajutine autoriseerimise rike (Sendmail)"
+
+msgid "Rate limit exceeded per sender (Exim)"
+msgstr "Saatja kohta kehtestatud sageduse piirang on ületatud (Exim)"
+
+msgid "Rate limit exceeded per recipient (Exim)"
+msgstr "Saaja kohta kehtestatud sageduse piirang on ületatud (Exim)"
+
+msgid "Rate limit exceeded per domain (Exim)"
+msgstr "Domeeni kohta kehtestatud sageduse piirang on ületatud (Exim)"
+
+msgid "Rate limit exceeded per IP (Exim)"
+msgstr "IP-aadressi kohta kehtestatud sageduse piirang on ületatud (Exim)"
+
+msgid "Message queued for later delivery (Postfix)"
+msgstr "Meil pandi hilisemaks kohaletoimetamiseks järjekorda (Postfix)"
+
+msgid "Delivery delayed due to policy (Exchange)"
+msgstr "Kohaletoimetamine viibis reeglite tõttu (Exchange)"
+
+msgid "Temporary failure in content filter"
+msgstr "Ajutine rike sisufiltris"
+
+msgid "Temporary failure in antivirus scanner"
+msgstr "Ajutine rike viirusetõrje skanneris"
+
+msgid "Temporary failure in spam filter"
+msgstr "Ajutine rike rämpsposti filtris"
+
+msgid "Temporary failure in milter (Postfix)"
+msgstr "Ajutine rike milteris (Postfix)"
+
+msgid "Greylisting - try again later"
+msgstr "Hall nimekiri - proovige hiljem uuesti"
+
+msgid "DDoS protection active - try again later"
+msgstr "DDoS-i kaitse on aktiivne - proovige hiljem uuesti"
+
+msgid "SMTP policy violation - temporary"
+msgstr "SMTP poliitika rikkumine - ajutine olek"
+
+msgid "Temporary error in RCPT TO processing"
+msgstr "Ajutine viga RCPT TO töötlemisel"
+
+msgid "Temporary error in MAIL FROM processing"
+msgstr "Ajutine viga MAIL FROM töötlemisel"
+
+msgid "Temporary error in EHLO/HELO processing"
+msgstr "Ajutine viga EHLO/HELO töötlemisel"
+
+msgid "Temporary error in DATA processing"
+msgstr "Ajutine viga DATA töötlemisel"
+
+msgid "Temporary error - service busy, try again later"
+msgstr "Ajutine viga - teenus on hõivatud, proovige hiljem uuesti"
+
+msgid "Syntax error - command unrecognized or too long"
+msgstr "Süntaksiviga - käsk on tundmatu või liiga pikk"
+
+msgid "Syntax error in parameters or arguments"
+msgstr "Süntaksiviga parameetrites või argumentides"
+
+msgid "Command not implemented"
+msgstr "Käsku pole rakendatud"
+
+msgid "Bad sequence of commands"
+msgstr "Käskude vale järjestus"
+
+msgid "Command parameter not implemented"
+msgstr "Käsu parameetrit pole rakendatud"
+
+msgid "Version not supported (ESMTP)"
+msgstr "Versiooni ei toetata (ESMTP)"
+
+msgid "Mailbox path invalid (LMTP)"
+msgstr "Postkasti tee on vigane (LMTP)"
+
+msgid "Too many commands in this session (Postfix)"
+msgstr "Liiga palju käske selles seansis (Postfix)"
+
+msgid "Recipient limit exceeded (Postfix)"
+msgstr "Saajate arvu piirang on ületatud (Postfix)"
+
+msgid "Sender limit exceeded (Postfix)"
+msgstr "Saatjate arvu piirang on ületatud (Postfix)"
+
+msgid "Domain limit exceeded (Postfix)"
+msgstr "Domeenide arvu piirang on ületatud (Postfix)"
+
+msgid "Mailbox does not exist (Exchange)"
+msgstr "Postkasti ei eksisteeri (Exchange)"
+
+msgid "DNS failure - permanent"
+msgstr "DNS-i rike - püsiv viga"
+
+msgid "Address type not supported (Postfix)"
+msgstr "Aadressi tüüpi ei toetata (Postfix)"
+
+msgid "Unable to open mailbox (Postfix)"
+msgstr "Postkasti ei saa avada (Postfix)"
+
+msgid "Mailbox locked - permanent"
+msgstr "Postkast on lukustatud - püsiv olek"
+
+msgid "Message rejected due to policy (Exchange)"
+msgstr "Sõnum lükati tagasi reeglite tõttu (Exchange)"
+
+msgid "Content rejected - permanent"
+msgstr "Sisu lükati tagasi - püsiv olek"
+
+msgid "Attachment type not allowed"
+msgstr "Manuse tüüp pole lubatud"
+
+msgid "Message encoding not supported"
+msgstr "Sõnumi kodeeringut ei toetata"
+
+msgid "Sender domain does not exist - permanent"
+msgstr "Saatja domeeni ei eksisteeri - püsiv viga"
+
+msgid "Domain does not accept mail or is closing"
+msgstr "Domeen ei võta meili vastu või sulgub"
+
+msgid "Recipient domain does not exist - permanent"
+msgstr "Saaja domeeni ei eksisteeri - püsiv viga"
+
+msgid "Mailbox quota exceeded - permanent"
+msgstr "Postkasti kvoot on ületatud - püsiv olek"
+
+msgid "Message size exceeds limit - permanent"
+msgstr "Sõnumi suurus ületab piirangu - püsiv olek"
+
+msgid "Authentication required (Sendmail)"
+msgstr "Autentimine on vajalik (Sendmail)"
+
+msgid "Authentication failed (Sendmail)"
+msgstr "Autentimine ebaõnnestus (Sendmail)"
+
+msgid "Authentication mechanism not supported"
+msgstr "Autentimismehhanismi ei toetata"
+
+msgid "Authentication credentials invalid"
+msgstr "Autentimise mandaadid on kehtetud"
+
+msgid "Authentication account expired"
+msgstr "Autentimiskonto aegus"
+
+msgid "Access denied - authentication required"
+msgstr "Juurdepääs keelatud - autentimine on vajalik"
+
+msgid "Access denied (Sendmailism)"
+msgstr "Juurdepääs keelatud (Sendmail)"
+
+msgid "Access denied - not authenticated"
+msgstr "Juurdepääs keelatud - te pole autenditud"
+
+msgid "Access denied - account locked"
+msgstr "Juurdepääs keelatud - konto on lukustatud"
+
+msgid "Access denied - account disabled"
+msgstr "Juurdepääs keelatud - konto on keelatud"
+
+msgid "Authentication failed"
+msgstr "Autentimine ebaõnnestus"
+
+msgid "Authentication required for relay (Postfix)"
+msgstr "Edastamiseks on vajalik autentimine (Postfix)"
+
+msgid "Authentication failed for relay (Postfix)"
+msgstr "Edastamise autentimine ebaõnnestus (Postfix)"
+
+msgid "Encryption required (STARTTLS)"
+msgstr "Krüpteeritud ühendus on vajalik (STARTTLS)"
+
+msgid "TLS required for this recipient"
+msgstr "Selle saaja jaoks on vajalik TLS-i krüptimine"
+
+msgid "Encryption strength insufficient"
+msgstr "Krüptimise tugevus on ebapiisav"
+
+msgid "Certificate validation failed"
+msgstr "Sertifikaadi kontroll ebaõnnestus"
+
+msgid "Invalid TLS certificate"
+msgstr "Vigane TLS-i sertifikaat"
+
+msgid "TLS protocol version not supported"
+msgstr "TLS-i protokolli versiooni ei toetata"
+
+msgid "Cipher suite not supported"
+msgstr "Šifri komplekti ei toetata"
+
+msgid "Access denied - no valid recipient"
+msgstr "Juurdepääs keelatud - kehtivat saajat pole"
+
+msgid "Access denied - no valid sender"
+msgstr "Juurdepääs keelatud - kehtivat saatjat pole"
+
+msgid "Access denied - domain not allowed"
+msgstr "Juurdepääs keelatud - domeen pole lubatud"
+
+msgid "Access denied - IP address blocked (permanent)"
+msgstr "Juurdepääs keelatud - IP-aadress on alaliselt blokeeritud"
+
+msgid "Access denied - sender domain blacklisted"
+msgstr "Juurdepääs keelatud - saatja domeen on mustas nimekirjas"
+
+msgid "Mailbox unavailable - requested action not taken"
+msgstr "Postkast pole saadaval - taotletud toimingut ei tehtud"
+
+msgid "User not local - please try forwarding address"
+msgstr "Kasutaja ei ole lokaalne - proovige edastusaadressi"
+
+msgid "Requested action aborted - exceeded storage allocation"
+msgstr "Taotletud toiming katkestati - eraldatud salvestusmaht ületati"
+
+msgid "Mailbox name not allowed"
+msgstr "Postkasti nimi pole lubatud"
+
+msgid "Requested action rejected - access denied"
+msgstr "Taotletud toiming lükati tagasi - juurdepääs keelatud"
+
+msgid "MAIL FROM/RCPT TO parameters not recognized"
+msgstr "MAIL FROM/RCPT TO parameetreid ei tunnistatud"
+
+msgid "Domain not allowed to send (DMARC reject)"
+msgstr "Domeenil pole lubatud saata (DMARC-i tagasilükkamine)"
+
+msgid "Too many duplicate messages - permanent"
+msgstr "Liiga palju dubleeritud sõnumeid - püsiv olek"
+
+msgid "Sender address rejected - domain not in SPF"
+msgstr "Saatja aadress lükati tagasi - domeen pole SPF-kirjes"
+
+msgid "Sender address rejected - DKIM verification failed"
+msgstr "Saatja aadress lükati tagasi - DKIM-i kontroll ebaõnnestus"
+
+msgid "Sender address rejected - DMARC policy reject"
+msgstr "Saatja aadress lükati tagasi - DMARC-i poliitika tagasilükkamine"
+
+msgid "Recipient address rejected - DMARC policy reject"
+msgstr "Saaja aadress lükati tagasi - DMARC-i poliitika tagasilükkamine"
+
+msgid "Message rejected due to spam content"
+msgstr "Sõnum lükati tagasi rämpsposti sisu tõttu"
+
+msgid "Message rejected due to virus detected"
+msgstr "Sõnum lükati tagasi tuvastatud viiruse tõttu"
+
+msgid "Message rejected due to malicious content"
+msgstr "Sõnum lükati tagasi pahatahtliku sisu tõttu"
+
+msgid "Message rejected due to phishing detection"
+msgstr "Sõnum lükati tagasi andmepüügi tuvastamise tõttu"
+
+msgid "Message rejected due to malware detection"
+msgstr "Sõnum lükati tagasi pahavara tuvastamise tõttu"
+
+msgid "Message rejected due to policy - permanent"
+msgstr "Sõnum lükati tagasi reeglite tõttu - püsiv olek"
+
+msgid "Message rejected due to content filtering"
+msgstr "Sõnum lükati tagasi sisu filtreerimise tõttu"
+
+msgid "Message rejected due to reputation"
+msgstr "Sõnum lükati tagasi maine tõttu"
+
+msgid "Access denied - access_map violation"
+msgstr "Juurdepääs keelatud - access_map rikkumine"
+
+msgid "Access denied - SMTP client listed in RBL"
+msgstr "Juurdepääs keelatud - SMTP-klient on RBL-is"
+
+msgid "Access denied - relay not authorized"
+msgstr "Juurdepääs keelatud - edastamine pole volitatud"
+
+msgid "Access denied - unknown SMTP client hostname"
+msgstr "Juurdepääs keelatud - SMTP-kliendi hosti nimi on tundmatu"
+
+msgid "Access denied - bad syntax for client HELO hostname"
+msgstr "Juurdepääs keelatud - kliendi HELO hostinime vigane süntaks"
+
+msgid "Access denied - SMTP client hostname rejected"
+msgstr "Juurdepääs keelatud - SMTP-kliendi hosti nimi lükati tagasi"
+
+msgid "Access denied - unknown domain for sender or recipient"
+msgstr "Juurdepääs keelatud - saatja või saaja domeen on tundmatu"
+
+msgid "Access denied - unknown client HELO hostname"
+msgstr "Juurdepääs keelatud - kliendi HELO hosti nimi on tundmatu"
+
+msgid "Access denied - invalid domain (not FQDN)"
+msgstr "Juurdepääs keelatud - vigane domeen (pole FQDN)"
+
+msgid "Access denied - domain not qualified"
+msgstr "Juurdepääs keelatud - domeen pole kvalifitseeritud"
+
+msgid "Access denied - mail server misconfigured"
+msgstr "Juurdepääs keelatud - meiliserver on valesti konfigureeritud"
+
+msgid "Access denied - open relay not allowed"
+msgstr "Juurdepääs keelatud - avatud edastamine pole lubatud"
+
+msgid "Access denied - proxy not allowed"
+msgstr "Juurdepääs keelatud - proksi pole lubatud"
+
+msgid "Access denied - dynamic IP not allowed"
+msgstr "Juurdepääs keelatud - dünaamiline IP pole lubatud"
+
+msgid "Access denied - residential IP not allowed"
+msgstr "Juurdepääs keelatud - elamu IP pole lubatud"
+
+msgid "Access denied - VPN/Tor detected"
+msgstr "Juurdepääs keelatud - tuvastati VPN/Tor"
+
+msgid "Access denied - Spamhaus DROP listed"
+msgstr "Juurdepääs keelatud - IP-aadress on Spamhaus DROP nimekirjas"
+
+msgid "Access denied - URL listed in URIBL"
+msgstr "Juurdepääs keelatud - URL on URIBL-is"
+
+msgid "Access denied - domain in RHSBL"
+msgstr "Juurdepääs keelatud - domeen on RHSBL-is"
+
+msgid "Access denied - IP in DNSWL (policy)"
+msgstr "Juurdepääs keelatud - IP on DNSWL-is (poliitika)"
+
+msgid "Delivery failed - mailbox not found"
+msgstr "Kohaletoimetamine ebaõnnestus - postkasti ei leitud"
+
+msgid "Delivery failed - recipient not local"
+msgstr "Kohaletoimetamine ebaõnnestus - saaja pole lokaalne"
+
+msgid "Delivery failed - recipient rejected"
+msgstr "Kohaletoimetamine ebaõnnestus - saaja lükati tagasi"
+
+msgid "Delivery failed - sender rejected"
+msgstr "Kohaletoimetamine ebaõnnestus - saatja lükati tagasi"
+
+msgid "Delivery failed - relay rejected"
+msgstr "Kohaletoimetamine ebaõnnestus - edastamine lükati tagasi"
+
+msgid "Delivery failed - DNS permanent error"
+msgstr "Kohaletoimetamine ebaõnnestus - püsiv DNS-i viga"
+
+msgid "Delivery failed - MX permanent error"
+msgstr "Kohaletoimetamine ebaõnnestus - püsiv MX-i viga"
+
+msgid "Delivery failed - A record permanent error"
+msgstr "Kohaletoimetamine ebaõnnestus - püsiv A-kirje viga"
+
+msgid "Delivery failed - PTR record permanent error"
+msgstr "Kohaletoimetamine ebaõnnestus - püsiv PTR-kirje viga"
+
+msgid "Delivery failed - policy permanent error"
+msgstr "Kohaletoimetamine ebaõnnestus - püsiv reeglite viga"
+
+msgid "DSN: Success - delivery status notification"
+msgstr "DSN: Edu - kohaletoimetamise oleku teatis"
+
+msgid "DSN: Delivery delayed"
+msgstr "DSN: Kohaletoimetamine viibis"
+
+msgid "DSN: Delivery failed - permanent"
+msgstr "DSN: Kohaletoimetamine ebaõnnestus - püsiv"
+
+msgid "DSN: Delivery failed - temporary"
+msgstr "DSN: Kohaletoimetamine ebaõnnestus - ajutine"
+
+msgid "DSN: Message expired"
+msgstr "DSN: Sõnum aegus"
+
+msgid "DSN: Message bounced"
+msgstr "DSN: Sõnum põrkas tagasi"
+
+msgid "DSN: Message discarded"
+msgstr "DSN: Sõnum visati ära"
+
+msgid "DSN: Message filtered"
+msgstr "DSN: Sõnum filtreeriti"
+
+msgid "DSN: Message quarantined"
+msgstr "DSN: Sõnum pandi karantiini"
+
+msgid "DSN: Message held for review"
+msgstr "DSN: Sõnum peeti läbivaatamiseks kinni"
+
+msgid "MTA-STS policy required"
+msgstr "MTA-STS poliitika on nõutav"
+
+msgid "MTA-STS policy validation failed"
+msgstr "MTA-STS poliitika kontroll ebaõnnestus"
+
+msgid "TLS reporting required"
+msgstr "TLS-i aruandlus on nõutav"
+
+msgid "TLS report requested"
+msgstr "TLS-i aruanne on taotletud"
+
+msgid "SMTP MTA Strict Transport Security active"
+msgstr "SMTP MTA Strict Transport Security on aktiivne"
+
+msgid "DANE validation required"
+msgstr "DANE-i kontroll on nõutav"
+
+msgid "DANE validation failed"
+msgstr "DANE-i kontroll ebaõnnestus"
+
+msgid "TLSA record missing"
+msgstr "TLSA-kirje puudub"
+
+msgid "Certificate name mismatch"
+msgstr "Sertifikaadi nimi ei kattu"
+
+msgid "Certificate expired"
+msgstr "Sertifikaat on aegunud"
+
+msgid "AUTH LOGIN required"
+msgstr "AUTH LOGIN autentimine on nõutav"
+
+msgid "AUTH PLAIN required"
+msgstr "AUTH PLAIN autentimine on nõutav"
+
+msgid "AUTH CRAM-MD5 required"
+msgstr "AUTH CRAM-MD5 autentimine on nõutav"
+
+msgid "AUTH DIGEST-MD5 required"
+msgstr "AUTH DIGEST-MD5 autentimine on nõutav"
+
+msgid "AUTH GSSAPI required"
+msgstr "AUTH GSSAPI autentimine on nõutav"
+
+msgid "AUTH NTLM required"
+msgstr "AUTH NTLM autentimine on nõutav"
+
+msgid "AUTH SCRAM required"
+msgstr "AUTH SCRAM autentimine on nõutav"
+
+msgid "AUTH OAUTHBEARER required"
+msgstr "AUTH OAUTHBEARER autentimine on nõutav"
+
+msgid "AUTH XOAUTH2 required"
+msgstr "AUTH XOAUTH2 autentimine on nõutav"
+
+msgid "Exchange: Mailbox database error"
+msgstr "Exchange: Postkasti andmebaasi viga"
+
+msgid "Exchange: Store driver error"
+msgstr "Exchange: Salvestusdraiveri viga"
+
+msgid "Exchange: Transport agent error"
+msgstr "Exchange: Transpordiagendi viga"
+
+msgid "Exchange: Content conversion error"
+msgstr "Exchange: Sisu teisendamise viga"
+
+msgid "Exchange: Routing error"
+msgstr "Exchange: Marsruutimise viga"
+
+msgid "Exchange: Mail flow stalled"
+msgstr "Exchange: Meilivoog on seiskunud"
+
+msgid "Exchange: Shadow redundancy error"
+msgstr "Exchange: Varukoopia ülearuse viga"
+
+msgid "Exchange: Safety net error"
+msgstr "Exchange: Turvavõrgu viga"
+
+msgid "Exchange: Queue database error"
+msgstr "Exchange: Järjekorra andmebaasi viga"
+
+msgid "Exchange: Message throttled"
+msgstr "Exchange: Sõnumit piirati"
+
+msgid "Postfix: Bounce queue error"
+msgstr "Postfix: Tagasilöögi järjekorra viga"
+
+msgid "Postfix: Deferred queue error"
+msgstr "Postfix: Edasilükatud järjekorra viga"
+
+msgid "Postfix: Hold queue error"
+msgstr "Postfix: Ootel järjekorra viga"
+
+msgid "Postfix: Incoming queue error"
+msgstr "Postfix: Sissetuleva järjekorra viga"
+
+msgid "Postfix: Active queue error"
+msgstr "Postfix: Aktiivse järjekorra viga"
+
+msgid "Postfix: Corrupted queue file"
+msgstr "Postfix: Rikutud järjekorra fail"
+
+msgid "Sendmail: Queue runner error"
+msgstr "Sendmail: Järjekorra käivitaja viga"
+
+msgid "Sendmail: Alias database error"
+msgstr "Sendmail: Aliase andmebaasi viga"
+
+msgid "Sendmail: Virtuser table error"
+msgstr "Sendmail: Virtuaalkasutaja tabeli viga"
+
+msgid "Sendmail: Mailer definition error"
+msgstr "Sendmail: Maileri definitsiooni viga"
+
+msgid "Exim: Router configuration error"
+msgstr "Exim: Ruuteri konfiguratsiooni viga"
+
+msgid "Exim: Transport configuration error"
+msgstr "Exim: Transpordi konfiguratsiooni viga"
+
+msgid "Exim: Director configuration error"
+msgstr "Exim: Direktori konfiguratsiooni viga"
+
+msgid "Exim: Retry configuration error"
+msgstr "Exim: Uuestiproovimise konfiguratsiooni viga"
+
+msgid "Exim: Rewrite configuration error"
+msgstr "Exim: Ümberkirjutamise konfiguratsiooni viga"
+
+msgid "Exim: Authentication configuration error"
+msgstr "Exim: Autentimise konfiguratsiooni viga"
+
+msgid "Exim: ACL configuration error"
+msgstr "Exim: ACL-i konfiguratsiooni viga"
+
+msgid "Exim: Local_scan configuration error"
+msgstr "Exim: Kohaliku skannimise konfiguratsiooni viga"
+
+msgid "Exim: Lookup configuration error"
+msgstr "Exim: Päringu konfiguratsiooni viga"
+
+msgid "Exim: Expansion configuration error"
+msgstr "Exim: Laienduse konfiguratsiooni viga"
+
+msgid "HTTP Protocol Versions"
+msgstr "HTTP protokolli versioonid"
+
+msgid "Protocol"
+msgstr "Protokoll"
+
+msgid "Request %"
+msgstr "Päringute osakaal"
+
+msgid "Bandwidth %"
+msgstr "Lairiba osakaal"
+
+msgid "Each request requires a new connection"
+msgstr "Iga päring vajab uut ühendust"
+
+msgid "Multiple requests can reuse one connection"
+msgstr "Mitu päringut saab jagada sama ühendust"
+
+msgid "Multiple requests in parallel over one connection"
+msgstr "Ühe ühenduse sees saab paralleelselt töödelda mitu päringut"
+
+msgid "Faster connection, better performance on poor networks"
+msgstr "Kiirem ühendus, parem jõudlus aeglastes võrkudes"
+
+msgid "No protocol data available"
+msgstr "Protokolli andmed puuduvad"
+
+msgid "of requests use HTTP/1.0"
+msgstr "päringutest kasutab HTTP/1.0 protokolli"
+
+msgid "From access logs"
+msgstr "Juurdepääsulogidest"
+
+msgid "No HTTP/2 requests detected"
+msgstr "HTTP/2 päringuid ei tuvastatud"
+
+msgid "All requests are HTTP/1.0, no HTTP/2 requests"
+msgstr "Kõik praegused päringud on HTTP/1.0, HTTP/2 päringuid pole"
+
+msgid "HTTP/3 not detected"
+msgstr "HTTP/3 päringuid ei tuvastatud"
+
+msgid "all requests do not include QUIC/HTTP/3 protocol requests"
+msgstr "kõik praegused päringud ei hõlma QUIC/HTTP/3 protokolli"
+
+msgid "Mail Authentication Statistics"
+msgstr "Meili autentimise statistika"
+
+msgid "Authentication"
+msgstr "Autentimise tüüp"
+
+msgid "Pass"
+msgstr "Läbitud"
+
+msgid "Fail"
+msgstr "Ebaõnnestunud"
+
+msgid "Softfail"
+msgstr "Pehme ebaõnnestumine"
+
+msgid "Neutral"
+msgstr "Neutraalne"
+
+msgid "None"
+msgstr "Puudub"
+
+msgid "Mail Queue Delay Statistics"
+msgstr "Meilijärjekorra viivituse statistika"
+
+msgid "Delay Range"
+msgstr "Viivituse vahemik"
+
+msgid "Count"
+msgstr "Arv"
+
+msgid "Percentage"
+msgstr "Protsent"
+
+msgid "TLS Encryption Statistics"
+msgstr "TLS-i krüptimise statistika"
+
+msgid "TLS Versions"
+msgstr "TLS-i versioonid"
+
+msgid "Top Ciphers"
+msgstr "Kõige levinumad šifrikomplektid"
+
+msgid "robot_hits_detail_both"
+msgstr "Päringuid kokku: %s (tavalised lehed: %s, robots.txt: %s)"
+
+msgid "robot_hits_detail_only_robots"
+msgstr "Juurdepääs ainult robots.txt-le: %s korda, ei kogunud muid lehti"
+
+msgid "robot_hits_detail_normal"
+msgstr "Tavaliste lehtede päringud: %s"
+
+# Abi ja näpunäited
+msgid "Troubleshooting"
+msgstr "Probleemide lahendamine"
+
+msgid "Did you use the correct URL?"
+msgstr "Kas kasutasite õiget URL-i?"
+
+msgid "Example:"
+msgstr "Näide:"
+
+msgid "Did you use correct config parameter?"
+msgstr "Kas kasutasite õiget konfiguratsiooni parameetrit?"
+
+msgid "Example: If your config file is awstats.mysite.conf, use -config=mysite"
+msgstr "Näide: Kui teie konfiguratsioonifail on awstats.mysite.conf, kasutage -config=mysite"
+
+msgid "Did you create your config file 'awstats.$SiteConfig.conf'?"
+msgstr "Kas olete loonud oma konfiguratsioonifaili 'awstats.$SiteConfig.conf'?"
+
+msgid "If not, you can run \"awstats_configure.pl\" from command line, or create it manually."
+msgstr "Kui ei, saate käivitada \"awstats_configure.pl\" käsurealt või luua selle käsitsi."
+
+msgid "Setup"
+msgstr "Seadistamine"
+
+msgid "file, web server or permissions may be wrong."
+msgstr "fail, veebiserver või load võivad olla valed."
+
+msgid "Check config file, permissions and AWStats documentation (in 'docs' directory)."
+msgstr "Kontrollige konfiguratsioonifaili, õigusi ja AWStatsi dokumentatsiooni (kataloogis 'docs')."
+
+msgid "Warning: Can't find language files for \"%s\". English will be used."
+msgstr "Hoiatus: keelefaile \"%s\" ei leita. Kasutatakse inglise keelt."
+
+msgid "%s process (ID %s) interrupted by signal %s."
+msgstr "%s protsess (ID %s) katkestati signaaliga %s."
+
+msgid "An AWStats update process seems to be already running for this config file. Try later. If this is not true, remove manually lock file"
+msgstr "Tundub, et selle konfiguratsioonifaili jaoks on AWStatsi uuendamise protsess juba käimas. Proovige hiljem uuesti. Kui see pole tõsi, eemaldage lukustusfail käsitsi"
+
+msgid "Report Overview"
+msgstr "Aruande ülevaade"
+
+msgid "Monthly Statistics"
+msgstr "Statistika kuude lõikes"
+
+msgid "Daily Statistics"
+msgstr "Statistika kuupäevade lõikes"
+
+msgid "Statistics by Day of Week"
+msgstr "Statistika nädalapäevade lõikes"
+
+msgid "Hourly Page Views"
+msgstr "Lehtede vaatamised tundide lõikes"
+
+msgid "Traffic Sources"
+msgstr "Liikluse allikad"
+
+msgid "Other Sources"
+msgstr "Muud allikad"
+
+msgid "tooltip_1"
+msgstr "Külastaja seansside arv veebisaidil. Kui külastajal pole 30 minuti jooksul tegevust, loetakse järgmine külastus uueks."
+
+msgid "tooltip_2"
+msgstr "Erinevate külastajate arv, kes külastasid teie veebisaiti valitud ajaperioodil. Statistika põhineb IP-aadressil."
+
+msgid "tooltip_3"
+msgstr "Päringute arv, mida loetakse lehtedeks (nagu HTML, PHP, ASP jne), välja arvatud staatilised failid nagu pildid, CSS, JS."
+
+msgid "tooltip_4"
+msgstr "Kõigi serverisse saadetud päringute koguarv, sealhulgas lehed, pildid, CSS, JS ja kõik muud failid."
+
+msgid "tooltip_5"
+msgstr "Serveri edastatud andmete kogumaht vastuseks kasutajate päringutele."
+
+msgid "tooltip_13"
+msgstr "Statistika allikatest, mis tulevad teie veebisaidile otsingumootorite kaudu. Näitab, millised otsingumootorid toovad liiklust ja milliseid otsingutermineid külastajad kasutavad."
+
+msgid "tooltip_14"
+msgstr "Statistika allikatest, mis tulevad teie veebisaidile teiste veebisaitide väliste linkide kaudu. Näitab, millised veebisaidid linkivad teie saidile ja kui palju liiklust nad toovad."
+
+msgid "tooltip_15"
+msgstr "Otsinguterminid, mida külastajad kasutavad teie veebisaidi leidmiseks otsingumootorite kaudu. Märksõnad on üksikud sõnad, võtmelaused on mitme sõna kombinatsioonid."
+
+msgid "tooltip_16"
+msgstr "Automatiseeritud programmid nagu otsingumootorite robotid, AI treeningrobotid, haavatavuse skannerid jne. Sulgudes olev number tähistab tavaliste lehtede ja robots.txt päringute arvu."
+
+msgid "tooltip_17"
+msgstr "Liikluse jaotuse graafik 24 tunni jooksul. Näitab teie veebisaidi liiklust erinevatel tundidel, aitab mõista kasutajate aktiivsuse aegu."
+
+msgid "tooltip_18"
+msgstr "See veerg näitab iga päeva/nädala keskmisi väärtusi valitud ajaperioodil, aitab mõista üldist trendi."
+
+msgid "tooltip_19"
+msgstr "Graafiku üksustel klõpsamine näitab üksikasjalikku teavet. Hõljutage hiirt graafiku elementide kohal, et näha konkreetseid väärtusi."
+
+msgid "tooltip_20"
+msgstr "Andmed, mida ei saa olemasolevatesse vahemikesse paigutada, tavaliselt ebatavalise või puuduva andmevormingu tõttu."
+
+msgid "tooltip_21"
+msgstr "Salvestatud usside rünnakud. Ussid on isepaljunevad pahatahtlikud programmid, mis levivad tavaliselt võrgu nõrkuste kaudu."
+
+#------------------------------------------------------------------------------
+# Abiteabe kuvamine - kogukonna väljaanne
+#------------------------------------------------------------------------------
+
+msgid "AWStats %s - Advanced Web Statistics"
+msgstr "AWStats %s - täpsemad veebistatistikad"
+
+msgid "Copyright (c) 2000-2025 Laurent Destailleur"
+msgstr "Autoriõigus (c) 2000-2025 Laurent Destailleur"
+
+msgid "Copyright (c) 2026-latest Community Edition"
+msgstr "Autoriõigus (c) 2026-praeguseni kogukonna väljaanne"
+
+msgid "AWStats comes with ABSOLUTELY NO WARRANTY. It's a free software distributed with a GNU General Public License (See LICENSE file for details)."
+msgstr "AWStats'd levitatakse ABSOLUUTSELT ILMA GARANTIITA. See on vaba tarkvara, mida levitatakse GNU üldise avaliku litsentsi alusel (üksikasjade vaatamiseks vaadake LICENSE-faili)."
+
+msgid "Syntax: %s -config=virtualhostname [options]"
+msgstr "Süntaks: %s -config=virtuaalhostinimi [valikud]"
+
+msgid "This runs %s in command line to update statistics (-update option) of a web site, from the log file defined in AWStats config file, or build a HTML report (-output option)."
+msgstr "See käivitab %s käsureal veebisaidi statistika uuendamiseks (-update valik) AWStatsi konfiguratsioonifailis määratletud logifailist või HTML-aruande koostamiseks (-output valik)."
+
+msgid "First, %s tries to read %s.virtualhostname.conf as the config file. If not found, %s tries to read %s.conf, and finally the full path passed to -config="
+msgstr "Esiteks proovib %s lugeda konfiguratsioonifailina %s.virtuaalhostinimi.conf. Kui seda ei leita, proovib %s lugeda %s.conf ja lõpuks parameetrile -config= edastatud täielikku teed."
+
+msgid "Note 1: Config files (*.conf) must be in /etc/awstats, /usr/local/etc/awstats, /etc or same directory than awstats.pl script file."
+msgstr "Märkus 1: Konfiguratsioonifailid (*.conf) peavad asuma kataloogis /etc/awstats, /usr/local/etc/awstats, /etc või samas kataloogis kui awstats.pl-skriptifail."
+
+msgid "Note 2: If AWSTATS_FORCE_CONFIG environment variable is defined, AWStats will use it as the 'config' value, whatever is the value on command line or URL."
+msgstr "Märkus 2: Kui on määratletud keskkonnamuutuja AWSTATS_FORCE_CONFIG, kasutab AWStats seda 'config' väärtusena, olenemata käsureal või URL-is olevast väärtusest."
+
+msgid "See AWStats documentation for all setup instructions."
+msgstr "Kõigi seadistusjuhiste saamiseks vaadake AWStatsi dokumentatsiooni."
+
+msgid "Options to update statistics:"
+msgstr "Valikud statistika uuendamiseks:"
+
+msgid "  -update        to update statistics (default)"
+msgstr "  -update        statistika uuendamine (vaikimisi)"
+
+msgid "  -showsteps     to add benchmark information every %s lines processed"
+msgstr "  -showsteps     lisa võrdlusteavet iga töödeldud %s rea järel"
+
+msgid "  -showcorrupted to add output for each corrupted lines found, with reason"
+msgstr "  -showcorrupted kuva väljund iga leitud rikutud rea kohta koos põhjusega"
+
+msgid "  -showdropped   to add output for each dropped lines found, with reason"
+msgstr "  -showdropped   kuva väljund iga leitud kõrvalejäetud rea kohta koos põhjusega"
+
+msgid "  -showunknownorigin  to output referer when it can't be parsed"
+msgstr "  -showunknownorigin    kuva viitaja, kui seda ei saa sõeluda"
+
+msgid "  -showdirectorigin   to output log line when origin is a direct access"
+msgstr "  -showdirectorigin     kuva logirida, kui lähtekoht on otsene juurdepääs"
+
+msgid "  -updatefor=n   to stop the update process after parsing n lines"
+msgstr "  -updatefor=n    peatage uuendamisprotsess pärast n rea sõelumist"
+
+msgid "  -LogFile=x     to change log to analyze whatever is 'LogFile' in config file"
+msgstr "  -LogFile=x      muuda analüüsimiseks logi, olenemata konfiguratsioonifailis olevast 'LogFile'ist"
+
+msgid "  Be care to process log files in chronological order when updating statistics."
+msgstr "  Olge ettevaatlik, et statistika uuendamisel töötleksite logifaile kronoloogilises järjekorras."
+
+msgid "Options to show statistics:"
+msgstr "Valikud statistika kuvamiseks:"
+
+msgid "  -output      to output main HTML report (no update made except with -update)"
+msgstr "  -output       kuvab peamise HTML-aruande (uuendusi ei tehta, välja arvatud -update-ga)"
+
+msgid "  -output=x    to output other report pages where x is:"
+msgstr "  -output=x     kuvab muid aruandelehti, kus x on:"
+
+msgid "build page of all domains/countries"
+msgstr "koosta kõigi domeenide/riikide leht"
+
+msgid "build page of all hosts"
+msgstr "koosta kõigi hostide leht"
+
+msgid "build page of last hits for hosts"
+msgstr "koosta hostide viimaste päringute leht"
+
+msgid "build page of all unresolved IP"
+msgstr "koosta kõigi lahendamata IP-de leht"
+
+msgid "build page of all email senders (maillog)"
+msgstr "koosta kõigi meilisaatjate leht (maillog)"
+
+msgid "build page of last email senders (maillog)"
+msgstr "koosta viimaste meilisaatjate leht (maillog)"
+
+msgid "build page of all email receivers (maillog)"
+msgstr "koosta kõigi meilisaajate leht (maillog)"
+
+msgid "build page of last email receivers (maillog)"
+msgstr "koosta viimaste meilisaajate leht (maillog)"
+
+msgid "build page of all logins used"
+msgstr "koosta kõigi kasutatud sisselogimiste leht"
+
+msgid "build page of last hits for logins"
+msgstr "koosta sisselogimiste viimaste päringute leht"
+
+msgid "build page of all robots/spider visits"
+msgstr "koosta kõigi robotite/ämblike külastuste leht"
+
+msgid "build page of last hits for robots"
+msgstr "koosta robotite viimaste päringute leht"
+
+msgid "list most often viewed pages"
+msgstr "loetle kõige sagedamini vaadatud lehed"
+
+msgid "list most often viewed pages matching filter"
+msgstr "loetle filtrile vastavad kõige sagedamini vaadatud lehed"
+
+msgid "list entry pages"
+msgstr "loetle sisenemislehed"
+
+msgid "list entry pages matching filter"
+msgstr "loetle filtrile vastavad sisenemislehed"
+
+msgid "list exit pages"
+msgstr "loetle väljumislehed"
+
+msgid "list exit pages matching filter"
+msgstr "loetle filtrile vastavad väljumislehed"
+
+msgid "build page with os detailed versions"
+msgstr "koosta leht operatsioonisüsteemide üksikasjalike versioonidega"
+
+msgid "build page with browsers detailed versions"
+msgstr "koosta leht brauserite üksikasjalike versioonidega"
+
+msgid "list 'User Agents' with unknown browser"
+msgstr "loetle 'kasutajaagendid' tundmatu brauseriga"
+
+msgid "list 'User Agents' with unknown OS"
+msgstr "loetle 'kasutajaagendid' tundmatu operatsioonisüsteemiga"
+
+msgid "build page of all refering search engines"
+msgstr "koosta kõigi viitavate otsingumootorite leht"
+
+msgid "build page of all refering pages"
+msgstr "koosta kõigi viitavate lehtede leht"
+
+msgid "list all keyphrases used on search engines"
+msgstr "loetle kõik otsingumootorites kasutatud võtmelaused"
+
+msgid "list all keywords used on search engines"
+msgstr "loetle kõik otsingumootorites kasutatud märksõnad"
+
+msgid "list 'Referers' for 404 errors"
+msgstr "loetle 404 vigade 'viitajad'"
+
+msgid "build page of all values for ExtraSection X"
+msgstr "koosta kõigi ExtraSection X väärtuste leht"
+
+msgid "  -staticlinks           to have static links in HTML report page"
+msgstr "  -staticlinks           kasuta HTML-aruande lehel staatilisi linke"
+
+msgid "  -staticlinksext=xxx    to have static links with .xxx extension instead of .html"
+msgstr "  -staticlinksext=xxx    kasuta staatilisi linke .xxx laiendiga .html asemel"
+
+msgid "  -lang=LL     to output a HTML report in language LL (en,de,es,fr,it,nl,et,...)"
+msgstr "  -lang=LL     kuva HTML-aruanne keeles LL (en,de,es,fr,it,nl,et,...)"
+
+msgid "  -month=MM    to output a HTML report for an old month MM"
+msgstr "  -month=MM    kuva HTML-aruanne vana kuu MM kohta"
+
+msgid "  -year=YYYY   to output a HTML report for an old year YYYY"
+msgstr "  -year=YYYY   kuva HTML-aruanne vana aasta YYYY kohta"
+
+msgid "  The 'date' options doesn't allow you to process old log file. They only allow you to see a past report for a chosen month/year period instead of current month/year."
+msgstr "  'kuupäeva' valikud ei võimalda teil vana logifaili töödelda. Need võimaldavad teil näha minevikuaruannet valitud kuu/aasta perioodi kohta praeguse kuu/aasta asemel."
+
+msgid "Other options:"
+msgstr "Muud valikud:"
+
+msgid "  -debug=X     to add debug informations lesser than level X (speed reduced)"
+msgstr "  -debug=X     lisa silumisteavet, mis on väiksem kui tase X (kiirus väheneb)"
+
+msgid "  -version     show AWStats version"
+msgstr "  -version, -v      näita AWStatsi versiooni"
+
+msgid "Now supports/detects:"
+msgstr "Praegu toetab/tuvastab:"
+
+msgid "  Web/Ftp/Mail/streaming server log analyzis (and load balanced log files)"
+msgstr "  Veebi/FTP/meili/voogedastuse serveri logide analüüs (ja koormusjaotusega logifailid)"
+
+msgid "  Reverse DNS lookup (IPv4 and IPv6) and GeoIP lookup"
+msgstr "  Pöörd-DNS-i päring (IPv4 ja IPv6) ja GeoIP-i päring"
+
+msgid "  Number of visits, number of unique visitors"
+msgstr "  Külastuste arv, unikaalsete külastajate arv"
+
+msgid "  Visits duration and list of last visits"
+msgstr "  Külastuste kestus ja viimaste külastuste loend"
+
+msgid "  Authenticated users"
+msgstr "  Autenditud kasutajad"
+
+msgid "  Days of week and rush hours"
+msgstr "  Nädalapäevad ja tipptunnid"
+
+msgid "  Hosts list and unresolved IP addresses list"
+msgstr "  Hostide loend ja lahendamata IP-aadresside loend"
+
+msgid "  Most viewed, entry and exit pages"
+msgstr "  Enimvaadatud, sisenemis- ja väljumislehed"
+
+msgid "  Files type and Web compression (mod_gzip, mod_deflate stats)"
+msgstr "  Failitüübid ja veebi tihendamine (mod_gzip, mod_deflate statistika)"
+
+msgid "  Configured Database Statistics"
+msgstr "  Konfigureeritud andmebaasi statistika"
+
+msgid "  %s domains/countries"
+msgstr "  %s domeeni/riiki"
+
+msgid "  %s robots"
+msgstr "  %s robotit"
+
+msgid "  %s worm's families"
+msgstr "  %s ussi perekonda"
+
+msgid "  %s operating systems"
+msgstr "  %s operatsioonisüsteemi"
+
+msgid "  %s browsers (%s with phone browsers database)"
+msgstr "  %s brauserit (%s koos telefonibrauserite andmebaasiga)"
+
+msgid "  %s search engines (and keyphrases/keywords used from them)"
+msgstr "  %s otsingumootorit (ja nendes kasutatud võtmelaused/märksõnad)"
+
+msgid "  All HTTP errors with last referrer"
+msgstr "  Kõik HTTP vead koos viimase viitajaga"
+
+msgid "  Report by day/month/year"
+msgstr "  Aruanne päeva/kuu/aasta lõikes"
+
+msgid "  Dynamic or static HTML or XHTML reports, static PDF reports"
+msgstr "  Dünaamilised või staatilised HTML või XHTML aruanded, staatilised PDF-aruanded"
+
+msgid "  Indexed text or XML monthly database"
+msgstr "  Indekseeritud tekst või XML kuu andmebaas"
+
+msgid "  And a lot of other advanced features and options..."
+msgstr "  Ja palju muid täiustatud funktsioone ja valikuid..."
+
+msgid "  New versions and FAQ at http://www.awstats.org"
+msgstr "  Uued versioonid ja KKK aadressil https://github.com/hestiacn/vstats/issues"

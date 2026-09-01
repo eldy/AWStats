@@ -1,218 +1,855 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html><head>
-<meta name="description" content="AWStats Documentation about plugins development - Graphs">
-<meta name="keywords" content="awstats, awstat, log, file, analyzer, contrib, plugins, graphs, resources, maxmind, geoipfree, geoip, cities, regions, countries, frontend">
-<meta name="robots" content="index,follow">
-<meta name="title" content="AWStats Documentation - Plugins Development - Graphs">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>AWStats Documentation - Plugins Development - Graphs</title>
-<link rel="stylesheet" href="styles.css" type="text/css">
-<link href="scripts/prettify.css" type="text/css" rel="stylesheet">
-<link href="https://plus.google.com/+LaurentDestailleur-Open-Source-Expert" rel="publisher" />
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWStats · 插件图形</title>
+    <meta name="description" content="AWStats Documentation - Plugins Development - Graphs (中文/English)">
+    <meta name="keywords" content="awstats, plugins, graphs, charts, development, 插件图形">
+    <meta name="author" content="Laurent Destailleur (多语言重构)">
+    <meta name="robots" content="index,follow">
+    <style>
+        /* ========== 现代化全局设计 ========== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-page: #f8fafc; --surface: #ffffff; --surface-secondary: #f1f5f9;
+            --text-primary: #0f172a; --text-secondary: #475569; --accent: #4f46e5;
+            --accent-light: #818cf8; --accent-soft: #eef2ff; --border: #e2e8f0;
+            --card-shadow: 0 20px 25px -5px rgba(0,0,0,0.05), 0 10px 10px -5px rgba(0,0,0,0.02);
+            --header-bg: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            --footer-bg: #eef2ff; --link-color: #4f46e5; --link-visited: #7c3aed;
+            --code-bg: #f1f5f9; --success: #10b981; --warning: #f59e0b; --danger: #ef4444;
+            --graph-type: #818cf8; --graph-data: #10b981;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-page: #0f172a; --surface: #1e293b; --surface-secondary: #334155;
+                --text-primary: #f1f5f9; --text-secondary: #cbd5e1; --accent: #818cf8;
+                --accent-light: #a5b4fc; --accent-soft: #2d3a5e; --border: #475569;
+                --card-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
+                --header-bg: linear-gradient(135deg, #4f46e5 0%, #6d28d9 100%);
+                --footer-bg: #1e293b; --link-color: #a5b4fc; --link-visited: #c4b5fd;
+                --code-bg: #334155; --success: #34d399; --warning: #fbbf24; --danger: #f87171;
+            }
+        }
+
+        body {
+            background-color: var(--bg-page); color: var(--text-primary);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6; margin: 0; padding: 0;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            display: flex; flex-direction: column; min-height: 100vh;
+        }
+        .container { max-width: 1300px; margin: 0 auto; padding: 0 28px; width: 100%; }
+
+        /* 现代化导航栏 */
+        .nav-bar {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+            background-color: rgba(var(--surface-rgb), 0.8);
+        }
+        .nav-container {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 20px;
+        }
+        .nav-home {
+            font-weight: 700; font-size: 1.3rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-decoration: none; display: flex; align-items: center; gap: 8px;
+        }
+        .nav-links {
+            display: flex; gap: 8px; flex-wrap: wrap;
+        }
+        .nav-links a {
+            color: var(--text-secondary); text-decoration: none;
+            font-weight: 500; padding: 8px 16px; border-radius: 40px;
+            transition: all 0.2s; font-size: 0.95rem;
+        }
+        .nav-links a:hover {
+            background: var(--accent-soft); color: var(--accent);
+        }
+        .nav-links a.active {
+            background: var(--accent); color: white;
+        }
+        .breadcrumb {
+            display: flex; gap: 8px; align-items: center;
+            color: var(--text-secondary); font-size: 0.9rem;
+        }
+        .breadcrumb a { color: var(--link-color); text-decoration: none; }
+
+        /* 现代化头部 */
+        .header {
+            background: var(--header-bg); color: white; border-radius: 0 0 40px 40px;
+            padding: 24px 0 32px; box-shadow: var(--card-shadow); margin-bottom: 30px;
+        }
+        .header-row {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 20px;
+        }
+        .logo-area { display: flex; align-items: center; gap: 16px; }
+        .logo-area img { height: 56px; width: auto; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
+        .site-title {
+            font-size: 2rem; font-weight: 700; background: rgba(255,255,255,0.1);
+            padding: 8px 24px; border-radius: 60px; backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .header-center {
+            flex: 1; text-align: center; font-weight: 500; font-size: 1.2rem;
+            background: rgba(0,0,0,0.1); padding: 8px 24px; border-radius: 60px;
+            backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.15);
+        }
+        .header-right { display: flex; gap: 12px; align-items: center; }
+        .lang-switch {
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 40px; padding: 6px 16px; color: white; font-weight: 500;
+            display: flex; align-items: center; gap: 8px; backdrop-filter: blur(8px);
+        }
+        .lang-switch select {
+            background: transparent; border: none; color: white; font-weight: 500;
+            outline: none; font-size: 0.95rem; cursor: pointer;
+        }
+        .lang-switch select option { background: var(--accent); color: white; }
+        .theme-toggle {
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 40px; padding: 8px 20px; font-size: 0.95rem; color: white;
+            cursor: pointer; display: flex; align-items: center; gap: 8px; backdrop-filter: blur(8px);
+        }
+
+        /* 现代化文档卡片 */
+        .doc-card {
+            background-color: var(--surface); border-radius: 40px;
+            padding: 3rem; box-shadow: var(--card-shadow);
+            border: 1px solid var(--border); margin: 20px 0 40px;
+        }
+        h1 {
+            font-size: 2.5rem; font-weight: 700; letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin: 0 0 25px 0;
+        }
+        h2 {
+            font-size: 2rem; font-weight: 600; margin: 2.5rem 0 1.5rem;
+            color: var(--text-primary); border-bottom: 3px solid var(--accent-soft);
+            padding-bottom: 12px;
+        }
+        h3 {
+            font-size: 1.5rem; font-weight: 600; margin: 2rem 0 1rem;
+            color: var(--accent);
+        }
+
+        /* 变量卡片网格 */
+        .var-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .var-card {
+            background: var(--surface-secondary);
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+        .var-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--card-shadow);
+        }
+        .var-header {
+            background: var(--accent-soft);
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border);
+        }
+        .var-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .var-body {
+            padding: 20px;
+        }
+        .var-desc {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+        .var-example {
+            background: var(--code-bg);
+            padding: 10px 15px;
+            border-radius: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            border: 1px solid var(--border);
+        }
+
+        /* 图形类型卡片 */
+        .graph-types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .graph-type-card {
+            background: var(--surface-secondary);
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            padding: 20px;
+        }
+        .graph-type-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 10px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .graph-type-desc {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+        .graph-data-list {
+            background: var(--code-bg);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        .graph-data-item {
+            padding: 4px 0;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+        }
+
+        /* 数据示例卡片 */
+        .data-example {
+            background: var(--accent-soft);
+            padding: 20px;
+            border-radius: 20px;
+            margin: 20px 0;
+            border: 1px solid var(--border);
+        }
+        .data-example pre {
+            background: var(--code-bg);
+            padding: 15px;
+            border-radius: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin-top: 10px;
+        }
+
+        /* 代码块样式 */
+        .code-block {
+            background: var(--code-bg);
+            padding: 15px 20px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        /* 注意框 */
+        .note-box {
+            background: var(--accent-soft);
+            padding: 20px;
+            border-radius: 20px;
+            border-left: 6px solid var(--accent);
+            margin: 20px 0;
+        }
+
+        /* 现代化页脚 */
+        .footer {
+            background-color: var(--footer-bg); margin-top: 60px;
+            padding: 32px 24px; border-radius: 40px 40px 0 0;
+            border-top: 1px solid var(--border); color: var(--text-secondary);
+        }
+        .footer-content {
+            display: flex; flex-wrap: wrap; justify-content: space-between;
+            align-items: center; gap: 20px; max-width: 1300px; margin: 0 auto;
+        }
+        .footer-copyright {
+            background: var(--surface); padding: 8px 24px; border-radius: 60px;
+            border: 1px solid var(--border); font-size: 0.95rem;
+        }
+        
+        .back-to-top {
+            position: fixed; bottom: 30px; right: 30px;
+            background: var(--accent); color: white;
+            width: 56px; height: 56px; border-radius: 28px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; border: none; box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
+            transition: all 0.2s; z-index: 99; font-size: 1.2rem;
+        }
+        .back-to-top:hover {
+            transform: scale(1.1); background: var(--accent-light);
+        }
+        
+        @media (max-width: 700px) {
+            .header-row { flex-direction: column; }
+            .doc-card { padding: 1.8rem; }
+            h1 { font-size: 2rem; }
+            .var-grid, .graph-types-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
+<body>
+    <!-- 导航栏 -->
+    <div class="nav-bar">
+        <div class="container nav-container">
+            <a href="index.html" class="nav-home">
+                <span>🏠</span> AWStats 文档
+            </a>
+            <div class="nav-links">
+                <a href="index.html" data-i18n="navHome">主页</a>
+                <a href="awstats_what.html" data-i18n="navWhat">什么是AWStats</a>
+                <a href="awstats_setup.html" data-i18n="navSetup">安装配置</a>
+                <a href="awstats_webmin.html" data-i18n="navWebmin">Webmin模块</a>
+                <a href="awstats_upgrade.html" data-i18n="navUpgrade">升级指南</a>
+                <a href="awstats_tools.html" data-i18n="navTools">其他工具</a>
+                <a href="awstats_security.html" data-i18n="navSecurity">安全建议</a>
+                <a href="awstats_license.html" data-i18n="navLicense">许可证</a>
+                <a href="awstats_glossary.html" data-i18n="navGlossary">术语表</a>
+                <a href="awstats_faq.html" data-i18n="navFAQ">FAQ</a>
+                <a href="awstats_extra.html" data-i18n="navExtra">额外部分</a>
+                <a href="awstats_dolibarr.html" data-i18n="navDolibarr">Dolibarr模块</a>
+                <a href="awstats_dev_plugins.html" data-i18n="navPlugins">插件开发</a>
+                <a href="awstats_dev_plugins_hooks.html" data-i18n="navHooks">插件钩子</a>
+                <a href="awstats_dev_plugins_graphs.html" class="active" data-i18n="navGraphs">插件图形</a>
+            </div>
+            <div class="breadcrumb">
+                <a href="index.html" data-i18n="home">主页</a>
+                <span>›</span>
+                <a href="awstats_dev_plugins.html" data-i18n="navPlugins">插件开发</a>
+                <span>›</span>
+                <span data-i18n="currentPage">插件图形</span>
+            </div>
+        </div>
+    </div>
 
-<body onload="prettyPrint()">
-<table style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10pt; line-height: normal; font-size-adjust: none; font-stretch: normal;" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" width="100%">
-<!-- Large -->
-<tbody>
-<tr style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">
-<td align="center" bgcolor="#9999cc"><a href="/"><img src="images/awstats_logo1.png" border="0"></a></td>
-<td align="center" bgcolor="#9999cc">
-<br>
-<font style="font-family: arial,helvetica,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 16pt; line-height: normal; font-size-adjust: none; font-stretch: normal;" color="#eeeeff"><b>AWStats logfile analyzer 8.0 Documentation</b></font><br>
-<br>
-</td>
-<td align="center" bgcolor="#9999cc">
-&nbsp;
-</td>
-</tr>
-</tbody>
-</table>
-<br>
-<br>
-<h1 style="font-family: arial,helvetica,sanserif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 26px; line-height: normal; font-size-adjust: none; font-stretch: normal;">Plugin
-Graphs</h1>
-Charts, graphs and maps can be generated by your plugin and make
-AWStats reports look nice. AWStats generates arrays of values, label
-names and titles so that your plugin only has to handle the final data
-and display it as you wish.<br>
-<span style="font-weight: bold;">NOTE:</span> Only
-one graphing plugin should be choose by a user at any given time, thus
-your plugin should generate as many graphs as possible. If more than
-one graphing plugin is enabled at any given time, multiple graphs will
-appear in the output for each graph type.<br>
-<br>
-Below is a list of variables passed to the graphin hook and how you
-should use them.<br>
-<ul>
-<li>Title</li>
-<li>Type</li>
-<li>Block Label</li>
-<li>Val Label</li>
-<li>Val Color</li>
-<li>Val Max</li>
-<li>Val Total</li>
-<li>Val Average</li>
-<li>Val Data</li>
-</ul>
-<br>
-<font color="#665544" size="3"><b>Title</b></font><br>
-<hr>This is simply the title of the graph as it should be
-displayed to the end user. This could be "Hosts (Top 5)" or "Monthly
-History" or anything else. Of course, you don't have to show the title
-unless you want to.<br>
-<br>
-<font color="#665544" size="3"><b>Type</b></font><br>
-<hr>The type is important as your graphing plugin should
-determine what type of graph to output depending on the type AWStats is
-requesting. For information on types and the data order, <a href="#Graph_Types_and_Data">check the Types and Data section</a>.<br>
-<ul>
-</ul>
-<font color="#665544" size="3"><b>Block Label</b></font><br>
-<hr>This is a label for each group of data, usually labels for
-the X axis such as the days of the week, months of the year, etc. Your
-plugin can use the scalar count of values in this array as the number
-of times a loop needs to iterate through an axis. For example:<br>
-<br>
-<code class="prettyprint">foreach my $j (1.. (scalar
-@$blocklabel)) { ... }</code><br>
-<br>
-<font color="#665544" size="3"><b>Val Label</b></font><br>
-<hr>@vallabel contains a list of labels for each of the data sets
-such as "pages", "hits", etc. Use the scalar count of values when
-accessing the data matrix.<br>
-<br>
-<font color="#665544" size="3"><b>Val Color</b></font><br>
-<hr>This is an array of color values associated with each type of
-data as assigned by the configuration file or the defaults in AWStats.
-Each color is a web formatted RGB hex encoded value such as "FFFFFF" or
-"000000". <br>
-<br>
-<font color="#665544" size="3"><b>Val Max</b></font><br>
-<hr>This array contains the maximum individual numeric value for
-each of the types of data stored in the data array. The count is the
-same as the the color array.<br>
-<br>
-<font color="#665544" size="3"><b>Val Total</b></font><br>
-<hr>This array contains the total numeric value for each type of
-data stored in the data array.&nbsp;The count is the same as the
-the color array. <br>
-<br>
-<font color="#665544" size="3"><b>Val Average</b></font><br>
-<hr>This array contains the average numeric value for each type
-of data
-stored in the data array.&nbsp;The count is the same as the the
-color array. <br>
-<br>
-<font color="#665544" size="3"><b>Val Data</b></font><br>
-<hr>This array contains the actual data values for each type of
-data indexed by each data type for a block of data, then the next set
-of types for a block and so on. Thus if we were looking at the monthly
-graph, the data would be laid out thusly:<br>
-<br>
-$valdata[0] --&gt; January Unique Visitors<br>
-$valdata[1] --&gt; January Number of Visits<br>
-$valdata[2] --&gt; January Pages<br>
-$valdata[3] --&gt; January Hits<br>
-$valdata[4] --&gt; January Bandwidth<br>
-$valdata[5] --&gt; February Unique Visitors<br>
-$valdata[6] --&gt; February Number of Visits<br>
-....<br>
-<br>
-<font color="#665544" size="3"><b><a name="Graph_Types_and_Data"></a>Graph Types and Data</b></font><br>
-<hr>Below is a list of the different graph types and the order in
-which data appears in the associated arrays.<br>
-<br>
-<ul>
-<li><span style="font-weight: bold;">month</span>
-- a graph of each month for a given year</li>
-<ul>
-<li>Unique Visitors</li>
-<li>Visits</li>
-<li>Pages</li>
-<li>Hits</li>
-<li>Bandwidth</li>
-</ul>
-<li><span style="font-weight: bold;">daysofmonth</span>
-- each day of the month</li>
-<ul>
-<li>Visits</li>
-<li>Pages</li>
-<li>Hits</li>
-<li>Bandwidth</li>
-</ul>
-<li><span style="font-weight: bold;">daysofweek</span>
--&nbsp;an averaged data set for each day of the week</li>
-<ul>
-<li>Pages</li>
-<li>Hits</li>
-<li>Bandwidth</li>
-</ul>
-<li><span style="font-weight: bold;">hours</span>
-- an averaged data set for each hour of a day</li>
-<ul>
-<li>Pages</li>
-<li>Hits</li>
-<li>Bandwidth</li>
-</ul>
-<li><span style="font-weight: bold;">cluster</span>
-- the top 5 clustered servers if the cluster option is enabled</li>
-<ul>
-<li>Pages</li>
-</ul>
-<li><span style="font-weight: bold;">filetypes</span>
-- the top 5 file types reported on</li>
-<ul>
-<li>Pages</li>
-</ul>
-<li><span style="font-weight: bold;">httpstatus</span>
-- the top 5 HTTP status codes</li>
-<ul>
-<li>Pages</li>
-</ul>
-<li><span style="font-weight: bold;">browsers</span>
-- the top 5 browsers</li>
-<ul>
-<li>Pages</li>
-</ul>
-<li><span style="font-weight: bold;">oss</span>
-- the top 5 operating systems</li>
-<ul>
-<li>Pages</li>
-</ul>
-<li><span style="font-weight: bold;">hosts</span>
-- the top 5 hosts</li>
-<ul>
-<li>Pages</li>
-</ul>
-<li><span style="font-weight: bold;">countries_map</span>
-- a list of all countries and their hit counts</li>
-<ul>
-<li>Hits</li>
-</ul>
-</ul>
-<br>
-<hr>
+    <header class="header">
+        <div class="container header-row">
+            <div class="logo-area">
+                <img src="images/awstats_logo6.png" alt="AWStats" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'56\' height=\'56\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%234f46e5\' rx=\'20\'/%3E%3Ctext x=\'20\' y=\'68\' fill=\'%23ffffff\' font-size=\'60\' font-weight=\'bold\'%3EAW%3C/text%3E%3C/svg%3E';">
+                <span class="site-title" data-i18n="siteTitle">AWStats 8.1</span>
+            </div>
+            <div class="header-center" data-i18n="headerSlogan">
+                ⚡ 先进的日志分析器 · 官方文档
+            </div>
+            <div class="header-right">
+                <div class="lang-switch">
+                    <span>🌐</span>
+                    <select id="langSelector">
+                        <option value="zh" selected>中文</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+                <button class="theme-toggle" id="themeToggleBtn">
+                    <span>🌓</span> <span class="theme-text" data-i18n="themeAuto">自动</span>
+                </button>
+            </div>
+        </div>
+    </header>
 
-<!-- You can remove this part if you distribution need documentation without external tags -->
-<!-- BEGIN_SOCIAL_NETWORKS -->
-<div class="htmldoc-ignore">
-<!-- google plus -->
-<span style="color: #bbb; font-weight: normal;">Article written by <a href="https://www.destailleur.fr" rel="author" style="color: #ccc; font-weight: normal;">Laurent Destailleur</a>.</span><br>
-<br>
-<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-<g:plusone></g:plusone>
-<!-- facebook -->
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/fr_FR/all.js#xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-<div class="fb-like" data-href="http://www.awstats.org/docs/awstats_dev_plugins_graphs.html" data-layout="button_count" data-action="recommend" data-show-faces="false" data-share="true"></div>
-</div>
-<!-- END_SOCIAL_NETWORKS -->
+    <main class="container">
+        <div class="doc-card">
+            <h1 data-i18n="mainTitle">📊 插件图形</h1>
 
-</body></html>
+            <p data-i18n="intro">您的插件可以生成图表、图形和地图，让 AWStats 报告更加美观。AWStats 生成值数组、标签名称和标题，这样您的插件只需处理最终数据并按照您希望的方式显示它们。</p>
+            
+            <div class="note-box">
+                <p><strong data-i18n="note">注意：</strong> <span data-i18n="noteDesc">用户在任何时候只能选择一个图形插件，因此您的插件应尽可能生成多种图形。如果同时启用多个图形插件，每种图形类型都会在输出中出现多个图形。</span></p>
+            </div>
+
+            <p data-i18n="varList">以下是传递给图形钩子的变量列表以及如何使用它们：</p>
+
+            <!-- 变量卡片网格 -->
+            <div class="var-grid">
+                <!-- Title -->
+                <div class="var-card">
+                    <div class="var-header">
+                        <div class="var-name">Title</div>
+                    </div>
+                    <div class="var-body">
+                        <div class="var-desc" data-i18n="titleDesc">这是应显示给最终用户的图形标题。可能是"主机（前5名）"或"月度历史"或其他任何内容。当然，您可以根据需要选择是否显示标题。</div>
+                    </div>
+                </div>
+
+                <!-- Type -->
+                <div class="var-card">
+                    <div class="var-header">
+                        <div class="var-name">Type</div>
+                    </div>
+                    <div class="var-body">
+                        <div class="var-desc" data-i18n="typeDesc">类型很重要，因为您的图形插件应根据 AWStats 请求的类型确定要输出的图形类型。有关类型和数据顺序的信息，请查看<a href="#Graph_Types_and_Data">类型和数据部分</a>。</div>
+                    </div>
+                </div>
+
+                <!-- Block Label -->
+                <div class="var-card">
+                    <div class="var-header">
+                        <div class="var-name">Block Label</div>
+                    </div>
+                    <div class="var-body">
+                        <div class="var-desc" data-i18n="blockLabelDesc">这是每组数据的标签，通常是 X 轴的标签，例如星期几、月份等。您的插件可以使用此数组中值的数量作为循环遍历轴的次数。例如：</div>
+                        <div class="var-example">
+                            foreach my $j (1.. (scalar @$blocklabel)) { ... }
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Val Label -->
+                <div class="var-card">
+                    <div class="var-header">
+                        <div class="var-name">Val Label</div>
+                    </div>
+                    <div class="var-body">
+                        <div class="var-desc" data-i18n="valLabelDesc">@vallabel 包含每个数据集的标签列表，如"页面数"、"文件数"等。在访问数据矩阵时使用值的数量。</div>
+                    </div>
+                </div>
+
+                <!-- Val Color -->
+                <div class="var-card">
+                    <div class="var-header">
+                        <div class="var-name">Val Color</div>
+                    </div>
+                    <div class="var-body">
+                        <div class="var-desc" data-i18n="valColorDesc">这是与每种数据类型相关联的颜色值数组，由配置文件或 AWStats 默认值分配。每种颜色都是 Web 格式的 RGB 十六进制编码值，如"FFFFFF"或"000000"。</div>
+                    </div>
+                </div>
+
+                <!-- Val Max -->
+                <div class="var-card">
+                    <div class="var-header">
+                        <div class="var-name">Val Max</div>
+                    </div>
+                    <div class="var-body">
+                        <div class="var-desc" data-i18n="valMaxDesc">此数组包含数据数组中存储的每种数据类型的最大数值。计数与颜色数组相同。</div>
+                    </div>
+                </div>
+
+                <!-- Val Total -->
+                <div class="var-card">
+                    <div class="var-header">
+                        <div class="var-name">Val Total</div>
+                    </div>
+                    <div class="var-body">
+                        <div class="var-desc" data-i18n="valTotalDesc">此数组包含数据数组中存储的每种数据类型的总数值。计数与颜色数组相同。</div>
+                    </div>
+                </div>
+
+                <!-- Val Average -->
+                <div class="var-card">
+                    <div class="var-header">
+                        <div class="var-name">Val Average</div>
+                    </div>
+                    <div class="var-body">
+                        <div class="var-desc" data-i18n="valAvgDesc">此数组包含数据数组中存储的每种数据类型的平均数值。计数与颜色数组相同。</div>
+                    </div>
+                </div>
+
+                <!-- Val Data -->
+                <div class="var-card">
+                    <div class="var-header">
+                        <div class="var-name">Val Data</div>
+                    </div>
+                    <div class="var-body">
+                        <div class="var-desc" data-i18n="valDataDesc">此数组包含每种数据类型的实际数据值，按数据块的每种数据类型索引，然后是下一个数据块的类型集，依此类推。因此，如果我们查看月度图形，数据将如下排列：</div>
+                        <div class="var-example">
+                              $valdata[0] --> <div data-i18n="oneMonthUniqueVisitors">一月 独立访客</div><br>
+                              $valdata[1] --> <div data-i18n="oneMonthVisits">一月 访问量</div><br>
+                              $valdata[2] --> <div data-i18n="oneMonthPages">一月 页面数</div><br>
+                              $valdata[3] --> <div data-i18n="oneMonthHits">一月 文件数</div><br>
+                              $valdata[4] --> <div data-i18n="oneMonthBandwidth">一月 带宽</div><br>
+                              $valdata[5] --> <div data-i18n="twoMonthUniqueVisitors">二月 独立访客</div><br>
+                              $valdata[6] --> <div data-i18n="twoMonthVisits">二月 访问量</div><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 图形类型和数据 -->
+            <a name="Graph_Types_and_Data"></a>
+            <h2>📈 <span data-i18n="graphTypesTitle">图形类型和数据</span></h2>
+            <hr>
+
+            <p data-i18n="graphTypesDesc">以下是不同图形类型的列表以及相关数组中数据的出现顺序。</p>
+
+            <div class="graph-types-grid">
+                <!-- month -->
+                <div class="graph-type-card">
+                    <div class="graph-type-name">month</div>
+                    <div class="graph-type-desc" data-i18n="graphMonthDesc">给定年份每个月的图形</div>
+                    <div class="graph-data-list">
+                        <div class="graph-data-item">• <span data-i18n="uniqueVisitors">独立访客</span></div>
+                        <div class="graph-data-item">• <span data-i18n="visits">访问量</span></div>
+                        <div class="graph-data-item">• <span data-i18n="pages">页面数</span></div>
+                        <div class="graph-data-item">• <span data-i18n="hits">文件数</span></div>
+                        <div class="graph-data-item">• <span data-i18n="bandwidth">带宽</span></div>
+                    </div>
+                </div>
+
+                <!-- daysofmonth -->
+                <div class="graph-type-card">
+                    <div class="graph-type-name">daysofmonth</div>
+                    <div class="graph-type-desc" data-i18n="graphDaysOfMonthDesc">月份中的每一天</div>
+                    <div class="graph-data-list">
+                        <div class="graph-data-item">• <span data-i18n="visits">访问量</span></div>
+                        <div class="graph-data-item">• <span data-i18n="pages">页面数</span></div>
+                        <div class="graph-data-item">• <span data-i18n="hits">文件数</span></div>
+                        <div class="graph-data-item">• <span data-i18n="bandwidth">带宽</span></div>
+                    </div>
+                </div>
+
+                <!-- daysofweek -->
+                <div class="graph-type-card">
+                    <div class="graph-type-name">daysofweek</div>
+                    <div class="graph-type-desc" data-i18n="graphDaysOfWeekDesc">每周每天的平均数据集</div>
+                    <div class="graph-data-list">
+                        <div class="graph-data-item">• <span data-i18n="pages">页面数</span></div>
+                        <div class="graph-data-item">• <span data-i18n="hits">文件数</span></div>
+                        <div class="graph-data-item">• <span data-i18n="bandwidth">带宽</span></div>
+                    </div>
+                </div>
+
+                <!-- hours -->
+                <div class="graph-type-card">
+                    <div class="graph-type-name">hours</div>
+                    <div class="graph-type-desc" data-i18n="graphHoursDesc">每天每小时的平均数据集</div>
+                    <div class="graph-data-list">
+                        <div class="graph-data-item">• <span data-i18n="pages">页面数</span></div>
+                        <div class="graph-data-item">• <span data-i18n="hits">文件数</span></div>
+                        <div class="graph-data-item">• <span data-i18n="bandwidth">带宽</span></div>
+                    </div>
+                </div>
+
+                <!-- cluster -->
+                <div class="graph-type-card">
+                    <div class="graph-type-name">cluster</div>
+                    <div class="graph-type-desc" data-i18n="graphClusterDesc">如果启用集群选项，前5个集群服务器</div>
+                    <div class="graph-data-list">
+                        <div class="graph-data-item">• <span data-i18n="pages">页面数</span></div>
+                    </div>
+                </div>
+
+                <!-- filetypes -->
+                <div class="graph-type-card">
+                    <div class="graph-type-name">filetypes</div>
+                    <div class="graph-type-desc" data-i18n="graphFiletypesDesc">前5种报告的文件类型</div>
+                    <div class="graph-data-list">
+                        <div class="graph-data-item">• <span data-i18n="pages">页面数</span></div>
+                    </div>
+                </div>
+
+                <!-- httpstatus -->
+                <div class="graph-type-card">
+                    <div class="graph-type-name">httpstatus</div>
+                    <div class="graph-type-desc" data-i18n="graphHttpStatusDesc">前5个 HTTP 状态码</div>
+                    <div class="graph-data-list">
+                        <div class="graph-data-item">• <span data-i18n="pages">页面数</span></div>
+                    </div>
+                </div>
+
+                <!-- browsers -->
+                <div class="graph-type-card">
+                    <div class="graph-type-name">browsers</div>
+                    <div class="graph-type-desc" data-i18n="graphBrowsersDesc">前5种浏览器</div>
+                    <div class="graph-data-list">
+                        <div class="graph-data-item">• <span data-i18n="pages">页面数</span></div>
+                    </div>
+                </div>
+
+                <!-- oss -->
+                <div class="graph-type-card">
+                    <div class="graph-type-name">oss</div>
+                    <div class="graph-type-desc" data-i18n="graphOSDesc">前5种操作系统</div>
+                    <div class="graph-data-list">
+                        <div class="graph-data-item">• <span data-i18n="pages">页面数</span></div>
+                    </div>
+                </div>
+
+                <!-- hosts -->
+                <div class="graph-type-card">
+                    <div class="graph-type-name">hosts</div>
+                    <div class="graph-type-desc" data-i18n="graphHostsDesc">前5个主机</div>
+                    <div class="graph-data-list">
+                        <div class="graph-data-item">• <span data-i18n="pages">页面数</span></div>
+                    </div>
+                </div>
+
+                <!-- countries_map -->
+                <div class="graph-type-card">
+                    <div class="graph-type-name">countries_map</div>
+                    <div class="graph-type-desc" data-i18n="graphCountriesDesc">所有国家及其请求数的列表</div>
+                    <div class="graph-data-list">
+                        <div class="graph-data-item">• <span data-i18n="hits">文件数</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- 署名 -->
+            <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-top: 20px;">
+                <span style="color: var(--text-secondary);" data-i18n="writtenBy">文章作者：<a href="https://www.destailleur.fr" rel="author" style="color: var(--accent);">Laurent Destailleur</a>。</span>
+                <span class="graph-type-name" style="background: var(--accent); color: white; padding: 4px 16px; border-radius: 30px; font-size: 0.9rem;" data-i18n="version">版本 8.1</span>
+            </div>
+        </div>
+    </main>
+
+    <!-- 返回顶部按钮 -->
+    <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="返回顶部">
+        ↑
+    </button>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-copyright">
+                © 1997 - <span id="currentYear"></span> Laurent Destailleur & AWStats <span data-i18n="copyright">团队</span>
+            </div>
+            <div class="footer-license">
+                <a href="awstats_license.html" data-i18n="licenseLink">GNU General Public License</a> · 
+                <a href="https://github.com/eldy/AWStats" rel="publisher" target="_blank" style="display: inline-flex; align-items: center;"><a data-i18n="authorLink"></a> 
+                </a>
+                    <img src="images/favicon.pub/github.svg" style="width: 24px; height: 24px;">
+                </div>
+            <div class="attribution" data-i18n="darkAttr">
+                🌓 自适应暗黑 · 现代化重构
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+            // 完整翻译资源
+            const translations = {
+                zh: {
+                    navHome: "主页",
+                    navWhat: "什么是AWStats",
+                    navSetup: "安装配置",
+                    navWebmin: "Webmin模块",
+                    navUpgrade: "升级指南",
+                    navTools: "其他工具",
+                    navSecurity: "安全建议",
+                    navLicense: "许可证",
+                    navGlossary: "术语表",
+                    navFAQ: "FAQ",
+                    navExtra: "额外部分",
+                    navDolibarr: "Dolibarr模块",
+                    navPlugins: "插件开发",
+                    navHooks: "插件钩子",
+                    navGraphs: "插件图形",
+                    home: "主页",
+                    currentPage: "插件图形",
+                    
+                    siteTitle: "AWStats 8.1",
+                    headerSlogan: "⚡ 先进的日志分析器 · 官方文档",
+                    themeAuto: "自动",
+                    mainTitle: "📊 插件图形",
+                    
+                    intro: "您的插件可以生成图表、图形和地图，让 AWStats 报告更加美观。AWStats 生成值数组、标签名称和标题，这样您的插件只需处理最终数据并按照您希望的方式显示它们。",
+                    note: "注意：",
+                    noteDesc: "用户在任何时候只能选择一个图形插件，因此您的插件应尽可能生成多种图形。如果同时启用多个图形插件，每种图形类型都会在输出中出现多个图形。",
+                    varList: "以下是传递给图形钩子的变量列表以及如何使用它们：",
+                    
+                    titleDesc: "这是应显示给最终用户的图形标题。可能是\"主机（前5名）\"或\"月度历史\"或其他任何内容。当然，您可以根据需要选择是否显示标题。",
+                    typeDesc: "类型很重要，因为您的图形插件应根据 AWStats 请求的类型确定要输出的图形类型。有关类型和数据顺序的信息，请查看<a href=\"#Graph_Types_and_Data\">类型和数据部分</a>。",
+                    blockLabelDesc: "这是每组数据的标签，通常是 X 轴的标签，例如星期几、月份等。您的插件可以使用此数组中值的数量作为循环遍历轴的次数。例如：",
+                    valLabelDesc: "@vallabel 包含每个数据集的标签列表，如\"页面数\"、\"文件数\"等。在访问数据矩阵时使用值的数量。",
+                    valColorDesc: "这是与每种数据类型相关联的颜色值数组，由配置文件或 AWStats 默认值分配。每种颜色都是 Web 格式的 RGB 十六进制编码值，如\"FFFFFF\"或\"000000\"。",
+                    valMaxDesc: "此数组包含数据数组中存储的每种数据类型的最大数值。计数与颜色数组相同。",
+                    valTotalDesc: "此数组包含数据数组中存储的每种数据类型的总数值。计数与颜色数组相同。",
+                    valAvgDesc: "此数组包含数据数组中存储的每种数据类型的平均数值。计数与颜色数组相同。",
+                    valDataDesc: "此数组包含每种数据类型的实际数据值，按数据块的每种数据类型索引，然后是下一个数据块的类型集，依此类推。因此，如果我们查看月度图形，数据将如下排列：",
+                    oneMonthUniqueVisitors: "一月 独立访客",
+                    oneMonthVisits: "一月 访问量",
+                    oneMonthPages: "一月 页面数",
+                    oneMonthHits: "一月 文件数",
+                    oneMonthBandwidth: "一月 带宽",
+                    twoMonthUniqueVisitors: "二月 独立访客",
+                    twoMonthVisits: "二月 访问量",
+                    twoMonthPages: "二月 页面数",
+                    twoMonthHits: "二月 文件数",
+                    twoMonthBandwidth: "二月 带宽",
+                    graphTypesTitle: "图形类型和数据",
+                    graphTypesDesc: "以下是不同图形类型的列表以及相关数组中数据的出现顺序。",
+                    
+                    graphMonthDesc: "给定年份每个月的图形",
+                    graphDaysOfMonthDesc: "月份中的每一天",
+                    graphDaysOfWeekDesc: "每周每天的平均数据集",
+                    graphHoursDesc: "每天每小时的平均数据集",
+                    graphClusterDesc: "如果启用集群选项，前5个集群服务器",
+                    graphFiletypesDesc: "前5种报告的文件类型",
+                    graphHttpStatusDesc: "前5个 HTTP 状态码",
+                    graphBrowsersDesc: "前5种浏览器",
+                    graphOSDesc: "前5种操作系统",
+                    graphHostsDesc: "前5个主机",
+                    graphCountriesDesc: "所有国家及其请求数的列表",
+                    
+                    uniqueVisitors: "独立访客",
+                    visits: "访问量",
+                    pages: "页面数",
+                    hits: "文件数",
+                    bandwidth: "带宽",
+                    
+                    writtenBy: "文章作者：<a href=\"https://www.destailleur.fr\" rel=\"author\" style=\"color: var(--accent);\">Laurent Destailleur</a>。",
+                    version: "版本 8.1",
+                    copyright: "© 2000 - {year} Laurent Destailleur & AWStats 团队",
+                    licenseLink: "GNU通用公共许可证",
+                    authorLink: "原作者",
+                    darkAttr: "🌓 自适应暗黑 · 中文/English",
+                },
+                en: {
+                    navHome: "Home",
+                    navWhat: "What is AWStats",
+                    navSetup: "Setup",
+                    navWebmin: "Webmin Module",
+                    navUpgrade: "Upgrade Guide",
+                    navTools: "Other Tools",
+                    navSecurity: "Security Tips",
+                    navLicense: "License",
+                    navGlossary: "Glossary",
+                    navFAQ: "FAQ",
+                    navExtra: "Extra Sections",
+                    navDolibarr: "Dolibarr Module",
+                    navPlugins: "Plugin Development",
+                    navHooks: "Plugin Hooks",
+                    navGraphs: "Plugin Graphs",
+                    home: "Home",
+                    currentPage: "Plugin Graphs",
+                    
+                    siteTitle: "AWStats 8.1",
+                    headerSlogan: "⚡ Advanced Log Analyzer · Official Docs",
+                    themeAuto: "Auto",
+                    mainTitle: "📊 Plugin Graphs",
+                    
+                    intro: "Charts, graphs and maps can be generated by your plugin and make AWStats reports look nice. AWStats generates arrays of values, label names and titles so that your plugin only has to handle the final data and display it as you wish.",
+                    note: "NOTE:",
+                    noteDesc: "Only one graphing plugin should be choose by a user at any given time, thus your plugin should generate as many graphs as possible. If more than one graphing plugin is enabled at any given time, multiple graphs will appear in the output for each graph type.",
+                    varList: "Below is a list of variables passed to the graphin hook and how you should use them:",
+                    
+                    titleDesc: "This is simply the title of the graph as it should be displayed to the end user. This could be \"Hosts (Top 5)\" or \"Monthly History\" or anything else. Of course, you don't have to show the title unless you want to.",
+                    typeDesc: "The type is important as your graphing plugin should determine what type of graph to output depending on the type AWStats is requesting. For information on types and the data order, <a href=\"#Graph_Types_and_Data\">check the Types and Data section</a>.",
+                    blockLabelDesc: "This is a label for each group of data, usually labels for the X axis such as the days of the week, months of the year, etc. Your plugin can use the scalar count of values in this array as the number of times a loop needs to iterate through an axis. For example:",
+                    valLabelDesc: "@vallabel contains a list of labels for each of the data sets such as \"pages\", \"hits\", etc. Use the scalar count of values when accessing the data matrix.",
+                    valColorDesc: "This is an array of color values associated with each type of data as assigned by the configuration file or the defaults in AWStats. Each color is a web formatted RGB hex encoded value such as \"FFFFFF\" or \"000000\".",
+                    valMaxDesc: "This array contains the maximum individual numeric value for each of the types of data stored in the data array. The count is the same as the the color array.",
+                    valTotalDesc: "This array contains the total numeric value for each type of data stored in the data array. The count is the same as the the color array.",
+                    valAvgDesc: "This array contains the average numeric value for each type of data stored in the data array. The count is the same as the the color array.",
+                    valDataDesc: "This array contains the actual data values for each type of data indexed by each data type for a block of data, then the next set of types for a block and so on. Thus if we were looking at the monthly graph, the data would be laid out thusly:",
+                    oneMonthUniqueVisitors: "January Unique Visitors",
+                    oneMonthVisits: "January Visits",
+                    oneMonthPages: "January Pages",
+                    oneMonthHits: "January Hits",
+                    oneMonthBandwidth: "January Bandwidth",
+                    twoMonthUniqueVisitors: "February Unique Visitors",
+                    twoMonthVisits: "February Visits",
+                    twoMonthPages: "February Pages",
+                    twoMonthHits: "February Hits",
+                    twoMonthBandwidth: "February Bandwidth",
+                    graphTypesTitle: "Graph Types and Data",
+                    graphTypesDesc: "Below is a list of the different graph types and the order in which data appears in the associated arrays.",
+                    
+                    graphMonthDesc: "a graph of each month for a given year",
+                    graphDaysOfMonthDesc: "each day of the month",
+                    graphDaysOfWeekDesc: "an averaged data set for each day of the week",
+                    graphHoursDesc: "an averaged data set for each hour of a day",
+                    graphClusterDesc: "the top 5 clustered servers if the cluster option is enabled",
+                    graphFiletypesDesc: "the top 5 file types reported on",
+                    graphHttpStatusDesc: "the top 5 HTTP status codes",
+                    graphBrowsersDesc: "the top 5 browsers",
+                    graphOSDesc: "the top 5 operating systems",
+                    graphHostsDesc: "the top 5 hosts",
+                    graphCountriesDesc: "a list of all countries and their hit counts",
+                    
+                    uniqueVisitors: "Unique Visitors",
+                    visits: "Visits",
+                    pages: "Pages",
+                    hits: "Hits",
+                    bandwidth: "Bandwidth",
+                    
+                    writtenBy: "Article written by <a href=\"https://www.destailleur.fr\" rel=\"author\" style=\"color: var(--accent);\">Laurent Destailleur</a>.",
+                    version: "Version 8.1",
+                    copyright: "© 2000 - {year} Laurent Destailleur & AWStats Team",
+                    licenseLink: "GNU General Public License",
+                    authorLink: "Author",
+                    darkAttr: "🌓 Adaptive dark mode · 中文/English",
+                }
+            };
+
+            const i18nElements = document.querySelectorAll('[data-i18n]');
+            const langSelector = document.getElementById('langSelector');
+            let currentLang = localStorage.getItem('awstats_lang') || 'zh';
+            langSelector.value = currentLang;
+
+            function applyLanguage(lang) {
+                const t = translations[lang] || translations.zh;
+                i18nElements.forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (t[key] !== undefined) {
+                        if (key === 'copyright') {
+                            const year = new Date().getFullYear();
+                            el.innerHTML = t[key].replace('{year}', year);
+                        } else if (key === 'intro' || key === 'noteDesc' || key === 'typeDesc' || key === 'blockLabelDesc' || key === 'valDataDesc' || key === 'writtenBy') {
+                            el.innerHTML = t[key];
+                        } else {
+                            el.textContent = t[key];
+                        }
+                    }
+                });
+                localStorage.setItem('awstats_lang', lang);
+                
+                const themeState = localStorage.getItem('awstats_theme') || 'auto';
+                const themeText = document.querySelector('.theme-text');
+                if (themeText) {
+                    if (themeState === 'auto') themeText.textContent = t.themeAuto;
+                    else if (themeState === 'light') themeText.textContent = (lang === 'zh' ? '浅色' : 'Light');
+                    else themeText.textContent = (lang === 'zh' ? '深色' : 'Dark');
+                }
+            }
+
+            applyLanguage(currentLang);
+
+            langSelector.addEventListener('change', (e) => {
+                currentLang = e.target.value;
+                applyLanguage(currentLang);
+            });
+
+            // 暗黑模式切换
+            const root = document.documentElement;
+            const themeBtn = document.getElementById('themeToggleBtn');
+            let themeState = localStorage.getItem('awstats_theme') || 'auto';
+
+            function applyTheme(state) {
+                root.classList.remove('force-light', 'force-dark');
+                if (state === 'light') root.classList.add('force-light');
+                else if (state === 'dark') root.classList.add('force-dark');
+                const themeText = document.querySelector('.theme-text');
+                if (themeText) {
+                    const lang = currentLang;
+                    const t = translations[lang];
+                    if (state === 'auto') themeText.textContent = t.themeAuto;
+                    else if (state === 'light') themeText.textContent = (lang === 'zh' ? '浅色' : 'Light');
+                    else themeText.textContent = (lang === 'zh' ? '深色' : 'Dark');
+                }
+                localStorage.setItem('awstats_theme', state);
+            }
+            applyTheme(themeState);
+            themeBtn.addEventListener('click', () => {
+                if (themeState === 'auto') themeState = 'light';
+                else if (themeState === 'light') themeState = 'dark';
+                else themeState = 'auto';
+                applyTheme(themeState);
+            });
+        })();
+    </script>
+</body>
+</html>

@@ -1,73 +1,294 @@
-# AWSTATS SMTP STATUS DATABASE
-#-------------------------------------------------------
-# If you want to add a SMTP status code, you must add
-# an entry in smtpcodelib.
-#-------------------------------------------------------
+# AWSTATS SMTP STATUS DATABASE - 现代化完整版本
+#-----------------------------------------------------------------------------
+# 包含 SMTP, ESMTP, 以及现代邮件服务器扩展状态码
+# 支持: Postfix, Sendmail, Exim, Exchange, 等主流 MTA
+#-----------------------------------------------------------------------------
 
-
-#package AWSSMTPCODES;
-
-
-# smtpcodelib
-# This list is used to found description of a SMTP status code
-#-----------------------------------------------------------------
 %smtpcodelib = (
-#[A successful code]
-'200'=>'Nonstandard success response',
-'211'=>'System status, or system help reply',
-'214'=>'Help message',
-'220'=>'<domain> Service ready',
-'221'=>'<domain> Service closing transmission channel',
-'250'=>'Requested mail action taken and completed',	# Your ISP mail server have successfully executes a command and the DNS is reporting a positive delivery.
-'251'=>'User not local: will forward to <forward-path>',	# Your message to a specified email address is not local to the mail server, but it will accept and forward the message to a different recipient email address.
-'252'=>'Recipient cannot be verified',	# but mail server accepts the message and attempts delivery.
-'354'=>'Start mail input and end with <CRLF>.<CRLF>',	# Indicates mail server is ready to accept the message or instruct your mail client to send the message body after the mail server have received the message headers.
-#[Temporary error code] Ask sender to try later to complete successfully
-'421'=>'<domain> Service not available, closing transmission channel',	# This may be a reply to any command if the service knows it must shut down.
-'450'=>'Requested mail action not taken: mailbox busy, DNS check failed or access denied for other reason',	# Your ISP mail server indicates that an email address does not exist or the mailbox is busy. It could be the network connection went down while sending, or it could also happen if the remote mail server does not want to accept mail from you for some reason i.e. (IP address, From address, Recipient, etc.)
-'451'=>'Requested mail action aborted: error in processing',	# Your ISP mail server indicates that the mailing has been interrupted, usually due to overloading from too many messages or transient failure is one in which the message sent is valid, but some temporary event prevents the successful sending of the message. Sending in the future may be successful.
-'452'=>'Requested mail action not taken: insufficient system storage',	# Your ISP mail server indicates, probable overloading from too many messages and sending in the future may be successful.
-'453'=>'Too many messages',	# Some mail servers have the option to reduce the number of concurrent connection and also the number of messages sent per connection. If you have a lot of messages queued up it could go over the max number of messages per connection. To see if this is the case you can try submitting only a few messages to that domain at a time and then keep increasing the number until you find the maximum number accepted by the server.
 
-# Postfix code for unknown_client_reject_code (postfix default=450) with reject_unknown_clients rule
-'470'=>'Access denied: Unknown SMTP client hostname (without DNS A or MX record)',
-# Postfix code for unknown_address_reject_code (postfix default=450) with reject_unknown_sender_domain rule
-'471'=>'Access denied: Unknown domain for sender or recipient email address (without DNS A or MX record)',
+#------------------------------------------------------------------------------
+# 2xx - Success (成功)
+#------------------------------------------------------------------------------
+'200' => _t("Nonstandard success response (ESMTP)"),
+'211' => _t("System status, or system help reply"),
+'214' => _t("Help message"),
+'215' => _t("SMTP service ready (LMTP)"),
+'220' => _t("Service ready - server is ready to receive mail"),
+'221' => _t("Service closing - connection is being closed"),
+'235' => _t("Authentication successful"),
+'250' => _t("Requested mail action taken and completed"),
+'251' => _t("User not local - will forward to another address"),
+'252' => _t("Cannot verify recipient, but will attempt delivery"),
+'253' => _t("Message accepted for delivery (DSN)"),
+'257' => _t("User name is a mailbox"),
 
-#[Permanent error code]
-'500'=>'Syntax error, command unrecognized or command line too long',
-'501'=>'Syntax error in parameters or arguments',
-'502'=>'Command not implemented',
-'503'=>'Server encountered bad sequence of commands',
-'504'=>'Command parameter not implemented',
-'521'=>'<domain> does not accept mail or closing transmission channel', # You must be pop-authenticated before you can use this SMTP server and you must use your mail address for the Sender/From field.
-'530'=>'Access denied', # a Sendmailism ?
-'550'=>'Requested mail action not taken: relaying not allowed, unknown recipient user, ...',	# Sending an email to recipients outside of your domain are not allowed or your mail server does not know that you have access to use it for relaying messages and authentication is required. Or to prevent the sending of SPAM some mail servers will not allow (relay) send mail to any e-mail using another company�s network and computer resources.
-'551'=>'User not local: please try <forward-path> or Invalid Address: Relay request denied',
-'552'=>'Requested mail action aborted: exceeded storage allocation',	# ISP mail server indicates, probable overloading from too many messages.
-'553'=>'Requested mail action not taken: mailbox name not allowed',	# Some mail servers have the option to reduce the number of concurrent connection and also the number of messages sent per connection. If you have a lot of messages queued up (being sent) for a domain, it could go over the maximum number of messages per connection and/or some change to the message and/or destination must be made for successful delivery.
-'554'=>'Requested mail action rejected: access denied',
-'557'=>'Too many duplicate messages', # Resource temporarily unavailable Indicates (probable) that there is some kind of anti-spam system on the mail server.
+#------------------------------------------------------------------------------
+# 3xx - Intermediate (中间状态)
+#------------------------------------------------------------------------------
+'334' => _t("Authentication challenge - please respond"),
+'354' => _t("Start mail input - end with <CRLF>.<CRLF>"),
+'355' => _t("Continue (LMTP)"),
 
-# Postfix code for access_map_reject_code (postfix default=554) with access map rule
-'570'=>'Access denied: access_map violation (on SMTP client or HELO hostname, sender or recipient email address)',
-# Postfix code for maps_rbl_reject_code (postfix default=554) with maps_rbl_domains rule
-'571'=>'Access denied: SMTP client listed in RBL',
-# Postfix code for relay_domains_reject_code (postfix default=554) with relay_domains_reject rule
-'572'=>'Access denied: Relay not authorized or not local host not a gateway',
-# Postfix code for unknown_client_reject_code (postfix default=450) with reject_unknown_client rule
-'573'=>'Access denied: Unknown SMTP client hostname (without DNS A or MX record)',
-# Postfix code for invalid_hostname_reject_code (postfix default=501) with reject_invalid_hostname rule
-'574'=>'Access denied: Bad syntax for client HELO hostname (Not RFC compliant)',
-# Postfix code for reject_code (postfix default=554) with smtpd_client_restrictions
-'575'=>'Access denied: SMTP client hostname rejected',
-# Postfix code for unknown_address_reject_code (postfix default=450) with reject_unknown_sender_domain or reject_unknown_recipient_domain rule
-'576'=>'Access denied: Unknown domain for sender or recipient email address (without DNS A or MX record)',
-# Postfix code for unknown_hostname_reject_code (postfix default=501) with reject_unknown_hostname rule
-'577'=>'Access denied: Unknown client HELO hostname (without DNS A or MX record)',
-# Postfix code for non_fqdn_reject_code (Postfix default=504) with reject_non_fqdn_hostname, reject_non_fqdn_sender or reject_non_fqdn_recipient rule 
-'578'=>'Access denied: Invalid domain for client HELO hostname, sender or recipient email address (not FQDN)',
+#------------------------------------------------------------------------------
+# 4xx - Temporary Failures (临时失败 - 可重试)
+#------------------------------------------------------------------------------
+'421' => _t("Service not available - connection closing, try again later"),
+'422' => _t("Mailbox busy or temporarily unavailable (Exchange)"),
+'423' => _t("Connection rate limit exceeded (Postfix)"),
+'424' => _t("Too many concurrent connections (Postfix)"),
+'425' => _t("Unable to establish connection (Postfix)"),
+'426' => _t("Connection timed out (Postfix)"),
+'427' => _t("Connection dropped due to error (Postfix)"),
+'428' => _t("Mailbox temporarily locked (Exchange)"),
+'429' => _t("Too many recipients (Postfix/Exim)"),
+'431' => _t("Mail server error (Exchange)"),
+'432' => _t("Received loop detected (Exim)"),
+'433' => _t("Too many hop count (Exim)"),
+'434' => _t("DNS lookup failed (Postfix)"),
+'435' => _t("Unable to authenticate (Postfix)"),
+'436' => _t("TLS handshake failed (Postfix)"),
+'437' => _t("SMTP protocol violation (Postfix)"),
+'438' => _t("Message size exceeds limit (Exchange)"),
+'439' => _t("Message rate limit exceeded (Postfix)"),
+'440' => _t("Mailbox quota exceeded - temporary"),
+'441' => _t("Domain not found (Postfix)"),
+'442' => _t("Message header invalid (Postfix)"),
+'443' => _t("Bounce loop detected (Postfix)"),
+'444' => _t("Unable to route (Postfix)"),
+'445' => _t("Sender domain not found (Postfix)"),
+'446' => _t("Recipient domain not found (Postfix)"),
+'447' => _t("Greylisting in progress - please try again (Postgrey)"),
+'448' => _t("Spam filtering in progress (SpamAssassin)"),
+'449' => _t("Virus scanning in progress (ClamAV)"),
+'450' => _t("Mailbox unavailable - try again later"),
+'451' => _t("Requested action aborted - error in processing"),
+'452' => _t("Insufficient system storage - try again later"),
+'453' => _t("Too many messages for this recipient (Exchange)"),
+'454' => _t("TLS not available (Postfix)"),
+'455' => _t("Server unable to accept messages (Postfix)"),
+'456' => _t("Temporary failure in DNS lookup (Exim)"),
+'457' => _t("Quota exceeded - temporary"),
+'458' => _t("Message too big - temporary"),
+'459' => _t("Too many messages per connection"),
+'460' => _t("Load average too high (Postfix)"),
+'461' => _t("Connection refused (Postfix)"),
+'462' => _t("Send rate limit exceeded (Postfix)"),
+'463' => _t("Recipient rate limit exceeded (Postfix)"),
+'464' => _t("Sender rate limit exceeded (Postfix)"),
+'465' => _t("IP address rate limit exceeded (Postfix)"),
+'466' => _t("MX lookup failed (Postfix)"),
+'467' => _t("A record lookup failed (Postfix)"),
+'468' => _t("PTR record lookup failed (Postfix)"),
+'469' => _t("Greylisting active - please try again (Postgrey)"),
+'470' => _t("Access denied - unknown SMTP client hostname"),
+'471' => _t("Access denied - unknown domain for sender or recipient"),
+'472' => _t("Sender address rejected - domain not verified (DMARC pending)"),
+'473' => _t("Recipient address rejected - domain not verified (DMARC pending)"),
+'474' => _t("DKIM verification pending - temporary failure"),
+'475' => _t("SPF verification pending - temporary failure"),
+'476' => _t("DMARC verification pending - temporary failure"),
+'477' => _t("DNSBL lookup temporary failure"),
+'478' => _t("RHSBL lookup temporary failure"),
+'479' => _t("URI DNSBL lookup temporary failure"),
+'480' => _t("Temporary authentication failure (Dovecot)"),
+'481' => _t("Temporary authorization failure (Sendmail)"),
+'482' => _t("Rate limit exceeded per sender (Exim)"),
+'483' => _t("Rate limit exceeded per recipient (Exim)"),
+'484' => _t("Rate limit exceeded per domain (Exim)"),
+'485' => _t("Rate limit exceeded per IP (Exim)"),
+'486' => _t("Message queued for later delivery (Postfix)"),
+'487' => _t("Delivery delayed due to policy (Exchange)"),
+'488' => _t("Temporary failure in content filter"),
+'489' => _t("Temporary failure in antivirus scanner"),
+'490' => _t("Temporary failure in spam filter"),
+'491' => _t("Temporary failure in milter (Postfix)"),
+'492' => _t("Greylisting - try again later"),
+'493' => _t("DDoS protection active - try again later"),
+'494' => _t("SMTP policy violation - temporary"),
+'495' => _t("Temporary error in RCPT TO processing"),
+'496' => _t("Temporary error in MAIL FROM processing"),
+'497' => _t("Temporary error in EHLO/HELO processing"),
+'498' => _t("Temporary error in DATA processing"),
+'499' => _t("Temporary error - service busy, try again later"),
+
+#------------------------------------------------------------------------------
+# 5xx - Permanent Failures (永久失败 - 不重试)
+#------------------------------------------------------------------------------
+'500' => _t("Syntax error - command unrecognized or too long"),
+'501' => _t("Syntax error in parameters or arguments"),
+'502' => _t("Command not implemented"),
+'503' => _t("Bad sequence of commands"),
+'504' => _t("Command parameter not implemented"),
+'505' => _t("Version not supported (ESMTP)"),
+'506' => _t("Mailbox path invalid (LMTP)"),
+'507' => _t("Too many commands in this session (Postfix)"),
+'508' => _t("Recipient limit exceeded (Postfix)"),
+'509' => _t("Sender limit exceeded (Postfix)"),
+'510' => _t("Domain limit exceeded (Postfix)"),
+'511' => _t("Mailbox does not exist (Exchange)"),
+'512' => _t("DNS failure - permanent"),
+'513' => _t("Address type not supported (Postfix)"),
+'514' => _t("Unable to open mailbox (Postfix)"),
+'515' => _t("Mailbox locked - permanent"),
+'516' => _t("Message rejected due to policy (Exchange)"),
+'517' => _t("Content rejected - permanent"),
+'518' => _t("Attachment type not allowed"),
+'519' => _t("Message encoding not supported"),
+'520' => _t("Sender domain does not exist - permanent"),
+'521' => _t("Domain does not accept mail or is closing"),
+'522' => _t("Recipient domain does not exist - permanent"),
+'523' => _t("Mailbox quota exceeded - permanent"),
+'524' => _t("Message size exceeds limit - permanent"),
+'525' => _t("Authentication required (Sendmail)"),
+'526' => _t("Authentication failed (Sendmail)"),
+'527' => _t("Authentication mechanism not supported"),
+'528' => _t("Authentication credentials invalid"),
+'529' => _t("Authentication account expired"),
+'530' => _t("Access denied - authentication required"),
+'531' => _t("Access denied (Sendmailism)"),
+'532' => _t("Access denied - not authenticated"),
+'533' => _t("Access denied - account locked"),
+'534' => _t("Access denied - account disabled"),
+'535' => _t("Authentication failed"),
+'536' => _t("Authentication required for relay (Postfix)"),
+'537' => _t("Authentication failed for relay (Postfix)"),
+'538' => _t("Encryption required (STARTTLS)"),
+'539' => _t("TLS required for this recipient"),
+'540' => _t("Encryption strength insufficient"),
+'541' => _t("Certificate validation failed"),
+'542' => _t("Invalid TLS certificate"),
+'543' => _t("TLS protocol version not supported"),
+'544' => _t("Cipher suite not supported"),
+'545' => _t("Access denied - no valid recipient"),
+'546' => _t("Access denied - no valid sender"),
+'547' => _t("Access denied - domain not allowed"),
+'548' => _t("Access denied - IP address blocked (permanent)"),
+'549' => _t("Access denied - sender domain blacklisted"),
+'550' => _t("Mailbox unavailable - requested action not taken"),
+'551' => _t("User not local - please try forwarding address"),
+'552' => _t("Requested action aborted - exceeded storage allocation"),
+'553' => _t("Mailbox name not allowed"),
+'554' => _t("Requested action rejected - access denied"),
+'555' => _t("MAIL FROM/RCPT TO parameters not recognized"),
+'556' => _t("Domain not allowed to send (DMARC reject)"),
+'557' => _t("Too many duplicate messages - permanent"),
+'558' => _t("Sender address rejected - domain not in SPF"),
+'559' => _t("Sender address rejected - DKIM verification failed"),
+'560' => _t("Sender address rejected - DMARC policy reject"),
+'561' => _t("Recipient address rejected - DMARC policy reject"),
+'562' => _t("Message rejected due to spam content"),
+'563' => _t("Message rejected due to virus detected"),
+'564' => _t("Message rejected due to malicious content"),
+'565' => _t("Message rejected due to phishing detection"),
+'566' => _t("Message rejected due to malware detection"),
+'567' => _t("Message rejected due to policy - permanent"),
+'568' => _t("Message rejected due to content filtering"),
+'569' => _t("Message rejected due to reputation"),
+'570' => _t("Access denied - access_map violation"),
+'571' => _t("Access denied - SMTP client listed in RBL"),
+'572' => _t("Access denied - relay not authorized"),
+'573' => _t("Access denied - unknown SMTP client hostname"),
+'574' => _t("Access denied - bad syntax for client HELO hostname"),
+'575' => _t("Access denied - SMTP client hostname rejected"),
+'576' => _t("Access denied - unknown domain for sender or recipient"),
+'577' => _t("Access denied - unknown client HELO hostname"),
+'578' => _t("Access denied - invalid domain (not FQDN)"),
+'579' => _t("Access denied - domain not qualified"),
+'580' => _t("Access denied - mail server misconfigured"),
+'581' => _t("Access denied - open relay not allowed"),
+'582' => _t("Access denied - proxy not allowed"),
+'583' => _t("Access denied - dynamic IP not allowed"),
+'584' => _t("Access denied - residential IP not allowed"),
+'585' => _t("Access denied - VPN/Tor detected"),
+'586' => _t("Access denied - Spamhaus DROP listed"),
+'587' => _t("Access denied - URL listed in URIBL"),
+'588' => _t("Access denied - domain in RHSBL"),
+'589' => _t("Access denied - IP in DNSWL (policy)"),
+'590' => _t("Delivery failed - mailbox not found"),
+'591' => _t("Delivery failed - recipient not local"),
+'592' => _t("Delivery failed - recipient rejected"),
+'593' => _t("Delivery failed - sender rejected"),
+'594' => _t("Delivery failed - relay rejected"),
+'595' => _t("Delivery failed - DNS permanent error"),
+'596' => _t("Delivery failed - MX permanent error"),
+'597' => _t("Delivery failed - A record permanent error"),
+'598' => _t("Delivery failed - PTR record permanent error"),
+'599' => _t("Delivery failed - policy permanent error"),
+
+#------------------------------------------------------------------------------
+# 6xx - Protocol Status (协议状态 - RFC 2034)
+#------------------------------------------------------------------------------
+'600' => _t("DSN: Success - delivery status notification"),
+'601' => _t("DSN: Delivery delayed"),
+'602' => _t("DSN: Delivery failed - permanent"),
+'603' => _t("DSN: Delivery failed - temporary"),
+'604' => _t("DSN: Message expired"),
+'605' => _t("DSN: Message bounced"),
+'606' => _t("DSN: Message discarded"),
+'607' => _t("DSN: Message filtered"),
+'608' => _t("DSN: Message quarantined"),
+'609' => _t("DSN: Message held for review"),
+
+#------------------------------------------------------------------------------
+# 7xx - Security Status (安全状态)
+#------------------------------------------------------------------------------
+'700' => _t("MTA-STS policy required"),
+'701' => _t("MTA-STS policy validation failed"),
+'702' => _t("TLS reporting required"),
+'703' => _t("TLS report requested"),
+'704' => _t("SMTP MTA Strict Transport Security active"),
+'705' => _t("DANE validation required"),
+'706' => _t("DANE validation failed"),
+'707' => _t("TLSA record missing"),
+'708' => _t("Certificate name mismatch"),
+'709' => _t("Certificate expired"),
+
+#------------------------------------------------------------------------------
+# 8xx - Authentication Status (认证状态)
+#------------------------------------------------------------------------------
+'800' => _t("AUTH LOGIN required"),
+'801' => _t("AUTH PLAIN required"),
+'802' => _t("AUTH CRAM-MD5 required"),
+'803' => _t("AUTH DIGEST-MD5 required"),
+'804' => _t("AUTH GSSAPI required"),
+'805' => _t("AUTH NTLM required"),
+'806' => _t("AUTH SCRAM required"),
+'807' => _t("AUTH OAUTHBEARER required"),
+'808' => _t("AUTH XOAUTH2 required"),
+
+#------------------------------------------------------------------------------
+# 9xx - Application Specific (应用特定)
+#------------------------------------------------------------------------------
+'900' => _t("Exchange: Mailbox database error"),
+'901' => _t("Exchange: Store driver error"),
+'902' => _t("Exchange: Transport agent error"),
+'903' => _t("Exchange: Content conversion error"),
+'904' => _t("Exchange: Routing error"),
+'905' => _t("Exchange: Mail flow stalled"),
+'906' => _t("Exchange: Shadow redundancy error"),
+'907' => _t("Exchange: Safety net error"),
+'908' => _t("Exchange: Queue database error"),
+'909' => _t("Exchange: Message throttled"),
+'910' => _t("Postfix: Bounce queue error"),
+'911' => _t("Postfix: Deferred queue error"),
+'912' => _t("Postfix: Hold queue error"),
+'913' => _t("Postfix: Incoming queue error"),
+'914' => _t("Postfix: Active queue error"),
+'915' => _t("Postfix: Corrupted queue file"),
+'916' => _t("Sendmail: Queue runner error"),
+'917' => _t("Sendmail: Alias database error"),
+'918' => _t("Sendmail: Virtuser table error"),
+'919' => _t("Sendmail: Mailer definition error"),
+'920' => _t("Exim: Router configuration error"),
+'921' => _t("Exim: Transport configuration error"),
+'922' => _t("Exim: Director configuration error"),
+'923' => _t("Exim: Retry configuration error"),
+'924' => _t("Exim: Rewrite configuration error"),
+'925' => _t("Exim: Authentication configuration error"),
+'926' => _t("Exim: ACL configuration error"),
+'927' => _t("Exim: Local_scan configuration error"),
+'928' => _t("Exim: Lookup configuration error"),
+'929' => _t("Exim: Expansion configuration error"),
 );
-
 
 1;

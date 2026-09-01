@@ -1,0 +1,184 @@
+# PODNAME: Geo::IPfree
+# ABSTRACT: Geo::IPfree - Modern IP geolocation using MMDB database
+
+__END__
+
+=pod
+
+=encoding UTF-8
+
+=head1 NAME
+
+Geo::IPfree - Modern IP geolocation using MMDB database (GeoIP2/DB-IP)
+
+=head1 VERSION
+
+version 2.0.0
+
+=head1 SYNOPSIS
+
+    use Geo::IPfree;
+    
+    my $geo = Geo::IPfree->new;
+    my ($code, $location) = $geo->LookUp('200.176.3.142');
+    print "$code - $location\n";  # US - United States, California, Mountain View
+    
+    # lookup by hostname
+    my ($code2, $location2) = $geo->LookUp('www.cnn.com');
+
+=head1 DESCRIPTION
+
+This is a complete rewrite of Geo::IPfree that uses modern B<MMDB format> 
+(GeoIP2/DB-IP) instead of the legacy DAT format.
+
+It provides city-level geolocation with multi-language support, including
+Chinese city and region names when using databases like DB-IP.
+
+=head1 REQUIREMENTS
+
+=over 4
+
+=item * Perl 5.20 or higher
+
+=item * L<GeoIP2::Database::Reader> (from libgeoip2-perl)
+
+=item * L<MaxMind::DB::Reader> (from libmaxmind-db-reader-perl)
+
+=item * A MMDB database file (GeoLite2, DB-IP, etc.)
+
+=back
+
+=head1 METHODS
+
+=head2 new( [$mmdb_file] )
+
+Creates a new Geo::IPfree instance. If no file is specified, it will search
+common locations for MMDB files:
+
+=over 4
+
+=item * /usr/share/GeoIP/
+
+=item * /usr/local/share/GeoIP/
+
+=item * /var/lib/GeoIP/
+
+=item * Perl @INC directories
+
+=item * The same directory where Geo/IPfree.pm is installed
+
+=back
+
+It looks for files matching: dbip-city-lite.mmdb, GeoLite2-City.mmdb, 
+GeoLite2-Country.mmdb, or dbip-city-*.mmdb.
+
+=head2 LookUp( $ip | $hostname )
+
+Given an IP address or a hostname, this function returns two things:
+
+=over 4
+
+=item * The ISO 3166 country code (2 chars)
+
+=item * The location string (Country, State/Province, City)
+
+=back
+
+B<NB:> Hostname resolution requires an internet connection.
+
+=head2 Clean_Cache( )
+
+Clears the lookup cache.
+
+=head2 Faster( )
+
+This method is deprecated with the MMDB backend as the database is
+already memory-mapped for optimal performance.
+
+=head2 LoadDB( )
+
+This method is deprecated. Database loading is automatic in new().
+
+=head1 CACHING
+
+The module caches the last 5000 queries by default. The cache key uses
+the /24 network (xxx.xxx.xxx.0) to maximize cache hits for IPs in the
+same subnet. This can significantly speed up log processing.
+
+To disable caching:
+    $geo->{cache} = 0;
+
+=head1 DATABASE FORMAT
+
+This module supports the standard MMDB (MaxMind Database) format used by:
+
+=over 4
+
+=item * L<https://dev.maxmind.com/geoip/geolite2-free-geolocation-data>
+
+=item * L<https://db-ip.com/db/lite.php>
+
+=back
+
+The MMDB format supports multiple languages and detailed location data
+including city, region, postal code, and coordinates.
+
+=head1 LANGUAGE SUPPORT
+
+The module uses a fixed language preference: Chinese (zh-CN) first,
+falling back to English (en). This is hardcoded in the source.
+
+Example output with DB-IP database:
+    US -> United_States,_California,_Mountain_View
+
+To change the language preference, you would need to modify the
+locales parameter in the new() method.
+
+=head1 SEE ALSO
+
+=over 4
+
+=item * L<GeoIP2::Database::Reader>
+
+=item * L<MaxMind::DB::Reader>
+
+=item * L<https://db-ip.com> - Free city-level MMDB database
+
+=item * L<https://dev.maxmind.com/geoip/geolite2-free-geolocation-data>
+
+=back
+
+=head1 MAINTAINER
+
+This modernized version is maintained by the HestiaCP team.
+
+=head1 ACKNOWLEDGEMENTS
+
+Special thanks to:
+
+=over 4
+
+=item * Laurent Destailleur (author of AWStats) for original testing and feedback
+
+=item * Graciliano M. P. for the original Geo::IPfree module
+
+=item * MaxMind and DB-IP for providing free geolocation databases
+
+=back
+
+=head1 AUTHOR
+
+Original version by Graciliano M. P. <gm@virtuasites.com.br>
+Modern MMDB rewrite by HestiaCP Team
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2026 by the contributors.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+Database files have their own licenses (CC BY-SA for GeoLite2, 
+CC BY for DB-IP). Please respect their terms.
+
+=cut

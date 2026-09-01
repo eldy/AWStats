@@ -1,29 +1,28 @@
 %define name awstats
-%define version	__VERSION__
-# For all other distrib
+%define version __VERSION__
 %define release 1
 
 Name: %{name}
 Version: %{version}
 Release: %{release}
+Source0: %{name}-%{version}.tgz
 Summary: AWStats is a free powerful and featureful server logfile analyzer.
 
 License: GPL
 Packager: Laurent Destailleur (Eldy) <eldy@users.sourceforge.net>
 Vendor: Laurent Destailleur
 
-URL: http://%{name}.sourceforge.net
-Source: http://dl.sf.net/awstats/%{name}-%{version}.tgz
 BuildArchitectures: noarch
 BuildRoot: /tmp/%{name}-buildroot
-Icon: awstats_logo1.gif
-
-# For all other distrib
 Group: Applications/Internet
 
-#Requires=perl
+# 依赖
+Requires: perl >= 1:5.020
+Requires: perl(JSON::XS)
+Requires: perl(Try::Tiny)
+Requires: wget
+Recommends: cron, httpd, ca-certificates
 AutoReqProv: yes
-
 
 %description
 AWStats (Advanced Web Statistics) is a free powerful and featureful
@@ -50,38 +49,38 @@ features.
 
 %description -l pl
 awstats (Advanced Web Statistics - zaawansowane statystyki WWW) to
-pot�ne i bogate w mo�liwo�ci narz�dzie generuj�ce zaawansowane
-graficzne statystyki serwera WWW. Ten analizator log�w serwera
-dzia�a z linii polece� lub jako CGI i pokazuje wszystkie informacje
-zawarte w logu w postaci graficznych stron WWW. Mo�e analizowa� logi
-wielu serwer�w WWW/WAP/proxy, takich jak Apache, IIS, Weblogic,
-Webstar, Squid... ale tak�e serwer�w pocztowych lub ftp.
+potężne i bogate w możliwości narzędzie generujące zaawansowane
+graficzne statystyki serwera WWW. Ten analizator logów serwera
+działa z linii poleceń lub jako CGI i pokazuje wszystkie informacje
+zawarte w logu w postaci graficznych stron WWW. Może analizować logi
+wielu serwerów WWW/WAP/proxy, takich jak Apache, IIS, Weblogic,
+Webstar, Squid... ale także serwerów pocztowych lub ftp.
 
-Ten program mo�e mierzy� odwiedziny, odwiedzaj�cych, uwierzytelnionych
-u�ytkownik�w, strony, domeny/kraje, najbardziej zaj�te godziny,
-odwiedziny robot�w, rodzaje plik�w, u�ywane wyszukiwarki i s�owa
-kluczowe, czasy trwania odwiedzin, b��dy HTTP... a nawet wi�cej.
-Statystyki mog� by� uaktualniane z przegl�darki lub schedulera.
-Program obs�uguje tak�e serwery wirtualne, wtyczki i wiele innych
+Ten program może mierzyć odwiedziny, odwiedzających, uwierzytelnionych
+użytkowników, strony, domeny/kraje, najbardziej zajęte godziny,
+odwiedziny robotów, rodzaje plików, używane wyszukiwarki i słowa
+kluczowe, czasy trwania odwiedzin, błędy HTTP... a nawet więcej.
+Statystyki mogą być uaktualniane z przeglądarki lub schedulera.
+Program obsługuje także serwery wirtualne, wtyczki i wiele innych
 rzeczy.
 
 %description -l fr
-AWStats (Advanced Web Statistics) est un outils pour g�n�rer des 
-statistiques avanc�s d'un serveur web (mais aussi ftp ou mail)
-de mani�re graphique.
+AWStats (Advanced Web Statistics) est un outil pour générer des 
+statistiques avancées d'un serveur web (mais aussi ftp ou mail)
+de manière graphique.
 
 Cet analyseur de log fonctionne en CGI ou en ligne de commande
-et synt�tise toutes les informations que vos logs contiennent en
+et synthétise toutes les informations que vos logs contiennent en
 quelques pages comme les visites, visiteurs uniques, logins,
 pages vues, domaines/pays, heures de pointes, visites des robots, 
-type de fichiers, moteurs de recherche, mots et phrases cl�s,
-dur�e des visites, r�partition clusters, erreurs HTTP mais aussi
-support java,flash,etc des navigateurs, r�solution d'�cran,
+type de fichiers, moteurs de recherche, mots et phrases clés,
+durée des visites, répartition clusters, erreurs HTTP mais aussi
+support java,flash,etc des navigateurs, résolution d'écran,
 estimation des ajouts aux favoris, etc...
 
-Les statistiques peuvent etre mise � jour par un navigateur ou un
-s�quenceur.
-AWStats g�n�re un fichier d'informations consolid�s pour pouvoir
+Les statistiques peuvent etre mise à jour par un navigateur ou un
+séquenceur.
+AWStats génère un fichier d'informations consolidés pour pouvoir
 traiter de large sites souvent et rapidement.
 
 Il peut analyser des logs IIS (W3C log format), fichier log Apache
@@ -89,134 +88,378 @@ Il peut analyser des logs IIS (W3C log format), fichier log Apache
 plupart des logs de serveur web, proxy, wap, streaming serveurs
 (et aussi serveurs ftp et de mails).
 Ce programme supporte de plus les serveurs virtuels, des plugins
-et de nombreuses fonctionalit�s.
-
-
-
+et de nombreuses fonctionnalités.
 
 #---- prep
 %prep
-%setup -q
-
+%setup -q -n %{name}-%{version}
 
 #---- build
 %build
 # Nothing to build
 
-
 #---- install
 %install
 rm -rf $RPM_BUILD_ROOT
-mkdir -p $RPM_BUILD_ROOT/usr/local/awstats/tools
-mkdir -p $RPM_BUILD_ROOT/usr/local/awstats/tools/webmin
-mkdir -p $RPM_BUILD_ROOT/usr/local/awstats/tools/xslt
-mkdir -p $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/classes
-mkdir -p $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/classes/src
-mkdir -p $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/cgi-bin
-mkdir -p $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/cgi-bin/lib
-mkdir -p $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/cgi-bin/plugins
-mkdir -p $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/cgi-bin/plugins/example
-mkdir -p $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/css
-mkdir -p $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/icon/browser
-mkdir -p $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/icon/clock
-mkdir -p $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/icon/cpu
-mkdir -p $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/icon/flags
-mkdir -p $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/icon/mime
-mkdir -p $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/icon/os
-mkdir -p $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/icon/other
-mkdir -p $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/js
-mkdir -p $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/cgi-bin/lang
-mkdir -p $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/cgi-bin/lang/tooltips_f
-mkdir -p $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/cgi-bin/lang/tooltips_m
-mkdir -p $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/cgi-bin/lang/tooltips_w
-#mkdir -p $RPM_BUILD_ROOT/usr/share/awstats/lang
-#mkdir -p $RPM_BUILD_ROOT/usr/share/awstats/man
-mkdir -p $RPM_BUILD_ROOT/usr/local/awstats/docs
-mkdir -p $RPM_BUILD_ROOT/usr/local/awstats/docs/images
-mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/awstats
-mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/cron.daily
-mkdir -p /var/lib/awstats
 
-install -m 444 tools/httpd_conf $RPM_BUILD_ROOT/usr/local/awstats/tools/httpd_conf
-install -m 755 tools/logresolvemerge.pl $RPM_BUILD_ROOT/usr/local/awstats/tools/logresolvemerge.pl
-install -m 755 tools/maillogconvert.pl $RPM_BUILD_ROOT/usr/local/awstats/tools/maillogconvert.pl
-install -m 755 tools/urlaliasbuilder.pl $RPM_BUILD_ROOT/usr/local/awstats/tools/urlaliasbuilder.pl
-install -m 755 tools/awstats_buildstaticpages.pl $RPM_BUILD_ROOT/usr/local/awstats/tools/awstats_buildstaticpages.pl
-install -m 755 tools/awstats_configure.pl $RPM_BUILD_ROOT/usr/local/awstats/tools/awstats_configure.pl
-install -m 755 tools/awstats_exportlib.pl $RPM_BUILD_ROOT/usr/local/awstats/tools/awstats_exportlib.pl
-install -m 755 tools/awstats_updateall.pl $RPM_BUILD_ROOT/usr/local/awstats/tools/awstats_updateall.pl
-install -m 755 tools/webmin/* $RPM_BUILD_ROOT/usr/local/awstats/tools/webmin
-install -m 755 tools/xslt/* $RPM_BUILD_ROOT/usr/local/awstats/tools/xslt
-install -m 755 wwwroot/classes/awgraphapplet.jar $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/classes/awgraphapplet.jar
-install -m 755 wwwroot/classes/src/* $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/classes/src
-install -m 755 wwwroot/cgi-bin/awstats.pl $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/cgi-bin/awstats.pl
-install -m 755 wwwroot/cgi-bin/awredir.pl $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/cgi-bin/awredir.pl
-install -m 755 wwwroot/cgi-bin/lib/* $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/cgi-bin/lib
-install -m 755 wwwroot/cgi-bin/plugins/*.pm $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/cgi-bin/plugins
-install -m 755 wwwroot/cgi-bin/plugins/example/* $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/cgi-bin/plugins/example
-install -m 644 wwwroot/cgi-bin/awstats.model.conf $RPM_BUILD_ROOT/%{_sysconfdir}/awstats/awstats.model.conf
-install -m 444 wwwroot/css/* $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/css
-install -m 444 wwwroot/icon/browser/* $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/icon/browser
-install -m 444 wwwroot/icon/clock/* $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/icon/clock
-install -m 444 wwwroot/icon/cpu/* $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/icon/cpu
-install -m 444 wwwroot/icon/flags/* $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/icon/flags
-install -m 444 wwwroot/icon/mime/* $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/icon/mime
-install -m 444 wwwroot/icon/os/* $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/icon/os
-install -m 444 wwwroot/icon/other/* $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/icon/other
-install -m 444 wwwroot/js/* $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/js
-install -m 444 wwwroot/cgi-bin/lang/tooltips_f/* $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/cgi-bin/lang/tooltips_f
-install -m 444 wwwroot/cgi-bin/lang/tooltips_m/* $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/cgi-bin/lang/tooltips_m
-install -m 444 wwwroot/cgi-bin/lang/tooltips_w/* $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/cgi-bin/lang/tooltips_w
-install -m 444 wwwroot/cgi-bin/lang/awstats* $RPM_BUILD_ROOT/usr/local/awstats/wwwroot/cgi-bin/lang
-install -m 444 README.md  $RPM_BUILD_ROOT/usr/local/awstats/README.md
-#install -m 644 README.md  $RPM_BUILD_ROOT/usr/share/awstats/man
-install -m 444 docs/*.* $RPM_BUILD_ROOT/usr/local/awstats/docs
-install -m 444 docs/images/* $RPM_BUILD_ROOT/usr/local/awstats/docs/images
+# 创建目录
+mkdir -p $RPM_BUILD_ROOT/usr/share/awstats
+mkdir -p $RPM_BUILD_ROOT/usr/share/awstats/icon
+mkdir -p $RPM_BUILD_ROOT/usr/share/awstats/css
+mkdir -p $RPM_BUILD_ROOT/usr/share/awstats/js
+mkdir -p $RPM_BUILD_ROOT/usr/share/awstats/classes
+mkdir -p $RPM_BUILD_ROOT/usr/share/awstats/tools
+mkdir -p $RPM_BUILD_ROOT/usr/lib/cgi-bin
+mkdir -p $RPM_BUILD_ROOT/usr/local/bin
+mkdir -p $RPM_BUILD_ROOT/etc/awstats
+mkdir -p $RPM_BUILD_ROOT/etc/cron.d
+mkdir -p $RPM_BUILD_ROOT/etc/cron.monthly
+mkdir -p $RPM_BUILD_ROOT/etc/logrotate.d
+mkdir -p $RPM_BUILD_ROOT/var/lib/awstats
+mkdir -p $RPM_BUILD_ROOT/var/log/awstats
+mkdir -p $RPM_BUILD_ROOT/usr/share/perl5/Geo
+mkdir -p $RPM_BUILD_ROOT/usr/share/doc/awstats
+
+# 创建 Apache 配置文件
+mkdir -p $RPM_BUILD_ROOT/etc/httpd/conf.d
+cat > $RPM_BUILD_ROOT/etc/httpd/conf.d/awstats.conf << 'EOF'
+Alias /awstatsclasses "/usr/share/awstats/classes/"
+Alias /awstatscss "/usr/share/awstats/css/"
+Alias /awstatsicons "/usr/share/awstats/icon/"
+Alias /awstatsdocs "/usr/share/doc/awstats/"
+ScriptAlias /awstats/ "/usr/lib/cgi-bin/"
+
+<Directory "/usr/share/awstats">
+    Options None
+    AllowOverride None
+    Require all granted
+</Directory>
+
+<IfModule mod_env.c>
+    SetEnv PERL5LIB /usr/share/awstats/lib:/usr/share/awstats/plugins
+</IfModule>
+EOF
+
+# 复制 webmin 模块 - 使用绝对路径
+if [ -d "$RPM_BUILD_DIR/%{name}-%{version}/tools/webmin/awstats" ]; then
+    mkdir -p $RPM_BUILD_ROOT/usr/share/awstats/tools/webmin
+    cd $RPM_BUILD_DIR/%{name}-%{version}/tools/webmin
+    tar -czf awstats-2.0.wbm awstats/
+    cp awstats-2.0.wbm $RPM_BUILD_ROOT/usr/share/awstats/tools/webmin/
+    cd $RPM_BUILD_DIR/%{name}-%{version}
+fi
+
+# 复制 MaxMind 模块到 Perl 库路径
+MAXMIND_SRC="$RPM_BUILD_DIR/%{name}-%{version}/wwwroot/cgi-bin/lib/MaxMind"
+if [ -d "$MAXMIND_SRC" ]; then
+    mkdir -p $RPM_BUILD_ROOT/usr/share/perl5/vendor_perl
+    cp -pr "$MAXMIND_SRC" $RPM_BUILD_ROOT/usr/share/perl5/vendor_perl/
+    echo "✓ Copied MaxMind module to Perl library path"
+else
+    echo "⚠ ERROR: MaxMind source directory not found at $MAXMIND_SRC"
+    echo "  Contents of $RPM_BUILD_DIR/%{name}-%{version}/wwwroot/cgi-bin/lib/:"
+    ls -la $RPM_BUILD_DIR/%{name}-%{version}/wwwroot/cgi-bin/lib/ || true
+    exit 1
+fi
+
+# 批量复制所有文件
+cp -pr $RPM_BUILD_DIR/%{name}-%{version}/docs/* $RPM_BUILD_ROOT/usr/share/doc/awstats/ 2>/dev/null || true
+cp -pr $RPM_BUILD_DIR/%{name}-%{version}/wwwroot/* $RPM_BUILD_ROOT/usr/share/awstats/ 2>/dev/null || true
+
+# 移动 CGI 脚本到 /usr/lib/cgi-bin
+mv $RPM_BUILD_ROOT/usr/share/awstats/cgi-bin/* $RPM_BUILD_ROOT/usr/lib/cgi-bin/ 2>/dev/null || true
+rm -rf $RPM_BUILD_ROOT/usr/share/awstats/cgi-bin 2>/dev/null || true
+
+cp -pr $RPM_BUILD_DIR/%{name}-%{version}/tools $RPM_BUILD_ROOT/usr/share/awstats/ 2>/dev/null || true
+cp -pr $RPM_BUILD_DIR/%{name}-%{version}/README.md $RPM_BUILD_ROOT/usr/share/awstats/ 2>/dev/null || true
+
+# 移动 lang/lib/plugins 到正确位置
+if [ -d "$RPM_BUILD_ROOT/usr/share/awstats/lang" ]; then
+    mv $RPM_BUILD_ROOT/usr/share/awstats/lang $RPM_BUILD_ROOT/usr/share/awstats/lang
+fi
+if [ -d "$RPM_BUILD_ROOT/usr/share/awstats/lib" ]; then
+    mv $RPM_BUILD_ROOT/usr/share/awstats/lib $RPM_BUILD_ROOT/usr/share/awstats/lib
+fi
+if [ -d "$RPM_BUILD_ROOT/usr/share/awstats/plugins" ]; then
+    mv $RPM_BUILD_ROOT/usr/share/awstats/plugins $RPM_BUILD_ROOT/usr/share/awstats/plugins
+fi
+
+# 复制配置文件
+cp -pr $RPM_BUILD_DIR/%{name}-%{version}/wwwroot/cgi-bin/awstats.conf $RPM_BUILD_ROOT/etc/awstats/awstats.conf
+cp -pr $RPM_BUILD_DIR/%{name}-%{version}/wwwroot/cgi-bin/awstats.model.conf $RPM_BUILD_ROOT/etc/awstats/awstats.model.conf
+
+# 创建空配置文件
+touch $RPM_BUILD_ROOT/etc/awstats/awstats.local.conf
+
+# 复制 MaxMind 模块
+MAXMIND_SRC="$RPM_BUILD_DIR/%{name}-%{version}/wwwroot/cgi-bin/lib/MaxMind"
+if [ -d "$MAXMIND_SRC" ]; then
+    mkdir -p $RPM_BUILD_ROOT/usr/share/perl5/vendor_perl
+    cp -pr "$MAXMIND_SRC" $RPM_BUILD_ROOT/usr/share/perl5/vendor_perl/
+fi
+
+# 复制 IPfree 模块
+if [ -f $RPM_BUILD_DIR/%{name}-%{version}/wwwroot/cgi-bin/lib/IPfree.pm ]; then
+    cp -pr $RPM_BUILD_DIR/%{name}-%{version}/wwwroot/cgi-bin/lib/IPfree.pm $RPM_BUILD_ROOT/usr/share/perl5/Geo/IPfree.pm
+    chmod 644 $RPM_BUILD_ROOT/usr/share/perl5/Geo/IPfree.pm
+fi
+
+if [ -f $RPM_BUILD_DIR/%{name}-%{version}/wwwroot/cgi-bin/lib/IPfree.pod ]; then
+    cp -pr $RPM_BUILD_DIR/%{name}-%{version}/wwwroot/cgi-bin/lib/IPfree.pod $RPM_BUILD_ROOT/usr/share/perl5/Geo/IPfree.pod
+    chmod 644 $RPM_BUILD_ROOT/usr/share/perl5/Geo/IPfree.pod
+fi
+
+# 创建 CLI 包装脚本
+cat > $RPM_BUILD_ROOT/usr/local/bin/awstats << 'EOF'
+#!/bin/bash
+perl /usr/lib/cgi-bin/awstats.pl "$@"
+EOF
+chmod 755 $RPM_BUILD_ROOT/usr/local/bin/awstats
+
+# 创建 cron 任务
+cat > $RPM_BUILD_ROOT/etc/cron.d/awstats << 'EOF'
+# AWStats cron job
+# Run AWStats update daily at 1:00 AM
+0 1 * * * root [ -x /usr/share/awstats/tools/awstats_updateall.pl ] && /usr/share/awstats/tools/awstats_updateall.pl now > /dev/null 2>&1
+EOF
+
+# 创建 logrotate 配置
+cat > $RPM_BUILD_ROOT/etc/logrotate.d/awstats << 'EOF'
+/var/log/awstats/*.log {
+    weekly
+    missingok
+    rotate 52
+    compress
+    delaycompress
+    notifempty
+    create 644 root root
+    sharedscripts
+    postrotate
+        /usr/share/awstats/tools/awstats_updateall.pl now > /dev/null 2>&1 || true
+    endscript
+}
+EOF
+
+# 创建 DB-IP 数据库更新脚本
+cat > $RPM_BUILD_ROOT/etc/cron.d/awstats-dbip-update << 'EOF'
+#!/bin/bash
+# ------------------------------------------------------------------------------
+# Monthly DB-IP database update script
+# Runs on the 1st of each month via cron.monthly
+# Generated by AWStats, do not edit manually
+# 由 AWStats 自动生成，请勿手动编辑
+# To disable automatic updates, rename this file so you can re-enable it later if needed.
+# 若需禁用自动更新，请将此文件重命名！以便后续再次启用此功能！
+# ------------------------------------------------------------------------------
+
+YEAR_MONTH=$(date +%Y-%m)
+DBIP_DIR="/usr/share/perl5/Geo"
+DBIP_DEST="$DBIP_DIR/dbip-city.mmdb"
+DBIP_TEMP_GZ="$DBIP_DIR/dbip-city.mmdb.tmp.gz"
+DBIP_TEMP="$DBIP_DIR/dbip-city.mmdb.tmp"
+LOG_FILE="/var/log/dbip-update.log"
+
+if [ -f "$LOG_FILE" ] && [ $(wc -l < "$LOG_FILE") -gt 30 ]; then
+    tail -n 30 "$LOG_FILE" > "$LOG_FILE.tmp"
+    mv "$LOG_FILE.tmp" "$LOG_FILE"
+fi
+
+mkdir -p "$DBIP_DIR"
+cd "$DBIP_DIR"
+
+if ! command -v wget > /dev/null 2>&1; then
+    echo "$(date): wget not installed, skipping update" >> "$LOG_FILE"
+    exit 1
+fi
+
+echo "$(date): Downloading DB-IP database for ${YEAR_MONTH}..." >> "$LOG_FILE"
+wget -q -O "$DBIP_TEMP_GZ" "https://download.db-ip.com/free/dbip-city-lite-${YEAR_MONTH}.mmdb.gz" 2>/dev/null
+if [ ! -s "$DBIP_TEMP_GZ" ]; then
+    LAST_MONTH=$(date -d "1 month ago" +%Y-%m 2>/dev/null)
+    if [ -n "$LAST_MONTH" ]; then
+        echo "$(date): Current month ${YEAR_MONTH} not available, trying ${LAST_MONTH}" >> "$LOG_FILE"
+        wget -q -O "$DBIP_TEMP_GZ" "https://download.db-ip.com/free/dbip-city-lite-${LAST_MONTH}.mmdb.gz" 2>/dev/null
+        if [ -s "$DBIP_TEMP_GZ" ]; then
+            echo "$(date): Downloaded ${LAST_MONTH} instead" >> "$LOG_FILE"
+        fi
+    fi
+fi
+if [ -s "$DBIP_TEMP_GZ" ]; then
+    gunzip -f "$DBIP_TEMP_GZ"
+    if [ -f "$DBIP_TEMP" ]; then
+        mv "$DBIP_TEMP" "$DBIP_DEST"
+        chmod 644 "$DBIP_DEST"
+        echo "$(date): Successfully updated to ${YEAR_MONTH}" >> "$LOG_FILE"
+        echo "✓ DB-IP database updated to ${YEAR_MONTH}"
+    else
+        echo "$(date): Gunzip failed" >> "$LOG_FILE"
+        echo "⚠ DB-IP database decompression failed"
+    fi
+else
+    rm -f "$DBIP_TEMP_GZ"
+    echo "$(date): Download failed for ${YEAR_MONTH}" >> "$LOG_FILE"
+    echo "⚠ DB-IP database update failed"
+fi
+EOF
+chmod 755 $RPM_BUILD_ROOT/etc/cron.d/awstats-dbip-update
 
 #---- clean
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-
 #---- files
 %files
 %defattr(-,root,root)
 %doc README.md
-%doc /usr/local/awstats/docs/*
-%config /%{_sysconfdir}/awstats/*
-%dir /usr/local/awstats/wwwroot
-%dir /usr/local/awstats/tools
-
-/usr/local/awstats/README.md
-/usr/local/awstats/wwwroot/*
-/usr/local/awstats/tools/*
-
+%config(noreplace) /etc/awstats/awstats.conf
+%config(noreplace) /etc/awstats/awstats.model.conf
+%config(noreplace) /etc/awstats/awstats.local.conf
+%config(noreplace) /etc/httpd/conf.d/awstats.conf
+%config(noreplace) /etc/cron.d/awstats
+%config(noreplace) /etc/logrotate.d/awstats
+%config(noreplace) /etc/cron.d/awstats-dbip-update
+/usr/share/doc/awstats/
+/usr/share/awstats/
+/usr/lib/cgi-bin/
+/usr/local/bin/awstats
+/var/lib/awstats
+/var/log/awstats
+/usr/share/perl5/Geo/
+/usr/share/perl5/vendor_perl/MaxMind/
 
 #---- post
 %post
+#!/bin/sh
+set -e
 
-# Create a config file
-#if [ 1 -eq 1 ]; then
-#  if [ ! -f /%{_sysconfdir}/awstats/awstats.`hostname`.conf ]; then
-#    /bin/cat /%{_sysconfdir}/awstats/awstats.model.conf | \
-#      /usr/bin/perl -p -e 's|^SiteDomain=.*$|SiteDomain="'`hostname`'"|;
-#                       s|^HostAliases=.*$|HostAliases="REGEX[^.*'${HOSTNAME//./\\\\.}'\$]"|;
-#                      ' > /%{_sysconfdir}/awstats/awstats.`hostname`.conf || :
-#  fi
-#fi
+case "$1" in
+    1)  # 首次安装
+        echo ""
+        echo "-----------------------------------------"
+        echo " AWStats %{version} - DB-IP Database Setup"
+        echo "-----------------------------------------"
+        echo ""
+        
+        # 创建目录
+        mkdir -p /usr/share/perl5/Geo
+        mkdir -p /var/lib/awstats
+        mkdir -p /var/log/awstats
+        chmod 755 /var/lib/awstats
+        chmod 755 /var/log/awstats
+        
+        # 确保 CGI 脚本可执行
+        if [ -f /usr/lib/cgi-bin/awstats.pl ]; then
+            chmod 755 /usr/lib/cgi-bin/awstats.pl
+        fi
+        if [ -f /usr/lib/cgi-bin/awredir.pl ]; then
+            chmod 755 /usr/lib/cgi-bin/awredir.pl
+        fi
+        
+        # 首次下载 DB-IP 数据库
+        DBIP_DEST="/usr/share/perl5/Geo/dbip-city.mmdb"
+        if [ ! -f "$DBIP_DEST" ]; then
+            echo "Downloading DB-IP City Lite database..."
+            
+            if command -v wget > /dev/null 2>&1; then
+                YEAR=$(date +%Y)
+                MONTH=$(date +%m)
+                DBIP_URL="https://download.db-ip.com/free/dbip-city-lite-${YEAR}-${MONTH}.mmdb.gz"
+                DBIP_TEMP_GZ="/usr/share/perl5/Geo/dbip-city-temp.mmdb.gz"
+                
+                echo "Trying ${YEAR}-${MONTH}..."
+                if wget -q --show-progress -O "$DBIP_TEMP_GZ" "$DBIP_URL" 2>/dev/null; then
+                    DOWNLOAD_SUCCESS=1
+                else
+                    LAST_YEAR=$(date -d "1 month ago" +%Y 2>/dev/null)
+                    LAST_MONTH=$(date -d "1 month ago" +%m 2>/dev/null)
+                    if [ -n "$LAST_YEAR" ] && [ -n "$LAST_MONTH" ]; then
+                        DBIP_URL="https://download.db-ip.com/free/dbip-city-lite-${LAST_YEAR}-${LAST_MONTH}.mmdb.gz"
+                        echo "Current month not available, trying ${LAST_YEAR}-${LAST_MONTH}..."
+                        if wget -q --show-progress -O "$DBIP_TEMP_GZ" "$DBIP_URL" 2>/dev/null; then
+                            DOWNLOAD_SUCCESS=1
+                        fi
+                    fi
+                fi
+                
+                if [ "$DOWNLOAD_SUCCESS" = "1" ] && [ -s "$DBIP_TEMP_GZ" ]; then
+                    if gunzip -f "$DBIP_TEMP_GZ"; then
+                        mv /usr/share/perl5/Geo/dbip-city-temp.mmdb "$DBIP_DEST"
+                        chmod 644 "$DBIP_DEST"
+                        echo "✓ GeoIP database downloaded successfully"
+                    else
+                        echo "⚠️ Failed to decompress database"
+                    fi
+                    rm -f "$DBIP_TEMP_GZ"
+                else
+                    echo "⚠️ GeoIP database download failed"
+                    echo "  Please check internet connection"
+                fi
+            else
+                echo "⚠️ wget not installed, skipping GeoIP database download"
+                echo "  Install wget: yum install wget"
+            fi
+        fi
+        
+        # 设置每月自动更新脚本
+        if [ -f /etc/cron.d/awstats-dbip-update ]; then
+            chmod +x /etc/cron.d/awstats-dbip-update
+            echo "✓ Monthly GeoIP update script installed"
+        fi
 
-# Show result
-echo
-echo ----- AWStats %version - Laurent Destailleur -----
-echo AWStats files have been installed in /usr/local/awstats
-echo
-echo If first install, follow instructions in documentation
-echo \(/usr/local/awstats/docs/index.html\) to setup AWStats in 3 steps:
-echo Step 1 : Install and Setup with awstats_configure.pl \(or manually\)
-echo Step 2 : Build/Update Statistics with awstats.pl
-echo Step 3 : Read Statistics
-echo
+        # 生成 awredir.pl 随机密钥
+        if [ -f /usr/lib/cgi-bin/awredir.pl ]; then
+            if command -v openssl >/dev/null 2>&1; then
+                KEY=$(openssl rand -hex 16 2>/dev/null)
+                sed -i "s/YOURKEYFORMD5/$KEY/" /usr/lib/cgi-bin/awredir.pl
+                echo "✓ Random key generated for awredir.pl"
+            fi
+        fi
+        
+        if [ -x /usr/sbin/a2enmod ]; then
+            a2enmod cgi > /dev/null 2>&1 || true
+            if command -v systemctl >/dev/null 2>&1; then
+                systemctl try-reload-or-restart httpd >/dev/null 2>&1 || true
+            fi
+        fi
+        (crontab -l 2>/dev/null; echo "0 5 3 * * /etc/cron.d/awstats-dbip-update") | crontab -
+        ;;
+esac
 
+echo ""
+echo "-----------------------------------------"
+echo " AWStats %{version} installation complete"
+echo "-----------------------------------------"
+echo ""
+echo " Main directory: /usr/share/awstats"
+echo " Configuration: /etc/awstats"
+echo " CGI scripts: /usr/lib/cgi-bin"
+echo " CLI wrapper: /usr/local/bin/awstats"
+echo ""
+echo " Web access: http://your-domain/vstats/"
+echo " Cron job: /etc/cron.d/awstats (daily at 1 AM)"
+echo " DB-IP database: /usr/share/perl5/Geo/dbip-city.mmdb"
+echo " Data directory: /var/lib/awstats"
+echo " Log directory: /var/log/awstats"
+echo ""
+echo " Monthly DB-IP update: /etc/cron.d/awstats-dbip-update"
+echo ""
+echo " No control panel? Try HestiaCP - https://hestiadocs.brepo.ru"
+echo " HestiaCP is designed for Red Hat series (RHEL/RockyLinux/AlmaLinux/CentOS)"
+echo " AWStats works out of the box with HestiaCP, no manual config needed."
+echo "-----------------------------------------"
+echo ""
+
+%postun
+#!/bin/sh
+if [ "$1" = "0" ]; then
+    # 卸载时清理
+    rm -f /usr/share/perl5/Geo/dbip-city.mmdb 2>/dev/null || true
+    rm -f /usr/share/perl5/Geo/dbip-city.mmdb.bak 2>/dev/null || true
+fi
 
 %changelog
-
+* __CHANGELOG_DATE__ Laurent Destailleur <eldy@users.sourceforge.net> %{version}-%{release}
+- Add DB-IP database support with monthly updates
+- Add city-level geolocation support
+- Add mobile device detection
+- Add download statistics with resume support

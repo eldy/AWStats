@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+
+<svg
+   xml:space="preserve"
+   width="52mm"
+   height="52mm"
+   style="clip-rule:evenodd;fill-rule:evenodd;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
+   viewBox="0 0 52 52"
+   version="1.1"
+   id="svg4"
+   sodipodi:docname="xine.svg"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><sodipodi:namedview
+   id="namedview4"
+   pagecolor="#ffffff"
+   bordercolor="#000000"
+   borderopacity="0.25"
+   inkscape:showpageshadow="2"
+   inkscape:pageopacity="0.0"
+   inkscape:pagecheckerboard="0"
+   inkscape:deskcolor="#d1d1d1"
+   inkscape:document-units="mm"
+   inkscape:zoom="1.1414299"
+   inkscape:cx="197.55923"
+   inkscape:cy="141.4892"
+   inkscape:window-width="1366"
+   inkscape:window-height="697"
+   inkscape:window-x="-8"
+   inkscape:window-y="-8"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="图层_x0020_1" />
+ <defs
+   id="defs1">
+  <style
+   type="text/css"
+   id="style1">
+   <![CDATA[
+    .fil1 {fill:white}
+    .fil0 {fill:#004B92}
+   ]]>
+  </style>
+ </defs>
+ <g
+   id="图层_x0020_1"
+   inkscape:label="图层 1"
+   inkscape:groupmode="layer">
+  <metadata
+   id="CorelCorpID_0Corel-Layer" />
+  <rect
+   class="fil0"
+   x="1.0594016"
+   y="1.0751011"
+   width="50"
+   height="50"
+   rx="10.6067"
+   ry="10.6067"
+   id="rect1" />
+  <polygon
+   class="fil1"
+   points="25.7568,35.1144 25.7568,24.2035 22.7566,24.2035 22.7566,35.1144 "
+   id="polygon1"
+   transform="translate(-3.9405984,-2.7815989)" />
+  <polygon
+   class="fil1"
+   points="35.0887,27 35.0887,35.201 37.8852,35.201 37.9769,25.8997 36.9454,24.8682 36.3723,24.1347 26.9742,24.1241 26.9742,35.2061 30,35.1144 30,27 "
+   id="polygon2"
+   transform="translate(-3.9405984,-2.7815989)" />
+  <polygon
+   class="fil1"
+   points="40.888,23.8826 40.6817,24.1118 39.0313,25.9456 39.0313,33.0973 40.8192,35.3436 51.5468,35.2978 51.5468,32.0429 42.1029,32.0429 42.1029,30.9884 50.1715,30.9884 50.1715,27.9881 42.057,27.9881 42.057,27 51.7302,27 51.6844,23.8826 "
+   id="polygon3"
+   transform="translate(-3.9405984,-2.7815989)" />
+  <polygon
+   class="fil1"
+   points="13.3126,35.2061 15.8341,32.0429 18.3097,35.2061 21.6563,35.2061 17.7137,29.4297 21.6563,24.2035 18.1721,24.2035 16.0507,26.325 13.9292,24.2036 10.1952,24.2036 14.0461,29.3839 9.7826,35.2061 "
+   id="polygon4"
+   transform="translate(-3.9405984,-2.7815989)" />
+ </g>
+</svg>

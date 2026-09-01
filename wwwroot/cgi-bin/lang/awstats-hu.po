@@ -1,0 +1,3332 @@
+# AWStats Hungarian (hu) translations
+# Copyright (C) 2026 AWStats
+# This file is distributed under the same license as the AWStats package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: AWStats 8.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-10 12:00+0000\n"
+"PO-Revision-Date: 2026-05-10 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Hungarian\n"
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#------------------------------------------------------------------------------
+# Hónapok nevei
+#------------------------------------------------------------------------------
+
+msgid "month_01"
+msgstr "Január"
+
+msgid "month_02"
+msgstr "Február"
+
+msgid "month_03"
+msgstr "Március"
+
+msgid "month_04"
+msgstr "Április"
+
+msgid "month_05"
+msgstr "Május"
+
+msgid "month_06"
+msgstr "Június"
+
+msgid "month_07"
+msgstr "Július"
+
+msgid "month_08"
+msgstr "Augusztus"
+
+msgid "month_09"
+msgstr "Szeptember"
+
+msgid "month_10"
+msgstr "Október"
+
+msgid "month_11"
+msgstr "November"
+
+msgid "month_12"
+msgstr "December"
+
+#------------------------------------------------------------------------------
+# Napok nevei
+#------------------------------------------------------------------------------
+
+msgid "DayOfWeek_0"
+msgstr "Vasárnap"
+
+msgid "DayOfWeek_1"
+msgstr "Hétfő"
+
+msgid "DayOfWeek_2"
+msgstr "Kedd"
+
+msgid "DayOfWeek_3"
+msgstr "Szerda"
+
+msgid "DayOfWeek_4"
+msgstr "Csütörtök"
+
+msgid "DayOfWeek_5"
+msgstr "Péntek"
+
+msgid "DayOfWeek_6"
+msgstr "Szombat"
+
+#------------------------------------------------------------------------------
+# Felületi elemek
+#------------------------------------------------------------------------------
+
+msgid "Advanced Web Statistics for"
+msgstr "Speciális webes statisztikák ehhez"
+
+msgid "Statistics for"
+msgstr "Statisztikák ehhez"
+
+msgid "main"
+msgstr "Áttekintés"
+
+# Téma váltása
+msgid "Switch to light mode"
+msgstr "Váltás világos módra"
+
+msgid "Switch to dark mode"
+msgstr "Váltás sötét módra"
+
+# Kapacitás mértékegységek
+msgid "TB"
+msgstr "TB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "Bytes"
+msgstr "Bájt"
+
+# Űrlap elemek
+msgid "Filter"
+msgstr "Szűrés"
+
+msgid "Exclude filter"
+msgstr "Kizáró szűrő"
+
+msgid "Top"
+msgstr "Legjobb"
+
+msgid "Full list"
+msgstr "Teljes lista"
+
+msgid "Last"
+msgstr "Utolsó"
+
+msgid "Average"
+msgstr "Átlag"
+
+msgid "Total"
+msgstr "Összesen"
+
+msgid "Percent"
+msgstr "Százalék"
+
+msgid "Export"
+msgstr "Exportálás"
+
+msgid "Details"
+msgstr "Részletek"
+
+msgid "Version"
+msgstr "Verzió"
+
+# Ezres elválasztó
+msgid "thousands_separator"
+msgstr " "
+
+# Hosszú dátumformátum (utolsó frissítéshez, első látogatáshoz stb.)
+msgid "dateformat_long"
+msgstr "yyyy.mm.dd. HH:MM:SS"
+
+# Rövid dátumformátum (diagramcímkékhez stb.)
+msgid "dateformat_short"
+msgstr "yyyy.mm.dd. HH:MM"
+
+msgid "date_format_year"
+msgstr "%s"
+
+msgid "date_format_month"
+msgstr "%1$s %2$s"
+
+#------------------------------------------------------------------------------
+# Navigációs sáv
+#------------------------------------------------------------------------------
+
+msgid "AWStats Month Selector"
+msgstr "AWStats hónapválasztó"
+
+msgid "nav_category_basic"
+msgstr "Alapdokumentáció"
+
+msgid "nav_category_guide"
+msgstr "Használati útmutató"
+
+msgid "nav_category_reference"
+msgstr "Referencia források"
+
+msgid "nav_category_integration"
+msgstr "Integráció és bővítés"
+
+msgid "nav_category_dev"
+msgstr "Fejlesztői dokumentáció"
+
+msgid "nav_changelog"
+msgstr "Változások naplója"
+
+msgid "nav_what"
+msgstr "Mi az AWStats"
+
+msgid "nav_license"
+msgstr "Licenc"
+
+msgid "nav_glossary"
+msgstr "Szójegyzék"
+
+msgid "nav_setup"
+msgstr "Telepítés és konfiguráció"
+
+msgid "nav_upgrade"
+msgstr "Frissítési útmutató"
+
+msgid "nav_config"
+msgstr "Konfigurációs paraméterek"
+
+msgid "nav_extra"
+msgstr "További szakaszok"
+
+msgid "nav_tools"
+msgstr "Egyéb eszközök"
+
+msgid "nav_faq"
+msgstr "GYIK"
+
+msgid "nav_security"
+msgstr "Biztonsági tanácsok"
+
+msgid "nav_compare"
+msgstr "Összehasonlítás"
+
+msgid "nav_benchmark"
+msgstr "Teljesítményteszt"
+
+msgid "nav_webmin"
+msgstr "Webmin modul"
+
+msgid "nav_dolibarr"
+msgstr "Dolibarr modul"
+
+msgid "nav_contrib"
+msgstr "Közreműködések"
+
+msgid "nav_plugins"
+msgstr "Bővítményfejlesztés"
+
+msgid "nav_hooks"
+msgstr "Bővítmény horgok"
+
+msgid "nav_graphs"
+msgstr "Bővítmény diagramok"
+
+msgid "Back to top"
+msgstr "Vissza az oldal tetejére"
+
+msgid "nav_select_month"
+msgstr "Válasszon hónapot"
+
+#------------------------------------------------------------------------------
+# Fő statisztikai mutatók
+#------------------------------------------------------------------------------
+
+# Látogatások
+msgid "Unique visitors"
+msgstr "Egyedi látogatók"
+
+msgid "Visits"
+msgstr "Látogatások"
+
+msgid "Visits duration"
+msgstr "Látogatások időtartama"
+
+msgid "First visit"
+msgstr "Első frissítés"
+
+msgid "Last visit"
+msgstr "Utolsó frissítés"
+
+msgid "Visits/Visitor"
+msgstr "Látogatás/Látogató"
+
+msgid "Pages/Visit"
+msgstr "Oldal/Látogatás"
+
+msgid "Hits/Visit"
+msgstr "Találat/Látogatás"
+
+msgid "KB/Visit"
+msgstr "KB/Látogatás"
+
+msgid "KB/Visits"
+msgstr "KB/Látogatás"
+
+# Forgalom
+msgid "Pages"
+msgstr "Oldalak száma"
+
+msgid "Hits"
+msgstr "Találatok száma"
+
+msgid "Bandwidth"
+msgstr "Sávszélesség"
+
+msgid "duration_format"
+msgstr "%s-%s"
+
+msgid "unit_s"
+msgstr "mp"
+
+msgid "unit_min"
+msgstr "perc"
+
+msgid "unit_h"
+msgstr "ó"
+
+msgid "and"
+msgstr "-"
+
+msgid "Device Types"
+msgstr "Eszköztípusok"
+
+msgid "Device Type"
+msgstr "Eszköztípus"
+
+# Eszköztípusok nevei
+msgid "Mobile"
+msgstr "Mobiltelefon"
+
+msgid "Pause & Go"
+msgstr "Szüneteltetés és folytatás"
+
+msgid "Complete"
+msgstr "Befejezés"
+
+msgid "Tablet"
+msgstr "Tablet"
+
+msgid "Tv"
+msgstr "Televízió"
+
+msgid "Wearable"
+msgstr "Hordható eszköz"
+
+msgid "Bot"
+msgstr "Bot"
+
+msgid "Desktop"
+msgstr "Asztali számítógép"
+
+msgid "Normal browsing traffic"
+msgstr "Normál böngészési forgalom"
+
+msgid "Abnormal browsing traffic"
+msgstr "Rendellenes böngészési forgalom"
+
+msgid "Viewed"
+msgstr "Megtekintve"
+
+msgid "Not viewed"
+msgstr "Nem tekintve meg"
+
+msgid "Abnormal browsing traffic note"
+msgstr "A rendellenes böngészési forgalom a következőket foglalja magában: keresőrobotok, MI-képző botok, sebezhetőségvizsgálók és a HTTP/HTTPS specifikációknak nem megfelelő kérések"
+
+# Fájlok
+msgid "File size"
+msgstr "Fájlméret"
+
+msgid "File type"
+msgstr "Fájltípus"
+
+msgid "Downloads"
+msgstr "Letöltések"
+
+msgid "Request time"
+msgstr "Kérés ideje"
+
+msgid "Total requests"
+msgstr "Kérések száma összesen"
+
+msgid "Frequency"
+msgstr "Gyakoriság"
+
+msgid "Average frequency"
+msgstr "Átlagos gyakoriság"
+
+msgid "Seconds"
+msgstr "Másodperc"
+
+# E-mail (LogType eq 'M' esetén)
+msgid "First"
+msgstr "Első"
+
+msgid "Mails"
+msgstr "E-mailek száma"
+
+msgid "Size"
+msgstr "Méret"
+
+msgid "If you remove this file, all statistics for date"
+msgstr "Figyelmeztetés: Ha eltávolítja ezt a fájlt, a dátumhoz tartozó összes statisztika"
+
+msgid "will be lost/reset."
+msgstr "véglegesen elveszik/visszaáll."
+
+msgid "Last config file used to build this data file was"
+msgstr "Az adatfájl létrehozásához használt utolsó konfigurációs fájl a következő volt"
+
+msgid "Position (offset in bytes) in this file for beginning of each section for"
+msgstr "A fájl MAP szakasza rögzíti az egyes szakaszok kezdetének bájteltolási pozícióit, hogy"
+
+msgid "direct I/O access. If you made changes somewhere in this file, you should"
+msgstr "az AWStats gyorsan hozzáférhessen az adatokhoz. Ha manuális módosításokat végzett ebben a fájlban, akkor"
+
+msgid "also remove completely the MAP section (AWStats will rewrite it at next update)"
+msgstr "teljesen távolítsa el a MAP szakaszt (az AWStats a következő frissítéskor újraírja)."
+
+msgid "LastLine    = Date of last record processed - Last record line number in last log - Last record offset in last log - Last record signature value"
+msgstr "LastLine    = Az utolsó feldolgozott rekord dátuma - Az utolsó rekord sorszáma az utolsó naplóban - Az utolsó rekord eltolása az utolsó naplóban - Az utolsó rekord aláírás értéke"
+
+msgid "FirstTime   = Date of first visit for history file"
+msgstr "FirstTime   = Az első látogatás dátuma a történeti fájlhoz"
+
+msgid "LastTime    = Date of last visit for history file"
+msgstr "LastTime    = Az utolsó látogatás dátuma a történeti fájlhoz"
+
+msgid "LastUpdate  = Date of last update - Nb of parsed records - Nb of parsed old records - Nb of parsed new records - Nb of parsed corrupted - Nb of parsed dropped"
+msgstr "LastUpdate  = Az utolsó frissítés dátuma - Feldolgozott rekordok száma - Feldolgozott régi rekordok száma - Feldolgozott új rekordok száma - Feldolgozott sérültek száma - Feldolgozott eldobottak száma"
+
+msgid "TotalVisits = Number of visits"
+msgstr "TotalVisits = Látogatások száma"
+
+msgid "TotalUnique = Number of unique visitors"
+msgstr "TotalUnique = Egyedi látogatók száma"
+
+msgid "MonthHostsKnown   = Number of hosts known"
+msgstr "MonthHostsKnown   = Ismert hosztok száma"
+
+msgid "MonthHostsUnKnown = Number of hosts unknown"
+msgstr "MonthHostsUnKnown = Ismeretlen hosztok száma"
+
+msgid "Cluster ID - Pages - Hits - Bandwidth"
+msgstr "Fürtszám - Oldalak száma - Találatok száma - Sávszélesség"
+
+msgid "Hour - Pages - Hits - Bandwidth - Not viewed Pages - Not viewed Hits - Not viewed Bandwidth"
+msgstr "Óra - Oldalak száma - Találatok száma - Sávszélesség - Nem megtekintett oldalak - Nem megtekintett találatok - Nem megtekintett sávszélesség"
+
+msgid "Date - Pages - Hits - Bandwidth - Visits"
+msgstr "Dátum - Oldalak száma - Találatok száma - Sávszélesség - Látogatások"
+
+msgid "Domain - Pages - Hits - Bandwidth"
+msgstr "Tartomány - Oldalak száma - Találatok száma - Sávszélesség"
+
+msgid "The %s first Pages must be first (order not required for others)"
+msgstr "A főoldal csak az első %s oldalt mutatja a legtöbb megtekintéssel. A teljes listát a részletes oldalon találja."
+
+msgid "Host - Pages - Hits - Bandwidth - Last visit date - [Start date of last visit] - [Last page of last visit]"
+msgstr "Hoszt - Oldalak száma - Találatok száma - Sávszélesség - Utolsó látogatás dátuma - [Az utolsó látogatás kezdő dátuma] - [Az utolsó látogatás utolsó oldala]"
+
+msgid "[Start date of last visit] and [Last page of last visit] are saved only if session is not finished"
+msgstr "[Az utolsó látogatás kezdő dátuma] és [Az utolsó látogatás utolsó oldala] csak akkor kerül mentésre, ha a munkamenet nem fejeződött be"
+
+msgid "The first %s items are sorted by hits in descending order; order of the remaining items is undefined."
+msgstr "Az első %s elem a találatok száma szerint csökkenő sorrendbe van rendezve; a fennmaradó elemek sorrendje nincs meghatározva."
+
+msgid "Login - Pages - Hits - Bandwidth - Last visit"
+msgstr "Bejelentkezett felhasználó - Oldalak száma - Találatok száma - Sávszélesség - Utolsó látogatás ideje"
+
+msgid "Robot ID - Hits - Bandwidth - Last visit - Hits on robots.txt"
+msgstr "Robot azonosító - Találatok száma - Sávszélesség - Utolsó látogatás ideje - Találatok a robots.txt fájlon"
+
+msgid "Worm ID - Hits - Bandwidth - Last visit"
+msgstr "Féreg azonosító - Találatok száma - Sávszélesség - Utolsó látogatás ideje"
+
+msgid "EMail - Hits - Bandwidth - Last visit"
+msgstr "E-mail - Találatok száma - Sávszélesség - Utolsó látogatás ideje"
+
+msgid "The first %s email addresses are sorted by hits in descending order; order of the remaining addresses is undefined."
+msgstr "Az első %s e-mail cím a találatok száma szerint csökkenő sorrendbe van rendezve; a fennmaradó címek sorrendje nincs meghatározva."
+
+msgid "URL - Pages - Bandwidth - Entry - Exit"
+msgstr "URL - Oldalak száma - Sávszélesség - Belépés - Kilépés"
+
+msgid "Files type - Hits - Bandwidth - Bandwidth without compression - Bandwidth after compression"
+msgstr "Fájltípus - Találatok száma - Sávszélesség - Sávszélesség tömörítés előtt - Sávszélesség tömörítés után"
+
+msgid "Request Time Range - Request Time Frequency"
+msgstr "Kérési időtartomány - Kérési idő gyakorisága"
+
+msgid "Payload Range - Payload Frequency"
+msgstr "Fájlméret-tartomány - Fájlok száma"
+
+msgid "Session range - Number of visits"
+msgstr "Munkamenet időtartam-tartomány - Látogatások száma"
+
+msgid "URL with %s errors - Hits"
+msgstr "URL %s hibával - Találatok száma"
+
+msgid "Last URL referrer"
+msgstr "Utolsó URL hivatkozó"
+
+msgid "Errors - Hits - Bandwidth"
+msgstr "Hibák - Találatok száma - Sávszélesség"
+
+msgid "Search keywords - Number of search"
+msgstr "Kulcsszavak - Keresések száma"
+
+msgid "Only top %s keywords shown on main page (sorted by search count). See full list on detail page."
+msgstr "A főoldal csak az első %s kulcsszót mutatja (keresési szám szerint rendezve). A teljes listát a részletes oldalon találja."
+
+msgid "Search keyphrases - Number of search"
+msgstr "Kulcskifejezések - Keresések száma"
+
+msgid "Only top %s keyphrases shown on main page (sorted by search count). See full list on detail page."
+msgstr "A főoldal csak az első %s kulcskifejezést mutatja (keresési szám szerint rendezve). A teljes listát a részletes oldalon találja."
+
+msgid "External page referers - Pages - Hits"
+msgstr "Külső oldalhivatkozók - Oldalak száma - Találatok száma"
+
+msgid "Only top %s external referrers shown on main page (sorted by pages). See full list on detail page."
+msgstr "A főoldal csak az első %s külső hivatkozót mutatja (oldalszám szerint rendezve). A teljes listát a részletes oldalon találja."
+
+msgid "Search engine referers ID - Pages - Hits"
+msgstr "Keresőmotor hivatkozó azonosító - Oldalak száma - Találatok száma"
+
+msgid "Origin - Pages - Hits"
+msgstr "Forrás - Oldalak száma - Találatok száma"
+
+msgid "Unknown referer Browser - Last visit date"
+msgstr "Ismeretlen hivatkozó böngésző - Utolsó látogatás dátuma"
+
+msgid "Unknown referer OS - Last visit date"
+msgstr "Ismeretlen hivatkozó operációs rendszer - Utolsó látogatás dátuma"
+
+msgid "Screen size - Hits"
+msgstr "Képernyőfelbontás - Találatok száma"
+
+msgid "Browser ID - Hits - Pages"
+msgstr "Böngésző azonosító - Kattintások száma - Oldalak száma"
+
+msgid "Downloads - Hits - Bandwidth"
+msgstr "Letöltések - Találatok száma - Sávszélesség"
+
+msgid "Protocol - Hits - Bandwidth"
+msgstr "Protokoll - Találatok száma - Sávszélesség"
+
+msgid "Icon Status - Type:200:404:Other"
+msgstr "Ikon állapota - Típus:200:404:Egyéb"
+
+#------------------------------------------------------------------------------
+# Időszakok fordításai
+#------------------------------------------------------------------------------
+
+msgid "period_00"
+msgstr "Éjfél · AWStats alszik, de te még nézed az adatokat? Igaz szerelem"
+
+msgid "period_01"
+msgstr "1 óra · Ebben az időpontban látogatsz? Álmatlanság vagy épp végeztél a munkával"
+
+msgid "period_02"
+msgstr "2 óra · A botok szorgalmasabbak nálad, még dolgoznak"
+
+msgid "period_03"
+msgstr "3 óra · A város alszik, a szerver túlórázik, ki van rosszabb helyzetben?"
+
+msgid "period_04"
+msgstr "4 óra · A legfényesebb csillag a sötétben, a képernyőd vagy a szerver jelzőlámpája"
+
+msgid "period_05"
+msgstr "5 óra · A korai madár fogja a férget, a korai bot gyűjti az adatokat"
+
+msgid "period_06"
+msgstr "6 óra · Valaki kel, valaki még nem aludt, az internet soha nem zár be"
+
+msgid "period_07"
+msgstr "7 óra · A metrózsúfolt ideje, egyben az internet böngészés ideje is"
+
+msgid "period_08"
+msgstr "8 óra · Első dolog a munka megkezdésekor: vess egy pillantást a tegnapi adatokra"
+
+msgid "period_09"
+msgstr "9 óra · Aranyidő, még a lustálkodásnak is megvannak a szabályai"
+
+msgid "period_10"
+msgstr "10 óra · Kávé idő, közben ellenőrizd, nőtt-e a forgalom"
+
+msgid "period_11"
+msgstr "11 óra · Még egy óra ebédig, kitartás"
+
+msgid "period_12"
+msgstr "Dél · Szerver: mindannyian elmentetek ebédelni, én pihenek egy kicsit"
+
+msgid "period_13"
+msgstr "13 óra · Ebéd utáni álmosság, de az adatok nem alszanak"
+
+msgid "period_14"
+msgstr "14 óra · Délutáni uzsonna idő, adatokkal finomabb"
+
+msgid "period_15"
+msgstr "15 óra · A mai forgalom trenddiagramja, hasonlít a hangulatgörbédre?"
+
+msgid "period_16"
+msgstr "16 óra · X óra van a munka végéig, a forgalom sprintelni kezd"
+
+msgid "period_17"
+msgstr "17 óra · Vége a munkaidőnek! De a szervernek tovább kell dolgoznia"
+
+msgid "period_18"
+msgstr "18 óra · Vacsoraidő, nézz egy videót a kikapcsolódáshoz"
+
+msgid "period_19"
+msgstr "19 óra · Főműsoridő, forgalmi csúcs, szerver: bírom"
+
+msgid "period_20"
+msgstr "20 óra · Elterülve a kanapén, te vagy az 114514. látogató"
+
+msgid "period_21"
+msgstr "21 óra · Késő este, a titkos adatlesők +1"
+
+msgid "period_22"
+msgstr "22 óra · A mai adatok hamarosan elkészülnek, izgulsz?"
+
+msgid "period_23"
+msgstr "23 óra · AWStats: Ideje aludni, holnap megint dolgozni kell"
+
+#------------------------------------------------------------------------------
+# Idődimenziók
+#------------------------------------------------------------------------------
+
+msgid "Period"
+msgstr "Statisztikai időszak"
+
+msgid "Year"
+msgstr "Év"
+
+msgid "Month"
+msgstr "Hónap"
+
+msgid "Months"
+msgstr "Hónapok"
+
+msgid "Date"
+msgstr "Dátum"
+
+msgid "Day"
+msgstr "Nap"
+
+msgid "Hour"
+msgstr "Óra"
+
+msgid "Hours"
+msgstr "Órák"
+
+msgid "Day of week"
+msgstr "Hét napja"
+
+msgid "When"
+msgstr "Mikor"
+
+msgid "%s Server Management Panel"
+msgstr "%s  szerver kezelőpanel"
+
+msgid "Server Administration"
+msgstr "Egyszerű és hatékony szerver megoldás"
+
+#------------------------------------------------------------------------------
+# Látogatói dimenziók
+#------------------------------------------------------------------------------
+
+msgid "Invalid URL Parameters"
+msgstr "Érvénytelen URL paraméterek"
+
+msgid "The requested page cannot be loaded due to invalid or malformed URL parameters."
+msgstr "A kért oldal nem tölthető be érvénytelen vagy hibás formátumú URL paraméterek miatt."
+
+msgid "This may be caused by typing an incorrect URL, missing parameter separators, or using an invalid configuration name."
+msgstr "Ezt okozhatja helytelen URL beírása, hiányzó paraméterelválasztók vagy érvénytelen konfigurációs név használata."
+
+msgid "Please check the URL you entered and ensure all parameters are correctly formatted."
+msgstr "Kérjük, ellenőrizze a megadott URL-t, és győződjön meg arról, hogy az összes paraméter megfelelően formázott."
+
+msgid "SiteDomain parameter not defined in your config/domain file, or you may not have execution permission on the file."
+msgstr "A SiteDomain paraméter nincs megadva a config/domain fájlban, vagy előfordulhat, hogy nincs végrehajtási jogosultsága a fájlon."
+
+msgid "Please run as Administrator to set permissions"
+msgstr "Futtassa rendszergazdaként a jogosultságok beállításához"
+
+msgid "This directory lacks read permission"
+msgstr "Ehhez a könyvtárhoz hiányzik az olvasási jogosultság"
+
+msgid "Please set read permission for directory"
+msgstr "Kérjük, állítsa be a könyvtár olvasási jogosultságát"
+
+msgid "Missing required parameter in config file"
+msgstr "Hiányzó szükséges paraméter a konfigurációs fájlban"
+
+msgid "Please check that 'DirData' is defined."
+msgstr "Kérjük, ellenőrizze, hogy a 'DirData' definiálva van-e."
+
+msgid "Domain name in browser address appears to be missing or incomplete"
+msgstr "Úgy tűnik, hogy a böngésző címében lévő tartománynév hiányzik vagy nem teljes"
+
+msgid "Please check the URL parameter"
+msgstr "Kérjük, ellenőrizze az URL paraméterét"
+
+msgid "Format description"
+msgstr "Formátum leírása"
+
+msgid "Please set execute permission"
+msgstr "Kérjük, állítsa be a végrehajtási jogosultságot"
+
+msgid "Or if you prefer numeric mode"
+msgstr "Vagy ha a numerikus módot részesíti előnyben"
+
+msgid "View Report Directly"
+msgstr "Jelentés közvetlen megtekintése"
+
+msgid "AWStats Log Viewer"
+msgstr "AWStats naplómegjelenítő"
+
+msgid "Month Selection"
+msgstr "Hónap kiválasztása"
+
+msgid "Who"
+msgstr "Ki"
+
+msgid "Visitors"
+msgstr "Látogatók"
+
+msgid "Countries"
+msgstr "Országok/Régiók"
+
+msgid "flag_icon"
+msgstr "Zászló"
+
+msgid "Country-Region-City"
+msgstr "Ország/Régió/Város"
+
+msgid "Code"
+msgstr "Kód"
+
+msgid "Known"
+msgstr "Ismert"
+
+msgid "unknownos"
+msgstr "Ismeretlen operációs rendszer"
+
+msgid "unknownbrowser"
+msgstr "Ismeretlen böngésző"
+
+msgid "Unresolved IP Address"
+msgstr "Feloldatlan IP-cím"
+
+msgid "Unknown File Type"
+msgstr "Ismeretlen fájltípus"
+
+msgid "Unknown Size"
+msgstr "Ismeretlen méret"
+
+msgid "Unknown Time"
+msgstr "Ismeretlen kérési idő"
+
+msgid "Unknown Browser"
+msgstr "Ismeretlen böngésző"
+
+msgid "Unknown OS"
+msgstr "Ismeretlen operációs rendszer"
+
+msgid "Unknown Visitor"
+msgstr "Ismeretlen látogató"
+
+msgid "Unknown Visitor (Total)"
+msgstr "Ismeretlen látogató (összesen)"
+
+msgid "Unknown Country"
+msgstr "Ismeretlen ország/régió"
+
+msgid "Unknown Country (Region)"
+msgstr "Ismeretlen ország/régió (összesen)"
+
+msgid "Unknown Visitor (Title)"
+msgstr "Ismeretlen látogató (cím)"
+
+msgid "PageStayTime"
+msgstr "Nem becsülhető az oldalon töltött idő"
+
+msgid "Unknown OS (Link)"
+msgstr "Ismeretlen operációs rendszer (hivatkozás)"
+
+msgid "Unknown OS (Row)"
+msgstr "Ismeretlen operációs rendszer (lista)"
+
+msgid "Unknown Browser (Link)"
+msgstr "Ismeretlen böngésző (hivatkozás)"
+
+msgid "Unknown Browser (Row)"
+msgstr "Ismeretlen böngésző (lista)"
+
+msgid "Unknown Screen"
+msgstr "Ismeretlen képernyőméret"
+
+msgid "Login"
+msgstr "Felhasználónév"
+
+msgid "Anonymous"
+msgstr "Névtelen"
+
+msgid "Robots"
+msgstr "Robotok"
+
+msgid "Different robots"
+msgstr "Különböző robotok"
+
+msgid "Hits on robots.txt"
+msgstr "A fent felsorolt keresőrobotok \"rendellenes\" böngészési forgalmat generálnak, amely nem szerepel más diagramokban. A '+' utáni szám a \"robots.txt\" fájl sikeres hozzáférésének száma."
+
+msgid "Worms"
+msgstr "Férgek"
+
+msgid "Different worms"
+msgstr "Különböző férgek"
+
+msgid "Target"
+msgstr "Cél"
+
+msgid "Grabber"
+msgstr "Adatgyűjtő eszköz"
+
+#------------------------------------------------------------------------------
+# Formátum leírások
+#------------------------------------------------------------------------------
+
+msgid "mime_text"
+msgstr "TXT egyszerű szövegfájl (1963-ban ASCII szabványosította a formázatlan egyszerű szöveget. Minden forráskód, konfigurációs fájl és rendszernapló alapköveként, platformfüggetlen újsor vezérlési folyamata (CRLF Windows-on, LF Unixon) továbbra is a leguniverzálisabb adatcsere-szabvány a számítástechnika világában)"
+
+msgid "mime_log"
+msgstr "LOG rendszer futási napló (rögzíti az operációs rendszer, a kernel és az alkalmazások szintű futási állapotait egyszerű szöveges eszközként. Lefedi az Nginx/Apache hozzáférési naplókat (Combined Log) és a szabványos syslog specifikációt, elsődleges adatforrásként szolgál hibaelhárításhoz, streaming teljesítményelemzéshez és biztonsági auditáláshoz)"
+
+msgid "mime_page"
+msgstr "HTML hipertext weboldal (Tim Berners-Lee alkotása 1989-ből, a World Wide Web sarokköve. Ingyenes, univerzális hipertext jelölőnyelvként a HTML5 specifikáció 2014-ben hivatalos W3C szabvánnyá vált, natívan támogatja a strukturált multimédiát, a szemantikus interakciót és a folyékony oldalelrendezést, 2016-ban elnyerte a Turing-díjat)"
+
+msgid "mime_khtml"
+msgstr "KHTML web-sablon motor (1998-as KDE 2.0 böngésző renderelő motor specifikációja. A modern webrenderelés alapjait lefektető nyílt forráskódú mérceként technológiai öröksége közvetlenül inspirálta az Apple WebKit és a Google Blink magjait, és a mai modern streaming dinamikus webarchitektúrákban is tovább él)"
+
+msgid "mime_script"
+msgstr "SCRIPT értelmezett dinamikus szkript (forráskód-folyamok általános kategóriája, amelyeket előzetes fordítás nélkül, soronként hajt végre egy adott futási környezet vagy interpreter. Lefedi az ASP, JSP, CGI és Tcl nyelveket, széles körben használják szerveroldali közös átjárófelületekhez, automatizálási folyamatvezérléshez és rendszerszintű feladat-összefűzéshez)"
+
+msgid "mime_js"
+msgstr "JavaScript szkript (1995-ös Netscape böngésző natív programozási környezete. 1997-ben létrejött az ECMAScript ipari szabvány, 2009-ben megszületett a Node.js futási környezet, amely áttörte a böngésző korlátait és létrehozta az aszinkron, nem blokkoló teljes verem architektúrát, a világ legnagyobb npm szoftvercsomag ökoszisztémájával kísérve)"
+
+msgid "mime_py"
+msgstr "Python szkript (1991-ben Guido van Rossum által létrehozott magas szintű értelmezett szkriptnyelv. A kötelező behúzás által biztosított veszteségmentes olvashatóságának és több paradigmájú kialakításának köszönhetően mára ipari szabvánnyá vált a modern webarchitektúra, a teljes veremű adattudomány, a mesterséges intelligencia (AI) modellek betanítása és a felhő natív automatizálási műveletek területén)"
+
+msgid "mime_sh"
+msgstr "Shell szkript (1971-es Unix korszak szabványos parancsértelmező szkriptje. Tartalmazza a Bash, Sh, Dash stb. kernelszintű parancsokat, jellemzően .sh kiterjesztéssel fut, univerzális kernelszintű ragasztóanyagként szolgál az alacsony szintű folyamatvezérléshez, telepítésmentes környezetkonfigurációhoz és automatizált telepítéshez modern Unix-szerű operációs rendszerekben)"
+
+msgid "mime_rb"
+msgstr "Ruby szkript (1995-ben Yukihiro Matsumoto által létrehozott objektumorientált szkriptnyelv. A fejlesztői élmény iránti rendkívüli tiszteletet középpontba állító tervezési filozófiájával a Ruby on Rails keretrendszere forradalmasította a modern magas szintű webarchitektúrát a 'Konvenció a konfiguráció felett (CoC)' paradigma létrehozásával)"
+
+msgid "mime_pl"
+msgstr "Perl szkript (1987-ben Larry Wall által létrehozott pragmatikus szkriptnyelv. A modern csomagkezelők (CPAN) úttörőjeként a szövegfeldolgozás 'svájci bicskájaként' ismert. Modern CGI módban, rendkívül alacsony fizikai memóriaigényével és hatékony reguláris kifejezés kezelésével nagy megbízhatóságú alapként szolgál a naplóelemzéshez)"
+
+msgid "mime_php"
+msgstr "PHP dinamikus weboldal (Rasmus Lerdorf alkotása 1995-ből, kifejezetten webfejlesztésre tervezve. A globális weboldalak több mint 70%-át működtető központi technológiaként olyan nagy termelési alkalmazások alapja, mint a WordPress és a Wikipedia. A PHP 8-tól kezdve, a JIT (just-in-time) futási motor bevezetésével nagy teljesítményű teljes veremű szerverarchitektúrává fejlődött)"
+
+msgid "mime_image"
+msgstr "IMAGE kép eszköz osztályozás (lefedi a veszteséges/veszteségmentesen tömörített bittérképeket, modern reszponzív webgrafikát és vektorokat. Kulcsfontosságú mutató egy webhely vizuális erőforrás-terhelésének, az ügyféloldali gyorsítótár találati arányának és a média hálózati sávszélesség-fogyasztásának értékeléséhez)"
+
+msgid "mime_document"
+msgstr "DOCUMENT strukturált dokumentum osztályozás (lefedi az egyszerű szöveget, táblázatkezelőket, fix elrendezésű hivatalos dokumentumokat (PDF) és könnyű jelölőnyelveket. Kulcsfontosságú mutató a szerveroldali statikus tudásbázis-elosztás, a vállalati eszközök letöltése és a szöveges folyam átviteli kapacitásának statisztikájához)"
+
+msgid "mime_package"
+msgstr "PACKAGE lefordított termék és szoftvercsomag osztályozás (lefedi az operációs rendszer natív végrehajtható programjait, futásidejű kapcsolati könyvtárakat (DLL/SO) és alkalmazáselosztási telepítőcsomagokat. Gyakran használják a szoftverelosztó oldalak kimenő forgalmának és letöltési csúcsainak értékelésére)"
+
+msgid "mime_archive"
+msgstr "ARCHIVE archivált és tömörített fájlok (általános kategória a DEFLATE, LZMA stb. magalgoritmusokon alapuló adattömörítési csomagokhoz. Hálózati rétegben a hagyományos csomagelosztás mellett kiterjed a GNU-projekt 1992-es Gzip dinamikus válaszfolyamaira is. Bár a Brotli algoritmust fokozatosan bevezetik néhány modern forgatókönyvben, ez az osztályozás továbbra is kulcsfontosságú mutató a szerver sávszélesség-átviteli sebességének és a szállítási réteg tömörítési hatékonyságának értékeléséhez)"
+
+msgid "mime_audio"
+msgstr "AUDIO digitális audiofolyam osztályozás (lefedi a tömörített hangot, hangoskönyveket és streaming audio tárolókat. Specifikus audiokodek szabványokon alapul, használják a multimédiás oldalak hangadatfolyam-átviteli sebességének, az egyidejű streaming sávszélességnek és a hosszú kapcsolatok viselkedésének figyelésére)"
+
+msgid "mime_video"
+msgstr "VIDEO digitális videofolyam osztályozás (lefedi a nagy felbontású videotárolókat, modern webes animációkat és streaming töredékeket. Kulcsfontosságú mutató a szerver sávszélesség-csúcshatárának és a tartalomszolgáltató hálózatok (CDN) gyorsítási hatékonyságának értékeléséhez nagy hálózati terhelés mellett)"
+
+msgid "mime_jscript"
+msgstr "JScript szkript (a Microsoft által 1996-ban kifejlesztett, reverse engineeringgel létrehozott saját implementáció az Internet Explorer 3.0-hoz. A klasszikus JavaScript korai hosztversenytársaként szolgált a Windows Script Host (WSH) és a korai ASP backendek fő motorjaként)"
+
+msgid "mime_json"
+msgstr "JSON strukturált adat (2001-ben Douglas Crockford által létrehozott könnyű adatszerializációs csereformátum. Szöveges kulcs-érték párokon és tömbstruktúrákon alapul, magas emberi olvashatósággal és veszteségmentes stream elemzési tulajdonságokkal rendelkezik, de facto szabvány a modern webes API-khoz, mikroservices architektúrákhoz és nagy nyelvi modellekkel való interakcióhoz)"
+
+msgid "mime_vbs"
+msgstr "VBScript szkript (a Microsoft által 1996-ban az IE 3.0-val kiadott szkriptnyelv-változat. A korai dinamikus ASP weboldalak és a Windows rendszeradminisztráció kulcsfontosságú meghajtója volt, de mára hivatalosan elavulttá vált és eltávolították a legújabb Windows 11 magokból, történelmi örökölt technológiához tartozik)"
+
+msgid "mime_conf"
+msgstr "CONF rendszerkonfigurációs fájl (adatfájlok általános kategóriája, amelyek a szoftver futásidejű környezetének paramétereit egyszerű szövegként tárolják. Lefedi az INI és a modern YAML, TOML, JSON specifikációkat. Linux rendszerekben többnyire az /etc könyvtárban összpontosulnak, központi függőséget képeznek a rendszerszintű futási állapot finomhangolásához)"
+
+msgid "mime_css"
+msgstr "CSS cascading style sheet (1996-os W3C szabvány, a HTML/JS mellett a frontend fejlesztés három magjának egyike. A CSS2 pozicionálástól a CSS3 moduláris fejlődéséig fejlődve natívan támogatja a Flexbox-ot, a Gridet és a médialekérdezéses reszponzív tervezést, a domináns szabvány a weboldalak megjelenítésének szétválasztásához modern böngészőkben)"
+
+msgid "mime_xsl"
+msgstr "XSL stíluslap (1999-es W3C szabvány, tartalmazza az XSLT transzformációs és az XPath címzési nyelveket, strukturált XML-adatok HTML, PDF vagy egyszerű szöveg formájában történő megjelenítéséhez. A modern fejlesztésben ökoszisztémáját nagyrészt könnyebb sablonmotorok és a JSON adatformátum váltotta fel)"
+
+msgid "mime_runtime"
+msgstr "végrehajtható fájl (EXE, ELF, Mach-O stb. operációs rendszer natív végrehajtható formátumok, amelyek lefordított alacsony szintű gépi kódot, belépési pontot és rendszerbetöltési információkat tartalmaznak)"
+
+msgid "mime_library"
+msgstr "könyvtárfájl (DLL, SO, dylib stb., dinamikus vagy statikus kapcsolati könyvtárak, amelyek megosztott szimbólumokat és áthelyezési kódot tartalmaznak más programok számára hívásra és futásidőben történő betöltésre)"
+
+msgid "mime_swf"
+msgstr "Flash animáció (1996 Macromedia, 2005-ben felvásárolta az Adobe. Interaktív webes animációs szabvány, egykor uralta az internetes animációkat és játékokat. Hátrányai: bővítményfüggőség, mobil támogatás hiánya, magas biztonsági kockázat. Az Adobe 2017-ben bejelentette a kivezetését, 2020-ban a támogatás teljesen megszűnt, felváltotta a HTML5/CSS3/JS)"
+
+msgid "mime_dtd"
+msgstr "DTD dokumentumtípus-definíció (1998-ban jelent meg az XML 1.0-val, az XML/HTML dokumentum szerkezetének meghatározására és érvényességének ellenőrzésére használják. A modern fejlesztésben nagyrészt felváltották rugalmasabb megoldások, mint az XML Schema, RELAX NG stb.)"
+
+msgid "mime_csv"
+msgstr "CSV adatformátum (vesszővel elválasztott értékek, univerzális egyszerű szöveges táblaformátum a mainframe korszakból (IBM Fortran fordító) 1972-ből. 2005-ben az RFC 4180 formalizálta, mint platform- és nyelvfüggetlen, veszteségmentes adatcsere-szabványt. Széles körben használják hatékony importáláshoz/exportáláshoz Excelben, relációs adatbázisokban és adatelemzésben (Pandas))"
+
+msgid "mime_cur"
+msgstr "egérmutató fájl (.cur formátum, az egérmutató stílusának testreszabásához használják, például ujj mutató weboldalakon vagy homokóra ikon várakozáskor. Rokona a gyakori .ico ikonnak, de van egy további 'forró pontja' – a tényleges kattintás helye. Történelem: a Windows 3.1-gyel (1992) vezették be, kulcsfontosságú alkotóeleme a parancssorból az egérrel vezérelt grafikus felhasználói felületre való átmenetnek)"
+
+msgid "mime_jnlp"
+msgstr "Java Web Start (2000-es évekbeli Java asztali alkalmazás-elosztási technológia, .jnlp fájlokon keresztül indít távoli Java programokat. Biztonsági problémák és a modern elosztási módszerek elterjedése miatt mára nagyrészt elavult)"
+
+msgid "mime_lit"
+msgstr "Microsoft Reader e-könyv (2000 Microsoft, LIT formátum. Elavult, mára olyan eszközökkel konvertálható EPUB vagy PDF formátumba, mint a Calibre)"
+
+msgid "mime_svg"
+msgstr "SVG vektorgrafika (1999-es W3C szabvány, XML-alapú 2D vektorképformátum. Veszteégmentes skálázhatóságot és szöveges streaming előnyöket kínál. Minden modern böngésző natívan támogatja, széles körben használják nagy felbontású webikonokhoz, logókhoz és vektoranimációkhoz, a modern webgrafika központi szabványa)"
+
+msgid "mime_ai"
+msgstr "AI vektorgrafika (1987-es Adobe saját vektorformátum. Az ipari szabvány tördeléshez, nyomtatástervezéshez és márkaidentitáshoz, támogatja a több réteget és a fejlett tördelési vektoradatokat, a professzionális vizuális művészet elsődleges hordozója)"
+
+msgid "mime_phshop"
+msgstr "PSD réteges kép (az Adobe által 1990-ben a Photoshop-pal kiadott saját bittérkép-forrásformátum. Támogatja a több réteget, csatornát, maszkot és a veszteségmentes szerkesztési adatokat, és a globális ipari szabvánnyá vált képfeldolgozásban és digitális festészetben)"
+
+msgid "mime_ttf"
+msgstr "TrueType betűtípus (1989-ben az Apple és a Microsoft által közösen kifejlesztett digitális körvonalas betűtípus-formátum. Kvadratikus Bézier-görbéken alapul, abszolút pixeles konzisztenciát biztosít a képernyős megjelenítés és a nyomtatott kimenet között, a modern asztali operációs rendszerek natív alapértelmezett betűtípus-formátuma)"
+
+msgid "mime_fon"
+msgstr "FON bittérképes betűtípus (1980-as évekbeli Microsoft korai rendszerszintű pontmátrix betűtípus-formátum. Nem támogatja a veszteségmentes arányos skálázást, jellemzően pixel alapú szövegmegjelenítésre korlátozódik örökölt rendszerekben vagy korai beágyazott eszközkomponensekben)"
+
+msgid "mime_pdf"
+msgstr "PDF elektronikus dokumentum (az Adobe által 1993-ban kifejlesztett, 2008-ban ISO 32000 nemzetközi szabvánnyá vált. Platformfüggetlen, fix elrendezésű dokumentumformátum abszolút elrendezési és formai hűséggel, a globális szabvány az elektronikus dokumentumok terjesztéséhez és a digitális kiadáshoz)"
+
+msgid "mime_dotnet"
+msgstr "ASP.NET dinamikus oldal (a Microsoft által 2002-ben a .NET architektúrával kiadott szerveroldali dinamikus weblap-technológia. Az IIS motoron fut, vállalati szintű Windows szerveroldali dinamikus webalkalmazások és elosztott rendszerek építésére használják)"
+
+msgid "mime_mdb"
+msgstr "MDB relációs adatbázis (a Microsoft által 1992-ben az Access-szel kiadott asztali szintű relációs adatbázis-tároló formátum. Beépített Jet adatbázismotorral rendelkezik, relációs adatbázis-megoldásként szolgált a korai személyi számítógépes és kis- és középvállalati információmenedzsmentben)"
+
+msgid "mime_md"
+msgstr "Markdown dokumentum (2004-ben John Gruber által létrehozott könnyű jelölőnyelv. Központi tervezési filozófiája, hogy 'az olvasható az, ami renderelődik', ami olyan modern származtatott specifikációkat hajt, mint a GFM és a CommonMark. Széles körben használják csere szabványként műszaki dokumentációhoz, tudásbázisokhoz (Obsidian) és modern statikus weboldal generátorokhoz)"
+
+msgid "mime_crystal"
+msgstr "Crystal Reports jelentés (az SAP Business Intelligence (BI) platform professzionális vállalati szintű jelentésfájl-formátuma. Több adatforrású csatlakozást és összetett dinamikus diagrammegjelenítési képességeket kínál, széles körben használják professzionális jelentések készítésére multinacionális vállalatok pénzügyi és adatelemzési rendszereiben)"
+
+msgid "mime_libreoffice"
+msgstr "LibreOffice dokumentum (az OpenOffice-on alapuló nyílt forráskódú irodai csomag saját formátuma, amelyet a The Document Foundation alapított 2010-ben. Mélyen implementálja a W3C ODF (OpenDocument Format) nemzetközi szabványát, a modern nyílt forráskódú ökoszisztéma irodai sarokköve)"
+
+msgid "mime_encrypt"
+msgstr "ENCRYPT titkosított fájl (eredeti bináris vagy szöveges adatok, amelyeket specifikus szimmetrikus vagy aszimmetrikus titkosítási algoritmusokkal dolgoztak fel. Tartalmazza a .enc, .pgp, .gpg stb. alapvető származtatott formátumokat, hálózati rétegben a nem nyilvános adatok bizalmas kezelésének és integritásellenőrzésének biztosítására használják)"
+
+msgid "mime_gpx"
+msgstr "GPX műholdkövetési adatok (XML-alapú globális helymeghatározó rendszer csereformátum. Földrajzi koordináták, útpontok, útvonalak és történelmi nyomvonalak leírására specializálódott, gyakori nyílt adatszabvány modern mobil sporteszközökhöz, autós navigációhoz és földrajzi információs rendszerekhez (GIS))"
+
+msgid "mime_diskimage"
+msgstr "Disk Image lemezkép (ISO, DMG, IMG stb., fizikai lemez vagy optikai adathordozó szektorról szektorra készített alacsony szintű képfájl. Alacsony szintű rendszertelepítésre, nagy méretű szoftver biztonságos terjesztésére és adathordozók teljes fizikai szintű biztonsági mentésére használják)"
+
+msgid "mime_vm"
+msgstr "VM virtuális gép kép (VMDK, VDI, VHDX, OVA stb., virtualizált fizikai lemezképek. A VMware, VirtualBox és Hyper-V platformok alapja, alacsony szintű hardveremulációhoz, példány-állapotmentésekhez és felhő infrastruktúra terjesztéshez használják)"
+
+msgid "mime_torrent"
+msgstr "BitTorrent torrent fájl (2001-ben Bram Cohen által tervezett P2P peer-to-peer elosztott letöltési index. Bencode kódoláson alapul, tárolja az eredeti fájl ellenőrzési metaadatait és a Tracker szerver címzési információit, a decentralizált hálózati folyamatos terjesztés központi hordozója)"
+
+msgid "mime_gis"
+msgstr "GIS geotérbeli adatok (földrajzi információs rendszer adatszabvány, középpontjában a Shapefile és GeoJSON áll. Többdimenziós geometriai koordinátákat, réteg-topológiát és attribútumadatokat tartalmaz, széles körben használják nagy felbontású digitális térképek rendereléséhez, műholdas távérzékeléshez és térbeli geometriai elemzéshez)"
+
+msgid "mime_ebook"
+msgstr "EBOOK e-könyv (digitális kiadói formátum, amelynek középpontjában a W3C nemzetközi nyílt EPUB szabványa és az Amazon Kindle saját MOBI/AZW architektúrája áll. Támogatja az adaptív streaming elrendezést, a metaadat-inkapszulálást és a DRM digitális jogkezelést, univerzális hordozó a mobil digitális olvasáshoz)"
+
+msgid "mime_avif"
+msgstr "AVIF nagy hatékonyságú kép (2019-es Alliance for Open Media (AOMedia) következő generációs ultra-nagy felbontású kép szabvány. Az AV1 videokódolás kulcskeret technológiáján alapul, 50%-kal jobb tömörítési aránnyal, mint a WebP, és natív támogatással rendelkezik a nagy dinamikus tartományhoz (HDR), a modern webes képtovábbítás mainstream szabványa)"
+
+msgid "mime_markdown"
+msgstr "Markdown könnyű dokumentum (2004-ben John Gruber által létrehozott szöveges dokumentum jelölőnyelv. Egyszerű szöveges deklaratív tervezést használ, szintaxisát a reStructuredText ihlette, széles körben használják GitHub projektekben, mérnöki szintű műszaki dokumentációban és modern statikus tartalomkezelési ökoszisztémákban)"
+
+msgid "mime_yaml"
+msgstr "YAML szerializált konfiguráció (2001-ben Clark Evans és mások által tervezett ember által olvasható adatszerializációs formátum. Hierarchikus behúzáson és kulcs-érték leképezésen alapul, mára a felhő natív infrastruktúra konfigurációs szabványává vált a Kubernetes, az Ansible automatizálás és a Docker Compose számára)"
+
+msgid "mime_toml"
+msgstr "TOML szemantikus konfiguráció (2013-ban Tom Preston-Werner által tervezett minimalista nyelv. Erős típusossággal, explicit leképezéssel és tiszta szemantikával rendelkezik, mint alacsony szintű tervezési előnyök, mára széles körben használják szabványos konfigurációs fájlként a modern Rust (Cargo), Python (pyproject.toml) és Go eszközláncokhoz)"
+
+msgid "mime_vue"
+msgstr "Vue egyfájlos komponens (2014-ben Evan You által kiadott progresszív webes keretrendszer saját SFC formátuma. Egyetlen fájlban valósítja meg a HTML/CSS/JS szempontok szétválasztását és a reaktív állapotkötést, mélyen hajtva a modern interaktív frontend webalkalmazásokat és a nagyméretű statikus weboldal motorokat)"
+
+msgid "mime_wasm"
+msgstr "WebAssembly bináris modul (2017-ben a W3C által létrehozott nagy teljesítményű, alacsony szintű bájtkód szabvány a web számára. Lehetővé teszi az erősen típusos nyelvek (mint C/C++/Rust) böngésző homokozó környezetbe történő fordítását, közel natív hardveres végrehajtási hatékonyságot biztosítva, a modern webes peremhálózati (edge computing) számítás sarokköve)"
+
+msgid "mime_jsx"
+msgstr "React JSX komponens (2013-ban a Facebook által a React keretrendszerrel kiadott JavaScript XML szintaxis kiterjesztés. Támogatja a virtuális DOM struktúrák deklaratív felépítését JavaScripten belül, lehetővé téve a frontend 'UI mint állapot függvénye' komponensalapú fejlesztési paradigmáját)"
+
+msgid "mime_tsx"
+msgstr "TypeScript TSX komponens (a Microsoft által 2012-ben kifejlesztett TypeScript erős típusú szintaxisának és a JSX-nek a kombinációja. Statikus fordítási idő típusellenőrzést és interfész-megkötéseket injektál a React komponensfejlesztésbe, kód szabvány a modern nagy frontend rendszerek biztonságos fejlesztéséhez)"
+
+msgid "mime_heif"
+msgstr "HEIF nagy hatékonyságú kép (2015-ben az MPEG szervezet által létrehozott nagy hatékonyságú képfájl-formátum. A HEVC (H.265) videokódolási algoritmuson alapul, támogatja a több képkockát, mélységi térképeket és metaadatokat nagyon kis térfogatban, saját tárolási szabvány a modern mobil operációs rendszerek és intelligens terminál eszközök számára)"
+
+msgid "mime_heic"
+msgstr "HEIC nagy hatékonyságú kép (Apple saját bittérkép formátuma a nemzetközi HEIF szabvány alapján. A modern iPhone-ok alapértelmezett fényképtárolási formátumaként hardverszintű kódolással/dekódolással rendelkezik iOS/macOS rendszeren és natív operációs rendszer támogatással, drámaian csökkenti az alacsony szintű tárhelyigényt, miközben magas képminőséget tart fenn)"
+
+msgid "mime_gltf"
+msgstr "glTF 3D eszközmodell (2015-ben a Khronos Group által kiadott GL átviteli formátum szabvány. JSON architektúrát használ háromdimenziós jelenetek leírására, a '3D JPEG-jeként' ismert, a könnyű ipari szabvány a modern WebGL/WebGPU és virtuális valóság rendereléshez)"
+
+msgid "mime_glb"
+msgstr "GLB bináris 3D modell (a glTF eszközmodell veszteségmentes bináris kapszulázási változata. Egyetlen fájlba egyesíti a jelenet struktúráját, az alacsony szintű háló csúcspont adatait, az anyagokat és a textúrákat, kifejezetten a webes 3D eszközök hatékony továbbítására és streaming terjesztésére tervezve platformok között)"
+
+msgid "mime_gls"
+msgstr "GLOSSARY adat szójegyzék (kifejezésdefiníciós fájl kifejezetten dokumentumkezelő rendszerekhez és strukturált korpuszokhoz. Tartalmazza a szabványos kifejezésdefiníciókat, többnyelvű leképezéseket és metaadat-leképezéseket, fogalmi konzisztencia fenntartásához használják automatizált szövegelemzésben és tartalomkiadó rendszerekben)"
+
+msgid "mime_cbz"
+msgstr "CBZ képregény (ZIP tömörítés-alapú saját képregénykép-archiválási formátum. Statikus bittérképes képek folyamatos sorozatát tartalmazza, univerzális könnyű tároló szabványként szolgál digitális képregény kiadáshoz és platformfüggetlen helyi gyűjteményekhez)"
+
+msgid "mime_cbr"
+msgstr "CBR képregény (RAR tömörítés-alapú saját képregénykép-archiválási formátum. A RAR algoritmust használja statikus bittérkép-sorozatok kapszulázására, magas tömörítési aránnyal és széles kompatibilitási támogatással rendelkezik a digitális képregény terjesztés területén)"
+
+msgid "mime_fb2"
+msgstr "FB2 e-könyv (2000-es évek eleji FictionBook 2.0 e-könyv szabvány. Tiszta XML struktúrát használ a könyvtulajdonságok és szöveghierarchia leírására, széles körben támogatott a nyílt forráskódú e-könyv ökoszisztémában és az örökölt digitális kiadói olvasókban)"
+
+msgid "mime_kepub"
+msgstr "KEPUB e-könyv (a Kobo saját, az EPUB szabványon alapuló továbbfejlesztett e-könyv formátuma. Hardverszinten optimalizált Kobo e-könyv olvasókhoz, hatékonyabb oldalelrendezést és olvasási statisztikai interakciót kínál)"
+
+msgid "mime_m4b"
+msgstr "M4B hangoskönyv (MPEG-4 Part 14 (MP4) tároló architektúrán alapuló hangoskönyv formátum. AAC kódolást használ, natívan támogatja az alacsony szintű könyvjelzők elhelyezését, a megszakítási ponttól történő lejátszás folytatását és a fejezetek beágyazását, egykor szabványos formátum volt az Apple iTunes ökoszisztémában)"
+
+msgid "mime_kfx"
+msgstr "Kindle KFX formátum (2015-ben az Amazon által a Kindle-lel kiadott saját továbbfejlesztett digitális kiadói formátum. Támogatja a fejlett tipográfiai ligatúrákat, a nagy dinamikájú betűtípus renderelést és a kernelszintű streaming oldalbetöltést (Page Flip), a modern Kindle platform központi szabványa)"
+
+msgid "mime_chm"
+msgstr "CHM lefordított súgófájl (a Microsoft által 1997-ben kiadott fordított HTML súgó információs rendszer. Hipertext adatokat és alacsony szintű indexeket egyetlen bináris tárolóba csomagol, hosszú ideje a Windows-szoftverek helyi offline súgódokumentációjának szabványos formátuma)"
+
+msgid "mime_mht"
+msgstr "MHT webarchívum (a Microsoft által 1999-ben kiadott MIME aggregációs hipertext formátum. Az RFC 2557 szabványon alapul, HTML forrást, CSS-t, JS-t és beágyazott képeket egyetlen szövegfájlba csomagol, örökölt böngészőkben offline weboldal mentésére használják)"
+
+msgid "mime_wml"
+msgstr "WML vezeték nélküli jelölőnyelv (a WAP fórum által 1999-ben létrehozott mobil jelölési szabvány. Az XML specifikáción alapul, kifejezetten a korai keskeny sávú vezeték nélküli mobilhálózatokhoz és alacsony számítási teljesítményű alapfunkciós telefonokhoz tervezték, a modern webes ökoszisztémában nyugdíjazott örökölt technológia)"
+
+msgid "mime_xhtml"
+msgstr "XHTML hipertext weboldal (2000-es W3C szabvány, XML architektúrán alapuló szigorú hipertext jelölőnyelv. 2009-ben a W3C leállította a technikai fejlesztését, és teljesen a HTML5 specifikáció felé fordult, ma már főleg örökölt rendszerekben használják szemantikus weboldal rendereléshez)"
+
+msgid "mime_xml"
+msgstr "XML strukturált dokumentum (1998-as W3C szabvány kiterjeszthető jelölőnyelv. Önleíró címke architektúrájával alapvető formátum a hálózati webszolgáltatásokhoz (SOAP/REST), rendszerszintű konfigurációs fájlokhoz (XSD) és platformfüggetlen adatcseréhez)"
+
+msgid "mime_sgml"
+msgstr "SGML szabványos általános jelölőnyelv (1986-os ISO 8879 nemzetközi szabvány. Az elektronikus dokumentumok strukturált leírásának ipari úttörőjeként mind az XML, mind a korai HTML specifikációk ebből a szabványos metanyelvből származnak)"
+
+msgid "mime_apng"
+msgstr "APNG dinamikus grafika (2004-ben a Mozilla által kifejlesztett PNG dinamikus kiterjesztés. Támogatja a 24 bites valódi színt és a 8 bites alfa csatorna félig áttetszőségét, nagy felbontású alternatívája a GIF formátumnak modern webes forgatókönyvekben)"
+
+msgid "mime_bmp"
+msgstr "BMP natív bittérkép (a Microsoft platform eszközfüggetlen bittérkép formátuma, amely a Windows 1.0 korszaka óta létezik. Veszteségmentes, tömörítetlen tárolást használ, így térfogata jellemzően 3-10-szer nagyobb, mint a PNG-é, de mivel nincs szüksége kódolási/dekódolási többletköltségre, még mindig széles körben be van ágyazva a Windows 11 alapvető összetevőibe, EXE/MSI erőforrás-szekciókba és örökölt illesztőprogram-grafikus pufferekbe)"
+
+msgid "mime_cdr"
+msgstr "CDR vektorgrafika (a Corel Corporation saját CorelDRAW professzionális vektortervező forrásformátuma. Támogatja a rétegenkénti színkezelést, összetett matematikai görbe csomópontokat és nyomtatási szintű elrendezési adatokat, speciális formátum a professzionális grafikai nyomtatás és a reklámtervezés területén)"
+
+msgid "mime_gif"
+msgstr "GIF indexelt színű kép (a CompuServe 1987-es 8 bites indexelt színű bittérkép formátuma. Az LZW algoritmuson alapul, 256 színszintre és egyszínű áttetszőségre korlátozódik, nagy képkockasebességnél terjedelmes, fokozatosan felváltják a modern, hatékony animációs szabványok, mint az APNG, WebP stb.)"
+
+msgid "mime_ico"
+msgstr "ICO rendszerikon (a Windows natív ikonerőforrás-kapszulázási formátuma. Támogatja több, különböző felbontású és színmélységű képváltozat keverését egyetlen tárolóban, egyben a modern webböngészők webhely-azonosítójának (Favicon) univerzális terjesztési szabványa is)"
+
+msgid "mime_jpeg"
+msgstr "JPEG tömörített kép (1992-es ISO 10918 nemzetközi szabvány veszteséges tömörítési formátum. A diszkrét koszinusz transzformáción (DCT) alapul, magas tömörítési arányt ér el, miközben kiváló, valósághű képminőséget tart fenn, abszolút de facto szabvány a statikus fényképekhez a globális interneten)"
+
+msgid "mime_jpg"
+msgstr "JPEG tömörített kép (1992-es ISO 10918 nemzetközi szabvány veszteséges tömörítési formátum. A diszkrét koszinusz transzformáción (DCT) alapul, magas tömörítési arányt ér el, miközben kiváló, valósághű képminőséget tart fenn, abszolút de facto szabvány a statikus fényképekhez a globális interneten)"
+
+msgid "mime_png"
+msgstr "PNG veszteségmentes kép (1996-ban a W3C által ajánlott hordozható hálózati grafika szabvány. Veszteségmentes tömörítési algoritmust használ, natívan támogatja a 24 bites valódi színt és a 8 bites alfa csatorna áttetszőségét, a klasszikus statikus GIF nagy felbontású alternatívájaként az internetes veszteségmentes pixelgrafikák abszolút de facto szabványa)"
+
+msgid "mime_ps"
+msgstr "PostScript oldalleíró fájl (az Adobe által 1985-ben kiadott veremalapú oldalleíró nyelv. A PDF formátum technológiai előfutáraként alacsony szinten biztosít hardverfüggetlen szövegtördelést és nagy pontosságú vektorgrafikus renderelést, alapvető szabvány a professzionális nyomtatás és lézernyomtatás területén)"
+
+msgid "mime_psb"
+msgstr "PSB nagy rétegdokumentum (az Adobe Photoshop saját, extra nagy forrásfájl-kapszulázási formátuma. Szakít a szabványos PSD formátum 2 GB fizikai térfogatának és 30 000 pixel belső címzési korlátainak, kifejezetten rendkívül nagy, mélyen rétegzett, hatalmas digitális művészeti eszközök tárolására tervezték)"
+
+msgid "mime_psd"
+msgstr "PSD réteges terv forrásfájl (az Adobe Photoshop saját réteges képtervezési tárolója. A grafikai képalkotás területén ipari szabvány tárolóként natívan kapszulázza a teljes réteg renderelési fát, bittérkép csatornákat, vektoros vágási útvonalakat és összetett keverési módokat, támogatja a veszteségmentes teljes adatszerkesztést)"
+
+msgid "mime_webp"
+msgstr "WebP nagy hatékonyságú kép (2010-ben a Google által kiadott univerzális webgrafika-kódolási szabvány. A VP8 videó kulcskocka technológiájából származik, tökéletesen kompatibilis a veszteséges, veszteségmentes, félig áttetsző és dinamikus rendereléssel, 25-35%-kal kisebb, mint a PNG azonos minőség mellett, a modern weboldalak nagy teljesítményű betöltésének sarokköve)"
+
+msgid "mime_woff"
+msgstr "WOFF webes glifafájl (2009-ben létrehozott, 2012-ben W3C szabvánnyá vált nyílt webes betűtípus-formátum. Lényege a szabványos TTF/OTF betűtípus-struktúrák veszteségmentes, folyamatos tömörítése, drámaian optimalizálja a hálózati sávszélesség-költséget, univerzális formátum modern weboldal-ikonokhoz és felhőbeli betűtípusokhoz)"
+
+msgid "mime_7z"
+msgstr "7z tömörített csomag (1999-ben Igor Pavlov által kifejlesztett 7-Zip saját formátum. Nyílt forráskódú LZMA/LZMA2 algoritmusokon alapul, rendkívül magas tömörítési aránnyal rendelkezik. Azonos körülmények között jellemzően 30-50%-kal kisebb, mint a ZIP, univerzális magas tömörítési arányú formátum a nyílt forráskódú közösségben és a szoftverterjesztésben)"
+
+msgid "mime_ace"
+msgstr "ACE tömörített csomag (1990-es évekbeli WinACE saját tömörítési formátum. Egykor versengett a RAR formátummal, és magas tömörítési arányt kínált. A technikai fejlesztés 2007 után leállt, mára felváltotta a 7z és RAR formátum, örökölt rendszerarchívum-formátumokhoz tartozik)"
+
+msgid "mime_bz2"
+msgstr "BZIP2 tömörített csomag (1996-ban Julian Seward által kifejlesztett blokkrendező tömörítési formátum. Alacsony szintű algoritmusának tömörítési aránya 15-20%-kal magasabb, mint a GZIP-é, de nagyobb számítási többletköltséggel. Gyakran használják Linux kernel forráskód és nyílt forráskódú szoftvercsomagok terjesztésére, szabványos fájlkiterjesztése .bz2)"
+
+msgid "mime_cab"
+msgstr "CAB tömörített csomag (a Microsoft által 1995-ben kifejlesztett Cabinet archívumformátum. A Windows rendszer natív telepítési szabványaként illesztőprogramok és kernelfájlok terjesztésére használják, egyben a Windows Installer (MSI) mögöttes tárolótárolójaként is szolgál)"
+
+msgid "mime_dmg"
+msgstr "DMG lemezkép (az Apple által az 1980-as évektől fejlesztett lemezkép-formátum. A macOS szoftverterjesztés szabványos tárolójaként támogatja a virtuális fájlrendszerként való csatolást, az alacsony szintű tömörítést és az adattitkosítást, a Mac ökoszisztéma alkalmazáselosztásának domináns formátuma)"
+
+msgid "mime_emz"
+msgstr "EMZ tömörített kép (a Windows Enhanced Metafile EMF tömörített változata. Lényegében bináris vektorgrafika, GZIP algoritmussal tömörítve, széles körben használják beágyazott vektorgrafika tárolására a Microsoft Office csomag dokumentumaiban)"
+
+msgid "mime_gz"
+msgstr "GZIP tömörített csomag (a GNU projekt szabványos folyamatos tömörítési formátuma, amelyet Jean-loup Gailly és Mark Adler fejlesztett ki 1992-ben. Unix/Linux szabványos tömörítőeszközeként egyben a HTTP szállítási réteg tömörítésének (Gzip) központi szabványa is, gyakran használják TAR archívummal kombinálva)"
+
+msgid "mime_jar"
+msgstr "JAR tömörített csomag (a Sun Microsystems által 1997-ben kiadott Java ARchive archívumformátum. Lényegében ZIP-struktúrán alapuló csomagolótároló Java osztálykönyvtárak és metaadatok kapszulázására, központi fordított termék a Maven, Gradle és a korai Android ökoszisztéma számára)"
+
+msgid "mime_lzma"
+msgstr "LZMA tömörített csomag (Igor Pavlov által 1998-ban kifejlesztett Lempel-Ziv-Markov lánc tömörítési algoritmus. A 7z formátum központi motorjaként rendkívül magas tömörítési aránnyal és gyors kicsomagolással rendelkezik, széles körben használják hardver firmware-ek és beágyazott rendszerek terjesztésére)"
+
+msgid "mime_rar"
+msgstr "RAR tömörített csomag (Eugene Roshal által 1993-ban kifejlesztett WinRAR saját archívumformátum. Támogatja a kötetekre osztást, fizikai helyreállítási rekordokat (ECC) és erős titkosítást. Tömörítési aránya jobb, mint a szabványos ZIP-é, széles kompatibilitási támogatással rendelkezik személyes és kereskedelmi területeken)"
+
+msgid "mime_tar"
+msgstr "TAR archív csomag (1979-es Unix V7 korszakbeli szalagos archívum formátum. Csak fájlfolyamok csomagolását végzi adattömörítés nélkül, gyakran kombinálják GZIP/BZIP2/XZ-vel, a Linux forráskód és a Docker képek réteges tárolásának mögöttes szabványa)"
+
+msgid "mime_tgz"
+msgstr "TGZ tömörített csomag (a TAR archívum és a GZIP tömörítés kombinált folyamatformátuma, .tgz vagy .tar.gz kiterjesztéssel. Mint a leguniverzálisabb szoftvercsomag-terjesztési formátum Unix/Linux környezetekben, széles körben használják forráskód-fordításon alapuló telepítéshez és telepítésmentes bináris csomagok terjesztéséhez)"
+
+msgid "mime_tbz2"
+msgstr "TBZ2 tömörített csomag (a TAR archívum és a BZIP2 tömörítés kombinált folyamatformátuma, .tbz2 vagy .tar.bz2 kiterjesztéssel. A TGZ-hez képest további 15-20%-kal javíthatja a tömörítési arányt, nagy fájlok átvitelére alkalmas, hosszú ideig használták a Linux kernel forráskód terjesztésére)"
+
+msgid "mime_xz"
+msgstr "XZ tömörített csomag (2009-ben kiadott következő generációs magas tömörítési arányú formátum. Az LZMA2 algoritmuson alapul, adattömörítési aránya 30-50%-kal jobb, mint a GZIP-é, miközben megtartja a gyors kicsomagolást. A Linux kernel és a mainstream csomagkezelők (például Debian .deb belsejében) ajánlott terjesztési szabványként állapították meg)"
+
+msgid "mime_z"
+msgstr "Z tömörített csomag (1985-ös Unix compress parancs LZW tömörítési formátuma. A korai Unix rendszerek szabványos tömörítési formátuma volt, mára teljesen felváltotta a hatékonyabb GZIP formátum, ritka történelmi örökölt formátum a modern hálózati forgalomban)"
+
+msgid "mime_zip"
+msgstr "ZIP tömörített csomag (Phil Katz által 1989-ben kifejlesztett PKZIP univerzális archívumformátum. Minden mainstream operációs rendszer natívan támogatja, a leggyakrabban használt tárolószabvány az interneten. A modern Java JAR, Android APK és Office dokumentumok (OOXML) is a ZIP struktúrán alapulnak)"
+
+msgid "mime_zst"
+msgstr "Zstandard tömörített csomag (a Facebook-tól Yann Collet által 2015-ben tervezett következő generációs folyamatos tömörítési szabvány. Közelíti a LZMA tömörítési arányát, miközben lényegesen nagyobb átviteli sebességgel rendelkezik, mint a GZIP. A Linux kernel (5.9+) és az Arch/Debian csomagkezelők mélyen átvették)"
+
+msgid "mime_lz4"
+msgstr "LZ4 tömörített csomag (Yann Collet által 2011-ben kifejlesztett ultra-gyors folyamatos tömörítési algoritmus. Átviteli sebessége több mint 10-szer gyorsabb, mint a GZIP-é, rendkívül alacsony CPU futásidejű többletköltséggel. Széles körben használják a Linux kernelben, az OpenZFS fájlrendszerben és a Hadoop valós idejű adatfolyam-feldolgozásában)"
+
+msgid "mime_lzo"
+msgstr "LZO tömörített csomag (Markus Oberhumer által 1996-ban kifejlesztett Lempel-Ziv-Oberhumer algoritmus. Az ultra-gyors kicsomagolási teljesítményre összpontosít. Széles körben beágyazott a Linux kernel Squashfs képeibe, OpenWrt firmware-ekbe és különféle erőforrás-korlátozott beágyazott rendszerekbe)"
+
+msgid "mime_msi"
+msgstr "MSI rendszertelepítő csomag (a Microsoft által 1999-ben kiadott Windows Installer adatkapszulázási formátum. A Windows alkalmazás szintű telepítési szabványaként natívan támogatja az alacsony szintű tranzakció-visszaállítást, komponens-életciklus-kezelést és kötegelt nélküli csendes telepítést, központi szabvány a vállalati szoftverek központosított terjesztéséhez és szabályzatalapú telepítéséhez)"
+
+msgid "mime_pkg"
+msgstr "PKG platformfüggetlen szoftvertelepítő csomag. 1. FreeBSD szoftvercsomag: pkgng szabvány, .pkg vagy .txz kiterjesztés, TAR+XZ/Zstd tömörítésen alapul, támogatja a függőségek feloldását és az aláírás-ellenőrzést; 2. macOS telepítőcsomag: az Apple Installer formátumon alapul, támogatja az egyéni összetevőket, telepítő szkripteket és rendszerszintű eltávolítást. Ezek a BSD szerverek, illetve a Mac rendszer elsődleges terjesztési hordozói."
+
+msgid "mime_apk"
+msgstr "APK Android alkalmazáscsomag (a Google által 2008-ban az Androiddal kiadott hagyományos alkalmazástelepítő csomag. Mögöttesen ZIP archívum struktúrán alapul, csomagolja a lefordított Dalvik bájtkódot (DEX), a metaadat-manifestet és a globális erőforrásokat, mára széles körben használják helyi fejlesztési hibakereséshez, harmadik féltől származó terjesztéshez és oldalról történő telepítéshez eszközökre)"
+
+msgid "mime_ipa"
+msgstr "IPA Apple alkalmazáscsomag (az iPhone SDK-val 2008-ban kiadott iOS/iPadOS exkluzív csomagolótároló. Lényegében egy FairPlay DRM-mel vagy vállalati tanúsítvánnyal aláírt ZIP archívum, amely Mach-O bináris végrehajtható fájlt, alkalmazás-erőforrás fát és Info.plist metaadat konfigurációt tartalmaz)"
+
+msgid "mime_hap"
+msgstr "HAP HarmonyOS alkalmazáscsomag (a HarmonyOS 2.0-val 2020-ban kiadott HarmonyOS rugalmas telepítési alapegység. Entry főmodulból vagy Feature kiterjesztett funkciós modulokból áll, a többvégpontos (telefonok, táblagépek, viselhető eszközök) eszközök közötti terjesztési formátum intelligens terminálok terjesztéséhez)"
+
+msgid "mime_har"
+msgstr "HAR HarmonyOS statikus megosztott csomag (HarmonyOS saját statikus megosztott könyvtár archív fájl. Közös komponensek, mögöttes erőforráskód és fordítási időbeli függőségek kapszulázására használják, több HAP modul által statikusan linkelve megosztásra, a HarmonyOS rendszer komponens-alapú fejlesztésének és többszörös modul újrafelhasználásának alapvető bázisa)"
+
+msgid "mime_aab"
+msgstr "AAB Android alkalmazáscsomag (a Google által 2018-ban bevezetett és 2021-ben létrehozott Google Play dinamikus terjesztési formátum. Tiszta terjesztési entitásként a felhő dinamikusan szabja és fordítja a cél eszköz CPU architektúrája, képernyősűrűsége és nyelve alapján, hogy optimalizált APK-kat generáljon igény szerint, átlagosan 35%-kal csökkentve az átviteli sávszélesség költségét)"
+
+msgid "mime_xapk"
+msgstr "XAPK kiterjesztett alkalmazáscsomag (a harmadik féltől származó Android közösség által létrehozott nem hivatalos alkalmazáskiterjesztési szabvány. Egyesíti a szabványos APK fájlt egy nagy OBB játékadat-kiterjesztő csomaggal, fizikailag áttörve a Google Play 100 MB-os egyedi fájlméret-korlátját, széles körben látható játékterjesztő platformokon)"
+
+msgid "mime_appx"
+msgstr "APPX modern alkalmazáscsomag (a Microsoft által 2012-ben a Windows 8-cal kiadott UWP alkalmazástelepítési szabvány. Homokozóban izolált végrehajtással és könnyű eltávolítási jellemzőkkel rendelkezik, a Microsoft Store korai domináns szabványa volt, de a modern Windows ökoszisztémában belépett a MSIX felé fejlődő életciklusának végső szakaszába)"
+
+msgid "mime_msix"
+msgstr "MSIX következő generációs alkalmazáscsomag (a Microsoft által 2018-ban kiadott új, teljesen szabványosított Windows csomagolási specifikáció. Tökéletesen ötvözi az APPX alkalmazásbiztonsági homokozó jellemzőit az MSI vállalati eszközkezelési előnyeivel, teljesen kompatibilis minden Win32 alkalmazástípussal, és a Windows 11 ajánlott terjesztési szabványa)"
+
+msgid "mime_appimage"
+msgstr "AppImage önálló alkalmazáscsomag (2004-ben indított Linux egyetlen végrehajtható archívum specifikáció. Az 'egy alkalmazás egy fájl' önálló architektúrát alkalmazza, amely futásidőben a FUSE mechanizmuson keresztül közvetlenül írásvédett virtuális fájlrendszerként csatolódik, nulla függőségű, dobozból kivehető végrehajtást érve el Linux disztribúciók között)"
+
+msgid "mime_flatpak"
+msgstr "Flatpak homokozós alkalmazáscsomag (2015-ben a Red Hat és a GNOME által vezetett Linux-disztribúciók közötti asztali alkalmazásterjesztési szabvány. A Linux kernel névtér- és Cgroups mechanizmusaira támaszkodva rendkívül szigorú alkalmazásszintű biztonsági homokozó elkülönítést ér el, a modern nyílt forráskódú operációs rendszerek szoftverközpontjainak alapja)"
+
+msgid "mime_snap"
+msgstr "Snap konténeres alkalmazáscsomag (2014-ben az Ubuntu anyavállalata, a Canonical által kiadott Linux univerzális telepítési szabvány. Az alkalmazás-önálló SquashFS kép csatolási architektúrát alkalmazza, támogatja az automatikus növekményes frissítéseket és a szigorú AppArmor homokozó elkülönítést, és az Ubuntu szoftverközpont ökoszisztéma alapértelmezett központi formátuma)"
+
+msgid "mime_deb"
+msgstr "DEB rendszerszoftver-csomag (a Debian projekt által 1993-ban létrehozott bináris és forráskód csomagolási specifikáció. A Debian, Ubuntu és összes származékuk mögöttes telepítési szabványaként a dpkg-re támaszkodik a csomag kibontásához és karbantartásához, és az APT-t használja hatékony csomagkezelő felületként, a Linux ökoszisztéma legérettebb szoftverterjesztési sarokköve)"
+
+msgid "mime_rpm"
+msgstr "RPM rendszerszoftver-csomag (a Red Hat által 1997-ben kiadott Red Hat Package Manager csomagolási specifikáció. A DEB-bel együtt a Linux hagyományos csomagkezelésének két nagy táborát alkotják, natívan rendelkeznek tranzakció-alapú függőség-ellenőrzéssel és alacsony szintű szoftver digitális aláírás-ellenőrzéssel, és továbbra is az abszolút mainstream terjesztési szabvány a Red Hat ökoszisztéma disztribúcióihoz, mint a RHEL, Fedora és CentOS"
+
+msgid "mime_pacman"
+msgstr "Pacman archív szoftvercsomag (az Arch Linux által 2002-ben a pacman kezelővel létrehozott .pkg.tar.zst csomagolási formátum. Az Arch gördülő frissítési mechanizmusának magjaként a nagy sebességű Zstandard magas tömörítési algoritmuson alapul, az AUR (Arch User Software Repository) ökoszisztémával együtt, egy modern csomagterjesztési szabvány, amely megtestesíti a minimalizmust és a KISS (Keep It Simple, Stupid) elvet)"
+
+msgid "mime_exe"
+msgstr "EXE natív végrehajtható fájl (a Windows platform Portable Executable (PE) bináris programformátuma. Technikai származása az MS-DOS korszakbeli MZ fejlécstruktúrából ered, és az 1993-as Windows NT-től kezdve teljesen PE struktúra specifikációvá vált, a világ legszélesebb körben használt végrehajtási szabványa a gépi kód utasításokhoz, statikus erőforrás-szekciókhoz és rendszermag-indításhoz)"
+
+msgid "mime_dll"
+msgstr "DLL dinamikus kapcsolati könyvtár (a Windows platform Dynamic Link Library megosztott kódkönyvtár specifikációja. A futásidőben történő dinamikus betöltés és szimbólum-áthelyezés révén jelentősen megtakarítja a fizikai memóriát és a lemezterületet, a Windows API központi megvalósítási formájaként. A korai 'DLL pokol' problémáját a modern korban az SxS párhuzamos elkülönítési mechanizmus gyökerezett meg)"
+
+msgid "mime_com"
+msgstr "COM klasszikus végrehajtható fájl (az MS-DOS korszak legrégebbi memóriakép (Command) végrehajtási formátuma. Strukturálatlan tiszta kódszegmens kialakítást használ, a 64 KB fizikai memória címzési szegmenshatárára korlátozódik, mára történelmi örökölt formátumként nyugdíjazták, de a modern Windows architektúrákban korlátozott kompatibilitást tart fenn specifikus komponens interfészként)"
+
+msgid "mime_aac"
+msgstr "AAC hang (MPEG szabvány 1997-ből, Advanced Audio Coding. Az MP3 utódja, hangminősége jobb az MP3-nál azonos bitrátánál, alapértelmezett hangformátum a YouTube, iTunes, Nintendo Switch számára)"
+
+msgid "mime_alac"
+msgstr "ALAC hang (Apple fejlesztette 2004-ben, Apple Lossless Audio Codec. Az Apple veszteségmentes formátuma, 2011-ben nyílt forráskódúvá vált, alapértelmezett veszteségmentes formátum az iTunes és Apple Music számára)"
+
+msgid "mime_flac"
+msgstr "FLAC hang (Xiph.Org Alapítvány fejlesztette 2001-ben, Free Lossless Audio Codec. Veszteségmentes tömörítés, hangminősége megegyezik a CD-ével, fájlmérete körülbelül fele az eredeti WAV-nak. Nyílt forráskódú és szabadalmi kötöttségektől mentes, kedvelt formátum audiophile-ek és digitális zenei gyűjtemények számára)"
+
+msgid "mime_mp3"
+msgstr "MP3 hang (Fraunhofer Intézet fejlesztette 1993-ban, MPEG-1 Audio Layer 3. Veszteséges tömörítési formátum, kis fájl elfogadható hangminőséggel, a 2000-es évek digitális zenei forradalmának fő formátuma, felelős az iPodért és a Napsterért. Szabadalmai 2017-ben lejártak, közkincssé vált)"
+
+msgid "mime_oga"
+msgstr "Ogg Audio hang (Xiph.Org Alapítvány fejlesztette, az Ogg tároló tiszta hangformátuma, Vorbis kódolást használ. Nyílt forráskódú és szabadalmi kötöttségektől mentes, tömörítési hatékonysága jobb az MP3-nál, széles körben használják nyílt forráskódú projektekben)"
+
+msgid "mime_ogg"
+msgstr "OGG hang (Xiph.Org Alapítvány fejlesztette 2000-ben, Ogg Vorbis formátum. Nyílt forráskódú és szabadalmi kötöttségektől mentes, tömörítési hatékonysága jobb az MP3-nál, a korai Spotify használta, széles körben használják játékok hang effektjeihez)"
+
+msgid "mime_opus"
+msgstr "Opus hang (IETF szabványosította 2012-ben, nyílt és szabadalmi kötöttségektől mentes hangformátum, egyesíti a SILK és CELT technológiákat, rendkívül alacsony késleltetés, legmagasabb tömörítési hatékonyság, alapértelmezett hangformátum a WebRTC, WhatsApp, Discord számára)"
+
+msgid "mime_wav"
+msgstr "WAV hang (a Microsoft és IBM fejlesztette 1991-ben, a Windows natív hangformátuma. PCM kódolás, tömörítetlen, veszteségmentes hangminőség, de nagyon nagy fájl, szabványos formátum professzionális hangszerkesztéshez)"
+
+msgid "mime_wma"
+msgstr "WMA hang (a Microsoft fejlesztette 1999-ben, Windows Media Audio. Van veszteséges/veszteségmentes változata, a Windows natív módon támogatja, a Windows Media Playerrel terjedt el. Mára marginalizálódott, felváltotta az MP3/AAC)"
+
+msgid "mime_dsf"
+msgstr "DSF hang (Direct Stream Digital formátum, a Sony és Philips fejlesztette. 1 bites magas mintavételezési frekvencia, szabványos DSD hangformátum, a SACD digitális változata, csúcskategóriás hangformátum audiophile-ek számára, nagyon nagy fájl)"
+
+msgid "mime_ape"
+msgstr "APE Hang (a Monkey's Audio fejlesztette ki 2000-ben, veszteségmentes tömörítési formátum. Magasabb tömörítés, mint a FLAC, de lassabb kódolás, még mindig használatos Windows platformon és audio rajongók körében)"
+
+msgid "mime_mid"
+msgstr "MIDI hang (MIDI Szövetség hozta létre 1983-ban, Musical Instrument Digital Interface. Kottaformátum, nem felvétel, fájl nagyon kicsi, szabvány elektronikus hangszerekhez, telefon csengőhangokhoz, játékok hang effektjeihez. A General MIDI 1991-ben szabványosult, 128 hangszert határoz meg)"
+
+msgid "mime_m4a"
+msgstr "M4A hang (MPEG-4 Audio, AAC tároló formátum. Az iTunes zenei bolt szabványos formátuma, fő hangformátum az Apple ökoszisztémában, támogatja a DRM védelmet)"
+
+msgid "mime_m3u"
+msgstr "M3U lejátszási lista (MP3 URL lejátszási lista formátum, egyszerű szövegfájl, hangfájlok elérési útjait rögzíti. Winamp korszak szabványa, internetes rádióhoz, online zenei streaminghez használják. Az M3U8 az UTF-8 változata, HTTP Live Streaminghez használják)"
+
+msgid "mime_asf"
+msgstr "ASF streaming (Microsoft fejlesztette 1996-ban, Advanced Systems Format. Windows Media streaming tároló, támogatja az audio és video szinkron átvitelét. Internetes élő közvetítésekhez és video on demand streaminghez használják, a WMA/WMV az ASF tárolón alapul)"
+
+msgid "mime_avi"
+msgstr "AVI video (a Microsoft 1992-ben dobta piacra, korai Windows video szabvány. 'Audio Video Interleave', hangot és képet váltakozva tárol, az 1990-2000-es évek legnépszerűbb videoformátuma volt, ma már felváltotta az MP4/MKV)"
+
+msgid "mime_divx"
+msgstr "DivX video (DivX Corporation fejlesztette 1998-ban, MPEG-4 alapú videokodek formátum. A 2000-es évek online videomegosztásának fő formátuma, az első technológia, amely DVD minőséget CD méretre tömörített. Szerzői jogi viták miatt később kereskedelmi kódolóvá alakult)"
+
+msgid "mime_mp4"
+msgstr "MP4 video (MPEG szabvány 2001-ből, MPEG-4 Part 14. A világ legelterjedtebb videoformátuma, támogatja a H.264/H.265 kódolást, alapértelmezett formátum internetes videóhoz, mobiltelefonos felvételhez, YouTube-hoz)"
+
+msgid "mime_m4v"
+msgstr "M4V video (iTunes videoformátum, az MP4 egy változata. Videoformátum az Apple ökoszisztémában, az iTunes Store filmjeinek és tévéműsorainak szabványos formátuma, támogatja a DRM szerzői jogi védelmet)"
+
+msgid "mime_mpeg"
+msgstr "MPEG video (MPEG szervezet hozta létre 1988-ban, Moving Picture Experts Group. Letette a digitális videotömörítési szabványok alapjait, az MPEG-1 (VCD), MPEG-2 (DVD), MPEG-4 (internet video) mély hatást gyakoroltak)"
+
+msgid "mime_mkv"
+msgstr "MKV video (Matroska projekt fejlesztette 2002-ben, nyílt forráskódú multimédiás tároló. Több hangsávot, több feliratot, fejezeteket támogat, 'csomagolóeszköz', a nagy felbontású filmek megosztásának kedvelt formátuma)"
+
+msgid "mime_mpg"
+msgstr "MPEG video (MPEG-1/MPEG-2 video kiterjesztés, szabványos formátum VCD-hez és DVD-hez. Az optikai lemezek videoformátuma az 1990-2000-es években, mára felváltotta a H.264/H.265)"
+
+msgid "mime_ogv"
+msgstr "Ogg Video video (Xiph.Org Alapítvány fejlesztette, az Ogg tároló videoformátuma, Theora kódolást használ. Nyílt és szabadalmi kötöttségektől mentes, a HTML5 video egyik korai szabványa, a Firefox natív módon támogatja)"
+
+msgid "mime_ogx"
+msgstr "Ogg multimédiás tároló (Xiph.Org Alapítvány fejlesztette, az Ogg tároló általános kiterjesztése, több sávot tartalmazhat, mint hang, video, felirat. Nyílt multimédiás szabvány, játékokhoz, streaminghez használják)"
+
+msgid "mime_rm"
+msgstr "RealMedia video (RealNetworks fejlesztette 1995-ben, RealMedia formátum. Az internetes streaming úttörője az 1990-2000-es években, a RealPlayer lejátszó fő formátuma. Hátrányok: speciális lejátszót igényel, gyenge tömörítési minőség, később felváltotta a Flash/MP4)"
+
+msgid "mime_flv"
+msgstr "Flash video (a formátum 2002-ben jelent meg, Flash Video formátum. Egykor az online video fő formátuma volt. A korai YouTube használta. Hátrányok: Flash bővítmény szükséges, gyenge teljesítmény, sok biztonsági rés. 2015-től a fő weboldalak áttértek HTML5 videóra, mára elavult)"
+
+msgid "mime_f4v"
+msgstr "F4V video (Adobe által fejlesztett Flash videoformátum, a FLV utódja. MPEG-4 szabványon alapul, támogatja a H.264 kódolást. A Flash technológiával együtt elavult, az Adobe 2020-ban megszüntette a támogatását)"
+
+msgid "mime_wmv"
+msgstr "WMV video (Microsoft fejlesztette 1999-ben, Windows Media Video. A Windows natív módon támogatja, optimalizált streaminghez, gyakori formátum volt a korai online videókban, mára marginalizálódott)"
+
+msgid "mime_wmf"
+msgstr "WMF média formátum (Windows Media Format, a Microsoft média keretrendszere, magában foglalja a WMV videót és WMA hangot, a Windows Media Player natív módon támogatja)"
+
+msgid "mime_mov"
+msgstr "MOV video (Apple fejlesztette 1991-ben, QuickTime tároló formátum. Szabványos formátum professzionális videóvágáshoz, több kodeket támogat, a Final Cut Pro és Premiere natív módon támogatja)"
+
+msgid "mime_qt"
+msgstr "QuickTime video (Apple 1991-ben dobta piacra, QuickTime formátum. Videó szabvány a Mac platformon, a MOV a tárolója, a QuickTime lejátszó széles körben használt volt. Az Apple 2016-ban leállította a Windows verzió fejlesztését, fokozatosan felváltja az MP4)"
+
+msgid "mime_webm"
+msgstr "WebM video (Google 2010-ben dobta piacra, nyílt és szabadalmi kötöttségektől mentes videoformátum. Matroska tárolón alapul, VP8/VP9 kódolás, szabványos HTML5 video formátum, alapértelmezett formátum a YouTube webes lejátszásához)"
+
+msgid "mime_3gp"
+msgstr "3GP video (3GPP hozta létre 2000-ben, videoformátum mobil eszközökhöz. Nagyon kicsi fájl, alacsony minőség, korai mobiltelefonok videofelvétel formátuma, MMS küldéséhez használták)"
+
+#------------------------------------------------------------------------------
+# Technikai dimenziók
+#------------------------------------------------------------------------------
+
+msgid "Operating Systems"
+msgstr "Operációs rendszerek"
+
+msgid "Top 5 Operating Systems"
+msgstr "Top 5 operációs rendszer"
+
+msgid "Unknown Robot"
+msgstr "Ismeretlen kliens"
+
+msgid "User agent"
+msgstr "Felhasználói ügynök"
+
+msgid "Browsers"
+msgstr "Böngészők"
+
+msgid "Top 5 Browsers"
+msgstr "Top 5 böngésző"
+
+msgid "Unknown Robot RH"
+msgstr "Ismeretlen kérés fejléc"
+
+msgid "Detailed"
+msgstr "Hozzáférő eszköz verziója"
+
+msgid "DetailedOS"
+msgstr "Operációs rendszer verzió"
+
+msgid "DetailedBS"
+msgstr "Böngésző verzió"
+
+msgid "Screen sizes"
+msgstr "Képernyőméretek"
+
+msgid "Compression"
+msgstr "Tömörítés"
+
+msgid "In"
+msgstr "Bemenet"
+
+msgid "Out"
+msgstr "Kimenet"
+
+msgid "Saved"
+msgstr "Megtakarítás"
+
+#------------------------------------------------------------------------------
+# Forrásdimenziók
+#------------------------------------------------------------------------------
+
+msgid "Origin"
+msgstr "Forrás"
+
+msgid "Referers"
+msgstr "Hivatkozók"
+
+msgid "meta.description"
+msgstr "AWStats speciális webnapló-elemző - valós idejű weboldal-forgalomfigyelés, látogatóelemzés, keresőmotor-kulcsszavak, hibás oldalak statisztikái. Támogatja a sötét módot és a többnyelvű felületet, átfogó adatelemzést biztosít weboldal-adminisztrátorok számára."
+
+msgid "meta.keywords"
+msgstr "AWStats,webes statisztikák,naplóelemzés,forgalomfigyelés,hozzáférési statisztikák,SEO elemzés,webes elemző eszköz,Web Analytics,Log Analyzer"
+
+msgid "meta.author"
+msgstr "AWStats"
+
+msgid "og.title"
+msgstr "AWStats - Webnapló elemzés"
+
+msgid "og.description"
+msgstr "📊 Professzionális nyílt forráskódú webes statisztikai eszköz, valós időben elemzi weboldala forgalmát és a látogatók viselkedését."
+
+msgid "og.image.alt"
+msgstr "AWStats statisztikai diagramok"
+
+msgid "Created by"
+msgstr "Készítette: %s"
+
+msgid "plugins"
+msgstr "bővítmények"
+
+msgid "dbip by"
+msgstr "adatok forrása"
+
+msgid "IPDB by"
+msgstr "földrajzi helyadatok szolgáltatója: DB-IP"
+
+# Egészségügyi állapot
+msgid "Configured"
+msgstr "Konfigurálva"
+
+msgid "Missing"
+msgstr "Hiányzik"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Unused"
+msgstr "Nem használt"
+
+# Egyéb
+msgid "Overall Health"
+msgstr "Általános egészség"
+
+msgid "Excellent"
+msgstr "Kiváló"
+
+msgid "Good"
+msgstr "Jó"
+
+msgid "Fair"
+msgstr "Közepes"
+
+msgid "Poor"
+msgstr "Gyenge"
+
+msgid "Missing icon types"
+msgstr "Hiányzó ikontípusok"
+
+msgid "See"
+msgstr "Lásd a részleteket"
+
+msgid "Expected Path"
+msgstr "Útvonal leírása"
+
+msgid "column for file locations"
+msgstr "oszlop a fájlhelyek lekéréséhez"
+
+# Tipp
+msgid "Tip: If you need to generate related icons, you can use %s to upload a logo image, and it will automatically generate all the above related icon files"
+msgstr "Tipp: Ha kapcsolódó ikonokat kell generálnia, használhatja a %s eszközt egy logókép feltöltéséhez, és automatikusan létrehozza az összes fenti kapcsolódó ikonfájlt"
+
+msgid "200: success, 404: failure"
+msgstr "200 a sikeresek száma, 404 a sikertelenek száma"
+
+# Várt útvonalak
+msgid "_PATH_FAVICON"
+msgstr "/favicon.ico"
+
+msgid "_PATH_APPLE_TOUCH"
+msgstr "/apple-touch-icon.png vagy /apple-touch-icon-180x180.png"
+
+msgid "_PATH_LOGO"
+msgstr "/logo.svg vagy /logo.png (hivatkozni kell rá a HTML/JSON-LD-ben)"
+
+msgid "_PATH_WEBMANIFEST"
+msgstr "/site.webmanifest vagy /manifest.json"
+
+msgid "_PATH_BROWSERCONFIG"
+msgstr "/browserconfig.xml"
+
+msgid "_PATH_SAFARI_PINNED"
+msgstr "/safari-pinned-tab.svg"
+
+msgid "_PATH_SOCIAL_ICON"
+msgstr "/images/github.svg, /images/paypal.svg stb."
+
+# Ikon típusok nevei
+msgid "Favicon"
+msgstr "Weboldal ikon"
+
+msgid "Apple Touch Icon (iOS/macOS)"
+msgstr "Apple Touch ikon (iPhone/iPad/Mac)"
+
+msgid "Site Logo"
+msgstr "Weboldal logó"
+
+msgid "Web App Manifest (Android/Chrome)"
+msgstr "Webalkalmazás jegyzékfájl (Android/Chrome)"
+
+msgid "Windows Browser Config"
+msgstr "Windows böngésző konfiguráció"
+
+msgid "Safari Pinned Tab"
+msgstr "Safari rögzített fül ikon"
+
+msgid "Social Icon"
+msgstr "Közösségi média ikon"
+
+# Fejlécek
+msgid "Icon Files Status"
+msgstr "Ikonfájlok állapota"
+
+msgid "Icon Type"
+msgstr "Ikon típus"
+
+msgid "Advanced Web Statistics"
+msgstr "Speciális naplóelemző"
+
+msgid "Advanced Web Statistics %s"
+msgstr "%s speciális naplóelemző"
+
+msgid "Your browser does not support frames. Please use a modern browser."
+msgstr "Az Ön böngészője nem támogatja a kereteket. Kérjük, használjon modern böngészőt."
+
+msgid "View statistics directly"
+msgstr "Statisztikák közvetlen megtekintése"
+
+msgid "Close"
+msgstr "Bezárás"
+
+msgid "Documentation Viewer"
+msgstr "Dokumentáció megjelenítő"
+
+msgid "Direct address / Bookmarks"
+msgstr "Közvetlen cím / Könyvjelzők"
+
+msgid "Search Engines"
+msgstr "Keresőmotorok"
+
+msgid "Refering search engines"
+msgstr "Hivatkozó keresőmotorok"
+
+msgid "External pages"
+msgstr "Külső oldalak"
+
+msgid "Refering pages"
+msgstr "Hivatkozó oldalak"
+
+msgid "Internal pages"
+msgstr "Belső oldalak"
+
+msgid "UnknownAccessSource"
+msgstr "Ismeretlen hozzáférési forrás"
+
+msgid "Different refering pages"
+msgstr "Különböző hivatkozó oldalak"
+
+msgid "Keyphrases"
+msgstr "Kulcskifejezések"
+
+msgid "Keywords"
+msgstr "Kulcsszavak"
+
+msgid "Keyphrases/Keywords"
+msgstr "Kulcskifejezések/Kulcsszavak"
+
+msgid "Different keyphrases"
+msgstr "Különböző kulcskifejezések"
+
+msgid "Different keywords"
+msgstr "Különböző kulcsszavak"
+
+#------------------------------------------------------------------------------
+# Oldaldimenziók
+#------------------------------------------------------------------------------
+
+msgid "Viewed pages"
+msgstr "Megtekintett oldalak"
+
+msgid "Different pages"
+msgstr "Különböző oldalak"
+
+msgid "Entry"
+msgstr "Belépési pozíció"
+
+msgid "Exit"
+msgstr "Kilépési pozíció"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Referer"
+msgstr "Hivatkozó"
+
+msgid "Host"
+msgstr "Hoszt"
+
+#------------------------------------------------------------------------------
+# Hibák és állapotok
+#------------------------------------------------------------------------------
+
+msgid "Error"
+msgstr "Hiba"
+
+msgid "HTTP Status Statistics"
+msgstr "HTTP állapotkód statisztikák"
+
+msgid "SMTP Error codes"
+msgstr "SMTP hibakódok"
+
+msgid "Page not found"
+msgstr "A kért oldal nem található"
+
+msgid "Unknown error"
+msgstr "Ismeretlen hiba"
+
+msgid "Abnormal traffic note"
+msgstr "A rendellenes böngészési forgalom a következőket foglalja magában: keresőrobotok, MI-képző botok, sebezhetőségvizsgálók és a specifikációknak nem megfelelő kérések"
+
+msgid "Page detail"
+msgstr "Oldal részletei"
+
+# Részletes hibaüzenetek
+msgid "AWStats did not found the"
+msgstr "Az AWStats nem találta"
+
+msgid "in your log records."
+msgstr "a naplórekordjaiban."
+
+msgid "AWStats did not find any valid log lines that match your"
+msgstr "Az AWStats nem talált érvényes naplósorokat, amelyek megfelelnek"
+
+msgid "parameter, in the"
+msgstr "paraméterének, a"
+
+msgid "th first non commented lines read of your log."
+msgstr ". első nem kommentált sorában a naplójában."
+
+msgid "Your log file"
+msgstr "A naplófájlja"
+
+msgid "must have a bad format or"
+msgstr "valószínűleg rossz formátumú, vagy"
+
+msgid "parameter setup does not match this format."
+msgstr "a paraméter beállítása nem egyezik ezzel a formátummal."
+
+msgid "Your AWStats"
+msgstr "Az Ön AWStats"
+
+msgid "parameter is:"
+msgstr "paramétere:"
+
+msgid "This means each line in your web server log file need to have:"
+msgstr "Ez azt jelenti, hogy a webkiszolgáló naplófájljának minden sorának tartalmaznia kell:"
+
+msgid "combined log format"
+msgstr "kombinált naplóformátum"
+
+msgid "MSIE Extended W3C log format"
+msgstr "MSIE kiterjesztett W3C naplóformátum"
+
+msgid "WebStar native log format"
+msgstr "WebStar natív naplóformátum"
+
+msgid "common log format"
+msgstr "általános naplóformátum"
+
+msgid "Lotus Notes/Lotus Domino"
+msgstr "Lotus Notes/Lotus Domino"
+
+msgid "the following personalized log format:"
+msgstr "a következő személyre szabott naplóformátum:"
+
+msgid "And this is an example of records AWStats found in your log file (the record number"
+msgstr "És ez egy példa az AWStats által a naplófájljában talált rekordokra (a rekord száma"
+
+msgid "in your log):"
+msgstr "a naplójában):"
+
+#------------------------------------------------------------------------------
+# Vegyes
+#------------------------------------------------------------------------------
+
+msgid "Extra/Marketing"
+msgstr "Extra/Marketing"
+
+#------------------------------------------------------------------------------
+# Felületi szöveg
+#------------------------------------------------------------------------------
+
+msgid "Current site"
+msgstr "Aktuális hely"
+
+msgid "Web Site"
+msgstr "Weboldal"
+
+msgid "Last Update"
+msgstr "Utolsó frissítés"
+
+msgid "Never updated"
+msgstr "Soha nem frissítve"
+
+msgid "No qualified records found in log"
+msgstr "Nem találhatók megfelelő rekordok a naplóban"
+
+msgid "corrupted"
+msgstr "sérült"
+
+msgid "comments"
+msgstr "megjegyzések"
+
+msgid "Blank"
+msgstr "Üres"
+
+msgid "dropped"
+msgstr "eldobott"
+
+msgid "Update now"
+msgstr "Frissítés most"
+
+msgid "Back to main page"
+msgstr "Vissza a főoldalra"
+
+msgid "Close window"
+msgstr "Ablak bezárása"
+
+msgid "Back page"
+msgstr "Vissza az előző oldalra"
+
+msgid "Navigation"
+msgstr "Navigáció"
+
+msgid "Summary"
+msgstr "Összefoglaló"
+
+msgid "Local"
+msgstr "Helyi"
+
+msgid "External"
+msgstr "Külső"
+
+msgid "Others (email senders)"
+msgstr "Egyéb (e-mail feladók)"
+
+msgid "Others (email receivers)"
+msgstr "Egyéb (e-mail címzettek)"
+
+msgid "Others"
+msgstr "Egyéb"
+
+msgid "Only 10 lines of browser data are currently displayed"
+msgstr "Jelenleg csak 10 sor böngészőadat látható, a teljes listát lásd a részletes oldalon"
+
+msgid "Others (unknown browsers)"
+msgstr "Egyéb (ismeretlen böngészők)"
+
+msgid "Others (operating systems)"
+msgstr "Egyéb (operációs rendszerek)"
+
+msgid "Others (unknown OS)"
+msgstr "Egyéb (ismeretlen operációs rendszer)"
+
+msgid "Others (search engines)"
+msgstr "Egyéb (keresőmotorok)"
+
+msgid "Others (referring pages)"
+msgstr "Egyéb (hivatkozó oldalak)"
+
+msgid "Others (keyphrases)"
+msgstr "Egyéb (kulcskifejezések)"
+
+msgid "Others (keywords)"
+msgstr "Egyéb (kulcsszavak)"
+
+msgid "Only first 10 robots shown"
+msgstr "A jelenlegi lista csak 10 robotot mutat, a teljes listát lásd a részletes oldalon"
+
+msgid "Failed to obtain access record"
+msgstr "Nem sikerült belépési rekordot szerezni"
+
+msgid "Failed to obtain leave record"
+msgstr "Nem sikerült távozási rekordot szerezni"
+
+msgid "Other pages"
+msgstr "Egyéb oldalak"
+
+msgid "Low Traffic IP Summary"
+msgstr "Alacsony forgalmú ismeretlen IP-k összefoglalója"
+
+msgid "Failed to obtain IP data"
+msgstr "Egyéb ismert IP-k összefoglalója"
+
+msgid "Failed to obtain the relevant data"
+msgstr "Nem sikerült beszerezni a releváns adatokat"
+
+msgid "Limited list of countries and regions"
+msgstr "Jelenleg csak 10 sor látható, a teljes listát lásd a részletes oldalon további országokért/régiókért"
+
+msgid "currentVisitorData"
+msgstr "Jelenleg csak 10 sor látogatói adat látható, a teljes listát lásd a részletes oldalon"
+
+msgid "Others (robots main)"
+msgstr "Egyéb (robotok)"
+
+msgid "Others (worms)"
+msgstr "Egyéb (férgek)"
+
+msgid "Displaying10RowsPageMorePleaseViewFullList"
+msgstr "A jelenlegi lista csak 10 oldalt mutat, a teljes listát lásd a részletes oldalon"
+
+msgid "Others (OS main)"
+msgstr "Egyéb (rendszer)"
+
+msgid "Others (browsers main)"
+msgstr "Egyéb (böngészők)"
+
+msgid "Others (screen sizes)"
+msgstr "Egyéb (méret)"
+
+msgid "Others (search engines main)"
+msgstr "Egyéb (keresőmotorok)"
+
+msgid "Others (referring pages main)"
+msgstr "Egyéb (hivatkozó oldalak)"
+
+msgid "Others (keyphrases main)"
+msgstr "Egyéb (kulcskifejezések)"
+
+msgid "Others (keywords main)"
+msgstr "Egyéb (kulcsszavak)"
+
+# 1xx
+msgid "Continue"
+msgstr "Folytassa a fennmaradó tartalom küldését"
+
+msgid "Switching Protocols"
+msgstr "Protokollváltás folyamatban"
+
+msgid "Processing (WebDAV)"
+msgstr "Feldolgozás folyamatban (kérem várjon)"
+
+msgid "Early Hints"
+msgstr "A kiszolgáló erőforrásokat készít elő"
+
+# 2xx
+msgid "[Miscellaneous successes]"
+msgstr "Egyéb sikeres állapotok"
+
+msgid "Request successful"
+msgstr "Kérés sikeres"
+
+msgid "Created successfully"
+msgstr "Sikeresen létrehozva"
+
+msgid "Accepted - processing"
+msgstr "Elfogadva, feldolgozás folyamatban"
+
+msgid "Non-authoritative information (from cache) (from cache)"
+msgstr "Nem hiteles információ (a gyorsítótárból)"
+
+msgid "Success, no content returned"
+msgstr "Sikeres, nem került visszaadásra tartalom"
+
+msgid "Reset content"
+msgstr "Állítsa vissza az űrlapot"
+
+msgid "Partial content (resume download)"
+msgstr "Részleges tartalom (támogatja a letöltés folytatását)"
+
+msgid "Multi-status (WebDAV)"
+msgstr "Több állapot (WebDAV kötegelt műveletek)"
+
+msgid "Already reported (WebDAV)"
+msgstr "Már jelentve (elkerüli az ismétlést)"
+
+msgid "IM used"
+msgstr "IM protokollbővítmény használatban"
+
+# 3xx
+msgid "[Miscellaneous redirections]"
+msgstr "Egyéb átirányítások"
+
+msgid "Multiple choices"
+msgstr "Több választási lehetőség"
+
+msgid "Moved permanently - update your links"
+msgstr "Véglegesen áthelyezve, kérjük, frissítse a hivatkozásait"
+
+msgid "Temporary redirect - URL unchanged"
+msgstr "Ideiglenes átirányítás, a cím nem változik"
+
+msgid "See other"
+msgstr "Kérjük, tekintse meg a másik címet"
+
+msgid "Not modified - using cached version"
+msgstr "Nem módosult, gyorsítótárazott verzió használatban"
+
+msgid "Use proxy"
+msgstr "Használjon proxyt"
+
+msgid "Switch proxy"
+msgstr "Váltson proxyt"
+
+msgid "Temporary redirect (keep method)"
+msgstr "Ideiglenes átirányítás (megtartja a kérés módszerét)"
+
+msgid "Permanent redirect - update your links"
+msgstr "Végleges átirányítás, kérjük, frissítse a hivatkozásait"
+
+# 4xx
+msgid "[Miscellaneous client/user errors]"
+msgstr "Egyéb klienshibák"
+
+msgid "Bad request"
+msgstr "A kérés formátuma hibás"
+
+msgid "Unauthorized - please log in"
+msgstr "Nem engedélyezett, kérjük, először jelentkezzen be"
+
+msgid "Payment required"
+msgstr "Fizetés szükséges"
+
+msgid "Forbidden - access denied"
+msgstr "Hozzáférés megtagadva, elégtelen jogosultságok"
+
+msgid "Page not found (404) - check for broken links"
+msgstr "Az oldal nem létezik, kérjük, ellenőrizze a hibás hivatkozásokat"
+
+msgid "Method not allowed"
+msgstr "A kérés módszere nem engedélyezett"
+
+msgid "Not acceptable"
+msgstr "Nem elfogadható válaszformátum"
+
+msgid "Proxy authentication required"
+msgstr "Proxy hitelesítés szükséges"
+
+msgid "Request timeout"
+msgstr "A kérés időtúllépése"
+
+msgid "Conflict - please try again"
+msgstr "Kérés ütközés, kérjük, próbálja újra később"
+
+msgid "Gone - permanently deleted"
+msgstr "Az erőforrás véglegesen törölve"
+
+msgid "Length required"
+msgstr "Meg kell adni a tartalom hosszát"
+
+msgid "Precondition failed"
+msgstr "Az előfeltételek nem teljesülnek"
+
+msgid "Payload too large"
+msgstr "A kérés tartalma túl nagy"
+
+msgid "URI too long"
+msgstr "A kérés címe túl hosszú"
+
+msgid "Unsupported media type"
+msgstr "A fájltípus nem támogatott"
+
+msgid "Range not satisfiable"
+msgstr "A kérés tartománya érvénytelen"
+
+msgid "Expectation failed"
+msgstr "Nem teljesíthető az elvárás"
+
+msgid "I am a teapot (April Fools)"
+msgstr "Én egy teáskanna vagyok (áprilisi tréfa)"
+
+msgid "Page expired (Laravel)"
+msgstr "Az oldal lejárt, frissítsen és próbálja újra"
+
+msgid "Method failure (Spring)"
+msgstr "A metódus sikertelen"
+
+msgid "Misdirected request"
+msgstr "A kérés rosszul lett átirányítva"
+
+msgid "Unprocessable entity (WebDAV)"
+msgstr "A kérés formátuma helyes, de nem dolgozható fel"
+
+msgid "Locked (WebDAV)"
+msgstr "Az erőforrás zárolva van"
+
+msgid "Failed dependency (WebDAV)"
+msgstr "A függő művelet sikertelen"
+
+msgid "Too early"
+msgstr "A kérés túl korán lett elküldve"
+
+msgid "Upgrade required"
+msgstr "Protokoll frissítése szükséges"
+
+msgid "Precondition required"
+msgstr "Hiányoznak a szükséges előfeltételek"
+
+msgid "Too many requests - slow down"
+msgstr "A kérések túl gyakoriak, kérjük, próbálja újra később"
+
+msgid "Request header fields too large (Shopify)"
+msgstr "A kérés fejléc mezői túl nagyok"
+
+msgid "Request header too large"
+msgstr "A kérés fejléce túl nagy"
+
+msgid "Login timeout (IIS)"
+msgstr "A bejelentkezés időtúllépése, kérjük, jelentkezzen be újra"
+
+msgid "No response (nginx)"
+msgstr "A kiszolgáló nem válaszol"
+
+msgid "Retry with (IIS)"
+msgstr "Kérjük, próbálja újra később"
+
+msgid "Blocked by Windows parental controls"
+msgstr "A Windows szülői felügyelet által blokkolva"
+
+msgid "Unavailable for legal reasons"
+msgstr "Nem elérhető jogi okokból"
+
+msgid "Client closed connection before idle timeout (AWS ELB)"
+msgstr "A kliens lezárta a kapcsolatot az inaktivitási időkorlát előtt"
+
+msgid "X-Forwarded-For header with >30 IP addresses (AWS ELB)"
+msgstr "A továbbítási lánc több mint 30 IP-címet tartalmaz"
+
+msgid "Incompatible protocol versions (AWS ELB)"
+msgstr "A protokollverziók nem kompatibilisek"
+
+msgid "Request header too large (nginx)"
+msgstr "A kérés fejléce túl nagy"
+
+msgid "SSL certificate error (nginx)"
+msgstr "SSL tanúsítvány hiba"
+
+msgid "SSL certificate required (nginx)"
+msgstr "SSL tanúsítvány szükséges"
+
+msgid "HTTP request sent to HTTPS port (nginx)"
+msgstr "HTTP kérés lett HTTPS portra küldve"
+
+msgid "Invalid token (ArcGIS)"
+msgstr "Érvénytelen token"
+
+msgid "Token required (ArcGIS) / Client closed request (nginx)"
+msgstr "Token szükséges / A kliens lezárta a kérést"
+
+msgid "Resource limit reached (cPanel)"
+msgstr "Erőforrás-korlát elérve (CPU/memória)"
+
+msgid "Bandwidth limit exceeded (Apache/cPanel)"
+msgstr "Sávszélesség korlát túllépve"
+
+# 5xx
+msgid "[Miscellaneous server errors]"
+msgstr "Egyéb kiszolgálóhibák"
+
+msgid "Internal server error - check logs"
+msgstr "Belső kiszolgálóhiba, ellenőrizze a naplókat"
+
+msgid "Not implemented"
+msgstr "A funkció nem támogatott a kiszolgálón"
+
+msgid "Bad gateway - backend error"
+msgstr "Rossz átjáró, a háttérszolgáltatás rendellenes"
+
+msgid "Service unavailable - maintenance or overload"
+msgstr "A szolgáltatás nem elérhető, karbantartás vagy túlterhelés"
+
+msgid "Gateway timeout"
+msgstr "Átjáró időtúllépése"
+
+msgid "HTTP version not supported"
+msgstr "A HTTP protokoll verzió nem támogatott"
+
+msgid "Variant also negotiates"
+msgstr "A változat részt vesz a tárgyalásban (konfigurációs hiba)"
+
+msgid "Insufficient storage (WebDAV)"
+msgstr "Nem elegendő tárhely"
+
+msgid "Loop detected (WebDAV)"
+msgstr "Ciklikus hivatkozás észlelve"
+
+msgid "Not extended"
+msgstr "További bővítés szükséges"
+
+msgid "Network authentication required"
+msgstr "Hálózati hitelesítés szükséges"
+
+# Cloudflare
+msgid "Unknown error (Cloudflare)"
+msgstr "Ismeretlen hiba"
+
+msgid "Web server is down (Cloudflare)"
+msgstr "A webkiszolgáló leállt"
+
+msgid "Connection timeout (Cloudflare)"
+msgstr "Kapcsolat időtúllépése"
+
+msgid "Origin is unreachable (Cloudflare)"
+msgstr "Az eredet nem érhető el"
+
+msgid "A timeout occurred (Cloudflare)"
+msgstr "Időtúllépés történt"
+
+msgid "SSL handshake failed (Cloudflare)"
+msgstr "SSL kézfogás sikertelen"
+
+msgid "Invalid SSL certificate (Cloudflare)"
+msgstr "Érvénytelen SSL tanúsítvány"
+
+msgid "Railgun error (Cloudflare - obsolete)"
+msgstr "Railgun hiba (elavult)"
+
+msgid "Site is overloaded (SSLLabs)"
+msgstr "Az oldal túlterhelt"
+
+msgid "Origin DNS error (Cloudflare) / Site is frozen (Pantheon)"
+msgstr "Eredet DNS hiba (Cloudflare) / Oldal lefagyott (Pantheon)"
+
+msgid "Temporarily disabled (Shopify)"
+msgstr "Ideiglenesen letiltva"
+
+msgid "Unauthorized (AWS ELB)"
+msgstr "Nem engedélyezett"
+
+msgid "Network read timeout error"
+msgstr "Hálózati olvasási időtúllépési hiba"
+
+msgid "Network connect timeout error"
+msgstr "Hálózati csatlakozási időtúllépési hiba"
+
+msgid "Unexpected token (Shopify)"
+msgstr "Váratlan token"
+
+msgid "Request denied (LinkedIn)"
+msgstr "Kérés megtagadva"
+
+msgid "HTTP/2 GOAWAY (AWS ELB)"
+msgstr "HTTP/2 kapcsolat lezárása"
+
+msgid "[Unknown]"
+msgstr "Ismeretlen állapotkód"
+
+# SMTP és e-mail
+msgid "Nonstandard success response (ESMTP)"
+msgstr "Nem szabványos sikeres válasz (ESMTP)"
+
+msgid "System status, or system help reply"
+msgstr "Rendszerállapot vagy rendszer súgó válasz"
+
+msgid "Help message"
+msgstr "Súgóüzenet"
+
+msgid "SMTP service ready (LMTP)"
+msgstr "SMTP szolgáltatás készen áll (LMTP)"
+
+msgid "Service ready - server is ready to receive mail"
+msgstr "Szolgáltatás készen áll - az e-mail kiszolgáló készen áll az e-mailek fogadására"
+
+msgid "Service closing - connection is being closed"
+msgstr "A szolgáltatás bezárul - a kapcsolat megszakad"
+
+msgid "Authentication successful"
+msgstr "Hitelesítés sikeres"
+
+msgid "Requested mail action taken and completed"
+msgstr "A kért e-mail művelet megtörtént és befejeződött"
+
+msgid "User not local - will forward to another address"
+msgstr "A felhasználó nem helyi - át lesz irányítva egy másik címre"
+
+msgid "Cannot verify recipient, but will attempt delivery"
+msgstr "Nem ellenőrizhető a címzett, de a kézbesítés megkísérlése megtörténik"
+
+msgid "Message accepted for delivery (DSN)"
+msgstr "Az üzenet elfogadva kézbesítésre (DSN)"
+
+msgid "User name is a mailbox"
+msgstr "A felhasználónév egy postafiók"
+
+msgid "Authentication challenge - please respond"
+msgstr "Hitelesítési kihívás - kérjük, válaszoljon"
+
+msgid "Start mail input - end with <CRLF>.<CRLF>"
+msgstr "Kezdje meg az e-mail tartalmának bevitelét - zárja <CRLF>.<CRLF>"
+
+msgid "Continue (LMTP)"
+msgstr "Folytatás (LMTP)"
+
+msgid "Service not available - connection closing, try again later"
+msgstr "A szolgáltatás nem elérhető - a kapcsolat bezárul, próbálja újra később"
+
+msgid "Mailbox busy or temporarily unavailable (Exchange)"
+msgstr "A postafiók foglalt vagy ideiglenesen nem elérhető (Exchange)"
+
+msgid "Connection rate limit exceeded (Postfix)"
+msgstr "A kapcsolódási gyakorisági korlát túllépve (Postfix)"
+
+msgid "Too many concurrent connections (Postfix)"
+msgstr "Túl sok egyidejű kapcsolat (Postfix)"
+
+msgid "Unable to establish connection (Postfix)"
+msgstr "Nem lehet kapcsolatot létesíteni (Postfix)"
+
+msgid "Connection timed out (Postfix)"
+msgstr "A kapcsolat időtúllépése (Postfix)"
+
+msgid "Connection dropped due to error (Postfix)"
+msgstr "A kapcsolat megszakadt hiba miatt (Postfix)"
+
+msgid "Mailbox temporarily locked (Exchange)"
+msgstr "A postafiók ideiglenesen zárolva (Exchange)"
+
+msgid "Too many recipients (Postfix/Exim)"
+msgstr "Túl sok címzett (Postfix/Exim)"
+
+msgid "Mail server error (Exchange)"
+msgstr "E-mail kiszolgáló hiba (Exchange)"
+
+msgid "Received loop detected (Exim)"
+msgstr "Fogadási hurok észlelve (Exim)"
+
+msgid "Too many hop count (Exim)"
+msgstr "Túl sok ugrás (Exim)"
+
+msgid "DNS lookup failed (Postfix)"
+msgstr "DNS keresés sikertelen (Postfix)"
+
+msgid "Unable to authenticate (Postfix)"
+msgstr "Nem lehet hitelesíteni (Postfix)"
+
+msgid "TLS handshake failed (Postfix)"
+msgstr "TLS kézfogás sikertelen (Postfix)"
+
+msgid "SMTP protocol violation (Postfix)"
+msgstr "SMTP protokoll megsértése (Postfix)"
+
+msgid "Message size exceeds limit (Exchange)"
+msgstr "Az üzenet mérete meghaladja a korlátot (Exchange)"
+
+msgid "Message rate limit exceeded (Postfix)"
+msgstr "Az üzenet gyakorisági korlát túllépve (Postfix)"
+
+msgid "Mailbox quota exceeded - temporary"
+msgstr "A postaláda kvótája betelt - ideiglenes állapot"
+
+msgid "Domain not found (Postfix)"
+msgstr "A tartomány nem található (Postfix)"
+
+msgid "Message header invalid (Postfix)"
+msgstr "Az üzenet fejléce érvénytelen (Postfix)"
+
+msgid "Bounce loop detected (Postfix)"
+msgstr "Visszafordulási hurok észlelve (Postfix)"
+
+msgid "Unable to route (Postfix)"
+msgstr "Nem lehet továbbítani (Postfix)"
+
+msgid "Sender domain not found (Postfix)"
+msgstr "A feladó tartománya nem található (Postfix)"
+
+msgid "Recipient domain not found (Postfix)"
+msgstr "A címzett tartománya nem található (Postfix)"
+
+msgid "Greylisting in progress - please try again (Postgrey)"
+msgstr "Greylisting folyamatban - kérjük, próbálja újra (Postgrey)"
+
+msgid "Spam filtering in progress (SpamAssassin)"
+msgstr "Spamszűrés folyamatban (SpamAssassin)"
+
+msgid "Virus scanning in progress (ClamAV)"
+msgstr "Vírusvizsgálat folyamatban (ClamAV)"
+
+msgid "Mailbox unavailable - try again later"
+msgstr "A postafiók nem elérhető - próbálja újra később"
+
+msgid "Requested action aborted - error in processing"
+msgstr "A kért művelet megszakítva - hiba a feldolgozás során"
+
+msgid "Insufficient system storage - try again later"
+msgstr "Nem elegendő rendszertárhely - próbálja újra később"
+
+msgid "Too many messages for this recipient (Exchange)"
+msgstr "Túl sok üzenet ennek a címzettnek (Exchange)"
+
+msgid "TLS not available (Postfix)"
+msgstr "A TLS nem elérhető (Postfix)"
+
+msgid "Server unable to accept messages (Postfix)"
+msgstr "A kiszolgáló nem tudja fogadni az üzeneteket (Postfix)"
+
+msgid "Temporary failure in DNS lookup (Exim)"
+msgstr "Ideiglenes hiba a DNS keresésben (Exim)"
+
+msgid "Quota exceeded - temporary"
+msgstr "A kvóta túllépve - ideiglenes állapot"
+
+msgid "Message too big - temporary"
+msgstr "Az üzenet túl nagy - ideiglenes állapot"
+
+msgid "Too many messages per connection"
+msgstr "Túl sok üzenet kapcsolatonként"
+
+msgid "Load average too high (Postfix)"
+msgstr "A rendszer átlagos terhelése túl magas (Postfix)"
+
+msgid "Connection refused (Postfix)"
+msgstr "A kapcsolat megtagadva (Postfix)"
+
+msgid "Send rate limit exceeded (Postfix)"
+msgstr "Küldési gyakorisági korlát túllépve (Postfix)"
+
+msgid "Recipient rate limit exceeded (Postfix)"
+msgstr "Címzett gyakorisági korlát túllépve (Postfix)"
+
+msgid "Sender rate limit exceeded (Postfix)"
+msgstr "Feladó gyakorisági korlát túllépve (Postfix)"
+
+msgid "IP address rate limit exceeded (Postfix)"
+msgstr "IP-cím gyakorisági korlát túllépve (Postfix)"
+
+msgid "MX lookup failed (Postfix)"
+msgstr "MX keresés sikertelen (Postfix)"
+
+msgid "A record lookup failed (Postfix)"
+msgstr "A rekord keresés sikertelen (Postfix)"
+
+msgid "PTR record lookup failed (Postfix)"
+msgstr "PTR rekord keresés sikertelen (Postfix)"
+
+msgid "Greylisting active - please try again (Postgrey)"
+msgstr "Greylisting aktív - próbálja újra (Postgrey)"
+
+msgid "Access denied - unknown SMTP client hostname"
+msgstr "Hozzáférés megtagadva - ismeretlen SMTP kliens hosztnév"
+
+msgid "Access denied - bad syntax for client HELO hostname"
+msgstr "Hozzáférés megtagadva - a kliens HELO gazdanév szintaxisa hibás"
+
+msgid "Access denied - SMTP client hostname rejected"
+msgstr "Hozzáférés megtagadva - az SMTP kliens gazdaneve elutasítva"
+
+msgid "Access denied - unknown domain for sender or recipient"
+msgstr "Hozzáférés megtagadva - ismeretlen tartomány a feladó vagy a címzett számára"
+
+msgid "Sender address rejected - domain not verified (DMARC pending)"
+msgstr "A feladó címe elutasítva - a tartomány nincs ellenőrizve (DMARC függőben)"
+
+msgid "Recipient address rejected - domain not verified (DMARC pending)"
+msgstr "A címzett címe elutasítva - a tartomány nincs ellenőrizve (DMARC függőben)"
+
+msgid "DKIM verification pending - temporary failure"
+msgstr "DKIM ellenőrzés függőben - ideiglenes hiba"
+
+msgid "SPF verification pending - temporary failure"
+msgstr "SPF ellenőrzés függőben - ideiglenes hiba"
+
+msgid "DMARC verification pending - temporary failure"
+msgstr "DMARC ellenőrzés függőben - ideiglenes hiba"
+
+msgid "DNSBL lookup temporary failure"
+msgstr "DNSBL keresés - ideiglenes hiba"
+
+msgid "RHSBL lookup temporary failure"
+msgstr "RHSBL keresés - ideiglenes hiba"
+
+msgid "URI DNSBL lookup temporary failure"
+msgstr "URI DNSBL keresés - ideiglenes hiba"
+
+msgid "Temporary authentication failure (Dovecot)"
+msgstr "Ideiglenes hitelesítési hiba (Dovecot)"
+
+msgid "Temporary authorization failure (Sendmail)"
+msgstr "Ideiglenes engedélyezési hiba (Sendmail)"
+
+msgid "Rate limit exceeded per sender (Exim)"
+msgstr "Gyakorisági korlát túllépve feladónként (Exim)"
+
+msgid "Rate limit exceeded per recipient (Exim)"
+msgstr "Gyakorisági korlát túllépve címzettenként (Exim)"
+
+msgid "Rate limit exceeded per domain (Exim)"
+msgstr "Gyakorisági korlát túllépve tartományonként (Exim)"
+
+msgid "Rate limit exceeded per IP (Exim)"
+msgstr "Gyakorisági korlát túllépve IP-nként (Exim)"
+
+msgid "Message queued for later delivery (Postfix)"
+msgstr "Az üzenet sorba került a későbbi kézbesítéshez (Postfix)"
+
+msgid "Delivery delayed due to policy (Exchange)"
+msgstr "A kézbesítés késik a szabályzat miatt (Exchange)"
+
+msgid "Temporary failure in content filter"
+msgstr "Ideiglenes hiba a tartalomszűrőben"
+
+msgid "Temporary failure in antivirus scanner"
+msgstr "Ideiglenes hiba a víruskeresőben"
+
+msgid "Temporary failure in spam filter"
+msgstr "Ideiglenes hiba a spamszűrőben"
+
+msgid "Temporary failure in milter (Postfix)"
+msgstr "Ideiglenes hiba a milterben (Postfix)"
+
+msgid "Greylisting - try again later"
+msgstr "Greylisting - próbálja újra később"
+
+msgid "DDoS protection active - try again later"
+msgstr "DDoS védelem aktív - próbálja újra később"
+
+msgid "SMTP policy violation - temporary"
+msgstr "SMTP szabályzat megsértése - ideiglenes állapot"
+
+msgid "Temporary error in RCPT TO processing"
+msgstr "Ideiglenes hiba a RCPT TO feldolgozásában"
+
+msgid "Temporary error in MAIL FROM processing"
+msgstr "Ideiglenes hiba a MAIL FROM feldolgozásában"
+
+msgid "Temporary error in EHLO/HELO processing"
+msgstr "Ideiglenes hiba az EHLO/HELO feldolgozásában"
+
+msgid "Temporary error in DATA processing"
+msgstr "Ideiglenes hiba a DATA feldolgozásában"
+
+msgid "Temporary error - service busy, try again later"
+msgstr "Ideiglenes hiba - a szolgáltatás foglalt, próbálja újra később"
+
+msgid "Syntax error - command unrecognized or too long"
+msgstr "Szintaktikai hiba - a parancs nem ismert vagy túl hosszú"
+
+msgid "Syntax error in parameters or arguments"
+msgstr "Szintaktikai hiba a paraméterekben vagy argumentumokban"
+
+msgid "Command not implemented"
+msgstr "A parancs nincs megvalósítva"
+
+msgid "Bad sequence of commands"
+msgstr "Rossz parancssorrend"
+
+msgid "Command parameter not implemented"
+msgstr "A parancs paramétere nincs megvalósítva"
+
+msgid "Version not supported (ESMTP)"
+msgstr "A verzió nem támogatott (ESMTP)"
+
+msgid "Mailbox path invalid (LMTP)"
+msgstr "A postafiók útvonala érvénytelen (LMTP)"
+
+msgid "Too many commands in this session (Postfix)"
+msgstr "Túl sok parancs ebben a munkamenetben (Postfix)"
+
+msgid "Recipient limit exceeded (Postfix)"
+msgstr "A címzettek korlátja túllépve (Postfix)"
+
+msgid "Sender limit exceeded (Postfix)"
+msgstr "A feladók korlátja túllépve (Postfix)"
+
+msgid "Domain limit exceeded (Postfix)"
+msgstr "A tartományok korlátja túllépve (Postfix)"
+
+msgid "Mailbox does not exist (Exchange)"
+msgstr "A postafiók nem létezik (Exchange)"
+
+msgid "DNS failure - permanent"
+msgstr "DNS hiba - végleges"
+
+msgid "Address type not supported (Postfix)"
+msgstr "A címtípus nem támogatott (Postfix)"
+
+msgid "Unable to open mailbox (Postfix)"
+msgstr "Nem lehet megnyitni a postafiókot (Postfix)"
+
+msgid "Mailbox locked - permanent"
+msgstr "A postafiók zárolva - végleges állapot"
+
+msgid "Message rejected due to policy (Exchange)"
+msgstr "Az üzenet elutasítva a szabályzat miatt (Exchange)"
+
+msgid "Content rejected - permanent"
+msgstr "A tartalom elutasítva - végleges"
+
+msgid "Attachment type not allowed"
+msgstr "A melléklet típusa nem engedélyezett"
+
+msgid "Message encoding not supported"
+msgstr "Az üzenet kódolása nem támogatott"
+
+msgid "Sender domain does not exist - permanent"
+msgstr "A feladó tartománya nem létezik - végleges"
+
+msgid "Domain does not accept mail or is closing"
+msgstr "A tartomány nem fogad e-maileket, vagy bezár"
+
+msgid "Recipient domain does not exist - permanent"
+msgstr "A címzett tartománya nem létezik - végleges"
+
+msgid "Mailbox quota exceeded - permanent"
+msgstr "A postaláda kvótája betelt - végleges"
+
+msgid "Message size exceeds limit - permanent"
+msgstr "Az üzenet mérete meghaladja a korlátot - végleges"
+
+msgid "Authentication required (Sendmail)"
+msgstr "Hitelesítés szükséges (Sendmail)"
+
+msgid "Authentication failed (Sendmail)"
+msgstr "Hitelesítés sikertelen (Sendmail)"
+
+msgid "Authentication mechanism not supported"
+msgstr "A hitelesítési mechanizmus nem támogatott"
+
+msgid "Authentication credentials invalid"
+msgstr "A hitelesítő adatok érvénytelenek"
+
+msgid "Authentication account expired"
+msgstr "A hitelesítési fiók lejárt"
+
+msgid "Access denied - authentication required"
+msgstr "Hozzáférés megtagadva - hitelesítés szükséges"
+
+msgid "Access denied (Sendmailism)"
+msgstr "Hozzáférés megtagadva (Sendmail)"
+
+msgid "Access denied - not authenticated"
+msgstr "Hozzáférés megtagadva - nincs hitelesítve"
+
+msgid "Access denied - account locked"
+msgstr "Hozzáférés megtagadva - a fiók zárolva"
+
+msgid "Access denied - account disabled"
+msgstr "Hozzáférés megtagadva - a fiók letiltva"
+
+msgid "Authentication failed"
+msgstr "Hitelesítés sikertelen"
+
+msgid "Authentication required for relay (Postfix)"
+msgstr "Hitelesítés szükséges a továbbításhoz (Postfix)"
+
+msgid "Authentication failed for relay (Postfix)"
+msgstr "A továbbításhoz szükséges hitelesítés sikertelen (Postfix)"
+
+msgid "Encryption required (STARTTLS)"
+msgstr "Titkosított kapcsolat szükséges (STARTTLS)"
+
+msgid "TLS required for this recipient"
+msgstr "Ez a címzett TLS titkosítást igényel"
+
+msgid "Encryption strength insufficient"
+msgstr "A titkosítás erőssége nem megfelelő"
+
+msgid "Certificate validation failed"
+msgstr "A tanúsítvány ellenőrzése sikertelen"
+
+msgid "Invalid TLS certificate"
+msgstr "Érvénytelen TLS tanúsítvány"
+
+msgid "TLS protocol version not supported"
+msgstr "A TLS protokoll verzió nem támogatott"
+
+msgid "Cipher suite not supported"
+msgstr "A titkosítási csomag nem támogatott"
+
+msgid "Access denied - no valid recipient"
+msgstr "Hozzáférés megtagadva - nincs érvényes címzett"
+
+msgid "Access denied - no valid sender"
+msgstr "Hozzáférés megtagadva - nincs érvényes feladó"
+
+msgid "Access denied - domain not allowed"
+msgstr "Hozzáférés megtagadva - a tartomány nem engedélyezett"
+
+msgid "Access denied - IP address blocked (permanent)"
+msgstr "Hozzáférés megtagadva - az IP-cím blokkolva van (végleges)"
+
+msgid "Access denied - sender domain blacklisted"
+msgstr "Hozzáférés megtagadva - a feladó tartománya feketelistán van"
+
+msgid "Mailbox unavailable - requested action not taken"
+msgstr "A postafiók nem elérhető - a kért művelet nem történt meg"
+
+msgid "User not local - please try forwarding address"
+msgstr "A felhasználó nem helyi - kérjük, próbálja a továbbítási címet"
+
+msgid "Requested action aborted - exceeded storage allocation"
+msgstr "A kért művelet megszakítva - a tárolási allokáció túllépve"
+
+msgid "Mailbox name not allowed"
+msgstr "A postafiók neve nem engedélyezett"
+
+msgid "Requested action rejected - access denied"
+msgstr "A kért művelet elutasítva - hozzáférés megtagadva"
+
+msgid "MAIL FROM/RCPT TO parameters not recognized"
+msgstr "A MAIL FROM/RCPT TO paraméterek nem ismertek"
+
+msgid "Domain not allowed to send (DMARC reject)"
+msgstr "A tartomány nem küldhet (DMARC elutasítás)"
+
+msgid "Too many duplicate messages - permanent"
+msgstr "Túl sok ismétlődő üzenet - végleges"
+
+msgid "Sender address rejected - domain not in SPF"
+msgstr "A feladó címe elutasítva - a tartomány nincs az SPF-ben"
+
+msgid "Sender address rejected - DKIM verification failed"
+msgstr "A feladó címe elutasítva - DKIM ellenőrzés sikertelen"
+
+msgid "Sender address rejected - DMARC policy reject"
+msgstr "A feladó címe elutasítva - DMARC szabályzat elutasítja"
+
+msgid "Recipient address rejected - DMARC policy reject"
+msgstr "A címzett címe elutasítva - DMARC szabályzat elutasítja"
+
+msgid "Message rejected due to spam content"
+msgstr "Az üzenet elutasítva spam tartalom miatt"
+
+msgid "Message rejected due to virus detected"
+msgstr "Az üzenet elutasítva vírus észlelése miatt"
+
+msgid "Message rejected due to malicious content"
+msgstr "Az üzenet elutasítva kártékony tartalom miatt"
+
+msgid "Message rejected due to phishing detection"
+msgstr "Az üzenet elutasítva adathalászat észlelése miatt"
+
+msgid "Message rejected due to malware detection"
+msgstr "Az üzenet elutasítva kártevő észlelése miatt"
+
+msgid "Message rejected due to policy - permanent"
+msgstr "Az üzenet elutasítva a szabályzat miatt - végleges"
+
+msgid "Message rejected due to content filtering"
+msgstr "Az üzenet elutasítva tartalomszűrés miatt"
+
+msgid "Message rejected due to reputation"
+msgstr "Az üzenet elutasítva a hírnév miatt"
+
+msgid "Access denied - access_map violation"
+msgstr "Hozzáférés megtagadva - access_map megsértése"
+
+msgid "Access denied - SMTP client listed in RBL"
+msgstr "Hozzáférés megtagadva - SMTP kliens szerepel az RBL-ben"
+
+msgid "Access denied - relay not authorized"
+msgstr "Hozzáférés megtagadva - a továbbítás nem engedélyezett"
+
+msgid "Access denied - unknown client HELO hostname"
+msgstr "Hozzáférés megtagadva - ismeretlen kliens HELO hosztnév"
+
+msgid "Access denied - invalid domain (not FQDN)"
+msgstr "Hozzáférés megtagadva - érvénytelen tartomány (nem FQDN)"
+
+msgid "Access denied - domain not qualified"
+msgstr "Hozzáférés megtagadva - a tartomány nem minősített"
+
+msgid "Access denied - mail server misconfigured"
+msgstr "Hozzáférés megtagadva - az e-mail kiszolgáló rosszul van konfigurálva"
+
+msgid "Access denied - open relay not allowed"
+msgstr "Hozzáférés megtagadva - nyílt továbbítás nem engedélyezett"
+
+msgid "Access denied - proxy not allowed"
+msgstr "Hozzáférés megtagadva - proxy nem engedélyezett"
+
+msgid "Access denied - dynamic IP not allowed"
+msgstr "Hozzáférés megtagadva - dinamikus IP-cím nem engedélyezett"
+
+msgid "Access denied - residential IP not allowed"
+msgstr "Hozzáférés megtagadva - lakossági IP-cím nem engedélyezett"
+
+msgid "Access denied - VPN/Tor detected"
+msgstr "Hozzáférés megtagadva - VPN/Tor észlelve"
+
+msgid "Access denied - Spamhaus DROP listed"
+msgstr "Hozzáférés megtagadva - szerepel a Spamhaus DROP listán"
+
+msgid "Access denied - URL listed in URIBL"
+msgstr "Hozzáférés megtagadva - az URL szerepel az URIBL-ben"
+
+msgid "Access denied - domain in RHSBL"
+msgstr "Hozzáférés megtagadva - a tartomány szerepel az RHSBL-ben"
+
+msgid "Access denied - IP in DNSWL (policy)"
+msgstr "Hozzáférés megtagadva - az IP-cím szerepel a DNSWL-ben (szabályzat)"
+
+msgid "Delivery failed - mailbox not found"
+msgstr "A kézbesítés sikertelen - a postafiók nem található"
+
+msgid "Delivery failed - recipient not local"
+msgstr "A kézbesítés sikertelen - a címzett nem helyi"
+
+msgid "Delivery failed - recipient rejected"
+msgstr "A kézbesítés sikertelen - a címzett elutasítva"
+
+msgid "Delivery failed - sender rejected"
+msgstr "A kézbesítés sikertelen - a feladó elutasítva"
+
+msgid "Delivery failed - relay rejected"
+msgstr "A kézbesítés sikertelen - a továbbítás elutasítva"
+
+msgid "Delivery failed - DNS permanent error"
+msgstr "A kézbesítés sikertelen - végleges DNS hiba"
+
+msgid "Delivery failed - MX permanent error"
+msgstr "A kézbesítés sikertelen - végleges MX hiba"
+
+msgid "Delivery failed - A record permanent error"
+msgstr "A kézbesítés sikertelen - végleges A rekord hiba"
+
+msgid "Delivery failed - PTR record permanent error"
+msgstr "A kézbesítés sikertelen - végleges PTR rekord hiba"
+
+msgid "Delivery failed - policy permanent error"
+msgstr "A kézbesítés sikertelen - végleges szabályzat hiba"
+
+msgid "DSN: Success - delivery status notification"
+msgstr "DSN: Sikeres - kézbesítési állapot értesítés"
+
+msgid "DSN: Delivery delayed"
+msgstr "DSN: Kézbesítés késik"
+
+msgid "DSN: Delivery failed - permanent"
+msgstr "DSN: Kézbesítés sikertelen - végleges"
+
+msgid "DSN: Delivery failed - temporary"
+msgstr "DSN: Kézbesítés sikertelen - ideiglenes"
+
+msgid "DSN: Message expired"
+msgstr "DSN: Az üzenet lejárt"
+
+msgid "DSN: Message bounced"
+msgstr "DSN: Az üzenet visszapattant"
+
+msgid "DSN: Message discarded"
+msgstr "DSN: Az üzenet eldobva"
+
+msgid "DSN: Message filtered"
+msgstr "DSN: Az üzenet szűrve"
+
+msgid "DSN: Message quarantined"
+msgstr "DSN: Az üzenet karanténba helyezve"
+
+msgid "DSN: Message held for review"
+msgstr "DSN: Az üzenet feltartva felülvizsgálatra"
+
+msgid "MTA-STS policy required"
+msgstr "MTA-STS szabályzat szükséges"
+
+msgid "MTA-STS policy validation failed"
+msgstr "Az MTA-STS szabályzat érvényesítése sikertelen"
+
+msgid "TLS reporting required"
+msgstr "TLS jelentés szükséges"
+
+msgid "TLS report requested"
+msgstr "TLS jelentés kérve"
+
+msgid "SMTP MTA Strict Transport Security active"
+msgstr "SMTP MTA Strict Transport Security aktív"
+
+msgid "DANE validation required"
+msgstr "DANE érvényesítés szükséges"
+
+msgid "DANE validation failed"
+msgstr "A DANE érvényesítés sikertelen"
+
+msgid "TLSA record missing"
+msgstr "TLSA rekord hiányzik"
+
+msgid "Certificate name mismatch"
+msgstr "A tanúsítvány neve nem egyezik"
+
+msgid "Certificate expired"
+msgstr "A tanúsítvány lejárt"
+
+msgid "AUTH LOGIN required"
+msgstr "AUTH LOGIN szükséges"
+
+msgid "AUTH PLAIN required"
+msgstr "AUTH PLAIN szükséges"
+
+msgid "AUTH CRAM-MD5 required"
+msgstr "AUTH CRAM-MD5 szükséges"
+
+msgid "AUTH DIGEST-MD5 required"
+msgstr "AUTH DIGEST-MD5 szükséges"
+
+msgid "AUTH GSSAPI required"
+msgstr "AUTH GSSAPI szükséges"
+
+msgid "AUTH NTLM required"
+msgstr "AUTH NTLM szükséges"
+
+msgid "AUTH SCRAM required"
+msgstr "AUTH SCRAM szükséges"
+
+msgid "AUTH OAUTHBEARER required"
+msgstr "AUTH OAUTHBEARER szükséges"
+
+msgid "AUTH XOAUTH2 required"
+msgstr "AUTH XOAUTH2 szükséges"
+
+msgid "Exchange: Mailbox database error"
+msgstr "Exchange: Hiba a postafiók adatbázisában"
+
+msgid "Exchange: Store driver error"
+msgstr "Exchange: Hiba a tároló illesztőprogramjában"
+
+msgid "Exchange: Transport agent error"
+msgstr "Exchange: Hiba a szállítási ügynökben"
+
+msgid "Exchange: Content conversion error"
+msgstr "Exchange: Hiba a tartalom konvertálásában"
+
+msgid "Exchange: Routing error"
+msgstr "Exchange: Hiba az útválasztásban"
+
+msgid "Exchange: Mail flow stalled"
+msgstr "Exchange: A levelezési folyamat leállt"
+
+msgid "Exchange: Shadow redundancy error"
+msgstr "Exchange: Hiba az árnyék redundanciában"
+
+msgid "Exchange: Safety net error"
+msgstr "Exchange: Hiba a biztonsági hálóban"
+
+msgid "Exchange: Queue database error"
+msgstr "Exchange: Hiba a sor adatbázisában"
+
+msgid "Exchange: Message throttled"
+msgstr "Exchange: Az üzenet korlátozva"
+
+msgid "Postfix: Bounce queue error"
+msgstr "Postfix: Hiba a visszapattanási sorban"
+
+msgid "Postfix: Deferred queue error"
+msgstr "Postfix: Hiba a halasztott sorban"
+
+msgid "Postfix: Hold queue error"
+msgstr "Postfix: Hiba a tartási sorban"
+
+msgid "Postfix: Incoming queue error"
+msgstr "Postfix: Hiba a bejövő sorban"
+
+msgid "Postfix: Active queue error"
+msgstr "Postfix: Hiba az aktív sorban"
+
+msgid "Postfix: Corrupted queue file"
+msgstr "Postfix: Sérült sor fájl"
+
+msgid "Sendmail: Queue runner error"
+msgstr "Sendmail: Hiba a sor futójában"
+
+msgid "Sendmail: Alias database error"
+msgstr "Sendmail: Hiba az álnév adatbázisban"
+
+msgid "Sendmail: Virtuser table error"
+msgstr "Sendmail: Hiba a virtuális felhasználói táblában"
+
+msgid "Sendmail: Mailer definition error"
+msgstr "Sendmail: Hiba a levélküldő definíciójában"
+
+msgid "Exim: Router configuration error"
+msgstr "Exim: Hiba az útválasztó konfigurációjában"
+
+msgid "Exim: Transport configuration error"
+msgstr "Exim: Hiba a szállítás konfigurációjában"
+
+msgid "Exim: Director configuration error"
+msgstr "Exim: Hiba a rendező konfigurációjában"
+
+msgid "Exim: Retry configuration error"
+msgstr "Exim: Hiba az újrapróbálkozás konfigurációjában"
+
+msgid "Exim: Rewrite configuration error"
+msgstr "Exim: Hiba az átírás konfigurációjában"
+
+msgid "Exim: Authentication configuration error"
+msgstr "Exim: Hiba a hitelesítés konfigurációjában"
+
+msgid "Exim: ACL configuration error"
+msgstr "Exim: Hiba az ACL konfigurációjában"
+
+msgid "Exim: Local_scan configuration error"
+msgstr "Exim: Hiba a Local_scan konfigurációjában"
+
+msgid "Exim: Lookup configuration error"
+msgstr "Exim: Hiba a keresés konfigurációjában"
+
+msgid "Exim: Expansion configuration error"
+msgstr "Exim: Hiba a kiterjesztés konfigurációjában"
+
+msgid "HTTP Protocol Versions"
+msgstr "HTTP protokoll verziók"
+
+msgid "Protocol"
+msgstr "Protokoll"
+
+msgid "Request %"
+msgstr "Kérés arány"
+
+msgid "Bandwidth %"
+msgstr "Sávszélesség arány"
+
+msgid "Each request requires a new connection"
+msgstr "Minden kérés új kapcsolatot igényel"
+
+msgid "Multiple requests can reuse one connection"
+msgstr "Több kérés újrahasználhatja ugyanazt a kapcsolatot"
+
+msgid "Multiple requests in parallel over one connection"
+msgstr "Több párhuzamos kérés egyetlen kapcsolaton keresztül"
+
+msgid "Faster connection, better performance on poor networks"
+msgstr "Gyorsabb kapcsolat, jobb teljesítmény gyenge hálózatokon"
+
+msgid "No protocol data available"
+msgstr "Nem állnak rendelkezésre protokoll adatok"
+
+msgid "of requests use HTTP/1.0"
+msgstr "a kérések HTTP/1.0 protokollt használnak"
+
+msgid "From access logs"
+msgstr "Hozzáférési naplókból"
+
+msgid "No HTTP/2 requests detected"
+msgstr "Nem észlelhető HTTP/2 protokoll kérés"
+
+msgid "All requests are HTTP/1.0, no HTTP/2 requests"
+msgstr "Az összes jelenlegi kérés HTTP/1.0, nincs HTTP/2 kérés"
+
+msgid "HTTP/3 not detected"
+msgstr "Nem észlelhető HTTP/3 protokoll kérés"
+
+msgid "all requests do not include QUIC/HTTP/3 protocol requests"
+msgstr "a jelenlegi kérések nem tartalmaznak QUIC/HTTP/3 protokoll kéréseket"
+
+msgid "Mail Authentication Statistics"
+msgstr "E-mail hitelesítési statisztikák"
+
+msgid "Authentication"
+msgstr "Hitelesítés típusa"
+
+msgid "Pass"
+msgstr "Sikeres"
+
+msgid "Fail"
+msgstr "Sikertelen"
+
+msgid "Softfail"
+msgstr "Lágy sikertelenség"
+
+msgid "Neutral"
+msgstr "Semleges"
+
+msgid "None"
+msgstr "Nincs"
+
+msgid "Mail Queue Delay Statistics"
+msgstr "E-mail sor késleltetési statisztikák"
+
+msgid "Delay Range"
+msgstr "Késleltetési tartomány"
+
+msgid "Count"
+msgstr "Szám"
+
+msgid "Percentage"
+msgstr "Százalék"
+
+msgid "TLS Encryption Statistics"
+msgstr "TLS titkosítási statisztikák"
+
+msgid "TLS Versions"
+msgstr "TLS verziók"
+
+msgid "Top Ciphers"
+msgstr "Leggyakoribb titkosítási csomagok"
+
+msgid "robot_hits_detail_both"
+msgstr "Összes kérés: %s (normál oldalak: %s, robots.txt: %s)"
+
+msgid "robot_hits_detail_only_robots"
+msgstr "Csak robots.txt: %s alkalom, egyéb oldalak lekérése nélkül"
+
+msgid "robot_hits_detail_normal"
+msgstr "Normál oldalak kérései: %s"
+
+# Súgó és tippek
+msgid "Troubleshooting"
+msgstr "Hibaelhárítás"
+
+msgid "Did you use the correct URL?"
+msgstr "A megfelelő URL-t használta?"
+
+msgid "Example:"
+msgstr "Példa:"
+
+msgid "Did you use correct config parameter?"
+msgstr "A megfelelő konfigurációs paramétert használta?"
+
+msgid "Example: If your config file is awstats.mysite.conf, use -config=mysite"
+msgstr "Példa: Ha a konfigurációs fájl neve awstats.ensite.conf, használja a -config=ensite paramétert"
+
+msgid "Did you create your config file 'awstats.$SiteConfig.conf'?"
+msgstr "Létrehozta a 'awstats.$SiteConfig.conf' konfigurációs fájlt?"
+
+msgid "If not, you can run \"awstats_configure.pl\" from command line, or create it manually."
+msgstr "Ha nem, futtathatja a \"awstats_configure.pl\" parancsot a parancssorból, vagy létrehozhatja manuálisan."
+
+msgid "Setup"
+msgstr "Beállítás"
+
+msgid "file, web server or permissions may be wrong."
+msgstr "fájl, webkiszolgáló vagy jogosultságok hibásak lehetnek."
+
+msgid "Check config file, permissions and AWStats documentation (in 'docs' directory)."
+msgstr "Ellenőrizze a konfigurációs fájlt, a jogosultságokat és az AWStats dokumentációt (a 'docs' könyvtárban)."
+
+msgid "Warning: Can't find language files for \"%s\". English will be used."
+msgstr "Figyelmeztetés: Nem találhatóak a \"%s\" nyelv fájljai. Az angol nyelv kerül használatra."
+
+#------------------------------------------------------------------------------
+# Hibák és jelek kezelése
+#------------------------------------------------------------------------------
+
+msgid "%s process (ID %s) interrupted by signal %s."
+msgstr "%s folyamat (ID %s) megszakítva a(z) %s jellel."
+
+msgid "An AWStats update process seems to be already running for this config file. Try later. If this is not true, remove manually lock file"
+msgstr "Úgy tűnik, hogy egy AWStats frissítési folyamat már fut ehhez a konfigurációs fájlhoz. Próbálja újra később. Ha ez nem igaz, távolítsa el manuálisan a zároló fájlt"
+
+#------------------------------------------------------------------------------
+# Új statisztikai címek
+#------------------------------------------------------------------------------
+msgid "Report Overview"
+msgstr "Jelentés áttekintése"
+
+msgid "Monthly Statistics"
+msgstr "Havi statisztikák"
+
+msgid "Daily Statistics"
+msgstr "Napi statisztikák"
+
+msgid "Statistics by Day of Week"
+msgstr "Statisztikák a hét napjai szerint"
+
+msgid "Hourly Page Views"
+msgstr "Oldalmegtekintések óránként"
+
+msgid "Traffic Sources"
+msgstr "Forgalmi források"
+
+msgid "Other Sources"
+msgstr "Egyéb források"
+
+msgid "tooltip_1"
+msgstr "A látogatók munkameneteinek száma a weboldalon. Ha ugyanaz a látogató több mint 30 perc tétlenség után újra hozzáfér, új látogatásként kerül elszámolásra"
+
+msgid "tooltip_2"
+msgstr "A weboldalát meglátogató különböző látogatók száma a kiválasztott időszakban. IP-címeken alapuló statisztika"
+
+msgid "tooltip_3"
+msgstr "Azon kérések száma, amelyeket oldalnak tekintünk (pl. HTML, PHP, ASP), nem tartalmazza a statikus fájlokat, mint képek, CSS, JS"
+
+msgid "tooltip_4"
+msgstr "A kiszolgálónak küldött összes kérés száma, beleértve az oldalakat, képeket, CSS-t, JS-t és az összes többi fájlt"
+
+msgid "tooltip_5"
+msgstr "A felhasználói kérésekre válaszul továbbított adatok teljes mennyisége"
+
+msgid "tooltip_13"
+msgstr "A keresőmotorokon keresztül érkező források statisztikája. Megmutatja, mely keresőmotorok hoznak forgalmat, és milyen keresőszavakat használnak a látogatók."
+
+msgid "tooltip_14"
+msgstr "Más weboldalak külső hivatkozásain keresztül érkező források statisztikája. Megmutatja, mely weboldalak hivatkoznak Önre, és mekkora forgalmat hoznak."
+
+msgid "tooltip_15"
+msgstr "A látogatók által használt szavak, amikor megtalálják Önt a keresőmotorokon keresztül. A kulcsszavak egyedi szavak, a kulcskifejezések több szó kombinációi."
+
+msgid "tooltip_16"
+msgstr "Automatikus programok, mint keresőrobotok, MI-képző botok, sebezhetőségvizsgálók. A zárójelben lévő számok a normál oldalakra és a robots.txt-re vonatkozó kéréseket jelölik."
+
+msgid "tooltip_17"
+msgstr "24 órás forgalom-eloszlási diagram. Megmutatja weboldala látogatottságát a nap különböző szakaszaiban, segít megérteni a felhasználók aktív időszakait."
+
+msgid "tooltip_18"
+msgstr "Ez az oszlop a kiválasztott időszak napi/heti átlagait mutatja, segít megérteni az általános trendet."
+
+msgid "tooltip_19"
+msgstr "Kattintson a diagram egy elemére a részletek megtekintéséhez. Vigye az egérmutatót a diagram egy eleme fölé a konkrét értékek megtekintéséhez."
+
+msgid "tooltip_20"
+msgstr "Az adatok, amelyek nem sorolhatók be a meglévő kategóriákba, általában rendellenes adatformátum vagy hiányzó információk miatt."
+
+msgid "tooltip_21"
+msgstr "Észlelt féregtámadások rögzítése. A férgek önmagukat másoló rosszindulatú programok, amelyek általában hálózati sebezhetőségeken keresztül terjednek."
+
+#------------------------------------------------------------------------------
+# Súgó információk megjelenítése - Community Edition
+#------------------------------------------------------------------------------
+msgid "AWStats %s - Advanced Web Statistics"
+msgstr "AWStats %s - Speciális webes statisztikák"
+
+msgid "Copyright (c) 2000-2025 Laurent Destailleur"
+msgstr "Copyright (c) 2000-2025 Laurent Destailleur"
+
+msgid "Copyright (c) 2026-latest Community Edition"
+msgstr "Copyright (c) 2026-legújabb Közösségi Kiadás"
+
+msgid "AWStats comes with ABSOLUTELY NO WARRANTY. It's a free software distributed with a GNU General Public License (See LICENSE file for details)."
+msgstr "Az AWStats SEMIFÉLE GARANCIÁVAL NEM RENDELKEZIK. Ez egy szabad szoftver, amely a GNU General Public License alatt kerül terjesztésre (A részleteket lásd a LICENSE fájlban)."
+
+msgid "Syntax: %s -config=virtualhostname [options]"
+msgstr "Szintaxis: %s -config=virtuális_gazdanév [opciók]"
+
+msgid "This runs %s in command line to update statistics (-update option) of a web site, from the log file defined in AWStats config file, or build a HTML report (-output option)."
+msgstr "Ez a parancs futtatja a %-t a parancssorban egy webhely statisztikáinak frissítéséhez (-update opció) az AWStats konfigurációs fájlban meghatározott naplófájlból, vagy egy HTML jelentés (-output opció) létrehozásához."
+
+msgid "First, %s tries to read %s.virtualhostname.conf as the config file. If not found, %s tries to read %s.conf, and finally the full path passed to -config="
+msgstr "Először a %s megpróbálja beolvasni a %s.virtuális_gazdanév.conf fájlt konfigurációs fájlként. Ha nem található, a %s megpróbálja beolvasni a %s.conf fájlt, végül a -config= paraméternek átadott teljes elérési utat."
+
+msgid "Note 1: Config files (*.conf) must be in /etc/awstats, /usr/local/etc/awstats, /etc or same directory than awstats.pl script file."
+msgstr "Megjegyzés 1: A konfigurációs fájloknak (*.conf) a következőkben kell lenniük: /etc/awstats, /usr/local/etc/awstats, /etc vagy ugyanabban a könyvtárban, mint az awstats.pl szkriptfájl."
+
+msgid "Note 2: If AWSTATS_FORCE_CONFIG environment variable is defined, AWStats will use it as the 'config' value, whatever is the value on command line or URL."
+msgstr "Megjegyzés 2: Ha az AWSTATS_FORCE_CONFIG környezeti változó definiálva van, az AWStats ezt használja 'config' értékként, függetlenül a parancssorban vagy URL-ben megadott értéktől."
+
+msgid "See AWStats documentation for all setup instructions."
+msgstr "Minden beállítási utasítást az AWStats dokumentációjában talál."
+
+msgid "Options to update statistics:"
+msgstr "Opciók a statisztikák frissítéséhez:"
+
+msgid "  -update        to update statistics (default)"
+msgstr "  -update        frissíti a statisztikákat (alapértelmezett)"
+
+msgid "  -showsteps     to add benchmark information every %s lines processed"
+msgstr "  -showsteps     teljesítményadatokat ad hozzá minden %s feldolgozott sor után"
+
+msgid "  -showcorrupted to add output for each corrupted lines found, with reason"
+msgstr "  -showcorrupted kimenetet ad minden talált sérült sorhoz, indokkal"
+
+msgid "  -showdropped   to add output for each dropped lines found, with reason"
+msgstr "  -showdropped   kimenetet ad minden talált eldobott sorhoz, indokkal"
+
+msgid "  -showunknownorigin  to output referer when it can't be parsed"
+msgstr "  -showunknownorigin   kiírja a hivatkozót, ha nem elemezhető"
+
+msgid "  -showdirectorigin   to output log line when origin is a direct access"
+msgstr "  -showdirectorigin    kiírja a naplósort, ha a forrás közvetlen hozzáférés"
+
+msgid "  -updatefor=n   to stop the update process after parsing n lines"
+msgstr "  -updatefor=n   leállítja a frissítési folyamatot n sor elemzése után"
+
+msgid "  -LogFile=x     to change log to analyze whatever is 'LogFile' in config file"
+msgstr "  -LogFile=x     megváltoztatja az elemzendő naplófájlt, függetlenül a konfigurációs fájl 'LogFile' értékétől"
+
+msgid "  Be care to process log files in chronological order when updating statistics."
+msgstr "  Ügyeljen arra, hogy a statisztikák frissítésekor a naplófájlokat időrendi sorrendben dolgozza fel."
+
+msgid "Options to show statistics:"
+msgstr "Opciók a statisztikák megjelenítéséhez:"
+
+msgid "  -output      to output main HTML report (no update made except with -update)"
+msgstr "  -output       kiírja a fő HTML jelentést (nem történik frissítés, kivéve -update-tel)"
+
+msgid "  -output=x    to output other report pages where x is:"
+msgstr "  -output=x     kiírja a többi jelentésoldalt, ahol x a következő:"
+
+msgid "build page of all domains/countries"
+msgstr "összes tartomány/ország oldalának felépítése"
+
+msgid "build page of all hosts"
+msgstr "összes hoszt oldalának felépítése"
+
+msgid "build page of last hits for hosts"
+msgstr "hosztok utolsó találatainak oldalának felépítése"
+
+msgid "build page of all unresolved IP"
+msgstr "összes feloldatlan IP oldalának felépítése"
+
+msgid "build page of all email senders (maillog)"
+msgstr "összes e-mail feladó oldalának felépítése (maillog)"
+
+msgid "build page of last email senders (maillog)"
+msgstr "utolsó e-mail feladók oldalának felépítése (maillog)"
+
+msgid "build page of all email receivers (maillog)"
+msgstr "összes e-mail címzett oldalának felépítése (maillog)"
+
+msgid "build page of last email receivers (maillog)"
+msgstr "utolsó e-mail címzettek oldalának felépítése (maillog)"
+
+msgid "build page of all logins used"
+msgstr "összes használt bejelentkezés oldalának felépítése"
+
+msgid "build page of last hits for logins"
+msgstr "bejelentkezések utolsó találatainak oldalának felépítése"
+
+msgid "build page of all robots/spider visits"
+msgstr "összes robot/pók látogatás oldalának felépítése"
+
+msgid "build page of last hits for robots"
+msgstr "robotok utolsó találatainak oldalának felépítése"
+
+msgid "list most often viewed pages"
+msgstr "leggyakrabban megtekintett oldalak listázása"
+
+msgid "list most often viewed pages matching filter"
+msgstr "a szűrőnek megfelelő leggyakrabban megtekintett oldalak listázása"
+
+msgid "list entry pages"
+msgstr "belépési oldalak listázása"
+
+msgid "list entry pages matching filter"
+msgstr "a szűrőnek megfelelő belépési oldalak listázása"
+
+msgid "list exit pages"
+msgstr "kilépési oldalak listázása"
+
+msgid "list exit pages matching filter"
+msgstr "a szűrőnek megfelelő kilépési oldalak listázása"
+
+msgid "build page with os detailed versions"
+msgstr "oldal felépítése az operációs rendszer részletes verzióival"
+
+msgid "build page with browsers detailed versions"
+msgstr "oldal felépítése a böngészők részletes verzióival"
+
+msgid "list 'User Agents' with unknown browser"
+msgstr "ismeretlen böngészővel rendelkező 'User Agents' listázása"
+
+msgid "list 'User Agents' with unknown OS"
+msgstr "ismeretlen operációs rendszerrel rendelkező 'User Agents' listázása"
+
+msgid "build page of all refering search engines"
+msgstr "összes hivatkozó keresőmotor oldalának felépítése"
+
+msgid "build page of all refering pages"
+msgstr "összes hivatkozó oldal felépítése"
+
+msgid "list all keyphrases used on search engines"
+msgstr "a keresőmotorokon használt összes kulcskifejezés listázása"
+
+msgid "list all keywords used on search engines"
+msgstr "a keresőmotorokon használt összes kulcsszó listázása"
+
+msgid "list 'Referers' for 404 errors"
+msgstr "a 404-es hibákhoz tartozó 'Hivatkozók' listázása"
+
+msgid "build page of all values for ExtraSection X"
+msgstr "az ExtraSection X összes értékének oldalát építi fel"
+
+msgid "  -staticlinks           to have static links in HTML report page"
+msgstr "  -staticlinks           statikus hivatkozásokat használ a HTML jelentésoldalon"
+
+msgid "  -staticlinksext=xxx    to have static links with .xxx extension instead of .html"
+msgstr "  -staticlinksext=xxx    statikus hivatkozásokat használ .xxx kiterjesztéssel a .html helyett"
+
+msgid "  -lang=LL     to output a HTML report in language LL (en,de,es,fr,it,nl,zh-cn,...)"
+msgstr "  -lang=LL     HTML jelentés kiírása LL nyelven (hu,en,de,es,fr,it,nl,zh-cn,...)"
+
+msgid "  -month=MM    to output a HTML report for an old month MM"
+msgstr "  -month=MM    HTML jelentés kiírása egy régebbi hónapról MM"
+
+msgid "  -year=YYYY   to output a HTML report for an old year YYYY"
+msgstr "  -year=YYYY   HTML jelentés kiírása egy régebbi évről YYYY"
+
+msgid "  The 'date' options doesn't allow you to process old log file. They only allow you to see a past report for a chosen month/year period instead of current month/year."
+msgstr "  A 'date' opciók nem teszik lehetővé a régi naplófájl feldolgozását. Csak azt teszik lehetővé, hogy egy múltbeli jelentést lásson egy kiválasztott hónap/év időszakra a jelenlegi hónap/év helyett."
+
+msgid "Other options:"
+msgstr "Egyéb opciók:"
+
+msgid "  -debug=X     to add debug informations lesser than level X (speed reduced)"
+msgstr "  -debug=X     hibakeresési információkat ad hozzá, amelyek kisebbek X szintnél (sebesség csökkentve)"
+
+msgid "  -version     show AWStats version"
+msgstr "  -version, -v     mutatja az AWStats verzióját"
+
+msgid "Now supports/detects:"
+msgstr "Jelenleg támogatja/felismeri:"
+
+msgid "  Web/Ftp/Mail/streaming server log analyzis (and load balanced log files)"
+msgstr "  Web/FTP/E-mail/streaming kiszolgáló naplóelemzése (és elosztott terhelésű naplófájlok)"
+
+msgid "  Reverse DNS lookup (IPv4 and IPv6) and GeoIP lookup"
+msgstr "  Fordított DNS lekérdezés (IPv4 és IPv6) és GeoIP lekérdezés"
+
+msgid "  Number of visits, number of unique visitors"
+msgstr "  Látogatások száma, egyedi látogatók száma"
+
+msgid "  Visits duration and list of last visits"
+msgstr "  Látogatások időtartama és az utolsó látogatások listája"
+
+msgid "  Authenticated users"
+msgstr "  Hitelesített felhasználók"
+
+msgid "  Days of week and rush hours"
+msgstr "  A hét napjai és csúcsidőszakok"
+
+msgid "  Hosts list and unresolved IP addresses list"
+msgstr "  Hosztok listája és feloldatlan IP-címek listája"
+
+msgid "  Most viewed, entry and exit pages"
+msgstr "  Legtöbbet megtekintett, belépési és kilépési oldalak"
+
+msgid "  Files type and Web compression (mod_gzip, mod_deflate stats)"
+msgstr "  Fájltípusok és webes tömörítés (mod_gzip, mod_deflate statisztikák)"
+
+msgid "  Configured Database Statistics"
+msgstr "  Konfigurált adatbázis-statisztikák"
+
+msgid "  %s domains/countries"
+msgstr "  %s tartomány/ország"
+
+msgid "  %s robots"
+msgstr "  %s robot"
+
+msgid "  %s worm's families"
+msgstr "  %s féreg család"
+
+msgid "  %s operating systems"
+msgstr "  %s operációs rendszer"
+
+msgid "  %s browsers (%s with phone browsers database)"
+msgstr "  %s böngésző (mobilböngésző adatbázissal együtt %s)"
+
+msgid "  %s search engines (and keyphrases/keywords used from them)"
+msgstr "  %s keresőmotor (és a használt kulcskifejezések/kulcsszavak tőlük)"
+
+msgid "  All HTTP errors with last referrer"
+msgstr "  Összes HTTP hiba az utolsó hivatkozóval"
+
+msgid "  Report by day/month/year"
+msgstr "  Jelentés nap/hónap/év szerint"
+
+msgid "  Dynamic or static HTML or XHTML reports, static PDF reports"
+msgstr "  Dinamikus vagy statikus HTML vagy XHTML jelentések, statikus PDF jelentések"
+
+msgid "  Indexed text or XML monthly database"
+msgstr "  Indexelt szöveges vagy XML havi adatbázis"
+
+msgid "  And a lot of other advanced features and options..."
+msgstr "  És még sok más fejlett funkció és opció..."
+
+msgid "  New versions and FAQ at http://www.awstats.org"
+msgstr "  Új verziók és GYIK a https://github.com/hestiacn/vstats/issues oldalon"

@@ -1,0 +1,1635 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWStats · 基准测试</title>
+    <meta name="description" content="AWStats Documentation - Benchmark page (中文/English)">
+    <meta name="keywords" content="awstats, benchmark, speed, dns, performance, 基准测试">
+    <meta name="author" content="Laurent Destailleur (多语言重构)">
+    <meta name="robots" content="index,follow">
+<style>
+/* ========== 现代化全局设计 ========== */
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
+
+/* ===== 主题变量 ===== */
+:root {
+    --bg-page: #f8fafc; 
+    --surface: #ffffff; 
+    --surface-secondary: #f1f5f9;
+    --text-primary: #0f172a; 
+    --text-secondary: #475569; 
+    --accent: #4f46e5;
+    --accent-light: #818cf8; 
+    --accent-soft: #eef2ff; 
+    --border: #e2e8f0;
+    --card-shadow: 0 20px 25px -5px rgba(0,0,0,0.05), 0 10px 10px -5px rgba(0,0,0,0.02);
+    --header-bg: linear-gradient(135deg, #4f46e5 0%, #4f46e5 100%);
+    --footer-bg: #eef2ff; 
+    --link-color: #4f46e5; 
+    --link-visited: #4f46e5; /* 统一为 link-color，移除紫色 */
+    --code-bg: #f1f5f9; 
+    --success: #10b981; 
+    --warning: #f59e0b; 
+    --danger: #ef4444;
+    --star-color: #fbbf24;
+}
+
+/* 深色模式 */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-page: #0f172a; 
+        --surface: #1e293b; 
+        --surface-secondary: #334155;
+        --text-primary: #f1f5f9; 
+        --text-secondary: #cbd5e1; 
+        --accent: #818cf8;
+        --accent-light: #a5b4fc; 
+        --accent-soft: #2d3a5e; 
+        --border: #475569;
+        --card-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
+        --header-bg: linear-gradient(135deg, #4f46e5 0%, #4f46e5 100%);
+        --footer-bg: #1e293b; 
+        --link-color: #a5b4fc; 
+        --link-visited: #a5b4fc; /* 统一为 link-color，移除紫色 */
+        --code-bg: #334155; 
+        --success: #34d399; 
+        --warning: #fbbf24; 
+        --danger: #f87171;
+    }
+}
+
+/* 强制浅色模式 */
+.force-light,
+.force-light :root {
+    --bg-page: #f8fafc; 
+    --surface: #ffffff; 
+    --surface-secondary: #f1f5f9;
+    --text-primary: #0f172a; 
+    --text-secondary: #475569; 
+    --accent: #4f46e5;
+    --accent-light: #818cf8; 
+    --accent-soft: #eef2ff; 
+    --border: #e2e8f0;
+    --card-shadow: 0 20px 25px -5px rgba(0,0,0,0.05), 0 10px 10px -5px rgba(0,0,0,0.02);
+    --header-bg: linear-gradient(135deg, #4f46e5 0%, #4f46e5 100%);
+    --footer-bg: #eef2ff; 
+    --link-color: #4f46e5; 
+    --link-visited: #4f46e5; /* 统一颜色 */
+    --code-bg: #f1f5f9; 
+    --success: #10b981; 
+    --warning: #f59e0b; 
+    --danger: #ef4444;
+}
+
+/* 强制深色模式 */
+.force-dark,
+.force-dark :root {
+    --bg-page: #0f172a; 
+    --surface: #1e293b; 
+    --surface-secondary: #334155;
+    --text-primary: #f1f5f9; 
+    --text-secondary: #cbd5e1; 
+    --accent: #818cf8;
+    --accent-light: #a5b4fc; 
+    --accent-soft: #2d3a5e; 
+    --border: #475569;
+    --card-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
+    --header-bg: linear-gradient(135deg, #4f46e5 0%, #4f46e5 100%);
+    --footer-bg: #1e293b; 
+    --link-color: #a5b4fc; 
+    --link-visited: #a5b4fc; /* 统一颜色 */
+    --code-bg: #334155; 
+    --success: #34d399; 
+    --warning: #fbbf24; 
+    --danger: #f87171;
+}
+
+/* ===== 基础样式 ===== */
+body {
+    background-color: var(--bg-page); 
+    color: var(--text-primary);
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6; 
+    margin: 0; 
+    padding: 0;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    display: flex; 
+    flex-direction: column; 
+    min-height: 100vh;
+}
+
+.container { 
+    max-width: 1300px; 
+    margin: 0 auto; 
+    padding: 0 28px; 
+    width: 100%; 
+}
+
+/* ===== 链接全局样式 - 移除下划线和访问颜色变化 ===== */
+a, a:link, a:visited {
+    text-decoration: none;
+    color: var(--link-color);
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: var(--accent);
+}
+
+/* ===== 导航栏基础 ===== */
+.nav-bar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+    background-color: rgba(var(--surface-rgb), 0.8);
+}
+
+/* ===== 桌面端样式 (≥701px) ===== */
+@media (min-width: 701px) {
+    .nav-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 20px;
+    }
+    
+    .nav-header {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        flex-shrink: 0;
+    }
+    
+    .nav-left {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+    
+    .nav-home {
+        font-weight: 700;
+        font-size: 1.3rem;
+        background: linear-gradient(135deg, var(--accent), var(--accent-light));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        white-space: nowrap;
+    }
+    
+    .breadcrumb {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        white-space: nowrap;
+    }
+    
+    .dropdown-menu {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        flex-wrap: nowrap;
+        margin-top: 0;
+    }
+    
+    .dropdown-item {
+        position: relative;
+        flex-shrink: 0;
+    }
+    
+    .dropdown-title {
+        padding: 6px 12px;
+        background: var(--surface-secondary);
+        border: 1px solid var(--border);
+        border-radius: 30px;
+        font-weight: 500;
+        font-size: 0.95rem;
+        color: var(--text-primary);
+        cursor: pointer;
+        transition: all 0.2s;
+        white-space: nowrap;
+        user-select: none;
+    }
+    
+    .dropdown-title:hover {
+        background: var(--accent-soft);
+        color: var(--accent);
+        border-color: var(--accent-light);
+    }
+    
+    .dropdown-content {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        min-width: 220px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 12px;
+        box-shadow: var(--card-shadow);
+        display: none;
+        z-index: 1000;
+        margin-top: 5px;
+    }
+    
+    .mobile-menu-toggle {
+        display: none;
+    }
+}
+
+/* ===== 移动端样式 (≤700px) ===== */
+@media (max-width: 700px) {
+    .nav-container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .nav-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        gap: 10px;
+    }
+    
+    .nav-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex: 1;
+    }
+    
+    .nav-home {
+        font-weight: 700;
+        font-size: 1.1rem;
+        background: linear-gradient(135deg, var(--accent), var(--accent-light));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        white-space: nowrap;
+    }
+    
+    .breadcrumb {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        color: var(--text-secondary);
+        font-size: 0.8rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 150px;
+    }
+    
+    /* 汉堡菜单按钮 */
+    .mobile-menu-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: var(--surface-secondary);
+        border: 1px solid var(--border);
+        border-radius: 40px;
+        color: var(--text-primary);
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-left: auto;
+    }
+    
+    .mobile-menu-toggle:hover {
+        background: var(--accent-soft);
+        color: var(--accent);
+    }
+    
+    /* 导航菜单 - 默认隐藏 */
+    .dropdown-menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        gap: 8px;
+        margin-top: 5px;
+    }
+    
+    /* 菜单展开时显示 */
+    .dropdown-menu.mobile-active {
+        display: flex;
+    }
+    
+    .dropdown-item {
+        width: 100%;
+        position: relative;
+    }
+    
+    .dropdown-title {
+        width: 100%;
+        padding: 12px 16px;
+        background: var(--surface-secondary);
+        border: 1px solid var(--border);
+        border-radius: 40px;
+        font-weight: 500;
+        color: var(--text-primary);
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        user-select: none;
+        font-size: 0.95rem;
+    }
+    
+    .dropdown-title:hover {
+        background: var(--accent-soft);
+        color: var(--accent);
+    }
+    
+    .dropdown-title::after {
+        content: "▼";
+        font-size: 0.7rem;
+        transition: transform 0.2s;
+    }
+    
+    .dropdown-item.active .dropdown-title::after {
+        transform: rotate(180deg);
+    }
+    
+    .dropdown-content {
+        position: static;
+        width: 100%;
+        margin-top: 5px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 8px;
+        box-shadow: none;
+        display: none;
+    }
+    
+    .dropdown-content a {
+        width: 100%;
+        text-align: center;
+        padding: 10px;
+        color: var(--text-secondary);
+        font-weight: 500;
+        border-radius: 30px;
+        transition: all 0.2s;
+        font-size: 0.95rem;
+        background: var(--surface-secondary);
+        border: 1px solid var(--border);
+        white-space: nowrap;
+        margin: 2px 0;
+    }
+    
+    .dropdown-content a:hover {
+        background: var(--accent-soft);
+        color: var(--accent);
+    }
+    
+    .dropdown-content a.active {
+        background: var(--accent);
+        color: white;
+        border-color: var(--accent);
+    }
+}
+
+/* ===== 下拉菜单通用样式 ===== */
+.dropdown-item.active .dropdown-content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: auto;
+    min-width: auto;
+}
+
+.dropdown-content a {
+    color: var(--text-secondary);
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 30px;
+    transition: all 0.2s;
+    font-size: 0.95rem;
+    background: var(--surface-secondary);
+    border: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+.dropdown-content a:hover {
+    background: var(--accent-soft);
+    color: var(--accent);
+}
+
+.dropdown-content a.active {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+}
+
+/* ===== 头部样式 ===== */
+.header {
+    background: var(--header-bg); 
+    color: white; 
+    border-radius: 0 0 40px 40px;
+    padding: 24px 0 32px; 
+    box-shadow: var(--card-shadow); 
+    margin-bottom: 30px;
+}
+
+.header-row {
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between;
+    flex-wrap: wrap; 
+    gap: 20px;
+}
+
+.logo-area { 
+    display: flex; 
+    align-items: center; 
+    gap: 16px; 
+}
+
+.logo-area img { 
+    height: 56px; 
+    width: auto; 
+}
+
+.site-title {
+    font-size: 1.5rem; 
+    font-weight: 700; 
+    background: rgba(255,255,255,0.1);
+    padding: 8px 24px; 
+    border-radius: 60px; 
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    text-decoration: none;
+}
+
+.header-center {
+    flex: 1; 
+    text-align: center; 
+    font-weight: 500; 
+    font-size: 1.5rem;
+    background: rgba(0,0,0,0.1); 
+    padding: 8px 24px; 
+    border-radius: 60px;
+    backdrop-filter: blur(8px); 
+    border: 1px solid rgba(255,255,255,0.15);
+}
+
+.header-right { 
+    display: flex; 
+    gap: 12px; 
+    align-items: center; 
+}
+
+/* ===== 自定义语言切换 ===== */
+.custom-select {
+    position: relative;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 40px;
+    padding: 6px 16px;
+    color: white;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(8px);
+    cursor: pointer;
+    min-width: 100px;
+}
+
+.custom-select:hover {
+    background: rgba(255,255,255,0.25);
+    border-color: rgba(255,255,255,0.5);
+}
+
+.select-selected {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.select-selected::after {
+    content: "▼";
+    font-size: 0.7rem;
+    margin-left: 8px;
+    opacity: 0.8;
+    transition: transform 0.2s;
+}
+
+.custom-select.active .select-selected::after {
+    transform: rotate(180deg);
+}
+
+.select-items {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    margin-top: 5px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    z-index: 1000;
+    display: none;
+}
+
+.custom-select.active .select-items {
+    display: block;
+}
+
+.select-items div {
+    padding: 10px 16px;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+}
+
+.select-items div:hover {
+    background: var(--accent-soft);
+    color: var(--accent);
+}
+
+.select-items div.selected {
+    background: var(--accent);
+    color: white;
+}
+
+/* ===== 主题切换按钮 ===== */
+.theme-toggle {
+    background: rgba(255,255,255,0.15); 
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 40px; 
+    padding: 8px 20px; 
+    font-size: 0.95rem; 
+    color: white;
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    backdrop-filter: blur(8px);
+    transition: all 0.2s;
+}
+
+.theme-toggle:hover {
+    background: rgba(255,255,255,0.25);
+    border-color: rgba(255,255,255,0.5);
+}
+
+/* ===== 文档卡片 ===== */
+.doc-card {
+    background-color: var(--surface); 
+    border-radius: 40px;
+    padding: 3rem; 
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--border); 
+    margin: 20px 0 40px;
+}
+
+h1 {
+    font-size: 2.5rem; 
+    font-weight: 700; 
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, var(--accent), var(--accent-light));
+    -webkit-background-clip: text;
+    margin: 0 0 25px 0;
+}
+
+h2 {
+    font-size: 2rem; 
+    font-weight: 600; 
+    margin: 2.5rem 0 1.5rem;
+    color: var(--text-primary); 
+    border-bottom: 3px solid var(--accent-soft);
+    padding-bottom: 12px;
+}
+
+h3 {
+    font-size: 1.5rem; 
+    font-weight: 600; 
+    margin: 2rem 0 1rem;
+    color: var(--accent);
+}
+
+/* ===== 基准测试表格 ===== */
+.benchmark-container {
+    overflow-x: auto;
+    margin: 30px 0;
+    border-radius: 24px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    box-shadow: var(--card-shadow);
+}
+
+.benchmark-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    min-width: 1000px;
+}
+
+.benchmark-table th {
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 700;
+    padding: 16px 12px;
+    text-align: center;
+    border-bottom: 2px solid var(--border);
+}
+
+.benchmark-table td {
+    padding: 12px 10px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+}
+
+.benchmark-table tr:last-child td {
+    border-bottom: none;
+}
+
+.benchmark-table tr:hover td {
+    background: var(--accent-soft);
+}
+
+.traffic-cell {
+    font-weight: 600;
+    color: var(--text-primary);
+    background: var(--surface-secondary);
+}
+
+.param-cell {
+    text-align: center;
+}
+
+.warning-cell {
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--warning);
+    font-style: italic;
+}
+
+/* ===== 星标建议 ===== */
+.advice-item {
+    display: flex;
+    gap: 15px;
+    margin: 20px 0;
+    padding: 20px;
+    background: var(--surface-secondary);
+    border-radius: 20px;
+    border: 1px solid var(--border);
+}
+
+.stars {
+    display: flex;
+    gap: 2px;
+    color: var(--star-color);
+    font-size: 1.2rem;
+    min-width: 60px;
+}
+
+.advice-item a {
+    color: var(--accent);
+}
+
+.advice-item a:hover {
+    color: var(--accent-light);
+}
+
+/* ===== 信息卡片 ===== */
+.info-card {
+    background: var(--accent-soft);
+    border-radius: 20px;
+    padding: 20px;
+    margin: 20px 0;
+    border-left: 6px solid var(--accent);
+}
+
+.info-card a {
+    color: var(--accent);
+}
+
+.info-card a:hover {
+    color: var(--accent-light);
+}
+
+/* ===== 注意框 ===== */
+.note-box {
+    background: var(--surface-secondary);
+    padding: 15px 20px;
+    border-radius: 16px;
+    border-left: 4px solid var(--warning);
+    margin: 20px 0;
+    font-size: 0.9rem;
+}
+
+.note-box a {
+    color: var(--accent);
+}
+
+.note-box a:hover {
+    color: var(--accent-light);
+}
+
+/* ===== 返回顶部按钮 ===== */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: var(--accent);
+    color: white;
+    width: 56px;
+    height: 56px;
+    border-radius: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
+    transition: all 0.2s;
+    z-index: 99;
+    font-size: 1.2rem;
+}
+
+.back-to-top:hover {
+    transform: scale(1.1);
+    background: var(--accent-light);
+}
+
+/* ===== 页脚 ===== */
+.footer {
+    background-color: var(--footer-bg); 
+    margin-top: 60px;
+    padding: 32px 24px; 
+    border-radius: 40px 40px 0 0;
+    border-top: 1px solid var(--border); 
+    color: var(--text-secondary);
+}
+
+.footer-content {
+    display: flex; 
+    flex-wrap: wrap; 
+    justify-content: space-between;
+    align-items: center; 
+    gap: 20px; 
+    max-width: 1300px; 
+    margin: 0 auto;
+}
+
+.footer-copyright {
+    background: var(--surface); 
+    padding: 8px 24px; 
+    border-radius: 60px;
+    border: 1px solid var(--border); 
+    font-size: 0.95rem;
+}
+
+.footer-license {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer-license img {
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+}
+
+/* ===== 移动端响应式调整 ===== */
+@media (max-width: 700px) {
+    .header-row { 
+        flex-direction: column; 
+        text-align: center;
+    }
+    
+    .header-center {
+        width: 100%;
+    }
+    
+    .header-right {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .doc-card { 
+        padding: 1.8rem; 
+    }
+    
+    h1 { 
+        font-size: 2rem; 
+    }
+    
+    .back-to-top {
+        bottom: 20px;
+        right: 20px;
+        width: 48px;
+        height: 48px;
+        border-radius: 24px;
+        font-size: 1rem;
+        opacity: 0.9;
+    }
+    
+    .footer {
+        padding: 24px 16px;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    
+    .footer-copyright {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .footer-license {
+        justify-content: center;
+    }
+}
+</style>
+</head>
+<body>
+    <!-- 导航栏 - 悬浮下拉式 -->
+    <div class="nav-bar">
+        <div class="container nav-container">
+            <div class="nav-header">
+              <span class="home-icon">🏠</span>
+                <div class="nav-left">
+                    <a href="index.html" class="nav-home">
+                        
+                        <span class="home-text" data-i18n="navHome">AWStats 文档</span>
+                    </a>
+                </div>
+                <div class="breadcrumb">
+                    <a href="index.html" data-i18n="home">主页</a>
+                    <span>›</span>
+                    <span data-i18n="currentPage">基准测试</span>
+                </div>
+                <div class="mobile-menu-toggle" id="mobileMenuToggle">
+                    ☰
+                </div>
+            </div>
+            
+            <!-- 悬浮下拉菜单 -->
+            <div class="dropdown-menu" id="mobileMenu">
+                <!-- 📌 基础文档 -->
+                <div class="dropdown-item">
+                    <div class="dropdown-title" data-i18n="categoryBasic">📌 基础文档</div>
+                    <div class="dropdown-content">
+                        <a href="index.html" data-i18n="navHome">主页</a>
+                        <a href="awstats_what.html" data-i18n="navWhat">什么是AWStats</a>
+                        <a href="awstats_license.html" data-i18n="navLicense">许可证</a>
+                        <a href="awstats_glossary.html" data-i18n="navGlossary">术语表</a>
+                    </div>
+                </div>
+                
+                <!-- 📘 使用指南 -->
+                <div class="dropdown-item">
+                    <div class="dropdown-title" data-i18n="categoryGuide">📘 使用指南</div>
+                    <div class="dropdown-content">
+                        <a href="awstats_setup.html" data-i18n="navSetup">安装配置</a>
+                        <a href="awstats_upgrade.html" data-i18n="navUpgrade">升级指南</a>
+                        <a href="awstats_config.html" data-i18n="navConfig">配置参数</a>
+                        <a href="awstats_extra.html" data-i18n="navExtra">额外部分</a>
+                        <a href="awstats_tools.html" data-i18n="navTools">其他工具</a>
+                    </div>
+                </div>
+                
+                <!-- 📚 参考资源 -->
+                <div class="dropdown-item">
+                    <div class="dropdown-title" data-i18n="categoryReference">📚 参考资源</div>
+                    <div class="dropdown-content">
+                        <a href="awstats_faq.html" data-i18n="navFAQ">FAQ</a>
+                        <a href="awstats_security.html" data-i18n="navSecurity">安全建议</a>
+                        <a href="awstats_compare.html" data-i18n="navCompare">对比</a>
+                        <a href="awstats_benchmark.html" class="active" data-i18n="navBenchmark">基准测试</a>
+                        <a href="awstats_changelog.html" data-i18n="navChangelog">更新日志</a>
+                    </div>
+                </div>
+                
+                <!-- 🧩 集成与扩展 -->
+                <div class="dropdown-item">
+                    <div class="dropdown-title" data-i18n="categoryIntegration">🧩 集成与扩展</div>
+                    <div class="dropdown-content">
+                        <a href="awstats_webmin.html" data-i18n="navWebmin">Webmin模块</a>
+                        <a href="awstats_dolibarr.html" data-i18n="navDolibarr">Dolibarr模块</a>
+                        <a href="awstats_contrib.html" data-i18n="navContrib">贡献资源</a>
+                    </div>
+                </div>
+                
+                <!-- 💻 开发者文档 -->
+                <div class="dropdown-item">
+                    <div class="dropdown-title" data-i18n="categoryDev">💻 开发者文档</div>
+                    <div class="dropdown-content">
+                        <a href="awstats_dev_plugins.html" data-i18n="navPlugins">插件开发</a>
+                        <a href="awstats_dev_plugins_hooks.html" data-i18n="navHooks">插件钩子</a>
+                        <a href="awstats_dev_plugins_graphs.html" data-i18n="navGraphs">插件图形</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="container header-row">
+            <div class="logo-area">
+                <img src="images/favicon.pub/logo.svg" alt="AWStats logo">
+                <span class="site-title" data-i18n="siteTitle">AWStats 8.1</span>
+            </div>
+            <div class="header-center" data-i18n="headerSlogan">
+                ⚡ 先进的日志分析器 · 官方文档
+            </div>
+            <div class="header-right">
+                <!-- 自定义语言切换 -->
+                <div class="lang-switch custom-select">
+                    <span>🌐</span>
+                    <div class="select-selected" data-value="zh">中文</div>
+                    <div class="select-items">
+                        <div data-value="zh" class="selected">中文</div>
+                        <div data-value="en">English</div>
+                    </div>
+                    <!-- 隐藏的原生 select，用于保持功能 -->
+                    <select id="langSelector" style="display: none;">
+                        <option value="zh" selected>中文</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+                
+                <button class="theme-toggle" id="themeToggleBtn">
+                    <span>🌓</span> <span class="theme-text" data-i18n="themeAuto">自动</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="doc-card">
+            <h1 data-i18n="mainTitle">📊 基准测试</h1>
+
+            <p data-i18n="intro">AWStats 更新过程必须经常运行，因此了解 AWStats 的速度很重要，以便根据 AWStats 的速度和您需要的刷新率选择每个更新过程之间的最佳延迟。AWStats 的速度取决于 AWStats 版本和您在配置文件中使用的选项/设置。</p>
+
+            <!-- 基准测试结果 -->
+            <h2>📈 <span data-i18n="benchmarkTitle">AWStats 6.0 版本的基准测试结果（使用常见配置）</span></h2>
+            
+            <div class="info-card">
+                <p><strong data-i18n="hardware">硬件：</strong> Athlon 1 GHz / 256MB</p>
+                <p><strong data-i18n="software">软件：</strong> Windows 2000 / Perl 5.8 (Cygwin Perl)</p>
+                <p><strong data-i18n="configOptions">配置选项：</strong> 使用默认值：<a href="awstats_config.html#LogFormat">LogFormat</a>=1, <a href="awstats_config.html#DNSLookup">DNSLookup</a>=0, <a href="awstats_config.html#URLWithQuery">URLWithQuery</a>=0, <a href="awstats_config.html#URLReferrerWithQuery">URLReferrerWithQuery</a>=0, <a href="awstats_config.html#URLWithAnchor">URLWithAnchor</a>=0, 无插件</p>
+                <p><strong data-i18n="avgSpeed">平均速度：</strong> <span style="font-size: 1.5rem; font-weight: 700; color: var(--accent);">5200</span> 行/秒</p>
+            </div>
+
+            <!-- 重要信息 -->
+            <h2>ℹ️ <span data-i18n="importantInfo">其他重要信息</span></h2>
+            
+            <div class="note-box">
+                <ul style="margin-left: 20px;">
+                    <li data-i18n="info1">日志文件大小大约是行数的 <b>150</b>（NCSA common/CLF 日志）到 <b>320倍</b>（NCSA extended/XLF/ELF 日志）</li>
+                    <li data-i18n="info2"><b>1,000次访问</b> = <b>8,000个页面</b>（每次访问8个页面）= <b>64,000行</b>（每个页面8个请求）= <b>20 MB文件</b> ⇒ <b>15秒</b>（Athlon 1GHz, 标准 Perl 5.8）</li>
+                    <li data-i18n="info3">历史文件（AWStats 数据库，总结日志分析）的大小为：<b>15000+90*x+100*y 字节</b>（其中 x 是每月唯一访客数，y 是网站上的不同页面数）。如果使用 <a href="awstats_config.html#BuildHistoryFormat">BuildHistoryFormat</a>=xml，此值需乘以3。</li>
+                </ul>
+            </div>
+
+            <p class="warning" style="color: var(--warning);" data-i18n="warning">警告！所有这些数据都是具有默认配置的常见公共网站的平均值。计算规则可能因 Web 服务器或 AWStats 配置以及网站内容而显著变化。</p>
+
+            <p data-i18n="dnsNote">不要忘记日志分析器的基准测试是在没有反向 DNS 查找的情况下进行的，因为 DNS 查找非常慢（取决于互联网网络和您的系统），如果在 AWStats 配置文件中启用，它将占用日志分析时间的 <b>99%</b 以上！请查看以下图表：</p>
+            <ul>
+                <li data-i18n="dnsNote1">获取更真实的基准测试结果</li>
+                <li data-i18n="dnsNote2">获取有关您网站良好设置的更多信息和建议</li>
+            </ul>
+
+            <!-- 频率/参数建议表格 -->
+            <h2>⚙️ <span data-i18n="recommendationsTitle">应该使用的频率/参数示例（以良好使用 AWStats）</span></h2>
+
+            <div class="benchmark-container">
+                <table class="benchmark-table">
+                    <thead>
+                        <tr>
+                            <th rowspan="2" data-i18n="traffic">您的网站流量</th>
+                            <th rowspan="2" data-i18n="perlDistrib">Perl 发行版</th>
+                            <th colspan="3" data-i18n="paramValues">参数值</th>
+                            <th rowspan="2" data-i18n="updateFreq">推荐更新频率<br>（日志轮转延迟）</th>
+                            <th rowspan="2" data-i18n="memoryReq">所需内存**</th>
+                            <th rowspan="2" data-i18n="duration">更新过程时长***</th>
+                        </tr>
+                        <tr>
+                            <th>DNSLookup*</th>
+                            <th>URLWithQuery</th>
+                            <th>URLReferrerWithQuery</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="traffic-cell" rowspan="2">0 - 1,000 次访问/月</td>
+                            <td rowspan="2" data-i18n="yourChoice">任意选择</td>
+                            <td class="param-cell" data-i18n="param0or2">0 或 2</td>
+                            <td class="param-cell" data-i18n="param0or1">0 或 1</td>
+                            <td class="param-cell" data-i18n="param0or1">0 或 1</td>
+                            <td data-i18n="freq1">每天一次<br>日志文件 0-1 MB<br>处理 2000 行</td>
+                            <td class="param-cell">4 MB 空闲</td>
+                            <td class="param-cell">1秒</td>
+                        </tr>
+                        <tr>
+                            <td class="param-cell" data-i18n="param1">1</td>
+                            <td class="param-cell" data-i18n="param0or1">0 或 1</td>
+                            <td class="param-cell" data-i18n="param0or1">0 或 1</td>
+                            <td data-i18n="freq1">每天一次<br>日志文件 0-1 MB<br>处理 2000 行</td>
+                            <td class="param-cell">4 MB 空闲</td>
+                            <td class="param-cell">2分钟</td>
+                        </tr>
+                        <tr>
+                            <td class="traffic-cell" rowspan="2">1,000 - 10,000 次访问/月</td>
+                            <td rowspan="2" data-i18n="yourChoice">任意选择</td>
+                            <td class="param-cell" data-i18n="param0or2">0 或 2</td>
+                            <td class="param-cell" data-i18n="param0or1">0 或 1</td>
+                            <td class="param-cell" data-i18n="param0or1">0 或 1</td>
+                            <td data-i18n="freq2">每天一次<br>日志文件 1-10 MB<br>处理 2000-20000 行</td>
+                            <td class="param-cell">4-8 MB 空闲</td>
+                            <td class="param-cell">1秒-10秒</td>
+                        </tr>
+                        <tr>
+                            <td class="param-cell" data-i18n="param1">1</td>
+                            <td class="param-cell" data-i18n="param0or1">0 或 1</td>
+                            <td class="param-cell" data-i18n="param0or1">0 或 1</td>
+                            <td data-i18n="freq2">每天一次<br>日志文件 1-10 MB<br>处理 2000-20000 行</td>
+                            <td class="param-cell">4-8 MB 空闲</td>
+                            <td class="param-cell">2分钟-10分钟</td>
+                        </tr>
+                        <tr>
+                            <td class="traffic-cell" rowspan="2">10,000 - 100,000 次访问/月</td>
+                            <td rowspan="2" data-i18n="yourChoice">任意选择</td>
+                            <td class="param-cell" data-i18n="param0or2">0 或 2</td>
+                            <td class="param-cell" data-i18n="param0or1">0 或 1</td>
+                            <td class="param-cell" data-i18n="param0or1">0 或 1</td>
+                            <td data-i18n="freq3">每天一次<br>日志文件 10-100 MB<br>处理 20000-200000 行</td>
+                            <td class="param-cell">8-32 MB 空闲</td>
+                            <td class="param-cell">10秒-120秒</td>
+                        </tr>
+                        <tr>
+                            <td class="param-cell" data-i18n="param1">1</td>
+                            <td class="param-cell" data-i18n="param0or1">0 或 1</td>
+                            <td class="param-cell" data-i18n="param0or1">0 或 1</td>
+                            <td data-i18n="freq3">每天一次<br>日志文件 10-100 MB<br\>处理 20000-200000 行</td>
+                            <td class="param-cell">8-32 MB 空闲</td>
+                            <td class="param-cell">10分钟-50分钟</td>
+                        </tr>
+                        <tr>
+                            <td class="traffic-cell" rowspan="2">100,000 - 500,000 次访问/月</td>
+                            <td rowspan="2" data-i18n="yourChoice">任意选择</td>
+                            <td class="param-cell" data-i18n="param0or2">0 或 2</td>
+                            <td class="param-cell" data-i18n="param0">0</td>
+                            <td class="param-cell" data-i18n="param0or1">0 或 1</td>
+                            <td data-i18n="freq4">每6小时<br>日志文件 24-96 MB<br>处理 50000-300000 行</td>
+                            <td class="param-cell">16-92 MB 空闲</td>
+                            <td class="param-cell">30秒-3分钟</td>
+                        </tr>
+                        <tr>
+                            <td class="param-cell" data-i18n="param1">1</td>
+                            <td class="param-cell" data-i18n="param0">0</td>
+                            <td class="param-cell" data-i18n="param0or1">0 或 1</td>
+                            <td data-i18n="freq4">每6小时<br>日志文件 24-96 MB<br>处理 50000-300000 行</td>
+                            <td class="param-cell">16-92 MB 空闲</td>
+                            <td class="param-cell">15分钟-60分钟</td>
+                        </tr>
+                        <tr>
+                            <td class="traffic-cell">500,000 - 2,000,000 次访问/月</td>
+                            <td data-i18n="seeNext">见下一节关于 ActiveState 的问题</td>
+                            <td class="param-cell">0 或 2</td>
+                            <td class="param-cell">0</td>
+                            <td class="param-cell">0</td>
+                            <td data-i18n="freq5">每6小时<br>日志文件 96-384 MB<br>处理 300000-1200000 行</td>
+                            <td class="param-cell">64-256 MB 空闲</td>
+                            <td class="param-cell">3分钟-12分钟</td>
+                        </tr>
+                        <tr>
+                            <td class="traffic-cell">2,000,000 - 4,000,000 次访问/月</td>
+                            <td data-i18n="seeNext">见下一节关于 ActiveState 的问题</td>
+                            <td class="param-cell">0 或 2</td>
+                            <td class="param-cell">0</td>
+                            <td class="param-cell">0</td>
+                            <td data-i18n="freq6">每6小时<br>日志文件 384-768 MB<br>处理 1200000-2400000 行</td>
+                            <td class="param-cell">256-512 MB 空闲</td>
+                            <td class="param-cell">12分钟-24分钟</td>
+                        </tr>
+                        <tr>
+                            <td class="traffic-cell">+4,000,000 次访问/月</td>
+                            <td class="warning-cell" colspan="7" data-i18n="hugeTraffic">AWStats 仅当您使用具有大内存的专用服务器时才是此类网站的好选择。否则，请尝试功能较少但更快的工具，如"行计数器日志分析器"，如 Webalizer。</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 表格注脚 -->
+            <div class="note-box">
+                <p><strong>*</strong> <span data-i18n="dnsNoteStar">您应将 <a href="awstats_config.html#DNSLookup">DNSLookup</a> 参数设为 0（或 2），如果：</span></p>
+                <ul style="margin-left: 40px;">
+                    <li data-i18n="dnsNoteStar1">- 反向 DNS 查找已在日志文件中完成，</li>
+                    <li data-i18n="dnsNoteStar2">- 或者您的网站每月访问量超过 250,000 次。</li>
+                </ul>
+                <p data-i18n="dnsNoteStar3">注意：如果启用 'geoip' 插件，国家报告可以在没有反向 DNS 查找的情况下工作（比反向 DNS 查找更快、更准确）。</p>
+                <p><strong>**</strong> <span data-i18n="memoryNote">这是更新过程所需的空闲内存（以 MB 为单位），不是安装的硬件内存！</span></p>
+                <p><strong>***</strong> <span data-i18n="durationNote">DNSLookup 设为 1 时的时长非常长，因为 DNS 查找无论计算机速度如何。DNSLookup 设为 0（或 2）时的时长基于 Athlon 1GHz/256MB、Cygwin Perl 5.8 和 LogFormat=1。</span></p>
+            </div>
+
+            <!-- 重要建议 -->
+            <a name="ADVICES"></a>
+            <h2>💡 <span data-i18n="advicesTitle">良好使用 AWStats 的一些重要建议</span></h2>
+
+            <!-- 建议1 -->
+            <div class="advice-item">
+                <div class="stars">★★★★</div>
+                <div>
+                    <p data-i18n="advice1">检查 AWStats 中 <a href="awstats_config.html#DNSLookup">DNSLookup</a> 是否已禁用（DNSLookup 不应设为 1）。如果您需要"国家"报告，应优先<b>使用 'geoip' 插件（使用 <a href="http://www.maxmind.com/en/city?rId=awstats">Maxmind 数据库</a>）而不是 DNS 查找</b>。这些插件让您获得更准确的结果，更快，无需网络查询（启用 DNSLookup 时，日志分析速度降低 40 到 100 倍，因此仅在需要时使用）。请注意，如果没有 DNS 查找和 'geoip' 插件，'国家'报告可能仍能工作，但结果将不如使用 'geoip' 准确，并且仅当日志文件中的主机地址已被解析时才有效（需要设置 Web 服务器执行此操作，这会使 Web 服务器变慢）。</p>
+                </div>
+            </div>
+
+            <!-- 建议2 -->
+            <div class="advice-item">
+                <div class="stars">★★★★</div>
+                <div>
+                    <p data-i18n="advice2">谨慎使用参数 <a href="awstats_config.html#URLWithQuery">URLWithQuery</a>、<a href="awstats_config.html#URLReferrerWithQuery">URLReferrerWithQuery</a> 和 <a href="awstats_config.html#URLWithAnchor">URLWithAnchor</a>（如果您不知道它们的含义，请将其设为 0），并检查您网站的 URL 语法，以确定是否需要完善参数 <a href="awstats_config.html#URLQuerySeparators">URLQuerySeparators</a>。如果您确实需要使用 <a href="awstats_config.html#URLWithQuery">URLWithQuery</a>=1，请检查 <a href="awstats_config.html#URLWithQueryWithOnlyFollowingParameters">URLWithQueryWithOnlyFollowingParameters</a> 或 <a href="awstats_config.html#URLWithQueryWithoutFollowingParameters">URLWithQueryWithoutFollowingParameters</a> 是否正确设置。</p>
+                </div>
+            </div>
+
+            <!-- 建议3 -->
+            <div class="advice-item">
+                <div class="stars">★★★★</div>
+                <div>
+                    <p data-i18n="advice3">使用<b>最新的 Perl 版本</b>（例如 Perl 5.8 比 5.6 快 5%），更重要的是，<b>对于大型日志文件，使用标准 Perl 发行版而不是 ActiveState</b>。这是因为 ActiveState 5.006（可能还有其他版本）有非常严重的内存泄漏问题，导致分析速度越来越慢，最终降至 0 行/秒，并耗尽所有内存。您可以通过在命令行添加 -showsteps 选项来观察速度下降。即使对于几 GB 的日志文件，速度也应保持在本页顶部给出的恒定值！</p>
+                </div>
+            </div>
+
+            <!-- 建议4 -->
+            <div class="advice-item">
+                <div class="stars">★★★</div>
+                <div>
+                    <p data-i18n="advice4"><b>轮转您的日志</b>（参见 <a href="awstats_faq.html#ROTATE">FAQ-SET500</a>）并更频繁地启动 AWStats（从 crontab 或调度程序，参见 <a href="awstats_faq.html#CRONTAB">FAQ-SET550</a>）。启动 AWStats 的频率越高，需要处理的日志新行就越少。这也可以解决 ActiveState 的内存问题（见下一条建议）。</p>
+                </div>
+            </div>
+
+            <!-- 建议5 -->
+            <div class="advice-item">
+                <div class="stars">★★</div>
+                <div>
+                    <p data-i18n="advice5">确保您的 <a href="awstats_config.html#HostAliases">HostAliases</a> 参数列表完整。</p>
+                </div>
+            </div>
+
+            <!-- 建议6 -->
+            <div class="advice-item">
+                <div class="stars">★★</div>
+                <div>
+                    <p data-i18n="advice6">使用<b>最新的 AWStats 版本</b>（例如 AWStats 6.0 比 5.9 快 15%）。</p>
+                </div>
+            </div>
+
+            <!-- 建议7 -->
+            <div class="advice-item">
+                <div class="stars">★★</div>
+                <div>
+                    <p data-i18n="advice7">对于高级用户，您可以使用不同选项重新编译 Perl。例如，"use64bitint=define usemymalloc=y" 似乎可以提高 10% 的速度。</p>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- 署名 -->
+            <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-top: 20px;">
+                <span style="color: var(--text-secondary);" data-i18n="writtenBy">文章作者：<a href="https://www.destailleur.fr" rel="author" style="color: var(--accent);">Laurent Destailleur</a>。</span>
+                <span class="stars" style="background: var(--accent); color: white; padding: 4px 16px; border-radius: 30px; font-size: 0.9rem;" data-i18n="version">版本 8.1</span>
+            </div>
+        </div>
+    </main>
+
+    <!-- 返回顶部按钮 -->
+    <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="返回顶部">
+        ↑
+    </button>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-copyright">
+                © 1997 - <span id="currentYear"></span> Laurent Destailleur & AWStats <span data-i18n="copyright">团队</span>
+            </div>
+            <div class="footer-license">
+                <a href="awstats_license.html" data-i18n="licenseLink">GNU General Public License</a> · 
+                <a href="https://github.com/eldy/AWStats" rel="publisher" target="_blank" style="display: inline-flex; align-items: center;"><a data-i18n="authorLink"></a> 
+                </a>
+                    <img src="images/favicon.pub/github.svg" style="width: 24px; height: 24px;">
+                </div>
+            <div class="attribution" data-i18n="darkAttr">
+                🌓 自适应暗黑 · 现代化重构
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+            // 完整翻译资源
+            const translations = {
+                zh: {
+                    // 导航
+                    home: "主页",
+                    currentPage: "基准测试",
+                    categoryBasic: "📌 基础文档",
+                    categoryGuide: "📘 使用指南",
+                    categoryReference: "📚 参考资源",
+                    categoryIntegration: "🧩 集成与扩展",
+                    categoryDev: "💻 开发者文档",
+                    
+                    navHome: "主页",
+                    navWhat: "什么是AWStats",
+                    navSetup: "安装配置",
+                    navWebmin: "Webmin模块",
+                    navUpgrade: "升级指南",
+                    navTools: "其他工具",
+                    navSecurity: "安全建议",
+                    navLicense: "许可证",
+                    navGlossary: "术语表",
+                    navFAQ: "FAQ",
+                    navExtra: "额外部分",
+                    navDolibarr: "Dolibarr模块",
+                    navPlugins: "插件开发",
+                    navHooks: "插件钩子",
+                    navGraphs: "插件图形",
+                    navContrib: "贡献资源",
+                    navConfig: "配置参数",
+                    navCompare: "对比",
+                    navBenchmark: "基准测试",
+                    navChangelog: "更新日志",
+                    
+                    siteTitle: "AWStats 8.1",
+                    headerSlogan: "⚡ 先进的日志分析器 · 官方文档",
+                    themeAuto: "自动",
+                    mainTitle: "📊 基准测试",
+                    
+                    intro: "AWStats 更新过程必须经常运行，因此了解 AWStats 的速度很重要，以便根据 AWStats 的速度和您需要的刷新率选择每个更新过程之间的最佳延迟。AWStats 的速度取决于 AWStats 版本和您在配置文件中使用的选项/设置。",
+                    
+                    benchmarkTitle: "AWStats 6.0 版本的基准测试结果（使用常见配置）",
+                    hardware: "硬件：",
+                    software: "软件：",
+                    configOptions: "配置选项：",
+                    avgSpeed: "平均速度：",
+                    
+                    importantInfo: "其他重要信息",
+                    info1: "日志文件大小大约是行数的 <b>150</b>（NCSA common/CLF 日志）到 <b>320倍</b>（NCSA extended/XLF/ELF 日志）",
+                    info2: "<b>1,000次访问</b> = <b>8,000个页面</b>（每次访问8个页面）= <b>64,000行</b>（每个页面8个请求）= <b>20 MB文件</b> ⇒ <b>15秒</b>（Athlon 1GHz, 标准 Perl 5.8）",
+                    info3: "历史文件（AWStats 数据库，总结日志分析）的大小为：<b>15000+90*x+100*y 字节</b>（其中 x 是每月唯一访客数，y 是网站上的不同页面数）。如果使用 <a href=\"awstats_config.html#BuildHistoryFormat\">BuildHistoryFormat</a>=xml，此值需乘以3。",
+                    
+                    warning: "警告！所有这些数据都是具有默认配置的常见公共网站的平均值。计算规则可能因 Web 服务器或 AWStats 配置以及网站内容而显著变化。",
+                    
+                    dnsNote: "不要忘记日志分析器的基准测试是在没有反向 DNS 查找的情况下进行的，因为 DNS 查找非常慢（取决于互联网网络和您的系统），如果在 AWStats 配置文件中启用，它将占用日志分析时间的 <b>99%</b 以上！请查看以下图表：",
+                    dnsNote1: "获取更真实的基准测试结果",
+                    dnsNote2: "获取有关您网站良好设置的更多信息和建议",
+                    
+                    recommendationsTitle: "应该使用的频率/参数示例（以良好使用 AWStats）",
+                    
+                    traffic: "您的网站流量",
+                    perlDistrib: "Perl 发行版",
+                    paramValues: "参数值",
+                    updateFreq: "推荐更新频率<br>（日志轮转延迟）",
+                    memoryReq: "所需内存**",
+                    duration: "更新过程时长***",
+                    
+                    yourChoice: "任意选择",
+                    freq1: "每天一次<br>日志文件 0-1 MB<br>处理 2000 行",
+                    freq2: "每天一次<br>日志文件 1-10 MB<br>处理 2000-20000 行",
+                    freq3: "每天一次<br>日志文件 10-100 MB<br>处理 20000-200000 行",
+                    freq4: "每6小时<br>日志文件 24-96 MB<br>处理 50000-300000 行",
+                    freq5: "每6小时<br>日志文件 96-384 MB<br>处理 300000-1200000 行",
+                    freq6: "每6小时<br>日志文件 384-768 MB<br>处理 1200000-2400000 行",
+                    
+                    seeNext: "见下一节关于 ActiveState 的问题",
+                    hugeTraffic: "AWStats 仅当您使用具有大内存的专用服务器时才是此类网站的好选择。否则，请尝试功能较少但更快的工具，如\"行计数器日志分析器\"，如 Webalizer。",
+                    
+                    dnsNoteStar: "您应将 <a href=\"awstats_config.html#DNSLookup\">DNSLookup</a> 参数设为 0（或 2），如果：",
+                    dnsNoteStar1: "- 反向 DNS 查找已在日志文件中完成，",
+                    dnsNoteStar2: "- 或者您的网站每月访问量超过 250,000 次。",
+                    dnsNoteStar3: "注意：如果启用 'geoip' 插件，国家报告可以在没有反向 DNS 查找的情况下工作（比反向 DNS 查找更快、更准确）。",
+                    memoryNote: "这是更新过程所需的空闲内存（以 MB 为单位），不是安装的硬件内存！",
+                    durationNote: "DNSLookup 设为 1 时的时长非常长，因为 DNS 查找无论计算机速度如何。DNSLookup 设为 0（或 2）时的时长基于 Athlon 1GHz/256MB、Cygwin Perl 5.8 和 LogFormat=1。",
+                    
+                    advicesTitle: "良好使用 AWStats 的一些重要建议",
+                    
+                    advice1: "检查 AWStats 中 <a href=\"awstats_config.html#DNSLookup\">DNSLookup</a> 是否已禁用（DNSLookup 不应设为 1）。如果您需要\"国家\"报告，应优先<b>使用 'geoip' 插件（使用 <a href=\"http://www.maxmind.com/en/city?rId=awstats\">Maxmind 数据库</a>）而不是 DNS 查找</b>。这些插件让您获得更准确的结果，更快，无需网络查询（启用 DNSLookup 时，日志分析速度降低 40 到 100 倍，因此仅在需要时使用）。请注意，如果没有 DNS 查找和 'geoip' 插件，'国家'报告可能仍能工作，但结果将不如使用 'geoip' 准确，并且仅当日志文件中的主机地址已被解析时才有效（需要设置 Web 服务器执行此操作，这会使 Web 服务器变慢）。",
+                    advice2: "谨慎使用参数 <a href=\"awstats_config.html#URLWithQuery\">URLWithQuery</a>、<a href=\"awstats_config.html#URLReferrerWithQuery\">URLReferrerWithQuery</a> 和 <a href=\"awstats_config.html#URLWithAnchor\">URLWithAnchor</a>（如果您不知道它们的含义，请将其设为 0），并检查您网站的 URL 语法，以确定是否需要完善参数 <a href=\"awstats_config.html#URLQuerySeparators\">URLQuerySeparators</a>。如果您确实需要使用 <a href=\"awstats_config.html#URLWithQuery\">URLWithQuery</a>=1，请检查 <a href=\"awstats_config.html#URLWithQueryWithOnlyFollowingParameters\">URLWithQueryWithOnlyFollowingParameters</a> 或 <a href=\"awstats_config.html#URLWithQueryWithoutFollowingParameters\">URLWithQueryWithoutFollowingParameters</a> 是否正确设置。",
+                    advice3: "使用<b>最新的 Perl 版本</b>（例如 Perl 5.8 比 5.6 快 5%），更重要的是，<b>对于大型日志文件，使用标准 Perl 发行版而不是 ActiveState</b>。这是因为 ActiveState 5.006（可能还有其他版本）有非常严重的内存泄漏问题，导致分析速度越来越慢，最终降至 0 行/秒，并耗尽所有内存。您可以通过在命令行添加 -showsteps 选项来观察速度下降。即使对于几 GB 的日志文件，速度也应保持在本页顶部给出的恒定值！",
+                    advice4: "<b>轮转您的日志</b>（参见 <a href=\"awstats_faq.html#ROTATE\">FAQ-SET500</a>）并更频繁地启动 AWStats（从 crontab 或调度程序，参见 <a href=\"awstats_faq.html#CRONTAB\">FAQ-SET550</a>）。启动 AWStats 的频率越高，需要处理的日志新行就越少。这也可以解决 ActiveState 的内存问题（见下一条建议）。",
+                    advice5: "确保您的 <a href=\"awstats_config.html#HostAliases\">HostAliases</a> 参数列表完整。",
+                    advice6: "使用<b>最新的 AWStats 版本</b>（例如 AWStats 6.0 比 5.9 快 15%）。",
+                    advice7: "对于高级用户，您可以使用不同选项重新编译 Perl。例如，\"use64bitint=define usemymalloc=y\" 似乎可以提高 10% 的速度。",
+                    
+                    writtenBy: "文章作者：<a href=\"https://www.destailleur.fr\" rel=\"author\" style=\"color: var(--accent);\">Laurent Destailleur</a>。",
+                    version: "版本 8.1",
+                    copyright: "团队",
+                    licenseLink: "GNU通用公共许可证",
+                    authorLink: "原作者",
+                    darkAttr: "🌓 自适应暗黑 · 中文/English",
+                },
+                en: {
+                    // Navigation
+                    home: "Home",
+                    currentPage: "Benchmark",
+                    categoryBasic: "📌 Basic Docs",
+                    categoryGuide: "📘 User Guide",
+                    categoryReference: "📚 Reference",
+                    categoryIntegration: "🧩 Integration",
+                    categoryDev: "💻 Developer",
+                    
+                    navHome: "Home",
+                    navWhat: "What is AWStats",
+                    navSetup: "Setup",
+                    navWebmin: "Webmin Module",
+                    navUpgrade: "Upgrade Guide",
+                    navTools: "Other Tools",
+                    navSecurity: "Security Tips",
+                    navLicense: "License",
+                    navGlossary: "Glossary",
+                    navFAQ: "FAQ",
+                    navExtra: "Extra Sections",
+                    navDolibarr: "Dolibarr Module",
+                    navPlugins: "Plugin Development",
+                    navHooks: "Plugin Hooks",
+                    navGraphs: "Plugin Graphs",
+                    navContrib: "Contrib",
+                    navConfig: "Config",
+                    navCompare: "Compare",
+                    navBenchmark: "Benchmark",
+                    navChangelog: "Changelog",
+                    
+                    siteTitle: "AWStats 8.1",
+                    headerSlogan: "⚡ Advanced Log Analyzer · Official Docs",
+                    themeAuto: "Auto",
+                    mainTitle: "📊 Benchmarks",
+                    
+                    intro: "AWStats update process must be ran frequently, so it's important to know what is AWStats speed to choose an optimum delay between each update process according to AWStats speed and the refresh rate you need to have. AWStats speed depends on AWStats version and options/setup you use in configuration file.",
+                    
+                    benchmarkTitle: "Benchmark results with AWStats version 6.0 and a common configuration",
+                    hardware: "HARDWARE:",
+                    software: "SOFTWARE:",
+                    configOptions: "CONFIG OPTIONS:",
+                    avgSpeed: "AVERAGE SPEED:",
+                    
+                    importantInfo: "Other important information",
+                    info1: "A log file size is about <b>150</b> (NCSA common/CLF log files) to <b>320 times</b> (NCSA extended/XLF/ELF log files) its number of lines,",
+                    info2: "<b>1,000 visits</b> = <b>8,000 pages</b> (with 8 pages/visits) = <b>64,000 lines</b> (with 8 hits/page) = <b>20 MB file</b> => <b>15 seconds</b> (Athlon 1GHz, Standard Perl 5.8)",
+                    info3: "History files (AWStats database, resuming the log analysis) has the following size (one file a month) : <b>15000+90*x+100*y bytes</b> (where x is number of unique visitors a month and y is number of different pages on web sites). If you use option <a href=\"awstats_config.html#BuildHistoryFormat\">BuildHistoryFormat</a>=xml, you must multiplie this value by 3.",
+                    
+                    warning: "WARNING ! All those data are average values for a common public site with default configuration. Calculation rule can be seriously changed according to web server or AWStats configuration and web site content.",
+                    
+                    dnsNote: "Don't forget that benchmarks of log analyzers are made without reverse DNS lookup because DNS lookup is so slow (depending on Internet network and your system), that if enabled in AWStats configuration file, it would take more than <b>99%</b> of the time of a log analysis ! Take a look at the following chart to:",
+                    dnsNote1: "Get more real ideas on benchmarks results",
+                    dnsNote2: "Get more information and advice on a good setup for your site.",
+                    
+                    recommendationsTitle: "Examples of frequency/parameters you should use to have a good use of AWStats",
+                    
+                    traffic: "Your Web site traffic",
+                    perlDistrib: "Perl distrib",
+                    paramValues: "Values for parameters",
+                    updateFreq: "Recommended update frequency<br>(Rotate log delay)",
+                    memoryReq: "Memory required**",
+                    duration: "Update process duration***",
+                    
+                    yourChoice: "Your choice",
+                    freq1: "Once a day<br>Log files are 0-1 MB<br>2000 lines to process",
+                    freq2: "Once a day<br>Log files are 1-10 MB<br>2000-20000 lines",
+                    freq3: "Once a day<br>Log Files are 10-100 MB<br>20000-200000 lines",
+                    freq4: "Every 6 hours<br>Log Files are 24-96 MB<br>50000-300000 lines",
+                    freq5: "Every 6 hours<br>Log Files are 96-384 MB<br>300000-1200000 lines",
+                    freq6: "Every 6 hours<br>Log Files are 384-768 MB<br>1200000-2400000 lines",
+                    
+                    seeNext: "See next section on pb with ActiveState",
+                    hugeTraffic: "AWStats is a good choice for such web sites only if you use a dedicated server with a large amount of memory. Try a tool with less features but faster like \"row counter log analyzers\" like Webalizer if not.",
+                    
+                    dnsNoteStar: "You should set <a href=\"awstats_config.html#DNSLookup\">DNSLookup</a> parameter to 0 (or 2) if",
+                    dnsNoteStar1: "- reverse DNS lookup is already done in your log file,",
+                    dnsNoteStar2: "- or if your web site has more than 250,000 visits a month.",
+                    dnsNoteStar3: "Note: Country report can works without reverse DNS lookup if plugin 'geoip' is enabled (faster and more accurate than reverse DNS lookup).",
+                    memoryNote: "This is free memory required for update process (in MB), this is not hardware memory installed !",
+                    durationNote: "Duration with DNSLookup set to 1 is very long because of DNS lookup whatever is speed of your computer. Duration with DNSLookup set to 0 (or 2) is with Athlon 1GHz/256MB, Cygwin Perl 5.8 and LogFormat=1.",
+                    
+                    advicesTitle: "SOME IMPORTANT ADVICES FOR A GOOD USE OF AWSTATS",
+                    
+                    advice1: "Check that <a href=\"awstats_config.html#DNSLookup\">DNSLookup</a> is disabled in AWStats (DNSLookup should not be set to 1). If you need a 'Country' report, you should prefer <b>using the 'geoip' plugin using <a href=\"http://www.maxmind.com/en/city?rId=awstats\">Maxmind database</a> instead of a DNS lookup</b>. Those plugins allow you to have more accurate results, faster with no network queries (With DNSLookup enabled, log analyze speed is decreased by 40 to 100 times, so use it only if required). Note that without DNS lookup and without the 'geoip' plugins, 'Country' report might work but results will be less accurate than the 'geoip' usage and it works only if hosts addresses in your log file are already resolved (need to setup your web server to do so, your web server will be slowed).",
+                    advice2: "Use carefully parameters <a href=\"awstats_config.html#URLWithQuery\">URLWithQuery</a>, <a href=\"awstats_config.html#URLReferrerWithQuery\">URLReferrerWithQuery</a> and <a href=\"awstats_config.html#URLWithAnchor\">URLWithAnchor</a> (Let them set to 0 if you don't know what they means) and check your web site URLs' syntax to know if you don't need to complete the parameter <a href=\"awstats_config.html#URLQuerySeparators\">URLQuerySeparators</a>. If you really need to use <a href=\"awstats_config.html#URLWithQuery\">URLWithQuery</a>=1, check that <a href=\"awstats_config.html#URLWithQueryWithOnlyFollowingParameters\">URLWithQueryWithOnlyFollowingParameters</a> or <a href=\"awstats_config.html#URLWithQueryWithoutFollowingParameters\">URLWithQueryWithoutFollowingParameters</a> are set properly.",
+                    advice3: "Use <b>last Perl version</b> (For example Perl 5.8 is 5% faster than 5.6) and, more important, <b>for large log files, use standard Perl distribution instead of ActiveState</b>. This is because ActiveState 5.006 (and may be also other versions), has very important memory hole problem making speed of analysis slower and slower reaching 0 lines/seconds and using all your memory. You can see the decrease by adding the -showsteps option on command line. The speed should be constant to value given in top of this page, even for several Gigabytes log files !",
+                    advice4: "<b>Rotate your log</b> (See <a href=\"awstats_faq.html#ROTATE\">FAQ-SET500</a>) and launch AWStats more often (from crontab or a scheduler, See <a href=\"awstats_faq.html#CRONTAB\">FAQ-SET550</a>). The more often you launch AWStats, the less AWStats has new lines in log to process. This can also solve the ActiveState memory problem (see next advice).",
+                    advice5: "Be sure that your <a href=\"awstats_config.html#HostAliases\">HostAliases</a> parameter list is complete.",
+                    advice6: "Use <b>last AWStats version</b> (For example AWStats 6.0 is 15% faster than 5.9).",
+                    advice7: "For geeks users, you can also recompile your Perl with differents options. For example, it seems that the \"use64bitint=define usemymalloc=y\" can increase speed by 10%.",
+                    
+                    writtenBy: "Article written by <a href=\"https://www.destailleur.fr\" rel=\"author\" style=\"color: var(--accent);\">Laurent Destailleur</a>.",
+                    version: "Version 8.1",
+                    copyright: "Team",
+                    licenseLink: "GNU General Public License",
+                    authorLink: "Author",
+                    darkAttr: "🌓 Adaptive dark mode · 中文/English",
+                }
+            };
+
+            const i18nElements = document.querySelectorAll('[data-i18n]');
+            const langSelector = document.getElementById('langSelector');
+            let currentLang = localStorage.getItem('awstats_lang') || 'zh';
+            langSelector.value = currentLang;
+
+            function applyLanguage(lang) {
+                const t = translations[lang] || translations.zh;
+                i18nElements.forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (t[key] !== undefined) {
+                        if (key === 'copyright') {
+                            const year = new Date().getFullYear();
+                            el.innerHTML = t[key].replace('{year}', year);
+                        } else if (key === 'info1' || key === 'info2' || key === 'info3' || key === 'dnsNoteStar' || key === 'dnsNoteStar3' || key === 'advice1' || key === 'advice2' || key === 'advice3' || key === 'advice4' || key === 'writtenBy') {
+                            el.innerHTML = t[key];
+                        } else {
+                            el.textContent = t[key];
+                        }
+                    }
+                });
+                localStorage.setItem('awstats_lang', lang);
+                
+                const themeState = localStorage.getItem('awstats_theme') || 'auto';
+                const themeText = document.querySelector('.theme-text');
+                if (themeText) {
+                    if (themeState === 'auto') themeText.textContent = t.themeAuto;
+                    else if (themeState === 'light') themeText.textContent = (lang === 'zh' ? '浅色' : 'Light');
+                    else themeText.textContent = (lang === 'zh' ? '深色' : 'Dark');
+                }
+            }
+            // 自定义下拉菜单功能
+            document.addEventListener('DOMContentLoaded', function() {
+                const customSelect = document.querySelector('.custom-select');
+                if (customSelect) {
+                    const selected = customSelect.querySelector('.select-selected');
+                    const items = customSelect.querySelectorAll('.select-items div');
+                    
+                    selected.addEventListener('click', function() {
+                        customSelect.classList.toggle('active');
+                    });
+                    
+                    items.forEach(item => {
+                        item.addEventListener('click', function() {
+                            const value = this.getAttribute('data-value');
+                            const text = this.textContent;
+                            
+                            // 更新显示
+                            selected.textContent = text;
+                            selected.setAttribute('data-value', value);
+                            
+                            // 更新实际 select 的值
+                            document.getElementById('langSelector').value = value;
+                            
+                            // 触发 change 事件
+                            document.getElementById('langSelector').dispatchEvent(new Event('change'));
+                            
+                            // 关闭下拉菜单
+                            customSelect.classList.remove('active');
+                        });
+                    });
+                    
+                    // 点击其他地方关闭
+                    document.addEventListener('click', function(e) {
+                        if (!customSelect.contains(e.target)) {
+                            customSelect.classList.remove('active');
+                        }
+                    });
+                }
+            });
+            // 点击展开下拉菜单功能
+            document.addEventListener('DOMContentLoaded', function() {
+                const dropdownItems = document.querySelectorAll('.dropdown-item');
+                
+                // 点击其他地方关闭所有下拉菜单
+                document.addEventListener('click', function(event) {
+                    if (!event.target.closest('.dropdown-item')) {
+                        dropdownItems.forEach(item => {
+                            item.classList.remove('active');
+                        });
+                    }
+                });
+                
+                // 点击下拉菜单标题切换显示
+                dropdownItems.forEach(item => {
+                    const title = item.querySelector('.dropdown-title');
+                    title.addEventListener('click', function(e) {
+                        e.stopPropagation(); // 阻止事件冒泡
+                        
+                        // 关闭其他打开的下拉菜单
+                        dropdownItems.forEach(otherItem => {
+                            if (otherItem !== item) {
+                                otherItem.classList.remove('active');
+                            }
+                        });
+                        
+                        // 切换当前菜单的显示状态
+                        item.classList.toggle('active');
+                    });
+                    
+                    // 防止点击下拉内容时关闭菜单
+                    const content = item.querySelector('.dropdown-content');
+                    if (content) {
+                        content.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                        });
+                    }
+                    // 按 ESC 键关闭所有菜单
+                    document.addEventListener('keydown', function(e) {
+                        if (e.key === 'Escape') {
+                            dropdownItems.forEach(item => {
+                                item.classList.remove('active');
+                            });
+                        }
+                    });
+                });
+            });
+            applyLanguage(currentLang);
+
+            langSelector.addEventListener('change', (e) => {
+                currentLang = e.target.value;
+                applyLanguage(currentLang);
+            });
+          // 手机端汉堡菜单功能
+          document.addEventListener('DOMContentLoaded', function() {
+              const mobileToggle = document.getElementById('mobileMenuToggle');
+              const mobileMenu = document.getElementById('mobileMenu');
+              
+              if (mobileToggle && mobileMenu) {
+                  mobileToggle.addEventListener('click', function() {
+                      mobileMenu.classList.toggle('mobile-active');
+                      
+                      // 改变图标样式
+                      if (mobileMenu.classList.contains('mobile-active')) {
+                          mobileToggle.innerHTML = '✕'; // 关闭图标
+                      } else {
+                          mobileToggle.innerHTML = '☰'; // 菜单图标
+                      }
+                  });
+                  
+                  // 点击菜单项后自动关闭菜单（可选）
+                  const menuItems = mobileMenu.querySelectorAll('.dropdown-title');
+                  menuItems.forEach(item => {
+                      item.addEventListener('click', function() {
+                          // 注意：这里不关闭主菜单，只处理子菜单的展开/收起
+                          // 如果需要点击后关闭主菜单，可以取消下面的注释
+                          // mobileMenu.classList.remove('mobile-active');
+                          // mobileToggle.innerHTML = '☰';
+                      });
+                  });
+              }
+          });
+            // 暗黑模式切换
+            const root = document.documentElement;
+            const themeBtn = document.getElementById('themeToggleBtn');
+            let themeState = localStorage.getItem('awstats_theme') || 'auto';
+
+            function applyTheme(state) {
+                root.classList.remove('force-light', 'force-dark');
+                if (state === 'light') root.classList.add('force-light');
+                else if (state === 'dark') root.classList.add('force-dark');
+                const themeText = document.querySelector('.theme-text');
+                if (themeText) {
+                    const lang = currentLang;
+                    const t = translations[lang];
+                    if (state === 'auto') themeText.textContent = t.themeAuto;
+                    else if (state === 'light') themeText.textContent = (lang === 'zh' ? '浅色' : 'Light');
+                    else themeText.textContent = (lang === 'zh' ? '深色' : 'Dark');
+                }
+                localStorage.setItem('awstats_theme', state);
+            }
+            applyTheme(themeState);
+            themeBtn.addEventListener('click', () => {
+                if (themeState === 'auto') themeState = 'light';
+                else if (themeState === 'light') themeState = 'dark';
+                else themeState = 'auto';
+                applyTheme(themeState);
+            });
+        })();
+    </script>
+</body>
+</html>

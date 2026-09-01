@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+
+<svg
+   xml:space="preserve"
+   width="110mm"
+   height="110mm"
+   style="clip-rule:evenodd;fill-rule:evenodd;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
+   viewBox="0 0 110 110"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="w3m.svg"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><sodipodi:namedview
+   id="namedview1"
+   pagecolor="#ffffff"
+   bordercolor="#000000"
+   borderopacity="0.25"
+   inkscape:showpageshadow="2"
+   inkscape:pageopacity="0.0"
+   inkscape:pagecheckerboard="0"
+   inkscape:deskcolor="#d1d1d1"
+   inkscape:document-units="mm"
+   inkscape:zoom="0.4035564"
+   inkscape:cx="397.71393"
+   inkscape:cy="561.25984"
+   inkscape:window-width="1366"
+   inkscape:window-height="697"
+   inkscape:window-x="-8"
+   inkscape:window-y="-8"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="图层_x0020_1" />
+ <defs
+   id="defs1">
+  <style
+   type="text/css"
+   id="style1">
+   <![CDATA[
+    .fil0 {fill:#4BB033}
+   ]]>
+  </style>
+ </defs>
+ <g
+   id="图层_x0020_1"
+   inkscape:label="图层 1"
+   inkscape:groupmode="layer">
+  <metadata
+   id="CorelCorpID_0Corel-Layer" />
+  <path
+   class="fil0"
+   d="m 22.9516,3.2672 h 60 c 11,0 20,6.9735 20,15.4967 v 69.0066 c 0,8.5232 -9,15.4967 -20,15.4967 h -60 c -11,0 -20,-6.9735 -20,-15.4967 V 18.7639 c 0,-8.5232 9,-15.4967 20,-15.4967 z m 44.8877,38.8341 c 0,1.5473 0.8354,1.3626 2.3263,1.3958 0.0758,8.7956 0.2474,10.883 -0.4653,19.5401 -2.4462,0.0545 -2.3262,-0.0137 -2.3262,2.7915 5.9153,0 9.3049,0.8632 9.3049,-1.3957 0,-1.764 -1.0913,-1.3956 -3.7483,-1.3967 l 0.4915,-16.2825 c 1.9313,2.2219 3.3629,12.5615 6.5134,12.5615 2.447,0 4.2662,-10.9766 5.9494,-13.0225 0.1875,5.1047 0.564,11.8188 0.564,16.7444 -2.6353,0 -3.7219,-0.3658 -3.7219,1.3958 0,2.2589 3.3892,1.3957 9.3048,1.3957 0,-2.7928 0.1118,-2.7319 -2.2347,-2.7971 -0.4067,-7.815 -0.5567,-11.7347 -0.5567,-19.5345 3.8205,-0.0852 2.5214,-2.7917 0.9304,-2.7915 L 84.5941,40.7079 79.5518,53.8734 74.818,40.7056 c -4.8037,0 -6.9787,-0.6718 -6.9787,1.3957 z m -44.198,-1.3957 c -4.8958,0 -9.7701,-0.8542 -9.7701,1.3957 0,1.5473 0.8352,1.3626 2.3262,1.3958 0.0794,3.57 1.1312,22.7969 5.1176,22.7969 2.9626,0 3.7465,-11.3405 6.0482,-13.0268 0.001,0.0129 6.0845,28.3863 8.8694,1.8907 0.3259,-3.1005 1.5381,-8.1387 1.8312,-11.6608 3.7662,-0.084 2.527,-2.7915 0.9305,-2.7915 h -7.9092 c 0,3.1274 -0.2449,2.7915 3.722,2.7915 l -2.0648,16.257 C 30.3566,57.8538 30.3357,47.219 26.8979,47.219 c -2.374,0 -3.558,10.2321 -5.5829,12.5616 L 19.3628,43.5085 c 4.5893,-0.0181 4.2785,0.391 4.2785,-2.8029 z m 21.8664,2.7915 c 0,4.9313 3.2567,4.3304 3.2567,0.4652 4.2042,-0.3498 8.8396,-2.1647 8.8396,4.1871 0,3.141 -5.1999,3.2568 -7.444,3.2568 0,6.0908 8.3744,-0.2019 8.3744,6.9787 0,6.3999 -7.9989,5.3814 -12.5615,2.3261 -6.9593,4.6602 15.8183,10.4906 15.8183,-1.3957 0,-3.4006 -1.0645,-5.8038 -3.7219,-6.5134 1.8117,-2.7055 2.7913,-1.3814 2.7913,-6.0481 0,-9.5008 -15.3529,-6.9059 -15.3529,-3.2567 z"
+   id="path1" />
+ </g>
+</svg>

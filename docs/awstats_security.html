@@ -1,167 +1,667 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-<meta name="description" content="AWStats Documentation - Security page">
-<meta name="keywords" content="awstats, awstat, security, tips">
-<meta name="robots" content="index,follow">
-<meta name="title" content="AWStats Documentation - Security page">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>AWStats Documentation - Security page</title>
-<link rel="stylesheet" href="styles.css" type="text/css">
-<link href="https://plus.google.com/+LaurentDestailleur-Open-Source-Expert" rel="publisher" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWStats · 安全建议</title>
+    <meta name="description" content="AWStats Documentation - Security tips (中文/English)">
+    <meta name="keywords" content="awstats, security, tips, 安全, 建议">
+    <meta name="author" content="Laurent Destailleur (多语言重构)">
+    <meta name="robots" content="index,follow">
+    <style>
+        /* ========== 全局设计 ========== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-page: #f8f9fc; --surface: #ffffff; --surface-secondary: #f1f3f8;
+            --text-primary: #1e293b; --text-secondary: #334155; --accent: #5b5f97;
+            --accent-light: #7f83b0; --border: #d0d5e0; --card-shadow: 0 8px 20px rgba(0,0,0,0.03), 0 2px 6px rgba(0,20,40,0.05);
+            --header-bg: linear-gradient(135deg, #7f83b0 0%, #5b5f97 100%);
+            --footer-bg: #ecedf2; --logo-filter: none; --link-color: #4f46e5;
+            --link-visited: #7c3aed; --code-bg: #e9e9f2;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-page: #12131f; --surface: #1f2130; --surface-secondary: #2a2c3e;
+                --text-primary: #edf2f7; --text-secondary: #cbd5e1; --accent: #a9acd9;
+                --accent-light: #b9bce6; --border: #3c405a; --card-shadow: 0 8px 20px rgba(0,0,0,0.6);
+                --header-bg: linear-gradient(145deg, #353a60, #222544);
+                --footer-bg: #1a1c2c; --logo-filter: brightness(1.1) drop-shadow(0 0 4px #aeaef0);
+                --link-color: #b1b3ff; --link-visited: #caa5ff; --code-bg: #2c2f44;
+            }
+        }
+        .force-light { --bg-page: #f8f9fc !important; --surface: #ffffff !important; --surface-secondary: #f1f3f8 !important; --text-primary: #1e293b !important; --text-secondary: #334155 !important; --accent: #5b5f97 !important; --border: #d0d5e0 !important; --footer-bg: #ecedf2 !important; --link-color: #4f46e5 !important; }
+        .force-dark { --bg-page: #12131f !important; --surface: #1f2130 !important; --surface-secondary: #2a2c3e !important; --text-primary: #edf2f7 !important; --text-secondary: #cbd5e1 !important; --accent: #a9acd9 !important; --border: #3c405a !important; --footer-bg: #1a1c2c !important; --link-color: #b1b3ff !important; }
+
+        body {
+            background-color: var(--bg-page); color: var(--text-primary);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6; margin: 0; padding: 0;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            display: flex; flex-direction: column; min-height: 100vh;
+        }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 28px; width: 100%; }
+
+        /* 导航栏 */
+        .nav-bar {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background-color: var(--surface);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        @supports (backdrop-filter: blur(10px)) {
+            .nav-bar {
+                background-color: color-mix(in srgb, var(--surface) 80%, transparent);
+                backdrop-filter: blur(10px);
+            }
+        }
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 30px;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .nav-links a:hover {
+            background: var(--surface-secondary);
+            color: var(--accent);
+        }
+        .nav-links a.active {
+            background: var(--accent);
+            color: white;
+        }
+        .nav-home {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: var(--accent);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .breadcrumb {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        .breadcrumb a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        .breadcrumb .separator {
+            color: var(--border);
+        }
+
+        /* 头部 */
+        .header {
+            background: var(--header-bg); color: white; border-radius: 0 0 32px 32px;
+            padding: 16px 0 20px; box-shadow: var(--card-shadow); margin-bottom: 20px;
+        }
+        .header-row {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 16px;
+        }
+        .logo-area { display: flex; align-items: center; gap: 12px; }
+        .logo-area img { height: 52px; width: auto; filter: var(--logo-filter); }
+        .site-title {
+            font-size: 1.75rem; font-weight: 600; background: rgba(255,255,255,0.1);
+            padding: 6px 18px; border-radius: 60px; backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .header-center {
+            flex: 1; text-align: center; font-weight: 500; font-size: 1.2rem;
+            background: rgba(0,0,0,0.1); padding: 8px 16px; border-radius: 40px;
+            backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.15);
+        }
+        .header-right { display: flex; gap: 12px; align-items: center; }
+        .lang-switch {
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 40px; padding: 6px 12px; color: white; font-weight: 500;
+            display: flex; align-items: center; gap: 6px; backdrop-filter: blur(4px);
+        }
+        .lang-switch select {
+            background: transparent; border: none; color: white; font-weight: 500;
+            outline: none; font-size: 0.95rem; cursor: pointer;
+        }
+        .lang-switch select option { background: #5b5f97; color: white; }
+        .theme-toggle {
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 40px; padding: 8px 16px; font-size: 0.9rem; color: white;
+            cursor: pointer; display: flex; align-items: center; gap: 6px; backdrop-filter: blur(4px);
+        }
+
+        /* 文档卡片样式 */
+        .doc-card {
+            background-color: var(--surface); border-radius: 32px;
+            padding: 2.5rem 2.8rem; box-shadow: var(--card-shadow);
+            border: 1px solid var(--border); margin: 20px 0 30px;
+        }
+        h1 {
+            font-size: 2.2rem; font-weight: 600; letter-spacing: -0.02em;
+            border-left: 10px solid var(--accent); padding-left: 24px;
+            margin: 0 0 25px 0; color: var(--text-primary);
+        }
+        h2 {
+            font-size: 1.8rem; font-weight: 600; margin: 2rem 0 1rem;
+            color: var(--accent); border-bottom: 2px solid var(--border); padding-bottom: 6px;
+        }
+        h3 { font-size: 1.4rem; margin: 1.8rem 0 0.8rem; color: var(--text-primary); font-weight: 600; }
+        hr { border: none; border-top: 2px dashed var(--border); margin: 2rem 0; }
+        ul, ol { padding-left: 1.8rem; margin: 1rem 0; }
+        li { margin: 0.6rem 0; color: var(--text-secondary); }
+        li strong { color: var(--text-primary); }
+        a { color: var(--link-color); text-decoration: none; border-bottom: 1px dotted var(--accent-light); }
+        a:hover { color: var(--accent-light); border-bottom-style: solid; }
+        code, .file-path {
+            background: var(--code-bg); padding: 0.2rem 0.6rem; border-radius: 20px;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.9rem;
+            border: 1px solid var(--border); color: var(--text-primary);
+        }
+        pre {
+            background: var(--code-bg);
+            padding: 20px;
+            border-radius: 16px;
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin: 20px 0;
+            /* 代码块内容不翻译 */
+            -moz-user-select: text;
+            -webkit-user-select: text;
+            user-select: text;
+        }
+        .badge {
+            background: var(--accent); color: white; font-size: 0.9rem;
+            padding: 2px 10px; border-radius: 30px; display: inline-block;
+        }
+        .security-section {
+            margin: 40px 0;
+            padding: 20px;
+            background: var(--surface-secondary);
+            border-radius: 24px;
+            border: 1px solid var(--border);
+        }
+        .policy-box {
+            border-left: 4px solid var(--accent);
+            padding: 15px 20px;
+            background: var(--surface);
+            border-radius: 12px;
+            margin: 15px 0;
+        }
+        .policy-label {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+        .footer {
+            background-color: var(--footer-bg); margin-top: 48px;
+            padding: 28px 24px; border-radius: 30px 30px 0 0;
+            border-top: 1px solid var(--border); color: var(--text-secondary);
+        }
+        .footer-content {
+            display: flex; flex-wrap: wrap; justify-content: space-between;
+            align-items: center; gap: 16px; max-width: 1200px; margin: 0 auto;
+        }
+        .footer-copyright {
+            background: var(--surface); padding: 6px 18px; border-radius: 60px;
+            border: 1px solid var(--border);
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.2s, background 0.2s;
+            z-index: 99;
+        }
+        .back-to-top:hover {
+            transform: scale(1.1);
+            background: var(--accent-light);
+        }
+        
+        @media (max-width: 700px) {
+            .header-row { flex-direction: column; }
+            .doc-card { padding: 1.8rem; }
+            h1 { font-size: 1.8rem; }
+            .nav-container { flex-direction: column; align-items: flex-start; }
+            .nav-links { justify-content: center; width: 100%; }
+            .back-to-top { bottom: 20px; right: 20px; }
+        }
+    </style>
 </head>
+<body>
+    <!-- 导航栏 -->
+    <div class="nav-bar">
+        <div class="container nav-container">
+            <a href="index.html" class="nav-home">
+                <span>🏠</span> AWStats 文档
+            </a>
+            <div class="nav-links">
+                <a href="index.html" data-i18n="navHome">主页</a>
+                <a href="awstats_what.html" data-i18n="navWhat">什么是AWStats</a>
+                <a href="awstats_setup.html" data-i18n="navSetup">安装配置</a>
+                <a href="awstats_webmin.html" data-i18n="navWebmin">Webmin模块</a>
+                <a href="awstats_upgrade.html" data-i18n="navUpgrade">升级指南</a>
+                <a href="awstats_tools.html" data-i18n="navTools">其他工具</a>
+                <a href="awstats_security.html" class="active" data-i18n="navSecurity">安全建议</a>
+                <a href="awstats_faq.html" data-i18n="navFAQ">FAQ</a>
+            </div>
+            <div class="breadcrumb">
+                <a href="index.html" data-i18n="home">主页</a>
+                <span class="separator">›</span>
+                <span data-i18n="currentPage">安全建议</span>
+            </div>
+        </div>
+    </div>
 
-<body topmargin=10 leftmargin=5>
+    <header class="header">
+        <div class="container header-row">
+            <div class="logo-area">
+                <img src="images/awstats_logo6.png" alt="AWStats" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'52\' height=\'52\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%235b5f97\'/%3E%3Ctext x=\'20\' y=\'68\' fill=\'%23ffffff\' font-size=\'60\' font-weight=\'bold\'%3EAW%3C/text%3E%3C/svg%3E';">
+                <span class="site-title" data-i18n="siteTitle">AWStats 8.1</span>
+            </div>
+            <div class="header-center" data-i18n="headerSlogan">
+                ⚡ 先进的日志分析器 · 官方文档
+            </div>
+            <div class="header-right">
+                <div class="lang-switch">
+                    <span>🌐</span>
+                    <select id="langSelector">
+                        <option value="zh" selected>中文</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+                <button class="theme-toggle" id="themeToggleBtn">
+                    <span>🌓</span> <span class="theme-text" data-i18n="themeAuto">自动</span>
+                </button>
+            </div>
+        </div>
+    </header>
 
+    <main class="container">
+        <div class="doc-card">
+            <h1 data-i18n="mainTitle">安全建议小贴士</h1>
 
-<table style="font: 10pt arial,helvetica,verdana" cellpadding=0 cellspacing=0 border=0 bgcolor=#FFFFFF width=100%>
+            <p data-i18n="intro">许多 AWStats 用户需要管理多个网站，特别是对于虚拟主机提供商。最常见的需求是防止用户 xxx（拥有网站 www.xxx.com）查看用户 yyy（拥有网站 www.yyy.com）的统计信息。</p>
+            
+            <p data-i18n="example">以下是可能的工作方式示例：</p>
 
-<!-- Large -->
-<tr style="font: 10pt arial,helvetica,verdana">
-<td bgcolor=#9999cc align=center><a href="/"><img src="images/awstats_logo6.png" border=0></a></td>
-<td bgcolor=#9999cc align=center>
-<br>
-<font style="font: 16pt arial,helvetica,sans-serif" color=#EEEEFF><b>AWStats logfile analyzer 8.0 Documentation</b></font><br>
-<br>
-</td>
-<td bgcolor=#9999cc align=center>
-&nbsp;
-</td>
-</tr>
+            <!-- 高度安全策略 -->
+            <a name="1"></a>
+            <div class="security-section">
+                <h2 data-i18n="highTitle"><u>1) 高度安全策略</u></h2>
+                
+                <div class="policy-box">
+                    <p><span class="policy-label" data-i18n="policy">策略：</span> <span data-i18n="highPolicy">您有多个由不同用户拥有的配置/域名，需要为每个域名构建统计信息。您不需要客户拥有"实时"统计信息。这对于拥有少数但大型重要客户网站的虚拟主机提供商来说是一个很好的选择。</span></p>
+                </div>
+                
+                <div class="policy-box">
+                    <p><span class="policy-label" data-i18n="advantage">优点：</span> <span data-i18n="highAdvantage">非常高的安全性。</span></p>
+                </div>
+                
+                <div class="policy-box">
+                    <p><span class="policy-label" data-i18n="disadvantage">缺点：</span> <span data-i18n="highDisadvantage">统计信息是静态的，无法动态更新/查看。</span></p>
+                </div>
+                
+                <div class="policy-box">
+                    <p><span class="policy-label" data-i18n="how">实现方法：</span> <span data-i18n="highHow1">使用 <b>-output -staticlinks</b> 选项将所有配置/域名的统计页面构建为静态 HTML 文件。不使用 AWStats 的 CGI 功能，静态构建的页面存储在受 Web 保护的 <b>领域</b> 中，仅允许授权的正确用户安全查看（或通过邮件发送）。</span></p>
+                    <p data-i18n="highHow2">如果用户对统计服务器有命令行访问权限（telnet），则必须正确设置 AWStats 数据库文件的权限。将配置/域名1的所有 AWStats 数据库文件（通过更新过程构建）设置为对 <i>user1</i>（或管理员用户）具有读写权限，而对其他用户没有读写权限。</p>
+                    <p data-i18n="highHow3">然后，检查配置文件中的 <a href="awstats_config.html#SaveDatabaseFilesWithPermissionsForEveryone">SaveDatabaseFilesWithPermissionsForEveryone</a> 参数是否设为 0。</p>
+                    <p data-i18n="highHow4">如果配置/域名1的 AWStats 数据库文件/目录是读保护的，则只有授权用户可以查看配置/域名1的统计信息。如果配置/域名1的 AWStats 数据库文件/目录是写保护的，则只有授权用户可以更新配置/域名1的统计信息。</p>
+                </div>
+            </div>
 
-</table>
+            <!-- 中等安全策略 -->
+            <a name="2"></a>
+            <div class="security-section">
+                <h2 data-i18n="mediumTitle"><u>2) 中等安全策略</u></h2>
+                
+                <div class="policy-box">
+                    <p><span class="policy-label" data-i18n="policy">策略：</span> <span data-i18n="mediumPolicy">您有多个配置/域名和多个用户。您希望指定哪些用户可以动态查看或更新每个配置/域名的统计信息。这是最常用的工作方式之一。</span></p>
+                </div>
+                
+                <div class="policy-box">
+                    <p><span class="policy-label" data-i18n="advantage">优点：</span> <span data-i18n="mediumAdvantage">统计信息是动态的，管理级别高。</span></p>
+                </div>
+                
+                <div class="policy-box">
+                    <p><span class="policy-label" data-i18n="disadvantage">缺点：</span> <span data-i18n="mediumDisadvantage">AWStats 数据库文件仍然必须对匿名 Web 服务器用户可读，因此如果有经验丰富的用户可以访问存储 AWStats 数据库文件的服务器（telnet），他们可能会成功安装和运行"破解"版的 AWStats，忽略 AllowAccessFromWebToAuthenticatedUsersOnly 参数的值。</span></p>
+                </div>
+                
+                <div class="policy-box">
+                    <p><span class="policy-label" data-i18n="how">实现方法：</span> <span data-i18n="mediumHow1">awstats.pl 文件必须保存在受 Web 保护的 <b>领域</b> 中，以强制访问者输入用户名/密码才能访问 AWStats CGI 程序。</span></p>
+                    
+                    <p><strong data-i18n="apacheExample">可以添加到 Apache 以使 awstats.pl 位于受 Web 保护领域的指令示例：</strong></p>
+                    <pre>
+&lt;Files "awstats.pl"&gt;
+AuthUserFile /path/to/.passwd
+AuthGroupFile /path/to/.group
+AuthName "Restricted Area For Customers"
+AuthType Basic
+require valid-user
+&lt;/Files&gt;</pre>
+                    
+                    <p data-i18n="mediumHow2">如果您将此类指令添加到 .htaccess 文件中，还必须检查 Apache 配置文件中的 <i>AllowOverride</i> 指令是否设为 <i>All</i>，以允许使用 .htaccess 文件。</p>
+                    
+                    <p data-i18n="mediumHow3">要了解如何为 Apache 以外的服务器创建受保护领域，请参阅您的 Web 服务器手册。</p>
+                    
+                    <p data-i18n="mediumHow4">然后编辑您想要保护的每个配置文件，将 <a href="awstats_config.html#AllowAccessFromWebToAuthenticatedUsersOnly">AllowAccessFromWebToAuthenticatedUsersOnly</a> 设为 1。您还可以在 <a href="awstats_config.html#AllowAccessFromWebToFollowingAuthenticatedUsers">AllowAccessFromWebToFollowingAuthenticatedUsers</a> 参数中编辑授权用户列表。您还可以使用 <a href="awstats_config.html#AllowAccessFromWebToFollowingIPAddresses">AllowAccessFromWebToFollowingIPAddresses</a> 参数指定允许的浏览器 IP 地址范围。</p>
+                    
+                    <p data-i18n="mediumHow5">您还可以将所有配置文件中的 <a href="awstats_config.html#SaveDatabaseFilesWithPermissionsForEveryone">SaveDatabaseFilesWithPermissionsForEveryone</a> 参数设为 0，除非您希望允许通过选项 <a href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a>=1 从 Web 更新。但这不建议，因为您需要为 Web 服务器用户授予所有历史文件的读写权限（除非您为每个授权用户设置 AWStats 脚本的 setuid，但这会使设置更加困难）。</p>
+                    
+                    <p data-i18n="mediumHow6"><a href="awstats_config.html#ErrorMessages">ErrorMessages</a> 和 <a href="awstats_config.html#DebugMessages">DebugMessages</a> 参数也与安全相关。</p>
+                </div>
 
+                <div class="policy-box">
+                    <p><strong data-i18n="envTip">其他提示：</strong> <span data-i18n="envTipDesc">如果定义了 <b>AWSTATS_FORCE_CONFIG</b> 环境变量，AWStats 将始终使用配置文件 <i>awstats.环境变量值.conf</i> 作为配置/域名文件。因此，如果您将此环境变量添加到 Web 服务器环境中，例如在 Apache 的 <i>&lt;VirtualHost&gt;</i> 指令组中添加行 <i>SetEnv AWSTATS_FORCE_CONFIG configvalueforthisdomain</i>，即使访问者尝试通过 URL '<i>http://mydomain/cgi-bin/awstats.pl?config=otherdomain</i>' 强制使用其他配置文件，AWStats 也会使用名为 <i>awstats.configvalueforthisdomain.conf</i> 的配置文件。这对于那些在配置文件中使用 <a href="awstats_config.html#AllowAccessFromWebToFollowingAuthenticatedUsers">AllowAccessFromWebToFollowingAuthenticatedUsers</a>="__REMOTE_USER__" 而不是维护每个 AWStats 配置文件中的授权用户列表的用户可能很有用。</span></p>
+                </div>
+            </div>
 
-<br><br><H1 style="font: 26px arial,helvetica,sans-serif">Little Tips about Security</H1>
+            <!-- 无安全策略 -->
+            <a name="3"></a>
+            <div class="security-section">
+                <h2 data-i18n="noTitle"><u>3) 无安全策略</u></h2>
+                
+                <div class="policy-box">
+                    <p><span class="policy-label" data-i18n="policy">策略：</span> <span data-i18n="noPolicy">您只有一个主机，或多个主机或用户，但不需要为不同的配置/域名统计信息管理特定的权限。</span></p>
+                </div>
+                
+                <div class="policy-box">
+                    <p><span class="policy-label" data-i18n="advantage">优点：</span> <span data-i18n="noAdvantage">设置非常简单（无需特殊设置）。统计信息是动态的。</span></p>
+                </div>
+                
+                <div class="policy-box">
+                    <p><span class="policy-label" data-i18n="disadvantage">缺点：</span> <span data-i18n="noDisadvantage">无法防止知道配置/域名名称和查看特定配置/域名统计信息的 URL 语法的用户查看统计信息。</span></p>
+                </div>
+                
+                <div class="policy-box">
+                    <p>
+                        <span class="policy-label" data-i18n="how">实现方法：</span>
+                        <span data-i18n="noHow1">无需特别操作（但您仍然可以使用）</span>
+                        <a href="awstats_config.html#AllowAccessFromWebToFollowingIPAddresses">AllowAccessFromWebToFollowingIPAddresses</a>
+                        <span data-i18n="noHow2">（参数获得最低限度的安全性）。</span>
+                    </p>
+                </div>
+            </div>
 
-<br>
-A lot of AWStats users have several web site to manage. This is particularly true for web hosting providers.
-The most common things you would like to do is to prevent user xxx (having a site www.xxx.com) to see
-statistics of user yyy (having a site www.yyy.com).<br>
-<br><br>
-This is example of possible way of working:<br>
-<br><br>
+            <p data-i18n="conclusion">AWStats 有很多可能的使用方式，结合其所有选项/参数与所有 Web 服务器选项/参数以及操作系统的安全功能。只需选择您需要的...</p>
 
-<br><a name="1"><H2 style="font: 22px arial,helvetica,sans-serif color: #606060"><u>1) HIGHLY SECURED POLICY</u></H2></a><br>
-<font color=blue><b>Policy</b></font>:<br>
-You have several different config/domains owned by different users and you want to build statistics for each
-of them. You don't need that your customer have "real-time" statistics.<br>
-This is a very good choice for web hosting providers with few but very large web sites of important customers.<br>
-<font color=blue><b>Advantage</b></font>:<br>
-Very highly secured.<br>
-<font color=blue><b>Disadvantage</b></font>:<br>
-Statistics are static, no dynamic update/view.<br>
-<font color=blue><b>How</b></font>:<br>
-All statistics pages for a config/domain file are built in static html files using <b>-output -staticlinks</b> option.<br>
-There is no CGI use of AWStats and static built pages are stored in a web protected <b>realm</b> to
-be securely viewed by correct allowed users only (or sent by mails).<br>
-If users have a command line access (telnet) on statistics server, you must set correct permissions on AWStats
-database files. Set all AWStats database files (built by the update process) for config/domain1 to have read/write
-for <i>user1</i> (or an admin user) and NO read and NO write permissions for any other users.<br>
-Then, check that the <a href="awstats_config.html#SaveDatabaseFilesWithPermissionsForEveryone">SaveDatabaseFilesWithPermissionsForEveryone</a> parameter is set 0 in your config/domain files.<br>
-If AWStats database files/directory for config/domain1 are read protected, only allowed users can see statistics for config/domain1.<br>
-If AWStats database files/directory for config/domain1 are write protected, only allowed users can update statistics for config/domain1.<br>
-<br><br>
+            <hr>
 
-<br><a name="2"><H2 style="font: 22px arial,helvetica,sans-serif color: #606060"><u>2) MEDIUM SECURED POLICY</u></H2></a><br>
-<font color=blue><b>Policy</b></font>:<br>
-You have several config/domain and several users. You want to specify which user can see or update dynamically
-statistics for each config/domain.<br>
-This is one of the most popular way of working.<br>
-<font color=blue><b>Advantage</b></font>:<br>
-Statistics are dynamic. High level of manageability.<br>
-<font color=blue><b>Disadvantage</b></font>:<br>
-AWStats database files must still be readable by anonymous web server user, so if an experienced user can have an access to
-the server (telnet) where AWStats database files are stored, he can succeed in installing and running a "hacked" version
-of AWStats that ignores value of parameter AllowAccessFromWebToAuthenticatedUsersOnly.<br>
-<font color=blue><b>How</b></font>:<br>
-awstats.pl file must be saved in a web protected <b>realm</b> to force a visitor to enter its username/password
-to access AWStats CGI program.<br>
-<br>
-<u>Example of directives you can add into Apache to have awstats.pl in a web protected realm:</u><br>
-<i>
-&lt;Files "awstats.pl"&gt;<br>
-AuthUserFile /path/to/.passwd<br>
-AuthGroupFile /path/to/.group<br>
-AuthName "Restricted Area For Customers"<br>
-AuthType Basic<br>
-require valid-user<br>
-&lt;/Files&gt;
-</i><br>
-If you add such directives into a .htaccess file, you must also check that the <i>AllowOverride</i> directive is set
-to <i>All</i> in Apache config file to allow the use of .htaccess files.<br>
-<br>
-To known how to create a protected realm for servers other than Apache, see your web server manual.<br>
-<br>
-Then edit each config/domain file you want to be protected to set <a href="awstats_config.html#AllowAccessFromWebToAuthenticatedUsersOnly">AllowAccessFromWebToAuthenticatedUsersOnly</a> to 1.<br>
-You can also edit list of authorized users in the <a href="awstats_config.html#AllowAccessFromWebToFollowingAuthenticatedUsers">AllowAccessFromWebToFollowingAuthenticatedUsers</a> parameter.<br>
-You can also specify a range of allowed browsers IP Addresses with the <a href="awstats_config.html#AllowAccessFromWebToFollowingIPAddresses">AllowAccessFromWebToFollowingIPAddresses</a> parameter.<br>
+            <!-- 署名 -->
+            <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-top: 20px;">
+                <span style="color: var(--text-secondary);" data-i18n="writtenBy">文章作者：<a href="https://www.destailleur.fr" rel="author">Laurent Destailleur</a>。</span>
+                <span class="badge" data-i18n="version">版本 8.1</span>
+            </div>
+        </div>
+    </main>
 
-You can also set <a href="awstats_config.html#SaveDatabaseFilesWithPermissionsForEveryone">SaveDatabaseFilesWithPermissionsForEveryone</a> parameter to 0 in all config/domain files,
-except if you want to allow update from web with option <a href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a>=1. But this is
-not recommanded as you need to give read/write permission for Web server user on all history
-files (Except if you setuid AWStats script for each authorized user, but this make setup much harder).<br>
-The following parameters <a href="awstats_config.html#ErrorMessages">ErrorMessages</a> and <a href="awstats_config.html#DebugMessages">DebugMessages</a> are
-also parameters related to security.<br>
-<br>
-<br>
-Other tip: If the <b>AWSTATS_FORCE_CONFIG</b> environment variable is defined, AWStats will always use
-the config file <i>awstats.VALUE_OF_AWSTATS_FORCE_CONFIG.conf</i> as the config/domain file.
-So if you add this environment variable into your web server environment, for example by adding the line<br>
-<i>SetEnv AWSTATS_FORCE_CONFIG configvalueforthisdomain</i><br>
-in your Apache <i>&lt;VirtualHost&gt;</i> directive group in httpd.conf (with other directives), AWStats will use the config file
-called <i>awstats.configvalueforthisdomain.conf</i> to choose which statistics used,
-even if a visitor try to force the config/domain file with the URL '<i>http://mydomain/cgi-bin/awstats.pl?config=otherdomain</i>'.
-This might be usefull for thoose who edit their config/domain file with <a href="awstats_config.html#AllowAccessFromWebToFollowingAuthenticatedUsers">AllowAccessFromWebToFollowingAuthenticatedUsers</a>="__REMOTE_USER__"</i>
-instead of maintaining the list of authorized users into each AWStats config file.<br>
-<br>
-<br>
+    <!-- 返回顶部按钮 -->
+    <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="返回顶部">
+        ↑
+    </button>
 
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-copyright">
+                © 1997 - <span id="currentYear"></span> Laurent Destailleur & AWStats <span data-i18n="copyright">团队</span>
+            </div>
+            <div class="footer-license">
+                <a href="awstats_license.html" data-i18n="licenseLink">GNU General Public License</a> · 
+                <a href="https://github.com/eldy/AWStats" rel="publisher" target="_blank" style="display: inline-flex; align-items: center;"><a data-i18n="authorLink"></a> 
+                </a>
+                    <img src="images/favicon.pub/github.svg" style="width: 24px; height: 24px;">
+                </div>
+            <div class="attribution" data-i18n="darkAttr">
+                🌓 自适应暗黑 · 现代化重构
+            </div>
+        </div>
+    </footer>
 
-<br><a name="3"><H2 style="font: 22px arial,helvetica,sans-serif color: #606060"><u>3) NO SECURITY POLICY</u></H2></a><br>
-<font color=blue><b>Policy</b></font>:<br>
-You have only one hosts or several hosts or users but you don't need to manage particular permissions
-for your different config/domain statistics.<br>
-<font color=blue><b>Advantage</b></font>:<br>
-Setup is very easy (No need of particular setup). Statistics are dynamic.<br>
-<font color=blue><b>Disadvantage</b></font>:<br>
-No way to prevent stats for config/domain to be seen by a user that known the
-config/domain name and the url syntax to see stats of a particular config/domain.<br>
-<font color=blue><b>How</b></font>:<br>
-No particular things to do (You can however easily use <a href="awstats_config.html#AllowAccessFromWebToFollowingIPAddresses">AllowAccessFromWebToFollowingIPAddresses</a> parameter
-to have a minimum of security).<br>
-<br>
-<br>
-<br>
+    <script>
+        (function() {
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-There is a lot of possible use for AWStats combining all its options/parameters with all web servers options/parameters and operating
-systems security features. Just use the one you need...<br>
-<br>
+            // 翻译资源 - 中文和英文
+            const translations = {
+                zh: {
+                    navHome: "主页",
+                    navWhat: "什么是AWStats",
+                    navSetup: "安装配置",
+                    navWebmin: "Webmin模块",
+                    navUpgrade: "升级指南",
+                    navTools: "其他工具",
+                    navSecurity: "安全建议",
+                    navFAQ: "FAQ",
+                    home: "主页",
+                    currentPage: "安全建议",
+                    
+                    siteTitle: "AWStats 8.1",
+                    headerSlogan: "⚡ 先进的日志分析器 · 官方文档",
+                    themeAuto: "自动",
+                    mainTitle: "安全建议小贴士",
+                    intro: "许多 AWStats 用户需要管理多个网站，特别是对于虚拟主机提供商。最常见的需求是防止用户 xxx（拥有网站 www.xxx.com）查看用户 yyy（拥有网站 www.yyy.com）的统计信息。",
+                    example: "以下是可能的工作方式示例：",
+                    
+                    highTitle: "1) 高度安全策略",
+                    mediumTitle: "2) 中等安全策略",
+                    noTitle: "3) 无安全策略",
+                    
+                    policy: "策略：",
+                    advantage: "优点：",
+                    disadvantage: "缺点：",
+                    how: "实现方法：",
+                    
+                    highPolicy: "您有多个由不同用户拥有的配置/域名，需要为每个域名构建统计信息。您不需要客户拥有\"实时\"统计信息。这对于拥有少数但大型重要客户网站的虚拟主机提供商来说是一个很好的选择。",
+                    highAdvantage: "非常高的安全性。",
+                    highDisadvantage: "统计信息是静态的，无法动态更新/查看。",
+                    highHow1: "使用 <b>-output -staticlinks</b> 选项将所有配置/域名的统计页面构建为静态 HTML 文件。不使用 AWStats 的 CGI 功能，静态构建的页面存储在受 Web 保护的 <b>领域</b> 中，仅允许授权的正确用户安全查看（或通过邮件发送）。",
+                    highHow2: "如果用户对统计服务器有命令行访问权限（telnet），则必须正确设置 AWStats 数据库文件的权限。将配置/域名1的所有 AWStats 数据库文件（通过更新过程构建）设置为对 <i>user1</i>（或管理员用户）具有读写权限，而对其他用户没有读写权限。",
+                    highHow3: "然后，检查配置文件中的 <a href=\"awstats_config.html#SaveDatabaseFilesWithPermissionsForEveryone\">SaveDatabaseFilesWithPermissionsForEveryone</a> 参数是否设为 0。",
+                    highHow4: "如果配置/域名1的 AWStats 数据库文件/目录是读保护的，则只有授权用户可以查看配置/域名1的统计信息。如果配置/域名1的 AWStats 数据库文件/目录是写保护的，则只有授权用户可以更新配置/域名1的统计信息。",
+                    
+                    mediumPolicy: "您有多个配置/域名和多个用户。您希望指定哪些用户可以动态查看或更新每个配置/域名的统计信息。这是最常用的工作方式之一。",
+                    mediumAdvantage: "统计信息是动态的，管理级别高。",
+                    mediumDisadvantage: "AWStats 数据库文件仍然必须对匿名 Web 服务器用户可读，因此如果有经验丰富的用户可以访问存储 AWStats 数据库文件的服务器（telnet），他们可能会成功安装和运行\"破解\"版的 AWStats，忽略 AllowAccessFromWebToAuthenticatedUsersOnly 参数的值。",
+                    mediumHow1: "awstats.pl 文件必须保存在受 Web 保护的 <b>领域</b> 中，以强制访问者输入用户名/密码才能访问 AWStats CGI 程序。",
+                    apacheExample: "可以添加到 Apache 以使 awstats.pl 位于受 Web 保护领域的指令示例：",
+                    mediumHow2: "如果您将此类指令添加到 .htaccess 文件中，还必须检查 Apache 配置文件中的 <i>AllowOverride</i> 指令是否设为 <i>All</i>，以允许使用 .htaccess 文件。",
+                    mediumHow3: "要了解如何为 Apache 以外的服务器创建受保护领域，请参阅您的 Web 服务器手册。",
+                    mediumHow4: "然后编辑您想要保护的每个配置文件，将 <a href=\"awstats_config.html#AllowAccessFromWebToAuthenticatedUsersOnly\">AllowAccessFromWebToAuthenticatedUsersOnly</a> 设为 1。您还可以在 <a href=\"awstats_config.html#AllowAccessFromWebToFollowingAuthenticatedUsers\">AllowAccessFromWebToFollowingAuthenticatedUsers</a> 参数中编辑授权用户列表。您还可以使用 <a href=\"awstats_config.html#AllowAccessFromWebToFollowingIPAddresses\">AllowAccessFromWebToFollowingIPAddresses</a> 参数指定允许的浏览器 IP 地址范围。",
+                    mediumHow5: "您还可以将所有配置文件中的 <a href=\"awstats_config.html#SaveDatabaseFilesWithPermissionsForEveryone\">SaveDatabaseFilesWithPermissionsForEveryone</a> 参数设为 0，除非您希望允许通过选项 <a href=\"awstats_config.html#AllowToUpdateStatsFromBrowser\">AllowToUpdateStatsFromBrowser</a>=1 从 Web 更新。但这不建议，因为您需要为 Web 服务器用户授予所有历史文件的读写权限（除非您为每个授权用户设置 AWStats 脚本的 setuid，但这会使设置更加困难）。",
+                    mediumHow6: "<a href=\"awstats_config.html#ErrorMessages\">ErrorMessages</a> 和 <a href=\"awstats_config.html#DebugMessages\">DebugMessages</a> 参数也与安全相关。",
+                    
+                    envTip: "其他提示：",
+                    envTipDesc: "如果定义了 <b>AWSTATS_FORCE_CONFIG</b> 环境变量，AWStats 将始终使用配置文件 <i>awstats.环境变量值.conf</i> 作为配置/域名文件。因此，如果您将此环境变量添加到 Web 服务器环境中，例如在 Apache 的 <i>&lt;VirtualHost&gt;</i> 指令组中添加行 <i>SetEnv AWSTATS_FORCE_CONFIG configvalueforthisdomain</i>，即使访问者尝试通过 URL '<i>http://mydomain/cgi-bin/awstats.pl?config=otherdomain</i>' 强制使用其他配置文件，AWStats 也会使用名为 <i>awstats.configvalueforthisdomain.conf</i> 的配置文件。这对于那些在配置文件中使用 <a href=\"awstats_config.html#AllowAccessFromWebToFollowingAuthenticatedUsers\">AllowAccessFromWebToFollowingAuthenticatedUsers</a>=\"__REMOTE_USER__\" 而不是维护每个 AWStats 配置文件中的授权用户列表的用户可能很有用。",
+                    
+                    noPolicy: "您只有一个主机，或多个主机或用户，但不需要为不同的配置/域名统计信息管理特定的权限。",
+                    noAdvantage: "设置非常简单（无需特殊设置）。统计信息是动态的。",
+                    noDisadvantage: "无法防止知道配置/域名名称和查看特定配置/域名统计信息的 URL 语法的用户查看统计信息。",
+                    noHow1: "无需特别操作（但您仍然可以使用)",
+                    noHow2: "(参数获得最低限度的安全性）。",
+                    conclusion: "AWStats 有很多可能的使用方式，结合其所有选项/参数与所有 Web 服务器选项/参数以及操作系统的安全功能。只需选择您需要的...",
+                    
+                    writtenBy: "文章作者：<a href=\"https://www.destailleur.fr\" rel=\"author\">Laurent Destailleur</a>。",
+                    version: "版本 8.1",
+                    copyright: "© 2000 - {year} Laurent Destailleur & AWStats 团队",
+                    licenseLink: "GNU通用公共许可证",
+                    authorLink: "原作者",
+                    darkAttr: "🌓 自适应暗黑 · 中文/English",
+                },
+                en: {
+                    navHome: "Home",
+                    navWhat: "What is AWStats",
+                    navSetup: "Setup",
+                    navWebmin: "Webmin Module",
+                    navUpgrade: "Upgrade Guide",
+                    navTools: "Other Tools",
+                    navSecurity: "Security Tips",
+                    navFAQ: "FAQ",
+                    home: "Home",
+                    currentPage: "Security Tips",
+                    
+                    siteTitle: "AWStats 8.1",
+                    headerSlogan: "⚡ Advanced Log Analyzer · Official Docs",
+                    themeAuto: "Auto",
+                    mainTitle: "Little Tips about Security",
+                    intro: "A lot of AWStats users have several web site to manage. This is particularly true for web hosting providers. The most common things you would like to do is to prevent user xxx (having a site www.xxx.com) to see statistics of user yyy (having a site www.yyy.com).",
+                    example: "This is example of possible way of working:",
+                    
+                    highTitle: "1) HIGHLY SECURED POLICY",
+                    mediumTitle: "2) MEDIUM SECURED POLICY",
+                    noTitle: "3) NO SECURITY POLICY",
+                    
+                    policy: "Policy:",
+                    advantage: "Advantage:",
+                    disadvantage: "Disadvantage:",
+                    how: "How:",
+                    
+                    highPolicy: "You have several different config/domains owned by different users and you want to build statistics for each of them. You don't need that your customer have \"real-time\" statistics. This is a very good choice for web hosting providers with few but very large web sites of important customers.",
+                    highAdvantage: "Very highly secured.",
+                    highDisadvantage: "Statistics are static, no dynamic update/view.",
+                    highHow1: "All statistics pages for a config/domain file are built in static html files using <b>-output -staticlinks</b> option. There is no CGI use of AWStats and static built pages are stored in a web protected <b>realm</b> to be securely viewed by correct allowed users only (or sent by mails).",
+                    highHow2: "If users have a command line access (telnet) on statistics server, you must set correct permissions on AWStats database files. Set all AWStats database files (built by the update process) for config/domain1 to have read/write for <i>user1</i> (or an admin user) and NO read and NO write permissions for any other users.",
+                    highHow3: "Then, check that the <a href=\"awstats_config.html#SaveDatabaseFilesWithPermissionsForEveryone\">SaveDatabaseFilesWithPermissionsForEveryone</a> parameter is set 0 in your config/domain files.",
+                    highHow4: "If AWStats database files/directory for config/domain1 are read protected, only allowed users can see statistics for config/domain1. If AWStats database files/directory for config/domain1 are write protected, only allowed users can update statistics for config/domain1.",
+                    
+                    mediumPolicy: "You have several config/domain and several users. You want to specify which user can see or update dynamically statistics for each config/domain. This is one of the most popular way of working.",
+                    mediumAdvantage: "Statistics are dynamic. High level of manageability.",
+                    mediumDisadvantage: "AWStats database files must still be readable by anonymous web server user, so if an experienced user can have an access to the server (telnet) where AWStats database files are stored, he can succeed in installing and running a \"hacked\" version of AWStats that ignores value of parameter AllowAccessFromWebToAuthenticatedUsersOnly.",
+                    mediumHow1: "awstats.pl file must be saved in a web protected <b>realm</b> to force a visitor to enter its username/password to access AWStats CGI program.",
+                    apacheExample: "Example of directives you can add into Apache to have awstats.pl in a web protected realm:",
+                    mediumHow2: "If you add such directives into a .htaccess file, you must also check that the <i>AllowOverride</i> directive is set to <i>All</i> in Apache config file to allow the use of .htaccess files.",
+                    mediumHow3: "To known how to create a protected realm for servers other than Apache, see your web server manual.",
+                    mediumHow4: "Then edit each config/domain file you want to be protected to set <a href=\"awstats_config.html#AllowAccessFromWebToAuthenticatedUsersOnly\">AllowAccessFromWebToAuthenticatedUsersOnly</a> to 1. You can also edit list of authorized users in the <a href=\"awstats_config.html#AllowAccessFromWebToFollowingAuthenticatedUsers\">AllowAccessFromWebToFollowingAuthenticatedUsers</a> parameter. You can also specify a range of allowed browsers IP Addresses with the <a href=\"awstats_config.html#AllowAccessFromWebToFollowingIPAddresses\">AllowAccessFromWebToFollowingIPAddresses</a> parameter.",
+                    mediumHow5: "You can also set <a href=\"awstats_config.html#SaveDatabaseFilesWithPermissionsForEveryone\">SaveDatabaseFilesWithPermissionsForEveryone</a> parameter to 0 in all config/domain files, except if you want to allow update from web with option <a href=\"awstats_config.html#AllowToUpdateStatsFromBrowser\">AllowToUpdateStatsFromBrowser</a>=1. But this is not recommanded as you need to give read/write permission for Web server user on all history files (Except if you setuid AWStats script for each authorized user, but this make setup much harder).",
+                    mediumHow6: "The following parameters <a href=\"awstats_config.html#ErrorMessages\">ErrorMessages</a> and <a href=\"awstats_config.html#DebugMessages\">DebugMessages</a> are also parameters related to security.",
+                    
+                    envTip: "Other tip:",
+                    envTipDesc: "If the <b>AWSTATS_FORCE_CONFIG</b> environment variable is defined, AWStats will always use the config file <i>awstats.VALUE_OF_AWSTATS_FORCE_CONFIG.conf</i> as the config/domain file. So if you add this environment variable into your web server environment, for example by adding the line <i>SetEnv AWSTATS_FORCE_CONFIG configvalueforthisdomain</i> in your Apache <i>&lt;VirtualHost&gt;</i> directive group in httpd.conf, AWStats will use the config file called <i>awstats.configvalueforthisdomain.conf</i> to choose which statistics used, even if a visitor try to force the config/domain file with the URL '<i>http://mydomain/cgi-bin/awstats.pl?config=otherdomain</i>'. This might be usefull for thoose who edit their config/domain file with <a href=\"awstats_config.html#AllowAccessFromWebToFollowingAuthenticatedUsers\">AllowAccessFromWebToFollowingAuthenticatedUsers</a>=\"__REMOTE_USER__\" instead of maintaining the list of authorized users into each AWStats config file.",
+                    
+                    noPolicy: "You have only one hosts or several hosts or users but you don't need to manage particular permissions for your different config/domain statistics.",
+                    noAdvantage: "Setup is very easy (No need of particular setup). Statistics are dynamic.",
+                    noDisadvantage: "No way to prevent stats for config/domain to be seen by a user that known the config/domain name and the url syntax to see stats of a particular config/domain.",
+                    noHow1: "No particular things to do (You can however easily use)",
+                    noHow2: "parameter to restrict access based on IP addresses.",
+                    conclusion: "There is a lot of possible use for AWStats combining all its options/parameters with all web servers options/parameters and operating systems security features. Just use the one you need...",
+                    
+                    writtenBy: "Article written by <a href=\"https://www.destailleur.fr\" rel=\"author\">Laurent Destailleur</a>.",
+                    version: "Version 8.1",
+                    copyright: "© 2000 - {year} Laurent Destailleur & AWStats Team",
+                    licenseLink: "GNU General Public License",
+                    authorLink: "Author",
+                    darkAttr: "🌓 Adaptive dark mode · 中文/English",
+                }
+            };
 
+            const i18nElements = document.querySelectorAll('[data-i18n]');
+            const langSelector = document.getElementById('langSelector');
+            let currentLang = localStorage.getItem('awstats_lang') || 'zh';
+            langSelector.value = currentLang;
 
-<br>
-<hr>
+            function applyLanguage(lang) {
+                const t = translations[lang] || translations.zh;
+                i18nElements.forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (t[key] !== undefined) {
+                        if (key === 'copyright') {
+                            const year = new Date().getFullYear();
+                            el.innerHTML = t[key].replace('{year}', year);
+                        } else if (key === 'intro' || key === 'example' || key === 'highHow1' || key === 'highHow2' || key === 'highHow3' || key === 'highHow4' || key === 'mediumHow1' || key === 'mediumHow2' || key === 'mediumHow3' || key === 'mediumHow4' || key === 'mediumHow5' || key === 'mediumHow6' || key === 'envTipDesc' || key === 'conclusion' || key === 'writtenBy') {
+                            el.innerHTML = t[key];
+                        } else {
+                            el.textContent = t[key];
+                        }
+                    }
+                });
+                localStorage.setItem('awstats_lang', lang);
+                
+                const themeState = localStorage.getItem('awstats_theme') || 'auto';
+                const themeText = document.querySelector('.theme-text');
+                if (themeText) {
+                    if (themeState === 'auto') themeText.textContent = t.themeAuto;
+                    else if (themeState === 'light') themeText.textContent = (lang === 'zh' ? '浅色' : 'Light');
+                    else themeText.textContent = (lang === 'zh' ? '深色' : 'Dark');
+                }
+            }
 
-<!-- You can remove this part if you distribution need documentation without external tags -->
-<!-- BEGIN_SOCIAL_NETWORKS -->
-<div class="htmldoc-ignore">
-<!-- google plus -->
-<span style="color: #bbb; font-weight: normal;">Article written by <a href="https://www.destailleur.fr" rel="author" style="color: #ccc; font-weight: normal;">Laurent Destailleur</a>.</span><br>
-<br>
-<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-<g:plusone></g:plusone>
-<!-- facebook -->
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/fr_FR/all.js#xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-<div class="fb-like" data-href="http://www.awstats.org/docs/awstats_security.html" data-layout="button_count" data-action="recommend" data-show-faces="false" data-share="true"></div>
-</div>
-<!-- END_SOCIAL_NETWORKS -->
+            applyLanguage(currentLang);
 
+            langSelector.addEventListener('change', (e) => {
+                currentLang = e.target.value;
+                applyLanguage(currentLang);
+            });
+
+            // 暗黑模式切换
+            const root = document.documentElement;
+            const themeBtn = document.getElementById('themeToggleBtn');
+            let themeState = localStorage.getItem('awstats_theme') || 'auto';
+
+            function applyTheme(state) {
+                root.classList.remove('force-light', 'force-dark');
+                if (state === 'light') root.classList.add('force-light');
+                else if (state === 'dark') root.classList.add('force-dark');
+                const themeText = document.querySelector('.theme-text');
+                if (themeText) {
+                    const lang = currentLang;
+                    const t = translations[lang];
+                    if (state === 'auto') themeText.textContent = t.themeAuto;
+                    else if (state === 'light') themeText.textContent = (lang === 'zh' ? '浅色' : 'Light');
+                    else themeText.textContent = (lang === 'zh' ? '深色' : 'Dark');
+                }
+                localStorage.setItem('awstats_theme', state);
+            }
+            applyTheme(themeState);
+            themeBtn.addEventListener('click', () => {
+                if (themeState === 'auto') themeState = 'light';
+                else if (themeState === 'light') themeState = 'dark';
+                else themeState = 'auto';
+                applyTheme(themeState);
+            });
+        })();
+    </script>
 </body>
 </html>

@@ -1,0 +1,3317 @@
+# AWStats Amharic (am) translations
+# Copyright (C) 2026 AWStats
+# This file is distributed under the same license as the AWStats package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: AWStats 8.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-10 12:00+0000\n"
+"PO-Revision-Date: 2026-05-10 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Amharic\n"
+"Language: am\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+
+#------------------------------------------------------------------------------
+# የወራት ስሞች
+#------------------------------------------------------------------------------
+
+msgid "month_01"
+msgstr "ጃንዋሪ"
+
+msgid "month_02"
+msgstr "ፌብሩዋሪ"
+
+msgid "month_03"
+msgstr "ማርች"
+
+msgid "month_04"
+msgstr "ኤፕሪል"
+
+msgid "month_05"
+msgstr "ሜይ"
+
+msgid "month_06"
+msgstr "ጁን"
+
+msgid "month_07"
+msgstr "ጁላይ"
+
+msgid "month_08"
+msgstr "ኦገስት"
+
+msgid "month_09"
+msgstr "ሴፕቴምበር"
+
+msgid "month_10"
+msgstr "ኦክቶበር"
+
+msgid "month_11"
+msgstr "ኖቬምበር"
+
+msgid "month_12"
+msgstr "ዲሴምበር"
+
+msgid "month_13"
+msgstr "ጳጉሜ"
+
+#------------------------------------------------------------------------------
+# የሳምንት ቀናት ስሞች
+#------------------------------------------------------------------------------
+
+msgid "DayOfWeek_0"
+msgstr "እሁድ"
+
+msgid "DayOfWeek_1"
+msgstr "ሰኞ"
+
+msgid "DayOfWeek_2"
+msgstr "ማክሰኞ"
+
+msgid "DayOfWeek_3"
+msgstr "ረቡዕ"
+
+msgid "DayOfWeek_4"
+msgstr "ሐሙስ"
+
+msgid "DayOfWeek_5"
+msgstr "አርብ"
+
+msgid "DayOfWeek_6"
+msgstr "ቅዳሜ"
+
+#------------------------------------------------------------------------------
+# የተጠቃሚ በይነገጽ ክፍሎች
+#------------------------------------------------------------------------------
+
+msgid "Advanced Web Statistics for"
+msgstr "የላቀ የድር ስታቲስቲክስ ለ"
+
+msgid "Statistics for"
+msgstr "ስታቲስቲክስ ለ"
+
+msgid "main"
+msgstr "አጠቃላይ እይታ"
+
+msgid "Switch to light mode"
+msgstr "ወደ ብርሃን ሁነታ ቀይር"
+
+msgid "Switch to dark mode"
+msgstr "ወደ ጨለማ ሁነታ ቀይር"
+
+msgid "TB"
+msgstr "TB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "Bytes"
+msgstr "ባይቶች"
+
+msgid "Filter"
+msgstr "አጣራ"
+
+msgid "Exclude filter"
+msgstr "ማጣሪያ አግልል"
+
+msgid "Top"
+msgstr "ከፍተኛ"
+
+msgid "Full list"
+msgstr "ሙሉ ዝርዝር"
+
+msgid "Last"
+msgstr "የመጨረሻ"
+
+msgid "Average"
+msgstr "አማካይ"
+
+msgid "Export"
+msgstr "ላክ"
+
+msgid "Details"
+msgstr "ዝርዝሮች"
+
+msgid "Version"
+msgstr "ስሪት"
+
+msgid "thousands_separator"
+msgstr ","
+
+msgid "dateformat_long"
+msgstr "dd/mm/yyyy HH:MM:SS"
+
+msgid "dateformat_short"
+msgstr "dd/mm/yyyy HH:MM"
+
+msgid "date_format_year"
+msgstr "ዓመት %s"
+
+msgid "date_format_month"
+msgstr "%1$s %2$s"
+
+#------------------------------------------------------------------------------
+# የማሰሻ አሞሌ
+#------------------------------------------------------------------------------
+
+msgid "AWStats Month Selector"
+msgstr "የAWStats ወር መራጫ"
+
+msgid "nav_category_basic"
+msgstr "መሠረታዊ ሰነዶች"
+
+msgid "nav_category_guide"
+msgstr "የአጠቃቀም መመሪያ"
+
+msgid "nav_category_reference"
+msgstr "የማጣቀሻ ግብዓቶች"
+
+msgid "nav_category_integration"
+msgstr "ውህደት እና ቅጥያዎች"
+
+msgid "nav_category_dev"
+msgstr "የገንቢ ሰነዶች"
+
+msgid "nav_changelog"
+msgstr "የለውጥ መዝገብ"
+
+msgid "nav_what"
+msgstr "AWStats ምንድን ነው"
+
+msgid "nav_license"
+msgstr "ፈቃድ"
+
+msgid "nav_glossary"
+msgstr "መዝገበ ቃላት"
+
+msgid "nav_setup"
+msgstr "መጫኛ እና ውቅር"
+
+msgid "nav_upgrade"
+msgstr "የማሻሻያ መመሪያ"
+
+msgid "nav_config"
+msgstr "የውቅር መለኪያዎች"
+
+msgid "nav_extra"
+msgstr "ተጨማሪ ክፍል"
+
+msgid "nav_tools"
+msgstr "ሌሎች መሳሪያዎች"
+
+msgid "nav_faq"
+msgstr "በተደጋጋሚ የሚጠየቁ ጥያቄዎች"
+
+msgid "nav_security"
+msgstr "የደህንነት ምክሮች"
+
+msgid "nav_compare"
+msgstr "ማነጻጸር"
+
+msgid "nav_benchmark"
+msgstr "ቤንችማርክ"
+
+msgid "nav_webmin"
+msgstr "የWebbin ሞጁል"
+
+msgid "nav_dolibarr"
+msgstr "የዶሊባር ሞጁል"
+
+msgid "nav_contrib"
+msgstr "የአስተዋጾ ግብዓቶች"
+
+msgid "nav_plugins"
+msgstr "የተሰኪ ልማት"
+
+msgid "nav_hooks"
+msgstr "የተሰኪ መንጠቆዎች"
+
+msgid "nav_graphs"
+msgstr "የተሰኪ ግራፎች"
+
+msgid "Back to top"
+msgstr "ወደ ላይ ተመለስ"
+
+msgid "nav_select_month"
+msgstr "ወር ምረጥ"
+
+#------------------------------------------------------------------------------
+# ዋና አመላካቾች
+#------------------------------------------------------------------------------
+
+msgid "Unique visitors"
+msgstr "ልዩ ጎብኚዎች"
+
+msgid "Visits"
+msgstr "የጉብኝት ብዛት"
+
+msgid "Visits duration"
+msgstr "የጉብኝት ቆይታ"
+
+msgid "First visit"
+msgstr "የመጀመሪያ ማዘመኛ"
+
+msgid "Last visit"
+msgstr "የመጨረሻ ማዘመኛ"
+
+msgid "Visits/Visitor"
+msgstr "ጉብኝት/ጎብኚ"
+
+msgid "Pages/Visit"
+msgstr "ገጽ/ጉብኝት"
+
+msgid "Hits/Visit"
+msgstr "ጥያቄ/ጉብኝት"
+
+msgid "KB/Visit"
+msgstr "ኪሎባይት/ጉብኝት"
+
+msgid "KB/Visits"
+msgstr "ኪሎባይት/የጉብኝት ብዛት"
+
+msgid "Pages"
+msgstr "የገጾች ብዛት"
+
+msgid "Hits"
+msgstr "የጥያቄዎች ብዛት"
+
+msgid "Bandwidth"
+msgstr "ባንድዊድዝ"
+
+msgid "duration_format"
+msgstr "%s-%s"
+
+msgid "unit_s"
+msgstr "ሰከንድ"
+
+msgid "unit_min"
+msgstr "ደቂቃ"
+
+msgid "unit_h"
+msgstr "ሰዓት"
+
+msgid "and"
+msgstr "-"
+
+msgid "Device Types"
+msgstr "የመሳሪያ ዓይነቶች"
+
+msgid "Device Type"
+msgstr "የመሳሪያ ዓይነት"
+
+msgid "Percent"
+msgstr "መቶኛ"
+
+msgid "Mobile"
+msgstr "ሞባይል ስልክ"
+
+msgid "Pause & Go"
+msgstr "አቁም እና ቀጥል"
+
+msgid "Complete"
+msgstr "ተጠናቀቀ"
+
+msgid "Tablet"
+msgstr "ታብሌት"
+
+msgid "Tv"
+msgstr "ቴሌቪዥን"
+
+msgid "Wearable"
+msgstr "የሚለበስ መሳሪያ"
+
+msgid "Bot"
+msgstr "ቦት"
+
+msgid "Desktop"
+msgstr "ዴስክቶፕ"
+
+msgid "Normal browsing traffic"
+msgstr "መደበኛ የአሰሳ ትራፊክ"
+
+msgid "Abnormal browsing traffic"
+msgstr "ያልተለመደ የአሰሳ ትራፊክ"
+
+msgid "Viewed"
+msgstr "ታይቷል"
+
+msgid "Not viewed"
+msgstr "አልታየም"
+
+msgid "Abnormal browsing traffic note"
+msgstr "ያልተለመደ የአሰሳ ትራፊክ የሚያጠቃልለው: የፍለጋ ቦቶች፣ የአርቲፊሻል ኢንተሊጀንስ ማሰልጠኛ ቦቶች፣ ተጋላጭነት ስካነሮች እና ከኤችቲቲፒ/ኤችቲቲፒኤስ ደረጃዎች ጋር የማይስማሙ ጥያቄዎች"
+
+msgid "File size"
+msgstr "የፋይል መጠን"
+
+msgid "File type"
+msgstr "የፋይል አይነት"
+
+msgid "Downloads"
+msgstr "ማውረጃዎች"
+
+msgid "Request time"
+msgstr "የጥያቄ ጊዜ"
+
+msgid "Total requests"
+msgstr "ጠቅላላ ጥያቄዎች"
+
+msgid "Frequency"
+msgstr "ድግግሞሽ"
+
+msgid "Average frequency"
+msgstr "አማካይ ድግግሞሽ"
+
+msgid "Seconds"
+msgstr "ሰከንዶች"
+
+msgid "First"
+msgstr "መጀመሪያ"
+
+msgid "Mails"
+msgstr "የኢሜይሎች ብዛት"
+
+msgid "Size"
+msgstr "መጠን"
+
+msgid "If you remove this file, all statistics for date"
+msgstr "ማስጠንቀቂያ: ይህን ፋይል ማስወገድ የቀኑን ሁሉንም ስታቲስቲክስ ያስጠፋል/ያስጀምራል"
+
+msgid "will be lost/reset."
+msgstr "በቋሚነት ይጠፋል/ይጀምራል!"
+
+msgid "Last config file used to build this data file was"
+msgstr "ይህን የውሂብ ፋይል ለመገንባት ጥቅም ላይ የዋለው የመጨረሻ ውቅር ፋይል ነበር"
+
+msgid "Position (offset in bytes) in this file for beginning of each section for"
+msgstr "በዚህ ፋይል ውስጥ ያለው የኤምኤፒ ክፍል የእያንዳንዱን ክፍል መጀመሪያ የባይት ኦፍሴት ቦታ ይመዘግባል"
+
+msgid "direct I/O access. If you made changes somewhere in this file, you should"
+msgstr "AWStats በቀጥታ ወደ ውሂቡ እንዲደርስ። በዚህ ፋይል ውስጥ አንድ ቦታ ላይ ለውጥ ካደረጉ"
+
+msgid "also remove completely the MAP section (AWStats will rewrite it at next update)"
+msgstr "የኤምኤፒ ክፍሉን ሙሉ በሙሉ ያስወግዱ (AWStats በሚቀጥለው ዝማኔ እንደገና ይጽፈዋል)"
+
+msgid "LastLine    = Date of last record processed - Last record line number in last log - Last record offset in last log - Last record signature value"
+msgstr "LastLine    = የመጨረሻ የተቀነባበረ መዝገብ ቀን - በመጨረሻ ሎግ ውስጥ የመጨረሻ መዝገብ መስመር ቁጥር - በመጨረሻ ሎግ ውስጥ የመጨረሻ መዝገብ ኦፍሴት - የመጨረሻ መዝገብ ፊርማ እሴት"
+
+msgid "FirstTime   = Date of first visit for history file"
+msgstr "FirstTime   = ለታሪክ ፋይል የመጀመሪያ ጉብኝት ቀን"
+
+msgid "LastTime    = Date of last visit for history file"
+msgstr "LastTime    = ለታሪክ ፋይል የመጨረሻ ጉብኝት ቀን"
+
+msgid "LastUpdate  = Date of last update - Nb of parsed records - Nb of parsed old records - Nb of parsed new records - Nb of parsed corrupted - Nb of parsed dropped"
+msgstr "LastUpdate  = የመጨረሻ ዝማኔ ቀን - የተተነተኑ መዝገቦች ብዛት - የተተነተኑ አሮጌ መዝገቦች ብዛት - የተተነተኑ አዳዲስ መዝገቦች ብዛት - የተተነተኑ የተበላሹ ብዛት - የተተነተኑ የተጣሉ ብዛት"
+
+msgid "TotalVisits = Number of visits"
+msgstr "TotalVisits = የጉብኝቶች ብዛት"
+
+msgid "TotalUnique = Number of unique visitors"
+msgstr "TotalUnique = የልዩ ጎብኚዎች ብዛት"
+
+msgid "MonthHostsKnown   = Number of hosts known"
+msgstr "MonthHostsKnown   = የሚታወቁ አስተናጋጆች ብዛት"
+
+msgid "MonthHostsUnKnown = Number of hosts unknown"
+msgstr "MonthHostsUnKnown = ያልታወቁ አስተናጋጆች ብዛት"
+
+msgid "Cluster ID - Pages - Hits - Bandwidth"
+msgstr "የክላስተር መታወቂያ - የገጾች ብዛት - የጥያቄዎች ብዛት - ባንድዊድዝ"
+
+msgid "Hour - Pages - Hits - Bandwidth - Not viewed Pages - Not viewed Hits - Not viewed Bandwidth"
+msgstr "ሰዓት - የገጾች ብዛት - የጥያቄዎች ብዛት - ባንድዊድዝ - ያልታዩ ገጾች - ያልታዩ ጥያቄዎች - ያልታየ ባንድዊድዝ"
+
+msgid "Date - Pages - Hits - Bandwidth - Visits"
+msgstr "ቀን - የገጾች ብዛት - የጥያቄዎች ብዛት - ባንድዊድዝ - ጉብኝቶች"
+
+msgid "Domain - Pages - Hits - Bandwidth"
+msgstr "ጎራ - የገጾች ብዛት - የጥያቄዎች ብዛት - ባንድዊድዝ"
+
+msgid "The %s first Pages must be first (order not required for others)"
+msgstr "ዋናው ገጽ %s ከፍተኛ ገጾችን ብቻ ያሳያል፣ እባክዎ ሙሉ ዝርዝሩን በዝርዝር ገጹ ላይ ይመልከቱ"
+
+msgid "Host - Pages - Hits - Bandwidth - Last visit date - [Start date of last visit] - [Last page of last visit]"
+msgstr "አስተናጋጅ - የገጾች ብዛት - የጥያቄዎች ብዛት - ባንድዊድዝ - የመጨረሻ ጉብኝት ጊዜ - [የመጨረሻ ጉብኝት መጀመሪያ ጊዜ] - [የመጨረሻ ጉብኝት የመጨረሻ ገጽ]"
+
+msgid "[Start date of last visit] and [Last page of last visit] are saved only if session is not finished"
+msgstr "[የመጨረሻ ጉብኝት መጀመሪያ ጊዜ] እና [የመጨረሻ ጉብኝት የመጨረሻ ገጽ] የሚቀመጡት ክፍለ ጊዜው ካላለቀ ብቻ ነው"
+
+msgid "The first %s items are sorted by hits in descending order; order of the remaining items is undefined."
+msgstr "የመጀመሪያዎቹ %s ንጥሎች እንደ ጥያቄ ብዛት ከልቅ ወደ ታች ተደርድረዋል፤ የቀሩት ንጥሎች ቅደም ተከተል አልተገለጸም።"
+
+msgid "Login - Pages - Hits - Bandwidth - Last visit"
+msgstr "ገብቷል ተጠቃሚ - የገጾች ብዛት - የጥያቄዎች ብዛት - ባንድዊድዝ - የመጨረሻ ጉብኝት ጊዜ"
+
+msgid "Robot ID - Hits - Bandwidth - Last visit - Hits on robots.txt"
+msgstr "የሮቦት መታወቂያ - የጥያቄዎች ብዛት - ባንድዊድዝ - የመጨረሻ ጉብኝት ጊዜ - robots.txt ጥያቄዎች"
+
+msgid "Worm ID - Hits - Bandwidth - Last visit"
+msgstr "የትል መታወቂያ - የጥያቄዎች ብዛት - ባንድዊድዝ - የመጨረሻ ጉብኝት ጊዜ"
+
+msgid "EMail - Hits - Bandwidth - Last visit"
+msgstr "ኢሜይል - የጥያቄዎች ብዛት - ባንድዊድዝ - የመጨረሻ ጉብኝት ጊዜ"
+
+msgid "The first %s email addresses are sorted by hits in descending order; order of the remaining addresses is undefined."
+msgstr "የመጀመሪያዎቹ %s የኢሜይል አድራሻዎች እንደ ጥያቄ ብዛት ከልቅ ወደ ታች ተደርድረዋል፤ የቀሩት አድራሻዎች ቅደም ተከተል አልተገለጸም።"
+
+msgid "URL - Pages - Bandwidth - Entry - Exit"
+msgstr "ዩአርኤል - የገጾች ብዛት - ባንድዊድዝ - መግቢያ - መውጫ"
+
+msgid "Files type - Hits - Bandwidth - Bandwidth without compression - Bandwidth after compression"
+msgstr "የፋይል ዓይነት - የጥያቄዎች ብዛት - ባንድዊድዝ - ከመጭመቅ በፊት ባንድዊድዝ - ከመጭመቅ በኋላ ባንድዊድዝ"
+
+msgid "Request Time Range - Request Time Frequency"
+msgstr "የጥያቄ ጊዜ ክልል - የጥያቄ ጊዜ ድግግሞሽ"
+
+msgid "Payload Range - Payload Frequency"
+msgstr "የፋይል መጠን ክልል - የፋይሎች ብዛት"
+
+msgid "Session range - Number of visits"
+msgstr "የክፍለ ጊዜ ቆይታ ክልል - የጉብኝቶች ብዛት"
+
+msgid "URL with %s errors - Hits"
+msgstr "%s ስህተቶች ያለው ዩአርኤል - የጥያቄዎች ብዛት"
+
+msgid "Last URL referrer"
+msgstr "የመጨረሻ ዩአርኤል አመላካች"
+
+msgid "Errors - Hits - Bandwidth"
+msgstr "ስህተቶች - የጥያቄዎች ብዛት - ባንድዊድዝ"
+
+msgid "Search keywords - Number of search"
+msgstr "ቁልፍ ቃላት - የፍለጋዎች ብዛት"
+
+msgid "Only top %s keywords shown on main page (sorted by search count). See full list on detail page."
+msgstr "ዋናው ገጽ %s ከፍተኛ ቁልፍ ቃላትን ብቻ ያሳያል (በፍለጋ ብዛት ተደርድሯል)። እባክዎ ሙሉ ዝርዝሩን በዝርዝር ገጹ ላይ ይመልከቱ"
+
+msgid "Search keyphrases - Number of search"
+msgstr "ቁልፍ ሀረጎች - የፍለጋዎች ብዛት"
+
+msgid "Only top %s keyphrases shown on main page (sorted by search count). See full list on detail page."
+msgstr "ዋናው ገጽ %s ከፍተኛ ቁልፍ ሀረጎችን ብቻ ያሳያል (በፍለጋ ብዛት ተደርድሯል)። እባክዎ ሙሉ ዝርዝሩን በዝርዝር ገጹ ላይ ይመልከቱ"
+
+msgid "External page referers - Pages - Hits"
+msgstr "የውጭ ገጽ አመላካቾች - የገጾች ብዛት - የጥያቄዎች ብዛት"
+
+msgid "Only top %s external referrers shown on main page (sorted by pages). See full list on detail page."
+msgstr "ዋናው ገጽ %s ከፍተኛ የውጭ አመላካቾችን ብቻ ያሳያል (በገጾች ብዛት ተደርድሯል)። እባክዎ ሙሉ ዝርዝሩን በዝርዝር ገጹ ላይ ይመልከቱ"
+
+msgid "Search engine referers ID - Pages - Hits"
+msgstr "የፍለጋ ሞተር አመላካች መታወቂያ - የገጾች ብዛት - የጥያቄዎች ብዛት"
+
+msgid "Origin - Pages - Hits"
+msgstr "ምንጭ - የገጾች ብዛት - የጥያቄዎች ብዛት"
+
+msgid "Unknown referer Browser - Last visit date"
+msgstr "ያልታወቀ አመላካች አሳሽ - የመጨረሻ ጉብኝት ጊዜ"
+
+msgid "Unknown referer OS - Last visit date"
+msgstr "ያልታወቀ አመላካች ስርዓተ ክወና - የመጨረሻ ጉብኝት ጊዜ"
+
+msgid "Screen size - Hits"
+msgstr "የማያ ጥራት - የጥያቄዎች ብዛት"
+
+msgid "Browser ID - Hits - Pages"
+msgstr "የአሳሽ መታወቂያ - የጠቅታዎች ብዛት - የገጾች ብዛት"
+
+msgid "Downloads - Hits - Bandwidth"
+msgstr "ማውረጃዎች - የጥያቄዎች ብዛት - ባንድዊድዝ"
+
+msgid "Protocol - Hits - Bandwidth"
+msgstr "ፕሮቶኮል - የጥያቄዎች ብዛት - ባንድዊድዝ"
+
+msgid "Icon Status - Type:200:404:Other"
+msgstr "የአዶ ሁኔታ - አይነት:200:404:ሌላ"
+
+#------------------------------------------------------------------------------
+# የጊዜ ክልል ትርጉም
+#------------------------------------------------------------------------------
+
+msgid "period_00"
+msgstr "እኩለ ሌሊት · AWStats ሁሉም ተኝተዋል፣ አንተ አሁንም ውሂብ እየተመለከትክ ነው? እውነተኛ ፍቅር"
+
+msgid "period_01"
+msgstr "ከሰዓት 1 ጠዋት · በዚህ ሰዓት መጎብኘት? እንቅልፍ አልወሰደህም ወይም ከስራ ገና ወጣህ"
+
+msgid "period_02"
+msgstr "ከሰዓት 2 ጠዋት · ቦቱ ካንተ የበለጠ ትጉህ ነው፣ አሁንም እየሰራ ነው"
+
+msgid "period_03"
+msgstr "ከሰዓት 3 ጠዋት · ከተማ ትተኛለች፣ አገልጋይ የትርፍ ሰዓት ስራ እየሰራ ነው፣ ማን የከፋ ነው?"
+
+msgid "period_04"
+msgstr "ከሰዓት 4 ጠዋት · በጨለማ ውስጥ በጣም ብሩህ ኮከብ፣ ማያ ገጽህ ነው ወይስ የአገልጋይ አመላካች መብራት"
+
+msgid "period_05"
+msgstr "ከሰዓት 5 ጠዋት · ቀደም ብሎ የሚነሳ ወፍ ትል ይበላል፣ ቀደም ብሎ የሚነሳ ቦት ውሂብ ይሰበስባል"
+
+msgid "period_06"
+msgstr "ከሰዓት 6 ጠዋት · አንድ ሰው ይነሳል፣ አንድ ሰው ገና አልተኛም፣ በይነመረብ በጭራሽ አይዘጋም"
+
+msgid "period_07"
+msgstr "ከሰዓት 7 ጠዋት · የባቡር መጨናነቅ ሰዓት፣ ድር የማሰስ ሰዓትም ነው"
+
+msgid "period_08"
+msgstr "ከሰዓት 8 ጠዋት · ስራ ስትጀምር የመጀመሪያ ስራ: የትናንትን ውሂብ መመልከት"
+
+msgid "period_09"
+msgstr "ከሰዓት 9 ጠዋት · ወርቃማ ሰዓት፣ ስራ ማምለጥም ደንብ አለው"
+
+msgid "period_10"
+msgstr "ከሰዓት 10 ጠዋት · ቡና ሰዓት፣ ትራፊክ ጨምሯል ወይ እንደሆነ ተመልከት"
+
+msgid "period_11"
+msgstr "ከሰዓት 11 ጠዋት · አንድ ሰዓት ሲቀረው ምግብ ሰዓት ነው፣ ትንሽ ተጨማሪ ታገስ"
+
+msgid "period_12"
+msgstr "እኩለ ቀን · አገልጋይ: እናንተ ሁላችሁ ምግብ ለመብላት ሄዳችኋል፣ እኔ ትንሽ አርፋለሁ"
+
+msgid "period_13"
+msgstr "ከሰዓት 1 ቀን · ከምግብ በኋላ እንቅልፍ ይሰማል፣ ግን ውሂብ ግን አይተኛም"
+
+msgid "period_14"
+msgstr "ከሰዓት 2 ቀን · ሻይ ሰዓት"
+
+msgid "period_15"
+msgstr "ከሰዓት 3 ቀን · የዛሬው የትራፊክ አዝማሚያ ግራፍ፣ እንደ ስሜትህ ግራፍ አይደለም?"
+
+msgid "period_16"
+msgstr "ከሰዓት 4 ቀን · ተጨማሪ X ሰዓት ሲቀረው ስራ ያበቃል፣ ትራፊክ መሮጥ ይጀምራል"
+
+msgid "period_17"
+msgstr "ከሰዓት 5 ማታ · ስራ አለቀ! ግን አገልጋይ አሁንም መስራት አለበት"
+
+msgid "period_18"
+msgstr "ከሰዓት 6 ማታ · እራት ሰዓት፣ ትንሽ ቪዲዮ ተመልከት፣ ዘና በል"
+
+msgid "period_19"
+msgstr "ከሰዓት 7 ማታ · ወርቃማ ሰዓት፣ ትራፊክ ይበዛል፣ አገልጋይ: እችላለሁ"
+
+msgid "period_20"
+msgstr "ከሰዓት 8 ማታ · ሶፋ ላይ ተኝተህ፣ አንተ ጎብኚ ቁጥር 114514 ነህ"
+
+msgid "period_21"
+msgstr "ከሰዓት 9 ማታ · ጸጥ ያለ ሌሊት፣ በስውር ውሂብ የሚመለከቱ የሌሊት ጉጉቶች +1"
+
+msgid "period_22"
+msgstr "ከሰዓት 10 ማታ · የዛሬው ውሂብ ሊወጣ ነው፣ ተደስተሃል?"
+
+msgid "period_23"
+msgstr "ከሰዓት 11 ማታ · AWStats: መተኛት ሰዓት ነው፣ ነገም መስራት አለብኝ"
+
+#------------------------------------------------------------------------------
+# የጊዜ ልኬት
+#------------------------------------------------------------------------------
+
+msgid "Period"
+msgstr "የስታቲስቲክስ ጊዜ"
+
+msgid "Year"
+msgstr "ዓመት"
+
+msgid "Month"
+msgstr "ወር"
+
+msgid "Months"
+msgstr "ወራት"
+
+msgid "Date"
+msgstr "ቀን"
+
+msgid "Day"
+msgstr "ቀን"
+
+msgid "Hour"
+msgstr "ሰዓት"
+
+msgid "Hours"
+msgstr "ሰዓታት"
+
+msgid "Day of week"
+msgstr "የሳምንቱ ቀን"
+
+msgid "When"
+msgstr "መቼ"
+
+msgid "%s Server Management Panel"
+msgstr "%s  የአገልጋይ አስተዳደር ፓነል"
+
+msgid "Server Administration"
+msgstr "ቀላል እና ቀልጣፋ የአገልጋይ መፍትሄ"
+
+#------------------------------------------------------------------------------
+# የጎብኚ ልኬቶች (በሪፖርቱ ላይ የሚታዩ መለያዎች)
+#------------------------------------------------------------------------------
+
+msgid "Invalid URL Parameters"
+msgstr "የተሳሳተ የURL መለኪያ"
+
+msgid "The requested page cannot be loaded due to invalid or malformed URL parameters."
+msgstr "በተሳሳተ ወይም በተዛባ የURL መለኪያ ምክንያት የተጠየቀው ገጽ መጫን አልቻለም።"
+
+msgid "This may be caused by typing an incorrect URL, missing parameter separators, or using an invalid configuration name."
+msgstr "ይህ የተሳሳተ URL በመተየብ፣ የጎደሉ መለኪያ መለያዎች፣ ወይም የተሳሳተ ውቅር ስም በመጠቀም ሊከሰት ይችላል።"
+
+msgid "Please check the URL you entered and ensure all parameters are correctly formatted."
+msgstr "እባክዎ የገቡትን URL ያረጋግጡ እና ሁሉም መለኪያዎች በትክክል መዋቀራቸውን ያረጋግጡ።"
+
+msgid "SiteDomain parameter not defined in your config/domain file, or you may not have execution permission on the file."
+msgstr "የSiteDomain መለኪያ በአወቃቀር/ጎራ ፋይልዎ ውስጥ አልተገለጸም፣ ወይም በፋይሉ ላይ የማስፈጸም ፈቃድ ላይኖርዎት ይችላል።"
+
+msgid "Please run as Administrator to set permissions"
+msgstr "እባክዎ ፈቃዶችን ለማዘጋጀት እንደ አስተዳዳሪ ያሂዱ"
+
+msgid "This directory lacks read permission"
+msgstr "ይህ ማውጫ የማንበብ ፈቃድ የለውም"
+
+msgid "Please set read permission for directory"
+msgstr "እባክዎ ለማውጫው የማንበብ ፈቃድ ያዘጋጁ"
+
+msgid "Missing required parameter in config file"
+msgstr "በውቅር ፋይል ውስጥ አስፈላጊ መለኪያ ጠፍቷል"
+
+msgid "Please check that 'DirData' is defined."
+msgstr "እባክዎ 'DirData' መገለጹን ያረጋግጡ።"
+
+msgid "Domain name in browser address appears to be missing or incomplete"
+msgstr "በአሳሽ አድራሻ ውስጥ ያለው የጎራ ስም ጠፍቷል ወይም ያልተሟላ ይመስላል"
+
+msgid "Please check the URL parameter"
+msgstr "እባክዎ የዩአርኤል መለኪያውን ያረጋግጡ"
+
+msgid "Format description"
+msgstr "የቅርጸት መግለጫ"
+
+msgid "Please set execute permission"
+msgstr "እባክዎ የማስፈጸም ፈቃድ ያዘጋጁ"
+
+msgid "Or if you prefer numeric mode"
+msgstr "ወይም የቁጥር ሁነታን የሚመርጡ ከሆነ"
+
+msgid "View Report Directly"
+msgstr "በቀጥታ ሪፖርቱን ይመልከቱ"
+
+# በሠንጠረዥ ርዕስ ላይ የሚታየው ጽሑፍ
+msgid "AWStats Log Viewer"
+msgstr "AWStats የምዝግብ ማያ ገጽ"
+
+# የወር መራጫ ቅጽ ላይ የሚታየው መለያ
+msgid "Month Selection"
+msgstr "የወር ምርጫ"
+
+msgid "Who"
+msgstr "ማን"
+
+msgid "Visitors"
+msgstr "ጎብኚዎች"
+
+msgid "Countries"
+msgstr "ሀገር/ክልል"
+
+msgid "flag_icon"
+msgstr "ብሔራዊ ሰንደቅ ዓላማ"
+
+msgid "Country-Region-City"
+msgstr "ሀገር/ክልል/ከተማ"
+
+msgid "Code"
+msgstr "ኮድ"
+
+msgid "Known"
+msgstr "የሚታወቅ"
+
+msgid "unknownos"
+msgstr "ያልታወቀ ስርዓተ ክወና"
+
+msgid "unknownbrowser"
+msgstr "ያልታወቀ አሳሽ"
+
+msgid "Unresolved IP Address"
+msgstr "ያልተፈታ የአይፒ አድራሻ"
+
+msgid "Unknown File Type"
+msgstr "ያልታወቀ የፋይል ዓይነት"
+
+msgid "Unknown Size"
+msgstr "ያልታወቀ የፋይል መጠን"
+
+msgid "Unknown Time"
+msgstr "ያልታወቀ የጥያቄ ጊዜ"
+
+msgid "Unknown Browser"
+msgstr "ያልታወቀ አሳሽ"
+
+msgid "Unknown OS"
+msgstr "ያልታወቀ ስርዓተ ክወና"
+
+msgid "Unknown Visitor"
+msgstr "ያልታወቀ ጎብኚ"
+
+msgid "Unknown Visitor (Total)"
+msgstr "ያልታወቀ ጎብኚ (ጠቅላላ)"
+
+msgid "Unknown Country"
+msgstr "ያልታወቀ ሀገር/ክልል"
+
+msgid "Unknown Country (Region)"
+msgstr "ያልታወቀ ሀገር/ክልል (ጠቅላላ)"
+
+msgid "Unknown Visitor (Title)"
+msgstr "ያልታወቀ ጎብኚ (ርዕስ)"
+
+msgid "PageStayTime"
+msgstr "በገጽ ላይ የሚቆይበትን ጊዜ መገመት አይቻልም"
+
+msgid "Unknown OS (Link)"
+msgstr "ያልታወቀ ስርዓተ ክወና (አገናኝ)"
+
+msgid "Unknown OS (Row)"
+msgstr "ያልታወቀ ስርዓተ ክወና (ዝርዝር)"
+
+msgid "Unknown Browser (Link)"
+msgstr "ያልታወቀ አሳሽ (አገናኝ)"
+
+msgid "Unknown Browser (Row)"
+msgstr "ያልታወቀ አሳሽ (ዝርዝር)"
+
+msgid "Unknown Screen"
+msgstr "ያልታወቀ የማያ ገጽ መጠን"
+
+msgid "Login"
+msgstr "ተጠቃሚ ስም"
+
+msgid "Anonymous"
+msgstr "ማንነቱ ያልታወቀ"
+
+msgid "Robots"
+msgstr "ሮቦቶች"
+
+msgid "Different robots"
+msgstr "የተለያዩ ሮቦቶች"
+
+msgid "Hits on robots.txt"
+msgstr "ከላይ ከተዘረዘሩት የፍለጋ ሞተር ሮቦቶች ያልተለመደ ትራፊክ በሌሎች ገበታዎች ውስጥ አልተካተተም። ከ '+' በኋላ ያለው ቁጥር የ 'robots.txt' ስኬታማ የመድረሻ መዝገቦች ብዛት ነው"
+
+msgid "Worms"
+msgstr "ትሎች"
+
+msgid "Different worms"
+msgstr "የተለያዩ ትሎች"
+
+msgid "Target"
+msgstr "ዒላማ"
+
+msgid "Grabber"
+msgstr "ውሂብ ጎታች መሳሪያ"
+
+#------------------------------------------------------------------------------
+# የቅርጸት መግለጫ
+#------------------------------------------------------------------------------
+
+msgid "mime_text"
+msgstr "TXT ጥሬ ጽሑፍ ፋይል (እ.ኤ.አ. በ1963 በASCII ኢንኮዲንግ ደረጃውን የጠበቀ ቅርጸት ያልያዘ ጽሑፍ። ለሁሉም ምንጭ ኮድ፣ ውቅር ፋይሎች እና ስርዓት ምዝግብ ማስታወሻዎች መሠረት ነው። ዊንዶውስ (CRLF) እና ዩኒክስ (LF) የመስመር መጨረሻ ቁጥጥር ፍሰቶችን የሚደግፍ ሲሆን፣ እስከ ዛሬ ድረስ በኮምፒውተር ዓለም ውስጥ በጣም ጥቅም ላይ የዋለ የመረጃ ልውውጥ ደረጃ ነው)"
+
+msgid "mime_log"
+msgstr "LOG የስርዓት ክወና ምዝግብ ማስታወሻ (የስርዓተ ክወና፣ ከርነል እና የመተግበሪያ ደረጃ የሩጫ ሁኔታን የሚመዘግብ ጥሬ ጽሑፍ ንብረት። ንጊንክስ/አፓቼ የመዳረሻ ምዝግብ ማስታወሻ (Combined Log) እና ደረጃውን የጠበቀ ሲስሎግ ዝርዝር መግለጫን ያጠቃልላል፤ ለችግር መፈለጊያ፣ ለዥረት አፈጻጸም ትንተና እና ለደህንነት ቁጥጥር ዋና የመረጃ ምንጭ ነው)"
+
+msgid "mime_page"
+msgstr "HTML ሃይፐርቴክስት ድህረ ገጽ (እ.ኤ.አ. በ1989 በቲም በርነርስ-ሊ የተፈጠረ የድር መሠረት ድንጋይ። ነጻ እና ክፍት የሆነ አጠቃላይ ሃይፐርቴክስት ማርክ ቋንቋ ሲሆን፣ የኤችቲኤምኤል5 ዝርዝር መግለጫ በ2014 የW3C ኦፊሴላዊ ደረጃ ሆነ፤ የተዋቀረ መልቲሚዲያ፣ ትርጉም ያለው መስተጋብር እና ዥረት አቅጣጫ ገጽ አቀማመጥን በተፈጥሮ ይደግፋል፣ እ.ኤ.አ. በ2016 የቱሪንግ ሽልማት አግኝቷል)"
+
+msgid "mime_khtml"
+msgstr "KHTML ድህረ ገጽ አብነት ሞተር (እ.ኤ.አ. በ1998 የKDE 2.0 አሳሽ ማቅረቢያ ሞተር ዝርዝር መግለጫ። ክፍት ምንጭ ማህበረሰብ ለዘመናዊ ድር ማቅረቢያ መሠረት የጣለ ቅርስ ነው፤ ቴክኖሎጂው በቀጥታ ለአፕል ዌብኪት እና ጎግል ብሊንክ ኮር አነሳሽነት ሆኗል፣ እስከ ዛሬ ድረስ በዘመናዊ ዥረት ተለዋዋጭ ድር አርክቴክቸር በኩል የታችኛውን ሀሳብ ያስቀጥላል)"
+
+msgid "mime_script"
+msgstr "SCRIPT ትርጓሜ ተለዋዋጭ ስክሪፕት (አስቀድሞ ማጠናቀር የማያስፈልጋቸውን፣ በተወሰነ የሩጫ ጊዜ አካባቢ ወይም ትርጓሜ መስመር በመስመር ተከትለው የሚነበቡ እና የሚፈጸሙ የምንጭ ኮድ ዥረቶች አጠቃላይ ምድብ። ኤኤስፒ፣ ጄኤስፒ፣ ሲጂአይ እና ቲሲኤልን ያጠቃልላል፤ በአገልጋይ ወገን ለሚገኙ አጠቃላይ መግቢያ በይነገጾች፣ አውቶማቲክ ሂደት ቁጥጥር እና የስርዓት ደረጃ ተግባራት ማጣበቂያ በሰፊው ይጠቅማል)"
+
+msgid "mime_js"
+msgstr "ጃቫስክሪፕት ስክሪፕት (እ.ኤ.አ. በ1995 የኔትስኬፕ አሳሽ ተፈጥሯዊ የፕሮግራም አካባቢ። በ1997 የECMAScript ኢንዱስትሪ ደረጃን አቋቋመ፤ በ2009 የNode.js የሩጫ ጊዜ አካባቢ መወለድ የአሳሹን ድንበር ሰብሮ ሙሉ ደረጃ ያልሚጠብቅ ያልሚዘጋ አርክቴክቸርን ከፈተ፣ ዓለም አቀፍ ትልቁን የnpm ሶፍትዌር ጥቅል ስነ-ምህዳር ጭምር አስገኝቷል)"
+
+msgid "mime_py"
+msgstr "ፓይተን ስክሪፕት (እ.ኤ.አ. በ1991 በጊዶ ቫን ሮሱም የተፈጠረ ከፍተኛ ደረጃ ትርጓሜ ቋንቋ። የግዴታ ገተራ አልባ ንባብን በማስጠበቅ እና ባለብዙ ምሳሌ የታችኛው ንድፍ በመጠቀም፣ አሁን ለዘመናዊ ድር አርክቴክቸር፣ ሙሉ ደረጃ የውሂብ ሳይንስ፣ አርቲፊሻል ኢንተሊጀንስ ሞዴል ሥልጠና እና ክላውድ ኔቲቭ አውቶማቲክ የስርዓት ጥገና ኢንዱስትሪ ደረጃ ቋንቋ ሆኗል)"
+
+msgid "mime_sh"
+msgstr "ሼል ስክሪፕት (እ.ኤ.አ. በ1971 የዩኒክስ ዘመን ደረጃውን የጠበቀ ትዕዛዝ ትርጓሜ ስክሪፕት። ባሽ፣ ሽ፣ ዳሽ የመሳሰሉ የከርነል ደረጃ ትዕዛዝ ዝርዝሮችን ያጠቃልላል፤ ብዙውን ጊዜ በ .sh ቅጥያ ይፈጸማል፣ ለዘመናዊ ዩኒክስ መሰል ስርዓተ ክወና የታችኛው ሂደት ቁጥጥር፣ ያለመጫን አካባቢ ውቅር እና አውቶማቲክ ተሰማራ አጠቃላይ የከርነል ደረጃ ማጣበቂያ ነው)"
+
+msgid "mime_rb"
+msgstr "ሩቢ ስክሪፕት (እ.ኤ.አ. በ1995 በዩኪሂሮ ማትሱሞቶ የተፈጠረ ነገር ተኮር ትርጓሜ ቋንቋ። እጅግ በጣም አክባሪ የገንቢ ተሞክሮ ማዕከል ባለው የንድፍ ፍልስፍና፣ የRuby on Rails ማዕቀፉ 'ስምምነት ከውቅር ይበልጣል (CoC)' የሚለውን ዘመናዊ ከፍተኛ ደረጃ ድር አርክቴክቸር ልማት ምሳሌን በአብዮታዊ ሁኔታ አቋቋመ)"
+
+msgid "mime_pl"
+msgstr "ፐርል ስክሪፕት (እ.ኤ.አ. በ1987 በላሪ ዎል የተፈጠረ ተግባራዊ ትርጓሜ ቋንቋ። የዘመናዊ ጥቅል አስተዳዳሪ ቀዳሚ (CPAN) ፈር ቀዳጅ እንደመሆኑ፣ ለጽሑፍ ሂደት 'ስዊስ ጦር ቢላዋ' በመባል ይታወቃል። በዘመናዊ ሲጂአይ ሁነታ በጣም ዝቅተኛ አካላዊ ማህደረ ትውስታ ወጪ፣ ከፍተኛ ብቃት ባለው መደበኛ አገላለጽ ሂደት፣ በምዝግብ ማስታወሻ ትንተና መስክ ከፍተኛ አስተማማኝ መሠረት ሆኖ ያገለግላል)"
+
+msgid "mime_php"
+msgstr "PHP ተለዋዋጭ ድረ ገጽ (እ.ኤ.አ. በ1995 በራስመስ ለርዶርፍ የተፈጠረ፣ በተለይ ለድር ልማት የተዘጋጀ። ከ70% በላይ ድረ ገጾችን በዓለም አቀፍ ደረጃ የሚያንቀሳቅስ ዋና ቴክኖሎጂ እንደመሆኑ፣ እንደ ዎርድፕረስ፣ ዊኪፔዲያ ያሉ ትላልቅ የምርት ደረጃ መተግበሪያዎችን በጥልቀት ይደግፋል። ከ PHP 8 ጀምሮ የJIT የሩጫ ጊዜ ማጠናከሪያ ሞተርን በማስተዋወቅ ወደ ከፍተኛ አፈጻጸም ሙሉ ደረጃ አገልጋይ ወገን የታችኛው ምሳሌ ሽግግር አድርጓል)"
+
+msgid "mime_image"
+msgstr "IMAGE የምስል ንብረት ምድብ (ጥራት አጥፊ/ጥራት የማያጠፋ ቢትማፕ፣ ዘመናዊ ምላሽ ሰጪ ግራፊክስ እና ቬክተር ግራፊክስን ያጠቃልላል። የድረ ገጽ የእይታ ሃብቶች ጭነት ወጪን፣ የደንበኛ ወገን መሸጎጫ መምታት ፍጥነት እና የሚዲያ አውታረ መረብ መተላለፊያ ይዘት ፍጆታን ለመገምገም ዋና አመልካች)"
+
+msgid "mime_document"
+msgstr "DOCUMENT የተዋቀረ ሰነድ ምድብ (ጥሬ ጽሑፍ፣ ቅጠበ ቀመር፣ ቅርጸት ያለው ይፋዊ ወረቀት (PDF) እና ቀላል ክብደት ያለው ማርክ ቋንቋን ያጠቃልላል። የአገልጋይ ወገን የማይንቀሳቀስ የእውቀት መጋዘን ስርጭት፣ የድርጅት መረጃ ንብረት ማውረድ እና የጽሑፍ ዥረት የመውጣት አቅምን ለማስላት ዋና አመልካች)"
+
+msgid "mime_package"
+msgstr "PACKAGE የተጠናቀረ ምርት እና ሶፍትዌር ጥቅል ምድብ (የስርዓተ ክወና ተፈጥሯዊ ተፈጻሚ ፕሮግራሞችን፣ የሩጫ ጊዜ ማገናኛ ቤተ-ፕሮግራሞችን (DLL/SO) እና የመተግበሪያ ስርጭት ጫኚ ጥቅሎችን ያጠቃልላል። ብዙ ጊዜ የሶፍትዌር ስርጭት ጣቢያ ወጪ መውጣት ፍሰት እና ማውረድ ከፍተኛ ጫና ለመገምገም ዋና አመልካች ነው)"
+
+msgid "mime_archive"
+msgstr "ARCHIVE ማዛጋጃ እና የተጨመቁ ፋይሎች (በዋናነት በDEFLATE፣ LZMA ወዘተ ስልተ ቀመሮች ላይ ተመሥርተው የተዘጋጁ የውሂብ መጭመቂያ ጥቅሎች አጠቃላይ ምድብ። በአውታረ መረብ ደረጃ ከባህላዊ ጥቅል ስርጭት በተጨማሪ፣ የ1992 የGNU ፕሮጀክትን Gzip ተለዋዋጭ ምላሽ ዥረት ያጠቃልላል። ምንም እንኳን ዘመናዊ ቦታዎች ቀስ በቀስ የBrotli ስልተ ቀመርን ቢያስተዋውቁም፣ ይህ ምድብ አሁንም የአገልጋይ መተላለፊያ ይዘት ፍጥነት እና የማጓጓዣ ደረጃ መጭመቅ ጠብታ ለመገምገም ዋና አመልካች ነው)"
+
+msgid "mime_audio"
+msgstr "AUDIO ናሙና የድምጽ ዥረት ምድብ (የተጨመቀ ድምጽ፣ የድምጽ መጽሐፍ እና የዥረት ሚዲያ ድምጽ መያዣዎችን አጠቃላይ ምድብ። በተወሰነ የድምጽ ኮዴክ ደረጃ ላይ ተመሥርቶ፣ የመልቲሚዲያ ጣቢያ የድምጽ ውሂብ ዥረት መተላለፊያ ፍጥነት፣ አንድ ጊዜ የሚከሰት የዥረት ሚዲያ መተላለፊያ ይዘት እና የረጅም ጊዜ ግንኙነት አፈጻጸምን ለመቆጣጠር ጥቅም ላይ ይውላል)"
+
+msgid "mime_video"
+msgstr "VIDEO ናሙና የቪዲዮ ዥረት ምድብ (ከፍተኛ ጥራት ያለው የቪዲዮ መያዣ፣ ዘመናዊ ድር አኒሜሽን እና የዥረት ሚዲያ ቁራጮችን አጠቃላይ ምድብ። ከፍተኛ ጭነት ባለው የአውታረ መረብ አካባቢ የአገልጋይ መተላለፊያ ይዘት ከፍተኛ ጫና ወሰን፣ የይዘት ማከፋፈያ አውታረ መረብ (ሲዲኤን) ማፋጠን ውጤትን ለመገምገም ዋና አመልካች ነው)"
+
+msgid "mime_jscript"
+msgstr "ጄስክሪፕት ስክሪፕት (እ.ኤ.አ. በ1996 ማይክሮሶፍት ለኢንተርኔት ኤክስፕሎረር 3.0 የተገላቢጦሽ ምህንድስና ባለቤትነት ትግበራ። እንደ ጥንታዊ ጃቫስክሪፕት አስተናጋጅ ተፎካካሪ፣ ቀደም ሲል እንደ ዊንዶውስ ስክሪፕት አስተናጋጅ (WSH) እና ጥንታዊ ኤኤስፒ የኋላ ጫፍ ዋና ሞተር አገልግሏል)"
+
+msgid "mime_json"
+msgstr "JSON የተዋቀረ ውሂብ (እ.ኤ.አ. በ2001 በዳግላስ ክሮክፎርድ የተቋቋመ ቀላል ክብደት ያለው የውሂብ ቅደም ተከተል ልውውጥ ቅርጸት። በጽሑፍ ላይ የተመሠረተ ቁልፍ-እሴት ጥንዶች እና ድርድር አርክቴክቸር ያለው፣ እጅግ በጣም ከፍተኛ የሰው ንባብ ችሎታ እና ጥራት የማያጠፋ ዥረት መሰል ትንተና ባህሪ አለው፤ ለዘመናዊ ድር ኤፒአይ፣ ማይክሮ አገልግሎት አርክቴክቸር እና ትልልቅ ቋንቋ ሞዴሎች መስተጋብር ተጨባጭ ደረጃ ነው)"
+
+msgid "mime_vbs"
+msgstr "ቪቢስክሪፕት ስክሪፕት (እ.ኤ.አ. በ1996 ማይክሮሶፍት ከ IE 3.0 ጋር ያስተዋወቀው የስክሪፕት ቋንቋ ተለዋጭ። ቀደም ሲል ለጥንታዊ ኤኤስፒ ተለዋዋጭ ድረ ገጾች እና ለዊንዶውስ ስርዓት አስተዳደር ዋና ሞተር ነበር፤ አሁን በማይክሮሶፍት በዊንዶውስ 11 አዲስ ከርነል ውስጥ በይፋ ተትቶ ተወግዷል፣ የታሪክ ቅሪት ቴክኖሎጂ ነው)"
+
+msgid "mime_conf"
+msgstr "CONF የስርዓት ውቅር ፋይል (የሶፍትዌር የሩጫ ጊዜ አካባቢ መለኪያዎችን በጥሬ ጽሑፍ መልክ በቋሚነት የሚያከማቹ የውሂብ ፋይሎች አጠቃላይ ምድብ። ኢኒ እና ዘመናዊ ዋይኤምኤል፣ ቶምኤል፣ ጄሶን ዝርዝር መግለጫዎችን ያጠቃልላል፤ በሊኑክስ ስርዓተ ክወና ውስጥ በብዛት በ /etc ማውጫ ውስጥ ይገኛሉ፣ ለስርዓት ደረጃ የሩጫ ሁኔታ መሻሻል ዋና ጥገኛ ናቸው)"
+
+msgid "mime_css"
+msgstr "CSS ካስኬድ ስታይል ሉህ (እ.ኤ.አ. በ1996 የW3C ደረጃ፣ ከኤችቲኤምኤል/ጄኤስ ጋር ከፊት ጫፍ ዋና ሶስት ቴክኖሎጂዎች አንዱ። በCSS2 አቀማመጥ እና CSS3 ሞጁላር ዝግመት ተሻሽሏል፣ በተፈጥሮ ፍሌክስቦክስ፣ ግሪድ እና ሚዲያ መጠይቅ ምላሽ ሰጪ ንድፍን ይደግፋል፣ ዘመናዊ አሳሽ ድረ ገጽ አቀራረብን ለመለያየት ፍጹም የበላይ ደረጃ ነው)"
+
+msgid "mime_xsl"
+msgstr "XSL ስታይል ሉህ (እ.ኤ.አ. በ1999 የW3C ደረጃ፣ XSLT ለውጥ እና XPath አድራሻ ቋንቋን ያጠቃልላል፤ የተዋቀረ XML ውሂብን ወደ ኤችቲኤምኤል፣ ፒዲኤፍ ወይም ጥሬ ጽሑፍ ለመቀየር ይጠቅማል። በዘመናዊ ልማት ሥነ-ምህዳሩ በቀላል ክብደት ባሉት አብነት ሞተሮች እና በጄሶን ውሂብ ቅርጸት ተተክቷል)"
+
+msgid "mime_runtime"
+msgstr "ተፈጻሚ ፋይል (EXE፣ ELF፣ Mach-O ወዘተ የስርዓተ ክወና ተፈጥሯዊ የአፈጻጸም ቅርጸቶች፣ ከተጠናቀረ የታችኛው የማሽን ኮድ፣ መግቢያ ነጥብ እና የስርዓት ጭነት መረጃ ጋር)"
+
+msgid "mime_library"
+msgstr "ቤተ-ፕሮግራም ፋይል (DLL፣ SO፣ dylib ወዘተ ተለዋዋጭ ወይም የማይንቀሳቀስ ማገናኛ ቤተ-ፕሮግራሞች፣ ለሌሎች ፕሮግራሞች ጥሪ የሚሆኑ፣ በሩጫ ጊዜ የሚጫኑ የተጋሩ ምልክቶች እና ዳግም አቀማመጥ ኮድ ይይዛሉ)"
+
+msgid "mime_swf"
+msgstr "ፍላሽ አኒሜሽን (እ.ኤ.አ. በ1996 Macromedia አዘጋጀ፣ በ2005 Adobe ገዛው። በይነተግባብ የድር አኒሜሽን ደረጃ፣ በኢንተርኔት አኒሜሽን እና ጨዋታዎች ላይ በላይነት ነበረው። ችግሮቹ፦ ተሰኪ መጫን ያስፈልጋል፣ በሞባይል አይደገፍም፣ ከፍተኛ የደህንነት አደጋ አለው። እ.ኤ.አ. በ2017 Adobe ማቋረጡን አስታወቀ፣ በ2020 ድጋፍ ሙሉ በሙሉ አቆመ፣ በኤችቲኤምኤል5/ሲኤስኤስ3/ጄኤስ ተተክቷል)"
+
+msgid "mime_dtd"
+msgstr "DTD የሰነድ አይነት ፍቺ (እ.ኤ.አ. በ1998 ከኤክስኤምኤል 1.0 ጋር ተለቋል፤ የኤክስኤምኤል/ኤችቲኤምኤል ሰነድ መዋቅርን ለመግለጽ እና ህጋዊነቱን ለማረጋገጥ ይጠቅማል። በዘመናዊ ልማት፣ እንደ ኤክስኤምኤል ስኬማ፣ ሬላክስ ኤንጂ ባሉ ተለዋዋጭ አማራጮች ተተክቷል)"
+
+msgid "mime_csv"
+msgstr "CSV ውሂብ ቅርጸት (በነጠላ ሰረዝ የሚለያዩ እሴቶች፣ እ.ኤ.አ. በ1972 በትልልቅ ማዕከላዊ ኮምፒውተሮች ዘመን (አይቢኤም ፎርትራን ማጠናከሪያ) አጠቃላይ ጥሬ ጽሑፍ ሰንጠረዥ ቅርጸት። እ.ኤ.አ. በ2005 በRFC 4180 በይፋ ደረጃውን የጠበቀ፣ እንደ ክሮስ-ፕላትፎርም፣ ክሮስ-ቋንቋ ጥራት የማያጠፋ ውሂብ ልውውጥ ደረጃ። ለኤክሴል፣ ለሪሌሽናል ዳታቤዝ፣ ለውሂብ ትንተና (ፓንዳስ) ከፍተኛ ብቃት ባለው ማስመጣት/ማውጣት ላይ በሰፊው ይጠቅማል)"
+
+msgid "mime_cur"
+msgstr "መዳፊት ጠቋሚ ፋይል (.cur ቅርጸት፤ የመዳፊት ጠቋሚ ቅጥን ለማበጀት ይጠቅማል። ለምሳሌ በድረ ገጽ ላይ የሚታየው የጣት ጠቋሚ፣ በስርዓት ውስጥ ያለው የሰዓት መልክ ጠብቂ አዶ ወዘተ። ከተለመደው .ico አዶ ጋር 'ዘመድ' ነው፣ ግን አንድ 'ሙቅ ነጥብ' ተጨምሮበታል — ይኸውም መዳፊት በትክክል የሚጫንበት ቦታ ነው። ታሪክ፦ ከዊንዶውስ 3.1 (እ.ኤ.አ. 1992) ጋር ተጀመረ፣ በግራፊክ በይነገጽ ከትዕዛዝ መስመር ወደ መዳፊት ክወና በሚደረገው ሽግግር ዘመን ውስጥ ቁልፍ አካል ነው)"
+
+msgid "mime_jnlp"
+msgstr "ጃቫ ዌብ ስታርት (እ.ኤ.አ. በ2000ዎቹ የጃቫ ዴስክቶፕ መተግበሪያ ስርጭት ቴክኖሎጂ፣ በ .jnlp ፋይል በኩል የሩቅ ጃቫ ፕሮግራም ያስጀምራል። በደህንነት ችግሮች እና በዘመናዊ የስርጭት ዘዴዎች መስፋፋት ምክንያት፣ አሁን መሠረታዊ በሆነ መልኩ ተትቷል)"
+
+msgid "mime_lit"
+msgstr "ማይክሮሶፍት ሪደር ኤሌክትሮኒክ መጽሐፍ (እ.ኤ.አ. 2000 ማይክሮሶፍት አስተዋወቀው፣ LIT ቅርጸት። ተትቷል፣ አሁን እንደ ካሊብር ባሉ መሳሪያዎች ወደ EPUB ወይም PDF መቀየር ይቻላል)"
+
+msgid "mime_svg"
+msgstr "SVG ቬክተር ግራፊክስ (እ.ኤ.አ. በ1999 የW3C ደረጃ፣ በኤክስኤምኤል አርክቴክቸር ላይ የተመሠረተ ባለ ሁለት አቅጣጫ ቬክተር ምስል ቅርጸት። በማንኛውም መጠን ሲቀየር ጥራቱ እንዳይጠፋ እና ዥረት መሰል ጽሑፍ ማስተላለፍ ጥቅም አለው። ሁሉም ዘመናዊ አሳሾች በተፈጥሮ ይደግፉታል፣ ለከፍተኛ ጥራት የድር አዶዎች፣ አርማዎች እና ቬክተር አኒሜሽን በሰፊው ይጠቅማል፣ ለዘመናዊ ድር ግራፊክስ ዋና ደረጃ ነው)"
+
+msgid "mime_ai"
+msgstr "AI ቬክተር ግራፊክስ (እ.ኤ.አ. በ1987 አዶቤ በብቸኝነት ያዘጋጀው የባለቤትነት ቬክተር ቅርጸት። ለአጻጻፍ ንድፍ፣ ለህትመት ዲዛይን እና ለምርት ስም መለያ ዲዛይን ኢንዱስትሪ ዋና ደረጃ ነው፤ ብዙ ንብርብሮችን እና ከፍተኛ ደረጃ የአጻጻፍ ቬክተር ውሂብን ይደግፋል፣ ለባለሙያ የእይታ ጥበብ ተመራጭ ተሸካሚ ነው)"
+
+msgid "mime_phshop"
+msgstr "PSD ንብርብር ምስል (እ.ኤ.አ. በ1990 አዶቤ ከፎቶሾፕ ጋር ያስተዋወቀው ባለብቸኝነት ቢትማፕ ምንጭ ፋይል ቅርጸት። በርካታ ንብርብሮችን፣ ቻናሎችን፣ ጭምብሎችን እና ጥራት የማያጠፋ አርትዖት ውሂብን ይደግፋል፤ በዓለም አቀፍ ደረጃ ለምስል ሂደት እና ለዲጂታል ሥዕል ኢንዱስትሪ ደረጃ ተደርጎ ተቀባይነት አግኝቷል)"
+
+msgid "mime_ttf"
+msgstr "TrueType ቅርጸ-ቁምፊ (እ.ኤ.አ. በ1989 በአፕል እና ማይክሮሶፍት በጋራ የተሰራ ዲጂታል ኮንቱር ቅርጸ-ቁምፊ ቅርጸት። በኳድራቲክ ቤዚየር ከርቭ ላይ የተመሠረተ፣ በስክሪን ማሳያ እና በህትመት ውጤት ላይ ፍጹም የፒክሰል ተመሳሳይነት ያረጋግጣል፣ ለዘመናዊ ዴስክቶፕ ስርዓተ ክወናዎች ተፈጥሯዊ ነባሪ ቅርጸ-ቁምፊ ቅርጸት ነው)"
+
+msgid "mime_fon"
+msgstr "FON ቢትማፕ ቅርጸ-ቁምፊ (እ.ኤ.አ. በ1980ዎቹ ማይክሮሶፍት ዊንዶውስ ቀደምት የስርዓት ደረጃ ነጥብ መሠረት ቅርጸ-ቁምፊ ቅርጸት። ማንኛውንም ተመጣጣኝ ያልሆነ ልኬት መለወጥ አይደግፍም፣ ብዙውን ጊዜ ከቀሪ ስርዓቶች ወይም ቀደምት አብሮገባ መሳሪያ ክፍሎች ጋር በመሆን ለተወሰነ የፒክሰል ጽሑፍ ማቅረቢያ ይጠቅማል)"
+
+msgid "mime_pdf"
+msgstr "PDF ኤሌክትሮኒክ ሰነድ (እ.ኤ.አ. በ1993 በአዶቤ ተሰራ እና እ.ኤ.አ. በ2008 የISO 32000 አለም አቀፍ ደረጃ ሆነ፣ ክሮስ-ፕላትፎርም ቅርጸት ያለው ሰነድ ቅርጸት። ፍጹም የአጻጻፍ እና የቅርጸት ታማኝነት አለው፣ ለዓለም አቀፍ የኤሌክትሮኒክ ሰነድ ስርጭት እና ለዲጂታል ህትመት አጠቃላይ ደረጃ ነው)"
+
+msgid "mime_dotnet"
+msgstr "ASP.NET ተለዋዋጭ ገጽ (እ.ኤ.አ. በ2002 ማይክሮሶፍት ከ.NET አርክቴክቸር ጋር ያስተዋወቀው የአገልጋይ ወገን ተለዋዋጭ ድር ቴክኖሎጂ። በአይአይኤስ አቅራቢ ሞተር ላይ የተመሠረተ፣ የኢንተርፕራይዝ ደረጃ ዊንዶውስ አገልጋይ ወገን ተለዋዋጭ ድር መተግበሪያዎችን እና የተከፋፈሉ ስርዓቶችን ለመገንባት ይጠቅማል)"
+
+msgid "mime_mdb"
+msgstr "MDB ሪሌሽናል ዳታቤዝ (እ.ኤ.አ. በ1992 ማይክሮሶፍት ከአክሰስ ጋር ያስተዋወቀው የዴስክቶፕ ደረጃ ሪሌሽናል ዳታቤዝ ማከማቻ ቅርጸት። አብሮገባ የጄት ዳታቤዝ ሞተር አለው፣ በግል ኮምፒውተሮች እና በአነስተኛ እና መካከለኛ ኢንተርፕራይዞች ቀደምት መረጃ በኤሌክትሮኒክ መንገድ አያያዝ ውስጥ እንደ ሪሌሽናል ዳታቤዝ መፍትሄ ሆኖ አገልግሏል)"
+
+msgid "mime_md"
+msgstr "ማርክዳውን ሰነድ (እ.ኤ.አ. በ2004 በጆን ግሩበር በብቸኝነት የተፈጠረ ቀላል ክብደት ያለው ማርክ ቋንቋ። ዋናው የንድፍ ፍልስፍና 'አንብበው ቀጥታ አቅርብ' የሚል ነው፤ GFM እና CommonMark የመሳሰሉ ዘመናዊ ተዋጽኦዎችን ያንቀሳቅሳል። በቴክኒካል ሰነዶች፣ በእውቀት መጋዘኖች (ኦብሲዲያን) እና በዘመናዊ የማይንቀሳቀስ ድረ ገጽ ማመንጫዎች እንደ ዋና ልውውጥ ደረጃ በሰፊው ይጠቅማል)"
+
+msgid "mime_crystal"
+msgstr "ክሪስታል ሪፖርቶች ሪፖርት (የSAP ቢዝነስ ኢንተሊጀንስ (ቢአይ) መድረክ ፕሮፌሽናል ኢንተርፕራይዝ ደረጃ ሪፖርት ፋይል ቅርጸት። በርካታ የውሂብ ምንጮች የታችኛው ግንኙነት እና ውስብስብ ተለዋዋጭ ገበታ ማቅረቢያ አቅም አለው፤ በዓለም አቀፍ ኢንተርፕራይዞች የፋይናንስ እና የውሂብ ትንተና ስርዓቶች ለባለሙያ ሪፖርት ማመንጨት በሰፊው ይጠቅማል)"
+
+msgid "mime_libreoffice"
+msgstr "ሊብረኦፊስ ሰነድ (እ.ኤ.አ. በ2010 ዘ ዶክመንት ፋውንዴሽን በኦፕንኦፊስ ቅርንጫፍ ላይ የተመሠረተ ክፍት ምንጭ የቢሮ ስብስብ ባለብቸኝነት ቅርጸት። የW3Cን ODF (ክፍት ሰነድ ቅርጸት) አለም አቀፍ ደረጃን በጥልቀት ይተገብራል፣ ለዘመናዊ ክፍት ምንጭ ስነ-ምህዳር የቢሮ መሠረት ነው)"
+
+msgid "mime_encrypt"
+msgstr "ENCRYPT የተመሰጠረ ፋይል (በተወሰነ ሲሜትሪክ ወይም አሲሜትሪክ ምስጠራ ስልተ ቀመር የተሰራ ጥሬ ሁለትዮሽ ወይም ጽሑፍ ውሂብ። .enc፣ .pgp፣ .gpg የመሳሰሉ ዋና ተዋጽኦ ቅርጸቶችን ያጠቃልላል፤ በአውታረ መረብ ደረጃ አይ공개 ላልሆነ ውሂብ ሚስጥራዊነት እና ሙሉነት ማረጋገጫ ለማስጠበቅ ይጠቅማል)"
+
+msgid "mime_gpx"
+msgstr "GPX ሳተላይት ዱካ ውሂብ (በኤክስኤምኤል አርክቴክቸር ላይ የተመሠረተ የአለም አቀፍ አቀማመጥ ማወቂያ ስርዓት ልውውጥ ቅርጸት። በተለይ ጂኦግራፊያዊ መጋጠሚያዎችን፣ ነጥቦችን፣ መስመሮችን እና ታሪካዊ ዱካዎችን ለመግለጽ ያገለግላል፤ ለዘመናዊ ሞባይል የእንቅስቃሴ መሳሪያዎች፣ ለተሽከርካሪ አሰሳ እና ለጂኦግራፊያዊ መረጃ ስርዓቶች (ጂአይኤስ) ክፍት የሆነ አጠቃላይ የውሂብ ደረጃ ነው)"
+
+msgid "mime_diskimage"
+msgstr "Disk Image የዲስክ ምስል (አይኤስኦ፣ ዲኤምጂ፣ አይኤምጂን ጨምሮ የአካላዊ ዲስክ ወይም የእይታ ዲስክ ሚዲያ በእያንዳንዱ ባይት የታችኛው ሴክተር ምስል ፋይል። ለስርዓት የታችኛው ተሰማራ፣ ከፍተኛ አቅም ላለው ሶፍትዌር ደህንነቱ የተጠበቀ ስርጭት እና ለማከማቻ ሚዲያ አካላዊ ደረጃ ሙሉ ውሂብ ምትኬ ይጠቅማል)"
+
+msgid "mime_vm"
+msgstr "VM ቨርቹዋል ማሽን ምስል (ቪኤምዲኬ፣ ቪዲአይ፣ ቪኤችዲኤክስ፣ ኦቪኤን ጨምሮ የቨርቹዋልነት አካላዊ ዲስክ ምስል። ለቪኤምዌር፣ ቨርቹዋልቦክስ እና ሃይፐር-ቪ መድረኮች መሠረት እንደመሆናቸው፣ ለስርዓት የታችኛው ሃርድዌር ማስመሰል፣ ለተግባር ምሳሌ ፈጣን ቅጂ እና ለደመና መሠረተ ልማት ስርጭት ይጠቅማል)"
+
+msgid "mime_torrent"
+msgstr "ቢትቶረንት ዘር ፋይል (እ.ኤ.አ. በ2001 በብራም ኮሄን የተነደፈ P2P ነጥብ ለነጥብ የተከፋፈለ ማውረጃ መረጃ ጠቋሚ። በቤንኮድ ኢንኮዲንግ ላይ የተመሠረተ፣ የመጀመሪያውን ፋይል የታችኛው ማረጋገጫ ሜታዳታ እና መከታተያ አገልጋይ አድራሻ መረጃ ያከማቻል፤ ማዕከል ላልሆነ የአውታረ መረብ ዥረት ስርጭት ዋና ተሸካሚ ነው)"
+
+msgid "mime_gis"
+msgstr "GIS ጂኦግራፊያዊ ክልል ውሂብ (በሼፕፋይል እና ጂኦጄሶን ላይ የተመሠረተ የጂኦግራፊያዊ መረጃ ስርዓት ውሂብ ደረጃ። ባለብዙ አቅጣጫ ጂኦሜትሪክ መጋጠሚያዎችን፣ ንብርብር ቶፖሎጂን እና ባህሪ ውሂብን ያጠቃልላል፤ ለከፍተኛ ትክክለኛነት ዲጂታል ካርታ ማቅረቢያ፣ ለሳተላይት ርቀት ዳሰሳ እና ለቦታ ጂኦሜትሪክ ትንተና በሰፊው ይጠቅማል)"
+
+msgid "mime_ebook"
+msgstr "EBOOK ኤሌክትሮኒክ መጽሐፍ (በW3C EPUB አለም አቀፍ ክፍት ደረጃ፣ በአማዞን ኪንድል ባለብቸኝነት ሞቢ/ኤዘደብሊው አርክቴክቸር ላይ የተመሠረተ ዲጂታል ህትመት ቅርጸት። ምላሽ ሰጪ ዥረት መሰል አጻጻፍን፣ ሜታዳታ መዘጋትን እና ዲአርኤም ዲጂታል መብት ጥበቃን ይደግፋል፤ ለሞባይል መጨረሻ ዲጂታል ንባብ አጠቃላይ ተሸካሚ ነው)"
+
+msgid "mime_avif"
+msgstr "AVIF ከፍተኛ ብቃት ምስል (እ.ኤ.አ. በ2019 ክፍት ሚዲያ አሊያንስ (AOMedia) ባስተዋወቀው ቀጣይ ትውልድ ከፍተኛ ጥራት ምስል ደረጃ። በAV1 ቪዲዮ ኢንኮዲንግ ቁልፍ ፍሬም ቴክኖሎጂ ላይ የተመሠረተ፣ ከፍተኛ መጭመቂያ መጠን ከWebP በ50% የተሻለ ሲሆን በተፈጥሮ ከፍተኛ ተለዋዋጭ ክልል (ኤችዲአር) ይደግፋል፤ ለዘመናዊ ድር ምስል ማስተላለፍ ዋና ደረጃ ነው)"
+
+msgid "mime_markdown"
+msgstr "ማርክዳውን ቀላል ክብደት ሰነድ (እ.ኤ.አ. በ2004 በጆን ግሩበር በብቸኝነት የተፈጠረ ጽሑፍ ሰነድ ማርክ ቋንቋ። ጥሬ ጽሑፍ በመግለጫ ዘዴ የተሰራ፣ ንድፍ አገባቡ በሬስትራክቸርት ቴክስት ተመስጦ ነው፤ ለጊትሃብ ፕሮጀክቶች፣ ለምህንድስና ደረጃ ቴክኒካል ሰነዶች እና ለዘመናዊ የማይንቀሳቀስ ይዘት አስተዳደር ስነ-ምህዳር በሰፊው ይጠቅማል)"
+
+msgid "mime_yaml"
+msgstr "YAML ተከታታይ ውቅር (እ.ኤ.አ. በ2001 በክላርክ ኢቫንስ እና ባልደረቦች የተነደፈ በሰው ሊነበብ የሚችል የውሂብ ተከታታይነት ቅርጸት። በደረጃ ገተራ እና በቁልፍ-እሴት ካርታ ላይ የተመሠረተ፣ አሁን ለኩበርኔትስ ኮንቴይነር ማስተካከያ፣ ለአንሲብል አውቶሜሽን እና ለዶከር ኮምፖዝ ክላውድ ኔቲቭ መሠረተ ልማት ውቅር ደረጃ ሆኗል)"
+
+msgid "mime_toml"
+msgstr "TOML ትርጉም ያለው ውቅር (እ.ኤ.አ. በ2013 በቶም ፕሪስተን-ዌርነር የተነደፈ እጅግ ቀላል አነስተኛ ቋንቋ። ጠንካራ አይነት፣ ግልጽ ካርታ እና ግልጽ ትርጉም የታችኛው የንድፍ ጥቅሞች አሉት፤ አሁን ለRust (Cargo)፣ ለPython (pyproject.toml) እና ለጎ ዘመናዊ መሳሪያ ሰንሰለት እንደ ደረጃውን የጠበቀ ውቅር ፋይል በሰፊው ይጠቅማል)"
+
+msgid "mime_vue"
+msgstr "ቪዩ ነጠላ ፋይል አካል (እ.ኤ.አ. በ2014 በዩ ዩሺ በቀስታ የሚጨምር የድር ማዕቀፍ ባለብቸኝነት SFC ቅርጸት። በአንድ ፋይል ውስጥ ኤችቲኤምኤል/ሲኤስኤስ/ጄኤስን ማዕከል በማድረግ መለያየት እና ምላሽ ሰጪ ሁኔታ ማገናኘት ይችላል፤ ዘመናዊ የድር በይነተግባብ የፊት ጫፍ መተግበሪያዎችን እና ትልልቅ የማይንቀሳቀስ ጣቢያ ሞተሮችን በጥልቀት ያንቀሳቅሳል)"
+
+msgid "mime_wasm"
+msgstr "WebAssembly ሁለትዮሽ ሞጁል (እ.ኤ.አ. በ2017 በW3C የተቋቋመ የድር ከፍተኛ አፈጻጸም ዝቅተኛ ደረጃ ባይት ኮድ ደረጃ። እንደ C/C++/Rust ያሉ ጠንካራ አይነት ቋንቋዎችን ወደ አሳሽ ሳንድቦክስ ኢላማ ማጠናቀር ይፈቅዳል፤ ከተፈጥሯዊ ሃርድዌር ጋር ቅርብ የሆነ የማስፈጸም ብቃት ይሰጣል፣ ለዘመናዊ ድር ጠርዝ ማስላት ዋና መሠረት ነው)"
+
+msgid "mime_jsx"
+msgstr "ሪአክት ጄኤስኤክስ አካል (እ.ኤ.አ. በ2013 ፌስቡክ ከሪአክት ማዕቀፍ ጋር ያስተዋወቀው የጃቫስክሪፕት ኤክስኤምኤል ሰዋሰው ቅጥያ። በጃቫስክሪፕት ውስጥ በመግለጫ መልክ DOM ቨርቹዋል መዋቅር መገንባት ይደግፋል፣ 'የተጠቃሚ በይነገጽ የሁኔታ ተግባር ነው' የሚለውን የፊት ጫፍ አካል ማደራጀት ልማት ምሳሌ አስገኝቷል)"
+
+msgid "mime_tsx"
+msgstr "ታይፕስክሪፕት ቲኤስኤክስ አካል (እ.ኤ.አ. በ2012 ማይክሮሶፍት ባዘጋጀው ታይፕስክሪፕት ጠንካራ አይነት ሰዋሰው እና ጄኤስኤክስ ዥረት ውህደት። በሪአክት አካል ልማት ውስጥ የማይንቀሳቀስ የማጠናከሪያ ጊዜ አይነት ማረጋገጫ እና በይነገጽ ገደቦችን ያስገባል፤ ለዘመናዊ ትልልቅ የፊት ጫፍ ስርዓቶች ደህንነቱ የተጠበቀ ልማት የኮድ ደረጃ ነው)"
+
+msgid "mime_heif"
+msgstr "HEIF ከፍተኛ ብቃት ምስል (እ.ኤ.አ. በ2015 በMPEG ድርጅት የተቋቋመ ከፍተኛ ብቃት ያለው ምስል ፋይል ቅርጸት። በHEVC (H.265) ቪዲዮ ኢንኮዲንግ ስልተ ቀመር ላይ የተመሠረተ፣ በጣም ትንሽ በሆነ መጠን ብዙ ፍሬም ምስሎችን፣ ጥልቀት ካርታ እና ሜታዳታ መያዝ ይችላል፤ ለዘመናዊ ሞባይል ስርዓተ ክወና እና ለስማርት ተርሚናል መሳሪያዎች ባለብቸኝነት ማከማቻ ደረጃ ነው)"
+
+msgid "mime_heic"
+msgstr "HEIC ከፍተኛ ብቃት ምስል (አፕል በHEIF አለም አቀፍ ደረጃ ላይ የተመሠረተ ባለብቸኝነት ቢትማፕ ቅርጸት። ለዘመናዊ አይፎን ነባሪ ፎቶ ማከማቻ ደረጃ እንደመሆኑ፣ በiOS/macOS ሃርድዌር ደረጃ ኮዴክ እና በተፈጥሯዊ ስርዓተ ክወና ድጋፍ አግኝቷል፤ ከፍተኛ ጥራት በማረጋገጥ ረገድ የታችኛውን ማከማቻ ቦታ በእጅጉ ይቀንሳል)"
+
+msgid "mime_gltf"
+msgstr "glTF 3D ንብረት ሞዴል (እ.ኤ.አ. በ2015 የKhronos Group ያወጣው የGL ማስተላለፊያ ቅርጸት ደረጃ። ባለ ሶስት አቅጣጫ ትዕይንት ለመግለጽ የጄሶን አርክቴክቸር ይጠቅማል፤ 'በ3D መስክ ጄፔግ' በመባል ይታወቃል፤ ለዘመናዊ ዌብጂኤል/ዌብጂፒዩ እና ለቨርቹዋል እውነታ ማቅረቢያ ቀላል ክብደት ያለው ኢንዱስትሪ ደረጃ ነው)"
+
+msgid "mime_glb"
+msgstr "GLB ሁለትዮሽ 3D ሞዴል (የglTF ንብረት ሞዴል ሙሉ ሁለትዮሽ ጥራት የማያጠፋ ማሸጊያ ስሪት። የትዕይንት መዋቅሩን፣ የታችኛውን ሜሽ ጫፍ ውሂብ፣ ቁሳቁስ እና ሸካራነት ምስል ወደ አንድ ፋይል ያዋህዳል፤ በተለይ ክሮስ-ፕላትፎርም የድር 3D ንብረቶችን በብቃት ለማስተላለፍ እና ለዥረት መሰል ስርጭት ይጠቅማል)"
+
+msgid "mime_gls"
+msgstr "GLOSSARY የውሂብ መዝገበ ቃላት (በተለይ ለሰነድ አስተዳደር ስርዓቶች እና ለተዋቀረ ቋንቋ ማከማቻ የሚሆን የቃላት ስብስብ ፍቺ ፋይል። ደረጃውን የጠበቀ የቃላት ፍቺ፣ ባለብዙ ቋንቋ ንጽጽር እና ሜታዳታ ካርታ አለው፤ ራስ-ሰር የጽሑፍ ትንተና እና የይዘት ህትመት ስርዓቶች ፅንሰ-ሀሳባዊ ወጥነት ለመጠበቅ ይጠቅማል)"
+
+msgid "mime_cbz"
+msgstr "CBZ ኮሚክ መጽሐፍ (በZIP መጭመቂያ መዋቅር ላይ የተመሠረተ ባለብቸኝነት ኮሚክ ምስል ማዛጋጃ ቅርጸት። በውስጡ ተከታታይ የማይንቀሳቀስ ቢትማፕ ቅደም ተከተል ይዟል፤ ለዲጂታል ኮሚክ ህትመት እና ለክሮስ-ፕላትፎርም አካባቢያዊ ማከማቻ እንደ አጠቃላይ ቀላል ክብደት ኮንቴይነር ደረጃ ነው)"
+
+msgid "mime_cbr"
+msgstr "CBR ኮሚክ መጽሐፍ (በRAR መጭመቂያ መዋቅር ላይ የተመሠረተ ባለብቸኝነት ኮሚክ ምስል ማዛጋጃ ቅርጸት። የማይንቀሳቀስ ቢትማፍ ቅደም ተከተልን ለማሸግ የRAR ስልተ ቀመር ይጠቀማል፤ ከፍተኛ መጭመቂያ መጠን አለው፣ በዲጂታል ኮሚክ ስርጭት ዘርፍ ሰፊ ተኳሃኝነት ድጋፍ አለው)"
+
+msgid "mime_fb2"
+msgstr "FB2 ኤሌክትሮኒክ መጽሐፍ (እ.ኤ.አ. በ2000ዎቹ መጀመሪያ የFictionBook 2.0 ኤሌክትሮኒክ መጽሐፍ ደረጃ። ንጹህ ኤክስኤምኤል መዋቅር በመጠቀም የመጽሐፉን ባህሪያት እና የጽሑፍ ደረጃዎችን ይገልጻል፤ በክፍት ምንጭ ኤሌክትሮኒክ መጽሐፍ ስነ-ምህዳር እና በቀሪ ዲጂታል ህትመት አንባቢዎች ውስጥ ሰፊ ድጋፍ አግኝቷል)"
+
+msgid "mime_kepub"
+msgstr "KEPUB ኤሌክትሮኒክ መጽሐፍ (ኮቦ በEPUB ደረጃ ላይ የተመሠረተ ባለብቸኝነት የተሻሻለ ኤሌክትሮኒክ መጽሐፍ ቅርጸት። ለኮቦ ሃርድዌር ደረጃ ኤሌክትሮኒክ መጽሐፍ አንባቢ የታችኛው ማቅረቢያ ማመቻቸት ተደርጎለታል፤ የበለጠ ብቃት ያለው የገጽ አቀማመጥ እና የንባብ ስታቲስቲክስ መስተጋብር ይሰጣል)"
+
+msgid "mime_m4b"
+msgstr "M4B የድምጽ መጽሐፍ (በMPEG-4 Part 14 (MP4) ኮንቴይነር አርክቴክቸር ላይ የተመሠረተ የድምጽ መጽሐፍ ቅርጸት። የAAC ኢንኮዲንግ ይጠቀማል፤ በተፈጥሮ የታችኛው ዕላማ ምልክት ማድረጊያ፣ የተቋረጠ ቦታ መቀጠል እና ምዕራፍ መከፋፈልን ይደግፋል፤ ቀደም ሲል ለአፕል አይቱንስ ስነ-ምህዳር ደረጃውን የጠበቀ ቅርጸት ነበር)"
+
+msgid "mime_kfx"
+msgstr "ኪንድል KFX ቅርጸት (እ.ኤ.አ. በ2015 አማዞን ከኪንድል ጋር ያስተዋወቀው ባለብቸኝነት የተሻሻለ ዲጂታል ህትመት ቅርጸት። የላቀ የፊደል አገናኝ አጻጻፍን፣ ከፍተኛ ተለዋዋጭ ቅርጸ-ቁምፊ ማቅረቢያ እና የከርነል ደረጃ ዥረት መሰል ገጽ መጫን (Page Flip) ይደግፋል፤ ለዘመናዊ ኪንድል መድረክ ዋና ደረጃ ነው)"
+
+msgid "mime_chm"
+msgstr "CHM የተጠናቀረ የእርዳታ ፋይል (እ.ኤ.አ. በ1997 ማይክሮሶፍት ያስተዋወቀው የተጠናቀረ ኤችቲኤምኤል የእርዳታ መረጃ ስርዓት። ሃይፐርቴክስት ውሂብን እና የታችኛውን መረጃ ጠቋሚ ወደ አንድ ሁለትዮሽ ኮንቴይነር ያሸጋግራል፤ ለዊንዶውስ ሶፍትዌር አካባቢያዊ ከመስመር ውጭ የእርዳታ ሰነድ ደረጃ ቅርጸት ሆኖ ለረጅም ጊዜ አገልግሏል)"
+
+msgid "mime_mht"
+msgstr "MHT ድረ ገጽ ማዛጊያ (እ.ኤ.አ. በ1999 ማይክሮሶፍት ያስተዋወቀው MIME የተዋሃደ ሃይፐርቴክስት ቅርጸት። በRFC 2557 ደረጃ ላይ የተመሠረተ፣ የኤችቲኤምኤል ምንጭ ኮድ፣ ሲኤስኤስ፣ ጄኤስ እና አብሮገባ ምስሎችን ወደ አንድ ጽሑፍ ፋይል ያሸጋግራል፤ ለቀድሞ አሳሾች ከመስመር ውጭ ድረ ገጽ ማስቀመጫ ይጠቅማል)"
+
+msgid "mime_wml"
+msgstr "WML ሽቦ አልባ ማርክ ቋንቋ (እ.ኤ.አ. በ1999 በWAP (ሽቦ አልባ መተግበሪያ ፕሮቶኮል) መድረክ የተቋቋመ የሞባይል ጫፍ ማርክ ደረጃ። በኤክስኤምኤል ዝርዝር መግለጫ ላይ የተመሠረተ፣ በተለይ ለቀደምት ጠባብ መተላለፊያ ይዘት ሽቦ አልባ ሴሉላር አውታረ መረብ እና ዝቅተኛ የማስላት አቅም ላላቸው ተግባር ስልኮች ነበር፤ በዘመናዊ ድር ስነ-ምህዳር ውስጥ ጡረታ የወጣ ቅሪት ቴክኖሎጂ ነው)"
+
+msgid "mime_xhtml"
+msgstr "XHTML ሃይፐርቴክስት ድረ ገጽ (እ.ኤ.አ. በ2000 የW3C ደረጃ፣ በኤክስኤምኤል አርክቴክቸር ላይ የተመሠረተ ጥብቅ አይነት ሃይፐርቴክስት ማርክ ቋንቋ። እ.ኤ.አ. በ2009 W3C ቴክኖሎጂውን ማሻሻል አቁሞ ሙሉ በሙሉ ወደ ኤችቲኤምኤል5 ዝርዝር መግለጫ ተሸጋገረ፤ አሁን በብዛት ለቀሪ ስርዓቶች ትርጉም ያለው ድረ ገጽ ማቅረቢያ ይጠቅማል)"
+
+msgid "mime_xml"
+msgstr "XML የተዋቀረ ሰነድ (እ.ኤ.አ. በ1998 የW3C ደረጃ ሊሰፋ የሚችል ማርክ ቋንቋ። እራሱን የሚገልጽ መለያ አርክቴክቸር አለው፤ ለአውታረ መረብ ድር አገልግሎቶች (SOAP/REST)፣ ለስርዓት ደረጃ ውቅር ፋይሎች (XSD) እና ለክሮስ-ፕላትፎርም ውሂብ ልውውጥ የታችኛው መሠረት ቅርጸት ነው)"
+
+msgid "mime_sgml"
+msgstr "SGML አጠቃላይ ማርክ ቋንቋ (እ.ኤ.አ. በ1986 የISO 8879 አለም አቀፍ ደረጃ ደረጃውን የጠበቀ አጠቃላይ ማርክ ቋንቋ። ለኤሌክትሮኒክ ሰነድ የተዋቀረ መግለጫ ኢንዱስትሪ ቀዳሚ እንደመሆኑ፣ ኤክስኤምኤል እና ቀደምት ኤችቲኤምኤል ዝርዝር መግለጫዎች ከዚህ ደረጃ ሜታ ቋንቋ ተወስደዋል)"
+
+msgid "mime_apng"
+msgstr "APNG ተለዋዋጭ ግራፊክስ (እ.ኤ.አ. በ2004 ሞዚላ ያዘጋጀው ተንቀሳቃሽ የአውታረ መረብ ግራፊክስ (PNG) ተለዋዋጭ ቅጥያ ቅርጸት። 24-ቢት እውነተኛ ቀለም እና 8-ቢት አልፋ ቻነል ግልጽነት ባህሪ ይደግፋል፤ በዘመናዊ ድር ሁኔታ ውስጥ ለጂአይኤፍ ቅርጸት ከፍተኛ ጥራት ያለው አማራጭ ነው)"
+
+msgid "mime_bmp"
+msgstr "BMP ተፈጥሯዊ ቢትማፕ (ከዊንዶውስ 1.0 ዘመን ጀምሮ የተቋቋመ የማይክሮሶፍት መድረክ መሳሪያ-ነጻ ቢትማፕ ቅርጸት። ጥራት የማያጠፋ ያልተጨመቀ ማከማቻ ይጠቀማል፤ ምንም እንኳን መጠኑ ከPNG በ3-10 እጥፍ ሊበልጥ ቢችልም፣ ምንም ኮዴክ ማድረግ ስለማያስፈልገው፣ እስከ ዛሬ ድረስ በዊንዶውስ 11 ከርነል አካላት፣ በEXE/MSI ሃብት ክፍሎች እና በቀሪ ነጂዎች ግራፊክ መሸጎጫ ውስጥ በሰፊው ተካቷል)"
+
+msgid "mime_cdr"
+msgstr "CDR ቬክተር ግራፊክስ (የካናዳ Corel ኩባንያ ባለብቸኝነት የCorelDRAW ፕሮፌሽናል ቬክተር ዲዛይን ምንጭ ፋይል ቅርጸት። ብዙ ንብርብር ቀለም አስተዳደር፣ ውስብስብ የሂሳብ ኮንቱር አንጓዎች እና የህትመት ደረጃ የአጻጻፍ ውሂብ ይደግፋል፤ ለፕሮፌሽናል ጠፍጣፋ ህትመት እና ለማስታወቂያ ዲዛይን መስክ የተዘጋጀ ቅርጸት ነው)"
+
+msgid "mime_gif"
+msgstr "GIF መረጃ ጠቋሚ ቀለም ምስል (እ.ኤ.አ. በ1987 CompuServe ያዘጋጀው 8-ቢት መረጃ ጠቋሚ ቀለም ቢትማፕ ቅርጸት። በLZW ስልተ ቀመር ላይ የተመሠረተ፣ በ256 ቀለም ደረጃዎች እና በአንድ ቀለም ግልጽነት ብቻ የተገደበ፣ ከፍተኛ ፍሬም ባለው ጊዜ መጠኑ ያበጣል፤ አሁን ቀስ በቀስ በAPNG፣ WebP ወዘተ ባሉ ዘመናዊ ከፍተኛ ብቃት ባላቸው ተለዋዋጭ ምስል ደረጃዎች እየተተካ ነው)"
+
+msgid "mime_ico"
+msgstr "ICO የስርዓት አዶ (ዊንዶውስ ተፈጥሯዊ አዶ ሃብት ማሸጊያ ቅርጸት። በአንድ ኮንቴይነር ውስጥ ብዙ የፒክሰል ጥራቶችን እና የቀለም ጥልቀቶችን የምስል ተለዋጮችን በቅልቅል ማስገባት ይደግፋል፤ ለዘመናዊ የድር አሳሽ ጣቢያ ዋና መለያ (Favicon) አጠቃላይ የስርጭት ደረጃም ነው)"
+
+msgid "mime_jpeg"
+msgstr "JPEG የተጨመቀ ምስል (እ.ኤ.አ. በ1992 የISO 10918 አለም አቀፍ ደረጃ ጥራት አጥፊ የሆነ የምስል መጭመቂያ ቅርጸት። በዲስክሪት ኮሳይን ትራንስፎርም (DCT) ስልተ ቀመር ላይ የተመሠረተ፣ ከፍተኛ መጭመቂያ መጠን እያገኘ እጅግ በጣም ጥሩ ምስላዊ ጥራት ይይዛል፤ በዓለም ኢንተርኔት ላይ ላሉ የማይንቀሳቀሱ ፎቶግራፎች ፍጹም ተጨባጭ ደረጃ ነው)"
+
+msgid "mime_jpg"
+msgstr "JPEG የተጨመቀ ምስል (እ.ኤ.አ. በ1992 የISO 10918 አለም አቀፍ ደረጃ ጥራት አጥፊ የሆነ የምስል መጭመቂያ ቅርጸት። በዲስክሪት ኮሳይን ትራንስፎርም (DCT) ስልተ ቀመር ላይ የተመሠረተ፣ ከፍተኛ መጭመቂያ መጠን እያገኘ እጅግ በጣም ጥሩ ምስላዊ ጥራት ይይዛል፤ በዓለም ኢንተርኔት ላይ ላሉ የማይንቀሳቀሱ ፎቶግራፎች ፍጹም ተጨባጭ ደረጃ ነው)"
+
+msgid "mime_png"
+msgstr "PNG ጥራት የማያጠፋ ምስል (እ.ኤ.አ. በ1996 በW3C የተመከረ ተንቀሳቃሽ የአውታረ መረብ ግራፊክስ ደረጃ። ጥራት የማያጠፋ መጭመቂያ ስልተ ቀመር ይጠቀማል፣ በተፈጥሮ 24-ቢት እውነተኛ ቀለም እና 8-ቢት አልፋ ቻነል ግልጽነት ይደግፋል፤ ለጥንታዊ የማይንቀሳቀስ GIF ከፍተኛ ጥራት አማራጭ እንደመሆኑ፣ በኢንተርኔት ላይ ላለ ጥራት የማያጠፋ ፒክሰል ምስል ፍጹም ተጨባጭ ደረጃ ነው)"
+
+msgid "mime_ps"
+msgstr "PostScript ገጽ መግለጫ ፋይል (እ.ኤ.አ. በ1985 አዶቤ ያስተዋወቀው ቁልል መሰል ገጽ መግለጫ ቋንቋ። ለፒዲኤፍ ቅርጸት የቴክኖሎጂ ቀዳሚ እንደመሆኑ፣ ከሃርድዌር ነጻ የሆነ የጽሑፍ አቀማመጥ እና ከፍተኛ ትክክለኛነት ያለው ቬክተር ግራፊክስ ማቅረቢያን ያስችላል፤ ለፕሮፌሽናል ህትመት እና ለሌዘር ማተሚያ መስክ መሠረት ጥል ደረጃ ነው)"
+
+msgid "mime_psb"
+msgstr "PSB ትልልቅ ንብርብር ሰነድ (አዶቤ ፎቶሾፕ ባለብቸኝነት ትልልቅ ምንጭ ፋይል ማሸጊያ ቅርጸት። መደበኛውን የPSD ቅርጸት 2 ጊጋባይት አካላዊ መጠን እና 30,000 ፒክሰሎች ውስጣዊ አድራሻ ገደብ ሰብሯል፤ በተለይ እጅግ በጣም ትልልቅ መጠን ያላቸውን፣ ከፍተኛ ንብርብር ጥልቀት ያላቸውን ግዙፍ ዲጂታል ጥበብ ንብረቶች ለማከማቸት ይጠቅማል)"
+
+msgid "mime_psd"
+msgstr "PSD ንብርብር ዲዛይን ምንጭ ፋይል (አዶቤ ፎቶሾፕ ባለብቸኝነት የተከፋፈለ ምስል ምህንድስና ቅርጸት። በግራፊክስ እና ምስል መስክ እንደ ኢንዱስትሪ ደረጃ ኮንቴይነር፣ ሙሉ የንብርብር ማቅረቢያ ዛፍን፣ የቢትማፕ ቻናሎችን፣ የቬክተር መቁረጫ መንገዶችን እና ድብልቅ ቅልቅል ሁነታዎችን በተፈጥሮ ያሸጋግራል፤ ጥራት የማያጠፋ ሙሉ ውሂብ አርትዖት ይደግፋል)"
+
+msgid "mime_webp"
+msgstr "WebP ከፍተኛ ብቃት ምስል (እ.ኤ.አ. በ2010 ጎግል ያስተዋወቀው አጠቃላይ የድር ግራፊክስ ኢንኮዲንግ ደረጃ። ከVP8 ቪዲዮ ቁልፍ ፍሬም ቴክኖሎጂ የተገኘ፣ ጥራት አጥፊ፣ ጥራት የማያጠፋ፣ ግልጽነት እና ተለዋዋጭ ማቅረቢያን ፍጹም በሆነ መልኩ ይደግፋል፤ ከተመሳሳይ ጥራት PNG ጋር ሲነጻጸር መጠኑን በ25-35% ይቀንሳል፣ ለዘመናዊ ድር ከፍተኛ አፈጻጸም ጭነት ዋና መሠረት ነው)"
+
+msgid "mime_woff"
+msgstr "WOFF የድር ቅርጸ-ቁምፊ ፋይል (እ.ኤ.አ. በ2009 የተፈጠረ እና እ.ኤ.አ. በ2012 የW3C ደረጃ የሆነው የድር ክፍት ቅርጸ-ቁምፊ ቅርጸት። ዋናው ነገር ደረጃውን የጠበቀ የTTF/OTF ቅርጸ-ቁምፊ መዋቅርን በዥረት መልክ ጥራት በማያጠፋ መልኩ መጭመቅ ነው፤ የአውታረ መረብ ማስተላለፊያ ይዘት ወጪን በእጅጉ ያሻሽላል፣ ለዘመናዊ ድረ ገጽ አዶዎች እና ለደመና ቅርጸ-ቁምፊዎች አጠቃላይ ቅርጸት ነው)"
+
+msgid "mime_7z"
+msgstr "7z መጭመቂያ ጥቅል (እ.ኤ.አ. በ1999 ኢጎር ፓቭሎቭ ያዘጋጀው የ7-Zip ባለብቸኝነት ቅርጸት። በክፍት ምንጭ LZMA/LZMA2 ስልተ ቀመር ላይ የተመሠረተ፣ እጅግ በጣም ከፍተኛ መጭመቂያ መጠን አለው። በተመሳሳይ ሁኔታ ውስጥ መጠኑ ብዙውን ጊዜ ከZIP በ30-50% ያንሳል፤ ለክፍት ምንጭ ማህበረሰብ እና ለሶፍትዌር ስርጭት አጠቃላይ ከፍተኛ መጭመቂያ ቅርጸት ነው)"
+
+msgid "mime_ace"
+msgstr "ACE መጭመቂያ ጥቅል (እ.ኤ.አ. በ1990ዎቹ የዊንACE ባለብቸኝነት መጭመቂያ ቅርጸት። ቀደም ሲል ከRAR ቅርጸት ጋር ይወዳደር እንደነበረ እና ከፍተኛ መጭመቂያ መጠን ነበረው። እ.ኤ.አ. በ2007 ከዚያ በኋላ ቴክኖሎጂው መሻሻል አቆመ፣ አሁን በ7z እና RAR ቅርጸቶች ተተክቷል፣ የቀሪ ስርዓት ማዛጃጃ ቅርጸት ነው)"
+
+msgid "mime_bz2"
+msgstr "BZIP2 መጭመቂያ ጥቅል (እ.ኤ.አ. በ1996 ጁሊያን ሴዋርድ ያዘጋጀው ብሎክ መደርደሪያ መጭመቂያ ቅርጸት። የታችኛው ስልተ ቀመር ከGZIP በ15-20% ከፍተኛ መጭመቂያ መጠን አለው ነገር ግን የማስላት ወጪው ከፍተኛ ነው። ብዙ ጊዜ ለሊኑክስ ከርነል ምንጭ ኮድ እና ለክፍት ምንጭ ሶፍትዌር ጥቅሎች ስርጭት ይጠቅማል፣ ደረጃውን የጠበቀ ቅጥያ .bz2 ነው)"
+
+msgid "mime_cab"
+msgstr "CAB መጭመቂያ ጥቅል (እ.ኤ.አ. በ1995 ማይክሮሶፍት በብቸኝነት ያዘጋጀው ካቢኔ ማዛጃጃ ቅርጸት። ለዊንዶውስ ስርዓት ተፈጥሯዊ ጫኚ ደረጃ እንደመሆኑ፣ ለነጂዎች እና ለከርነል ፋይሎች ስርጭት ይጠቅማል፤ እንዲሁም ለዊንዶውስ ኢንስታለር (MSI) የታችኛው ማከማቻ ኮንቴይነር ነው)"
+
+msgid "mime_dmg"
+msgstr "DMG የዲስክ ምስል (እ.ኤ.አ. በ1980ዎቹ አፕል ያሻሻለው የዲስክ ምስል ቅርጸት። እንደ ማክኦኤስ ሶፍትዌር ስርጭት ደረጃ ኮንቴይነር፣ አካላዊ ተሰቅሎ እንደ ቨርቹዋል ፋይል ስርዓት መጠቀም፣ የታችኛው መጭመቂያ እና ውሂብ ምስጠራ ይደግፋል፤ ለማክ ስነ-ምህዳር መተግበሪያ ስርጭት ዋነኛ ቅርጸት ነው)"
+
+msgid "mime_emz"
+msgstr "EMZ የተጨመቀ ምስል (የዊንዶውስ የተሻሻለ ሜታፋይል EMF የተጨመቀ ስሪት። ዋናው ነገር በGZIP ስልተ ቀመር የተጨመቀ ሁለትዮሽ ቬክተር ግራፊክስ ነው፤ በማይክሮሶፍት ኦፊስ ሰነዶች ውስጥ ለተካተቱ ቬክተር ግራፊክስ ማከማቻ በሰፊው ይጠቅማል)"
+
+msgid "mime_gz"
+msgstr "GZIP መጭመቂያ ጥቅል (እ.ኤ.አ. በ1992 የጂኤንዩ ፕሮጀክት ዣን-ሉፕ ጋይሊ እና ማርክ አድለር ያዘጋጁት ደረጃውን የጠበቀ ዥረት መጭመቂያ ቅርጸት። እንደ ዩኒክስ/ሊኑክስ ደረጃ መጭመቂያ መሳሪያ፣ እንዲሁም የኤችቲቲፒ ማጓጓዣ ደረጃ መጭመቂያ (Gzip) ዋና ደረጃ ነው፤ ብዙ ጊዜ ከTAR ማዛጃጃ ጋር ተደምሮ ይጠቅማል)"
+
+msgid "mime_jar"
+msgstr "JAR መጭመቂያ ጥቅል (እ.ኤ.አ. በ1997 ሰን ማይክሮሲስተምስ ያስተዋወቀው ጃቫ ማዛጃጃ (Java ARchive) ቅርጸት። ዋናው ነገር በZIP መዋቅር ላይ የተመሠረተ ማሸጊያ ኮንቴይነር ነው፤ የጃቫ ክፍል ቤተ-ፕሮግራሞችን እና ሜታዳታን ለማሸግ ይጠቅማል፤ ለማቨን፣ ግሬድል እና ለቀደምት አንድሮይድ ስነ-ምህዳር ዋና የማጠናቀሪያ ምርት ነው)"
+
+msgid "mime_lzma"
+msgstr "LZMA መጭመቂያ ጥቅል (እ.ኤ.አ. በ1998 ኢጎር ፓቭሎቭ ያዘጋጀው Lempel-Ziv-Markov chain ሰንሰለት መጭመቂያ ስልተ ቀመር። እንደ 7z ቅርጸት ዋና ሞተር፣ እጅግ በጣም ከፍተኛ መጭመቂያ መጠን እና ከፍተኛ ፍጥነት መፍታት ባህሪ አለው፤ በሰፊው ለሃርድዌር ጽኑ ብልህነት እና ለአብሮገባ ስርዓት ስርጭት ይጠቅማል)"
+
+msgid "mime_rar"
+msgstr "RAR መጭመቂያ ጥቅል (እ.ኤ.አ. በ1993 ዩጂን ሮሻል ያዘጋጀው የዊንአር ባለብቸኝነት ማዛጃጃ ቅርጸት። በክፍል መከፋፈል መጭመቅ፣ አካላዊ ማገገሚያ መዝገብ (ECC) እና ከፍተኛ ጥንካሬ ምስጠራ ይደግፋል። መጭመቂያ መጠኑ ከመደበኛ ZIP የላቀ ነው፤ በግል ኮምፒውተሮች እና በንግድ ዘርፍ ሰፊ ተኳሃኝነት ድጋፍ አለው)"
+
+msgid "mime_tar"
+msgstr "TAR ማዛጃጃ ጥቅል (እ.ኤ.አ. በ1979 የዩኒክስ V7 ዘመን ቴፕ ማዛጃጃ (Tape ARchive) ቅርጸት። የፋይል ዥረት ማሸግ ብቻ ይሰራል እንጂ ውሂብ መጭመቅ አይሰራም፤ ብዙ ጊዜ ከGZIP/BZIP2/XZ ጋር ይደመራል፣ ለሊኑክስ ምንጭ ኮድ ጥቅሎች እና ለዶከር ምስል ንብርብር ማከማቻ የታችኛው ደረጃ ነው)"
+
+msgid "mime_tgz"
+msgstr "TGZ መጭመቂያ ጥቅል (የTAR ማዛጃጃ እና የGZIP መጭመቂያ ዥረት ውህድ ቅርጸት፣ ቅጥያው .tgz ወይም .tar.gz ነው። በዩኒክስ/ሊኑክስ አካባቢ እንደ በጣም አጠቃላይ የሶፍትዌር ጥቅል ስርጭት ቅርጸት፣ ለምንጭ ኮድ ማጠናቀር ተሰማራ እና ለማይጫን ሁለትዮሽ ጥቅል ስርጭት በሰፊው ይጠቅማል)"
+
+msgid "mime_tbz2"
+msgstr "TBZ2 መጭመቂያ ጥቅል (የTAR ማዛጃጃ እና የBZIP2 መጭመቂያ ዥረት ውህድ ቅርጸት፣ ቅጥያው .tbz2 ወይም .tar.bz2 ነው። ከTGZ ጋር ሲነጻጸር ተጨማሪ 15-20% መጭመቂያ መጠን ማሻሻል ይችላል፣ ለትልልቅ ፋይሎች ማስተላለፍ ተስማሚ ነው፤ ቀደም ሲል ለሊኑክስ ከርነል ምንጭ ኮድ ስርጭት ለረጅም ጊዜ ጥቅም ላይ ውሏል)"
+
+msgid "mime_xz"
+msgstr "XZ መጭመቂያ ጥቅል (እ.ኤ.አ. በ2009 የተዋወቀው ቀጣይ ትውልድ ከፍተኛ መጭመቂያ ቅርጸት። በLZMA2 ስልተ ቀመር ላይ የተመሠረተ፣ የውሂብ መጭመቂያ መጠን ከGZIP በ30-50% የተሻለ ሲሆን ከፍተኛ ፍጥነት መፍታት ይይዛል። በሊኑክስ ከርነል እና በዋና ጥቅል አስተዳዳሪዎች (ለምሳሌ የዲቢያን .deb ውስጣዊ) እንደ ተመራጭ የስርጭት ደረጃ ተቀባይነት አግኝቷል)"
+
+msgid "mime_z"
+msgstr "Z መጭመቂያ ጥቅል (እ.ኤ.አ. በ1985 የዩኒክስ compress ትዕዛዝ LZW መጭመቂያ ቅርጸት። ለቀደምት ዩኒክስ ስርዓቶች እንደ ደረጃ መጭመቂያ ደረጃ ነበር፤ አሁን በብቃቱ በላጭ በሆነው የGZIP ቅርጸት ሙሉ በሙሉ ተተክቷል፣ በዘመናዊ የአውታረ መረብ ትራፊክ ውስጥ እምብዛም የማይታይ የታሪክ ቅሪት ቅርጸት ነው)"
+
+msgid "mime_zip"
+msgstr "ZIP መጭመቂያ ጥቅል (እ.ኤ.አ. በ1989 ፊል ካትዝ ያዘጋጀው የPKZIP አጠቃላይ ማዛጃጃ ቅርጸት። በዋና ስርዓተ ክወናዎች በተፈጥሮ ድጋፍ አግኝቷል፤ በኢንተርኔት ላይ በስፋት ጥቅም ላይ የዋለ የኮንቴይነር ደረጃ ነው። ዘመናዊ ጃቫ ጃር፣ አንድሮይድ ኤፒኬ እና ኦፊስ ሰነዶች (ኦኦኤክስኤምኤል) ሁሉም በZIP መዋቅር ላይ የተመሠረቱ ናቸው)"
+
+msgid "mime_zst"
+msgstr "Zstandard መጭመቂያ ጥቅል (እ.ኤ.አ. በ2015 ፌስቡክ ያን ኮሌት የነደፈው አዲስ ትውልድ ዥረት መጭመቂያ ደረጃ። ወደ LZMA መጭመቂያ መጠን እየቀረበ ከጂዚፕ በእጅጉ የሚበልጥ የማጓጓዝ አቅም አለው። በሊኑክስ ከርነል (5.9+) እና በአርክ/ዲቢያን ጥቅል አስተዳዳሪዎች ጥልቅ ተቀባይነት አግኝቷል)"
+
+msgid "mime_lz4"
+msgstr "LZ4 መጭመቂያ ጥቅል (እ.ኤ.አ. በ2011 ያን ኮሌት ያዘጋጀው እጅግ በጣም ፈጣን ዥረት መጭመቂያ ስልተ ቀመር። የማጓጓዝ ፍጥነቱ ከጂዚፕ በ10 እጥፍ ይበልጣል፣ እጅግ በጣም ዝቅተኛ የሲፒዩ የሩጫ ጊዜ ወጪ አለው። በሊኑክስ ከርነል፣ በኦፕንZFS ፋይል ስርዓት እና በሃዱፕ የቅጽበት ውሂብ ዥረት ሂደት ውስጥ በሰፊው ይጠቅማል)"
+
+msgid "mime_lzo"
+msgstr "LZO መጭመቂያ ጥቅል (እ.ኤ.አ. በ1996 ማርኩስ ኦበርሁመር ያዘጋጀው Lempel-Ziv-Oberhumer ስልተ ቀመር። ትኩረቱ በእጅጉ ፈጣን መፍታት አፈጻጸም ላይ ነው። በሊኑክስ ከርነል ስኳሽፍስ ምስል፣ በኦፕንደብልዩቲ ጽኑ ብልህነት እና በተለያዩ ሀብት-ውስን አብሮገባ ስርዓቶች ውስጥ በሰፊው ተካትቷል)"
+
+msgid "mime_msi"
+msgstr "MSI የስርዓት ጫኚ ጥቅል (እ.ኤ.አ. በ1999 ማይክሮሶፍት ያስተዋወቀው የዊንዶውስ ኢንስታለር ውሂብ ማሸጊያ ቅርጸት። እንደ ዊንዶውስ መተግበሪያ ደረጃ ደረጃውን የጠበቀ ተሰማራ ዝርዝር መግለጫ፣ በተፈጥሮ የታችኛው ግብይት መመለስን፣ የአካል ህይወት ዑደት አስተዳደርን እና ያለቡድ ፋይል ዝምተኛ መጫንን ይደግፋል፤ ለኢንተርፕራይዝ ደረጃ ሶፍትዌር ማእከላዊ ስርጭት እና ፖሊሲ ተሰማራ ዋና ደረጃ ነው)"
+
+msgid "mime_pkg"
+msgstr "PKG ክሮስ-ፕላትፎርም ሶፍትዌር ጫኚ ጥቅል። 1. ፍሪቢኤስዲ ሶፍትዌር ጥቅል፡ pkgng ደረጃ፣ ቅጥያው .pkg ወይም .txz ነው፣ በTAR+XZ/Zstd መጭመቂያ ላይ የተመሠረተ፣ ጥገኛ ትንተና እና ፊርማ ማረጋገጫ ይደግፋል፤ 2. ማክኦኤስ ጫኚ ጥቅል፡ በአፕል ኢንስታለር ቅርጸት ላይ የተመሠረተ፣ ብጁ አካላትን፣ የመጫኛ ስክሪፕቶችን እና የስርዓት ደረጃ ማራገፍን ይደግፋል። እነዚህ ለቢኤስዲ አገልጋዮች እና ለማክ ስርዓት ዋና ዋና የስርጭት ተሸካሚዎች ናቸው።"
+
+msgid "mime_apk"
+msgstr "APK አንድሮይድ መተግበሪያ ጥቅል (እ.ኤ.አ. በ2008 ጎግል ከአንድሮይድ ጋር ያስተዋወቀው ባህላዊ መተግበሪያ ጫኚ ጥቅል። የታችኛው ክፍል በZIP ማዛጃጃ መዋቅር ላይ የተመሠረተ፣ የተጠናቀረ የዳልቪክ ባይት ኮድ (DEX)፣ ሜታዳታ ማኒፌስት እና አጠቃላይ ሃብቶችን ያሸጋግራል፤ አሁን ለአካባቢያዊ ልማት ማረም፣ ለሶስተኛ ወገን ስርጭት እና ለመሳሪያ ወገን መጫን በሰፊው ይጠቅማል)"
+
+msgid "mime_ipa"
+msgstr "IPA አፕል መተግበሪያ ጥቅል (እ.ኤ.አ. በ2008 ከአይፎን ኤስዲኬ ጋር የተለቀቀው የአይኦኤስ/አይፓድኦኤስ ብቸኛ ማሸጊያ ኮንቴይነር። ዋናው ነገር በFairPlay ዲአርኤም ዲጂታል መብት ወይም በኢንተርፕራይዝ ደረጃ ኮድ ፊርማ የተጠበቀ ZIP ማዛጃጃ ነው፤ በውስጡ የማክ-ኦ ሁለትዮሽ ተፈጻሚ ፋይል፣ የመተግበሪያ ሃብት ዛፍ እና ኢንፎ.ፕሊስት ሜታዳታ ውቅር ይዟል)"
+
+msgid "mime_hap"
+msgstr "HAP ሃርሞኒ መተግበሪያ ጥቅል (እ.ኤ.አ. በ2020 ከሃርሞኒኦኤስ 2.0 ጋር የተለቀቀው የሃርሞኒ ተለዋዋጭ ተሰማራ መሠረት ክፍል። በመግቢያ ዋና ሞጁል ወይም በባህሪ ቅጥያ ተግባር ሞጁል የተዋቀረ፤ ወደ መስቀለኛ ጫፍ ሙሉ ትዕይንት (ስልክ፣ ጡባዊ፣ ተለባሽ መሳሪያ) ስማርት ተርሚናል ስርጭት ዋነኛ ባለብዙ ጫፍ ተሰማራ ቅርጸት ነው)"
+
+msgid "mime_har"
+msgstr "HAR ሃርሞኒ የማይንቀሳቀስ የተጋራ ጥቅል (HarmonyOS ባለብቸኝነት የማይንቀሳቀስ የተጋራ ቤተ-ፕሮግራም ማዛጃጃ ፋይል። የጋራ አካላትን፣ የታችኛውን ሃብት ኮድ እና የማጠናከሪያ ጊዜ ጥገኛዎችን ለማሸግ ይጠቅማል፤ በበርካታ የHAP ሞጁሎች በማይንቀሳቀስ ሁኔታ ይገናኛል፣ ለሃርሞኒ ስርዓት አካል ማደራጀት ልማት እና ባለብዙ ሞጁል እንደገና ጥቅም ላይ ማዋል ዋና መሠረት ነው)"
+
+msgid "mime_aab"
+msgstr "AAB አንድሮይድ መተግበሪያ ጥቅል (እ.ኤ.አ. በ2018 ጎግል ያስተዋወቀው እና እ.ኤ.አ. በ2021 የተቋቋመው የGoogle Play ተለዋዋጭ ስርጭት ቅርጸት። እንደ ንጹህ ስርጭት አካል፣ በደመና ወገን በዒላማ መሳሪያ ሲፒዩ አርክቴክቸር፣ በስክሪን ጥንካሬ እና በቋንቋ ላይ ተመሥርቶ በተለዋዋጭነት የተቆረጠ እና እንደአስፈላጊነቱ የተመቻቸ ኤፒኬ ያመነጫል፤ በአማካይ 35% የማስተላለፊያ ይዘት ወጪ ይቀንሳል)"
+
+msgid "mime_xapk"
+msgstr "XAPK የተራዘመ መተግበሪያ ጥቅል (በሶስተኛ ወገን አንድሮይድ ማህበረሰብ የተቋቋመ ኦፊሴላዊ ያልሆነ የመተግበሪያ ቅጥያ ደረጃ። መደበኛውን የኤፒኬ ፋይል እና ትልልቅ የኦቢቢ ጨዋታ ውሂብ ቅጥያ ጥቅልን በማጣመር፣ የGoogle Playን 100MB ነጠላ ፋይል መጠን ገደብ አካላዊ መሰናክል ሰብሯል፤ በተለይ በጨዋታ ስርጭት መድረኮች ላይ ይታያል)"
+
+msgid "mime_appx"
+msgstr "APPX ዘመናዊ መተግበሪያ ጥቅል (እ.ኤ.አ. በ2012 ማይክሮሶፍት ከዊንዶውስ 8 ጋር ያስተዋወቀው የUWP መተግበሪያ ተሰማራ ዝርዝር መግለጫ። የሳንድቦክስ ገለልተኛ ሩጫ እና ቀላል ክብደት ማራገፍ ባህሪ አለው፤ እንደ ማይክሮሶፍት መደብር ቀደምት ዋና ደረጃ፣ በዘመናዊ ዊንዶውስ ስነ-ምህዳር ውስጥ ወደ ኤምኤስአይኤክስ በሚሻገርበት የህይወት ዑደት መጨረሻ ላይ ይገኛል)"
+
+msgid "mime_msix"
+msgstr "MSIX አዲስ ትውልድ መተግበሪያ ጥቅል (እ.ኤ.አ. በ2018 ማይክሮሶፍት ያወጣው አዲስ የዊንዶውስ ደረጃውን የጠበቀ ማሸጊያ ዝርዝር መግለጫ። የAPPXን የመተግበሪያ ደህንነት ሳንድቦክስ ባህሪ እና የMSIን የኢንተርፕራይዝ ደረጃ ንብረት አስተዳደር ጥቅሞችን ፍጹም በሆነ መልኩ አዋህዷል፤ ሁሉንም የዊን32 መተግበሪያ አይነቶች ሙሉ በሙሉ ይደግፋል፣ ለዊንዶውስ 11 ተመራጭ የስርጭት ደረጃ ነው)"
+
+msgid "mime_appimage"
+msgstr "AppImage መጫኛ የማያስፈልገው መተግበሪያ ጥቅል (እ.ኤ.አ. በ2004 የተጀመረ የሊኑክስ ነጠላ ተፈጻሚ ማዛጃጃ ደረጃ። 'አንድ መተግበሪያ አንድ ፋይል' የሚለውን ራሱን የያዘ አርክቴክቸር ይከተላል፤ በሩጫ ጊዜ በFUSE ዘዴ በቀጥታ እንደ ተነባቢ ብቻ ቨርቹዋል ፋይል ስርዓት ይሰቀላል፣ በሊኑክስ ስርጭቶች ላይ ጥገኛ የሌለው ቀጥታ አገልግሎት ያስችላል)"
+
+msgid "mime_flatpak"
+msgstr "Flatpak ሳንድቦክስ መተግበሪያ ጥቅል (እ.ኤ.አ. በ2015 በሬድሃት እና በጂኤንኦሜ ተቀዳሚነት የተሰራ የሊኑክስ ክሮስ-ስርጭት ዴስክቶፕ መተግበሪያ ስርጭት ደረጃ። የታችኛው ክፍል በሊኑክስ ከርነል ኔምስፔስ እና ሲግሩፕስ ዘዴዎች ላይ ተመሥርቶ እጅግ በጣም ጥብቅ የሆነ የመተግበሪያ ደረጃ የደህንነት ሳንድቦክስ ገለልተኝነት ይፈጽማል፤ ለዘመናዊ ክፍት ምንጭ ስርዓተ ክወና ሶፍትዌር ማእከል መሠረት ነው)"
+
+msgid "mime_snap"
+msgstr "Snap ኮንቴይነር የተደረገ መተግበሪያ ጥቅል (እ.ኤ.አ. በ2014 የኡቡንቱ ወላጅ ኩባንያ ካኖኒካል ያስተዋወቀው የሊኑክስ አጠቃላይ ተሰማራ ደረጃ። መተግበሪያውን እራሱን የያዘ የስኳሽፍስ ምስል ተሰቅሎ ማስኬጃ አርክቴክቸርን ይጠቀማል፤ አውቶማቲክ ተጨማሪ ዝመና እና ጥብቅ የሆነ የአፕአርሞር ሳንድቦክስ ገለልተኝነት ይደግፋል፤ ለኡቡንቱ ሶፍትዌር ማእከል ስነ-ምህዳር ዋና ነባሪ ቅርጸት ነው)"
+
+msgid "mime_deb"
+msgstr "DEB የስርዓት ሶፍትዌር ጥቅል (እ.ኤ.አ. በ1993 የዲቢያን ፕሮጀክት የተቋቋመ ሁለትዮሽ እና ምንጭ ኮድ ማሸጊያ ዝርዝር መግለጫ። ለዲቢያን፣ ኡቡንቱ እና ለሁሉም ተዋጽኦ ስርዓቶቻቸው የታችኛው ጫኚ ደረጃ እንደመሆኑ፣ በዲፒኬጂ ኮር ይፈታል እና ይጠበቃል፣ ኤፒቲ ደግሞ እንደ ከፍተኛ ብቃት ያለው ጥቅል አስተዳዳሪ ፊት ለፊት ይሰራል፤ የሊኑክስ ስነ-ምህዳር በጣም የበሰለ የሶፍትዌር ስርጭት መሠረት ነው)"
+
+msgid "mime_rpm"
+msgstr "RPM የስርዓት ሶፍትዌር ጥቅል (እ.ኤ.አ. በ1997 ሬድሃት ያስተዋወቀው የሬድሃት ጥቅል አስተዳዳሪ ማሸጊያ ዝርዝር መግለጫ። ከDEB ጋር ተመሳሳይ በሆነ መልኩ ከሊኑክስ ባህላዊ ጥቅል አስተዳደር ሁለቱ ዋና ዋና አቀናባሪዎች አንዱ ነው፤ በተፈጥሮ አብሮገባ የግብይት ደረጃ ጥገኛ ማረጋገጫ እና የታችኛው ሶፍትዌር ናሙና ፊርማ ማረጋገጫ አለው፤ እስከ ዛሬ ድረስ ለRHEL፣ Fedora እና CentOS የመሳሰሉ ሬድሃት ሥርወ-ስርዓት ስነ-ምህዳሮች ፍጹም ዋነኛ የስርጭት ደረጃ ነው)"
+
+msgid "mime_pacman"
+msgstr "Pacman ማዛጃጃ ሶፍትዌር ጥቅል (እ.ኤ.አ. በ2002 አርክ ሊኑክስ ከፓክማን አስተዳዳሪ ጋር ያቋቋመው .pkg.tar.zst ማሸጊያ ቅርጸት። እንደ አርክ ተንከባላይ ዝመና ዘዴ ዋና አካል፣ በZstandard ከፍተኛ ፍጥነት እና ከፍተኛ መጭመቂያ ስልተ ቀመር ላይ የተመሠረተ፣ ከኤውአር (አርክ ተጠቃሚ ሶፍትዌር ማከማቻ) ስነ-ምህዳር ጋር ተደምሮ፣ እጅግ ቀላል እና ኪሲሲ መርህን የሚያንጸባርቅ ዘመናዊ የጥቅል ስርጭት ደረጃ ነው"
+
+msgid "mime_exe"
+msgstr "EXE ተፈጥሯዊ ተፈጻሚ ፋይል (የዊንዶውስ መድረክ ተንቀሳቃሽ ተፈጻሚ (PE) ሁለትዮሽ ፕሮግራም ቅርጸት። ቴክኖሎጂው ከኤምኤስ-ዶስ ዘመን ኤምዜድ ራስጌ መዋቅር ተወስዶ፣ ከ1993 ዊንዶውስ ኤንቲ ጀምሮ ሙሉ በሙሉ እንደ PE መዋቅር ደረጃ ተቋቋመ፤ እንደ ማሽን ኮድ መመሪያዎች፣ የማይንቀሳቀስ ሃብት ክፍሎች እና የስርዓት ከርነል መሪ በዓለም ላይ በስፋት ጥቅም ላይ የዋለ የአፈጻጸም ደረጃ ነው)"
+
+msgid "mime_dll"
+msgstr "DLL ተለዋዋጭ ማገናኛ ቤተ-ፕሮግራም (የዊንዶውስ መድረክ ተለዋዋጭ ማገናኛ ቤተ-ፕሮግራም የተጋራ ኮድ ቤተ-ፕሮግራም ዝርዝር መግለጫ። በሩጫ ጊዜ በተለዋዋጭነት በመጫን እና ምልክት እንደገና በማስቀመጥ፣ አካላዊ ማህደረ ትውስታ እና ዲስክ ቦታን በእጅጉ ይቆጥባል፤ እንደ ዊንዶውስ ኤፒአይ ዋና ትግበራ መልክ፣ ቀደምት የ'ዲኤልኤል ገሃነም' ችግር በዘመናዊው በኤስክስኤስ ትይዩ ገለልተኝነት ዘዴ ሙሉ በሙሉ ተፈትቷል)"
+
+msgid "mime_com"
+msgstr "COM ጥንታዊ ተፈጻሚ ፋይል (የኤምኤስ-ዶስ ዘመን እጅግ ጥንታዊው የማህደረ ትውስታ ምስል (Command) የአፈጻጸም ቅርጸት። መዋቅር የሌለው ንጹህ ኮድ ክፍል ንድፍ ይጠቀማል፤ በ64 ኪሎባይት አካላዊ ማህደረ ትውስታ አድራሻ ክልል የተገደበ ነበር፤ አሁን ጡረታ ወጥቶ ቀሪ ታሪካዊ ቅርጸት ነው፣ ነገር ግን በዘመናዊ ዊንዶውስ አርክቴክቸር ውስጥ አሁንም እንደ አንድ የተወሰነ አካል በይነገጽ ውስን ተኳሃኝነት አለው)"
+
+msgid "mime_aac"
+msgstr "AAC ኦዲዮ (በ1997 የMPEG ደረጃ፣ Advanced Audio Coding። የMP3 ተተኪ፣ በተመሳሳይ ቢት ተመን ከMP3 የተሻለ የኦዲዮ ጥራት፣ የዩቲዩብ፣ የአይቲውንስ፣ የንንቲዶ ስዊች ነባሪ የኦዲዮ ቅርጸት)"
+
+msgid "mime_alac"
+msgstr "ALAC ኦዲዮ (አፕል በ2004 አዘጋጀው፣ Apple Lossless Audio Codec። የአፕል ኪሳራ-አልባ ቅርጸት፣ በ2011 ክፍት ምንጭ ሆነ፣ በአይቲውንስ እና በአፕል ሙዚቃ ውስጥ ለማይጠፋ ኦዲዮ ነባሪ ቅርጸት)"
+
+msgid "mime_flac"
+msgstr "FLAC ኦዲዮ (Xiph.Org ፋውንዴሽን በ2001 አዘጋጀው፣ Free Lossless Audio Codec። ኪሳራ-አልባ መጭመቅ፣ የኦዲዮ ጥራት ከሲዲ ጋር እኩል ነው፣ የፋይል መጠን ከመጀመሪያው WAV ግማሽ ያህል ነው። ክፍት ምንጭ እና ከባለቤትነት ነጻ ነው፣ ለኦዲዮ አፍቃሪዎች እና ለዲጂታል ሙዚቃ ስብስብ ተመራጭ ቅርጸት ነው)"
+
+msgid "mime_mp3"
+msgstr "MP3 ኦዲዮ (ፍራውንሆፈር ኢንስቲትዩት በ1993 አዘጋጀው፣ MPEG-1 Audio Layer 3። ኪሳራ ያለው መጭመቂያ ቅርጸት፣ ትንሽ ፋይል ግን ተቀባይነት ያለው የኦዲዮ ጥራት፣ የ2000ዎቹ የዲጂታል ሙዚቃ አብዮት ዋነኛ ቅርጸት፣ የአይፖድ እና ናፕስተር አስተዋጽኦ አበርክቷል። የፈጠራ ባለቤትነት በ2017 አብቅቷል፣ ወደ ህዝባዊ ጎራ ቅርጸት ተቀይሯል)"
+
+msgid "mime_oga"
+msgstr "Ogg Audio ኦዲዮ (በXiph.Org ፋውንዴሽን የተዘጋጀ፣ የኦግ ኮንቴነር ንጹህ ኦዲዮ ቅርጸት፣ ቮርቢስ ኮዴክ ይጠቀማል። ክፍት ምንጭ እና ከባለቤትነት ነጻ፣ የመጭመቂያ ብቃት ከMP3 የተሻለ ነው፣ በክፍት ምንጭ ፕሮጀክቶች ውስጥ በሰፊው ጥቅም ላይ ይውላል)"
+
+msgid "mime_ogg"
+msgstr "OGG ኦዲዮ (Xiph.Org ፋውንዴሽን በ2000 አዘጋጀው፣ Ogg Vorbis ቅርጸት። ክፍት ምንጭ እና ከባለቤትነት ነጻ፣ የመጭመቂያ ብቃት ከMP3 የተሻለ ነው፣ ቀደምት ስፖቲፋይ ተጠቅሞበታል፣ በጨዋታ ኦዲዮ ተጽዕኖዎች ውስጥ በሰፊው ጥቅም ላይ ይውላል)"
+
+msgid "mime_opus"
+msgstr "ኦፐስ ኦዲዮ (IETF በ2012 ደረጃውን የጠበቀው፣ ክፍት ምንጭ እና ከባለቤትነት ነጻ የሆነ የኦዲዮ ቅርጸት፣ የSILK እና CELT ቴክኖሎጂዎች ጥምረት፣ በጣም ዝቅተኛ መዘግየት፣ ከፍተኛ የመጭመቅ ብቃት፣ የWebRTC፣ WhatsApp፣ Discord ነባሪ የኦዲዮ ቅርጸት)"
+
+msgid "mime_wav"
+msgstr "WAV ኦዲዮ (ማይክሮሶፍት እና አይቢኤም በ1991 አዘጋጁት፣ የዊንዶውስ ተፈጥሯዊ ኦዲዮ ቅርጸት። PCM ኢንኮዲንግ፣ ያልተጨመቀ፣ ኪሳራ-አልባ የኦዲዮ ጥራት ግን ፋይሉ በጣም ትልቅ ነው፣ ለፕሮፌሽናል ኦዲዮ አርትዕ መደበኛ ቅርጸት ነው)"
+
+msgid "mime_wma"
+msgstr "WMA ኦዲዮ (ማይክሮሶፍት በ1999 አዘጋጀው፣ Windows Media Audio። ኪሳራ ያለው/ኪሳራ-አልባ ሁለቱም እትሞች አሉት፣ በዊንዶውስ በተፈጥሮ ይደገፋል፣ ከዊንዶውስ ሚዲያ ማጫወቻ ጋር ተሰራጭቷል። አሁን ወደ ዳር ተገፍቷል፣ በMP3/AAC ተተክቷል)"
+
+msgid "mime_dsf"
+msgstr "DSF ኦዲዮ (ቀጥተኛ ዥረት ዲጂታል ቅርጸት፣ በሶኒ እና ፊሊፕስ ተዘጋጀ። 1-ቢት ከፍተኛ ናሙና መጠን፣ DSD ኦዲዮ መደበኛ ቅርጸት፣ የSACD ዲጂታል እትም፣ ለኦዲዮ አፍቃሪዎች ከፍተኛ ደረጃ የኦዲዮ ቅርጸት፣ ፋይሉ በጣም ትልቅ ነው)"
+
+msgid "mime_ape"
+msgstr "APE ኦዲዮ (በ2000 በMonkey's Audio የተሰራ፣ ኪሳራ የሌለው መጭመቂያ ቅርጸት። ከFLAC ከፍ ያለ መጭመቂያ ግን ቀርፋፋ ኢንኮዲንግ፣ አሁንም በዊንዶውስ መድረክ እና በሙዚቃ አፍቃሪዎች ዘንድ ጥቅም ላይ ይውላል)"
+
+msgid "mime_mid"
+msgstr "ሚዲ ኦዲዮ (የሚዲ ማህበር በ1983 ገለጸው፣ የሙዚቃ መሳሪያ ዲጂታል በይነገጽ። ቅጂ ሳይሆን የሙዚቃ ማስታወሻ ቅርጸት፣ ፋይሉ በጣም ትንሽ ነው፣ ለኤሌክትሮኒክ የሙዚቃ መሳሪያዎች፣ ለስልክ ደወል ድምጾች፣ ለጨዋታ ኦዲዮ ተጽዕኖዎች መደበኛ ነው። አጠቃላይ ሚዲ በ1991 ደረጃውን የጠበቀ ሆነ፣ 128 የመሳሪያ ድምጾችን ገለጸ)"
+
+msgid "mime_m4a"
+msgstr "M4A ኦዲዮ (MPEG-4 ኦዲዮ፣ የAAC ኮንቴነር ቅርጸት። የአይቲውንስ ሙዚቃ መደብር መደበኛ ቅርጸት፣ የአፕል ስነ-ምህዳር ዋነኛ የኦዲዮ ቅርጸት፣ DRM ጥበቃ ይደግፋል)"
+
+msgid "mime_m3u"
+msgstr "M3U አጫዋች ዝርዝር (MP3 ዩአርኤል አጫዋች ዝርዝር ቅርጸት፣ ጥሬ ጽሑፍ ፋይል፣ የኦዲዮ ፋይል መንገዶችን ይመዘግባል። የዊናምፕ ዘመን መደበኛ ቅርጸት፣ ለመስመር ላይ ራዲዮ፣ ለመስመር ላይ ሙዚቃ ዥረት ይጠቅማል። M3U8 የዩቲኤፍ-8 እትሙ ነው፣ ለኤችቲቲፒ የቀጥታ ዥረት ይጠቅማል)"
+
+msgid "mime_asf"
+msgstr "ASF ዥረት ሚዲያ (ማይክሮሶፍት በ1996 አዘጋጀው፣ Advanced Systems Format። የዊንዶውስ ሚዲያ ዥረት ኮንቴነር፣ የኦዲዮ እና ቪዲዮ ተመሳሳይ ማስተላለፍ ይደግፋል። ለመስመር ላይ የቀጥታ ስርጭት እና በፍላጎት ላይ የተመሠረተ የቪዲዮ ዥረት ይጠቅማል፣ WMA/WMV ሁለቱም በASF ኮንቴነር ላይ የተመሠረቱ ናቸው)"
+
+msgid "mime_avi"
+msgstr "AVI ቪዲዮ (ማይክሮሶፍት በ1992 አስተዋወቀው፣ የዊንዶውስ ቀደምት ቪዲዮ መደበኛ ቅርጸት። 'Audio Video Interleave'፣ ኦዲዮ እና ቪዲዮ በተለዋጭነት ያከማቻል፣ በ1990-2000ዎቹ በጣም ታዋቂ የቪዲዮ ቅርጸት ነበር፣ አሁን በMP4/MKV ተተክቷል)"
+
+msgid "mime_divx"
+msgstr "DivX ቪዲዮ (DivX ኮርፖሬሽን በ1998 አዘጋጀው፣ በMPEG-4 ላይ የተመሠረተ የቪዲዮ ኮዴክ ቅርጸት። በ2000ዎቹ የመስመር ላይ ቪዲዮ መጋራት ዋነኛ ቅርጸት፣ የዲቪዲ ጥራትን ወደ ሲዲ መጠን የጨመቀ የመጀመሪያ ቴክኖሎጂ። በቅጂ መብት ክርክር ምክንያት፣ በኋላ ወደ ንግድ ኢንኮደር ተቀየረ)"
+
+msgid "mime_mp4"
+msgstr "MP4 ቪዲዮ (በ2001 የMPEG ደረጃ፣ MPEG-4 Part 14። በዓለም ላይ በጣም የተለመደ የቪዲዮ ቅርጸት፣ H.264/H.265 ኢንኮዲንግ ይደግፋል፣ ለበይነመረብ ቪዲዮ፣ ለስልክ ቀረጻ፣ ለዩቲዩብ ነባሪ ቅርጸት ነው)"
+
+msgid "mime_m4v"
+msgstr "M4V ቪዲዮ (የአይቲውንስ ቪዲዮ ቅርጸት፣ የMP4 ልዩነት። በአፕል ስነ-ምህዳር ውስጥ የቪዲዮ ቅርጸት፣ የአይቲውንስ ስቶር ፊልሞች እና የቴሌቪዥን ፕሮግራሞች መደበኛ ቅርጸት፣ DRM የቅጂ መብት ጥበቃ ይደግፋል)"
+
+msgid "mime_mpeg"
+msgstr "MPEG ቪዲዮ (የMPEG ድርጅት በ1988 ገለጸው፣ ተንቀሳቃሽ ምስል ባለሙያዎች ቡድን። የዲጂታል ቪዲዮ መጭመቂያ ደረጃዎች መሠረት ጣለ፣ MPEG-1 (VCD)፣ MPEG-2 (ዲቪዲ)፣ MPEG-4 (መስመር ላይ ቪዲዮ) ጥልቅ ተጽዕኖ አሳድረዋል)"
+
+msgid "mime_mkv"
+msgstr "MKV ቪዲዮ (ማትሮስካ ፕሮጀክት በ2002 አዘጋጀው፣ ክፍት ምንጭ የመልቲሚዲያ ኮንቴነር ቅርጸት። ብዙ የኦዲዮ ትራኮች፣ ብዙ የግርጌ ጽሑፎች፣ ምዕራፎች ይደግፋል፣ 'መጠቅለያ መሳሪያ'፣ ከፍተኛ ጥራት ያላቸውን ፊልሞች ለማጋራት ተመራጭ ቅርጸት ነው)"
+
+msgid "mime_mpg"
+msgstr "MPEG ቪዲዮ (የMPEG-1/MPEG-2 ቪዲዮ ቅጥያ፣ ለቪሲዲ እና ዲቪዲ መደበኛ ቅርጸት። በ1990-2000ዎቹ በዲስክ ላይ ለሚገኝ ቪዲዮ ዋነኛ ቅርጸት ነበር፣ አሁን በH.264/H.265 ተተክቷል)"
+
+msgid "mime_ogv"
+msgstr "Ogg Video ቪዲዮ (በXiph.Org ፋውንዴሽን የተዘጋጀ፣ የኦግ ኮንቴነር ቪዲዮ ቅርጸት፣ ቴኦራ ኮዴክ ይጠቀማል። ክፍት ምንጭ እና ከባለቤትነት ነጻ፣ ከኤችቲኤምኤል5 ቪዲዮ ቀደምት ደረጃዎች አንዱ ነው፣ በፋየርፎክስ በተፈጥሮ ይደገፋል)"
+
+msgid "mime_ogx"
+msgstr "Ogg መልቲሚዲያ ኮንቴነር (በXiph.Org ፋውንዴሽን የተዘጋጀ፣ የኦግ ኮንቴነር አጠቃላይ ቅጥያ፣ እንደ ኦዲዮ፣ ቪዲዮ፣ ግርጌ ጽሑፍ ያሉ ብዙ ትራኮች ሊይዝ ይችላል። ክፍት ምንጭ መልቲሚዲያ ደረጃ፣ ለጨዋታዎች፣ ለዥረት ይጠቅማል)"
+
+msgid "mime_rm"
+msgstr "ሪኤል ሚዲያ ቪዲዮ (ሪኤል ኔትወርክስ በ1995 አዘጋጀው፣ ሪኤል ሚዲያ ቅርጸት። በ1990-2000ዎቹ የመስመር ላይ ዥረት አቅኚ ነበር፣ የሪኤል ማጫወቻ ዋነኛ ቅርጸት ነበር። ድክመቶች: ልዩ ማጫወቻ ያስፈልጋል፣ ደካማ የመጭመቂያ ጥራት፣ በኋላ በፍላሽ/MP4 ተተክቷል)"
+
+msgid "mime_flv"
+msgstr "ፍላሽ ቪዲዮ (በ2002 ቅርጸት ታየ፣ Flash Video ቅርጸት። በአንድ ወቅት የመስመር ላይ ቪዲዮ ዋነኛ ቅርጸት ነበር፣ ቀደምት ዩቲዩብ ተጠቅሞበታል። ድክመቶች: የፍላሽ ተሰኪ አስፈላጊነት፣ ደካማ አፈጻጸም፣ ብዙ የደህንነት ጉድለቶች። ከ2015 ጀምሮ ዋና ዋና ድረ-ገጾች ወደ ኤችቲኤምኤል5 ቪዲዮ ቀይረዋል፣ አሁን ተወግዷል)"
+
+msgid "mime_f4v"
+msgstr "F4V ቪዲዮ (በአዶቤ የተዘጋጀ የፍላሽ ቪዲዮ ቅርጸት፣ የFLV ተተኪ። በMPEG-4 ደረጃ ላይ የተመሠረተ፣ H.264 ኢንኮዲንግ ይደግፋል። ከፍላሽ ቴክኖሎጂ ጋር ተወግዷል፣ አዶቤ በ2020 ድጋፍ አቁሟል)"
+
+msgid "mime_wmv"
+msgstr "WMV ቪዲዮ (ማይክሮሶፍት በ1999 አዘጋጀው፣ Windows Media Video። በዊንዶውስ በተፈጥሮ ይደገፋል፣ ለዥረት ማስተላለፊያ ተመቻችቷል፣ በመጀመሪያ የመስመር ላይ ቪዲዮዎች ውስጥ የተለመደ ቅርጸት ነበር፣ አሁን ወደ ዳር ተገፍቷል)"
+
+msgid "mime_wmf"
+msgstr "WMF ሚዲያ ቅርጸት (የዊንዶውስ ሚዲያ ቅርጸት፣ የማይክሮሶፍት ሚዲያ ማዕቀፍ፣ WMV ቪዲዮን፣ WMA ኦዲዮን ያጠቃልላል፣ በዊንዶውስ ሚዲያ ማጫወቻ በተፈጥሮ ይደገፋል)"
+
+msgid "mime_mov"
+msgstr "MOV ቪዲዮ (አፕል በ1991 አዘጋጀው፣ በQuickTime ኮንቴነር ቅርጸት። ለፕሮፌሽናል ቪዲዮ አርትዕ መደበኛ ቅርጸት፣ ብዙ ኮዴኮችን ይደግፋል፣ በFinal Cut Pro፣ Premiere በተፈጥሮ ይደገፋል)"
+
+msgid "mime_qt"
+msgstr "QuickTime ቪዲዮ (አፕል በ1991 አስተዋወቀው፣ QuickTime ቅርጸት። በማክ መድረክ ላይ የቪዲዮ ደረጃ፣ MOV የእሱ ኮንቴነር ነው፣ የQuickTime ማጫወቻ በአንድ ወቅት በሰፊው ይጠቅም ነበር። አፕል በ2016 የዊንዶውስ እትም ልማት አቆመ፣ ቀስ በቀስ በMP4 ተተካ)"
+
+msgid "mime_webm"
+msgstr "WebM ቪዲዮ (ጎግል በ2010 አስተዋወቀው፣ ክፍት ምንጭ እና ከባለቤትነት ነጻ የሆነ ቪዲዮ ቅርጸት። በማትሮስካ ኮንቴነር ላይ የተመሠረተ፣ VP8/VP9 ኢንኮዲንግ፣ የኤችቲኤምኤል5 ቪዲዮ ደረጃ ቅርጸት፣ የዩቲዩብ ድር ላይ ነባሪ የመጫወቻ ቅርጸት ነው)"
+
+msgid "mime_3gp"
+msgstr "3GP ቪዲዮ (3GPP በ2000 ገለጸው፣ ለሞባይል መሳሪያዎች ቪዲዮ ቅርጸት። ፋይሉ በጣም ትንሽ ነው፣ ጥራቱ ዝቅተኛ ነው፣ ቀደምት ፌቸር ስልኮች የቪዲዮ ቀረጻ ቅርጸት፣ ኤምኤምኤስ ለመላክ ይጠቅም ነበር)"
+
+#------------------------------------------------------------------------------
+# ቴክኒካዊ ልኬት
+#------------------------------------------------------------------------------
+
+msgid "Operating Systems"
+msgstr "የስርዓተ ክወናዎች"
+
+msgid "Top 5 Operating Systems"
+msgstr "ከፍተኛ 5 የስርዓተ ክወናዎች"
+
+msgid "Unknown Robot"
+msgstr "ያልታወቀ ደንበኛ"
+
+msgid "User agent"
+msgstr "User agent"
+
+msgid "Browsers"
+msgstr "አሳሾች"
+
+msgid "Top 5 Browsers"
+msgstr "ከፍተኛ 5 አሳሾች"
+
+msgid "Unknown Robot RH"
+msgstr "ያልታወቀ የጥያቄ ራስጌ"
+
+msgid "Detailed"
+msgstr "እየደረሰ ያለው መሳሪያ ስሪት"
+
+msgid "DetailedOS"
+msgstr "የስርዓተ ክወና ስሪት"
+
+msgid "DetailedBS"
+msgstr "የአሳሽ ስሪት"
+
+msgid "Screen sizes"
+msgstr "የማያ ገጽ መጠኖች"
+
+msgid "Compression"
+msgstr "መጭመቅ"
+
+msgid "In"
+msgstr "ግቤት"
+
+msgid "Out"
+msgstr "ውጤት"
+
+msgid "Saved"
+msgstr "ቁጠባ"
+
+#------------------------------------------------------------------------------
+# ምንጭ ልኬት
+#------------------------------------------------------------------------------
+
+msgid "Origin"
+msgstr "ምንጭ"
+
+msgid "Referers"
+msgstr "ምንጮች"
+
+msgid "meta.description"
+msgstr "AWStats የላቀ የድር ሎግ ተንታኝ - የድር ትራፊክን በቅጽበት መከታተል፣ የጎብኚ ትንተና፣ የፍለጋ ሞተር ቁልፍ ቃላት፣ የስህተት ገጽ ስታቲስቲክስ። ጨለማ ሁነታን፣ ባለብዙ ቋንቋ በይነገጽን ይደግፋል፣ ለድር አስተዳዳሪዎች አጠቃላይ የውሂብ ትንተና ያቀርባል።"
+
+msgid "meta.keywords"
+msgstr "AWStats,የድር ስታቲስቲክስ,የሎግ ትንተና,የትራፊክ ክትትል,የመድረሻ ስታቲስቲክስ,የSEO ትንተና,የድር ትንተና መሳሪያ,Web Analytics,Log Analyzer"
+
+msgid "meta.author"
+msgstr "AWStats"
+
+msgid "og.title"
+msgstr "AWStats - የድር ሎግ ትንተና"
+
+msgid "og.description"
+msgstr "📊 ፕሮፌሽናል ክፍት ምንጭ የድር ስታቲስቲክስ መሳሪያ፣ የድር ጣቢያዎን ትራፊክ እና የጎብኚ ባህሪ በቅጽበት ይተነትናል።"
+
+msgid "og.image.alt"
+msgstr "የAWStats ስታቲስቲክስ ገበታዎች"
+
+msgid "Created by"
+msgstr "በ %s ተፈጠረ"
+
+msgid "plugins"
+msgstr "ተሰኪዎች"
+
+msgid "dbip by"
+msgstr "ውሂብ ከ"
+
+msgid "IPDB by"
+msgstr "ጂኦግራፊያዊ አቀማመጥ ውሂብ በ DB-IP"
+
+msgid "Configured"
+msgstr "ተዋቅሯል"
+
+msgid "Missing"
+msgstr "ጠፍቷል"
+
+msgid "OK"
+msgstr "ስኬት"
+
+msgid "Unused"
+msgstr "ጥቅም ላይ ያልዋለ"
+
+msgid "Overall Health"
+msgstr "አጠቃላይ ጤንነት"
+
+msgid "Excellent"
+msgstr "በጣም ጥሩ"
+
+msgid "Good"
+msgstr "ጥሩ"
+
+msgid "Fair"
+msgstr "መካከለኛ"
+
+msgid "Poor"
+msgstr "ደካማ"
+
+msgid "Missing icon types"
+msgstr "የጠፉ አዶ ዓይነቶች"
+
+msgid "See"
+msgstr "ዝርዝር ይመልከቱ"
+
+msgid "Expected Path"
+msgstr "የመንገድ መግለጫ"
+
+msgid "column for file locations"
+msgstr "የፋይል ቦታዎችን ለማግኘት አምድ"
+
+msgid "Tip: If you need to generate related icons, you can use %s to upload a logo image, and it will automatically generate all the above related icon files"
+msgstr "ጠቃሚ ምክር: ተዛማጅ አዶዎች ማመንጨት ከፈለጉ፣ የሎጎ ምስል ለመስቀል %s ን መጠቀም ይችላሉ፣ እና ከላይ ያሉትን ሁሉንም ተዛማጅ አዶ ፋይሎች በራስ-ሰር ያመነጫል"
+
+msgid "200: success, 404: failure"
+msgstr "200 የስኬት ብዛት ነው 404 የውድቀት ብዛት ነው"
+
+msgid "_PATH_FAVICON"
+msgstr "/favicon.ico"
+
+msgid "_PATH_APPLE_TOUCH"
+msgstr "/apple-touch-icon.png ወይም /apple-touch-icon-180x180.png"
+
+msgid "_PATH_LOGO"
+msgstr "/logo.svg ወይም /logo.png (በኤችቲኤምኤል/ጄሶን-ኤልዲ ውስጥ መጥቀስ ያስፈልጋል)"
+
+msgid "_PATH_WEBMANIFEST"
+msgstr "/site.webmanifest ወይም /manifest.json"
+
+msgid "_PATH_BROWSERCONFIG"
+msgstr "/browserconfig.xml"
+
+msgid "_PATH_SAFARI_PINNED"
+msgstr "/safari-pinned-tab.svg"
+
+msgid "_PATH_SOCIAL_ICON"
+msgstr "/images/github.svg, /images/paypal.svg ወዘተ"
+
+msgid "Favicon"
+msgstr "የድር ጣቢያ አዶ"
+
+msgid "Apple Touch Icon (iOS/macOS)"
+msgstr "የአፕል ንክኪ አዶ (አይፎን/አይፓድ/ማክ)"
+
+msgid "Site Logo"
+msgstr "የጣቢያ አርማ"
+
+msgid "Web App Manifest (Android/Chrome)"
+msgstr "የድር መተግበሪያ ማኒፌስት ፋይል (Android/Chrome)"
+
+msgid "Windows Browser Config"
+msgstr "የዊንዶውስ አሳሽ ውቅር"
+
+msgid "Safari Pinned Tab"
+msgstr "የሳፋሪ ተሰክቷል ትር አዶ"
+
+msgid "Social Icon"
+msgstr "የማህበራዊ ሚዲያ አዶ"
+
+msgid "Icon Files Status"
+msgstr "የአዶ ፋይሎች ሁኔታ"
+
+msgid "Icon Type"
+msgstr "የአዶ ዓይነት"
+
+msgid "Total"
+msgstr "ጠቅላላ"
+
+msgid "Advanced Web Statistics"
+msgstr "የላቀ ሎግ ተንታኝ"
+
+msgid "Advanced Web Statistics %s"
+msgstr "የላቀ ሎግ ተንታኝ %s"
+
+msgid "Your browser does not support frames. Please use a modern browser."
+msgstr "አሳሽዎ ክፈፎችን አይደግፍም። እባክዎ ዘመናዊ አሳሽ ይጠቀሙ።"
+
+msgid "View statistics directly"
+msgstr "ስታቲስቲክሱን በቀጥታ ይመልከቱ"
+
+msgid "Close"
+msgstr "ዝጋ"
+
+msgid "Documentation Viewer"
+msgstr "የሰነድ ተመልካች"
+
+msgid "Direct address / Bookmarks"
+msgstr "ቀጥተኛ አድራሻ / ዕልባቶች"
+
+msgid "Search Engines"
+msgstr "የፍለጋ ሞተሮች"
+
+msgid "Refering search engines"
+msgstr "የሚያመለክቱ የፍለጋ ሞተሮች"
+
+msgid "External pages"
+msgstr "ውጫዊ ገጾች"
+
+msgid "Refering pages"
+msgstr "የማመሳከሪያ ገጾች"
+
+msgid "Internal pages"
+msgstr "ውስጣዊ ገጾች"
+
+msgid "UnknownAccessSource"
+msgstr "ያልታወቀ የመድረሻ ምንጭ"
+
+msgid "Different refering pages"
+msgstr "የተለያዩ የማመሳከሪያ ገጾች"
+
+msgid "Keyphrases"
+msgstr "ቁልፍ ሀረጎች"
+
+msgid "Keywords"
+msgstr "ቁልፍ ቃላት"
+
+msgid "Keyphrases/Keywords"
+msgstr "ቁልፍ ሀረጎች/ቁልፍ ቃላት"
+
+msgid "Different keyphrases"
+msgstr "የተለያዩ ቁልፍ ሀረጎች"
+
+msgid "Different keywords"
+msgstr "የተለያዩ ቁልፍ ቃላት"
+
+#------------------------------------------------------------------------------
+# ገጽ ልኬት
+#------------------------------------------------------------------------------
+
+msgid "Viewed pages"
+msgstr "የታዩ ገጾች"
+
+msgid "Different pages"
+msgstr "የተለያዩ ገጾች"
+
+msgid "Entry"
+msgstr "የመግቢያ ቦታ"
+
+msgid "Exit"
+msgstr "የመውጫ ቦታ"
+
+msgid "URL"
+msgstr "ዩአርኤል"
+
+msgid "Referer"
+msgstr "አመላካች"
+
+msgid "Host"
+msgstr "አስተናጋጅ"
+
+#------------------------------------------------------------------------------
+# ስህተቶች እና ሁኔታዎች
+#------------------------------------------------------------------------------
+
+msgid "Error"
+msgstr "ስህተት"
+
+msgid "HTTP Status Statistics"
+msgstr "የኤችቲቲፒ ሁኔታ ኮድ ስታቲስቲክስ"
+
+msgid "SMTP Error codes"
+msgstr "የኤስኤምቲፒ ስህተት ኮዶች"
+
+msgid "Page not found"
+msgstr "የተጠየቀው ገጽ አልተገኘም"
+
+msgid "Unknown error"
+msgstr "ያልታወቀ ስህተት"
+
+msgid "Abnormal traffic note"
+msgstr "ያልተለመደ ትራፊክ የሚያጠቃልለው: የፍለጋ ቦቶች፣ የአርቲፊሻል ኢንተሊጀንስ ማሰልጠኛ ቦቶች፣ ተጋላጭነት ስካነሮች እና ከዝርዝር መግለጫ ጋር የማይስማሙ ጥያቄዎች"
+
+msgid "Page detail"
+msgstr "የገጽ ዝርዝር"
+
+msgid "AWStats did not found the"
+msgstr "AWStats አላገኘም"
+
+msgid "in your log records."
+msgstr "በእርስዎ ሎግ መዝገቦች ውስጥ"
+
+msgid "AWStats did not find any valid log lines that match your"
+msgstr "AWStats ከእርስዎ ጋር የሚዛመዱ ምንም ትክክለኛ የሎግ መስመሮችን አላገኘም"
+
+msgid "parameter, in the"
+msgstr "መለኪያ፣ በ"
+
+msgid "th first non commented lines read of your log."
+msgstr "ከእርስዎ ሎግ የተነበቡ የመጀመሪያዎቹ የማትስማሙ መስመሮች"
+
+msgid "Your log file"
+msgstr "የእርስዎ ሎግ ፋይል"
+
+msgid "must have a bad format or"
+msgstr "መጥፎ ቅርጸት ሊኖረው ይችላል ወይም"
+
+msgid "parameter setup does not match this format."
+msgstr "የመለኪያ ማዋቀር ከዚህ ቅርጸት ጋር አይዛመድም"
+
+msgid "Your AWStats"
+msgstr "የእርስዎ AWStats"
+
+msgid "parameter is:"
+msgstr "መለኪያው ነው:"
+
+msgid "This means each line in your web server log file need to have:"
+msgstr "ይህ ማለት በእርስዎ የድር አገልጋይ ሎግ ፋይል ውስጥ እያንዳንዱ መስመር መያዝ አለበት:"
+
+msgid "combined log format"
+msgstr "የተዋሃደ ሎግ ቅርጸት"
+
+msgid "MSIE Extended W3C log format"
+msgstr "የMSIE የተራዘመ W3C ሎግ ቅርጸት"
+
+msgid "WebStar native log format"
+msgstr "የዌብስታር ተፈጥሯዊ ሎግ ቅርጸት"
+
+msgid "common log format"
+msgstr "የተለመደ ሎግ ቅርጸት"
+
+msgid "Lotus Notes/Lotus Domino"
+msgstr "ሎቱስ ኖቶች/ሎቱስ ዶሚኖ"
+
+msgid "the following personalized log format:"
+msgstr "የሚከተለው ግላዊ ሎግ ቅርጸት:"
+
+msgid "And this is an example of records AWStats found in your log file (the record number"
+msgstr "እና ይህ AWStats በእርስዎ ሎግ ፋይል ውስጥ ያገኘው የመዝገቦች ምሳሌ ነው (የመዝገብ ቁጥር"
+
+msgid "in your log):"
+msgstr "በእርስዎ ሎግ ውስጥ):"
+
+#------------------------------------------------------------------------------
+# የተለያዩ
+#------------------------------------------------------------------------------
+
+msgid "Extra/Marketing"
+msgstr "ተጨማሪ/ግብይት"
+
+#------------------------------------------------------------------------------
+# የበይነገጽ ጽሑፍ
+#------------------------------------------------------------------------------
+
+msgid "Current site"
+msgstr "አሁን ያለው ድር ጣቢያ"
+
+msgid "Web Site"
+msgstr "ድር ጣቢያ"
+
+msgid "Last Update"
+msgstr "የመጨረሻ ማዘመኛ"
+
+msgid "Never updated"
+msgstr "በጭራሽ አልተዘመነም"
+
+msgid "No qualified records found in log"
+msgstr "በሎግ ውስጥ ምንም ብቁ መዝገቦች አልተገኙም"
+
+msgid "corrupted"
+msgstr "የተበላሸ"
+
+msgid "comments"
+msgstr "አስተያየቶች"
+
+msgid "Blank"
+msgstr "ባዶ"
+
+msgid "dropped"
+msgstr "የተጣለ"
+
+msgid "Update now"
+msgstr "አሁን አዘምን"
+
+msgid "Back to main page"
+msgstr "ወደ ዋና ገጽ ተመለስ"
+
+msgid "Close window"
+msgstr "መስኮት ዝጋ"
+
+msgid "Back page"
+msgstr "ወደ ቀዳሚ ገጽ ተመለስ"
+
+msgid "Navigation"
+msgstr "ማሰሻ"
+
+msgid "Summary"
+msgstr "ማጠቃለያ"
+
+msgid "Local"
+msgstr "አካባቢያዊ"
+
+msgid "External"
+msgstr "ውጫዊ"
+
+msgid "Others (email senders)"
+msgstr "ሌሎች (ኢሜይል ላኪዎች)"
+
+msgid "Others (email receivers)"
+msgstr "ሌሎች (ኢሜይል ተቀባዮች)"
+
+msgid "Others"
+msgstr "ሌሎች"
+
+msgid "Only 10 lines of browser data are currently displayed"
+msgstr "በአሁኑ ጊዜ 10 መስመሮች የአሳሽ ውሂብ ብቻ ይታያሉ፣ እባክዎ ሙሉ ዝርዝሩን ይመልከቱ"
+
+msgid "Others (unknown browsers)"
+msgstr "ሌሎች (ያልታወቁ አሳሾች)"
+
+msgid "Others (operating systems)"
+msgstr "ሌሎች (ስርዓተ ክወናዎች)"
+
+msgid "Others (unknown OS)"
+msgstr "ሌሎች (ያልታወቀ ስርዓተ ክወና)"
+
+msgid "Others (search engines)"
+msgstr "ሌሎች (የፍለጋ ሞተሮች)"
+
+msgid "Others (referring pages)"
+msgstr "ሌሎች (የማመሳከሪያ ገጾች)"
+
+msgid "Others (keyphrases)"
+msgstr "ሌሎች (ቁልፍ ሀረጎች)"
+
+msgid "Others (keywords)"
+msgstr "ሌሎች (ቁልፍ ቃላት)"
+
+msgid "Only first 10 robots shown"
+msgstr "የአሁኑ ዝርዝር 10 ሮቦቶችን ብቻ ያሳያል፣ እባክዎ ሙሉ ዝርዝሩን ይመልከቱ"
+
+msgid "Failed to obtain access record"
+msgstr "የመግቢያ መዝገብ ማግኘት አልተቻለም"
+
+msgid "Failed to obtain leave record"
+msgstr "የመውጫ መዝገብ ማግኘት አልተቻለም"
+
+msgid "Other pages"
+msgstr "ሌሎች ገጾች"
+
+msgid "Low Traffic IP Summary"
+msgstr "ዝቅተኛ ትራፊክ ያልታወቀ አይፒ ማጠቃለያ"
+
+msgid "Failed to obtain IP data"
+msgstr "ሌሎች የታወቁ አይፒ ማጠቃለያ"
+
+msgid "Failed to obtain the relevant data"
+msgstr "ተዛማጅ ውሂቡን ማግኘት አልተቻለም"
+
+msgid "Limited list of countries and regions"
+msgstr "በአሁኑ ጊዜ 10 መስመሮች ብቻ ይታያሉ፣ እባክዎ ለተጨማሪ ሀገሮች እና ክልሎች ሙሉ ዝርዝሩን ይመልከቱ"
+
+msgid "currentVisitorData"
+msgstr "በአሁኑ ጊዜ 10 መስመሮች የጎብኚ ውሂብ ብቻ ይታያሉ፣ እባክዎ ሙሉ ዝርዝሩን ይመልከቱ"
+
+msgid "Others (robots main)"
+msgstr "ሌሎች (ሮቦቶች)"
+
+msgid "Others (worms)"
+msgstr "ሌሎች (ትሎች)"
+
+msgid "Displaying10RowsPageMorePleaseViewFullList"
+msgstr "የአሁኑ ዝርዝር 10 ገጾችን ብቻ ያሳያል፣ እባክዎ ሙሉ ዝርዝሩን ይመልከቱ"
+
+msgid "Others (OS main)"
+msgstr "ሌሎች (ስርዓት)"
+
+msgid "Others (browsers main)"
+msgstr "ሌሎች (አሳሾች)"
+
+msgid "Others (screen sizes)"
+msgstr "ሌሎች (መጠን)"
+
+msgid "Others (search engines main)"
+msgstr "ሌሎች (የፍለጋ ሞተሮች)"
+
+msgid "Others (referring pages main)"
+msgstr "ሌሎች (የማመሳከሪያ ገጾች)"
+
+msgid "Others (keyphrases main)"
+msgstr "ሌሎች (ቁልፍ ሀረጎች)"
+
+msgid "Others (keywords main)"
+msgstr "ሌሎች (ቁልፍ ቃላት)"
+
+# 1xx
+msgid "Continue"
+msgstr "የቀረውን ይዘት መላክ ቀጥል"
+
+msgid "Switching Protocols"
+msgstr "ፕሮቶኮል በመቀየር ላይ"
+
+msgid "Processing (WebDAV)"
+msgstr "በማቀነባበር ላይ (እባክዎ ትንሽ ይጠብቁ)"
+
+msgid "Early Hints"
+msgstr "አገልጋይ ግብዓቶችን በማዘጋጀት ላይ"
+
+# 2xx
+msgid "[Miscellaneous successes]"
+msgstr "ሌሎች የስኬት ሁኔታዎች"
+
+msgid "Request successful"
+msgstr "ጥያቄው ስኬታማ ሆኗል"
+
+msgid "Created successfully"
+msgstr "በስኬት ተፈጥሯል"
+
+msgid "Accepted - processing"
+msgstr "ተቀባይነት አግኝቷል፣ በማቀነባበር ላይ"
+
+msgid "Non-authoritative information (from cache) (from cache)"
+msgstr "ስልጣን የሌለው መረጃ (ከመሸጎጫ)"
+
+msgid "Success, no content returned"
+msgstr "ስኬት፣ ምንም ይዘት አልተመለሰም"
+
+msgid "Reset content"
+msgstr "እባክዎ ቅጹን ዳግም ያስጀምሩ"
+
+msgid "Partial content (resume download)"
+msgstr "ከፊል ይዘት (የማውረጃ መቀጠል ይደግፋል)"
+
+msgid "Multi-status (WebDAV)"
+msgstr "ባለብዙ ሁኔታ (የWebDAV ቡድን ሥራዎች)"
+
+msgid "Already reported (WebDAV)"
+msgstr "አስቀድሞ ተዘግቧል (መደጋገምን ለማስወገድ)"
+
+msgid "IM used"
+msgstr "IM ፕሮቶኮል ቅጥያ ጥቅም ላይ ውሏል"
+
+# 3xx
+msgid "[Miscellaneous redirections]"
+msgstr "ሌሎች አቅጣጫ መለወጫዎች"
+
+msgid "Multiple choices"
+msgstr "በርካታ አማራጮች"
+
+msgid "Moved permanently - update your links"
+msgstr "በቋሚነት ተወስዷል፣ እባክዎ አገናኞችዎን ያዘምኑ"
+
+msgid "Temporary redirect - URL unchanged"
+msgstr "ጊዜያዊ አቅጣጫ መለወጫ፣ አድራሻው አልተለወጠም"
+
+msgid "See other"
+msgstr "እባክዎ ሌላ አድራሻ ይመልከቱ"
+
+msgid "Not modified - using cached version"
+msgstr "አልተሻሻለም፣ የተሸጎጠ ስሪት በመጠቀም ላይ"
+
+msgid "Use proxy"
+msgstr "እባክዎ ተኪ ይጠቀሙ"
+
+msgid "Switch proxy"
+msgstr "እባክዎ ተኪ ይለውጡ"
+
+msgid "Temporary redirect (keep method)"
+msgstr "ጊዜያዊ አቅጣጫ መለወጫ (የጥያቄ ዘዴን ይያዙ)"
+
+msgid "Permanent redirect - update your links"
+msgstr "ቋሚ አቅጣጫ መለወጫ፣ እባክዎ አገናኞችዎን ያዘምኑ"
+
+# 4xx
+msgid "[Miscellaneous client/user errors]"
+msgstr "ሌሎች የደንበኛ ስህተቶች"
+
+msgid "Bad request"
+msgstr "የጥያቄ ቅርጸት የተሳሳተ ነው"
+
+msgid "Unauthorized - please log in"
+msgstr "ያልተፈቀደ፣ እባክዎ መጀመሪያ ይግቡ"
+
+msgid "Payment required"
+msgstr "ክፍያ ያስፈልጋል"
+
+msgid "Forbidden - access denied"
+msgstr "መድረስ ተከልክሏል፣ ፈቃድ በቂ አይደለም"
+
+msgid "Page not found (404) - check for broken links"
+msgstr "ገጹ የለም፣ እባክዎ የተሰበሩ አገናኞችን ያረጋግጡ"
+
+msgid "Method not allowed"
+msgstr "የጥያቄ ዘዴ አይፈቀድም"
+
+msgid "Not acceptable"
+msgstr "ተቀባይነት የሌለው የምላሽ ቅርጸት"
+
+msgid "Proxy authentication required"
+msgstr "በተኪ በኩል ማረጋገጥ ያስፈልጋል"
+
+msgid "Request timeout"
+msgstr "የጥያቄ ጊዜ አልፏል"
+
+msgid "Conflict - please try again"
+msgstr "የጥያቄ ግጭት፣ እባክዎ በኋላ እንደገና ይሞክሩ"
+
+msgid "Gone - permanently deleted"
+msgstr "ግብዓቱ በቋሚነት ተሰርዟል"
+
+msgid "Length required"
+msgstr "የይዘቱ ርዝመት መገለጽ አለበት"
+
+msgid "Precondition failed"
+msgstr "ቅድመ ሁኔታዎች አልተሟሉም"
+
+msgid "Payload too large"
+msgstr "የጥያቄ ይዘት በጣም ትልቅ ነው"
+
+msgid "URI too long"
+msgstr "የጥያቄ አድራሻ በጣም ረዥም ነው"
+
+msgid "Unsupported media type"
+msgstr "የፋይል ዓይነቱ አይደገፍም"
+
+msgid "Range not satisfiable"
+msgstr "የጥያቄ ክልል ትክክል አይደለም"
+
+msgid "Expectation failed"
+msgstr "ተስፋውን ማሟላት አልተቻለም"
+
+msgid "I am a teapot (April Fools)"
+msgstr "እኔ የሻይ ማሰሮ ነኝ (የኤፕሪል ፎል ቀልድ)"
+
+msgid "Page expired (Laravel)"
+msgstr "ገጹ ጊዜው አልፏል፣ እባክዎ አድስ አድርገው እንደገና ይሞክሩ"
+
+msgid "Method failure (Spring)"
+msgstr "ዘዴው አልተሳካም"
+
+msgid "Misdirected request"
+msgstr "ጥያቄው በስህተት ተመርቷል"
+
+msgid "Unprocessable entity (WebDAV)"
+msgstr "የጥያቄ ቅርጸት ትክክል ነው ግን ማቀናበር አልተቻለም"
+
+msgid "Locked (WebDAV)"
+msgstr "ግብዓቱ ተቆልፏል (WebDAV)"
+
+msgid "Failed dependency (WebDAV)"
+msgstr "ጥገኛ ሥራው አልተሳካም"
+
+msgid "Too early"
+msgstr "ጥያቄው በጣም ቀድሞ ተልኳል"
+
+msgid "Upgrade required"
+msgstr "ፕሮቶኮል ማሻሻል ያስፈልጋል"
+
+msgid "Precondition required"
+msgstr "አስፈላጊ ቅድመ ሁኔታዎች ጠፍተዋል"
+
+msgid "Too many requests - slow down"
+msgstr "ጥያቄዎች ከመጠን በላይ ተደጋግመዋል፣ እባክዎ በኋላ እንደገና ይሞክሩ"
+
+msgid "Request header fields too large (Shopify)"
+msgstr "የጥያቄ ራስጌ መስኮች በጣም ትልቅ ናቸው"
+
+msgid "Request header too large"
+msgstr "የጥያቄ ራስጌ በጣም ትልቅ ነው"
+
+msgid "Login timeout (IIS)"
+msgstr "የመግቢያ ጊዜ አልፏል፣ እባክዎ እንደገና ይግቡ"
+
+msgid "No response (nginx)"
+msgstr "አገልጋዩ ምላሽ አይሰጥም"
+
+msgid "Retry with (IIS)"
+msgstr "እባክዎ በኋላ እንደገና ይሞክሩ"
+
+msgid "Blocked by Windows parental controls"
+msgstr "በዊንዶውስ የወላጅ ቁጥጥር ታግዷል"
+
+msgid "Unavailable for legal reasons"
+msgstr "በህጋዊ ምክንያቶች መድረስ አይቻልም"
+
+msgid "Client closed connection before idle timeout (AWS ELB)"
+msgstr "ደንበኛው በእረፍት ጊዜ ማብቂያ በፊት ግንኙነቱን ዘግቷል (AWS ELB)"
+
+msgid "X-Forwarded-For header with >30 IP addresses (AWS ELB)"
+msgstr "የማስተላለፊያ ሰንሰለት ከ30 በላይ የአይፒ አድራሻዎች አሉት"
+
+msgid "Incompatible protocol versions (AWS ELB)"
+msgstr "የፕሮቶኮል ስሪቶች ተኳሃኝ አይደሉም"
+
+msgid "Request header too large (nginx)"
+msgstr "የጥያቄ ራስጌ በጣም ትልቅ ነው"
+
+msgid "SSL certificate error (nginx)"
+msgstr "የኤስኤስኤል ሰርተፊኬት ስህተት"
+
+msgid "SSL certificate required (nginx)"
+msgstr "የኤስኤስኤል ሰርተፊኬት ያስፈልጋል"
+
+msgid "HTTP request sent to HTTPS port (nginx)"
+msgstr "የኤችቲቲፒ ጥያቄ ወደ ኤችቲቲፒኤስ ወደብ ተልኳል"
+
+msgid "Invalid token (ArcGIS)"
+msgstr "ማረጋገጫ ትክክል አይደለም"
+
+msgid "Token required (ArcGIS) / Client closed request (nginx)"
+msgstr "ማረጋገጫ ያስፈልጋል / ደንበኛው ጥያቄውን ዘግቷል"
+
+msgid "Resource limit reached (cPanel)"
+msgstr "የግብዓት ገደብ (ሲፒዩ/ማህደረ ትውስታ) ላይ ደርሷል"
+
+msgid "Bandwidth limit exceeded (Apache/cPanel)"
+msgstr "የባንድዊድዝ ገደብ ተሻግሯል"
+
+# 5xx
+msgid "[Miscellaneous server errors]"
+msgstr "ሌሎች የአገልጋይ ስህተቶች"
+
+msgid "Internal server error - check logs"
+msgstr "የውስጥ አገልጋይ ስህተት፣ እባክዎ ሎጎችን ያረጋግጡ"
+
+msgid "Not implemented"
+msgstr "አገልጋዩ ይህን ተግባር አይደግፍም"
+
+msgid "Bad gateway - backend error"
+msgstr "የመግቢያ በር ስህተት፣ የኋላ መጨረሻ አገልግሎት ያልተለመደ ነው"
+
+msgid "Service unavailable - maintenance or overload"
+msgstr "አገልግሎት አይገኝም፣ ጥገና ወይም ከመጠን በላይ መጫን"
+
+msgid "Gateway timeout"
+msgstr "የመግቢያ በር ምላሽ ጊዜ አልፏል"
+
+msgid "HTTP version not supported"
+msgstr "የኤችቲቲፒ ፕሮቶኮል ስሪት አይደገፍም"
+
+msgid "Variant also negotiates"
+msgstr "ተለዋጭም በድርድሩ ውስጥ ይሳተፋል (የውቅር ስህተት)"
+
+msgid "Insufficient storage (WebDAV)"
+msgstr "በቂ ያልሆነ የማከማቻ ቦታ"
+
+msgid "Loop detected (WebDAV)"
+msgstr "የሉፕ ማጣቀሻ ተገኝቷል"
+
+msgid "Not extended"
+msgstr "ተጨማሪ ቅጥያ ያስፈልጋል"
+
+msgid "Network authentication required"
+msgstr "የአውታረ መረብ ማረጋገጫ ያስፈልጋል"
+
+# Cloudflare
+msgid "Unknown error (Cloudflare)"
+msgstr "ያልታወቀ ስህተት"
+
+msgid "Web server is down (Cloudflare)"
+msgstr "የድር አገልጋይ ዘግቷል"
+
+msgid "Connection timeout (Cloudflare)"
+msgstr "የግንኙነት ጊዜ አልፏል"
+
+msgid "Origin is unreachable (Cloudflare)"
+msgstr "ምንጩ ላይ መድረስ አይቻልም"
+
+msgid "A timeout occurred (Cloudflare)"
+msgstr "የጊዜ ማብቂያ ተከስቷል"
+
+msgid "SSL handshake failed (Cloudflare)"
+msgstr "የኤስኤስኤል የእጅ መጨበጥ አልተሳካም"
+
+msgid "Invalid SSL certificate (Cloudflare)"
+msgstr "የኤስኤስኤል ሰርተፊኬት ትክክል አይደለም"
+
+msgid "Railgun error (Cloudflare - obsolete)"
+msgstr "የሬይልጋን ስህተት (ጊዜ ያለፈበት)"
+
+msgid "Site is overloaded (SSLLabs)"
+msgstr "ድር ጣቢያው ከመጠን በላይ ጭነት አለበት"
+
+msgid "Origin DNS error (Cloudflare) / Site is frozen (Pantheon)"
+msgstr "የምንጭ ዲኤንኤስ ስህተት (Cloudflare) / ድር ጣቢያው ቀዝቅዟል (Pantheon)"
+
+msgid "Temporarily disabled (Shopify)"
+msgstr "በጊዜያዊነት ተሰናክሏል"
+
+msgid "Unauthorized (AWS ELB)"
+msgstr "ያልተፈቀደ"
+
+msgid "Network read timeout error"
+msgstr "የአውታረ መረብ ንባብ ጊዜ ማብቂያ ስህተት"
+
+msgid "Network connect timeout error"
+msgstr "የአውታረ መረብ ግንኙነት ጊዜ ማብቂያ ስህተት"
+
+msgid "Unexpected token (Shopify)"
+msgstr "ያልተጠበቀ ማረጋገጫ"
+
+msgid "Request denied (LinkedIn)"
+msgstr "ጥያቄው ውድቅ ተደርጓል"
+
+msgid "HTTP/2 GOAWAY (AWS ELB)"
+msgstr "የኤችቲቲፒ/2 ግንኙነት መዘጋት"
+
+msgid "[Unknown]"
+msgstr "ያልታወቀ ሁኔታ ኮድ"
+
+msgid "Nonstandard success response (ESMTP)"
+msgstr "መደበኛ ያልሆነ የስኬት ምላሽ (ESMTP)"
+
+msgid "System status, or system help reply"
+msgstr "የስርዓት ሁኔታ፣ ወይም የስርዓት እርዳታ መልዕክት"
+
+msgid "Help message"
+msgstr "የእርዳታ መልዕክት"
+
+msgid "SMTP service ready (LMTP)"
+msgstr "የኤስኤምቲፒ አገልግሎት ዝግጁ ነው (LMTP)"
+
+msgid "Service ready - server is ready to receive mail"
+msgstr "አገልግሎት ዝግጁ ነው - የኢሜይል አገልጋይ ኢሜይል ለመቀበል ዝግጁ ነው"
+
+msgid "Service closing - connection is being closed"
+msgstr "አገልግሎት እየተዘጋ ነው - ግንኙነቱ እየተዘጋ ነው"
+
+msgid "Authentication successful"
+msgstr "ማረጋገጫ ስኬታማ ሆኗል"
+
+msgid "Requested mail action taken and completed"
+msgstr "የተጠየቀው የኢሜይል እርምጃ ተወስዶ ተጠናቋል"
+
+msgid "User not local - will forward to another address"
+msgstr "ተጠቃሚው በዚህ አገልጋይ ላይ የለም - ወደ ሌላ አድራሻ ያስተላልፋል"
+
+msgid "Cannot verify recipient, but will attempt delivery"
+msgstr "ተቀባዩን ማረጋገጥ አልተቻለም፣ ግን ለማድረስ ይሞክራል"
+
+msgid "Message accepted for delivery (DSN)"
+msgstr "ኢሜይሉ ለማድረስ ተቀባይነት አግኝቷል (DSN)"
+
+msgid "User name is a mailbox"
+msgstr "የተጠቃሚ ስም የመልእክት ሳጥን ነው"
+
+msgid "Authentication challenge - please respond"
+msgstr "የማረጋገጫ ፈተና - እባክዎ ምላሽ ይስጡ"
+
+msgid "Start mail input - end with <CRLF>.<CRLF>"
+msgstr "የኢሜይል ይዘት ማስገባት ጀምር - በ <CRLF>.<CRLF> አጠናቅቅ"
+
+msgid "Continue (LMTP)"
+msgstr "ቀጥል (LMTP)"
+
+msgid "Service not available - connection closing, try again later"
+msgstr "አገልግሎት አይገኝም - ግንኙነት እየተዘጋ ነው፣ እባክዎ በኋላ እንደገና ይሞክሩ"
+
+msgid "Mailbox busy or temporarily unavailable (Exchange)"
+msgstr "የመልእክት ሳጥኑ ሥራ የበዛበት ወይም ለጊዜው አይገኝም (Exchange)"
+
+msgid "Connection rate limit exceeded (Postfix)"
+msgstr "የግንኙነት መጠን ገደብ ተሻግሯል (Postfix)"
+
+msgid "Too many concurrent connections (Postfix)"
+msgstr "በጣም ብዙ በአንድ ጊዜ ግንኙነቶች (Postfix)"
+
+msgid "Unable to establish connection (Postfix)"
+msgstr "ግንኙነት መመስረት አልተቻለም (Postfix)"
+
+msgid "Connection timed out (Postfix)"
+msgstr "የግንኙነት ጊዜ አልፏል (Postfix)"
+
+msgid "Connection dropped due to error (Postfix)"
+msgstr "በስህተት ምክንያት ግንኙነቱ ተቋርጧል (Postfix)"
+
+msgid "Mailbox temporarily locked (Exchange)"
+msgstr "የመልእክት ሳጥኑ ለጊዜው ተቆልፏል (Exchange)"
+
+msgid "Too many recipients (Postfix/Exim)"
+msgstr "በጣም ብዙ ተቀባዮች (Postfix/Exim)"
+
+msgid "Mail server error (Exchange)"
+msgstr "የኢሜይል አገልጋይ ስህተት (Exchange)"
+
+msgid "Received loop detected (Exim)"
+msgstr "የሉፕ መቀበያ ተገኝቷል (Exim)"
+
+msgid "Too many hop count (Exim)"
+msgstr "በጣም ብዙ ሆፕ ብዛት (Exim)"
+
+msgid "DNS lookup failed (Postfix)"
+msgstr "የዲኤንኤስ ፍለጋ አልተሳካም (Postfix)"
+
+msgid "Unable to authenticate (Postfix)"
+msgstr "ማረጋገጥ አልተቻለም (Postfix)"
+
+msgid "TLS handshake failed (Postfix)"
+msgstr "የTLS የእጅ መጨበጥ አልተሳካም (Postfix)"
+
+msgid "SMTP protocol violation (Postfix)"
+msgstr "የኤስኤምቲፒ ፕሮቶኮል ጥሰት (Postfix)"
+
+msgid "Message size exceeds limit (Exchange)"
+msgstr "የኢሜይል መጠን ገደቡን አልፏል (Exchange)"
+
+msgid "Message rate limit exceeded (Postfix)"
+msgstr "የኢሜይል መጠን ገደብ ተሻግሯል (Postfix)"
+
+msgid "Mailbox quota exceeded - temporary"
+msgstr "የመልእክት ሳጥን ኮታ ሞልቷል - ጊዜያዊ ሁኔታ"
+
+msgid "Domain not found (Postfix)"
+msgstr "ጎራው አልተገኘም (Postfix)"
+
+msgid "Message header invalid (Postfix)"
+msgstr "የኢሜይል ራስጌ ትክክል አይደለም (Postfix)"
+
+msgid "Bounce loop detected (Postfix)"
+msgstr "የማዞሪያ ሉፕ ተገኝቷል (Postfix)"
+
+msgid "Unable to route (Postfix)"
+msgstr "አቅጣጫ መወሰን አልተቻለም (Postfix)"
+
+msgid "Sender domain not found (Postfix)"
+msgstr "የላኪ ጎራ አልተገኘም (Postfix)"
+
+msgid "Recipient domain not found (Postfix)"
+msgstr "የተቀባይ ጎራ አልተገኘም (Postfix)"
+
+msgid "Greylisting in progress - please try again (Postgrey)"
+msgstr "Greylisting ምርመራ በሂደት ላይ - እባክዎ በኋላ እንደገና ይሞክሩ (Postgrey)"
+
+msgid "Spam filtering in progress (SpamAssassin)"
+msgstr "የአይፈለጌ መልዕክት ማጣሪያ በሂደት ላይ (SpamAssassin)"
+
+msgid "Virus scanning in progress (ClamAV)"
+msgstr "የቫይረስ ስካን በሂደት ላይ (ClamAV)"
+
+msgid "Mailbox unavailable - try again later"
+msgstr "የመልእክት ሳጥኑ አይገኝም - እባክዎ በኋላ እንደገና ይሞክሩ"
+
+msgid "Requested action aborted - error in processing"
+msgstr "የተጠየቀው እርምጃ ተቋርጧል - በማቀነባበር ጊዜ ስህተት ተከስቷል"
+
+msgid "Insufficient system storage - try again later"
+msgstr "በቂ ያልሆነ የስርዓት ማከማቻ - እባክዎ በኋላ እንደገና ይሞክሩ"
+
+msgid "Too many messages for this recipient (Exchange)"
+msgstr "ለዚህ ተቀባይ በጣም ብዙ ኢሜይሎች (Exchange)"
+
+msgid "TLS not available (Postfix)"
+msgstr "TLS አይገኝም (Postfix)"
+
+msgid "Server unable to accept messages (Postfix)"
+msgstr "አገልጋዩ ኢሜይል መቀበል አይችልም (Postfix)"
+
+msgid "Temporary failure in DNS lookup (Exim)"
+msgstr "በዲኤንኤስ ፍለጋ ላይ ጊዜያዊ ውድቀት (Exim)"
+
+msgid "Quota exceeded - temporary"
+msgstr "ኮታ ተሻግሯል - ጊዜያዊ ሁኔታ"
+
+msgid "Message too big - temporary"
+msgstr "ኢሜይሉ በጣም ትልቅ ነው - ጊዜያዊ ሁኔታ"
+
+msgid "Too many messages per connection"
+msgstr "በአንድ ግንኙነት በጣም ብዙ ኢሜይሎች"
+
+msgid "Load average too high (Postfix)"
+msgstr "አማካይ ጭነት በጣም ከፍተኛ ነው (Postfix)"
+
+msgid "Connection refused (Postfix)"
+msgstr "ግንኙነት ውድቅ ተደርጓል (Postfix)"
+
+msgid "Send rate limit exceeded (Postfix)"
+msgstr "የመላኪያ መጠን ገደብ ተሻግሯል (Postfix)"
+
+msgid "Recipient rate limit exceeded (Postfix)"
+msgstr "የተቀባይ መጠን ገደብ ተሻግሯል (Postfix)"
+
+msgid "Sender rate limit exceeded (Postfix)"
+msgstr "የላኪ መጠን ገደብ ተሻግሯል (Postfix)"
+
+msgid "IP address rate limit exceeded (Postfix)"
+msgstr "የአይፒ አድራሻ መጠን ገደብ ተሻግሯል (Postfix)"
+
+msgid "MX lookup failed (Postfix)"
+msgstr "የኤምኤክስ ፍለጋ አልተሳካም (Postfix)"
+
+msgid "A record lookup failed (Postfix)"
+msgstr "የኤ መዝገብ ፍለጋ አልተሳካም (Postfix)"
+
+msgid "PTR record lookup failed (Postfix)"
+msgstr "የPTR መዝገብ ፍለጋ አልተሳካም (Postfix)"
+
+msgid "Greylisting active - please try again (Postgrey)"
+msgstr "Greylisting ንቁ ነው - እባክዎ በኋላ እንደገና ይሞክሩ (Postgrey)"
+
+msgid "Access denied - unknown domain for sender or recipient"
+msgstr "መድረስ ተከልክሏል - ለላኪ ወይም ለተቀባይ ያልታወቀ ጎራ"
+
+msgid "Sender address rejected - domain not verified (DMARC pending)"
+msgstr "የላኪ አድራሻ ውድቅ ተደርጓል - ጎራው አልተረጋገጠም (DMARC በመጠባበቅ ላይ)"
+
+msgid "Recipient address rejected - domain not verified (DMARC pending)"
+msgstr "የተቀባይ አድራሻ ውድቅ ተደርጓል - ጎራው አልተረጋገጠም (DMARC በመጠባበቅ ላይ)"
+
+msgid "DKIM verification pending - temporary failure"
+msgstr "የዲኪም ማረጋገጫ በመጠባበቅ ላይ - ጊዜያዊ ውድቀት"
+
+msgid "SPF verification pending - temporary failure"
+msgstr "የኤስፒኤፍ ማረጋገጫ በመጠባበቅ ላይ - ጊዜያዊ ውድቀት"
+
+msgid "DMARC verification pending - temporary failure"
+msgstr "የዲማርክ ማረጋገጫ በመጠባበቅ ላይ - ጊዜያዊ ውድቀት"
+
+msgid "DNSBL lookup temporary failure"
+msgstr "የዲኤንኤስቢኤል ፍለጋ ጊዜያዊ ውድቀት"
+
+msgid "RHSBL lookup temporary failure"
+msgstr "የአርኤችኤስቢኤል ፍለጋ ጊዜያዊ ውድቀት"
+
+msgid "URI DNSBL lookup temporary failure"
+msgstr "የዩአርአይ ዲኤንኤስቢኤል ፍለጋ ጊዜያዊ ውድቀት"
+
+msgid "Temporary authentication failure (Dovecot)"
+msgstr "ጊዜያዊ የማረጋገጫ ውድቀት (Dovecot)"
+
+msgid "Temporary authorization failure (Sendmail)"
+msgstr "ጊዜያዊ የፈቃድ ውድቀት (Sendmail)"
+
+msgid "Rate limit exceeded per sender (Exim)"
+msgstr "በአንድ ላኪ መጠን ገደብ ተሻግሯል (Exim)"
+
+msgid "Rate limit exceeded per recipient (Exim)"
+msgstr "በአንድ ተቀባይ መጠን ገደብ ተሻግሯል (Exim)"
+
+msgid "Rate limit exceeded per domain (Exim)"
+msgstr "በአንድ ጎራ መጠን ገደብ ተሻግሯል (Exim)"
+
+msgid "Rate limit exceeded per IP (Exim)"
+msgstr "በአንድ አይፒ መጠን ገደብ ተሻግሯል (Exim)"
+
+msgid "Message queued for later delivery (Postfix)"
+msgstr "ኢሜይሉ ለኋላ አቅርቦት በወረፋ ተሰልፏል (Postfix)"
+
+msgid "Delivery delayed due to policy (Exchange)"
+msgstr "በፖሊሲ ምክንያት አቅርቦት ተዘግይቷል (Exchange)"
+
+msgid "Temporary failure in content filter"
+msgstr "በይዘት ማጣሪያ ጊዜያዊ ውድቀት"
+
+msgid "Temporary failure in antivirus scanner"
+msgstr "በፀረ-ቫይረስ ስካነር ጊዜያዊ ውድቀት"
+
+msgid "Temporary failure in spam filter"
+msgstr "በአይፈለጌ መልዕክት ማጣሪያ ጊዜያዊ ውድቀት"
+
+msgid "Temporary failure in milter (Postfix)"
+msgstr "በሚልተር ጊዜያዊ ውድቀት (Postfix)"
+
+msgid "Greylisting - try again later"
+msgstr "Greylisting - እባክዎ በኋላ እንደገና ይሞክሩ"
+
+msgid "DDoS protection active - try again later"
+msgstr "የዲዶስ ጥበቃ ንቁ ነው - እባክዎ በኋላ እንደገና ይሞክሩ"
+
+msgid "SMTP policy violation - temporary"
+msgstr "የኤስኤምቲፒ ፖሊሲ ጥሰት - ጊዜያዊ ሁኔታ"
+
+msgid "Temporary error in RCPT TO processing"
+msgstr "በRCPT TO ማቀነባበር ላይ ጊዜያዊ ስህተት"
+
+msgid "Temporary error in MAIL FROM processing"
+msgstr "በMAIL FROM ማቀነባበር ላይ ጊዜያዊ ስህተት"
+
+msgid "Temporary error in EHLO/HELO processing"
+msgstr "በEHLO/HELO ማቀነባበር ላይ ጊዜያዊ ስህተት"
+
+msgid "Temporary error in DATA processing"
+msgstr "በDATA ማቀነባበር ላይ ጊዜያዊ ስህተት"
+
+msgid "Temporary error - service busy, try again later"
+msgstr "ጊዜያዊ ስህተት - አገልግሎት ሥራ የበዛበት ነው፣ እባክዎ በኋላ እንደገና ይሞክሩ"
+
+msgid "Syntax error - command unrecognized or too long"
+msgstr "የአገባብ ስህተት - ትእዛዙ ያልታወቀ ወይም በጣም ረዥም ነው"
+
+msgid "Syntax error in parameters or arguments"
+msgstr "በመለኪያዎች ወይም በክርክሮች ውስጥ የአገባብ ስህተት"
+
+msgid "Command not implemented"
+msgstr "ትእዛዙ ጥቅም ላይ አልዋለም"
+
+msgid "Bad sequence of commands"
+msgstr "የትእዛዞች ቅደም ተከተል የተሳሳተ ነው"
+
+msgid "Command parameter not implemented"
+msgstr "የትእዛዝ መለኪያ ጥቅም ላይ አልዋለም"
+
+msgid "Version not supported (ESMTP)"
+msgstr "ስሪቱ አይደገፍም (ESMTP)"
+
+msgid "Mailbox path invalid (LMTP)"
+msgstr "የመልእክት ሳጥን መንገድ ትክክል አይደለም (LMTP)"
+
+msgid "Too many commands in this session (Postfix)"
+msgstr "በዚህ ክፍለ ጊዜ ውስጥ በጣም ብዙ ትእዛዞች (Postfix)"
+
+msgid "Recipient limit exceeded (Postfix)"
+msgstr "የተቀባይ ገደብ ተሻግሯል (Postfix)"
+
+msgid "Sender limit exceeded (Postfix)"
+msgstr "የላኪ ገደብ ተሻግሯል (Postfix)"
+
+msgid "Domain limit exceeded (Postfix)"
+msgstr "የጎራ ገደብ ተሻግሯል (Postfix)"
+
+msgid "Mailbox does not exist (Exchange)"
+msgstr "የመልእክት ሳጥኑ የለም (Exchange)"
+
+msgid "DNS failure - permanent"
+msgstr "ዲኤንኤስ አልተሳካም - ቋሚ ስህተት"
+
+msgid "Address type not supported (Postfix)"
+msgstr "የአድራሻ አይነት አይደገፍም (Postfix)"
+
+msgid "Unable to open mailbox (Postfix)"
+msgstr "የመልእክት ሳጥኑን መክፈት አልተቻለም (Postfix)"
+
+msgid "Mailbox locked - permanent"
+msgstr "የመልእክት ሳጥኑ ተቆልፏል - ቋሚ ሁኔታ"
+
+msgid "Message rejected due to policy (Exchange)"
+msgstr "በፖሊሲ ምክንያት ኢሜይሉ ውድቅ ተደርጓል (Exchange)"
+
+msgid "Content rejected - permanent"
+msgstr "ይዘቱ ውድቅ ተደርጓል - ቋሚ ሁኔታ"
+
+msgid "Attachment type not allowed"
+msgstr "የዕቅፍ ፋይል አይነት አይፈቀድም"
+
+msgid "Message encoding not supported"
+msgstr "የኢሜይል ኢንኮዲንግ አይደገፍም"
+
+msgid "Sender domain does not exist - permanent"
+msgstr "የላኪ ጎራ የለም - ቋሚ ሁኔታ"
+
+msgid "Domain does not accept mail or is closing"
+msgstr "ጎራው ኢሜይል አይቀበልም ወይም እየዘጋ ነው"
+
+msgid "Recipient domain does not exist - permanent"
+msgstr "የተቀባይ ጎራ የለም - ቋሚ ሁኔታ"
+
+msgid "Mailbox quota exceeded - permanent"
+msgstr "የመልእክት ሳጥን ኮታ ሞልቷል - ቋሚ ሁኔታ"
+
+msgid "Message size exceeds limit - permanent"
+msgstr "የኢሜይል መጠን ገደቡን አልፏል - ቋሚ ሁኔታ"
+
+msgid "Authentication required (Sendmail)"
+msgstr "ማረጋገጫ ያስፈልጋል (Sendmail)"
+
+msgid "Authentication failed (Sendmail)"
+msgstr "ማረጋገጫ አልተሳካም (Sendmail)"
+
+msgid "Authentication mechanism not supported"
+msgstr "የማረጋገጫ ዘዴ አይደገፍም"
+
+msgid "Authentication credentials invalid"
+msgstr "የማረጋገጫ ምስክርነቶች ትክክል አይደሉም"
+
+msgid "Authentication account expired"
+msgstr "የማረጋገጫ መለያ ጊዜው አልፏል"
+
+msgid "Access denied - authentication required"
+msgstr "መድረስ ተከልክሏል - ማረጋገጫ ያስፈልጋል"
+
+msgid "Access denied (Sendmailism)"
+msgstr "መድረስ ተከልክሏል (Sendmail)"
+
+msgid "Access denied - not authenticated"
+msgstr "መድረስ ተከልክሏል - አልተረጋገጠም"
+
+msgid "Access denied - account locked"
+msgstr "መድረስ ተከልክሏል - መለያው ተቆልፏል"
+
+msgid "Access denied - account disabled"
+msgstr "መድረስ ተከልክሏል - መለያው ተሰናክሏል"
+
+msgid "Authentication failed"
+msgstr "ማረጋገጫ አልተሳካም"
+
+msgid "Authentication required for relay (Postfix)"
+msgstr "ለማስተላለፊያ ማረጋገጫ ያስፈልጋል (Postfix)"
+
+msgid "Authentication failed for relay (Postfix)"
+msgstr "ለማስተላለፊያ ማረጋገጫ አልተሳካም (Postfix)"
+
+msgid "Encryption required (STARTTLS)"
+msgstr "የተመሰጠረ ግንኙነት ያስፈልጋል (STARTTLS)"
+
+msgid "TLS required for this recipient"
+msgstr "ይህ ተቀባይ TLS ምስጠራ ይፈልጋል"
+
+msgid "Encryption strength insufficient"
+msgstr "የምስጠራ ጥንካሬ በቂ አይደለም"
+
+msgid "Certificate validation failed"
+msgstr "የሰርተፊኬት ማረጋገጫ አልተሳካም"
+
+msgid "Invalid TLS certificate"
+msgstr "የTLS ሰርተፊኬት ትክክል አይደለም"
+
+msgid "TLS protocol version not supported"
+msgstr "የTLS ፕሮቶኮል ስሪት አይደገፍም"
+
+msgid "Cipher suite not supported"
+msgstr "የሲፈር ስብስብ አይደገፍም"
+
+msgid "Access denied - no valid recipient"
+msgstr "መድረስ ተከልክሏል - ምንም ትክክለኛ ተቀባይ የለም"
+
+msgid "Access denied - no valid sender"
+msgstr "መድረስ ተከልክሏል - ምንም ትክክለኛ ላኪ የለም"
+
+msgid "Access denied - domain not allowed"
+msgstr "መድረስ ተከልክሏል - ጎራው አይፈቀድም"
+
+msgid "Access denied - IP address blocked (permanent)"
+msgstr "መድረስ ተከልክሏል - አይፒ አድራሻ ታግዷል (ቋሚ)"
+
+msgid "Access denied - sender domain blacklisted"
+msgstr "መድረስ ተከልክሏል - የላኪ ጎራ በጥቁር ዝርዝር ውስጥ ይገኛል"
+
+msgid "Mailbox unavailable - requested action not taken"
+msgstr "የመልእክት ሳጥኑ አይገኝም - የተጠየቀው እርምጃ አልተወሰደም"
+
+msgid "User not local - please try forwarding address"
+msgstr "ተጠቃሚው አካባቢያዊ አይደለም - እባክዎ የማስተላለፊያ አድራሻ ይሞክሩ"
+
+msgid "Requested action aborted - exceeded storage allocation"
+msgstr "የተጠየቀው እርምጃ ተቋርጧል - የማከማቻ ድልድል ተሻግሯል"
+
+msgid "Mailbox name not allowed"
+msgstr "የመልእክት ሳጥን ስም አይፈቀድም"
+
+msgid "Requested action rejected - access denied"
+msgstr "የተጠየቀው እርምጃ ውድቅ ተደርጓል - መድረስ ተከልክሏል"
+
+msgid "MAIL FROM/RCPT TO parameters not recognized"
+msgstr "MAIL FROM/RCPT TO መለኪያዎች አልታወቁም"
+
+msgid "Domain not allowed to send (DMARC reject)"
+msgstr "ጎራው እንዲልክ አይፈቀድም (DMARC ውድቅ)"
+
+msgid "Too many duplicate messages - permanent"
+msgstr "በጣም ብዙ የተደጋገሙ ኢሜይሎች - ቋሚ ሁኔታ"
+
+msgid "Sender address rejected - domain not in SPF"
+msgstr "የላኪ አድራሻ ውድቅ ተደርጓል - ጎራው በSPF ውስጥ የለም"
+
+msgid "Sender address rejected - DKIM verification failed"
+msgstr "የላኪ አድራሻ ውድቅ ተደርጓል - የዲኪም ማረጋገጫ አልተሳካም"
+
+msgid "Sender address rejected - DMARC policy reject"
+msgstr "የላኪ አድራሻ ውድቅ ተደርጓል - የዲማርክ ፖሊሲ ውድቅ አድርጓል"
+
+msgid "Recipient address rejected - DMARC policy reject"
+msgstr "የተቀባይ አድራሻ ውድቅ ተደርጓል - የዲማርክ ፖሊሲ ውድቅ አድርጓል"
+
+msgid "Message rejected due to spam content"
+msgstr "በአይፈለጌ መልዕክት ይዘት ምክንያት ኢሜይሉ ውድቅ ተደርጓል"
+
+msgid "Message rejected due to virus detected"
+msgstr "ቫይረስ በመገኘቱ ምክንያት ኢሜይሉ ውድቅ ተደርጓል"
+
+msgid "Message rejected due to malicious content"
+msgstr "አደገኛ ይዘት በመኖሩ ምክንያት ኢሜይሉ ውድቅ ተደርጓል"
+
+msgid "Message rejected due to phishing detection"
+msgstr "ማጭበርበር በመገኘቱ ምክንያት ኢሜይሉ ውድቅ ተደርጓል"
+
+msgid "Message rejected due to malware detection"
+msgstr "ማልዌር በመገኘቱ ምክንያት ኢሜይሉ ውድቅ ተደርጓል"
+
+msgid "Message rejected due to policy - permanent"
+msgstr "በፖሊሲ ምክንያት ኢሜይሉ ውድቅ ተደርጓል - ቋሚ ሁኔታ"
+
+msgid "Message rejected due to content filtering"
+msgstr "በይዘት ማጣሪያ ምክንያት ኢሜይሉ ውድቅ ተደርጓል"
+
+msgid "Message rejected due to reputation"
+msgstr "በስም ምክንያት ኢሜይሉ ውድቅ ተደርጓል"
+
+msgid "Access denied - access_map violation"
+msgstr "መድረስ ተከልክሏል - access_map ጥሰት"
+
+msgid "Access denied - SMTP client listed in RBL"
+msgstr "መድረስ ተከልክሏል - የኤስኤምቲፒ ደንበኛ በRBL ውስጥ ይገኛል"
+
+msgid "Access denied - relay not authorized"
+msgstr "መድረስ ተከልክሏል - ማስተላለፊያ ያልተፈቀደ ነው"
+
+msgid "Access denied - unknown SMTP client hostname"
+msgstr "መድረስ ተከልክሏል - ያልታወቀ የኤስኤምቲፒ ደንበኛ አስተናጋጅ ስም"
+
+msgid "Access denied - bad syntax for client HELO hostname"
+msgstr "መድረስ ተከልክሏል - ለደንበኛ HELO አስተናጋጅ ስም የተሳሳተ አገባብ"
+
+msgid "Access denied - SMTP client hostname rejected"
+msgstr "መድረስ ተከልክሏል - የኤስኤምቲፒ ደንበኛ አስተናጋጅ ስም ውድቅ ተደርጓል"
+
+msgid "Access denied - unknown client HELO hostname"
+msgstr "መድረስ ተከልክሏል - ያልታወቀ የደንበኛ HELO አስተናጋጅ ስም"
+
+msgid "Access denied - invalid domain (not FQDN)"
+msgstr "መድረስ ተከልክሏል - ጎራው ትክክል አይደለም (FQDN አይደለም)"
+
+msgid "Access denied - domain not qualified"
+msgstr "መድረስ ተከልክሏል - ጎራው ብቁ አይደለም"
+
+msgid "Access denied - mail server misconfigured"
+msgstr "መድረስ ተከልክሏል - የኢሜይል አገልጋይ ውቅር የተሳሳተ ነው"
+
+msgid "Access denied - open relay not allowed"
+msgstr "መድረስ ተከልክሏል - ክፍት ማስተላለፊያ አይፈቀድም"
+
+msgid "Access denied - proxy not allowed"
+msgstr "መድረስ ተከልክሏል - ተኪ መጠቀም አይፈቀድም"
+
+msgid "Access denied - dynamic IP not allowed"
+msgstr "መድረስ ተከልክሏል - ተለዋዋጭ አይፒ አይፈቀድም"
+
+msgid "Access denied - residential IP not allowed"
+msgstr "መድረስ ተከልክሏል - የመኖሪያ አይፒ አይፈቀድም"
+
+msgid "Access denied - VPN/Tor detected"
+msgstr "መድረስ ተከልክሏል - ቪፒኤን/ቶር ተገኝቷል"
+
+msgid "Access denied - Spamhaus DROP listed"
+msgstr "መድረስ ተከልክሏል - በSpamhaus DROP ዝርዝር ውስጥ ይገኛል"
+
+msgid "Access denied - URL listed in URIBL"
+msgstr "መድረስ ተከልክሏል - ዩአርኤል በURIBL ውስጥ ይገኛል"
+
+msgid "Access denied - domain in RHSBL"
+msgstr "መድረስ ተከልክሏል - ጎራው በRHSBL ውስጥ ይገኛል"
+
+msgid "Access denied - IP in DNSWL (policy)"
+msgstr "መድረስ ተከልክሏል - አይፒ በዲኤንኤስኤል ውስጥ ነው (ፖሊሲ)"
+
+msgid "Delivery failed - mailbox not found"
+msgstr "አቅርቦት አልተሳካም - የመልእክት ሳጥኑ አልተገኘም"
+
+msgid "Delivery failed - recipient not local"
+msgstr "አቅርቦት አልተሳካም - ተቀባዩ በዚህ አገልጋይ ላይ የለም"
+
+msgid "Delivery failed - recipient rejected"
+msgstr "አቅርቦት አልተሳካም - ተቀባዩ ውድቅ ተደርጓል"
+
+msgid "Delivery failed - sender rejected"
+msgstr "አቅርቦት አልተሳካም - ላኪው ውድቅ ተደርጓል"
+
+msgid "Delivery failed - relay rejected"
+msgstr "አቅርቦት አልተሳካም - ማስተላለፊያው ውድቅ ተደርጓል"
+
+msgid "Delivery failed - DNS permanent error"
+msgstr "አቅርቦት አልተሳካም - ቋሚ የዲኤንኤስ ስህተት"
+
+msgid "Delivery failed - MX permanent error"
+msgstr "አቅርቦት አልተሳካም - ቋሚ የኤምኤክስ ስህተት"
+
+msgid "Delivery failed - A record permanent error"
+msgstr "አቅርቦት አልተሳካም - ቋሚ የኤ መዝገብ ስህተት"
+
+msgid "Delivery failed - PTR record permanent error"
+msgstr "አቅርቦት አልተሳካም - ቋሚ የPTR መዝገብ ስህተት"
+
+msgid "Delivery failed - policy permanent error"
+msgstr "አቅርቦት አልተሳካም - ቋሚ የፖሊሲ ስህተት"
+
+msgid "DSN: Success - delivery status notification"
+msgstr "DSN: ስኬት - የአቅርቦት ሁኔታ ማሳወቂያ"
+
+msgid "DSN: Delivery delayed"
+msgstr "DSN: አቅርቦት ተዘግይቷል"
+
+msgid "DSN: Delivery failed - permanent"
+msgstr "DSN: አቅርቦት አልተሳካም - ቋሚ"
+
+msgid "DSN: Delivery failed - temporary"
+msgstr "DSN: አቅርቦት አልተሳካም - ጊዜያዊ"
+
+msgid "DSN: Message expired"
+msgstr "DSN: ኢሜይሉ ጊዜው አልፏል"
+
+msgid "DSN: Message bounced"
+msgstr "DSN: ኢሜይሉ ተመልሷል"
+
+msgid "DSN: Message discarded"
+msgstr "DSN: ኢሜይሉ ተጥሏል"
+
+msgid "DSN: Message filtered"
+msgstr "DSN: ኢሜይሉ ተጣርቷል"
+
+msgid "DSN: Message quarantined"
+msgstr "DSN: ኢሜይሉ በቁጥጥር ስር ውሏል"
+
+msgid "DSN: Message held for review"
+msgstr "DSN: ለግምገማ ኢሜይሉ ተይዟል"
+
+msgid "MTA-STS policy required"
+msgstr "MTA-STS ፖሊሲ ያስፈልጋል"
+
+msgid "MTA-STS policy validation failed"
+msgstr "የMTA-STS ፖሊሲ ማረጋገጫ አልተሳካም"
+
+msgid "TLS reporting required"
+msgstr "TLS ሪፖርት ያስፈልጋል"
+
+msgid "TLS report requested"
+msgstr "TLS ሪፖርት ተጠይቋል"
+
+msgid "SMTP MTA Strict Transport Security active"
+msgstr "SMTP MTA Strict Transport Security ንቁ ነው"
+
+msgid "DANE validation required"
+msgstr "DANE ማረጋገጫ ያስፈልጋል"
+
+msgid "DANE validation failed"
+msgstr "DANE ማረጋገጫ አልተሳካም"
+
+msgid "TLSA record missing"
+msgstr "TLSA መዝገብ ጠፍቷል"
+
+msgid "Certificate name mismatch"
+msgstr "የሰርተፊኬት ስም አልተዛመደም"
+
+msgid "Certificate expired"
+msgstr "ሰርተፊኬቱ ጊዜው አልፏል"
+
+msgid "AUTH LOGIN required"
+msgstr "AUTH LOGIN ያስፈልጋል"
+
+msgid "AUTH PLAIN required"
+msgstr "AUTH PLAIN ያስፈልጋል"
+
+msgid "AUTH CRAM-MD5 required"
+msgstr "AUTH CRAM-MD5 ያስፈልጋል"
+
+msgid "AUTH DIGEST-MD5 required"
+msgstr "AUTH DIGEST-MD5 ያስፈልጋል"
+
+msgid "AUTH GSSAPI required"
+msgstr "AUTH GSSAPI ያስፈልጋል"
+
+msgid "AUTH NTLM required"
+msgstr "AUTH NTLM ያስፈልጋል"
+
+msgid "AUTH SCRAM required"
+msgstr "AUTH SCRAM ያስፈልጋል"
+
+msgid "AUTH OAUTHBEARER required"
+msgstr "AUTH OAUTHBEARER ያስፈልጋል"
+
+msgid "AUTH XOAUTH2 required"
+msgstr "AUTH XOAUTH2 ያስፈልጋል"
+
+msgid "Exchange: Mailbox database error"
+msgstr "Exchange: የመልእክት ሳጥን ውሂብ ጎታ ስህተት"
+
+msgid "Exchange: Store driver error"
+msgstr "Exchange: የማከማቻ ነጂ ስህተት"
+
+msgid "Exchange: Transport agent error"
+msgstr "Exchange: የትራንስፖርት ወኪል ስህተት"
+
+msgid "Exchange: Content conversion error"
+msgstr "Exchange: የይዘት ልወጣ ስህተት"
+
+msgid "Exchange: Routing error"
+msgstr "Exchange: የመንገድ ማዞሪያ ስህተት"
+
+msgid "Exchange: Mail flow stalled"
+msgstr "Exchange: የኢሜይል ፍሰት ቆሟል"
+
+msgid "Exchange: Shadow redundancy error"
+msgstr "Exchange: የጥላ ተደጋጋሚነት ስህተት"
+
+msgid "Exchange: Safety net error"
+msgstr "Exchange: የደህንነት መረብ ስህተት"
+
+msgid "Exchange: Queue database error"
+msgstr "Exchange: የወረፋ ውሂብ ጎታ ስህተት"
+
+msgid "Exchange: Message throttled"
+msgstr "Exchange: ኢሜይሉ ተገድቧል"
+
+msgid "Postfix: Bounce queue error"
+msgstr "Postfix: የማስመለሻ ወረፋ ስህተት"
+
+msgid "Postfix: Deferred queue error"
+msgstr "Postfix: የራዘመ ወረፋ ስህተት"
+
+msgid "Postfix: Hold queue error"
+msgstr "Postfix: የተያዘ ወረፋ ስህተት"
+
+msgid "Postfix: Incoming queue error"
+msgstr "Postfix: የገቢ ወረፋ ስህተት"
+
+msgid "Postfix: Active queue error"
+msgstr "Postfix: ንቁ ወረፋ ስህተት"
+
+msgid "Postfix: Corrupted queue file"
+msgstr "Postfix: የተበላሸ ወረፋ ፋይል"
+
+msgid "Sendmail: Queue runner error"
+msgstr "Sendmail: የወረፋ ሯጭ ስህተት"
+
+msgid "Sendmail: Alias database error"
+msgstr "Sendmail: የቅጽል ስም ውሂብ ጎታ ስህተት"
+
+msgid "Sendmail: Virtuser table error"
+msgstr "Sendmail: የምናባዊ ተጠቃሚ ሠንጠረዥ ስህተት"
+
+msgid "Sendmail: Mailer definition error"
+msgstr "Sendmail: የላኪ ትርጉም ስህተት"
+
+msgid "Exim: Router configuration error"
+msgstr "Exim: የራውተር ውቅር ስህተት"
+
+msgid "Exim: Transport configuration error"
+msgstr "Exim: የትራንስፖርት ውቅር ስህተት"
+
+msgid "Exim: Director configuration error"
+msgstr "Exim: የዳይሬክተር ውቅር ስህተት"
+
+msgid "Exim: Retry configuration error"
+msgstr "Exim: የእንደገና ሙከራ ውቅር ስህተት"
+
+msgid "Exim: Rewrite configuration error"
+msgstr "Exim: የዳግም ጽሑፍ ውቅር ስህተት"
+
+msgid "Exim: Authentication configuration error"
+msgstr "Exim: የማረጋገጫ ውቅር ስህተት"
+
+msgid "Exim: ACL configuration error"
+msgstr "Exim: የACL ውቅር ስህተት"
+
+msgid "Exim: Local_scan configuration error"
+msgstr "Exim: የLocal_scan ውቅር ስህተት"
+
+msgid "Exim: Lookup configuration error"
+msgstr "Exim: የፍለጋ ውቅር ስህተት"
+
+msgid "Exim: Expansion configuration error"
+msgstr "Exim: የማስፋፊያ ውቅር ስህተት"
+
+msgid "HTTP Protocol Versions"
+msgstr "የኤችቲቲፒ ፕሮቶኮል ስሪቶች"
+
+msgid "Protocol"
+msgstr "ፕሮቶኮል"
+
+msgid "Request %"
+msgstr "የጥያቄ መቶኛ"
+
+msgid "Bandwidth %"
+msgstr "የባንድዊድዝ መቶኛ"
+
+msgid "Each request requires a new connection"
+msgstr "እያንዳንዱ ጥያቄ አዲስ ግንኙነት መፍጠር ይፈልጋል"
+
+msgid "Multiple requests can reuse one connection"
+msgstr "ብዙ ጥያቄዎች አንድ ግንኙነት እንደገና መጠቀም ይችላሉ"
+
+msgid "Multiple requests in parallel over one connection"
+msgstr "ብዙ ጥያቄዎች በአንድ ግንኙነት አማካኝነት በትይዩ ማቀናበር ይቻላል"
+
+msgid "Faster connection, better performance on poor networks"
+msgstr "ፈጣን ግንኙነት፣ በደካማ አውታረ መረቦች ላይ የተሻለ አፈጻጸም"
+
+msgid "No protocol data available"
+msgstr "ምንም የፕሮቶኮል ውሂብ የለም"
+
+msgid "of requests use HTTP/1.0"
+msgstr "የጥያቄዎቹ ኤችቲቲፒ/1.0 ፕሮቶኮል ይጠቀማሉ"
+
+msgid "From access logs"
+msgstr "ከመድረሻ ሎጎች"
+
+msgid "No HTTP/2 requests detected"
+msgstr "ምንም የኤችቲቲፒ/2 ፕሮቶኮል ጥያቄዎች አልተገኙም"
+
+msgid "All requests are HTTP/1.0, no HTTP/2 requests"
+msgstr "ሁሉም ጥያቄዎች ኤችቲቲፒ/1.0 ናቸው፣ ምንም የኤችቲቲፒ/2 ጥያቄዎች የሉም"
+
+msgid "HTTP/3 not detected"
+msgstr "ምንም የኤችቲቲፒ/3 ፕሮቶኮል ጥያቄዎች አልተገኙም"
+
+msgid "all requests do not include QUIC/HTTP/3 protocol requests"
+msgstr "ሁሉም ጥያቄዎች የQUIC/ኤችቲቲፒ/3 ፕሮቶኮል ጥያቄዎችን አያካትቱም"
+
+msgid "Mail Authentication Statistics"
+msgstr "የኢሜይል ማረጋገጫ ስታቲስቲክስ"
+
+msgid "Authentication"
+msgstr "የማረጋገጫ ዓይነት"
+
+msgid "Pass"
+msgstr "ማለፍ"
+
+msgid "Fail"
+msgstr "ውድቀት"
+
+msgid "Softfail"
+msgstr "ለስላሳ ውድቀት"
+
+msgid "Neutral"
+msgstr "ገለልተኛ"
+
+msgid "None"
+msgstr "ምንም"
+
+msgid "Mail Queue Delay Statistics"
+msgstr "የኢሜይል ወረፋ መዘግየት ስታቲስቲክስ"
+
+msgid "Delay Range"
+msgstr "የመዘግየት ክልል"
+
+msgid "Count"
+msgstr "ቁጥር"
+
+msgid "Percentage"
+msgstr "መቶኛ"
+
+msgid "TLS Encryption Statistics"
+msgstr "የTLS ምስጠራ ስታቲስቲክስ"
+
+msgid "TLS Versions"
+msgstr "የTLS ስሪቶች"
+
+msgid "Top Ciphers"
+msgstr "የተለመዱ ሲፈር ስብስቦች"
+
+msgid "robot_hits_detail_both"
+msgstr "ጠቅላላ ጥያቄዎች: %s ጊዜ (መደበኛ ገጽ: %s ጊዜ, robots.txt: %s ጊዜ)"
+
+msgid "robot_hits_detail_only_robots"
+msgstr "ወደ robots.txt ብቻ ደርሷል: %s ጊዜ፣ ሌላ ገጽ ውሂብ አልተገኘም"
+
+msgid "robot_hits_detail_normal"
+msgstr "መደበኛ ገጽ ጥያቄ: %s ጊዜ"
+
+msgid "Troubleshooting"
+msgstr "ችግር መፍቻ"
+
+msgid "Did you use the correct URL?"
+msgstr "ትክክለኛውን ዩአርኤል ተጠቅመዋል?"
+
+msgid "Example:"
+msgstr "ምሳሌ:"
+
+msgid "Did you use correct config parameter?"
+msgstr "ትክክለኛውን የውቅር መለኪያ ተጠቅመዋል?"
+
+msgid "Example: If your config file is awstats.mysite.conf, use -config=mysite"
+msgstr "ምሳሌ: የውቅር ፋይልዎ awstats.mysite.conf ከሆነ፣ -config=mysite ይጠቀሙ"
+
+msgid "Did you create your config file 'awstats.$SiteConfig.conf'?"
+msgstr "'awstats.$SiteConfig.conf' የውቅር ፋይል ፈጥረዋል?"
+
+msgid "If not, you can run \"awstats_configure.pl\" from command line, or create it manually."
+msgstr "ካልሆነ፣ \"awstats_configure.pl\"ን ከትእዛዝ መስመር ማስኬድ ይችላሉ፣ ወይም በእጅ መፍጠር ይችላሉ።"
+
+msgid "Setup"
+msgstr "ማዋቀር"
+
+msgid "file, web server or permissions may be wrong."
+msgstr "ፋይል፣ ድር አገልጋይ ወይም ፈቃዶች የተሳሳቱ ሊሆኑ ይችላሉ።"
+
+msgid "Check config file, permissions and AWStats documentation (in 'docs' directory)."
+msgstr "የውቅር ፋይል፣ ፈቃዶች እና የAWStats ሰነድ ('docs' ማውጫ ውስጥ) ያረጋግጡ።"
+
+msgid "Warning: Can't find language files for \"%s\". English will be used."
+msgstr "ማስጠንቀቂያ: ለ \"%s\" የቋንቋ ፋይሎች አልተገኙም። እንግሊዝኛ ጥቅም ላይ ይውላል።"
+
+#------------------------------------------------------------------------------
+# ስህተት እና ምልክት አያያዝ
+#------------------------------------------------------------------------------
+
+msgid "%s process (ID %s) interrupted by signal %s."
+msgstr "%s ሂደት (መታወቂያ %s) በምልክት %s ተቋርጧል።"
+
+msgid "An AWStats update process seems to be already running for this config file. Try later. If this is not true, remove manually lock file"
+msgstr "ለዚህ የውቅር ፋይል አንድ የAWStats የማዘመን ሂደት ቀድሞውኑ እየሰራ ያለ ይመስላል። እባክዎ በኋላ ይሞክሩ። እውነት ካልሆነ፣ የመቆለፊያ ፋይሉን በእጅ ያስወግዱ"
+
+#------------------------------------------------------------------------------
+# አዲስ የስታቲስቲክስ አርዕስቶች
+#------------------------------------------------------------------------------
+msgid "Report Overview"
+msgstr "የሪፖርት አጠቃላይ እይታ"
+
+msgid "Monthly Statistics"
+msgstr "ወርሃዊ ስታቲስቲክስ"
+
+msgid "Daily Statistics"
+msgstr "ዕለታዊ ስታቲስቲክስ"
+
+msgid "Statistics by Day of Week"
+msgstr "በሳምንቱ ቀን መሠረት ስታቲስቲክስ"
+
+msgid "Hourly Page Views"
+msgstr "በሰዓት የሚታዩ ጊዜዎች ብዛት"
+
+msgid "Traffic Sources"
+msgstr "የትራፊክ ምንጮች"
+
+msgid "Other Sources"
+msgstr "ሌሎች ምንጮች"
+
+msgid "tooltip_1"
+msgstr "በድር ጣቢያው ላይ የጎብኚ ክፍለ ጊዜዎች ብዛት። ከ30 ደቂቃ በላይ እንቅስቃሴ ከሌለ በኋላ እንደገና የሚመጣ ተመሳሳይ ጎብኚ እንደ አዲስ ጉብኝት ይቆጠራል"
+
+msgid "tooltip_2"
+msgstr "በተመረጠው ጊዜ ውስጥ ወደ ድር ጣቢያዎ የመጡ የተለያዩ ጎብኚዎች ብዛት። በአይፒ አድራሻ ላይ የተመሠረተ"
+
+msgid "tooltip_3"
+msgstr "እንደ ገጽ ሆነው የሚቆጠሩ ጥያቄዎች ብዛት (እንደ ኤችቲኤምኤል፣ ፒኤችፒ፣ ኤኤስፒ ያሉ)፣ እንደ ሥዕሎች፣ ሲኤስኤስ፣ ጄኤስ ያሉ የማይንቀሳቀሱ ፋይሎችን አያካትትም"
+
+msgid "tooltip_4"
+msgstr "ወደ አገልጋዩ የተላኩ ጠቅላላ ጥያቄዎች ብዛት፣ ሁሉንም ገጾች፣ ሥዕሎች፣ ሲኤስኤስ፣ ጄኤስ እና ሌሎች ፋይሎች ያካትታል"
+
+msgid "tooltip_5"
+msgstr "አገልጋዩ ለተጠቃሚ ጥያቄ ምላሽ በሚሰጥበት ጊዜ የሚልከው ጠቅላላ የውሂብ መጠን"
+
+msgid "tooltip_13"
+msgstr "በፍለጋ ሞተሮች በኩል ወደ ድር ጣቢያዎ የሚመጣው ትራፊክ ምንጭ ስታቲስቲክስ። የትኛው የፍለጋ ሞተር ትራፊክ እንዳመጣልዎት እና ተጠቃሚዎች የተጠቀሙባቸውን የፍለጋ ቃላት ያሳያል"
+
+msgid "tooltip_14"
+msgstr "ከሌሎች ድር ጣቢያዎች በውጭ አገናኞች በኩል ወደ ድር ጣቢያዎ የሚመጣው ትራፊክ ምንጭ ስታቲስቲክስ። የትኞቹ ድር ጣቢያዎች ወደ እርስዎ እንደሚያገናኙ እና ምን ያህል ትራፊክ እንደሚያመጡ ያሳያል"
+
+msgid "tooltip_15"
+msgstr "ተጠቃሚዎች በፍለጋ ሞተሮች በኩል ድር ጣቢያዎን በሚፈልጉበት ጊዜ የሚጠቀሙባቸው የፍለጋ ቃላት። ቁልፍ ቃል አንድ ቃል ነው፣ ቁልፍ ሀረግ የበርካታ ቃላት ጥምረት ነው"
+
+msgid "tooltip_16"
+msgstr "እንደ ፍለጋ ቦቶች፣ አርቲፊሻል ኢንተሊጀንስ ማሰልጠኛ ቦቶች፣ ተጋላጭነት ስካነሮች ያሉ አውቶማቲክ ፕሮግራሞች። በቅንፍ ውስጥ ያለው ቁጥር መደበኛ ገጽ ጥያቄዎች እና robots.txt ጥያቄዎች ብዛት ያሳያል"
+
+msgid "tooltip_17"
+msgstr "24 ሰዓት የትራፊክ ስርጭት ገበታ። የድር ጣቢያዎ በየቀኑ በእያንዳንዱ ሰዓት ምን ያህል ትራፊክ እንዳለው ያሳያል፣ ተጠቃሚዎች የሚንቀሳቀሱበትን ጊዜ ለመረዳት ይረዳል"
+
+msgid "tooltip_18"
+msgstr "ይህ አምድ በተመረጠው ጊዜ ውስጥ ዕለታዊ/ሳምንታዊ አማካይ እሴቶችን ያሳያል፣ አጠቃላይ አዝማሚያውን እንዲረዱ ይረዳዎታል"
+
+msgid "tooltip_19"
+msgstr "ዝርዝሮችን ለማየት በገበታው ውስጥ ባለው ንጥል ላይ ጠቅ ያድርጉ። የተወሰነ እሴት ለማየት መዳፊትን በገበታው አካል ላይ አንዡሩ"
+
+msgid "tooltip_20"
+msgstr "አሁን ባለው ክልል ውስጥ መመደብ የማይችሉ ውሂቦች፣ በአብዛኛው ባልተለመደ የውሂብ ቅርጸት ወይም ጉድለት ምክንያት ይከሰታል"
+
+msgid "tooltip_21"
+msgstr "የተገኙ ትል ጥቃቶች መዝገቦች። ትል ራሱን የሚያሰራጭ ጎጂ ፕሮግራም ነው፣ በአብዛኛው በአውታረ መረብ ጉድለቶች በኩል ይሰራጫል"
+
+#------------------------------------------------------------------------------
+# የእርዳታ መልዕክት አሳይ - ማህበረሰብ እትም
+#------------------------------------------------------------------------------
+msgid "AWStats %s - Advanced Web Statistics"
+msgstr "AWStats %s - የላቀ የድር ስታቲስቲክስ"
+
+msgid "Copyright (c) 2000-2025 Laurent Destailleur"
+msgstr "የቅጂ መብት (c) 2000-2025 Laurent Destailleur"
+
+msgid "Copyright (c) 2026-latest Community Edition"
+msgstr "የቅጂ መብት (c) 2026-አሁን ማህበረሰብ እትም"
+
+msgid "AWStats comes with ABSOLUTELY NO WARRANTY. It's a free software distributed with a GNU General Public License (See LICENSE file for details)."
+msgstr "AWStats ምንም ዋስትና ሳይኖረው ይመጣል። በጂኤንዩ አጠቃላይ ህዝባዊ ፈቃድ ስር የሚሰራጭ ነጻ ሶፍትዌር ነው (ለዝርዝር የፈቃድ ፋይሉን ይመልከቱ)።"
+
+msgid "Syntax: %s -config=virtualhostname [options]"
+msgstr "አገባብ: %s -config=ምናባዊ አስተናጋጅ ስም [አማራጮች]"
+
+msgid "This runs %s in command line to update statistics (-update option) of a web site, from the log file defined in AWStats config file, or build a HTML report (-output option)."
+msgstr "ይህ በAWStats ውቅር ፋይል ውስጥ ከተገለጸው ሎግ ፋይል የድር ጣቢያ ስታቲስቲክስ ለማዘመን (-update አማራጭ) ወይም የኤችቲኤምኤል ሪፖርት ለመገንባት (-output አማራጭ) በትእዛዝ መስመር %s ን ያስኬዳል።"
+
+msgid "First, %s tries to read %s.virtualhostname.conf as the config file. If not found, %s tries to read %s.conf, and finally the full path passed to -config="
+msgstr "በመጀመሪያ፣ %s የውቅር ፋይሉን ለማንበብ %s.ምናባዊ አስተናጋጅ ስም.conf ይሞክራል። ካልተገኘ፣ %s %s.conf ለማንበብ ይሞክራል፣ እና በመጨረሻም -config= ላይ የተላከውን ሙሉ መንገድ ያነባል"
+
+msgid "Note 1: Config files (*.conf) must be in /etc/awstats, /usr/local/etc/awstats, /etc or same directory than awstats.pl script file."
+msgstr "ማስታወሻ 1: የውቅር ፋይሎች (*.conf) በ /etc/awstats፣ /usr/local/etc/awstats፣ /etc ወይም ከawstats.pl ስክሪፕት ፋይል ጋር በተመሳሳይ ማውጫ ውስጥ መሆን አለባቸው።"
+
+msgid "Note 2: If AWSTATS_FORCE_CONFIG environment variable is defined, AWStats will use it as the 'config' value, whatever is the value on command line or URL."
+msgstr "ማስታወሻ 2: የAWSTATS_FORCE_CONFIG የአካባቢ ተለዋዋጭ ከተገለጸ፣ AWStats በትእዛዝ መስመር ወይም ዩአርኤል ላይ ምንም እንኳን 'config' እሴት አድርጎ ይጠቀመዋል።"
+
+msgid "See AWStats documentation for all setup instructions."
+msgstr "ለሁሉም የማዋቀሪያ መመሪያዎች የAWStats ሰነድ ይመልከቱ።"
+
+msgid "Options to update statistics:"
+msgstr "ስታቲስቲክስ ለማዘመን አማራጮች:"
+
+msgid "  -update        to update statistics (default)"
+msgstr "  -update        ስታቲስቲክስ ያዘምኑ (ነባሪ)"
+
+msgid "  -showsteps     to add benchmark information every %s lines processed"
+msgstr "  -showsteps     በየ %s መስመሮች ሂደት ቤንችማርክ መረጃ ያክሉ"
+
+msgid "  -showcorrupted to add output for each corrupted lines found, with reason"
+msgstr "  -showcorrupted ለተገኘ እያንዳንዱ የተበላሸ መስመር ምክንያቱን ጨምሮ ውጤት ይጨምሩ"
+
+msgid "  -showdropped   to add output for each dropped lines found, with reason"
+msgstr "  -showdropped   ለተገኘ እያንዳንዱ የተጣለ መስመር ምክንያቱን ጨምሮ ውጤት ይጨምሩ"
+
+msgid "  -showunknownorigin  to output referer when it can't be parsed"
+msgstr "  -showunknownorigin   ማመሳከሪያው መተንተን በማይቻልበት ጊዜ ውጤት ያውጡ"
+
+msgid "  -showdirectorigin   to output log line when origin is a direct access"
+msgstr "  -showdirectorigin    ምንጩ ቀጥተኛ መድረሻ በሚሆንበት ጊዜ የሎግ መስመር ውጤት ያውጡ"
+
+msgid "  -updatefor=n   to stop the update process after parsing n lines"
+msgstr "  -updatefor=n    n መስመሮችን ከተነተነ በኋላ የማዘመን ሂደቱን ያቁሙ"
+
+msgid "  -LogFile=x     to change log to analyze whatever is 'LogFile' in config file"
+msgstr "  -LogFile=x      በውቅር ፋይል ውስጥ 'LogFile' ያለውን ለመተንተን ሎጉን ይቀይሩ"
+
+msgid "  Be care to process log files in chronological order when updating statistics."
+msgstr "  ስታቲስቲክስ በሚያዘምኑበት ጊዜ የሎግ ፋይሎችን በቅደም ተከተል ለማካሄድ ይጠንቀቁ።"
+
+msgid "Options to show statistics:"
+msgstr "ስታቲስቲክስ ለማሳየት አማራጮች:"
+
+msgid "  -output      to output main HTML report (no update made except with -update)"
+msgstr "  -output      ዋናውን የኤችቲኤምኤል ሪፖርት ውጤት ያውጡ (-update ካልሆነ በስተቀር ምንም ዝማኔ አይደረግም)"
+
+msgid "  -output=x    to output other report pages where x is:"
+msgstr "  -output=x    ሌሎች ሪፖርት ገጾችን ውጤት ያውጡ x እዚህ ነው:"
+
+msgid "build page of all domains/countries"
+msgstr "የሁሉም ጎራዎች/ሀገሮች ገጽ ገንቡ"
+
+msgid "build page of all hosts"
+msgstr "የሁሉም አስተናጋጆች ገጽ ገንቡ"
+
+msgid "build page of last hits for hosts"
+msgstr "ለአስተናጋጆች የመጨረሻ ጥያቄዎች ገጽ ገንቡ"
+
+msgid "build page of all unresolved IP"
+msgstr "የሁሉም ያልተፈቱ አይፒዎች ገጽ ገንቡ"
+
+msgid "build page of all email senders (maillog)"
+msgstr "የሁሉም ኢሜይል ላኪዎች ገጽ ገንቡ (maillog)"
+
+msgid "build page of last email senders (maillog)"
+msgstr "የመጨረሻ ኢሜይል ላኪዎች ገጽ ገንቡ (maillog)"
+
+msgid "build page of all email receivers (maillog)"
+msgstr "የሁሉም ኢሜይል ተቀባዮች ገጽ ገንቡ (maillog)"
+
+msgid "build page of last email receivers (maillog)"
+msgstr "የመጨረሻ ኢሜይል ተቀባዮች ገጽ ገንቡ (maillog)"
+
+msgid "build page of all logins used"
+msgstr "የሁሉም ጥቅም ላይ የዋሉ የመግቢያ ስሞች ገጽ ገንቡ"
+
+msgid "build page of last hits for logins"
+msgstr "ለመግቢያ ስሞች የመጨረሻ ጥያቄዎች ገጽ ገንቡ"
+
+msgid "build page of all robots/spider visits"
+msgstr "የሁሉም ሮቦት/ሸረሪት ጉብኝቶች ገጽ ገንቡ"
+
+msgid "build page of last hits for robots"
+msgstr "ለሮቦቶች የመጨረሻ ጥያቄዎች ገጽ ገንቡ"
+
+msgid "list most often viewed pages"
+msgstr "በብዛት የሚታዩ ገጾችን ዘርዝሩ"
+
+msgid "list most often viewed pages matching filter"
+msgstr "ከማጣሪያ ጋር የሚዛመዱ በብዛት የሚታዩ ገጾችን ዘርዝሩ"
+
+msgid "list entry pages"
+msgstr "የመግቢያ ገጾችን ዘርዝሩ"
+
+msgid "list entry pages matching filter"
+msgstr "ከማጣሪያ ጋር የሚዛመዱ የመግቢያ ገጾችን ዘርዝሩ"
+
+msgid "list exit pages"
+msgstr "የመውጫ ገጾችን ዘርዝሩ"
+
+msgid "list exit pages matching filter"
+msgstr "ከማጣሪያ ጋር የሚዛመዱ የመውጫ ገጾችን ዘርዝሩ"
+
+msgid "build page with os detailed versions"
+msgstr "የስርዓተ ክወናዎች ዝርዝር ስሪቶች ያሉት ገጽ ገንቡ"
+
+msgid "build page with browsers detailed versions"
+msgstr "የአሳሾች ዝርዝር ስሪቶች ያሉት ገጽ ገንቡ"
+
+msgid "list 'User Agents' with unknown browser"
+msgstr "ያልታወቀ አሳሽ ያላቸውን 'User Agents' ዘርዝሩ"
+
+msgid "list 'User Agents' with unknown OS"
+msgstr "ያልታወቀ ስርዓተ ክወና ያላቸውን 'User Agents' ዘርዝሩ"
+
+msgid "build page of all refering search engines"
+msgstr "የሁሉም የሚያመለክቱ የፍለጋ ሞተሮች ገጽ ገንቡ"
+
+msgid "build page of all refering pages"
+msgstr "የሁሉም የሚያመለክቱ ገጾች ገጽ ገንቡ"
+
+msgid "list all keyphrases used on search engines"
+msgstr "በፍለጋ ሞተሮች ላይ ጥቅም ላይ የዋሉ ሁሉንም ቁልፍ ሀረጎች ዘርዝሩ"
+
+msgid "list all keywords used on search engines"
+msgstr "በፍለጋ ሞተሮች ላይ ጥቅም ላይ የዋሉ ሁሉንም ቁልፍ ቃላት ዘርዝሩ"
+
+msgid "list 'Referers' for 404 errors"
+msgstr "ለ404 ስህተቶች 'Referers' ዘርዝሩ"
+
+msgid "build page of all values for ExtraSection X"
+msgstr "ለExtraSection X የሁሉም እሴቶች ገጽ ገንቡ"
+
+msgid "  -staticlinks           to have static links in HTML report page"
+msgstr "  -staticlinks           በኤችቲኤምኤል ሪፖርት ገጽ ላይ የማይንቀሳቀሱ አገናኞች እንዲኖሩ ያድርጉ"
+
+msgid "  -staticlinksext=xxx    to have static links with .xxx extension instead of .html"
+msgstr "  -staticlinksext=xxx    ከ .html ይልቅ .xxx ቅጥያ ያላቸው የማይንቀሳቀሱ አገናኞች እንዲኖሩ ያድርጉ"
+
+msgid "  -lang=LL     to output a HTML report in language LL (en,de,es,fr,it,nl,zh-cn,...)"
+msgstr "  -lang=LL     በLL ቋንቋ የኤችቲኤምኤል ሪፖርት ውጤት ያውጡ (en,de,es,fr,it,nl,am,...)"
+
+msgid "  -month=MM    to output a HTML report for an old month MM"
+msgstr "  -month=MM    ለአሮጌ ወር MM የኤችቲኤምኤል ሪፖርት ውጤት ያውጡ"
+
+msgid "  -year=YYYY   to output a HTML report for an old year YYYY"
+msgstr "  -year=YYYY   ለአሮጌ ዓመት YYYY የኤችቲኤምኤል ሪፖርት ውጤት ያውጡ"
+
+msgid "  The 'date' options doesn't allow you to process old log file. They only allow you to see a past report for a chosen month/year period instead of current month/year."
+msgstr "  'date' አማራጮች አሮጌ የሎግ ፋይል እንዲያስኬዱ አይፈቅዱም። እነሱ ከአሁኑ ወር/ዓመት ይልቅ ለተመረጠው ወር/ዓመት ጊዜ ያለፈ ሪፖርት እንዲያዩ ብቻ ይፈቅዱላችኋል።"
+
+msgid "Other options:"
+msgstr "ሌሎች አማራጮች:"
+
+msgid "  -debug=X     to add debug informations lesser than level X (speed reduced)"
+msgstr "  -debug=X     ከደረጃ X ያነሱ የማረሚያ መረጃዎችን ያክሉ (ፍጥነት ይቀንሳል)"
+
+msgid "  -version     show AWStats version"
+msgstr "  -version, -v     የAWStats ስሪት አሳይ"
+
+msgid "Now supports/detects:"
+msgstr "አሁን ይደግፋል/ያገኛል:"
+
+msgid "  Web/Ftp/Mail/streaming server log analyzis (and load balanced log files)"
+msgstr "  የድር/ኤፍቲፒ/ኢሜይል/ዥረት አገልጋይ ሎግ ትንተና (እና ጭነት ሚዛናዊ የሎግ ፋይሎች)"
+
+msgid "  Reverse DNS lookup (IPv4 and IPv6) and GeoIP lookup"
+msgstr "  ተገላቢጦሽ ዲኤንኤስ ፍለጋ (IPv4 እና IPv6) እና ጂኦአይፒ ፍለጋ"
+
+msgid "  Number of visits, number of unique visitors"
+msgstr "  የጉብኝቶች ብዛት፣ የልዩ ጎብኚዎች ብዛት"
+
+msgid "  Visits duration and list of last visits"
+msgstr "  የጉብኝት ቆይታ እና የመጨረሻ ጉብኝቶች ዝርዝር"
+
+msgid "  Authenticated users"
+msgstr "  የተረጋገጡ ተጠቃሚዎች"
+
+msgid "  Days of week and rush hours"
+msgstr "  የሳምንቱ ቀናት እና የተጨናነቁ ሰዓቶች"
+
+msgid "  Hosts list and unresolved IP addresses list"
+msgstr "  የአስተናጋጆች ዝርዝር እና ያልተፈቱ አይፒ አድራሻዎች ዝርዝር"
+
+msgid "  Most viewed, entry and exit pages"
+msgstr "  በብዛት የሚታዩ፣ የመግቢያ እና የመውጫ ገጾች"
+
+msgid "  Files type and Web compression (mod_gzip, mod_deflate stats)"
+msgstr "  የፋይል ዓይነት እና የድር መጭመቅ (mod_gzip፣ mod_deflate ስታቲስቲክስ)"
+
+msgid "  Configured Database Statistics"
+msgstr "  የተዋቀረ የውሂብ ጎታ ስታቲስቲክስ"
+
+msgid "  %s domains/countries"
+msgstr "  %s ጎራዎች/ሀገሮች"
+
+msgid "  %s robots"
+msgstr "  %s ሮቦቶች"
+
+msgid "  %s worm's families"
+msgstr "  %s ትል ቤተሰቦች"
+
+msgid "  %s operating systems"
+msgstr "  %s ስርዓተ ክወናዎች"
+
+msgid "  %s browsers (%s with phone browsers database)"
+msgstr "  %s አሳሾች (የስልክ አሳሽ ውሂብ ጎታ ጨምሮ %s)"
+
+msgid "  %s search engines (and keyphrases/keywords used from them)"
+msgstr "  %s የፍለጋ ሞተሮች (እና ከእነሱ ጥቅም ላይ የዋሉ ቁልፍ ሀረጎች/ቁልፍ ቃላት)"
+
+msgid "  All HTTP errors with last referrer"
+msgstr "  ሁሉም የኤችቲቲፒ ስህተቶች ከመጨረሻ አመላካች ጋር"
+
+msgid "  Report by day/month/year"
+msgstr "  በቀን/ወር/ዓመት ሪፖርት"
+
+msgid "  Dynamic or static HTML or XHTML reports, static PDF reports"
+msgstr "  ተለዋዋጭ ወይም የማይንቀሳቀስ ኤችቲኤምኤል ወይም ኤክስኤችቲኤምኤል ሪፖርቶች፣ የማይንቀሳቀስ ፒዲኤፍ ሪፖርቶች"
+
+msgid "  Indexed text or XML monthly database"
+msgstr "  ኢንዴክስ የተደረገበት ጽሑፍ ወይም ኤክስኤምኤል ወርሃዊ ውሂብ ጎታ"
+
+msgid "  And a lot of other advanced features and options..."  
+msgstr "  እና ሌሎች ብዙ የላቀ ባህሪያት እና አማራጮች..."
+
+msgid "  New versions and FAQ at http://www.awstats.org"
+msgstr "  አዳዲስ ስሪቶች እና ተደጋጋሚ ጥያቄዎች በ https://github.com/hestiacn/vstats/issues ላይ ይመልከቱ"

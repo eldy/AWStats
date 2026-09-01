@@ -1,0 +1,3285 @@
+# AWStats Breton (br) translations
+# Copyright (C) 2026 AWStats
+# This file is distributed under the same license as the AWStats package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: AWStats 8.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-10 12:00+0000\n"
+"PO-Revision-Date: 2026-05-10 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Breton\n"
+"Language: br\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=5; plural=(n%10==1 && n%100!=11 && n%100!=71 && n%100!=91 ? 0 : n%10==2 && n%100!=12 && n%100!=72 && n%100!=92 ? 1 : (n%10==3 || n%10==4 || n%10==9) && n%100!=13 && n%100!=14 && n%100!=19 && n%100!=73 && n%100!=74 && n%100!=79 && n%100!=93 && n%100!=94 && n%100!=99 ? 2 : n%1000000==0 && n!=0 ? 3 : 4);\n"
+
+#------------------------------------------------------------------------------
+# Anvioù ar mizioù
+#------------------------------------------------------------------------------
+
+msgid "month_01"
+msgstr "Genver"
+
+msgid "month_02"
+msgstr "C'hwevrer"
+
+msgid "month_03"
+msgstr "Meurzh"
+
+msgid "month_04"
+msgstr "Ebrel"
+
+msgid "month_05"
+msgstr "Mae"
+
+msgid "month_06"
+msgstr "Mezheven"
+
+msgid "month_07"
+msgstr "Gouhere"
+
+msgid "month_08"
+msgstr "Eost"
+
+msgid "month_09"
+msgstr "Gwengolo"
+
+msgid "month_10"
+msgstr "Here"
+
+msgid "month_11"
+msgstr "Du"
+
+msgid "month_12"
+msgstr "Kerzu"
+
+#------------------------------------------------------------------------------
+# Anvioù ar deizioù en ur sizhun
+#------------------------------------------------------------------------------
+
+msgid "DayOfWeek_0"
+msgstr "Sul"
+
+msgid "DayOfWeek_1"
+msgstr "Lun"
+
+msgid "DayOfWeek_2"
+msgstr "Meurzh"
+
+msgid "DayOfWeek_3"
+msgstr "Merc'her"
+
+msgid "DayOfWeek_4"
+msgstr "Yaou"
+
+msgid "DayOfWeek_5"
+msgstr "Gwener"
+
+msgid "DayOfWeek_6"
+msgstr "Sadorn"
+
+#------------------------------------------------------------------------------
+# Elfennoù an etrefas
+#------------------------------------------------------------------------------
+
+msgid "Advanced Web Statistics for"
+msgstr "Stadegoù Web Araokaet evit"
+
+msgid "Statistics for"
+msgstr "Stadegoù evit"
+
+msgid "main"
+msgstr "Trec'hlenn hollek"
+
+# Kemm tem
+msgid "Switch to light mode"
+msgstr "Tremen d'ar mod sklaer"
+
+msgid "Switch to dark mode"
+msgstr "Tremen d'ar mod teñval"
+
+# Unanennoù kapasite
+msgid "TB"
+msgstr "TB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "Bytes"
+msgstr "Eizbitoù"
+
+# Elfennoù furmskrid
+msgid "Filter"
+msgstr "Silañ"
+
+msgid "Exclude filter"
+msgstr "Silañ ar pezh da vezañ lezet a-gostez"
+
+msgid "Top"
+msgstr "Kentañ"
+
+msgid "Full list"
+msgstr "Roll klok"
+
+msgid "Last"
+msgstr "Diwezhañ"
+
+msgid "Average"
+msgstr "Keitad"
+
+msgid "Export"
+msgstr "Ezporzhiañ"
+
+msgid "Details"
+msgstr "Munudoù"
+
+msgid "Version"
+msgstr "Stumm"
+
+# Ranner miliadoù
+msgid "thousands_separator"
+msgstr " "
+
+# Furmat hir an deiziad (evit an hizivadur diwezhañ, ar gweladenn gentañ, h.a.)
+msgid "dateformat_long"
+msgstr "dd/mm/yyyy HH:MM:SS"
+
+# Furmat berr an deiziad (evit tikedennoù ar grafoù, h.a.)
+msgid "dateformat_short"
+msgstr "dd/mm/yyyy HH:MM"
+
+msgid "date_format_year"
+msgstr "%s"
+
+msgid "date_format_month"
+msgstr "%1$s %2$s"
+
+#------------------------------------------------------------------------------
+# Merdeiñ
+#------------------------------------------------------------------------------
+
+msgid "AWStats Month Selector"
+msgstr "Dibaber miz AWStats"
+
+msgid "nav_category_basic"
+msgstr "Teuliadur diazez"
+
+msgid "nav_category_guide"
+msgstr "Tiernaodoù implijout"
+
+msgid "nav_category_reference"
+msgstr "Mammennoù dave"
+
+msgid "nav_category_integration"
+msgstr "Enframmadur hag astennoù"
+
+msgid "nav_category_dev"
+msgstr "Teuliadur an diorrer"
+
+msgid "nav_changelog"
+msgstr "Kont ar c'hemmoù"
+
+msgid "nav_what"
+msgstr "Penaos ez a AWStats"
+
+msgid "nav_license"
+msgstr "Aotreegezh"
+
+msgid "nav_glossary"
+msgstr "Geriadur"
+
+msgid "nav_setup"
+msgstr "Staliañ ha kefluniañ"
+
+msgid "nav_upgrade"
+msgstr "Tiernaod an hizivadur"
+
+msgid "nav_config"
+msgstr "Arventennoù ar c'hefluniadur"
+
+msgid "nav_extra"
+msgstr "Rannoù ouzhpenn"
+
+msgid "nav_tools"
+msgstr "Ostilhoù all"
+
+msgid "nav_faq"
+msgstr "Goulennoù alies"
+
+msgid "nav_security"
+msgstr "Alioù surentez"
+
+msgid "nav_compare"
+msgstr "Keñveriañ"
+
+msgid "nav_benchmark"
+msgstr "Bazhvaloù"
+
+msgid "nav_webmin"
+msgstr "Modul Webmin"
+
+msgid "nav_dolibarr"
+msgstr "Modul Dolibarr"
+
+msgid "nav_contrib"
+msgstr "Degasadennoù"
+
+msgid "nav_plugins"
+msgstr "Diorren luginoù"
+
+msgid "nav_hooks"
+msgstr "Kroginoù al luginoù"
+
+msgid "nav_graphs"
+msgstr "Grafoù al luginoù"
+
+msgid "Back to top"
+msgstr "Distreiñ d'al laez"
+
+msgid "nav_select_month"
+msgstr "Dibabit ur miz"
+
+#------------------------------------------------------------------------------
+# Disoc'hioù stadeg pennañ
+#------------------------------------------------------------------------------
+
+msgid "Unique visitors"
+msgstr "Gweladennerien dibar"
+
+msgid "Visits"
+msgstr "Gweladennoù"
+
+msgid "Visits duration"
+msgstr "Pad ar gweladennoù"
+
+msgid "First visit"
+msgstr "Kentañ hizivadur"
+
+msgid "Last visit"
+msgid_plural "Last visits"
+
+msgid "Visits/Visitor"
+msgstr "Gweladenn/Gweladenner"
+
+msgid "Pages/Visit"
+msgstr "Pajenn/Gweladenn"
+
+msgid "Hits/Visit"
+msgstr "Goulenn/Gweladenn"
+
+msgid "KB/Visit"
+msgstr "KB/Gweladenn"
+
+msgid "KB/Visits"
+msgstr "KB/Gweladenn"
+
+msgid "Pages"
+msgstr "Pajennoù"
+
+msgid "Hits"
+msgstr "Goulennoù"
+
+msgid "Bandwidth"
+msgstr "Ledred"
+
+msgid "duration_format"
+msgstr "%s-%s"
+
+msgid "unit_s"
+msgstr "eilenn"
+
+msgid "unit_min"
+msgstr "munut"
+
+msgid "unit_h"
+msgstr "eur"
+
+msgid "and"
+msgstr "-"
+
+msgid "Device Types"
+msgstr "Doareoù ardivink"
+
+msgid "Device Type"
+msgstr "Doare ardivink"
+
+msgid "Percent"
+msgstr "Dregantad"
+
+msgid "Mobile"
+msgstr "Pellgomzer hezoug"
+
+msgid "Pause & Go"
+msgstr "Kenderc'hel pellgargañ"
+
+msgid "Complete"
+msgstr "Echuet"
+
+msgid "Tablet"
+msgstr "Tablezenn"
+
+msgid "Tv"
+msgstr "Skinwel"
+
+msgid "Wearable"
+msgstr "Ardivink dougus"
+
+msgid "Bot"
+msgstr "Robot"
+
+msgid "Desktop"
+msgstr "Urzhiataer burev"
+
+msgid "Normal browsing traffic"
+msgstr "Trafik furchal reizh"
+
+msgid "Abnormal browsing traffic"
+msgstr "Trafik furchal dizereat"
+
+msgid "Viewed"
+msgstr "Gwelet"
+
+msgid "Not viewed"
+msgstr "N'eo ket bet gwelet"
+
+msgid "Abnormal browsing traffic note"
+msgstr "En trafik furchal dizereat emañ : robotoù ar c'hlaskerien, robotoù AoE, skannerioù gourdrouz ha goulennoù hep heuliañ reolennoù HTTP/HTTPS"
+
+msgid "File size"
+msgstr "Ment ar restr"
+
+msgid "File type"
+msgstr "Seurt restr"
+
+msgid "Downloads"
+msgstr "Pellgargadennoù"
+
+msgid "Request time"
+msgstr "Eur ar goulenn"
+
+msgid "Total requests"
+msgstr "Goulennoù hollad"
+
+msgid "Frequency"
+msgstr "Amzeriad"
+
+msgid "Average frequency"
+msgstr "Keitad an amzeriad"
+
+msgid "Seconds"
+msgstr "Eilennoù"
+
+msgid "First"
+msgstr "Kentañ"
+
+msgid "Mails"
+msgstr "Posteloù"
+
+msgid "Size"
+msgstr "Ment"
+
+msgid "If you remove this file, all statistics for date"
+msgstr "Diwallit : O tilemel ar restr-mañ e vo kollet/adoberiet holl stadegoù an deiziad"
+
+msgid "will be lost/reset."
+msgstr "!"
+
+msgid "Last config file used to build this data file was"
+msgstr "Ar restr kefluniañ implijet da sevel ar restr roadennoù-mañ a oa"
+
+msgid "Position (offset in bytes) in this file for beginning of each section for"
+msgstr "Lec'hiadur (adlamm e eizbitoù) er restr-mañ evit deroù pep rann evit"
+
+msgid "direct I/O access. If you made changes somewhere in this file, you should"
+msgstr "Mont eeun I/O. Ma hoc'h eus graet kemmoù bennak er restr-mañ, e tleit"
+
+msgid "also remove completely the MAP section (AWStats will rewrite it at next update)"
+msgstr "dilemel ivez penn-da-benn rann MAP (AWStats he adskrivo d'an hizivadur war-lerc'h)."
+
+msgid "LastLine    = Date of last record processed - Last record line number in last log - Last record offset in last log - Last record signature value"
+msgstr "LastLine    = Deiziad an enrolladenn diwezhañ bet eilpennet - Niverenn linenn an enrolladenn diwezhañ er c'hoazhvarn diwezhañ - Adlamm an enrolladenn diwezhañ er c'hoazhvarn diwezhañ - Talvoud sinadur an enrolladenn diwezhañ"
+
+msgid "FirstTime   = Date of first visit for history file"
+msgstr "FirstTime   = Deiziad ar gweladenn gentañ evit restr an istor"
+
+msgid "LastTime    = Date of last visit for history file"
+msgstr "LastTime    = Deiziad ar weladenn ziwezhañ evit restr an istor"
+
+msgid "LastUpdate  = Date of last update - Nb of parsed records - Nb of parsed old records - Nb of parsed new records - Nb of parsed corrupted - Nb of parsed dropped"
+msgstr "LastUpdate  = Deiziad an hizivadur diwezhañ - Niver enrolladennoù eilpennet - Niver enrolladennoù kozh eilpennet - Niver enrolladennoù nevez eilpennet - Niver enrolladennoù kontammet eilpennet - Niver enrolladennoù taolet eilpennet"
+
+msgid "TotalVisits = Number of visits"
+msgstr "TotalVisits = Niver a weladennoù"
+
+msgid "TotalUnique = Number of unique visitors"
+msgstr "TotalUnique = Niver a weladennerien zibar"
+
+msgid "MonthHostsKnown   = Number of hosts known"
+msgstr "MonthHostsKnown   = Niver a ostizien anavezet"
+
+msgid "MonthHostsUnKnown = Number of hosts unknown"
+msgstr "MonthHostsUnKnown = Niver a ostizien dianav"
+
+msgid "Cluster ID - Pages - Hits - Bandwidth"
+msgstr "ID klustr - Niver pajennoù - Niver goulennoù - Ledred"
+
+msgid "Hour - Pages - Hits - Bandwidth - Not viewed Pages - Not viewed Hits - Not viewed Bandwidth"
+msgstr "Eur - Niver a bajennoù - Niver a c'houlennoù - Ledred - Pajennoù anwelet - Goulennoù anwelet - Ledred anwelet"
+
+msgid "Date - Pages - Hits - Bandwidth - Visits"
+msgstr "Deiziad - Niver a bajennoù - Niver a c'houlennoù - Ledred - Niver a weladennoù"
+
+msgid "Domain - Pages - Hits - Bandwidth"
+msgstr "Domani - Niver a bajennoù - Niver a c'houlennoù - Ledred"
+
+msgid "The %s first Pages must be first (order not required for others)"
+msgstr "War ar bajenn degemer ne vez diskwelet nemet ar %s pajenn gentañ gant ar muiañ a weladennoù. Gwelet ar roll klok war ar bajenn munudoù."
+
+msgid "Host - Pages - Hits - Bandwidth - Last visit date - [Start date of last visit] - [Last page of last visit]"
+msgstr "Ostiz - Niver a bajennoù - Niver a c'houlennoù - Ledred - Eur ar weladenn ziwezhañ - [Eur deroù ar weladenn ziwezhañ] - [Pajenn diwezhañ ar weladenn ziwezhañ]"
+
+msgid "[Start date of last visit] and [Last page of last visit] are saved only if session is not finished"
+msgstr "[Eur deroù ar weladenn ziwezhañ] hag [Pajenn diwezhañ ar weladenn ziwezhañ] ne vezont enrollet nemet ma n'eo ket echu an dalc'h"
+
+msgid "The first %s items are sorted by hits in descending order; order of the remaining items is undefined."
+msgstr "An %s kentañ a zo renket hervez an niver a skoioù en urzh diskennus; urzh an elfennoù all n'eo ket termenet."
+
+msgid "Login - Pages - Hits - Bandwidth - Last visit"
+msgstr "Implijer kevreet - Niver a bajennoù - Niver a c'houlennoù - Ledred - Eur ar weladenn ziwezhañ"
+
+msgid "Robot ID - Hits - Bandwidth - Last visit - Hits on robots.txt"
+msgstr "ID robot - Niver a c'houlennoù - Ledred - Eur ar weladenn ziwezhañ - Niver a c'houlennoù evit robots.txt"
+
+msgid "Worm ID - Hits - Bandwidth - Last visit"
+msgstr "ID preñv - Niver a c'houlennoù - Ledred - Eur ar weladenn ziwezhañ"
+
+msgid "EMail - Hits - Bandwidth - Last visit"
+msgstr "Postel - Niver a c'houlennoù - Ledred - Eur ar weladenn ziwezhañ"
+
+msgid "The first %s email addresses are sorted by hits in descending order; order of the remaining addresses is undefined."
+msgstr "An %s chomlec'h postel kentañ a zo renket hervez an niver a skoioù en urzh diskennus; urzh ar chomlec'hioù all n'eo ket termenet."
+
+msgid "URL - Pages - Bandwidth - Entry - Exit"
+msgstr "URL - Niver a bajennoù - Ledred - Moned - Mont er-maez"
+
+msgid "Files type - Hits - Bandwidth - Bandwidth without compression - Bandwidth after compression"
+msgstr "Seurt restr - Niver a c'houlennoù - Ledred - Ledred a-raok an daskor - Ledred goude an daskor"
+
+msgid "Request Time Range - Request Time Frequency"
+msgstr "Korzenn eur ar goulenn - Niver a c'houlennoù"
+
+msgid "Payload Range - Payload Frequency"
+msgstr "Korzenn ment ar restr - Niver a restroù"
+
+msgid "Session range - Number of visits"
+msgstr "Korzenn pad an dalc'h - Niver a weladennoù"
+
+msgid "URL with %s errors - Hits"
+msgstr "URL gant %s fazi - Niver a c'houlennoù"
+
+msgid "Last URL referrer"
+msgstr "URL daveer diwezhañ"
+
+msgid "Errors - Hits - Bandwidth"
+msgstr "Fazioù - Niver a c'houlennoù - Ledred"
+
+msgid "Search keywords - Number of search"
+msgstr "Gerioù-alc'hwez klask - Niver a glaskoù"
+
+msgid "Only top %s keywords shown on main page (sorted by search count). See full list on detail page."
+msgstr "War ar bajenn degemer ne vez diskwelet nemet ar %s ger-alc'hwez kentañ hervez niver ar c'hlaskoù. Gwelet ar roll klok war ar bajenn munudoù."
+
+msgid "Search keyphrases - Number of search"
+msgstr "Frazoù-alc'hwez klask - Niver a glaskoù"
+
+msgid "Only top %s keyphrases shown on main page (sorted by search count). See full list on detail page."
+msgstr "War ar bajenn degemer ne vez diskwelet nemet ar %s frazenn-alc'hwez kentañ hervez niver ar c'hlaskoù. Gwelet ar roll klok war ar bajenn munudoù."
+
+msgid "External page referers - Pages - Hits"
+msgstr "Daveer pajenn diavaez - Niver a bajennoù - Niver a c'houlennoù"
+
+msgid "Only top %s external referrers shown on main page (sorted by pages). See full list on detail page."
+msgstr "War ar bajenn degemer ne vez diskwelet nemet an %s daveer diavaez kentañ hervez niver ar pajennoù. Gwelet ar roll klok war ar bajenn munudoù."
+
+msgid "Search engine referers ID - Pages - Hits"
+msgstr "ID daveer klasker - Niver a bajennoù - Niver a c'houlennoù"
+
+msgid "Origin - Pages - Hits"
+msgstr "Gourc'han - Niver a bajennoù - Niver a c'houlennoù"
+
+msgid "Unknown referer Browser - Last visit date"
+msgstr "Daveer merdeer dianav - Eur ar weladenn ziwezhañ"
+
+msgid "Unknown referer OS - Last visit date"
+msgstr "Daveer OS dianav - Eur ar weladenn ziwezhañ"
+
+msgid "Screen size - Hits"
+msgstr "Ment skramm - Niver a c'houlennoù"
+
+msgid "Browser ID - Hits - Pages"
+msgstr "ID merdeer - Niver a c'houlennoù - Niver a bajennoù"
+
+msgid "Downloads - Hits - Bandwidth"
+msgstr "Pellgargadennoù - Niver a c'houlennoù - Ledred"
+
+msgid "Protocol - Hits - Bandwidth"
+msgstr "Keval - Niver a c'houlennoù - Ledred"
+
+msgid "Icon Status - Type:200:404:Other"
+msgstr "Statud al luguennoù - Doare :200:404:All"
+
+#------------------------------------------------------------------------------
+# Troidigezhioù ar prantadoù eur
+#------------------------------------------------------------------------------
+
+msgid "period_00"
+msgstr "Hanternoz · Ar stadegoù a gousk, c'hwi a lenn c'hoazh? Karantez wirion"
+
+msgid "period_01"
+msgstr "Un eur diouzh ar mintin · Piv zo o sellet ken abred? Diankousk pe distro eus al labour"
+
+msgid "period_02"
+msgstr "Div eur diouzh ar mintin · Robotoù zo c'hoazh o labourat, startoc'h int c'hoazh"
+
+msgid "period_03"
+msgstr "Teir eur diouzh ar mintin · Kêr a gousk, ar servijer a labour, pioc'h a goll?"
+
+msgid "period_04"
+msgstr "Pevar eur diouzh ar mintin · Ar steredenn skedusañ en deñvalijenn eo ho skramm pe golier ar servijer"
+
+msgid "period_05"
+msgstr "Pemp eur diouzh ar mintin · Al labous abred a bak ar c'hevien, ar robot abred a bak ar roadennoù"
+
+msgid "period_06"
+msgstr "C'hwec'h eur diouzh ar mintin · Unan zo savet, unan all kousket c'hoazh, kenrouedad ne gousk morse"
+
+msgid "period_07"
+msgstr "Seizh eur diouzh ar mintin · Poent an darzh en ti-boutin, poent ivez da verdeiñ"
+
+msgid "period_08"
+msgstr "Eizh eur diouzh ar mintin · Petra kentañ d'ober pa erruer: sellet ouzh roadennoù dec'h"
+
+msgid "period_09"
+msgstr "Nav eur diouzh ar mintin · Eurvezhioù aour, 'vez ehan ivez hep re"
+
+msgid "period_10"
+msgstr "Dek eur diouzh ar mintin · Poenn ar c'hafe, da sellet hag-eñ eo kresket an darzh"
+
+msgid "period_11"
+msgstr "Unnek eur diouzh ar mintin · Un eurvezh c'hoazh a-raok merenn"
+
+msgid "period_12"
+msgstr "Kreisteiz · Servijer : aet oc'h holl da zebriñ, diskuizhañ a rin ivez"
+
+msgid "period_13"
+msgstr "Un eur goude kreisteiz · Kousket a ra an ene, mes ar roadennoù ne gouskont ket"
+
+msgid "period_14"
+msgstr "Div eur goude kreisteiz · Poent ar roched vihan, 'zo matoc'h c'hoazh gant roadennoù"
+
+msgid "period_15"
+msgstr "Teir eur goude kreisteiz · Tres an darzh-hiziv, ha kar a-wenn eo d'ho trivliadur?"
+
+msgid "period_16"
+msgstr "Pevar eur goude kreisteiz · X eurvezh a chom a-raok kuitaat al labour, an darzh a red muioc'h"
+
+msgid "period_17"
+msgstr "Pemp eur goude kreisteiz · Echuet evit an deiz! Met ar servijer a labour c'hoazh"
+
+msgid "period_18"
+msgstr "C'hwec'h eur diouzh an noz · Poenn ar pred, ur filmig evit diskuizhañ"
+
+msgid "period_19"
+msgstr "Seizh eur diouzh an noz · Ur mare pouezus, an darzh uhelañ, servijer : 'bado"
+
+msgid "period_20"
+msgstr "Eizh eur diouzh an noz · Kousket war ar gourvezvank, c'hwi eo ar 114514vet gweladenner"
+
+msgid "period_21"
+msgstr "Nav eur diouzh an noz · Deuet eo an noz, gweladenner noz o sellet dre guzh +1"
+
+msgid "period_22"
+msgstr "Dek eur diouzh an noz · Roadennoù an deiz o tont, nec'het?"
+
+msgid "period_23"
+msgstr "Unnek eur diouzh an noz · AWStats : poent mont da gousket, labour a vo warc'hoazh"
+
+#------------------------------------------------------------------------------
+# Mentoù an eur
+#------------------------------------------------------------------------------
+
+msgid "Period"
+msgstr "Prantad stadeg"
+
+msgid "Year"
+msgstr "Bloaz"
+
+msgid "Month"
+msgstr "Miz"
+
+msgid "Months"
+msgstr "Mizioù"
+
+msgid "Date"
+msgstr "Deiz"
+
+msgid "Day"
+msgstr "Deiz"
+
+msgid "Hour"
+msgstr "Eur"
+
+msgid "Hours"
+msgstr "Eurvezhioù"
+
+msgid "Day of week"
+msgstr "Deiz ar sizhun"
+
+msgid "When"
+msgstr "Pegoulz"
+
+msgid "%s Server Management Panel"
+msgstr "Panel evezhiañ servijerioù %s "
+
+msgid "Server Administration"
+msgstr "Disoc'h eeun hag efedus evit ho servijer"
+
+#------------------------------------------------------------------------------
+# Ment ar weladennerien
+#------------------------------------------------------------------------------
+
+msgid "Invalid URL Parameters"
+msgstr "Arventenn URL didalvoud"
+
+msgid "The requested page cannot be loaded due to invalid or malformed URL parameters."
+msgstr "Ne c'hall ket bezañ karget ar bajenn goulennet abalamour d'arventenn URL didalvoud pe fazius."
+
+msgid "This may be caused by typing an incorrect URL, missing parameter separators, or using an invalid configuration name."
+msgstr "Gallout a ra bezañ abalamour m'eo bet skrivet un URL fazius, ez eus berr-dorrerioù a vank pe ez eus bet implijet un anv kefluniadur didalvoud."
+
+msgid "Please check the URL you entered and ensure all parameters are correctly formatted."
+msgstr "Gwiriekait an URL hoc'h eus skrivet ha bezit sur eo furmadiezh mat an holl arventennoù."
+
+msgid "SiteDomain parameter not defined in your config/domain file, or you may not have execution permission on the file."
+msgstr "N'ouzhver Parameter SiteDomain ebet hoc'hall bezañ termenet er restr config/domain, pe marteze n'ho peus ket a aotre seveniñ war ar restr."
+
+msgid "Please run as Administrator to set permissions"
+msgstr "Kit en-dro evel Merour evit aotreañ ar gwirioù"
+
+msgid "This directory lacks read permission"
+msgstr "An teuliad-mañ n'eus ket a aotre lenn"
+
+msgid "Please set read permission for directory"
+msgstr "Lakait un aotre lenn evit an teuliad"
+
+msgid "Missing required parameter in config file"
+msgstr "Diank eo un arventenn rekis er restr kefluniadur"
+
+msgid "Please check that 'DirData' is defined."
+msgstr "Gwiriit mar plij ez eus termenet 'DirData'."
+
+msgid "Domain name in browser address appears to be missing or incomplete"
+msgstr "Mankout pe diglok eo anv domani an ajañs merdeer"
+
+msgid "Please check the URL parameter"
+msgstr "Gwiriit arventenn URL mar plij"
+
+msgid "Format description"
+msgstr "Deskrivadur furmat"
+
+msgid "Please set execute permission"
+msgstr "Lakit aotre seveniñ mar plij"
+
+msgid "Or if you prefer numeric mode"
+msgstr "Pe mar kavit gwelloc'h ar mod niverel"
+
+msgid "View Report Directly"
+msgstr "Gwelet an destivell war-eeun"
+
+msgid "AWStats Log Viewer"
+msgstr "AWStats gwellerez kazetennoù"
+
+msgid "Month Selection"
+msgstr "Dibab miz"
+
+msgid "Who"
+msgstr "Piv"
+
+msgid "Visitors"
+msgstr "Gweladennerien"
+
+msgid "Countries"
+msgstr "Broioù/rannvroioù"
+
+msgid "flag_icon"
+msgstr "Banniel"
+
+msgid "Country-Region-City"
+msgstr "Bro/Rannvro/Kêr"
+
+msgid "Code"
+msgstr "Kod"
+
+msgid "Known"
+msgstr "Anavezet"
+
+msgid "unknownos"
+msgstr "reizhiad korzenneg dianav"
+
+msgid "unknownbrowser"
+msgstr "merdeer dianav"
+
+msgid "Unresolved IP Address"
+msgstr "Chomlec'h IP diresis"
+
+msgid "Unknown File Type"
+msgstr "Seurt restr dianav"
+
+msgid "Unknown Size"
+msgstr "Ment dianav"
+
+msgid "Unknown Time"
+msgstr "Eur ar goulenn dianav"
+
+msgid "Unknown Browser"
+msgstr "Merdeer dianav"
+
+msgid "Unknown OS"
+msgstr "Reizhiad korzenneg dianav"
+
+msgid "Unknown Visitor"
+msgstr "Gweladenner dianav"
+
+msgid "Unknown Visitor (Total)"
+msgstr "Gweladennerien zianav (hollad)"
+
+msgid "Unknown Country"
+msgstr "Bro/rannvro dianav"
+
+msgid "Unknown Country (Region)"
+msgstr "Bro/rannvro dianav (hollad)"
+
+msgid "Unknown Visitor (Title)"
+msgstr "Gweladenner dianav (titl)"
+
+msgid "PageStayTime"
+msgstr "Ne c'hall ket bezañ jedet amzer ar chom war ar bajenn"
+
+msgid "Unknown OS (Link)"
+msgstr "Reizhiad korzenneg dianav (liamm)"
+
+msgid "Unknown OS (Row)"
+msgstr "Reizhiad korzenneg dianav (roll)"
+
+msgid "Unknown Browser (Link)"
+msgstr "Merdeer dianav (liamm)"
+
+msgid "Unknown Browser (Row)"
+msgstr "Merdeer dianav (roll)"
+
+msgid "Unknown Screen"
+msgstr "Ment skramm dianav"
+
+msgid "Login"
+msgstr "Anv implijer"
+
+msgid "Anonymous"
+msgstr "Dizanv"
+
+msgid "Robots"
+msgstr "Robotoù"
+
+msgid "Different robots"
+msgstr "Robotoù disheñvel"
+
+msgid "Hits on robots.txt"
+msgstr "An darzh 'furchal direizh' krouet gant robotoù ar c'hlaskerien a-us ne vez ket lakaet er grafoù all. Nemet an niver war-lerc'h '+' a gont ar gweladennoù deuet a-benn eus ar restr 'robots.txt'"
+
+msgid "Worms"
+msgstr "Preñved"
+
+msgid "Different worms"
+msgstr "Preñved disheñvel"
+
+msgid "Target"
+msgstr "Pal"
+
+msgid "Grabber"
+msgstr "Skaraber"
+
+#------------------------------------------------------------------------------
+# Deskrivadurioù furmadoù restroù
+#------------------------------------------------------------------------------
+
+msgid "mime_text"
+msgstr "TXT (Restr testenn blaen. Testenn blaen hep furmadur ebet, standartezet gant kod ASCII e 1963. Diazez pep kod tarzh, restr kefluniadur ha log reizhiad. Gant e reolennoù dibenn linenn etre-platform (CRLF e Windows, LF e Unix), chom a ra ar standart eskemm roadennoù hollekusañ er bed urzhiataer)"
+
+msgid "mime_log"
+msgstr "LOG (Log mont-en-dre ar reizhiad. Restr testenn blaen a enroll stad mont-en-dre ar reizhiad korvoiñ, ar c'hernel hag ar meziantoù. Ennañ logioù moned Nginx/Apache (Log Kenaozet) ha reolennadur syslog. Ar vammenn roadennoù greiz eo evit diskoulmañ kudennoù, dielfennañ berzhusted ha auditerezh surentez)"
+
+msgid "mime_page"
+msgstr "HTML (Pajenn web hipertestenn. Diazez hollek ar World Wide Web krouet gant Tim Berners-Lee e 1989. Ur yezh vermenadur hipertestenn hollek digoust. Standartezet eo bet ar spesad HTML5 gant ar W3C e 2014. A-enep nativel eo d'ar media strishadur, d'ar etreobererezh semantek ha d'ar c'hinadur pajennoù fluidek. Priz Turing e 2016)"
+
+msgid "mime_khtml"
+msgstr "KHTML (Mekanik patrom pajenn web. Spesad mekanik rentañ ar merdeer KDE 2.0 eus 1998. Ur skouer eo e kumuniezh an open source evit diazez ar rentañ web modern. E hêrezh teknikel a awenas ha a zegasas da naskoù WebKit an Apple ha Blink Google, hag a endalc'h hiziv c'hoazh he donezon dre arkitekturoù pajennoù web dinamik modern)"
+
+msgid "mime_script"
+msgstr "SCRIPT (Skript dinamik ezharmenet. Rummad hollek ar gwazhioù tarzh a vez lennet ha sevenet linenn gant linenn gant un ezharner pe ur c'hoarier d'ar mare. Ennañ ASP, JSP, CGI ha Tcl, implijet kalz evit etrefasioù porched hollek d'ar servijer, evit kontrollañ prosessoù emgefre ha evit pegadur trevelloù live-reizhiad)"
+
+msgid "mime_js"
+msgstr "JavaScript (Skript. Endro programmiñ naturel ar merdeer Netscape e 1995. E 1997 e voe diazezet ar standart greantel ECMAScript. E 2009 e ganedigezh an ezharner Node.js a dorras harzhoù ar merdeer hag a zigoras an arkitekturañ asinkron ha nann-stankaus full-stack, asambles gant ekosistem pakadoù npm, an hirañ er bed)"
+
+msgid "mime_py"
+msgstr "Python (Skript. Ur yezh skriptañ ezharmenet a live uhel krouet gant Guido van Rossum e 1991. Gant he lennusted dre ret e-keñver al lec'hiañ hag he c'heal toud- liesstumm, ez eo deuet da vezañ ar standart greantel evit arkitekturañ web modern, skiant roadennoù full-stack, stumadur patromoù IAG (AI) ha trevadur emgefre ha trevadur nativel (cloud-native) e bed ar DevOps)"
+
+msgid "mime_sh"
+msgstr "Shell (Skript. Skript ezharner urzhioù standart eus mare Unix (1971). Ennañ reolennadurioù urzhioù live-kernel evel Bash, Sh, Dash, hag a vez sevenet gant al lostger .sh. Pegadur hollek live-kernel eo evit kontrollañ prosessoù izel, kefluniadur endro hep staliañ hag implijadur emgefre en holl reizhiadoù Unix modern)"
+
+msgid "mime_rb"
+msgstr "Ruby (Skript. Yezh skriptañ kentelius-objed krouet gant Yukihiro Matsumoto (Matz) e 1995. Gant ar brederouriezh sevel diazezet war an anaoudegezh diorroer, he framm Ruby on Rails a zispakas ar patrom diorren 'Convention over Configuration (CoC)' evit arkitekturañ web modern a live uhel)"
+
+msgid "mime_pl"
+msgstr "Perl (Skript. Yezh skriptañ feukadel krouet gant Larry Wall e 1987. Enklasker ar merour pakadoù modern (CPAN), lesanvet 'Goulliog Suis' ar pleustradur testenn. E mod CGI modern e talc'h da vezañ un diaz uhel-fiziañs e domani an dielfennañ logioù, gant ur spiradur izel-tre e-keñver ar c'hortoz fizikel hag ur pledadur efedus e-keñver an eztaoladennoù reoliek)"
+
+msgid "mime_php"
+msgstr "PHP (Pajenn web dinamik. Krouet gant Rasmus Lerdorf e 1995, ha treset evit diorren ar web. Ar greizenn teknikel eo a gas war-raok ouzhpenn 70% eus al lec'hiennoù web er bed. E-leizh a zoug a ra ar meziantoù bras e-lec'h produiñ evel WordPress ha Wikipedia. Gant degasadenn e ezharner JIT (Just-In-Time) e PHP 8, ez eo emdroet war-du ur servijer full-stack berzhus uhel)"
+
+msgid "mime_image"
+msgstr "IMAGE (Rummad ar pezhioù skeudenn. Rummad hollek ennañ skeudennoù gweredoù gant/dreistkollet (lossy/lossless), skeudennoù respontus modern ha tresadennoù vektor. Un taolennvan greiz eo evit priziañ karg kargañ danvez-arseller ul lec'hienn, feur aketañ an e-tal (cache) war-du ar c'hliant hag oberadur gwazhband ar mediaoù)"
+
+msgid "mime_document"
+msgstr "DOCUMENT (Rummad an teulioù frammet. Rummad hollek ennañ testenn blaen, follennoù jediñ, teulioù furmad fiks (PDF) ha yezhoù vermenadur skañv. Un taolennvan greiz eo evit ar stadegoù e-keñver dasparzh goulev diaz keleier stadel a-berzh ar servijer, pellgargañ danvezioù jediñ an embregerezhioù hag evit rikloz ar gwazhioù testenn)"
+
+msgid "mime_package"
+msgstr "PACKAGE (Rummad ar meziantoù kenaozet. Rummad hollek ennañ programmoù ezharmadus naturel ar reizhiad korvoiñ, levraouegoù liamm e-pad al labour (DLL/SO) ha pakadoù staliañ ar meziantoù. Lakaet alies e-penn ar ventiñ evit priziañ mont en-dro ez-karg (bandwidth) lec'hiennoù dasparzh ar meziantoù)"
+
+msgid "mime_archive"
+msgstr "ARCHIVE (Restroù gwasket. Rummad hollek ar pakadoù roadennoù gwasket diazezet war algoritmoù evel DEFLATE, LZMA. Er gwiskad kenrouedad, estreget dasparzh hengounel ar pakadoù, ennañ ivez gwazhioù gant kenderc'hiñ Gzip (1992) ar raktres GNU. Daoust ma vez gwelet nebeut a-walc'h a implij eus algoritm Brotli er evit brasterezhioù modern, chom a ra ar rummad-mañ ul lavarenn greiz evit gargañ ez-karg ar servijerioù hag izelaat ar gwask er gwiskad treuzkas)"
+
+msgid "mime_audio"
+msgstr "AUDIO (Rummad ar gwazhioù niverel son. Rummad hollek ennañ son gwasket, levrioù-lavar hag endalc'herioù son kendiviz. Diazezet war ur c'hodadur reoliek son, implijet evit evezhiañ feur rikloz ar gwazhioù son war lec'hiennoù liesmedia, gwazhband ar c'hendiviz hag oberadenn al liammoù hir)"
+
+msgid "mime_video"
+msgstr "VIDEO (Rummad ar gwazhioù niverel video. Rummad hollek ennañ endalc'herioù video gant uhel-spisverzh, tresadennoù-bev modern ha tammoù kendiviz. Un taolennvan greiz eo e-pad ar c'harg rouedad uhel evit priziañ dreistpouezh gwazhband ar servijer ha berzhusted ar Rouedad Dasparzh Danvez (CDN))"
+
+msgid "mime_jscript"
+msgstr "JScript (Skript. Ur skript perc'henniezh ijin-warez bet diorroet gant Microsoft e 1996 evit Internet Explorer 3.0. Evel kevezer d'ar JavaScript klasel, e oa an nask greiz evit Windows Script Host (WSH) hag evit backendoù kozh ASP)"
+
+msgid "mime_json"
+msgstr "JSON (Roadennoù frammet. Furmad skañv heuliata roadennoù evit an eskemm savet gant Douglas Crockford e 2001. Ur sav-treust diazezet war goubladoù talvoudegezhioù-alc'hwez ha taolennadoù testenn, gant un lennusted uhel gant an dud ha perzhioù ezharmadur nann-stankaus. Ar standart 'facto' eo evit APIoù web modern, arkitekturañ mikro-servijoù hag etreoberiadur gant patromoù bras)"
+
+msgid "mime_vbs"
+msgstr "VBScript (Skript. Adstumm eus yezh ar skriptoù bet embannet gant Microsoft gant IE 3.0 e 1996. Bez e oa an nask evit al lec'hiennoù ASP kozh ha melestradur ar sistem Windows. Bremañ eo bet dilezet ha skarzhet gant Microsoft e kernelell nevesañ Windows 11. Un teknologiezh relek eo)"
+
+msgid "mime_conf"
+msgstr "CONF (Restr kefluniadur ar reizhiad. Rummad ar restroù a vaga a-hed pad an trevalloù roadennoù parametroù endro un meziant en un doare testenn blaen. Enno reolennadurioù INI ha reolennadurioù modern YAML, TOML, JSON. E sistem Linux emaint muioc'h e kavout er c'havlec'h /etc. Ur gourc'hemenn greiz eo evit ar mont-en-dre reizhiad)"
+
+msgid "mime_css"
+msgstr "CSS (Follenn a stumm. Standart W3C e 1996, unan eus an tri greiz evit an talbenn (front-end) gant HTML ha JS. Dre zirolladur modul CSS2 (lec'hiadur) ha CSS3, a-enep nativel eo d'ar voestoù laosk (Flexbox), d'ar grid ha d'ar c'heal 'response design' evit an endroioù lies. Ar reolenn domaniant meurbet eo evit distagañ ar pajennoù web hag o diskwel er merdeerioù modern)"
+
+msgid "mime_xsl"
+msgstr "XSL (Follenn a stumm. Standart W3C e 1999, ennañ yezhoù treuzfurmadur XSLT ha yezh oberiadur XPath. Implijet evit diskwel roadennoù frammet XML e HTML, PDF pe testenn blaen. Hiziv-an-deiz, en diorren modern, eo bet erlerc'hiet e ekosistem kalz gant mekanegoù patromoù skañvoc'h ha gant ar furmad JSON)"
+
+msgid "mime_runtime"
+msgstr "Restr ezharmadus (furmmadoù ezharmadur naturel ar reizhiad korvoiñ evel EXE, ELF, Mach-O. Ennañ kod-melin kenaozet live izel, ar poent moned ha ditouroù kargañ ar reizhiad)"
+
+msgid "mime_library"
+msgstr "Restr levraoueg (Levraouegoù liamm pe dinamik (DLL, SO, dylib). Enno arouezioù troerien ha kod adsavet evit bezañ galvet ha karget e-pad al labour gant programmoù all)"
+
+msgid "mime_swf"
+msgstr "Flash (Animadur (Macromedia Flash). Standart evit an animadurioù web etreoberiat, diorroet gant Macromedia e 1996, prenet gant Adobe e 2005. Beleac'h ar web evit an animadurioù hag ar c'hoarioù. Poentoù kizidik : bez' ez eus ezhomm ur plugin, skor ebet war ar pellgomzerioù hezoug, riskl surentez uhel. E 2017 eo bet disklêriet e baouez gant Adobe, hag e 2020 eo bet paouezet klok. Erlec'hiet gant HTML5/CSS3/JS)"
+
+msgid "mime_dtd"
+msgstr "DTD (Termenadur doare an teul (Document Type Definition). Embannet gant XML 1.0 e 1998, evit termeniñ framm an teulioù XML/HTML ha gwiriañ o zerrienn. En diorren modern, eo bet erlerc'hiet tamm ha tamm gant digemmennoù plegusoc'h evel XML Schema pe RELAX NG)"
+
+msgid "mime_csv"
+msgstr "CSV (Furmad roadennoù. Talvoudoù rannet gant skejoù. Ur furmad taolennoù testenn blaen hollek eus mare an datorioù bras (klenner IBM Fortran) e 1972. Kenaozet ent-ofisiel gant an RFC 4180 e 2005. Ur standart eskemm roadennoù nann-stankaus a-dreuz ar reizhiadoù hag ar yezhoù. Implijet kalz evit enporzhiañ hag ezporzhiañ en Excel, er bazioù roadennoù ereadurel hag en dielfennañ roadennoù (Pandas))"
+
+msgid "mime_cur"
+msgstr ".cur (Restr bizied logodenn (kurzor). Furmat .cur, evit personelaat stumm ar bizied logodenn (da sk. bizied biz-meud war ar pajennoù web, eoulier ar gortoz e sistemioù...). Kar eo d'ar furmad .ico, met ouzhpennet e vez dezhañ ur poent 'tomm' – lec'h wir ar klik eo. Istor : degaset gant Windows 3.1 (1992), un elfenn dibar e oa e-pad ar mare ma troe an etrefas grafik eus al linenn-urzh d'al logodenn)"
+
+msgid "mime_jnlp"
+msgstr "Java Web Start (Un teknologiezh dasparzh meziantoù burev Java e 2000. A lañse ur meziant Java a-bell dre ur restr .jnlp. En deus paouezet abalamour d'ar c'hudennoù surentez ha d'an doareoù dasparzh modern)"
+
+msgid "mime_lit"
+msgstr "Microsoft Reader (Levr elektronek. Furmat LIT (2000) gant Microsoft. Peurechu. Hiziv e c'haller e dreiñ da EPUB pe PDF gant binvioù evel Calibre)"
+
+msgid "mime_svg"
+msgstr "SVG (Skeudenn vektor. Standart W3C e 1999. Ur furmad skeudennoù vektor daou-zomaniezh diazezet war XML. Gant an avantaj na goll ket e barregezh er c'hreskadur hag an treuskasadur testenn er gwazh. Skoret ent-nativel gant an holl verdeerioù modern. Implijet evit tresadennoù rikl, logoioù ha tresadennoù-bev vektor. Ar reolenn greiz eo evit ar grafikennoù web modern)"
+
+msgid "mime_ai"
+msgstr "AI (Skeudenn vektor. Furmat vektor perc'henniezh diorroet gant Adobe e 1987. Ar reolenn greiz eo evit diorren an aozadurioù (layout) er brassañ, ar moullañ hag an tresadennoù bruderezh (branding). Skorañ a ra meur a liveadur hag roadennoù vektor aozadur a live uhel. Ar pezh a vez kavet gwelloc'h gant an arzourien vicher)"
+
+msgid "mime_phshop"
+msgstr "PSD (Skeudenn liveadur (layers). Furmat mammenn bitmap perc'henniezh gant Adobe ha Photoshop e 1990. Skorañ a ra meur a liveadur, kanolioù, maskloù hag ur c'hempenn hep koll. Deuet eo da vezañ standart ar vicher evit an tresadennoù niverel hag an treserezh)"
+
+msgid "mime_ttf"
+msgstr "TrueType (Nodrez. Furmat nodrez nivelel (outline font) diorroet gant Apple ha Microsoft e 1989. Diazezet war grommennoù Bezièr eeun (quadratic). Aotren a ra disoc'hoù parfet etre skramm ha moulladur e-keñver ar piksel. Ar furmat nodrez dre ziouer e pep reizhiad korvoiñ burev modern)"
+
+msgid "mime_fon"
+msgstr "FON (Nodrez piksel. Furmat nodrez poentoù (dot matrix) e live sistem e deroù Microsoft Windows (bloavezhioù 1980). Ne skor ket ar c'hreskadurioù mentoù digemm. Lakaet alies e sistemioù relek pe e lodennoù trevnadoù enframmet evit tresañ testennoù gant sikour pikseloù bevennet)"
+
+msgid "mime_pdf"
+msgstr "PDF (Teul elektronek. Furmat teul pajennoù fiks (cross-platform) diorroet gant Adobe e 1993, ha deuet da vezañ standart ISO 32000 e 2008. Gantañ ur fealded krenn e-keñver an aozadur hag ar c'hempenn. Ar reolenn hollek evit dasparzh an teulioù ofisiel elektronek hag an embannadur niverel)"
+
+msgid "mime_dotnet"
+msgstr "ASP.NET (Pajenn dinamik. Un teknologiezh pajennoù web dinamik a-berzh ar servijer, bet embannet gant Microsoft e 2002 gant an arc'hwelouri .NET. Karget e vez e mekanik IIS. Implijet evit sevel meziantoù web dinamik a live embregerezh evit servijerioù Windows ha reizhiadoù dasparzhet)"
+
+msgid "mime_mdb"
+msgstr "MDB (Bazenn roadennoù ereadurel. Furmat stokadenn bazenn roadennoù ereadurel a live burev, embannet gant Microsoft gant Access e 1992. Ennañ mekanik bazenn roadennoù Jet. Un diskoulm bazenn roadennoù er grennoù hag er reizhiadoù keleiererezh kentañ evit an embregerezhioù bihan ha krenn e oa)"
+
+msgid "mime_md"
+msgstr "Markdown (Teul. Ur yezh vermenadur skañv krouet gant John Gruber e 2004. A-hervez, 'lennus evel m'eo skrammet' eo e brederouriezh greiz. Hag eñ a gas war-raok an isreolennadurioù modern evel GFM ha CommonMark. Un eskemm kreiz eo e kalz teulioù teknikel, ar gouleier keleier (evel Obsidian) hag e ganerien lec'hiennoù web statel modern)"
+
+msgid "mime_crystal"
+msgstr "Crystal Reports (Danevell. Furmat restroù danevelloù a live micherel evit ar savenn SAP Business Intelligence (BI). Gant un naeredigezh d'ar vammennoù roadennoù lies, un tresadur grafikoù dinamek kevret. E implij kalz dre ar bed en embregerezhioù etrevroadel evit an danevelloù micherel er sistemioù arc'hantus hag en dielfennañ roadennoù)"
+
+msgid "mime_libreoffice"
+msgstr "LibreOffice (Teul. Furmat perc'henniezh eus ar pakad burev digor e 2010 gant The Document Foundation, savet war skourr OpenOffice. Roet eo e pleustr dre wellan d'ar reolenn etrebroadel ODF (OpenDocument Format) ar W3C. An diazez burev eo evit an ekosistem digor modern)"
+
+msgid "mime_encrypt"
+msgstr "ENCRYPT (Restr sifret. Roadennoù diwar keveler pe testenn, bet treuzfurmet gant un algoritm sifret a-simmertr pe nann-a-simmertr. Ennañ furmmadoù deveret evel .enc, .pgp, .gpg. Er gwiskad rouedad, implijet evit gwareziñ kuzhder ha dibledusted ar roadennoù prevez)"
+
+msgid "mime_gpx"
+msgstr "GPX (Roadennoù hentoù loarell. Furmat eskemm evit ar sistem lec'hiañ hollek (GPS) diazezet war XML. A-ziforc'h eo evit tremen ar c'hoordinaonoù douaroniel, ar poentoù, an hentoù hag an hentoù istorel. Ur standart digor hollek eo evit ardivinkoù fiñv a-vremañ, bageadur ar c'hirri ha sistemioù Titouroù Douaroniel (GIS))"
+
+msgid "mime_diskimage"
+msgstr "Disk Image (Skeudenn gantenn. Restr skeudenn eus skiantadur ar gantenn (sector- dre-sector) evit ar gantennoù fizikel pe ar gantennoù optik (ISO, DMG, IMG...). Implijet evit trevadur reizhiadoù izel, dasparzh surañ meziantoù bras ha gwarediñ klok roadennoù ouzh live fizikel ar skor"
+
+msgid "mime_vm"
+msgstr "VM (Skeudenn mentez-virtual. Ennañ VMDK, VDI, VHDX, OVA, skeudennoù gantennoù fizikel mentez. Diazez savennoù evel VMware, VirtualBox ha Hyper-V, implijet evit trevnadur efanerezh live reizhiad, kemerañ marilhoù prantad (snapshots) ha dasparzh ar c'heflusker (infrastructure) a-ziwar ar goabrenn)"
+
+msgid "mime_torrent"
+msgstr "BitTorrent (Restr seed. Meneger pellgargañ dasparzhet a-zoare P2P (dafar-ouzh-dafar) gant Bram Cohen e 2001. Diazezet war enkodadur Bencode, a vaga roadennoù metadilenn gwiriañ ar restroù hag e lerennoù trec'h Tracker. Ar greizenn evit an dasparzh gwazhioù rouedad digreizennañ eo)"
+
+msgid "mime_gis"
+msgstr "GIS (Roadennoù egor douaroniel. Ur standart roadennoù e-keñver ar sistem keleier douaroniel (GIS) gant Shapefile ha GeoJSON. Ennañ kevelerioù mentoniezh liesment, topologiezh liveadur ha roadennoù perzh. Implijet kalz evit tresadur kartennoù niverel gant uhel-resisted, pell-klevout dre loarell hag e dielfennañ mentoniezh ar space)"
+
+msgid "mime_ebook"
+msgstr "EBOOK (Levr elektronek. Furmat embann niverel gant ar standart etrebroadel digor EPUB ar W3C hag an arc'hwelourien MOBI/AZW perc'henniezh gant Amazon Kindle. Skorañ a ra an aozadur er gwazh (flow layout), ar pakadur metaroadennoù hag ar Gwarez gwirioù niverel (DRM). Bez eo ar karbed hollek evit al lenn niverel war ardivinkoù hezoug)"
+
+msgid "mime_avif"
+msgstr "AVIF (Skeudenn berzhus-kenañ. Ur standart skeudennoù dreist-uhel-spisverzh (next-generation) bet embannet gant ar C'hevredad Media Digor (AOMedia) e 2019. Diazezet war teknologiezh ar c'hadroù-tremen evit ar video AV1, gant ur feur gwaskadur 50% uheloc'h evit WebP, ha skor nativel evit ar skeuliad dinamek (HDR). Ar standart redonek evit treuzkas skeudennoù war ar web modern)"
+
+msgid "mime_markdown"
+msgstr "Markdown (Teul skañv. Un doare da verkout testennoù skañv krouet gant John Gruber e 2004. Tres testenn blaen disklêriat (declarative design). Gant un tresadur doare-skrivañ awenet gant reStructuredText. E implij kalz e raktresoù GitHub, e teulioù teknikel live-iengezh ha e ekosistem ar c'heleier statel modern)"
+
+msgid "mime_yaml"
+msgstr "YAML (Kefluniadur heuliata. Un furmad heuliata roadennoù lennus gant Mab-Den, treset gant Clark Evans ha kenseurted e 2001. Diazezet war al lec'hiañ liveour hag ar c'hevalennoù alc'hwez-talvoud. Savet eo evel standart kefluniadur evit ar c'heflusker nativel (cloud-native) evel arc'hweladur c'honterennoù Kubernetes, emgefre Ansible ha Docker Compose)"
+
+msgid "mime_toml"
+msgstr "TOML (Kefluniadur semantek. Un doare skañv-kenañ (minimalist) treset gant Tom Preston-Werner e 2013. Gant avantajoù e tresadur evel taolvadur kreñv (strong typing), kartañ splann ha sklêrijenn semantek. Hiriv e vez graet gant ar furmad kefluniadur standart evit Rust (Cargo), Python (pyproject.toml) hag evit Go, gant ostilhoù a-vremañ)"
+
+msgid "mime_vue"
+msgstr "Vue (Stlenn un-restr (Single File Component). Stumm SFC perc'henniezh eus ar steuñvadur Web progressif (progressive framework) gant Evan You e 2014. Dont a ra a-benn da zispartiañ an traoù a sell ouzh HTML/CSS/JS en un hevelep restr, asambles gant ul liamm stad c'hober (reactive). Kaset e vez gantañ an arloadoù talbenn web etreoberiat modern ha mekanikoù lec'hiennoù bras-ha-bras)"
+
+msgid "mime_wasm"
+msgstr "WebAssembly (Nod binarel. Un nod binarel live izel, gant perzhioù mat, e 2017, hervez ar W3C. Dont a ra a-benn da genaozañ yezhoù krefñ evel C/C++/Rust evit o lakaat da redek e voest-traezh ar merdeer (browser sandbox) gant ur barregezh prestik da hini an efanerezh kaledved. Bez eo diazez an drojedenniñ e bord ar web (edge computing))"
+
+msgid "mime_jsx"
+msgstr "React JSX (Stlenn (component). Un astenn eus an doare-skrivañ JavaScript XML bet embannet gant Facebook gant ar steuñvadur React e 2013. Skorañ a ra an diorren doare-skrivañ disklêriat evit framm DOM dre vir (virtual). Lakaet eo bet e pleustr ar patrom diorren 'UI evel ar gevred stad' evit an talbenn)"
+
+msgid "mime_tsx"
+msgstr "TypeScript TSX (Stlenn. Kenaozet gant an doare-skrivañ kreñv eus TypeScript (diorroet gant Microsoft e 2012) gant JSX e gwazh. Enstaliañ a ra e diorren ar stlennoù React ur gwiriañ taolvadur statel e-pad an treiñ ha reolennoù etrefas. Ur reolenn kod eo evit an diorren surañ a gostez ar sistemioù talbenn bras modern)"
+
+msgid "mime_heif"
+msgstr "HEIF (Skeudenn berzhus. Furmat skeudenn efedus savet gant kevredad MPEG e 2015. Diazezet war an algoritm kodadur video HEVC (H.265). Aotren a ra mirout meur a skeudenn, kartennoù donder ha metaroadennoù en ur volumenn bihan-kenañ. Ar furmat stokadenn perc'henniezh eo evit ar reizhiadoù korvoiñ hezoug modern hag ar divinoù pennañ ijin)"
+
+msgid "mime_heic"
+msgstr "HEIC (Skeudenn berzhus. Furmat bitmap perc'henniezh Apple diazezet war ar standart etrebroadel HEIF. Ar furmat dre ziouer eo evit luc'hskeudennoù an iPhone modern. Skor a live kaledved ha reizhiad korvoiñ (iOS/macOS) en deus. Digreskiñ a ra kalz ar blasenn stokadenn tra ma talc'h d'ur skeudenn eus ar c'hentañ troc'h)"
+
+msgid "mime_gltf"
+msgstr "glTF (Patrom 3D. Standart furmat treuzkas GL, degaset gant Khronos Group e 2015. Deskrivañ a ra gweledennoù tri-ment (3D) gant an aozadur JSON. Lesanvet eo 'JPEG an tiriad 3D'. Ur standart greantel skañv eo evit an daskor (rendering) WebGL/WebGPU modern hag ar virtual reizh)"
+
+msgid "mime_glb"
+msgstr "GLB (Patrom 3D binarel. Stumm nann-stankaus enklozet e-pad eus patrom glTF. Kendeuziñ a ra framm al leurenn, roadennoù verkadur (mesh) e live izel, danvez ha gwiad skeudennoù en un hevelep restr. Arveret eo evit an treuskasadur efedus hag an dasparzh e gwazh evit an danvezioù web 3D a-dreuz savennoù)"
+
+msgid "mime_gls"
+msgstr "GLOSSARY (Roll termenoù. Ur restr termenadur termoù evit ar sistemioù melestradur teulioù hag ar gwernioù frammet. Ennañ termenadurioù termoù standart, kevataladurioù liesyezhek ha kartañ metaroadennoù. Arveret evit mirout un unvaniez a-bellgofis e sistemoù dielfennañ testenn emgefre hag embann endalc'h)"
+
+msgid "mime_cbz"
+msgstr "CBZ (Levr bannoù-treset. Furmat gwask arc'hivañ bannoù-treset perc'henniezh, diazezet war framm Ziwask (ZIP). Enklozañ a ra a-hed ur c'hevreadad skeudennoù poent statik. Ur standart endalc'her skañv eo evit an embann bannoù-treset niverel hag an dastum lec'hel a-dreuz savennoù)"
+
+msgid "mime_cbr"
+msgstr "CBR (Levr bannoù-treset. Furmat gwask arc'hivañ bannoù-treset perc'henniezh, diazezet war framm gwask RAR. Enklozañ a ra ar c'hevreadad skeudennoù poent statik dre an algoritm RAR, gant ur feur waskadur uhel. Skoret eo kalz e bed an dasparzh bannoù-treset niverel)"
+
+msgid "mime_fb2"
+msgstr "FB2 (Levr elektronek. Ur standart levr elektronek FictionBook 2.0 e deroù ar bloavezhioù 2000. Deskrivañ a ra perzhioù al levr ha liveadur ar testennoù gant framm XML. Skoret kalz en ekosistem levrioù elektronek digor ha war al lennerien embann niverel relek)"
+
+msgid "mime_kepub"
+msgstr "KEPUB (Levr elektronek. Furmat levr elektronek kresket (enhanced) perc'henniezh Kobo diazezet war ar standart EPUB. Skoret eo en live izel gant al lennerien levrioù elektronek Kobo (hardware) evit ur rentañ pajennoù efedusoc'h ha klokoc'h evit an holl stadegoù lenn)"
+
+msgid "mime_m4b"
+msgstr "M4B (Levr-lavar. Furmat levr-lavar diazezet war arc'hwel endalc'her MPEG-4 Part 14 (MP4). Gant enkodadur AAC, skor nativel evit sinedoù pajennoù (bookmarks), kenderc'hel da lenn goude ur serr, ha framm dre bredeier. Bez e oa furmat standart an ekosistem Apple iTunes)"
+
+msgid "mime_kfx"
+msgstr "Kindle KFX (Furmat. Furmat embann niverel kresket (enhanced) perc'henniezh Amazon gant ar Kindle e 2015. Skor a ra un aozadur nivedegezh araoket (advanced ligatures), rentañ nodrez herrek (high-dynamic) ha kargañ pajennoù en live kernel (Page Flip). Ar reolenn greiz eo evit ar savenn Kindle modern)"
+
+msgid "mime_chm"
+msgstr "CHM (Restr skoazell kenaozet. Reizhiad keleier HTML skoazell kenaozet (Compiled HTML Help) gant Microsoft e 1997. Pakañ a ra roadennoù hipertestenn hag ar meneger live izel en un endalc'her binadel unan. E-pad pell eo bet ar furmat standart evit an teulioù skoazell lec'hel er meziantoù Windows)"
+
+msgid "mime_mht"
+msgstr "MHT (Diell pajenn web. Furmat hipertestenn agreg MIME gant Microsoft e 1999. Diazezet war ar reolennad RFC 2557, a bak ar vammenn HTML, CSS, JS hag ar skeudennoù enframmet en un hevelep restr testenn. Arveret e oa evit enrolañ pajennoù web diwar-linenn gant merdeerioù kozh)"
+
+msgid "mime_wml"
+msgstr "WML (Yezh vermenadur digablez (Wireless Markup Language). Savet gant forom ar WAP (Wireless Application Protocol) e 1999 evit ar pellgomzerioù hezoug. Diazezet war spesad XML, arveret evit ar rouedoù pellgomzer gant ledrum stris eus ar penn-kentañ (early narrowband) ha pellgomzerioù fetis (feature phones). En ekosistem web modern, ez eo teknologiezh relek echu)"
+
+msgid "mime_xhtml"
+msgstr "XHTML (Pajenn web hipertestenn. Standart W3C e 2000, yezh vermenadur hipertestenn strizh diazezet war arc'hwel XML. E 2009, e paouezas W3C gant e zirolladur teknikel hag e tistroas war-du ar spesad HTML5. Hiziv e vez kavet evit rentañ pajennoù web semantek er sistemioù relek)"
+
+msgid "mime_xml"
+msgstr "XML (Teul frammet. Yezh vermenadur astennus (Extensible Markup Language) standart W3C e 1998. Gantañ ur sav-treust balizennoù em-zeskriv (self-descriptive). Ar furmat diazez eo evit ar servijoù web (SOAP/REST), ar restroù kefluniadur live reizhiad (XSD) hag evit an eskemmoù roadennoù etre savennoù)"
+
+msgid "mime_sgml"
+msgstr "SGML (Yezh vermenadur hollek. Yezh vermenadur hollek standart ISO 8879 e 1986. Rakger greantel eo evit an deskrivadur frammet teulioù elektronek. XML hag an hengoun HTML kentañ a zeu diwar ar vezegezh vamm (meta language) standart-se)"
+
+msgid "mime_apng"
+msgstr "APNG (Skeudenn bev. Astenn evit ar PNG (Portable Network Graphics) bet diorroet gant Mozilla e 2004. Skor a ra 24-bit (gwirioù liv) ha 8-bit kanol Alpha (treuzwelus). Un diskoulm foran (alternative) splann eo er web modern e-lec'h ar furmad GIF)"
+
+msgid "mime_bmp"
+msgstr "BMP (Skeudenn nativel poent (bitmap). Furmat skeudenn dizalc'h diouzh ar benveg (Device Independent Bitmap) gant Microsoft abaoe mare Windows 1.0. Ur skor nann-stankaus (lossless) ha diwask. Daoust ma'z eo ar ment war-dro 3 da 10 gwech brasoc'h evit PNG, abalamour m'eo dieub digant ar c'hodadur, e talc'her d'e enframmañ e lodennoù kreiz Windows 11, e rannoù danvez (ressources) EXE/MSI, ha e ardivinkoù grafik evit meziantoù relek)"
+
+msgid "mime_cdr"
+msgstr "CDR (Skeudenn vektor. Furmat mammenn tresadennoù vektor a-vicher ha perc'henniezh CorelDRAW (Corel Corporation, Kanada). Skor a ra meur a liveadur evit ar mererezh livioù, nodoù trogenn jedoniel, ha roadennoù aozadur a live moulladur. Emañ e domani treserezh moullerezh bruderezh hag an treserezh a-vicher)"
+
+msgid "mime_gif"
+msgstr "GIF (Skeudenn niveren livioù (indexed). Furmat skeudenn 8-bit livioù niverennet gant CompuServe e 1987. Diazezet war algoritmo LZW, bevennet d'ur skeuliad 256 liv ha d'un treuzwelusted unliv. Kalz a blasenn a ya gantañ evit frammoù uhel, hag erlec'hiet eo tamm-ha-tamm gant stummoù modern evel APNG, WebP)"
+
+msgid "mime_ico"
+msgstr "ICO (Arlun (icon) sistem. Furmat pakadur danvez arlun nativel gant Windows. Aotren a ra enframmañ meur a stumm skeudenn gant mentoù piksel ha donderioù livioù disheñvel en un endalc'her unan. Ar reolenn dasparzh hollek eo ivez evit ar merkerez (Favicon) al lec'hiennoù web er merdeerioù modern)"
+
+msgid "mime_jpeg"
+msgstr "JPEG (Skeudenn gwasket. Furmat skeudenn gant ur goll (lossy) standart ISO 10918 e 1992. Diazezet war algorithm treuzfurmidur kosinenn diskred (DCT). Dont a ra a-benn da waskaat kalz tra ma talc'h ur skeudenn wirion eus ar c'hentañ troc'h. Ar reolenn 'facto' evit al luc'hskeudennoù statik war internet ar bed)"
+
+msgid "mime_jpg"
+msgstr "JPEG (Skeudenn gwasket. Furmat skeudenn gant ur goll (lossy) standart ISO 10918 e 1992. Diazezet war algorithm treuzfurmidur kosinenn diskred (DCT). Dont a ra a-benn da waskaat kalz tra ma talc'h ur skeudenn wirion eus ar c'hentañ troc'h. Ar reolenn 'facto' evit al luc'hskeudennoù statik war internet ar bed)"
+
+msgid "mime_png"
+msgstr "PNG (Skeudenn nann-stankaus (lossless). Standart PNG (Portable Network Graphics) kinniget gant ar W3C e 1996. Dre un algorithm nann-stankaus, e skor nativel 24-bit (gwirioù liv) ha 8-bit kanol Alpha (treuzwelus). Evel un diskoulm splann (higher definition) d'ar GIF statik klasel, ez eo ar reolenn 'facto' evit ar skeudennoù piksel nann-stankaus war internet)"
+
+msgid "mime_ps"
+msgstr "PostScript (Restr deskrivadur pajenn. Ur yezh deskrivadur pajennoù (Page Description Language) diazezet war ur bern (stack-based) gant Adobe e 1985. Rakger teknikel ar furmad PDF eo. Er live izel, ec'h aotren un tresadur aozadur testennoù dizalc'h diouzh an efanerezh, ha skeudennoù vektor gant un uhel-resisted. Ur reolenn diazez eo evit an embann a-vicher hag ar moulladur lazer)"
+
+msgid "mime_psb"
+msgstr "PSB (Teul bras gant liveadurioù. Furmat pakadur mammenn dreist-vras (extra large) gant Adobe Photoshop. Dont a ra a-benn da dreuziñ bevennoù ar furmat PSD reoliek (2GB e ment fizikel ha 30.000 piksel evit an tremen diabarzh). A-ziforc'h eo evit stokañ danvezioù niverel ramzel ha don gant meur a liveadur)"
+
+msgid "mime_psd"
+msgstr "PSD (Restr mammenn livadur liveadur. Furmat greantel evit ar skritell (layer) e-keñver Photoshop gant Adobe. Endalc'her standart e bed tresadennoù (graphics), a vak nativel gwezenn rentañ leun ar skeudennoù, kanolioù piksel, hentoù dispen (vectoriel) hag e kemmesk liveoù. Aotren a ra un aozadur nann-stankaus (lossless) eus an holl roadennoù)"
+
+msgid "mime_webp"
+msgstr "WebP (Skeudenn efedus. Ur standart enkodadur skeudennoù web hollek gant Google e 2010. Dont a ra eus teknologiezh ar c'hadroù-tremen video VP8. Kenglotaat a ra gant ar gwaskadur dre goll (lossy), ar gwaskadur nann-stankaus (lossless), an treuzwelusted hag an tresadennoù bev. 25-35% bihanoc'h evit PNG gant ar memes live skeudenn. Diazez kargañ lec'hiennoù web gant un dalc'h uhel (high performance) eo)"
+
+msgid "mime_woff"
+msgstr "WOFF (Restr stumm evit ar web. Furmat stumm web digor (Web Open Font Format) bet krouet e 2009 ha deuet da vezañ standart W3C e 2012. He c'halvezout a zo gwaskat framm ar stummoù TTF/OTF reoliek en un doare nann-stankaus er gwazh, evit gwellaat spiradur ar rouedad. Ar furmat hollek eo evit ar monogrammoù (icon fonts) hag ar stummoù er goabrenn war al lec'hiennoù modern)"
+
+msgid "mime_7z"
+msgstr "7z (Pakad gwasket. Furmat perc'henniezh gant 7-Zip (Igor Pavlov) e 1999. Diazezet war an algoritmoù digor LZMA/LZMA2, gant ur feur waskadur uhel-kenañ. Dindan an hevelep donezonoù, eo ar ment etre 30 ha 50% bihanoc'h evit ZIP. Ar furmat gant ur feur waskadur uhel evit an dasparzh meziantoù er gumuniezh digor)"
+
+msgid "mime_ace"
+msgstr "ACE (Pakad gwasket. Furmat gwask perc'henniezh WinACE eus ar bloavezhioù 1990. Kenstrivañ a reas gant ar furmat RAR, gant ur feur waskadur uhel. Goude 2007, e paouezas an dirollañ teknikel. Hiziv, erlec'hiet gant ar furmadoù 7z ha RAR. Ur furmat relek eo (legate)"
+
+msgid "mime_bz2"
+msgstr "BZIP2 (Pakad gwasket. Furmat gwask aozet dre renkadoù (block-sorting) gant Julian Seward e 1996. Gwelloc'h (15-20%) eo e feur waskadur evit GZIP, gant ur c'houst jediñ uheloc'h. Arveret alies evit dasparzh kodoù tarzh (source code) ar c'hernel Linux ha pakadoù digor. Astenn standard .bz2)"
+
+msgid "mime_cab"
+msgstr "CAB (Pakad gwasket. Furmat arc'hivañ Cabinet diorroet gant Microsoft e 1995. Ar reolenn staliañ nativel eo evit ar sistem Windows. Implijet evit dasparzh an dregantadoù hag ar restroù kernell (kernel files). Ul lec'hier stokadenn evit Windows Installer (MSI) eo ivez)"
+
+msgid "mime_dmg"
+msgstr "DMG (Skeudenn gantenn. Furmat Skeudenn Gantenn (Disk Image) diorroet gant Apple adalek ar bloavezhioù 1980. Ar c'hendalc'her standart eo evit dasparzh ar meziantoù macOS. Skor a ra ar pignadur fizikel evel ur restr reizhiad virtual, an digwaskadur live izel hag ar sifradur roadennoù. Ar furmat redonek evit dasparzh arloadoù e ekosistem Mac)"
+
+msgid "mime_emz"
+msgstr "EMZ (Skeudenn gwasket. Stumm gwasket (gant algoritm GZIP) eus restr Enhanced Metafile (EMF) Windows. Ur skeudenn vektor binarel eo. Implijet kalz e teulioù Microsoft Office evit stokañ skeudennoù vektor enframmet)"
+
+msgid "mime_gz"
+msgstr "GZIP (Pakad gwasket. Furmat gwask stank (stream) standart gant raktres GNU (Jean-loup Gailly ha Mark Adler) e 1992. Amañ benveg gwask reoliek Unix/Linux, ha reolenn greiz evit ar waskadur er gwiskad treuzkas HTTP (Gzip). Alies e vez kavet liammet gant an arc'hivañ TAR)"
+
+msgid "mime_jar"
+msgstr "JAR (Pakad gwasket. Furmat Java ARchive gant Sun Microsystems e 1997. Diazezet war framm gwask ZIP, evit pakañ levraouegoù Java klas (class libraries) ha metaroadennoù. Arveret eo evel kenderc'had kenaozañ (compilation artifact) gant Maven, Gradle, hag en ekosistem Android kentañ)"
+
+msgid "mime_lzma"
+msgstr "LZMA (Pakad gwasket. Algoritm gwaskadur Lempel-Ziv-Markov chain (Igor Pavlov) e 1998. Ar mekanik kreiz evit furmat 7z, gant ur feur waskadur uhel-kenañ ha perzhioù dibakadur herrek. Implijet kalz evit dasparzh kaledoù (firmware) ha sistemoù enframmet)"
+
+msgid "mime_rar"
+msgstr "RAR (Pakad gwasket. Furmat arc'hivañ perc'henniezh WinRAR (Eugene Roshal) e 1993. Skor a ra rannañ an arc'hiv (volumes), rekordioù fiñv (recovery records), hag ur sifradur kreñv. Feur waskadur gwelloc'h evit ZIP. Kenglotaet eo kalz er bed bersonel ha kenwerzhel)"
+
+msgid "mime_tar"
+msgstr "TAR (Pakad arc'hivañ. Furmat arc'hivañ TAR (Tape ARchive) eus mare Unix V7 (1979). Ne ra nemet pakañ gwazhad ar restroù hep gwaskadur. Alies e vez lakaet asambles gant GZIP/BZIP2/XZ. Ar reolenn izel evit pakadoù kodoù tarzh Linux ha stokadenn al liveoù (layered storage) evit skeudennoù Docker)"
+
+msgid "mime_tgz"
+msgstr "TGZ (Pakad gwasket. Kenaozadur gwazh eus arc'hiv TAR ha gwaskadur GZIP (astennoù .tgz pe .tar.gz). Ar furmat dasparzh pakadoù meziantoù ar muiañ a vez implijet en endro Unix/Linux. Arveret e vez evit trevadur kodoù tarzh kenaozet (source code) ha dasparzh pakadoù binarel hep staliañ)"
+
+msgid "mime_tbz2"
+msgstr "TBZ2 (Pakad gwasket. Kenaozadur gwazh eus arc'hiv TAR ha gwaskadur BZIP2 (astennoù .tbz2 pe .tar.bz2). E-keñver TGZ, e c'haller kreskiñ ar feur waskadur 15-20%. A-fet a dalvoudegezh evit restroù bras. E-pad pell eo bet implijet evit dasparzh kodoù tarzh ar c'hernel Linux)"
+
+msgid "mime_xz"
+msgstr "XZ (Pakad gwasket. Furmat gwaskadur a rummad nevez (2009) gant ur feur waskadur uhel. Diazezet war an algoritm LZMA2, ar feur waskadur 30-50% gwelloc'h evit GZIP ha mirout un dibakadur herrek. Degemeret eo bet gant ar c'hernel Linux hag ar merourien pakadoù pennañ (evel e diabarzh deb Debian) evit ar standart dasparzh)"
+
+msgid "mime_z"
+msgstr "Z (Pakad gwasket. Furmat gwaskadur LZW gant urzh Unix 'compress' (1985). Ar reolenn waskadur reoliek evit an Unix kentañ e oa. Bremañ eo bet erlec'hiet penn-da-benn gant ar furmat GZIP, a zo efedusoc'h. War ar rouedoù, ez eo ral-tre e gavout ha debret e vez evel furmat relek)"
+
+msgid "mime_zip"
+msgstr "ZIP (Pakad gwasket. Furmat arc'hivañ hollek PKZIP (Phil Katz) e 1989. Skoret nativel gant an holl reizhiadoù korvoiñ pennañ. Ar reolenn endalc'her ar muiañ implijet war internet. Java JAR, Android APK ha teulioù Office (OOXML) a zo diazezet war framm ZIP)"
+
+msgid "mime_zst"
+msgstr "Zstandard (Pakad gwasket. Ur reolenn waskadur stank (stream) a rummad nevez gant Yann Collet (Facebook) e 2015. Tostaat a ra a-us da feur waskadur LZMA, gant ul live rikloz (throughput) pell zo ouzhpenn GZIP. Degemeret mat gant ar c'hernel Linux (5.9+) ha merourien pakadoù Arch/Debian)"
+
+msgid "mime_lz4"
+msgstr "LZ4 (Pakad gwasket. Algoritm waskadur stank prim-tre gant Yann Collet e 2011. Live rikloz 10 gwech buanoc'h evit GZIP, gant ur c'houst CPU izel-kenañ e-pad al labour. Implijet gant ar c'hernel Linux, ar restr reizhiad OpenZFS, hag evit pledadur roadennoù e gwazh (real-time) gant Hadoop)"
+
+msgid "mime_lzo"
+msgstr "LZO (Pakad gwasket. Algoritm Lempel-Ziv-Oberhumer gant Markus Oberhumer e 1996. Kemeret eo bet e brant e-keñver ar zibakadur herrek. Douget eo en doueoù Squashfs evit ar c'hernel Linux, ar firmwaorioù OpenWrt, hag e sistemioù enframmet gant oberiantizoù bevennet)"
+
+msgid "mime_msi"
+msgstr "MSI (Pakad staliañ reizhiad. Furmat pakadur roadennoù Windows Installer gant Microsoft e 1999. Ur reolenn trevadur reoliek a live arload Windows eo. A-enep nativel eo d'ur gontrol e dregantadoù e live stadel (transactional), d'ur mererezh buhez ar stlennoù (components), ha da staliañ didrouz (silent) hep 'batch'. Ar reolenn greiz eo evit dasparzh kreizennet ar meziantoù a live embregerezh hag evit trevadur reoliek)"
+
+msgid "mime_pkg"
+msgstr "PKG (Pakad staliañ etre-savennoù. 1. Pakad FreeBSD : reolenn pkgng, astennoù .pkg pe .txz, diazezet war waskadur TAR+XZ/Zstd. Skor a ra dielfennañ oberoù kevrenn (dependencies) ha gwiriañ sinadur (signature). 2. Pakad staliañ macOS : diazezet war furmat Apple Installer, a skor stlennoù personelaet, skriptoù staliañ ha dizstaliañ e live reizhiad. Ar pennañ karbedoù dasparzh evit ar servijer BSD hag ar reizhiadoù Mac)"
+
+msgid "mime_apk"
+msgstr "APK (Pakad arload Android. Pakad staliañ arload hengounel evit Android gant Google e 2008. Diazezet war framm ZIP. Pakañ a ra kod Dalvik kenaozet (DEX), manifest metaroadennoù ha danvez hollek. Hiziv ez eo implijet kalz evit an trevadur diorroiñ lec'hel, dasparzh dre droidi (third-party) ha staliañ direkt war ardivink (sideload))"
+
+msgid "mime_ipa"
+msgstr "IPA (Pakad arload Apple. Endalc'her pakañ iOS/iPadOS gant an SDK iPhone e 2008. Evit gwir, un arc'hiv ZIP gwarezet gant FairPlay DRM pe gant ur sinadur kod a live embregerezh eo. Ennañ restr ezharmadus Mach-O binarel, gwezenn danvez an arload, ha kefluniadur metaroadennoù Info.plist)"
+
+msgid "mime_hap"
+msgstr "HAP (Pakad arload HarmonyOS. Unvez trevadur elastrek HarmonyOS, bet embannet gant HarmonyOS 2.0 e 2020. Savet eo gant ar c'hevandad pennañ Entry pe gant kevandadoù oberiañ Feature. Stumm trevadur kreiz evit an arloadoù a-dreuz ardivinkoù (pellgomzer, tablez, ardivinkoù iskis) eo)"
+
+msgid "mime_har"
+msgstr "HAR (Pakad ingal statik HarmonyOS. Restr arc'hiv levraoueg statik, ingal ha perc'henniezh HarmonyOS. Implijet evit pakañ danvezioù hollek (common components), kodoù danvez live izel hag oberoù kevrenn e-pad an treiñ (compile-time). Liammet e vez gant meur a vodul HAP. Diazez evit an diorren dre gevandadoù e reizhiad HarmonyOS hag evit adimplij ar meur a vodul)"
+
+msgid "mime_aab"
+msgstr "AAB (Strollad arload Android. Furmat dasparzh dinamik Google Play gant Google e 2018, staliet e 2021. Evel un vanne (entity) dasparzh pur, eo kenaozet e koubl (cloud) diouzh tore'hou arc'hwel ar CPU, stankter ar skramm hag ar yezh. Alese e teu APKoù frammet diouzh an ezhommoù. Digreskiñ a ra al live rikloz gant 35% war ar gwazhband)"
+
+msgid "mime_xapk"
+msgstr "XAPK (Pakad arload astennet. Ur reolenn astenn an arloadoù (nann-ofisiel) savet gant kumuniezh Android dre droidi. Peurliesañ e vez kavet war ar savennoù dasparzh c'hoarioù. Kendeuziñ a ra ar restr APK reoliek gant ar pakad roadennoù OBB (bras a-walc'h). Dont a ra a-benn da dremen ar vevenn 100 MB (Google Play) evit ar restroù dizalc'h)"
+
+msgid "mime_appx"
+msgstr "APPX (Pakad arload modern. Spesad trevadur arload UWP gant Microsoft gant Windows 8 e 2012. Skor a ra un endro sandbox ha distaliañ skañv. Bez e oa ar reolenn greiz evit Microsoft Store. En ekosistem Windows modern, emañ e fin e vuhez (end of life) hag o treiñ war-du MSIX)"
+
+msgid "mime_msix"
+msgstr "MSIX (Pakad arload a rummad nevez. Ur spesad pakañ standart gant Microsoft e 2018. Kendeuziñ a ra perzhioù surentez APPX (sandbox) gant madoù MSIX e-keñver mererezh danvez a live embregerezh (enterprise asset management). Kenglotus gant an holl meziantoù Win32. Ar reolenn dasparzh kinniget evit Windows 11)"
+
+msgid "mime_appimage"
+msgstr "AppImage (Pakad arload hep staliañ. Spesad arc'hivañ un-rewissus (single executable) e Linux e 2004. Evit gwir, 'un arload = ur restr'. En e amzer, e vez pignet evel ur restr reizhiad virtual e lenn nemetken (FUSE). Evel-se e c'haller ober gant arload hep bezañ o staliañ, a-dreuz an holl stummadurioù Linux)"
+
+msgid "mime_flatpak"
+msgstr "Flatpak (Pakad arload e sandbox. Standart dasparzh arloadoù burev (desktop) a-dreuz stummadurioù Linux, bet diorroet gant Red Hat ha GNOME e 2015. En e live izel, e ra gant mekanikoù Namespace ha Cgroups ar c'hernel Linux evit ur sandbox surentez strizh. Bez eo diazez stank ar meziantoù e kreizenn ar reizhiadoù digor modern)"
+
+msgid "mime_snap"
+msgstr "Snap (Pakad arload e sandbox. Standart trevadur hollek Linux gant Canonical (penn-embregerezh Ubuntu) e 2014. Evit gwir, ur skeudenn SquashFS gant an arload hag e holl oberoù kevrenn. Skor a ra ouzhajioù emgefre tamm-ha-tamm (incremental) ha sandbox AppArmor. Ar furmat dre ziouer eo evit kreizenn arload Ubuntu)"
+
+msgid "mime_deb"
+msgstr "DEB (Pakad meziant reizhiad. Spesad pakañ binarel ha kod-tarzh gant raktres Debian e 1993. Ar reolenn staliañ live izel evit Debian, Ubuntu hag an holl stummadurioù deveret. Gant dpkg e vez dibaket ha gant APT e vez meret. Diazez ar c'hevredad dasparzh meziantoù koshañ ha kletañ en ekosistem Linux)"
+
+msgid "mime_rpm"
+msgstr "RPM (Pakad meziant reizhiad. Spesad pakañ ar Merour Pakadoù (RPM) gant Red Hat e 1997. Asambles gant DEB, ez int daou du dasparzh hengounel Linux. Ennañ ur gontrol kevrennoù live tregantad (transactional) hag ur gwiriañ sinadur niverel (digital signature). Chom a ra ar reolenn dasparzh pennañ evit ekosistem Red Hat (RHEL, Fedora, CentOS))"
+
+msgid "mime_pacman"
+msgstr "Pacman (Pakad arc'hiv. Furmat .pkg.tar.zst evit merour pakadoù Arch Linux (2002). Diazez ar c'heal 'rolling release' Arch. Diazezet war algoritm Zstandard (uhel-voued, uhel-spirad), asambles gant ekosistem AUR (Arch User Repository), ez eo ur reolenn dasparzh modern a zo keal ar verrdro (KISS) hag an nebeutañ traoù (minimalist))"
+
+msgid "mime_exe"
+msgstr "EXE (Restr ezharmadus nativel. Furmat programm binarel Portable Executable (PE) e savenn Windows. Dont a ra war-lerc'h framm MZ eus mare MS-DOS, ha staliet eo bet a-benn e 1993 gant Windows NT (framm PE). Ar reolenn ezharmadur a reer ganti ar muiañ er bed evit an urzhioù kod-melin, ar rannvroioù danvez statik, hag an heñchañ (bootstrap) kernell ar reizhiad)"
+
+msgid "mime_dll"
+msgstr "DLL (Levraoueg liamm dinamek. Reolenn levraoueg kod rannet Dynamic Link Library e savenn Windows. Dre bezañ karget dinamek e-pad al labour gant adlec'hiadur arouezioù, e vez prenet plas er c'hortoz hag er bladenn kalz. Un doare da dreiñ APIoù Windows e gwirionez eo. Kudennoù ar 'DLL Hell' kozh a zo bet diskoulmet gant ar mekanik SxS (isolation side-by-side))"
+
+msgid "mime_com"
+msgstr "COM (Restr ezharmadus klasel. Furmat ezharmadur koshañ (Command) eus mare MS-DOS. Ur rann 'kod' hep framm, bevennet d'un tremen 64KB er c'hortoz. Hiziv eo relek, met en arkitekturañ Windows modern ez eo skoret c'hoazh gant etrefasoù trevnadoù 'zo (limited compatibility))"
+
+msgid "mime_aac"
+msgstr "Son AAC (Standard MPEG 1997, Advanced Audio Coding. Erlec'hier MP3, ouzhpennet kalite ar son e-keñver an hevelep feur kas, format son dre ziouer evit YouTube, iTunes, Nintendo Switch)
+
+msgid "mime_alac"
+msgstr "Son ALAC (diorroet gant Apple e 2004, Apple Lossless Audio Codec. Format hep koll Apple, degemeret open source e 2011, format dre ziouer evit ar son hep koll en iTunes hag e Apple Music)
+
+msgid "mime_flac"
+msgstr "Son FLAC (diorroet gant Xiph.Org Foundation e 2001, Free Lossless Audio Codec. Daskor hep koll, kalite ar son a zo par d'ar CD, ar restr a zo hanter ment ar WAV orin keit-ha-keit. Open source ha hep patent, dibab kentañ evit an audiophile evit ar collecting sonerezh niverel)
+
+msgid "mime_mp3"
+msgstr "Son MP3 (diorroet gant Fraunhofer Institute e 1993, MPEG-1 Audio Layer 3. Format daskor gant koll, restroù bihan gant ur galite mat, ar format pennañ en dispac'h ar sonerezh niverel er bloavezhioù 2000, en doa roet lañs da iPod ha Napster. Ar patent a dremenas e 2017, deuet da vezañ Public Domain)
+
+msgid "mime_oga"
+msgstr "Son Ogg Audio (diorroet gant Xiph.Org Foundation, furmat son glan eus endalc'her Ogg, a ra gant ar c'hod Vorbis. Open source ha hep patent, gouskor an daskor gwelloc'h eget MP3, implijet kalz e raktresoù open source)
+
+msgid "mime_ogg"
+msgstr "Son OGG (diorroet gant Xiph.Org Foundation e 2000, Ogg Vorbis format. Open source ha hep patent, gouskor an daskor gwelloc'h eget MP3, gwechall e veze implijet gant Spotify, implijet kalz evit efedoù son er c'hoarioù)
+
+msgid "mime_opus"
+msgstr "Son Opus (IETF a standardizas anezhañ e 2012, open source ha hep patent. A ya gant an teknologiezhioù SILK ha CELT, un nams evit an amzer a-hed izelaf, gouskor an daskor gwellañ, format son dre ziouer evit WebRTC, WhatsApp, Discord)
+
+msgid "mime_wav"
+msgstr "Son WAV (diorroet gant Microsoft hag IBM e 1991, format son orin Windows. Kodadur PCM hep daskor, kalite dreist met mentoù restroù bras, format standart evit an aozerien son profesionel)
+
+msgid "mime_wma"
+msgstr "Son WMA (diorroet gant Microsoft e 1999, Windows Media Audio. Daou stumm (gant koll/hep koll) a zo, Windows o skor anezhañ en orin, brudet gant ar Windows Media Player. Bremañ emañ war an tu a-gostez, erlec'hiet gant MP3/AAC)
+
+msgid "mime_dsf"
+msgstr "Son DSF (Direct Stream Digital format, diorroet gant Sony ha Philips. 1-bit ekemenn uhelaat, format standart DSD son, stumm niverel SACD, format son evit an audiophile uhel, restroù bras meurbet)
+
+msgid "mime_ape"
+msgstr "Aodio APE (diorroet gant Monkey's Audio e 2000, furmad gwaskañ hep koll. Gwaskañ uheloc'h eget FLAC met kodadenn gorrek, implijet c'hoazh war savenn Windows ha dre vourzhierien sonerezh)"
+
+msgid "mime_mid"
+msgstr "Son MIDI (Standard MIDI Association e 1983, Musical Instrument Digital Interface. Format notennoù kentoc'h evit enrolladur, restroù bihan-tre, standart evit ar benvegoù son elektronek, an tonioù pellgomzer, efedoù son er c'hoarioù. General MIDI a voe standardizet e 1991, a termen 128 benvegat)
+
+msgid "mime_m4a"
+msgstr "Son M4A (MPEG-4 Audio, endalc'her evit AAC. Format standart evit iTunes Music Store, format pennañ e ekosistem Apple, a skor gwarez DRM)
+
+msgid "mime_m3u"
+msgstr "Roll M3U (roll MP3 URL, un destenn blaen hepken, a enroll hentoù ar restroù son. Standart e amzer Winamp, implijet evit ar skingomz internet, evit an streaming son enlinenn. M3U8 a zo e stumm UTF-8, implijet evit an HTTP Live Streaming)
+
+msgid "mime_asf"
+msgstr "Media skignañ ASF (diorroet gant Microsoft e 1996, Advanced Systems Format. Endalc'her temskignañ Windows Media, a skor treuzkas a-unvan son ha video. Implijet evit an temskignañ enlive hag evit ar video war c'houlenn, WMA/WMV a zo diazezet war endalc'her ASF)
+
+msgid "mime_avi"
+msgstr "Video AVI (kinniget gant Microsoft e 1992, standart video kentañ Windows. 'Audio Video Interleave', son ha video a zo kevreet, format video ar muiañ implijet er bloavezhioù 1990 ha 2000, bremañ eo bet erlec'hiet gant MP4/MKV)
+
+msgid "mime_divx"
+msgstr "Video DivX (diorroet gant DivX company e 1998, koded video diazezet war MPEG-4. Brudet e oa er bloavezhioù 2000 evit an eskemm videooù war ar genrouedad, ar wech kentañ e c'haller daskor kalite DVD war ur bladenn CD. Gant ar c'hudennoù aotreegezh, e troas da goded kenwerzh)
+
+msgid "mime_mp4"
+msgstr "Video MP4 (Standard MPEG 2001, MPEG-4 Part 14. Format video hollekaf er bed, a skor ar c'hodadur H.264/H.265, format dre ziouer evit ar videooù war ar genrouedad, evit ar filmoù gant ar pellgomzer hezoug, gant YouTube)
+
+msgid "mime_m4v"
+msgstr "Video M4V (format video iTunes, doare MP4. Format video en ekosistem Apple, format standart evit ar filmoù hag an abadennoù skinwel er iTunes Store, a skor gwarez DRM)
+
+msgid "mime_mpeg"
+msgstr "Video MPEG (Standard MPEG e 1988, Moving Picture Experts Group. Kentsandardoù evit an daskor video niverel, MPEG-1 (VCD), MPEG-2 (DVD), MPEG-4 (videooù war ar genrouedad) o deus bet ul levezon vras)
+
+msgid "mime_mkv"
+msgstr "Video MKV (diorroet gant raktres Matroska e 2002, endalc'her liesmedia open source. A skor meur a roudenn son, meur a roudenn titloù, pennadoù, 'endalc'her a c'hall pakadoù peptra', dibab kentañ evit an eskemm filmoù a zishualder uhel)
+
+msgid "mime_mpg"
+msgstr "Video MPEG (astenn evit video MPEG-1/MPEG-2, format standart evit VCD ha DVD. A oa ar format pennañ evit videooù war bladennoù CD er bloavezhioù 1990 ha 2000, bremañ eo bet erlec'hiet gant H.264/H.265)
+
+msgid "mime_ogv"
+msgstr "Video Ogg Video (diorroet gant Xiph.Org Foundation, format video endalc'her Ogg, implijet ar c'hod Theora. Open source ha hep patent, unan eus ar c'hentañ furmadoù evit HTML5 video, Firefox o skor anezhañ en orin)
+
+msgid "mime_ogx"
+msgstr "Endalc'her liesmedia Ogg (diorroet gant Xiph.Org Foundation, astenn hollek endalc'her Ogg, a c'hall bezañ ennañ meur a roudenn evel son, video, titloù. Standard liesmedia open source, implijet er c'hoarioù hag evit ar skignañ media)
+
+msgid "mime_rm"
+msgstr "Video RealMedia (diorroet gant RealNetworks e 1995, format RealMedia. A oa ar c'hentañ evit ar skignañ media war ar genrouedad er bloavezhioù 1990 ha 2000, format diazez ar RealPlayer. Gwalladoù : ret eo ur lenner ispisial, fall e galite an daskor, erlec'hiet gant Flash/MP4)
+
+msgid "mime_flv"
+msgstr "Video Flash (ar format a zeuas e 2002, Flash Video format. A oa ar format pennañ evit ar videooù war ar genrouedad, YouTube a rae gantañ e deroù. Gwalladoù : ret eo ar plugin Flash, performans fall, meur a doull suretez. Adalek 2015, an darn vrasañ eus al lec'hiennoù pennañ a dremenas da HTML5 video, bremañ eo bet lezet a-gostez)
+
+msgid "mime_f4v"
+msgstr "Video F4V (Flash video format diorroet gant Adobe, daskor F4V a zo erlec'hier FLV. Diazezet war standard MPEG-4, a skor kodadur H.264. Bet lezet a-gostez gant teknologiezh Flash, diorroet gant Adobe e voe ehanet e 2020)
+
+msgid "mime_wmv"
+msgstr "Video WMV (diorroet gant Microsoft e 1999, Windows Media Video. Skoret a-orin gant Windows, kempennet evit an treuzkas dre skignañ, a oa ur format boutin evit ar videooù enlinenn er bloavezhioù 2000, bremañ emañ war an tu a-gostez)
+
+msgid "mime_wmf"
+msgstr "Format media WMF (Windows Media Format, framm Microsoft evit ar mediaoù. A ya gant video WMV, son WMA, skoret a-orin gant Windows Media Player)
+
+msgid "mime_mov"
+msgstr "Video MOV (diorroet gant Apple e 1991, endalc'her QuickTime. Format standart evit aozadur video profesionel, a skor meur a goded, skoret a-orin gant Final Cut Pro, Premiere)
+
+msgid "mime_qt"
+msgstr "Video QuickTime (kinniget gant Apple e 1991, format QuickTime. Standart evit ar videooù war savenn Mac, MOV a zo e endalc'her, lenner QuickTime a veze implijet kalz. Apple a ehanas diorren ar stumm Windows e 2016, gant ar c'hortoz e vo erlec'hiet gant MP4)
+
+msgid "mime_webm"
+msgstr "Video WebM (kinniget gant Google e 2010, open source ha hep patent. Diazezet war endalc'her Matroska, kodadur VP8/VP9, format standart HTML5 video, format dre ziouer evit player web YouTube)
+
+msgid "mime_3gp"
+msgstr "Video 3GP (diazezet gant 3GPP e 2000, format video evit ardivinkoù hezoug. Restroù bihan-tre, perzh fall, format evit an enrolladurioù gant pellgomzerioù hezoug kozh, implijet evit kas gant an MMS)
+
+#------------------------------------------------------------------------------
+# Technical Dimension
+#------------------------------------------------------------------------------
+
+msgid "Operating Systems"
+msgstr "Reizhiadoù Korzenneg"
+
+msgid "Top 5 Operating Systems"
+msgstr "Kentañ 5 Reizhiad Korzenneg"
+
+msgid "Unknown Robot"
+msgstr "Kliant dianav"
+
+msgid "User agent"
+msgstr "gwerzher implijer"
+
+msgid "Browsers"
+msgstr "Merdeerien"
+
+msgid "Top 5 Browsers"
+msgstr "Kentañ 5 Merdeer"
+
+msgid "Unknown Robot RH"
+msgstr "Titouroù goulenn dianav"
+
+msgid "Detailed"
+msgstr "Stumm ardivink a gas"
+
+msgid "DetailedOS"
+msgstr "Stumm ar reizhiad korzenneg"
+
+msgid "DetailedBS"
+msgstr "Stumm ar merdeer"
+
+msgid "Screen sizes"
+msgstr "Mentoù skramm"
+
+msgid "Compression"
+msgstr "Daskor"
+
+msgid "In"
+msgstr "Emoned"
+
+msgid "Out"
+msgstr "Ezmone"
+
+msgid "Saved"
+msgstr "Meneged"
+
+#------------------------------------------------------------------------------
+# Origin Dimension
+#------------------------------------------------------------------------------
+
+msgid "Origin"
+msgstr "Mammenn"
+
+msgid "Referers"
+msgstr "Daveerien"
+
+msgid "meta.description"
+msgstr "AWStats benveg dielfennañ kazetennoù web araokaet - evezhiañ trafik ho lec'hienn web en amzer wir, dielfennañ ho kweladennerien, gerioù-alc'hwez ar c'hlaskerien, stadegoù ar fazioù. A skor mod teñval, etrefas liesyezhek, a ro ur bledadur roadennoù hollek evit merourien al lec'hiennoù web."
+
+msgid "meta.keywords"
+msgstr "AWStats,stadegoù web,dielfennañ kazetennoù,evezhiañ trafik,stadegoù gweladennoù, dielfennañ SEO,benveg evit dielfennañ al lec'hienn web,Web Analytics,Log Analyzer"
+
+msgid "meta.author"
+msgstr "AWStats"
+
+msgid "og.title"
+msgstr "AWStats - dielfennañ kazetennoù web"
+
+msgid "og.description"
+msgstr "📊 Ur benveg stadegoù web profesionel open source, dielfennit trafik ho lec'hienn web hag emzalc'h ho kweladennerien en amzer wir."
+
+msgid "og.image.alt"
+msgstr "Graf stadeg AWStats"
+
+msgid "Created by"
+msgstr "Krouet gant %s"
+
+msgid "plugins"
+msgstr "Luginoù"
+
+msgid "dbip by"
+msgstr "Roadennoù digant"
+
+msgid "IPDB by"
+msgstr "Roadennoù geolokadur a vez pourchaset gant DB-IP"
+
+# Health
+msgid "Configured"
+msgstr "Kefluniet"
+
+msgid "Missing"
+msgstr "Mankout"
+
+msgid "OK"
+msgstr "Mat"
+
+msgid "Unused"
+msgstr "Ne vez ket implijet"
+
+# Other
+msgid "Overall Health"
+msgstr "Yec'hed hollek"
+
+msgid "Excellent"
+msgstr "Meurbet"
+
+msgid "Good"
+msgstr "Mat"
+
+msgid "Fair"
+msgstr "Etre"
+
+msgid "Poor"
+msgstr "Fall"
+
+msgid "Missing icon types"
+msgstr "Seurtoù lugelloù a vank"
+
+msgid "see detail column for file locations"
+msgstr "gwelet ar golonenn evit lec'hiadur ar restroù"
+
+msgid "Expected Path"
+msgstr "Hent Spi"
+
+msgid "Tip: If you need to generate related icons, you can use %s to upload a logo image, and it will automatically generate all the above related icon files"
+msgstr "Titour : Ma rankit genel lugelloù liammet, gallout a rit implijout %s evit kargañ ur skeudenn logo, hag ec'h angenero otomatekment holl restroù al lugelloù liammet a-us"
+
+msgid "200: success, 404: failure"
+msgstr "200 a zo niver a berzh, 404 a zo niver a c'hwitadenn"
+
+msgid "_PATH_FAVICON"
+msgstr "/favicon.ico"
+
+msgid "_PATH_APPLE_TOUCH"
+msgstr "/apple-touch-icon.png pe /apple-touch-icon-180x180.png"
+
+msgid "_PATH_LOGO"
+msgstr "/logo.svg pe /logo.png (ret eo e venegiñ er HTML/JSON-LD)"
+
+msgid "_PATH_WEBMANIFEST"
+msgstr "/site.webmanifest pe /manifest.json"
+
+msgid "_PATH_BROWSERCONFIG"
+msgstr "/browserconfig.xml"
+
+msgid "_PATH_SAFARI_PINNED"
+msgstr "/safari-pinned-tab.svg"
+
+msgid "_PATH_SOCIAL_ICON"
+msgstr "/images/github.svg, /images/paypal.svg, hag all"
+
+msgid "Favicon"
+msgstr "Lugell al lec'hienn"
+
+msgid "Apple Touch Icon (iOS/macOS)"
+msgstr "Lugell Apple Touch (iPhone/iPad/Mac)"
+
+msgid "Site Logo"
+msgstr "Logo al lec'hienn"
+
+msgid "Web App Manifest (Android/Chrome)"
+msgstr "Roll manifest an arload web (Android/Chrome)"
+
+msgid "Windows Browser Config"
+msgstr "Kefluniadur merdeer Windows"
+
+msgid "Safari Pinned Tab"
+msgstr "Lugell an ivinell staget evit Safari"
+
+msgid "Social Icon"
+msgstr "Lugell rouedadoù sokial"
+
+msgid "Icon Files Status"
+msgstr "Statud restroù al lugelloù"
+
+msgid "Icon Type"
+msgstr "Seurt lugell"
+
+msgid "Total"
+msgstr "Hollad"
+
+msgid "Advanced Web Statistics"
+msgstr "Stadegoù Web Araokaet"
+
+msgid "Advanced Web Statistics %s"
+msgstr "%s Stadegoù Web Araokaet"
+
+msgid "Your browser does not support frames. Please use a modern browser."
+msgstr "Ne skor ket ho merdeer ar frammoù. Mar plij, grit gant ur merdeer modern."
+
+msgid "View statistics directly"
+msgstr "Gwelet ar stadegoù war-eeun"
+
+msgid "Close"
+msgstr "Serriñ"
+
+msgid "Documentation Viewer"
+msgstr "Gwellerez an deuliadur"
+
+msgid "Direct address / Bookmarks"
+msgstr "Chomlec'h eeun / Sinedoù"
+
+msgid "Search Engines"
+msgstr "Klaskerien"
+
+msgid "Refering search engines"
+msgstr "Klaskerien a zegas"
+
+msgid "External pages"
+msgstr "Pajennoù diavaez"
+
+msgid "Refering pages"
+msgstr "Pajennoù a zegas"
+
+msgid "Internal pages"
+msgstr "Pajennoù diabarzh"
+
+msgid "UnknownAccessSource"
+msgstr "Mammenn dizave"
+
+msgid "Different refering pages"
+msgstr "Pajennoù a zegas disheñvel"
+
+msgid "Keyphrases"
+msgstr "Klaskfrazennoù"
+
+msgid "Keywords"
+msgstr "Gerioù-alc'hwez"
+
+msgid "Keyphrases/Keywords"
+msgstr "Klaskfrazennoù/Gerioù-alc'hwez"
+
+msgid "Different keyphrases"
+msgstr "Klaskfrazennoù disheñvel"
+
+msgid "Different keywords"
+msgstr "Gerioù-alc'hwez disheñvel"
+
+msgid "Viewed pages"
+msgstr "Pajennoù gwelet"
+
+msgid "Different pages"
+msgstr "Pajennoù disheñvel"
+
+msgid "Entry"
+msgstr "Moned"
+
+msgid "Exit"
+msgstr "Mont-er-maez"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Referer"
+msgstr "Daveer"
+
+msgid "Host"
+msgstr "Ostiz"
+
+msgid "Error"
+msgstr "Fazi"
+
+msgid "HTTP Status Statistics"
+msgstr "Stadegoù kodoù stad HTTP"
+
+msgid "SMTP Error codes"
+msgstr "Kodoù fazi SMTP"
+
+msgid "Page not found"
+msgstr "N'eo ket bet kavet ar bajenn c'houlennet"
+
+msgid "Unknown error"
+msgstr "Fazi dianav"
+
+msgid "Abnormal traffic note"
+msgstr "En trafik furchal direizh emañ : robotoù ar c'hlaskerien, robotoù AoE, skannerioù gourdrouz ha goulennoù hep heuliañ ar reolennoù"
+
+msgid "Page detail"
+msgstr "Munudoù ar bajenn"
+
+msgid "AWStats did not found the"
+msgstr "Ne gavas ket AWStats"
+
+msgid "in your log records."
+msgstr "en ho pladennoù kazetenn."
+
+msgid "AWStats did not find any valid log lines that match your"
+msgstr "Ne gavas AWStats linenn goulenn ebet hag a glotfe gant ho"
+
+msgid "parameter, in the"
+msgstr "arventenn, e-barzh"
+
+msgid "th first non commented lines read of your log."
+msgstr "-vet a gentañ linennoù nann-evezhiadennet lennet eus ho kazetenn."
+
+msgid "Your log file"
+msgstr "Ho restr kazetenn"
+
+msgid "must have a bad format or"
+msgstr "he deus sur awalc'h ur furmat fall pe"
+
+msgid "parameter setup does not match this format."
+msgstr "stummadur an arventenn ne glot ket gant ar furmat-mañ."
+
+msgid "Your AWStats"
+msgstr "Ho AWStats"
+
+msgid "parameter is:"
+msgstr "arventenn a zo :"
+
+msgid "This means each line in your web server log file need to have:"
+msgstr "Talvezout a ra e rank pep linenn e restr kazetenn ho servijer web kaout :"
+
+msgid "combined log format"
+msgstr "furmat kazetenn kemmesket"
+
+msgid "MSIE Extended W3C log format"
+msgstr "furmat kazetenn astennet W3C MSIE"
+
+msgid "WebStar native log format"
+msgstr "furmat kazetenn orin WebStar"
+
+msgid "common log format"
+msgstr "furmat kazetenn boutin"
+
+msgid "Lotus Notes/Lotus Domino"
+msgstr "Lotus Notes/Lotus Domino"
+
+msgid "the following personalized log format:"
+msgstr "ar furmat kazetenn personelaet da-heul :"
+
+msgid "And this is an example of records AWStats found in your log file (the record number"
+msgstr "Ha setu un skouer eus an enrolladennoù kavet gant AWStats en ho restr kazetenn (niver an enrolladenn"
+
+msgid "in your log):"
+msgstr "en ho kazetenn) :"
+
+msgid "Extra/Marketing"
+msgstr "Ouzhpenn/Marketing"
+
+msgid "Current site"
+msgstr "Lec'hienn red"
+
+msgid "Web Site"
+msgstr "Lec'hienn Web"
+
+msgid "Last Update"
+msgstr "Hizivadur diwezhañ"
+
+msgid "Never updated"
+msgstr "Morse hizivaet"
+
+msgid "No qualified records found in log"
+msgstr "N'eus bet kavet enrolladenn a c'hallfe bezañ e kazetenn"
+
+msgid "corrupted"
+msgstr "kontammet"
+
+msgid "comments"
+msgstr "evezhiadennoù"
+
+msgid "Blank"
+msgstr "Goullo"
+
+msgid "dropped"
+msgstr "taolet"
+
+msgid "Update now"
+msgstr "Hizivaat bremañ"
+
+msgid "Back to main page"
+msgstr "Distreiñ d'ar bajenn degemer"
+
+msgid "Close window"
+msgstr "Serriñ ar prenestr"
+
+msgid "Back page"
+msgstr "Distreiñ d'ar bajenn a-raok"
+
+msgid "Navigation"
+msgstr "Merdeiñ"
+
+msgid "Summary"
+msgstr "Diverradur"
+
+msgid "Local"
+msgstr "Lec'hel"
+
+msgid "External"
+msgstr "Diavaez"
+
+msgid "Others (email senders)"
+msgstr "Re all (kasourien)"
+
+msgid "Others (email receivers)"
+msgstr "Re all (degemerourien)"
+
+msgid "Others"
+msgstr "Re all"
+
+msgid "Only 10 lines of browser data are currently displayed"
+msgstr "10 linenn roadennoù merdeer hepken a zo diskwelet bremañ, gwelet ar roll klok evit muioc'h"
+
+msgid "Others (unknown browsers)"
+msgstr "Re all (merdeerien zianav)"
+
+msgid "Others (operating systems)"
+msgstr "Re all (reizhiadoù korzenneg)"
+
+msgid "Others (unknown OS)"
+msgstr "Re all (reizhiad dianav)"
+
+msgid "Others (search engines)"
+msgstr "Re all (klaskerien)"
+
+msgid "Others (referring pages)"
+msgstr "Re all (pajennoù a zegas)"
+
+msgid "Others (keyphrases)"
+msgstr "Re all (frazennoù)"
+
+msgid "Others (keywords)"
+msgstr "Re all (gerioù-alc'hwez)"
+
+msgid "Only first 10 robots shown"
+msgstr "Ar 10 robot kentañ hepken a zo diskwelet, gwelet ar roll klok evit muioc'h"
+
+msgid "Failed to obtain access record"
+msgstr "C'hwitet eo bet tapout enrolladenn ar moned"
+
+msgid "Failed to obtain leave record"
+msgstr "C'hwitet eo bet tapout enrolladenn ar mont-er-maez"
+
+msgid "Other pages"
+msgstr "Pajennoù all"
+
+msgid "Low Traffic IP Summary"
+msgstr "Diverradur IP trafik izel dianav"
+
+msgid "Failed to obtain IP data"
+msgstr "Diverradur IP anavezet all"
+
+msgid "Failed to obtain the relevant data"
+msgstr "N'eo ket bet tapet ar roadennoù liammet"
+
+msgid "Limited list of countries and regions"
+msgstr "Roll bevennet ar broioù hag ar rannvroioù, gwelet ar roll klok evit muioc'h"
+
+msgid "currentVisitorData"
+msgstr "10 linenn roadennoù gweladenner hepken a zo diskwelet bremañ, gwelet ar roll klok evit muioc'h"
+
+msgid "Others (robots main)"
+msgstr "Re all (robotoù)"
+
+msgid "Others (worms)"
+msgstr "Re all (preñved)"
+
+msgid "Displaying10RowsPageMorePleaseViewFullList"
+msgstr "10 linenn pajenn hepken a zo diskwelet bremañ, gwelet ar roll klok evit muioc'h"
+
+msgid "Others (OS main)"
+msgstr "Re all (reizhiadoù)"
+
+msgid "Others (browsers main)"
+msgstr "Re all (merdeerien)"
+
+msgid "Others (screen sizes)"
+msgstr "Re all (mentoù)"
+
+msgid "Others (search engines main)"
+msgstr "Re all (klaskerien)"
+
+msgid "Others (referring pages main)"
+msgstr "Re all (pajennoù mammenn)"
+
+msgid "Others (keyphrases main)"
+msgstr "Re all (frazennoù)"
+
+msgid "Others (keywords main)"
+msgstr "Re all (gerioù-alc'hwez)"
+
+msgid "Continue"
+msgstr "Kenderc'hel gant kas ar pezh a chom"
+
+msgid "Switching Protocols"
+msgstr "E tremen ar protokol"
+
+msgid "Processing (WebDAV)"
+msgstr "E plediñ (gortozit mar plij)"
+
+msgid "Early Hints"
+msgstr "Ar servijer a bourchas ar vammennoù"
+
+msgid "[Miscellaneous successes]"
+msgstr "Stadoù all a berzh"
+
+msgid "Request successful"
+msgstr "Goulenn en deus graet berzh"
+
+msgid "Created successfully"
+msgstr "Krouet gant berzh"
+
+msgid "Accepted - processing"
+msgstr "Degemeret, o plediñ"
+
+msgid "Non-authoritative information (from cache) (from cache)"
+msgstr "Titouroù nann-awiriek (eus ar grubuilh)"
+
+msgid "Success, no content returned"
+msgstr "Berzh, n'eus bet distroet netra"
+
+msgid "Reset content"
+msgstr "Adderaouekaat ar furmul"
+
+msgid "Partial content (resume download)"
+msgstr "Danvez darnel (a skor kenderc'hel ar pellgargañ)"
+
+msgid "Multi-status (WebDAV)"
+msgstr "Stadoù lies (oberadennoù stroll WebDAV)"
+
+msgid "Already reported (WebDAV)"
+msgstr "Diagent bet kemenet (a vir ouzh an daouadur)"
+
+msgid "IM used"
+msgstr "Ar protokol astennet IM a zo bet implijet"
+
+msgid "[Miscellaneous redirections]"
+msgstr "Adkasoù all"
+
+msgid "Multiple choices"
+msgstr "Meur a zibab"
+
+msgid "Moved permanently - update your links"
+msgstr "Dilec'hiet da viken - hizivaat ho liammoù"
+
+msgid "Temporary redirect - URL unchanged"
+msgstr "Adkas da c'hortoz - n'eo ket bet kemmet ar chomlec'h"
+
+msgid "See other"
+msgstr "Gwelet ur chomlec'h all"
+
+msgid "Not modified - using cached version"
+msgstr "N'eo ket bet kemmet - implijout a ra ar stumm e grubuilh"
+
+msgid "Use proxy"
+msgstr "Implijout ur proksi"
+
+msgid "Switch proxy"
+msgstr "Kemmañ proksi"
+
+msgid "Temporary redirect (keep method)"
+msgstr "Adkas da c'hortoz (a vir doare ar goulenn)"
+
+msgid "Permanent redirect - update your links"
+msgstr "Adkas da viken - hizivaat ho liammoù"
+
+msgid "[Miscellaneous client/user errors]"
+msgstr "Fazioù all war tu ar c'hliant/an implijer"
+
+msgid "Bad request"
+msgstr "Furmad fall ar goulenn"
+
+msgid "Unauthorized - please log in"
+msgstr "N'eo ket aotreet, mar plij kevreit"
+
+msgid "Payment required"
+msgstr "Rankout a rit paeañ"
+
+msgid "Forbidden - access denied"
+msgstr "Difennet an digoradur, aotreoù diglok"
+
+msgid "Page not found (404) - check for broken links"
+msgstr "N'eus ket eus ar bajenn, gwiriekit al liammoù torret"
+
+msgid "Method not allowed"
+msgstr "Ne vez ket aotreet an doare goulenn"
+
+msgid "Not acceptable"
+msgstr "Furmad respont diege"
+
+msgid "Proxy authentication required"
+msgstr "Rankout a rit en em anavezout gant ar proksi"
+
+msgid "Request timeout"
+msgstr "Re bell eo bet ar goulenn"
+
+msgid "Conflict - please try again"
+msgstr "Tabut etre ar goulennoù, klaskit en-dro diwezhatoc'h"
+
+msgid "Gone - permanently deleted"
+msgstr "Ar vammenn a zo bet diverket da viken"
+
+msgid "Length required"
+msgstr "Rankout a rit spisaat hirder an danvez"
+
+msgid "Precondition failed"
+msgstr "N'eo ket bet sevenet an divizoù"
+
+msgid "Payload too large"
+msgstr "Re vras eo danvez ar goulenn"
+
+msgid "URI too long"
+msgstr "Re hir eo chomlec'h ar goulenn"
+
+msgid "Unsupported media type"
+msgstr "Seurt restr n'eo ket skoret"
+
+msgid "Range not satisfiable"
+msgstr "Ar c'horzenn c'houlennet n'eus talvoudegezh ebet"
+
+msgid "Expectation failed"
+msgstr "N'haller ket seveniñ ar goulenn Expect"
+
+msgid "I am a teapot (April Fools)"
+msgstr "Un teod on (farsadenn Fools Ebrel)"
+
+msgid "Page expired (Laravel)"
+msgstr "Ar bajenn he deus redec, adkargit ha klaskit en-dro"
+
+msgid "Method failure (Spring)"
+msgstr "Torret eo bet an doare"
+
+msgid "Misdirected request"
+msgstr "Kammgas an doare"
+
+msgid "Unprocessable entity (WebDAV)"
+msgstr "Furmad ar goulenn a zo reizh met n'haller ket e blegiñ"
+
+msgid "Locked (WebDAV)"
+msgstr "Ar vammenn a zo alc'hwezet"
+
+msgid "Failed dependency (WebDAV)"
+msgstr "Torret eo bet an oberadenn a zispleg"
+
+msgid "Too early"
+msgstr "Abred re eo bet kaset ar goulenn"
+
+msgid "Upgrade required"
+msgstr "Rankout a rit daskempen ar protokol"
+
+msgid "Precondition required"
+msgstr "Mankout a ra an divizoù ret"
+
+msgid "Too many requests - slow down"
+msgstr "Re alies eo ar goulennoù, klaskit en-dro diwezhatoc'h"
+
+msgid "Request header fields too large (Shopify)"
+msgstr "Re vras eo tachennoù takenn ar goulenn"
+
+msgid "Request header too large"
+msgstr "Re vras eo takenn ar goulenn"
+
+msgid "Login timeout (IIS)"
+msgstr "Re bell eo bet ar c'hevre, kevreit en-dro"
+
+msgid "No response (nginx)"
+msgstr "Respont ebet digant ar servijer"
+
+msgid "Retry with (IIS)"
+msgstr "Klaskit en-dro diwezhatoc'h"
+
+msgid "Blocked by Windows parental controls"
+msgstr "Stanket gant ar c'houzoulerezh kerentel Windows"
+
+msgid "Unavailable for legal reasons"
+msgstr "N'haller ket kaout abalamour d'un abeg lezennel"
+
+msgid "Client closed connection before idle timeout (AWS ELB)"
+msgstr "Ar c'hliant en deus torret ar gevreadenn en un doare oberiant"
+
+msgid "X-Forwarded-For header with >30 IP addresses (AWS ELB)"
+msgstr "Chadenn an treuzkas a ya dreist 30 chomlec'h IP"
+
+msgid "Incompatible protocol versions (AWS ELB)"
+msgstr "Stummoù protokol an ingal"
+
+msgid "Request header too large (nginx)"
+msgstr "Re vras eo takenn ar goulenn"
+
+msgid "SSL certificate error (nginx)"
+msgstr "Fazi testeni SSL"
+
+msgid "SSL certificate required (nginx)"
+msgstr "Rankout a rit kaout un testeni SSL"
+
+msgid "HTTP request sent to HTTPS port (nginx)"
+msgstr "Goulenn HTTP kaset war bord HTTPS"
+
+msgid "Invalid token (ArcGIS)"
+msgstr "Jedouer didalvoud"
+
+msgid "Token required (ArcGIS) / Client closed request (nginx)"
+msgstr "Rankout a rit kaout ur jedouer / Ar c'hliant en deus serret ar goulenn"
+
+msgid "Resource limit reached (cPanel)"
+msgstr "Tizhet eo bet bevenn ar vammennoù (CPU/eñvor)"
+
+msgid "Bandwidth limit exceeded (Apache/cPanel)"
+msgstr "Tremenet eo bet bevenn al ledred"
+
+msgid "[Miscellaneous server errors]"
+msgstr "Fazioù all war ar servijer"
+
+msgid "Internal server error - check logs"
+msgstr "Fazi diabarzh ar servijer, gwiriekit ar c'hazetennoù"
+
+msgid "Not implemented"
+msgstr "Ne skor ket ar servijer ar fonksion-mañ"
+
+msgid "Bad gateway - backend error"
+msgstr "Fazi ar savenn-dremen, servij an adreñv ne labour ket mat"
+
+msgid "Service unavailable - maintenance or overload"
+msgstr "N'haller ket kaout ar servij, dale pe re a garg"
+
+msgid "Gateway timeout"
+msgstr "Re bell eo bet respont ar savenn-dremen"
+
+msgid "HTTP version not supported"
+msgstr "Stumm protokol HTTP n'eo ket skoret"
+
+msgid "Variant also negotiates"
+msgstr "Ar stumm all a gemer perzh er c'hefluniadur ivez (kefluniadur fall)"
+
+msgid "Insufficient storage (WebDAV)"
+msgstr "N'eus ket trawalc'h a blas e nor ar sanailh"
+
+msgid "Loop detected (WebDAV)"
+msgstr "Kavet ez eus un dave kelc'hiek"
+
+msgid "Not extended"
+msgstr "Rankout a ra bezañ astennet"
+
+msgid "Network authentication required"
+msgstr "Rankout a rit en em anavezout war ar rouedad"
+
+msgid "Unknown error (Cloudflare)"
+msgstr "Fazi dianav"
+
+msgid "Web server is down (Cloudflare)"
+msgstr "Ar servijer web a zo lazhet"
+
+msgid "Connection timeout (Cloudflare)"
+msgstr "Re bell eo bet ar gevreadenn"
+
+msgid "Origin is unreachable (Cloudflare)"
+msgstr "Ar servijer orin n'haller ket e dizhout"
+
+msgid "A timeout occurred (Cloudflare)"
+msgstr "C'hoarvezet ez eus un dremen-amzer"
+
+msgid "SSL handshake failed (Cloudflare)"
+msgstr "Torret eo bet ar c'henstok SSL"
+
+msgid "Invalid SSL certificate (Cloudflare)"
+msgstr "Testeni SSL didalvoud"
+
+msgid "Railgun error (Cloudflare - obsolete)"
+msgstr "Fazi Railgun (diamprestet)"
+
+msgid "Site is overloaded (SSLLabs)"
+msgstr "Al lec'hienn a zo re garg"
+
+msgid "Origin DNS error (Cloudflare) / Site is frozen (Pantheon)"
+msgstr "Fazi DNS ar servijer orin / Al lec'hienn a zo skornet"
+
+msgid "Temporarily disabled (Shopify)"
+msgstr "Diweredekaet da c'hortoz"
+
+msgid "Unauthorized (AWS ELB)"
+msgstr "N'eo ket aotreet"
+
+msgid "Network read timeout error"
+msgstr "Dremen-amzer lenn ar rouedad"
+
+msgid "Network connect timeout error"
+msgstr "Dremen-amzer kennask ouzh ar rouedad"
+
+msgid "Unexpected token (Shopify)"
+msgstr "Jedouer dic'hortoz"
+
+msgid "Request denied (LinkedIn)"
+msgstr "Nac'het eo bet ar goulenn"
+
+msgid "HTTP/2 GOAWAY (AWS ELB)"
+msgstr "Kevreadenn HTTP/2 serret"
+
+msgid "[Unknown]"
+msgstr "Kod stad dianav"
+
+msgid "Nonstandard success response (ESMTP)"
+msgstr "Respont berzh diouzh ar c'hiz (ESMTP)"
+
+msgid "System status, or system help reply"
+msgstr "Statud ar sistem pe skoazell"
+
+msgid "Help message"
+msgstr "Kemennadenn skoazell"
+
+msgid "SMTP service ready (LMTP)"
+msgstr "Servij SMTP prest (LMTP)"
+
+msgid "Service ready - server is ready to receive mail"
+msgstr "Servij prest - servijer ar postel a c'hall resev postel"
+
+msgid "Service closing - connection is being closed"
+msgstr "Ar servij a o serriñ - ar gevreadenn a vo torret"
+
+msgid "Authentication successful"
+msgstr "Anavezadur en deus graet berzh"
+
+msgid "Requested mail action taken and completed"
+msgstr "An oberadenn postel goulennet a zo sevenet hag echu"
+
+msgid "User not local - will forward to another address"
+msgstr "An implijer n'emañ ket war ar servijer-mañ - a vo treuzkaset d'ur chomlec'h all"
+
+msgid "Cannot verify recipient, but will attempt delivery"
+msgstr "N'haller ket gwiriañ ar resever, met klasket e vo an degasadenn"
+
+msgid "Message accepted for delivery (DSN)"
+msgstr "Ar c'hemennadenn a zo degemeret evit an degasadenn (DSN)"
+
+msgid "User name is a mailbox"
+msgstr "An anv implijer a zo ur voest postel"
+
+msgid "Authentication challenge - please respond"
+msgstr "Goulenn anavezadur - respontit mar plij"
+
+msgid "Start mail input - end with <CRLF>.<CRLF>"
+msgstr "Krogit da ensoc'hañ danvez ar postel - echuit gant <CRLF>.<CRLF>"
+
+msgid "Continue (LMTP)"
+msgstr "Kenderc'hel (LMTP)"
+
+msgid "Service not available - connection closing, try again later"
+msgstr "N'haller ket kaout ar servij - ar gevreadenn a o serriñ, klaskit en-dro diwezhatoc'h"
+
+msgid "Mailbox busy or temporarily unavailable (Exchange)"
+msgstr "Ar voestel postel a zo oc'h implij pe n'haller ket e gaout da c'hortoz (Exchange)"
+
+msgid "Connection rate limit exceeded (Postfix)"
+msgstr "Tremenet eo bet bevenn an tizh kevreadenn (Postfix)"
+
+msgid "Too many concurrent connections (Postfix)"
+msgstr "Re a gevreadennoù war un dro (Postfix)"
+
+msgid "Unable to establish connection (Postfix)"
+msgstr "N'haller ket staliañ ar gevreadenn (Postfix)"
+
+msgid "Connection timed out (Postfix)"
+msgstr "Re bell eo bet ar gevreadenn (Postfix)"
+
+msgid "Connection dropped due to error (Postfix)"
+msgstr "Torret eo bet ar gevreadenn abalamour d'ur fazi (Postfix)"
+
+msgid "Mailbox temporarily locked (Exchange)"
+msgstr "Ar voestel postel a zo alc'hwezet da c'hortoz (Exchange)"
+
+msgid "Too many recipients (Postfix/Exim)"
+msgstr "Re a reseverien (Postfix/Exim)"
+
+msgid "Mail server error (Exchange)"
+msgstr "Fazi servijer postel (Exchange)"
+
+msgid "Received loop detected (Exim)"
+msgstr "Kavet ez eus ur boukl resev (Exim)"
+
+msgid "Too many hop count (Exim)"
+msgstr "Re a lammoù (Exim)"
+
+msgid "DNS lookup failed (Postfix)"
+msgstr "C'hwitet eo bet ar goulenn DNS (Postfix)"
+
+msgid "Unable to authenticate (Postfix)"
+msgstr "N'haller ket seveniñ an anavezadur (Postfix)"
+
+msgid "TLS handshake failed (Postfix)"
+msgstr "C'hwitet eo bet ar c'henstok TLS (Postfix)"
+
+msgid "SMTP protocol violation (Postfix)"
+msgstr "Torret eo bet reolennoù protokol SMTP (Postfix)"
+
+msgid "Message size exceeds limit (Exchange)"
+msgstr "Ment ar postel a ya dreist ar vevenn (Exchange)"
+
+msgid "Message rate limit exceeded (Postfix)"
+msgstr "Tremenet eo bet bevenn al liester kasadennoù postel (Postfix)"
+
+msgid "Mailbox quota exceeded - temporary"
+msgstr "Kota ar voestel postel a zo leun - statud da c'hortoz"
+
+msgid "Domain not found (Postfix)"
+msgstr "N'eo ket bet kavet an domen (Postfix)"
+
+msgid "Message header invalid (Postfix)"
+msgstr "Takenn ar postel n'eo ket mat (Postfix)"
+
+msgid "Bounce loop detected (Postfix)"
+msgstr "Kavet ez eus ur boukl distro (Postfix)"
+
+msgid "Unable to route (Postfix)"
+msgstr "N'haller ket hentchañ (Postfix)"
+
+msgid "Sender domain not found (Postfix)"
+msgstr "N'eo ket bet kavet domen ar c'haser (Postfix)"
+
+msgid "Recipient domain not found (Postfix)"
+msgstr "N'eo ket bet kavet domen ar resever (Postfix)"
+
+msgid "Greylisting in progress - please try again (Postgrey)"
+msgstr "Ar roll gris a vez savet - klaskit en-dro diwezhatoc'h (Postgrey)"
+
+msgid "Spam filtering in progress (SpamAssassin)"
+msgstr "Silañ ar stroboù a vez graet (SpamAssassin)"
+
+msgid "Virus scanning in progress (ClamAV)"
+msgstr "Skannañ ar viruzoù a vez graet (ClamAV)"
+
+msgid "Mailbox unavailable - try again later"
+msgstr "Ar voestel postel n'haller ket e gaout - klaskit en-dro diwezhatoc'h"
+
+msgid "Requested action aborted - error in processing"
+msgstr "Torret eo bet an oberadenn goulennet - fazi er blediñ"
+
+msgid "Insufficient system storage - try again later"
+msgstr "N'eus ket trawalc'h a blas er sistem - klaskit en-dro diwezhatoc'h"
+
+msgid "Too many messages for this recipient (Exchange)"
+msgstr "Re a gemennadennoù evit ar resever-mañ (Exchange)"
+
+msgid "TLS not available (Postfix)"
+msgstr "N'haller ket kaout TLS (Postfix)"
+
+msgid "Server unable to accept messages (Postfix)"
+msgstr "Ar servijer n'hall ket resev postel (Postfix)"
+
+msgid "Temporary failure in DNS lookup (Exim)"
+msgstr "C'hwitadenn da c'hortoz er goulenn DNS (Exim)"
+
+msgid "Quota exceeded - temporary"
+msgstr "Tremenet eo bet ar gote - statud da c'hortoz"
+
+msgid "Message too big - temporary"
+msgstr "Re vras eo ar postel - statud da c'hortoz"
+
+msgid "Too many messages per connection"
+msgstr "Re a gemennadennoù dre gevreaden"
+
+msgid "Load average too high (Postfix)"
+msgstr "Karg keitat ar sistem a zo re uhel (Postfix)"
+
+msgid "Connection refused (Postfix)"
+msgstr "Nac'het eo bet ar gevreadenn (Postfix)"
+
+msgid "Send rate limit exceeded (Postfix)"
+msgstr "Tremenet eo bet bevenn al liester kas (Postfix)"
+
+msgid "Recipient rate limit exceeded (Postfix)"
+msgstr "Tremenet eo bet bevenn al liester evit ar resever (Postfix)"
+
+msgid "Sender rate limit exceeded (Postfix)"
+msgstr "Tremenet eo bet bevenn al liester evit ar c'haser (Postfix)"
+
+msgid "IP address rate limit exceeded (Postfix)"
+msgstr "Tremenet eo bet bevenn al liester evit ar chomlec'h IP (Postfix)"
+
+msgid "MX lookup failed (Postfix)"
+msgstr "C'hwitet eo bet ar goulenn MX (Postfix)"
+
+msgid "A record lookup failed (Postfix)"
+msgstr "C'hwitet eo bet ar goulenn enrolladenn A (Postfix)"
+
+msgid "PTR record lookup failed (Postfix)"
+msgstr "C'hwitet eo bet ar goulenn enrolladenn PTR (Postfix)"
+
+msgid "Greylisting active - please try again (Postgrey)"
+msgstr "Ar roll gris a zo oberiant - klaskit en-dro diwezhatoc'h (Postgrey)"
+
+msgid "Sender address rejected - domain not verified (DMARC pending)"
+msgstr "Nac'het eo chomlec'h ar c'haser - an domen n'eo ket bet gwiriet (DMARC o c'hortoz)"
+
+msgid "Recipient address rejected - domain not verified (DMARC pending)"
+msgstr "Nac'het eo chomlec'h ar resever - an domen n'eo ket bet gwiriet (DMARC o c'hortoz)"
+
+msgid "DKIM verification pending - temporary failure"
+msgstr "Gwiriañ DKIM a zo o c'hortoz - c'hwitadenn da c'hortoz"
+
+msgid "SPF verification pending - temporary failure"
+msgstr "Gwiriañ SPF a zo o c'hortoz - c'hwitadenn da c'hortoz"
+
+msgid "DMARC verification pending - temporary failure"
+msgstr "Gwiriañ DMARC a zo o c'hortoz - c'hwitadenn da c'hortoz"
+
+msgid "DNSBL lookup temporary failure"
+msgstr "C'hwitadenn da c'hortoz er goulenn DNSBL"
+
+msgid "RHSBL lookup temporary failure"
+msgstr "C'hwitadenn da c'hortoz er goulenn RHSBL"
+
+msgid "URI DNSBL lookup temporary failure"
+msgstr "C'hwitadenn da c'hortoz er goulenn URI DNSBL"
+
+msgid "Temporary authentication failure (Dovecot)"
+msgstr "C'hwitadenn da c'hortoz en anavezadur (Dovecot)"
+
+msgid "Temporary authorization failure (Sendmail)"
+msgstr "C'hwitadenn da c'hortoz en aotre (Sendmail)"
+
+msgid "Rate limit exceeded per sender (Exim)"
+msgstr "Tremenet eo bet bevenn al liester evit ar c'haser unan (Exim)"
+
+msgid "Rate limit exceeded per recipient (Exim)"
+msgstr "Tremenet eo bet bevenn al liester evit ar resever unan (Exim)"
+
+msgid "Rate limit exceeded per domain (Exim)"
+msgstr "Tremenet eo bet bevenn al liester evit an domen unan (Exim)"
+
+msgid "Rate limit exceeded per IP (Exim)"
+msgstr "Tremenet eo bet bevenn al liester evit ar chomlec'h IP unan (Exim)"
+
+msgid "Message queued for later delivery (Postfix)"
+msgstr "Ar postel a zo bet lakaet er renk evit un degasadenn diwezhatoc'h (Postfix)"
+
+msgid "Delivery delayed due to policy (Exchange)"
+msgstr "Daleet eo bet an degasadenn abalamour d'ar reolennoù (Exchange)"
+
+msgid "Temporary failure in content filter"
+msgstr "C'hwitadenn da c'hortoz er sil danvez"
+
+msgid "Temporary failure in antivirus scanner"
+msgstr "C'hwitadenn da c'hortoz er skanner enepviruz"
+
+msgid "Temporary failure in spam filter"
+msgstr "C'hwitadenn da c'hortoz er sil stroboù"
+
+msgid "Temporary failure in milter (Postfix)"
+msgstr "C'hwitadenn da c'hortoz er milter (Postfix)"
+
+msgid "Greylisting - try again later"
+msgstr "Roll gris - klaskit en-dro diwezhatoc'h"
+
+msgid "DDoS protection active - try again later"
+msgstr "Gwarez DDoS a zo oberiant - klaskit en-dro diwezhatoc'h"
+
+msgid "SMTP policy violation - temporary"
+msgstr "Torret eo bet reolennoù SMTP - statud da c'hortoz"
+
+msgid "Temporary error in RCPT TO processing"
+msgstr "Fazi da c'hortoz e pledidigezh RCPT TO"
+
+msgid "Temporary error in MAIL FROM processing"
+msgstr "Fazi da c'hortoz e pledidigezh MAIL FROM"
+
+msgid "Temporary error in EHLO/HELO processing"
+msgstr "Fazi da c'hortoz e pledidigezh EHLO/HELO"
+
+msgid "Temporary error in DATA processing"
+msgstr "Fazi da c'hortoz e pledidigezh DATA"
+
+msgid "Temporary error - service busy, try again later"
+msgstr "Fazi da c'hortoz - ar servij a zo oc'h implij, klaskit en-dro diwezhatoc'h"
+
+msgid "Syntax error - command unrecognized or too long"
+msgstr "Fazi kevreadurezh - n'eo ket anavezet an urzh pe re hir eo"
+
+msgid "Syntax error in parameters or arguments"
+msgstr "Fazi kevreadurezh en arventennoù pe en arguzennoù"
+
+msgid "Command not implemented"
+msgstr "N'eo ket bet implijet an urzh"
+
+msgid "Bad sequence of commands"
+msgstr "Urzhioù en ur seoliad fall"
+
+msgid "Command parameter not implemented"
+msgstr "N'eo ket bet implijet an arventenn urzh"
+
+msgid "Version not supported (ESMTP)"
+msgstr "Ar stumm n'eo ket skoret (ESMTP)"
+
+msgid "Mailbox path invalid (LMTP)"
+msgstr "Hent ar voestel postal n'eo ket mat (LMTP)"
+
+msgid "Too many commands in this session (Postfix)"
+msgstr "Re a urzhioù en dalc'h-mañ (Postfix)"
+
+msgid "Recipient limit exceeded (Postfix)"
+msgstr "Tremenet eo bet bevenn niver ar reseverien (Postfix)"
+
+msgid "Sender limit exceeded (Postfix)"
+msgstr "Tremenet eo bet bevenn niver ar gaserien (Postfix)"
+
+msgid "Domain limit exceeded (Postfix)"
+msgstr "Tremenet eo bet bevenn niver an domennoù (Postfix)"
+
+msgid "Mailbox does not exist (Exchange)"
+msgstr "Ar voestel postel n'eus ket anezhi (Exchange)"
+
+msgid "DNS failure - permanent"
+msgstr "C'hwitadenn DNS - fazi padus"
+
+msgid "Address type not supported (Postfix)"
+msgstr "Ar seurt chomlec'h n'eo ket skoret (Postfix)"
+
+msgid "Unable to open mailbox (Postfix)"
+msgstr "N'haller ket digeriñ ar voestel postel (Postfix)"
+
+msgid "Mailbox locked - permanent"
+msgstr "Alc'hwezet eo ar voestel postel - statud padus"
+
+msgid "Message rejected due to policy (Exchange)"
+msgstr "Nac'het eo bet ar c'hemennadenn abalamour d'ar reolennoù (Exchange)"
+
+msgid "Content rejected - permanent"
+msgstr "Nac'het eo bet an danvez - statud padus"
+
+msgid "Attachment type not allowed"
+msgstr "Ar seurt stager n'eo ket aotreet"
+
+msgid "Message encoding not supported"
+msgstr "Kodadur ar c'hemennadenn n'eo ket skoret"
+
+msgid "Sender domain does not exist - permanent"
+msgstr "Domen ar c'haser n'eus ket anezhi - fazi padus"
+
+msgid "Domain does not accept mail or is closing"
+msgstr "An domen ne zegemer ket postel pe emañ o serriñ"
+
+msgid "Recipient domain does not exist - permanent"
+msgstr "Domen ar resever n'eus ket anezhi - fazi padus"
+
+msgid "Mailbox quota exceeded - permanent"
+msgstr "Kota ar voestel postel a zo tremenet - statud padus"
+
+msgid "Message size exceeds limit - permanent"
+msgstr "Ment ar c'hemennadenn a ya dreist ar vevenn - statud padus"
+
+msgid "Authentication required (Sendmail)"
+msgstr "Rankout a rit en em anavezout (Sendmail)"
+
+msgid "Authentication failed (Sendmail)"
+msgstr "C'hwitet eo bet an anavezadur (Sendmail)"
+
+msgid "Authentication mechanism not supported"
+msgstr "Mekanik an anavezadur n'eo ket skoret"
+
+msgid "Authentication credentials invalid"
+msgstr "An titouroù anavezadur n'int ket mat"
+
+msgid "Authentication account expired"
+msgstr "Kont an anavezadur a zo redec"
+
+msgid "Access denied - authentication required"
+msgstr "Nac'het eo an digoradur - rankout a rit en em anavezout"
+
+msgid "Access denied (Sendmailism)"
+msgstr "Nac'het eo an digoradur (Sendmail)"
+
+msgid "Access denied - not authenticated"
+msgstr "Nac'het eo an digoradur - n'oc'h ket en em anavezet"
+
+msgid "Access denied - account locked"
+msgstr "Nac'het eo an digoradur - alc'hwezet eo ar gont"
+
+msgid "Access denied - account disabled"
+msgstr "Nac'het eo an digoradur - diweredekaet eo ar gont"
+
+msgid "Authentication failed"
+msgstr "C'hwitet eo bet an anavezadur"
+
+msgid "Authentication required for relay (Postfix)"
+msgstr "Rankout a rit en em anavezout evit an treuzkas (Postfix)"
+
+msgid "Authentication failed for relay (Postfix)"
+msgstr "C'hwitet eo bet an anavezadur evit an treuzkas (Postfix)"
+
+msgid "Encryption required (STARTTLS)"
+msgstr "Rankout a rit kaout ur gevreadenn sifret (STARTTLS)"
+
+msgid "TLS required for this recipient"
+msgstr "Rankout a rit kaout un enrinegenn TLS evit ar resever-mañ"
+
+msgid "Encryption strength insufficient"
+msgstr "N'eo ket kreñv a-walc'h an enrinegenn"
+
+msgid "Certificate validation failed"
+msgstr "C'hwitet eo bet gwiriañ an testeni"
+
+msgid "Invalid TLS certificate"
+msgstr "Testeni TLS didalvoud"
+
+msgid "TLS protocol version not supported"
+msgstr "Stumm protokol TLS n'eo ket skoret"
+
+msgid "Cipher suite not supported"
+msgstr "Ar c'horf sifr n'eo ket skoret"
+
+msgid "Access denied - no valid recipient"
+msgstr "Nac'het eo an digoradur - resever ebet gant talvoudegezh"
+
+msgid "Access denied - no valid sender"
+msgstr "Nac'het eo an digoradur - kaser ebet gant talvoudegezh"
+
+msgid "Access denied - domain not allowed"
+msgstr "Nac'het eo an digoradur - an domen n'eo ket aotreet"
+
+msgid "Access denied - IP address blocked (permanent)"
+msgstr "Nac'het eo an digoradur - ar chomlec'h IP a zo bet stanket da viken"
+
+msgid "Access denied - sender domain blacklisted"
+msgstr "Nac'het eo an digoradur - domen ar c'haser a zo war ar roll du"
+
+msgid "Mailbox unavailable - requested action not taken"
+msgstr "N'haller ket kaout ar voestel postel - n'eo ket bet sevenet an oberadenn goulennet"
+
+msgid "User not local - please try forwarding address"
+msgstr "An implijer n'eo ket lec'hel - klaskit gant ar chomlec'h treuzkas"
+
+msgid "Requested action aborted - exceeded storage allocation"
+msgstr "Torret eo bet an oberadenn goulennet - dreist d'ar sanailh deveret"
+
+msgid "Mailbox name not allowed"
+msgstr "Anv ar voestel postel n'eo ket aotreet"
+
+msgid "Requested action rejected - access denied"
+msgstr "Nac'het eo bet an oberadenn goulennet - digoradur nac'het"
+
+msgid "MAIL FROM/RCPT TO parameters not recognized"
+msgstr "N'eo ket bet anavezet arventennoù MAIL FROM/RCPT TO"
+
+msgid "Domain not allowed to send (DMARC reject)"
+msgstr "N'eo ket aotreet an domen da gas (nac'hadenn DMARC)"
+
+msgid "Too many duplicate messages - permanent"
+msgstr "Re a gemennadennoù daoublet - statud padus"
+
+msgid "Sender address rejected - domain not in SPF"
+msgstr "Nac'het eo chomlec'h ar c'haser - n'emañ ket an domen e enrolladenn SPF"
+
+msgid "Sender address rejected - DKIM verification failed"
+msgstr "Nac'het eo chomlec'h ar c'haser - c'hwitet eo bet gwiriañ DKIM"
+
+msgid "Sender address rejected - DMARC policy reject"
+msgstr "Nac'het eo chomlec'h ar c'haser - nac'hadenn reolenn DMARC"
+
+msgid "Recipient address rejected - DMARC policy reject"
+msgstr "Nac'het eo chomlec'h ar resever - nac'hadenn reolenn DMARC"
+
+msgid "Message rejected due to spam content"
+msgstr "Nac'het eo ar c'hemennadenn abalamour d'un danvez stroboù"
+
+msgid "Message rejected due to virus detected"
+msgstr "Nac'het eo ar c'hemennadenn abalamour ma'z eus bet kavet ur viruz"
+
+msgid "Message rejected due to malicious content"
+msgstr "Nac'het eo ar c'hemennadenn abalamour d'un danvez drouk"
+
+msgid "Message rejected due to phishing detection"
+msgstr "Nac'het eo ar c'hemennadenn abalamour ma'z eus bet kavet un arsailh fourrañ"
+
+msgid "Message rejected due to malware detection"
+msgstr "Nac'het eo ar c'hemennadenn abalamour ma'z eus bet kavet ur malware"
+
+msgid "Message rejected due to policy - permanent"
+msgstr "Nac'het eo ar c'hemennadenn abalamour d'ar reolennoù - statud padus"
+
+msgid "Message rejected due to content filtering"
+msgstr "Nac'het eo ar c'hemennadenn abalamour da silañ an danvez"
+
+msgid "Message rejected due to reputation"
+msgstr "Nac'het eo ar c'hemennadenn abalamour d'ar vrud"
+
+msgid "Access denied - access_map violation"
+msgstr "Nac'het eo an digoradur - torret eo reolennoù an access_map"
+
+msgid "Access denied - SMTP client listed in RBL"
+msgstr "Nac'het eo an digoradur - kliant SMTP a zo war ar roll RBL"
+
+msgid "Access denied - relay not authorized"
+msgstr "Nac'het eo an digoradur - n'eo ket aotreet an treuzkas"
+
+msgid "Access denied - unknown SMTP client hostname"
+msgstr "Nac'het eo an digoradur - anv ostiz SMTP dianav"
+
+msgid "Access denied - bad syntax for client HELO hostname"
+msgstr "Nac'het eo an digoradur - kevreadurezh fall en anv ostiz klask HELO"
+
+msgid "Access denied - SMTP client hostname rejected"
+msgstr "Nac'het eo an digoradur - nac'het eo bet anv ostiz ar c'hliant SMTP"
+
+msgid "Access denied - unknown domain for sender or recipient"
+msgstr "Nac'het eo an digoradur - domenn anavezet ebet evit ar c'haser pe ar resever"
+
+msgid "Access denied - unknown client HELO hostname"
+msgstr "Nac'het eo an digoradur - anv ostiz HELO ar c'hliant dianav"
+
+msgid "Access denied - invalid domain (not FQDN)"
+msgstr "Nac'het eo an digoradur - domenn didalvoud (n'eo ket FQDN)"
+
+msgid "Access denied - domain not qualified"
+msgstr "Nac'het eo an digoradur - an domenn n'eo ket kualifiet"
+
+msgid "Access denied - mail server misconfigured"
+msgstr "Nac'het eo an digoradur - servijer ar postel kefluniet fall"
+
+msgid "Access denied - open relay not allowed"
+msgstr "Nac'het eo an digoradur - n'eo ket aotreet un treuzkas digor"
+
+msgid "Access denied - proxy not allowed"
+msgstr "Nac'het eo an digoradur - n'eo ket aotreet ar proksi"
+
+msgid "Access denied - dynamic IP not allowed"
+msgstr "Nac'het eo an digoradur - n'eo ket aotreet ar chomlec'h IP dinamek"
+
+msgid "Access denied - residential IP not allowed"
+msgstr "Nac'het eo an digoradur - n'eo ket aotreet ar chomlec'h IP residantel"
+
+msgid "Access denied - VPN/Tor detected"
+msgstr "Nac'het eo an digoradur - kavet ez eus VPN/Tor"
+
+msgid "Access denied - Spamhaus DROP listed"
+msgstr "Nac'het eo an digoradur - ar chomlec'h IP a zo war roll DROP Spamhaus"
+
+msgid "Access denied - URL listed in URIBL"
+msgstr "Nac'het eo an digoradur - URL a zo war URIBL"
+
+msgid "Access denied - domain in RHSBL"
+msgstr "Nac'het eo an digoradur - an domenn a zo war RHSBL"
+
+msgid "Access denied - IP in DNSWL (policy)"
+msgstr "Nac'het eo an digoradur - IP a zo war DNSWL (reolenn)"
+
+msgid "Delivery failed - mailbox not found"
+msgstr "C'hwitet eo bet an degasadenn - n'eo ket bet kavet ar voestel postel"
+
+msgid "Delivery failed - recipient not local"
+msgstr "C'hwitet eo bet an degasadenn - ar resever n'eo ket lec'hel"
+
+msgid "Delivery failed - recipient rejected"
+msgstr "C'hwitet eo bet an degasadenn - nac'het eo ar resever"
+
+msgid "Delivery failed - sender rejected"
+msgstr "C'hwitet eo bet an degasadenn - nac'het eo ar c'haser"
+
+msgid "Delivery failed - relay rejected"
+msgstr "C'hwitet eo bet an degasadenn - nac'het eo an treuzkas"
+
+msgid "Delivery failed - DNS permanent error"
+msgstr "C'hwitet eo bet an degasadenn - fazi DNS padus"
+
+msgid "Delivery failed - MX permanent error"
+msgstr "C'hwitet eo bet an degasadenn - fazi MX padus"
+
+msgid "Delivery failed - A record permanent error"
+msgstr "C'hwitet eo bet an degasadenn - fazi enrolladenn A padus"
+
+msgid "Delivery failed - PTR record permanent error"
+msgstr "C'hwitet eo bet an degasadenn - fazi enrolladenn PTR padus"
+
+msgid "Delivery failed - policy permanent error"
+msgstr "C'hwitet eo bet an degasadenn - fazi reolennoù padus"
+
+msgid "DSN: Success - delivery status notification"
+msgstr "DSN: Berzh - kemennadur stad an degasadenn"
+
+msgid "DSN: Delivery delayed"
+msgstr "DSN: Daleet eo an degasadenn"
+
+msgid "DSN: Delivery failed - permanent"
+msgstr "DSN: C'hwitet eo an degasadenn - padus"
+
+msgid "DSN: Delivery failed - temporary"
+msgstr "DSN: C'hwitet eo an degasadenn - da c'hortoz"
+
+msgid "DSN: Message expired"
+msgstr "DSN: Ar c'hemennadenn a zo redec"
+
+msgid "DSN: Message bounced"
+msgstr "DSN: Distroet eo ar c'hemennadenn"
+
+msgid "DSN: Message discarded"
+msgstr "DSN: Taolet eo bet ar c'hemennadenn"
+
+msgid "DSN: Message filtered"
+msgstr "DSN: Sileet eo bet ar c'hemennadenn"
+
+msgid "DSN: Message quarantined"
+msgstr "DSN: Ar c'hemennadenn a zo lakaet e karantin"
+
+msgid "DSN: Message held for review"
+msgstr "DSN: Dalc'het eo ar c'hemennadenn evit an addamant"
+
+msgid "MTA-STS policy required"
+msgstr "Rankout a rit kaout reolenn MTA-STS"
+
+msgid "MTA-STS policy validation failed"
+msgstr "C'hwitet eo bet gwiriañ reolenn MTA-STS"
+
+msgid "TLS reporting required"
+msgstr "Rankout a rit da gas da sitel TLS"
+
+msgid "TLS report requested"
+msgstr "Goulennet eo bet danevell TLS"
+
+msgid "SMTP MTA Strict Transport Security active"
+msgstr "SMTP MTA Strict Transport Security a zo oberiant"
+
+msgid "DANE validation required"
+msgstr "Rankout a rit gwiriañ DANE"
+
+msgid "DANE validation failed"
+msgstr "C'hwitet eo bet gwiriañ DANE"
+
+msgid "TLSA record missing"
+msgstr "Enrolladenn TLSA a vank"
+
+msgid "Certificate name mismatch"
+msgstr "Anv an testeni ne glot ket"
+
+msgid "Certificate expired"
+msgstr "An testeni a zo redec"
+
+msgid "AUTH LOGIN required"
+msgstr "Rankout a rit kaout an anavezadur AUTH LOGIN"
+
+msgid "AUTH PLAIN required"
+msgstr "Rankout a rit kaout an anavezadur AUTH PLAIN"
+
+msgid "AUTH CRAM-MD5 required"
+msgstr "Rankout a rit kaout an anavezadur AUTH CRAM-MD5"
+
+msgid "AUTH DIGEST-MD5 required"
+msgstr "Rankout a rit kaout an anavezadur AUTH DIGEST-MD5"
+
+msgid "AUTH GSSAPI required"
+msgstr "Rankout a rit kaout an anavezadur AUTH GSSAPI"
+
+msgid "AUTH NTLM required"
+msgstr "Rankout a rit kaout an anavezadur AUTH NTLM"
+
+msgid "AUTH SCRAM required"
+msgstr "Rankout a rit kaout an anavezadur AUTH SCRAM"
+
+msgid "AUTH OAUTHBEARER required"
+msgstr "Rankout a rit kaout an anavezadur AUTH OAUTHBEARER"
+
+msgid "AUTH XOAUTH2 required"
+msgstr "Rankout a rit kaout an anavezadur AUTH XOAUTH2"
+
+msgid "Exchange: Mailbox database error"
+msgstr "Exchange: Fazi diazoù roadennoù ar voestel postel"
+
+msgid "Exchange: Store driver error"
+msgstr "Exchange: Fazi koker ar sanailh"
+
+msgid "Exchange: Transport agent error"
+msgstr "Exchange: Fazi agent an treuzkas"
+
+msgid "Exchange: Content conversion error"
+msgstr "Exchange: Fazi treuzfurmidigezh an danvez"
+
+msgid "Exchange: Routing error"
+msgstr "Exchange: Fazi an hentchañ"
+
+msgid "Exchange: Mail flow stalled"
+msgstr "Exchange: Red ar postel a zo savet"
+
+msgid "Exchange: Shadow redundancy error"
+msgstr "Exchange: Fazi ar redundañ en disheol"
+
+msgid "Exchange: Safety net error"
+msgstr "Exchange: Fazi rouedad surentez"
+
+msgid "Exchange: Queue database error"
+msgstr "Exchange: Fazi diazoù roadennoù ar renk"
+
+msgid "Exchange: Message throttled"
+msgstr "Exchange: Bevennet eo bet ar c'hemennadenn"
+
+msgid "Postfix: Bounce queue error"
+msgstr "Postfix: Fazi renk an distro"
+
+msgid "Postfix: Deferred queue error"
+msgstr "Postfix: Fazi renk an dale"
+
+msgid "Postfix: Hold queue error"
+msgstr "Postfix: Fazi renk an dalc'h"
+
+msgid "Postfix: Incoming queue error"
+msgstr "Postfix: Fazi renk an degemer"
+
+msgid "Postfix: Active queue error"
+msgstr "Postfix: Fazi renk oberiant"
+
+msgid "Postfix: Corrupted queue file"
+msgstr "Postfix: Restr renk kontammet"
+
+msgid "Sendmail: Queue runner error"
+msgstr "Sendmail: Fazi redaer ar renk"
+
+msgid "Sendmail: Alias database error"
+msgstr "Sendmail: Fazi diazoù an alias"
+
+msgid "Sendmail: Virtuser table error"
+msgstr "Sendmail: Fazi taolenn arveriaded virtuel"
+
+msgid "Sendmail: Mailer definition error"
+msgstr "Sendmail: Fazi termenadur ar mailer"
+
+msgid "Exim: Router configuration error"
+msgstr "Exim: Fazi kefluniadur an henteer"
+
+msgid "Exim: Transport configuration error"
+msgstr "Exim: Fazi kefluniadur an treuzkas"
+
+msgid "Exim: Director configuration error"
+msgstr "Exim: Fazi kefluniadur ar rener"
+
+msgid "Exim: Retry configuration error"
+msgstr "Exim: Fazi kefluniadur an adklaskoù"
+
+msgid "Exim: Rewrite configuration error"
+msgstr "Exim: Fazi kefluniadur an adskrivadur"
+
+msgid "Exim: Authentication configuration error"
+msgstr "Exim: Fazi kefluniadur an anavezadur"
+
+msgid "Exim: ACL configuration error"
+msgstr "Exim: Fazi kefluniadur ACL"
+
+msgid "Exim: Local_scan configuration error"
+msgstr "Exim: Fazi kefluniadur Local_scan"
+
+msgid "Exim: Lookup configuration error"
+msgstr "Exim: Fazi kefluniadur ar glask"
+
+msgid "Exim: Expansion configuration error"
+msgstr "Exim: Fazi kefluniadur an astenn"
+
+msgid "HTTP Protocol Versions"
+msgstr "Stummoù protokol HTTP"
+
+msgid "Protocol"
+msgstr "Protokol"
+
+msgid "Request %"
+msgstr "Rann ar goulennoù"
+
+msgid "Bandwidth %"
+msgstr "Rann al ledred"
+
+msgid "Each request requires a new connection"
+msgstr "Rankout a ra pep goulenn kaout ur gevreadenn nevez"
+
+msgid "Multiple requests can reuse one connection"
+msgstr "Meur a c'houlenn a c'hall rannañ ar memes kevreadenn"
+
+msgid "Multiple requests in parallel over one connection"
+msgstr "Meur a c'houlenn a c'hall bezañ plediet a-gevret e-barzh ur gevreadenn hepken"
+
+msgid "Faster connection, better performance on poor networks"
+msgstr "Kevreadenn buanoc'h, gwelloc'h berzh war rouedadoù gorrek"
+
+msgid "No protocol data available"
+msgstr "Roadennoù protokol ebet"
+
+msgid "of requests use HTTP/1.0"
+msgstr "eus ar goulennoù a ra gant protokol HTTP/1.0"
+
+msgid "From access logs"
+msgstr "Diwar kazetennoù an digoradur"
+
+msgid "No HTTP/2 requests detected"
+msgstr "N'eus ket bet kavet goulenn HTTP/2 ebet"
+
+msgid "All requests are HTTP/1.0, no HTTP/2 requests"
+msgstr "An holl c'houlennoù a zo HTTP/1.0, goulenn HTTP/2 ebet"
+
+msgid "HTTP/3 not detected"
+msgstr "N'eus ket bet kavet goulenn HTTP/3 ebet"
+
+msgid "all requests do not include QUIC/HTTP/3 protocol requests"
+msgstr "An holl c'houlennoù n' enframmont ket goulennoù protokol QUIC/HTTP/3"
+
+msgid "Mail Authentication Statistics"
+msgstr "Stadegoù an anavezadur postel"
+
+msgid "Authentication"
+msgstr "Seurt anavezadur"
+
+msgid "Pass"
+msgstr "Tremenet"
+
+msgid "Fail"
+msgstr "C'hwitet"
+
+msgid "Softfail"
+msgstr "C'hwitadenn blot"
+
+msgid "Neutral"
+msgstr "Neptu"
+
+msgid "None"
+msgstr "Hini ebet"
+
+msgid "Mail Queue Delay Statistics"
+msgstr "Stadegoù an dale er renk postel"
+
+msgid "Delay Range"
+msgstr "Korzenn an dale"
+
+msgid "Count"
+msgstr "Niver"
+
+msgid "Percentage"
+msgstr "Dregantad"
+
+msgid "TLS Encryption Statistics"
+msgstr "Stadegoù enrinegenn TLS"
+
+msgid "TLS Versions"
+msgstr "Stummoù TLS"
+
+msgid "Top Ciphers"
+msgstr "Korfoù sifr ar muiañ implijet"
+
+msgid "robot_hits_detail_both"
+msgstr "Goulennoù hollek: %s (pajennoù reizh: %s, robots.txt: %s)"
+
+msgid "robot_hits_detail_only_robots"
+msgstr "Mont dreist da robots.txt hepken: %s gwech, n'en deus ket dastumet pajennoù all"
+
+msgid "robot_hits_detail_normal"
+msgstr "Goulennoù evit pajennoù reizh: %s"
+
+msgid "Troubleshooting"
+msgstr "Diskoulmañ kudennoù"
+
+msgid "Did you use the correct URL?"
+msgstr "Hag implijet ho peus an URL reizh?"
+
+msgid "Example:"
+msgstr "Skouer:"
+
+msgid "Did you use correct config parameter?"
+msgstr "Hag implijet ho peus an arventenn kefluniadur reizh?"
+
+msgid "Example: If your config file is awstats.mysite.conf, use -config=mysite"
+msgstr "Skouer: Mard eo awstats.mysite.conf ho restr kefluniadur, implijit -config=mysite"
+
+msgid "Did you create your config file 'awstats.$SiteConfig.conf'?"
+msgstr "Hag krouet ho peus ho restr kefluniadur 'awstats.$SiteConfig.conf'?"
+
+msgid "If not, you can run \"awstats_configure.pl\" from command line, or create it manually."
+msgstr "Ma n'eo ket, gallout a rit lañsaat \"awstats_configure.pl\" adalek al linenn urzh, pe krouiñ anezhi gant an dorn."
+
+msgid "Setup"
+msgstr "Kefluniañ"
+
+msgid "file, web server or permissions may be wrong."
+msgstr "restr, ar servijer web pe an aotreoù a c'hall bezañ fall."
+
+msgid "Check config file, permissions and AWStats documentation (in 'docs' directory)."
+msgstr "Gwiriekit ar restr kefluniadur, an aotreoù ha teuliadur AWStats (er c'havlec'h 'docs')."
+
+msgid "Warning: Can't find language files for \"%s\". English will be used."
+msgstr "Diwallit: N'haller ket kavout restroù yezh evit \"%s\". Implijet e vo ar saozneg."
+
+msgid "%s process (ID %s) interrupted by signal %s."
+msgstr "Torret eo bet an argerzh %s (ID %s) gant ar sinal %s."
+
+msgid "An AWStats update process seems to be already running for this config file. Try later. If this is not true, remove manually lock file"
+msgstr "Seblantout a ra ez eus un argerzh hizivaat AWStats o redek evit ar restr kefluniadur-mañ. Klaskit diwezhatoc'h. Ma n'eo ket gwir, tennit ar restr alc'hwez gant an dorn"
+
+msgid "Report Overview"
+msgstr "Trec'hlenn an destivell"
+
+msgid "Monthly Statistics"
+msgstr "Stadegoù dre vizioù"
+
+msgid "Daily Statistics"
+msgstr "Stadegoù dre zeizioù"
+
+msgid "Statistics by Day of Week"
+msgstr "Stadegoù dre zeizioù ar sizhun"
+
+msgid "Hourly Page Views"
+msgstr "Gweladennoù pajennoù dre eur"
+
+msgid "Traffic Sources"
+msgstr "Mammennoù an darzh"
+
+msgid "Other Sources"
+msgstr "Mammennoù all"
+
+msgid "tooltip_1"
+msgstr "Niver a dalc'hioù ar gweladenner war al lec'hienn web. Pa ne vez oberiantiezh ebet e-pad muioc'h evit 30 munud, e vez niveret ar gweladenn da heul evel unan nevez."
+
+msgid "tooltip_2"
+msgstr "Niver a weladennerien zisheñvel a zo bet deuet war ho lec'hienn web e-pad ar prantad dibabet."
+
+msgid "tooltip_3"
+msgstr "Niver ar goulennoù a vez niveret evel pajennoù (evel HTML, PHP, ASP, hag all), hep kontañ ar restroù statikel evel ar skeudennoù, CSS, JS."
+
+msgid "tooltip_4"
+msgstr "Niver hollek an holl c'houlennoù kaset d'ar servijer, en o zouez ar pajennoù, ar skeudennoù, ar CSS, ar JS hag an holl restroù all."
+
+msgid "tooltip_5"
+msgstr "Kementad hollek ar roadennoù treuzkaset gant ar servijer evel respont da c'houlennoù an implijer."
+
+msgid "tooltip_13"
+msgstr "Stadegoù ar vammennoù a ya war ho lec'hienn web dre ar c'hlaskerien. Diskouez a ra pe glaskerien a gas darzh ha pe gerioù a glask a vez implijet gant ar weladennerien."
+
+msgid "tooltip_14"
+msgstr "Stadegoù ar vammennoù a ya war ho lec'hienn web dre liammoù diavaez eus lec'hiennoù web all. Diskouez a ra pe lec'hiennoù web a liamm ouzhoc'h ha pegement a darzh a zegasont."
+
+msgid "tooltip_15"
+msgstr "Termenoù a glask a implij ar weladennerien evit kavout ho lec'hienn web dre ar c'hlaskerien. Gerioù-alc'hwez a zo gerioù unan, frazennoù-alc'hwez a zo kenaozadurioù meur a c'her."
+
+msgid "tooltip_16"
+msgstr "Programmoù emgefre evel robotoù klaskerien, robotoù AoE, skannerioù gourdrouz, hag all. Niver etre krommelloù a adkas niver ar goulennoù evit ar pajennoù reizh ha robots.txt."
+
+msgid "tooltip_17"
+msgstr "Graf dasparzh an darzh e-pad 24 eur. Diskouez a ra darzh ho lec'hienn web d'an eurioù disheñvel, a sikour deoc'h da gompren eurioù oberiantiz an implijer."
+
+msgid "tooltip_18"
+msgstr "Ar golonenn-mañ a ziskouez talvoudoù keitat evit pep deiz/sizhun e-pad ar prantad dibabet, a sikour deoc'h da gompren an dar a-blaen hollek."
+
+msgid "tooltip_19"
+msgstr "Klikit war an elfennoù er graf evit gwelet titouroù munudet. Mont ar logodenn dreist elfennoù ar graf a ziskouez talvoudoù resis."
+
+msgid "tooltip_20"
+msgstr "Roadennoù n'haller ket renkañ er c'horzennoù a zo, peurvuiañ abalamour d'ur furmat roadennoù iskis a vank."
+
+msgid "tooltip_21"
+msgstr "Argadennoù preñved enrollet. Preñved a zo malware en-emreplica a led dre zegouezhioù rouedad peurvuiañ."
+
+msgid "AWStats %s - Advanced Web Statistics"
+msgstr "AWStats %s - Stadegoù Web Araokaet"
+
+msgid "Copyright (c) 2000-2025 Laurent Destailleur"
+msgstr "Gwirioù merañ (c) 2000-2025 Laurent Destailleur"
+
+msgid "Copyright (c) 2026-latest Community Edition"
+msgstr "Gwirioù merañ (c) 2026-bremañ Stumm ar Gumuniezh"
+
+msgid "AWStats comes with ABSOLUTELY NO WARRANTY. It's a free software distributed with a GNU General Public License (See LICENSE file for details)."
+msgstr "AWStats a zo dasparzhet HEP GARANTIS EBET. Ur meziant frank eo, dasparzhet dindan an Aotreegezh Hollek Publik GNU (gwelet ar restr LICENSE evit ar munudoù)."
+
+msgid "Syntax: %s -config=virtualhostname [options]"
+msgstr "Kevreadurezh: %s -config=anvostizvirtuel [dibarzhioù]"
+
+msgid "This runs %s in command line to update statistics (-update option) of a web site, from the log file defined in AWStats config file, or build a HTML report (-output option)."
+msgstr "Homañ a lak da redek %s al linenn urzh evit hizivaat stadegoù (-update dibarzh) ul lec'hienn web, adalek restr kazetenn termenet e restr kefluniadur AWStats, pe evit sevel un destivell HTML (-output dibarzh)."
+
+msgid "First, %s tries to read %s.virtualhostname.conf as the config file. If not found, %s tries to read %s.conf, and finally the full path passed to -config="
+msgstr "Da gentañ, %s a glask lenn %s.anvostizvirtuel.conf evel restr kefluniadur. Ma n'eo ket kavet, %s a glask lenn %s.conf, ha da ziwezhañ an hent klok treuzkaset da -config="
+
+msgid "Note 1: Config files (*.conf) must be in /etc/awstats, /usr/local/etc/awstats, /etc or same directory than awstats.pl script file."
+msgstr "Notenn 1: Rankout a ra ar restroù kefluniadur (*.conf) bezañ e /etc/awstats, /usr/local/etc/awstats, /etc pe er memes teuliad ha skript awstats.pl."
+
+msgid "Note 2: If AWSTATS_FORCE_CONFIG environment variable is defined, AWStats will use it as the 'config' value, whatever is the value on command line or URL."
+msgstr "Notenn 2: M'eo termenet an argemenn endro AWSTATS_FORCE_CONFIG, AWStats a raio ganti evel talvoud 'config', ne vern petra eo an talvoud al linenn urzh pe war an URL."
+
+msgid "See AWStats documentation for all setup instructions."
+msgstr "Gwelet teuliadur AWStats evit an holl zeskrivadurioù kefluniañ."
+
+msgid "Options to update statistics:"
+msgstr "Dibarzhioù evit hizivaat ar stadegoù:"
+
+msgid "  -update        to update statistics (default)"
+msgstr "  -update        hizivaat ar stadegoù (dre ziouer)"
+
+msgid "  -showsteps     to add benchmark information every %s lines processed"
+msgstr "  -showsteps     ouzhpennañ titouroù diazpar a-c'houde pep %s linenn eilpennet"
+
+msgid "  -showcorrupted to add output for each corrupted lines found, with reason"
+msgstr "  -showcorrupted diskouez an ezvont evit pep linenn eilpennet kontammet kavet, gant an abeg"
+
+msgid "  -showdropped   to add output for each dropped lines found, with reason"
+msgstr "  -showdropped   diskouez an ezvont evit pep linenn eilpennet taolet kavet, gant an abeg"
+
+msgid "  -showunknownorigin  to output referer when it can't be parsed"
+msgstr "  -showunknownorigin    diskouez an daveer pa n'haller ket e eilpennañ"
+
+msgid "  -showdirectorigin   to output log line when origin is a direct access"
+msgstr "  -showdirectorigin     diskouez al linenn kazetenn pa 'z eo an orin un digoradur eeun"
+
+msgid "  -updatefor=n   to stop the update process after parsing n lines"
+msgstr "  -updatefor=n    paouez an argerzh hizivaat goude eilpennañ n linenn"
+
+msgid "  -LogFile=x     to change log to analyze whatever is 'LogFile' in config file"
+msgstr "  -LogFile=x      kemmañ ar c'hazetenn da zielfennañ ne vern petra eo 'LogFile' er restr kefluniadur"
+
+msgid "  Be care to process log files in chronological order when updating statistics."
+msgstr "  Diwallit da ble diazhoù kazetenn en urzh kronologel pa hizivait stadegoù."
+
+msgid "Options to show statistics:"
+msgstr "Dibarzhioù evit diskouez ar stadegoù:"
+
+msgid "  -output      to output main HTML report (no update made except with -update)"
+msgstr "  -output       diskouez an destivell HTML bennañ (hizivadur ebet war-bouez gant -update)"
+
+msgid "  -output=x    to output other report pages where x is:"
+msgstr "  -output=x     diskouez pajennoù destivell all eo x :"
+
+msgid "build page of all domains/countries"
+msgstr "sevel pajenn an holl domennoù/broioù"
+
+msgid "build page of all hosts"
+msgstr "sevel pajenn an holl ostizien"
+
+msgid "build page of last hits for hosts"
+msgstr "sevel pajenn ar goulennoù diwezhañ evit an ostizien"
+
+msgid "build page of all unresolved IP"
+msgstr "sevel pajenn an holl chomlec'hioù IP nann-resis"
+
+msgid "build page of all email senders (maillog)"
+msgstr "sevel pajenn an holl gasourien postel (maillog)"
+
+msgid "build page of last email senders (maillog)"
+msgstr "sevel pajenn ar gasourien postel diwezhañ (maillog)"
+
+msgid "build page of all email receivers (maillog)"
+msgstr "sevel pajenn an holl reseverien postel (maillog)"
+
+msgid "build page of last email receivers (maillog)"
+msgstr "sevel pajenn ar reseverien postel diwezhañ (maillog)"
+
+msgid "build page of all logins used"
+msgstr "sevel pajenn an holl gevreoù implijet"
+
+msgid "build page of last hits for logins"
+msgstr "sevel pajenn ar goulennoù diwezhañ evit ar c'hevreoù"
+
+msgid "build page of all robots/spider visits"
+msgstr "sevel pajenn an holl weladennoù robot/kevnidenn"
+
+msgid "build page of last hits for robots"
+msgstr "sevel pajenn ar goulennoù diwezhañ evit ar robotoù"
+
+msgid "list most often viewed pages"
+msgstr "rollañ ar pajennoù gwelet aliesañ"
+
+msgid "list most often viewed pages matching filter"
+msgstr "rollañ ar pajennoù gwelet aliesañ a glot gant ar sil"
+
+msgid "list entry pages"
+msgstr "rollañ ar pajennoù moned"
+
+msgid "list entry pages matching filter"
+msgstr "rollañ ar pajennoù moned a glot gant ar sil"
+
+msgid "list exit pages"
+msgstr "rollañ ar pajennoù mont-er-maez"
+
+msgid "list exit pages matching filter"
+msgstr "rollañ ar pajennoù mont-er-maez a glot gant ar sil"
+
+msgid "build page with os detailed versions"
+msgstr "sevel pajenn gant stummoù munudet ar reizhiadoù korzenneg"
+
+msgid "build page with browsers detailed versions"
+msgstr "sevel pajenn gant stummoù munudet ar merdeerien"
+
+msgid "list 'User Agents' with unknown browser"
+msgstr "rollañ ar 'User Agents' gant ur merdeer dianav"
+
+msgid "list 'User Agents' with unknown OS"
+msgstr "rollañ ar 'User Agents' gant ur reizhiad korzenneg dianav"
+
+msgid "build page of all refering search engines"
+msgstr "sevel pajenn an holl glaskerien a zegas"
+
+msgid "build page of all refering pages"
+msgstr "sevel pajenn an holl bajennoù a zegas"
+
+msgid "list all keyphrases used on search engines"
+msgstr "rollañ an holl frazennoù-alc'hwez implijet war ar c'hlaskerien"
+
+msgid "list all keywords used on search engines"
+msgstr "rollañ an holl c'herioù-alc'hwez implijet war ar c'hlaskerien"
+
+msgid "list 'Referers' for 404 errors"
+msgstr "rollañ ar 'Daveerien' evit fazioù 404"
+
+msgid "build page of all values for ExtraSection X"
+msgstr "sevel pajenn an holl dalvoudoù evit ExtraSection X"
+
+msgid "  -staticlinks           to have static links in HTML report page"
+msgstr "  -staticlinks           implijout liammoù statikel war bajenn an destivell HTML"
+
+msgid "  -staticlinksext=xxx    to have static links with .xxx extension instead of .html"
+msgstr "  -staticlinksext=xxx    implijout liammoù statikel gant an astenn .xxx e-lec'h .html"
+
+msgid "  -lang=LL     to output a HTML report in language LL (en,de,es,fr,it,nl,br,...)"
+msgstr "  -lang=LL     diskouez an destivell HTML er yezh LL (en,de,es,fr,it,nl,br,...)"
+
+msgid "  -month=MM    to output a HTML report for an old month MM"
+msgstr "  -month=MM    diskouez un destivell HTML evit ar miz kozh MM"
+
+msgid "  -year=YYYY   to output a HTML report for an old year YYYY"
+msgstr "  -year=YYYY   diskouez un destivell HTML evit ar bloaz kozh YYYY"
+
+msgid "  The 'date' options doesn't allow you to process old log file. They only allow you to see a past report for a chosen month/year period instead of current month/year."
+msgstr "  Ne aotreont ket dit ble diazhoù kazetenn gozh. Aotren a reont dit gwelet un destivell dremenet evit ur prantad miz/bloaz dibabet e-lec'h ar miz/bloaz red."
+
+msgid "Other options:"
+msgstr "Dibarzhioù all:"
+
+msgid "  -debug=X     to add debug informations lesser than level X (speed reduced)"
+msgstr "  -debug=X     ouzhpennañ titouroù izeilaat a-us da live X (diskarg ar buander)"
+
+msgid "  -version     show AWStats version"
+msgstr "  -version, -v      diskouez stumm AWStats"
+
+msgid "Now supports/detects:"
+msgstr "Skor/Kavout a ra bremañ :"
+
+msgid "  Web/Ftp/Mail/streaming server log analyzis (and load balanced log files)"
+msgstr "  Dielfennadur kazetennoù servijerioù web/FTP/postel/skignañ (ha restroù kazetenn kargbalañset)"
+
+msgid "  Reverse DNS lookup (IPv4 and IPv6) and GeoIP lookup"
+msgstr "  Klask DNS en dro (IPv4 hag IPv6) ha klask GeoIP"
+
+msgid "  Number of visits, number of unique visitors"
+msgstr "  Niver a weladennoù, niver a weladennerien unan"
+
+msgid "  Visits duration and list of last visits"
+msgstr "  Pad ar gweladennoù ha roll ar gweladennoù diwezhañ"
+
+msgid "  Authenticated users"
+msgstr "  Implijerien en em anavezet"
+
+msgid "  Days of week and rush hours"
+msgstr "  Deizioù ar sizhun hag eurvezhioù uhel"
+
+msgid "  Hosts list and unresolved IP addresses list"
+msgstr "  Roll an ostizien ha roll ar chomlec'hioù IP dianav"
+
+msgid "  Most viewed, entry and exit pages"
+msgstr "  Pajennoù gwelet ar muiañ, pajennoù moned ha mont-er-maez"
+
+msgid "  Files type and Web compression (mod_gzip, mod_deflate stats)"
+msgstr "  Seurtoù restroù ha daskor web (stadegoù mod_gzip, mod_deflate)"
+
+msgid "  Configured Database Statistics"
+msgstr "  Stadegoù ar roadennoù diaz kefluniet"
+
+msgid "  %s domains/countries"
+msgstr "  %s domen/bro"
+
+msgid "  %s robots"
+msgstr "  %s robot"
+
+msgid "  %s worm's families"
+msgstr "  %s familh preñv"
+
+msgid "  %s operating systems"
+msgstr "  %s reizhiad korzenneg"
+
+msgid "  %s browsers (%s with phone browsers database)"
+msgstr "  %s merdeer (%s gant diazoù ar merdeerioù hezoug)"
+
+msgid "  %s search engines (and keyphrases/keywords used from them)"
+msgstr "  %s klasker (hag ar frazennoù-alc'hwez/gerioù-alc'hwez implijet ganto)"
+
+msgid "  All HTTP errors with last referrer"
+msgstr "  Holl fazioù HTTP gant an daveer diwezhañ"
+
+msgid "  Report by day/month/year"
+msgstr "  Destivell dre zeiz/miz/bloaz"
+
+msgid "  Dynamic or static HTML or XHTML reports, static PDF reports"
+msgstr "  Destivelloù HTML pe XHTML dinamek pe statikel, destivelloù PDF statikel"
+
+msgid "  Indexed text or XML monthly database"
+msgstr "  Roadennoù diaz tekstennaoueg miziek pe XML"
+
+msgid "  And a lot of other advanced features and options..."
+msgstr "  Ha kalz a fonksionoù araokaet all..."
+
+msgid "  New versions and FAQ at http://www.awstats.org"
+msgstr "  Stummoù nevez ha Goulennoù alies war https://github.com/hestiacn/vstats/issues"

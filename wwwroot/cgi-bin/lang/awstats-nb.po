@@ -1,0 +1,3296 @@
+# AWStats Norwegian Bokmål (nb) translations
+# Copyright (C) 2026 AWStats
+# This file is distributed under the same license as the AWStats package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: AWStats 8.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-10 12:00+0000\n"
+"PO-Revision-Date: 2026-05-10 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Norwegian Bokmål\n"
+"Language: nb\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#------------------------------------------------------------------------------
+# Månedsnavn
+#------------------------------------------------------------------------------
+
+msgid "month_01"
+msgstr "jan."
+
+msgid "month_02"
+msgstr "feb."
+
+msgid "month_03"
+msgstr "mar."
+
+msgid "month_04"
+msgstr "apr."
+
+msgid "month_05"
+msgstr "mai"
+
+msgid "month_06"
+msgstr "jun."
+
+msgid "month_07"
+msgstr "jul."
+
+msgid "month_08"
+msgstr "aug."
+
+msgid "month_09"
+msgstr "sep."
+
+msgid "month_10"
+msgstr "okt."
+
+msgid "month_11"
+msgstr "nov."
+
+msgid "month_12"
+msgstr "des."
+
+#------------------------------------------------------------------------------
+# Ukedagsnavn
+#------------------------------------------------------------------------------
+
+msgid "DayOfWeek_0"
+msgstr "søn"
+
+msgid "DayOfWeek_1"
+msgstr "man"
+
+msgid "DayOfWeek_2"
+msgstr "tir"
+
+msgid "DayOfWeek_3"
+msgstr "ons"
+
+msgid "DayOfWeek_4"
+msgstr "tor"
+
+msgid "DayOfWeek_5"
+msgstr "fre"
+
+msgid "DayOfWeek_6"
+msgstr "lør"
+
+#------------------------------------------------------------------------------
+# Grensesnittelementer
+#------------------------------------------------------------------------------
+
+msgid "Advanced Web Statistics for"
+msgstr "Avansert webstatistikk for"
+
+msgid "Statistics for"
+msgstr "Statistikk for"
+
+msgid "main"
+msgstr "hoved"
+
+msgid "Switch to light mode"
+msgstr "Bytt til lys modus"
+
+msgid "Switch to dark mode"
+msgstr "Bytt til mørk modus"
+
+msgid "TB"
+msgstr "TB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "Bytes"
+msgstr "Byte"
+
+msgid "Filter"
+msgstr "Filter"
+
+msgid "Exclude filter"
+msgstr "Ekskluder filter"
+
+msgid "Top"
+msgstr "Topp"
+
+msgid "Full list"
+msgstr "Fullstendig liste"
+
+msgid "Last"
+msgstr "Siste"
+
+msgid "Average"
+msgstr "Gjennomsnitt"
+
+msgid "Export"
+msgstr "Eksporter"
+
+msgid "Details"
+msgstr "Detaljer"
+
+msgid "Version"
+msgstr "Versjon"
+
+msgid "thousands_separator"
+msgstr " "
+
+msgid "dateformat_long"
+msgstr "dd.mm.yyyy HH:MM:SS"
+
+msgid "dateformat_short"
+msgstr "dd.mm.yyyy HH:MM"
+
+msgid "date_format_year"
+msgstr "%s"
+
+msgid "date_format_month"
+msgstr "%1$s %2$s"
+
+#------------------------------------------------------------------------------
+# Navigasjonslinje
+#------------------------------------------------------------------------------
+
+msgid "AWStats Month Selector"
+msgstr "AWStats månedsvelger"
+
+msgid "nav_category_basic"
+msgstr "Grunnleggende dokumenter"
+
+msgid "nav_category_guide"
+msgstr "Bruksveiledning"
+
+msgid "nav_category_reference"
+msgstr "Referansemateriell"
+
+msgid "nav_category_integration"
+msgstr "Integrasjon og utvidelser"
+
+msgid "nav_category_dev"
+msgstr "Utviklerdokumentasjon"
+
+msgid "nav_changelog"
+msgstr "Endringslogg"
+
+msgid "nav_what"
+msgstr "Hva er AWStats"
+
+msgid "nav_license"
+msgstr "Lisens"
+
+msgid "nav_glossary"
+msgstr "Ordliste"
+
+msgid "nav_setup"
+msgstr "Installasjon og konfigurasjon"
+
+msgid "nav_upgrade"
+msgstr "Oppgraderingsveiledning"
+
+msgid "nav_config"
+msgstr "Konfigurasjonsparametre"
+
+msgid "nav_extra"
+msgstr "Ekstra seksjoner"
+
+msgid "nav_tools"
+msgstr "Andre verktøy"
+
+msgid "nav_faq"
+msgstr "OSS"
+
+msgid "nav_security"
+msgstr "Sikkerhetsråd"
+
+msgid "nav_compare"
+msgstr "Sammenligning"
+
+msgid "nav_benchmark"
+msgstr "Ytelsestester"
+
+msgid "nav_webmin"
+msgstr "Webmin-modul"
+
+msgid "nav_dolibarr"
+msgstr "Dolibarr-modul"
+
+msgid "nav_contrib"
+msgstr "Bidrag"
+
+msgid "nav_plugins"
+msgstr "Programtilleggsutvikling"
+
+msgid "nav_hooks"
+msgstr "Programtilleggskroker"
+
+msgid "nav_graphs"
+msgstr "Programtilleggsgrafer"
+
+msgid "Back to top"
+msgstr "Tilbake til toppen"
+
+msgid "nav_select_month"
+msgstr "Velg måned"
+
+#------------------------------------------------------------------------------
+# Hovedstatistikkindikatorer
+#------------------------------------------------------------------------------
+
+msgid "Unique visitors"
+msgstr "Unike besøkende"
+
+msgid "Visits"
+msgstr "Besøk"
+
+msgid "Visits duration"
+msgstr "Besøksvarighet"
+
+msgid "First visit"
+msgstr "Første besøk"
+
+msgid "Last visit"
+msgstr "Siste besøk"
+
+msgid "Visits/Visitor"
+msgstr "Besøk/Besøkende"
+
+msgid "Pages/Visit"
+msgstr "Sider/Besøk"
+
+msgid "Hits/Visit"
+msgstr "Treff/Besøk"
+
+msgid "KB/Visit"
+msgstr "KB/Besøk"
+
+msgid "KB/Visits"
+msgstr "KB/Besøk"
+
+msgid "Pages"
+msgstr "Sider"
+
+msgid "Hits"
+msgstr "Treff"
+
+msgid "Bandwidth"
+msgstr "Båndbredde"
+
+msgid "duration_format"
+msgstr "%s-%s"
+
+msgid "unit_s"
+msgstr "s"
+
+msgid "unit_min"
+msgstr "min"
+
+msgid "unit_h"
+msgstr "t"
+
+msgid "and"
+msgstr "-"
+
+msgid "Device Types"
+msgstr "Enhetstyper"
+
+msgid "Device Type"
+msgstr "Enhetstype"
+
+msgid "Percent"
+msgstr "Prosent"
+
+msgid "Mobile"
+msgstr "Mobil"
+
+msgid "Pause & Go"
+msgstr "Stopp og fortsett"
+
+msgid "Complete"
+msgstr "Fullfør"
+
+msgid "Tablet"
+msgstr "Nettbrett"
+
+msgid "Tv"
+msgstr "TV"
+
+msgid "Wearable"
+msgstr "Bærbar enhet"
+
+msgid "Bot"
+msgstr "Bot"
+
+msgid "Desktop"
+msgstr "Stasjonær datamaskin"
+
+msgid "Normal browsing traffic"
+msgstr "Normal nettrafikk"
+
+msgid "Abnormal browsing traffic"
+msgstr "Unormal nettrafikk"
+
+msgid "Viewed"
+msgstr "Vist"
+
+msgid "Not viewed"
+msgstr "Ikke vist"
+
+msgid "Abnormal browsing traffic note"
+msgstr "Unormal nettrafikk inkluderer: søkemotorroboter, AI-treningsroboter, sårbarhetsskannere og forespørsler som ikke overholder HTTP/HTTPS-spesifikasjonene"
+
+msgid "File size"
+msgstr "Filstørrelse"
+
+msgid "File type"
+msgstr "Filtype"
+
+msgid "Downloads"
+msgstr "Nedlastinger"
+
+msgid "Request time"
+msgstr "Forespørselstid"
+
+msgid "Total requests"
+msgstr "Totalt antall forespørsler"
+
+msgid "Frequency"
+msgstr "Frekvens"
+
+msgid "Average frequency"
+msgstr "Gjennomsnittlig frekvens"
+
+msgid "Seconds"
+msgstr "Sekunder"
+
+msgid "First"
+msgstr "Første"
+
+msgid "Mails"
+msgstr "E-poster"
+
+msgid "Size"
+msgstr "Størrelse"
+
+msgid "If you remove this file, all statistics for date"
+msgstr "Advarsel: Hvis du sletter denne filen, vil all statistikk for datoen"
+
+msgid "will be lost/reset."
+msgstr "gå tapt/nullstilles permanent!"
+
+msgid "Last config file used to build this data file was"
+msgstr "Den siste konfigurasjonsfilen som ble brukt til å bygge denne datafilen var"
+
+msgid "Position (offset in bytes) in this file for beginning of each section for"
+msgstr "Posisjonen (forskyvning i bytes) i denne filen for begynnelsen av hver seksjon for"
+
+msgid "direct I/O access. If you made changes somewhere in this file, you should"
+msgstr "direkte I/O-tilgang. Hvis du har gjort endringer et sted i denne filen, bør du"
+
+msgid "also remove completely the MAP section (AWStats will rewrite it at next update)"
+msgstr "også fjerne MAP-seksjonen fullstendig (AWStats vil skrive den om ved neste oppdatering)"
+
+msgid "LastLine    = Date of last record processed - Last record line number in last log - Last record offset in last log - Last record signature value"
+msgstr "LastLine    = Dato for siste behandlede post - Siste postlinjenummer i siste logg - Siste postforskyvning i siste logg - Siste postsignaturverdi"
+
+msgid "FirstTime   = Date of first visit for history file"
+msgstr "FirstTime   = Dato for første besøk i historiefilen"
+
+msgid "LastTime    = Date of last visit for history file"
+msgstr "LastTime    = Dato for siste besøk i historiefilen"
+
+msgid "LastUpdate  = Date of last update - Nb of parsed records - Nb of parsed old records - Nb of parsed new records - Nb of parsed corrupted - Nb of parsed dropped"
+msgstr "LastUpdate  = Dato for siste oppdatering - Antall analyserte poster - Antall analyserte gamle poster - Antall analyserte nye poster - Antall analyserte ødelagte - Antall analyserte forkastede"
+
+msgid "TotalVisits = Number of visits"
+msgstr "TotalVisits = Antall besøk"
+
+msgid "TotalUnique = Number of unique visitors"
+msgstr "TotalUnique = Antall unike besøkende"
+
+msgid "MonthHostsKnown   = Number of hosts known"
+msgstr "MonthHostsKnown   = Antall kjente verter"
+
+msgid "MonthHostsUnKnown = Number of hosts unknown"
+msgstr "MonthHostsUnKnown = Antall ukjente verter"
+
+msgid "Cluster ID - Pages - Hits - Bandwidth"
+msgstr "Klynge-ID - Sider - Treff - Båndbredde"
+
+msgid "Hour - Pages - Hits - Bandwidth - Not viewed Pages - Not viewed Hits - Not viewed Bandwidth"
+msgstr "Time - Sider - Treff - Båndbredde - Ikke viste sider - Ikke viste treff - Ikke vist båndbredde"
+
+msgid "Date - Pages - Hits - Bandwidth - Visits"
+msgstr "Dato - Sider - Treff - Båndbredde - Besøk"
+
+msgid "Domain - Pages - Hits - Bandwidth"
+msgstr "Domene - Sider - Treff - Båndbredde"
+
+msgid "The %s first Pages must be first (order not required for others)"
+msgstr "Hovedsiden viser bare de første %s sidene etter antall sidevisninger, fullstendig liste finnes på detaljsiden."
+
+msgid "Host - Pages - Hits - Bandwidth - Last visit date - [Start date of last visit] - [Last page of last visit]"
+msgstr "Vert - Sider - Treff - Båndbredde - Siste besøksdato - [Startdato for siste besøk] - [Siste side i siste besøk]"
+
+msgid "[Start date of last visit] and [Last page of last visit] are saved only if session is not finished"
+msgstr "[Startdato for siste besøk] og [Siste side i siste besøk] lagres bare hvis økten ikke er fullført"
+
+msgid "The first %s items are sorted by hits in descending order; order of the remaining items is undefined."
+msgstr "De første %s elementene er sortert etter antall treff i synkende rekkefølge; rekkefølgen på de gjenværende elementene er udefinert."
+
+msgid "Login - Pages - Hits - Bandwidth - Last visit"
+msgstr "Innlogging - Sider - Treff - Båndbredde - Siste besøk"
+
+msgid "Robot ID - Hits - Bandwidth - Last visit - Hits on robots.txt"
+msgstr "Robot-ID - Treff - Båndbredde - Siste besøk - Treff på robots.txt"
+
+msgid "Worm ID - Hits - Bandwidth - Last visit"
+msgstr "Orm-ID - Treff - Båndbredde - Siste besøk"
+
+msgid "EMail - Hits - Bandwidth - Last visit"
+msgstr "E-post - Treff - Båndbredde - Siste besøk"
+
+msgid "The first %s email addresses are sorted by hits in descending order; order of the remaining addresses is undefined."
+msgstr "De første %s e-postadressene er sortert etter antall treff i synkende rekkefølge; rekkefølgen på de gjenværende adressene er udefinert."
+
+msgid "URL - Pages - Bandwidth - Entry - Exit"
+msgstr "URL - Sider - Båndbredde - Inngang - Utgang"
+
+msgid "Files type - Hits - Bandwidth - Bandwidth without compression - Bandwidth after compression"
+msgstr "Filtype - Treff - Båndbredde - Båndbredde uten komprimering - Båndbredde etter komprimering"
+
+msgid "Request Time Range - Request Time Frequency"
+msgstr "Forespørselstidsområde - Forespørselstidsfrekvens"
+
+msgid "Payload Range - Payload Frequency"
+msgstr "Nyttelastområde - Nyttelastfrekvens"
+
+msgid "Session range - Number of visits"
+msgstr "Øktområde - Antall besøk"
+
+msgid "URL with %s errors - Hits"
+msgstr "URL med %s feil - Treff"
+
+msgid "Last URL referrer"
+msgstr "Siste URL-henviser"
+
+msgid "Errors - Hits - Bandwidth"
+msgstr "Feil - Treff - Båndbredde"
+
+msgid "Search keywords - Number of search"
+msgstr "Søkeord - Antall søk"
+
+msgid "Only top %s keywords shown on main page (sorted by search count). See full list on detail page."
+msgstr "Hovedsiden viser bare de %s mest søkte søkeordene, fullstendig liste finnes på detaljsiden."
+
+msgid "Search keyphrases - Number of search"
+msgstr "Søkefraser - Antall søk"
+
+msgid "Only top %s keyphrases shown on main page (sorted by search count). See full list on detail page."
+msgstr "Hovedsiden viser bare de %s mest søkte søkefrasene, fullstendig liste finnes på detaljsiden."
+
+msgid "External page referers - Pages - Hits"
+msgstr "Henvisninger fra eksterne sider - Sider - Treff"
+
+msgid "Only top %s external referrers shown on main page (sorted by pages). See full list on detail page."
+msgstr "Hovedsiden viser bare de %s eksterne henvisningene med flest sidehenvisninger, fullstendig liste finnes på detaljsiden."
+
+msgid "Search engine referers ID - Pages - Hits"
+msgstr "Søkemotorhenviser-ID - Sider - Treff"
+
+msgid "Origin - Pages - Hits"
+msgstr "Opprinnelse - Sider - Treff"
+
+msgid "Unknown referer Browser - Last visit date"
+msgstr "Ukjent henvisernettleser - Siste besøksdato"
+
+msgid "Unknown referer OS - Last visit date"
+msgstr "Ukjent henviser OS - Siste besøksdato"
+
+msgid "Screen size - Hits"
+msgstr "Skjermstørrelse - Treff"
+
+msgid "Browser ID - Hits - Pages"
+msgstr "Nettleser-ID - Treff - Sider"
+
+msgid "Downloads - Hits - Bandwidth"
+msgstr "Nedlastinger - Treff - Båndbredde"
+
+msgid "Protocol - Hits - Bandwidth"
+msgstr "Protokoll - Treff - Båndbredde"
+
+msgid "Icon Status - Type:200:404:Other"
+msgstr "Ikonstatus - Type:200:404:Annet"
+
+#------------------------------------------------------------------------------
+# Tidsperiodeoversettelser
+#------------------------------------------------------------------------------
+
+msgid "period_00"
+msgstr "Midnatt · AWStats sover, og du ser på data? Utrolig"
+
+msgid "period_01"
+msgstr "Kl 01 · Er du søvnløs eller akkurat ferdig på jobb?"
+
+msgid "period_02"
+msgstr "Kl 02 · Selv roboter jobber hardere enn deg"
+
+msgid "period_03"
+msgstr "Kl 03 · Byen sover, serveren jobber overtid"
+
+msgid "period_04"
+msgstr "Kl 04 · Er det skjermen eller serverlyset som er lysest?"
+
+msgid "period_05"
+msgstr "Kl 05 · Tidlig fugl fanger orm"
+
+msgid "period_06"
+msgstr "Kl 06 · Noen står opp, andre har ikke lagt seg"
+
+msgid "period_07"
+msgstr "Kl 07 · Tid for å surfe mens du pendler"
+
+msgid "period_08"
+msgstr "Kl 08 · Første jobb: sjekk gårsdagens data"
+
+msgid "period_09"
+msgstr "Kl 09 · Tid for kaffe og statistikk"
+
+msgid "period_10"
+msgstr "Kl 10 · Sjekk om trafikken har økt"
+
+msgid "period_11"
+msgstr "Kl 11 · En time til lunsj, hold ut"
+
+msgid "period_12"
+msgstr "Kl 12 · Serveren kan hvile litt"
+
+msgid "period_13"
+msgstr "Kl 13 · Data blir ikke trøtte"
+
+msgid "period_14"
+msgstr "Kl 14 · Ettermiddagskaffe og data er en bra kombinasjon"
+
+msgid "period_15"
+msgstr "Kl 15 · Dagens trafikkurve minner om humøret ditt"
+
+msgid "period_16"
+msgstr "Kl 16 · Trafikken øker mot slutten av dagen"
+
+msgid "period_17"
+msgstr "Kl 17 · Jobben er over for i dag, men serveren jobber videre"
+
+msgid "period_18"
+msgstr "Kl 18 · Middagstid"
+
+msgid "period_19"
+msgstr "Kl 19 · Høytiden for nettrafikk"
+
+msgid "period_20"
+msgstr "Kl 20 · Du er besøk nummer 114514"
+
+msgid "period_21"
+msgstr "Kl 21 · Nattugler som sjekker data"
+
+msgid "period_22"
+msgstr "Kl 22 · Dagens data er snart klar"
+
+msgid "period_23"
+msgstr "Kl 23 · AWStats sier: sov, du må jobbe i morgen"
+
+#------------------------------------------------------------------------------
+# Tidsdimensjoner
+#------------------------------------------------------------------------------
+
+msgid "Period"
+msgstr "Periode"
+
+msgid "Year"
+msgstr "År"
+
+msgid "Month"
+msgstr "Måned"
+
+msgid "Months"
+msgstr "Måneder"
+
+msgid "Date"
+msgstr "Dato"
+
+msgid "Day"
+msgstr "Dag"
+
+msgid "Hour"
+msgstr "Time"
+
+msgid "Hours"
+msgstr "Timer"
+
+msgid "Day of week"
+msgstr "Ukedag"
+
+msgid "When"
+msgstr "Når"
+
+msgid "%s Server Management Panel"
+msgstr "%s  serveradministrasjonspanel"
+
+msgid "Server Administration"
+msgstr "Enkel og effektiv serverløsning"
+
+#------------------------------------------------------------------------------
+# Besøksdimensjoner
+#------------------------------------------------------------------------------
+
+msgid "Invalid URL Parameters"
+msgstr "Ugyldige URL-parametre"
+
+msgid "The requested page cannot be loaded due to invalid or malformed URL parameters."
+msgstr "Den forespurte siden kan ikke lastes på grunn av ugyldige eller feilformaterte URL-parametre."
+
+msgid "This may be caused by typing an incorrect URL, missing parameter separators, or using an invalid configuration name."
+msgstr "Dette kan skyldes at du har skrevet en feil URL, manglende parameterskilletegn, eller bruk av et ugyldig konfigurasjonsnavn."
+
+msgid "Please check the URL you entered and ensure all parameters are correctly formatted."
+msgstr "Vennligst sjekk URL-en du skrev inn og forsikre deg om at alle parametre er riktig formatert."
+
+msgid "SiteDomain parameter not defined in your config/domain file, or you may not have execution permission on the file."
+msgstr "SiteDomain-parameteren er ikke definert i config/domain-filen din, eller du har kanskje ikke kjøretillatelse for filen."
+
+msgid "Please run as Administrator to set permissions"
+msgstr "Kjør som Administrator for å angi tillatelser"
+
+msgid "This directory lacks read permission"
+msgstr "Denne mappen mangler lesetillatelse"
+
+msgid "Please set read permission for directory"
+msgstr "Vennligst sett lesetillatelse for mappen"
+
+msgid "Missing required parameter in config file"
+msgstr "Mangler nødvendig parameter i konfigurasjonsfilen"
+
+msgid "Please check that 'DirData' is defined."
+msgstr "Vennligst sjekk at 'DirData' er definert."
+
+msgid "Domain name in browser address appears to be missing or incomplete"
+msgstr "Domenenavnet i nettleseradressen ser ut til å mangle eller være ufullstendig"
+
+msgid "Please check the URL parameter"
+msgstr "Vennligst sjekk URL-parameteren"
+
+msgid "Format description"
+msgstr "Formatbeskrivelse"
+
+msgid "Please set execute permission"
+msgstr "Vennligst angi kjøretillatelse"
+
+msgid "Or if you prefer numeric mode"
+msgstr "Eller hvis du foretrekker numerisk modus"
+
+msgid "View Report Directly"
+msgstr "Vis rapport direkte"
+
+msgid "AWStats Log Viewer"
+msgstr "AWStats loggviser"
+
+msgid "Month Selection"
+msgstr "Månedsvalg"
+
+msgid "Who"
+msgstr "Hvem"
+
+msgid "Visitors"
+msgstr "Besøkende"
+
+msgid "Countries"
+msgstr "Land"
+
+msgid "flag_icon"
+msgstr "flagg"
+
+msgid "Country-Region-City"
+msgstr "Land-Region-By"
+
+msgid "Code"
+msgstr "Kode"
+
+msgid "Known"
+msgstr "Kjent"
+
+msgid "unknownos"
+msgstr "ukjent OS"
+
+msgid "unknownbrowser"
+msgstr "ukjent nettleser"
+
+msgid "Unresolved IP Address"
+msgstr "Uoppløst IP-adresse"
+
+msgid "Unknown File Type"
+msgstr "Ukjent filtype"
+
+msgid "Unknown Size"
+msgstr "Ukjent størrelse"
+
+msgid "Unknown Time"
+msgstr "Ukjent tid"
+
+msgid "Unknown Browser"
+msgstr "Ukjent nettleser"
+
+msgid "Unknown OS"
+msgstr "Ukjent OS"
+
+msgid "Unknown Visitor"
+msgstr "Ukjent besøkende"
+
+msgid "Unknown Visitor (Total)"
+msgstr "Ukjent besøkende (Totalt)"
+
+msgid "Unknown Country"
+msgstr "Ukjent land"
+
+msgid "Unknown Country (Region)"
+msgstr "Ukjent land (Region)"
+
+msgid "Unknown Visitor (Title)"
+msgstr "Ukjent besøkende (tittel)"
+
+msgid "PageStayTime"
+msgstr "Kan ikke estimere sideoppholdstid"
+
+msgid "Unknown OS (Link)"
+msgstr "Ukjent OS (lenke)"
+
+msgid "Unknown OS (Row)"
+msgstr "ukjent operativsystem"
+
+msgid "Unknown Browser (Link)"
+msgstr "Ukjent nettleser (lenke)"
+
+msgid "Unknown Browser (Row)"
+msgstr "ukjent nettleser"
+
+msgid "Unknown Screen"
+msgstr "Ukjent skjermstørrelse"
+
+msgid "Login"
+msgstr "Innlogging"
+
+msgid "Anonymous"
+msgstr "Anonym"
+
+msgid "Robots"
+msgstr "Roboter"
+
+msgid "Different robots"
+msgstr "Ulike roboter"
+
+msgid "Hits on robots.txt"
+msgstr "Trafikken fra søkemotorroboter oppført ovenfor, kategorisert som \"unormal trafikk\", er ikke inkludert i andre tabeller og grafer. Tallet etter \"+\"-tegnet representerer antall vellykkede forespørsler til robots.txt-filen"
+
+msgid "Worms"
+msgstr "Orm"
+
+msgid "Different worms"
+msgstr "Ulike ormer"
+
+msgid "Target"
+msgstr "Mål"
+
+msgid "Grabber"
+msgstr "Grabber"
+
+#------------------------------------------------------------------------------
+# Formatbeskrivelser
+#------------------------------------------------------------------------------
+
+msgid "mime_text"
+msgstr "TXT ren tekstfil (ustrukturert ren tekst standardisert av ASCII-koding i 1963. Som det underliggende grunnlaget for all kildekode, konfigurasjonsfiler og systemlogger, er dens plattformuavhengige Windows (CRLF) og Unix (LF) linjeskiftkontrollstrømmer fremdeles den mest universelle datutvekslingsstandarden i datamaskinens verden)"
+
+msgid "mime_log"
+msgstr "LOG systemoperasjonslogg (ren tekstressurs som registrerer operativsystem-, kjerne- og applikasjonsnivå kjøretidstilstander. Dekker Nginx/Apache tilgangslogger (Combined Log) og standard syslog-spesifikasjon, er en kjernedatakilde for feilsøking, strømmeytelsesanalyse og sikkerhetsrevisjon)"
+
+msgid "mime_page"
+msgstr "HTML hypertekst nettside (grunnsteinen i World Wide Web opprettet av Tim Berners-Lee i 1989. Som et gratis tilgjengelig universelt hypertekstmerkingsspråk, ble HTML5-spesifikasjonen en offisiell W3C-standard i 2014, med opprinnelig støtte for strukturert multimedia, semantisk interaksjon og strømmeoppsett. Vant Turing-prisen i 2016)"
+
+msgid "mime_khtml"
+msgstr "KHTML nettmalsmotor (1998 KDE 2.0 nettleserens gjengivelsesmotorspesifikasjon. Som et åpen kildekode samfunnsreferanse som la grunnlaget for moderne nettgjengivelse, har dens tekniske arv direkte inspirert og utviklet seg til Apple WebKit og Google Blink kjerner, og fortsetter den dag i dag sin underliggende tråd gjennom moderne strømmedynamisk nettarkitektur)"
+
+msgid "mime_script"
+msgstr "SCRIPT tolket dynamisk skript (generell klassifisering av kildestrømmer som ikke trenger forhåndskompilering og leses og utføres linje for linje av en bestemt kjøretid eller tolk. Dekker ASP, JSP, CGI og Tcl, etc., mye brukt for server-side fellesgrensesnitt, automatiserte prosesskontroller og systemnivå oppgavebinding)"
+
+msgid "mime_js"
+msgstr "JavaScript skript (1995 Netscape-nettleserens opprinnelige programmeringsmiljø. Etablerte ECMAScript industriell standard i 1997, Node.js kjøretid ble født i 2009, brøt nettlesergrenser og skapte fullstack asynkron ikke-blokkerende arkitektur, ledsaget av verdens største npm programvarepakkeøkosystem)"
+
+msgid "mime_py"
+msgstr "Python skript (høynivå tolket skriptspråk opprettet av Guido van Rossum i 1991. Takket være obligatorisk innrykk som sikrer ikke-tap av lesbarhet og multi-paradigme lavnivådesign, har det nå blitt etablert som bransjestandardspråk for moderne web-arkitektur, fullstack datavitenskap, kunstig intelligens (AI) modelltrening og sky-native automatisert drift)"
+
+msgid "mime_sh"
+msgstr "Shell skript (standard kommandotolker-skript fra Unix-tiden i 1971. Inneholder kjerne-nivå kommandospesifikasjoner som Bash, Sh, Dash, utføres vanligvis med .sh-utvidelse, er en universell kjerne-nivå lim for lavnivå prosesskontroll, installasjonsfri miljøkonfigurasjon og automatisert distribusjon i moderne Unix-lignende operativsystemer)"
+
+msgid "mime_rb"
+msgstr "Ruby skript (objektorientert skriptspråk opprettet av Yukihiro Matsumoto i 1995. Med ekstrem respekt for utvikleropplevelsen som sin kjerne designfilosofi, etablerte Ruby on Rails-rammeverket revolusjonerende 'Konvensjon fremfor konfigurasjon (CoC)' moderne høy-nivå web-arkitektur utviklingsparadigme)"
+
+msgid "mime_pl"
+msgstr "Perl skript (pragmatisk skriptspråk opprettet av Larry Wall i 1987. Som grunnleggeren av moderne pakkebehandlere (CPAN), blir det kalt 'den sveitsiske hærkniven' for tekstbehandling. I moderne CGI-modus fungerer det fortsatt som en høypålitelig base i loggparsing takket være svært lave fysiske minnekostnader og høy effektivitet regulære uttrykkbehandling)"
+
+msgid "mime_php"
+msgstr "PHP dynamisk nettside (opprettet av Rasmus Lerdorf i 1995, spesialdesignet for web-utvikling. Som kjerne teknologi som driver over 70% av verdens nettsteder, støtter den dypt store produksjonsapplikasjoner som WordPress og Wikipedia. Siden introduksjonen av JIT (Just-In-Time) kompileringskjøretid i PHP 8, har den oppnådd grunnleggende paradigme evolusjon mot høyytelses fullstack server-side)"
+
+msgid "mime_image"
+msgstr "IMAGE bildeklassifisering (dekker generell klassifisering av taps-/tapsfri komprimert bitmap, moderne responsiv webgrafikk og vektorgrafikk. Er en nøkkelindikator for å vurdere nettstedets visuelle ressurslastkostnader, klient-side cache treffrate og medienettverks båndbreddeforbruk)"
+
+msgid "mime_document"
+msgstr "DOCUMENT strukturert dokumentklassifisering (dekker generell klassifisering av ren tekst, regneark, fastformat dokumenter (PDF) og lettvektsmerkingsspråk. Er en nøkkelindikator for statistikk over server-side statisk kunnskapsbase distribusjon, bedriftsinformasjonsressursnedlasting og tekststrøm gjennomstrømmingsevne)"
+
+msgid "mime_package"
+msgstr "PACKAGE kompileringsprodukt og programvarepakke klassifisering (dekker generell klassifisering av operativsystemets opprinnelige kjørbare programmer, kjøretidslinkbiblioteker (DLL/SO) og applikasjonsdistribusjonsinstallasjonspakker. Brukes ofte som en nøkkelindikator for å vurdere utgående trafikk og nedlastingstopper for programvaredistribusjonssider)"
+
+msgid "mime_archive"
+msgstr "ARCHIVE arkiv og komprimerte filer (generell klassifisering av datakomprimeringspakker basert på kjernalgoritmer som DEFLATE, LZMA. I nettverkslaget, i tillegg til å representere tradisjonell pakkedistribusjon, dekker det også 1992 GNU-prosjektets Gzip dynamiske responsstrøm. Selv om Brotli-algoritmen gradvis introduseres i moderne scenarier, er denne klassifiseringen fortsatt en nøkkelindikator for å vurdere server båndbreddegjennomstrømning og transportlagstrykkreduksjon)"
+
+msgid "mime_audio"
+msgstr "AUDIO digital lydstrømklassifisering (dekker generell klassifisering av komprimert lyd, lydbøker og strømmemedie lydbeholdere. Basert på spesifikke lydkodekstandarder, brukes til å overvåke multimediasiders lyddatastrøms gjennomstrømning, samtidig strømmebåndbredde og langforbindelsesytelse)"
+
+msgid "mime_video"
+msgstr "VIDEO digital videostrømklassifisering (dekker generell klassifisering av høyoppløselige videobeholdere, moderne nettverksanimasjon og strømmemediesegmenter. Er en nøkkelindikator for å vurdere server båndbreddetoppgrense og innholdsleveringsnettverk (CDN) akselerasjonseffekt under høybelastnings nettverksmiljø)"
+
+msgid "mime_jscript"
+msgstr "JScript skript (1996 Microsofts reverse engineering proprietære implementering for Internet Explorer 3.0. Som en tidlig klassisk JavaScript-vert konkurrent, fungerte det som kjernemotor for Windows Script Host (WSH) og tidlig ASP backend)"
+
+msgid "mime_json"
+msgstr "JSON strukturert data (lettvekts dataserialiseringsutvekslingsformat etablert av Douglas Crockford i 2001. Basert på tekstbaserte nøkkel-verdi-par og array-arkitektur, har ekstremt høy menneskelig lesbarhet og tapsfri strømmetolkings egenskaper. Er de facto standard for moderne web-APIer, mikrotjenestearkitektur og interaksjon med store språkmodeller)"
+
+msgid "mime_vbs"
+msgstr "VBScript skript (skriptspråkvariant utgitt av Microsoft sammen med IE 3.0 i 1996. Var en gang en kjernedriver for tidlige ASP dynamiske nettsteder og Windows-systemadministrasjon, er nå offisielt utfaset og fjernet fra Windows 11s nyeste kjerne av Microsoft, tilhører historisk arv-teknologi)"
+
+msgid "mime_conf"
+msgstr "CONF systemkonfigurasjonsfil (generell klassifisering av datafiler som permanent lagrer programvare kjøretidsmiljøparametere i ren tekstform. Dekker INI og moderne YAML, TOML, JSON-spesifikasjoner, under Linux-systemer er de ofte konsentrert i /etc-katalogen. Er en kjerneavhengighet for systemnivå kjøretidstilstandsoptimalisering)"
+
+msgid "mime_css"
+msgstr "CSS cascading style sheets (1996 W3C-standard, sammen med HTML/JS kalt front-endens tre kjernekomponenter. Gjennomgikk CSS2-posisjonering og CSS3 modulær evolusjon, støtter opprinnelig Flexbox, Grid og media query responsivt design. Er den absolutt dominerende standarden for å frakoble nettsidepresentasjon i moderne nettlesere)"
+
+msgid "mime_xsl"
+msgstr "XSL stilark (1999 W3C-standard, inneholder XSLT-transformasjon og XPath-adresseringsspråk, brukes til å gjengi strukturerte XML-data til HTML, PDF eller ren tekst. I moderne utvikling er dens økosystem i stor grad erstattet av lettere malmotorer og JSON-dataformat)"
+
+msgid "mime_runtime"
+msgstr "Kjørbar fil (operativsystemets opprinnelige kjøreformater som EXE, ELF, Mach-O, inneholder kompilert lavnivå maskinkode, inngangspunkt og systeminnlastingsinformasjon)"
+
+msgid "mime_library"
+msgstr "Bibliotekfil (dynamiske eller statiske lenkebiblioteker som DLL, SO, dylib, inneholder delte symboler og omplasseringskode for å kalles av andre programmer og lastes inn under kjøring)"
+
+msgid "mime_swf"
+msgstr "Flash-animasjon (utviklet av Macromedia i 1996, kjøpt opp av Adobe i 2005. Interaktiv web-animasjonsstandard, dominerte en gang internettanimasjon og spill. Ulemper: avhengig av plugins, ikke støttet på mobil, høy sikkerhetsrisiko. Adobe kunngjorde utfasing i 2017, stanset full støtte i 2020, erstattet av HTML5/CSS3/JS)"
+
+msgid "mime_dtd"
+msgstr "DTD dokumenttype definisjon (utgitt sammen med XML 1.0 i 1998, brukes til å definere XML/HTML-dokumentstruktur og validere legitimitet. I moderne utvikling er den gradvis erstattet av mer fleksible løsninger som XML Schema, RELAX NG)"
+
+msgid "mime_csv"
+msgstr "CSV dataformat (kommaseparerte verdier, universelt ren tekst tabellformat fra stormaskin-tiden (IBM Fortran kompilator) i 1972. Offisielt standardisert av RFC 4180 i 2005, som en tverrplattform, tverrspråklig tapsfri datautvekslingsstandard. Mye brukt for effektiv import/eksport til Excel, relasjonsdatabaser, dataanalyse (Pandas).)"
+
+msgid "mime_cur"
+msgstr "Muspekerfil (.cur-format, brukes for å tilpasse musestil. For eksempel fingerpeker på nettsider, timeglass venter-ikon i systemet. Den er i slekt med den vanlige .ico-ikonet, men den har en ekstra 'hotspot' - plasseringen der musen faktisk klikker. Historie: introdusert med Windows 3.1 (1992), var en nøkkelkomponent i overgangen fra kommandolinje til musoperasjon i grensesnitthistorien)"
+
+msgid "mime_jnlp"
+msgstr "Java Web Start (2000-tallets Java desktop applikasjonsdistribusjonsteknologi, starter eksterne Java-programmer via .jnlp-fil. På grunn av sikkerhetsproblemer og utbredelsen av moderne distribusjonsmåter, er nå i praksis utfaset)"
+
+msgid "mime_lit"
+msgstr "Microsoft Reader e-bok (utgitt av Microsoft i 2000, LIT-format. Utfaset, kan nå konverteres til EPUB eller PDF ved hjelp av verktøy som Calibre)"
+
+msgid "mime_svg"
+msgstr "SVG vektorgrafikk (1999 W3C-standard, todimensjonalt vektorbildeformat basert på XML-arkitektur. Har fordelen med vilkårlig skalering uten tap av skarphet og tekststrømoverføring. Alle moderne nettlesere støtter det opprinnelig. Mye brukt for høyoppløselige nettsideikoner, logoer og vektoranimasjonsgjengivelse. Er kjernestandarden for moderne web-grafikk)"
+
+msgid "mime_ai"
+msgstr "AI vektorgrafikk (proprietært vektorgrafikkformat uavhengig utviklet av Adobe i 1987. Som den sentrale industristandarden for typografi, trykkedesign og merkevareidentitetsdesign, støtter flerlags og høy-nivå layout vektordata. Er det foretrukne mediet for profesjonell visuell kunst)"
+
+msgid "mime_phshop"
+msgstr "PSD lagbilde (proprietært rasterbilde kildefilformat utgitt av Adobe sammen med Photoshop i 1990. Støtter flerlags lagdeling, kanaler, masker og tapsfri redigeringsdata. Er etablert som global industristandard for bildebehandling og digital maling)"
+
+msgid "mime_ttf"
+msgstr "TrueType font (digital konturfontformat utviklet i fellesskap av Apple og Microsoft i 1989. Basert på kvadratiske Bézier-kurver, oppnår absolutt pikselkonsistens mellom skjermvisning og utskriftsutdata. Er det opprinnelige standardfontformatet for moderne skrivebordsoperativsystemer)"
+
+msgid "mime_fon"
+msgstr "FON bitmapfont (tidlig system-nivå punktmatrisefontformat fra Microsoft Windows på 1980-tallet. Støtter ikke vilkårlig tapsfri skalering. Brukes vanligvis med arvesystemer eller tidlige innebygde enhetskomponenter for begrenset pikselert tekstgjengivelse)"
+
+msgid "mime_pdf"
+msgstr "PDF elektronisk dokument (tverrplattform fast-layout dokumentformat utviklet av Adobe i 1993 og ble ISO 32000 internasjonal standard i 2008. Har absolutt layout- og formatnøyaktighet. Er den universelle standarden for global elektronisk dokumentdistribusjon og digital publisering)"
+
+msgid "mime_dotnet"
+msgstr "ASP.NET dynamisk side (server-side dynamisk webteknologi utgitt av Microsoft sammen med .NET-arkitekturen i 2002. Bæres av IIS-gjengivelsesmotoren, brukes til å bygge bedriftsnivå Windows server-side dynamiske webapplikasjoner og distribuerte systemer)"
+
+msgid "mime_mdb"
+msgstr "MDB relasjonsdatabase (skrivebordsnivå relasjonsdatabase lagringsformat utgitt av Microsoft sammen med Access i 1992. Har innebygd Jet-database motor, ble brukt som relasjonsdatabase løsning i tidlig informasjonsbehandling for personlige datamaskiner og små og mellomstore bedrifter)"
+
+msgid "mime_md"
+msgstr "Markdown dokument (lettvekts merkingsspråk uavhengig opprettet av John Gruber i 2004. Kjerne designfilosofi er 'lesbar betyr gjengitt', som driver moderne avledede standarder som GFM og CommonMark. Mye brukt som en kjerneutvekslingsstandard for teknisk dokumentasjon, kunnskapsbaser (Obsidian) og moderne statiske nettstedsgeneratorer)"
+
+msgid "mime_crystal"
+msgstr "Crystal Reports (SAP Business Intelligence (BI) plattforms profesjonelle bedriftsnivå rapportfilformat. Har flerdatakilde lavnivå tilkobling og komplekse dynamiske diagramgjengivelsesmuligheter, mye brukt for profesjonell rapportgenerering i flernasjonale selskapers finans- og dataanalysesystemer)"
+
+msgid "mime_libreoffice"
+msgstr "LibreOffice dokument (åpen kildekode kontorpakkes proprietære format bygget av The Document Foundation i 2010 basert på OpenOffice-forgreningen. Implementerer dypt W3Cs ODF (Open Document Format) internasjonale standard. Er den moderne åpen kildekode økosystemets kontorfundament)"
+
+msgid "mime_encrypt"
+msgstr "ENCRYPT kryptert fil (rå binær- eller tekstdata behandlet via spesifikke symmetriske eller asymmetriske krypteringsalgoritmer. Inneholder kjernederiverte formater som .enc, .pgp, .gpg. I nettverkslaget brukes for å sikre konfidensialitet og integritetsverifisering av ikke-offentlige data)"
+
+msgid "mime_gpx"
+msgstr "GPX satellittspordata (XML-arkitektur-basert globalt posisjoneringssystem utvekslingsformat. Spesielt utviklet for å beskrive geografiske koordinater, veipunkter, ruter og historiske spor. Er en felles åpen datastandard for moderne mobile sportsenheter, bilnavigasjon og geografiske informasjonssystemer (GIS))"
+
+msgid "mime_diskimage"
+msgstr "Disk Image diskbilde (inkluderer byte-for-byte lavnivå sektorbildefiler av fysisk disk eller optisk media som ISO, DMG, IMG. Brukes til system lavnivå distribusjon, sikker distribusjon av stor kapasitet programvare og fysisk-nivå fullstendig databackup av lagringsmedier)"
+
+msgid "mime_vm"
+msgstr "VM virtuell maskin bilde (inkluderer virtualiserte fysiske diskbilder som VMDK, VDI, VHDX, OVA. Som grunnlag for VMware, VirtualBox og Hyper-V-plattformer, brukes til lavnivå system-nivå maskinvare-emulering, forekomst-øyeblikksbilder og skyinfrastruktur distribusjon)"
+
+msgid "mime_torrent"
+msgstr "BitTorrent torrent-fil (P2P peer-to-peer distribuert nedlastingsindeks designet av Bram Cohen i 2001. Basert på Bencode-koding, lagrer originalfilens lavnivå kontrollsum metadata og Tracker-server adresseringsinformasjon. Er en kjernebærer for desentralisert nettverksflytdistribusjon)"
+
+msgid "mime_gis"
+msgstr "GIS geospatial data (geografisk informasjonssystem datastandard med Shapefile og GeoJSON som kjerne. Inkluderer flerdimensjonale geometriske koordinater, lagtopologi og attributtdata. Mye brukt for høy-presisjon digital kartgjengivelse, satellitt fjernmåling og romlig geometrianalyse)"
+
+msgid "mime_ebook"
+msgstr "EBOOK e-bok (digitalt publiseringsformat med W3Cs EPUB åpne internasjonale standard, Amazon Kindles proprietære MOBI/AZW-arkitektur som kjerne. Støtter adaptiv strømmeoppsett, metadata-innkapsling og DRM digital rettighetsbeskyttelse. Er en universell bærer for digital lesing på mobile enheter)"
+
+msgid "mime_avif"
+msgstr "AVIF høy-effektivt bilde (neste generasjons ultra-høy oppløsningsbilde standard introdusert av Open Media Alliance (AOMedia) i 2019. Basert på AV1 videokoding nøkkelrammeteknologi, komprimeringsrate 50% bedre enn WebP og støtter opprinnelig High Dynamic Range (HDR). Er en mainstream standard for moderne web-bildeoverføring)"
+
+msgid "mime_markdown"
+msgstr "Markdown lettvekt dokument (tekstdokument merkingsspråk uavhengig opprettet av John Gruber i 2004. Bruker ren tekst deklarativ design, syntaksdesign er inspirert av reStructuredText. Mye brukt for GitHub-prosjekter, ingeniør-nivå teknisk dokumentasjon og moderne statisk innholdshåndteringsøkosystem)"
+
+msgid "mime_yaml"
+msgstr "YAML serialiseringskonfigurasjon (menneskelesbart dataserialiseringsformat designet av Clark Evans og andre i 2001. Basert på hierarkisk innrykk og nøkkel-verdi-mapping. Har nå blitt etablert som sky-native infrastrukturkonfigurasjonsstandard for Kubernetes containerorkestrering, Ansible automatisering og Docker Compose)"
+
+msgid "mime_toml"
+msgstr "TOML semantisk konfigurasjon (minimalistisk språk designet av Tom Preston-Werner i 2013. Har lavnivå designfordeler som sterk typing, eksplisitt mapping og semantisk klarhet. Brukes nå mye som standardisert konfigurasjonsfil for moderne verktøykjeder for Rust (Cargo), Python (pyproject.toml) og Go)"
+
+msgid "mime_vue"
+msgstr "Vue enkeltfilskomponent (proprietært SFC-format for progressiv webrammeverk introdusert av Evan You i 2014. I en enkelt fil implementerer separasjon av bekymringer for HTML/CSS/JS og reaktiv tilstandsbinding. Driver dypt moderne web interaktive front-end applikasjoner og storskala statiske nettstedsmotorer)"
+
+msgid "mime_wasm"
+msgstr "WebAssembly binær modul (W3Cs høyytelses lavnivå bytekodestandard for web etablert i 2017. Tillater sterkt typed språk som C/C++/Rust å kompilere til nettleser sandkasse-mål, gir utførelseseffektivitet nær opprinnelig maskinvare. Er en hjørnestein for moderne webkantberegning)"
+
+msgid "mime_jsx"
+msgstr "React JSX komponent (JavaScript XML syntaksutvidelse utgitt av Facebook sammen med React-rammeverket i 2013. Støtter deklarativ bygging av DOM virtuell struktur i JavaScript, implementerte front-end 'UI er en funksjon av tilstand' komponentbasert utviklingsparadigme)"
+
+msgid "mime_tsx"
+msgstr "TypeScript TSX komponent (kombinasjon av TypeScript sterk typesyntaks utviklet av Microsoft i 2012 og JSX-strøm. Injiserer statisk kompileringstid typesjekking og grensesnittbegrensninger i React-komponentutvikling. Er en kodestandard for sikker utvikling av moderne store front-end systemer)"
+
+msgid "mime_heif"
+msgstr "HEIF høy-effektivt bilde (høy-effektiv bildefilformat etablert av MPEG-organisasjonen i 2015. Basert på HEVC (H.265) video-kodingsalgoritme, støtter å inneholde flerbilder bilder, dybdekart og metadata i svært lite volum. Er en proprietær lagringsstandard for moderne mobile operativsystemer og smarte terminalenheter)"
+
+msgid "mime_heic"
+msgstr "HEIC høy-effektivt bilde (Apples proprietære bitmap-format implementert basert på HEIF internasjonal standard. Som standard fotolagringsformat for moderne iPhone, får iOS/macOS maskinvarenivå koding/dekoding og opprinnelig operativsystemstøtte. Mens det opprettholder høy bildekvalitet, reduserer det underliggende lagringsplass dramatisk)"
+
+msgid "mime_gltf"
+msgstr "glTF 3D ressursmodell (GL overføringsformatstandard utgitt av Khronos Group i 2015. Bruker JSON-arkitektur for å beskrive tredimensjonale scener, kjent som 'JPEG for 3D-området'. Er en lettvekts industristandard for moderne WebGL/WebGPU og virtuell virkelighetsgjengivelse)"
+
+msgid "mime_glb"
+msgstr "GLB binær 3D-modell (full binær, tapsfri innkapslingsversjon av glTF-ressursmodellen. Kombinerer scenestruktur, lavnivå mesh-vertexdata, materialer og teksturkart til en enkelt fil. Spesielt designet for høy-effektiv overføring og strømmedistribusjon av tverrplattform web 3D-ressurser)"
+
+msgid "mime_gls"
+msgstr "GLOSSARY dataordliste (terminologi-definisjonsfil spesielt for dokumenthåndteringssystemer og strukturerte korpus. Har innebygde standard termdefinisjoner, flerspråklige mappinger og metadata-mappinger. Brukes for å opprettholde konseptuell konsistens i automatisert tekstanalyse og innholdspubliseringssystemer)"
+
+msgid "mime_cbz"
+msgstr "CBZ tegneseriebok (proprietært tegneseriebilde-arkiveringsformat basert på ZIP-komprimeringsstruktur. Internt innkapsler en kontinuerlig sekvens av statiske bitmap-bilder. Er en universell lettvekts beholderstandard for digital tegneserieutgivelse og tverrplattform lokal samling)"
+
+msgid "mime_cbr"
+msgstr "CBR tegneseriebok (proprietært tegneseriebilde-arkiveringsformat basert på RAR-komprimeringsstruktur. Bruker RAR-algoritme for å innkapsle statiske bitmap-sekvenser, har relativt høy komprimeringsgrad, har bred kompatibilitetsstøtte i digital tegneseriedistribusjon)"
+
+msgid "mime_fb2"
+msgstr "FB2 e-bok (tidlig 2000-talls FictionBook 2.0 e-bokstandard. Bruker ren XML-struktur for å beskrive bokattributter og teksthierarki. Har bred støtte i åpen kildekode e-bokøkosystem og arvede digitale publiseringslesere)"
+
+msgid "mime_kepub"
+msgstr "KEPUB e-bok (Kobos proprietære forbedrede e-bokformat som har utviklet seg fra EPUB-standarden. Utfører lavnivå gjengivelsesoptimalisering for Kobos maskinvarenivå e-boklesere, gir mer effektiv sideoppsett og lesestatistikkinteraksjon)"
+
+msgid "mime_m4b"
+msgstr "M4B lydbok (lydbokformat basert på MPEG-4 Part 14 (MP4) beholderarkitektur. Bruker AAC-koding, støtter opprinnelig lavnivå bokmerkeplassering, avspillingsfortsettelse fra bruddpunkt og kapittelembedding. Var en gang standardformat for Apple iTunes-økosystemet)"
+
+msgid "mime_kfx"
+msgstr "Kindle KFX-format (proprietært forbedret digitalt publiseringsformat utgitt av Amazon sammen med Kindle i 2015. Støtter avansert ligaturlayout, høydynamisk fontgjengivelse og kjerne-nivå strømme sidelasting (Page Flip). Er kjernestandarden for moderne Kindle-plattform)"
+
+msgid "mime_chm"
+msgstr "CHM kompilert hjelpefil (kompilert HTML-hjelpeinformasjonssystem utgitt av Microsoft i 1997. Pakker hypertekstdata og underliggende indeks til en enkelt binær beholder. Var lenge standardformatet for lokal offline hjelpedokumentasjon for Windows-programvare)"
+
+msgid "mime_mht"
+msgstr "MHT nettsidearkiv (MIME aggregert hypertekstformat utgitt av Microsoft i 1999. Basert på RFC 2557-standarden, innkapsler HTML-kilde, CSS, JS og innebygde bilder i en enkelt tekstfil. Brukes for offline nettsidelagring i arve-nettlesere)"
+
+msgid "mime_wml"
+msgstr "WML trådløst merkingsspråk (mobil merkingsstandard etablert av WAP-forumet i 1999. Basert på XML-spesifikasjon, spesielt designet for tidlige smalbånds trådløse mobilnettverk og lav-ytelse funksjonstelefoner. I moderne web-økosystem tilhører det pensjonert arv-teknologi)"
+
+msgid "mime_xhtml"
+msgstr "XHTML hypertekst nettside (2000 W3C-standard, innkapsling av strengt hypertekstmerkingsspråk basert på XML-arkitektur. I 2009 stoppet W3C dens tekniske evolusjon og gikk fullstendig over til HTML5-spesifikasjonen. Brukes nå mest for semantisk nettsidegjengivelse i arvesystemer)"
+
+msgid "mime_xml"
+msgstr "XML strukturert dokument (1998 W3C-standard utvidbart merkingsspråk. Har selvbeskrivende tag-arkitektur. Er et underliggende grunnformat for nettverk web-tjenester (SOAP/REST), system-nivå konfigurasjonsfiler (XSD) og tverrplattform datautveksling)"
+
+msgid "mime_sgml"
+msgstr "SGML generalisert merkingsspråk (1986 ISO 8879 internasjonal standard standard generalisert merkingsspråk. Som en industripioner for strukturert beskrivelse av elektroniske dokumenter, stammer både XML og tidlige HTML-spesifikasjoner fra dette standard metatspråket)"
+
+msgid "mime_apng"
+msgstr "APNG dynamisk grafikk (2004 Mozillas utviklede Portable Network Graphics (PNG) dynamiske utvidelse. Støtter 24-bits ekte farger og 8-bits Alpha-kanal halvgjennomsiktighet. Er et høyoppløselig alternativ til GIF-formatet i moderne web-scenarier)"
+
+msgid "mime_bmp"
+msgstr "BMP opprinnelig bitmap (Microsoft-plattformens enhetsuavhengige bitmap-format etablert siden Windows 1.0-tiden. Bruker tapsfri, ukomprimert lagring, selv om størrelsen vanligvis er 3-10 ganger større enn PNG, fordi ingen koding/dekoding overhead, brukes den den dag i dag fortsatt mye innebygd i Windows 11s kjernekomponenter, EXE/MSI-ressurssegmenter og arvede driveres grafikkbuffere)"
+
+msgid "mime_cdr"
+msgstr "CDR vektorgrafikk (Canadas Corel-selskaps proprietære CorelDRAW profesjonelle vektordesign kildefilformat. Støtter flerlags fargebehandling, komplekse matematiske konturnoder og trykk-nivå layoutdata. Er et spesialisert format for profesjonell flatetrykk og reklamedesign)"
+
+msgid "mime_gif"
+msgstr "GIF indeksert fargebilde (8-bits indeksert fargebitmap-format utviklet av CompuServe i 1987. Basert på LZW-algoritme, begrenset til 256 fargenivåer og enkeltfarge gjennomsiktighet, blir størrelsen stor ved høy bildefrekvens. Er nå gradvis erstattet av moderne høy-effektive dynamiske bilde-standarder som APNG, WebP)"
+
+msgid "mime_ico"
+msgstr "ICO systemikon (Windows opprinnelig ikonressursinnkapslingsformat. Støtter blandet innbygging av flere pikseloppløsninger og fargedybder bildevarianter i en enkelt beholder. Er også en universell distribusjonsstandard for moderne web-nettleseres kjerneidentifikator (Favicon))"
+
+msgid "mime_jpeg"
+msgstr "JPEG komprimert bilde (1992 ISO 10918 internasjonal standard tapskomprimert bildeformat. Basert på diskret cosinus-transform (DCT) algoritme, oppnår høy komprimeringsgrad samtidig som den opprettholder utmerket realistisk bildekvalitet. Er den absolutte de facto-standarden for global internett statisk fotografering)"
+
+msgid "mime_jpg"
+msgstr "JPEG komprimert bilde (1992 ISO 10918 internasjonal standard tapskomprimert bildeformat. Basert på diskret cosinus-transform (DCT) algoritme, oppnår høy komprimeringsgrad samtidig som den opprettholder utmerket realistisk bildekvalitet. Er den absolutte de facto-standarden for global internett statisk fotografering)"
+
+msgid "mime_png"
+msgstr "PNG tapsfritt bilde (1996 W3C-anbefalt Portable Network Graphics standard. Bruker tapsfri komprimeringsalgoritme, støtter opprinnelig 24-bits ekte farger og 8-bits Alpha-kanal gjennomsiktighet. Som et høyoppløselig alternativ til klassisk statisk GIF, er den absolutte de facto-standarden for internett tapsfrie pikselbilder)"
+
+msgid "mime_ps"
+msgstr "PostScript sidebeskrivelsesfil (stack-basert sidebeskrivelsesspråk introdusert av Adobe i 1985. Som den teknologiske forløperen til PDF-formatet, implementerer på lavnivå maskinvareuavhengig typografi og høy-presisjon vektorgrafikk-gjengivelse. Er en grunnleggende standard for profesjonell trykkeriutgivelse og laserskriverdomener)"
+
+msgid "mime_psb"
+msgstr "PSB stort lagdokument (Adobe Photoshops proprietære super-stor kildefilinnkapslingsformat. Bryter gjennom standard PSD-formatets 2GB fysiske størrelse og 30 000 pikslers interne adresseringsgrenser. Spesielt designet for å lagre super-storskala, høy lagdybde gigantiske digitale kunstressurser)"
+
+msgid "mime_psd"
+msgstr "PSD lagdesign kildefil (Adobe Photoshops proprietære lagdelte bildeingeniørformat. Som en industristandard beholder innen grafikk- og bildeområdet, innkapsler den opprinnelig fullt laggjengivelsestre, bitmap-kanaler, vektor klippebaner og sammensatte blandingsmoduser, støtter tapsfri full data-redigering)"
+
+msgid "mime_webp"
+msgstr "WebP høy-effektivt bilde (universell web-grafikk kodingsstandard introdusert av Google i 2010. Avledet fra VP8 video nøkkelrammeteknologi, perfekt kompatibel med taps- og tapsfri, semi-gjennomsiktig og dynamisk gjengivelse. Reduserer størrelsen med 25-35% sammenlignet med PNG av samme kvalitet. Er en hjørnestein for moderne nettsiders høyytelses lasting)"
+
+msgid "mime_woff"
+msgstr "WOFF web-glyph fil (åpen web-fontformat opprettet i 2009 og ble W3C-standard i 2012. I hovedsak er det en strøm tapsfri komprimeringsinnkapsling av standard TTF/OTF fontstrukturer, som optimaliserer nettverksoverførings båndbreddekostnad betydelig. Er et universelt format for moderne nettsideikoner og skyfonter)"
+
+msgid "mime_7z"
+msgstr "7z komprimert arkiv (1999 Igor Pavlovs 7-Zip proprietære format. Basert på åpen kildekode LZMA/LZMA2-algoritmer, har ekstremt høy komprimeringsgrad. Under like forhold er størrelsen vanligvis 30-50% mindre enn ZIP. Er et universelt høy-komprimeringsforholdsformat for åpen kildekode-samfunnet og programvaredistribusjon)"
+
+msgid "mime_ace"
+msgstr "ACE komprimert arkiv (1990-tallets WinACE proprietære komprimeringsformat. Konkurrerte en gang med RAR-format og hadde relativt høy komprimeringsgrad. Etter 2007 stoppet teknologisk videreutvikling, er nå erstattet av 7z og RAR-format. Tilhører arvesystem arkiveringsformat)"
+
+msgid "mime_bz2"
+msgstr "BZIP2 komprimert arkiv (1996 Julian Sewards blokksorteringskomprimeringsformat. Dens underliggende algoritme har 15-20% høyere komprimeringsgrad enn GZIP, men høyere beregningskostnad. Brukes ofte til distribusjon av Linux-kjernekildekode og åpen kildekode programvarepakker. Standard utvidelse er .bz2)"
+
+msgid "mime_cab"
+msgstr "CAB komprimert arkiv (1995 Microsofts uavhengig utviklede Cabinet-arkiveringsformat. Som Windows-systemets opprinnelige installasjonspakke-standard, brukes for driver- og kjernefildistribusjon. Fungerer også som underliggende lagringsbeholder for Windows Installer (MSI))"
+
+msgid "mime_dmg"
+msgstr "DMG diskbilde (1980-tallets Apple-evolverte Disk Image-format. Som standard beholder for macOS programvaredistribusjon, støtter fysisk montering som virtuelt filsystem, lavnivå komprimering og datakryptering. Er Mac-økosystemets mainstream applikasjonsdistribusjonsformat)"
+
+msgid "mime_emz"
+msgstr "EMZ komprimert bilde (komprimert versjon av Windows Enhanced Metafile EMF. I hovedsak binær vektorgrafikk komprimert via GZIP-algoritmen. Mye brukt til lagring av innebygd vektorgrafikk i Microsoft Office-seriedokumenter)"
+
+msgid "mime_gz"
+msgstr "GZIP komprimert arkiv (1992 GNU-prosjektets Jean-loup Gailly og Mark Adlers standard strømkomprimeringsformat. Som Unix/Linux standard komprimeringsverktøy, er det også kjernestandarden for HTTP transportlagskomprimering (Gzip). Brukes ofte sammen med TAR-arkivering)"
+
+msgid "mime_jar"
+msgstr "JAR komprimert arkiv (1997 Sun Microsystems' Java ARchive arkiveringsformat. I hovedsak en ZIP-struktur-basert pakkebeholder, brukes for å innkapsle Java-klassebiblioteker og metadata. Er en kjernekompileringsprodukt for Maven, Gradle og tidlig Android-økosystem)"
+
+msgid "mime_lzma"
+msgstr "LZMA komprimert arkiv (1998 Igor Pavlovs Lempel-Ziv-Markov kjetting-komprimeringsalgoritme. Som kjernemotoren for 7z-formatet, har ekstremt høy komprimeringsgrad og høyhastighets dekomprimering. Mye brukt for maskinvare-fastvare og innebygde systemdistribusjoner)"
+
+msgid "mime_rar"
+msgstr "RAR komprimert arkiv (1993 Eugene Roshals WinRAR proprietære arkiveringsformat. Støtter volumsplitting, fysiske gjenopprettingsposter (ECC) og høy-styrke kryptering. Komprimeringsgraden er bedre enn standard ZIP, har bred kompatibilitetsstøtte i personlige datamaskiner og kommersielle områder)"
+
+msgid "mime_tar"
+msgstr "TAR arkivpakke (1979 Unix V7-tidens Tape ARchive-båndarkiveringsformat. Utfører kun filstrømpakking uten datakomprimering. Kombineres ofte med GZIP/BZIP2/XZ. Er en underliggende standard for Linux-kildepakker og Docker-bildelagringslagring)"
+
+msgid "mime_tgz"
+msgstr "TGZ komprimert arkiv (TAR-arkivering og GZIP-komprimering strømkombinasjonsformat, utvidelser .tgz eller .tar.gz. Som det mest universelle programvarepakkedistribusjonsformatet i Unix/Linux-miljø, mye brukt for kildekodekompileringsdistribusjon og installasjonsfri binærpakedistribusjon)"
+
+msgid "mime_tbz2"
+msgstr "TBZ2 komprimert arkiv (TAR-arkivering og BZIP2-komprimering strømkombinasjonsformat, utvidelser .tbz2 eller .tar.bz2. Sammenlignet med TGZ kan ytterligere 15-20% komprimeringsgrad oppnås, egnet for storfileroverføring, ble lenge brukt for Linux-kjernekildekodedistribusjon)"
+
+msgid "mime_xz"
+msgstr "XZ komprimert arkiv (2009 introdusert neste generasjons høy-komprimeringsforholdsformat. Basert på LZMA2-algoritme, datakomprimeringsgrad 30-50% høyere enn GZIP samtidig som den opprettholder høyhastighets dekomprimering. Har blitt etablert som anbefalt distribusjonsstandard av Linux-kjernen og mainstream pakkebehandlere (som inne i Debian .deb))"
+
+msgid "mime_z"
+msgstr "Z komprimert arkiv (1985 Unix compress-kommandoens LZW-komprimeringsformat. Som en tidlig Unix-systems standard komprimeringsstandard, er nå fullstendig erstattet av mer effektive GZIP-formatet. I moderne nettverkstrafikk er det et sjelden historisk arveformat)"
+
+msgid "mime_zip"
+msgstr "ZIP komprimert arkiv (1989 Phil Katz' PKZIP universelle arkiveringsformat. Har opprinnelig støtte fra hovedstrøms operativsystemer. Er den mest brukte beholderstandarden på internett. Moderne Javas JAR, Androids APK og Office-dokumenter (OOXML) er alle basert på ZIP-struktur)"
+
+msgid "mime_zst"
+msgstr "Zstandard komprimert arkiv (2015 Facebooks Yann Collets design av neste generasjons strømkomprimeringsstandard. Nærmer seg LZMA-komprimeringsgrad samtidig som den har langt høyere gjennomstrømning enn GZIP. Har blitt dypt adoptert av Linux-kjerne (5.9+) og Arch/Debian-pakkebehandlere)"
+
+msgid "mime_lz4"
+msgstr "LZ4 komprimert arkiv (2011 Yann Collets ekstremt rask strømkomprimeringsalgoritme. Gjennomstrømningshastighet over 10 ganger raskere enn GZIP, har ekstremt lav CPU-kjøretidskostnad. Mye brukt i Linux-kjerne, OpenZFS-filsystem og Hadoop sanntids datastrømbehandling)"
+
+msgid "mime_lzo"
+msgstr "LZO komprimert arkiv (1996 Markus Oberhumer Lempel-Ziv-Oberhumer-algoritme. Fokuserer på ekstremt rask dekomprimeringsytelse. Mye innebygd i Linux-kjerne Squashfs-bilder, OpenWrt-fastvare og ulike ressursbegrensede innebygde systemer)"
+
+msgid "mime_msi"
+msgstr "MSI systeminstallasjonspakke (1999 Microsofts Windows Installer datainnkapslingsformat. Som en Windows applikasjonsnivå standard distribusjonsspesifikasjon, støtter opprinnelig lavnivå transaksjons tilbakerulling, komponent livssyklusadministrasjon og stille installasjon uten batchbehandling. Er en kjernestandard for sentralisert programvaredistribusjon og policy-distribusjon på bedriftsnivå)"
+
+msgid "mime_pkg"
+msgstr "PKG tverrplattform programvareinstallasjonspakke. 1. FreeBSD programvarepakke: pkgng standard, utvidelse .pkg eller .txz, basert på TAR+XZ/Zstd komprimering, støtter avhengighetsoppløsning og signaturverifisering; 2. macOS installasjonspakke: basert på Apple Installer-format, støtter tilpassede komponenter, installasjonsskript og systemnivå avinstallasjon. Er henholdsvis BSD-serveres og Mac-systemers viktigste distribusjonsbærere."
+
+msgid "mime_apk"
+msgstr "APK Android applikasjonspakke (2008 Googles tradisjonelle applikasjonsinstallasjonspakke utgitt sammen med Android. Basert på ZIP-arkivstruktur, pakker kompilert Dalvik bytekode (DEX), metadatamanifest og globale ressurser. Brukes nå mye for lokal utviklingsfeilsøking, tredjepartsdistribusjon og side-lasting installasjon på enhet)"
+
+msgid "mime_ipa"
+msgstr "IPA Apple applikasjonspakke (2008 iOS/iPadOS-spesifikk pakkebeholder utgitt sammen med iPhone SDK. I hovedsak et ZIP-arkiv beskyttet av FairPlay DRM eller bedriftsnivå kodesignatur, inneholder Mach-O binær kjørbar fil, applikasjonsressurstre og Info.plist metadatakonfigurasjon)"
+
+msgid "mime_hap"
+msgstr "HAP HarmonyOS applikasjonspakke (2020 HarmonyOS elastiske distribusjons grunnenhet utgitt sammen med HarmonyOS 2.0. Består av Entry hovedmodul eller Feature utvidelsesfunksjonsmoduler. Er en kjerne multi-end distribusjonsformat for smarte terminaler i tverr-end alle scenarier (telefoner, nettbrett, bærbare enheter))"
+
+msgid "mime_har"
+msgstr "HAR HarmonyOS statisk delt pakke (HarmonyOS' proprietære statisk delt bibliotekarkivfil. Brukes for å innkapsle felles komponenter, lavnivå ressurskode og kompileringstidsavhengigheter, som statisk lenkes og deles av flere HAP-moduler. Er en kjernebase for HarmonyOS-systemets komponentbaserte utvikling og multi-modul gjenbruk)"
+
+msgid "mime_aab"
+msgstr "AAB Android applikasjonsbunt (2018 Google-introdusert og 2021 etablert Google Play dynamisk distribusjonsformat. Som en ren distribusjonsenhet, dynamisk beskåret og kompilert av skyen i henhold til målenhetens CPU-arkitektur, skjermtetthet og språk, og genererer optimaliserte APK-er etter behov. Reduserer gjennomsnittlig overføringsbåndbreddekostnad med 35%)"
+
+msgid "mime_xapk"
+msgstr "XAPK utvidet applikasjonspakke (uoffisiell applikasjonsutvidelsesstandard etablert av tredjeparts Android-samfunnet. Ved å kombinere standard APK-fil med stor OBB-spilldatautvidelsespakke, bryter fysisk Googles 100MB grense for enkeltfilstørrelse. Mye sett på spilldistribusjonsplattformer)"
+
+msgid "mime_appx"
+msgstr "APPX moderne applikasjonspakke (2012 Microsofts UWP applikasjonsdistribusjonsspesifikasjon utgitt sammen med Windows 8. Har sandkasseisolert kjøring og lettvekt avinstallasjonsegenskaper. Som en tidlig dominant standard for Microsoft Store, har den i moderne Windows-økosystem gått inn i sin livssyklus' sluttfase mot MSIX-evolusjon)"
+
+msgid "mime_msix"
+msgstr "MSIX neste generasjons applikasjonspakke (2018 Microsofts helt nye standardiserte pakkespesifikasjon for Windows. Perfekt smelter sammen APPXs applikasjonssikkerhets sandkassefunksjoner med MSIXs bedriftsnivå ressursforvaltningsfordeler. Fullt kompatibel med alle Win32-applikasjonstyper. Er den anbefalte distribusjonsstandarden for Windows 11)"
+
+msgid "mime_appimage"
+msgstr "AppImage installasjonsfri applikasjonspakke (2004 startet Linux enkelt kjørbar arkivspesifikasjon. Bruker 'en applikasjon er en fil' selv-innholdende arkitektur. Under kjøring monteres den direkte via FUSE-mekanismen som et skrivebeskyttet virtuelt filsystem for utførelse, oppnår null-avhengighet umiddelbar bruk på tvers av Linux-distribusjoner)"
+
+msgid "mime_flatpak"
+msgstr "Flatpak sandkasse applikasjonspakke (2015 Red Hat og GNOME-ledet Linux tverr-distribusjon skrivebordsapplikasjonsdistribusjonsstandard. Avhengig underliggende av Linux-kjernens Namespace- og Cgroups-mekanismer for å oppnå ekstremt streng applikasjonsnivå sikkerhetssandkasseisolering. Er grunnlaget for moderne åpen kildekode OS programvaresentre)"
+
+msgid "mime_snap"
+msgstr "Snap containerisert applikasjonspakke (2014 Ubuntu-morselskapet Canonicals Linux universelle distribusjonsstandard. Bruker selv-innholdende SquashFS-bilde monteringsarkitektur, støtter automatiserte inkrementelle oppdateringer og streng AppArmor sandkasseisolering. Er kjernen standardformat for Ubuntu Software Center-økosystemet)"
+
+msgid "mime_deb"
+msgstr "DEB system programvarepakke (1993 Debian-prosjektets etablerte binær- og kildekode-innkapslingsspesifikasjon. Som en underliggende installasjonsstandard for Debian, Ubuntu og alle deres derivatsystemer, er avhengig av dpkg-kjerne for utpakking og vedlikehold, med APT som effektiv pakkebehandler-front. Er den mest modne programvaredistribusjonsfundamentet i Linux-økosystemet)"
+
+msgid "mime_rpm"
+msgstr "RPM system programvarepakke (1997 Red Hats Red Hat pakkebehandler-innkapslingsspesifikasjon. Sammen med DEB regnes som de to store leirene i Linux tradisjonell pakkehåndtering. Har opprinnelig innebygd transaksjonsnivå avhengighetssjekking og underliggende programvare digital signaturverifisering. Er fortsatt den absolutte mainstream-distribusjonsstandarden for Red Hat-familiens økosystemer som RHEL, Fedora og CentOS den dag i dag)"
+
+msgid "mime_pacman"
+msgstr "Pacman arkivert programvarepakke (2002 Arch Linux' pacman-manager-etablerte .pkg.tar.zst-innkapslingsformat. Som kjernen i Archs rullende oppdateringsmekanisme, basert på Zstandard høyhastighets høykomprimeringsalgoritme, sammen med AUR (Arch User Software Repository)-økosystemet. Er en modernisert pakkedistribusjonsstandard som legemliggjør minimalistiske og KISS-prinsipper)"
+
+msgid "mime_exe"
+msgstr "EXE opprinnelig kjørbar fil (Windows-plattformens Portable Executable (PE) binærprogramformat. Teknologisk nedstammer fra MS-DOS-tidens MZ-hovedstruktur, og siden 1993 Windows NT fullt etablert som PE-strukturspesifikasjon. Er verdens mest brukte utførelsesstandard for maskinkodeinstruksjoner, statiske ressurssegmenter og systemkjerneoppstart)"
+
+msgid "mime_dll"
+msgstr "DLL dynamisk lenkebibliotek (Windows-plattformens Dynamic Link Library delt kodebibliotekspesifikasjon. Ved å dynamisk laste og symbol-omplassere under kjøring, sparer betydelig fysisk minne og diskplass. Som kjernens implementeringsform for Windows API, ble dets tidlige DLL Hell-problem i moderne tid løst ved SxS parallell isolasjonsmekanisme)"
+
+msgid "mime_com"
+msgstr "COM klassisk kjørbar fil (eldste minne-bilde (Command) utførelsesformat fra MS-DOS-tiden. Bruker ustrukturert ren kodesegmentdesign, begrenset til 64KB fysisk minne adresseringssegment øvre grense. Er nå pensjonert som historisk arveformat, men brukes fortsatt i moderne Windows-arkitektur som et bestemt komponentgrensesnitt for begrenset kompatibilitet)"
+
+msgid "mime_aac"
+msgstr "AAC-lyd (MPEG-standard fra 1997, Advanced Audio Coding. Etterfølgeren til MP3, lydkvaliteten bedre enn MP3 ved samme bithastighet, standard lydformat for YouTube, iTunes, Nintendo Switch)"
+
+msgid "mime_alac"
+msgstr "ALAC-lyd (utviklet av Apple i 2004, Apple Lossless Audio Codec. Apples tapsfrie format, åpen kildekode i 2011, standardformat for iTunes og Apple Music tapsfri lyd)"
+
+msgid "mime_flac"
+msgstr "FLAC-lyd (utviklet av Xiph.Org Foundation i 2001, Free Lossless Audio Codec. Tapsfri komprimering, lydkvalitet som CD, filstørrelse omtrent halvparten av original WAV. Åpen kildekode uten patenter, foretrukket format for audiofiler og digitale musikksamlinger)"
+
+msgid "mime_mp3"
+msgstr "MP3-lyd (utviklet av Fraunhofer Institute i 1993, MPEG-1 Audio Layer 3. Format med tap av kvalitet, liten filstørrelse akseptabel kvalitet, kjernen i den digitale musikkrevolusjonen på 2000-tallet, hovedårsaken til iPod og Napster. Patentet utløp i 2017, ble offentlig domenefilformat)"
+
+msgid "mime_oga"
+msgstr "Ogg Audio-lyd (utviklet av Xiph.Org Foundation, rent lydformat for Ogg-beholderen, bruker Vorbis-koding. Åpen kildekode uten patenter, komprimeringskvalitet bedre enn MP3, mye brukt i åpen kildekode-prosjekter)"
+
+msgid "mime_ogg"
+msgstr "OGG-lyd (utviklet av Xiph.Org Foundation i 2000, Ogg Vorbis-format. Åpen kildekode uten patenter, komprimeringskvalitet bedre enn MP3, tidlig bruker var Spotify, mye brukt for lydeffekter i spill)"
+
+msgid "mime_opus"
+msgstr "Opus-lyd (standardisert av IETF i 2012, åpen kildekode uten patenter lydformat. Kombinerer SILK- og CELT-teknologi, ekstremt lav latens, høyest komprimeringskvalitet, standard lydformat for WebRTC, WhatsApp, Discord)"
+
+msgid "mime_wav"
+msgstr "WAV-lyd (utviklet av Microsoft og IBM i 1991, innfødt Windows-lydformat. PCM-koding uten komprimering, tapsfri lydkvalitet, men enorme filer, standardformat for profesjonell lydredigering)"
+
+msgid "mime_wma"
+msgstr "WMA-lyd (utviklet av Microsoft i 1999, Windows Media Audio. To versjoner: med og uten tap, innfødt støttet av Windows, ble utbredt med Windows Media Player. Er nå marginalisert, erstattet av MP3/AAC)"
+
+msgid "mime_dsf"
+msgstr "DSF-lyd (Direct Stream Digital-format, utviklet av Sony og Philips, 1-bit høy samplingsfrekvens, standardformat for DSD-lyd, digital versjon av SACD, audiophile high-end-lydformat, enorme filer)"
+
+msgid "mime_ape"
+msgstr "APE Lyd (utviklet av Monkey's Audio i 2000, tapsfri komprimeringsformat. Høyere komprimering enn FLAC, men langsommere koding, brukes fortsatt på Windows-plattformen og blant audio-entusiaster)"
+
+msgid "mime_mid"
+msgstr "MIDI-lyd (opprettet av MIDI Association i 1983, Musical Instrument Digital Interface. Noteformat snarere enn opptak, svært små filer, standard for elektroniske instrumenter, ringetoner for mobiltelefoner, lydeffekter i spill. I 1991 ble General MIDI standardisert, definerte 128 instrumentlyder)"
+
+msgid "mime_m4a"
+msgstr "M4A-lyd (MPEG-4 Audio, beholderformat for AAC. Standardformat for iTunes Music Store, mainstream-lydformat i Apples økosystem, støtter DRM-beskyttelse)"
+
+msgid "mime_m3u"
+msgstr "M3U-spilleliste (MP3 URL-spillelisteformat, ren tekstfil, registrerer stier til lydfiler. Standard fra Winamp-tiden, brukes for nettradio, online musikkstrømming. M3U8 er dens UTF-8-versjon, brukes for HTTP Live Streaming)"
+
+msgid "mime_asf"
+msgstr "ASF-strømming (utviklet av Microsoft i 1996, Advanced Systems Format. Windows Media-beholder for strømming, støtter synkronisert lyd- og videooverføring. Brukes for direktesendinger og strømming på forespørsel, WMA/WMV er basert på ASF-beholderen)"
+
+msgid "mime_avi"
+msgstr "AVI-video (introdusert av Microsoft i 1992, tidlig Windows-videostandard. \"Audio Video Interleave\", lyd- og vekselvis lagring, det mest populære videoformatet på 1990-2000-tallet, erstattet av MP4/MKV)"
+
+msgid "mime_divx"
+msgstr "DivX-video (utviklet av DivX-selskapet i 1998, videokodingsformat basert på MPEG-4. Hovedformat for fildeling av videoer på internett på 2000-tallet, den første teknologien som komprimerte DVD-kvalitet til CD-størrelse. På grunn av opphavsrettskonflikter, ble det senere kommersielt kodingsverktøy)"
+
+msgid "mime_mp4"
+msgstr "MP4-video (MPEG-standard fra 2001, MPEG-4 Part 14. Det mest universelle videoformatet i verden, støtter H.264/H.265-koding, standardformat for nettvideo, mobilopptak, YouTube)"
+
+msgid "mime_m4v"
+msgstr "M4V-video (iTunes-videoformat, variant av MP4. Videoformat i Apples økosystem, standardformat for filmer og TV-serier på iTunes Store, støtter DRM-opphavsrettsbeskyttelse)"
+
+msgid "mime_mpeg"
+msgstr "MPEG-video (opprettet av MPEG-organisasjonen i 1988, Moving Picture Experts Group. Grunnlegger av standarder for digital videokomprimering, stor innflytelse fra MPEG-1 (VCD), MPEG-2 (DVD), MPEG-4 (nettvideo))"
+
+msgid "mime_mkv"
+msgstr "MKV-video (utviklet av Matroska-prosjektet i 2002, åpen kildekode multimediebeholder. Støtter flere lydspor, flere undertekster, kapitler, \"innpakningsverktøy\", foretrukket format for fildeling av HD-filmer)"
+
+msgid "mime_mpg"
+msgstr "MPEG-video (MPEG-1/MPEG-2 videofilendelse, standardformat for VCD og DVD. Hovedformat for videoer på optiske plater på 1990-2000-tallet, erstattet av H.264/H.265)"
+
+msgid "mime_ogv"
+msgstr "Ogg Video-video (utviklet av Xiph.Org Foundation, videoformat for Ogg-beholderen, bruker Theora-koding. Åpen kildekode uten patenter, tidlig standard for HTML5-video, innfødt støttet av Firefox)"
+
+msgid "mime_ogx"
+msgstr "Ogg-multimediebeholder (utviklet av Xiph.Org Foundation, universell utvidelse av Ogg-beholderen, kan inneholde flere spor: lyd, video, undertekster osv. Åpen kildekode-multimediastandard, brukes for spill, strømming)"
+
+msgid "mime_rm"
+msgstr "RealMedia-video (utviklet av RealNetworks i 1995, RealMedia-format. Pioner innen internettstrømming på 1990-2000-tallet, kjernformat for RealPlayer-avspilleren. Ulemper: krever spesialavspiller, dårlig komprimeringskvalitet, ble erstattet av Flash/MP4)"
+
+msgid "mime_flv"
+msgstr "Flash-video (formatet dukket opp i 2002, Flash Video-format. Var en gang mainstream for nettvideo, tidlig bruker var YouTube. Ulemper: krever Flash-programtillegg, dårlig ytelse, mange sikkerhetshull. Fra 2015 gikk mainstream-nettsteder over til HTML5-video, nå nedlagt)"
+
+msgid "mime_f4v"
+msgstr "F4V-video (Flash-videoformat utviklet av Adobe, etterfølger til FLV. Basert på MPEG-4-standarden, støtter H.264-koding. Sammen med Flash-teknologien ble den nedlagt, Adobe avsluttet støtten i 2020)"
+
+msgid "mime_wmv"
+msgstr "WMV-video (utviklet av Microsoft i 1999, Windows Media Video. Innfødt støttet av Windows, optimalisert for strømming, vanlig format for online-videoer i de tidlige dagene, nå marginalisert)"
+
+msgid "mime_wmf"
+msgstr "WMF-medieformat (Windows Media Format, Microsofts medierammeverk. Omfatter WMV-video og WMA-lyd, innfødt støttet av Windows Media Player)"
+
+msgid "mime_mov"
+msgstr "MOV-video (utviklet av Apple i 1991, QuickTime-beholderformat. Standardformat for profesjonell videoredigering, støtter flere kodeker, innfødt støttet av Final Cut Pro, Premiere)"
+
+msgid "mime_qt"
+msgstr "QuickTime-video (introdusert av Apple i 1991, QuickTime-format. Videostandard for Mac-plattformen, MOV er dens beholder, QuickTime-avspilleren var mye brukt. I 2016 avsluttet Apple utviklingen av Windows-versjonen, gradvis erstattet av MP4)"
+
+msgid "mime_webm"
+msgstr "WebM-video (introdusert av Google i 2010, åpen kildekode uten patenter videoformat. Basert på Matroska-beholderen, VP8/VP9-koding, standardformat for HTML5-video, YouTubes standard web-avspillingsformat)"
+
+msgid "mime_3gp"
+msgstr "3GP-video (opprettet av 3GPP i 2000, videoformat for mobile enheter. Svært små filer, lav kvalitet, format for videoopptak på tidlige mobiltelefoner, brukes for MMS-sending)"
+
+#------------------------------------------------------------------------------
+# Tekniske dimensjoner
+#------------------------------------------------------------------------------
+
+msgid "Operating Systems"
+msgstr "Operativsystemer"
+
+msgid "Top 5 Operating Systems"
+msgstr "Topp 5 operativsystemer"
+
+msgid "Unknown Robot"
+msgstr "Ukjent klient"
+
+msgid "User agent"
+msgstr "Brukeragent"
+
+msgid "Browsers"
+msgstr "Nettlesere"
+
+msgid "Top 5 Browsers"
+msgstr "Topp 5 nettlesere"
+
+msgid "Unknown Robot RH"
+msgstr "Ukjent forespørselsoverskrift"
+
+msgid "Detailed"
+msgstr "Detaljert"
+
+msgid "DetailedOS"
+msgstr "Operativsystemversjon"
+
+msgid "DetailedBS"
+msgstr "Nettleserversjon"
+
+msgid "Screen sizes"
+msgstr "Skjermstørrelser"
+
+msgid "Compression"
+msgstr "Komprimering"
+
+msgid "In"
+msgstr "Inn"
+
+msgid "Out"
+msgstr "Ut"
+
+msgid "Saved"
+msgstr "Lagret"
+
+#------------------------------------------------------------------------------
+# Kildedimensjoner
+#------------------------------------------------------------------------------
+
+msgid "Origin"
+msgstr "Opprinnelse"
+
+msgid "Referers"
+msgstr "Henvisere"
+
+msgid "meta.description"
+msgstr "AWStats avansert nettlogganalysator - sanntidsovervåking av netttrafikk, besøksanalyse, søkemotornøkkelord, feilside-statistikk. Støtter mørk modus, flerspråklig grensesnitt, gir omfattende dataanalyse for nettstedsadministratorer."
+
+msgid "meta.keywords"
+msgstr "AWStats,nettstatistikk,logganalyse,trafikkovervåking,besøksstatistikk,SEO-analyse,nettstedsanalyseverktøy,Web Analytics,Log Analyzer"
+
+msgid "meta.author"
+msgstr "AWStats"
+
+msgid "og.title"
+msgstr "AWStats - Nettlogganalyse"
+
+msgid "og.description"
+msgstr "📊 Profesjonelt åpen kildekode nettstatistikkverktøy, analyserer netttrafikken og besøksatferden din i sanntid."
+
+msgid "og.image.alt"
+msgstr "AWStats statistikkgrafer"
+
+msgid "Created by"
+msgstr "Opprettet av %s"
+
+msgid "plugins"
+msgstr "programtillegg"
+
+msgid "dbip by"
+msgstr "data fra"
+
+msgid "IPDB by"
+msgstr "Geografiske data levert av DB-IP"
+
+msgid "Configured"
+msgstr "Konfigurert"
+
+msgid "Missing"
+msgstr "Mangler"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Unused"
+msgstr "Ubrukt"
+
+msgid "Overall Health"
+msgstr "Generell helsestatus"
+
+msgid "Excellent"
+msgstr "Utmerket"
+
+msgid "Good"
+msgstr "Bra"
+
+msgid "Fair"
+msgstr "Greit"
+
+msgid "Poor"
+msgstr "Dårlig"
+
+msgid "Missing icon types"
+msgstr "Manglende ikontyper"
+
+msgid "See"
+msgstr "Se"
+
+msgid "Expected Path"
+msgstr "Forventet sti"
+
+msgid "column for file locations"
+msgstr "kolonne for filplasseringer"
+
+msgid "Tip: If you need to generate related icons, you can use %s to upload a logo image, and it will automatically generate all the above related icon files"
+msgstr "Tips: Hvis du trenger å generere relaterte ikoner, kan du bruke %s til å laste opp et logobilde, og det vil automatisk generere alle de ovennevnte relaterte ikonfilene"
+
+msgid "200: success, 404: failure"
+msgstr "200 er antall vellykkede, 404 er antall mislykkede"
+
+msgid "_PATH_FAVICON"
+msgstr "/favicon.ico"
+
+msgid "_PATH_APPLE_TOUCH"
+msgstr "/apple-touch-icon.png eller /apple-touch-icon-180x180.png"
+
+msgid "_PATH_LOGO"
+msgstr "/logo.svg eller /logo.png (må refereres i HTML/JSON-LD)"
+
+msgid "_PATH_WEBMANIFEST"
+msgstr "/site.webmanifest eller /manifest.json"
+
+msgid "_PATH_BROWSERCONFIG"
+msgstr "/browserconfig.xml"
+
+msgid "_PATH_SAFARI_PINNED"
+msgstr "/safari-pinned-tab.svg"
+
+msgid "_PATH_SOCIAL_ICON"
+msgstr "/images/github.svg, /images/paypal.svg osv."
+
+msgid "Favicon"
+msgstr "Favicon"
+
+msgid "Apple Touch Icon (iOS/macOS)"
+msgstr "Apple Touch-ikon (iPhone/iPad/Mac)"
+
+msgid "Site Logo"
+msgstr "Nettstedlogo"
+
+msgid "Web App Manifest (Android/Chrome)"
+msgstr "Nettappmanifest (Android/Chrome)"
+
+msgid "Windows Browser Config"
+msgstr "Windows-nettleserkonfigurasjon"
+
+msgid "Safari Pinned Tab"
+msgstr "Safari-festet fane-ikon"
+
+msgid "Social Icon"
+msgstr "Sosialt medie-ikon"
+
+msgid "Icon Files Status"
+msgstr "Ikonfilstatus"
+
+msgid "Icon Type"
+msgstr "Ikontype"
+
+msgid "Total"
+msgstr "Totalt"
+
+msgid "Advanced Web Statistics"
+msgstr "Avansert logganalysator"
+
+msgid "Advanced Web Statistics %s"
+msgstr "%s Avansert logganalysator"
+
+msgid "Your browser does not support frames. Please use a modern browser."
+msgstr "Nettleseren din støtter ikke rammer. Vennligst bruk en moderne nettleser."
+
+msgid "View statistics directly"
+msgstr "Se statistikk direkte"
+
+msgid "Close"
+msgstr "Lukk"
+
+msgid "Documentation Viewer"
+msgstr "Dokumentasjonsviser"
+
+msgid "Direct address / Bookmarks"
+msgstr "Direkte adresse / Bokmerker"
+
+msgid "Search Engines"
+msgstr "Søkemotorer"
+
+msgid "Refering search engines"
+msgstr "Henvisende søkemotorer"
+
+msgid "External pages"
+msgstr "Eksterne sider"
+
+msgid "Refering pages"
+msgstr "Henvisende sider"
+
+msgid "Internal pages"
+msgstr "Interne sider"
+
+msgid "UnknownAccessSource"
+msgstr "Ukjent tilgangskilde"
+
+msgid "Different refering pages"
+msgstr "Ulike henvisende sider"
+
+msgid "Keyphrases"
+msgstr "Nøkkelfraser"
+
+msgid "Keywords"
+msgstr "Nøkkelord"
+
+msgid "Keyphrases/Keywords"
+msgstr "Nøkkelfraser/Nøkkelord"
+
+msgid "Different keyphrases"
+msgstr "Ulike nøkkelfraser"
+
+msgid "Different keywords"
+msgstr "Ulike nøkkelord"
+
+#------------------------------------------------------------------------------
+# Sidedimensjoner
+#------------------------------------------------------------------------------
+
+msgid "Viewed pages"
+msgstr "Viste sider"
+
+msgid "Different pages"
+msgstr "Ulike sider"
+
+msgid "Entry"
+msgstr "Inngang"
+
+msgid "Exit"
+msgstr "Utgang"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Referer"
+msgstr "Henviser"
+
+msgid "Host"
+msgstr "Vert"
+
+#------------------------------------------------------------------------------
+# Feil og status
+#------------------------------------------------------------------------------
+
+msgid "Error"
+msgstr "Feil"
+
+msgid "HTTP Status Statistics"
+msgstr "HTTP-statuskode-statistikk"
+
+msgid "SMTP Error codes"
+msgstr "SMTP-feilkoder"
+
+msgid "Page not found"
+msgstr "Forespurt side ikke funnet"
+
+msgid "Unknown error"
+msgstr "Ukjent feil"
+
+msgid "Abnormal traffic note"
+msgstr "Unormal nettrafikk inkluderer: søkemotorroboter, AI-treningsroboter, sårbarhetsskannere og forespørsler som ikke overholder standarder"
+
+msgid "Page detail"
+msgstr "Sidedetalj"
+
+msgid "AWStats did not found the"
+msgstr "AWStats fant ikke"
+
+msgid "in your log records."
+msgstr "i loggpostene dine."
+
+msgid "AWStats did not find any valid log lines that match your"
+msgstr "AWStats fant ingen gyldige logglinjer som samsvarer med"
+
+msgid "parameter, in the"
+msgstr "parameteren, i"
+
+msgid "th first non commented lines read of your log."
+msgstr " første ikke-kommenterte linjene lest i loggen din."
+
+msgid "Your log file"
+msgstr "Loggfilen din"
+
+msgid "must have a bad format or"
+msgstr "har sannsynligvis et feil format eller"
+
+msgid "parameter setup does not match this format."
+msgstr "parameteroppsettet samsvarer ikke med dette formatet."
+
+msgid "Your AWStats"
+msgstr "AWStats-parameteren din"
+
+msgid "parameter is:"
+msgstr "er:"
+
+msgid "This means each line in your web server log file need to have:"
+msgstr "Dette betyr at hver linje i nettloggfilen din må ha:"
+
+msgid "combined log format"
+msgstr "kombinert loggformat"
+
+msgid "MSIE Extended W3C log format"
+msgstr "MSIE utvidet W3C-loggformat"
+
+msgid "WebStar native log format"
+msgstr "WebStar innfødt loggformat"
+
+msgid "common log format"
+msgstr "vanlig loggformat"
+
+msgid "Lotus Notes/Lotus Domino"
+msgstr "Lotus Notes/Lotus Domino"
+
+msgid "the following personalized log format:"
+msgstr "følgende tilpassede loggformat:"
+
+msgid "And this is an example of records AWStats found in your log file (the record number"
+msgstr "Dette er et eksempel på poster AWStats fant i loggfilen din (post nummer"
+
+msgid "in your log):"
+msgstr "i loggen din):"
+
+#------------------------------------------------------------------------------
+# Diverse
+#------------------------------------------------------------------------------
+
+msgid "Extra/Marketing"
+msgstr "Ekstra/Markedsføring"
+
+#------------------------------------------------------------------------------
+# Grensesnitttekster
+#------------------------------------------------------------------------------
+
+msgid "Current site"
+msgstr "Nåværende nettsted"
+
+msgid "Web Site"
+msgstr "Nettsted"
+
+msgid "Last Update"
+msgstr "Sist oppdatert"
+
+msgid "Never updated"
+msgstr "Aldri oppdatert"
+
+msgid "No qualified records found in log"
+msgstr "Ingen kvalifiserte poster funnet i loggen"
+
+msgid "corrupted"
+msgstr "ødelagte"
+
+msgid "comments"
+msgstr "kommentarer"
+
+msgid "Blank"
+msgstr "Tom"
+
+msgid "dropped"
+msgstr "forkastet"
+
+msgid "Update now"
+msgstr "Oppdater nå"
+
+msgid "Back to main page"
+msgstr "Tilbake til hovedsiden"
+
+msgid "Close window"
+msgstr "Lukk vindu"
+
+msgid "Back page"
+msgstr "Tilbake"
+
+msgid "Navigation"
+msgstr "Navigasjon"
+
+msgid "Summary"
+msgstr "Sammendrag"
+
+msgid "Local"
+msgstr "Lokal"
+
+msgid "External"
+msgstr "Ekstern"
+
+msgid "Others (email senders)"
+msgstr "Andre (avsendere)"
+
+msgid "Others (email receivers)"
+msgstr "Andre (mottakere)"
+
+msgid "Others"
+msgstr "Andre"
+
+msgid "Only 10 lines of browser data are currently displayed"
+msgstr "Kun de første 10 radene med nettleserdata vises. Se fullstendig liste for flere data"
+
+msgid "Others (unknown browsers)"
+msgstr "Andre (ukjente nettlesere)"
+
+msgid "Others (operating systems)"
+msgstr "Andre (operativsystemer)"
+
+msgid "Others (unknown OS)"
+msgstr "Andre (ukjent OS)"
+
+msgid "Others (search engines)"
+msgstr "Andre (søkemotorer)"
+
+msgid "Others (referring pages)"
+msgstr "Andre (henvisende sider)"
+
+msgid "Others (keyphrases)"
+msgstr "Andre (fraser)"
+
+msgid "Others (keywords)"
+msgstr "Andre (nøkkelord)"
+
+msgid "Only first 10 robots shown"
+msgstr "Bare de første 10 robotene vises. Se fullstendig liste for flere"
+
+msgid "Failed to obtain access record"
+msgstr "Kunne ikke hente innreisepost"
+
+msgid "Failed to obtain leave record"
+msgstr "Kunne ikke hente utreisepost"
+
+msgid "Other pages"
+msgstr "Andre sider"
+
+msgid "Low Traffic IP Summary"
+msgstr "Oppsummering av IP-adresser med lav trafikk"
+
+msgid "Failed to obtain IP data"
+msgstr "Annen kjent IP-oppsummering"
+
+msgid "Failed to obtain the relevant data"
+msgstr "Kunne ikke hente relevante data"
+
+msgid "Limited list of countries and regions"
+msgstr "Bare de første 10 dataene vises. Se fullstendig liste for flere land og regioner"
+
+msgid "currentVisitorData"
+msgstr "Bare de første 10 besøksdataene vises. Se fullstendig liste for flere"
+
+msgid "Others (robots main)"
+msgstr "Andre (roboter)"
+
+msgid "Others (worms)"
+msgstr "Andre (ormer)"
+
+msgid "Displaying10RowsPageMorePleaseViewFullList"
+msgstr "Bare de første 10 sidene vises. Se fullstendig liste for flere"
+
+msgid "Others (OS main)"
+msgstr "Andre (OS)"
+
+msgid "Others (browsers main)"
+msgstr "Andre (nettlesere)"
+
+msgid "Others (screen sizes)"
+msgstr "Andre (størrelser)"
+
+msgid "Others (search engines main)"
+msgstr "Andre (søkemotorer)"
+
+msgid "Others (referring pages main)"
+msgstr "Andre (henvisingssider)"
+
+msgid "Others (keyphrases main)"
+msgstr "Andre (fraser)"
+
+msgid "Others (keywords main)"
+msgstr "Andre (nøkkelord)"
+
+msgid "Continue"
+msgstr "Fortsett"
+
+msgid "Switching Protocols"
+msgstr "Veksler protokoller"
+
+msgid "Processing (WebDAV)"
+msgstr "Behandler (WebDAV)"
+
+msgid "Early Hints"
+msgstr "Tidlige hint"
+
+msgid "[Miscellaneous successes]"
+msgstr "[Andre suksesser]"
+
+msgid "Request successful"
+msgstr "Forespørsel vellykket"
+
+msgid "Created successfully"
+msgstr "Opprettet vellykket"
+
+msgid "Accepted - processing"
+msgstr "Akseptert - behandler"
+
+msgid "Non-authoritative information (from cache) (from cache)"
+msgstr "Ikke-autoritativ informasjon (fra hurtigbuffer)"
+
+msgid "Success, no content returned"
+msgstr "Suksess, ikke noe innhold returnert"
+
+msgid "Reset content"
+msgstr "Tilbakestill innhold"
+
+msgid "Partial content (resume download)"
+msgstr "Delvis innhold (gjenoppta nedlasting)"
+
+msgid "Multi-status (WebDAV)"
+msgstr "Flere statuser (WebDAV)"
+
+msgid "Already reported (WebDAV)"
+msgstr "Allerede rapportert (WebDAV)"
+
+msgid "IM used"
+msgstr "IM brukt"
+
+msgid "[Miscellaneous redirections]"
+msgstr "[Andre videresendinger]"
+
+msgid "Multiple choices"
+msgstr "Flere valg"
+
+msgid "Moved permanently - update your links"
+msgstr "Flyttet permanent - oppdater lenkene dine"
+
+msgid "Temporary redirect - URL unchanged"
+msgstr "Midlertidig videresending - URL uendret"
+
+msgid "See other"
+msgstr "Se annen"
+
+msgid "Not modified - using cached version"
+msgstr "Ikke endret - bruker bufret versjon"
+
+msgid "Use proxy"
+msgstr "Bruk proxy"
+
+msgid "Switch proxy"
+msgstr "Bytt proxy"
+
+msgid "Temporary redirect (keep method)"
+msgstr "Midlertidig videresending (behold metode)"
+
+msgid "Permanent redirect - update your links"
+msgstr "Permanent videresending - oppdater lenkene dine"
+
+msgid "[Miscellaneous client/user errors]"
+msgstr "[Andre klient-/brukerfeil]"
+
+msgid "Bad request"
+msgstr "Ugyldig forespørsel"
+
+msgid "Unauthorized - please log in"
+msgstr "Uautorisert - vennligst logg inn"
+
+msgid "Payment required"
+msgstr "Betaling kreves"
+
+msgid "Forbidden - access denied"
+msgstr "Forbudt - tilgang nektet"
+
+msgid "Page not found (404) - check for broken links"
+msgstr "Side ikke funnet (404) - sjekk for ødelagte lenker"
+
+msgid "Method not allowed"
+msgstr "Metode ikke tillatt"
+
+msgid "Not acceptable"
+msgstr "Ikke akseptabelt"
+
+msgid "Proxy authentication required"
+msgstr "Proxy-autentisering kreves"
+
+msgid "Request timeout"
+msgstr "Forespørsel tidsavbrudd"
+
+msgid "Conflict - please try again"
+msgstr "Konflikt - vennligst prøv igjen"
+
+msgid "Gone - permanently deleted"
+msgstr "Borte - permanent slettet"
+
+msgid "Length required"
+msgstr "Lengde kreves"
+
+msgid "Precondition failed"
+msgstr "Forutsetning mislyktes"
+
+msgid "Payload too large"
+msgstr "Nyttedata for stor"
+
+msgid "URI too long"
+msgstr "URI for lang"
+
+msgid "Unsupported media type"
+msgstr "Medietype ikke støttet"
+
+msgid "Range not satisfiable"
+msgstr "Område kan ikke tilfredsstilles"
+
+msgid "Expectation failed"
+msgstr "Forventning mislyktes"
+
+msgid "I am a teapot (April Fools)"
+msgstr "Jeg er en tekanne (aprilsnarr)"
+
+msgid "Page expired (Laravel)"
+msgstr "Side utløpt (Laravel)"
+
+msgid "Method failure (Spring)"
+msgstr "Metodesvikt (Spring)"
+
+msgid "Misdirected request"
+msgstr "Feilrettet forespørsel"
+
+msgid "Unprocessable entity (WebDAV)"
+msgstr "Kan ikke behandles (WebDAV)"
+
+msgid "Locked (WebDAV)"
+msgstr "Låst (WebDAV)"
+
+msgid "Failed dependency (WebDAV)"
+msgstr "Mislykket avhengighet (WebDAV)"
+
+msgid "Too early"
+msgstr "For tidlig"
+
+msgid "Upgrade required"
+msgstr "Oppgradering kreves"
+
+msgid "Precondition required"
+msgstr "Forutsetning kreves"
+
+msgid "Too many requests - slow down"
+msgstr "For mange forespørsler - ro ned"
+
+msgid "Request header fields too large (Shopify)"
+msgstr "Forespørselshoder for store (Shopify)"
+
+msgid "Request header too large"
+msgstr "Forespørselshode for stort"
+
+msgid "Login timeout (IIS)"
+msgstr "Innlogging tidsavbrudd (IIS)"
+
+msgid "No response (nginx)"
+msgstr "Intet svar (nginx)"
+
+msgid "Retry with (IIS)"
+msgstr "Prøv på nytt med (IIS)"
+
+msgid "Blocked by Windows parental controls"
+msgstr "Blokkert av Windows foreldrekontroll"
+
+msgid "Unavailable for legal reasons"
+msgstr "Utilgjengelig av juridiske årsaker"
+
+msgid "Client closed connection before idle timeout (AWS ELB)"
+msgstr "Klient lukket forbindelsen før inaktivitetstidsavbrudd (AWS ELB)"
+
+msgid "X-Forwarded-For header with >30 IP addresses (AWS ELB)"
+msgstr "X-Forwarded-For-hode med >30 IP-adresser (AWS ELB)"
+
+msgid "Incompatible protocol versions (AWS ELB)"
+msgstr "Inkompatible protokollversjoner (AWS ELB)"
+
+msgid "Request header too large (nginx)"
+msgstr "Forespørselshode for stort (nginx)"
+
+msgid "SSL certificate error (nginx)"
+msgstr "SSL-sertifikatfeil (nginx)"
+
+msgid "SSL certificate required (nginx)"
+msgstr "SSL-sertifikat kreves (nginx)"
+
+msgid "HTTP request sent to HTTPS port (nginx)"
+msgstr "HTTP-forespørsel sendt til HTTPS-port (nginx)"
+
+msgid "Invalid token (ArcGIS)"
+msgstr "Ugyldig token (ArcGIS)"
+
+msgid "Token required (ArcGIS) / Client closed request (nginx)"
+msgstr "Token kreves (ArcGIS) / klient lukket forespørsel (nginx)"
+
+msgid "Resource limit reached (cPanel)"
+msgstr "Ressursgrense nådd (cPanel)"
+
+msgid "Bandwidth limit exceeded (Apache/cPanel)"
+msgstr "Båndbreddegrense overskredet (Apache/cPanel)"
+
+msgid "[Miscellaneous server errors]"
+msgstr "[Andre serverfeil]"
+
+msgid "Internal server error - check logs"
+msgstr "Intern serverfeil - sjekk logger"
+
+msgid "Not implemented"
+msgstr "Ikke implementert"
+
+msgid "Bad gateway - backend error"
+msgstr "Dårlig gateway - backend-feil"
+
+msgid "Service unavailable - maintenance or overload"
+msgstr "Tjeneste utilgjengelig - vedlikehold eller overbelastning"
+
+msgid "Gateway timeout"
+msgstr "Gateway tidsavbrudd"
+
+msgid "HTTP version not supported"
+msgstr "HTTP-versjon ikke støttet"
+
+msgid "Variant also negotiates"
+msgstr "Variant forhandler også"
+
+msgid "Insufficient storage (WebDAV)"
+msgstr "Utilstrekkelig lagring (WebDAV)"
+
+msgid "Loop detected (WebDAV)"
+msgstr "Løkke oppdaget (WebDAV)"
+
+msgid "Not extended"
+msgstr "Ikke utvidet"
+
+msgid "Network authentication required"
+msgstr "Nettverksautentisering kreves"
+
+msgid "Unknown error (Cloudflare)"
+msgstr "Ukjent feil (Cloudflare)"
+
+msgid "Web server is down (Cloudflare)"
+msgstr "Nettjener er nede (Cloudflare)"
+
+msgid "Connection timeout (Cloudflare)"
+msgstr "Tilkoblingstidsavbrudd (Cloudflare)"
+
+msgid "Origin is unreachable (Cloudflare)"
+msgstr "Opprinnelse er utilgjengelig (Cloudflare)"
+
+msgid "A timeout occurred (Cloudflare)"
+msgstr "Et tidsavbrudd oppstod (Cloudflare)"
+
+msgid "SSL handshake failed (Cloudflare)"
+msgstr "SSL-håndtrykk mislyktes (Cloudflare)"
+
+msgid "Invalid SSL certificate (Cloudflare)"
+msgstr "Ugyldig SSL-sertifikat (Cloudflare)"
+
+msgid "Railgun error (Cloudflare - obsolete)"
+msgstr "Railgun-feil (Cloudflare - foreldet)"
+
+msgid "Site is overloaded (SSLLabs)"
+msgstr "Nettstedet er overbelastet (SSLLabs)"
+
+msgid "Origin DNS error (Cloudflare) / Site is frozen (Pantheon)"
+msgstr "DNS-feil for opprinnelse (Cloudflare) / Nettsted frosset (Pantheon)"
+
+msgid "Temporarily disabled (Shopify)"
+msgstr "Midlertidig deaktivert (Shopify)"
+
+msgid "Unauthorized (AWS ELB)"
+msgstr "Uautorisert (AWS ELB)"
+
+msgid "Network read timeout error"
+msgstr "Nettverkslesingsfeil"
+
+msgid "Network connect timeout error"
+msgstr "Nettverkstilkobling tidsavbrudd"
+
+msgid "Unexpected token (Shopify)"
+msgstr "Uventet token (Shopify)"
+
+msgid "Request denied (LinkedIn)"
+msgstr "Forespørsel avvist (LinkedIn)"
+
+msgid "HTTP/2 GOAWAY (AWS ELB)"
+msgstr "HTTP/2 GOAWAY (AWS ELB)"
+
+msgid "[Unknown]"
+msgstr "[Ukjent]"
+
+msgid "Nonstandard success response (ESMTP)"
+msgstr "Ikke-standard suksessrespons (ESMTP)"
+
+msgid "System status, or system help reply"
+msgstr "Systemstatus, eller systemhjelp-svar"
+
+msgid "Help message"
+msgstr "Hjelpemelding"
+
+msgid "SMTP service ready (LMTP)"
+msgstr "SMTP-tjeneste klar (LMTP)"
+
+msgid "Service ready - server is ready to receive mail"
+msgstr "Tjeneste klar - serveren er klar til å motta e-post"
+
+msgid "Service closing - connection is being closed"
+msgstr "Tjeneste stenger - tilkoblingen lukkes"
+
+msgid "Authentication successful"
+msgstr "Autentisering vellykket"
+
+msgid "Requested mail action taken and completed"
+msgstr "Forespurt e-posthandling utført og fullført"
+
+msgid "User not local - will forward to another address"
+msgstr "Bruker ikke lokal - vil videresende til en annen adresse"
+
+msgid "Cannot verify recipient, but will attempt delivery"
+msgstr "Kan ikke bekrefte mottaker, men vil forsøke levering"
+
+msgid "Message accepted for delivery (DSN)"
+msgstr "Melding akseptert for levering (DSN)"
+
+msgid "User name is a mailbox"
+msgstr "Brukernavn er en postkasse"
+
+msgid "Authentication challenge - please respond"
+msgstr "Autentiseringsutfordring - vennligst svar"
+
+msgid "Start mail input - end with <CRLF>.<CRLF>"
+msgstr "Start e-postinndata - avslutt med <CRLF>.<CRLF>"
+
+msgid "Continue (LMTP)"
+msgstr "Fortsett (LMTP)"
+
+msgid "Service not available - connection closing, try again later"
+msgstr "Tjeneste utilgjengelig - tilkobling lukkes, prøv igjen senere"
+
+msgid "Mailbox busy or temporarily unavailable (Exchange)"
+msgstr "Postkasse opptatt eller midlertidig utilgjengelig (Exchange)"
+
+msgid "Connection rate limit exceeded (Postfix)"
+msgstr "Tilkoblingshastighetsgrense overskredet (Postfix)"
+
+msgid "Too many concurrent connections (Postfix)"
+msgstr "For mange samtidige tilkoblinger (Postfix)"
+
+msgid "Unable to establish connection (Postfix)"
+msgstr "Kan ikke opprette tilkobling (Postfix)"
+
+msgid "Connection timed out (Postfix)"
+msgstr "Tilkobling tidsavbrudd (Postfix)"
+
+msgid "Connection dropped due to error (Postfix)"
+msgstr "Tilkobling avbrutt på grunn av feil (Postfix)"
+
+msgid "Mailbox temporarily locked (Exchange)"
+msgstr "Postkasse midlertidig låst (Exchange)"
+
+msgid "Too many recipients (Postfix/Exim)"
+msgstr "For mange mottakere (Postfix/Exim)"
+
+msgid "Mail server error (Exchange)"
+msgstr "E-postserverfeil (Exchange)"
+
+msgid "Received loop detected (Exim)"
+msgstr "Mottatt løkke oppdaget (Exim)"
+
+msgid "Too many hop count (Exim)"
+msgstr "For mange hopp (Exim)"
+
+msgid "DNS lookup failed (Postfix)"
+msgstr "DNS-oppslag mislyktes (Postfix)"
+
+msgid "Unable to authenticate (Postfix)"
+msgstr "Kan ikke autentisere (Postfix)"
+
+msgid "TLS handshake failed (Postfix)"
+msgstr "TLS-håndtrykk mislyktes (Postfix)"
+
+msgid "SMTP protocol violation (Postfix)"
+msgstr "SMTP-protokollbrudd (Postfix)"
+
+msgid "Message size exceeds limit (Exchange)"
+msgstr "Meldingens størrelse overstiger grensen (Exchange)"
+
+msgid "Message rate limit exceeded (Postfix)"
+msgstr "Meldingstaket overskredet (Postfix)"
+
+msgid "Mailbox quota exceeded - temporary"
+msgstr "Postkassekvote overskredet - midlertidig"
+
+msgid "Domain not found (Postfix)"
+msgstr "Domene ikke funnet (Postfix)"
+
+msgid "Message header invalid (Postfix)"
+msgstr "Meldingens hode ugyldig (Postfix)"
+
+msgid "Bounce loop detected (Postfix)"
+msgstr "Returløkke oppdaget (Postfix)"
+
+msgid "Unable to route (Postfix)"
+msgstr "Kan ikke rute (Postfix)"
+
+msgid "Sender domain not found (Postfix)"
+msgstr "Avsenderdomene ikke funnet (Postfix)"
+
+msgid "Recipient domain not found (Postfix)"
+msgstr "Mottakerdomene ikke funnet (Postfix)"
+
+msgid "Greylisting in progress - please try again (Postgrey)"
+msgstr "Greylisting pågår - vennligst prøv igjen (Postgrey)"
+
+msgid "Spam filtering in progress (SpamAssassin)"
+msgstr "Søppelfiltrering pågår (SpamAssassin)"
+
+msgid "Virus scanning in progress (ClamAV)"
+msgstr "Virus-skanning pågår (ClamAV)"
+
+msgid "Mailbox unavailable - try again later"
+msgstr "Postkasse utilgjengelig - prøv igjen senere"
+
+msgid "Requested action aborted - error in processing"
+msgstr "Forespurt handling avbrutt - feil under behandling"
+
+msgid "Insufficient system storage - try again later"
+msgstr "Utilstrekkelig systemlagring - prøv igjen senere"
+
+msgid "Too many messages for this recipient (Exchange)"
+msgstr "For mange meldinger for denne mottakeren (Exchange)"
+
+msgid "TLS not available (Postfix)"
+msgstr "TLS utilgjengelig (Postfix)"
+
+msgid "Server unable to accept messages (Postfix)"
+msgstr "Server kan ikke motta meldinger (Postfix)"
+
+msgid "Temporary failure in DNS lookup (Exim)"
+msgstr "Midlertidig feil under DNS-oppslag (Exim)"
+
+msgid "Quota exceeded - temporary"
+msgstr "Kvote overskredet - midlertidig"
+
+msgid "Message too big - temporary"
+msgstr "Melding for stor - midlertidig"
+
+msgid "Too many messages per connection"
+msgstr "For mange meldinger per tilkobling"
+
+msgid "Load average too high (Postfix)"
+msgstr "Gjennomsnittlig belastning for høy (Postfix)"
+
+msgid "Connection refused (Postfix)"
+msgstr "Tilkobling nektet (Postfix)"
+
+msgid "Send rate limit exceeded (Postfix)"
+msgstr "Sendingshastighetsgrense overskredet (Postfix)"
+
+msgid "Recipient rate limit exceeded (Postfix)"
+msgstr "Mottakerhastighetsgrense overskredet (Postfix)"
+
+msgid "Sender rate limit exceeded (Postfix)"
+msgstr "Avsenderhastighetsgrense overskredet (Postfix)"
+
+msgid "IP address rate limit exceeded (Postfix)"
+msgstr "IP-adressehastighetsgrense overskredet (Postfix)"
+
+msgid "MX lookup failed (Postfix)"
+msgstr "MX-oppslag mislyktes (Postfix)"
+
+msgid "A record lookup failed (Postfix)"
+msgstr "A-post-oppslag mislyktes (Postfix)"
+
+msgid "PTR record lookup failed (Postfix)"
+msgstr "PTR-post-oppslag mislyktes (Postfix)"
+
+msgid "Greylisting active - please try again (Postgrey)"
+msgstr "Greylisting aktiv - vennligst prøv igjen (Postgrey)"
+
+msgid "Sender address rejected - domain not verified (DMARC pending)"
+msgstr "Avsenderadresse avvist - domene ikke bekreftet (DMARC venter)"
+
+msgid "Recipient address rejected - domain not verified (DMARC pending)"
+msgstr "Mottakeradresse avvist - domene ikke bekreftet (DMARC venter)"
+
+msgid "DKIM verification pending - temporary failure"
+msgstr "DKIM-verifisering venter - midlertidig feil"
+
+msgid "SPF verification pending - temporary failure"
+msgstr "SPF-verifisering venter - midlertidig feil"
+
+msgid "DMARC verification pending - temporary failure"
+msgstr "DMARC-verifisering venter - midlertidig feil"
+
+msgid "DNSBL lookup temporary failure"
+msgstr "DNSBL-oppslag midlertidig feil"
+
+msgid "RHSBL lookup temporary failure"
+msgstr "RHSBL-oppslag midlertidig feil"
+
+msgid "URI DNSBL lookup temporary failure"
+msgstr "URI DNSBL-oppslag midlertidig feil"
+
+msgid "Temporary authentication failure (Dovecot)"
+msgstr "Midlertidig autentiseringsfeil (Dovecot)"
+
+msgid "Temporary authorization failure (Sendmail)"
+msgstr "Midlertidig autoriseringsfeil (Sendmail)"
+
+msgid "Rate limit exceeded per sender (Exim)"
+msgstr "Hastighetsgrense overskredet per avsender (Exim)"
+
+msgid "Rate limit exceeded per recipient (Exim)"
+msgstr "Hastighetsgrense overskredet per mottaker (Exim)"
+
+msgid "Rate limit exceeded per domain (Exim)"
+msgstr "Hastighetsgrense overskredet per domene (Exim)"
+
+msgid "Rate limit exceeded per IP (Exim)"
+msgstr "Hastighetsgrense overskredet per IP (Exim)"
+
+msgid "Message queued for later delivery (Postfix)"
+msgstr "Melding satt i kø for senere levering (Postfix)"
+
+msgid "Delivery delayed due to policy (Exchange)"
+msgstr "Levering forsinket på grunn av policy (Exchange)"
+
+msgid "Temporary failure in content filter"
+msgstr "Midlertidig feil i innholdsfilter"
+
+msgid "Temporary failure in antivirus scanner"
+msgstr "Midlertidig feil i antivirusskanner"
+
+msgid "Temporary failure in spam filter"
+msgstr "Midlertidig feil i søppelfilter"
+
+msgid "Temporary failure in milter (Postfix)"
+msgstr "Midlertidig feil i milter (Postfix)"
+
+msgid "Greylisting - try again later"
+msgstr "Greylisting - prøv igjen senere"
+
+msgid "DDoS protection active - try again later"
+msgstr "DDoS-beskyttelse aktiv - prøv igjen senere"
+
+msgid "SMTP policy violation - temporary"
+msgstr "SMTP-policybrudd - midlertidig"
+
+msgid "Temporary error in RCPT TO processing"
+msgstr "Midlertidig feil under RCPT TO-behandling"
+
+msgid "Temporary error in MAIL FROM processing"
+msgstr "Midlertidig feil under MAIL FROM-behandling"
+
+msgid "Temporary error in EHLO/HELO processing"
+msgstr "Midlertidig feil under EHLO/HELO-behandling"
+
+msgid "Temporary error in DATA processing"
+msgstr "Midlertidig feil under DATA-behandling"
+
+msgid "Temporary error - service busy, try again later"
+msgstr "Midlertidig feil - tjeneste opptatt, prøv igjen senere"
+
+msgid "Syntax error - command unrecognized or too long"
+msgstr "Syntaksfeil - kommando ikke gjenkjent eller for lang"
+
+msgid "Syntax error in parameters or arguments"
+msgstr "Syntaksfeil i parametere eller argumenter"
+
+msgid "Command not implemented"
+msgstr "Kommando ikke implementert"
+
+msgid "Bad sequence of commands"
+msgstr "Dårlig rekkefølge av kommandoer"
+
+msgid "Command parameter not implemented"
+msgstr "Kommandoargument ikke implementert"
+
+msgid "Version not supported (ESMTP)"
+msgstr "Versjon ikke støttet (ESMTP)"
+
+msgid "Mailbox path invalid (LMTP)"
+msgstr "Postkassesti ugyldig (LMTP)"
+
+msgid "Too many commands in this session (Postfix)"
+msgstr "For mange kommandoer i denne økten (Postfix)"
+
+msgid "Recipient limit exceeded (Postfix)"
+msgstr "Mottakergrense overskredet (Postfix)"
+
+msgid "Sender limit exceeded (Postfix)"
+msgstr "Avsendergrense overskredet (Postfix)"
+
+msgid "Domain limit exceeded (Postfix)"
+msgstr "Domenegrense overskredet (Postfix)"
+
+msgid "Mailbox does not exist (Exchange)"
+msgstr "Postkasse eksisterer ikke (Exchange)"
+
+msgid "DNS failure - permanent"
+msgstr "DNS-feil - permanent"
+
+msgid "Address type not supported (Postfix)"
+msgstr "Adressetype ikke støttet (Postfix)"
+
+msgid "Unable to open mailbox (Postfix)"
+msgstr "Kan ikke åpne postkasse (Postfix)"
+
+msgid "Mailbox locked - permanent"
+msgstr "Postkasse låst - permanent"
+
+msgid "Message rejected due to policy (Exchange)"
+msgstr "Melding avvist på grunn av policy (Exchange)"
+
+msgid "Content rejected - permanent"
+msgstr "Innhold avvist - permanent"
+
+msgid "Attachment type not allowed"
+msgstr "Vedleggstype ikke tillatt"
+
+msgid "Message encoding not supported"
+msgstr "Meldingens koding ikke støttet"
+
+msgid "Sender domain does not exist - permanent"
+msgstr "Avsenderdomene eksisterer ikke - permanent"
+
+msgid "Domain does not accept mail or is closing"
+msgstr "Domene aksepterer ikke e-post eller stenger"
+
+msgid "Recipient domain does not exist - permanent"
+msgstr "Mottakerdomene eksisterer ikke - permanent"
+
+msgid "Mailbox quota exceeded - permanent"
+msgstr "Postkassekvote overskredet - permanent"
+
+msgid "Message size exceeds limit - permanent"
+msgstr "Meldingens størrelse overstiger grensen - permanent"
+
+msgid "Authentication required (Sendmail)"
+msgstr "Autentisering kreves (Sendmail)"
+
+msgid "Authentication failed (Sendmail)"
+msgstr "Autentisering mislyktes (Sendmail)"
+
+msgid "Authentication mechanism not supported"
+msgstr "Autentiseringsmetode ikke støttet"
+
+msgid "Authentication credentials invalid"
+msgstr "Autentiseringslegitimasjon ugyldig"
+
+msgid "Authentication account expired"
+msgstr "Autentiseringskonto utløpt"
+
+msgid "Access denied - authentication required"
+msgstr "Tilgang nektet - autentisering kreves"
+
+msgid "Access denied (Sendmailism)"
+msgstr "Tilgang nektet (Sendmail)"
+
+msgid "Access denied - not authenticated"
+msgstr "Tilgang nektet - ikke autentisert"
+
+msgid "Access denied - account locked"
+msgstr "Tilgang nektet - konto låst"
+
+msgid "Access denied - account disabled"
+msgstr "Tilgang nektet - konto deaktivert"
+
+msgid "Authentication failed"
+msgstr "Autentisering mislyktes"
+
+msgid "Authentication required for relay (Postfix)"
+msgstr "Autentisering kreves for relé (Postfix)"
+
+msgid "Authentication failed for relay (Postfix)"
+msgstr "Autentisering mislyktes for relé (Postfix)"
+
+msgid "Encryption required (STARTTLS)"
+msgstr "Kryptering kreves (STARTTLS)"
+
+msgid "TLS required for this recipient"
+msgstr "TLS kreves for denne mottakeren"
+
+msgid "Encryption strength insufficient"
+msgstr "Krypteringsstyrke utilstrekkelig"
+
+msgid "Certificate validation failed"
+msgstr "Sertifikatvalidering mislyktes"
+
+msgid "Invalid TLS certificate"
+msgstr "Ugyldig TLS-sertifikat"
+
+msgid "TLS protocol version not supported"
+msgstr "TLS-protokollversjon ikke støttet"
+
+msgid "Cipher suite not supported"
+msgstr "Kodesett ikke støttet"
+
+msgid "Access denied - no valid recipient"
+msgstr "Tilgang nektet - ingen gyldig mottaker"
+
+msgid "Access denied - no valid sender"
+msgstr "Tilgang nektet - ingen gyldig avsender"
+
+msgid "Access denied - domain not allowed"
+msgstr "Tilgang nektet - domene ikke tillatt"
+
+msgid "Access denied - IP address blocked (permanent)"
+msgstr "Tilgang nektet - IP-adresse blokkert (permanent)"
+
+msgid "Access denied - sender domain blacklisted"
+msgstr "Tilgang nektet - avsenderdomene svartelistet"
+
+msgid "Mailbox unavailable - requested action not taken"
+msgstr "Postkasse utilgjengelig - forespurt handling ikke utført"
+
+msgid "User not local - please try forwarding address"
+msgstr "Bruker ikke lokal - vennligst prøv videresendingsadressen"
+
+msgid "Requested action aborted - exceeded storage allocation"
+msgstr "Forespurt handling avbrutt - overskred lagringsallokering"
+
+msgid "Mailbox name not allowed"
+msgstr "Postkassenavn ikke tillatt"
+
+msgid "Requested action rejected - access denied"
+msgstr "Forespurt handling avvist - tilgang nektet"
+
+msgid "MAIL FROM/RCPT TO parameters not recognized"
+msgstr "MAIL FROM/RCPT TO-parametere ikke gjenkjent"
+
+msgid "Domain not allowed to send (DMARC reject)"
+msgstr "Domene har ikke tillatelse til å sende (DMARC avvisning)"
+
+msgid "Too many duplicate messages - permanent"
+msgstr "For mange duplikatmeldinger - permanent"
+
+msgid "Sender address rejected - domain not in SPF"
+msgstr "Avsenderadresse avvist - domene ikke i SPF"
+
+msgid "Sender address rejected - DKIM verification failed"
+msgstr "Avsenderadresse avvist - DKIM-verifisering mislyktes"
+
+msgid "Sender address rejected - DMARC policy reject"
+msgstr "Avsenderadresse avvist - DMARC-policy avvisning"
+
+msgid "Recipient address rejected - DMARC policy reject"
+msgstr "Mottakeradresse avvist - DMARC-policy avvisning"
+
+msgid "Message rejected due to spam content"
+msgstr "Melding avvist på grunn av søppelinnhold"
+
+msgid "Message rejected due to virus detected"
+msgstr "Melding avvist på grunn av oppdaget virus"
+
+msgid "Message rejected due to malicious content"
+msgstr "Melding avvist på grunn av ondsinnet innhold"
+
+msgid "Message rejected due to phishing detection"
+msgstr "Melding avvist på grunn av oppdaget phishing"
+
+msgid "Message rejected due to malware detection"
+msgstr "Melding avvist på grunn av oppdaget skadelig programvare"
+
+msgid "Message rejected due to policy - permanent"
+msgstr "Melding avvist på grunn av policy - permanent"
+
+msgid "Message rejected due to content filtering"
+msgstr "Melding avvist på grunn av innholdsfiltrering"
+
+msgid "Message rejected due to reputation"
+msgstr "Melding avvist på grunn av omdømme"
+
+msgid "Access denied - access_map violation"
+msgstr "Tilgang nektet - access_map-brudd"
+
+msgid "Access denied - SMTP client listed in RBL"
+msgstr "Tilgang nektet - SMTP-klient oppført i RBL"
+
+msgid "Access denied - relay not authorized"
+msgstr "Tilgang nektet - relé ikke autorisert"
+
+msgid "Access denied - unknown SMTP client hostname"
+msgstr "Tilgang nektet - ukjent SMTP-klientvertsnavn"
+
+msgid "Access denied - bad syntax for client HELO hostname"
+msgstr "Tilgang nektet - dårlig syntaks for klient HELO-vertsnavn"
+
+msgid "Access denied - SMTP client hostname rejected"
+msgstr "Tilgang nektet - SMTP-klientvertsnavn avvist"
+
+msgid "Access denied - unknown domain for sender or recipient"
+msgstr "Tilgang nektet - ukjent domene for avsender eller mottaker"
+
+msgid "Access denied - unknown client HELO hostname"
+msgstr "Tilgang nektet - ukjent klient HELO-vertsnavn"
+
+msgid "Access denied - invalid domain (not FQDN)"
+msgstr "Tilgang nektet - ugyldig domene (ikke FQDN)"
+
+msgid "Access denied - domain not qualified"
+msgstr "Tilgang nektet - domene ikke kvalifisert"
+
+msgid "Access denied - mail server misconfigured"
+msgstr "Tilgang nektet - e-postserver feilkonfigurert"
+
+msgid "Access denied - open relay not allowed"
+msgstr "Tilgang nektet - åpent relé ikke tillatt"
+
+msgid "Access denied - proxy not allowed"
+msgstr "Tilgang nektet - proxy ikke tillatt"
+
+msgid "Access denied - dynamic IP not allowed"
+msgstr "Tilgang nektet - dynamisk IP ikke tillatt"
+
+msgid "Access denied - residential IP not allowed"
+msgstr "Tilgang nektet - bolig-IP ikke tillatt"
+
+msgid "Access denied - VPN/Tor detected"
+msgstr "Tilgang nektet - VPN/Tor oppdaget"
+
+msgid "Access denied - Spamhaus DROP listed"
+msgstr "Tilgang nektet - oppført i Spamhaus DROP"
+
+msgid "Access denied - URL listed in URIBL"
+msgstr "Tilgang nektet - URL oppført i URIBL"
+
+msgid "Access denied - domain in RHSBL"
+msgstr "Tilgang nektet - domene i RHSBL"
+
+msgid "Access denied - IP in DNSWL (policy)"
+msgstr "Tilgang nektet - IP i DNSWL (policy)"
+
+msgid "Delivery failed - mailbox not found"
+msgstr "Levering mislyktes - postkasse ikke funnet"
+
+msgid "Delivery failed - recipient not local"
+msgstr "Levering mislyktes - mottaker ikke lokal"
+
+msgid "Delivery failed - recipient rejected"
+msgstr "Levering mislyktes - mottaker avvist"
+
+msgid "Delivery failed - sender rejected"
+msgstr "Levering mislyktes - avsender avvist"
+
+msgid "Delivery failed - relay rejected"
+msgstr "Levering mislyktes - relé avvist"
+
+msgid "Delivery failed - DNS permanent error"
+msgstr "Levering mislyktes - permanent DNS-feil"
+
+msgid "Delivery failed - MX permanent error"
+msgstr "Levering mislyktes - permanent MX-feil"
+
+msgid "Delivery failed - A record permanent error"
+msgstr "Levering mislyktes - permanent A-post-feil"
+
+msgid "Delivery failed - PTR record permanent error"
+msgstr "Levering mislyktes - permanent PTR-post-feil"
+
+msgid "Delivery failed - policy permanent error"
+msgstr "Levering mislyktes - permanent policy-feil"
+
+msgid "DSN: Success - delivery status notification"
+msgstr "DSN: Suksess - leveringsstatusvarsel"
+
+msgid "DSN: Delivery delayed"
+msgstr "DSN: Levering forsinket"
+
+msgid "DSN: Delivery failed - permanent"
+msgstr "DSN: Levering mislyktes - permanent"
+
+msgid "DSN: Delivery failed - temporary"
+msgstr "DSN: Levering mislyktes - midlertidig"
+
+msgid "DSN: Message expired"
+msgstr "DSN: Melding utløpt"
+
+msgid "DSN: Message bounced"
+msgstr "DSN: Melding returnert"
+
+msgid "DSN: Message discarded"
+msgstr "DSN: Melding forkastet"
+
+msgid "DSN: Message filtered"
+msgstr "DSN: Melding filtrert"
+
+msgid "DSN: Message quarantined"
+msgstr "DSN: Melding satt i karantene"
+
+msgid "DSN: Message held for review"
+msgstr "DSN: Melding holdt tilbake for gjennomgang"
+
+msgid "MTA-STS policy required"
+msgstr "MTA-STS-policy kreves"
+
+msgid "MTA-STS policy validation failed"
+msgstr "MTA-STS-policyvalidering mislyktes"
+
+msgid "TLS reporting required"
+msgstr "TLS-rapportering kreves"
+
+msgid "TLS report requested"
+msgstr "TLS-rapport forespurt"
+
+msgid "SMTP MTA Strict Transport Security active"
+msgstr "SMTP MTA Strict Transport Security aktiv"
+
+msgid "DANE validation required"
+msgstr "DANE-validering kreves"
+
+msgid "DANE validation failed"
+msgstr "DANE-validering mislyktes"
+
+msgid "TLSA record missing"
+msgstr "TLSA-post mangler"
+
+msgid "Certificate name mismatch"
+msgstr "Sertifikatnavn samsvarer ikke"
+
+msgid "Certificate expired"
+msgstr "Sertifikat utløpt"
+
+msgid "AUTH LOGIN required"
+msgstr "AUTH LOGIN kreves"
+
+msgid "AUTH PLAIN required"
+msgstr "AUTH PLAIN kreves"
+
+msgid "AUTH CRAM-MD5 required"
+msgstr "AUTH CRAM-MD5 kreves"
+
+msgid "AUTH DIGEST-MD5 required"
+msgstr "AUTH DIGEST-MD5 kreves"
+
+msgid "AUTH GSSAPI required"
+msgstr "AUTH GSSAPI kreves"
+
+msgid "AUTH NTLM required"
+msgstr "AUTH NTLM kreves"
+
+msgid "AUTH SCRAM required"
+msgstr "AUTH SCRAM kreves"
+
+msgid "AUTH OAUTHBEARER required"
+msgstr "AUTH OAUTHBEARER kreves"
+
+msgid "AUTH XOAUTH2 required"
+msgstr "AUTH XOAUTH2 kreves"
+
+msgid "Exchange: Mailbox database error"
+msgstr "Exchange: Feil i postkassedatabase"
+
+msgid "Exchange: Store driver error"
+msgstr "Exchange: Lagringsdrevfeil"
+
+msgid "Exchange: Transport agent error"
+msgstr "Exchange: Transportagentfeil"
+
+msgid "Exchange: Content conversion error"
+msgstr "Exchange: Innholdskonverteringsfeil"
+
+msgid "Exchange: Routing error"
+msgstr "Exchange: Rutingfeil"
+
+msgid "Exchange: Mail flow stalled"
+msgstr "Exchange: E-postflyt stoppet"
+
+msgid "Exchange: Shadow redundancy error"
+msgstr "Exchange: Skyggeredundansfeil"
+
+msgid "Exchange: Safety net error"
+msgstr "Exchange: Sikkerhetsnettfeil"
+
+msgid "Exchange: Queue database error"
+msgstr "Exchange: Kødatabasefeil"
+
+msgid "Exchange: Message throttled"
+msgstr "Exchange: Melding strupet"
+
+msgid "Postfix: Bounce queue error"
+msgstr "Postfix: Returkøfeil"
+
+msgid "Postfix: Deferred queue error"
+msgstr "Postfix: Utsatt køfeil"
+
+msgid "Postfix: Hold queue error"
+msgstr "Postfix: Hold-køfeil"
+
+msgid "Postfix: Incoming queue error"
+msgstr "Postfix: Inngående køfeil"
+
+msgid "Postfix: Active queue error"
+msgstr "Postfix: Aktiv køfeil"
+
+msgid "Postfix: Corrupted queue file"
+msgstr "Postfix: Ødelagt køfil"
+
+msgid "Sendmail: Queue runner error"
+msgstr "Sendmail: Køkjørerfeil"
+
+msgid "Sendmail: Alias database error"
+msgstr "Sendmail: Aliasdatabasefeil"
+
+msgid "Sendmail: Virtuser table error"
+msgstr "Sendmail: Virtuser-tabellfeil"
+
+msgid "Sendmail: Mailer definition error"
+msgstr "Sendmail: E-postprogramdefinisjonsfeil"
+
+msgid "Exim: Router configuration error"
+msgstr "Exim: Ruterkonfigurasjonsfeil"
+
+msgid "Exim: Transport configuration error"
+msgstr "Exim: Transportkonfigurasjonsfeil"
+
+msgid "Exim: Director configuration error"
+msgstr "Exim: Direktørkonfigurasjonsfeil"
+
+msgid "Exim: Retry configuration error"
+msgstr "Exim: Forsøk-på-nytt-konfigurasjonsfeil"
+
+msgid "Exim: Rewrite configuration error"
+msgstr "Exim: Omskrivingskonfigurasjonsfeil"
+
+msgid "Exim: Authentication configuration error"
+msgstr "Exim: Autentiseringskonfigurasjonsfeil"
+
+msgid "Exim: ACL configuration error"
+msgstr "Exim: ACL-konfigurasjonsfeil"
+
+msgid "Exim: Local_scan configuration error"
+msgstr "Exim: Local_scan-konfigurasjonsfeil"
+
+msgid "Exim: Lookup configuration error"
+msgstr "Exim: Oppslagskonfigurasjonsfeil"
+
+msgid "Exim: Expansion configuration error"
+msgstr "Exim: Utvidelseskonfigurasjonsfeil"
+
+msgid "HTTP Protocol Versions"
+msgstr "HTTP-protokollversjoner"
+
+msgid "Protocol"
+msgstr "Protokoll"
+
+msgid "Request %"
+msgstr "Forespørselsandel"
+
+msgid "Bandwidth %"
+msgstr "Båndbreddeandel"
+
+msgid "Each request requires a new connection"
+msgstr "Hver forespørsel krever en ny tilkobling"
+
+msgid "Multiple requests can reuse one connection"
+msgstr "Flere forespørsler kan gjenbruke én tilkobling"
+
+msgid "Multiple requests in parallel over one connection"
+msgstr "Flere forespørsler parallelt over én tilkobling"
+
+msgid "Faster connection, better performance on poor networks"
+msgstr "Raskere tilkobling, bedre ytelse på dårlige nettverk"
+
+msgid "No protocol data available"
+msgstr "Ingen protokolldata tilgjengelig"
+
+msgid "of requests use HTTP/1.0"
+msgstr "av forespørslene bruker HTTP/1.0"
+
+msgid "From access logs"
+msgstr "Fra tilgangslogger"
+
+msgid "No HTTP/2 requests detected"
+msgstr "Ingen HTTP/2-forespørsler oppdaget"
+
+msgid "All requests are HTTP/1.0, no HTTP/2 requests"
+msgstr "Alle forespørsler er HTTP/1.0, ingen HTTP/2-forespørsler"
+
+msgid "HTTP/3 not detected"
+msgstr "HTTP/3 ikke oppdaget"
+
+msgid "all requests do not include QUIC/HTTP/3 protocol requests"
+msgstr "alle forespørslene inkluderer ikke QUIC/HTTP/3-protokollforespørsler"
+
+msgid "Mail Authentication Statistics"
+msgstr "E-postautentiseringsstatistikk"
+
+msgid "Authentication"
+msgstr "Autentiseringstype"
+
+msgid "Pass"
+msgstr "Bestått"
+
+msgid "Fail"
+msgstr "Mislyktes"
+
+msgid "Softfail"
+msgstr "Myk mislykket"
+
+msgid "Neutral"
+msgstr "Nøytral"
+
+msgid "None"
+msgstr "Ingen"
+
+msgid "Mail Queue Delay Statistics"
+msgstr "E-postkøforsinkelsesstatistikk"
+
+msgid "Delay Range"
+msgstr "Forsinkelsesområde"
+
+msgid "Count"
+msgstr "Antall"
+
+msgid "Percentage"
+msgstr "Prosentandel"
+
+msgid "TLS Encryption Statistics"
+msgstr "TLS-krypteringsstatistikk"
+
+msgid "TLS Versions"
+msgstr "TLS-versjoner"
+
+msgid "Top Ciphers"
+msgstr "Mest brukte chiffer"
+
+msgid "robot_hits_detail_both"
+msgstr "Totalt antall forespørsler: %s (normale sider: %s, robots.txt: %s)"
+
+msgid "robot_hits_detail_only_robots"
+msgstr "Kun robots.txt-forespørsler: %s, ingen andre sider"
+
+msgid "robot_hits_detail_normal"
+msgstr "Normale sideforespørsler: %s"
+
+msgid "Troubleshooting"
+msgstr "Feilsøking"
+
+msgid "Did you use the correct URL?"
+msgstr "Brukte du riktig URL?"
+
+msgid "Example:"
+msgstr "Eksempel:"
+
+msgid "Did you use correct config parameter?"
+msgstr "Brukte du riktig konfigurasjonsparameter?"
+
+msgid "Example: If your config file is awstats.mysite.conf, use -config=mysite"
+msgstr "Eksempel: Hvis konfigurasjonsfilen din er awstats.mysite.conf, bruk -config=mysite"
+
+msgid "Did you create your config file 'awstats.$SiteConfig.conf'?"
+msgstr "Opprettet du konfigurasjonsfilen 'awstats.$SiteConfig.conf'?"
+
+msgid "If not, you can run \"awstats_configure.pl\" from command line, or create it manually."
+msgstr "Hvis ikke, kan du kjøre \"awstats_configure.pl\" fra kommandolinjen, eller opprette den manuelt."
+
+msgid "Setup"
+msgstr "Oppsett"
+
+msgid "file, web server or permissions may be wrong."
+msgstr "fil, nettserver eller tillatelser kan være feil."
+
+msgid "Check config file, permissions and AWStats documentation (in 'docs' directory)."
+msgstr "Sjekk konfigurasjonsfilen, tillatelser og AWStats-dokumentasjonen (i 'docs'-katalogen)."
+
+msgid "Warning: Can't find language files for \"%s\". English will be used."
+msgstr "Advarsel: Finner ikke språkfiler for \"%s\". Engelsk vil bli brukt."
+
+msgid "%s process (ID %s) interrupted by signal %s."
+msgstr "%s-prosess (ID %s) avbrutt av signal %s."
+
+msgid "An AWStats update process seems to be already running for this config file. Try later. If this is not true, remove manually lock file"
+msgstr "En AWStats-oppdateringsprosess ser ut til å allerede kjøre for denne konfigurasjonsfilen. Prøv senere. Hvis dette ikke er sant, fjern låsefilen manuelt"
+
+msgid "Report Overview"
+msgstr "Rapportoversikt"
+
+msgid "Monthly Statistics"
+msgstr "Månedlig statistikk"
+
+msgid "Daily Statistics"
+msgstr "Daglig statistikk"
+
+msgid "Statistics by Day of Week"
+msgstr "Statistikk etter ukedag"
+
+msgid "Hourly Page Views"
+msgstr "Sidevisninger per time"
+
+msgid "Traffic Sources"
+msgstr "Trafikkilder"
+
+msgid "Other Sources"
+msgstr "Andre kilder"
+
+msgid "tooltip_1"
+msgstr "Antall økter besøkende har på nettstedet. En ny økt telles hvis en besøkende har vært inaktiv i mer enn 30 minutter."
+
+msgid "tooltip_2"
+msgstr "Antall unike besøkende som har besøkt nettstedet ditt i den valgte perioden."
+
+msgid "tooltip_3"
+msgstr "Antall forespørsler som regnes som sider (HTML, PHP, ASP osv.), ekskluderer bilder, CSS og JS."
+
+msgid "tooltip_4"
+msgstr "Totalt antall forespørsler til serveren, inkludert sider, bilder, CSS, JS og alle filer."
+
+msgid "tooltip_5"
+msgstr "Total mengde data som serveren sender som svar på brukerforespørsler."
+
+msgid "tooltip_13"
+msgstr "Statistikk over trafikkilder fra søkemotorer. Viser hvilke søkemotorer som gir deg trafikk og hvilke søkeuttrykk som brukes."
+
+msgid "tooltip_14"
+msgstr "Statistikk over trafikkilder fra eksterne lenker fra andre nettsteder."
+
+msgid "tooltip_15"
+msgstr "Søkeuttrykk brukt av besøkende for å finne deg via søkemotorer. Nøkkelord er enkeltord, nøkkelfraser er kombinasjoner av ord."
+
+msgid "tooltip_16"
+msgstr "Automatiserte programmer som søkemotorroboter, AI-treningsroboter, sårbarhetsskannere osv."
+
+msgid "tooltip_17"
+msgstr "Trafikkfordeling over 24 timer. Hjelper deg å forstå når brukerne er mest aktive."
+
+msgid "tooltip_18"
+msgstr "Denne kolonnen viser gjennomsnittsverdier for hver dag/uke i den valgte perioden."
+
+msgid "tooltip_19"
+msgstr "Klikk på elementer i grafen for detaljer. Hold musepekeren over elementer for å se verdier."
+
+msgid "tooltip_20"
+msgstr "Data som ikke kan kategoriseres i eksisterende områder, vanligvis på grunn av uvanlig format."
+
+msgid "tooltip_21"
+msgstr "Registrering av ormangrep. Orm er et selv-replikerende ondsinnet program."
+
+msgid "AWStats %s - Advanced Web Statistics"
+msgstr "AWStats %s - Avansert webstatistikk"
+
+msgid "Copyright (c) 2000-2025 Laurent Destailleur"
+msgstr "Opphavsrett (c) 2000-2025 Laurent Destailleur"
+
+msgid "Copyright (c) 2026-latest Community Edition"
+msgstr "Opphavsrett (c) 2026-siste fellesskapsutgave"
+
+msgid "AWStats comes with ABSOLUTELY NO WARRANTY. It's a free software distributed with a GNU General Public License (See LICENSE file for details)."
+msgstr "AWStats leveres UTEN NOEN GARANTI. Det er fri programvare distribuert under GNU General Public License (Se LICENSE-filen for detaljer)."
+
+msgid "Syntax: %s -config=virtualhostname [options]"
+msgstr "Syntaks: %s -config=vertnavn [valg]"
+
+msgid "This runs %s in command line to update statistics (-update option) of a web site, from the log file defined in AWStats config file, or build a HTML report (-output option)."
+msgstr "Dette kjører %s i kommandolinjen for å oppdatere statistikk (-update-valg) for et nettsted, fra loggfilen definert i AWStats-konfigurasjonsfilen, eller bygge en HTML-rapport (-output-valg)."
+
+msgid "First, %s tries to read %s.virtualhostname.conf as the config file. If not found, %s tries to read %s.conf, and finally the full path passed to -config="
+msgstr "Først prøver %s å lese %s.vertsnavn.conf som konfigurasjonsfil. Hvis den ikke blir funnet, prøver %s å lese %s.conf, og til slutt hele banen sendt til -config="
+
+msgid "Note 1: Config files (*.conf) must be in /etc/awstats, /usr/local/etc/awstats, /etc or same directory than awstats.pl script file."
+msgstr "Merknad 1: Konfigurasjonsfiler (*.conf) må være i /etc/awstats, /usr/local/etc/awstats, /etc eller samme katalog som awstats.pl-skriptfilen."
+
+msgid "Note 2: If AWSTATS_FORCE_CONFIG environment variable is defined, AWStats will use it as the 'config' value, whatever is the value on command line or URL."
+msgstr "Merknad 2: Hvis miljøvariabelen AWSTATS_FORCE_CONFIG er definert, vil AWStats bruke den som 'config'-verdien, uansett hva verdien er på kommandolinjen eller URL-en."
+
+msgid "See AWStats documentation for all setup instructions."
+msgstr "Se AWStats-dokumentasjonen for alle installasjonsinstruksjoner."
+
+msgid "Options to update statistics:"
+msgstr "Valg for å oppdatere statistikk:"
+
+msgid "  -update        to update statistics (default)"
+msgstr "  -update        oppdater statistikk (standard)"
+
+msgid "  -showsteps     to add benchmark information every %s lines processed"
+msgstr "  -showsteps     legg til informasjon om ytelsestesting hver %s behandlede linje"
+
+msgid "  -showcorrupted to add output for each corrupted lines found, with reason"
+msgstr "  -showcorrupted skriv ut for hver ødelagte linje som blir funnet, med årsak"
+
+msgid "  -showdropped   to add output for each dropped lines found, with reason"
+msgstr "  -showdropped   skriv ut for hver forkastede linje som blir funnet, med årsak"
+
+msgid "  -showunknownorigin  to output referer when it can't be parsed"
+msgstr "  -showunknownorigin  skriv ut henviser når den ikke kan tolkes"
+
+msgid "  -showdirectorigin   to output log line when origin is a direct access"
+msgstr "  -showdirectorigin   skriv ut logglinje når opprinnelsen er direkte tilgang"
+
+msgid "  -updatefor=n   to stop the update process after parsing n lines"
+msgstr "  -updatefor=n   stopp oppdateringsprosessen etter å ha tolket n linjer"
+
+msgid "  -LogFile=x     to change log to analyze whatever is 'LogFile' in config file"
+msgstr "  -LogFile=x     endre loggfilen til å analysere uavhengig av hva 'LogFile' i konfigurasjonsfilen er"
+
+msgid "  Be care to process log files in chronological order when updating statistics."
+msgstr "  Vær nøye med å behandle loggfiler i kronologisk rekkefølge når du oppdaterer statistikk."
+
+msgid "Options to show statistics:"
+msgstr "Valg for å vise statistikk:"
+
+msgid "  -output      to output main HTML report (no update made except with -update)"
+msgstr "  -output      skriv ut hoved-HTML-rapport (ingen oppdatering gjort unntatt med -update)"
+
+msgid "  -output=x    to output other report pages where x is:"
+msgstr "  -output=x    skriv ut andre rapportsider der x er:"
+
+msgid "build page of all domains/countries"
+msgstr "bygg side for alle domener/land"
+
+msgid "build page of all hosts"
+msgstr "bygg side for alle verter"
+
+msgid "build page of last hits for hosts"
+msgstr "bygg side for siste treff for verter"
+
+msgid "build page of all unresolved IP"
+msgstr "bygg side for alle uoppløste IP-adresser"
+
+msgid "build page of all email senders (maillog)"
+msgstr "bygg side for alle e-postavsendere (e-postlogg)"
+
+msgid "build page of last email senders (maillog)"
+msgstr "bygg side for siste e-postavsendere (e-postlogg)"
+
+msgid "build page of all email receivers (maillog)"
+msgstr "bygg side for alle e-postmottakere (e-postlogg)"
+
+msgid "build page of last email receivers (maillog)"
+msgstr "bygg side for siste e-postmottakere (e-postlogg)"
+
+msgid "build page of all logins used"
+msgstr "bygg side for alle pålogginger brukt"
+
+msgid "build page of last hits for logins"
+msgstr "bygg side for siste treff for pålogginger"
+
+msgid "build page of all robots/spider visits"
+msgstr "bygg side for alle robot-/edderkoppbesøk"
+
+msgid "build page of last hits for robots"
+msgstr "bygg side for siste treff for roboter"
+
+msgid "list most often viewed pages"
+msgstr "list hyppigst viste sider"
+
+msgid "list most often viewed pages matching filter"
+msgstr "list hyppigst viste sider som samsvarer med filter"
+
+msgid "list entry pages"
+msgstr "list inngangssider"
+
+msgid "list entry pages matching filter"
+msgstr "list inngangssider som samsvarer med filter"
+
+msgid "list exit pages"
+msgstr "list utgangssider"
+
+msgid "list exit pages matching filter"
+msgstr "list utgangssider som samsvarer med filter"
+
+msgid "build page with os detailed versions"
+msgstr "bygg side med detaljerte OS-versjoner"
+
+msgid "build page with browsers detailed versions"
+msgstr "bygg side med detaljerte nettleserversjoner"
+
+msgid "list 'User Agents' with unknown browser"
+msgstr "list 'User Agents' med ukjent nettleser"
+
+msgid "list 'User Agents' with unknown OS"
+msgstr "list 'User Agents' med ukjent OS"
+
+msgid "build page of all refering search engines"
+msgstr "bygg side for alle henvisende søkemotorer"
+
+msgid "build page of all refering pages"
+msgstr "bygg side for alle henvisende sider"
+
+msgid "list all keyphrases used on search engines"
+msgstr "list alle nøkkelfraser brukt på søkemotorer"
+
+msgid "list all keywords used on search engines"
+msgstr "list alle nøkkelord brukt på søkemotorer"
+
+msgid "list 'Referers' for 404 errors"
+msgstr "list 'Henvisere' for 404-feil"
+
+msgid "build page of all values for ExtraSection X"
+msgstr "bygg side for alle verdier for ExtraSection X"
+
+msgid "  -staticlinks           to have static links in HTML report page"
+msgstr "  -staticlinks           bruk statiske lenker i HTML-rapportsiden"
+
+msgid "  -staticlinksext=xxx    to have static links with .xxx extension instead of .html"
+msgstr "  -staticlinksext=xxx    bruk statiske lenker med .xxx-utvidelse i stedet for .html"
+
+msgid "  -lang=LL     to output a HTML report in language LL (en,de,es,fr,it,nl,zh-cn,...)"
+msgstr "  -lang=LL     skriv ut en HTML-rapport på språket LL (nb,en,de,fr,...)"
+
+msgid "  -month=MM    to output a HTML report for an old month MM"
+msgstr "  -month=MM    skriv ut en HTML-rapport for en gammel måned MM"
+
+msgid "  -year=YYYY   to output a HTML report for an old year YYYY"
+msgstr "  -year=YYYY   skriv ut en HTML-rapport for et gammelt år YYYY"
+
+msgid "  The 'date' options doesn't allow you to process old log file. They only allow you to see a past report for a chosen month/year period instead of current month/year."
+msgstr "  'Dato'-valgene lar deg ikke behandle gamle loggfiler. De lar deg bare se en tidligere rapport for en valgt måned/år-periode i stedet for gjeldende måned/år."
+
+msgid "Other options:"
+msgstr "Andre valg:"
+
+msgid "  -debug=X     to add debug informations lesser than level X (speed reduced)"
+msgstr "  -debug=X     legg til feilsøkingsinformasjon mindre enn nivå X (hastighet redusert)"
+
+msgid "  -version     show AWStats version"
+msgstr "  -version, -v     vis AWStats-versjon"
+
+msgid "Now supports/detects:"
+msgstr "Støtter/oppdager nå:"
+
+msgid "  Web/Ftp/Mail/streaming server log analyzis (and load balanced log files)"
+msgstr "  Logganalyse for nett/FTP/e-post/strømming (og lastbalanserte loggfiler)"
+
+msgid "  Reverse DNS lookup (IPv4 and IPv6) and GeoIP lookup"
+msgstr "  Omvendt DNS-oppslag (IPv4 og IPv6) og GeoIP-oppslag"
+
+msgid "  Number of visits, number of unique visitors"
+msgstr "  Antall besøk, antall unike besøkende"
+
+msgid "  Visits duration and list of last visits"
+msgstr "  Besøksvarighet og liste over siste besøk"
+
+msgid "  Authenticated users"
+msgstr "  Autentiserte brukere"
+
+msgid "  Days of week and rush hours"
+msgstr "  Dager i uken og rushtider"
+
+msgid "  Hosts list and unresolved IP addresses list"
+msgstr "  Liste over verter og liste over uoppløste IP-adresser"
+
+msgid "  Most viewed, entry and exit pages"
+msgstr "  Mest viste, inngangs- og utgangssider"
+
+msgid "  Files type and Web compression (mod_gzip, mod_deflate stats)"
+msgstr "  Filtype og webkomprimering (mod_gzip, mod_deflate-statistikk)"
+
+msgid "  Configured Database Statistics"
+msgstr "  Konfigurert databasestatistikk"
+
+msgid "  %s domains/countries"
+msgstr "  %s domener/land"
+
+msgid "  %s robots"
+msgstr "  %s roboter"
+
+msgid "  %s worm's families"
+msgstr "  %s ormfamilier"
+
+msgid "  %s operating systems"
+msgstr "  %s operativsystemer"
+
+msgid "  %s browsers (%s with phone browsers database)"
+msgstr "  %s nettlesere (%s med nettleserdatabase for telefoner)"
+
+msgid "  %s search engines (and keyphrases/keywords used from them)"
+msgstr "  %s søkemotorer (og nøkkelfraser/nøkkelord brukt fra dem)"
+
+msgid "  All HTTP errors with last referrer"
+msgstr "  Alle HTTP-feil med siste henviser"
+
+msgid "  Report by day/month/year"
+msgstr "  Rapport etter dag/måned/år"
+
+msgid "  Dynamic or static HTML or XHTML reports, static PDF reports"
+msgstr "  Dynamiske eller statiske HTML- eller XHTML-rapporter, statiske PDF-rapporter"
+
+msgid "  Indexed text or XML monthly database"
+msgstr "  Indeksert tekst eller XML månedlig database"
+
+msgid "  And a lot of other advanced features and options..."
+msgstr "  Og mange andre avanserte funksjoner og valg..."
+
+msgid "  New versions and FAQ at http://www.awstats.org"
+msgstr "  Nye versjoner og OSS på https://github.com/hestiacn/vstats/issues"

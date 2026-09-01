@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 64 63.999998"
+   version="1.1"
+   id="svg4"
+   sodipodi:docname="ericsson-icon.svg"
+   width="64"
+   height="64"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
+  <metadata
+     id="metadata10">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs8" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     id="namedview6"
+     showgrid="false"
+     inkscape:zoom="1.5038168"
+     inkscape:cx="86.769501"
+     inkscape:cy="78.467003"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg4" />
+  <path
+     inkscape:connector-curvature="0"
+     d="M 16.507857,63.621659 C 13.199649,64.810342 9.5523263,63.105464 8.3425293,59.804923 7.1327237,56.504377 8.8142583,52.846234 12.106998,51.615364 L 47.455645,38.656073 c 3.310915,-1.214808 6.984345,0.486569 8.200764,3.802315 1.21737,3.315315 -0.485665,6.989462 -3.802324,8.203174 z m 0,-19.132414 C 13.199649,45.677926 9.5523263,43.973048 8.3425293,40.672509 7.1327237,37.371961 8.8142583,33.71382 12.106998,32.48295 L 47.455645,19.524469 c 3.310915,-1.216419 6.984345,0.486567 8.200764,3.802311 1.216733,3.314643 -0.486308,6.987738 -3.802324,8.200757 z m 0,-19.132414 C 13.211845,26.503164 9.6054783,24.794965 8.4043483,21.518531 7.2032275,18.242093 8.8510403,14.60774 12.106998,13.35215 L 47.455645,0.3928584 c 3.310915,-1.216418 6.984345,0.486567 8.200764,3.802316 1.216733,3.314648 -0.486308,6.9877396 -3.802324,8.2007586 z"
+     id="path2-3"
+     sodipodi:nodetypes="csccccccsccccccsccccc"
+     style="stroke-width:0.80557531" />
+</svg>

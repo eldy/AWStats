@@ -1,0 +1,3308 @@
+# AWStats Urdu (ur) translations
+# Copyright (C) 2026 AWStats
+# This file is distributed under the same license as the AWStats package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: AWStats 8.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-10 12:00+0000\n"
+"PO-Revision-Date: 2026-05-10 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Urdu\n"
+"Language: ur\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#------------------------------------------------------------------------------
+# مہینوں کے نام
+#------------------------------------------------------------------------------
+
+msgid "month_01"
+msgstr "جنوری"
+
+msgid "month_02"
+msgstr "فروری"
+
+msgid "month_03"
+msgstr "مارچ"
+
+msgid "month_04"
+msgstr "اپریل"
+
+msgid "month_05"
+msgstr "مئی"
+
+msgid "month_06"
+msgstr "جون"
+
+msgid "month_07"
+msgstr "جولائی"
+
+msgid "month_08"
+msgstr "اگست"
+
+msgid "month_09"
+msgstr "ستمبر"
+
+msgid "month_10"
+msgstr "اکتوبر"
+
+msgid "month_11"
+msgstr "نومبر"
+
+msgid "month_12"
+msgstr "دسمبر"
+
+#------------------------------------------------------------------------------
+# ہفتے کے دنوں کے نام
+#------------------------------------------------------------------------------
+
+msgid "DayOfWeek_0"
+msgstr "اتوار"
+
+msgid "DayOfWeek_1"
+msgstr "پیر"
+
+msgid "DayOfWeek_2"
+msgstr "منگل"
+
+msgid "DayOfWeek_3"
+msgstr "بدھ"
+
+msgid "DayOfWeek_4"
+msgstr "جمعرات"
+
+msgid "DayOfWeek_5"
+msgstr "جمعہ"
+
+msgid "DayOfWeek_6"
+msgstr "ہفتہ"
+
+#------------------------------------------------------------------------------
+# انٹرفیس کے عناصر
+#------------------------------------------------------------------------------
+
+msgid "Advanced Web Statistics for"
+msgstr "کے لیے اعلیٰ ویب شماریات"
+
+msgid "Statistics for"
+msgstr "کے اعداد و شمار"
+
+msgid "main"
+msgstr "مرکزی"
+
+msgid "Switch to light mode"
+msgstr "روشن موڈ پر جائیں"
+
+msgid "Switch to dark mode"
+msgstr "تاریک موڈ پر جائیں"
+
+msgid "TB"
+msgstr "TB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "Bytes"
+msgstr "بائٹس"
+
+msgid "Filter"
+msgstr "فلٹر کریں"
+
+msgid "Exclude filter"
+msgstr "خارج کرنے کا فلٹر"
+
+msgid "Top"
+msgstr "سرفہرست"
+
+msgid "Full list"
+msgstr "مکمل فہرست"
+
+msgid "Last"
+msgstr "آخری"
+
+msgid "Average"
+msgstr "اوسط"
+
+msgid "Export"
+msgstr "برآمد کریں"
+
+msgid "Details"
+msgstr "تفصیلات"
+
+msgid "Version"
+msgstr "ورژن"
+
+msgid "thousands_separator"
+msgstr "٬"
+
+msgid "dateformat_long"
+msgstr "HH:MM:SS dd mm yyyy،"
+
+msgid "dateformat_short"
+msgstr "HH:MM dd mm yyyy،"
+
+msgid "date_format_year"
+msgstr "%s"
+
+msgid "date_format_month"
+msgstr "%2$s %1$s"
+
+#------------------------------------------------------------------------------
+# نیویگیشن بار
+#------------------------------------------------------------------------------
+
+msgid "AWStats Month Selector"
+msgstr "AWStats مہینہ منتخب کریں"
+
+msgid "nav_category_basic"
+msgstr "بنیادی دستاویزات"
+
+msgid "nav_category_guide"
+msgstr "استعمال کی گائیڈ"
+
+msgid "nav_category_reference"
+msgstr "حوالہ جات"
+
+msgid "nav_category_integration"
+msgstr "انضمام اور توسیع"
+
+msgid "nav_category_dev"
+msgstr "ڈویلپر دستاویزات"
+
+msgid "nav_changelog"
+msgstr "تبدیلی لاگ"
+
+msgid "nav_what"
+msgstr "AWStats کیا ہے"
+
+msgid "nav_license"
+msgstr "لائسنس"
+
+msgid "nav_glossary"
+msgstr "فرہنگ"
+
+msgid "nav_setup"
+msgstr "تنصیب اور ترتیب"
+
+msgid "nav_upgrade"
+msgstr "اپ گریڈ گائیڈ"
+
+msgid "nav_config"
+msgstr "ترتیب کے پیرامیٹرز"
+
+msgid "nav_extra"
+msgstr "اضافی حصے"
+
+msgid "nav_tools"
+msgstr "دوسرے اوزار"
+
+msgid "nav_faq"
+msgstr "عمومی سوالات"
+
+msgid "nav_security"
+msgstr "تحفظ کے مشورے"
+
+msgid "nav_compare"
+msgstr "موازنہ"
+
+msgid "nav_benchmark"
+msgstr "بنچ مارک"
+
+msgid "nav_webmin"
+msgstr "Webmin ماڈیول"
+
+msgid "nav_dolibarr"
+msgstr "Dolibarr ماڈیول"
+
+msgid "nav_contrib"
+msgstr "تعاون کے وسائل"
+
+msgid "nav_plugins"
+msgstr "پلگ ان کی ترقی"
+
+msgid "nav_hooks"
+msgstr "پلگ ان ہکس"
+
+msgid "nav_graphs"
+msgstr "پلگ ان گرافکس"
+
+msgid "Back to top"
+msgstr "اوپر جائیں"
+
+msgid "nav_select_month"
+msgstr "مہینہ منتخب کریں"
+
+#------------------------------------------------------------------------------
+# اہم شماریاتی اشارے
+#------------------------------------------------------------------------------
+
+msgid "Unique visitors"
+msgstr "مختلف زائرین"
+
+msgid "Visits"
+msgstr "دورے"
+
+msgid "Visits duration"
+msgstr "دورے کا دورانیہ"
+
+msgid "First visit"
+msgstr "پہلا دورہ"
+
+msgid "Last visit"
+msgstr "آخری دورہ"
+
+msgid "Visits/Visitor"
+msgstr "دورے/زیارت کنندہ"
+
+msgid "Pages/Visit"
+msgstr "صفحات/دورہ"
+
+msgid "Hits/Visit"
+msgstr "ہٹس/دورہ"
+
+msgid "KB/Visit"
+msgstr "کے بی/دورہ"
+
+msgid "KB/Visits"
+msgstr "کے بی/دورے"
+
+msgid "Pages"
+msgstr "صفحات"
+
+msgid "Hits"
+msgstr "ہٹس"
+
+msgid "Bandwidth"
+msgstr "بینڈوتھ"
+
+msgid "duration_format"
+msgstr "%s - %s"
+
+msgid "unit_s"
+msgstr "سیکنڈ"
+
+msgid "unit_min"
+msgstr "منٹ"
+
+msgid "unit_h"
+msgstr "گھنٹہ"
+
+msgid "and"
+msgstr "اور"
+
+msgid "Device Types"
+msgstr "آلات کی اقسام"
+
+msgid "Device Type"
+msgstr "آلے کی قسم"
+
+msgid "Percent"
+msgstr "فیصد"
+
+msgid "Mobile"
+msgstr "موبائل"
+
+msgid "Pause & Go"
+msgstr "وقفہ اور جاری"
+
+msgid "Complete"
+msgstr "مکمل"
+
+msgid "Tablet"
+msgstr "ٹیبلیٹ"
+
+msgid "Tv"
+msgstr "ٹی وی"
+
+msgid "Wearable"
+msgstr "پہننے کے قابل"
+
+msgid "Bot"
+msgstr "بوٹ"
+
+msgid "Desktop"
+msgstr "ڈیسک ٹاپ"
+
+msgid "Normal browsing traffic"
+msgstr "عام براؤزنگ ٹریفک"
+
+msgid "Abnormal browsing traffic"
+msgstr "غیر معمولی براؤزنگ ٹریفک"
+
+msgid "Viewed"
+msgstr "دیکھا گیا"
+
+msgid "Not viewed"
+msgstr "نہیں دیکھا گیا"
+
+msgid "Abnormal browsing traffic note"
+msgstr "غیر معمولی براؤزنگ ٹریفک میں شامل ہیں: سرچ انجن کرالر، AI تربیتی کرالر، کمزوری سکینر اور HTTP/HTTPS معیارات سے مطابقت نہ رکھنے والی درخواستیں"
+
+msgid "File size"
+msgstr "فائل کا سائز"
+
+msgid "File type"
+msgstr "فائل کی قسم"
+
+msgid "Downloads"
+msgstr "ڈاؤن لوڈز"
+
+msgid "Request time"
+msgstr "درخواست کا وقت"
+
+msgid "Total requests"
+msgstr "کل درخواستیں"
+
+msgid "Frequency"
+msgstr "تعدد"
+
+msgid "Average frequency"
+msgstr "اوسط تعدد"
+
+msgid "Seconds"
+msgstr "سیکنڈ"
+
+msgid "First"
+msgstr "پہلا"
+
+msgid "Mails"
+msgstr "ای میلز"
+
+msgid "Size"
+msgstr "سائز"
+
+msgid "If you remove this file, all statistics for date"
+msgstr "انتباہ: اس فائل کو حذف کرنے سے تاریخ"
+
+msgid "will be lost/reset."
+msgstr "کے تمام اعداد و شمار مستقل طور پر ختم/ری سیٹ ہو جائیں گے!"
+
+msgid "Last config file used to build this data file was"
+msgstr "اس ڈیٹا فائل کو بنانے کے لیے استعمال ہونے والی آخری ترتیب فائل تھی"
+
+msgid "Position (offset in bytes) in this file for beginning of each section for"
+msgstr "اس فائل میں ہر سیکشن کے آغاز کے لیے بائٹس میں پوزیشن (آفسیٹ)"
+
+msgid "direct I/O access. If you made changes somewhere in this file, you should"
+msgstr "AWStats کو تیز تر ڈائریکٹ ڈیٹا تک رسائی کے لیے۔ اگر آپ نے اس فائل میں کہیں بھی تبدیلی کی ہے، تو آپ کو"
+
+msgid "also remove completely the MAP section (AWStats will rewrite it at next update)"
+msgstr "MAP سیکشن کو مکمل طور پر بھی حذف کر دینا چاہیے (AWStats اگلی اپ ڈیٹ پر اسے دوبارہ لکھ دے گا)۔"
+
+msgid "LastLine    = Date of last record processed - Last record line number in last log - Last record offset in last log - Last record signature value"
+msgstr "LastLine    = پروسیس شدہ آخری ریکارڈ کی تاریخ - آخری لاگ میں آخری ریکارڈ کی لائن نمبر - آخری لاگ میں آخری ریکارڈ کا آفسیٹ - آخری ریکارڈ کے دستخط کی قدر"
+
+msgid "FirstTime   = Date of first visit for history file"
+msgstr "FirstTime   = ہسٹری فائل کے لیے پہلے دورے کی تاریخ"
+
+msgid "LastTime    = Date of last visit for history file"
+msgstr "LastTime    = ہسٹری فائل کے لیے آخری دورے کی تاریخ"
+
+msgid "LastUpdate  = Date of last update - Nb of parsed records - Nb of parsed old records - Nb of parsed new records - Nb of parsed corrupted - Nb of parsed dropped"
+msgstr "LastUpdate  = آخری اپ ڈیٹ کی تاریخ - تجزیہ شدہ ریکارڈز کی تعداد - تجزیہ شدہ پرانے ریکارڈز کی تعداد - تجزیہ شدہ نئے ریکارڈز کی تعداد - تجزیہ شدہ خراب شدہ ریکارڈز کی تعداد - تجزیہ شدہ چھوڑے گئے ریکارڈز کی تعداد"
+
+msgid "TotalVisits = Number of visits"
+msgstr "TotalVisits = دوروں کی تعداد"
+
+msgid "TotalUnique = Number of unique visitors"
+msgstr "TotalUnique = مختلف زائرین کی تعداد"
+
+msgid "MonthHostsKnown   = Number of hosts known"
+msgstr "MonthHostsKnown   = معلوم میزبانوں کی تعداد"
+
+msgid "MonthHostsUnKnown = Number of hosts unknown"
+msgstr "MonthHostsUnKnown = نامعلوم میزبانوں کی تعداد"
+
+msgid "Cluster ID - Pages - Hits - Bandwidth"
+msgstr "Cluster ID - صفحات - ہٹس - بینڈوتھ"
+
+msgid "Hour - Pages - Hits - Bandwidth - Not viewed Pages - Not viewed Hits - Not viewed Bandwidth"
+msgstr "گھنٹہ - صفحات - ہٹس - بینڈوتھ - غیر دیکھے گئے صفحات - غیر دیکھی گئی ہٹس - غیر دیکھی گئی بینڈوتھ"
+
+msgid "Date - Pages - Hits - Bandwidth - Visits"
+msgstr "تاریخ - صفحات - ہٹس - بینڈوتھ - دورے"
+
+msgid "Domain - Pages - Hits - Bandwidth"
+msgstr "ڈومین - صفحات - ہٹس - بینڈوتھ"
+
+msgid "The %s first Pages must be first (order not required for others)"
+msgstr "صفحات (%s) صرف مرکزی صفحہ پر دکھائے جاتے ہیں، مکمل فہرست کے لیے تفصیلی صفحہ دیکھیں۔"
+
+msgid "Host - Pages - Hits - Bandwidth - Last visit date - [Start date of last visit] - [Last page of last visit]"
+msgstr "میزبان - صفحات - ہٹس - بینڈوتھ - آخری دورے کی تاریخ - [آخری دورے کی آغاز کی تاریخ] - [آخری دورے کا آخری صفحہ]"
+
+msgid "[Start date of last visit] and [Last page of last visit] are saved only if session is not finished"
+msgstr "[آخری دورے کی آغاز کی تاریخ] اور [آخری دورے کا آخری صفحہ] صرف اس وقت محفوظ ہوتے ہیں جب سیشن ختم نہ ہوا ہو"
+
+msgid "The first %s items are sorted by hits in descending order; order of the remaining items is undefined."
+msgstr "پہلی %s اشیاء کو ہٹس کی تعداد کے مطابق نزولی ترتیب میں ترتیب دیا گیا ہے؛ باقی اشیاء کی ترتیب متعین نہیں ہے۔"
+
+msgid "Login - Pages - Hits - Bandwidth - Last visit"
+msgstr "لاگ ان کردہ صارف - صفحات - ہٹس - بینڈوتھ - آخری دورے کا وقت"
+
+msgid "Robot ID - Hits - Bandwidth - Last visit - Hits on robots.txt"
+msgstr "روبوٹ ID - ہٹس - بینڈوتھ - آخری دورہ - robots.txt پر ہٹس"
+
+msgid "Worm ID - Hits - Bandwidth - Last visit"
+msgstr "کیڑا ID - ہٹس - بینڈوتھ - آخری دورہ"
+
+msgid "EMail - Hits - Bandwidth - Last visit"
+msgstr "ای میل - ہٹس - بینڈوتھ - آخری دورہ"
+
+msgid "The first %s email addresses are sorted by hits in descending order; order of the remaining addresses is undefined."
+msgstr "پہلے %s ای میل پتوں کو ہٹس کی تعداد کے مطابق نزولی ترتیب میں ترتیب دیا گیا ہے؛ باقی پتوں کی ترتیب متعین نہیں ہے۔"
+
+msgid "URL - Pages - Bandwidth - Entry - Exit"
+msgstr "URL - صفحات - بینڈوتھ - داخلی راستہ - خارجی راستہ"
+
+msgid "Files type - Hits - Bandwidth - Bandwidth without compression - Bandwidth after compression"
+msgstr "فائل کی قسم - ہٹس - بینڈوتھ - کمپریشن سے پہلے بینڈوتھ - کمپریشن کے بعد بینڈوتھ"
+
+msgid "Request Time Range - Request Time Frequency"
+msgstr "درخواست کے وقت کی حد - درخواستوں کی تعداد"
+
+msgid "Payload Range - Payload Frequency"
+msgstr "فائل کے سائز کی حد - فائلوں کی تعداد"
+
+msgid "Session range - Number of visits"
+msgstr "سیشن کے دورانیے کی حد - دوروں کی تعداد"
+
+msgid "URL with %s errors - Hits"
+msgstr "%s غلطیوں والے URLs - ہٹس"
+
+msgid "Last URL referrer"
+msgstr "آخری ماخذ URL"
+
+msgid "Errors - Hits - Bandwidth"
+msgstr "غلطیاں - ہٹس - بینڈوتھ"
+
+msgid "Search keywords - Number of search"
+msgstr "تلاش کے کلیدی الفاظ - تلاش کی تعداد"
+
+msgid "Only top %s keywords shown on main page (sorted by search count). See full list on detail page."
+msgstr "صرف %s سب سے زیادہ تلاش کیے گئے کلیدی الفاظ مرکزی صفحہ پر دکھائے جاتے ہیں، مکمل فہرست کے لیے تفصیلی صفحہ دیکھیں۔"
+
+msgid "Search keyphrases - Number of search"
+msgstr "تلاش کے کلیدی جملے - تلاش کی تعداد"
+
+msgid "Only top %s keyphrases shown on main page (sorted by search count). See full list on detail page."
+msgstr "صرف %s سب سے زیادہ تلاش کیے گئے کلیدی جملے مرکزی صفحہ پر دکھائے جاتے ہیں، مکمل فہرست کے لیے تفصیلی صفحہ دیکھیں۔"
+
+msgid "External page referers - Pages - Hits"
+msgstr "بیرونی صفحہ کے حوالہ جات - صفحات - ہٹس"
+
+msgid "Only top %s external referrers shown on main page (sorted by pages). See full list on detail page."
+msgstr "صرف %s سب سے زیادہ حوالہ دینے والے بیرونی ماخذ مرکزی صفحہ پر دکھائے جاتے ہیں، مکمل فہرست کے لیے تفصیلی صفحہ دیکھیں۔"
+
+msgid "Search engine referers ID - Pages - Hits"
+msgstr "سرچ انجن حوالہ جات ID - صفحات - ہٹس"
+
+msgid "Origin - Pages - Hits"
+msgstr "ماخذ - صفحات - ہٹس"
+
+msgid "Unknown referer Browser - Last visit date"
+msgstr "نامعلوم ماخذ براؤزر - آخری دورے کی تاریخ"
+
+msgid "Unknown referer OS - Last visit date"
+msgstr "نامعلوم ماخذ آپریٹنگ سسٹم - آخری دورے کی تاریخ"
+
+msgid "Screen size - Hits"
+msgstr "اسکرین ریزولوشن - ہٹس"
+
+msgid "Browser ID - Hits - Pages"
+msgstr "براؤزر ID - کلکس - صفحات"
+
+msgid "Downloads - Hits - Bandwidth"
+msgstr "ڈاؤن لوڈ - ہٹس - بینڈوتھ"
+
+msgid "Protocol - Hits - Bandwidth"
+msgstr "پروٹوکول - ہٹس - بینڈوتھ"
+
+msgid "Icon Status - Type:200:404:Other"
+msgstr "آئیکن اسٹیٹس - قسم:200:404:دیگر"
+
+#------------------------------------------------------------------------------
+# Time Period Translations
+#------------------------------------------------------------------------------
+
+msgid "period_00"
+msgstr "نصف شب · AWStats سو گیا، آپ اب بھی ڈیٹا دیکھ رہے ہیں؟ کتنی محبت ہے"
+
+msgid "period_01"
+msgstr "صبح ایک بجے · اس وقت کون وزٹ کر رہا ہے؟ بے خوابی یا ابھی کام سے چھٹی ہوئی؟"
+
+msgid "period_02"
+msgstr "صبح دو بجے · کرالر بھی آپ سے زیادہ محنتی ہیں، وہ اب بھی کام کر رہے ہیں"
+
+msgid "period_03"
+msgstr "صبح تین بجے · شہر سو رہا ہے، سرور اوور ٹائم کر رہا ہے، کون زیادہ بے بس ہے؟"
+
+msgid "period_04"
+msgstr "صبح چار بجے · اندھیرے میں سب سے روشن ستارہ، آپ کی اسکرین ہے یا سرور کی انڈیکیٹر لائٹ"
+
+msgid "period_05"
+msgstr "صبح پانچ بجے · صبح سویرے اٹھنے والے پرندے کو کیڑا ملتا ہے، صبح سویرے اٹھنے والا کرالر ڈیٹا کھودتا ہے"
+
+msgid "period_06"
+msgstr "صبح چھ بجے · کچھ لوگ جاگ گئے، کچھ ابھی سوئے نہیں، انٹرنیٹ کبھی بند نہیں ہوتا"
+
+msgid "period_07"
+msgstr "صبح سات بجے · میٹرو میں ہجوم کا وقت، ویب براؤزنگ کا بھی وقت"
+
+msgid "period_08"
+msgstr "صبح آٹھ بجے · کام شروع کرنے کا پہلا کام: کل کا ڈیٹا ایک نظر دیکھنا"
+
+msgid "period_09"
+msgstr "صبح نو بجے · سنہری وقت، آرام کرنے کے بھی اصول ہیں"
+
+msgid "period_10"
+msgstr "صبح دس بجے · کافی کا وقت، دیکھتے ہیں ٹریفک بڑھی یا نہیں"
+
+msgid "period_11"
+msgstr "صبح گیارہ بجے · کھانے میں ابھی ایک گھنٹہ باقی ہے، تھوڑا اور صبر کریں"
+
+msgid "period_12"
+msgstr "دوپہر بارہ بجے · سرور: تم سب کھانا کھانے چلے گئے، میں تھوڑا آرام کر لوں"
+
+msgid "period_13"
+msgstr "دوپہر ایک بجے · دوپہر کی نیند کا حملہ، لیکن ڈیٹا نہیں سوئے گا"
+
+msgid "period_14"
+msgstr "دوپہر دو بجے · شام کی چائے کا وقت، ڈیٹا کے ساتھ اور بھی لذیذ"
+
+msgid "period_15"
+msgstr "دوپہر تین بجے · آج کے ٹریفک کے رجحان کا گراف، آپ کے موڈ کی طرح لگتا ہے؟"
+
+msgid "period_16"
+msgstr "دوپہر چار بجے · چھٹی میں X گھنٹے باقی ہیں، ٹریفک دوڑنا شروع ہو گئی"
+
+msgid "period_17"
+msgstr "شام پانچ بجے · چھٹی ہو گئی! لیکن سرور کو اب بھی کام کرنا ہے"
+
+msgid "period_18"
+msgstr "شام چھ بجے · کھانے کا وقت، ویڈیو دیکھ کر آرام کریں"
+
+msgid "period_19"
+msgstr "شام سات بجے · سنہری دور، ٹریفک کی چوٹی، سرور: میں برداشت کر سکتا ہوں"
+
+msgid "period_20"
+msgstr "شام آٹھ بجے · سوفی پر بیٹھے، آپ 114514 ویں مہمان ہیں"
+
+msgid "period_21"
+msgstr "شام نو بجے · رات گئے، چپکے سے ڈیٹا دیکھنے والے رات کے الّو +1"
+
+msgid "period_22"
+msgstr "رات دس بجے · آج کا ڈیٹا تیار ہونے والا ہے، گھبراہٹ ہے؟"
+
+msgid "period_23"
+msgstr "گیارہ بجے رات · AWStats: اب سونے کا وقت ہے، کل پھر کام کرنا ہے"
+
+#------------------------------------------------------------------------------
+# وقت کے جہات
+#------------------------------------------------------------------------------
+
+msgid "Period"
+msgstr "شماریاتی مدت"
+
+msgid "Year"
+msgstr "سال"
+
+msgid "Month"
+msgstr "مہینہ"
+
+msgid "Months"
+msgstr "مہینے"
+
+msgid "Date"
+msgstr "تاریخ"
+
+msgid "Day"
+msgstr "دن"
+
+msgid "Hour"
+msgstr "گھنٹہ"
+
+msgid "Hours"
+msgstr "گھنٹے"
+
+msgid "Day of week"
+msgstr "ہفتے کا دن"
+
+msgid "When"
+msgstr "کب"
+
+msgid "%s Server Management Panel"
+msgstr "%s  سرور مینجمنٹ پینل"
+
+msgid "Server Administration"
+msgstr "سادہ اور موثر سرور حل"
+
+#------------------------------------------------------------------------------
+# وزٹ کرنے والوں کے جہات
+#------------------------------------------------------------------------------
+
+msgid "Invalid URL Parameters"
+msgstr "غلط یو آر ایل پیرامیٹرز"
+
+msgid "The requested page cannot be loaded due to invalid or malformed URL parameters."
+msgstr "غلط یا غلط فارمیٹ شدہ یو آر ایل پیرامیٹرز کی وجہ سے درخواست کردہ صفحہ لوڈ نہیں کیا جا سکتا۔"
+
+msgid "This may be caused by typing an incorrect URL, missing parameter separators, or using an invalid configuration name."
+msgstr "یہ غلط یو آر ایل ٹائپ کرنے، پیرامیٹر سیپریٹرز کی کمی، یا غلط کنفیگریشن نام استعمال کرنے کی وجہ سے ہو سکتا ہے۔"
+
+msgid "Please check the URL you entered and ensure all parameters are correctly formatted."
+msgstr "براہ کرم آپ کے داخل کردہ یو آر ایل کو چیک کریں اور یقینی بنائیں کہ تمام پیرامیٹرز صحیح طریقے سے فارمیٹ شدہ ہیں۔"
+
+msgid "SiteDomain parameter not defined in your config/domain file, or you may not have execution permission on the file."
+msgstr "SiteDomain پیرامیٹر آپ کی config/domain فائل میں متعین نہیں ہے، یا ہو سکتا ہے کہ آپ کو فائل پر عمل درآمد کی اجازت نہ ہو۔"
+
+msgid "Please run as Administrator to set permissions"
+msgstr "اجازتیں سیٹ کرنے کے لیے براہ کرم بطور ایڈمنسٹریٹر چلائیں"
+
+msgid "This directory lacks read permission"
+msgstr "اس ڈائرکٹری میں پڑھنے کی اجازت نہیں ہے"
+
+msgid "Please set read permission for directory"
+msgstr "براہ کرم ڈائرکٹری کے لیے پڑھنے کی اجازت مقرر کریں"
+
+msgid "Missing required parameter in config file"
+msgstr "کنفیگریشن فائل میں مطلوبہ پیرامیٹر موجود نہیں"
+
+msgid "Please check that 'DirData' is defined."
+msgstr "براہ کرم چیک کریں کہ 'DirData' کی تعریف ہوئی ہے۔"
+
+msgid "Domain name in browser address appears to be missing or incomplete"
+msgstr "براؤزر ایڈریس میں ڈومین نام موجود نہیں ہے یا نامکمل لگتا ہے"
+
+msgid "Please check the URL parameter"
+msgstr "براہ کرم URL پیرامیٹر چیک کریں"
+
+msgid "Format description"
+msgstr "فارمیٹ کی تفصیل"
+
+msgid "Please set execute permission"
+msgstr "براہ کرم عمل درآمد کی اجازت سیٹ کریں"
+
+msgid "Or if you prefer numeric mode"
+msgstr "یا اگر آپ عددی موڈ کو ترجیح دیتے ہیں"
+
+msgid "View Report Directly"
+msgstr "براہ راست رپورٹ دیکھیں"
+
+msgid "AWStats Log Viewer"
+msgstr "AWStats لاگ دیکھنے والا"
+
+msgid "Month Selection"
+msgstr "مہینے کا انتخاب"
+
+msgid "Who"
+msgstr "کون"
+
+msgid "Visitors"
+msgstr "زائرین"
+
+msgid "Countries"
+msgstr "ممالک/خطے"
+
+msgid "flag_icon"
+msgstr "پرچم"
+
+msgid "Country-Region-City"
+msgstr "ملک/خطہ/شہر"
+
+msgid "Code"
+msgstr "کوڈ"
+
+msgid "Known"
+msgstr "معلوم"
+
+msgid "unknownos"
+msgstr "نامعلوم آپریٹنگ سسٹم"
+
+msgid "unknownbrowser"
+msgstr "نامعلوم براؤزر"
+
+msgid "Unresolved IP Address"
+msgstr "غیر حل شدہ IP پتہ"
+
+msgid "Unknown File Type"
+msgstr "نامعلوم فائل کی قسم"
+
+msgid "Unknown Size"
+msgstr "نامعلوم فائل کا سائز"
+
+msgid "Unknown Time"
+msgstr "نامعلوم درخواست کا وقت"
+
+msgid "Unknown Browser"
+msgstr "نامعلوم براؤزر"
+
+msgid "Unknown OS"
+msgstr "نامعلوم آپریٹنگ سسٹم"
+
+msgid "Unknown Visitor"
+msgstr "نامعلوم مہمان"
+
+msgid "Unknown Visitor (Total)"
+msgstr "نامعلوم مہمان (کل)"
+
+msgid "Unknown Country"
+msgstr "نامعلوم ملک/خطہ"
+
+msgid "Unknown Country (Region)"
+msgstr "نامعلوم ملک/خطہ (کل)"
+
+msgid "Unknown Visitor (Title)"
+msgstr "نامعلوم مہمان (عنوان)"
+
+msgid "PageStayTime"
+msgstr "صفحہ پر قیام کا اندازہ نہیں لگایا جا سکتا"
+
+msgid "Unknown OS (Link)"
+msgstr "نامعلوم آپریٹنگ سسٹم (لنک)"
+
+msgid "Unknown OS (Row)"
+msgstr "نامعلوم آپریٹنگ سسٹم (فہرست)"
+
+msgid "Unknown Browser (Link)"
+msgstr "نامعلوم براؤزر (لنک)"
+
+msgid "Unknown Browser (Row)"
+msgstr "نامعلوم براؤزر (فہرست)"
+
+msgid "Unknown Screen"
+msgstr "نامعلوم اسکرین سائز"
+
+msgid "Login"
+msgstr "لاگ ان نام"
+
+msgid "Anonymous"
+msgstr "گمنام"
+
+msgid "Robots"
+msgstr "روبوٹ"
+
+msgid "Different robots"
+msgstr "مختلف روبوٹ"
+
+msgid "Hits on robots.txt"
+msgstr "مندرجہ بالا سرچ انجن روبوٹس کی طرف سے پیدا کردہ 'غیر معمولی براؤزنگ' ٹریفک دوسرے چارٹس میں شامل نہیں ہے '+' کے بعد کا نمبر 'robots.txt' تک کامیاب رسائی کی تعداد ہے"
+
+msgid "Worms"
+msgstr "کیڑے"
+
+msgid "Different worms"
+msgstr "مختلف کیڑے"
+
+msgid "Target"
+msgstr "ہدف"
+
+msgid "Grabber"
+msgstr "گرابر"
+
+#------------------------------------------------------------------------------
+# فارمیٹ کی تفصیلات
+#------------------------------------------------------------------------------
+
+msgid "mime_text"
+msgstr "TXT سادہ متن کی فائل (1963 میں ASCII انکوڈنگ کے ذریعے معیاری بنایا گیا غیر فارمیٹ شدہ سادہ متن۔ تمام سورس کوڈز، کنفیگریشن فائلوں اور سسٹم لاگز کی بنیادی بنیاد کے طور پر، اس کے کراس پلیٹ فارم ونڈوز (CRLF) اور یونکس (LF) لائن بریک کنٹرول فلو آج بھی کمپیوٹر کی دنیا میں ڈیٹا کے تبادلے کا سب سے عام معیار ہیں)"
+
+msgid "mime_log"
+msgstr "LOG سسٹم آپریشن لاگ (آپریٹنگ سسٹم، کرنل اور ایپلیکیشن لیول رن ٹائم اسٹیٹس کو ریکارڈ کرنے والا سادہ متن کا اثاثہ۔ Nginx/Apache تک رسائی لاگز (کمبائنڈ لاگ) اور معیاری syslog تفصیلات کا احاطہ کرتا ہے۔ خرابیوں کا سراغ لگانے، اسٹریم کارکردگی کے تجزیہ اور سیکیورٹی آڈٹ کے لیے بنیادی ڈیٹا ماخذ ہے)"
+
+msgid "mime_page"
+msgstr "HTML ہائپر ٹیکسٹ ویب پیج (1989 میں ٹم برنرز لی کے ذریعے تخلیق کردہ ورلڈ وائڈ ویب کا بنیادی پتھر۔ ایک مفت میں دستیاب عالمگیر ہائپر ٹیکسٹ مارک اپ زبان کے طور پر، اس کی HTML5 تفصیلات 2014 میں W3C کا سرکاری معیار بن گئی، جو ساختی ملٹی میڈیا، معنوی تعامل اور اسٹریم پیج لے آؤٹ کے لیے مقامی مدد فراہم کرتی ہے۔ 2016 میں ٹیورنگ ایوارڈ جیتا)"
+
+msgid "mime_khtml"
+msgstr "KHTML ویب ٹیمپلیٹ انجن (1998 KDE 2.0 براؤزر رینڈرنگ انجن تفصیلات۔ جدید ویب رینڈرنگ کی بنیاد رکھنے والے اوپن سورس کمیونٹی بینچ مارک کے طور پر، اس کی تکنیکی وراثت نے براہ راست ایپل ویب کٹ اور گوگل بلنک کرنلز کو متاثر کیا اور ان میں ترقی کی۔ آج بھی جدید اسٹریم ڈائنامک ویب آرکیٹیکچر کے ذریعے اپنی بنیادی راہ کو جاری رکھے ہوئے ہے)"
+
+msgid "mime_script"
+msgstr "SCRIPT تشریح شدہ ڈائنامک اسکرپٹ (ان سورس کوڈ اسٹریمز کی عمومی درجہ بندی جنہیں پہلے سے مرتب کرنے کی ضرورت نہیں ہوتی اور جو ایک مخصوص رن ٹائم یا انٹرپریٹر کے ذریعے لائن بہ لائن پڑھ کر چلائی جاتی ہیں۔ ASP، JSP، CGI اور Tcl وغیرہ کا احاطہ کرتا ہے۔ سرور سائڈ کامن گیٹ وے انٹرفیس، خودکار عمل کنٹرول اور سسٹم لیول ٹاسک گلو کے لیے بڑے پیمانے پر استعمال ہوتا ہے)"
+
+msgid "mime_js"
+msgstr "JavaScript اسکرپٹ (1995 نیٹ اسکیپ براؤزر کا مقامی پروگرامنگ ماحول۔ 1997 میں ECMAScript انڈسٹری معیار قائم کیا، 2009 میں Node.js رن ٹائم وجود میں آیا، جس نے براؤزر کی حدود توڑ دیں اور فل اسٹیک ایسنکرونس نان بلاکنگ آرکیٹیکچر بنایا۔ دنیا کے سب سے بڑے npm سافٹ ویئر پیکیج ایکو سسٹم کے ساتھ)"
+
+msgid "mime_py"
+msgstr "Python اسکرپٹ (1991 میں Guido van Rossum کے ذریعے تخلیق کردہ اعلیٰ سطحی تشریح شدہ اسکرپٹنگ زبان۔ لازمی انڈینٹیشن کی وجہ سے ناقابلِ ضیاع پڑھنے کی اہلیت اور کثیر تمثیل نچلی سطح کے ڈیزائن کی بدولت، یہ اب جدید ویب آرکیٹیکچر، فل اسٹیک ڈیٹا سائنس، مصنوعی ذہانت (AI) ماڈل ٹریننگ اور کلاؤڈ نیٹیو خودکار آپس کے لیے صنعتی معیاری زبان کے طور پر قائم ہو چکی ہے)"
+
+msgid "mime_sh"
+msgstr "Shell اسکرپٹ (1971 یونکس دور کا معیاری کمانڈ انٹرپریٹر اسکرپٹ۔ Bash، Sh، Dash جیسی کرنل لیول کمانڈ تفصیلات شامل ہیں، عام طور پر .sh ایکسٹینشن کے ساتھ چلایا جاتا ہے۔ جدید یونکس جیسے آپریٹنگ سسٹمز میں نچلی سطح کے عمل کنٹرول، تنصیب کے بغیر ماحول کی ترتیب اور خودکار تعیناتی کے لیے ایک عالمگیر کرنل لیول گلو ہے)"
+
+msgid "mime_rb"
+msgstr "Ruby اسکرپٹ (1995 میں Yukihiro Matsumoto کے ذریعے تخلیق کردہ آبجیکٹ اورینٹڈ اسکرپٹنگ زبان۔ ڈویلپر کے تجربے کا انتہائی احترام اس کا مرکزی ڈیزائن فلسفہ ہے۔ اس کا Ruby on Rails فریم ورک نے 'Convention over Configuration (CoC)' کے جدید اعلیٰ سطحی ویب آرکیٹیکچر ترقیاتی نمونے کو انقلابی طور پر قائم کیا)"
+
+msgid "mime_pl"
+msgstr "Perl اسکرپٹ (1987 میں Larry Wall کے ذریعے تخلیق کردہ عملی اسکرپٹنگ زبان۔ جدید پیکیج مینیجرز کے بانی (CPAN) کے طور پر، اسے ٹیکسٹ پروسیسنگ کا 'سوئس آرمی چاقو' کہا جاتا ہے۔ جدید CGI موڈ میں، انتہائی کم فزیکل میموری لاگت، اعلیٰ کارکردگی والی ریگولر ایکسپریشن پروسیسنگ کی وجہ سے، لاگ پارسنگ کے شعبے میں ایک انتہائی قابلِ اعتماد بنیاد کے طور پر کام کرتا ہے)"
+
+msgid "mime_php"
+msgstr "PHP ڈائنامک ویب پیج (1995 میں Rasmus Lerdorf نے تخلیق کیا، خاص طور پر ویب ڈویلپمنٹ کے لیے ڈیزائن کیا گیا۔ دنیا کی 70% سے زیادہ ویب سائٹس چلانے والی بنیادی ٹیکنالوجی کے طور پر، یہ ورڈپریس، وکیپیڈیا جیسی بڑی پروڈکشن لیول ایپلیکیشنز کو گہرائی سے سپورٹ کرتا ہے۔ PHP 8 سے JIT (جسٹ ان ٹائم) کمپائلیشن رن ٹائم انجن کے متعارف ہونے کے بعد، اس نے اعلیٰ کارکردگی والے فل اسٹیک سرور سائڈ کی طرف بنیادی نمونے کی ترقی حاصل کر لی ہے)"
+
+msgid "mime_image"
+msgstr "IMAGE امیج اثاثہ کی درجہ بندی (نقصان دہ/نقصان کے بغیر کمپریسڈ بٹ میپ، جدید ریسپانسیو ویب گرافکس اور ویکٹر گرافکس کی عمومی درجہ بندی کا احاطہ کرتا ہے۔ سائٹ کے بصری وسائل کے لوڈنگ اخراجات، کلائنٹ سائڈ کیشے ہٹ ریٹ اور میڈیا نیٹ ورک بینڈوڈتھ کی کھپت کا جائزہ لینے کے لیے ایک کلیدی اشارے ہے)"
+
+msgid "mime_document"
+msgstr "DOCUMENT ساختی دستاویز کی درجہ بندی (سادہ متن، سپریڈ شیٹس، فکسڈ فارمیٹ دستاویزات (PDF) اور ہلکی مارک اپ زبانوں کی عمومی درجہ بندی کا احاطہ کرتا ہے۔ سرور سائڈ جامد نالج بیس ڈسٹری بیوشن، انٹرپرائز انفارمیشن اثاثہ ڈاؤن لوڈ اور ٹیکسٹ اسٹریم تھرو پٹ صلاحیت کے اعدادوشمار کے لیے ایک کلیدی اشارے ہے)"
+
+msgid "mime_package"
+msgstr "PACKAGE کمپائلیشن مصنوعات اور سافٹ ویئر پیکیج کی درجہ بندی (آپریٹنگ سسٹم کے مقامی قابلِ عمل پروگراموں، رن ٹائم لنک لائبریریز (DLL/SO) اور ایپلیکیشن ڈسٹری بیوشن انسٹالیشن پیکیج کی عمومی درجہ بندی کا احاطہ کرتا ہے۔ سافٹ ویئر ڈسٹری بیوشن سائٹس کے آؤٹ باؤنڈ ٹریفک اور ڈاؤن لوڈ چوٹیوں کا جائزہ لینے کے لیے اکثر کلیدی اشارے کے طور پر استعمال ہوتا ہے)"
+
+msgid "mime_archive"
+msgstr "ARCHIVE آرکائیو اور کمپریسڈ فائلیں (DEFLATE، LZMA جیسے بنیادی الگورتھم پر مبنی ڈیٹا کمپریشن پیکیج کی عمومی درجہ بندی۔ نیٹ ورک پرت میں، روایتی پیکیج ڈسٹری بیوشن کی نمائندگی کرنے کے علاوہ، 1992 کے GNU پروجیکٹ کے Gzip ڈائنامک رسپانس اسٹریم کا بھی احاطہ کرتا ہے۔ اگرچہ جدید منظرناموں میں Brotli الگورتھم آہستہ آہستہ متعارف کرایا جا رہا ہے، یہ درجہ بندی سرور بینڈوڈتھ تھرو پٹ ریٹ اور ٹرانسپورٹ پرت پریشر میں کمی کا جائزہ لینے کے لیے ایک کلیدی اشارے کے طور پر برقرار ہے)"
+
+msgid "mime_audio"
+msgstr "AUDIO ڈیجیٹل آڈیو اسٹریم کی درجہ بندی (کمپریسڈ آڈیو، آڈیو بکس اور اسٹریمنگ میڈیا آڈیو کنٹینر کی عمومی درجہ بندی کا احاطہ کرتا ہے۔ مخصوص آڈیو کوڈیک معیارات پر مبنی، ملٹی میڈیا سائٹس کے آڈیو ڈیٹا اسٹریم کے تھرو پٹ ریٹ، ہم عصر اسٹریمنگ بینڈوڈتھ اور لمبے کنکشن کی کارکردگی کی نگرانی کے لیے استعمال ہوتا ہے)"
+
+msgid "mime_video"
+msgstr "VIDEO ڈیجیٹل ویڈیو اسٹریم کی درجہ بندی (اعلیٰ ریزولیوشن ویڈیو کنٹینر، جدید ویب اینیمیشن اور اسٹریمنگ میڈیا سیگمنٹ کی عمومی درجہ بندی کا احاطہ کرتا ہے۔ اعلیٰ بوجھ والے نیٹ ورک ماحول میں سرور بینڈوڈتھ چوٹی کی حد، مواد کی ترسیل کے نیٹ ورک (CDN) کی رفتار کے اثر کا جائزہ لینے کے لیے ایک کلیدی اشارے ہے)"
+
+msgid "mime_jscript"
+msgstr "JScript اسکرپٹ (1996 میں Microsoft کی طرف سے Internet Explorer 3.0 کے لیے تیار کردہ ریورس انجینئرنگ ملکیتی نفاذ۔ ابتدائی کلاسک JavaScript کے میزبان حریف کے طور پر، یہ Windows اسکرپٹ ہوسٹ (WSH) اور ابتدائی ASP بیک اینڈ کا بنیادی انجن تھا)"
+
+msgid "mime_json"
+msgstr "JSON ساختی ڈیٹا (2001 میں Douglas Crockford کے ذریعے قائم کردہ ہلکا پھلکا ڈیٹا سیریلائزیشن ایکسچینج فارمیٹ۔ متن پر مبنی کلید ویلیو جوڑوں اور صف آرکیٹیکچر پر مبنی، انتہائی اعلیٰ انسانی پڑھنے کی اہلیت اور ناقابلِ ضیاع اسٹریم پارسنگ خصوصیت رکھتا ہے۔ یہ جدید ویب API، مائیکرو سروسز آرکیٹیکچر اور بڑے لینگویج ماڈلز کے ساتھ تعامل کے لیے ڈی فیکٹو معیار ہے)"
+
+msgid "mime_vbs"
+msgstr "VBScript اسکرپٹ (1996 میں Microsoft کی طرف سے IE 3.0 کے ساتھ جاری کردہ اسکرپٹنگ زبان کی مختلف شکل۔ کبھی ابتدائی ASP ڈائنامک ویب سائٹس اور Windows سسٹم مینجمنٹ کا بنیادی ڈرائیور تھا، اب Windows 11 کے تازہ ترین کرنل سے Microsoft کی طرف سے باضابطہ طور پر خارج کر دیا گیا ہے۔ یہ تاریخی وراثتی ٹیکنالوجی ہے)"
+
+msgid "mime_conf"
+msgstr "CONF سسٹم کنفیگریشن فائل (سافٹ ویئر رن ٹائم ماحول کے پیرامیٹرز کو سادہ متن کی شکل میں مستقل طور پر ذخیرہ کرنے والی ڈیٹا فائلوں کی عمومی درجہ بندی۔ INI اور جدید YAML، TOML، JSON تفصیلات کا احاطہ کرتا ہے۔ Linux نظاموں میں یہ زیادہ تر /etc ڈائرکٹری میں مرکوز ہوتی ہیں۔ سسٹم لیول رن ٹائم اسٹیٹ کی اصلاح کا بنیادی انحصار ہے)"
+
+msgid "mime_css"
+msgstr "CSS کیسکیڈنگ اسٹائل شیٹس (1996 W3C معیار، HTML/JS کے ساتھ فرنٹ اینڈ کے تین بنیادی اجزاء میں سے ایک ہے۔ CSS2 پوزیشننگ اور CSS3 ماڈیولر ارتقاء سے گزری۔ فلیکس باکس، گرڈ اور میڈیا کوری ریسپانسیو ڈیزائن کے لیے مقامی مدد فراہم کرتا ہے۔ جدید براؤزرز میں ویب پیج پریزنٹیشن کو الگ کرنے کے لیے یہ بالکل غالب معیار ہے)"
+
+msgid "mime_xsl"
+msgstr "XSL اسٹائل شیٹ (1999 W3C معیار، XSLT ٹرانسفارمیشن اور XPath ایڈریسنگ زبان شامل ہے، XML ساختی ڈیٹا کو HTML، PDF یا سادہ متن میں رینڈر کرنے کے لیے استعمال ہوتی ہے۔ جدید ترقی میں اس کا ماحولیاتی نظام زیادہ تر ہلکے ٹیمپلیٹ انجنوں اور JSON ڈیٹا فارمیٹ سے بدل دیا گیا ہے)"
+
+msgid "mime_runtime"
+msgstr "قابلِ عمل فائل (EXE، ELF، Mach-O جیسے آپریٹنگ سسٹم کے مقامی عمل درآمد کے فارمیٹس، جن میں مرتب شدہ نچلی سطح کا مشینی کوڈ، اندراج نقطہ اور سسٹم لوڈنگ کی معلومات ہوتی ہیں)"
+
+msgid "mime_library"
+msgstr "لائبریری فائل (DLL، SO، dylib جیسی ڈائنامک یا جامد لنک لائبریریاں، جن میں دوسرے پروگراموں کو کال کرنے اور رن ٹائم پر لوڈ کرنے کے لیے مشترکہ علامتیں اور دوبارہ جگہ دینے کا کوڈ ہوتا ہے)"
+
+msgid "mime_swf"
+msgstr "Flash اینیمیشن (1996 میں Macromedia نے تیار کیا، 2005 میں Adobe نے خرید لیا۔ انٹرایکٹو ویب اینیمیشن معیار، ایک زمانے میں انٹرنیٹ اینیمیشن اور گیمز پر غلبہ رکھتا تھا۔ کمزوریاں: پلگ ان پر انحصار، موبائل پر تعاون نہیں، اعلیٰ سیکیورٹی خطرہ۔ 2017 میں Adobe نے خاتمے کا اعلان کیا، 2020 میں مکمل تعاون بند کر دیا، HTML5/CSS3/JS نے تبدیل کر دیا)"
+
+msgid "mime_dtd"
+msgstr "DTD دستاویز کی قسم کی تعریف (1998 میں XML 1.0 کے ساتھ جاری کی گئی، XML/HTML دستاویز کی ساخت کی وضاحت اور قانونی حیثیت کی تصدیق کے لیے استعمال ہوتی ہے۔ جدید ترقی میں، اسے XML Schema، RELAX NG جیسے زیادہ لچکدار حل نے آہستہ آہستہ تبدیل کر دیا ہے)"
+
+msgid "mime_csv"
+msgstr "CSV ڈیٹا فارمیٹ (کوما سے الگ کردہ اقدار، 1972 مین فریم دور کا عالمگیر سادہ متن ٹیبل فارمیٹ (IBM Fortran کمپائلر)۔ 2005 میں RFC 4180 کے ذریعے باضابطہ طور پر معیاری بنایا گیا۔ کراس پلیٹ فارم، کراس لینگویج ناقابلِ ضیاع ڈیٹا ایکسچینج معیار کے طور پر۔ Excel، ریلیشنل ڈیٹا بیس، ڈیٹا تجزیہ (Pandas) میں موثر درآمد/برآمد کے لیے بڑے پیمانے پر استعمال ہوتا ہے۔)"
+
+msgid "mime_cur"
+msgstr "ماؤس پوائنٹر فائل (.cur فارمیٹ، ماؤس کے انداز کو اپنی مرضی کے مطابق بنانے کے لیے استعمال ہوتی ہے۔ جیسے ویب صفحات پر انگلی کا کرسر، سسٹم میں ریت کی گھڑی کے انتظار کی آئیکون۔ عام .ico آئیکون کا 'رشتہ دار' ہے، لیکن اس میں ایک اضافی 'ہاٹ سپاٹ' مقام ہوتا ہے — وہ مقام جہاں ماؤس اصل میں کلک کرتا ہے۔ تاریخ: Windows 3.1 (1992) کے ساتھ متعارف کرایا گیا، گرافیکل انٹرفیس کی کمانڈ لائن سے ماؤس آپریشن دور میں منتقلی کا ایک اہم جزو تھا)"
+
+msgid "mime_jnlp"
+msgstr "Java Web Start (2000 کی دہائی کی Java ڈیسک ٹاپ ایپلیکیشن ڈسٹری بیوشن ٹیکنالوجی، .jnlp فائل کے ذریعے دور دراز کے Java پروگرام شروع کرتی ہے۔ سیکیورٹی مسائل اور جدید تقسیم کے طریقوں کے پھیلاؤ کی وجہ سے، اب بڑی حد تک ختم کر دی گئی ہے)"
+
+msgid "mime_lit"
+msgstr "Microsoft Reader ای بک (2000 میں Microsoft نے جاری کی، LIT فارمیٹ۔ ختم کر دی گئی، اب Calibre جیسے اوزاروں سے EPUB یا PDF میں تبدیل کی جا سکتی ہے)"
+
+msgid "mime_svg"
+msgstr "SVG ویکٹر گرافکس (1999 W3C معیار، XML آرکیٹیکچر پر مبنی دو جہتی ویکٹر امیج فارمیٹ۔ من مانی پیمانے پر تیزی سے محروم ہوئے بغیر اور متن کی اسٹریم ٹرانسمیشن کا فائدہ رکھتا ہے۔ تمام جدید براؤزر اسے مقامی طور پر سپورٹ کرتے ہیں۔ اعلیٰ ریزولیوشن ویب آئیکونز، لوگو اور ویکٹر اینیمیشن رینڈرنگ کے لیے بڑے پیمانے پر استعمال ہوتا ہے۔ یہ جدید ویب گرافکس کا بنیادی معیار ہے)"
+
+msgid "mime_ai"
+msgstr "AI ویکٹر گرافکس (1987 میں Adobe نے آزادانہ طور پر تیار کردہ ملکیتی ویکٹر گرافکس فارمیٹ۔ ٹائپوگرافی، پرنٹ ڈیزائن اور برانڈ شناخت ڈیزائن کے لیے صنعتی بنیادی معیار کے طور پر، متعدد پرتوں اور اعلیٰ سطحی ترتیب ویکٹر ڈیٹا کی حمایت کرتا ہے۔ یہ پیشہ ورانہ بصری فن کے لیے پسندیدہ کیریئر ہے)"
+
+msgid "mime_phshop"
+msgstr "PSD پرت کی تصویر (1990 میں Adobe نے Photoshop کے ساتھ جاری کردہ ملکیتی راسٹر امیج سورس فائل فارمیٹ۔ متعدد پرتوں کی پرت بندی، چینلز، ماسک اور ناقابلِ ضیاع ترمیم کے ڈیٹا کی حمایت کرتا ہے۔ یہ عالمی امیج پروسیسنگ اور ڈیجیٹل پینٹنگ کے لیے صنعتی معیار کے طور پر قائم کیا گیا ہے)"
+
+msgid "mime_ttf"
+msgstr "TrueType فونٹ (1989 میں Apple اور Microsoft نے مشترکہ طور پر تیار کیا ہوا ڈیجیٹل کنٹور فونٹ فارمیٹ۔ چوکور بیزیئر منحنی خطوط پر مبنی، اسکرین ڈسپلے اور پرنٹ آؤٹ پٹ کے درمیان مکمل پکسل ہم آہنگی حاصل کرتا ہے۔ یہ جدید ڈیسک ٹاپ آپریٹنگ سسٹمز کا مقامی پہلے سے طے شدہ فونٹ فارمیٹ ہے)"
+
+msgid "mime_fon"
+msgstr "FON بٹ میپ فونٹ (1980 کی دہائی کے Microsoft Windows کا ابتدائی سسٹم لیول ڈاٹ میٹرکس فونٹ فارمیٹ۔ من مانی متناسب ناقابلِ ضیاع پیمانے کی حمایت نہیں کرتا۔ عام طور پر میراثی نظاموں یا ابتدائی ایمبیڈڈ ڈیوائس اجزاء کے ساتھ محدود پکسل شدہ متن کی رینڈرنگ کے لیے استعمال ہوتا ہے)"
+
+msgid "mime_pdf"
+msgstr "PDF الیکٹرانک دستاویز (1993 میں Adobe نے تیار کیا اور 2008 میں ISO 32000 بین الاقوامی معیار بن گیا۔ کراس پلیٹ فارم فکسڈ لے آؤٹ دستاویز فارمیٹ۔ اس میں مکمل ترتیب اور فارمیٹ کی وفاداری ہے۔ یہ عالمی الیکٹرانک سرکاری دستاویز کی تقسیم اور ڈیجیٹل اشاعت کا عالمگیر معیار ہے)"
+
+msgid "mime_dotnet"
+msgstr "ASP.NET ڈائنامک صفحہ (2002 میں Microsoft نے .NET آرکیٹیکچر کے ساتھ جاری کردہ سرور سائڈ ڈائنامک ویب ٹیکنالوجی۔ IIS رینڈرنگ انجن پر چلتی ہے، جو انٹرپرائز لیول Windows سرور سائڈ ڈائنامک ویب ایپلیکیشنز اور تقسیم شدہ نظاموں کی تعمیر کے لیے استعمال ہوتی ہے)"
+
+msgid "mime_mdb"
+msgstr "MDB ریلیشنل ڈیٹا بیس (1992 میں Microsoft نے Access کے ساتھ جاری کردہ ڈیسک ٹاپ لیول ریلیشنل ڈیٹا بیس اسٹوریج فارمیٹ۔ بلٹ ان Jet ڈیٹا بیس انجن ہے، ذاتی کمپیوٹرز اور چھوٹے اور درمیانے درجے کے کاروباری اداروں کی ابتدائی معلوماتی انتظامیہ میں ایک ریلیشنل ڈیٹا بیس حل کے طور پر استعمال ہوتا تھا)"
+
+msgid "mime_md"
+msgstr "Markdown دستاویز (2004 میں John Gruber نے آزادانہ طور پر تخلیق کیا ہوا ہلکی پھلکی مارک اپ زبان۔ بنیادی ڈیزائن فلسفہ 'قابلِ مطالعہ ہے تو قابلِ رینڈر ہے' ہے، جو GFM اور CommonMark جیسے جدید مشتق معیارات کو چلاتا ہے۔ تکنیکی دستاویزات، نالج بیس (Obsidian) اور جدید جامد ویب سائٹ جنریٹرز کے لیے ایک بنیادی تبادلے کے معیار کے طور پر بڑے پیمانے پر استعمال ہوتی ہے)"
+
+msgid "mime_crystal"
+msgstr "Crystal Reports (SAP بزنس انٹیلیجنس (BI) پلیٹ فارم کا پیشہ ورانہ انٹرپرائز لیول رپورٹ فائل فارمیٹ۔ متعدد ڈیٹا ذرائع سے نچلی سطح کا کنکشن اور پیچیدہ ڈائنامک چارٹ رینڈرنگ کی صلاحیتیں رکھتا ہے، کثیر القومی کمپنیوں کے مالیاتی اور ڈیٹا تجزیہ نظاموں میں پیشہ ورانہ رپورٹ کی تیاری کے لیے بڑے پیمانے پر استعمال ہوتا ہے)"
+
+msgid "mime_libreoffice"
+msgstr "LibreOffice دستاویز (2010 میں The Document Foundation نے OpenOffice فورک کی بنیاد پر بنائے گئے اوپن سورس آفس سوٹ کا ملکیتی فارمیٹ۔ W3C کے ODP (اوپن ڈاکومنٹ فارمیٹ) بین الاقوامی معیار کو گہرائی سے نافذ کرتا ہے۔ یہ جدید اوپن سورس ماحولیاتی نظام کی دفتری بنیاد ہے)"
+
+msgid "mime_encrypt"
+msgstr "ENCRYPT خفیہ کردہ فائل (مخصوص ہم آہنگ یا غیر ہم آہنگ خفیہ کاری الگورتھم کے ذریعے پروسیس شدہ خام بائنری یا متن کا ڈیٹا۔ .enc، .pgp، .gpg جیسے بنیادی مشتق فارمیٹس شامل ہیں۔ نیٹ ورک پرت میں، غیر عوامی ڈیٹا کی رازداری اور سالمیت کی تصدیق کو یقینی بنانے کے لیے استعمال ہوتی ہے)"
+
+msgid "mime_gpx"
+msgstr "GPX سیٹلائٹ ٹریک ڈیٹا (XML آرکیٹیکچر پر مبنی عالمی پوزیشننگ سسٹم ایکسچینج فارمیٹ۔ خاص طور پر جغرافیائی نقاط، وے پوائنٹس، راستوں اور تاریخی ٹریکس کی وضاحت کے لیے استعمال ہوتا ہے۔ یہ جدید موبائل کھیلوں کے آلات، کار نیویگیشن اور جغرافیائی معلوماتی نظاموں (GIS) کے لیے ایک مشترکہ کھلا ڈیٹا معیار ہے)"
+
+msgid "mime_diskimage"
+msgstr "Disk Image ڈسک امیج (ISO، DMG، IMG سمیت فزیکل ڈسک یا آپٹیکل میڈیا کی بائٹ بہ بائٹ نچلی سطح کے سیکٹر امیج فائلیں شامل ہیں۔ سسٹم کی نچلی سطح کی تعیناتی، بڑی گنجائش والے سافٹ ویئر کی محفوظ تقسیم اور اسٹوریج میڈیا کی فزیکل لیول مکمل ڈیٹا بیک اپ کے لیے استعمال ہوتی ہے)"
+
+msgid "mime_vm"
+msgstr "VM ورچوئل مشین امیج (VMDK، VDI، VHDX، OVA سمیت ورچوئلائزڈ فزیکل ڈسک امیجز شامل ہیں۔ VMware، VirtualBox اور Hyper-V پلیٹ فارمز کی بنیاد کے طور پر، نچلی سطح کے سسٹم لیول ہارڈویئر ایمولیشن، مثال کے فوری سنیپ شاٹس اور کلاؤڈ انفراسٹرکچر کی تقسیم کے لیے استعمال ہوتی ہے)"
+
+msgid "mime_torrent"
+msgstr "BitTorrent ٹورنٹ فائل (2001 میں Bram Cohen کے ذریعے ڈیزائن کردہ P2P پیر ٹو پیر تقسیم شدہ ڈاؤن لوڈ انڈیکس۔ Bencode انکوڈنگ پر مبنی، اصل فائل کے نچلی سطح کے چیکسم میٹا ڈیٹا اور ٹریکر سرور ایڈریسنگ معلومات کو ذخیرہ کرتی ہے۔ یہ وکندریقرت نیٹ ورک فلو ڈسٹری بیوشن کا بنیادی کیریئر ہے)"
+
+msgid "mime_gis"
+msgstr "GIS جغرافیائی خلائی ڈیٹا (Shapefile اور GeoJSON کو مرکز بنا کر جغرافیائی معلوماتی نظام کا ڈیٹا معیار۔ کثیر جہتی ہندسی نقاط، پرت ٹوپولوجی اور وصفاتی ڈیٹا شامل ہیں۔ اعلیٰ صحت والے ڈیجیٹل نقشہ رینڈرنگ، سیٹلائٹ ریموٹ سینسنگ اور مقامی ہندسی تجزیہ کے لیے بڑے پیمانے پر استعمال ہوتا ہے)"
+
+msgid "mime_ebook"
+msgstr "EBOOK ای بک (W3C کے EPUB کھلے بین الاقوامی معیار، Amazon Kindle کے ملکیتی MOBI/AZW آرکیٹیکچر کو مرکز بنا کر ڈیجیٹل اشاعت کا فارمیٹ۔ انکولی اسٹریم لے آؤٹ، میٹا ڈیٹا انکیپسولیشن اور DRM ڈیجیٹل حقوق کے تحفظ کی حمایت کرتا ہے۔ یہ موبائل آلات پر ڈیجیٹل پڑھنے کے لیے ایک عالمگیر کیریئر ہے)"
+
+msgid "mime_avif"
+msgstr "AVIF اعلیٰ کارکردگی والی تصویر (2019 میں اوپن میڈیا الائنس (AOMedia) کے ذریعے متعارف کرایا گیا اگلی نسل کا الٹرا ہائی ریزولیوشن امیج معیار۔ AV1 ویڈیو انکوڈنگ کی فریم ٹیکنالوجی پر مبنی، کمپریشن کی شرح WebP سے 50% بہتر ہے اور ہائی ڈائنامک رینج (HDR) کی مقامی طور پر حمایت کرتا ہے۔ یہ جدید ویب امیج ٹرانسمیشن کا مرکزی دھارے کا معیار ہے)"
+
+msgid "mime_markdown"
+msgstr "Markdown ہلکا پھلکا دستاویز (2004 میں John Gruber نے آزادانہ طور پر تخلیق کردہ ٹیکسٹ دستاویز مارک اپ زبان۔ سادہ متن کا اعلانیہ ڈیزائن استعمال کرتی ہے، اس کا نحو ڈیزائن reStructuredText سے متاثر ہے۔ GitHub منصوبوں، انجینئرنگ لیول تکنیکی دستاویزات اور جدید جامد مواد کے انتظام کے ماحولیاتی نظام کے لیے بڑے پیمانے پر استعمال ہوتی ہے)"
+
+msgid "mime_yaml"
+msgstr "YAML سیریلائزیشن کنفیگریشن (2001 میں Clark Evans اور دیگر کے ذریعے ڈیزائن کردہ انسانی قرات پذیر ڈیٹا سیریلائزیشن فارمیٹ۔ درجہ بندی انڈینٹیشن اور کلید قدر میپنگ پر مبنی۔ اب یہ Kubernetes کنٹینر آرکیسٹریشن، Ansible آٹومیشن اور Docker Compose کے لیے کلاؤڈ نیٹیو انفراسٹرکچر کنفیگریشن معیار کے طور پر قائم ہو چکا ہے)"
+
+msgid "mime_toml"
+msgstr "TOML معنوی کنفیگریشن (2013 میں Tom Preston Werner نے ڈیزائن کیا ہوا انتہائی کم سے کم زبان۔ مضبوط ٹائپنگ، واضح میپنگ اور معنوی وضاحت جیسے نچلی سطح کے ڈیزائن کے فوائد رکھتی ہے۔ اب یہ Rust (Cargo)، Python (pyproject.toml) اور Go کے جدید ٹول چینز کے لیے ایک معیاری کنفیگریشن فائل کے طور پر بڑے پیمانے پر استعمال ہوتی ہے)"
+
+msgid "mime_vue"
+msgstr "Vue سنگل فائل جزو (2014 میں Evan You کے ذریعے متعارف کرایا گیا ترقی پسند ویب فریم ورک کا ملکیتی SFC فارمیٹ۔ ایک ہی فائل میں HTML/CSS/JS کی فکری علیحدگی اور رد عمل والی حالت کی پابندی کو نافذ کرتا ہے، جدید ویب انٹرایکٹو فرنٹ اینڈ ایپلیکیشنز اور بڑے پیمانے پر جامد سائٹ انجنوں کو گہرائی سے چلاتا ہے)"
+
+msgid "mime_wasm"
+msgstr "WebAssembly بائنری ماڈیول (2017 میں W3C کے ذریعے قائم کردہ ویب کے لیے اعلیٰ کارکردگی والا نچلی سطح کا بائٹ کوڈ معیار۔ C/C++/Rust جیسی مضبوط قسم کی زبانوں کو براؤزر سینڈ باکس ہدف پر مرتب کرنے کی اجازت دیتا ہے، جو مقامی ہارڈویئر کے قریب عمل درآمد کی کارکردگی فراہم کرتا ہے۔ یہ جدید ویب ایج کمپیوٹنگ کا بنیادی پتھر ہے)"
+
+msgid "mime_jsx"
+msgstr "React JSX جزو (2013 میں Facebook نے React فریم ورک کے ساتھ جاری کردہ JavaScript XML نحوی توسیع۔ JavaScript میں DOM ورچوئل ساخت کو اعلانیہ طور پر بنانے کی حمایت کرتا ہے، فرنٹ اینڈ ڈویلپمنٹ میں 'UI حالت کا فنکشن ہے' کے جزو پر مبنی ترقیاتی نمونے کو نافذ کیا)"
+
+msgid "mime_tsx"
+msgstr "TypeScript TSX جزو (2012 میں Microsoft کے ذریعے تیار کردہ TypeScript مضبوط قسم کے نحو اور JSX کا اسٹریم مجموعہ۔ React جزو کی ترقی میں جامد کمپائل ٹائم قسم کی جانچ اور انٹرفیس کی رکاوٹوں کو داخل کرتا ہے۔ یہ جدید بڑے فرنٹ اینڈ سسٹمز کی محفوظ ترقی کے لیے ایک کوڈ معیار ہے)"
+
+msgid "mime_heif"
+msgstr "HEIF اعلیٰ کارکردگی والی تصویر (2015 میں MPEG تنظیم کے ذریعے قائم کردہ اعلیٰ کارکردگی والی امیج فائل فارمیٹ۔ HEVC (H.265) ویڈیو انکوڈنگ الگورتھم پر مبنی، بہت کم حجم میں متعدد فریم امیجز، ڈیپتھ میپس اور میٹا ڈیٹا کو ایڈجسٹ کرنے کی حمایت کرتا ہے۔ یہ جدید موبائل آپریٹنگ سسٹمز اور سمارٹ ٹرمینل آلات کے لیے ایک ملکیتی اسٹوریج معیار ہے)"
+
+msgid "mime_heic"
+msgstr "HEIC اعلیٰ کارکردگی والی تصویر (HEIF بین الاقوامی معیار کی بنیاد پر Apple کے ذریعے نافذ کردہ ملکیتی بٹ میپ فارمیٹ۔ جدید iPhone کے پہلے سے طے شدہ فوٹو اسٹوریج معیار کے طور پر، یہ iOS/macOS ہارڈویئر لیول انکوڈنگ/ڈی کوڈنگ اور مقامی آپریٹنگ سسٹم کی حمایت حاصل کرتا ہے۔ اعلیٰ تصویری معیار کو یقینی بناتے ہوئے، بنیادی اسٹوریج کی جگہ کو ڈرامائی طور پر کم کرتا ہے)"
+
+msgid "mime_gltf"
+msgstr "glTF 3D اثاثہ ماڈل (2015 میں Khronos Group کے ذریعے جاری کردہ GL ٹرانسفر فارمیٹ معیار۔ تین جہتی مناظر کو بیان کرنے کے لیے JSON آرکیٹیکچر استعمال کرتا ہے، جسے '3D دائرے کا JPEG' کہا جاتا ہے۔ یہ جدید WebGL/WebGPU اور ورچوئل رئیلٹی رینڈرنگ کے لیے ایک ہلکا صنعتی معیار ہے)"
+
+msgid "mime_glb"
+msgstr "GLB بائنری 3D ماڈل (glTF اثاثہ ماڈل کا مکمل بائنری، ناقابلِ ضیاع انکیپسولیشن ورژن۔ منظر کی ساخت، نچلی سطح کے جال کی چوٹی کے ڈیٹا، مواد اور بناوٹ کے نقشوں کو ایک ہی فائل میں یکجا کرتا ہے۔ کراس پلیٹ فارم ویب 3D اثاثوں کی موثر ترسیل اور اسٹریم ڈسٹری بیوشن کے لیے خاص طور پر ڈیزائن کیا گیا ہے)"
+
+msgid "mime_gls"
+msgstr "GLOSSARY ڈیٹا ذخیرہ الفاظ (دستاویز کے انتظام کے نظام اور ساختی کارپورا کے لیے خاص طور پر اصطلاحات کے سیٹ کی تعریف کی فائل۔ بلٹ ان معیاری اصطلاح کی تعریفیں، کثیر لسانی میپنگز اور میٹا ڈیٹا میپنگز شامل ہیں۔ خودکار متن کے تجزیہ اور مواد کی اشاعت کے نظاموں کے تصوراتی ہم آہنگی کو برقرار رکھنے کے لیے استعمال ہوتی ہے)"
+
+msgid "mime_cbz"
+msgstr "CBZ کامک بک (ZIP کمپریشن ساخت پر مبنی ملکیتی کامک امیج آرکائیونگ فارمیٹ۔ اندرونی طور پر مسلسل جامد بٹ میپ ترتیب کو انکیپسولیٹ کرتی ہے۔ یہ ڈیجیٹل کامک اشاعت اور کراس پلیٹ فارم مقامی مجموعہ کے لیے ایک عالمگیر ہلکا کنٹینر معیار ہے)"
+
+msgid "mime_cbr"
+msgstr "CBR کامک بک (RAR کمپریشن ساخت پر مبنی ملکیتی کامک امیج آرکائیونگ فارمیٹ۔ جامد بٹ میپ ترتیب کو انکیپسولیٹ کرنے کے لیے RAR الگورتھم استعمال کرتی ہے، نسبتاً اعلیٰ کمپریشن کی شرح رکھتی ہے، ڈیجیٹل کامک ڈسٹری بیوشن کے شعبے میں وسیع مطابقت کی حمایت رکھتی ہے)"
+
+msgid "mime_fb2"
+msgstr "FB2 ای بک (2000 کی دہائی کے اوائل کا FictionBook 2.0 ای بک معیار۔ کتاب کی خصوصیات اور متن کے درجہ بندی کو بیان کرنے کے لیے خالص XML ساخت استعمال کرتی ہے۔ اوپن سورس ای بک ماحولیاتی نظام اور میراثی ڈیجیٹل اشاعت پڑھنے والوں میں وسیع حمایت حاصل ہے)"
+
+msgid "mime_kepub"
+msgstr "KEPUB ای بک (Kobo کا EPUB معیار سے تیار کردہ ملکیتی بہتر ای بک فارمیٹ۔ Kobo کے ہارڈویئر لیول ای بک قارئین کے لیے نچلی سطح کی رینڈرنگ اصلاح کرتی ہے، زیادہ موثر صفحہ کی ترتیب اور پڑھنے کے اعدادوشمار کے تعامل فراہم کرتی ہے)"
+
+msgid "mime_m4b"
+msgstr "M4B آڈیو بک (MPEG-4 Part 14 (MP4) کنٹینر آرکیٹیکچر پر مبنی آڈیو بک فارمیٹ۔ AAC انکوڈنگ استعمال کرتی ہے، نچلی سطح کے بک مارک مقام، بریک پوائنٹ سے دوبارہ شروع کر کے چلانے اور ابواب کو ایمبیڈ کرنے کی مقامی حمایت رکھتی ہے۔ ایک زمانے میں Apple iTunes ماحولیاتی نظام کا معیاری فارمیٹ تھا)"
+
+msgid "mime_kfx"
+msgstr "Kindle KFX فارمیٹ (2015 میں Amazon نے Kindle کے ساتھ جاری کردہ ملکیتی بہتر ڈیجیٹل اشاعت فارمیٹ۔ جدید حرفی جوڑ کی ترتیب، اعلیٰ حرکیاتی فونٹ رینڈرنگ اور کرنل لیول اسٹریم صفحہ لوڈنگ (Page Flip) کی حمایت کرتا ہے۔ یہ جدید Kindle پلیٹ فارم کا بنیادی معیار ہے)"
+
+msgid "mime_chm"
+msgstr "CHM مرتب شدہ ہیلپ فائل (1997 میں Microsoft کے ذریعے جاری کردہ مرتب شدہ HTML ہیلپ معلوماتی نظام۔ ہائپر ٹیکسٹ ڈیٹا اور بنیادی انڈیکس کو ایک ہی بائنری کنٹینر میں پیک کرتی ہے۔ طویل عرصے تک Windows سافٹ ویئر کے لیے مقامی آف لائن ہیلپ دستاویزات کا معیاری فارمیٹ رہی ہے)"
+
+msgid "mime_mht"
+msgstr "MHT ویب صفحہ آرکائیو (1999 میں Microsoft کے ذریعے جاری کردہ MIME مجموعی ہائپر ٹیکسٹ فارمیٹ۔ RFC 2557 معیار پر مبنی، HTML سورس، CSS، JS اور ایمبیڈڈ امیجز کو ایک ہی ٹیکسٹ فائل میں انکیپسولیٹ کرتی ہے۔ میراثی براؤزرز میں آف لائن ویب صفحہ محفوظ کرنے کے لیے استعمال ہوتی ہے)"
+
+msgid "mime_wml"
+msgstr "WML وائرلیس مارک اپ لینگویج (1999 میں WAP (وائرلیس ایپلیکیشن پروٹوکول) فورم کے ذریعے قائم کردہ موبائل مارک اپ معیار۔ XML تفصیلات پر مبنی، خاص طور پر ابتدائی تنگ بینڈ وائرلیس سیلولر نیٹ ورکس اور کم طاقت والے فیچر فونز کے لیے ڈیزائن کیا گیا۔ جدید ویب ماحولیاتی نظام میں یہ ریٹائرڈ میراثی ٹیکنالوجی ہے)"
+
+msgid "mime_xhtml"
+msgstr "XHTML ہائپر ٹیکسٹ ویب صفحہ (2000 W3C معیار، XML آرکیٹیکچر پر مبنی سخت قسم کی ہائپر ٹیکسٹ مارک اپ زبان کی انکیپسولیشن۔ 2009 میں W3C نے اس کی تکنیکی ترقی روک دی اور مکمل طور پر HTML5 تفصیلات کی طرف منتقل ہو گیا۔ اب زیادہ تر میراثی نظاموں میں معنوی ویب صفحہ رینڈرنگ کے لیے استعمال ہوتا ہے)"
+
+msgid "mime_xml"
+msgstr "XML ساختی دستاویز (1998 W3C معیار کی قابلِ توسیع مارک اپ زبان۔ خود وضاحتی ٹیگ آرکیٹیکچر رکھتی ہے۔ یہ نیٹ ورک ویب سروسز (SOAP/REST)، سسٹم لیول کنفیگریشن فائلوں (XSD) اور کراس پلیٹ فارم ڈیٹا کے تبادلے کے لیے بنیادی پتھر کا فارمیٹ ہے)"
+
+msgid "mime_sgml"
+msgstr "SGML عام شدہ مارک اپ لینگویج (1986 ISO 8879 بین الاقوامی معیار کی معیاری عام شدہ مارک اپ زبان۔ الیکٹرانک دستاویزات کی ساختی وضاحت کے صنعتی علمبردار کے طور پر، XML اور ابتدائی HTML تفصیلات دونوں اس معیاری میٹا زبان سے ماخوذ ہیں)"
+
+msgid "mime_apng"
+msgstr "APNG ڈائنامک گرافکس (2004 میں Mozilla کے ذریعے تیار کردہ پورٹیبل نیٹ ورک گرافکس (PNG) کی ڈائنامک توسیع۔ 24 بٹ حقیقی رنگوں اور 8 بٹ الفا چینل نیم شفافیت کی حمایت کرتا ہے۔ یہ جدید ویب منظرناموں میں GIF فارمیٹ کا ایک اعلیٰ ریزولیوشن متبادل ہے)"
+
+msgid "mime_bmp"
+msgstr "BMP مقامی بٹ میپ (Windows 1.0 دور سے قائم کردہ Microsoft پلیٹ فارم کا ڈیوائس سے آزاد بٹ میپ فارمیٹ۔ ناقابلِ ضیاع، غیر کمپریسڈ اسٹوریج استعمال کرتا ہے، اگرچہ اس کا حجم عام طور پر PNG سے 3-10 گنا بڑا ہوتا ہے، لیکن انکوڈنگ/ڈی کوڈنگ کے اضافی اخراجات نہ ہونے کی وجہ سے، یہ آج بھی Windows 11 کے بنیادی اجزاء، EXE/MSI وسائل کے حصوں اور میراثی ڈرائیوروں کے گرافکس بفرز میں بڑے پیمانے پر ایمبیڈڈ ہے)"
+
+msgid "mime_cdr"
+msgstr "CDR ویکٹر گرافکس (کینیڈا کی Corel کمپنی کا ملکیتی CorelDRAW پیشہ ورانہ ویکٹر ڈیزائن سورس فائل فارمیٹ۔ متعدد پرتوں کے رنگوں کا انتظام، پیچیدہ ریاضیاتی شکلی نوڈس اور پرنٹ گریڈ لے آؤٹ ڈیٹا کی حمایت کرتا ہے۔ یہ پیشہ ورانہ فلیٹ پرنٹنگ اور اشتہاری ڈیزائن کے شعبے کے لیے ایک خاص فارمیٹ ہے)"
+
+msgid "mime_gif"
+msgstr "GIF انڈیکسڈ رنگ امیج (1987 میں CompuServe کے ذریعے تیار کردہ 8 بٹ انڈیکسڈ رنگ بٹ میپ فارمیٹ۔ LZW الگورتھم پر مبنی، 256 رنگوں کی سطحوں اور ایک رنگ کی شفافیت تک محدود، اعلیٰ فریم ریٹ پر حجم بڑھ جاتا ہے۔ اب APNG، WebP جیسے جدید اعلیٰ کارکردگی والے ڈائنامک امیج معیارات سے آہستہ آہستہ تبدیل کیا جا رہا ہے)"
+
+msgid "mime_ico"
+msgstr "ICO سسٹم آئیکون (Windows مقامی آئیکون وسائل کی انکیپسولیشن فارمیٹ۔ ایک ہی کنٹینر میں متعدد پکسل ریزولوشنز اور رنگ گہرائیوں کے امیج ورائینٹس کو ملا کر ایمبیڈ کرنے کی حمایت کرتا ہے۔ یہ جدید ویب براؤزر سائٹ کی بنیادی شناخت کنندہ (Favicon) کے لیے ایک عالمگیر تقسیم کا معیار بھی ہے)"
+
+msgid "mime_jpeg"
+msgstr "JPEG کمپریسڈ امیج (1992 ISO 10918 بین الاقوامی معیار کا نقصان دہ کمپریشن امیج فارمیٹ۔ مجرد کوزائن ٹرانسفارم (DCT) الگورتھم پر مبنی، اعلیٰ کمپریشن تناسب حاصل کرتے ہوئے شاندار حقیقت پسندانہ تصویری معیار کو برقرار رکھتا ہے۔ یہ عالمی انٹرنیٹ جامد فوٹوگرافی کا مکمل ڈی فیکٹو معیار ہے)"
+
+msgid "mime_jpg"
+msgstr "JPEG کمپریسڈ امیج (1992 ISO 10918 بین الاقوامی معیار کا نقصان دہ کمپریشن امیج فارمیٹ۔ مجرد کوزائن ٹرانسفارم (DCT) الگورتھم پر مبنی، اعلیٰ کمپریشن تناسب حاصل کرتے ہوئے شاندار حقیقت پسندانہ تصویری معیار کو برقرار رکھتا ہے۔ یہ عالمی انٹرنیٹ جامد فوٹوگرافی کا مکمل ڈی فیکٹو معیار ہے)"
+
+msgid "mime_png"
+msgstr "PNG ناقابلِ ضیاع امیج (1996 میں W3C کے ذریعے تجویز کردہ پورٹیبل نیٹ ورک گرافکس معیار۔ ناقابلِ ضیاع کمپریشن الگورتھم استعمال کرتا ہے، 24 بٹ حقیقی رنگوں اور 8 بٹ الفا چینل شفافیت کی مقامی حمایت رکھتا ہے۔ کلاسک جامد GIF کے اعلیٰ ریزولیوشن متبادل کے طور پر، یہ انٹرنیٹ پر ناقابلِ ضیاع پکسل امیجز کا مکمل ڈی فیکٹو معیار ہے)"
+
+msgid "mime_ps"
+msgstr "PostScript صفحہ تفصیل فائل (1985 میں Adobe کے ذریعے متعارف کرایا گیا اسٹیک پر مبنی صفحہ تفصیل زبان۔ PDF فارمیٹ کے تکنیکی پیشرو کے طور پر، یہ نچلی سطح پر ہارڈویئر سے آزاد ٹائپوگرافی اور اعلیٰ صحت والی ویکٹر گرافکس رینڈرنگ کو نافذ کرتا ہے۔ یہ پیشہ ورانہ پرنٹنگ اشاعت اور لیزر پرنٹنگ کے شعبوں کے لیے ایک بنیادی معیار ہے)"
+
+msgid "mime_psb"
+msgstr "PSB بڑی پرت والی دستاویز (Adobe Photoshop کا ملکیتی بہت بڑی سورس فائل انکیپسولیشن فارمیٹ۔ یہ معیاری PSD فارمیٹ کی 2GB فزیکل سائز اور 30,000 پکسل کی اندرونی ایڈریسنگ حدود کو توڑتا ہے۔ خاص طور پر بہت بڑے پیمانے، اعلیٰ پرت گہرائی والے دیوہیکل ڈیجیٹل آرٹ اثاثوں کو ذخیرہ کرنے کے لیے ڈیزائن کیا گیا ہے)"
+
+msgid "mime_psd"
+msgstr "PSD پرت ڈیزائن سورس فائل (Adobe Photoshop کا ملکیتی پرت والی امیج انجینئرنگ فارمیٹ۔ گرافکس اور امیج ڈومین میں صنعتی معیاری کنٹینر کے طور پر، یہ مکمل پرت رینڈرنگ ٹری، بٹ میپ چینلز، ویکٹر کلپنگ پاتھ اور مرکب مکسنگ موڈز کو مقامی طور پر انکیپسولیٹ کرتا ہے، ناقابلِ ضیاع مکمل ڈیٹا ایڈیٹنگ کی حمایت کرتا ہے)"
+
+msgid "mime_webp"
+msgstr "WebP اعلیٰ کارکردگی والی تصویر (2010 میں Google کے ذریعے متعارف کرایا گیا عالمگیر ویب گرافکس انکوڈنگ معیار۔ VP8 ویڈیو کی فریم ٹیکنالوجی سے ماخوذ، یہ نقصان دہ، ناقابلِ ضیاع، نیم شفاف اور ڈائنامک رینڈرنگ کے ساتھ بالکل مطابقت رکھتا ہے۔ ایک جیسے معیار والے PNG کے مقابلے میں حجم 25-35% کم کرتا ہے۔ یہ جدید ویب صفحہ کی اعلیٰ کارکردگی والی لوڈنگ کا بنیادی پتھر ہے)"
+
+msgid "mime_woff"
+msgstr "WOFF ویب گلائف فائل (2009 میں تخلیق کیا گیا اور 2012 میں W3C معیار بننے والا اوپن ویب فونٹ فارمیٹ۔ خلاصہ یہ کہ، یہ معیاری TTF/OTF فونٹ ڈھانچوں کا اسٹریم ناقابلِ ضیاع کمپریشن انکیپسولیشن ہے، جو نیٹ ورک ٹرانسمیشن بینڈوڈتھ کے اخراجات کو بہت زیادہ بہتر بناتا ہے۔ یہ جدید ویب سائٹ آئیکونز اور کلاؤڈ فونٹس کے لیے ایک عالمگیر فارمیٹ ہے)"
+
+msgid "mime_7z"
+msgstr "7z کمپریسڈ آرکائیو (1999 میں Igor Pavlov کے ذریعے تیار کردہ 7-Zip کا ملکیتی فارمیٹ۔ اوپن سورس LZMA/LZMA2 الگورتھم پر مبنی، انتہائی اعلیٰ کمپریشن کی شرح رکھتا ہے۔ ایک جیسے حالات میں اس کا حجم عام طور پر ZIP سے 30-50% چھوٹا ہوتا ہے۔ یہ اوپن سورس کمیونٹی اور سافٹ ویئر کی تقسیم کے لیے ایک عالمگیر اعلیٰ کمپریشن تناسب والا فارمیٹ ہے)"
+
+msgid "mime_ace"
+msgstr "ACE کمپریسڈ آرکائیو (1990 کی دہائی کا WinACE ملکیتی کمپریشن فارمیٹ۔ ایک زمانے میں RAR فارمیٹ سے مقابلہ کیا اور نسبتاً اعلیٰ کمپریشن کی شرح رکھتا تھا۔ 2007 کے بعد تکنیکی تکرار رک گئی، اب 7z اور RAR فارمیٹس نے تبدیل کر دیا ہے۔ یہ میراثی نظام آرکائیونگ فارمیٹ میں شامل ہے)"
+
+msgid "mime_bz2"
+msgstr "BZIP2 کمپریسڈ آرکائیو (1996 میں Julian Seward کے ذریعے تیار کردہ بلاک ترتیب دینے والا کمپریشن فارمیٹ۔ اس کا بنیادی الگورتھم GZIP سے 15-20% زیادہ کمپریشن کی شرح رکھتا ہے لیکن حسابی لاگت زیادہ ہے۔ Linux کرنل سورس کوڈ اور اوپن سورس سافٹ ویئر پیکیجز کی تقسیم کے لیے اکثر استعمال ہوتا ہے۔ معیاری توسیع .bz2 ہے)"
+
+msgid "mime_cab"
+msgstr "CAB کمپریسڈ آرکائیو (1995 میں Microsoft نے آزادانہ طور پر تیار کیا ہوا کیبنٹ آرکائیونگ فارمیٹ۔ Windows سسٹم کے مقامی انسٹالیشن پیکیج معیار کے طور پر، ڈرائیورز اور کرنل فائلوں کی تقسیم کے لیے استعمال ہوتا ہے۔ یہ Windows Installer (MSI) کے لیے بنیادی اسٹوریج کنٹینر بھی ہے)"
+
+msgid "mime_dmg"
+msgstr "DMG ڈسک امیج (1980 کی دہائی میں Apple کے ذریعے تیار کردہ ڈسک امیج فارمیٹ۔ macOS سافٹ ویئر کی تقسیم کے معیاری کنٹینر کے طور پر، ورچوئل فائل سسٹم کے طور پر فزیکل ماؤنٹنگ، نچلی سطح کے کمپریشن اور ڈیٹا انکرپشن کی حمایت کرتا ہے۔ یہ Mac ماحولیاتی نظام میں ایپلیکیشن کی تقسیم کا مرکزی دھارے کا فارمیٹ ہے)"
+
+msgid "mime_emz"
+msgstr "EMZ کمپریسڈ تصویر (Windows Enhanced Metafile EMF کا کمپریسڈ ورژن۔ خلاصہ یہ کہ، یہ GZIP الگورتھم کے ذریعے کمپریس کردہ بائنری ویکٹر گرافکس ہے۔ Microsoft Office سیریز کی دستاویزات میں ایمبیڈڈ ویکٹر گرافکس کو ذخیرہ کرنے کے لیے بڑے پیمانے پر استعمال ہوتی ہے)"
+
+msgid "mime_gz"
+msgstr "GZIP کمپریسڈ آرکائیو (1992 میں GNU پروجیکٹ کے Jean-loup Gailly اور Mark Adler کے ذریعے تیار کردہ معیاری اسٹریم کمپریشن فارمیٹ۔ Unix/Linux معیاری کمپریشن ٹول کے طور پر، یہ HTTP ٹرانسپورٹ پرت کمپریشن (Gzip) کا بنیادی معیار بھی ہے۔ اکثر TAR آرکائیونگ کے ساتھ استعمال ہوتا ہے)"
+
+msgid "mime_jar"
+msgstr "JAR کمپریسڈ آرکائیو (1997 میں Sun Microsystems کے ذریعے متعارف کرایا گیا Java ARchive آرکائیونگ فارمیٹ۔ خلاصہ یہ کہ، یہ ZIP ساخت پر مبنی پیکیجنگ کنٹینر ہے، Java کلاس لائبریریوں اور میٹا ڈیٹا کو انکیپسولیٹ کرنے کے لیے استعمال ہوتا ہے۔ یہ Maven، Gradle اور ابتدائی Android ماحولیاتی نظام کا بنیادی کمپائلیشن پروڈکٹ ہے)"
+
+msgid "mime_lzma"
+msgstr "LZMA کمپریسڈ آرکائیو (1998 میں Igor Pavlov کے ذریعے تیار کردہ Lempel-Ziv-Markov چین کمپریشن الگورتھم۔ 7z فارمیٹ کے بنیادی انجن کے طور پر، انتہائی اعلیٰ کمپریشن کی شرح اور تیز رفتاری سے ڈیکمپریشن کی خصوصیات رکھتا ہے۔ ہارڈویئر فرم ویئر اور ایمبیڈڈ سسٹمز کی تقسیم کے لیے بڑے پیمانے پر استعمال ہوتا ہے)"
+
+msgid "mime_rar"
+msgstr "RAR کمپریسڈ آرکائیو (1993 میں Eugene Roshal کے ذریعے تیار کردہ WinRAR کا ملکیتی آرکائیونگ فارمیٹ۔ والیومز میں تقسیم، فزیکل ریکوری ریکارڈز (ECC) اور اعلیٰ طاقت والی انکرپشن کی حمایت کرتا ہے۔ کمپریشن کی شرح معیاری ZIP سے بہتر ہے، ذاتی کمپیوٹرز اور تجارتی شعبے میں وسیع مطابقت کی حمایت رکھتا ہے)"
+
+msgid "mime_tar"
+msgstr "TAR آرکائیو پیکیج (1979 Unix V7 دور کا ٹیپ آرکائیونگ فارمیٹ۔ صرف فائل اسٹریم کو پیک کرتا ہے، ڈیٹا کمپریشن نہیں کرتا۔ اکثر GZIP/BZIP2/XZ کے ساتھ ملایا جاتا ہے، یہ Linux سورس پیکیجز اور Docker امیج لیئر اسٹوریج کے لیے بنیادی معیار ہے)"
+
+msgid "mime_tgz"
+msgstr "TGZ کمپریسڈ آرکائیو (TAR آرکائیونگ اور GZIP کمپریشن کا اسٹریم مجموعہ فارمیٹ، توسیعات .tgz یا .tar.gz۔ Unix/Linux ماحول میں سافٹ ویئر پیکیج کی تقسیم کا سب سے عام فارمیٹ ہونے کے ناطے، سورس کوڈ کمپائلیشن کی تعیناتی اور تنصیب کے بغیر بائنری پیکیج کی تقسیم کے لیے بڑے پیمانے پر استعمال ہوتا ہے)"
+
+msgid "mime_tbz2"
+msgstr "TBZ2 کمپریسڈ آرکائیو (TAR آرکائیونگ اور BZIP2 کمپریشن کا اسٹریم مجموعہ فارمیٹ، توسیعات .tbz2 یا .tar.bz2۔ TGZ کے مقابلے میں کمپریشن کی شرح کو مزید 15-20% بڑھایا جا سکتا ہے، بڑی فائلوں کی ترسیل کے لیے موزوں ہے، ایک زمانے میں Linux کرنل سورس کوڈ کی تقسیم کے لیے طویل عرصے تک استعمال ہوتا رہا ہے)"
+
+msgid "mime_xz"
+msgstr "XZ کمپریسڈ آرکائیو (2009 میں متعارف کرایا گیا اگلی نسل کا اعلیٰ کمپریشن تناسب والا فارمیٹ۔ LZMA2 الگورتھم پر مبنی، ڈیٹا کمپریشن کی شرح GZIP سے 30-50% زیادہ ہے اور تیز رفتاری سے ڈیکمپریشن کو برقرار رکھتا ہے۔ Linux کرنل اور مرکزی دھارے کے پیکیج مینیجرز (جیسے Debian .deb کے اندر) نے اسے تجویز کردہ تقسیم کے معیار کے طور پر قائم کر لیا ہے)"
+
+msgid "mime_z"
+msgstr "Z کمپریسڈ آرکائیو (1985 Unix compress کمانڈ کا LZW کمپریشن فارمیٹ۔ ابتدائی Unix نظاموں کے معیاری کمپریشن معیار کے طور پر، اب اسے زیادہ موثر GZIP فارمیٹ نے مکمل طور پر تبدیل کر دیا ہے۔ جدید نیٹ ورک ٹریفک میں، یہ ایک نایاب میراثی تاریخی فارمیٹ ہے)"
+
+msgid "mime_zip"
+msgstr "ZIP کمپریسڈ آرکائیو (1989 میں Phil Katz کے ذریعے تیار کردہ PKZIP عالمگیر آرکائیونگ فارمیٹ۔ مرکزی دھارے کے آپریٹنگ سسٹمز کی مقامی حمایت حاصل ہے۔ یہ انٹرنیٹ پر سب سے زیادہ استعمال ہونے والا کنٹینر معیار ہے۔ جدید Java کا JAR، Android کا APK اور Office دستاویزات (OOXML) سب ZIP ساخت پر مبنی ہیں)"
+
+msgid "mime_zst"
+msgstr "Zstandard کمپریسڈ آرکائیو (2015 میں Facebook کے Yann Collet کے ذریعے ڈیزائن کردہ نئی نسل کا اسٹریم کمپریشن معیار۔ LZMA کمپریشن کی شرح کے قریب پہنچتے ہوئے GZIP سے کہیں زیادہ تھرو پٹ رکھتا ہے۔ Linux کرنل (5.9+) اور Arch/Debian پیکیج مینیجرز نے اسے گہرائی سے اپنا لیا ہے)"
+
+msgid "mime_lz4"
+msgstr "LZ4 کمپریسڈ آرکائیو (2011 میں Yann Collet کے ذریعے تیار کردہ انتہائی تیز اسٹریم کمپریشن الگورتھم۔ تھرو پٹ کی رفتار GZIP سے 10 گنا زیادہ تیز ہے، انتہائی کم CPU رن ٹائم لاگت رکھتی ہے۔ Linux کرنل، OpenZFS فائل سسٹم اور Hadoop ریئل ٹائم ڈیٹا اسٹریم پروسیسنگ میں بڑے پیمانے پر استعمال ہوتی ہے)"
+
+msgid "mime_lzo"
+msgstr "LZO کمپریسڈ آرکائیو (1996 میں Markus Oberhumer کے ذریعے تیار کردہ Lempel-Ziv-Oberhumer الگورتھم۔ انتہائی تیز ڈیکمپریشن کارکردگی پر مرکوز ہے۔ Linux کرنل Squashfs امیجز، OpenWrt فرم ویئر اور مختلف وسائل کی پابندی والے ایمبیڈڈ سسٹمز میں بڑے پیمانے پر ایمبیڈڈ ہے)"
+
+msgid "mime_msi"
+msgstr "MSI سسٹم انسٹالیشن پیکیج (1999 میں Microsoft کے ذریعے متعارف کرایا گیا Windows Installer ڈیٹا انکیپسولیشن فارمیٹ۔ Windows ایپلیکیشن لیول معیاری تعیناتی کی تفصیلات کے طور پر، یہ نچلی سطح کے لین دین کی واپسی، اجزاء کے لائف سائیکل کے انتظام اور بیچ پروسیسنگ کے بغیر خاموش تنصیب کی مقامی حمایت کرتا ہے۔ یہ انٹرپرائز لیول سنٹرلائزڈ سافٹ ویئر ڈسٹری بیوشن اور پالیسی کی تعیناتی کے لیے بنیادی معیار ہے)"
+
+msgid "mime_pkg"
+msgstr "PKG کراس پلیٹ فارم سافٹ ویئر انسٹالیشن پیکیج۔ 1. FreeBSD سافٹ ویئر پیکیج: pkgng معیار، توسیع .pkg یا .txz، TAR+XZ/Zstd کمپریشن پر مبنی، انحصار کے حل اور دستخط کی توثیق کی حمایت کرتا ہے؛ 2. macOS انسٹالیشن پیکیج: Apple Installer فارمیٹ پر مبنی، حسب ضرورت اجزاء، انسٹالیشن اسکرپٹس اور سسٹم لیول ان انسٹالیشن کی حمایت کرتا ہے۔ یہ بالترتیب BSD سرورز اور Mac سسٹمز کے لیے بنیادی تقسیم کے کیریئر ہیں۔"
+
+msgid "mime_apk"
+msgstr "APK Android ایپلیکیشن پیکیج (2008 میں Google نے Android کے ساتھ جاری کردہ روایتی ایپلیکیشن انسٹالیشن پیکیج۔ ZIP آرکائیو ساخت پر مبنی، مرتب شدہ Dalvik بائٹ کوڈ (DEX)، میٹا ڈیٹا مینیفیسٹ اور عالمی وسائل کو پیک کرتا ہے۔ اب مقامی ترقیاتی ڈیبگنگ، تیسری فریق کی تقسیم اور ڈیوائس سائیڈ لوڈنگ تنصیب کے لیے بڑے پیمانے پر استعمال ہوتا ہے)"
+
+msgid "mime_ipa"
+msgstr "IPA Apple ایپلیکیشن پیکیج (2008 میں iPhone SDK کے ساتھ جاری کردہ iOS/iPadOS کے لیے مخصوص پیکیجنگ کنٹینر۔ خلاصہ یہ کہ، یہ FairPlay DRM ڈیجیٹل کاپی رائٹ یا انٹرپرائز لیول کوڈ دستخط سے محفوظ کردہ ZIP آرکائیو ہے، جس میں Mach-O بائنری قابلِ عمل فائل، ایپلیکیشن وسائل کا درخت اور Info.plist میٹا ڈیٹا کنفیگریشن شامل ہے)"
+
+msgid "mime_hap"
+msgstr "HAP HarmonyOS ایپلیکیشن پیکیج (2020 میں HarmonyOS 2.0 کے ساتھ جاری کردہ HarmonyOS کی لچکدار تعیناتی کی بنیادی اکائی۔ Entry مرکزی ماڈیول یا Feature توسیعی فنکشنل ماڈیولز پر مشتمل ہے۔ یہ کراس اینڈ تمام منظرناموں (فونز، ٹیبلیٹس، پہننے کے قابل آلات) کے لیے سمارٹ ٹرمینل ڈسٹری بیوشن کا بنیادی کثیر سرہ فارمیٹ ہے)"
+
+msgid "mime_har"
+msgstr "HAR HarmonyOS جامد مشترکہ پیکیج (HarmonyOS کا ملکیتی جامد مشترکہ لائبریری آرکائیو فائل۔ مشترکہ اجزاء، نچلی سطح کے وسائل کے کوڈ اور کمپائل ٹائم انحصارات کو انکیپسولیٹ کرنے کے لیے استعمال ہوتی ہے، جسے متعدد HAP ماڈیولز جامد طور پر منسلک کر کے شیئر کرتے ہیں۔ یہ HarmonyOS سسٹم کے جزو پر مبنی ترقی اور متعدد ماڈیولز کے دوبارہ استعمال کی بنیادی بنیاد ہے)"
+
+msgid "mime_aab"
+msgstr "AAB Android ایپلیکیشن بنڈل (2018 میں Google نے متعارف کرایا اور 2021 میں قائم کیا گیا Google Play ڈائنامک ڈسٹری بیوشن فارمیٹ۔ خالص تقسیم کرنے والی ہستی کے طور پر، یہ کلاؤڈ کے ذریعے ہدف ڈیوائس کے CPU آرکیٹیکچر، اسکرین کثافت اور زبان کے مطابق ڈائنامک طور پر تراش کر مرتب کیا جاتا ہے اور ضرورت کے مطابق بہتر بنائے گئے APK تیار کرتا ہے۔ اوسطاً 35% ٹرانسمیشن بینڈوڈتھ لاگت کو کم کرتا ہے)"
+
+msgid "mime_xapk"
+msgstr "XAPK توسیع شدہ ایپلیکیشن پیکیج (تیسری فریق Android کمیونٹی کے ذریعے قائم کردہ غیر سرکاری ایپلیکیشن توسیع معیار۔ معیاری APK فائل کو بہت بڑے OBB گیم ڈیٹا توسیعی پیکیج کے ساتھ مل کر انکیپسولیٹ کر کے، یہ Google Play کی 100MB واحد فائل کے سائز کی حد کو جسمانی طور پر توڑ دیتا ہے۔ گیم ڈسٹری بیوشن پلیٹ فارمز پر بڑے پیمانے پر دیکھا جاتا ہے)"
+
+msgid "mime_appx"
+msgstr "APPX جدید ایپلیکیشن پیکیج (2012 میں Microsoft نے Windows 8 کے ساتھ جاری کردہ UWP ایپلیکیشن تعیناتی کی تفصیلات۔ سینڈ باکس علیحدگی سے چلنے اور ہلکے وزن میں ان انسٹالیشن کی خصوصیات رکھتا ہے۔ Microsoft Store کے ابتدائی غالب معیار کے طور پر، جدید Windows ماحولیاتی نظام میں یہ MSIX کی طرف بڑھنے والے لائف سائیکل کے آخری مرحلے میں داخل ہو چکا ہے)"
+
+msgid "mime_msix"
+msgstr "MSIX نئی نسل کا ایپلیکیشن پیکیج (2018 میں Microsoft کے ذریعے جاری کردہ Windows کا بالکل نیا معیاری پیکیجنگ تفصیلات۔ یہ APPX کی ایپلیکیشن سیکیورٹی سینڈ باکس خصوصیات اور MSI کے انٹرپرائز لیول اثاثہ جات کے انتظام کے فوائد کو مکمل طور پر یکجا کرتا ہے۔ تمام Win32 ایپلیکیشن اقسام کے ساتھ مکمل مطابقت رکھتا ہے۔ یہ Windows 11 کے لیے تجویز کردہ تقسیم کا معیار ہے)"
+
+msgid "mime_appimage"
+msgstr "AppImage تنصیب کے بغیر ایپلیکیشن پیکیج (2004 میں شروع کردہ Linux واحد قابلِ عمل آرکائیو تفصیلات۔ 'ایک ایپلیکیشن ایک فائل ہے' کے خود کفیل آرکیٹیکچر کو اپناتا ہے۔ رن ٹائم پر، یہ FUSE میکانزم کے ذریعے براہ راست صرف پڑھنے کے لیے ورچوئل فائل سسٹم کے طور پر ماؤنٹ ہو کر چلائی جاتی ہے، جو تمام Linux ڈسٹری بیوشنز پر صفر انحصار کے ساتھ فوری استعمال کو ممکن بناتی ہے)"
+
+msgid "mime_flatpak"
+msgstr "Flatpak سینڈ باکس ایپلیکیشن پیکیج (2015 میں Red Hat اور GNOME کی قیادت میں Linux کراس ڈسٹری بیوشن ڈیسک ٹاپ ایپلیکیشن ڈسٹری بیوشن معیار۔ نچلی سطح پر Linux کرنل کے Namespace اور Cgroups میکانزم پر انحصار کرتے ہوئے انتہائی سخت ایپلیکیشن لیول سیکیورٹی سینڈ باکس علیحدگی کو حاصل کرتا ہے۔ یہ جدید اوپن سورس OS سافٹ ویئر سینٹرز کی بنیاد ہے)"
+
+msgid "mime_snap"
+msgstr "Snap کنٹینرائزڈ ایپلیکیشن پیکیج (2014 میں Ubuntu کی بنیادی کمپنی Canonical کے ذریعے متعارف کرایا گیا Linux عالمگیر تعیناتی معیار۔ خود کفیل SquashFS امیج ماؤنٹنگ آرکیٹیکچر کو اپناتا ہے، خودکار اضافی اپ ڈیٹس اور سخت AppArmor سینڈ باکس علیحدگی کی حمایت کرتا ہے۔ یہ Ubuntu سافٹ ویئر سینٹر ماحولیاتی نظام کا بنیادی پہلے سے طے شدہ فارمیٹ ہے)"
+
+msgid "mime_deb"
+msgstr "DEB سسٹم سافٹ ویئر پیکیج (1993 میں Debian پروجیکٹ کے ذریعے قائم کردہ بائنری اور سورس کوڈ انکیپسولیشن تفصیلات۔ Debian، Ubuntu اور ان کے تمام مشتقات کے لیے بنیادی تنصیب کے معیار کے طور پر، یہ ان پیکنگ اور دیکھ بھال کے لیے dpkg کرنل پر انحصار کرتا ہے، اور APT کو موثر پیکیج مینیجر فرنٹ اینڈ کے طور پر استعمال کرتا ہے۔ یہ Linux ماحولیاتی نظام میں سافٹ ویئر کی تقسیم کی سب سے پختہ بنیاد ہے)"
+
+msgid "mime_rpm"
+msgstr "RPM سسٹم سافٹ ویئر پیکیج (1997 میں Red Hat کے ذریعے متعارف کرایا گیا Red Hat پیکیج مینیجر انکیپسولیشن تفصیلات۔ DEB کے ساتھ ساتھ Linux روایتی پیکیج مینجمنٹ کے دو بڑے کیمپوں میں سے ایک سمجھا جاتا ہے۔ اس میں لین دین کی سطح پر انحصار کی جانچ اور بنیادی سافٹ ویئر ڈیجیٹل دستخط کی توثیق کی مقامی طور پر تعمیر شدہ حمایت ہے۔ یہ آج بھی RHEL، Fedora اور CentOS جیسے Red Hat فیملی ماحولیاتی نظام کے لیے مکمل مرکزی دھارے کی تقسیم کا معیار ہے)"
+
+msgid "mime_pacman"
+msgstr "Pacman آرکائیو شدہ سافٹ ویئر پیکیج (2002 میں Arch Linux نے pacman مینیجر کے ساتھ قائم کیا گیا .pkg.tar.zst انکیپسولیشن فارمیٹ۔ Arch کی رولنگ اپ ڈیٹ میکانزم کا مرکز ہونے کے ناطے، یہ Zstandard تیز رفتار اعلیٰ کمپریشن الگورتھم پر مبنی ہے، AUR (Arch صارف سافٹ ویئر ذخیرہ) ماحولیاتی نظام کے ساتھ مل کر۔ یہ ایک جدید پیکیج ڈسٹری بیوشن معیار ہے جو انتہائی سادگی اور KISS اصولوں کی عکاسی کرتا ہے)"
+
+msgid "mime_exe"
+msgstr "EXE مقامی قابلِ عمل فائل (Windows پلیٹ فارم کا پورٹیبل ایگزیکیوٹیبل (PE) بائنری پروگرام فارمیٹ۔ ٹیکنالوجی MS-DOS دور کے MZ ہیڈر ساخت سے تیار ہوئی، اور 1993 Windows NT سے شروع ہو کر PE ساخت کی تفصیلات کے طور پر مکمل طور پر قائم ہو گئی۔ یہ مشینی کوڈ ہدایات، جامد وسائل کے حصوں اور سسٹم کرنل بوٹ اسٹریپنگ کے لیے دنیا کا سب سے زیادہ استعمال ہونے والا عمل درآمد معیار ہے)"
+
+msgid "mime_dll"
+msgstr "DLL ڈائنامک لنک لائبریری (Windows پلیٹ فارم کا ڈائنامک لنک لائبریری مشترکہ کوڈ لائبریری تفصیلات۔ رن ٹائم پر ڈائنامک طور پر لوڈ کرنے اور علامتوں کو دوبارہ جگہ دینے سے، یہ فزیکل میموری اور ڈسک کی جگہ کو بہت زیادہ بچاتی ہے۔ Windows API کے نفاذ کی بنیادی شکل کے طور پر، اس کا ابتدائی DLL Hell مسئلہ جدید دور میں SxS متوازی علیحدگی کے میکانزم سے جڑ سے ختم کر دیا گیا ہے)"
+
+msgid "mime_com"
+msgstr "COM کلاسک قابلِ عمل فائل (MS-DOS دور کی قدیم ترین میموری امیج (کمانڈ) عمل درآمد فارمیٹ۔ غیر ساختہ خالص کوڈ طبقہ کا ڈیزائن استعمال کرتا ہے، 64KB فزیکل میموری ایڈریسنگ طبقہ کی بالائی حد تک محدود ہے۔ اب ایک تاریخی میراثی فارمیٹ کے طور پر ریٹائر ہو چکی ہے، لیکن جدید Windows آرکیٹیکچر میں محدود مطابقت کے لیے اب بھی ایک مخصوص جزو انٹرفیس کے طور پر استعمال ہوتی ہے)"
+
+msgid "mime_aac"
+msgstr "AAC آڈیو (1997 MPEG معیار، Advanced Audio Coding۔ MP3 کا جانشین، ایک ہی بٹ ریٹ پر MP3 سے بہتر آواز کا معیار، YouTube، iTunes، Nintendo Switch کا ڈیفالٹ آڈیو فارمیٹ)"
+
+msgid "mime_alac"
+msgstr "ALAC آڈیو (2004 میں Apple نے تیار کیا، Apple Lossless Audio Codec۔ ایپل کا غیر نقصان دہ فارمیٹ، 2011 میں اوپن سورس ہوا، iTunes اور Apple Music کے غیر نقصان دہ آڈیو کا ڈیفالٹ فارمیٹ)"
+
+msgid "mime_flac"
+msgstr "FLAC آڈیو (2001 میں Xiph.Org فاؤنڈیشن نے تیار کیا، Free Lossless Audio Codec۔ غیر نقصان دہ کمپریشن، آواز کا معیار CD کے برابر، فائل کا سائز اصل WAV کا نصف کے قریب ہوتا ہے۔ اوپن سورس اور پیٹنٹ سے پاک، آڈیو فائلز اور ڈیجیٹل میوزک کلیکشن کرنے والوں کے لیے پہلا انتخاب)"
+
+msgid "mime_mp3"
+msgstr "MP3 آڈیو (1993 میں Fraunhofer انسٹی ٹیوٹ نے تیار کیا، MPEG-1 Audio Layer 3۔ نقصان دہ کمپریشن فارمیٹ، فائل کا سائز چھوٹا اور آواز کا معیار قابل قبول، 2000 کی دہائی میں ڈیجیٹل میوزک انقلاب کا بنیادی فارمیٹ، iPod اور Napster کی کامیابی کی وجہ۔ 2017 میں پیٹنٹ کی میعاد ختم ہو گئی، عوامی ڈومین کا فارمیٹ بن گیا)"
+
+msgid "mime_oga"
+msgstr "Ogg Audio آڈیو (Xiph.Org فاؤنڈیشن نے تیار کیا، Ogg کنٹینر کا خالص آڈیو فارمیٹ، Vorbis کوڈیک استعمال کرتا ہے۔ اوپن سورس اور پیٹنٹ سے پاک، کمپریشن کی کارکردگی MP3 سے بہتر، اوپن سورس پروجیکٹس وسیع پیمانے پر استعمال کرتے ہیں)"
+
+msgid "mime_ogg"
+msgstr "OGG آڈیو (2000 میں Xiph.Org فاؤنڈیشن نے تیار کیا، Ogg Vorbis فارمیٹ۔ اوپن سورس اور پیٹنٹ سے پاک، کمپریشن کی کارکردگی MP3 سے بہتر، Spotify نے ابتدائی طور پر اپنایا، گیمز میں بڑے پیمانے پر استعمال ہوتا ہے)"
+
+msgid "mime_opus"
+msgstr "Opus آڈیو (2012 میں IETF نے معیاری بنایا، اوپن سورس اور پیٹنٹ سے پاک آڈیو فارمیٹ۔ SILK اور CELT ٹیکنالوجیز کو یکجا کرتا ہے، انتہائی کم تاخیر، سب سے زیادہ کمپریشن کارکردگی، WebRTC، WhatsApp، Discord کا ڈیفالٹ آڈیو فارمیٹ)"
+
+msgid "mime_wav"
+msgstr "WAV آڈیو (1991 میں Microsoft اور IBM نے تیار کیا، Windows کا مقامی آڈیو فارمیٹ۔ بغیر کمپریشن کے PCM کوڈیک، آواز کا معیار غیر نقصان دہ لیکن فائل بہت بڑی، پیشہ ورانہ آڈیو ایڈیٹنگ کا معیاری فارمیٹ)"
+
+msgid "mime_wma"
+msgstr "WMA آڈیو (1999 میں Microsoft نے تیار کیا، Windows Media Audio۔ نقصان دہ/غیر نقصان دہ دو ورژن، Windows مقامی طور پر سپورٹ کرتا ہے، Windows Media Player کے ساتھ مقبول ہوا۔ اب کنارے پر ہے، MP3/AAC نے اس کی جگہ لے لی)"
+
+msgid "mime_dsf"
+msgstr "DSF آڈیو (Direct Stream Digital فارمیٹ، Sony اور Philips نے تیار کیا۔ 1bit ہائی نمونہ ریٹ، DSD آڈیو کا معیاری فارمیٹ، SACD کا ڈیجیٹل ورژن، آڈیو فائلز کا اعلیٰ درجے کا فارمیٹ، فائل بہت بڑی)"
+
+msgid "mime_ape"
+msgstr "APE آڈیو (2000 میں Monkey's Audio نے تیار کیا، بے نقصان کمپریشن فارمیٹ۔ FLAC سے زیادہ کمپریشن لیکن سست انکوڈنگ، اب بھی ونڈوز پلیٹ فارم اور آڈیو کے شوقین افراد میں استعمال ہوتا ہے)"
+
+msgid "mime_mid"
+msgstr "MIDI آڈیو (1983 میں MIDI ایسوسی ایشن نے وضع کیا، Musical Instrument Digital Interface۔ ریکارڈنگ کے بجائے موسیقی کے اسکور کا فارمیٹ، فائل انتہائی چھوٹی، الیکٹرانک آلات، موبائل فون کی گھنٹیاں، گیم آڈیو کا معیار۔ 1991 میں General MIDI معیاری بنا، جس میں 128 آلات کی آوازوں کی تعریف کی گئی)"
+
+msgid "mime_m4a"
+msgstr "M4A آڈیو (MPEG-4 Audio، AAC کا کنٹینر فارمیٹ۔ iTunes میوزک اسٹور کا معیاری فارمیٹ، Apple ماحولیاتی نظام کا مرکزی آڈیو فارمیٹ، DRM تحفظ کو سپورٹ کرتا ہے)"
+
+msgid "mime_m3u"
+msgstr "M3U پلے لسٹ (MP3 URL پلے لسٹ فارمیٹ، سادہ ٹیکسٹ فائل، آڈیو فائل کے راستے ریکارڈ کرتی ہے۔ Winamp دور کا معیار، انٹرنیٹ براڈکاسٹ، آن لائن میوزک اسٹریمنگ کے لیے استعمال ہوتی ہے۔ M3U8 اس کا UTF-8 ورژن ہے، HTTP Live Streaming کے لیے استعمال ہوتا ہے)"
+
+msgid "mime_asf"
+msgstr "ASF اسٹریمنگ میڈیا (1996 میں Microsoft نے تیار کیا، Advanced Systems Format۔ Windows Media اسٹریمنگ کنٹینر، آڈیو اور ویڈیو کی ہم وقت ساز ترسیل کو سپورٹ کرتا ہے۔ آن لائن لائیو براڈکاسٹ اور اسٹریمنگ آن ڈیمانڈ کے لیے استعمال ہوتا ہے، WMA/WMV دونوں ASF کنٹینر پر مبنی ہیں)"
+
+msgid "mime_avi"
+msgstr "AVI ویڈیو (1992 میں Microsoft نے متعارف کرایا، Windows کا ابتدائی ویڈیو معیار۔ 'Audio Video Interleave'، آڈیو اور ویڈیو کو باری باری اسٹور کرتا ہے، 1990-2000 کی دہائی کا سب سے مقبول ویڈیو فارمیٹ، اب MP4/MKV نے اس کی جگہ لے لی)"
+
+msgid "mime_divx"
+msgstr "DivX ویڈیو (1998 میں DivX کمپنی نے تیار کیا، MPEG-4 پر مبنی ویڈیو کوڈیک فارمیٹ۔ 2000 کی دہائی میں آن لائن ویڈیو شیئرنگ کا مرکزی فارمیٹ، پہلی ٹیکنالوجی جس نے DVD کوالٹی کو CD سائز میں کمپریس کیا۔ کاپی رائٹ کے تنازعات کی وجہ سے، بعد میں تجارتی کوڈیک میں تبدیل ہو گیا)"
+
+msgid "mime_mp4"
+msgstr "MP4 ویڈیو (2001 MPEG معیار، MPEG-4 Part 14۔ دنیا کا سب سے عام ویڈیو فارمیٹ، H.264/H.265 کوڈیک کو سپورٹ کرتا ہے، انٹرنیٹ ویڈیو، موبائل فون کی ریکارڈنگ، YouTube کا ڈیفالٹ فارمیٹ)"
+
+msgid "mime_m4v"
+msgstr "M4V ویڈیو (iTunes ویڈیو فارمیٹ، MP4 کی تبدیلی۔ Apple ماحولیاتی نظام کا ویڈیو فارمیٹ، iTunes Store کی فلموں، ٹی وی شوز کا معیاری فارمیٹ، DRM کاپی رائٹ تحفظ کو سپورٹ کرتا ہے)"
+
+msgid "mime_mpeg"
+msgstr "MPEG ویڈیو (1988 میں MPEG تنظیم نے وضع کیا، Moving Picture Experts Group۔ ڈیجیٹل ویڈیو کمپریشن معیار کی بنیاد رکھنے والا، MPEG-1 (VCD)، MPEG-2 (DVD)، MPEG-4 (انٹرنیٹ ویڈیو) نے گہرا اثر ڈالا)"
+
+msgid "mime_mkv"
+msgstr "MKV ویڈیو (2002 میں Matroska پروجیکٹ نے تیار کیا، اوپن سورس ملٹی میڈیا کنٹینر فارمیٹ۔ متعدد آڈیو ٹریکس، متعدد سب ٹائٹلز، ابواب کو سپورٹ کرتا ہے، 'پیکجنگ کا جادوگر'، ہائی ڈیفینیشن فلم شیئرنگ کا پہلا انتخاب)"
+
+msgid "mime_mpg"
+msgstr "MPEG ویڈیو (MPEG-1/MPEG-2 ویڈیو کی توسیع، VCD اور DVD کا معیاری فارمیٹ۔ 1990-2000 کی دہائی میں آپٹیکل ڈسک ویڈیو کا مرکزی فارمیٹ، اب H.264/H.265 نے اس کی جگہ لے لی)"
+
+msgid "mime_ogv"
+msgstr "Ogg Video ویڈیو (Xiph.Org فاؤنڈیشن نے تیار کیا، Ogg کنٹینر کا ویڈیو فارمیٹ، Theora کوڈیک استعمال کرتا ہے۔ اوپن سورس اور پیٹنٹ سے پاک، HTML5 ویڈیو کے ابتدائی معیارات میں سے ایک، Firefox مقامی طور پر سپورٹ کرتا ہے)"
+
+msgid "mime_ogx"
+msgstr "Ogg ملٹی میڈیا کنٹینر (Xiph.Org فاؤنڈیشن نے تیار کیا، Ogg کنٹینر کی عمومی توسیع، جس میں آڈیو، ویڈیو، سب ٹائٹلز جیسے متعدد ٹریک شامل ہو سکتے ہیں۔ اوپن سورس ملٹی میڈیا معیار، گیمز، اسٹریمنگ میڈیا کے لیے استعمال ہوتا ہے)"
+
+msgid "mime_rm"
+msgstr "RealMedia ویڈیو (1995 میں RealNetworks نے تیار کیا، RealMedia فارمیٹ۔ 1990-2000 کی دہائی میں انٹرنیٹ اسٹریمنگ میڈیا کا علمبردار، RealPlayer پلیئر کا بنیادی فارمیٹ۔ مسائل: خصوصی پلیئر کی ضرورت، کمپریشن کا خراب معیار، بعد میں Flash/MP4 نے اس کی جگہ لے لی)"
+
+msgid "mime_flv"
+msgstr "Flash ویڈیو (2002 میں فارمیٹ سامنے آیا، Flash Video فارمیٹ۔ کبھی انٹرنیٹ ویڈیو کا مرکزی فارمیٹ تھا، YouTube نے ابتدائی طور پر اپنایا۔ مسائل: Flash پلگ ان کی ضرورت، کم کارکردگی، بہت زیادہ سیکیورٹی خطرات۔ 2015 سے مرکزی ویب سائٹس نے HTML5 ویڈیو کی طرف رخ کیا، اب ختم ہو چکا ہے)"
+
+msgid "mime_f4v"
+msgstr "F4V ویڈیو (Adobe نے تیار کیا Flash ویڈیو فارمیٹ، FLV کا جانشین۔ MPEG-4 معیار پر مبنی، H.264 کوڈیک کو سپورٹ کرتا ہے۔ Flash ٹیکنالوجی کے ساتھ ختم ہو گیا، Adobe نے 2020 میں سپورٹ بند کر دی)"
+
+msgid "mime_wmv"
+msgstr "WMV ویڈیو (1999 میں Microsoft نے تیار کیا، Windows Media Video۔ Windows مقامی طور پر سپورٹ کرتا ہے، اسٹریمنگ ٹرانسمیشن کے لیے بہتر بنایا گیا، ابتدائی آن لائن ویڈیو کا عام فارمیٹ، اب کنارے پر ہے)"
+
+msgid "mime_wmf"
+msgstr "WMF میڈیا فارمیٹ (Windows Media Format، مائیکروسافٹ کا میڈیا فریم ورک۔ WMV ویڈیو، WMA آڈیو کا مجموعہ، Windows Media Player مقامی طور پر سپورٹ کرتا ہے)"
+
+msgid "mime_mov"
+msgstr "MOV ویڈیو (1991 میں Apple نے تیار کیا، QuickTime کنٹینر فارمیٹ۔ پیشہ ورانہ ویڈیو ایڈیٹنگ کا معیاری فارمیٹ، متعدد کوڈیکس کو سپورٹ کرتا ہے، Final Cut Pro، Premiere مقامی طور پر سپورٹ کرتے ہیں)"
+
+msgid "mime_qt"
+msgstr "QuickTime ویڈیو (1991 میں Apple نے متعارف کرایا، QuickTime فارمیٹ۔ Mac پلیٹ فارم کا ویڈیو معیار، MOV اس کا کنٹینر ہے، QuickTime پلیئر بڑے پیمانے پر استعمال ہوتا تھا۔ 2016 میں Apple نے Windows ورژن کی ترقی بند کر دی، آہستہ آہستہ MP4 نے اس کی جگہ لے لی)"
+
+msgid "mime_webm"
+msgstr "WebM ویڈیو (2010 میں Google نے متعارف کرایا، اوپن سورس اور پیٹنٹ سے پاک ویڈیو فارمیٹ۔ Matroska کنٹینر پر مبنی، VP8/VP9 کوڈیک، HTML5 ویڈیو کا معیاری فارمیٹ، YouTube کا ڈیفالٹ ویب پلے بیک فارمیٹ)"
+
+msgid "mime_3gp"
+msgstr "3GP ویڈیو (2000 میں 3GPP نے وضع کیا، موبائل ڈیوائس کا ویڈیو فارمیٹ۔ فائل کا سائز بہت چھوٹا، معیار کم، ابتدائی فیچر فونز کی ویڈیو ریکارڈنگ کا فارمیٹ، MMS کے ذریعے بھیجنے کے لیے استعمال ہوتا تھا)"
+
+#------------------------------------------------------------------------------
+# تکنیکی جہات
+#------------------------------------------------------------------------------
+
+msgid "Operating Systems"
+msgstr "آپریٹنگ سسٹم"
+
+msgid "Top 5 Operating Systems"
+msgstr "سرفہرست 5 آپریٹنگ سسٹم"
+
+msgid "Unknown Robot"
+msgstr "نامعلوم کلائنٹ"
+
+msgid "User agent"
+msgstr "رسائی کا ذریعہ"
+
+msgid "Browsers"
+msgstr "براؤزر"
+
+msgid "Top 5 Browsers"
+msgstr "سرفہرست 5 براؤزر"
+
+msgid "Unknown Robot RH"
+msgstr "نامعلوم درخواست ہیڈر"
+
+msgid "Detailed"
+msgstr "رسائی آلہ کا ورژن"
+
+msgid "DetailedOS"
+msgstr "آپریٹنگ سسٹم کا ورژن"
+
+msgid "DetailedBS"
+msgstr "براؤزر کا ورژن"
+
+msgid "Screen sizes"
+msgstr "اسکرین سائز"
+
+msgid "Compression"
+msgstr "کمپریشن"
+
+msgid "In"
+msgstr "ان پٹ"
+
+msgid "Out"
+msgstr "آؤٹ پٹ"
+
+msgid "Saved"
+msgstr "بچت"
+
+#------------------------------------------------------------------------------
+# ماخذ کے جہات
+#------------------------------------------------------------------------------
+
+msgid "Origin"
+msgstr "ماخذ"
+
+msgid "Referers"
+msgstr "ماخذ"
+
+msgid "meta.description"
+msgstr "AWStats اعلیٰ درجے کا ویب سائٹ لاگ تجزیہ کار - ریئل ٹائم ویب سائٹ ٹریفک مانیٹرنگ، زائرین کا تجزیہ، سرچ انجن کلیدی الفاظ، ایرر پیجز کے اعداد و شمار۔ ڈارک موڈ کو سپورٹ کرتا ہے، کثیر لسانی انٹرفیس، ویب سائٹ ایڈمنسٹریٹرز کے لیے جامع ڈیٹا تجزیہ فراہم کرتا ہے۔"
+
+msgid "meta.keywords"
+msgstr "AWStats,ویب سائٹ کے اعداد و شمار,لاگ تجزیہ,ٹریفک مانیٹرنگ,رسائی کے اعداد و شمار,SEO تجزیہ,ویب سائٹ تجزیہ ٹول,Web Analytics,Log Analyzer"
+
+msgid "meta.author"
+msgstr "AWStats"
+
+msgid "og.title"
+msgstr "AWStats - ویب سائٹ لاگ تجزیہ"
+
+msgid "og.description"
+msgstr "📊 پیشہ ورانہ اوپن سورس ویب سائٹ شماریاتی ٹول، ریئل ٹائم میں آپ کی ویب سائٹ کے ٹریفک اور زائرین کے رویے کا تجزیہ کریں۔"
+
+msgid "og.image.alt"
+msgstr "AWStats شماریاتی چارٹ"
+
+msgid "Created by"
+msgstr "%s کی طرف سے تخلیق کردہ"
+
+msgid "plugins"
+msgstr "پلگ ان"
+
+msgid "dbip by"
+msgstr "ڈیٹا از"
+
+msgid "IPDB by"
+msgstr "جغرافیائی محل وقوع کا ڈیٹا DB-IP کے ذریعے فراہم کردہ"
+
+msgid "Configured"
+msgstr "ترتیب شدہ"
+
+msgid "Missing"
+msgstr "غیر موجود"
+
+msgid "OK"
+msgstr "کامیاب"
+
+msgid "Unused"
+msgstr "استعمال شدہ"
+
+msgid "Overall Health"
+msgstr "مجموعی صحت"
+
+msgid "Excellent"
+msgstr "بہترین"
+
+msgid "Good"
+msgstr "اچھا"
+
+msgid "Fair"
+msgstr "معمولی"
+
+msgid "Poor"
+msgstr "کمزور"
+
+msgid "Missing icon types"
+msgstr "غیر موجود آئیکن کی اقسام"
+
+msgid "See"
+msgstr "تفصیلات"
+
+msgid "Expected Path"
+msgstr "راہ کی وضاحت"
+
+msgid "column for file locations"
+msgstr "فائل کی جگہیں حاصل کرنے کے لیے کالم"
+
+msgid "Tip: If you need to generate related icons, you can use %s to upload a logo image, and it will automatically generate all the above related icon files"
+msgstr "ٹپ: اگر آپ کو متعلقہ آئیکنز تیار کرنے کی ضرورت ہے، تو آپ %s کا استعمال کرتے ہوئے لوگو امیج اپ لوڈ کر سکتے ہیں، اور یہ خود بخود اوپر دی گئی تمام متعلقہ آئیکن فائلیں تیار کر دے گا"
+
+msgid "200: success, 404: failure"
+msgstr "200 کامیابیوں کی تعداد ہے 404 ناکامیوں کی تعداد"
+
+msgid "_PATH_FAVICON"
+msgstr "/favicon.ico"
+
+msgid "_PATH_APPLE_TOUCH"
+msgstr "/apple-touch-icon.png یا /apple-touch-icon-180x180.png"
+
+msgid "_PATH_LOGO"
+msgstr "/logo.svg یا /logo.png (HTML/JSON-LD میں حوالہ دینے کی ضرورت ہے)"
+
+msgid "_PATH_WEBMANIFEST"
+msgstr "/site.webmanifest یا /manifest.json"
+
+msgid "_PATH_BROWSERCONFIG"
+msgstr "/browserconfig.xml"
+
+msgid "_PATH_SAFARI_PINNED"
+msgstr "/safari-pinned-tab.svg"
+
+msgid "_PATH_SOCIAL_ICON"
+msgstr "/images/github.svg، /images/paypal.svg وغیرہ"
+
+msgid "Favicon"
+msgstr "ویب سائٹ آئیکن"
+
+msgid "Apple Touch Icon (iOS/macOS)"
+msgstr "ایپل ٹچ آئیکن (iPhone/iPad/Mac)"
+
+msgid "Site Logo"
+msgstr "ویب سائٹ کا لوگو"
+
+msgid "Web App Manifest (Android/Chrome)"
+msgstr "ویب ایپ مینی فیسٹ (Android/Chrome)"
+
+msgid "Windows Browser Config"
+msgstr "Windows براؤزر کنفیگریشن"
+
+msgid "Safari Pinned Tab"
+msgstr "Safari پن شدہ ٹیب آئیکن"
+
+msgid "Social Icon"
+msgstr "سوشل پلیٹ فارم آئیکن"
+
+msgid "Icon Files Status"
+msgstr "آئیکن فائل کی حالت"
+
+msgid "Icon Type"
+msgstr "آئیکن کی قسم"
+
+msgid "Total"
+msgstr "کل"
+
+msgid "Advanced Web Statistics"
+msgstr "اعلیٰ درجے کا لاگ تجزیہ کار"
+
+msgid "Advanced Web Statistics %s"
+msgstr "%s اعلیٰ درجے کا لاگ تجزیہ کار"
+
+msgid "Your browser does not support frames. Please use a modern browser."
+msgstr "آپ کا براؤزر فریمز کو سپورٹ نہیں کرتا۔ براہ کرم جدید براؤزر استعمال کریں۔"
+
+msgid "View statistics directly"
+msgstr "براہ راست اعداد و شمار دیکھیں"
+
+msgid "Close"
+msgstr "بند کریں"
+
+msgid "Documentation Viewer"
+msgstr "دستاویز دیکھنے والا"
+
+msgid "Direct address / Bookmarks"
+msgstr "براہ راست پتہ / بک مارکس"
+
+msgid "Search Engines"
+msgstr "سرچ انجن"
+
+msgid "Refering search engines"
+msgstr "ماخذ سرچ انجن"
+
+msgid "External pages"
+msgstr "بیرونی صفحات"
+
+msgid "Refering pages"
+msgstr "ماخذ صفحات"
+
+msgid "Internal pages"
+msgstr "اندرونی صفحات"
+
+msgid "UnknownAccessSource"
+msgstr "نامعلوم رسائی کا ماخذ"
+
+msgid "Different refering pages"
+msgstr "مختلف ماخذ صفحات"
+
+msgid "Keyphrases"
+msgstr "کلیدی جملے"
+
+msgid "Keywords"
+msgstr "کلیدی الفاظ"
+
+msgid "Keyphrases/Keywords"
+msgstr "کلیدی جملے/کلیدی الفاظ"
+
+msgid "Different keyphrases"
+msgstr "مختلف کلیدی جملے"
+
+msgid "Different keywords"
+msgstr "مختلف کلیدی الفاظ"
+
+#------------------------------------------------------------------------------
+# صفحے کے جہات
+#------------------------------------------------------------------------------
+
+msgid "Viewed pages"
+msgstr "دیکھے گئے صفحات"
+
+msgid "Different pages"
+msgstr "مختلف صفحات"
+
+msgid "Entry"
+msgstr "داخلی راستہ"
+
+msgid "Exit"
+msgstr "خارجی راستہ"
+
+msgid "URL"
+msgstr "ویب سائٹ کا پتہ"
+
+msgid "Referer"
+msgstr "ماخذ"
+
+msgid "Host"
+msgstr "میزبان"
+
+#------------------------------------------------------------------------------
+# غلطیاں اور حالتیں
+#------------------------------------------------------------------------------
+
+msgid "Error"
+msgstr "غلطی"
+
+msgid "HTTP Status Statistics"
+msgstr "HTTP حالت کوڈ کے اعداد و شمار"
+
+msgid "SMTP Error codes"
+msgstr "SMTP خرابی کے کوڈز"
+
+msgid "Page not found"
+msgstr "درخواست کردہ صفحہ نہیں ملا"
+
+msgid "Unknown error"
+msgstr "نامعلوم خرابی"
+
+msgid "Abnormal traffic note"
+msgstr "غیر معمولی براؤزنگ ٹریفک میں شامل ہیں: سرچ انجن کرالر، AI تربیتی کرالر، کمزوری سکینر اور معیارات سے مطابقت نہ رکھنے والی درخواستیں"
+
+msgid "Page detail"
+msgstr "صفحے کی تفصیلات"
+
+msgid "AWStats did not found the"
+msgstr "AWStats کو یہ نہیں ملا"
+
+msgid "in your log records."
+msgstr "آپ کے لاگ ریکارڈز میں۔"
+
+msgid "AWStats did not find any valid log lines that match your"
+msgstr "AWStats کو آپ کے"
+
+msgid "parameter, in the"
+msgstr "پیرامیٹر سے مماثل کوئی درست لاگ لائن نہیں ملی،"
+
+msgid "th first non commented lines read of your log."
+msgstr "آپ کے لاگ کی پہلی غیر تبصرہ شدہ لائنوں میں۔"
+
+msgid "Your log file"
+msgstr "آپ کی لاگ فائل"
+
+msgid "must have a bad format or"
+msgstr "کی شکل غلط ہو سکتی ہے، یا"
+
+msgid "parameter setup does not match this format."
+msgstr "پیرامیٹر کی ترتیب اس شکل سے مماثل نہیں ہے۔"
+
+msgid "Your AWStats"
+msgstr "آپ کا AWStats"
+
+msgid "parameter is:"
+msgstr "پیرامیٹر ہے:"
+
+msgid "This means each line in your web server log file need to have:"
+msgstr "اس کا مطلب ہے کہ آپ کے ویب سرور لاگ فائل کی ہر لائن میں یہ ہونا ضروری ہے:"
+
+msgid "combined log format"
+msgstr "مشترکہ لاگ فارمیٹ"
+
+msgid "MSIE Extended W3C log format"
+msgstr "MSIE توسیعی W3C لاگ فارمیٹ"
+
+msgid "WebStar native log format"
+msgstr "WebStar مقامی لاگ فارمیٹ"
+
+msgid "common log format"
+msgstr "عام لاگ فارمیٹ"
+
+msgid "Lotus Notes/Lotus Domino"
+msgstr "لوٹس نوٹس/لوٹس ڈومینو"
+
+msgid "the following personalized log format:"
+msgstr "درج ذیل ذاتی نوعیت کا لاگ فارمیٹ:"
+
+msgid "And this is an example of records AWStats found in your log file (the record number"
+msgstr "اور یہ AWStats کو آپ کی لاگ فائل میں ملنے والے ریکارڈز کی ایک مثال ہے (ریکارڈ نمبر"
+
+msgid "in your log):"
+msgstr "آپ کے لاگ میں):"
+
+#------------------------------------------------------------------------------
+# متفرق
+#------------------------------------------------------------------------------
+
+msgid "Extra/Marketing"
+msgstr "اضافی/مارکیٹنگ"
+
+#------------------------------------------------------------------------------
+# انٹرفیس کا متن
+#------------------------------------------------------------------------------
+
+msgid "Current site"
+msgstr "موجودہ سائٹ"
+
+msgid "Web Site"
+msgstr "ویب سائٹ"
+
+msgid "Last Update"
+msgstr "آخری اپ ڈیٹ"
+
+msgid "Never updated"
+msgstr "کبھی اپ ڈیٹ نہیں ہوا"
+
+msgid "No qualified records found in log"
+msgstr "لاگ میں کوئی اہل ریکارڈ نہیں ملا"
+
+msgid "corrupted"
+msgstr "خراب شدہ"
+
+msgid "comments"
+msgstr "تبصرے"
+
+msgid "Blank"
+msgstr "خالی"
+
+msgid "dropped"
+msgstr "چھوڑے گئے"
+
+msgid "Update now"
+msgstr "ابھی اپ ڈیٹ کریں"
+
+msgid "Back to main page"
+msgstr "مرکزی صفحہ پر واپس جائیں"
+
+msgid "Close window"
+msgstr "ونڈو بند کریں"
+
+msgid "Back page"
+msgstr "پچھلے صفحے پر واپس جائیں"
+
+msgid "Navigation"
+msgstr "نیویگیشن"
+
+msgid "Summary"
+msgstr "خلاصہ"
+
+msgid "Local"
+msgstr "مقامی"
+
+msgid "External"
+msgstr "بیرونی"
+
+msgid "Others (email senders)"
+msgstr "دیگر(ای میل بھیجنے والے)"
+
+msgid "Others (email receivers)"
+msgstr "دیگر(ای میل وصول کرنے والے)"
+
+msgid "Others"
+msgstr "دیگر"
+
+msgid "Only 10 lines of browser data are currently displayed"
+msgstr "موجودہ طور پر صرف 10 لائنیں براؤزر ڈیٹا دکھائی جا رہی ہیں، مزید کے لیے مکمل فہرست دیکھیں"
+
+msgid "Others (unknown browsers)"
+msgstr "دیگر(نامعلوم براؤزر)"
+
+msgid "Others (operating systems)"
+msgstr "دیگر(آپریٹنگ سسٹم)"
+
+msgid "Others (unknown OS)"
+msgstr "دیگر(نامعلوم سسٹم)"
+
+msgid "Others (search engines)"
+msgstr "دیگر(سرچ انجن)"
+
+msgid "Others (referring pages)"
+msgstr "دیگر(حوالہ دینے والے صفحات)"
+
+msgid "Others (keyphrases)"
+msgstr "دیگر(جملے)"
+
+msgid "Others (keywords)"
+msgstr "دیگر(کلیدی الفاظ)"
+
+msgid "Only first 10 robots shown"
+msgstr "موجودہ فہرست صرف 10 لائنیں روبوٹ ڈیٹا دکھا سکتی ہے، مزید کے لیے مکمل فہرست دیکھیں"
+
+msgid "Failed to obtain access record"
+msgstr "داخلے کا ریکارڈ حاصل کرنے میں ناکام"
+
+msgid "Failed to obtain leave record"
+msgstr "باہر نکلنے کا ریکارڈ حاصل کرنے میں ناکام"
+
+msgid "Other pages"
+msgstr "دوسرے صفحات"
+
+msgid "Low Traffic IP Summary"
+msgstr "کم رسائی والے نامعلوم IP کا خلاصہ"
+
+msgid "Failed to obtain IP data"
+msgstr "دیگر معلوم IP کا خلاصہ"
+
+msgid "Failed to obtain the relevant data"
+msgstr "متعلقہ ڈیٹا حاصل کرنے میں ناکام"
+
+msgid "Limited list of countries and regions"
+msgstr "موجودہ طور پر صرف 10 لائنیں دکھائی جا رہی ہیں، مزید ممالک اور خطوں کے لیے مکمل فہرست دیکھیں"
+
+msgid "currentVisitorData"
+msgstr "موجودہ طور پر صرف 10 لائنیں وزٹر ڈیٹا دکھائی جا رہی ہیں، مزید کے لیے مکمل فہرست دیکھیں"
+
+msgid "Others (robots main)"
+msgstr "دیگر(روبوٹ)"
+
+msgid "Others (worms)"
+msgstr "دیگر(کیڑے)"
+
+msgid "Displaying10RowsPageMorePleaseViewFullList"
+msgstr "موجودہ فہرست صرف 10 لائنیں صفحہ دکھا سکتی ہے، مزید کے لیے مکمل فہرست دیکھیں"
+
+msgid "Others (OS main)"
+msgstr "دیگر(سسٹم)"
+
+msgid "Others (browsers main)"
+msgstr "دیگر(براؤزر)"
+
+msgid "Others (screen sizes)"
+msgstr "دیگر(سائز)"
+
+msgid "Others (search engines main)"
+msgstr "دیگر(سرچ انجن)"
+
+msgid "Others (referring pages main)"
+msgstr "دیگر(ماخذ صفحات)"
+
+msgid "Others (keyphrases main)"
+msgstr "دیگر(جملے)"
+
+msgid "Others (keywords main)"
+msgstr "دیگر(کلیدی الفاظ)"
+
+msgid "Continue"
+msgstr "باقی مواد بھیجنا جاری رکھیں"
+
+msgid "Switching Protocols"
+msgstr "پروٹوکول تبدیل ہو رہا ہے"
+
+msgid "Processing (WebDAV)"
+msgstr "پروسیسنگ جاری ہے (براہ کرم انتظار کریں)"
+
+msgid "Early Hints"
+msgstr "سرور وسائل تیار کر رہا ہے"
+
+msgid "[Miscellaneous successes]"
+msgstr "دیگر کامیاب حالتیں"
+
+msgid "Request successful"
+msgstr "درخواست کامیاب"
+
+msgid "Created successfully"
+msgstr "کامیابی سے تخلیق ہو گیا"
+
+msgid "Accepted - processing"
+msgstr "قبول کر لیا گیا، پروسیسنگ جاری ہے"
+
+msgid "Non-authoritative information (from cache) (from cache)"
+msgstr "غیر مستند معلومات (کیشے سے)"
+
+msgid "Success, no content returned"
+msgstr "کامیاب، کوئی مواد واپس نہیں کیا گیا"
+
+msgid "Reset content"
+msgstr "فارم دوبارہ سیٹ کریں"
+
+msgid "Partial content (resume download)"
+msgstr "جزوی مواد (ڈاؤن لوڈ دوبارہ شروع کرنے کی سہولت)"
+
+msgid "Multi-status (WebDAV)"
+msgstr "متعدد حالتیں (WebDAV بیچ آپریشن)"
+
+msgid "Already reported (WebDAV)"
+msgstr "پہلے سے رپورٹ کر دیا گیا (تکرار سے بچنے کے لیے)"
+
+msgid "IM used"
+msgstr "IM توسیعی پروٹوکول استعمال کیا گیا"
+
+msgid "[Miscellaneous redirections]"
+msgstr "دوسرے ری ڈائریکشن"
+
+msgid "Multiple choices"
+msgstr "متعدد انتخاب"
+
+msgid "Moved permanently - update your links"
+msgstr "مستقل طور پر منتقل کر دیا گیا - براہ کرم اپنے لنکس کو اپ ڈیٹ کریں"
+
+msgid "Temporary redirect - URL unchanged"
+msgstr "عارضی ری ڈائریکشن - پتہ تبدیل نہیں ہوا"
+
+msgid "See other"
+msgstr "براہ کرم دوسرا پتہ دیکھیں"
+
+msgid "Not modified - using cached version"
+msgstr "ترمیم شدہ نہیں - کیشے شدہ ورژن استعمال کر رہے ہیں"
+
+msgid "Use proxy"
+msgstr "براہ کرم پراکسی استعمال کریں"
+
+msgid "Switch proxy"
+msgstr "براہ کرم پراکسی تبدیل کریں"
+
+msgid "Temporary redirect (keep method)"
+msgstr "عارضی ری ڈائریکشن (درخواست کا طریقہ برقرار رکھیں)"
+
+msgid "Permanent redirect - update your links"
+msgstr "مستقل ری ڈائریکشن - براہ کرم اپنے لنکس کو اپ ڈیٹ کریں"
+
+msgid "[Miscellaneous client/user errors]"
+msgstr "دوسرے کلائنٹ کی خرابیاں"
+
+msgid "Bad request"
+msgstr "درخواست کی شکل غلط ہے"
+
+msgid "Unauthorized - please log in"
+msgstr "غیر مجاز - براہ کرم پہلے لاگ ان کریں"
+
+msgid "Payment required"
+msgstr "ادائیگی کی ضرورت ہے"
+
+msgid "Forbidden - access denied"
+msgstr "رسائی ممنوع - اجازت نہیں ہے"
+
+msgid "Page not found (404) - check for broken links"
+msgstr "صفحہ موجود نہیں ہے، براہ کرم ٹوٹے ہوئے لنکس چیک کریں"
+
+msgid "Method not allowed"
+msgstr "درخواست کا طریقہ اجازت یافتہ نہیں ہے"
+
+msgid "Not acceptable"
+msgstr "قبول کرنے کے قابل جوابی فارمیٹ نہیں ہے"
+
+msgid "Proxy authentication required"
+msgstr "پراکسی تصدیق کی ضرورت ہے"
+
+msgid "Request timeout"
+msgstr "درخواست کا وقت ختم ہو گیا"
+
+msgid "Conflict - please try again"
+msgstr "درخواست میں تصادم ہے - براہ کرم بعد میں دوبارہ کوشش کریں"
+
+msgid "Gone - permanently deleted"
+msgstr "وسائل مستقل طور پر حذف کر دیے گئے ہیں"
+
+msgid "Length required"
+msgstr "مواد کی لمبائی کی وضاحت کرنے کی ضرورت ہے"
+
+msgid "Precondition failed"
+msgstr "شرط پوری نہیں ہوئی"
+
+msgid "Payload too large"
+msgstr "درخواست کا مواد بہت بڑا ہے"
+
+msgid "URI too long"
+msgstr "درخواست کا پتہ بہت لمبا ہے"
+
+msgid "Unsupported media type"
+msgstr "نا معاون فائل کی قسم"
+
+msgid "Range not satisfiable"
+msgstr "درخواست کردہ حد غلط ہے"
+
+msgid "Expectation failed"
+msgstr "Expect کی ضرورت پوری کرنے میں ناکام"
+
+msgid "I am a teapot (April Fools)"
+msgstr "میں چائے کا برتن ہوں (اپریل فول کا مذاق)"
+
+msgid "Page expired (Laravel)"
+msgstr "صفحہ کی میعاد ختم ہو چکی ہے، براہ کرم ریفریش کر کے دوبارہ کوشش کریں"
+
+msgid "Method failure (Spring)"
+msgstr "طریقہ ناکام ہو گیا"
+
+msgid "Misdirected request"
+msgstr "درخواست کو غلط طریقے سے ری ڈائریکٹ کر دیا گیا"
+
+msgid "Unprocessable entity (WebDAV)"
+msgstr "درخواست کی شکل درست ہے لیکن اس پر کارروائی نہیں کی جا سکتی"
+
+msgid "Locked (WebDAV)"
+msgstr "وسائل پہلے سے لاک ہیں"
+
+msgid "Failed dependency (WebDAV)"
+msgstr "انحصار والا عمل ناکام ہو گیا"
+
+msgid "Too early"
+msgstr "درخواست بہت جلدی بھیج دی گئی"
+
+msgid "Upgrade required"
+msgstr "پروٹوکول کو اپ گریڈ کرنے کی ضرورت ہے"
+
+msgid "Precondition required"
+msgstr "ضروری شرط موجود نہیں ہے"
+
+msgid "Too many requests - slow down"
+msgstr "درخواستیں بہت زیادہ ہیں - براہ کرم تھوڑی دیر بعد دوبارہ کوشش کریں"
+
+msgid "Request header fields too large (Shopify)"
+msgstr "درخواست ہیڈر کے فیلڈز بہت بڑے ہیں"
+
+msgid "Request header too large"
+msgstr "درخواست ہیڈر بہت بڑا ہے"
+
+msgid "Login timeout (IIS)"
+msgstr "لاگ ان کا وقت ختم ہو گیا، براہ کرم دوبارہ لاگ ان کریں"
+
+msgid "No response (nginx)"
+msgstr "سرور کا کوئی جواب نہیں ہے"
+
+msgid "Retry with (IIS)"
+msgstr "براہ کرم تھوڑی دیر بعد دوبارہ کوشش کریں"
+
+msgid "Blocked by Windows parental controls"
+msgstr "والدین کے کنٹرول کے ذریعے بلاک کر دیا گیا"
+
+msgid "Unavailable for legal reasons"
+msgstr "قانونی وجوہات کی بنا پر قابل رسائی نہیں"
+
+msgid "Client closed connection before idle timeout (AWS ELB)"
+msgstr "کلائنٹ نے فعال طور پر کنکشن منقطع کر دیا"
+
+msgid "X-Forwarded-For header with >30 IP addresses (AWS ELB)"
+msgstr "فارورڈنگ چین میں 30 سے زیادہ IP پتے ہیں"
+
+msgid "Incompatible protocol versions (AWS ELB)"
+msgstr "پروٹوکول ورژن غیر مطابقت رکھتے ہیں"
+
+msgid "Request header too large (nginx)"
+msgstr "درخواست ہیڈر بہت بڑا ہے"
+
+msgid "SSL certificate error (nginx)"
+msgstr "SSL سرٹیفکیٹ کی خرابی"
+
+msgid "SSL certificate required (nginx)"
+msgstr "SSL سرٹیفکیٹ کی ضرورت ہے"
+
+msgid "HTTP request sent to HTTPS port (nginx)"
+msgstr "HTTP درخواست HTTPS پورٹ پر بھیجی گئی"
+
+msgid "Invalid token (ArcGIS)"
+msgstr "غلط ٹوکن"
+
+msgid "Token required (ArcGIS) / Client closed request (nginx)"
+msgstr "ٹوکن کی ضرورت ہے / کلائنٹ نے درخواست بند کر دی"
+
+msgid "Resource limit reached (cPanel)"
+msgstr "وسائل کی حد پوری ہو گئی (CPU/میموری)"
+
+msgid "Bandwidth limit exceeded (Apache/cPanel)"
+msgstr "بینڈوتھ کی حد سے تجاوز کر گیا"
+
+msgid "[Miscellaneous server errors]"
+msgstr "دوسرے سرور کی خرابیاں"
+
+msgid "Internal server error - check logs"
+msgstr "سرور کے اندرونی خرابی - براہ کرم لاگ چیک کریں"
+
+msgid "Not implemented"
+msgstr "سرور اس فنکشن کو سپورٹ نہیں کرتا"
+
+msgid "Bad gateway - backend error"
+msgstr "گیٹ وے کی خرابی - بیک اینڈ سروس غیر معمولی ہے"
+
+msgid "Service unavailable - maintenance or overload"
+msgstr "سروس دستیاب نہیں ہے - دیکھ بھال یا اوور لوڈ"
+
+msgid "Gateway timeout"
+msgstr "گیٹ وے کا جواب دینے کا وقت ختم ہو گیا"
+
+msgid "HTTP version not supported"
+msgstr "HTTP پروٹوکول ورژن معاون نہیں ہے"
+
+msgid "Variant also negotiates"
+msgstr "متغیر بھی گفت و شنید میں حصہ لیتا ہے (ترتیب کی خرابی)"
+
+msgid "Insufficient storage (WebDAV)"
+msgstr "ذخیرہ کرنے کی جگہ ناکافی ہے"
+
+msgid "Loop detected (WebDAV)"
+msgstr "تکراری حوالہ کی نشاندہی ہوئی"
+
+msgid "Not extended"
+msgstr "مزید توسیع کی ضرورت ہے"
+
+msgid "Network authentication required"
+msgstr "نیٹ ورک کی توثیق کی ضرورت ہے"
+
+msgid "Unknown error (Cloudflare)"
+msgstr "نامعلوم خرابی"
+
+msgid "Web server is down (Cloudflare)"
+msgstr "ویب سرور بند ہے"
+
+msgid "Connection timeout (Cloudflare)"
+msgstr "کنکشن کا وقت ختم ہو گیا"
+
+msgid "Origin is unreachable (Cloudflare)"
+msgstr "اصل سورس تک رسائی ممکن نہیں"
+
+msgid "A timeout occurred (Cloudflare)"
+msgstr "وقت ختم ہو گیا"
+
+msgid "SSL handshake failed (Cloudflare)"
+msgstr "SSL ہینڈ شیک ناکام ہو گیا"
+
+msgid "Invalid SSL certificate (Cloudflare)"
+msgstr "SSL سرٹیفکیٹ غلط ہے"
+
+msgid "Railgun error (Cloudflare - obsolete)"
+msgstr "Railgun خرابی (متروک)"
+
+msgid "Site is overloaded (SSLLabs)"
+msgstr "سائٹ اوور لوڈ ہے"
+
+msgid "Origin DNS error (Cloudflare) / Site is frozen (Pantheon)"
+msgstr "اصل سورس DNS خرابی / سائٹ منجمد ہے"
+
+msgid "Temporarily disabled (Shopify)"
+msgstr "عارضی طور پر غیر فعال"
+
+msgid "Unauthorized (AWS ELB)"
+msgstr "غیر مجاز"
+
+msgid "Network read timeout error"
+msgstr "نیٹ ورک پڑھنے کا وقت ختم ہو گیا"
+
+msgid "Network connect timeout error"
+msgstr "نیٹ ورک کنکشن کا وقت ختم ہو گیا"
+
+msgid "Unexpected token (Shopify)"
+msgstr "غیر متوقع ٹوکن"
+
+msgid "Request denied (LinkedIn)"
+msgstr "درخواست مسترد کر دی گئی"
+
+msgid "HTTP/2 GOAWAY (AWS ELB)"
+msgstr "HTTP/2 کنکشن بند ہو رہا ہے"
+
+msgid "[Unknown]"
+msgstr "نامعلوم حالت کوڈ"
+
+msgid "Nonstandard success response (ESMTP)"
+msgstr "غیر معیاری کامیاب جواب (ESMTP)"
+
+msgid "System status, or system help reply"
+msgstr "سسٹم کی حالت، یا سسٹم ہیلپ معلومات"
+
+msgid "Help message"
+msgstr "مدد کا پیغام"
+
+msgid "SMTP service ready (LMTP)"
+msgstr "SMTP سروس تیار ہے (LMTP)"
+
+msgid "Service ready - server is ready to receive mail"
+msgstr "سروس تیار ہے - میل سرور میل وصول کرنے کے لیے تیار ہے"
+
+msgid "Service closing - connection is being closed"
+msgstr "سروس بند ہو رہی ہے - کنکشن بند ہو رہا ہے"
+
+msgid "Authentication successful"
+msgstr "شناخت کی تصدیق کامیاب"
+
+msgid "Requested mail action taken and completed"
+msgstr "درخواست کردہ میل کارروائی عمل میں لائی گئی اور مکمل ہو گئی"
+
+msgid "User not local - will forward to another address"
+msgstr "صارف اس سرور پر نہیں ہے - دوسرے پتے پر بھیجا جائے گا"
+
+msgid "Cannot verify recipient, but will attempt delivery"
+msgstr "وصول کنندہ کی تصدیق نہیں کر سکتے، لیکن پہنچانے کی کوشش کریں گے"
+
+msgid "Message accepted for delivery (DSN)"
+msgstr "میل پہنچانے کے لیے قبول کر لیا گیا (DSN)"
+
+msgid "User name is a mailbox"
+msgstr "صارف نام ایک میل باکس ہے"
+
+msgid "Authentication challenge - please respond"
+msgstr "شناخت کی تصدیق کا چیلنج - براہ کرم جواب دیں"
+
+msgid "Start mail input - end with <CRLF>.<CRLF>"
+msgstr "میل مواد داخل کرنا شروع کریں - <CRLF>.<CRLF> کے ساتھ ختم کریں"
+
+msgid "Continue (LMTP)"
+msgstr "جاری رکھیں (LMTP)"
+
+msgid "Service not available - connection closing, try again later"
+msgstr "سروس دستیاب نہیں ہے - کنکشن بند ہو رہا ہے، براہ کرم بعد میں دوبارہ کوشش کریں"
+
+msgid "Mailbox busy or temporarily unavailable (Exchange)"
+msgstr "میل باکس مصروف ہے یا عارضی طور پر دستیاب نہیں ہے (Exchange)"
+
+msgid "Connection rate limit exceeded (Postfix)"
+msgstr "کنکشن کی فریکوئنسی کی حد سے تجاوز کر گیا (Postfix)"
+
+msgid "Too many concurrent connections (Postfix)"
+msgstr "ہم آہنگ کنکشنز کی بہت زیادہ تعداد (Postfix)"
+
+msgid "Unable to establish connection (Postfix)"
+msgstr "کنکشن قائم کرنے سے قاصر (Postfix)"
+
+msgid "Connection timed out (Postfix)"
+msgstr "کنکشن کا وقت ختم ہو گیا (Postfix)"
+
+msgid "Connection dropped due to error (Postfix)"
+msgstr "خرابی کی وجہ سے کنکشن منقطع ہو گیا (Postfix)"
+
+msgid "Mailbox temporarily locked (Exchange)"
+msgstr "میل باکس عارضی طور پر لاک ہے (Exchange)"
+
+msgid "Too many recipients (Postfix/Exim)"
+msgstr "وصول کنندگان کی تعداد بہت زیادہ ہے (Postfix/Exim)"
+
+msgid "Mail server error (Exchange)"
+msgstr "میل سرور کی خرابی (Exchange)"
+
+msgid "Received loop detected (Exim)"
+msgstr "وصول کا لوپ پایا گیا (Exim)"
+
+msgid "Too many hop count (Exim)"
+msgstr "ہاپس کی تعداد بہت زیادہ ہے (Exim)"
+
+msgid "DNS lookup failed (Postfix)"
+msgstr "DNS تلاش ناکام ہوئی (Postfix)"
+
+msgid "Unable to authenticate (Postfix)"
+msgstr "شناخت کی تصدیق کرنے سے قاصر (Postfix)"
+
+msgid "TLS handshake failed (Postfix)"
+msgstr "TLS ہینڈ شیک ناکام ہوا (Postfix)"
+
+msgid "SMTP protocol violation (Postfix)"
+msgstr "SMTP پروٹوکول کی خلاف ورزی (Postfix)"
+
+msgid "Message size exceeds limit (Exchange)"
+msgstr "میل کا سائز حد سے تجاوز کر گیا (Exchange)"
+
+msgid "Message rate limit exceeded (Postfix)"
+msgstr "میل کی فریکوئنسی کی حد سے تجاوز کر گیا (Postfix)"
+
+msgid "Mailbox quota exceeded - temporary"
+msgstr "میل باکس کوٹہ بھر گیا - عارضی حالت"
+
+msgid "Domain not found (Postfix)"
+msgstr "ڈومین نہیں ملا (Postfix)"
+
+msgid "Message header invalid (Postfix)"
+msgstr "میل ہیڈر غلط ہے (Postfix)"
+
+msgid "Bounce loop detected (Postfix)"
+msgstr "واپسی کا لوپ پایا گیا (Postfix)"
+
+msgid "Unable to route (Postfix)"
+msgstr "راؤٹ کرنے سے قاصر (Postfix)"
+
+msgid "Sender domain not found (Postfix)"
+msgstr "بھیجنے والے کا ڈومین نہیں ملا (Postfix)"
+
+msgid "Recipient domain not found (Postfix)"
+msgstr "وصول کنندہ کا ڈومین نہیں ملا (Postfix)"
+
+msgid "Greylisting in progress - please try again (Postgrey)"
+msgstr "گرے لسٹنگ جاری ہے - براہ کرم بعد میں دوبارہ کوشش کریں (Postgrey)"
+
+msgid "Spam filtering in progress (SpamAssassin)"
+msgstr "اسپام فلٹرنگ جاری ہے (SpamAssassin)"
+
+msgid "Virus scanning in progress (ClamAV)"
+msgstr "وائرس اسکیننگ جاری ہے (ClamAV)"
+
+msgid "Mailbox unavailable - try again later"
+msgstr "میل باکس دستیاب نہیں ہے - براہ کرم بعد میں دوبارہ کوشش کریں"
+
+msgid "Requested action aborted - error in processing"
+msgstr "درخواست کردہ کارروائی منسوخ کر دی گئی - پروسیسنگ کے دوران خرابی"
+
+msgid "Insufficient system storage - try again later"
+msgstr "سسٹم کی ذخیرہ کرنے کی جگہ ناکافی ہے - براہ کرم بعد میں دوبارہ کوشش کریں"
+
+msgid "Too many messages for this recipient (Exchange)"
+msgstr "اس وصول کنندہ کے لیے بہت زیادہ میلز ہیں (Exchange)"
+
+msgid "TLS not available (Postfix)"
+msgstr "TLS دستیاب نہیں ہے (Postfix)"
+
+msgid "Server unable to accept messages (Postfix)"
+msgstr "سرور میلز قبول کرنے سے قاصر ہے (Postfix)"
+
+msgid "Temporary failure in DNS lookup (Exim)"
+msgstr "DNS تلاش میں عارضی ناکامی (Exim)"
+
+msgid "Quota exceeded - temporary"
+msgstr "کوٹہ سے تجاوز - عارضی حالت"
+
+msgid "Message too big - temporary"
+msgstr "میل بہت بڑا ہے - عارضی حالت"
+
+msgid "Too many messages per connection"
+msgstr "فی کنکشن بہت زیادہ میلز"
+
+msgid "Load average too high (Postfix)"
+msgstr "سسٹم لوڈ بہت زیادہ ہے (Postfix)"
+
+msgid "Connection refused (Postfix)"
+msgstr "کنکشن مسترد کر دیا گیا (Postfix)"
+
+msgid "Send rate limit exceeded (Postfix)"
+msgstr "بھیجنے کی فریکوئنسی کی حد سے تجاوز کر گیا (Postfix)"
+
+msgid "Recipient rate limit exceeded (Postfix)"
+msgstr "وصول کنندہ کی فریکوئنسی کی حد سے تجاوز کر گیا (Postfix)"
+
+msgid "Sender rate limit exceeded (Postfix)"
+msgstr "بھیجنے والے کی فریکوئنسی کی حد سے تجاوز کر گیا (Postfix)"
+
+msgid "IP address rate limit exceeded (Postfix)"
+msgstr "IP پتے کی فریکوئنسی کی حد سے تجاوز کر گیا (Postfix)"
+
+msgid "MX lookup failed (Postfix)"
+msgstr "MX تلاش ناکام ہوئی (Postfix)"
+
+msgid "A record lookup failed (Postfix)"
+msgstr "A ریکارڈ تلاش ناکام ہوا (Postfix)"
+
+msgid "PTR record lookup failed (Postfix)"
+msgstr "PTR ریکارڈ تلاش ناکام ہوا (Postfix)"
+
+msgid "Greylisting active - please try again (Postgrey)"
+msgstr "گرے لسٹنگ فعال ہے - براہ کرم بعد میں دوبارہ کوشش کریں (Postgrey)"
+
+msgid "Sender address rejected - domain not verified (DMARC pending)"
+msgstr "بھیجنے والے کا پتہ مسترد کر دیا گیا - ڈومین کی تصدیق نہیں ہوئی (DMARC زیر التواء)"
+
+msgid "Recipient address rejected - domain not verified (DMARC pending)"
+msgstr "وصول کنندہ کا پتہ مسترد کر دیا گیا - ڈومین کی تصدیق نہیں ہوئی (DMARC زیر التواء)"
+
+msgid "DKIM verification pending - temporary failure"
+msgstr "DKIM تصدیق زیر التواء - عارضی ناکامی"
+
+msgid "SPF verification pending - temporary failure"
+msgstr "SPF تصدیق زیر التواء - عارضی ناکامی"
+
+msgid "DMARC verification pending - temporary failure"
+msgstr "DMARC تصدیق زیر التواء - عارضی ناکامی"
+
+msgid "DNSBL lookup temporary failure"
+msgstr "DNSBL تلاش عارضی طور پر ناکام"
+
+msgid "RHSBL lookup temporary failure"
+msgstr "RHSBL تلاش عارضی طور پر ناکام"
+
+msgid "URI DNSBL lookup temporary failure"
+msgstr "URI DNSBL تلاش عارضی طور پر ناکام"
+
+msgid "Temporary authentication failure (Dovecot)"
+msgstr "عارضی شناخت کی تصدیق کی ناکامی (Dovecot)"
+
+msgid "Temporary authorization failure (Sendmail)"
+msgstr "عارضی اجازت کی ناکامی (Sendmail)"
+
+msgid "Rate limit exceeded per sender (Exim)"
+msgstr "فی بھیجنے والے کی فریکوئنسی کی حد سے تجاوز (Exim)"
+
+msgid "Rate limit exceeded per recipient (Exim)"
+msgstr "فی وصول کنندہ کی فریکوئنسی کی حد سے تجاوز (Exim)"
+
+msgid "Rate limit exceeded per domain (Exim)"
+msgstr "فی ڈومین کی فریکوئنسی کی حد سے تجاوز (Exim)"
+
+msgid "Rate limit exceeded per IP (Exim)"
+msgstr "فی IP کی فریکوئنسی کی حد سے تجاوز (Exim)"
+
+msgid "Message queued for later delivery (Postfix)"
+msgstr "میل بعد میں پہنچانے کے لیے قطار میں لگا دی گئی (Postfix)"
+
+msgid "Delivery delayed due to policy (Exchange)"
+msgstr "پالیسی کی وجہ سے ترسیل میں تاخیر (Exchange)"
+
+msgid "Temporary failure in content filter"
+msgstr "مواد فلٹر میں عارضی ناکامی"
+
+msgid "Temporary failure in antivirus scanner"
+msgstr "اینٹی وائرس اسکینر میں عارضی ناکامی"
+
+msgid "Temporary failure in spam filter"
+msgstr "اسپام فلٹر میں عارضی ناکامی"
+
+msgid "Temporary failure in milter (Postfix)"
+msgstr "Milter میں عارضی ناکامی (Postfix)"
+
+msgid "Greylisting - try again later"
+msgstr "گرے لسٹنگ - براہ کرم بعد میں دوبارہ کوشش کریں"
+
+msgid "DDoS protection active - try again later"
+msgstr "DDoS تحفظ فعال ہے - براہ کرم بعد میں دوبارہ کوشش کریں"
+
+msgid "SMTP policy violation - temporary"
+msgstr "SMTP پالیسی کی خلاف ورزی - عارضی حالت"
+
+msgid "Temporary error in RCPT TO processing"
+msgstr "RCPT TO پروسیسنگ میں عارضی خرابی"
+
+msgid "Temporary error in MAIL FROM processing"
+msgstr "MAIL FROM پروسیسنگ میں عارضی خرابی"
+
+msgid "Temporary error in EHLO/HELO processing"
+msgstr "EHLO/HELO پروسیسنگ میں عارضی خرابی"
+
+msgid "Temporary error in DATA processing"
+msgstr "DATA پروسیسنگ میں عارضی خرابی"
+
+msgid "Temporary error - service busy, try again later"
+msgstr "عارضی خرابی - سروس مصروف ہے، براہ کرم بعد میں دوبارہ کوشش کریں"
+
+msgid "Syntax error - command unrecognized or too long"
+msgstr "نحوی خرابی - کمانڈ ناقابل شناخت ہے یا بہت لمبی ہے"
+
+msgid "Syntax error in parameters or arguments"
+msgstr "پیرامیٹرز یا دلائل میں نحوی خرابی"
+
+msgid "Command not implemented"
+msgstr "کمانڈ لاگو نہیں کی گئی"
+
+msgid "Bad sequence of commands"
+msgstr "کمانڈز کی ترتیب غلط ہے"
+
+msgid "Command parameter not implemented"
+msgstr "کمانڈ پیرامیٹر لاگو نہیں کیا گیا"
+
+msgid "Version not supported (ESMTP)"
+msgstr "ورژن معاون نہیں ہے (ESMTP)"
+
+msgid "Mailbox path invalid (LMTP)"
+msgstr "میل باکس کا راستہ غلط ہے (LMTP)"
+
+msgid "Too many commands in this session (Postfix)"
+msgstr "اس سیشن میں بہت زیادہ کمانڈز ہیں (Postfix)"
+
+msgid "Recipient limit exceeded (Postfix)"
+msgstr "وصول کنندگان کی حد سے تجاوز کر گیا (Postfix)"
+
+msgid "Sender limit exceeded (Postfix)"
+msgstr "بھیجنے والوں کی حد سے تجاوز کر گیا (Postfix)"
+
+msgid "Domain limit exceeded (Postfix)"
+msgstr "ڈومینز کی حد سے تجاوز کر گیا (Postfix)"
+
+msgid "Mailbox does not exist (Exchange)"
+msgstr "میل باکس موجود نہیں ہے (Exchange)"
+
+msgid "DNS failure - permanent"
+msgstr "DNS ناکامی - مستقل خرابی"
+
+msgid "Address type not supported (Postfix)"
+msgstr "پتے کی قسم معاون نہیں ہے (Postfix)"
+
+msgid "Unable to open mailbox (Postfix)"
+msgstr "میل باکس کھولنے سے قاصر (Postfix)"
+
+msgid "Mailbox locked - permanent"
+msgstr "میل باکس لاک ہے - مستقل حالت"
+
+msgid "Message rejected due to policy (Exchange)"
+msgstr "پالیسی کی وجہ سے میل مسترد کر دی گئی (Exchange)"
+
+msgid "Content rejected - permanent"
+msgstr "مواد مسترد کر دیا گیا - مستقل حالت"
+
+msgid "Attachment type not allowed"
+msgstr "اٹیچمنٹ کی قسم اجازت یافتہ نہیں ہے"
+
+msgid "Message encoding not supported"
+msgstr "میل انکوڈنگ معاون نہیں ہے"
+
+msgid "Sender domain does not exist - permanent"
+msgstr "بھیجنے والے کا ڈومین موجود نہیں ہے - مستقل حالت"
+
+msgid "Domain does not accept mail or is closing"
+msgstr "ڈومین میل قبول نہیں کرتا یا بند ہو رہا ہے"
+
+msgid "Recipient domain does not exist - permanent"
+msgstr "وصول کنندہ کا ڈومین موجود نہیں ہے - مستقل حالت"
+
+msgid "Mailbox quota exceeded - permanent"
+msgstr "میل باکس کوٹہ بھر گیا - مستقل حالت"
+
+msgid "Message size exceeds limit - permanent"
+msgstr "میل کا سائز حد سے تجاوز کر گیا - مستقل حالت"
+
+msgid "Authentication required (Sendmail)"
+msgstr "شناخت کی تصدیق کی ضرورت ہے (Sendmail)"
+
+msgid "Authentication failed (Sendmail)"
+msgstr "شناخت کی تصدیق ناکام ہوئی (Sendmail)"
+
+msgid "Authentication mechanism not supported"
+msgstr "شناخت کی تصدیق کا طریقہ کار معاون نہیں ہے"
+
+msgid "Authentication credentials invalid"
+msgstr "شناخت کی تصدیق کی اسناد غلط ہیں"
+
+msgid "Authentication account expired"
+msgstr "شناخت کی تصدیق کا اکاؤنٹ میعاد ختم ہو چکا ہے"
+
+msgid "Access denied - authentication required"
+msgstr "رسائی سے انکار - شناخت کی تصدیق کی ضرورت ہے"
+
+msgid "Access denied (Sendmailism)"
+msgstr "رسائی سے انکار (Sendmail)"
+
+msgid "Access denied - not authenticated"
+msgstr "رسائی سے انکار - تصدیق شدہ نہیں ہے"
+
+msgid "Access denied - account locked"
+msgstr "رسائی سے انکار - اکاؤنٹ لاک ہے"
+
+msgid "Access denied - account disabled"
+msgstr "رسائی سے انکار - اکاؤنٹ غیر فعال ہے"
+
+msgid "Authentication failed"
+msgstr "شناخت کی تصدیق ناکام ہوئی"
+
+msgid "Authentication required for relay (Postfix)"
+msgstr "ریلے فارورڈنگ کے لیے شناخت کی تصدیق کی ضرورت ہے (Postfix)"
+
+msgid "Authentication failed for relay (Postfix)"
+msgstr "ریلے فارورڈنگ کے لیے شناخت کی تصدیق ناکام ہوئی (Postfix)"
+
+msgid "Encryption required (STARTTLS)"
+msgstr "خفیہ کنکشن کی ضرورت ہے (STARTTLS)"
+
+msgid "TLS required for this recipient"
+msgstr "اس وصول کنندہ کے لیے TLS خفیہ کاری کی ضرورت ہے"
+
+msgid "Encryption strength insufficient"
+msgstr "خفیہ کاری کی طاقت ناکافی ہے"
+
+msgid "Certificate validation failed"
+msgstr "سرٹیفکیٹ کی توثیق ناکام ہوئی"
+
+msgid "Invalid TLS certificate"
+msgstr "غلط TLS سرٹیفکیٹ"
+
+msgid "TLS protocol version not supported"
+msgstr "TLS پروٹوکول ورژن معاون نہیں ہے"
+
+msgid "Cipher suite not supported"
+msgstr "خفیہ کاری کا سوٹ معاون نہیں ہے"
+
+msgid "Access denied - no valid recipient"
+msgstr "رسائی سے انکار - کوئی درست وصول کنندہ نہیں ہے"
+
+msgid "Access denied - no valid sender"
+msgstr "رسائی سے انکار - کوئی درست بھیجنے والا نہیں ہے"
+
+msgid "Access denied - domain not allowed"
+msgstr "رسائی سے انکار - ڈومین اجازت یافتہ نہیں ہے"
+
+msgid "Access denied - IP address blocked (permanent)"
+msgstr "رسائی سے انکار - IP پتہ بلاک کر دیا گیا ہے (مستقل)"
+
+msgid "Access denied - sender domain blacklisted"
+msgstr "رسائی سے انکار - بھیجنے والے کا ڈومین بلیک لسٹ میں ہے"
+
+msgid "Mailbox unavailable - requested action not taken"
+msgstr "میل باکس دستیاب نہیں ہے - درخواست کردہ کارروائی عمل میں نہیں لائی گئی"
+
+msgid "User not local - please try forwarding address"
+msgstr "صارف اس سرور پر نہیں ہے - براہ کرم فارورڈنگ ایڈریس استعمال کریں"
+
+msgid "Requested action aborted - exceeded storage allocation"
+msgstr "درخواست کردہ کارروائی منسوخ کر دی گئی - ذخیرہ کرنے کی تقسیم سے تجاوز کر گیا"
+
+msgid "Mailbox name not allowed"
+msgstr "میل باکس کا نام اجازت یافتہ نہیں ہے"
+
+msgid "Requested action rejected - access denied"
+msgstr "درخواست کردہ کارروائی مسترد کر دی گئی - رسائی سے انکار"
+
+msgid "MAIL FROM/RCPT TO parameters not recognized"
+msgstr "MAIL FROM/RCPT TO پیرامیٹرز کی شناخت نہیں ہوئی"
+
+msgid "Domain not allowed to send (DMARC reject)"
+msgstr "ڈومین کو بھیجنے کی اجازت نہیں ہے (DMARC مسترد)"
+
+msgid "Too many duplicate messages - permanent"
+msgstr "بہت زیادہ ڈپلیکیٹ میلز - مستقل حالت"
+
+msgid "Sender address rejected - domain not in SPF"
+msgstr "بھیجنے والے کا پتہ مسترد کر دیا گیا - ڈومین SPF میں نہیں ہے"
+
+msgid "Sender address rejected - DKIM verification failed"
+msgstr "بھیجنے والے کا پتہ مسترد کر دیا گیا - DKIM تصدیق ناکام ہوئی"
+
+msgid "Sender address rejected - DMARC policy reject"
+msgstr "بھیجنے والے کا پتہ مسترد کر دیا گیا - DMARC پالیسی مسترد"
+
+msgid "Recipient address rejected - DMARC policy reject"
+msgstr "وصول کنندہ کا پتہ مسترد کر دیا گیا - DMARC پالیسی مسترد"
+
+msgid "Message rejected due to spam content"
+msgstr "اسپام مواد کی وجہ سے میل مسترد کر دی گئی"
+
+msgid "Message rejected due to virus detected"
+msgstr "وائرس کی تشخیص کی وجہ سے میل مسترد کر دی گئی"
+
+msgid "Message rejected due to malicious content"
+msgstr "نقصان دہ مواد کی وجہ سے میل مسترد کر دی گئی"
+
+msgid "Message rejected due to phishing detection"
+msgstr "فشنگ کی تشخیص کی وجہ سے میل مسترد کر دی گئی"
+
+msgid "Message rejected due to malware detection"
+msgstr میلویئر کی تشخیص کی وجہ سے میل مسترد کر دی گئی"
+
+msgid "Message rejected due to policy - permanent"
+msgstr "پالیسی کی وجہ سے میل مسترد کر دی گئی - مستقل حالت"
+
+msgid "Message rejected due to content filtering"
+msgstr "مواد فلٹرنگ کی وجہ سے میل مسترد کر دی گئی"
+
+msgid "Message rejected due to reputation"
+msgstr "شہرت کی وجہ سے میل مسترد کر دی گئی"
+
+msgid "Access denied - access_map violation"
+msgstr "رسائی سے انکار - access_map کی خلاف ورزی"
+
+msgid "Access denied - SMTP client listed in RBL"
+msgstr "رسائی سے انکار - SMTP کلائنٹ RBL میں درج ہے"
+
+msgid "Access denied - relay not authorized"
+msgstr "رسائی سے انکار - ریلے فارورڈنگ مجاز نہیں ہے"
+
+msgid "Access denied - unknown SMTP client hostname"
+msgstr "رسائی سے انکار - نامعلوم SMTP کلائنٹ ہوسٹ نام"
+
+msgid "Access denied - bad syntax for client HELO hostname"
+msgstr "رسائی سے انکار - کلائنٹ HELO ہوسٹ نام کی نحوی خرابی"
+
+msgid "Access denied - SMTP client hostname rejected"
+msgstr "رسائی سے انکار - SMTP کلائنٹ ہوسٹ نام مسترد کر دیا گیا"
+
+msgid "Access denied - unknown domain for sender or recipient"
+msgstr "رسائی سے انکار - بھیجنے والے یا وصول کنندہ کے لیے نامعلوم ڈومین"
+
+msgid "Access denied - unknown client HELO hostname"
+msgstr "رسائی سے انکار - نامعلوم کلائنٹ HELO ہوسٹ نام"
+
+msgid "Access denied - invalid domain (not FQDN)"
+msgstr "رسائی سے انکار - غلط ڈومین (FQDN نہیں ہے)"
+
+msgid "Access denied - domain not qualified"
+msgstr "رسائی سے انکار - ڈومین اہل نہیں ہے"
+
+msgid "Access denied - mail server misconfigured"
+msgstr "رسائی سے انکار - میل سرور کی ترتیب غلط ہے"
+
+msgid "Access denied - open relay not allowed"
+msgstr "رسائی سے انکار - کھلا ریلے اجازت یافتہ نہیں ہے"
+
+msgid "Access denied - proxy not allowed"
+msgstr "رسائی سے انکار - پراکسی اجازت یافتہ نہیں ہے"
+
+msgid "Access denied - dynamic IP not allowed"
+msgstr "رسائی سے انکار - متحرک IP اجازت یافتہ نہیں ہے"
+
+msgid "Access denied - residential IP not allowed"
+msgstr "رسائی سے انکار - رہائشی IP اجازت یافتہ نہیں ہے"
+
+msgid "Access denied - VPN/Tor detected"
+msgstr "رسائی سے انکار - VPN/Tor کی تشخیص ہوئی"
+
+msgid "Access denied - Spamhaus DROP listed"
+msgstr "رسائی سے انکار - Spamhaus DROP فہرست میں ہے"
+
+msgid "Access denied - URL listed in URIBL"
+msgstr "رسائی سے انکار - URL URIBL میں درج ہے"
+
+msgid "Access denied - domain in RHSBL"
+msgstr "رسائی سے انکار - ڈومین RHSBL میں ہے"
+
+msgid "Access denied - IP in DNSWL (policy)"
+msgstr "رسائی سے انکار - IP DNSWL میں ہے (پالیسی)"
+
+msgid "Delivery failed - mailbox not found"
+msgstr "ترسیل ناکام ہوئی - میل باکس نہیں ملا"
+
+msgid "Delivery failed - recipient not local"
+msgstr "ترسیل ناکام ہوئی - وصول کنندہ مقامی نہیں ہے"
+
+msgid "Delivery failed - recipient rejected"
+msgstr "ترسیل ناکام ہوئی - وصول کنندہ مسترد کر دیا گیا"
+
+msgid "Delivery failed - sender rejected"
+msgstr "ترسیل ناکام ہوئی - بھیجنے والا مسترد کر دیا گیا"
+
+msgid "Delivery failed - relay rejected"
+msgstr "ترسیل ناکام ہوئی - ریلے مسترد کر دیا گیا"
+
+msgid "Delivery failed - DNS permanent error"
+msgstr "ترسیل ناکام ہوئی - DNS مستقل خرابی"
+
+msgid "Delivery failed - MX permanent error"
+msgstr "ترسیل ناکام ہوئی - MX مستقل خرابی"
+
+msgid "Delivery failed - A record permanent error"
+msgstr "ترسیل ناکام ہوئی - A ریکارڈ مستقل خرابی"
+
+msgid "Delivery failed - PTR record permanent error"
+msgstr "ترسیل ناکام ہوئی - PTR ریکارڈ مستقل خرابی"
+
+msgid "Delivery failed - policy permanent error"
+msgstr "ترسیل ناکام ہوئی - پالیسی مستقل خرابی"
+
+msgid "DSN: Success - delivery status notification"
+msgstr "DSN: کامیاب - ترسیل کی حالت کی اطلاع"
+
+msgid "DSN: Delivery delayed"
+msgstr "DSN: ترسیل میں تاخیر"
+
+msgid "DSN: Delivery failed - permanent"
+msgstr "DSN: ترسیل ناکام ہوئی - مستقل"
+
+msgid "DSN: Delivery failed - temporary"
+msgstr "DSN: ترسیل ناکام ہوئی - عارضی"
+
+msgid "DSN: Message expired"
+msgstr "DSN: میل کی میعاد ختم ہو گئی"
+
+msgid "DSN: Message bounced"
+msgstr "DSN: میل واپس آ گئی"
+
+msgid "DSN: Message discarded"
+msgstr "DSN: میل ضائع کر دی گئی"
+
+msgid "DSN: Message filtered"
+msgstr "DSN: میل فلٹر کر دی گئی"
+
+msgid "DSN: Message quarantined"
+msgstr "DSN: میل قرنطینہ کر دی گئی"
+
+msgid "DSN: Message held for review"
+msgstr "DSN: میل جائزے کے لیے روک دی گئی"
+
+msgid "MTA-STS policy required"
+msgstr "MTA-STS پالیسی کی ضرورت ہے"
+
+msgid "MTA-STS policy validation failed"
+msgstr "MTA-STS پالیسی کی توثیق ناکام ہوئی"
+
+msgid "TLS reporting required"
+msgstr "TLS رپورٹنگ کی ضرورت ہے"
+
+msgid "TLS report requested"
+msgstr "TLS رپورٹ کی درخواست کی گئی"
+
+msgid "SMTP MTA Strict Transport Security active"
+msgstr "SMTP MTA سخت ٹرانسپورٹ سیکیورٹی فعال ہے"
+
+msgid "DANE validation required"
+msgstr "DANE توثیق کی ضرورت ہے"
+
+msgid "DANE validation failed"
+msgstr "DANE توثیق ناکام ہوئی"
+
+msgid "TLSA record missing"
+msgstr "TLSA ریکارڈ موجود نہیں ہے"
+
+msgid "Certificate name mismatch"
+msgstr "سرٹیفکیٹ کے نام کا ملاپ نہیں ہے"
+
+msgid "Certificate expired"
+msgstr "سرٹیفکیٹ میعاد ختم ہو چکا ہے"
+
+msgid "AUTH LOGIN required"
+msgstr "AUTH LOGIN توثیق کی ضرورت ہے"
+
+msgid "AUTH PLAIN required"
+msgstr "AUTH PLAIN توثیق کی ضرورت ہے"
+
+msgid "AUTH CRAM-MD5 required"
+msgstr "AUTH CRAM-MD5 توثیق کی ضرورت ہے"
+
+msgid "AUTH DIGEST-MD5 required"
+msgstr "AUTH DIGEST-MD5 توثیق کی ضرورت ہے"
+
+msgid "AUTH GSSAPI required"
+msgstr "AUTH GSSAPI توثیق کی ضرورت ہے"
+
+msgid "AUTH NTLM required"
+msgstr "AUTH NTLM توثیق کی ضرورت ہے"
+
+msgid "AUTH SCRAM required"
+msgstr "AUTH SCRAM توثیق کی ضرورت ہے"
+
+msgid "AUTH OAUTHBEARER required"
+msgstr "AUTH OAUTHBEARER توثیق کی ضرورت ہے"
+
+msgid "AUTH XOAUTH2 required"
+msgstr "AUTH XOAUTH2 توثیق کی ضرورت ہے"
+
+msgid "Exchange: Mailbox database error"
+msgstr "Exchange: میل باکس ڈیٹا بیس کی خرابی"
+
+msgid "Exchange: Store driver error"
+msgstr "Exchange: اسٹور ڈرائیور کی خرابی"
+
+msgid "Exchange: Transport agent error"
+msgstr "Exchange: ٹرانسپورٹ ایجنٹ کی خرابی"
+
+msgid "Exchange: Content conversion error"
+msgstr "Exchange: مواد کی تبدیلی کی خرابی"
+
+msgid "Exchange: Routing error"
+msgstr "Exchange: روٹنگ کی خرابی"
+
+msgid "Exchange: Mail flow stalled"
+msgstr "Exchange: میل کا بہاؤ رک گیا"
+
+msgid "Exchange: Shadow redundancy error"
+msgstr "Exchange: شیڈو ریڈنڈنسی کی خرابی"
+
+msgid "Exchange: Safety net error"
+msgstr "Exchange: سیفٹی نیٹ کی خرابی"
+
+msgid "Exchange: Queue database error"
+msgstr "Exchange: قطار ڈیٹا بیس کی خرابی"
+
+msgid "Exchange: Message throttled"
+msgstr "Exchange: میل پر پابندی لگائی گئی"
+
+msgid "Postfix: Bounce queue error"
+msgstr "Postfix: واپسی قطار کی خرابی"
+
+msgid "Postfix: Deferred queue error"
+msgstr "Postfix: موخر شدہ قطار کی خرابی"
+
+msgid "Postfix: Hold queue error"
+msgstr "Postfix: ہولڈ قطار کی خرابی"
+
+msgid "Postfix: Incoming queue error"
+msgstr "Postfix: آنے والی قطار کی خرابی"
+
+msgid "Postfix: Active queue error"
+msgstr "Postfix: فعال قطار کی خرابی"
+
+msgid "Postfix: Corrupted queue file"
+msgstr "Postfix: خراب شدہ قطار فائل"
+
+msgid "Sendmail: Queue runner error"
+msgstr "Sendmail: قطار رنر کی خرابی"
+
+msgid "Sendmail: Alias database error"
+msgstr "Sendmail: عرف ڈیٹا بیس کی خرابی"
+
+msgid "Sendmail: Virtuser table error"
+msgstr "Sendmail: ورچوئل یوزر ٹیبل کی خرابی"
+
+msgid "Sendmail: Mailer definition error"
+msgstr "Sendmail: میلر تعریف کی خرابی"
+
+msgid "Exim: Router configuration error"
+msgstr "Exim: روٹر ترتیب کی خرابی"
+
+msgid "Exim: Transport configuration error"
+msgstr "Exim: ٹرانسپورٹ ترتیب کی خرابی"
+
+msgid "Exim: Director configuration error"
+msgstr "Exim: ڈائریکٹر ترتیب کی خرابی"
+
+msgid "Exim: Retry configuration error"
+msgstr "Exim: دوبارہ کوشش ترتیب کی خرابی"
+
+msgid "Exim: Rewrite configuration error"
+msgstr "Exim: دوبارہ تحریر ترتیب کی خرابی"
+
+msgid "Exim: Authentication configuration error"
+msgstr "Exim: توثیق ترتیب کی خرابی"
+
+msgid "Exim: ACL configuration error"
+msgstr "Exim: ACL ترتیب کی خرابی"
+
+msgid "Exim: Local_scan configuration error"
+msgstr "Exim: Local_scan ترتیب کی خرابی"
+
+msgid "Exim: Lookup configuration error"
+msgstr "Exim: تلاش ترتیب کی خرابی"
+
+msgid "Exim: Expansion configuration error"
+msgstr "Exim: توسیع ترتیب کی خرابی"
+
+msgid "HTTP Protocol Versions"
+msgstr "HTTP پروٹوکول ورژن"
+
+msgid "Protocol"
+msgstr "پروٹوکول"
+
+msgid "Request %"
+msgstr "درخواست کا فیصد"
+
+msgid "Bandwidth %"
+msgstr "بینڈوتھ کا فیصد"
+
+msgid "Each request requires a new connection"
+msgstr "ہر درخواست کے لیے نیا کنکشن بنانا ہوتا ہے"
+
+msgid "Multiple requests can reuse one connection"
+msgstr "متعدد درخواستیں ایک کنکشن دوبارہ استعمال کر سکتی ہیں"
+
+msgid "Multiple requests in parallel over one connection"
+msgstr "ایک کنکشن پر متعدد درخواستیں متوازی طور پر"
+
+msgid "Faster connection, better performance on poor networks"
+msgstr "تیز کنکشن، کمزور نیٹ ورک پر بہتر کارکردگی"
+
+msgid "No protocol data available"
+msgstr "کوئی پروٹوکول ڈیٹا دستیاب نہیں ہے"
+
+msgid "of requests use HTTP/1.0"
+msgstr "درخواستوں نے HTTP/1.0 پروٹوکول استعمال کیا"
+
+msgid "From access logs"
+msgstr "رسائی لاگز سے"
+
+msgid "No HTTP/2 requests detected"
+msgstr "کوئی HTTP/2 پروٹوکول درخواست نہیں ملی"
+
+msgid "All requests are HTTP/1.0, no HTTP/2 requests"
+msgstr "موجودہ تمام درخواستیں HTTP/1.0 ہیں، کوئی HTTP/2 درخواست نہیں"
+
+msgid "HTTP/3 not detected"
+msgstr "کوئی HTTP/3 پروٹوکول درخواست نہیں ملی"
+
+msgid "all requests do not include QUIC/HTTP/3 protocol requests"
+msgstr "موجودہ تمام درخواستوں میں QUIC/HTTP/3 پروٹوکول درخواستیں نہیں ہیں"
+
+msgid "Mail Authentication Statistics"
+msgstr "میل توثیق کے اعداد و شمار"
+
+msgid "Authentication"
+msgstr "توثیق کی قسم"
+
+msgid "Pass"
+msgstr "کامیاب"
+
+msgid "Fail"
+msgstr "ناکام"
+
+msgid "Softfail"
+msgstr "نرم ناکامی"
+
+msgid "Neutral"
+msgstr "غیر جانبدار"
+
+msgid "None"
+msgstr "کوئی نہیں"
+
+msgid "Mail Queue Delay Statistics"
+msgstr "میل قطار میں تاخیر کے اعداد و شمار"
+
+msgid "Delay Range"
+msgstr "تاخیر کی حد"
+
+msgid "Count"
+msgstr "تعداد"
+
+msgid "Percentage"
+msgstr "فیصد"
+
+msgid "TLS Encryption Statistics"
+msgstr "TLS خفیہ کاری کے اعداد و شمار"
+
+msgid "TLS Versions"
+msgstr "TLS ورژن"
+
+msgid "Top Ciphers"
+msgstr "عام استعمال ہونے والے خفیہ کاری سوٹ"
+
+msgid "robot_hits_detail_both"
+msgstr "کل درخواستیں: %s (عام صفحات: %s، robots.txt: %s)"
+
+msgid "robot_hits_detail_only_robots"
+msgstr "صرف robots.txt تک رسائی: %s، کوئی دوسرے صفحات نہیں کھینچے"
+
+msgid "robot_hits_detail_normal"
+msgstr "عام صفحہ کی درخواستیں: %s"
+
+msgid "Troubleshooting"
+msgstr "خرابیوں کا ازالہ"
+
+msgid "Did you use the correct URL?"
+msgstr "کیا آپ نے درست URL استعمال کیا؟"
+
+msgid "Example:"
+msgstr "مثال:"
+
+msgid "Did you use correct config parameter?"
+msgstr "کیا آپ نے درست ترتیب پیرامیٹر استعمال کیا؟"
+
+msgid "Example: If your config file is awstats.mysite.conf, use -config=mysite"
+msgstr "مثال: اگر آپ کی ترتیب فائل awstats.mysite.conf ہے، تو -config=mysite استعمال کریں"
+
+msgid "Did you create your config file 'awstats.$SiteConfig.conf'?"
+msgstr "کیا آپ نے ترتیب فائل 'awstats.$SiteConfig.conf' بنائی ہے؟"
+
+msgid "If not, you can run \"awstats_configure.pl\" from command line, or create it manually."
+msgstr "اگر نہیں، تو آپ کمانڈ لائن سے \"awstats_configure.pl\" چلا سکتے ہیں، یا دستی طور پر بنا سکتے ہیں۔"
+
+msgid "Setup"
+msgstr "ترتیب"
+
+msgid "file, web server or permissions may be wrong."
+msgstr "فائل، ویب سرور یا اجازتیں غلط ہو سکتی ہیں۔"
+
+msgid "Check config file, permissions and AWStats documentation (in 'docs' directory)."
+msgstr "ترتیب فائل، اجازتیں اور AWStats دستاویزات ('docs' ڈائریکٹری میں) چیک کریں۔"
+
+msgid "Warning: Can't find language files for \"%s\". English will be used."
+msgstr "انتباہ: \"%s\" کے لیے زبان کی فائلیں نہیں مل سکیں۔ انگریزی استعمال کی جائے گی۔"
+
+#------------------------------------------------------------------------------
+# خرابی اور سگنل ہینڈلنگ
+#------------------------------------------------------------------------------
+
+msgid "%s process (ID %s) interrupted by signal %s."
+msgstr "%s عمل (ID %s) سگنل %s سے منقطع ہو گیا۔"
+
+msgid "An AWStats update process seems to be already running for this config file. Try later. If this is not true, remove manually lock file"
+msgstr "اس ترتیب فائل کے لیے AWStats اپ ڈیٹ عمل پہلے سے چل رہا ہے۔ براہ کرم بعد میں کوشش کریں۔ اگر ایسا نہیں ہے تو لاک فائل کو دستی طور پر حذف کریں"
+
+#------------------------------------------------------------------------------
+# نئے شماریاتی عنوانات
+#------------------------------------------------------------------------------
+
+msgid "Report Overview"
+msgstr "رپورٹ کا جائزہ"
+
+msgid "Monthly Statistics"
+msgstr "ماہانہ اعداد و شمار"
+
+msgid "Daily Statistics"
+msgstr "یومیہ اعداد و شمار"
+
+msgid "Statistics by Day of Week"
+msgstr "ہفتے کے دن کے لحاظ سے اعداد و شمار"
+
+msgid "Hourly Page Views"
+msgstr "فی گھنٹہ صفحہ کے مناظر"
+
+msgid "Traffic Sources"
+msgstr "ٹریفک کے ذرائع"
+
+msgid "Other Sources"
+msgstr "دیگر ذرائع"
+
+msgid "tooltip_1"
+msgstr "ویب سائٹ پر وزٹر کے سیشنز کی تعداد۔ ایک ہی وزٹر 30 منٹ سے زیادہ غیر فعال رہنے کے بعد دوبارہ آتا ہے تو اسے نیا دورہ شمار کیا جاتا ہے"
+
+msgid "tooltip_2"
+msgstr "مقررہ مدت میں آپ کی ویب سائٹ دیکھنے والے مختلف وزٹرز کی تعداد۔ IP پتے کی بنیاد پر شمار کیا جاتا ہے"
+
+msgid "tooltip_3"
+msgstr "صفحات کے طور پر شمار ہونے والی درخواستوں کی تعداد (جیسے HTML، PHP، ASP)، جس میں تصاویر، CSS، JS جیسی جامد فائلیں شامل نہیں ہیں"
+
+msgid "tooltip_4"
+msgstr "سرور کو بھیجی گئی تمام درخواستوں کی کل تعداد، جس میں صفحات، تصاویر، CSS، JS اور تمام فائلیں شامل ہیں"
+
+msgid "tooltip_5"
+msgstr "سرور کی طرف سے صارفین کی درخواستوں کے جواب میں منتقل کردہ ڈیٹا کی کل مقدار"
+
+msgid "tooltip_13"
+msgstr "سرچ انجنوں کے ذریعے آپ کی ویب سائٹ پر آنے والے ذرائع کے اعداد و شمار۔ دکھاتا ہے کہ کون سے سرچ انجن آپ کے لیے ٹریفک لائے اور وزٹرز نے کون سے تلاشی الفاظ استعمال کیے"
+
+msgid "tooltip_14"
+msgstr "دیگر ویب سائٹس کے بیرونی لنکس کے ذریعے آپ کی ویب سائٹ پر آنے والے ذرائع کے اعداد و شمار۔ دکھاتا ہے کہ کون سی سائٹیں آپ سے منسلک ہیں اور وہ کتنی ٹریفک لاتی ہیں"
+
+msgid "tooltip_15"
+msgstr "وزٹرز سرچ انجنوں پر آپ کی ویب سائٹ تلاش کرتے وقت استعمال کردہ الفاظ۔ کلیدی الفاظ واحد الفاظ ہیں، کلیدی جملے متعدد الفاظ کا مجموعہ ہیں"
+
+msgid "tooltip_16"
+msgstr "سرچ انجن کرالر، AI تربیتی کرالر، کمزوری سکینر جیسے خودکار پروگرام۔ بریکٹ میں موجود نمبر عام صفحے کی درخواستوں اور robots.txt درخواستوں کی تعداد کو ظاہر کرتا ہے"
+
+msgid "tooltip_17"
+msgstr "24 گھنٹے کی ٹریفک تقسیم کا چارٹ۔ یہ دکھاتا ہے کہ دن کے مختلف اوقات میں آپ کی ویب سائٹ پر رسائی کیسے ہوتی ہے، جس سے صارفین کی سرگرمی کے اوقات کو سمجھنے میں مدد ملتی ہے"
+
+msgid "tooltip_18"
+msgstr "یہ کالم منتخب کردہ مدت کے دوران روزانہ/ہفتہ وار اوسط قیمت ظاہر کرتا ہے، جس سے مجموعی رجحان کو سمجھنے میں مدد ملتی ہے"
+
+msgid "tooltip_19"
+msgstr "مزید تفصیلات دیکھنے کے لیے چارٹ میں موجود آئٹمز پر کلک کریں۔ مخصوص اقدار دیکھنے کے لیے ماؤس کو چارٹ کے عناصر پر رکھیں"
+
+msgid "tooltip_20"
+msgstr "وہ ڈیٹا جسے موجودہ زمروں میں شامل نہیں کیا جا سکتا، عام طور پر ڈیٹا کی شکل میں بے ضابطگی یا کمی کی وجہ سے"
+
+msgid "tooltip_21"
+msgstr "تشخیص شدہ وائرس وارم کے حملوں کے ریکارڈ۔ وارم ایک خود پھیلنے والا بدنیتی پر مبنی پروگرام ہے، جو عام طور پر نیٹ ورک کے خطرات کے ذریعے پھیلتا ہے"
+
+#------------------------------------------------------------------------------
+# مدد کی معلومات دکھائیں - کمیونٹی ایڈیشن
+#------------------------------------------------------------------------------
+
+msgid "AWStats %s - Advanced Web Statistics"
+msgstr "AWStats %s - اعلیٰ درجے کی ویب شماریات"
+
+msgid "Copyright (c) 2000-2025 Laurent Destailleur"
+msgstr "کاپی رائٹ (c) 2000-2025 Laurent Destailleur"
+
+msgid "Copyright (c) 2026-latest Community Edition"
+msgstr "کاپی رائٹ (c) 2026-تازہ ترین کمیونٹی ایڈیشن"
+
+msgid "AWStats comes with ABSOLUTELY NO WARRANTY. It's a free software distributed with a GNU General Public License (See LICENSE file for details)."
+msgstr "AWStats بالکل کوئی وارنٹی فراہم نہیں کرتا۔ یہ GNU جنرل پبلک لائسنس کے تحت تقسیم شدہ ایک مفت سافٹ ویئر ہے (تفصیلات کے لیے LICENSE فائل دیکھیں)۔"
+
+msgid "Syntax: %s -config=virtualhostname [options]"
+msgstr "نحو: %s -config=مجازی_میزبان_نام [اختیارات]"
+
+msgid "This runs %s in command line to update statistics (-update option) of a web site, from the log file defined in AWStats config file, or build a HTML report (-output option)."
+msgstr "یہ کمانڈ AWStats ترتیب فائل میں متعرف کردہ لاگ فائل سے ویب سائٹ کے اعداد و شمار کو اپ ڈیٹ کرنے (-update اختیار) یا HTML رپورٹ بنانے (-output اختیار) کے لیے کمانڈ لائن میں %s چلاتا ہے۔"
+
+msgid "First, %s tries to read %s.virtualhostname.conf as the config file. If not found, %s tries to read %s.conf, and finally the full path passed to -config="
+msgstr "سب سے پہلے، %s ترتیب فائل کے طور پر %s.virtualhostname.conf کو پڑھنے کی کوشش کرتا ہے۔ اگر نہ ملے تو، %s %s.conf کو پڑھنے کی کوشش کرتا ہے، اور آخر میں -config= کو دیا گیا مکمل راستہ"
+
+msgid "Note 1: Config files (*.conf) must be in /etc/awstats, /usr/local/etc/awstats, /etc or same directory than awstats.pl script file."
+msgstr "نوٹ 1: ترتیب فائلیں (*.conf) /etc/awstats، /usr/local/etc/awstats، /etc یا awstats.pl اسکرپٹ فائل والی ڈائریکٹری میں ہونی چاہئیں۔"
+
+msgid "Note 2: If AWSTATS_FORCE_CONFIG environment variable is defined, AWStats will use it as the 'config' value, whatever is the value on command line or URL."
+msgstr "نوٹ 2: اگر AWSTATS_FORCE_CONFIG ماحولیاتی متغیر متعرف ہے، تو AWStats اسے 'config' قدر کے طور پر استعمال کرے گا، چاہے کمانڈ لائن یا URL پر کوئی بھی قدر ہو۔"
+
+msgid "See AWStats documentation for all setup instructions."
+msgstr "تمام تنصیب ہدایات کے لیے AWStats دستاویزات دیکھیں۔"
+
+msgid "Options to update statistics:"
+msgstr "اعداد و شمار اپ ڈیٹ کرنے کے اختیارات:"
+
+msgid "  -update        to update statistics (default)"
+msgstr "  -update        اعداد و شمار اپ ڈیٹ کریں (طے شدہ)"
+
+msgid "  -showsteps     to add benchmark information every %s lines processed"
+msgstr "  -showsteps     ہر %s لائن پر کارروائی کے بعد بنچ مارک معلومات شامل کریں"
+
+msgid "  -showcorrupted to add output for each corrupted lines found, with reason"
+msgstr "  -showcorrupted  ملنے والی ہر خراب لائن کے لیے وجہ کے ساتھ آؤٹ پٹ شامل کریں"
+
+msgid "  -showdropped   to add output for each dropped lines found, with reason"
+msgstr "  -showdropped    ملنے والی ہر چھوڑی گئی لائن کے لیے وجہ کے ساتھ آؤٹ پٹ شامل کریں"
+
+msgid "  -showunknownorigin  to output referer when it can't be parsed"
+msgstr "  -showunknownorigin    جب ماخذ کا تجزیہ نہ کیا جا سکے تو اسے آؤٹ پٹ کریں"
+
+msgid "  -showdirectorigin   to output log line when origin is a direct access"
+msgstr "  -showdirectorigin     جب ماخذ براہ راست رسائی ہو تو لاگ لائن آؤٹ پٹ کریں"
+
+msgid "  -updatefor=n   to stop the update process after parsing n lines"
+msgstr "  -updatefor=n    n لائنوں کا تجزیہ کرنے کے بعد اپ ڈیٹ عمل روک دیں"
+
+msgid "  -LogFile=x     to change log to analyze whatever is 'LogFile' in config file"
+msgstr "  -LogFile=x     تجزیہ کرنے کے لیے لاگ تبدیل کریں، ترتیب فائل میں 'LogFile' جو بھی ہو"
+
+msgid "  Be care to process log files in chronological order when updating statistics."
+msgstr "  اعداد و شمار اپ ڈیٹ کرتے وقت لاگ فائلوں کو تاریخی ترتیب میں پروسیس کرنے کا خیال رکھیں۔"
+
+msgid "Options to show statistics:"
+msgstr "اعداد و شمار دکھانے کے اختیارات:"
+
+msgid "  -output      to output main HTML report (no update made except with -update)"
+msgstr "  -output       مرکزی HTML رپورٹ آؤٹ پٹ کریں (-update کے بغیر کوئی اپ ڈیٹ نہیں)"
+
+msgid "  -output=x    to output other report pages where x is:"
+msgstr "  -output=x    دیگر رپورٹ صفحات آؤٹ پٹ کریں جہاں x یہ ہے:"
+
+msgid "build page of all domains/countries"
+msgstr "تمام ڈومینز/ممالک کا صفحہ بنائیں"
+
+msgid "build page of all hosts"
+msgstr "تمام میزبانوں کا صفحہ بنائیں"
+
+msgid "build page of last hits for hosts"
+msgstr "میزبانوں کی آخری ہٹس کا صفحہ بنائیں"
+
+msgid "build page of all unresolved IP"
+msgstr "تمام غیر حل شدہ IP کا صفحہ بنائیں"
+
+msgid "build page of all email senders (maillog)"
+msgstr "تمام ای میل بھیجنے والوں کا صفحہ بنائیں (میل لاگ)"
+
+msgid "build page of last email senders (maillog)"
+msgstr "آخری ای میل بھیجنے والوں کا صفحہ بنائیں (میل لاگ)"
+
+msgid "build page of all email receivers (maillog)"
+msgstr "تمام ای میل وصول کنندگان کا صفحہ بنائیں (میل لاگ)"
+
+msgid "build page of last email receivers (maillog)"
+msgstr "آخری ای میل وصول کنندگان کا صفحہ بنائیں (میل لاگ)"
+
+msgid "build page of all logins used"
+msgstr "تمام استعمال شدہ لاگ انز کا صفحہ بنائیں"
+
+msgid "build page of last hits for logins"
+msgstr "لاگ انز کی آخری ہٹس کا صفحہ بنائیں"
+
+msgid "build page of all robots/spider visits"
+msgstr "تمام روبوٹس/اسپائڈرز کے دوروں کا صفحہ بنائیں"
+
+msgid "build page of last hits for robots"
+msgstr "روبوٹس کی آخری ہٹس کا صفحہ بنائیں"
+
+msgid "list most often viewed pages"
+msgstr "سب سے زیادہ دیکھے گئے صفحات کی فہرست دیں"
+
+msgid "list most often viewed pages matching filter"
+msgstr "فلٹر سے مماثل سب سے زیادہ دیکھے گئے صفحات کی فہرست دیں"
+
+msgid "list entry pages"
+msgstr "داخلی صفحات کی فہرست دیں"
+
+msgid "list entry pages matching filter"
+msgstr "فلٹر سے مماثل داخلی صفحات کی فہرست دیں"
+
+msgid "list exit pages"
+msgstr "خارجی صفحات کی فہرست دیں"
+
+msgid "list exit pages matching filter"
+msgstr "فلٹر سے مماثل خارجی صفحات کی فہرست دیں"
+
+msgid "build page with os detailed versions"
+msgstr "آپریٹنگ سسٹم کے تفصیلی ورژنز کے ساتھ صفحہ بنائیں"
+
+msgid "build page with browsers detailed versions"
+msgstr "براؤزرز کے تفصیلی ورژنز کے ساتھ صفحہ بنائیں"
+
+msgid "list 'User Agents' with unknown browser"
+msgstr "نامعلوم براؤزر والے 'یوزر ایجنٹس' کی فہرست دیں"
+
+msgid "list 'User Agents' with unknown OS"
+msgstr "نامعلوم آپریٹنگ سسٹم والے 'یوزر ایجنٹس' کی فہرست دیں"
+
+msgid "build page of all refering search engines"
+msgstr "تمام ماخذ سرچ انجنوں کا صفحہ بنائیں"
+
+msgid "build page of all refering pages"
+msgstr "تمام ماخذ صفحات کا صفحہ بنائیں"
+
+msgid "list all keyphrases used on search engines"
+msgstr "سرچ انجنوں پر استعمال ہونے والے تمام کلیدی جملوں کی فہرست دیں"
+
+msgid "list all keywords used on search engines"
+msgstr "سرچ انجنوں پر استعمال ہونے والے تمام کلیدی الفاظ کی فہرست دیں"
+
+msgid "list 'Referers' for 404 errors"
+msgstr "404 غلطیوں کے لیے 'ماخذ' کی فہرست دیں"
+
+msgid "build page of all values for ExtraSection X"
+msgstr "ExtraSection X کے لیے تمام قدروں کا صفحہ بنائیں"
+
+msgid "  -staticlinks           to have static links in HTML report page"
+msgstr "  -staticlinks           HTML رپورٹ صفحہ میں جامد لنکس استعمال کریں"
+
+msgid "  -staticlinksext=xxx    to have static links with .xxx extension instead of .html"
+msgstr "  -staticlinksext=xxx    .html کے بجائے .xxx توسیع والے جامد لنکس استعمال کریں"
+
+msgid "  -lang=LL     to output a HTML report in language LL (en,de,es,fr,it,nl,zh-cn,...)"
+msgstr "  -lang=LL      LL زبان میں HTML رپورٹ آؤٹ پٹ کریں (en,de,es,fr,it,nl,ur,...)"
+
+msgid "  -month=MM    to output a HTML report for an old month MM"
+msgstr "  -month=MM     پرانے مہینے MM کے لیے HTML رپورٹ آؤٹ پٹ کریں"
+
+msgid "  -year=YYYY   to output a HTML report for an old year YYYY"
+msgstr "  -year=YYYY    پرانے سال YYYY کے لیے HTML رپورٹ آؤٹ پٹ کریں"
+
+msgid "  The 'date' options doesn't allow you to process old log file. They only allow you to see a past report for a chosen month/year period instead of current month/year."
+msgstr "  تاریخ کے اختیارات آپ کو پرانی لاگ فائل پر کارروائی کرنے کی اجازت نہیں دیتے۔ وہ صرف آپ کو موجودہ مہینے/سال کی بجائے منتخب کردہ مہینے/سال کی مدت کے لیے ماضی کی رپورٹ دیکھنے کی اجازت دیتے ہیں۔"
+
+msgid "Other options:"
+msgstr "دیگر اختیارات:"
+
+msgid "  -debug=X     to add debug informations lesser than level X (speed reduced)"
+msgstr "  -debug=X      سطح X سے کم ڈیبگ معلومات شامل کریں (رفتار کم ہو جائے گی)"
+
+msgid "  -version     show AWStats version"
+msgstr "  -version, -v     AWStats ورژن دکھائیں"
+
+msgid "Now supports/detects:"
+msgstr "اب معاون/تشخیص شدہ:"
+
+msgid "  Web/Ftp/Mail/streaming server log analyzis (and load balanced log files)"
+msgstr "  ویب/FTP/میل/اسٹریمنگ سرور لاگ تجزیہ (اور لوڈ بیلنس شدہ لاگ فائلیں)"
+
+msgid "  Reverse DNS lookup (IPv4 and IPv6) and GeoIP lookup"
+msgstr "  ریورس DNS تلاش (IPv4 اور IPv6) اور GeoIP تلاش"
+
+msgid "  Number of visits, number of unique visitors"
+msgstr "  دوروں کی تعداد، مختلف زائرین کی تعداد"
+
+msgid "  Visits duration and list of last visits"
+msgstr "  دوروں کا دورانیہ اور آخری دوروں کی فہرست"
+
+msgid "  Authenticated users"
+msgstr "  تصدیق شدہ صارفین"
+
+msgid "  Days of week and rush hours"
+msgstr "  ہفتے کے دن اور مصروف اوقات"
+
+msgid "  Hosts list and unresolved IP addresses list"
+msgstr "  میزبانوں کی فہرست اور غیر حل شدہ IP پتوں کی فہرست"
+
+msgid "  Most viewed, entry and exit pages"
+msgstr "  سب سے زیادہ دیکھے گئے، داخلی اور خارجی صفحات"
+
+msgid "  Files type and Web compression (mod_gzip, mod_deflate stats)"
+msgstr "  فائل کی اقسام اور ویب کمپریشن (mod_gzip، mod_deflate اعداد و شمار)"
+
+msgid "  Configured Database Statistics"
+msgstr "  ترتیب شدہ ڈیٹا بیس کے اعداد و شمار"
+
+msgid "  %s domains/countries"
+msgstr "  %s ڈومینز/ممالک"
+
+msgid "  %s robots"
+msgstr "  %s روبوٹ"
+
+msgid "  %s worm's families"
+msgstr "  %s کیڑوں کے خاندان"
+
+msgid "  %s operating systems"
+msgstr "  %s آپریٹنگ سسٹمز"
+
+msgid "  %s browsers (%s with phone browsers database)"
+msgstr "  %s براؤزرز (%s موبائل براؤزر ڈیٹا بیس کے ساتھ)"
+
+msgid "  %s search engines (and keyphrases/keywords used from them)"
+msgstr "  %s سرچ انجن (اور ان سے استعمال کردہ کلیدی جملے/کلیدی الفاظ)"
+
+msgid "  All HTTP errors with last referrer"
+msgstr "  آخری ماخذ کے ساتھ تمام HTTP غلطیاں"
+
+msgid "  Report by day/month/year"
+msgstr "  دن/مہینہ/سال کے لحاظ سے رپورٹ"
+
+msgid "  Dynamic or static HTML or XHTML reports, static PDF reports"
+msgstr "  متحرک یا جامد HTML یا XHTML رپورٹیں، جامد PDF رپورٹیں"
+
+msgid "  Indexed text or XML monthly database"
+msgstr "  انڈیکس شدہ متن یا XML ماہانہ ڈیٹا بیس"
+
+msgid "  And a lot of other advanced features and options..."
+msgstr "  اور بہت سی دوسری جدید خصوصیات اور اختیارات..."
+
+msgid "  New versions and FAQ at http://www.awstats.org"
+msgstr "  نئے ورژن اور عمومی سوالات https://github.com/hestiacn/vstats/issues پر"

@@ -1,0 +1,3317 @@
+# AWStats Romanian (ro) translations
+# Copyright (C) 2026 AWStats
+# This file is distributed under the same license as the AWStats package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: AWStats 8.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-10 12:00+0000\n"
+"PO-Revision-Date: 2026-05-10 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Romanian\n"
+"Language: ro\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2);\n"
+
+#------------------------------------------------------------------------------
+# Numele lunilor
+#------------------------------------------------------------------------------
+
+msgid "month_01"
+msgstr "ian."
+
+msgid "month_02"
+msgstr "feb."
+
+msgid "month_03"
+msgstr "mar."
+
+msgid "month_04"
+msgstr "apr."
+
+msgid "month_05"
+msgstr "mai"
+
+msgid "month_06"
+msgstr "iun."
+
+msgid "month_07"
+msgstr "iul."
+
+msgid "month_08"
+msgstr "aug."
+
+msgid "month_09"
+msgstr "sept."
+
+msgid "month_10"
+msgstr "oct."
+
+msgid "month_11"
+msgstr "nov."
+
+msgid "month_12"
+msgstr "dec."
+
+#------------------------------------------------------------------------------
+# Numele zilelor săptămânii
+#------------------------------------------------------------------------------
+
+msgid "DayOfWeek_0"
+msgstr "dum."
+
+msgid "DayOfWeek_1"
+msgstr "lun."
+
+msgid "DayOfWeek_2"
+msgstr "mar."
+
+msgid "DayOfWeek_3"
+msgstr "mie."
+
+msgid "DayOfWeek_4"
+msgstr "joi"
+
+msgid "DayOfWeek_5"
+msgstr "vin."
+
+msgid "DayOfWeek_6"
+msgstr "sâm."
+
+#------------------------------------------------------------------------------
+# Elemente de interfață
+#------------------------------------------------------------------------------
+
+msgid "Advanced Web Statistics for"
+msgstr "Statistici Web Avansate pentru"
+
+msgid "Statistics for"
+msgstr "Statistici pentru"
+
+msgid "main"
+msgstr "principal"
+
+msgid "Switch to light mode"
+msgstr "Comutare la modul luminos"
+
+msgid "Switch to dark mode"
+msgstr "Comutare la modul întunecat"
+
+msgid "TB"
+msgstr "TB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "Bytes"
+msgstr "Octeți"
+
+msgid "Filter"
+msgstr "Filtru"
+
+msgid "Exclude filter"
+msgstr "Filtru de excludere"
+
+msgid "Top"
+msgstr "Top"
+
+msgid "Full list"
+msgstr "Listă completă"
+
+msgid "Last"
+msgstr "Ultimele"
+
+msgid "Average"
+msgstr "Medie"
+
+msgid "Export"
+msgstr "Export"
+
+msgid "Details"
+msgstr "Detalii"
+
+msgid "Version"
+msgstr "Versiune"
+
+msgid "thousands_separator"
+msgstr " "
+
+msgid "dateformat_long"
+msgstr "dd.mm.yyyy HH:MM:SS"
+
+msgid "dateformat_short"
+msgstr "dd.mm.yyyy HH:MM"
+
+msgid "date_format_year"
+msgstr "%s an"
+
+msgid "date_format_month"
+msgstr "%1$s %2$s an"
+
+#------------------------------------------------------------------------------
+# Bara de navigare
+#------------------------------------------------------------------------------
+
+msgid "AWStats Month Selector"
+msgstr "Selector lună AWStats"
+
+msgid "nav_category_basic"
+msgstr "Documente de bază"
+
+msgid "nav_category_guide"
+msgstr "Ghid de utilizare"
+
+msgid "nav_category_reference"
+msgstr "Resurse de referință"
+
+msgid "nav_category_integration"
+msgstr "Integrare și extensii"
+
+msgid "nav_category_dev"
+msgstr "Documentație dezvoltator"
+
+msgid "nav_changelog"
+msgstr "Jurnal modificări"
+
+msgid "nav_what"
+msgstr "Ce este AWStats"
+
+msgid "nav_license"
+msgstr "Licență"
+
+msgid "nav_glossary"
+msgstr "Glosar"
+
+msgid "nav_setup"
+msgstr "Instalare și configurare"
+
+msgid "nav_upgrade"
+msgstr "Ghid de actualizare"
+
+msgid "nav_config"
+msgstr "Parametri de configurare"
+
+msgid "nav_extra"
+msgstr "Secțiuni suplimentare"
+
+msgid "nav_tools"
+msgstr "Alte instrumente"
+
+msgid "nav_faq"
+msgstr "Întrebări frecvente"
+
+msgid "nav_security"
+msgstr "Sfaturi de securitate"
+
+msgid "nav_compare"
+msgstr "Comparație"
+
+msgid "nav_benchmark"
+msgstr "Teste de performanță"
+
+msgid "nav_webmin"
+msgstr "Modul Webmin"
+
+msgid "nav_dolibarr"
+msgstr "Modul Dolibarr"
+
+msgid "nav_contrib"
+msgstr "Resurse de contribuție"
+
+msgid "nav_plugins"
+msgstr "Dezvoltare plugin-uri"
+
+msgid "nav_hooks"
+msgstr "Cârlige plugin"
+
+msgid "nav_graphs"
+msgstr "Grafice plugin"
+
+msgid "Back to top"
+msgstr "Înapoi sus"
+
+msgid "nav_select_month"
+msgstr "Selectați luna"
+
+#------------------------------------------------------------------------------
+# Indicatori statistici principali
+#------------------------------------------------------------------------------
+
+msgid "Unique visitors"
+msgstr "Vizitatori unici"
+
+msgid "Visits"
+msgstr "Vizite"
+
+msgid "Visits duration"
+msgstr "Durata vizitelor"
+
+msgid "First visit"
+msgstr "Prima vizită"
+
+msgid "Last visit"
+msgstr "Ultima vizită"
+
+msgid "Visits/Visitor"
+msgstr "Vizite/Vizitator"
+
+msgid "Pages/Visit"
+msgstr "Pagini/Vizită"
+
+msgid "Hits/Visit"
+msgstr "Accesări/Vizită"
+
+msgid "KB/Visit"
+msgstr "KB/Vizită"
+
+msgid "KB/Visits"
+msgstr "KB/Vizite"
+
+msgid "Pages"
+msgstr "Pagini"
+
+msgid "Hits"
+msgstr "Accesări"
+
+msgid "Bandwidth"
+msgstr "Lățime de bandă"
+
+msgid "duration_format"
+msgstr "%s-%s"
+
+msgid "unit_s"
+msgstr "sec"
+
+msgid "unit_min"
+msgstr "min"
+
+msgid "unit_h"
+msgstr "ore"
+
+msgid "and"
+msgstr "-"
+
+msgid "Device Types"
+msgstr "Tipuri de dispozitive"
+
+msgid "Device Type"
+msgstr "Tip dispozitiv"
+
+msgid "Percent"
+msgstr "Procent"
+
+msgid "Mobile"
+msgstr "Mobil"
+
+msgid "Pause & Go"
+msgstr "Pauză și continuare"
+
+msgid "Complete"
+msgstr "Finalizat"
+
+msgid "Tablet"
+msgstr "Tabletă"
+
+msgid "Tv"
+msgstr "Televizor"
+
+msgid "Wearable"
+msgstr "Dispozitiv purtabil"
+
+msgid "Bot"
+msgstr "Bot"
+
+msgid "Desktop"
+msgstr "Desktop"
+
+msgid "Normal browsing traffic"
+msgstr "Trafic de navigare normal"
+
+msgid "Abnormal browsing traffic"
+msgstr "Trafic de navigare anormal"
+
+msgid "Viewed"
+msgstr "Vizualizat"
+
+msgid "Not viewed"
+msgstr "Nevizualizat"
+
+msgid "Abnormal browsing traffic note"
+msgstr "Traficul de navigare anormal include: roboți ai motoarelor de căutare, roboți de antrenare AI, scanere de vulnerabilități și solicitări care nu respectă specificațiile HTTP/HTTPS"
+
+msgid "File size"
+msgstr "Dimensiune fișier"
+
+msgid "File type"
+msgstr "Tip fișier"
+
+msgid "Downloads"
+msgstr "Descărcări"
+
+msgid "Request time"
+msgstr "Timpul cererii"
+
+msgid "Total requests"
+msgstr "Total cereri"
+
+msgid "Frequency"
+msgstr "Frecvență"
+
+msgid "Average frequency"
+msgstr "Frecvența medie"
+
+msgid "Seconds"
+msgstr "Secunde"
+
+msgid "First"
+msgstr "Prima"
+
+msgid "Mails"
+msgstr "E-mailuri"
+
+msgid "Size"
+msgstr "Dimensiune"
+
+msgid "If you remove this file, all statistics for date"
+msgstr "Avertisment: Ștergerea acestui fișier va face ca toate statisticile pentru data"
+
+msgid "will be lost/reset."
+msgstr "să fie pierdute/resetate permanent!"
+
+msgid "Last config file used to build this data file was"
+msgstr "Ultimul fișier de configurare folosit pentru a construi acest fișier de date a fost"
+
+msgid "Position (offset in bytes) in this file for beginning of each section for"
+msgstr "Poziția (decalajul în octeți) în acest fișier pentru începutul fiecărei secțiuni pentru"
+
+msgid "direct I/O access. If you made changes somewhere in this file, you should"
+msgstr "acces direct I/O. Dacă ați făcut modificări undeva în acest fișier, ar trebui"
+
+msgid "also remove completely the MAP section (AWStats will rewrite it at next update)"
+msgstr "să eliminați complet secțiunea MAP (AWStats o va rescrie la următoarea actualizare)"
+
+msgid "LastLine    = Date of last record processed - Last record line number in last log - Last record offset in last log - Last record signature value"
+msgstr "LastLine    = Data ultimei înregistrări procesate - Numărul liniei ultimei înregistrări în ultimul jurnal - Decalajul ultimei înregistrări în ultimul jurnal - Valoarea semnăturii ultimei înregistrări"
+
+msgid "FirstTime   = Date of first visit for history file"
+msgstr "FirstTime   = Data primei vizite pentru fișierul de istoric"
+
+msgid "LastTime    = Date of last visit for history file"
+msgstr "LastTime    = Datei ultimei vizite pentru fișierul de istoric"
+
+msgid "LastUpdate  = Date of last update - Nb of parsed records - Nb of parsed old records - Nb of parsed new records - Nb of parsed corrupted - Nb of parsed dropped"
+msgstr "LastUpdate  = Data ultimei actualizări - Numărul de înregistrări analizate - Numărul de înregistrări vechi analizate - Numărul de înregistrări noi analizate - Numărul de înregistrări corupte analizate - Numărul de înregistrări eliminate analizate"
+
+msgid "TotalVisits = Number of visits"
+msgstr "TotalVisits = Numărul de vizite"
+
+msgid "TotalUnique = Number of unique visitors"
+msgstr "TotalUnique = Numărul de vizitatori unici"
+
+msgid "MonthHostsKnown   = Number of hosts known"
+msgstr "MonthHostsKnown   = Numărul de gazde cunoscute"
+
+msgid "MonthHostsUnKnown = Number of hosts unknown"
+msgstr "MonthHostsUnKnown = Numărul de gazde necunoscute"
+
+msgid "Cluster ID - Pages - Hits - Bandwidth"
+msgstr "ID cluster - Pagini - Accesări - Lățime de bandă"
+
+msgid "Hour - Pages - Hits - Bandwidth - Not viewed Pages - Not viewed Hits - Not viewed Bandwidth"
+msgstr "Oră - Pagini - Accesări - Lățime de bandă - Pagini nevizualizate - Accesări nevizualizate - Lățime de bandă nevizualizată"
+
+msgid "Date - Pages - Hits - Bandwidth - Visits"
+msgstr "Dată - Pagini - Accesări - Lățime de bandă - Vizite"
+
+msgid "Domain - Pages - Hits - Bandwidth"
+msgstr "Domeniu - Pagini - Accesări - Lățime de bandă"
+
+msgid "The %s first Pages must be first (order not required for others)"
+msgstr "Pagina principală afișează doar primele %s pagini după numărul de afișări, lista completă se află pe pagina de detalii."
+
+msgid "Host - Pages - Hits - Bandwidth - Last visit date - [Start date of last visit] - [Last page of last visit]"
+msgstr "Gazdă - Pagini - Accesări - Lățime de bandă - Data ultimei vizite - [Data de început a ultimei vizite] - [Ultima pagină a ultimei vizite]"
+
+msgid "[Start date of last visit] and [Last page of last visit] are saved only if session is not finished"
+msgstr "[Data de început a ultimei vizite] și [Ultima pagină a ultimei vizite] sunt salvate numai dacă sesiunea nu s-a încheiat"
+
+msgid "The first %s items are sorted by hits in descending order; order of the remaining items is undefined."
+msgstr "Primele %s elemente sunt sortate după numărul de accesări în ordine descrescătoare; ordinea elementelor rămase este nedefinită."
+
+msgid "Login - Pages - Hits - Bandwidth - Last visit"
+msgstr "Autentificare - Pagini - Accesări - Lățime de bandă - Ultima vizită"
+
+msgid "Robot ID - Hits - Bandwidth - Last visit - Hits on robots.txt"
+msgstr "ID robot - Accesări - Lățime de bandă - Ultima vizită - Accesări pe robots.txt"
+
+msgid "Worm ID - Hits - Bandwidth - Last visit"
+msgstr "ID vierme - Accesări - Lățime de bandă - Ultima vizită"
+
+msgid "EMail - Hits - Bandwidth - Last visit"
+msgstr "E-mail - Accesări - Lățime de bandă - Ultima vizită"
+
+msgid "The first %s email addresses are sorted by hits in descending order; order of the remaining addresses is undefined."
+msgstr "Primele %s adrese de e-mail sunt sortate după numărul de accesări în ordine descrescătoare; ordinea adreselor rămase este nedefinită."
+
+msgid "URL - Pages - Bandwidth - Entry - Exit"
+msgstr "URL - Pagini - Lățime de bandă - Intrare - Ieșire"
+
+msgid "Files type - Hits - Bandwidth - Bandwidth without compression - Bandwidth after compression"
+msgstr "Tip fișiere - Accesări - Lățime de bandă - Lățime de bandă fără compresie - Lățime de bandă după compresie"
+
+msgid "Request Time Range - Request Time Frequency"
+msgstr "Interval de timp al cererii - Frecvența timpului cererii"
+
+msgid "Payload Range - Payload Frequency"
+msgstr "Interval de încărcătură - Frecvența încărcăturii"
+
+msgid "Session range - Number of visits"
+msgstr "Interval de sesiune - Numărul de vizite"
+
+msgid "URL with %s errors - Hits"
+msgstr "URL cu erori %s - Accesări"
+
+msgid "Last URL referrer"
+msgstr "Ultimul referrer URL"
+
+msgid "Errors - Hits - Bandwidth"
+msgstr "Erori - Accesări - Lățime de bandă"
+
+msgid "Search keywords - Number of search"
+msgstr "Cuvinte cheie căutare - Numărul de căutări"
+
+msgid "Only top %s keywords shown on main page (sorted by search count). See full list on detail page."
+msgstr "Pagina principală afișează doar primele %s cuvinte cheie după numărul de căutări, lista completă se află pe pagina de detalii."
+
+msgid "Search keyphrases - Number of search"
+msgstr "Expresii cheie de căutare - Numărul de căutări"
+
+msgid "Only top %s keyphrases shown on main page (sorted by search count). See full list on detail page."
+msgstr "Pagina principală afișează doar primele %s expresii cheie după numărul de căutări, lista completă se află pe pagina de detalii."
+
+msgid "External page referers - Pages - Hits"
+msgstr "Refereri pagini externe - Pagini - Accesări"
+
+msgid "Only top %s external referrers shown on main page (sorted by pages). See full list on detail page."
+msgstr "Pagina principală afișează doar primii %s refereri externi după numărul de pagini, lista completă se află pe pagina de detalii."
+
+msgid "Search engine referers ID - Pages - Hits"
+msgstr "ID referer motor de căutare - Pagini - Accesări"
+
+msgid "Origin - Pages - Hits"
+msgstr "Origine - Pagini - Accesări"
+
+msgid "Unknown referer Browser - Last visit date"
+msgstr "Browser referer necunoscut - Data ultimei vizite"
+
+msgid "Unknown referer OS - Last visit date"
+msgstr "SO referer necunoscut - Data ultimei vizite"
+
+msgid "Screen size - Hits"
+msgstr "Dimensiune ecran - Accesări"
+
+msgid "Browser ID - Hits - Pages"
+msgstr "ID browser - Accesări - Pagini"
+
+msgid "Downloads - Hits - Bandwidth"
+msgstr "Descărcări - Accesări - Lățime de bandă"
+
+msgid "Protocol - Hits - Bandwidth"
+msgstr "Protocol - Accesări - Lățime de bandă"
+
+msgid "Icon Status - Type:200:404:Other"
+msgstr "Stare pictogramă - Tip:200:404:Altele"
+
+#------------------------------------------------------------------------------
+# Traduceri perioade de timp
+#------------------------------------------------------------------------------
+
+msgid "period_00"
+msgstr "Miezul nopții · AWStats doarme, tu încă te uiți la date? Incredibil"
+
+msgid "period_01"
+msgstr "Ora 1 dimineața · Nu poți dormi sau tocmai ai terminat munca?"
+
+msgid "period_02"
+msgstr "Ora 2 dimineața · Chiar și roboții sunt mai harnici decât tine"
+
+msgid "period_03"
+msgstr "Ora 3 dimineața · Orașul doarme, serverul lucrează peste program"
+
+msgid "period_04"
+msgstr "Ora 4 dimineața · Ce este mai strălucitor, ecranul tău sau lumina serverului?"
+
+msgid "period_05"
+msgstr "Ora 5 dimineața · Pasărea timpurie prinde viermele"
+
+msgid "period_06"
+msgstr "Ora 6 dimineața · Cineva se trezește, cineva încă nu s-a culcat"
+
+msgid "period_07"
+msgstr "Ora 7 dimineața · Timp de navigat în timp ce mergi la muncă"
+
+msgid "period_08"
+msgstr "Ora 8 dimineața · Primul lucru: verifică datele de ieri"
+
+msgid "period_09"
+msgstr "Ora 9 dimineața · Perioada de aur, cel mai bun moment pentru muncă"
+
+msgid "period_10"
+msgstr "Ora 10 dimineața · Timp de cafea, verifică dacă traficul a crescut"
+
+msgid "period_11"
+msgstr "Ora 11 dimineața · Încă o oră până la prânz, ține-te puțin"
+
+msgid "period_12"
+msgstr "Ora 12 prânz · Serverul: toți au plecat la prânz, eu mă odihnesc puțin"
+
+msgid "period_13"
+msgstr "Ora 13 · Somnolența lovește, dar datele nu dorm"
+
+msgid "period_14"
+msgstr "Ora 14 · Ceaiul de după-amiază, mai gustos cu date"
+
+msgid "period_15"
+msgstr "Ora 15 · Graficul traficului de astăzi seamănă cu schimbarea ta de dispoziție"
+
+msgid "period_16"
+msgstr "Ora 16 · Mai sunt X ore până la sfârșitul programului, traficul accelerează"
+
+msgid "period_17"
+msgstr "Ora 17 · Programul s-a terminat! Dar serverul încă lucrează"
+
+msgid "period_18"
+msgstr "Ora 18 · Timpul cinei"
+
+msgid "period_19"
+msgstr "Ora 19 · Perioada de aur, trafic de vârf"
+
+msgid "period_20"
+msgstr "Ora 20 · Târât pe canapea, ești vizitatorul numărul 114514"
+
+msgid "period_21"
+msgstr "Ora 21 · Noaptea se adâncește, bufnița care se uită pe ascuns la date +1"
+
+msgid "period_22"
+msgstr "Ora 22 · Datele de astăzi sunt aproape gata, ești emoționat?"
+
+msgid "period_23"
+msgstr "Ora 23 · AWStats: timpul să dormi, mâine trebuie să muncești din nou"
+
+#------------------------------------------------------------------------------
+# Dimensiuni temporale
+#------------------------------------------------------------------------------
+
+msgid "Period"
+msgstr "Perioadă"
+
+msgid "Year"
+msgstr "An"
+
+msgid "Month"
+msgstr "Lună"
+
+msgid "Months"
+msgstr "Luni"
+
+msgid "Date"
+msgstr "Dată"
+
+msgid "Day"
+msgstr "Zi"
+
+msgid "Hour"
+msgstr "Oră"
+
+msgid "Hours"
+msgstr "Ore"
+
+msgid "Day of week"
+msgstr "Ziua săptămânii"
+
+msgid "When"
+msgstr "Când"
+
+msgid "%s Server Management Panel"
+msgstr "Panoul de gestionare a serverului %s "
+
+msgid "Server Administration"
+msgstr "Soluție de server simplă și eficientă"
+
+#------------------------------------------------------------------------------
+# Dimensiunile vizitatorului
+#------------------------------------------------------------------------------
+
+msgid "Invalid URL Parameters"
+msgstr "Parametri URL invalide"
+
+msgid "The requested page cannot be loaded due to invalid or malformed URL parameters."
+msgstr "Pagina solicitată nu poate fi încărcată din cauza parametrilor URL invalizi sau formatate incorect."
+
+msgid "This may be caused by typing an incorrect URL, missing parameter separators, or using an invalid configuration name."
+msgstr "Acest lucru se poate datora introducerii unei URL incorecte, lipsei separatorilor de parametri sau utilizării unui nume de configurare invalid."
+
+msgid "Please check the URL you entered and ensure all parameters are correctly formatted."
+msgstr "Vă rugăm să verificați URL-ul introdus și să vă asigurați că toți parametrii sunt formatați corect."
+
+msgid "SiteDomain parameter not defined in your config/domain file, or you may not have execution permission on the file."
+msgstr "Parametrul SiteDomain nu este definit în fișierul dvs. config/domain sau este posibil să nu aveți permisiune de execuție asupra fișierului."
+
+msgid "Please run as Administrator to set permissions"
+msgstr "Rulați ca Administrator pentru a seta permisiunile"
+
+msgid "This directory lacks read permission"
+msgstr "Acest director nu are permisiune de citire"
+
+msgid "Please set read permission for directory"
+msgstr "Vă rugăm să setați permisiunea de citire pentru director"
+
+msgid "Missing required parameter in config file"
+msgstr "Lipsește parametrul necesar în fișierul de configurare"
+
+msgid "Please check that 'DirData' is defined."
+msgstr "Vă rugăm să verificați dacă 'DirData' este definit."
+
+msgid "Domain name in browser address appears to be missing or incomplete"
+msgstr "Numele de domeniu din adresa browserului pare să lipsească sau este incomplet"
+
+msgid "Please check the URL parameter"
+msgstr "Vă rugăm să verificați parametrul URL"
+
+msgid "Format description"
+msgstr "Descriere format"
+
+msgid "Please set execute permission"
+msgstr "Vă rugăm să setați permisiunea de execuție"
+
+msgid "Or if you prefer numeric mode"
+msgstr "Sau dacă preferați modul numeric"
+
+msgid "View Report Directly"
+msgstr "Vizualizați raportul direct"
+
+msgid "AWStats Log Viewer"
+msgstr "Vizualizator de jurnale AWStats"
+
+msgid "Month Selection"
+msgstr "Selectarea lunii"
+
+msgid "Who"
+msgstr "Cine"
+
+msgid "Visitors"
+msgstr "Vizitatori"
+
+msgid "Countries"
+msgstr "Țări"
+
+msgid "flag_icon"
+msgstr "steag"
+
+msgid "Country-Region-City"
+msgstr "Țară-Regiune-Oraș"
+
+msgid "Code"
+msgstr "Cod"
+
+msgid "Known"
+msgstr "Cunoscut"
+
+msgid "unknownos"
+msgstr "SO necunoscut"
+
+msgid "unknownbrowser"
+msgstr "browser necunoscut"
+
+msgid "Unresolved IP Address"
+msgstr "Adresă IP nerezolvată"
+
+msgid "Unknown File Type"
+msgstr "Tip fișier necunoscut"
+
+msgid "Unknown Size"
+msgstr "Dimensiune necunoscută"
+
+msgid "Unknown Time"
+msgstr "Timp necunoscut"
+
+msgid "Unknown Browser"
+msgstr "Browser necunoscut"
+
+msgid "Unknown OS"
+msgstr "SO necunoscut"
+
+msgid "Unknown Visitor"
+msgstr "Vizitator necunoscut"
+
+msgid "Unknown Visitor (Total)"
+msgstr "Vizitator necunoscut (Total)"
+
+msgid "Unknown Country"
+msgstr "Țară necunoscută"
+
+msgid "Unknown Country (Region)"
+msgstr "Țară necunoscută (Regiune)"
+
+msgid "Unknown Visitor (Title)"
+msgstr "Vizitator necunoscut (titlu)"
+
+msgid "PageStayTime"
+msgstr "Nu se poate estima timpul petrecut pe pagină"
+
+msgid "Unknown OS (Link)"
+msgstr "SO necunoscut (link)"
+
+msgid "Unknown OS (Row)"
+msgstr "sistem de operare necunoscut"
+
+msgid "Unknown Browser (Link)"
+msgstr "Browser necunoscut (link)"
+
+msgid "Unknown Browser (Row)"
+msgstr "browser necunoscut"
+
+msgid "Unknown Screen"
+msgstr "Dimensiune ecran necunoscută"
+
+msgid "Login"
+msgstr "Nume de utilizator"
+
+msgid "Anonymous"
+msgstr "Anonim"
+
+msgid "Robots"
+msgstr "Roboți"
+
+msgid "Different robots"
+msgstr "Roboți diferiți"
+
+msgid "Hits on robots.txt"
+msgstr "Traficul de la roboții motoarelor de căutare listați mai sus, categorisit ca „trafic de navigare anormal”, nu este inclus în alte tabele și grafice. Numărul de după semnul „+” reprezintă numărul de solicitări reușite la fișierul robots.txt"
+
+msgid "Worms"
+msgstr "Viermi"
+
+msgid "Different worms"
+msgstr "Viermi diferiți"
+
+msgid "Target"
+msgstr "Țintă"
+
+msgid "Grabber"
+msgstr "Grabber"
+
+#------------------------------------------------------------------------------
+# Descrieri format
+#------------------------------------------------------------------------------
+
+msgid "mime_text"
+msgstr "TXT fișier text simplu (text simplu neformatat, standardizat de codificarea ASCII în 1963. Ca piatră de temelie a tuturor codurilor sursă, fișierelor de configurare și jurnalelor de sistem, fluxurile sale de control al întreruperii de linie multiplatformă Windows (CRLF) și Unix (LF) sunt încă cel mai universal standard de schimb de date din lumea calculatoarelor)"
+
+msgid "mime_log"
+msgstr "LOG jurnal de funcționare a sistemului (activ text simplu care înregistrează starea de execuție a sistemului de operare, a nucleului și a aplicațiilor la nivel de execuție. Acoperă jurnalele de acces Nginx/Apache (Jurnal combinat) și specificația standard syslog, fiind sursa principală de date pentru depanare, analiza performanței fluxului și auditul de securitate)"
+
+msgid "mime_page"
+msgstr "HTML pagină web hipertext (piatra de temelie a World Wide Web creată de Tim Berners-Lee în 1989. Ca limbaj de marcare hipertext universal gratuit și deschis, specificația sa HTML5 a devenit standardul oficial W3C în 2014, oferind suport nativ pentru multimedia structurată, interacțiune semantică și aspect de pagină în flux. A primit Premiul Turing în 2016)"
+
+msgid "mime_khtml"
+msgstr "KHTML motor de șabloane web (specificația motorului de randare a browserului KDE 2.0 din 1998. Ca reper al comunității open source care a pus bazele randării web moderne, moștenirea sa tehnologică a inspirat și a evoluat direct în nucleele Apple WebKit și Google Blink, continuând și astăzi firul său fundamental prin arhitectura web dinamică modernă bazată pe flux)"
+
+msgid "mime_script"
+msgstr "SCRIPT script dinamic interpretat (clasificare generală a fluxurilor de cod sursă care nu necesită compilare prealabilă și sunt citite și executate linie cu linie de un mediu de execuție sau interpretor specific. Acoperă ASP, JSP, CGI și Tcl, etc., utilizat pe scară largă pentru interfețe gateway comune pe partea de server, control automat al proceselor și lipirea sarcinilor la nivel de sistem)"
+
+msgid "mime_js"
+msgstr "Script JavaScript (mediu de programare nativ al browserului Netscape din 1995. A stabilit standardul industrial ECMAScript în 1997, mediul de execuție Node.js s-a născut în 2009, spărgând granițele browserului și creând o arhitectură asincronă non-blocantă full-stack, însoțit de cel mai mare ecosistem de pachete software npm din lume)"
+
+msgid "mime_py"
+msgstr "Script Python (limbaj de script interpretat de nivel înalt creat de Guido van Rossum în 1991. Datorită indentării obligatorii pentru lizibilitate fără pierderi și designului de nivel scăzut multi-paradigmă, este acum stabilit ca limbaj standard industrial pentru arhitectura web modernă, știința datelor full-stack, antrenarea modelelor de inteligență artificială (AI) și operațiunile automatizate native pentru cloud)"
+
+msgid "mime_sh"
+msgstr "Script Shell (script standard de interpretare a comenzilor din era Unix din 1971. Include specificații de comandă la nivel de nucleu precum Bash, Sh, Dash, executat de obicei cu extensia .sh, fiind un liant universal la nivel de nucleu pentru controlul proceselor de nivel scăzut, configurarea mediului fără instalare și implementarea automatizată în sistemele de operare moderne asemănătoare Unix)"
+
+msgid "mime_rb"
+msgstr "Script Ruby (limbaj de script orientat pe obiecte creat de Yukihiro Matsumoto în 1995. Cu respectul extrem pentru experiența dezvoltatorului ca filosofie centrală de design, framework-ul său Ruby on Rails a stabilit revoluționar paradigma de dezvoltare a arhitecturii web moderne de nivel înalt 'Convenție mai presus de Configurare (CoC)')"
+
+msgid "mime_pl"
+msgstr "Script Perl (limbaj de script pragmatic creat de Larry Wall în 1987. Ca fondator al managerilor de pachete moderne (CPAN), este numit 'cuțitul elvețian' al procesării textului. În modul CGI modern, funcționează în continuare ca o bază de înaltă fiabilitate în domeniul parsării jurnalelor datorită costului fizic extrem de scăzut al memoriei și procesării eficiente a expresiilor regulate)"
+
+msgid "mime_php"
+msgstr "Pagină web dinamică PHP (creată de Rasmus Lerdorf în 1995, proiectată special pentru dezvoltarea web. Ca tehnologie centrală care conduce peste 70% din site-urile web ale lumii, acceptă profund aplicații mari de producție precum WordPress și Wikipedia. De la introducerea motorului de execuție de compilare JIT (Just-In-Time) în PHP 8, a realizat o evoluție fundamentală de paradigmă către partea de server full-stack de înaltă performanță)"
+
+msgid "mime_image"
+msgstr "IMAGE clasificarea activelor de imagine (acoperă clasificarea generală a bitmap-urilor comprimate cu pierdere/fără pierdere, graficii web responsive moderne și graficii vectoriale. Este un indicator cheie pentru evaluarea costului de încărcare a resurselor vizuale ale site-ului, a ratei de accesare a cache-ului pe partea de client și a consumului de lățime de bandă al rețelei media)"
+
+msgid "mime_document"
+msgstr "DOCUMENT clasificarea documentelor structurate (acoperă clasificarea generală a textului simplu, foilor de calcul, documentelor cu format fix (PDF) și limbajelor de marcare ușoare. Este un indicator cheie pentru statisticile de distribuție a bazelor de cunoștințe statice pe partea de server, descărcarea activelor informatice ale întreprinderii și capacitatea de debit a fluxului de text)"
+
+msgid "mime_package"
+msgstr "PACKAGE clasificarea produselor de compilare și a pachetelor software (acoperă clasificarea generală a programelor executabile native ale sistemului de operare, bibliotecilor de legătură în timp de execuție (DLL/SO) și pachetelor de instalare a distribuției aplicațiilor. Adesea utilizat ca indicator cheie pentru evaluarea traficului de ieșire și a vârfurilor de descărcare ale site-urilor de distribuție software)"
+
+msgid "mime_archive"
+msgstr "ARCHIVE fișiere de arhivă și comprimate (clasificare generală a pachetelor de compresie a datelor bazate pe algoritmi de bază precum DEFLATE, LZMA. În stratul de rețea, pe lângă reprezentarea distribuției tradiționale de pachete, acoperă și fluxul de răspuns dinamic Gzip al proiectului GNU din 1992. Deși algoritmul Brotli este introdus treptat în scenarii moderne, această clasificare rămâne un indicator cheie pentru evaluarea ratei de debit a lățimii de bandă a serverului și a reducerii presiunii în stratul de transport)"
+
+msgid "mime_audio"
+msgstr "AUDIO clasificarea fluxului audio digital (acoperă clasificarea generală a audio-ului comprimat, a cărților audio și a containerelor audio media de streaming. Bazată pe standarde specifice de codec audio, utilizată pentru a monitoriza rata de debit a fluxurilor de date audio ale site-urilor multimedia, lățimea de bandă de streaming concurent și performanța conexiunilor lungi)"
+
+msgid "mime_video"
+msgstr "VIDEO clasificarea fluxului video digital (acoperă clasificarea generală a containerelor video de înaltă definiție, animațiilor web moderne și segmentelor media de streaming. Este un indicator cheie pentru evaluarea limitei maxime a lățimii de bandă a serverului și a efectului de accelerare al Rețelei de Distribuție a Conținutului (CDN) în medii de rețea cu sarcină ridicată)"
+
+msgid "mime_jscript"
+msgstr "Script JScript (implementare proprietară de inginerie inversă dezvoltată de Microsoft pentru Internet Explorer 3.0 în 1996. Ca un concurent timpuriu al gazdei JavaScript clasice, a fost motorul central al gazdei de scripturi Windows (WSH) și al backend-ului timpuriu ASP)"
+
+msgid "mime_json"
+msgstr "JSON date structurate (format ușor de schimb de serializare a datelor stabilit de Douglas Crockford în 2001. Bazat pe perechi cheie-valoare text și arhitectură de matrice, are o lizibilitate umană extrem de ridicată și o caracteristică de parsare a fluxului fără pierderi. Este standardul de facto pentru API-urile web moderne, arhitectura de microservicii și interacțiunea cu modelele lingvistice mari)"
+
+msgid "mime_vbs"
+msgstr "Script VBScript (variantă de limbaj de scripting lansată de Microsoft împreună cu IE 3.0 în 1996. A fost cândva motorul central pentru site-urile web dinamice ASP timpurii și gestionarea sistemului Windows, acum este oficial abandonat și eliminat din cel mai recent nucleu Windows 11 de către Microsoft, aparținând tehnologiei moștenite istorice)"
+
+msgid "mime_conf"
+msgstr "CONF fișier de configurare a sistemului (clasificare generală a fișierelor de date care stochează permanent parametrii mediului de execuție a software-ului sub formă de text simplu. Acoperă specificațiile INI și moderne YAML, TOML, JSON. În sistemele Linux, sunt concentrate în principal în directorul /etc. Este dependența centrală pentru optimizarea stării de execuție la nivel de sistem)"
+
+msgid "mime_css"
+msgstr "CSS foi de stil în cascadă (standard W3C din 1996, împreună cu HTML/JS fiind unul dintre cele trei nuclee front-end. A trecut prin poziționarea CSS2 și evoluția modulară CSS3, suportând nativ Flexbox, Grid și design responsive cu interogări media. Este standardul absolut dominant pentru decuplarea prezentării paginilor web în browserele moderne)"
+
+msgid "mime_xsl"
+msgstr "XSL foaie de stil (standard W3C din 1999, conține limbajul de transformare XSLT și limbajul de adresare XPath, utilizat pentru a reda date XML structurate ca HTML, PDF sau text simplu. În dezvoltarea modernă, ecosistemul său a fost înlocuit în mare parte de motoare de șabloane mai ușoare și formatul de date JSON)"
+
+msgid "mime_runtime"
+msgstr "Fișier executabil (formate de execuție native ale sistemului de operare precum EXE, ELF, Mach-O, care conțin cod mașină de nivel scăzut compilat, punct de intrare și informații de încărcare a sistemului)"
+
+msgid "mime_library"
+msgstr "Fișier de bibliotecă (biblioteci de legătură dinamice sau statice precum DLL, SO, dylib, care conțin simboluri partajate și cod de relocare pentru a fi apelate de alte programe și încărcate în timpul execuției)"
+
+msgid "mime_swf"
+msgstr "Animație Flash (dezvoltată de Macromedia în 1996, achiziționată de Adobe în 2005. Standard de animație web interactivă, a dominat cândva animația și jocurile pe internet. Puncte slabe: dependentă de plugin-uri, nesuportată pe mobil, risc ridicat de securitate. Adobe a anunțat retragerea în 2017, a oprit complet suportul în 2020, fiind înlocuită de HTML5/CSS3/JS)"
+
+msgid "mime_dtd"
+msgstr "DTD definiția tipului de document (lansată împreună cu XML 1.0 în 1998, utilizată pentru a defini structura documentului XML/HTML și a valida legalitatea. În dezvoltarea modernă, a fost înlocuită treptat de soluții mai flexibile precum XML Schema, RELAX NG)"
+
+msgid "mime_csv"
+msgstr "CSV format de date (valori separate prin virgulă, format universal de tabel text simplu din era mainframe-urilor din 1972 (compilator IBM Fortran). Standardizat oficial de RFC 4180 în 2005, ca standard de schimb de date fără pierderi multiplatformă și multi-limbă. Utilizat pe scară largă pentru import/export eficient în Excel, baze de date relaționale, analiza datelor (Pandas).)"
+
+msgid "mime_cur"
+msgstr "Fișier indicator al mouse-ului (format .cur, utilizat pentru personalizarea stilului mouse-ului, de exemplu cursorul deget pe paginile web, pictograma clepsidră de așteptare în sistem. Este o rudă a pictogramei comune .ico, dar are o localizare suplimentară a 'punctului fierbinte' - locația în care mouse-ul face clic de fapt. Istorie: introdus odată cu Windows 3.1 (1992), a fost o componentă cheie în tranziția interfeței grafice de la linia de comandă la era operațiunilor cu mouse-ul)"
+
+msgid "mime_jnlp"
+msgstr "Java Web Start (tehnologie de distribuție a aplicațiilor desktop Java din anii 2000, care pornește programe Java la distanță prin fișiere .jnlp. Din cauza problemelor de securitate și a popularizării metodelor moderne de distribuție, este acum practic eliminată)"
+
+msgid "mime_lit"
+msgstr "Carte electronică Microsoft Reader (lansată de Microsoft în 2000, format LIT. Eliminată, poate fi convertită acum în EPUB sau PDF folosind instrumente precum Calibre)"
+
+msgid "mime_svg"
+msgstr "SVG grafică vectorială (standard W3C din 1999, format de imagine vectorială bidimensional bazat pe arhitectura XML. Are avantajul scalării arbitrare fără pierderea clarității și al transmiterii fluxului de text. Toate browserele moderne îl acceptă nativ. Utilizat pe scară largă pentru pictograme web de înaltă rezoluție, logo-uri și randarea animațiilor vectoriale. Este standardul central pentru grafica web modernă)"
+
+msgid "mime_ai"
+msgstr "AI grafică vectorială (format de grafică vectorială proprietar dezvoltat independent de Adobe în 1987. Ca standard central al industriei pentru tipografie, design de imprimare și design de identitate a mărcii, acceptă date vectoriale de aspect multi-strat și de nivel înalt. Este vehiculul preferat pentru artele vizuale profesionale)"
+
+msgid "mime_phshop"
+msgstr "PSD imagine în straturi (format de fișier sursă de imagine raster proprietar lansat de Adobe împreună cu Photoshop în 1990. Acceptă stratificare multi-strat, canale, măști și date de editare fără pierderi. A fost stabilit ca standard industrial global pentru procesarea imaginilor și pictura digitală)"
+
+msgid "mime_ttf"
+msgstr "Font TrueType (format de font de contur digital dezvoltat în comun de Apple și Microsoft în 1989. Bazat pe curbele Bézier pătratice, realizează o consistență absolută a pixelilor între afișarea pe ecran și ieșirea tipărită. Este formatul de font implicit nativ al sistemelor de operare desktop moderne)"
+
+msgid "mime_fon"
+msgstr "FON font bitmap (format de font matrice de puncte la nivel de sistem timpuriu al Microsoft Windows din anii 1980. Nu acceptă scalarea fără pierderi în proporție arbitrară. Utilizat de obicei cu sisteme moștenite sau componente de dispozitive încorporate timpurii pentru randarea textului pixelat limitat)"
+
+msgid "mime_pdf"
+msgstr "PDF document electronic (format de document cu aspect fix multiplatformă dezvoltat de Adobe în 1993 și devenit standardul internațional ISO 32000 în 2008. Are o fidelitate absolută a aspectului și formatului. Este standardul universal pentru distribuția globală a documentelor oficiale electronice și publicarea digitală)"
+
+msgid "mime_dotnet"
+msgstr "ASP.NET pagină dinamică (tehnologie web dinamică pe partea de server lansată de Microsoft împreună cu arhitectura .NET în 2002. Rulează pe motorul de randare IIS, utilizată pentru a construi aplicații web dinamice pe partea de server Windows la nivel de întreprindere și sisteme distribuite)"
+
+msgid "mime_mdb"
+msgstr "MDB bază de date relațională (format de stocare a bazei de date relaționale la nivel de desktop lansat de Microsoft împreună cu Access în 1992. Are motorul de bază de date Jet încorporat, a fost utilizat ca soluție de bază de date relațională în gestionarea timpurie a informațiilor a computerelor personale și a întreprinderilor mici și mijlocii)"
+
+msgid "mime_md"
+msgstr "Document Markdown (limbaj de marcare ușor creat independent de John Gruber în 2004. Filosofia centrală de design este 'lizibil înseamnă randabil', care conduce standarde derivate moderne precum GFM și CommonMark. Utilizat pe scară largă ca standard central de schimb pentru documentația tehnică, bazele de cunoștințe (Obsidian) și generatoarele moderne de site-uri statice)"
+
+msgid "mime_crystal"
+msgstr "Crystal Reports (format de fișier de raport profesional la nivel de întreprindere al platformei SAP Business Intelligence (BI). Are conexiune de nivel scăzut la surse multiple de date și capacități complexe de randare dinamică a diagramelor, utilizat pe scară largă pentru generarea profesională de rapoarte în sistemele financiare și de analiză a datelor ale companiilor multinaționale)"
+
+msgid "mime_libreoffice"
+msgstr "Document LibreOffice (format proprietar al suita de birou open source construită de The Document Foundation în 2010 pe baza ramurii OpenOffice. Implementează profund standardul internațional ODF (Format de Document Deschis) al W3C. Este fundamentul biroului al ecosistemului modern open source)"
+
+msgid "mime_encrypt"
+msgstr "ENCRYPT fișier criptat (date binare sau text brute procesate printr-un algoritm specific de criptare simetric sau asimetric. Include formate derivate de bază precum .enc, .pgp, .gpg. În stratul de rețea, este utilizat pentru a asigura confidențialitatea și verificarea integrității datelor nepublice)"
+
+msgid "mime_gpx"
+msgstr "GPX date de traiectorie prin satelit (format de schimb al sistemului de poziționare global bazat pe arhitectura XML. Special utilizat pentru a descrie coordonate geografice, puncte de cale, rute și trasee istorice. Este un standard de date deschis comun pentru dispozitivele sportive mobile moderne, navigația auto și Sistemele de Informații Geografice (GIS))"
+
+msgid "mime_diskimage"
+msgstr "Disk Image imagine de disc (include fișiere imagine de sector de nivel scăzut byte cu byte ale discurilor fizice sau suporturilor optice, cum ar fi ISO, DMG, IMG. Utilizat pentru implementarea de sistem de nivel scăzut, distribuirea securizată a software-ului de mare capacitate și backup-ul complet al datelor la nivel fizic al suporturilor de stocare)"
+
+msgid "mime_vm"
+msgstr "VM imagine de mașină virtuală (include imagini de disc fizic virtualizate precum VMDK, VDI, VHDX, OVA. Ca bază a platformelor VMware, VirtualBox și Hyper-V, utilizat pentru emularea hardware la nivel de sistem de nivel scăzut, instantanee de instanță și distribuirea infrastructurii cloud)"
+
+msgid "mime_torrent"
+msgstr "BitTorrent fișier torrent (indice de descărcare distribuită P2P peer-to-peer proiectat de Bram Cohen în 2001. Bazat pe codificarea Bencode, stochează metadatele sumei de control de nivel scăzut ale fișierului original și informațiile de adresare a serverului Tracker. Este vehiculul central pentru distribuția fluxului în rețelele descentralizate)"
+
+msgid "mime_gis"
+msgstr "GIS date geospațiale (standard de date al sistemului de informații geografice cu Shapefile și GeoJSON ca nucleu. Include coordonate geometrice multidimensionale, topologia stratului și date de atribut. Utilizat pe scară largă pentru randarea hărților digitale de înaltă precizie, teledetecția prin satelit și analiza geometriei spațiale)"
+
+msgid "mime_ebook"
+msgstr "EBOOK carte electronică (format de publicare digitală cu standardul internațional deschis EPUB al W3C și arhitectura proprietară MOBI/AZW a Amazon Kindle ca nucleu. Suportă aspect adaptiv în flux, încapsularea metadatelor și protecția drepturilor digitale DRM. Este un vehicul universal pentru lectura digitală pe dispozitive mobile)"
+
+msgid "mime_avif"
+msgstr "AVIF imagine eficientă (standard de imagine ultra-înaltă rezoluție de generație următoare introdus de Open Media Alliance (AOMedia) în 2019. Bazat pe tehnologia cadrelor cheie de codare video AV1, rata de compresie cu 50% mai bună decât WebP și suportă nativ High Dynamic Range (HDR). Este standardul principal pentru transmiterea imaginilor web moderne)"
+
+msgid "mime_markdown"
+msgstr "Markdown document ușor (limbaj de marcare a documentelor text creat independent de John Gruber în 2004. Utilizează design declarativ cu text simplu, designul său de sintaxă este inspirat de reStructuredText. Utilizat pe scară largă pentru proiecte GitHub, documentație tehnică la nivel de inginerie și ecosistemul modern de gestionare a conținutului static)"
+
+msgid "mime_yaml"
+msgstr "YAML configurare de serializare (format de serializare a datelor lizibil de om proiectat de Clark Evans și alții în 2001. Bazat pe indentare ierarhică și mapare cheie-valoare. Acum a fost stabilit ca standard de configurare a infrastructurii native pentru cloud pentru orchestrarea containerelor Kubernetes, automatizarea Ansible și Docker Compose)"
+
+msgid "mime_toml"
+msgstr "TOML configurare semantică (limbaj minimalist proiectat de Tom Preston-Werner în 2013. Are avantaje de design de nivel scăzut precum tipizare puternică, mapare explicită și claritate semantică. Acum utilizat pe scară largă ca fișier de configurare standardizat pentru lanțurile de instrumente moderne Rust (Cargo), Python (pyproject.toml) și Go)"
+
+msgid "mime_vue"
+msgstr "Vue componentă cu un singur fișier (format SFC proprietar al framework-ului web progresiv introdus de Evan You în 2014. Într-un singur fișier, realizează separarea preocupărilor HTML/CSS/JS și legarea stării reactive, conducând profund aplicațiile front-end interactive web moderne și motoarele de site-uri statice la scară largă)"
+
+msgid "mime_wasm"
+msgstr "WebAssembly modul binar (standard de cod de octeți de nivel scăzut de înaltă performanță pentru web stabilit de W3C în 2017. Permite limbajelor puternic tipate precum C/C++/Rust să fie compilate la ținta sandbox-ului browserului, oferind eficiență de execuție apropiată de hardware-ul nativ. Este piatra de temelie a calculului la marginea rețelei web moderne)"
+
+msgid "mime_jsx"
+msgstr "React component JSX (extensie de sintaxă JavaScript XML lansată de Facebook împreună cu framework-ul React în 2013. Suportă construirea declarativă a structurii virtuale DOM în JavaScript, implementând paradigma de dezvoltare front-end bazată pe componente 'UI este o funcție a stării')"
+
+msgid "mime_tsx"
+msgstr "TypeScript component TSX (combinația fluxului dintre sintaxa puternic tipată TypeScript dezvoltată de Microsoft în 2012 și JSX. Injectează verificarea tipului static în timpul compilării și constrângerile de interfață în dezvoltarea componentelor React. Este un standard de cod pentru dezvoltarea securizată a sistemelor front-end mari moderne)"
+
+msgid "mime_heif"
+msgstr "HEIF imagine eficientă (format de fișier de imagine eficient stabilit de organizația MPEG în 2015. Bazat pe algoritmul de codare video HEVC (H.265), suportă acomodarea mai multor imagini de cadre, hărți de adâncime și metadate într-un volum foarte mic. Este un standard de stocare proprietar pentru sistemele de operare mobile moderne și dispozitivele terminale inteligente)"
+
+msgid "mime_heic"
+msgstr "HEIC imagine eficientă (format bitmap proprietar Apple implementat pe baza standardului internațional HEIF. Ca standard implicit de stocare a fotografiilor pentru iPhone-ul modern, primește suport de codare/decodare la nivel hardware iOS/macOS și suport nativ al sistemului de operare. Asigurând o calitate ridicată a imaginii, reduce dramatic spațiul de stocare subiacent)"
+
+msgid "mime_gltf"
+msgstr "glTF model de activ 3D (standard de format de transfer GL lansat de Khronos Group în 2015. Utilizează arhitectura JSON pentru a descrie scene tridimensionale, fiind numit 'JPEG-ul domeniului 3D'. Este un standard industrial ușor pentru randarea WebGL/WebGPU modernă și realitatea virtuală)"
+
+msgid "mime_glb"
+msgstr "GLB model 3D binar (versiune de încapsulare binară completă, fără pierderi a modelului de activ glTF. Combină structura scenei, datele vertexurilor plasă de nivel scăzut, materialele și hărțile de textură într-un singur fișier. Special conceput pentru transmiterea eficientă și distribuirea în flux a activelor 3D web multiplatformă)"
+
+msgid "mime_gls"
+msgstr "GLOSSARY glosar de date (fișier de definiție a setului de terminologie special pentru sistemele de gestionare a documentelor și corpusurile structurate. Are definiții standard de termeni încorporate, mapări multilingve și mapări de metadate. Utilizat pentru menținerea coerenței conceptuale în analiza automată a textului și sistemele de publicare a conținutului)"
+
+msgid "mime_cbz"
+msgstr "CBZ carte de benzi desenate (format de arhivare a imaginilor de benzi desenate proprietar bazat pe structura de compresie ZIP. Încapsulează intern o secvență continuă de imagini bitmap statice. Este un standard de container ușor universal pentru publicarea benzilor desenate digitale și colecționarea locală multiplatformă)"
+
+msgid "mime_cbr"
+msgstr "CBR carte de benzi desenate (format de arhivare a imaginilor de benzi desenate proprietar bazat pe structura de compresie RAR. Utilizează algoritmul RAR pentru a încapsula secvențe de bitmap statice, având o rată de compresie relativ ridicată, cu un suport larg de compatibilitate în domeniul distribuției benzilor desenate digitale)"
+
+msgid "mime_fb2"
+msgstr "FB2 carte electronică (standard de carte electronică FictionBook 2.0 de la începutul anilor 2000. Utilizează structură XML pură pentru a descrie atributele cărții și ierarhia textului. Are un suport larg în ecosistemul cărților electronice open source și în cititoarele de publicare digitală moștenite)"
+
+msgid "mime_kepub"
+msgstr "KEPUB carte electronică (format de carte electronică îmbunătățit proprietar Kobo care a evoluat din standardul EPUB. Efectuează optimizarea randării de nivel scăzut pentru cititoarele de cărți electronice la nivel hardware ale Kobo, oferind un aspect al paginii mai eficient și interacțiune cu statisticile de lectură)"
+
+msgid "mime_m4b"
+msgstr "M4B carte audio (format de carte audio bazat pe arhitectura containerului MPEG-4 Part 14 (MP4). Utilizează codificarea AAC, suportă nativ localizarea marcajului de nivel scăzut, reluarea redării de la punctul de întrerupere și încorporarea capitolelor. A fost cândva formatul standard al ecosistemului Apple iTunes)"
+
+msgid "mime_kfx"
+msgstr "Kindle KFX format (format de publicare digitală îmbunătățit proprietar lansat de Amazon împreună cu Kindle în 2015. Suportă aspect avansat al ligaturilor, redarea fonturilor cu dinamică ridicată și încărcarea paginii în flux la nivel de nucleu (Page Flip). Este standardul central al platformei Kindle moderne)"
+
+msgid "mime_chm"
+msgstr "CHM fișier de ajutor compilat (sistem de informații de ajutor HTML compilat lansat de Microsoft în 1997. Împachetează datele hipertext și indexul subiacent într-un singur container binar. Multă vreme a fost formatul standard pentru documentația de ajutor offline locală pentru software-ul Windows)"
+
+msgid "mime_mht"
+msgstr "MHT arhivă pagină web (format hipertext agregat MIME lansat de Microsoft în 1999. Bazat pe standardul RFC 2557, încapsulează codul sursă HTML, CSS, JS și imaginile încorporate într-un singur fișier text. Utilizat pentru salvarea paginilor web offline în browserele moștenite)"
+
+msgid "mime_wml"
+msgstr "WML limbaj de marcare fără fir (standard de marcare mobil stabilit de forumul WAP (Protocol de Aplicație Fără Fir) în 1999. Bazat pe specificația XML, special conceput pentru rețelele celulare fără fir de bandă îngustă timpurii și telefoanele cu funcții de capacitate redusă. În ecosistemul web modern, aparține tehnologiei moștenite retrase)"
+
+msgid "mime_xhtml"
+msgstr "XHTML pagină web hipertext (standard W3C din 2000, încapsularea unui limbaj de marcare hipertext strict bazat pe arhitectura XML. În 2009, W3C a oprit evoluția sa tehnologică și a trecut complet la specificația HTML5. Acum utilizat în principal pentru randarea paginilor web semantice în sistemele moștenite)"
+
+msgid "mime_xml"
+msgstr "XML document structurat (limbaj de marcare extensibil din standardul W3C din 1998. Are o arhitectură de etichete auto-descrise. Este un format fundamental de bază pentru serviciile web în rețea (SOAP/REST), fișierele de configurare la nivel de sistem (XSD) și schimbul de date multiplatformă)"
+
+msgid "mime_sgml"
+msgstr "SGML limbaj de marcare generalizat (standard internațional ISO 8879 din 1986 pentru limbajul de marcare generalizat standard. Ca pionier al industriei în descrierea structurată a documentelor electronice, atât XML, cât și specificațiile HTML timpurii derivă din acest meta-limbaj standard)"
+
+msgid "mime_apng"
+msgstr "APNG grafică dinamică (extensie dinamică a Graficii de Rețea Portabile (PNG) dezvoltată de Mozilla în 2004. Suportă culori reale pe 24 de biți și semitransparență a canalului Alfa pe 8 biți. Este o alternativă de înaltă definiție la formatul GIF în scenariile web moderne)"
+
+msgid "mime_bmp"
+msgstr "BMP bitmap nativ (format bitmap independent de dispozitiv al platformei Microsoft stabilit încă din era Windows 1.0. Utilizează stocare fără pierderi, necomprimată, deși dimensiunea sa este de obicei de 3-10 ori mai mare decât PNG, datorită lipsei costurilor de codare/decodare, este încă pe scară largă încorporat în componentele de bază ale Windows 11, segmentele de resurse EXE/MSI și bufferele grafice ale driverelor moștenite)"
+
+msgid "mime_cdr"
+msgstr "CDR grafică vectorială (format de fișier sursă de design vectorial profesional CorelDRAW proprietar al companiei canadiene Corel. Suportă gestionarea culorilor pe mai multe straturi, noduri de contur matematice complexe și date de aspect la nivel de imprimare. Este un format specializat pentru domeniul designului de imprimare plană profesională și publicitate)"
+
+msgid "mime_gif"
+msgstr "GIF imagine cu culoare indexată (format bitmap cu culoare indexată pe 8 biți dezvoltat de CompuServe în 1987. Bazat pe algoritmul LZW, limitat la 256 de niveluri de culoare și transparență de culoare unică, la o rată mare de cadre devine voluminos. Acum este înlocuit treptat de standardele moderne de imagine dinamică eficiente precum APNG, WebP)"
+
+msgid "mime_ico"
+msgstr "ICO pictogramă de sistem (format de încapsulare a resurselor de pictograme native Windows. Suportă încorporarea mixtă a variantelor de imagine cu mai multe rezoluții de pixeli și adâncimi de culoare într-un singur container. De asemenea, este un standard de distribuție universal pentru identificatorul central al site-ului browserelor web moderne (Favicon))"
+
+msgid "mime_jpeg"
+msgstr "JPEG imagine comprimată (format de imagine cu compresie cu pierderi al standardului internațional ISO 10918 din 1992. Bazat pe algoritmul de transformare cosinus discretă (DCT), atinge un raport ridicat de compresie menținând în același timp o calitate excelentă a imaginii realiste. Este standardul de facto absolut pentru fotografia statică pe internetul global)"
+
+msgid "mime_jpg"
+msgstr "JPEG imagine comprimată (format de imagine cu compresie cu pierderi al standardului internațional ISO 10918 din 1992. Bazat pe algoritmul de transformare cosinus discretă (DCT), atinge un raport ridicat de compresie menținând în același timp o calitate excelentă a imaginii realiste. Este standardul de facto absolut pentru fotografia statică pe internetul global)"
+
+msgid "mime_png"
+msgstr "PNG imagine fără pierderi (standard de grafică de rețea portabilă recomandat de W3C în 1996. Utilizează un algoritm de compresie fără pierderi, suportă nativ culori reale pe 24 de biți și transparență pe canalul Alfa pe 8 biți. Ca alternativă de înaltă definiție la GIF-ul static clasic, este standardul de facto absolut pentru imaginile de pixeli fără pierderi pe internet)"
+
+msgid "mime_ps"
+msgstr "PostScript fișier de descriere a paginii (limbaj de descriere a paginii bazat pe stivă introdus de Adobe în 1985. Ca predecesor tehnologic al formatului PDF, implementează la nivel scăzut tipografie independentă de hardware și randare de înaltă precizie a graficii vectoriale. Este un standard fundamental pentru domeniile de publicare tipografică profesională și imprimare laser)"
+
+msgid "mime_psb"
+msgstr "PSB document cu strat mare (format de încapsulare a fișierelor sursă super-mari proprietar al Adobe Photoshop. Acesta sparge limitele de dimensiune fizică de 2 GB și de adresare internă de 30.000 de pixeli ale formatului PSD standard. Special conceput pentru a stoca active de artă digitală gigantice de scară super-mare, cu adâncime mare a stratului)"
+
+msgid "mime_psd"
+msgstr "PSD fișier sursă de design pe straturi (format de inginerie a imaginii stratificate proprietar al Adobe Photoshop. Ca container standard industrial în domeniul graficii și imaginii, încapsulează nativ arborele complet de randare a stratului, canalele bitmap, căile de decupare vectoriale și modurile de amestecare compuse, suportând editarea completă a datelor fără pierderi)"
+
+msgid "mime_webp"
+msgstr "WebP imagine eficientă (standard universal de codare a graficii web introdus de Google în 2010. Derivat din tehnologia cadrelor cheie video VP8, perfect compatibil cu randarea cu pierderi, fără pierderi, semi-transparentă și dinamică. Reduce dimensiunea cu 25-35% față de PNG de aceeași calitate. Este piatra de temelie pentru încărcarea de înaltă performanță a paginilor web moderne)"
+
+msgid "mime_woff"
+msgstr "WOFF fișier de glifă web (format de font web deschis creat în 2009 și devenit standard W3C în 2012. În esență, este o încapsulare a compresiei fără pierderi în flux a structurilor standard de font TTF/OTF, care optimizează dramatic costul lățimii de bandă de transmisie a rețelei. Este un format universal pentru pictogramele site-urilor web moderne și fonturile cloud)"
+
+msgid "mime_7z"
+msgstr "7z arhivă comprimată (format proprietar 7-Zip dezvoltat de Igor Pavlov în 1999. Bazat pe algoritmii open source LZMA/LZMA2, are o rată de compresie extrem de ridicată. În condiții similare, dimensiunea sa este de obicei cu 30-50% mai mică decât ZIP. Este un format universal de raport de compresie ridicat pentru comunitatea open source și distribuția de software)"
+
+msgid "mime_ace"
+msgstr "ACE arhivă comprimată (format de compresie proprietar WinACE din anii 1990. A concurat cândva cu formatul RAR și avea o rată de compresie relativ ridicată. După 2007, iterația tehnologică s-a oprit, fiind acum înlocuit de formatele 7z și RAR. Aparține formatelor de arhivare a sistemelor moștenite)"
+
+msgid "mime_bz2"
+msgstr "BZIP2 arhivă comprimată (format de compresie cu sortare în blocuri dezvoltat de Julian Seward în 1996. Rata sa de compresie a algoritmului subiacent este cu 15-20% mai mare decât GZIP, dar costul de calcul este mai mare. Folosit adesea pentru distribuirea codului sursă al nucleului Linux și a pachetelor software open source. Extensia standard este .bz2)"
+
+msgid "mime_cab"
+msgstr "CAB arhivă comprimată (format de arhivare Cabinet dezvoltat independent de Microsoft în 1995. Ca standard de pachet de instalare nativ al sistemului Windows, utilizat pentru distribuirea driverelor și fișierelor nucleului. De asemenea, servește ca container de stocare subiacent pentru Windows Installer (MSI))"
+
+msgid "mime_dmg"
+msgstr "DMG imagine de disc (format de imagine de disc evoluat de Apple în anii 1980. Ca container standard pentru distribuirea software-ului macOS, suportă montarea fizică ca sistem de fișiere virtual, compresie de nivel scăzut și criptarea datelor. Este formatul principal pentru distribuirea aplicațiilor în ecosistemul Mac)"
+
+msgid "mime_emz"
+msgstr "EMZ imagine comprimată (versiune comprimată a Metafișierului Îmbunătățit Windows EMF. În esență, este o grafică vectorială binară comprimată prin algoritmul GZIP. Folosită pe scară largă pentru stocarea graficii vectoriale încorporate în documentele din seria Microsoft Office)"
+
+msgid "mime_gz"
+msgstr "GZIP arhivă comprimată (format de compresie în flux standard dezvoltat de Jean-loup Gailly și Mark Adler din proiectul GNU în 1992. Ca unealtă standard de compresie Unix/Linux, este, de asemenea, standardul central pentru compresia stratului de transport HTTP (Gzip). Adesea utilizat împreună cu arhivarea TAR)"
+
+msgid "mime_jar"
+msgstr "JAR arhivă comprimată (format de arhivare Java ARchive introdus de Sun Microsystems în 1997. În esență, este un container de împachetare bazat pe structura ZIP, utilizat pentru a încapsula bibliotecile de clase Java și metadatele. Este un produs de compilare central pentru Maven, Gradle și ecosistemul Android timpuriu)"
+
+msgid "mime_lzma"
+msgstr "LZMA arhivă comprimată (algoritm de compresie în lanț Lempel-Ziv-Markov dezvoltat de Igor Pavlov în 1998. Ca motor central al formatului 7z, are o rată de compresie extrem de ridicată și caracteristici de decomprimare rapidă. Folosit pe scară largă pentru distribuirea firmware-ului hardware și a sistemelor încorporate)"
+
+msgid "mime_rar"
+msgstr "RAR arhivă comprimată (format de arhivare proprietar WinRAR dezvoltat de Eugene Roshal în 1993. Suportă împărțirea pe volume, înregistrări fizice de recuperare (ECC) și criptare de înaltă rezistență. Rata de compresie este superioară ZIP-ului standard, având un suport larg de compatibilitate în computerele personale și în domeniul comercial)"
+
+msgid "mime_tar"
+msgstr "TAR pachet de arhivare (format de arhivare pe bandă din era Unix V7 din 1979. Efectuează doar împachetarea fluxului de fișiere fără compresie a datelor. Adesea combinat cu GZIP/BZIP2/XZ, este un standard subiacent pentru pachetele de cod sursă Linux și stocarea stratificată a imaginilor Docker)"
+
+msgid "mime_tgz"
+msgstr "TGZ arhivă comprimată (format de combinație în flux a arhivării TAR și compresiei GZIP, extensii .tgz sau .tar.gz. Ca cel mai universal format de distribuire a pachetelor software în mediul Unix/Linux, utilizat pe scară largă pentru implementarea compilării codului sursă și distribuirea pachetelor binare fără instalare)"
+
+msgid "mime_tbz2"
+msgstr "TBZ2 arhivă comprimată (format de combinație în flux a arhivării TAR și compresiei BZIP2, extensii .tbz2 sau .tar.bz2. Comparativ cu TGZ, poate crește rata de compresie cu încă 15-20%, potrivit pentru transmiterea fișierelor mari, a fost folosit mult timp pentru distribuirea codului sursă al nucleului Linux)"
+
+msgid "mime_xz"
+msgstr "XZ arhivă comprimată (format de raport de compresie ridicat de generație următoare introdus în 2009. Bazat pe algoritmul LZMA2, rata de compresie a datelor este cu 30-50% mai mare decât GZIP, menținând în același timp decomprimarea rapidă. A fost stabilit ca standard de distribuire recomandat de nucleul Linux și de managerii de pachete principali (cum ar fi în interiorul Debian .deb))"
+
+msgid "mime_z"
+msgstr "Z arhivă comprimată (format de compresie LZW al comenzii Unix compress din 1985. Ca standard de compresie timpuriu al sistemelor Unix, a fost acum complet înlocuit de formatul GZIP mai eficient. În traficul de rețea modern, este un format istoric moștenit rar)"
+
+msgid "mime_zip"
+msgstr "ZIP arhivă comprimată (format de arhivare universal PKZIP dezvoltat de Phil Katz în 1989. Are suport nativ din partea sistemelor de operare principale. Este cel mai utilizat standard de container pe internet. JAR-ul modern al Java, APK-ul Android și documentele Office (OOXML) sunt toate bazate pe structura ZIP)"
+
+msgid "mime_zst"
+msgstr "Zstandard arhivă comprimată (standard de compresie în flux de nouă generație proiectat de Yann Collet de la Facebook în 2015. Se apropie de rata de compresie LZMA având în același timp un debit mult mai mare decât GZIP. A fost adoptat profund de nucleul Linux (5.9+) și de managerii de pachete Arch/Debian)"
+
+msgid "mime_lz4"
+msgstr "LZ4 arhivă comprimată (algoritm de compresie în flux extrem de rapid dezvoltat de Yann Collet în 2011. Viteza de debit este de peste 10 ori mai rapidă decât GZIP, având un cost de execuție a CPU-ului extrem de scăzut. Folosit pe scară largă în nucleul Linux, sistemul de fișiere OpenZFS și procesarea fluxului de date în timp real Hadoop)"
+
+msgid "mime_lzo"
+msgstr "LZO arhivă comprimată (algoritm Lempel-Ziv-Oberhumer dezvoltat de Markus Oberhumer în 1996. Se concentrează pe performanța extrem de rapidă de decomprimare. Încorporat pe scară largă în imaginile Squashfs ale nucleului Linux, firmware-ul OpenWrt și diverse sisteme încorporate cu resurse limitate)"
+
+msgid "mime_msi"
+msgstr "MSI pachet de instalare a sistemului (format de încapsulare a datelor Windows Installer introdus de Microsoft în 1999. Ca specificație standard de implementare la nivel de aplicație Windows, suportă nativ revenirea tranzacțiilor de nivel scăzut, gestionarea ciclului de viață al componentelor și instalarea silențioasă fără procesare în lot. Este standardul central pentru distribuirea centralizată a software-ului la nivel de întreprindere și implementarea politicilor)"
+
+msgid "mime_pkg"
+msgstr "PKG pachet de instalare software multiplatformă. 1. Pachet software FreeBSD: standard pkgng, extensie .pkg sau .txz, bazat pe compresie TAR+XZ/Zstd, suportă rezolvarea dependențelor și verificarea semnăturii; 2. Pachet de instalare macOS: bazat pe formatul Apple Installer, suportă componente personalizate, scripturi de instalare și dezinstalare la nivel de sistem. Sunt, respectiv, principalele vehicule de distribuire pentru serverele BSD și sistemele Mac."
+
+msgid "mime_apk"
+msgstr "APK pachet de aplicații Android (pachet de instalare a aplicațiilor tradițional lansat de Google împreună cu Android în 2008. Bazat pe structura de arhivare ZIP, împachetează codul byte Dalvik compilat (DEX), manifestul de metadate și resursele globale. Acum utilizat pe scară largă pentru depanarea dezvoltării locale, distribuirea de către terți și instalarea laterală pe dispozitive)"
+
+msgid "mime_ipa"
+msgstr "IPA pachet de aplicații Apple (container de împachetare exclusiv pentru iOS/iPadOS lansat împreună cu iPhone SDK în 2008. În esență, o arhivă ZIP protejată de DRM FairPlay sau semnătură de cod la nivel de întreprindere, care conține un fișier executabil binar Mach-O, arborele de resurse al aplicației și configurația de metadate Info.plist)"
+
+msgid "mime_hap"
+msgstr "HAP pachet de aplicații HarmonyOS (unitate de bază de implementare elastică HarmonyOS lansată împreună cu HarmonyOS 2.0 în 2020. Este compus din modulul principal Entry sau modulele funcționale de extensie Feature. Este formatul central de implementare multi-dispozitiv pentru distribuirea terminalelor inteligente în toate scenariile cross-end (telefoane, tablete, dispozitive purtabile))"
+
+msgid "mime_har"
+msgstr "HAR pachet partajat static HarmonyOS (fișier de arhivă a bibliotecii partajate statice proprietar HarmonyOS. Folosit pentru a încapsula componente comune, cod de resurse de nivel scăzut și dependențe de timp de compilare, care sunt legate static și partajate de mai multe module HAP. Este baza centrală pentru dezvoltarea bazată pe componente și reutilizarea multi-modul a sistemului HarmonyOS)"
+
+msgid "mime_aab"
+msgstr "AAB pachet de aplicații Android (format de distribuire dinamică Google Play introdus de Google în 2018 și stabilit în 2021. Ca entitate de distribuire pură, este decupat și compilat dinamic de nor în funcție de arhitectura CPU, densitatea ecranului și limba dispozitivului țintă, generând APK-uri optimizate la cerere. Reduce costul lățimii de bandă de transmisie cu o medie de 35%)"
+
+msgid "mime_xapk"
+msgstr "XAPK pachet de aplicații extins (standard neoficial de extensie a aplicațiilor stabilit de comunitatea Android terță parte. Prin încapsularea comună a fișierului APK standard cu pachetul de extensie a datelor de joc OBB foarte mare, sparge fizic limita de dimensiune a fișierului independent de 100 MB al Google Play. Este larg răspândit pe platformele de distribuire a jocurilor)"
+
+msgid "mime_appx"
+msgstr "APPX pachet de aplicații modern (specificație de implementare a aplicațiilor UWP lansată de Microsoft împreună cu Windows 8 în 2012. Are izolare în sandbox și caracteristici de dezinstalare ușoară. Ca standard dominant timpuriu al Microsoft Store, în ecosistemul Windows modern a intrat în faza finală a ciclului de viață care evoluează către MSIX)"
+
+msgid "mime_msix"
+msgstr "MSIX pachet de aplicații de nouă generație (specificație de împachetare standardizată complet nouă pentru Windows lansată de Microsoft în 2018. Contopește perfect caracteristicile sandbox-ului de securitate al aplicațiilor APPX cu avantajele gestionării activelor la nivel de întreprindere ale MSI. Pe deplin compatibil cu toate tipurile de aplicații Win32. Este standardul de distribuire recomandat pentru Windows 11)"
+
+msgid "mime_appimage"
+msgstr "AppImage pachet de aplicații fără instalare (specificație de arhivă unică executabilă Linux inițiată în 2004. Adoptă arhitectura auto-conținută 'o aplicație este un fișier'. În timpul execuției, este montat direct prin mecanismul FUSE ca sistem de fișiere virtual doar pentru citire pentru a fi executat, realizând utilizarea imediată fără dependențe pe toate distribuțiile Linux)"
+
+msgid "mime_flatpak"
+msgstr "Flatpak pachet de aplicații în sandbox (standard de distribuire a aplicațiilor desktop între distribuțiile Linux, condus de Red Hat și GNOME în 2015. Se bazează pe mecanismele Namespace și Cgroups ale nucleului Linux pentru a realiza o izolare extrem de strictă a sandbox-ului de securitate la nivel de aplicație. Este baza centrelor de software ale sistemelor de operare open source moderne)"
+
+msgid "mime_snap"
+msgstr "Snap pachet de aplicații containerizat (standard de implementare universală Linux introdus de Canonical, compania-mamă a Ubuntu, în 2014. Adoptă arhitectura de montare a imaginii SquashFS auto-conținută, suportă actualizări incrementale automatizate și izolare strictă a sandbox-ului AppArmor. Este formatul implicit central al ecosistemului Centrului de Software Ubuntu)"
+
+msgid "mime_deb"
+msgstr "DEB pachet software de sistem (specificație de încapsulare binară și a codului sursă stabilită de proiectul Debian în 1993. Ca standard de instalare subiacent pentru Debian, Ubuntu și toate sistemele lor derivate, se bazează pe nucleul dpkg pentru despachetare și întreținere, folosind APT ca front-end eficient al managerului de pachete. Este cea mai matură bază de distribuire a software-ului din ecosistemul Linux)"
+
+msgid "mime_rpm"
+msgstr "RPM pachet software de sistem (specificație de încapsulare a managerului de pachete Red Hat lansată de Red Hat în 1997. Împreună cu DEB, este considerat unul dintre cele două mari tabere ale gestionării tradiționale a pachetelor Linux. Are nativ verificarea dependențelor la nivel de tranzacție și verificarea semnăturii digitale a software-ului subiacent. Rămâne standardul absolut de distribuire mainstream pentru ecosistemele din familia Red Hat, cum ar fi RHEL, Fedora și CentOS)"
+
+msgid "mime_pacman"
+msgstr "Pacman pachet software de arhivare (format de încapsulare .pkg.tar.zst stabilit de Arch Linux împreună cu managerul pacman în 2002. Este nucleul mecanismului de actualizare continuă (rolling release) al Arch. Bazat pe algoritmul de compresie rapidă și de înaltă compresie Zstandard, împreună cu ecosistemul AUR (Arhiva de Software a Utilizatorilor Arch). Este un standard modern de distribuire a pachetelor care reflectă principiile minimalismului și KISS)"
+
+msgid "mime_exe"
+msgstr "EXE fișier executabil nativ (format de program binar Portabil Executabil (PE) al platformei Windows. Evoluția tehnologică provine din structura antet MZ din era MS-DOS, și din 1993 Windows NT a fost pe deplin stabilit ca specificație a structurii PE. Este cel mai utilizat standard de execuție la nivel global pentru instrucțiunile de cod mașină, segmentele de resurse statice și pornirea nucleului sistemului)"
+
+msgid "mime_dll"
+msgstr "DLL bibliotecă de legătură dinamică (specificație a bibliotecii de cod partajat Dynamic Link Library a platformei Windows. Prin încărcarea dinamică și repoziționarea simbolurilor în timpul execuției, economisește semnificativ memorie fizică și spațiu pe disc. Ca formă centrală de implementare a API-ului Windows, problema sa timpurie 'Iadul DLL' a fost rezolvată în epoca modernă prin mecanismul de izolare paralelă SxS)"
+
+msgid "mime_com"
+msgstr "COM fișier executabil clasic (cel mai vechi format de execuție a imaginii de memorie (Command) din era MS-DOS. Adoptă un design de segment de cod pur nestructurat, limitat la limita superioară a segmentului de adresare a memoriei fizice de 64KB. Acum este retras ca format istoric moștenit, dar în arhitectura modernă Windows este încă utilizat ca o interfață de componentă specifică pentru compatibilitate limitată)"
+
+msgid "mime_aac"
+msgstr "Audio AAC (standard MPEG din 1997, Advanced Audio Coding. Succesorul MP3, calitatea audio superioară MP3 la aceeași rată de biți, format audio implicit pentru YouTube, iTunes, Nintendo Switch)"
+
+msgid "mime_alac"
+msgstr "Audio ALAC (dezvoltat de Apple în 2004, Apple Lossless Audio Codec. Format lossless Apple, open source în 2011, format implicit pentru audio lossless în iTunes și Apple Music)"
+
+msgid "mime_flac"
+msgstr "Audio FLAC (dezvoltat de Fundația Xiph.Org în 2001, Free Lossless Audio Codec. Compresie fără pierderi, calitate audio identică cu CD-ul, dimensiunea fișierului aproximativ jumătate față de WAV original. Open source fără brevete, format preferat de audiofili și colecționarii de muzică digitală)"
+
+msgid "mime_mp3"
+msgstr "Audio MP3 (dezvoltat de Institutul Fraunhofer în 1993, MPEG-1 Audio Layer 3. Format de compresie cu pierderi, dimensiune mică a fișierului, calitate acceptabilă, formatul central al revoluției muzicii digitale din anii 2000, forța motrice din spatele iPod-ului și Napster-ului. Brevetul a expirat în 2017, devenit format de domeniu public)"
+
+msgid "mime_oga"
+msgstr "Audio Ogg Audio (dezvoltat de Fundația Xiph.Org, format audio pur al containerului Ogg, folosește codificarea Vorbis. Open source fără brevete, eficiența compresiei mai bună decât MP3, utilizat pe scară largă în proiectele open source)"
+
+msgid "mime_ogg"
+msgstr "Audio OGG (dezvoltat de Fundația Xiph.Org în 2000, format Ogg Vorbis. Open source fără brevete, eficiența compresiei mai bună decât MP3, folosit timpuriu de Spotify, utilizat pe scară largă pentru efecte sonore în jocuri)"
+
+msgid "mime_opus"
+msgstr "Audio Opus (standardizat de IETF în 2012, format audio open source fără brevete. Combină tehnologiile SILK și CELT, latență extrem de scăzută, cea mai mare eficiență a compresiei, format audio implicit pentru WebRTC, WhatsApp, Discord)"
+
+msgid "mime_wav"
+msgstr "Audio WAV (dezvoltat de Microsoft și IBM în 1991, format audio nativ Windows. Codificare PCM fără compresie, calitate audio fără pierderi, dar dimensiune mare a fișierului, format standard pentru editarea audio profesională)"
+
+msgid "mime_wma"
+msgstr "Audio WMA (dezvoltat de Microsoft în 1999, Windows Media Audio. Două versiuni: cu pierderi și fără pierderi, suportat nativ de Windows, s-a răspândit odată cu Windows Media Player. Acum marginalizat, înlocuit de MP3/AAC)"
+
+msgid "mime_dsf"
+msgstr "Audio DSF (format Direct Stream Digital, dezvoltat de Sony și Philips. Rată de eșantionare ridicată de 1bit, format standard pentru audio DSD, versiunea digitală a SACD, format audio high-end pentru audiofili, dimensiunea fișierului enormă)"
+
+msgid "mime_ape"
+msgstr "Audio APE (dezvoltat de Monkey's Audio în 2000, format de compresie fără pierderi. Compresie mai mare decât FLAC dar codare mai lentă, încă folosit pe platforma Windows și printre pasionații de audio)"
+
+msgid "mime_mid"
+msgstr "Audio MIDI (stabilit de Asociația MIDI în 1983, Musical Instrument Digital Interface. Format de partitură muzicală, nu înregistrare, dimensiunea fișierului foarte mică, standard pentru instrumente electronice, tonuri de apel pentru telefoane mobile, efecte sonore în jocuri. În 1991 General MIDI a fost standardizat, definind 128 de timbre instrumentale)"
+
+msgid "mime_m4a"
+msgstr "Audio M4A (Audio MPEG-4, format container pentru AAC. Format standard al magazinului iTunes Music Store, format audio principal în ecosistemul Apple, acceptă protecția DRM)"
+
+msgid "mime_m3u"
+msgstr "Listă de redare M3U (format de listă de redare URL MP3, fișier text simplu, înregistrează căile fișierelor audio. Standard din era Winamp, utilizat pentru radio pe internet, streaming muzical online. M3U8 este versiunea sa UTF-8, utilizat pentru HTTP Live Streaming)"
+
+msgid "mime_asf"
+msgstr "Streaming ASF (dezvoltat de Microsoft în 1996, Advanced Systems Format. Container streaming Windows Media, acceptă transmiterea sincronă audio-video. Utilizat pentru transmisiuni live și streaming video la cerere, WMA/WMV se bazează pe containerul ASF)"
+
+msgid "mime_avi"
+msgstr "Video AVI (lansat de Microsoft în 1992, standard video timpuriu pentru Windows. „Audio Video Interleave”, stocare intercalată audio-video, cel mai popular format video în anii 1990-2000, acum înlocuit de MP4/MKV)"
+
+msgid "mime_divx"
+msgstr "Video DivX (dezvoltat de compania DivX în 1998, format de codificare video bazat pe MPEG-4. Format principal pentru partajarea videoclipurilor pe internet în anii 2000, prima tehnologie care a comprimat calitatea DVD la dimensiunea unui CD. Din cauza controverselor legate de drepturile de autor, s-a transformat ulterior într-un codificator comercial)"
+
+msgid "mime_mp4"
+msgstr "Video MP4 (standard MPEG din 2001, MPEG-4 Partea 14. Cel mai universal format video din lume, acceptă codificarea H.264/H.265, format implicit pentru videoclipuri pe internet, înregistrări pe telefon, YouTube)"
+
+msgid "mime_m4v"
+msgstr "Video M4V (format video iTunes, variantă a MP4. Format video în ecosistemul Apple, format standard pentru filme, emisiuni TV în iTunes Store, acceptă protecția drepturilor de autor DRM)"
+
+msgid "mime_mpeg"
+msgstr "Video MPEG (stabilit de organizația MPEG în 1988, Moving Picture Experts Group. Fondator al standardelor de compresie video digitală, influență profundă a MPEG-1 (VCD), MPEG-2 (DVD), MPEG-4 (video pe internet))"
+
+msgid "mime_mkv"
+msgstr "Video MKV (dezvoltat de proiectul Matroska în 2002, container multimedia open source. Acceptă mai multe piste audio, mai multe subtitrări, capitole, „instrument de ambalare”, format preferat pentru partajarea filmelor HD)"
+
+msgid "mime_mpg"
+msgstr "Video MPEG (extensie video MPEG-1/MPEG-2, format standard pentru VCD și DVD. Format video principal pe discurile optice în anii 1990-2000, acum înlocuit de H.264/H.265)"
+
+msgid "mime_ogv"
+msgstr "Video Ogg Video (dezvoltat de Fundația Xiph.Org, format video al containerului Ogg, folosește codificarea Theora. Open source fără brevete, unul dintre primele standarde pentru video HTML5, acceptat nativ de Firefox)"
+
+msgid "mime_ogx"
+msgstr "Container multimedia Ogg (dezvoltat de Fundația Xiph.Org, extensie universală a containerului Ogg, poate conține mai multe piste: audio, video, subtitrări etc. Standard multimedia open source, utilizat pentru jocuri, streaming)"
+
+msgid "mime_rm"
+msgstr "Video RealMedia (dezvoltat de RealNetworks în 1995, format RealMedia. Pionier al streaming-ului pe internet în anii 1990-2000, format de bază al playerului RealPlayer. Puncte slabe: necesită player special, calitate slabă a compresiei, ulterior înlocuit de Flash/MP4)"
+
+msgid "mime_flv"
+msgstr "Video Flash (formatul a apărut în 2002, format Flash Video. A fost cândva formatul principal pentru videoclipurile online, folosit timpuriu de YouTube. Puncte slabe: necesită plugin Flash, performanță slabă, multe găuri de securitate. Din 2015 site-urile principale au trecut la video HTML5, acum eliminat)"
+
+msgid "mime_f4v"
+msgstr "Video F4V (format video Flash dezvoltat de Adobe, succesor al FLV. Bazat pe standardul MPEG-4, acceptă codificarea H.264. Odată cu tehnologia Flash a fost eliminat, Adobe a oprit suportul în 2020)"
+
+msgid "mime_wmv"
+msgstr "Video WMV (dezvoltat de Microsoft în 1999, Windows Media Video. Suportat nativ de Windows, optimizat pentru transmisie streaming, format comun pentru videoclipurile online timpurii, acum marginalizat)"
+
+msgid "mime_wmf"
+msgstr "Format media WMF (Format Windows Media, platforma media Microsoft. Include denumirea generică pentru video WMV și audio WMA, suportat nativ de Windows Media Player)"
+
+msgid "mime_mov"
+msgstr "Video MOV (dezvoltat de Apple în 1991, format container QuickTime. Format standard pentru editarea video profesională, acceptă mai multe codecuri, acceptat nativ de Final Cut Pro, Premiere)"
+
+msgid "mime_qt"
+msgstr "Video QuickTime (lansat de Apple în 1991, format QuickTime. Standard video pentru platforma Mac, MOV este containerul său, playerul QuickTime a fost utilizat pe scară largă. În 2016 Apple a oprit dezvoltarea versiunii pentru Windows, fiind înlocuit treptat de MP4)"
+
+msgid "mime_webm"
+msgstr "Video WebM (lansat de Google în 2010, format video open source fără brevete. Bazat pe containerul Matroska, codificarea VP8/VP9, format standard pentru video HTML5, formatul implicit de redare web al YouTube)"
+
+msgid "mime_3gp"
+msgstr "Video 3GP (stabilit de 3GPP în 2000, format video pentru dispozitive mobile. Dimensiunea fișierului foarte mică, calitate scăzută, format pentru înregistrările video ale telefoanelor mobile timpurii, utilizat pentru trimiterea prin MMS)"
+
+#------------------------------------------------------------------------------
+# Dimensiuni tehnice
+#------------------------------------------------------------------------------
+
+msgid "Operating Systems"
+msgstr "Sisteme de operare"
+
+msgid "Top 5 Operating Systems"
+msgstr "Primele 5 sisteme de operare"
+
+msgid "Unknown Robot"
+msgstr "Client necunoscut"
+
+msgid "User agent"
+msgstr "Agent utilizator"
+
+msgid "Browsers"
+msgstr "Browsere"
+
+msgid "Top 5 Browsers"
+msgstr "Primele 5 browsere"
+
+msgid "Unknown Robot RH"
+msgstr "Antet de solicitare necunoscut"
+
+msgid "Detailed"
+msgstr "Detaliat"
+
+msgid "DetailedOS"
+msgstr "Versiune sistem de operare"
+
+msgid "DetailedBS"
+msgstr "Versiune browser"
+
+msgid "Screen sizes"
+msgstr "Dimensiuni ecran"
+
+msgid "Compression"
+msgstr "Compresie"
+
+msgid "In"
+msgstr "Intrare"
+
+msgid "Out"
+msgstr "Ieșire"
+
+msgid "Saved"
+msgstr "Salvat"
+
+#------------------------------------------------------------------------------
+# Dimensiuni sursă
+#------------------------------------------------------------------------------
+
+msgid "Origin"
+msgstr "Origine"
+
+msgid "Referers"
+msgstr "Refereri"
+
+msgid "meta.description"
+msgstr "AWStats analizor avansat de jurnale web - monitorizare în timp real a traficului site-ului web, analiza vizitatorilor, cuvinte cheie motoare de căutare, statistici pagini de eroare. Acceptă mod întunecat, interfață multilingvă, oferă analiză cuprinzătoare a datelor pentru administratorii de site-uri web."
+
+msgid "meta.keywords"
+msgstr "AWStats,statistici site-uri web,analiză jurnale,monitorizare trafic,statistici vizite,analiză SEO,instrument analiză site-uri web,Web Analytics,Analizor Jurnale"
+
+msgid "meta.author"
+msgstr "AWStats"
+
+msgid "og.title"
+msgstr "AWStats - Analiză Jurnale Web"
+
+msgid "og.description"
+msgstr "📊 Instrument profesionist de statistici web open source, analizează traficul site-ului și comportamentul vizitatorilor în timp real."
+
+msgid "og.image.alt"
+msgstr "Grafice statistice AWStats"
+
+msgid "Created by"
+msgstr "Creat de %s"
+
+msgid "plugins"
+msgstr "plugin-uri"
+
+msgid "dbip by"
+msgstr "date de la"
+
+msgid "IPDB by"
+msgstr "Datele de localizare geografică sunt furnizate de DB-IP"
+
+# Sănătate
+msgid "Configured"
+msgstr "Configurat"
+
+msgid "Missing"
+msgstr "Lipsă"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Unused"
+msgstr "Neutilizat"
+
+msgid "Overall Health"
+msgstr "Stare generală de sănătate"
+
+msgid "Excellent"
+msgstr "Excelent"
+
+msgid "Good"
+msgstr "Bun"
+
+msgid "Fair"
+msgstr "Acceptabil"
+
+msgid "Poor"
+msgstr "Slab"
+
+msgid "Missing icon types"
+msgstr "Tipuri de pictograme lipsă"
+
+msgid "See"
+msgstr "Vezi"
+
+msgid "Expected Path"
+msgstr "Cale așteptată"
+
+msgid "column for file locations"
+msgstr "coloană pentru a obține locațiile fișierelor"
+
+msgid "Tip: If you need to generate related icons, you can use %s to upload a logo image, and it will automatically generate all the above related icon files"
+msgstr "Sfat: Dacă trebuie să generați pictograme conexe, puteți utiliza %s pentru a încărca o imagine de logo, iar aceasta va genera automat toate fișierele de pictograme conexe de mai sus"
+
+msgid "200: success, 404: failure"
+msgstr "200 este numărul de succese, 404 este numărul de eșecuri"
+
+msgid "_PATH_FAVICON"
+msgstr "/favicon.ico"
+
+msgid "_PATH_APPLE_TOUCH"
+msgstr "/apple-touch-icon.png sau /apple-touch-icon-180x180.png"
+
+msgid "_PATH_LOGO"
+msgstr "/logo.svg sau /logo.png (trebuie referit în HTML/JSON-LD)"
+
+msgid "_PATH_WEBMANIFEST"
+msgstr "/site.webmanifest sau /manifest.json"
+
+msgid "_PATH_BROWSERCONFIG"
+msgstr "/browserconfig.xml"
+
+msgid "_PATH_SAFARI_PINNED"
+msgstr "/safari-pinned-tab.svg"
+
+msgid "_PATH_SOCIAL_ICON"
+msgstr "/images/github.svg, /images/paypal.svg etc."
+
+msgid "Favicon"
+msgstr "Pictogramă site"
+
+msgid "Apple Touch Icon (iOS/macOS)"
+msgstr "Pictogramă Apple Touch (iPhone/iPad/Mac)"
+
+msgid "Site Logo"
+msgstr "Logo site"
+
+msgid "Web App Manifest (Android/Chrome)"
+msgstr "Manifest aplicație web (Android/Chrome)"
+
+msgid "Windows Browser Config"
+msgstr "Configurare browser Windows"
+
+msgid "Safari Pinned Tab"
+msgstr "Pictogramă filă fixată Safari"
+
+msgid "Social Icon"
+msgstr "Pictogramă platformă socială"
+
+msgid "Icon Files Status"
+msgstr "Stare fișiere pictograme"
+
+msgid "Icon Type"
+msgstr "Tip pictogramă"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Advanced Web Statistics"
+msgstr "Analizor avansat de jurnale"
+
+msgid "Advanced Web Statistics %s"
+msgstr "%s Analizor avansat de jurnale"
+
+msgid "Your browser does not support frames. Please use a modern browser."
+msgstr "Browserul dvs. nu acceptă cadre. Vă rugăm să utilizați un browser modern."
+
+msgid "View statistics directly"
+msgstr "Vizualizați statisticile direct"
+
+msgid "Close"
+msgstr "Închide"
+
+msgid "Documentation Viewer"
+msgstr "Vizualizator documentație"
+
+msgid "Direct address / Bookmarks"
+msgstr "Adresă directă / Marcaje"
+
+msgid "Search Engines"
+msgstr "Motoare de căutare"
+
+msgid "Refering search engines"
+msgstr "Motoare de căutare care referă"
+
+msgid "External pages"
+msgstr "Pagini externe"
+
+msgid "Refering pages"
+msgstr "Pagini care referă"
+
+msgid "Internal pages"
+msgstr "Pagini interne"
+
+msgid "UnknownAccessSource"
+msgstr "Sursă de acces necunoscută"
+
+msgid "Different refering pages"
+msgstr "Pagini care referă diferite"
+
+msgid "Keyphrases"
+msgstr "Expresii cheie"
+
+msgid "Keywords"
+msgstr "Cuvinte cheie"
+
+msgid "Keyphrases/Keywords"
+msgstr "Expresii cheie/Cuvinte cheie"
+
+msgid "Different keyphrases"
+msgstr "Expresii cheie diferite"
+
+msgid "Different keywords"
+msgstr "Cuvinte cheie diferite"
+
+#------------------------------------------------------------------------------
+# Dimensiuni pagină
+#------------------------------------------------------------------------------
+
+msgid "Viewed pages"
+msgstr "Pagini vizualizate"
+
+msgid "Different pages"
+msgstr "Pagini diferite"
+
+msgid "Entry"
+msgstr "Intrare"
+
+msgid "Exit"
+msgstr "Ieșire"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Referer"
+msgstr "Referer"
+
+msgid "Host"
+msgstr "Gazdă"
+
+#------------------------------------------------------------------------------
+# Erori și stări
+#------------------------------------------------------------------------------
+
+msgid "Error"
+msgstr "Eroare"
+
+msgid "HTTP Status Statistics"
+msgstr "Statistici coduri stare HTTP"
+
+msgid "SMTP Error codes"
+msgstr "Coduri eroare SMTP"
+
+msgid "Page not found"
+msgstr "Pagina solicitată nu a fost găsită"
+
+msgid "Unknown error"
+msgstr "Eroare necunoscută"
+
+msgid "Abnormal traffic note"
+msgstr "Traficul de navigare anormal include: roboți ai motoarelor de căutare, roboți de antrenare AI, scanere de vulnerabilități și solicitări care nu respectă standardele"
+
+msgid "Page detail"
+msgstr "Detaliu pagină"
+
+# Mesaje de eroare detaliate
+msgid "AWStats did not found the"
+msgstr "AWStats nu a găsit"
+
+msgid "in your log records."
+msgstr "în înregistrările jurnalului dumneavoastră."
+
+msgid "AWStats did not find any valid log lines that match your"
+msgstr "AWStats nu a găsit nicio linie de jurnal validă care să se potrivească cu"
+
+msgid "parameter, in the"
+msgstr "parametrul dvs., în"
+
+msgid "th first non commented lines read of your log."
+msgstr "primele linii necomentate citite din jurnalul dumneavoastră."
+
+msgid "Your log file"
+msgstr "Fișierul dvs. jurnal"
+
+msgid "must have a bad format or"
+msgstr "trebuie să aibă un format incorect sau"
+
+msgid "parameter setup does not match this format."
+msgstr "configurația parametrului nu se potrivește cu acest format."
+
+msgid "Your AWStats"
+msgstr "Parametrul dvs. AWStats"
+
+msgid "parameter is:"
+msgstr "este:"
+
+msgid "This means each line in your web server log file need to have:"
+msgstr "Aceasta înseamnă că fiecare linie din fișierul jurnal al serverului dvs. web trebuie să aibă:"
+
+msgid "combined log format"
+msgstr "format jurnal combinat"
+
+msgid "MSIE Extended W3C log format"
+msgstr "format jurnal W3C extins MSIE"
+
+msgid "WebStar native log format"
+msgstr "format jurnal nativ WebStar"
+
+msgid "common log format"
+msgstr "format jurnal comun"
+
+msgid "Lotus Notes/Lotus Domino"
+msgstr "Lotus Notes/Lotus Domino"
+
+msgid "the following personalized log format:"
+msgstr "următorul format de jurnal personalizat:"
+
+msgid "And this is an example of records AWStats found in your log file (the record number"
+msgstr "Acesta este un exemplu de înregistrări pe care AWStats le-a găsit în fișierul dvs. jurnal (numărul înregistrării"
+
+msgid "in your log):"
+msgstr "în jurnalul dvs.):"
+
+#------------------------------------------------------------------------------
+# Diverse
+#------------------------------------------------------------------------------
+
+msgid "Extra/Marketing"
+msgstr "Suplimentar/Marketing"
+
+#------------------------------------------------------------------------------
+# Texte interfață
+#------------------------------------------------------------------------------
+
+msgid "Current site"
+msgstr "Site actual"
+
+msgid "Web Site"
+msgstr "Site web"
+
+msgid "Last Update"
+msgstr "Ultima actualizare"
+
+msgid "Never updated"
+msgstr "Niciodată actualizat"
+
+msgid "No qualified records found in log"
+msgstr "Nu s-au găsit înregistrări eligibile în jurnal"
+
+msgid "corrupted"
+msgstr "corupte"
+
+msgid "comments"
+msgstr "comentarii"
+
+msgid "Blank"
+msgstr "Gol"
+
+msgid "dropped"
+msgstr "eliminate"
+
+msgid "Update now"
+msgstr "Actualizați acum"
+
+msgid "Back to main page"
+msgstr "Înapoi la pagina principală"
+
+msgid "Close window"
+msgstr "Închide fereastra"
+
+msgid "Back page"
+msgstr "Pagina anterioară"
+
+msgid "Navigation"
+msgstr "Navigare"
+
+msgid "Summary"
+msgstr "Rezumat"
+
+msgid "Local"
+msgstr "Local"
+
+msgid "External"
+msgstr "Extern"
+
+msgid "Others (email senders)"
+msgstr "Altele (expeditori)"
+
+msgid "Others (email receivers)"
+msgstr "Altele (destinatari)"
+
+msgid "Others"
+msgstr "Altele"
+
+msgid "Only 10 lines of browser data are currently displayed"
+msgstr "Doar primele 10 linii de date despre browser sunt afișate în prezent, lista completă se află pe pagina de detalii"
+
+msgid "Others (unknown browsers)"
+msgstr "Altele (browsere necunoscute)"
+
+msgid "Others (operating systems)"
+msgstr "Altele (sisteme de operare)"
+
+msgid "Others (unknown OS)"
+msgstr "Altele (SO necunoscut)"
+
+msgid "Others (search engines)"
+msgstr "Altele (motoare de căutare)"
+
+msgid "Others (referring pages)"
+msgstr "Altele (pagini care referă)"
+
+msgid "Others (keyphrases)"
+msgstr "Altele (expresii)"
+
+msgid "Others (keywords)"
+msgstr "Altele (cuvinte cheie)"
+
+msgid "Only first 10 robots shown"
+msgstr "Doar primii 10 roboți sunt afișați, lista completă se află pe pagina de detalii"
+
+msgid "Failed to obtain access record"
+msgstr "Nu s-a putut obține înregistrarea de intrare"
+
+msgid "Failed to obtain leave record"
+msgstr "Nu s-a putut obține înregistrarea de ieșire"
+
+msgid "Other pages"
+msgstr "Alte pagini"
+
+msgid "Low Traffic IP Summary"
+msgstr "Rezumat IP necunoscut cu trafic redus"
+
+msgid "Failed to obtain IP data"
+msgstr "Rezumat alt IP cunoscut"
+
+msgid "Failed to obtain the relevant data"
+msgstr "Nu s-au putut obține datele relevante"
+
+msgid "Limited list of countries and regions"
+msgstr "Doar primele 10 linii de date sunt afișate în prezent, lista completă pentru mai multe țări și regiuni se află pe pagina de detalii"
+
+msgid "currentVisitorData"
+msgstr "Doar primele 10 linii de date despre vizitatori sunt afișate în prezent, lista completă se află pe pagina de detalii"
+
+msgid "Others (robots main)"
+msgstr "Altele (roboți)"
+
+msgid "Others (worms)"
+msgstr "Altele (viermi)"
+
+msgid "Displaying10RowsPageMorePleaseViewFullList"
+msgstr "Doar primele 10 pagini sunt afișate în prezent, lista completă se află pe pagina de detalii"
+
+msgid "Others (OS main)"
+msgstr "Altele (sisteme)"
+
+msgid "Others (browsers main)"
+msgstr "Altele (browsere)"
+
+msgid "Others (screen sizes)"
+msgstr "Altele (dimensiuni)"
+
+msgid "Others (search engines main)"
+msgstr "Altele (motoare de căutare)"
+
+msgid "Others (referring pages main)"
+msgstr "Altele (pagini care referă)"
+
+msgid "Others (keyphrases main)"
+msgstr "Altele (expresii)"
+
+msgid "Others (keywords main)"
+msgstr "Altele (cuvinte cheie)"
+
+# 1xx
+msgid "Continue"
+msgstr "Continuă"
+
+msgid "Switching Protocols"
+msgstr "Comutare protocoale"
+
+msgid "Processing (WebDAV)"
+msgstr "Procesare (WebDAV)"
+
+msgid "Early Hints"
+msgstr "Indicații timpurii"
+
+# 2xx
+msgid "[Miscellaneous successes]"
+msgstr "[Succese diverse]"
+
+msgid "Request successful"
+msgstr "Cerere cu succes"
+
+msgid "Created successfully"
+msgstr "Creat cu succes"
+
+msgid "Accepted - processing"
+msgstr "Acceptat - procesare"
+
+msgid "Non-authoritative information (from cache) (from cache)"
+msgstr "Informații neautoritare (din cache)"
+
+msgid "Success, no content returned"
+msgstr "Succes, niciun conținut returnat"
+
+msgid "Reset content"
+msgstr "Resetați conținutul"
+
+msgid "Partial content (resume download)"
+msgstr "Conținut parțial (reluare descărcare)"
+
+msgid "Multi-status (WebDAV)"
+msgstr "Multi-stare (WebDAV)"
+
+msgid "Already reported (WebDAV)"
+msgstr "Deja raportat (WebDAV)"
+
+msgid "IM used"
+msgstr "IM folosit"
+
+# 3xx
+msgid "[Miscellaneous redirections]"
+msgstr "[Redirecționări diverse]"
+
+msgid "Multiple choices"
+msgstr "Opțiuni multiple"
+
+msgid "Moved permanently - update your links"
+msgstr "Mutat permanent - actualizați-vă legăturile"
+
+msgid "Temporary redirect - URL unchanged"
+msgstr "Redirecționare temporară - URL neschimbat"
+
+msgid "See other"
+msgstr "Vezi altul"
+
+msgid "Not modified - using cached version"
+msgstr "Nemodificat - utilizarea versiunii din cache"
+
+msgid "Use proxy"
+msgstr "Folosiți proxy"
+
+msgid "Switch proxy"
+msgstr "Schimbați proxy-ul"
+
+msgid "Temporary redirect (keep method)"
+msgstr "Redirecționare temporară (păstrează metoda)"
+
+msgid "Permanent redirect - update your links"
+msgstr "Redirecționare permanentă - actualizați-vă legăturile"
+
+# 4xx
+msgid "[Miscellaneous client/user errors]"
+msgstr "[Erori client/utilizator diverse]"
+
+msgid "Bad request"
+msgstr "Cerere incorectă"
+
+msgid "Unauthorized - please log in"
+msgstr "Neautorizat - vă rugăm să vă autentificați"
+
+msgid "Payment required"
+msgstr "Plată necesară"
+
+msgid "Forbidden - access denied"
+msgstr "Interzis - acces respins"
+
+msgid "Page not found (404) - check for broken links"
+msgstr "Pagina negăsită (404) - verificați legăturile întrerupte"
+
+msgid "Method not allowed"
+msgstr "Metodă nepermisă"
+
+msgid "Not acceptable"
+msgstr "Neacceptabil"
+
+msgid "Proxy authentication required"
+msgstr "Autentificare proxy necesară"
+
+msgid "Request timeout"
+msgstr "Cerere expirată"
+
+msgid "Conflict - please try again"
+msgstr "Conflict - vă rugăm să încercați din nou"
+
+msgid "Gone - permanently deleted"
+msgstr "Dispărut - șters permanent"
+
+msgid "Length required"
+msgstr "Lungime necesară"
+
+msgid "Precondition failed"
+msgstr "Precondiție eșuată"
+
+msgid "Payload too large"
+msgstr "Încărcătură prea mare"
+
+msgid "URI too long"
+msgstr "URI prea lung"
+
+msgid "Unsupported media type"
+msgstr "Tip media neacceptat"
+
+msgid "Range not satisfiable"
+msgstr "Interval nesatisfăcăbil"
+
+msgid "Expectation failed"
+msgstr "Așteptare eșuată"
+
+msgid "I am a teapot (April Fools)"
+msgstr "Sunt un ceainic (1 Aprilie)"
+
+msgid "Page expired (Laravel)"
+msgstr "Pagina a expirat (Laravel)"
+
+msgid "Method failure (Spring)"
+msgstr "Eșec metodă (Spring)"
+
+msgid "Misdirected request"
+msgstr "Cerere direcționată greșit"
+
+msgid "Unprocessable entity (WebDAV)"
+msgstr "Entitate neprocesabilă (WebDAV)"
+
+msgid "Locked (WebDAV)"
+msgstr "Blocat (WebDAV)"
+
+msgid "Failed dependency (WebDAV)"
+msgstr "Dependență eșuată (WebDAV)"
+
+msgid "Too early"
+msgstr "Prea devreme"
+
+msgid "Upgrade required"
+msgstr "Actualizare necesară"
+
+msgid "Precondition required"
+msgstr "Precondiție necesară"
+
+msgid "Too many requests - slow down"
+msgstr "Prea multe cereri - încetiniți"
+
+msgid "Request header fields too large (Shopify)"
+msgstr "Câmpurile antetului cererii sunt prea mari (Shopify)"
+
+msgid "Request header too large"
+msgstr "Antetul cererii este prea mare"
+
+msgid "Login timeout (IIS)"
+msgstr "Expirare autentificare (IIS)"
+
+msgid "No response (nginx)"
+msgstr "Niciun răspuns (nginx)"
+
+msgid "Retry with (IIS)"
+msgstr "Reîncercați cu (IIS)"
+
+msgid "Blocked by Windows parental controls"
+msgstr "Blocat de controlul parental Windows"
+
+msgid "Unavailable for legal reasons"
+msgstr "Indisponibil din motive legale"
+
+msgid "Client closed connection before idle timeout (AWS ELB)"
+msgstr "Clientul a închis conexiunea înainte de expirarea perioadei de inactivitate (AWS ELB)"
+
+msgid "X-Forwarded-For header with >30 IP addresses (AWS ELB)"
+msgstr "Antet X-Forwarded-For cu >30 de adrese IP (AWS ELB)"
+
+msgid "Incompatible protocol versions (AWS ELB)"
+msgstr "Versiuni de protocol incompatibile (AWS ELB)"
+
+msgid "Request header too large (nginx)"
+msgstr "Antetul cererii este prea mare (nginx)"
+
+msgid "SSL certificate error (nginx)"
+msgstr "Eroare certificat SSL (nginx)"
+
+msgid "SSL certificate required (nginx)"
+msgstr "Certificat SSL necesar (nginx)"
+
+msgid "HTTP request sent to HTTPS port (nginx)"
+msgstr "Cerere HTTP trimisă la portul HTTPS (nginx)"
+
+msgid "Invalid token (ArcGIS)"
+msgstr "Token invalid (ArcGIS)"
+
+msgid "Token required (ArcGIS) / Client closed request (nginx)"
+msgstr "Token necesar (ArcGIS) / Clientul a închis cererea (nginx)"
+
+msgid "Resource limit reached (cPanel)"
+msgstr "Limită de resurse atinsă (cPanel)"
+
+msgid "Bandwidth limit exceeded (Apache/cPanel)"
+msgstr "Limită de lățime de bandă depășită (Apache/cPanel)"
+
+# 5xx
+msgid "[Miscellaneous server errors]"
+msgstr "[Erori server diverse]"
+
+msgid "Internal server error - check logs"
+msgstr "Eroare internă de server - verificați jurnalele"
+
+msgid "Not implemented"
+msgstr "Neimplementat"
+
+msgid "Bad gateway - backend error"
+msgstr "Poartă de legătură defectă - eroare backend"
+
+msgid "Service unavailable - maintenance or overload"
+msgstr "Serviciu indisponibil - întreținere sau suprasarcină"
+
+msgid "Gateway timeout"
+msgstr "Expirare poartă de legătură"
+
+msgid "HTTP version not supported"
+msgstr "Versiune HTTP neacceptată"
+
+msgid "Variant also negotiates"
+msgstr "Varianta negociază de asemenea"
+
+msgid "Insufficient storage (WebDAV)"
+msgstr "Stocare insuficientă (WebDAV)"
+
+msgid "Loop detected (WebDAV)"
+msgstr "Buclă detectată (WebDAV)"
+
+msgid "Not extended"
+msgstr "Neextins"
+
+msgid "Network authentication required"
+msgstr "Autentificare rețea necesară"
+
+# Cloudflare
+msgid "Unknown error (Cloudflare)"
+msgstr "Eroare necunoscută (Cloudflare)"
+
+msgid "Web server is down (Cloudflare)"
+msgstr "Serverul web nu funcționează (Cloudflare)"
+
+msgid "Connection timeout (Cloudflare)"
+msgstr "Expirare conexiune (Cloudflare)"
+
+msgid "Origin is unreachable (Cloudflare)"
+msgstr "Originea este inaccesibilă (Cloudflare)"
+
+msgid "A timeout occurred (Cloudflare)"
+msgstr "A avut loc o expirare (Cloudflare)"
+
+msgid "SSL handshake failed (Cloudflare)"
+msgstr "Handshake SSL eșuat (Cloudflare)"
+
+msgid "Invalid SSL certificate (Cloudflare)"
+msgstr "Certificat SSL invalid (Cloudflare)"
+
+msgid "Railgun error (Cloudflare - obsolete)"
+msgstr "Eroare Railgun (Cloudflare - învechit)"
+
+msgid "Site is overloaded (SSLLabs)"
+msgstr "Site-ul este suprasolicitat (SSLLabs)"
+
+msgid "Origin DNS error (Cloudflare) / Site is frozen (Pantheon)"
+msgstr "Eroare DNS origine (Cloudflare) / Site-ul este înghețat (Pantheon)"
+
+msgid "Temporarily disabled (Shopify)"
+msgstr "Dezactivat temporar (Shopify)"
+
+msgid "Unauthorized (AWS ELB)"
+msgstr "Neautorizat (AWS ELB)"
+
+msgid "Network read timeout error"
+msgstr "Eroare de expirare la citirea rețelei"
+
+msgid "Network connect timeout error"
+msgstr "Eroare de expirare la conectarea la rețea"
+
+msgid "Unexpected token (Shopify)"
+msgstr "Token neașteptat (Shopify)"
+
+msgid "Request denied (LinkedIn)"
+msgstr "Cerere respinsă (LinkedIn)"
+
+msgid "HTTP/2 GOAWAY (AWS ELB)"
+msgstr "HTTP/2 GOAWAY (AWS ELB)"
+
+msgid "[Unknown]"
+msgstr "[Necunoscut]"
+
+msgid "Nonstandard success response (ESMTP)"
+msgstr "Răspuns de succes nonstandard (ESMTP)"
+
+msgid "System status, or system help reply"
+msgstr "Stare sistem, sau răspuns de ajutor sistem"
+
+msgid "Help message"
+msgstr "Mesaj de ajutor"
+
+msgid "SMTP service ready (LMTP)"
+msgstr "Serviciu SMTP gata (LMTP)"
+
+msgid "Service ready - server is ready to receive mail"
+msgstr "Serviciu gata - serverul este gata să primească e-mailuri"
+
+msgid "Service closing - connection is being closed"
+msgstr "Serviciu închidere - conexiunea se închide"
+
+msgid "Authentication successful"
+msgstr "Autentificare reușită"
+
+msgid "Requested mail action taken and completed"
+msgstr "Acțiunea de e-mail solicitată a fost efectuată și finalizată"
+
+msgid "User not local - will forward to another address"
+msgstr "Utilizatorul nu este local - va fi redirecționat către o altă adresă"
+
+msgid "Cannot verify recipient, but will attempt delivery"
+msgstr "Nu se poate verifica destinatarul, dar se va încerca livrarea"
+
+msgid "Message accepted for delivery (DSN)"
+msgstr "Mesaj acceptat pentru livrare (DSN)"
+
+msgid "User name is a mailbox"
+msgstr "Numele de utilizator este o cutie poștală"
+
+msgid "Authentication challenge - please respond"
+msgstr "Provocare autentificare - vă rugăm să răspundeți"
+
+msgid "Start mail input - end with <CRLF>.<CRLF>"
+msgstr "Începeți introducerea e-mailului - terminați cu <CRLF>.<CRLF>"
+
+msgid "Continue (LMTP)"
+msgstr "Continuă (LMTP)"
+
+msgid "Service not available - connection closing, try again later"
+msgstr "Serviciu indisponibil - conexiunea se închide, încercați din nou mai târziu"
+
+msgid "Mailbox busy or temporarily unavailable (Exchange)"
+msgstr "Cutie poștală ocupată sau temporar indisponibilă (Exchange)"
+
+msgid "Connection rate limit exceeded (Postfix)"
+msgstr "Limită rată conexiune depășită (Postfix)"
+
+msgid "Too many concurrent connections (Postfix)"
+msgstr "Prea multe conexiuni concurente (Postfix)"
+
+msgid "Unable to establish connection (Postfix)"
+msgstr "Nu se poate stabili conexiunea (Postfix)"
+
+msgid "Connection timed out (Postfix)"
+msgstr "Conexiune expirată (Postfix)"
+
+msgid "Connection dropped due to error (Postfix)"
+msgstr "Conexiune întreruptă din cauza unei erori (Postfix)"
+
+msgid "Mailbox temporarily locked (Exchange)"
+msgstr "Cutie poștală blocată temporar (Exchange)"
+
+msgid "Too many recipients (Postfix/Exim)"
+msgstr "Prea mulți destinatari (Postfix/Exim)"
+
+msgid "Mail server error (Exchange)"
+msgstr "Eroare server de e-mail (Exchange)"
+
+msgid "Received loop detected (Exim)"
+msgstr "Buclesă de primire detectată (Exim)"
+
+msgid "Too many hop count (Exim)"
+msgstr "Număr prea mare de hop-uri (Exim)"
+
+msgid "DNS lookup failed (Postfix)"
+msgstr "Căutare DNS eșuată (Postfix)"
+
+msgid "Unable to authenticate (Postfix)"
+msgstr "Nu se poate autentifica (Postfix)"
+
+msgid "TLS handshake failed (Postfix)"
+msgstr "Handshake TLS eșuat (Postfix)"
+
+msgid "SMTP protocol violation (Postfix)"
+msgstr "Încălcare protocol SMTP (Postfix)"
+
+msgid "Message size exceeds limit (Exchange)"
+msgstr "Dimensiunea mesajului depășește limita (Exchange)"
+
+msgid "Message rate limit exceeded (Postfix)"
+msgstr "Limită rată mesaje depășită (Postfix)"
+
+msgid "Mailbox quota exceeded - temporary"
+msgstr "Cotă cutie poștală depășită - temporar"
+
+msgid "Domain not found (Postfix)"
+msgstr "Domeniu negăsit (Postfix)"
+
+msgid "Message header invalid (Postfix)"
+msgstr "Antet mesaj invalid (Postfix)"
+
+msgid "Bounce loop detected (Postfix)"
+msgstr "Buclă de retur detectată (Postfix)"
+
+msgid "Unable to route (Postfix)"
+msgstr "Nu se poate ruta (Postfix)"
+
+msgid "Sender domain not found (Postfix)"
+msgstr "Domeniul expeditorului negăsit (Postfix)"
+
+msgid "Recipient domain not found (Postfix)"
+msgstr "Domeniul destinatarului negăsit (Postfix)"
+
+msgid "Greylisting in progress - please try again (Postgrey)"
+msgstr "Greylisting în desfășurare - vă rugăm să încercați din nou (Postgrey)"
+
+msgid "Spam filtering in progress (SpamAssassin)"
+msgstr "Filtrare spam în desfășurare (SpamAssassin)"
+
+msgid "Virus scanning in progress (ClamAV)"
+msgstr "Scanare antivirus în desfășurare (ClamAV)"
+
+msgid "Mailbox unavailable - try again later"
+msgstr "Cutie poștală indisponibilă - încercați din nou mai târziu"
+
+msgid "Requested action aborted - error in processing"
+msgstr "Acțiunea solicitată a fost întreruptă - eroare în procesare"
+
+msgid "Insufficient system storage - try again later"
+msgstr "Stocare sistem insuficientă - încercați din nou mai târziu"
+
+msgid "Too many messages for this recipient (Exchange)"
+msgstr "Prea multe mesaje pentru acest destinatar (Exchange)"
+
+msgid "TLS not available (Postfix)"
+msgstr "TLS indisponibil (Postfix)"
+
+msgid "Server unable to accept messages (Postfix)"
+msgstr "Serverul nu poate accepta mesaje (Postfix)"
+
+msgid "Temporary failure in DNS lookup (Exim)"
+msgstr "Eșec temporar în căutarea DNS (Exim)"
+
+msgid "Quota exceeded - temporary"
+msgstr "Cotă depășită - temporar"
+
+msgid "Message too big - temporary"
+msgstr "Mesaj prea mare - temporar"
+
+msgid "Too many messages per connection"
+msgstr "Prea multe mesaje per conexiune"
+
+msgid "Load average too high (Postfix)"
+msgstr "Media de încărcare prea mare (Postfix)"
+
+msgid "Connection refused (Postfix)"
+msgstr "Conexiune respinsă (Postfix)"
+
+msgid "Send rate limit exceeded (Postfix)"
+msgstr "Limită rată de trimitere depășită (Postfix)"
+
+msgid "Recipient rate limit exceeded (Postfix)"
+msgstr "Limită rată destinatar depășită (Postfix)"
+
+msgid "Sender rate limit exceeded (Postfix)"
+msgstr "Limită rată expeditor depășită (Postfix)"
+
+msgid "IP address rate limit exceeded (Postfix)"
+msgstr "Limită rată adresă IP depășită (Postfix)"
+
+msgid "MX lookup failed (Postfix)"
+msgstr "Căutare MX eșuată (Postfix)"
+
+msgid "A record lookup failed (Postfix)"
+msgstr "Căutare înregistrare A eșuată (Postfix)"
+
+msgid "PTR record lookup failed (Postfix)"
+msgstr "Căutare înregistrare PTR eșuată (Postfix)"
+
+msgid "Greylisting active - please try again (Postgrey)"
+msgstr "Greylisting activ - vă rugăm să încercați din nou (Postgrey)"
+
+msgid "Sender address rejected - domain not verified (DMARC pending)"
+msgstr "Adresă expeditor respinsă - domeniu neverificat (DMARC în așteptare)"
+
+msgid "Recipient address rejected - domain not verified (DMARC pending)"
+msgstr "Adresă destinatar respinsă - domeniu neverificat (DMARC în așteptare)"
+
+msgid "DKIM verification pending - temporary failure"
+msgstr "Verificare DKIM în așteptare - eșec temporar"
+
+msgid "SPF verification pending - temporary failure"
+msgstr "Verificare SPF în așteptare - eșec temporar"
+
+msgid "DMARC verification pending - temporary failure"
+msgstr "Verificare DMARC în așteptare - eșec temporar"
+
+msgid "DNSBL lookup temporary failure"
+msgstr "Eșec temporar căutare DNSBL"
+
+msgid "RHSBL lookup temporary failure"
+msgstr "Eșec temporar căutare RHSBL"
+
+msgid "URI DNSBL lookup temporary failure"
+msgstr "Eșec temporar căutare URI DNSBL"
+
+msgid "Temporary authentication failure (Dovecot)"
+msgstr "Eșec temporar de autentificare (Dovecot)"
+
+msgid "Temporary authorization failure (Sendmail)"
+msgstr "Eșec temporar de autorizare (Sendmail)"
+
+msgid "Rate limit exceeded per sender (Exim)"
+msgstr "Limită rată depășită per expeditor (Exim)"
+
+msgid "Rate limit exceeded per recipient (Exim)"
+msgstr "Limită rată depășită per destinatar (Exim)"
+
+msgid "Rate limit exceeded per domain (Exim)"
+msgstr "Limită rată depășită per domeniu (Exim)"
+
+msgid "Rate limit exceeded per IP (Exim)"
+msgstr "Limită rată depășită per IP (Exim)"
+
+msgid "Message queued for later delivery (Postfix)"
+msgstr "Mesaj pus în coadă pentru livrare ulterioară (Postfix)"
+
+msgid "Delivery delayed due to policy (Exchange)"
+msgstr "Livrare întârziată din cauza politicii (Exchange)"
+
+msgid "Temporary failure in content filter"
+msgstr "Eșec temporar în filtrul de conținut"
+
+msgid "Temporary failure in antivirus scanner"
+msgstr "Eșec temporar în scanerul antivirus"
+
+msgid "Temporary failure in spam filter"
+msgstr "Eșec temporar în filtrul de spam"
+
+msgid "Temporary failure in milter (Postfix)"
+msgstr "Eșec temporar în milter (Postfix)"
+
+msgid "Greylisting - try again later"
+msgstr "Greylisting - încercați din nou mai târziu"
+
+msgid "DDoS protection active - try again later"
+msgstr "Protecție DDoS activă - încercați din nou mai târziu"
+
+msgid "SMTP policy violation - temporary"
+msgstr "Încălcare politică SMTP - temporar"
+
+msgid "Temporary error in RCPT TO processing"
+msgstr "Eroare temporară în procesarea RCPT TO"
+
+msgid "Temporary error in MAIL FROM processing"
+msgstr "Eroare temporară în procesarea MAIL FROM"
+
+msgid "Temporary error in EHLO/HELO processing"
+msgstr "Eroare temporară în procesarea EHLO/HELO"
+
+msgid "Temporary error in DATA processing"
+msgstr "Eroare temporară în procesarea DATA"
+
+msgid "Temporary error - service busy, try again later"
+msgstr "Eroare temporară - serviciu ocupat, încercați din nou mai târziu"
+
+msgid "Syntax error - command unrecognized or too long"
+msgstr "Eroare de sintaxă - comandă nerecunoscută sau prea lungă"
+
+msgid "Syntax error in parameters or arguments"
+msgstr "Eroare de sintaxă în parametri sau argumente"
+
+msgid "Command not implemented"
+msgstr "Comandă neimplementată"
+
+msgid "Bad sequence of commands"
+msgstr "Secvență greșită de comenzi"
+
+msgid "Command parameter not implemented"
+msgstr "Parametru comandă neimplementat"
+
+msgid "Version not supported (ESMTP)"
+msgstr "Versiune neacceptată (ESMTP)"
+
+msgid "Mailbox path invalid (LMTP)"
+msgstr "Cale cutie poștală invalidă (LMTP)"
+
+msgid "Too many commands in this session (Postfix)"
+msgstr "Prea multe comenzi în această sesiune (Postfix)"
+
+msgid "Recipient limit exceeded (Postfix)"
+msgstr "Limită destinatari depășită (Postfix)"
+
+msgid "Sender limit exceeded (Postfix)"
+msgstr "Limită expeditori depășită (Postfix)"
+
+msgid "Domain limit exceeded (Postfix)"
+msgstr "Limită domenii depășită (Postfix)"
+
+msgid "Mailbox does not exist (Exchange)"
+msgstr "Cutia poștală nu există (Exchange)"
+
+msgid "DNS failure - permanent"
+msgstr "Eșec DNS - permanent"
+
+msgid "Address type not supported (Postfix)"
+msgstr "Tip adresă neacceptat (Postfix)"
+
+msgid "Unable to open mailbox (Postfix)"
+msgstr "Nu se poate deschide cutia poștală (Postfix)"
+
+msgid "Mailbox locked - permanent"
+msgstr "Cutie poștală blocată - permanent"
+
+msgid "Message rejected due to policy (Exchange)"
+msgstr "Mesaj respins din cauza politicii (Exchange)"
+
+msgid "Content rejected - permanent"
+msgstr "Conținut respins - permanent"
+
+msgid "Attachment type not allowed"
+msgstr "Tip atașament nepermis"
+
+msgid "Message encoding not supported"
+msgstr "Codificare mesaj neacceptată"
+
+msgid "Sender domain does not exist - permanent"
+msgstr "Domeniul expeditorului nu există - permanent"
+
+msgid "Domain does not accept mail or is closing"
+msgstr "Domeniul nu acceptă e-mailuri sau se închide"
+
+msgid "Recipient domain does not exist - permanent"
+msgstr "Domeniul destinatarului nu există - permanent"
+
+msgid "Mailbox quota exceeded - permanent"
+msgstr "Cotă cutie poștală depășită - permanent"
+
+msgid "Message size exceeds limit - permanent"
+msgstr "Dimensiunea mesajului depășește limita - permanent"
+
+msgid "Authentication required (Sendmail)"
+msgstr "Autentificare necesară (Sendmail)"
+
+msgid "Authentication failed (Sendmail)"
+msgstr "Autentificare eșuată (Sendmail)"
+
+msgid "Authentication mechanism not supported"
+msgstr "Mecanism de autentificare neacceptat"
+
+msgid "Authentication credentials invalid"
+msgstr "Date de autentificare invalide"
+
+msgid "Authentication account expired"
+msgstr "Cont de autentificare expirat"
+
+msgid "Access denied - authentication required"
+msgstr "Acces respins - autentificare necesară"
+
+msgid "Access denied (Sendmailism)"
+msgstr "Acces respins (Sendmail)"
+
+msgid "Access denied - not authenticated"
+msgstr "Acces respins - neautentificat"
+
+msgid "Access denied - account locked"
+msgstr "Acces respins - cont blocat"
+
+msgid "Access denied - account disabled"
+msgstr "Acces respins - cont dezactivat"
+
+msgid "Authentication failed"
+msgstr "Autentificare eșuată"
+
+msgid "Authentication required for relay (Postfix)"
+msgstr "Autentificare necesară pentru releu (Postfix)"
+
+msgid "Authentication failed for relay (Postfix)"
+msgstr "Autentificare pentru releu eșuată (Postfix)"
+
+msgid "Encryption required (STARTTLS)"
+msgstr "Criptare necesară (STARTTLS)"
+
+msgid "TLS required for this recipient"
+msgstr "TLS necesar pentru acest destinatar"
+
+msgid "Encryption strength insufficient"
+msgstr "Putere de criptare insuficientă"
+
+msgid "Certificate validation failed"
+msgstr "Validare certificat eșuată"
+
+msgid "Invalid TLS certificate"
+msgstr "Certificat TLS invalid"
+
+msgid "TLS protocol version not supported"
+msgstr "Versiune protocol TLS neacceptată"
+
+msgid "Cipher suite not supported"
+msgstr "Set de cifruri neacceptat"
+
+msgid "Access denied - no valid recipient"
+msgstr "Acces respins - niciun destinatar valid"
+
+msgid "Access denied - no valid sender"
+msgstr "Acces respins - niciun expeditor valid"
+
+msgid "Access denied - domain not allowed"
+msgstr "Acces respins - domeniu nepermis"
+
+msgid "Access denied - IP address blocked (permanent)"
+msgstr "Acces respins - adresă IP blocată (permanent)"
+
+msgid "Access denied - sender domain blacklisted"
+msgstr "Acces respins - domeniul expeditorului pe lista neagră"
+
+msgid "Mailbox unavailable - requested action not taken"
+msgstr "Cutie poștală indisponibilă - acțiunea solicitată nu a fost efectuată"
+
+msgid "User not local - please try forwarding address"
+msgstr "Utilizatorul nu este local - vă rugăm să încercați adresa de redirecționare"
+
+msgid "Requested action aborted - exceeded storage allocation"
+msgstr "Acțiunea solicitată a fost întreruptă - alocare de stocare depășită"
+
+msgid "Mailbox name not allowed"
+msgstr "Nume cutie poștală nepermis"
+
+msgid "Requested action rejected - access denied"
+msgstr "Acțiunea solicitată respinsă - acces respins"
+
+msgid "MAIL FROM/RCPT TO parameters not recognized"
+msgstr "Parametri MAIL FROM/RCPT TO nerecunoscuți"
+
+msgid "Domain not allowed to send (DMARC reject)"
+msgstr "Domeniul nu are permisiunea de a trimite (respingere DMARC)"
+
+msgid "Too many duplicate messages - permanent"
+msgstr "Prea multe mesaje duplicate - permanent"
+
+msgid "Sender address rejected - domain not in SPF"
+msgstr "Adresă expeditor respinsă - domeniul nu este în SPF"
+
+msgid "Sender address rejected - DKIM verification failed"
+msgstr "Adresă expeditor respinsă - verificare DKIM eșuată"
+
+msgid "Sender address rejected - DMARC policy reject"
+msgstr "Adresă expeditor respinsă - politică DMARC respinge"
+
+msgid "Recipient address rejected - DMARC policy reject"
+msgstr "Adresă destinatar respinsă - politică DMARC respinge"
+
+msgid "Message rejected due to spam content"
+msgstr "Mesaj respins din cauza conținutului spam"
+
+msgid "Message rejected due to virus detected"
+msgstr "Mesaj respins din cauza detectării unui virus"
+
+msgid "Message rejected due to malicious content"
+msgstr "Mesaj respins din cauza conținutului malițios"
+
+msgid "Message rejected due to phishing detection"
+msgstr "Mesaj respins din cauza detectării unei tentative de phishing"
+
+msgid "Message rejected due to malware detection"
+msgstr "Mesaj respins din cauza detectării unui malware"
+
+msgid "Message rejected due to policy - permanent"
+msgstr "Mesaj respins din cauza politicii - permanent"
+
+msgid "Message rejected due to content filtering"
+msgstr "Mesaj respins din cauza filtrării conținutului"
+
+msgid "Message rejected due to reputation"
+msgstr "Mesaj respins din cauza reputației"
+
+msgid "Access denied - access_map violation"
+msgstr "Acces respins - încălcare access_map"
+
+msgid "Access denied - SMTP client listed in RBL"
+msgstr "Acces respins - client SMTP listat în RBL"
+
+msgid "Access denied - relay not authorized"
+msgstr "Acces respins - releu neautorizat"
+
+msgid "Access denied - unknown SMTP client hostname"
+msgstr "Acces respins - nume gazdă client SMTP necunoscut"
+
+msgid "Access denied - bad syntax for client HELO hostname"
+msgstr "Acces respins - sintaxă incorectă pentru numele gazdă HELO al clientului"
+
+msgid "Access denied - SMTP client hostname rejected"
+msgstr "Acces respins - numele gazdă al clientului SMTP respins"
+
+msgid "Access denied - unknown domain for sender or recipient"
+msgstr "Acces respins - domeniu necunoscut pentru expeditor sau destinatar"
+
+msgid "Access denied - unknown client HELO hostname"
+msgstr "Acces respins - nume gazdă HELO client necunoscut"
+
+msgid "Access denied - invalid domain (not FQDN)"
+msgstr "Acces respins - domeniu invalid (nu este FQDN)"
+
+msgid "Access denied - domain not qualified"
+msgstr "Acces respins - domeniu necalificat"
+
+msgid "Access denied - mail server misconfigured"
+msgstr "Acces respins - server de e-mail configurat greșit"
+
+msgid "Access denied - open relay not allowed"
+msgstr "Acces respins - releu deschis nepermis"
+
+msgid "Access denied - proxy not allowed"
+msgstr "Acces respins - proxy nepermis"
+
+msgid "Access denied - dynamic IP not allowed"
+msgstr "Acces respins - IP dinamic nepermis"
+
+msgid "Access denied - residential IP not allowed"
+msgstr "Acces respins - IP rezidențial nepermis"
+
+msgid "Access denied - VPN/Tor detected"
+msgstr "Acces respins - VPN/Tor detectat"
+
+msgid "Access denied - Spamhaus DROP listed"
+msgstr "Acces respins - listat în Spamhaus DROP"
+
+msgid "Access denied - URL listed in URIBL"
+msgstr "Acces respins - URL listat în URIBL"
+
+msgid "Access denied - domain in RHSBL"
+msgstr "Acces respins - domeniu în RHSBL"
+
+msgid "Access denied - IP in DNSWL (policy)"
+msgstr "Acces respins - IP în DNSWL (politică)"
+
+msgid "Delivery failed - mailbox not found"
+msgstr "Livrare eșuată - cutie poștală negăsită"
+
+msgid "Delivery failed - recipient not local"
+msgstr "Livrare eșuată - destinatarul nu este local"
+
+msgid "Delivery failed - recipient rejected"
+msgstr "Livrare eșuată - destinatar respins"
+
+msgid "Delivery failed - sender rejected"
+msgstr "Livrare eșuată - expeditor respins"
+
+msgid "Delivery failed - relay rejected"
+msgstr "Livrare eșuată - releu respins"
+
+msgid "Delivery failed - DNS permanent error"
+msgstr "Livrare eșuată - eroare permanentă DNS"
+
+msgid "Delivery failed - MX permanent error"
+msgstr "Livrare eșuată - eroare permanentă MX"
+
+msgid "Delivery failed - A record permanent error"
+msgstr "Livrare eșuată - eroare permanentă înregistrare A"
+
+msgid "Delivery failed - PTR record permanent error"
+msgstr "Livrare eșuată - eroare permanentă înregistrare PTR"
+
+msgid "Delivery failed - policy permanent error"
+msgstr "Livrare eșuată - eroare permanentă de politică"
+
+msgid "DSN: Success - delivery status notification"
+msgstr "DSN: Succes - notificare stare livrare"
+
+msgid "DSN: Delivery delayed"
+msgstr "DSN: Livrare întârziată"
+
+msgid "DSN: Delivery failed - permanent"
+msgstr "DSN: Livrare eșuată - permanent"
+
+msgid "DSN: Delivery failed - temporary"
+msgstr "DSN: Livrare eșuată - temporar"
+
+msgid "DSN: Message expired"
+msgstr "DSN: Mesaj expirat"
+
+msgid "DSN: Message bounced"
+msgstr "DSN: Mesaj returnat"
+
+msgid "DSN: Message discarded"
+msgstr "DSN: Mesaj eliminat"
+
+msgid "DSN: Message filtered"
+msgstr "DSN: Mesaj filtrat"
+
+msgid "DSN: Message quarantined"
+msgstr "DSN: Mesaj în carantină"
+
+msgid "DSN: Message held for review"
+msgstr "DSN: Mesaj reținut pentru revizuire"
+
+msgid "MTA-STS policy required"
+msgstr "Politică MTA-STS necesară"
+
+msgid "MTA-STS policy validation failed"
+msgstr "Validare politică MTA-STS eșuată"
+
+msgid "TLS reporting required"
+msgstr "Raportare TLS necesară"
+
+msgid "TLS report requested"
+msgstr "Raport TLS solicitat"
+
+msgid "SMTP MTA Strict Transport Security active"
+msgstr "Securitate strictă de transport MTA SMTP activă"
+
+msgid "DANE validation required"
+msgstr "Validare DANE necesară"
+
+msgid "DANE validation failed"
+msgstr "Validare DANE eșuată"
+
+msgid "TLSA record missing"
+msgstr "Înregistrare TLSA lipsă"
+
+msgid "Certificate name mismatch"
+msgstr "Nume certificat nepotrivit"
+
+msgid "Certificate expired"
+msgstr "Certificat expirat"
+
+msgid "AUTH LOGIN required"
+msgstr "AUTH LOGIN necesar"
+
+msgid "AUTH PLAIN required"
+msgstr "AUTH PLAIN necesar"
+
+msgid "AUTH CRAM-MD5 required"
+msgstr "AUTH CRAM-MD5 necesar"
+
+msgid "AUTH DIGEST-MD5 required"
+msgstr "AUTH DIGEST-MD5 necesar"
+
+msgid "AUTH GSSAPI required"
+msgstr "AUTH GSSAPI necesar"
+
+msgid "AUTH NTLM required"
+msgstr "AUTH NTLM necesar"
+
+msgid "AUTH SCRAM required"
+msgstr "AUTH SCRAM necesar"
+
+msgid "AUTH OAUTHBEARER required"
+msgstr "AUTH OAUTHBEARER necesar"
+
+msgid "AUTH XOAUTH2 required"
+msgstr "AUTH XOAUTH2 necesar"
+
+msgid "Exchange: Mailbox database error"
+msgstr "Exchange: Eroare bază date cutie poștală"
+
+msgid "Exchange: Store driver error"
+msgstr "Exchange: Eroare driver stocare"
+
+msgid "Exchange: Transport agent error"
+msgstr "Exchange: Eroare agent transport"
+
+msgid "Exchange: Content conversion error"
+msgstr "Exchange: Eroare conversie conținut"
+
+msgid "Exchange: Routing error"
+msgstr "Exchange: Eroare rutare"
+
+msgid "Exchange: Mail flow stalled"
+msgstr "Exchange: Flux de e-mail blocat"
+
+msgid "Exchange: Shadow redundancy error"
+msgstr "Exchange: Eroare redundanță umbră"
+
+msgid "Exchange: Safety net error"
+msgstr "Exchange: Eroare plasă de siguranță"
+
+msgid "Exchange: Queue database error"
+msgstr "Exchange: Eroare bază date coadă"
+
+msgid "Exchange: Message throttled"
+msgstr "Exchange: Mesaj limitat"
+
+msgid "Postfix: Bounce queue error"
+msgstr "Postfix: Eroare coadă de retur"
+
+msgid "Postfix: Deferred queue error"
+msgstr "Postfix: Eroare coadă amânată"
+
+msgid "Postfix: Hold queue error"
+msgstr "Postfix: Eroare coadă de așteptare"
+
+msgid "Postfix: Incoming queue error"
+msgstr "Postfix: Eroare coadă de intrare"
+
+msgid "Postfix: Active queue error"
+msgstr "Postfix: Eroare coadă activă"
+
+msgid "Postfix: Corrupted queue file"
+msgstr "Postfix: Fișier coadă corupt"
+
+msgid "Sendmail: Queue runner error"
+msgstr "Sendmail: Eroare rulare coadă"
+
+msgid "Sendmail: Alias database error"
+msgstr "Sendmail: Eroare bază date alias"
+
+msgid "Sendmail: Virtuser table error"
+msgstr "Sendmail: Eroare tabel utilizatori virtuali"
+
+msgid "Sendmail: Mailer definition error"
+msgstr "Sendmail: Eroare definiție program de expediere"
+
+msgid "Exim: Router configuration error"
+msgstr "Exim: Eroare configurare router"
+
+msgid "Exim: Transport configuration error"
+msgstr "Exim: Eroare configurare transport"
+
+msgid "Exim: Director configuration error"
+msgstr "Exim: Eroare configurare director"
+
+msgid "Exim: Retry configuration error"
+msgstr "Exim: Eroare configurare reîncercare"
+
+msgid "Exim: Rewrite configuration error"
+msgstr "Exim: Eroare configurare rescriere"
+
+msgid "Exim: Authentication configuration error"
+msgstr "Exim: Eroare configurare autentificare"
+
+msgid "Exim: ACL configuration error"
+msgstr "Exim: Eroare configurare ACL"
+
+msgid "Exim: Local_scan configuration error"
+msgstr "Exim: Eroare configurare Local_scan"
+
+msgid "Exim: Lookup configuration error"
+msgstr "Exim: Eroare configurare căutare"
+
+msgid "Exim: Expansion configuration error"
+msgstr "Exim: Eroare configurare extindere"
+
+msgid "HTTP Protocol Versions"
+msgstr "Versiuni protocol HTTP"
+
+msgid "Protocol"
+msgstr "Protocol"
+
+msgid "Request %"
+msgstr "% cereri"
+
+msgid "Bandwidth %"
+msgstr "% lățime de bandă"
+
+msgid "Each request requires a new connection"
+msgstr "Fiecare cerere necesită o conexiune nouă"
+
+msgid "Multiple requests can reuse one connection"
+msgstr "Mai multe cereri pot reutiliza o singură conexiune"
+
+msgid "Multiple requests in parallel over one connection"
+msgstr "Mai multe cereri în paralel printr-o singură conexiune"
+
+msgid "Faster connection, better performance on poor networks"
+msgstr "Conexiune mai rapidă, performanță mai bună pe rețele slabe"
+
+msgid "No protocol data available"
+msgstr "Nu există date de protocol disponibile"
+
+msgid "of requests use HTTP/1.0"
+msgstr "dintre cereri folosesc HTTP/1.0"
+
+msgid "From access logs"
+msgstr "Din jurnalele de acces"
+
+msgid "No HTTP/2 requests detected"
+msgstr "Nu au fost detectate cereri HTTP/2"
+
+msgid "All requests are HTTP/1.0, no HTTP/2 requests"
+msgstr "Toate cererile sunt HTTP/1.0, nicio cerere HTTP/2"
+
+msgid "HTTP/3 not detected"
+msgstr "HTTP/3 nu a fost detectat"
+
+msgid "all requests do not include QUIC/HTTP/3 protocol requests"
+msgstr "toate cererile nu includ cereri de protocol QUIC/HTTP/3"
+
+msgid "Mail Authentication Statistics"
+msgstr "Statistici autentificare e-mail"
+
+msgid "Authentication"
+msgstr "Tip autentificare"
+
+msgid "Pass"
+msgstr "Reușit"
+
+msgid "Fail"
+msgstr "Eșuat"
+
+msgid "Softfail"
+msgstr "Eșuat ușor"
+
+msgid "Neutral"
+msgstr "Neutru"
+
+msgid "None"
+msgstr "Niciunul"
+
+msgid "Mail Queue Delay Statistics"
+msgstr "Statistici întârziere coadă e-mail"
+
+msgid "Delay Range"
+msgstr "Interval de întârziere"
+
+msgid "Count"
+msgstr "Număr"
+
+msgid "Percentage"
+msgstr "Procent"
+
+msgid "TLS Encryption Statistics"
+msgstr "Statistici criptare TLS"
+
+msgid "TLS Versions"
+msgstr "Versiuni TLS"
+
+msgid "Top Ciphers"
+msgstr "Cele mai utilizate cifruri"
+
+msgid "robot_hits_detail_both"
+msgstr "Total cereri: %s (pagini normale: %s, robots.txt: %s)"
+
+msgid "robot_hits_detail_only_robots"
+msgstr "Doar cereri robots.txt: %s, fără alte pagini"
+
+msgid "robot_hits_detail_normal"
+msgstr "Cereri de pagini normale: %s"
+
+# Ajutor și sfaturi
+msgid "Troubleshooting"
+msgstr "Depanare"
+
+msgid "Did you use the correct URL?"
+msgstr "Ați folosit URL-ul corect?"
+
+msgid "Example:"
+msgstr "Exemplu:"
+
+msgid "Did you use correct config parameter?"
+msgstr "Ați folosit parametrul de configurare corect?"
+
+msgid "Example: If your config file is awstats.mysite.conf, use -config=mysite"
+msgstr "Exemplu: Dacă fișierul dvs. de configurare este awstats.mysite.conf, utilizați -config=mysite"
+
+msgid "Did you create your config file 'awstats.$SiteConfig.conf'?"
+msgstr "Ați creat fișierul dvs. de configurare 'awstats.$SiteConfig.conf'?"
+
+msgid "If not, you can run \"awstats_configure.pl\" from command line, or create it manually."
+msgstr "Dacă nu, puteți rula „awstats_configure.pl” din linia de comandă sau îl puteți crea manual."
+
+msgid "Setup"
+msgstr "Configurare"
+
+msgid "file, web server or permissions may be wrong."
+msgstr "fișierul, serverul web sau permisiunile pot fi greșite."
+
+msgid "Check config file, permissions and AWStats documentation (in 'docs' directory)."
+msgstr "Verificați fișierul de configurare, permisiunile și documentația AWStats (în directorul „docs”)."
+
+msgid "Warning: Can't find language files for \"%s\". English will be used."
+msgstr "Avertisment: Nu se găsesc fișierele de limbă pentru „%s”. Se va folosi limba engleză."
+
+#------------------------------------------------------------------------------
+# Gestionare erori și semnale
+#------------------------------------------------------------------------------
+
+msgid "%s process (ID %s) interrupted by signal %s."
+msgstr "Procesul %s (ID %s) a fost întrerupt de semnalul %s."
+
+msgid "An AWStats update process seems to be already running for this config file. Try later. If this is not true, remove manually lock file"
+msgstr "Un proces de actualizare AWStats pare să ruleze deja pentru acest fișier de configurare. Încercați mai târziu. Dacă acest lucru nu este adevărat, eliminați manual fișierul de blocare"
+
+#------------------------------------------------------------------------------
+# Titluri statistice noi
+#------------------------------------------------------------------------------
+
+msgid "Report Overview"
+msgstr "Prezentare generală raport"
+
+msgid "Monthly Statistics"
+msgstr "Statistici lunare"
+
+msgid "Daily Statistics"
+msgstr "Statistici zilnice"
+
+msgid "Statistics by Day of Week"
+msgstr "Statistici pe zi a săptămânii"
+
+msgid "Hourly Page Views"
+msgstr "Afișări de pagini pe oră"
+
+msgid "Traffic Sources"
+msgstr "Surse de trafic"
+
+msgid "Other Sources"
+msgstr "Alte surse"
+
+msgid "tooltip_1"
+msgstr "Numărul de sesiuni ale vizitatorilor pe site. O nouă sesiune este numărată dacă un vizitator revine după mai mult de 30 de minute de inactivitate."
+
+msgid "tooltip_2"
+msgstr "Numărul de vizitatori diferiți care au vizitat site-ul dvs. în perioada selectată. Bazat pe adresa IP."
+
+msgid "tooltip_3"
+msgstr "Numărul de cereri considerate pagini (HTML, PHP, ASP etc.), excluzând imagini, CSS, JS."
+
+msgid "tooltip_4"
+msgstr "Numărul total de cereri către server, inclusiv pagini, imagini, CSS, JS și toate fișierele."
+
+msgid "tooltip_5"
+msgstr "Cantitatea totală de date transmise de server ca răspuns la cererile utilizatorilor."
+
+msgid "tooltip_13"
+msgstr "Statistici ale surselor de trafic de la motoarele de căutare. Arată ce motoare de căutare vă aduc trafic și ce termeni de căutare folosesc vizitatorii."
+
+msgid "tooltip_14"
+msgstr "Statistici ale surselor de trafic de la link-uri externe de pe alte site-uri web. Arată ce site-uri se leagă la dvs. și traficul pe care îl aduc."
+
+msgid "tooltip_15"
+msgstr "Termenii de căutare folosiți de vizitatori pentru a vă găsi prin motoarele de căutare. Cuvintele cheie sunt cuvinte individuale, expresiile cheie sunt combinații de cuvinte."
+
+msgid "tooltip_16"
+msgstr "Programe automatizate precum roboții motoarelor de căutare, roboții de antrenare AI, scanerele de vulnerabilități etc. Numerele dintre paranteze indică numărul de cereri de pagini normale și cererile robots.txt."
+
+msgid "tooltip_17"
+msgstr "Distribuția traficului pe 24 de ore. Vă arată când site-ul dvs. este cel mai vizitat, ajutând la înțelegerea orelor active ale utilizatorilor."
+
+msgid "tooltip_18"
+msgstr "Această coloană arată valorile medii zilnice/săptămânale pentru perioada de timp selectată, ajutând la înțelegerea tendinței generale."
+
+msgid "tooltip_19"
+msgstr "Faceți clic pe elementele din grafic pentru a vedea informații detaliate. Plasați mouse-ul peste elementele graficului pentru a vedea valorile."
+
+msgid "tooltip_20"
+msgstr "Date care nu pot fi clasificate în intervalele existente, de obicei din cauza unui format de date anormal sau lipsă."
+
+msgid "tooltip_21"
+msgstr "Înregistrări ale atacurilor cu viermi detectate. Viermele este un program malițios care se auto-replică, de obicei răspândindu-se prin vulnerabilități de rețea."
+
+#------------------------------------------------------------------------------
+# Afișare informații de ajutor - Ediția Comunității
+#------------------------------------------------------------------------------
+
+msgid "AWStats %s - Advanced Web Statistics"
+msgstr "AWStats %s - Statistici Web Avansate"
+
+msgid "Copyright (c) 2000-2025 Laurent Destailleur"
+msgstr "Drepturi de autor (c) 2000-2025 Laurent Destailleur"
+
+msgid "Copyright (c) 2026-latest Community Edition"
+msgstr "Drepturi de autor (c) 2026-cea mai recentă Ediția Comunității"
+
+msgid "AWStats comes with ABSOLUTELY NO WARRANTY. It's a free software distributed with a GNU General Public License (See LICENSE file for details)."
+msgstr "AWStats vine FĂRĂ NICIO GARANȚIE. Este un software liber distribuit cu o Licență Publică Generală GNU (Consultați fișierul LICENSE pentru detalii)."
+
+msgid "Syntax: %s -config=virtualhostname [options]"
+msgstr "Sintaxă: %s -config=nume_gazdă_virtuală [opțiuni]"
+
+msgid "This runs %s in command line to update statistics (-update option) of a web site, from the log file defined in AWStats config file, or build a HTML report (-output option)."
+msgstr "Aceasta rulează %s în linia de comandă pentru a actualiza statisticile (opțiunea -update) ale unui site web, din fișierul jurnal definit în fișierul de configurare AWStats, sau pentru a construi un raport HTML (opțiunea -output)."
+
+msgid "First, %s tries to read %s.virtualhostname.conf as the config file. If not found, %s tries to read %s.conf, and finally the full path passed to -config="
+msgstr "Mai întâi, %s încearcă să citească %s.nume_gazdă_virtuală.conf ca fișier de configurare. Dacă nu este găsit, %s încearcă să citească %s.conf și, în final, calea completă transmisă către -config="
+
+msgid "Note 1: Config files (*.conf) must be in /etc/awstats, /usr/local/etc/awstats, /etc or same directory than awstats.pl script file."
+msgstr "Nota 1: Fișierele de configurare (*.conf) trebuie să fie în /etc/awstats, /usr/local/etc/awstats, /etc sau același director ca fișierul script awstats.pl."
+
+msgid "Note 2: If AWSTATS_FORCE_CONFIG environment variable is defined, AWStats will use it as the 'config' value, whatever is the value on command line or URL."
+msgstr "Nota 2: Dacă variabila de mediu AWSTATS_FORCE_CONFIG este definită, AWStats o va folosi ca valoare „config”, indiferent de valoarea din linia de comandă sau URL."
+
+msgid "See AWStats documentation for all setup instructions."
+msgstr "Consultați documentația AWStats pentru toate instrucțiunile de configurare."
+
+msgid "Options to update statistics:"
+msgstr "Opțiuni pentru actualizarea statisticilor:"
+
+msgid "  -update        to update statistics (default)"
+msgstr "  -update        pentru a actualiza statisticile (implicit)"
+
+msgid "  -showsteps     to add benchmark information every %s lines processed"
+msgstr "  -showsteps     pentru a adăuga informații de referință la fiecare %s linii procesate"
+
+msgid "  -showcorrupted to add output for each corrupted lines found, with reason"
+msgstr "  -showcorrupted pentru a adăuga ieșire pentru fiecare linie coruptă găsită, cu motivul"
+
+msgid "  -showdropped   to add output for each dropped lines found, with reason"
+msgstr "  -showdropped   pentru a adăuga ieșire pentru fiecare linie eliminată găsită, cu motivul"
+
+msgid "  -showunknownorigin  to output referer when it can't be parsed"
+msgstr "  -showunknownorigin  pentru a afișa referer-ul atunci când nu poate fi analizat"
+
+msgid "  -showdirectorigin   to output log line when origin is a direct access"
+msgstr "  -showdirectorigin   pentru a afișa linia de jurnal atunci când originea este un acces direct"
+
+msgid "  -updatefor=n   to stop the update process after parsing n lines"
+msgstr "  -updatefor=n   pentru a opri procesul de actualizare după analizarea a n linii"
+
+msgid "  -LogFile=x     to change log to analyze whatever is 'LogFile' in config file"
+msgstr "  -LogFile=x     pentru a schimba jurnalul pentru a analiza orice este „LogFile” în fișierul de configurare"
+
+msgid "  Be care to process log files in chronological order when updating statistics."
+msgstr "  Aveți grijă să procesați fișierele jurnal în ordine cronologică atunci când actualizați statisticile."
+
+msgid "Options to show statistics:"
+msgstr "Opțiuni pentru afișarea statisticilor:"
+
+msgid "  -output      to output main HTML report (no update made except with -update)"
+msgstr "  -output      pentru a afișa raportul HTML principal (nu se face nicio actualizare, cu excepția cazului în care se utilizează -update)"
+
+msgid "  -output=x    to output other report pages where x is:"
+msgstr "  -output=x    pentru a afișa alte pagini de raport, unde x este:"
+
+msgid "build page of all domains/countries"
+msgstr "construiește pagina tuturor domeniilor/țărilor"
+
+msgid "build page of all hosts"
+msgstr "construiește pagina tuturor gazdelor"
+
+msgid "build page of last hits for hosts"
+msgstr "construiește pagina ultimelor accesări pentru gazde"
+
+msgid "build page of all unresolved IP"
+msgstr "construiește pagina tuturor adreselor IP nerezolvate"
+
+msgid "build page of all email senders (maillog)"
+msgstr "construiește pagina tuturor expeditorilor de e-mail (jurnal mail)"
+
+msgid "build page of last email senders (maillog)"
+msgstr "construiește pagina ultimilor expeditori de e-mail (jurnal mail)"
+
+msgid "build page of all email receivers (maillog)"
+msgstr "construiește pagina tuturor destinatarilor de e-mail (jurnal mail)"
+
+msgid "build page of last email receivers (maillog)"
+msgstr "construiește pagina ultimilor destinatari de e-mail (jurnal mail)"
+
+msgid "build page of all logins used"
+msgstr "construiește pagina tuturor autentificărilor utilizate"
+
+msgid "build page of last hits for logins"
+msgstr "construiește pagina ultimelor accesări pentru autentificări"
+
+msgid "build page of all robots/spider visits"
+msgstr "construiește pagina tuturor vizitelor roboților/''păianjenilor''"
+
+msgid "build page of last hits for robots"
+msgstr "construiește pagina ultimelor accesări pentru roboți"
+
+msgid "list most often viewed pages"
+msgstr "listează paginile cel mai des vizualizate"
+
+msgid "list most often viewed pages matching filter"
+msgstr "listează paginile cel mai des vizualizate care se potrivesc cu filtrul"
+
+msgid "list entry pages"
+msgstr "listează paginile de intrare"
+
+msgid "list entry pages matching filter"
+msgstr "listează paginile de intrare care se potrivesc cu filtrul"
+
+msgid "list exit pages"
+msgstr "listează paginile de ieșire"
+
+msgid "list exit pages matching filter"
+msgstr "listează paginile de ieșire care se potrivesc cu filtrul"
+
+msgid "build page with os detailed versions"
+msgstr "construiește pagina cu versiuni detaliate ale sistemului de operare"
+
+msgid "build page with browsers detailed versions"
+msgstr "construiește pagina cu versiuni detaliate ale browserelor"
+
+msgid "list 'User Agents' with unknown browser"
+msgstr "listează 'Agenții utilizator' cu browser necunoscut"
+
+msgid "list 'User Agents' with unknown OS"
+msgstr "listează 'Agenti utilizator' cu SO necunoscut"
+
+msgid "build page of all refering search engines"
+msgstr "construiește pagina tuturor motoarelor de căutare care referă"
+
+msgid "build page of all refering pages"
+msgstr "construiește pagina tuturor paginilor care referă"
+
+msgid "list all keyphrases used on search engines"
+msgstr "listează toate expresiile cheie utilizate pe motoarele de căutare"
+
+msgid "list all keywords used on search engines"
+msgstr "listează toate cuvintele cheie utilizate pe motoarele de căutare"
+
+msgid "list 'Referers' for 404 errors"
+msgstr "listează 'Refererii' pentru erorile 404"
+
+msgid "build page of all values for ExtraSection X"
+msgstr "construiește pagina tuturor valorilor pentru Secțiunea Suplimentară X"
+
+msgid "  -staticlinks           to have static links in HTML report page"
+msgstr "  -staticlinks           pentru a avea legături statice în pagina raportului HTML"
+
+msgid "  -staticlinksext=xxx    to have static links with .xxx extension instead of .html"
+msgstr "  -staticlinksext=xxx    pentru a avea legături statice cu extensia .xxx în loc de .html"
+
+msgid "  -lang=LL     to output a HTML report in language LL (en,de,es,fr,it,nl,zh-cn,...)"
+msgstr "  -lang=LL     pentru a afișa un raport HTML în limba LL (ro,en,de,fr,...)"
+
+msgid "  -month=MM    to output a HTML report for an old month MM"
+msgstr "  -month=MM    pentru a afișa un raport HTML pentru o lună veche MM"
+
+msgid "  -year=YYYY   to output a HTML report for an old year YYYY"
+msgstr "  -year=YYYY   pentru a afișa un raport HTML pentru un an vechi YYYY"
+
+msgid "  The 'date' options doesn't allow you to process old log file. They only allow you to see a past report for a chosen month/year period instead of current month/year."
+msgstr "  Opțiunile „date” nu vă permit să procesați fișierul jurnal vechi. Ele vă permit doar să vedeți un raport trecut pentru o perioadă lună/an aleasă în locul lunii/anului curent."
+
+msgid "Other options:"
+msgstr "Alte opțiuni:"
+
+msgid "  -debug=X     to add debug informations lesser than level X (speed reduced)"
+msgstr "  -debug=X     pentru a adăuga informații de depanare mai mici decât nivelul X (viteză redusă)"
+
+msgid "  -version     show AWStats version"
+msgstr "  -version, -v     arată versiunea AWStats"
+
+msgid "Now supports/detects:"
+msgstr "Acceptă/detectează acum:"
+
+msgid "  Web/Ftp/Mail/streaming server log analyzis (and load balanced log files)"
+msgstr "  Analiza jurnalelor serverului Web/Ftp/Mail/streaming (și a fișierelor jurnal echilibrate de sarcină)"
+
+msgid "  Reverse DNS lookup (IPv4 and IPv6) and GeoIP lookup"
+msgstr "  Căutare DNS inversă (IPv4 și IPv6) și căutare GeoIP"
+
+msgid "  Number of visits, number of unique visitors"
+msgstr "  Numărul de vizite, numărul de vizitatori unici"
+
+msgid "  Visits duration and list of last visits"
+msgstr "  Durata vizitelor și lista ultimelor vizite"
+
+msgid "  Authenticated users"
+msgstr "  Utilizatori autentificați"
+
+msgid "  Days of week and rush hours"
+msgstr "  Zilele săptămânii și orele de vârf"
+
+msgid "  Hosts list and unresolved IP addresses list"
+msgstr "  Lista gazdelor și lista adreselor IP nerezolvate"
+
+msgid "  Most viewed, entry and exit pages"
+msgstr "  Cele mai vizualizate pagini, pagini de intrare și ieșire"
+
+msgid "  Files type and Web compression (mod_gzip, mod_deflate stats)"
+msgstr "  Tipul fișierelor și compresia Web (statistici mod_gzip, mod_deflate)"
+
+msgid "  Configured Database Statistics"
+msgstr "  Statistici ale bazei de date configurate"
+
+msgid "  %s domains/countries"
+msgstr "  %s domenii/țări"
+
+msgid "  %s robots"
+msgstr "  %s roboți"
+
+msgid "  %s worm's families"
+msgstr "  %s familii de viermi"
+
+msgid "  %s operating systems"
+msgstr "  %s sisteme de operare"
+
+msgid "  %s browsers (%s with phone browsers database)"
+msgstr "  %s browsere (%s cu baza de date a browserelor de telefon)"
+
+msgid "  %s search engines (and keyphrases/keywords used from them)"
+msgstr "  %s motoare de căutare (și expresii cheie/cuvinte cheie utilizate de pe acestea)"
+
+msgid "  All HTTP errors with last referrer"
+msgstr "  Toate erorile HTTP cu ultimul referer"
+
+msgid "  Report by day/month/year"
+msgstr "  Raport pe zi/lună/an"
+
+msgid "  Dynamic or static HTML or XHTML reports, static PDF reports"
+msgstr "  Rapoarte HTML sau XHTML dinamice sau statice, rapoarte PDF statice"
+
+msgid "  Indexed text or XML monthly database"
+msgstr "  Bază de date lunară text indexat sau XML"
+
+msgid "  And a lot of other advanced features and options..."
+msgstr "  Și o mulțime de alte caracteristici și opțiuni avansate..."
+
+msgid "  New versions and FAQ at http://www.awstats.org"
+msgstr "  Versiuni noi și Întrebări frecvente la https://github.com/hestiacn/vstats/issues"

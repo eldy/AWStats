@@ -1,162 +1,1682 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html><head>
-<meta name="keywords" content="awstats, awstat, log, logs, file, analyzer, analysis, analytics, statistics, web, server, reporting, reports, geoip, index, faq, doc, documentation, docs, setup, manual, instructions, questions, support, help, problems">
-<meta name="robots" content="index,follow">
-<meta name="author" content="Laurent Destailleur">
-<meta name="description" content="AWStats Log Analyzer official documentation pages (setup, FAQ, demo...)">
-<meta name="title" content="AWStats Log Analyzer Documentation">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>AWStats logfile analyzer Documentation</title>
-<link rel="stylesheet" href="styles.css" type="text/css">
-<link href="https://plus.google.com/+LaurentDestailleur-Open-Source-Expert" rel="publisher" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWStats 8.1 · 日志分析器</title>
+    <meta name="keywords" content="awstats, log analyzer, web analytics, documentation, multilingual, i18n">
+    <meta name="description" content="AWStats logfile analyzer 官方文档，支持中英文切换。安装、配置、插件、FAQ、升级及更多资源。">
+    <meta name="author" content="Laurent Destailleur (多语言重构)">
+    <meta name="robots" content="index,follow">
+
+    <style>
+    * { 
+        margin: 0; 
+        padding: 0; 
+        box-sizing: border-box; 
+    }
+
+    /* ===== 主题变量 ===== */
+    :root {
+        --bg-page: #f8fafc; 
+        --surface: #ffffff; 
+        --surface-secondary: #f1f5f9;
+        --text-primary: #0f172a; 
+        --text-secondary: #475569; 
+        --accent: #4f46e5;
+        --accent-light: #818cf8; 
+        --accent-soft: #eef2ff; 
+        --border: #e2e8f0;
+        --card-shadow: 0 20px 25px -5px rgba(0,0,0,0.05), 0 10px 10px -5px rgba(0,0,0,0.02);
+        --header-bg: linear-gradient(135deg, #4f46e5 0%, #4f46e5 100%);
+        --footer-bg: #eef2ff; 
+        --link-color: #4f46e5; 
+        --link-visited: #4f46e5;
+        --code-bg: #f1f5f9; 
+        --success: #10b981; 
+        --warning: #f59e0b; 
+        --danger: #ef4444;
+        --star-color: #fbbf24;
+        --timeline-left-width: 180px;
+        --timeline-line: var(--accent);
+        --timeline-dot-size: 16px;
+        --timeline-dot: var(--accent);
+        --era-concept: #f59e0b;
+        --era-foundation: #10b981;
+        --era-logic: #8b5cf6;
+        --era-preopen: #ec4899;
+    }
+
+    /* 深色模式 */
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --bg-page: #0f172a; 
+            --surface: #1e293b; 
+            --surface-secondary: #334155;
+            --text-primary: #f1f5f9; 
+            --text-secondary: #cbd5e1; 
+            --accent: #818cf8;
+            --accent-light: #a5b4fc; 
+            --accent-soft: #2d3a5e; 
+            --border: #475569;
+            --card-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
+            --header-bg: linear-gradient(135deg, #4f46e5 0%, #4f46e5 100%);
+            --footer-bg: #1e293b; 
+            --link-color: #a5b4fc; 
+            --link-visited: #a5b4fc;
+            --code-bg: #334155; 
+            --success: #34d399; 
+            --warning: #fbbf24; 
+            --danger: #f87171;
+            --timeline-line: var(--accent);
+            --timeline-dot: var(--accent);
+        }
+    }
+
+    /* 强制浅色模式 */
+    .force-light,
+    .force-light :root {
+        --bg-page: #f8fafc; 
+        --surface: #ffffff; 
+        --surface-secondary: #f1f5f9;
+        --text-primary: #0f172a; 
+        --text-secondary: #475569; 
+        --accent: #4f46e5;
+        --accent-light: #818cf8; 
+        --accent-soft: #eef2ff; 
+        --border: #e2e8f0;
+        --card-shadow: 0 20px 25px -5px rgba(0,0,0,0.05), 0 10px 10px -5px rgba(0,0,0,0.02);
+        --header-bg: linear-gradient(135deg, #4f46e5 0%, #4f46e5 100%);
+        --footer-bg: #eef2ff; 
+        --link-color: #4f46e5; 
+        --link-visited: #4f46e5;
+        --code-bg: #f1f5f9;
+        --success: #10b981; 
+        --warning: #f59e0b; 
+        --danger: #ef4444;
+    }
+
+    /* 强制深色模式 */
+    .force-dark,
+    .force-dark :root {
+        --bg-page: #0f172a; 
+        --surface: #1e293b; 
+        --surface-secondary: #334155;
+        --text-primary: #f1f5f9; 
+        --text-secondary: #cbd5e1; 
+        --accent: #818cf8;
+        --accent-light: #a5b4fc; 
+        --accent-soft: #2d3a5e; 
+        --border: #475569;
+        --card-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
+        --header-bg: linear-gradient(135deg, #4f46e5 0%, #4f46e5 100%);
+        --footer-bg: #1e293b; 
+        --link-color: #a5b4fc; 
+        --link-visited: #a5b4fc;
+        --code-bg: #334155; 
+        --success: #34d399; 
+        --warning: #fbbf24; 
+        --danger: #f87171;
+    }
+
+    /* ===== 基础样式 ===== */
+    body {
+        background-color: var(--bg-page); 
+        color: var(--text-primary);
+        font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        line-height: 1.6; 
+        margin: 0; 
+        padding: 0;
+        transition: background-color 0.2s ease, color 0.2s ease;
+        display: flex; 
+        flex-direction: column; 
+        min-height: 100vh;
+    }
+
+    .container { 
+        max-width: 1300px; 
+        margin: 0 auto; 
+        padding: 0 28px; 
+        width: 100%; 
+    }
+
+    /* ===== 链接全局样式 ===== */
+    a, a:link, a:visited {
+        text-decoration: none;
+        color: var(--link-color);
+        transition: color 0.2s ease;
+    }
+
+    a:hover {
+        color: var(--accent);
+    }
+
+    /* ===== 导航栏基础 ===== */
+    .nav-bar {
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
+        padding: 12px 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(12px);
+        background-color: rgba(var(--surface-rgb), 0.8);
+    }
+
+    /* ===== 桌面端样式 (≥701px) ===== */
+    @media (min-width: 701px) {
+        .nav-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .nav-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-shrink: 0;
+        }
+        
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .nav-home {
+            font-weight: 700;
+            font-size: 1.3rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+        
+        .dropdown-menu {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-wrap: nowrap;
+            margin-top: 0;
+        }
+        
+        .dropdown-item {
+            position: relative;
+            flex-shrink: 0;
+        }
+        
+        .dropdown-title {
+            padding: 6px 12px;
+            background: var(--surface-secondary);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+            user-select: none;
+        }
+        
+        .dropdown-title:hover {
+            background: var(--accent-soft);
+            color: var(--accent);
+            border-color: var(--accent-light);
+        }
+        
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 220px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 12px;
+            box-shadow: var(--card-shadow);
+            display: none;
+            z-index: 1000;
+            margin-top: 5px;
+        }
+        
+        .mobile-menu-toggle {
+            display: none;
+        }
+    }
+
+    /* ===== 移动端样式 (≤700px) ===== */
+    @media (max-width: 700px) {
+        .nav-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .nav-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            gap: 10px;
+        }
+        
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+        }
+        
+        .nav-home {
+            font-weight: 700;
+            font-size: 1.1rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 150px;
+        }
+        
+        /* 汉堡菜单按钮 */
+        .mobile-menu-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--surface-secondary);
+            border: 1px solid var(--border);
+            border-radius: 40px;
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-left: auto;
+        }
+        
+        .mobile-menu-toggle:hover {
+            background: var(--accent-soft);
+            color: var(--accent);
+        }
+        
+        /* 导航菜单 - 默认隐藏 */
+        .dropdown-menu {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+            gap: 8px;
+            margin-top: 5px;
+        }
+        
+        /* 菜单展开时显示 */
+        .dropdown-menu.mobile-active {
+            display: flex;
+        }
+        
+        .dropdown-item {
+            width: 100%;
+            position: relative;
+        }
+        
+        .dropdown-title {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--surface-secondary);
+            border: 1px solid var(--border);
+            border-radius: 40px;
+            font-weight: 500;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            font-size: 0.95rem;
+        }
+        
+        .dropdown-title:hover {
+            background: var(--accent-soft);
+            color: var(--accent);
+        }
+        
+        .dropdown-title::after {
+            content: "▼";
+            font-size: 0.7rem;
+            transition: transform 0.2s;
+        }
+        
+        .dropdown-item.active .dropdown-title::after {
+            transform: rotate(180deg);
+        }
+        
+        .dropdown-content {
+            position: static;
+            width: 100%;
+            margin-top: 5px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 8px;
+            box-shadow: none;
+            display: none;
+        }
+        
+        .dropdown-content a {
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            border-radius: 30px;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+            background: var(--surface-secondary);
+            border: 1px solid var(--border);
+            white-space: nowrap;
+            margin: 2px 0;
+        }
+        
+        .dropdown-content a:hover {
+            background: var(--accent-soft);
+            color: var(--accent);
+        }
+        
+        .dropdown-content a.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+    }
+
+    /* ===== 下拉菜单通用样式 ===== */
+    .dropdown-item.active .dropdown-content {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        width: auto;
+        min-width: auto;
+    }
+
+    .dropdown-content a {
+        color: var(--text-secondary);
+        font-weight: 500;
+        padding: 8px 12px;
+        border-radius: 30px;
+        transition: all 0.2s;
+        font-size: 0.95rem;
+        background: var(--surface-secondary);
+        border: 1px solid var(--border);
+        white-space: nowrap;
+    }
+
+    .dropdown-content a:hover {
+        background: var(--accent-soft);
+        color: var(--accent);
+    }
+
+    .dropdown-content a.active {
+        background: var(--accent);
+        color: white;
+        border-color: var(--accent);
+    }
+
+    /* ===== 头部样式 ===== */
+    .header {
+        background: var(--header-bg); 
+        color: white; 
+        border-radius: 0 0 40px 40px;
+        padding: 24px 0 32px; 
+        box-shadow: var(--card-shadow); 
+        margin-bottom: 30px;
+    }
+
+    .header-row {
+        display: flex; 
+        align-items: center; 
+        justify-content: space-between;
+        flex-wrap: wrap; 
+        gap: 20px;
+    }
+
+    .logo-area { 
+        display: flex; 
+        align-items: center; 
+        gap: 16px; 
+    }
+
+    .logo-area img { 
+        height: 60px; 
+        width: auto; 
+    }
+
+    .site-title {
+        font-size: 1.5rem; 
+        font-weight: 700; 
+        background: rgba(255,255,255,0.1);
+        padding: 8px 24px; 
+        border-radius: 60px; 
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255,255,255,0.2);
+        color: white;
+        text-decoration: none;
+    }
+
+    .header-center {
+        flex: 1; 
+        text-align: center; 
+        font-weight: 500; 
+        font-size: 1.5rem;
+        background: rgba(0,0,0,0.1); 
+        padding: 8px 24px; 
+        border-radius: 60px;
+        backdrop-filter: blur(8px); 
+        border: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .header-right { 
+        display: flex; 
+        gap: 12px; 
+        align-items: center; 
+    }
+
+    /* ===== 自定义语言切换 ===== */
+    .custom-select {
+        position: relative;
+        background: rgba(255,255,255,0.15);
+        border: 1px solid rgba(255,255,255,0.3);
+        border-radius: 40px;
+        padding: 6px 16px;
+        color: white;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        backdrop-filter: blur(8px);
+        cursor: pointer;
+        min-width: 100px;
+    }
+
+    .custom-select:hover {
+        background: rgba(255,255,255,0.25);
+        border-color: rgba(255,255,255,0.5);
+    }
+
+    .select-selected {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .select-selected::after {
+        content: "▼";
+        font-size: 0.7rem;
+        margin-left: 8px;
+        opacity: 0.8;
+        transition: transform 0.2s;
+    }
+
+    .custom-select.active .select-selected::after {
+        transform: rotate(180deg);
+    }
+
+    .select-items {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        left: 0;
+        margin-top: 5px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: var(--card-shadow);
+        z-index: 1000;
+        display: none;
+    }
+
+    .custom-select.active .select-items {
+        display: block;
+    }
+
+    .select-items div {
+        padding: 10px 16px;
+        color: var(--text-primary);
+        cursor: pointer;
+        transition: all 0.2s;
+        text-align: center;
+    }
+
+    .select-items div:hover {
+        background: var(--accent-soft);
+        color: var(--accent);
+    }
+
+    .select-items div.selected {
+        background: var(--accent);
+        color: white;
+    }
+
+    /* ===== 主题切换按钮 ===== */
+    .theme-toggle {
+        background: rgba(255,255,255,0.15); 
+        border: 1px solid rgba(255,255,255,0.3);
+        border-radius: 40px; 
+        padding: 8px 20px; 
+        font-size: 0.95rem; 
+        color: white;
+        cursor: pointer; 
+        display: flex; 
+        align-items: center; 
+        gap: 8px; 
+        backdrop-filter: blur(8px);
+        transition: all 0.2s;
+    }
+
+    .theme-toggle:hover {
+        background: rgba(255,255,255,0.25);
+        border-color: rgba(255,255,255,0.5);
+    }
+
+    /* ===== 文档卡片 ===== */
+    .doc-card {
+        background-color: var(--surface); 
+        border-radius: 40px;
+        padding: 3rem; 
+        box-shadow: var(--card-shadow);
+        border: 1px solid var(--border); 
+        margin: 20px 0 40px;
+    }
+
+    h1 {
+        font-size: 2.5rem; 
+        font-weight: 700; 
+        letter-spacing: -0.02em;
+        background: linear-gradient(135deg, var(--accent), var(--accent-light));
+        -webkit-background-clip: text;
+        margin: 0 0 25px 0;
+    }
+
+    h2 {
+        font-size: 2rem; 
+        font-weight: 600; 
+        margin: 2.5rem 0 1.5rem;
+        color: var(--text-primary); 
+        border-bottom: 3px solid var(--accent-soft);
+        padding-bottom: 12px;
+    }
+
+    h3 {
+        font-size: 1.5rem; 
+        font-weight: 600; 
+        margin: 2rem 0 1rem;
+        color: var(--accent);
+    }
+
+    /* ===== 星标建议 ===== */
+    .advice-item {
+        display: flex;
+        gap: 15px;
+        margin: 20px 0;
+        padding: 20px;
+        background: var(--surface-secondary);
+        border-radius: 20px;
+        border: 1px solid var(--border);
+    }
+
+    .stars {
+        display: flex;
+        gap: 2px;
+        color: var(--star-color);
+        font-size: 1.2rem;
+        min-width: 60px;
+    }
+
+    .advice-item a {
+        color: var(--accent);
+    }
+
+    .advice-item a:hover {
+        color: var(--accent-light);
+    }
+
+    /* ===== 信息卡片 ===== */
+    .info-card {
+        background: var(--accent-soft);
+        border-radius: 20px;
+        padding: 20px;
+        margin: 20px 0;
+        border-left: 6px solid var(--accent);
+    }
+
+    .info-card a {
+        color: var(--accent);
+    }
+
+    .info-card a:hover {
+        color: var(--accent-light);
+    }
+
+    /* ===== 注意框 ===== */
+    .note-box {
+        background: var(--surface-secondary);
+        padding: 15px 20px;
+        border-radius: 16px;
+        border-left: 4px solid var(--warning);
+        margin: 20px 0;
+        font-size: 0.9rem;
+    }
+
+    .note-box a {
+        color: var(--accent);
+    }
+
+    .note-box a:hover {
+        color: var(--accent-light);
+    }
+
+    /* ===== 返回顶部按钮 ===== */
+    .back-to-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: var(--accent);
+        color: white;
+        width: 56px;
+        height: 56px;
+        border-radius: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border: none;
+        box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
+        transition: all 0.2s;
+        z-index: 99;
+        font-size: 1.2rem;
+    }
+
+    .back-to-top:hover {
+        transform: scale(1.1);
+        background: var(--accent-light);
+    }
+
+    /* ===== 页脚 ===== */
+    .footer {
+        background-color: var(--footer-bg); 
+        margin-top: 60px;
+        padding: 32px 24px; 
+        border-radius: 40px 40px 0 0;
+        border-top: 1px solid var(--border); 
+        color: var(--text-secondary);
+    }
+
+    .footer-content {
+        display: flex; 
+        flex-wrap: wrap; 
+        justify-content: space-between;
+        align-items: center; 
+        gap: 20px; 
+        max-width: 1300px; 
+        margin: 0 auto;
+    }
+
+    .footer-copyright {
+        background: var(--surface); 
+        padding: 8px 24px; 
+        border-radius: 60px;
+        border: 1px solid var(--border); 
+        font-size: 0.95rem;
+    }
+
+    .footer-license {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .footer-license img {
+        width: 24px;
+        height: 24px;
+        vertical-align: middle;
+    }
+
+    /* ===== 移动端响应式调整 ===== */
+    @media (max-width: 700px) {
+        .header-row { 
+            flex-direction: column; 
+            text-align: center;
+        }
+        
+        .header-center {
+            width: 100%;
+        }
+        
+        .header-right {
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .doc-card { 
+            padding: 1.8rem; 
+        }
+        
+        h1 { 
+            font-size: 2rem; 
+        }
+        
+        .back-to-top {
+            bottom: 20px;
+            right: 20px;
+            width: 48px;
+            height: 48px;
+            border-radius: 24px;
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .footer {
+            padding: 24px 16px;
+        }
+        
+        .footer-content {
+            flex-direction: column;
+            text-align: center;
+            gap: 15px;
+        }
+        
+        .footer-copyright {
+            width: 100%;
+            text-align: center;
+        }
+        
+        .footer-license {
+            justify-content: center;
+        }
+    }
+
+    /* ===== 英雄区域 ===== */
+    .hero {
+        text-align: center;
+        padding: 60px 20px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .hero-title {
+        font-size: 3rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, var(--accent), var(--accent-light));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 20px;
+        line-height: 1.2;
+    }
+
+    .hero-subtitle {
+        font-size: 1.3rem;
+        color: var(--text-secondary);
+        margin-bottom: 30px;
+        line-height: 1.6;
+    }
+
+    .hero-stats {
+        display: flex;
+        gap: 30px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 40px;
+    }
+
+    .stat-item {
+        text-align: center;
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--accent);
+        line-height: 1;
+    }
+
+    .stat-label {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* ===== 关于区域 ===== */
+    .about-section {
+        background: var(--surface-secondary);
+        border-radius: 40px;
+        padding: 50px;
+        margin: 40px 0;
+        border: 1px solid var(--border);
+    }
+
+    .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+        align-items: center;
+    }
+
+    .about-content h2 {
+        font-size: 2rem;
+        color: var(--accent);
+        margin-bottom: 20px;
+    }
+
+    .about-content p {
+        color: var(--text-secondary);
+        font-size: 1.1rem;
+        line-height: 1.8;
+        margin-bottom: 20px;
+    }
+
+    .about-highlight {
+        background: var(--surface);
+        border-radius: 24px;
+        padding: 30px;
+        border: 1px solid var(--border);
+    }
+
+    .highlight-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .highlight-icon {
+        font-size: 2rem;
+        min-width: 50px;
+        text-align: center;
+    }
+
+    .highlight-text h3 {
+        font-size: 1.2rem;
+        color: var(--accent);
+        margin-bottom: 5px;
+    }
+
+    .highlight-text p {
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+    }
+
+    /* ===== 时间线预览 ===== */
+    .timeline-preview {
+        background: var(--surface);
+        border-radius: 30px;
+        padding: 40px;
+        margin: 40px 0;
+        border: 1px solid var(--border);
+    }
+
+    .timeline-preview h2 {
+        font-size: 2rem;
+        color: var(--accent);
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .timeline-strip {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .timeline-point {
+        flex: 1;
+        min-width: 100px;
+        text-align: center;
+        position: relative;
+    }
+
+    .timeline-point::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        right: -50%;
+        width: 100%;
+        height: 2px;
+        background: var(--border);
+        z-index: 0;
+    }
+
+    .timeline-point:last-child::after {
+        display: none;
+    }
+
+    .timeline-year {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--accent);
+        background: var(--surface-secondary);
+        padding: 8px 16px;
+        border-radius: 30px;
+        border: 1px solid var(--border);
+        display: inline-block;
+        position: relative;
+        z-index: 1;
+    }
+
+    .timeline-desc {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        margin-top: 8px;
+    }
+
+    .timeline-link {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .timeline-link a {
+        color: var(--link-color);
+        text-decoration: none;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 24px;
+        border-radius: 40px;
+        background: var(--surface-secondary);
+        border: 1px solid var(--border);
+        transition: all 0.2s;
+    }
+
+    .timeline-link a:hover {
+        background: var(--accent);
+        color: white;
+        transform: translateX(4px);
+    }
+
+    /* ===== 捐赠区域 ===== */
+    .donate-section {
+        background: var(--surface);
+        border-radius: 60px;
+        padding: 30px 40px;
+        margin: 40px 0;
+        border: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .donate-text h3 {
+        font-size: 1.5rem;
+        color: var(--accent);
+        margin-bottom: 8px;
+    }
+
+    .donate-text p {
+        color: var(--text-secondary);
+        font-size: 1rem;
+    }
+
+    .donate-button {
+        background: var(--accent);
+        color: white;
+        border: none;
+        border-radius: 40px;
+        padding: 12px 36px;
+        font-size: 1.1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+    }
+
+    .donate-button:hover {
+        background: var(--accent-light);
+        transform: scale(1.05);
+    }
+
+    hr {
+        border: none;
+        border-top: 2px dotted var(--border);
+        margin: 24px 0;
+    }
+
+    .footer-links {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .footer-links img {
+        width: 24px;
+        height: 24px;
+        vertical-align: middle;
+    }
+
+    .attribution {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+    }
+
+    [data-i18n] {
+        /* 占位符样式，实际文本由 JS 替换 */
+    }
+    </style>
 </head>
+<body>
+    <!-- 导航栏 - 悬浮下拉式 -->
+    <div class="nav-bar">
+        <div class="container nav-container">
+            <div class="nav-header">
+                <span class="home-icon">🏠</span>
+                <div class="nav-left">
+                    <a href="index.html" class="nav-home">
+                        <span class="home-text" data-i18n="navHome">AWStats 文档</span>
+                    </a>
+                </div>
+                <div class="mobile-menu-toggle" id="mobileMenuToggle">
+                    ☰
+                </div>
+            </div>
+            
+            <!-- 悬浮下拉菜单 -->
+            <div class="dropdown-menu" id="mobileMenu">
+                <!-- 📌 基础文档 -->
+                <div class="dropdown-item">
+                    <div class="dropdown-title" data-i18n="categoryBasic">📌 基础文档</div>
+                    <div class="dropdown-content">
+                        <a href="awstats_changelog.html" data-i18n="navChangelog">更新日志</a>
+                        <a href="awstats_what.html" data-i18n="navWhat">什么是AWStats</a>
+                        <a href="awstats_license.html" data-i18n="navLicense">许可证</a>
+                        <a href="awstats_glossary.html" data-i18n="navGlossary">术语表</a>
+                    </div>
+                </div>
+                
+                <!-- 📘 使用指南 -->
+                <div class="dropdown-item">
+                    <div class="dropdown-title" data-i18n="categoryGuide">📘 使用指南</div>
+                    <div class="dropdown-content">
+                        <a href="awstats_setup.html" data-i18n="navSetup">安装配置</a>
+                        <a href="awstats_upgrade.html" data-i18n="navUpgrade">升级指南</a>
+                        <a href="awstats_config.html" data-i18n="navConfig">配置参数</a>
+                        <a href="awstats_extra.html" data-i18n="navExtra">额外部分</a>
+                        <a href="awstats_tools.html" data-i18n="navTools">其他工具</a>
+                    </div>
+                </div>
+                
+                <!-- 📚 参考资源 -->
+                <div class="dropdown-item">
+                    <div class="dropdown-title" data-i18n="categoryReference">📚 参考资源</div>
+                    <div class="dropdown-content">
+                        <a href="awstats_faq.html" data-i18n="navFAQ">FAQ</a>
+                        <a href="awstats_security.html" data-i18n="navSecurity">安全建议</a>
+                        <a href="awstats_compare.html" data-i18n="navCompare">对比</a>
+                        <a href="awstats_benchmark.html" data-i18n="navBenchmark">基准测试</a>
+                    </div>
+                </div>
+                
+                <!-- 🧩 集成与扩展 -->
+                <div class="dropdown-item">
+                    <div class="dropdown-title" data-i18n="categoryIntegration">🧩 集成与扩展</div>
+                    <div class="dropdown-content">
+                        <a href="awstats_webmin.html" data-i18n="navWebmin">Webmin模块</a>
+                        <a href="awstats_dolibarr.html" data-i18n="navDolibarr">Dolibarr模块</a>
+                        <a href="awstats_contrib.html" data-i18n="navContrib">贡献资源</a>
+                    </div>
+                </div>
+                
+                <!-- 💻 开发者文档 -->
+                <div class="dropdown-item">
+                    <div class="dropdown-title" data-i18n="categoryDev">💻 开发者文档</div>
+                    <div class="dropdown-content">
+                        <a href="awstats_dev_plugins.html" data-i18n="navPlugins">插件开发</a>
+                        <a href="awstats_dev_plugins_hooks.html" data-i18n="navHooks">插件钩子</a>
+                        <a href="awstats_dev_plugins_graphs.html" data-i18n="navGraphs">插件图形</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<body topmargin="10" leftmargin="5">
+    <header class="header">
+        <div class="container header-row">
+            <div class="logo-area">
+                <img src="images/favicon.pub/logo.svg" alt="AWStats logo">
+                <span class="site-title" data-i18n="siteTitle">AWStats 8.1</span>
+            </div>
+            <div class="header-center" data-i18n="headerSlogan">
+                ⚡ 先进的日志分析器 · 官方文档
+            </div>
+            <div class="header-right">
+                <!-- 自定义语言切换 -->
+                <div class="lang-switch custom-select">
+                    <span>🌐</span>
+                    <div class="select-selected" data-value="zh" data-i18n="langZh">中文</div>
+                    <div class="select-items">
+                        <div data-value="zh" class="selected" data-i18n="langZh">中文</div>
+                        <div data-value="en" data-i18n="langEn">English</div>
+                    </div>
+                    <!-- 隐藏的原生 select，用于保持功能 -->
+                    <select id="langSelector" style="display: none;">
+                        <option value="zh" selected>中文</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+                
+                <button class="theme-toggle" id="themeToggleBtn">
+                    <span>🌓</span> <span class="theme-text" data-i18n="themeAuto">自动</span>
+                </button>
+            </div>
+        </div>
+    </header>
 
-<center>
-<table style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10pt; line-height: normal; font-size-adjust: none; font-stretch: normal;" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" width="100%">
+    <main class="container">
+        <!-- 英雄区域 -->
+        <div class="hero">
+            <h1 class="hero-title" data-i18n="heroTitle">AWStats 8.1</h1>
+            <p class="hero-subtitle" data-i18n="heroSubtitle">
+                先进的日志分析器 · 始于 1997 年
+            </p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number" data-i18n="statYears">27+</div>
+                    <div class="stat-label" data-i18n="statYearsLabel">年历史</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-i18n="statVersions">30+</div>
+                    <div class="stat-label" data-i18n="statVersionsLabel">版本迭代</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-i18n="statLangs">43</div>
+                    <div class="stat-label" data-i18n="statLangsLabel">种语言</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-i18n="statPlugins">30+</div>
+                    <div class="stat-label" data-i18n="statPluginsLabel">插件扩展</div>
+                </div>
+            </div>
+        </div>
 
-<!-- Large -->
-<tbody><tr style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">
-<td align="center" bgcolor="#9999cc"><a href="/"><img src="images/awstats_logo6.png" border="0"></a></td>
-<td align="center" bgcolor="#9999cc">
-<br>
-<font style="font-family: arial,helvetica,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 16pt; line-height: normal; font-size-adjust: none; font-stretch: normal;" color="#eeeeff"><b>AWStats logfile analyzer 8.0 Documentation</b></font><br>
-<br>
-</td>
-<td align="center" bgcolor="#9999cc">
-&nbsp;
-</td>
-</tr>
+        <!-- 关于区域 -->
+        <div class="about-section">
+            <div class="about-grid">
+                <div class="about-content">
+                    <h2 data-i18n="aboutTitle">什么是 AWStats？</h2>
+                    <p data-i18n="aboutDesc1">
+                        AWStats 是一个功能强大的日志分析器，能够生成高级的 Web、FTP、邮件和流媒体服务器统计报告。
+                        数据以易于阅读的网页形式图形化呈现。
+                    </p>
+                    <p data-i18n="aboutDesc2">
+                        由 Laurent Destailleur 于 1997 年创建，2000 年在 SourceForge 公开发布。
+                        至今仍是开源社区最受欢迎的日志分析工具之一。
+                    </p>
+                </div>
+                <div class="about-highlight">
+                    <div class="highlight-item">
+                        <span class="highlight-icon">📊</span>
+                        <div class="highlight-text">
+                            <h3 data-i18n="highlight1Title">精准统计</h3>
+                            <p data-i18n="highlight1Desc">基于页面计数，有效排除机器人流量</p>
+                        </div>
+                    </div>
+                    <div class="highlight-item">
+                        <span class="highlight-icon">🧩</span>
+                        <div class="highlight-text">
+                            <h3 data-i18n="highlight2Title">插件扩展</h3>
+                            <p data-i18n="highlight2Desc">30+ 官方插件，支持 GeoIP、图表等</p>
+                        </div>
+                    </div>
+                    <div class="highlight-item">
+                        <span class="highlight-icon">🌍</span>
+                        <div class="highlight-text">
+                            <h3 data-i18n="highlight3Title">多语言支持</h3>
+                            <p data-i18n="highlight3Desc">43 种语言，全球用户社区</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-</tbody></table>
+        <!-- 时间线预览 -->
+        <div class="timeline-preview">
+            <h2 data-i18n="timelineTitle">📋 项目时间线</h2>
+            <div class="timeline-strip">
+                <div class="timeline-point">
+                    <span class="timeline-year">1997</span>
+                    <div class="timeline-desc" data-i18n="timeline1997">项目启动</div>
+                </div>
+                <div class="timeline-point">
+                    <span class="timeline-year">2000</span>
+                    <div class="timeline-desc" data-i18n="timeline2000">SourceForge 发布</div>
+                </div>
+                <div class="timeline-point">
+                    <span class="timeline-year">2004</span>
+                    <div class="timeline-desc" data-i18n="timeline2004">6.0 里程碑</div>
+                </div>
+                <div class="timeline-point">
+                    <span class="timeline-year">2011</span>
+                    <div class="timeline-desc" data-i18n="timeline2011">7.0 系列</div>
+                </div>
+                <div class="timeline-point">
+                    <span class="timeline-year">2026</span>
+                    <div class="timeline-desc" data-i18n="timeline2026">8.1 社区版</div>
+                </div>
+            </div>
+            <div class="timeline-link">
+                <a href="awstats_changelog.html" data-i18n="timelineLink">查看完整开发历史 →</a>
+            </div>
+        </div>
 
+        <!-- 捐赠区域 -->
+        <div class="donate-section">
+            <div class="donate-text">
+                <h3 data-i18n="donateTitle">❤️ 支持 AWStats</h3>
+                <p data-i18n="donateDesc">如果您喜欢这个项目，欢迎捐赠支持原作者</p>
+            </div>
+            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" style="display: inline;">
+                <input type="hidden" name="cmd" value="_s-xclick">
+                <input type="hidden" name="hosted_button_id" value="HS88H4AVF72HC">
+                <button type="submit" class="donate-button">
+                    <img src="images/favicon.pub/paypal.svg" alt="PayPal" style="height: 24px; border-radius: 4px;">
+                    <span data-i18n="donateButton">支持项目</span>
+                </button>
+            </form>
+        </div>
+    </main>
+    
+    <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="返回顶部" data-i18n="backToTop">↑</button>
+    
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-copyright">
+                © 1997 - <span id="currentYear"></span> Laurent Destailleur & AWStats <span data-i18n="copyright">团队</span>
+            </div>
+            <div class="footer-license">
+                <a href="awstats_license.html" data-i18n="licenseLink">GNU General Public License</a> · 
+                <a href="https://github.com/eldy/AWStats" rel="publisher" target="_blank" style="display: inline-flex; align-items: center;"><a data-i18n="authorLink"></a> 
+                </a>
+                    <img src="images/favicon.pub/github.svg" style="width: 24px; height: 24px;">
+                </div>
+            <div class="attribution" data-i18n="darkAttr">
+                🌓 自适应暗黑 · 现代化重构
+            </div>
+        </div>
+    </footer>
 
-<br><h1 style="font-family: arial,helvetica,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 20px; line-height: normal; font-size-adjust: none; font-stretch: normal;">Table of contents</h1>
+    <script>
+        (function() {
+            // 年份自动更新
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
 
+            // 多语言资源
+            const translations = {
+                en: {
+                    siteTitle: "AWStats 8.1",
+                    headerSlogan: "⚡ Advanced Log Analyzer · Official Docs",
+                    themeAuto: "Auto",
+                    navHome: "Home",
+                    navWhat: "What is AWStats",
+                    navLicense: "License",
+                    navGlossary: "Glossary",
+                    navSetup: "Setup",
+                    navUpgrade: "Upgrade Guide",
+                    navConfig: "Config",
+                    navExtra: "Extra Sections",
+                    navTools: "Other Tools",
+                    navFAQ: "FAQ",
+                    navSecurity: "Security Tips",
+                    navCompare: "Compare",
+                    navBenchmark: "Benchmark",
+                    navChangelog: "Changelog",
+                    navWebmin: "Webmin Module",
+                    navDolibarr: "Dolibarr Module",
+                    navContrib: "Contrib",
+                    navPlugins: "Plugin Development",
+                    navHooks: "Plugin Hooks",
+                    navGraphs: "Plugin Graphs",
+                    categoryBasic: "📌 Basic Docs",
+                    categoryGuide: "📘 User Guide",
+                    categoryReference: "📚 Reference",
+                    categoryIntegration: "🧩 Integration",
+                    categoryDev: "💻 Developer",
+                    langZh: "中文",
+                    langEn: "English",
+                    
+                    // Hero
+                    heroTitle: "AWStats 8.1",
+                    heroSubtitle: "Advanced Log Analyzer · Since 1997",
+                    statYears: "27+",
+                    statYearsLabel: "Years",
+                    statVersions: "30+",
+                    statVersionsLabel: "Versions",
+                    statLangs: "43",
+                    statLangsLabel: "Languages",
+                    statPlugins: "30+",
+                    statPluginsLabel: "Plugins",
+                    
+                    // About
+                    aboutTitle: "What is AWStats?",
+                    aboutDesc1: "AWStats is a powerful log analyzer that generates advanced statistics reports for web, FTP, mail and streaming servers. Data is presented graphically in easy-to-read web pages.",
+                    aboutDesc2: "Created by Laurent Destailleur in 1997 and released on SourceForge in 2000, it remains one of the most popular open-source log analysis tools.",
+                    
+                    highlight1Title: "Accurate Statistics",
+                    highlight1Desc: "Page-based counting, effectively filtering bot traffic",
+                    highlight2Title: "Plugin Extensions",
+                    highlight2Desc: "30+ official plugins supporting GeoIP, charts, etc.",
+                    highlight3Title: "Multilingual",
+                    highlight3Desc: "43 languages, global user community",
+                    
+                    // Timeline
+                    timelineTitle: "📋 Project Timeline",
+                    timeline1997: "Project Started",
+                    timeline2000: "SourceForge Release",
+                    timeline2004: "6.0 Milestone",
+                    timeline2011: "7.0 Series",
+                    timeline2026: "8.1 Refactor",
+                    timelineLink: "View full history →",
+                    
+                    // Donate
+                    donateTitle: "❤️ Support AWStats",
+                    donateDesc: "If you like this project, consider supporting the original author",
+                    donateButton: "Support Project",
+                    
+                    // Footer
+                    licenseLink: "GPL License",
+                    authorLink: "Author",
+                    copyright: "Team",
+                    darkAttr: "🌓 Adaptive dark mode · Modern refactor",
+                    backToTop: "↑"
+                },
+                zh: {
+                    siteTitle: "AWStats 8.1",
+                    headerSlogan: "⚡ 先进的日志分析器 · 官方文档",
+                    themeAuto: "自动",
+                    navHome: "主页",
+                    navWhat: "什么是AWStats",
+                    navLicense: "许可证",
+                    navGlossary: "术语表",
+                    navSetup: "安装配置",
+                    navUpgrade: "升级指南",
+                    navConfig: "配置参数",
+                    navExtra: "额外部分",
+                    navTools: "其他工具",
+                    navFAQ: "FAQ",
+                    navSecurity: "安全建议",
+                    navCompare: "对比",
+                    navBenchmark: "基准测试",
+                    navChangelog: "更新日志",
+                    navWebmin: "Webmin模块",
+                    navDolibarr: "Dolibarr模块",
+                    navContrib: "贡献资源",
+                    navPlugins: "插件开发",
+                    navHooks: "插件钩子",
+                    navGraphs: "插件图形",
+                    categoryBasic: "📌 基础文档",
+                    categoryGuide: "📘 使用指南",
+                    categoryReference: "📚 参考资源",
+                    categoryIntegration: "🧩 集成与扩展",
+                    categoryDev: "💻 开发者文档",
+                    langZh: "中文",
+                    langEn: "English",
+                    
+                    // Hero
+                    heroTitle: "AWStats 8.1",
+                    heroSubtitle: "先进的日志分析器 · 始于 1997 年",
+                    statYears: "27+",
+                    statYearsLabel: "年历史",
+                    statVersions: "30+",
+                    statVersionsLabel: "版本迭代",
+                    statLangs: "43",
+                    statLangsLabel: "种语言",
+                    statPlugins: "30+",
+                    statPluginsLabel: "插件扩展",
+                    
+                    // About
+                    aboutTitle: "什么是 AWStats？",
+                    aboutDesc1: "AWStats 是一个功能强大的日志分析器，能够生成高级的 Web、FTP、邮件和流媒体服务器统计报告。数据以易于阅读的网页形式图形化呈现。",
+                    aboutDesc2: "由 Laurent Destailleur 于 1997 年创建，2000 年在 SourceForge 公开发布。至今仍是开源社区最受欢迎的日志分析工具之一。",
+                    
+                    highlight1Title: "精准统计",
+                    highlight1Desc: "基于页面计数，有效排除机器人流量",
+                    highlight2Title: "插件扩展",
+                    highlight2Desc: "30+ 官方插件，支持 GeoIP、图表等",
+                    highlight3Title: "多语言支持",
+                    highlight3Desc: "43 种语言，全球用户社区",
+                    
+                    // Timeline
+                    timelineTitle: "📋 项目时间线",
+                    timeline1997: "项目启动",
+                    timeline2000: "SourceForge 发布",
+                    timeline2004: "6.0 里程碑",
+                    timeline2011: "7.0 系列",
+                    timeline2026: "8.1 社区版",
+                    timelineLink: "查看完整开发历史 →",
+                    
+                    // Donate
+                    donateTitle: "❤️ 支持 AWStats",
+                    donateDesc: "如果您喜欢这个项目，欢迎捐赠支持原作者",
+                    donateButton: "支持项目",
+                    
+                    // Footer
+                    licenseLink: "GPL 许可证",
+                    copyright: "团队",
+                    authorLink: "原作者",
+                    darkAttr: "🌓 自适应暗黑 · 现代化重构",
+                    backToTop: "↑"
+                }
+            };
 
-<table style="border: 1px solid rgb(153, 153, 204);"><tbody><tr><td>
+            const i18nElements = document.querySelectorAll('[data-i18n]');
+            const langSelector = document.getElementById('langSelector');
+            let currentLang = localStorage.getItem('awstats_lang') || 'en';
+            langSelector.value = currentLang;
 
-<!-- SiteSearch Google -->
-<form action="https://www.google.com" id="cse-search-box">
-  <div>
-    <input type="hidden" name="cx" value="partner-pub-1071905880519467:6430131597" />
-    <input type="hidden" name="ie" value="UTF-8" />
-    <input type="text" name="q" size="55" />
-    <input type="submit" name="sa" value="Search" />
-  </div>
-</form>
+            function applyLanguage(lang) {
+                const t = translations[lang] || translations.en;
+                i18nElements.forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (t[key] !== undefined) {
+                        if (key === 'copyright') {
+                            const year = new Date().getFullYear();
+                            el.innerHTML = t[key].replace('{year}', year);
+                        } else {
+                            el.textContent = t[key];
+                        }
+                    }
+                });
+                localStorage.setItem('awstats_lang', lang);
+                
+                const themeState = localStorage.getItem('awstats_theme') || 'auto';
+                const themeText = document.querySelector('.theme-text');
+                if (themeText) {
+                    if (themeState === 'auto') themeText.textContent = t.themeAuto;
+                    else if (themeState === 'light') themeText.textContent = (lang === 'zh' ? '浅色' : 'Light');
+                    else themeText.textContent = (lang === 'zh' ? '深色' : 'Dark');
+                }
+            }
 
-<script type="text/javascript" src="https://www.google.fr/coop/cse/brand?form=cse-search-box&amp;lang=en"></script>
-<!-- SiteSearch Google -->
+            // 自定义下拉菜单功能
+            document.addEventListener('DOMContentLoaded', function() {
+                const customSelect = document.querySelector('.custom-select');
+                if (customSelect) {
+                    const selected = customSelect.querySelector('.select-selected');
+                    const items = customSelect.querySelectorAll('.select-items div');
+                    
+                    selected.addEventListener('click', function() {
+                        customSelect.classList.toggle('active');
+                    });
+                    
+                    items.forEach(item => {
+                        item.addEventListener('click', function() {
+                            const value = this.getAttribute('data-value');
+                            const text = this.textContent;
+                            
+                            // 更新显示
+                            selected.textContent = text;
+                            selected.setAttribute('data-value', value);
+                            
+                            // 更新实际 select 的值
+                            document.getElementById('langSelector').value = value;
+                            
+                            // 触发 change 事件
+                            document.getElementById('langSelector').dispatchEvent(new Event('change'));
+                            
+                            // 关闭下拉菜单
+                            customSelect.classList.remove('active');
+                        });
+                    });
+                    
+                    // 点击其他地方关闭
+                    document.addEventListener('click', function(e) {
+                        if (!customSelect.contains(e.target)) {
+                            customSelect.classList.remove('active');
+                        }
+                    });
+                }
+            });
 
-</td></tr></tbody></table>
+            // 点击展开下拉菜单功能
+            document.addEventListener('DOMContentLoaded', function() {
+                const dropdownItems = document.querySelectorAll('.dropdown-item');
+                
+                // 点击其他地方关闭所有下拉菜单
+                document.addEventListener('click', function(event) {
+                    if (!event.target.closest('.dropdown-item')) {
+                        dropdownItems.forEach(item => {
+                            item.classList.remove('active');
+                        });
+                    }
+                });
+                
+                // 点击下拉菜单标题切换显示
+                dropdownItems.forEach(item => {
+                    const title = item.querySelector('.dropdown-title');
+                    title.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        
+                        // 关闭其他打开的下拉菜单
+                        dropdownItems.forEach(otherItem => {
+                            if (otherItem !== item) {
+                                otherItem.classList.remove('active');
+                            }
+                        });
+                        
+                        // 切换当前菜单的显示状态
+                        item.classList.toggle('active');
+                    });
+                    
+                    // 防止点击下拉内容时关闭菜单
+                    const content = item.querySelector('.dropdown-content');
+                    if (content) {
+                        content.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                        });
+                    }
+                    
+                    // 按 ESC 键关闭所有菜单
+                    document.addEventListener('keydown', function(e) {
+                        if (e.key === 'Escape') {
+                            dropdownItems.forEach(item => {
+                                item.classList.remove('active');
+                            });
+                        }
+                    });
+                });
+            });
 
-<br>
+            // 手机端汉堡菜单功能
+            document.addEventListener('DOMContentLoaded', function() {
+                const mobileToggle = document.getElementById('mobileMenuToggle');
+                const mobileMenu = document.getElementById('mobileMenu');
+                
+                if (mobileToggle && mobileMenu) {
+                    mobileToggle.addEventListener('click', function() {
+                        mobileMenu.classList.toggle('mobile-active');
+                        
+                        // 改变图标样式
+                        if (mobileMenu.classList.contains('mobile-active')) {
+                            mobileToggle.innerHTML = '✕';
+                        } else {
+                            mobileToggle.innerHTML = '☰';
+                        }
+                    });
+                }
+            });
 
+            applyLanguage(currentLang);
 
-<table border="0" cellpadding="6" cellspacing="0" style="max-width: 600px">
+            langSelector.addEventListener('change', (e) => {
+                currentLang = e.target.value;
+                applyLanguage(currentLang);
+            });
 
-<!-- Ligne 1 -->
+            // 主题切换
+            const root = document.documentElement;
+            const themeBtn = document.getElementById('themeToggleBtn');
+            let themeState = localStorage.getItem('awstats_theme') || 'auto';
 
-<tbody><tr><td align="center" valign="top" width="50%">
-
-<table bgcolor="#ffffff" border="0" cellpadding="4" cellspacing="0" width="100%">
-<tbody><tr><td align="center" bgcolor="#e9e9e9">
-<strong>Release Notes</strong>
-</td></tr><tr><td>
-<a href="awstats_what.html">What is AWStats / Features</a>
-</td></tr><tr><td>
-<a href="awstats_changelog.txt">New Features / Changelog</a>
-</td></tr><tr><td>
-<a href="awstats_upgrade.html">Upgrade</a>
-</td></tr>
-</tbody></table>
-
-</td><td align="center" valign="top" width="50%">
-
-<table bgcolor="#ffffff" border="0" cellpadding="4" cellspacing="0" width="100%">
-<tbody><tr><td align="center" bgcolor="#e9e9e9">
-<strong>Reference manual</strong>
-</td></tr><tr><td>
-<a href="awstats_setup.html">Install, Setup and Use AWStats</a>
-</td></tr><tr><td>
-<a href="awstats_config.html">Configuration Directives/Options</a>
-</td></tr><tr><td>
-<a href="awstats_extra.html">Configuration for Extra Sections feature</a>
-</td></tr><tr><td>
-<a href="awstats_contrib.html">Contribs, plugins and resources</a>
-</td></tr><tr><td>
-<a href="awstats_tools.html">Other provided utilities</a>
-</td></tr><tr><td>
-<a href="awstats_glossary.html">Glossary of terms</a>
-</td></tr>
-</tbody></table>
-
-</td></tr>
-
-<!-- Ligne 2 -->
-
-<tr><td colspan="2" align="center" valign="top" width="100%">
-
-<table bgcolor="#ffffff" border="0" cellpadding="4" cellspacing="0" width="100%">
-
-<tbody><tr><td colspan="2" align="center" bgcolor="#e9e9e9">
-<strong>Other Topics</strong>
-</td></tr>
-
-<tr><td width="50%">
-<a href="awstats_compare.html">Comparison with other log analyzers</a>
-</td><td width="50%">
-<a href="awstats_faq.html">FAQ and Troubleshooting</a>
-</td></tr>
-
-<tr><td width="50%">
-<a href="awstats_benchmark.html">Benchmarks</a>
-</td><td width="50%">
-<a href="awstats_license.html">AWStats License</a>
-</td></tr>
-
-<tr><td><a href="awstats_dev_plugins.html">Plugin Developement</a></td><td></td></tr>
-
-</tbody></table>
-
-</td></tr>
-
-<!-- Ligne 3 -->
-
-<tr><td colspan="2" align="center" valign="top" width="100%">
-
-<table bgcolor="#ffffff" border="0" cellpadding="4" cellspacing="0" width="100%">
-
-<tbody><tr><td colspan="2" align="center" bgcolor="#e9e9e9">
-<strong>AWStats modules for third tools</strong>
-</td></tr>
-
-<tr><td width="50%">
-<a href="awstats_webmin.html">AWStats module for Webmin</a>
-</td><td width="50%">
-</td></tr>
-
-
-
-</tbody></table>
-
-</td></tr></tbody></table>
-
-<hr color="DDDDDD">
-
-<!-- You can remove this part if your distribution need documentation without external tags -->
-<!-- BEGIN_PAYPAL_LINK -->
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-<input type="hidden" name="cmd" value="_s-xclick">
-<input type="hidden" name="hosted_button_id" value="8968579">
-<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online.">
-<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
-</form>
-<!-- END_PAYPAL_LINK -->
-
-</center>
-
-
-</body></html>
+            function applyTheme(state) {
+                root.classList.remove('force-light', 'force-dark');
+                if (state === 'light') root.classList.add('force-light');
+                else if (state === 'dark') root.classList.add('force-dark');
+                
+                const themeText = document.querySelector('.theme-text');
+                const lang = currentLang;
+                const t = translations[lang];
+                if (themeText) {
+                    if (state === 'auto') themeText.textContent = t.themeAuto;
+                    else if (state === 'light') themeText.textContent = (lang === 'zh' ? '浅色' : 'Light');
+                    else themeText.textContent = (lang === 'zh' ? '深色' : 'Dark');
+                }
+                localStorage.setItem('awstats_theme', state);
+            }
+            
+            applyTheme(themeState);
+            
+            themeBtn.addEventListener('click', () => {
+                if (themeState === 'auto') themeState = 'light';
+                else if (themeState === 'light') themeState = 'dark';
+                else themeState = 'auto';
+                applyTheme(themeState);
+            });
+        })();
+    </script>
+</body>
+</html>

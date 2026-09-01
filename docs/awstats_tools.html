@@ -1,220 +1,765 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html><head>
-<meta name="description" content="AWStats Documentation - Other tools">
-<meta name="keywords" content="awstats, awstat, tools, utilities, awstats_buildstaticpages, logresolvemerge, common2combined">
-<meta name="robots" content="index,follow">
-<meta name="title" content="AWStats Documentation - Other tools">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>AWStats Documentation - Other tools</title>
-<link rel="stylesheet" href="styles.css" type="text/css">
-<link href="https://plus.google.com/+LaurentDestailleur-Open-Source-Expert" rel="publisher" />
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWStats · 其他工具</title>
+    <meta name="description" content="AWStats Documentation - Other tools (中文/English)">
+    <meta name="keywords" content="awstats, tools, utilities, 工具">
+    <meta name="author" content="Laurent Destailleur (多语言重构)">
+    <meta name="robots" content="index,follow">
+    <style>
+        /* ========== 全局设计 ========== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-page: #f8f9fc; --surface: #ffffff; --surface-secondary: #f1f3f8;
+            --text-primary: #1e293b; --text-secondary: #334155; --accent: #5b5f97;
+            --accent-light: #7f83b0; --border: #d0d5e0; --card-shadow: 0 8px 20px rgba(0,0,0,0.03), 0 2px 6px rgba(0,20,40,0.05);
+            --header-bg: linear-gradient(135deg, #7f83b0 0%, #5b5f97 100%);
+            --footer-bg: #ecedf2; --logo-filter: none; --link-color: #4f46e5;
+            --link-visited: #7c3aed; --code-bg: #e9e9f2;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-page: #12131f; --surface: #1f2130; --surface-secondary: #2a2c3e;
+                --text-primary: #edf2f7; --text-secondary: #cbd5e1; --accent: #a9acd9;
+                --accent-light: #b9bce6; --border: #3c405a; --card-shadow: 0 8px 20px rgba(0,0,0,0.6);
+                --header-bg: linear-gradient(145deg, #353a60, #222544);
+                --footer-bg: #1a1c2c; --logo-filter: brightness(1.1) drop-shadow(0 0 4px #aeaef0);
+                --link-color: #b1b3ff; --link-visited: #caa5ff; --code-bg: #2c2f44;
+            }
+        }
+        .force-light { --bg-page: #f8f9fc !important; --surface: #ffffff !important; --surface-secondary: #f1f3f8 !important; --text-primary: #1e293b !important; --text-secondary: #334155 !important; --accent: #5b5f97 !important; --border: #d0d5e0 !important; --footer-bg: #ecedf2 !important; --link-color: #4f46e5 !important; }
+        .force-dark { --bg-page: #12131f !important; --surface: #1f2130 !important; --surface-secondary: #2a2c3e !important; --text-primary: #edf2f7 !important; --text-secondary: #cbd5e1 !important; --accent: #a9acd9 !important; --border: #3c405a !important; --footer-bg: #1a1c2c !important; --link-color: #b1b3ff !important; }
+
+        body {
+            background-color: var(--bg-page); color: var(--text-primary);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6; margin: 0; padding: 0;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            display: flex; flex-direction: column; min-height: 100vh;
+        }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 28px; width: 100%; }
+
+        /* 导航栏 */
+        .nav-bar {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background-color: var(--surface);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        @supports (backdrop-filter: blur(10px)) {
+            .nav-bar {
+                background-color: color-mix(in srgb, var(--surface) 80%, transparent);
+                backdrop-filter: blur(10px);
+            }
+        }
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 30px;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .nav-links a:hover {
+            background: var(--surface-secondary);
+            color: var(--accent);
+        }
+        .nav-links a.active {
+            background: var(--accent);
+            color: white;
+        }
+        .nav-home {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: var(--accent);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .breadcrumb {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        .breadcrumb a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        .breadcrumb .separator {
+            color: var(--border);
+        }
+
+        /* 头部 */
+        .header {
+            background: var(--header-bg); color: white; border-radius: 0 0 32px 32px;
+            padding: 16px 0 20px; box-shadow: var(--card-shadow); margin-bottom: 20px;
+        }
+        .header-row {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 16px;
+        }
+        .logo-area { display: flex; align-items: center; gap: 12px; }
+        .logo-area img { height: 52px; width: auto; filter: var(--logo-filter); }
+        .site-title {
+            font-size: 1.75rem; font-weight: 600; background: rgba(255,255,255,0.1);
+            padding: 6px 18px; border-radius: 60px; backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .header-center {
+            flex: 1; text-align: center; font-weight: 500; font-size: 1.2rem;
+            background: rgba(0,0,0,0.1); padding: 8px 16px; border-radius: 40px;
+            backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.15);
+        }
+        .header-right { display: flex; gap: 12px; align-items: center; }
+        .lang-switch {
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 40px; padding: 6px 12px; color: white; font-weight: 500;
+            display: flex; align-items: center; gap: 6px; backdrop-filter: blur(4px);
+        }
+        .lang-switch select {
+            background: transparent; border: none; color: white; font-weight: 500;
+            outline: none; font-size: 0.95rem; cursor: pointer;
+        }
+        .lang-switch select option { background: #5b5f97; color: white; }
+        .theme-toggle {
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 40px; padding: 8px 16px; font-size: 0.9rem; color: white;
+            cursor: pointer; display: flex; align-items: center; gap: 6px; backdrop-filter: blur(4px);
+        }
+
+        /* 文档卡片样式 */
+        .doc-card {
+            background-color: var(--surface); border-radius: 32px;
+            padding: 2.5rem 2.8rem; box-shadow: var(--card-shadow);
+            border: 1px solid var(--border); margin: 20px 0 30px;
+        }
+        h1 {
+            font-size: 2.2rem; font-weight: 600; letter-spacing: -0.02em;
+            border-left: 10px solid var(--accent); padding-left: 24px;
+            margin: 0 0 25px 0; color: var(--text-primary);
+        }
+        h2 {
+            font-size: 1.8rem; font-weight: 600; margin: 2rem 0 1rem;
+            color: var(--accent); border-bottom: 2px solid var(--border); padding-bottom: 6px;
+        }
+        h3 { font-size: 1.4rem; margin: 1.8rem 0 0.8rem; color: var(--text-primary); font-weight: 600; }
+        hr { border: none; border-top: 2px dashed var(--border); margin: 2rem 0; }
+        ul, ol { padding-left: 1.8rem; margin: 1rem 0; }
+        li { margin: 0.6rem 0; color: var(--text-secondary); }
+        li strong { color: var(--text-primary); }
+        a { color: var(--link-color); text-decoration: none; border-bottom: 1px dotted var(--accent-light); }
+        a:hover { color: var(--accent-light); border-bottom-style: solid; }
+        code, .file-path {
+            background: var(--code-bg); padding: 0.2rem 0.6rem; border-radius: 20px;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.9rem;
+            border: 1px solid var(--border); color: var(--text-primary);
+        }
+        pre {
+            background: var(--code-bg);
+            padding: 20px;
+            border-radius: 16px;
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin: 20px 0;
+            /* 代码块内容不翻译 */
+            -moz-user-select: text;
+            -webkit-user-select: text;
+            user-select: text;
+        }
+        .badge {
+            background: var(--accent); color: white; font-size: 0.9rem;
+            padding: 2px 10px; border-radius: 30px; display: inline-block;
+        }
+        .tool-section {
+            margin: 40px 0;
+            padding: 20px;
+            background: var(--surface-secondary);
+            border-radius: 24px;
+            border: 1px solid var(--border);
+        }
+        .footer {
+            background-color: var(--footer-bg); margin-top: 48px;
+            padding: 28px 24px; border-radius: 30px 30px 0 0;
+            border-top: 1px solid var(--border); color: var(--text-secondary);
+        }
+        .footer-content {
+            display: flex; flex-wrap: wrap; justify-content: space-between;
+            align-items: center; gap: 16px; max-width: 1200px; margin: 0 auto;
+        }
+        .footer-copyright {
+            background: var(--surface); padding: 6px 18px; border-radius: 60px;
+            border: 1px solid var(--border);
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.2s, background 0.2s;
+            z-index: 99;
+        }
+        .back-to-top:hover {
+            transform: scale(1.1);
+            background: var(--accent-light);
+        }
+        
+        @media (max-width: 700px) {
+            .header-row { flex-direction: column; }
+            .doc-card { padding: 1.8rem; }
+            h1 { font-size: 1.8rem; }
+            .nav-container { flex-direction: column; align-items: flex-start; }
+            .nav-links { justify-content: center; width: 100%; }
+            .back-to-top { bottom: 20px; right: 20px; }
+        }
+    </style>
 </head>
+<body>
+    <!-- 导航栏 -->
+    <div class="nav-bar">
+        <div class="container nav-container">
+            <a href="index.html" class="nav-home">
+                <span>🏠</span> AWStats 文档
+            </a>
+            <div class="nav-links">
+                <a href="index.html" data-i18n="navHome">主页</a>
+                <a href="awstats_what.html" data-i18n="navWhat">什么是AWStats</a>
+                <a href="awstats_webmin.html" data-i18n="navWebmin">Webmin模块</a>
+                <a href="awstats_upgrade.html" data-i18n="navUpgrade">升级指南</a>
+                <a href="awstats_tools.html" class="active" data-i18n="navTools">其他工具</a>
+                <a href="awstats_faq.html" data-i18n="navFAQ">FAQ</a>
+            </div>
+            <div class="breadcrumb">
+                <a href="index.html" data-i18n="home">主页</a>
+                <span class="separator">›</span>
+                <span data-i18n="currentPage">其他工具</span>
+            </div>
+        </div>
+    </div>
 
-<body topmargin="10" leftmargin="5">
+    <header class="header">
+        <div class="container header-row">
+            <div class="logo-area">
+                <img src="images/awstats_logo6.png" alt="AWStats" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'52\' height=\'52\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%235b5f97\'/%3E%3Ctext x=\'20\' y=\'68\' fill=\'%23ffffff\' font-size=\'60\' font-weight=\'bold\'%3EAW%3C/text%3E%3C/svg%3E';">
+                <span class="site-title" data-i18n="siteTitle">AWStats 8.1</span>
+            </div>
+            <div class="header-center" data-i18n="headerSlogan">
+                ⚡ 先进的日志分析器 · 官方文档
+            </div>
+            <div class="header-right">
+                <div class="lang-switch">
+                    <span>🌐</span>
+                    <select id="langSelector">
+                        <option value="zh" selected>中文</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+                <button class="theme-toggle" id="themeToggleBtn">
+                    <span>🌓</span> <span class="theme-text" data-i18n="themeAuto">自动</span>
+                </button>
+            </div>
+        </div>
+    </header>
 
+    <main class="container">
+        <div class="doc-card">
+            <h1 data-i18n="mainTitle">其他工具</h1>
 
-<table style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10pt; line-height: normal; font-size-adjust: none; font-stretch: normal;" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" width="100%">
+            <p data-i18n="intro">这是 AWStats 提供的其他工具列表。<br>所有这些工具都位于 AWStats 发行版的 <b>tools</b> 目录中。</p>
 
-<!-- Large -->
-<tbody><tr style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">
-<td align="center" bgcolor="#9999cc"><a href="/"><img src="images/awstats_logo6.png" border="0"></a></td>
-<td align="center" bgcolor="#9999cc">
-<br>
-<font style="font-family: arial,helvetica,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 16pt; line-height: normal; font-size-adjust: none; font-stretch: normal;" color="#eeeeff"><b>AWStats logfile analyzer 8.0 Documentation</b></font><br>
-<br>
-</td>
-<td align="center" bgcolor="#9999cc">
-&nbsp;
-</td>
-</tr>
+            <!-- awstats_updateall.pl -->
+            <div class="tool-section">
+                <a name="awstats_updateall"></a>
+                <h2 data-i18n="updateallTitle"><u>awstats_updateall.pl</u></h2>
+                <p data-i18n="updateallDesc">awstats_updateall 为特定目录中找到的所有 AWStats 配置文件（awstats.model.conf 除外）启动更新过程，因此您可以轻松设置 cron/scheduler 任务。默认扫描的目录是 /etc/awstats。</p>
+                <p><strong data-i18n="usage">用法：</strong> <code>awstats_updateall.pl now [options]</code></p>
+                <p><strong data-i18n="options">选项：</strong></p>
+                <ul>
+                    <li><code>-awstatsprog=pathtoawstatspl</code> <span data-i18n="optAwstatsprog">- 指定 AWStats 程序路径</span></li>
+                    <li><code>-configdir=confdirtoscan</code> <span data-i18n="optConfigdir">- 指定配置文件目录</span></li>
+                </ul>
+            </div>
 
-</tbody></table>
+            <!-- awstats_buildstaticpages.pl -->
+            <div class="tool-section">
+                <a name="awstats_buildstaticpages"></a>
+                <h2 data-i18n="buildstaticTitle"><u>awstats_buildstaticpages.pl</u></h2>
+                <p data-i18n="buildstaticDesc">awstats_buildstaticpages 允许您使用 -staticlinks 选项启动 AWStats，以构建 AWStats -output 选项允许的所有可能页面。</p>
+                <p><strong data-i18n="usage">用法：</strong><br>
+                <code>awstats_buildstaticpages.pl (awstats_options) [awstatsbuildstaticpages_options]</code></p>
+                <p><strong data-i18n="awstatsOptions">awstats_options（AWStats 已知的任何选项）：</strong></p>
+                <ul>
+                    <li><code>-config=configvalue</code> <span data-i18n="optConfig">- config 参数的值（必需）</span></li>
+                    <li><code>-update</code> <span data-i18n="optUpdate">- 在生成页面之前更新统计数据</span></li>
+                    <li><code>-lang=LL</code> <span data-i18n="optLang">- 以 LL 语言输出 HTML 报告（en,de,es,fr,...）</span></li>
+                    <li><code>-month=MM</code> <span data-i18n="optMonth">- 为旧月份 MM 输出 HTML 报告</span></li>
+                    <li><code>-year=YYYY</code> <span data-i18n="optYear">- 为旧年份 YYYY 输出 HTML 报告</span></li>
+                </ul>
+                <p><strong data-i18n="buildstaticOptions">awstatsbuildstaticpages_options：</strong></p>
+                <ul>
+                    <li><code>-awstatsprog=pathtoawstatspl</code> <span data-i18n="optBuildAwstatsprog">- 指定 AWStats 软件（awstats.pl）路径</span></li>
+                    <li><code>-dir=outputdir</code> <span data-i18n="optDir">- 设置生成页面的输出目录</span></li>
+                    <li><code>-builddate=%YY%MM%DD</code> <span data-i18n="optBuilddate">- 在生成的文件名中添加构建日期</span></li>
+                    <li><code>-staticlinksext=xxx</code> <span data-i18n="optStaticlinksext">- 页面使用 .xxx 扩展名而非 .html</span></li>
+                    <li><code>-buildpdf[=pathtohtmldoc]</code> <span data-i18n="optBuildpdf">- 构建 HTML 页面后构建 PDF 文件。使用此选项时，输出目录必须包含图标目录（需要 'htmldoc'）</span></li>
+                </ul>
+            </div>
 
+            <!-- logresolvemerge.pl -->
+            <div class="tool-section">
+                <a name="logresolvemerge"></a>
+                <h2 data-i18n="logresolvemergeTitle"><u>logresolvemerge.pl</u></h2>
+                <p data-i18n="logresolvemergeDesc">logresolvemerge 允许您从特定源获取一个按日期排序的唯一输出日志文件：<br>&nbsp;- 可以读取多个输入日志文件，<br>&nbsp;- 可以读取 .gz/.bz2 日志文件，<br>&nbsp;- 还可以进行快速反向 DNS 查找，将结果日志文件中的所有 IP 地址替换为主机名。</p>
+                <p data-i18n="logresolvemergeWarranty">logresolvemerge 绝对不提供任何担保。它是一个自由软件，遵循 GNU 通用公共许可证发布（参见 COPYING.txt 文件）。logresolvemerge 是 AWStats 的一部分，但也可以单独用作日志合并器或解析器，然后再使用任何其他日志分析器。</p>
+                
+                <p><strong data-i18n="usage">用法：</strong></p>
+                <pre>
+logresolvemerge.pl [options] file
+logresolvemerge.pl [options] file1 ... filen
+logresolvemerge.pl [options] *.*
+perl logresolvemerge.pl [options] *.* > newfile</pre>
 
-<br><br><h1 style="font-family: arial,helvetica,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 26px; line-height: normal; font-size-adjust: none; font-stretch: normal;">Other utilities</h1>
+                <p><strong data-i18n="options">选项：</strong></p>
+                <ul>
+                    <li><code>-dnslookup</code> <span data-i18n="optDnslookup">- 对 IP 地址进行反向 DNS 查找</span></li>
+                    <li><code>-dnslookup=n</code> <span data-i18n="optDnslookupN">- 同上，但使用 n 个并行线程而非串行请求</span></li>
+                    <li><code>-dnscache=file</code> <span data-i18n="optDnscache">- 在网络查找之前首先从缓存文件进行 DNS 查找</span></li>
+                    <li><code>-showsteps</code> <span data-i18n="optShowsteps">- 每处理 8192 行在 stderr 打印基准信息</span></li>
+                    <li><code>-addfilenum</code> <span data-i18n="optAddfilenum">- 如果使用多个文件，可以在第一字段添加文件编号</span></li>
+                    <li><code>-addfilename</code> <span data-i18n="optAddfilename">- 如果使用多个文件，可以在输出文件的第一字段添加文件名。当日志文件来自多个负载均衡的计算机时，这可用于添加集群 ID</span></li>
+                    <li><code>-stoponfirsteof</code> <span data-i18n="optStoponfirsteof">- 当任何日志文件到达文件结尾时停止处理</span></li>
+                    <li><code>-printfields</code> <span data-i18n="optPrintfields">- 对于 IIS 或 W3C 日志，在日志文件条目之间切换时打印当前日志文件的最新字段头，以便解析器自动确定可用字段</span></li>
+                    <li><code>-ignoremissing</code> <span data-i18n="optIgnoremissing">- 如果日志文件缺失，不会失败</span></li>
+                </ul>
 
-<br>
-This is a list of other tools provided with AWStats.<br>
-All those tools are available in <b>tools</b> directory of AWStats distribution.<br>
-<br><br>
+                <p data-i18n="logresolvemergeDetail">此命令在命令行中运行 logresolvemerge，打开一个或多个服务器日志文件，合并它们（按日期排序）和/或进行反向 DNS 查找（如果要求）。结果日志文件发送到标准输出。</p>
+                <p data-i18n="logresolvemergeNote">注意：logresolvemerge 不是用于排序单个文件的'sort'工具。它是一个能够输出排序日志记录（可选包含反向 DNS 查找）的软件，即使日志记录分布在多个文件中也是如此。每个这些文件本身必须已经独立排序（但所有 Web 服务器日志文件都是如此）。因此，您可以将其用于负载均衡的日志文件或分组多个旧日志文件。</p>
+                <p data-i18n="logresolvemergeGoal">不要忘记 logresolvemerge 的主要目标是将日志记录以排序顺序发送给日志分析器，而无需在磁盘上合并文件（完全不需要磁盘空间）且无需将文件加载到内存中（不需要更多内存）。输出记录的选择是即时完成的。</p>
+                <p data-i18n="logresolvemergeUseful">因此，当您想要快速处理多个和/或大型日志文件，不使用磁盘或更多内存，并通过管道按时间顺序输出（供日志分析器使用）时，logresolvemerge 特别有用。</p>
+                <p data-i18n="logresolvemergeSorted">注意：如果输入记录不是"精确"排序而是"近乎"排序（这在重负载服务器上会发生），这不是问题，输出也将是"近乎"排序的，但一些日志分析器（如 AWStats）知道如何处理此类日志。</p>
+                <p><strong data-i18n="warnings">警告：</strong></p>
+                <ul>
+                    <li data-i18n="logresolvemergeWarning1">如果日志文件是旧的 MAC 文本文件（行以 CR 字符结尾），您不能在 Windows 或 Unix 平台上运行此工具。</li>
+                    <li data-i18n="logresolvemergeWarning2">由于 ActiveState Perl 版本的内存漏洞，如果您需要处理大型日志文件，请使用其他 Perl 解释器。</li>
+                </ul>
 
-<!--
-<br>
-<br><a name="awstats_configure"><H2 style="font: 18px arial,helvetica,sans-serif color: #606060"><u>awstats_configure.pl</u></H2></a>
-<br>This script creates one config file for each web servers provided by Apache.
-<br>After running this tool, AWStats can immediatly be used.<br>
-<br>
-<br> This tool is not yet available...
+                <p><strong data-i18n="supports">现在支持/检测：</strong></p>
+                <ul>
+                    <li data-i18n="logresolvemergeSupport1">自动检测日志格式</li>
+                    <li data-i18n="logresolvemergeSupport2">如果 PATH 中有 zcat/bzcat 工具，文件可以是 .gz/.bz2 文件</li>
+                    <li data-i18n="logresolvemergeSupport3">使用 Perl 5.8+ 的多线程反向 DNS 查找（多个并行请求）</li>
+                </ul>
+            </div>
 
-<br>
-<br>
--->
+            <!-- maillogconvert.pl -->
+            <div class="tool-section">
+                <a name="maillogconvert"></a>
+                <h2 data-i18n="maillogconvertTitle"><u>maillogconvert.pl</u></h2>
+                <p data-i18n="maillogconvertDesc">maillogconvert 是邮件日志预处理器，可将邮件日志文件（来自 postfix、sendmail 或 qmail 服务器）转换为人类可读的格式。输出格式也可供日志分析器（如 AWStats）使用。</p>
+                
+                <p><strong data-i18n="usage">用法：</strong></p>
+                <pre>perl maillogconvert.pl [standard|vadmin] [year] < logfile > output</pre>
 
-<br>
-<br><a name="awstats_updateall"><h2 style=""><u>awstats_updateall.pl</u></h2></a>
-<br>awstats_updateall launches update process for all AWStats config files (except
-<br>awstats.model.conf) found in a particular directory, so you can easily setup a
-<br>cron/scheduler job. The scanned directory is by default /etc/awstats.
-<br>
-<br>Usage:  awstats_updateall.pl now [options]
-<br>
-<br>Where options are:
-<br>  -awstatsprog=pathtoawstatspl
-<br>  -configdir=confdirtoscan
+                <p data-i18n="maillogconvertParams">第一个参数指定邮件日志文件的格式：</p>
+                <ul>
+                    <li><strong>standard</strong> <span data-i18n="optStandard">- 日志文件是标准的 postfix、sendmail、qmail 或 mdaemon 日志格式</span></li>
+                    <li><strong>vadmin</strong> <span data-i18n="optVadmin">- 日志文件是带有 vadmin 多主机支持的 qmail 日志格式</span></li>
+                </ul>
+                <p data-i18n="maillogconvertYear">第二个参数指定用于日志文件时间戳的年份，如果当前年份不正确（例如 2002）。始终使用 4 位数字。如果未指定，则使用当前年份。</p>
+                <p data-i18n="maillogconvertOutput">如果未指定输出，则输出到控制台（stdout）。</p>
 
-<br>
-<br>
+                <p><strong data-i18n="example">示例：</strong></p>
+                <p data-i18n="maillogconvertExample">以下来自 postfix 邮件日志服务器的示例：</p>
+                <pre>
+Jan 01 07:27:31 apollon postfix/smtpd[1684]: connect from remt30.cluster1.charter.net[209.225.8.40]
+Jan 01 07:27:32 apollon postfix/smtpd[1684]: 2BC793B8A4: client=remt30.cluster1.charter.net[209.225.8.40]
+Jan 01 07:27:32 apollon postfix/cleanup[1687]: 2BC793B8A4: message-id=<36027278@vneka>
+Jan 01 07:27:32 apollon postfix/qmgr[13860]: 2BC793B8A4: from=<fromuser@aol.com>, size=2130, nrcpt=1 (queue active)
+Jan 01 07:27:38 apollon postfix/local[1689]: 2BC793B8A4: to=<touser@mainserver.com>, orig_to=<touser@toserver.com>, relay=local, delay=6, status=sent ("|/usr/bin/procmail")</pre>
+                <p data-i18n="maillogconvertOutputExample">将生成如下文件：</p>
+                <pre>
+2004-01-01 07:27:38 fromuser@aol.com touser@toserver.com remt30.cluster1.charter.net localhost SMTP - 1 2130</pre>
+                <p data-i18n="maillogconvertFaq">查看 <a href="awstats_faq.html#MAIL">FAQ-COM100</a> 了解如何使用 maillogconvert.pl 与 AWStats 分析邮件日志文件。</p>
+            </div>
 
-<br>
-<br><a name="awstats_buildstaticpages"><h2 style=""><u>awstats_buildstaticpages.pl</u></h2></a>
-<br>awstats_buildstaticpages allows you to launch AWStats with -staticlinks option
-<br>to build all possible pages allowed by AWStats -output option.
-<br>
-<br>Usage:
-<br>awstats_buildstaticpages.pl (awstats_options) [awstatsbuildstaticpages_options]
-<br>
-<br>  where awstats_options are any option known by AWStats
-<br>   -config=configvalue is value for -config parameter (REQUIRED)
-<br>   -update             option used to update statistics before to generate pages
-<br>   -lang=LL            to output a HTML report in language LL (en,de,es,fr,...)
-<br>   -month=MM           to output a HTML report for an old month=MM
-<br>   -year=YYYY          to output a HTML report for an old year=YYYY
-<br>
-<br>  and awstatsbuildstaticpages_options can be
-<br>   -awstatsprog=pathtoawstatspl gives AWStats software (awstats.pl) path
-<br>   -dir=outputdir               to set output directory for generated pages
-<br>   -builddate=%YY%MM%DD         Used to add build date in built pages filenames
-<br>   -staticlinksext=xxx          For pages with .xxx extension instead of .html
-<br>   -buildpdf[=pathtohtmldoc]    Build a PDF file after building HTML pages.
-<br>                                 Output directory must contains icon directory
-<br>                                 when this option is used (need 'htmldoc').
-<br>
-<br>New versions and FAQ at http://www.awstats.org
+            <!-- urlaliasbuilder.pl -->
+            <div class="tool-section">
+                <a name="urlaliasbuilder"></a>
+                <h2 data-i18n="urlaliasbuilderTitle"><u>urlaliasbuilder.pl</u></h2>
+                <p data-i18n="urlaliasbuilderDesc">Urlaliasbuilder 从输入文件生成 'urlalias' 文件（urlalias 文件是一个包含两列的文件：URL 和 URL 的清晰标题）。输入文件必须包含 URL 列表（可以是 AWStats 历史文件）。对于每个 URL，脚本获取相应的 HTML 页面并捕获头信息（标题），然后写入一个输出文件，其中包含每个 URL 的一行和多个字段：- 第一个字段是 URL，- 第二个是从网页捕获的标题。此结果文件可由 AWStats urlalias 插件使用。</p>
+                
+                <p><strong data-i18n="usage">用法：</strong> <code>urlaliasbuilder.pl -site=www.myserver.com [options]</code></p>
+                <p data-i18n="urlaliasbuilderSite">site 参数包含要获取页面的 Web 服务器。</p>
+                <p><strong data-i18n="options">选项：</strong></p>
+                <ul>
+                    <li><code>-urllistfile=Input urllist file</code> <span data-i18n="optUrllistfile">- 如果此文件是 AWStats 历史文件，则 urlaliasbuilder 将使用该文件的 SIDER 部分作为其输入 URL 列表</span></li>
+                    <li><code>-urlaliasfile=Output urlalias file to build</code> <span data-i18n="optUrlaliasfile">- 要构建的输出 urlalias 文件</span></li>
+                    <li><code>-overwrite</code> <span data-i18n="optOverwrite">- 如果输出文件存在则覆盖（默认追加到文件）</span></li>
+                    <li><code>-secure</code> <span data-i18n="optSecure">- 使用 https 协议</span></li>
+                </ul>
+                <p><strong data-i18n="example">示例：</strong> <code>urlaliasbuilder.pl -site=www.someotherhost.com</code></p>
+                <p data-i18n="urlaliasbuilderCredit">此脚本由 Simon Waight 的原创作品 title-grabber.pl 编写而成。</p>
+            </div>
 
-<br>
-<br>
+            <hr>
 
-<br>
-<br><a name="logresolvemerge"><h2 style=""><u>logresolvemerge.pl</u></h2></a>
-logresolvemerge allows you to get one unique output log file, sorted on date,<br>built from particular sources:<br>&nbsp;- It can read several input log files,<br>&nbsp;- It can read .gz/.bz2 log files,<br>&nbsp;- It can also makes a fast reverse DNS lookup to replace<br>&nbsp;&nbsp; all IP addresses into host names in resulting log file.<br>logresolvemerge comes with ABSOLUTELY NO WARRANTY. It's a free software<br>distributed with a GNU General Public License (See COPYING.txt file).<br>logresolvemerge is part of AWStats but can be used alone as a log merger<br>or resolver before using any other log analyzer.<br><br>Usage:<br>&nbsp; logresolvemerge.pl [options] file<br>&nbsp; logresolvemerge.pl [options] file1 ... filen<br>&nbsp; logresolvemerge.pl [options] *.*<br>&nbsp; perl logresolvemerge.pl [options] *.* &gt; newfile<br>Options:<br>&nbsp; -dnslookup&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; make a reverse DNS lookup on IP adresses<br>&nbsp; -dnslookup=n&nbsp;&nbsp;&nbsp; same with a n parallel threads instead of serial requests<br>&nbsp; -dnscache=file&nbsp; make DNS lookup from cache file first before network lookup<br>&nbsp; -showsteps&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print on stderr benchmark information every 8192 lines<br>&nbsp; -addfilenum&nbsp;&nbsp;&nbsp;&nbsp; if used with several files, file number can be added in first<br>&nbsp; -addfilename&nbsp;&nbsp;&nbsp; if used with several files, file name can be added in first<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-field of output file. This can be used to add a cluster id<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-when log files come from several load balanced computers.<br>&nbsp; -stoponfirsteof Stop processing when any logfile reaches end-of-file.<br>&nbsp; -printfields&nbsp;&nbsp;&nbsp; For IIS or W3C logs, prints the latest field header for<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-the currentlog file when switching between log file entries<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-so that the parsercan automatically determine which fields<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; are avaiable.<br>&nbsp; -ignoremissing&nbsp; will not fail if a log file is missing<br><br>This runs logresolvemerge in command line to open one or several<br>server log files to merge them (sorted on date) and/or to make a reverse<br>DNS lookup (if asked). The result log file is sent on standard output.<br>Note: logresolvemerge is not a 'sort' tool to sort one file. It's a<br>software able to output sorted log records (with a reverse DNS lookup<br>included or not) even if log records are dispatched in several files.<br>Each of thoose files must be already independently sorted itself<br>(but that is the case in all web server log files). So you can use it<br>for load balanced log files or to group several old log files.<br><br>Don't forget that the main goal of logresolvemerge is to send log records to<br>a log analyzer in a sorted order without merging files on disk (NO NEED<br>OF DISK SPACE AT ALL) and without loading files into memory (NO NEED<br>OF MORE MEMORY). Choose of output records is done on the fly.<br><br>So logresolvemerge is particularly usefull when you want to output several<br>and/or large log files in a fast process, with no use of disk or<br>more memory, and in a chronological order through a pipe (to be used by a log<br>analyzer).<br><br>Note: If input records are not 'exactly' sorted but 'nearly' sorted (this<br>occurs with heavy servers), this is not a problem, the output will also<br>be 'nearly' sorted but a few log analyzers (like AWStats) knowns how to deal<br>with such logs.<br><br>WARNING: If log files are old MAC text files (lines ended with CR char), you<br>can't run this tool on Win or Unix platforms.<br><br>WARNING: Because of memory holes in ActiveState Perl version, use another<br>Perl interpreter if you need to process large log files.<br><br>Now supports/detects:<br>&nbsp; Automatic detection of log format<br>&nbsp; Files can be .gz/.bz2 files if zcat/bzcat tools are available in PATH.<br>&nbsp; Multithreaded reverse DNS lookup (several parallel requests) with Perl 5.8+.<br>New versions and FAQ at http://www.awstats.org<br>
-<br>
+            <!-- 相关文档 -->
+            <div style="background: var(--surface-secondary); padding: 20px; border-radius: 20px; margin-top: 20px;">
+                <h3 style="margin-top: 0; color: var(--accent);" data-i18n="relatedLinks">📎 相关文档</h3>
+                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                    <a href="awstats_faq.html#MAIL" data-i18n="linkMailFAQ">邮件日志 FAQ</a>
+                    <a href="awstats_contrib.html" data-i18n="linkPlugins">插件资源</a>
+                    <a href="awstats_config.html" data-i18n="linkConfig">配置指南</a>
+                </div>
+            </div>
 
-<br>
-<br><a name="maillogconvert"><h2 style=""><u>maillogconvert.pl</u></h2></a>
-<br>maillogconvert is mail log preprocessor that convert a mail log file (from
-<br>postfix, sendmail or qmail servers) into a human readable format.
-<br>The output format is also ready to be used by a log analyzer, like AWStats.
-<br>
-<br>Usage:
-<br>  perl maillogconvert.pl [standard|vadmin] [year] &lt; logfile &gt; output
-<br>
-<br>The first parameter specifies what format the mail logfile is :
-<br>  standard - logfile is standard postfix,sendmail,qmail or mdaemon log format
-<br>  vadmin   - logfile is qmail log format with vadmin multi-host support
-<br>
-<br>The second parameter specifies what year to timestamp logfile with, if current
-<br>year is not the correct one (ie. 2002). Always use 4 digits. If not specified,
-<br>current year is used.
-<br>
-<br>If no output is specified, it goes to the console (stdout).
+            <!-- 署名 -->
+            <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-top: 20px;">
+                <span style="color: var(--text-secondary);" data-i18n="writtenBy">文章作者：<a href="https://www.destailleur.fr" rel="author">Laurent Destailleur</a>。</span>
+                <span class="badge" data-i18n="version">版本 8.1</span>
+            </div>
+        </div>
+    </main>
 
-<br>For example, the following sample from postfix mail log server:
-<br>
-<i>
-<br># 1 Mail fromuser@aol.com -&gt; touser@toserver.com, forward touser@toserver.com -&gt; touser@mainserver.com
-<br>Jan 01 07:27:31 apollon postfix/smtpd[1684]: connect from remt30.cluster1.charter.net[209.225.8.40]
-<br>Jan 01 07:27:32 apollon postfix/smtpd[1684]: 2BC793B8A4: client=remt30.cluster1.charter.net[209.225.8.40]
-<br>Jan 01 07:27:32 apollon postfix/cleanup[1687]: 2BC793B8A4: message-id=&lt;36027278@vneka&gt;
-<br>Jan 01 07:27:32 apollon postfix/qmgr[13860]: 2BC793B8A4: from=<fromuser @aol.com="">, size=2130, nrcpt=1 (queue active)
-<br>Jan 01 07:27:32 apollon postfix/smtpd[1684]: disconnect from remt30.cluster1.charter.net[209.225.8.40]
-<br>Jan 01 07:27:38 apollon postfix/local[1689]: 2BC793B8A4: to=<touser @mainserver.com="">, orig_to=<touser @toserver.com="">, relay=local, delay=6, status=sent ("|/usr/bin/procmail")
-<br># 2 Reject: 450
-<br>Jan 01 14:05:44 apollon postfix/smtpd[2114]: connect from baby.mainframe.nl[81.29.4.2]
-<br>Jan 01 14:05:44 apollon postfix/smtpd[2114]: E0C9D3BD9A: client=baby.mainframe.nl[81.29.4.2]
-<br>Jan 01 14:05:44 apollon postfix/smtpd[2114]: E0C9D3BD9A: reject: RCPT from baby.mainframe.nl[81.29.4.2]: 450 <touser2 @toserver.com="">: User unknown in local recipient table; from=&lt;&gt; to=<touser2 @toserver.com=""> proto=ESMTP helo=<baby.mainframe.nl>
-<br>Jan 01 14:10:16 juni postfix/smtpd[2568]: C34ED1432B: reject: RCPT from relay2.tp2rc.edu.tw[163.28.32.177]: 450 <unknownuser @unknownserver.com="">: User unknown in local recipient table; from=&lt;&gt; proto=ESMTP helo=<rmail.nccu.edu.tw>
-<br># 1 From unknown
-<br>Jan 01 15:17:05 apollon postfix/smtpd[29866]: connect from tomts12.bellnexxia.net[209.226.175.56]
-<br>Jan 01 15:17:05 apollon postfix/smtpd[29866]: 578093B8B5: client=tomts12.bellnexxia.net[209.226.175.56]
-<br>Jan 01 15:17:05 apollon postfix/cleanup[28931]: 578093B8B5:
-message-id=&lt;20030905131913.EOVH11393.tomts12-srv.bellnexxia.net@tomts12-srv&gt;
-<br>Jan 01 15:17:06 apollon postfix/qmgr[965]: 578093B8B5: from=&lt;&gt;, size=109367, nrcpt=1 (queue active)
-<br>Jan 01 15:17:06 apollon postfix/local[32432]: 578093B8B5: to=<touser @mainserver.com="">, orig_to=<touser @toserver.com="">, relay=local, delay=1, status=sent ("|/usr/bin/procmail")
-<br>Jan 01 15:17:06 apollon postfix/smtpd[29866]: disconnect from tomts12.bellnexxia.net[209.226.175.56]
-</touser></touser></rmail.nccu.edu.tw></unknownuser></baby.mainframe.nl></touser2></touser2></touser></touser></fromuser></i>
-<br>
-<br>will give a file that looks like this:
-<br>
-<i>
-<br>2004-01-01 07:27:38 fromuser@aol.com touser@toserver.com remt30.cluster1.charter.net localhost SMTP - 1 2130
-<br>2004-01-01 14:05:44 &lt;&gt; touser2@toserver.com baby.mainframe.nl - SMTP - 450 0
-<br>2004-01-01 14:10:16 &lt;&gt; unknownuser@unknownserver.com relay2.tp2rc.edu.tw - SMTP - 450 0
-<br>2004-01-01 15:17:06 &lt;&gt; touser@toserver.com tomts12.bellnexxia.net localhost SMTP - 1 109367
-</i>
-<br>
-<br>See <a href="awstats_faq.html#MAIL">FAQ-COM100</a> to see how to use maillogconvert.pl with AWStats to analyze mail log files.
-<br>
+    <!-- 返回顶部按钮 -->
+    <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="返回顶部">
+        ↑
+    </button>
 
-<br>
-<br>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-copyright">
+                © 1997 - <span id="currentYear"></span> Laurent Destailleur & AWStats <span data-i18n="copyright">团队</span>
+            </div>
+            <div class="footer-license">
+                <a href="awstats_license.html" data-i18n="licenseLink">GNU General Public License</a> · 
+                <a href="https://github.com/eldy/AWStats" rel="publisher" target="_blank" style="display: inline-flex; align-items: center;"><a data-i18n="authorLink"></a> 
+                </a>
+                    <img src="images/favicon.pub/github.svg" style="width: 24px; height: 24px;">
+                </div>
+            <div class="attribution" data-i18n="darkAttr">
+                🌓 自适应暗黑 · 现代化重构
+            </div>
+        </div>
+    </footer>
 
-<br>
-<br><a name="urlaliasbuilder"><h2 style=""><u>urlaliasbuilder.pl</u></h2></a>
-<br>Urlaliasbuilder generates an 'urlalias' file from an input file (an urlalias file
-<br>is a file with two columns: url and clear title of url).
-<br>The input file must contain a list of URLs (It can be an AWStats history file).
-<br>For each of thoose URLs, the script get the corresponding HTML page and catch the
-<br>header information (title), then it writes an output file that contains one line
-<br>for each URLs and several fields:
-<br>- The first field is the URL,
-<br>- The second is title caught from web page.
-<br>This resulting file can be used by AWStats urlalias plugin.
-<br>
-<br>Usage:   urlaliasbuilder.pl  -site=www.myserver.com  [options]
-<br>
-<br>The site parameter contains the web server to get the page from.
-<br>Where options are:
-<br>  -urllistfile=Input urllist file
-<br>	If this file is an AWStats history file then urlaliasbuilder will use the
-<br>    SIDER section of this file as its input URL's list.
-<br>  -urlaliasfile=Output urlalias file to build
-<br>  -overwrite    Overwrite output file if exists (by default appends to file).
-<br>  -secure       Use https protocol
-<br>
-<br>Example: urlaliasbuilder.pl -site=www.someotherhost.com
-<br>
-<br>New versions and FAQ at http://www.awstats.org
-<br>
-<br>This script was written from Simon Waight original works title-grabber.pl.
-<br>
-<br>
+    <script>
+        (function() {
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-<br>
-<hr>
+            // 翻译资源 - 中文和英文
+            const translations = {
+                zh: {
+                    navHome: "主页",
+                    navWhat: "什么是AWStats",
+                    navWebmin: "Webmin模块",
+                    navUpgrade: "升级指南",
+                    navTools: "其他工具",
+                    navFAQ: "FAQ",
+                    home: "主页",
+                    currentPage: "其他工具",
+                    
+                    siteTitle: "AWStats 8.1",
+                    headerSlogan: "⚡ 先进的日志分析器 · 官方文档",
+                    themeAuto: "自动",
+                    mainTitle: "其他工具",
+                    intro: "这是 AWStats 提供的其他工具列表。<br>所有这些工具都位于 AWStats 发行版的 <b>tools</b> 目录中。",
+                    
+                    updateallTitle: "awstats_updateall.pl",
+                    updateallDesc: "awstats_updateall 为特定目录中找到的所有 AWStats 配置文件（awstats.model.conf 除外）启动更新过程，因此您可以轻松设置 cron/scheduler 任务。默认扫描的目录是 /etc/awstats。",
+                    
+                    buildstaticTitle: "awstats_buildstaticpages.pl",
+                    buildstaticDesc: "awstats_buildstaticpages 允许您使用 -staticlinks 选项启动 AWStats，以构建 AWStats -output 选项允许的所有可能页面。",
+                    
+                    logresolvemergeTitle: "logresolvemerge.pl",
+                    logresolvemergeDesc: "logresolvemerge 允许您从特定源获取一个按日期排序的唯一输出日志文件：<br>&nbsp;- 可以读取多个输入日志文件，<br>&nbsp;- 可以读取 .gz/.bz2 日志文件，<br>&nbsp;- 还可以进行快速反向 DNS 查找，将结果日志文件中的所有 IP 地址替换为主机名。",
+                    logresolvemergeWarranty: "logresolvemerge 绝对不提供任何担保。它是一个自由软件，遵循 GNU 通用公共许可证发布（参见 COPYING.txt 文件）。logresolvemerge 是 AWStats 的一部分，但也可以单独用作日志合并器或解析器，然后再使用任何其他日志分析器。",
+                    logresolvemergeDetail: "此命令在命令行中运行 logresolvemerge，打开一个或多个服务器日志文件，合并它们（按日期排序）和/或进行反向 DNS 查找（如果要求）。结果日志文件发送到标准输出。",
+                    logresolvemergeNote: "注意：logresolvemerge 不是用于排序单个文件的'sort'工具。它是一个能够输出排序日志记录（可选包含反向 DNS 查找）的软件，即使日志记录分布在多个文件中也是如此。每个这些文件本身必须已经独立排序（但所有 Web 服务器日志文件都是如此）。因此，您可以将其用于负载均衡的日志文件或分组多个旧日志文件。",
+                    logresolvemergeGoal: "不要忘记 logresolvemerge 的主要目标是将日志记录以排序顺序发送给日志分析器，而无需在磁盘上合并文件（完全不需要磁盘空间）且无需将文件加载到内存中（不需要更多内存）。输出记录的选择是即时完成的。",
+                    logresolvemergeUseful: "因此，当您想要快速处理多个和/或大型日志文件，不使用磁盘或更多内存，并通过管道按时间顺序输出（供日志分析器使用）时，logresolvemerge 特别有用。",
+                    logresolvemergeSorted: "注意：如果输入记录不是'精确'排序而是'近乎'排序（这在重负载服务器上会发生），这不是问题，输出也将是'近乎'排序的，但一些日志分析器（如 AWStats）知道如何处理此类日志。",
+                    logresolvemergeWarning1: "如果日志文件是旧的 MAC 文本文件（行以 CR 字符结尾），您不能在 Windows 或 Unix 平台上运行此工具。",
+                    logresolvemergeWarning2: "由于 ActiveState Perl 版本的内存漏洞，如果您需要处理大型日志文件，请使用其他 Perl 解释器。",
+                    logresolvemergeSupport1: "自动检测日志格式",
+                    logresolvemergeSupport2: "如果 PATH 中有 zcat/bzcat 工具，文件可以是 .gz/.bz2 文件",
+                    logresolvemergeSupport3: "使用 Perl 5.8+ 的多线程反向 DNS 查找（多个并行请求）",
+                    
+                    maillogconvertTitle: "maillogconvert.pl",
+                    maillogconvertDesc: "maillogconvert 是邮件日志预处理器，可将邮件日志文件（来自 postfix、sendmail 或 qmail 服务器）转换为人类可读的格式。输出格式也可供日志分析器（如 AWStats）使用。",
+                    maillogconvertParams: "第一个参数指定邮件日志文件的格式：",
+                    maillogconvertYear: "第二个参数指定用于日志文件时间戳的年份，如果当前年份不正确（例如 2002）。始终使用 4 位数字。如果未指定，则使用当前年份。",
+                    maillogconvertOutput: "如果未指定输出，则输出到控制台（stdout）。",
+                    maillogconvertExample: "以下来自 postfix 邮件日志服务器的示例：",
+                    maillogconvertOutputExample: "将生成如下文件：",
+                    maillogconvertFaq: "查看 <a href=\"awstats_faq.html#MAIL\">FAQ-COM100</a> 了解如何使用 maillogconvert.pl 与 AWStats 分析邮件日志文件。",
+                    
+                    urlaliasbuilderTitle: "urlaliasbuilder.pl",
+                    urlaliasbuilderDesc: "Urlaliasbuilder 从输入文件生成 'urlalias' 文件（urlalias 文件是一个包含两列的文件：URL 和 URL 的清晰标题）。输入文件必须包含 URL 列表（可以是 AWStats 历史文件）。对于每个 URL，脚本获取相应的 HTML 页面并捕获头信息（标题），然后写入一个输出文件，其中包含每个 URL 的一行和多个字段：- 第一个字段是 URL，- 第二个是从网页捕获的标题。此结果文件可由 AWStats urlalias 插件使用。",
+                    urlaliasbuilderSite: "site 参数包含要获取页面的 Web 服务器。",
+                    urlaliasbuilderCredit: "此脚本由 Simon Waight 的原创作品 title-grabber.pl 编写而成。",
+                    
+                    usage: "用法：",
+                    options: "选项：",
+                    awstatsOptions: "awstats_options（AWStats 已知的任何选项）：",
+                    buildstaticOptions: "awstatsbuildstaticpages_options：",
+                    example: "示例：",
+                    warnings: "警告：",
+                    supports: "现在支持/检测：",
+                    
+                    // 选项说明翻译
+                    optAwstatsprog: "- 指定 AWStats 程序路径",
+                    optConfigdir: "- 指定配置文件目录",
+                    optConfig: "- config 参数的值（必需）",
+                    optUpdate: "- 在生成页面之前更新统计数据",
+                    optLang: "- 以 LL 语言输出 HTML 报告（en,de,es,fr,...）",
+                    optMonth: "- 为旧月份 MM 输出 HTML 报告",
+                    optYear: "- 为旧年份 YYYY 输出 HTML 报告",
+                    optBuildAwstatsprog: "- 指定 AWStats 软件（awstats.pl）路径",
+                    optDir: "- 设置生成页面的输出目录",
+                    optBuilddate: "- 在生成的文件名中添加构建日期",
+                    optStaticlinksext: "- 页面使用 .xxx 扩展名而非 .html",
+                    optBuildpdf: "- 构建 HTML 页面后构建 PDF 文件。使用此选项时，输出目录必须包含图标目录（需要 'htmldoc'）",
+                    optDnslookup: "- 对 IP 地址进行反向 DNS 查找",
+                    optDnslookupN: "- 同上，但使用 n 个并行线程而非串行请求",
+                    optDnscache: "- 在网络查找之前首先从缓存文件进行 DNS 查找",
+                    optShowsteps: "- 每处理 8192 行在 stderr 打印基准信息",
+                    optAddfilenum: "- 如果使用多个文件，可以在第一字段添加文件编号",
+                    optAddfilename: "- 如果使用多个文件，可以在输出文件的第一字段添加文件名。当日志文件来自多个负载均衡的计算机时，这可用于添加集群 ID",
+                    optStoponfirsteof: "- 当任何日志文件到达文件结尾时停止处理",
+                    optPrintfields: "- 对于 IIS 或 W3C 日志，在日志文件条目之间切换时打印当前日志文件的最新字段头，以便解析器自动确定可用字段",
+                    optIgnoremissing: "- 如果日志文件缺失，不会失败",
+                    optStandard: "- 日志文件是标准的 postfix、sendmail、qmail 或 mdaemon 日志格式",
+                    optVadmin: "- 日志文件是带有 vadmin 多主机支持的 qmail 日志格式",
+                    optUrllistfile: "- 如果此文件是 AWStats 历史文件，则 urlaliasbuilder 将使用该文件的 SIDER 部分作为其输入 URL 列表",
+                    optUrlaliasfile: "- 要构建的输出 urlalias 文件",
+                    optOverwrite: "- 如果输出文件存在则覆盖（默认追加到文件）",
+                    optSecure: "- 使用 https 协议",
+                    
+                    relatedLinks: "📎 相关文档",
+                    linkMailFAQ: "邮件日志 FAQ",
+                    linkPlugins: "插件资源",
+                    linkConfig: "配置指南",
+                    
+                    writtenBy: "文章作者：<a href=\"https://www.destailleur.fr\" rel=\"author\">Laurent Destailleur</a>。",
+                    version: "版本 8.1",
+                    copyright: "© 2000 - {year} Laurent Destailleur & AWStats 团队",
+                    licenseLink: "GNU通用公共许可证",
+                    authorLink: "原作者",
+                    darkAttr: "🌓 自适应暗黑 · 中文/English",
+                },
+                en: {
+                    navHome: "Home",
+                    navWhat: "What is AWStats",
+                    navWebmin: "Webmin Module",
+                    navUpgrade: "Upgrade Guide",
+                    navTools: "Other Tools",
+                    navFAQ: "FAQ",
+                    home: "Home",
+                    currentPage: "Other Tools",
+                    
+                    siteTitle: "AWStats 8.1",
+                    headerSlogan: "⚡ Advanced Log Analyzer · Official Docs",
+                    themeAuto: "Auto",
+                    mainTitle: "Other Utilities",
+                    intro: "This is a list of other tools provided with AWStats.<br>All those tools are available in <b>tools</b> directory of AWStats distribution.",
+                    
+                    updateallTitle: "awstats_updateall.pl",
+                    updateallDesc: "awstats_updateall launches update process for all AWStats config files (except awstats.model.conf) found in a particular directory, so you can easily setup a cron/scheduler job. The scanned directory is by default /etc/awstats.",
+                    
+                    buildstaticTitle: "awstats_buildstaticpages.pl",
+                    buildstaticDesc: "awstats_buildstaticpages allows you to launch AWStats with -staticlinks option to build all possible pages allowed by AWStats -output option.",
+                    
+                    logresolvemergeTitle: "logresolvemerge.pl",
+                    logresolvemergeDesc: "logresolvemerge allows you to get one unique output log file, sorted on date, built from particular sources:<br>&nbsp;- It can read several input log files,<br>&nbsp;- It can read .gz/.bz2 log files,<br>&nbsp;- It can also makes a fast reverse DNS lookup to replace all IP addresses into host names in resulting log file.",
+                    logresolvemergeWarranty: "logresolvemerge comes with ABSOLUTELY NO WARRANTY. It's a free software distributed with a GNU General Public License (See COPYING.txt file). logresolvemerge is part of AWStats but can be used alone as a log merger or resolver before using any other log analyzer.",
+                    logresolvemergeDetail: "This runs logresolvemerge in command line to open one or several server log files to merge them (sorted on date) and/or to make a reverse DNS lookup (if asked). The result log file is sent on standard output.",
+                    logresolvemergeNote: "Note: logresolvemerge is not a 'sort' tool to sort one file. It's a software able to output sorted log records (with a reverse DNS lookup included or not) even if log records are dispatched in several files. Each of thoose files must be already independently sorted itself (but that is the case in all web server log files). So you can use it for load balanced log files or to group several old log files.",
+                    logresolvemergeGoal: "Don't forget that the main goal of logresolvemerge is to send log records to a log analyzer in a sorted order without merging files on disk (NO NEED OF DISK SPACE AT ALL) and without loading files into memory (NO NEED OF MORE MEMORY). Choose of output records is done on the fly.",
+                    logresolvemergeUseful: "So logresolvemerge is particularly usefull when you want to output several and/or large log files in a fast process, with no use of disk or more memory, and in a chronological order through a pipe (to be used by a log analyzer).",
+                    logresolvemergeSorted: "Note: If input records are not 'exactly' sorted but 'nearly' sorted (this occurs with heavy servers), this is not a problem, the output will also be 'nearly' sorted but a few log analyzers (like AWStats) knowns how to deal with such logs.",
+                    logresolvemergeWarning1: "If log files are old MAC text files (lines ended with CR char), you can't run this tool on Win or Unix platforms.",
+                    logresolvemergeWarning2: "Because of memory holes in ActiveState Perl version, use another Perl interpreter if you need to process large log files.",
+                    logresolvemergeSupport1: "Automatic detection of log format",
+                    logresolvemergeSupport2: "Files can be .gz/.bz2 files if zcat/bzcat tools are available in PATH.",
+                    logresolvemergeSupport3: "Multithreaded reverse DNS lookup (several parallel requests) with Perl 5.8+.",
+                    
+                    maillogconvertTitle: "maillogconvert.pl",
+                    maillogconvertDesc: "maillogconvert is mail log preprocessor that convert a mail log file (from postfix, sendmail or qmail servers) into a human readable format. The output format is also ready to be used by a log analyzer, like AWStats.",
+                    maillogconvertParams: "The first parameter specifies what format the mail logfile is :",
+                    maillogconvertYear: "The second parameter specifies what year to timestamp logfile with, if current year is not the correct one (ie. 2002). Always use 4 digits. If not specified, current year is used.",
+                    maillogconvertOutput: "If no output is specified, it goes to the console (stdout).",
+                    maillogconvertExample: "For example, the following sample from postfix mail log server:",
+                    maillogconvertOutputExample: "will give a file that looks like this:",
+                    maillogconvertFaq: "See <a href=\"awstats_faq.html#MAIL\">FAQ-COM100</a> to see how to use maillogconvert.pl with AWStats to analyze mail log files.",
+                    
+                    urlaliasbuilderTitle: "urlaliasbuilder.pl",
+                    urlaliasbuilderDesc: "Urlaliasbuilder generates an 'urlalias' file from an input file (an urlalias file is a file with two columns: url and clear title of url). The input file must contain a list of URLs (It can be an AWStats history file). For each of thoose URLs, the script get the corresponding HTML page and catch the header information (title), then it writes an output file that contains one line for each URLs and several fields: - The first field is the URL, - The second is title caught from web page. This resulting file can be used by AWStats urlalias plugin.",
+                    urlaliasbuilderSite: "The site parameter contains the web server to get the page from.",
+                    urlaliasbuilderCredit: "This script was written from Simon Waight original works title-grabber.pl.",
+                    
+                    usage: "Usage:",
+                    options: "Options:",
+                    awstatsOptions: "awstats_options are any option known by AWStats:",
+                    buildstaticOptions: "awstatsbuildstaticpages_options:",
+                    example: "Example:",
+                    warnings: "Warnings:",
+                    supports: "Now supports/detects:",
+                    
+                    // 选项说明翻译
+                    optAwstatsprog: "- Specify AWStats program path",
+                    optConfigdir: "- Specify config directory to scan",
+                    optConfig: "- config parameter value (required)",
+                    optUpdate: "- Update statistics before generating pages",
+                    optLang: "- Output HTML report in language LL (en,de,es,fr,...)",
+                    optMonth: "- Output HTML report for old month MM",
+                    optYear: "- Output HTML report for old year YYYY",
+                    optBuildAwstatsprog: "- Specify AWStats software (awstats.pl) path",
+                    optDir: "- Set output directory for generated pages",
+                    optBuilddate: "- Add build date in built pages filenames",
+                    optStaticlinksext: "- For pages with .xxx extension instead of .html",
+                    optBuildpdf: "- Build a PDF file after building HTML pages. Output directory must contains icon directory when this option is used (need 'htmldoc')",
+                    optDnslookup: "- Make a reverse DNS lookup on IP adresses",
+                    optDnslookupN: "- Same with n parallel threads instead of serial requests",
+                    optDnscache: "- Make DNS lookup from cache file first before network lookup",
+                    optShowsteps: "- Print on stderr benchmark information every 8192 lines",
+                    optAddfilenum: "- If used with several files, file number can be added in first field",
+                    optAddfilename: "- If used with several files, file name can be added in first field of output file. This can be used to add a cluster id when log files come from several load balanced computers",
+                    optStoponfirsteof: "- Stop processing when any logfile reaches end-of-file",
+                    optPrintfields: "- For IIS or W3C logs, prints the latest field header for the currentlog file when switching between log file entries so that the parser can automatically determine which fields are avaiable",
+                    optIgnoremissing: "- Will not fail if a log file is missing",
+                    optStandard: "- logfile is standard postfix,sendmail,qmail or mdaemon log format",
+                    optVadmin: "- logfile is qmail log format with vadmin multi-host support",
+                    optUrllistfile: "- If this file is an AWStats history file then urlaliasbuilder will use the SIDER section of this file as its input URL's list",
+                    optUrlaliasfile: "- Output urlalias file to build",
+                    optOverwrite: "- Overwrite output file if exists (by default appends to file)",
+                    optSecure: "- Use https protocol",
+                    
+                    relatedLinks: "📎 Related Documents",
+                    linkMailFAQ: "Mail Log FAQ",
+                    linkPlugins: "Plugins",
+                    linkConfig: "Configuration Guide",
+                    
+                    writtenBy: "Article written by <a href=\"https://www.destailleur.fr\" rel=\"author\">Laurent Destailleur</a>.",
+                    version: "Version 8.1",
+                    copyright: "© 2000 - {year} Laurent Destailleur & AWStats Team",
+                    licenseLink: "GNU General Public License",
+                    authorLink: "Author",
+                    darkAttr: "🌓 Adaptive dark mode · 中文/English",
+                }
+            };
 
-<!-- You can remove this part if you distribution need documentation without external tags -->
-<!-- BEGIN_SOCIAL_NETWORKS -->
-<div class="htmldoc-ignore">
-<!-- google plus -->
-<span style="color: #bbb; font-weight: normal;">Article written by <a href="https://www.destailleur.fr" rel="author" style="color: #ccc; font-weight: normal;">Laurent Destailleur</a>.</span><br>
-<br>
-<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-<g:plusone></g:plusone>
-<!-- facebook -->
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/fr_FR/all.js#xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-<div class="fb-like" data-href="http://www.awstats.org/docs/awstats_tools.html" data-layout="button_count" data-action="recommend" data-show-faces="false" data-share="true"></div>
-</div>
-<!-- END_SOCIAL_NETWORKS -->
+            const i18nElements = document.querySelectorAll('[data-i18n]');
+            const langSelector = document.getElementById('langSelector');
+            let currentLang = localStorage.getItem('awstats_lang') || 'zh';
+            langSelector.value = currentLang;
 
-</body></html>
+            function applyLanguage(lang) {
+                const t = translations[lang] || translations.zh;
+                i18nElements.forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (t[key] !== undefined) {
+                        // 特殊处理：如果是代码块前后的标签文字，需要保留HTML结构
+                        if (key === 'copyright') {
+                            const year = new Date().getFullYear();
+                            el.innerHTML = t[key].replace('{year}', year);
+                        } else if (key === 'intro' || key === 'writtenBy' || key.includes('Desc') || key.includes('Detail') || key.includes('Note') || key.includes('Goal') || key.includes('Useful') || key.includes('Sorted') || key.includes('Example') || key.includes('Faq') || key.includes('Params') || key.includes('Year') || key.includes('Output') || key.includes('Site') || key.includes('Credit')) {
+                            // 这些是包含HTML的文本内容
+                            el.innerHTML = t[key];
+                        } else if (key === 'usage' || key === 'options' || key === 'awstatsOptions' || key === 'buildstaticOptions' || key === 'example' || key === 'warnings' || key === 'supports' || key.startsWith('opt')) {
+                            // 这些是标签文字和选项说明，直接替换文本
+                            el.textContent = t[key];
+                        } else {
+                            el.textContent = t[key];
+                        }
+                    }
+                });
+                localStorage.setItem('awstats_lang', lang);
+                
+                const themeState = localStorage.getItem('awstats_theme') || 'auto';
+                const themeText = document.querySelector('.theme-text');
+                if (themeText) {
+                    if (themeState === 'auto') themeText.textContent = t.themeAuto;
+                    else if (themeState === 'light') themeText.textContent = (lang === 'zh' ? '浅色' : 'Light');
+                    else themeText.textContent = (lang === 'zh' ? '深色' : 'Dark');
+                }
+            }
+
+            applyLanguage(currentLang);
+
+            langSelector.addEventListener('change', (e) => {
+                currentLang = e.target.value;
+                applyLanguage(currentLang);
+            });
+
+            // 暗黑模式切换
+            const root = document.documentElement;
+            const themeBtn = document.getElementById('themeToggleBtn');
+            let themeState = localStorage.getItem('awstats_theme') || 'auto';
+
+            function applyTheme(state) {
+                root.classList.remove('force-light', 'force-dark');
+                if (state === 'light') root.classList.add('force-light');
+                else if (state === 'dark') root.classList.add('force-dark');
+                const themeText = document.querySelector('.theme-text');
+                if (themeText) {
+                    const lang = currentLang;
+                    const t = translations[lang];
+                    if (state === 'auto') themeText.textContent = t.themeAuto;
+                    else if (state === 'light') themeText.textContent = (lang === 'zh' ? '浅色' : 'Light');
+                    else themeText.textContent = (lang === 'zh' ? '深色' : 'Dark');
+                }
+                localStorage.setItem('awstats_theme', state);
+            }
+            applyTheme(themeState);
+            themeBtn.addEventListener('click', () => {
+                if (themeState === 'auto') themeState = 'light';
+                else if (themeState === 'light') themeState = 'dark';
+                else themeState = 'auto';
+                applyTheme(themeState);
+            });
+        })();
+    </script>
+</body>
+</html>

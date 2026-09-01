@@ -1,0 +1,3333 @@
+# AWStats Hebrew (he) translations
+# Copyright (C) 2026 AWStats
+# This file is distributed under the same license as the AWStats package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: AWStats 8.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-10 12:00+0000\n"
+"PO-Revision-Date: 2026-05-10 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Hebrew\n"
+"Language: he\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#------------------------------------------------------------------------------
+# שמות חודשים
+#------------------------------------------------------------------------------
+
+msgid "month_01"
+msgstr "ינואר"
+
+msgid "month_02"
+msgstr "פברואר"
+
+msgid "month_03"
+msgstr "מרץ"
+
+msgid "month_04"
+msgstr "אפריל"
+
+msgid "month_05"
+msgstr "מאי"
+
+msgid "month_06"
+msgstr "יוני"
+
+msgid "month_07"
+msgstr "יולי"
+
+msgid "month_08"
+msgstr "אוגוסט"
+
+msgid "month_09"
+msgstr "ספטמבר"
+
+msgid "month_10"
+msgstr "אוקטובר"
+
+msgid "month_11"
+msgstr "נובמבר"
+
+msgid "month_12"
+msgstr "דצמבר"
+
+msgid "month_13"
+msgstr "אדר א׳"
+
+#------------------------------------------------------------------------------
+# שמות ימי השבוע
+#------------------------------------------------------------------------------
+
+msgid "DayOfWeek_0"
+msgstr "ראשון"
+
+msgid "DayOfWeek_1"
+msgstr "שני"
+
+msgid "DayOfWeek_2"
+msgstr "שלישי"
+
+msgid "DayOfWeek_3"
+msgstr "רביעי"
+
+msgid "DayOfWeek_4"
+msgstr "חמישי"
+
+msgid "DayOfWeek_5"
+msgstr "שישי"
+
+msgid "DayOfWeek_6"
+msgstr "שבת"
+
+#------------------------------------------------------------------------------
+# רכיבי ממשק
+#------------------------------------------------------------------------------
+
+msgid "Advanced Web Statistics for"
+msgstr "סטטיסטיקות רשת מתקדמות עבור"
+
+msgid "Statistics for"
+msgstr "סטטיסטיקות עבור"
+
+msgid "main"
+msgstr "תקציר"
+
+# החלפת נושא
+msgid "Switch to light mode"
+msgstr "עבור למצב בהיר"
+
+msgid "Switch to dark mode"
+msgstr "עבור למצב כהה"
+
+# יחידות קיבולת
+msgid "TB"
+msgstr "TB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "Bytes"
+msgstr "בתים"
+
+# רכיבי טופס
+msgid "Filter"
+msgstr "סנן"
+
+msgid "Exclude filter"
+msgstr "החרג מסנן"
+
+msgid "Top"
+msgstr "ראשי"
+
+msgid "Full list"
+msgstr "רשימה מלאה"
+
+msgid "Last"
+msgstr "אחרון"
+
+msgid "Average"
+msgstr "ממוצע"
+
+msgid "Total"
+msgstr "סה\"כ"
+
+msgid "Percent"
+msgstr "אחוז"
+
+msgid "Export"
+msgstr "ייצא"
+
+msgid "Details"
+msgstr "פרטים"
+
+msgid "Version"
+msgstr "גרסה"
+
+# מפריד אלפים
+msgid "thousands_separator"
+msgstr ","
+
+msgid "dateformat_long"
+msgstr "HH:MM:SS dd/mm/yyyy"
+
+msgid "dateformat_short"
+msgstr "HH:MM dd/mm/yyyy"
+
+msgid "date_format_year"
+msgstr "%s"
+
+msgid "date_format_month"
+msgstr "%2$s %1$s"
+
+#------------------------------------------------------------------------------
+# סרגל ניווט
+#------------------------------------------------------------------------------
+
+msgid "AWStats Month Selector"
+msgstr "בורר חודש AWStats"
+
+msgid "nav_category_basic"
+msgstr "תיעוד בסיסי"
+
+msgid "nav_category_guide"
+msgstr "מדריך שימוש"
+
+msgid "nav_category_reference"
+msgstr "משאבי עזר"
+
+msgid "nav_category_integration"
+msgstr "אינטגרציה והרחבה"
+
+msgid "nav_category_dev"
+msgstr "תיעוד מפתחים"
+
+msgid "nav_changelog"
+msgstr "יומן שינויים"
+
+msgid "nav_what"
+msgstr "מה זה AWStats"
+
+msgid "nav_license"
+msgstr "רישיון"
+
+msgid "nav_glossary"
+msgstr "מונחון"
+
+msgid "nav_setup"
+msgstr "התקנה ותצורה"
+
+msgid "nav_upgrade"
+msgstr "מדריך שדרוג"
+
+msgid "nav_config"
+msgstr "פרמטרי תצורה"
+
+msgid "nav_extra"
+msgstr "חלקים נוספים"
+
+msgid "nav_tools"
+msgstr "כלים נוספים"
+
+msgid "nav_faq"
+msgstr "שאלות נפוצות"
+
+msgid "nav_security"
+msgstr "המלצות אבטחה"
+
+msgid "nav_compare"
+msgstr "השוואה"
+
+msgid "nav_benchmark"
+msgstr "בדיקת ביצועים"
+
+msgid "nav_webmin"
+msgstr "מודול Webmin"
+
+msgid "nav_dolibarr"
+msgstr "מודול Dolibarr"
+
+msgid "nav_contrib"
+msgstr "משאבי תרומה"
+
+msgid "nav_plugins"
+msgstr "פיתוח תוספים"
+
+msgid "nav_hooks"
+msgstr "קרסי תוספים"
+
+msgid "nav_graphs"
+msgstr "גרפי תוספים"
+
+msgid "Back to top"
+msgstr "חזרה לראש העמוד"
+
+msgid "nav_select_month"
+msgstr "בחר חודש"
+
+#------------------------------------------------------------------------------
+# מדדים סטטיסטיים עיקריים
+#------------------------------------------------------------------------------
+
+# ביקורים
+msgid "Unique visitors"
+msgstr "מבקרים ייחודיים"
+
+msgid "Visits"
+msgstr "ביקורים"
+
+msgid "Visits duration"
+msgstr "משך ביקור"
+
+msgid "First visit"
+msgstr "עדכון ראשון"
+
+msgid "Last visit"
+msgstr "עדכון אחרון"
+
+msgid "Visits/Visitor"
+msgstr "ביקורים/מבקר"
+
+msgid "Pages/Visit"
+msgstr "עמודים/ביקור"
+
+msgid "Hits/Visit"
+msgstr "בקשות/ביקור"
+
+msgid "KB/Visit"
+msgstr "KB/ביקור"
+
+msgid "KB/Visits"
+msgstr "KB/ביקורים"
+
+# תעבורה
+msgid "Pages"
+msgstr "מספר עמודים"
+
+msgid "Hits"
+msgstr "מספר בקשות"
+
+msgid "Bandwidth"
+msgstr "רוחב פס"
+
+msgid "duration_format"
+msgstr "%s-%s"
+
+msgid "unit_s"
+msgstr "ש'"
+
+msgid "unit_min"
+msgstr "דק'"
+
+msgid "unit_h"
+msgstr "ש\"ע"
+
+msgid "and"
+msgstr "-"
+
+msgid "Device Types"
+msgstr "סוגי מכשירים"
+
+msgid "Device Type"
+msgstr "סוג מכשיר"
+
+# שמות סוגי מכשירים
+msgid "Mobile"
+msgstr "טלפון נייד"
+
+msgid "Pause & Go"
+msgstr "השהה והמשך"
+
+msgid "Complete"
+msgstr "השלם"
+
+msgid "Tablet"
+msgstr "טאבלט"
+
+msgid "Tv"
+msgstr "טלוויזיה"
+
+msgid "Wearable"
+msgstr "מכשיר לביש"
+
+msgid "Bot"
+msgstr "בוט"
+
+msgid "Desktop"
+msgstr "מחשב שולחני"
+
+msgid "Normal browsing traffic"
+msgstr "תעבורת גלישה רגילה"
+
+msgid "Abnormal browsing traffic"
+msgstr "תעבורת גלישה חריגה"
+
+msgid "Viewed"
+msgstr "נצפה"
+
+msgid "Not viewed"
+msgstr "לא נצפה"
+
+msgid "Abnormal browsing traffic note"
+msgstr "תעבורת גלישה חריגה כוללת: רובוטי חיפוש, בוטים לאימון בינה מלאכותית, סורקי פגיעויות ובקשות שאינן תואמות את מפרטי HTTP/HTTPS"
+
+# קבצים
+msgid "File size"
+msgstr "גודל קובץ"
+
+msgid "File type"
+msgstr "סוג קובץ"
+
+msgid "Downloads"
+msgstr "הורדות"
+
+msgid "Request time"
+msgstr "זמן בקשה"
+
+msgid "Total requests"
+msgstr "סה\"כ בקשות"
+
+msgid "Frequency"
+msgstr "תדירות"
+
+msgid "Average frequency"
+msgstr "תדירות ממוצעת"
+
+msgid "Seconds"
+msgstr "שניות"
+
+# דואר אלקטרוני (עבור LogType eq 'M')
+msgid "First"
+msgstr "ראשון"
+
+msgid "Mails"
+msgstr "מספר הודעות דואר"
+
+msgid "Size"
+msgstr "גודל"
+
+msgid "If you remove this file, all statistics for date"
+msgstr "אזהרה: אם תסיר קובץ זה, כל הנתונים הסטטיסטיים עבור התאריך"
+
+msgid "will be lost/reset."
+msgstr "יאבדו/יאופסו לצמיתות."
+
+msgid "Last config file used to build this data file was"
+msgstr "קובץ התצורה האחרון שבו נעשה שימוש לבניית קובץ נתונים זה היה"
+
+msgid "Position (offset in bytes) in this file for beginning of each section for"
+msgstr "קטע MAP בקובץ זה מתעד את מיקומי ההיסט של בייטים עבור תחילת כל קטע, כך ש"
+
+msgid "direct I/O access. If you made changes somewhere in this file, you should"
+msgstr "AWStats יוכל לגשת במהירות לנתונים. אם ביצעת שינויים ידניים בקובץ זה, עליך"
+
+msgid "also remove completely the MAP section (AWStats will rewrite it at next update)"
+msgstr "להסיר לחלוטין את קטע MAP (AWStats יכתוב אותו מחדש בעדכון הבא)."
+
+msgid "LastLine    = Date of last record processed - Last record line number in last log - Last record offset in last log - Last record signature value"
+msgstr "LastLine    = תאריך הרשומה האחרונה שעובדה - מספר שורת הרשומה האחרונה בלוג האחרון - היסט הרשומה האחרונה בלוג האחרון - ערך חתימת הרשומה האחרונה"
+
+msgid "FirstTime   = Date of first visit for history file"
+msgstr "FirstTime   = תאריך הביקור הראשון עבור קובץ ההיסטוריה"
+
+msgid "LastTime    = Date of last visit for history file"
+msgstr "LastTime    = תאריך הביקור האחרון עבור קובץ ההיסטוריה"
+
+msgid "LastUpdate  = Date of last update - Nb of parsed records - Nb of parsed old records - Nb of parsed new records - Nb of parsed corrupted - Nb of parsed dropped"
+msgstr "LastUpdate  = תאריך העדכון האחרון - מספר הרשומות שעובדו - מספר הרשומות הישנות שעובדו - מספר הרשומות החדשות שעובדו - מספר הרשומות הפגומות - מספר הרשומות שהושלכו"
+
+msgid "TotalVisits = Number of visits"
+msgstr "TotalVisits = מספר ביקורים"
+
+msgid "TotalUnique = Number of unique visitors"
+msgstr "TotalUnique = מספר מבקרים ייחודיים"
+
+msgid "MonthHostsKnown   = Number of hosts known"
+msgstr "MonthHostsKnown   = מספר מארחים ידועים"
+
+msgid "MonthHostsUnKnown = Number of hosts unknown"
+msgstr "MonthHostsUnKnown = מספר מארחים לא ידועים"
+
+msgid "Cluster ID - Pages - Hits - Bandwidth"
+msgstr "מזהה אשכול - מספר עמודים - מספר בקשות - רוחב פס"
+
+msgid "Hour - Pages - Hits - Bandwidth - Not viewed Pages - Not viewed Hits - Not viewed Bandwidth"
+msgstr "שעה - מספר עמודים - מספר בקשות - רוחב פס - עמודים שלא נצפו - בקשות שלא נצפו - רוחב פס שלא נצפה"
+
+msgid "Date - Pages - Hits - Bandwidth - Visits"
+msgstr "תאריך - מספר עמודים - מספר בקשות - רוחב פס - ביקורים"
+
+msgid "Domain - Pages - Hits - Bandwidth"
+msgstr "דומיין - מספר עמודים - מספר בקשות - רוחב פס"
+
+msgid "The %s first Pages must be first (order not required for others)"
+msgstr "העמוד הראשי מציג רק את %s העמודים הראשונים עם מספר הצפיות הגבוה ביותר. עיין ברשימה המלאה בעמוד הפרטים."
+
+msgid "Host - Pages - Hits - Bandwidth - Last visit date - [Start date of last visit] - [Last page of last visit]"
+msgstr "מארח - מספר עמודים - מספר בקשות - רוחב פס - תאריך ביקור אחרון - [תאריך התחלת הביקור האחרון] - [עמוד אחרון של הביקור האחרון]"
+
+msgid "[Start date of last visit] and [Last page of last visit] are saved only if session is not finished"
+msgstr "[תאריך התחלת הביקור האחרון] ו-[עמוד אחרון של הביקור האחרון] נשמרים רק אם הסשן לא הסתיים"
+
+msgid "The first %s items are sorted by hits in descending order; order of the remaining items is undefined."
+msgstr "%s הפריטים הראשונים ממוינים לפי מספר הכניסות בסדר יורד; סדר הפריטים הנותרים אינו מוגדר."
+
+msgid "Login - Pages - Hits - Bandwidth - Last visit"
+msgstr "משתמש מחובר - מספר עמודים - מספר בקשות - רוחב פס - זמן ביקור אחרון"
+
+msgid "Robot ID - Hits - Bandwidth - Last visit - Hits on robots.txt"
+msgstr "מזהה רובוט - מספר בקשות - רוחב פס - זמן ביקור אחרון - בקשות ל-robots.txt"
+
+msgid "Worm ID - Hits - Bandwidth - Last visit"
+msgstr "מזהה תולעת - מספר בקשות - רוחב פס - זמן ביקור אחרון"
+
+msgid "EMail - Hits - Bandwidth - Last visit"
+msgstr "דואר אלקטרוני - מספר בקשות - רוחב פס - זמן ביקור אחרון"
+
+msgid "The first %s email addresses are sorted by hits in descending order; order of the remaining addresses is undefined."
+msgstr "%s כתובות הדואר האלקטרוני הראשונות ממוינות לפי מספר הכניסות בסדר יורד; סדר הכתובות הנותרות אינו מוגדר."
+
+msgid "URL - Pages - Bandwidth - Entry - Exit"
+msgstr "URL - מספר עמודים - רוחב פס - כניסה - יציאה"
+
+msgid "Files type - Hits - Bandwidth - Bandwidth without compression - Bandwidth after compression"
+msgstr "סוג קובץ - מספר בקשות - רוחב פס - רוחב פס ללא דחיסה - רוחב פס לאחר דחיסה"
+
+msgid "Request Time Range - Request Time Frequency"
+msgstr "טווח זמן בקשה - תדירות זמן בקשה"
+
+msgid "Payload Range - Payload Frequency"
+msgstr "טווח גודל קובץ - מספר קבצים"
+
+msgid "Session range - Number of visits"
+msgstr "טווח משך סשן - מספר ביקורים"
+
+msgid "URL with %s errors - Hits"
+msgstr "URL עם %s שגיאות - מספר בקשות"
+
+msgid "Last URL referrer"
+msgstr "כתובת URL מפנה אחרונה"
+
+msgid "Errors - Hits - Bandwidth"
+msgstr "שגיאות - מספר בקשות - רוחב פס"
+
+msgid "Search keywords - Number of search"
+msgstr "מילות מפתח - מספר חיפושים"
+
+msgid "Only top %s keywords shown on main page (sorted by search count). See full list on detail page."
+msgstr "העמוד הראשי מציג רק את %s מילות המפתח הראשונות (ממוינות לפי מספר חיפושים). עיין ברשימה המלאה בעמוד הפרטים."
+
+msgid "Search keyphrases - Number of search"
+msgstr "ביטויי מפתח - מספר חיפושים"
+
+msgid "Only top %s keyphrases shown on main page (sorted by search count). See full list on detail page."
+msgstr "העמוד הראשי מציג רק את %s ביטויי המפתח הראשונים (ממוינים לפי מספר חיפושים). עיין ברשימה המלאה בעמוד הפרטים."
+
+msgid "External page referers - Pages - Hits"
+msgstr "מפנים חיצוניים - מספר עמודים - מספר בקשות"
+
+msgid "Only top %s external referrers shown on main page (sorted by pages). See full list on detail page."
+msgstr "העמוד הראשי מציג רק את %s המפנים החיצוניים הראשונים (ממוינים לפי מספר עמודים). עיין ברשימה המלאה בעמוד הפרטים."
+
+msgid "Search engine referers ID - Pages - Hits"
+msgstr "מזהה מפנה ממנוע חיפוש - מספר עמודים - מספר בקשות"
+
+msgid "Origin - Pages - Hits"
+msgstr "מקור - מספר עמודים - מספר בקשות"
+
+msgid "Unknown referer Browser - Last visit date"
+msgstr "דפדפן מפנה לא ידוע - תאריך ביקור אחרון"
+
+msgid "Unknown referer OS - Last visit date"
+msgstr "מערכת הפעלה מפנה לא ידועה - תאריך ביקור אחרון"
+
+msgid "Screen size - Hits"
+msgstr "רזולוציית מסך - מספר בקשות"
+
+msgid "Browser ID - Hits - Pages"
+msgstr "מזהה דפדפן - מספר לחיצות - מספר עמודים"
+
+msgid "Downloads - Hits - Bandwidth"
+msgstr "הורדות - מספר בקשות - רוחב פס"
+
+msgid "Protocol - Hits - Bandwidth"
+msgstr "פרוטוקול - מספר בקשות - רוחב פס"
+
+msgid "Icon Status - Type:200:404:Other"
+msgstr "מצב סמל - סוג:200:404:אחר"
+
+#------------------------------------------------------------------------------
+# תרגומי תקופות זמן
+#------------------------------------------------------------------------------
+
+msgid "period_00"
+msgstr "חצות · AWStats ישן, ואתה עדיין מסתכל על נתונים? אהבת אמת"
+
+msgid "period_01"
+msgstr "שעה 1 · מבקר בשעה הזו? נדודי שינה או בדיוק סיימת לעבוד"
+
+msgid "period_02"
+msgstr "שעה 2 · בוטים חרוצים ממך, הם עדיין עובדים"
+
+msgid "period_03"
+msgstr "שעה 3 · העיר ישנה, השרת עובד שעות נוספות, מי במצב גרוע יותר?"
+
+msgid "period_04"
+msgstr "שעה 4 · הכוכב הבהיר ביותר בחושך, המסך שלך או נורית החיווי של השרת"
+
+msgid "period_05"
+msgstr "שעה 5 · ציפור מוקדמת תופסת את התולעת, בוט מוקדם אוסף את הנתונים"
+
+msgid "period_06"
+msgstr "שעה 6 · מישהו קם, מישהו עדיין לא ישן, האינטרנט לעולם לא נסגר"
+
+msgid "period_07"
+msgstr "שעה 7 · זמן לעומס ברכבת התחתית, גם זמן לגלוש באינטרנט"
+
+msgid "period_08"
+msgstr "שעה 8 · הדבר הראשון כשמתחילים לעבוד: תסתכל על הנתונים של אתמול"
+
+msgid "period_09"
+msgstr "שעה 9 · שעת זהב, אפילו להתבטל יש חוקים"
+
+msgid "period_10"
+msgstr "שעה 10 · זמן לקפה, בדוק בדרך אם התעבורה גדלה"
+
+msgid "period_11"
+msgstr "שעה 11 · עוד שעה לארוחת צהריים, תחזיק מעמד עוד קצת"
+
+msgid "period_12"
+msgstr "צהריים · שרת: כולכם הלכתם לארוחת צהריים, אני אנוח מעט"
+
+msgid "period_13"
+msgstr "שעה 13 · ישנוניות אחרי ארוחת צהריים, אבל נתונים לא ישנים"
+
+msgid "period_14"
+msgstr "שעה 14 · זמן לנשנוש אחר הצהריים, עם נתונים זה טעים יותר"
+
+msgid "period_15"
+msgstr "שעה 15 · גרף מגמת התעבורה של היום, האם הוא דומה לעקומת מצב הרוח שלך?"
+
+msgid "period_16"
+msgstr "שעה 16 · נותרו X שעות עד סיום העבודה, התעבורה מתחילה להאיץ"
+
+msgid "period_17"
+msgstr "שעה 17 · סיום העבודה! אבל השרת חייב להמשיך לעבוד"
+
+msgid "period_18"
+msgstr "שעה 18 · זמן ארוחת ערב, צפה בסרטון כדי להירגע"
+
+msgid "period_19"
+msgstr "שעה 19 · שעת שיא, תעבורת שיא, שרת: אני עומד בזה"
+
+msgid "period_20"
+msgstr "שעה 20 · שרוע על הספה, אתה המבקר מספר 114514"
+
+msgid "period_21"
+msgstr "שעה 21 · מאוחר בלילה, צופי נתונים בסתר +1"
+
+msgid "period_22"
+msgstr "שעה 22 · הנתונים של היום יהיו מוכנים בקרוב, לחוץ?"
+
+msgid "period_23"
+msgstr "שעה 23 · AWStats: זמן לישון, מחר שוב עובדים"
+
+#------------------------------------------------------------------------------
+# ממדי זמן
+#------------------------------------------------------------------------------
+
+msgid "Period"
+msgstr "תקופה סטטיסטית"
+
+msgid "Year"
+msgstr "שנה"
+
+msgid "Month"
+msgstr "חודש"
+
+msgid "Months"
+msgstr "חודשים"
+
+msgid "Date"
+msgstr "תאריך"
+
+msgid "Day"
+msgstr "יום"
+
+msgid "Hour"
+msgstr "שעה"
+
+msgid "Hours"
+msgstr "שעות"
+
+msgid "Day of week"
+msgstr "יום בשבוע"
+
+msgid "When"
+msgstr "מתי"
+
+msgid "%s Server Management Panel"
+msgstr "לוח ניהול שרת %s "
+
+msgid "Server Administration"
+msgstr "פתרון שרת פשוט ויעיל"
+
+#------------------------------------------------------------------------------
+# ממדי מבקרים
+#------------------------------------------------------------------------------
+
+msgid "Invalid URL Parameters"
+msgstr "פרמטרי URL לא חוקיים"
+
+msgid "The requested page cannot be loaded due to invalid or malformed URL parameters."
+msgstr "לא ניתן לטעון את העמוד המבוקש עקב פרמטרי URL לא חוקיים או לא תקינים."
+
+msgid "This may be caused by typing an incorrect URL, missing parameter separators, or using an invalid configuration name."
+msgstr "זה יכול להיגרם מהקלדת URL שגוי, מפרידי פרמטרים חסרים, או שימוש בשם תצורה לא חוקי."
+
+msgid "Please check the URL you entered and ensure all parameters are correctly formatted."
+msgstr "אנא בדוק את הURL שהזנת וודא כי כל הפרמטרים מעוצבים כהלכה."
+
+msgid "SiteDomain parameter not defined in your config/domain file, or you may not have execution permission on the file."
+msgstr "הפרמטר SiteDomain לא הוגדר בקובץ config/domain שלך, או שאין לך הרשאת הרצה על הקובץ."
+
+msgid "Please run as Administrator to set permissions"
+msgstr "אנא הפעל כמנהל מערכת כדי להגדיר הרשאות"
+
+msgid "This directory lacks read permission"
+msgstr "לספרייה זו אין הרשאת קריאה"
+
+msgid "Please set read permission for directory"
+msgstr "אנא הגדר הרשאת קריאה עבור הספרייה"
+
+msgid "Missing required parameter in config file"
+msgstr "חסר פרמטר נדרש בקובץ התצורה"
+
+msgid "Please check that 'DirData' is defined."
+msgstr "אנא בדוק ש-'DirData' מוגדר."
+
+msgid "Domain name in browser address appears to be missing or incomplete"
+msgstr "נראה כי שם התחום בכתובת הדפדפן חסר או לא שלם"
+
+msgid "Please check the URL parameter"
+msgstr "אנא בדוק את פרמטר ה-URL"
+
+msgid "Format description"
+msgstr "תיאור התבנית"
+
+msgid "Please set execute permission"
+msgstr "אנא הגדר הרשאת הרצה"
+
+msgid "Or if you prefer numeric mode"
+msgstr "או אם אתה מעדיף מצב מספרי"
+
+msgid "View Report Directly"
+msgstr "הצג דוח ישירות"
+
+msgid "AWStats Log Viewer"
+msgstr "צופה ביומני AWStats"
+
+msgid "Month Selection"
+msgstr "בחירת חודש"
+
+msgid "Who"
+msgstr "מי"
+
+msgid "Visitors"
+msgstr "מבקרים"
+
+msgid "Countries"
+msgstr "מדינות/אזורים"
+
+msgid "flag_icon"
+msgstr "דגל"
+
+msgid "Country-Region-City"
+msgstr "מדינה/אזור/עיר"
+
+msgid "Code"
+msgstr "קוד"
+
+msgid "Known"
+msgstr "ידוע"
+
+msgid "unknownos"
+msgstr "מערכת הפעלה לא ידועה"
+
+msgid "unknownbrowser"
+msgstr "דפדפן לא ידוע"
+
+msgid "Unresolved IP Address"
+msgstr "כתובת IP לא מזוהה"
+
+msgid "Unknown File Type"
+msgstr "סוג קובץ לא ידוע"
+
+msgid "Unknown Size"
+msgstr "גודל לא ידוע"
+
+msgid "Unknown Time"
+msgstr "זמן בקשה לא ידוע"
+
+msgid "Unknown Browser"
+msgstr "דפדפן לא ידוע"
+
+msgid "Unknown OS"
+msgstr "מערכת הפעלה לא ידועה"
+
+msgid "Unknown Visitor"
+msgstr "מבקר לא ידוע"
+
+msgid "Unknown Visitor (Total)"
+msgstr "מבקר לא ידוע (סה\"כ)"
+
+msgid "Unknown Country"
+msgstr "מדינה/אזור לא ידוע"
+
+msgid "Unknown Country (Region)"
+msgstr "מדינה/אזור לא ידוע (סה\"כ)"
+
+msgid "Unknown Visitor (Title)"
+msgstr "מבקר לא ידוע (כותרת)"
+
+msgid "PageStayTime"
+msgstr "לא ניתן להעריך זמן שהייה בעמוד"
+
+msgid "Unknown OS (Link)"
+msgstr "מערכת הפעלה לא ידועה (קישור)"
+
+msgid "Unknown OS (Row)"
+msgstr "מערכת הפעלה לא ידועה (רשימה)"
+
+msgid "Unknown Browser (Link)"
+msgstr "דפדפן לא ידוע (קישור)"
+
+msgid "Unknown Browser (Row)"
+msgstr "דפדפן לא ידוע (רשימה)"
+
+msgid "Unknown Screen"
+msgstr "גודל מסך לא ידוע"
+
+msgid "Login"
+msgstr "שם משתמש"
+
+msgid "Anonymous"
+msgstr "אנונימי"
+
+msgid "Robots"
+msgstr "רובוטים"
+
+msgid "Different robots"
+msgstr "רובוטים שונים"
+
+msgid "Hits on robots.txt"
+msgstr "רובוטי מנועי החיפוש המפורטים לעיל מייצרים תעבורת גלישה \"חריגה\" שאינה כלולה בגרפים אחרים. המספר שאחרי '+' הוא מספר הכניסות המוצלחות לקובץ \"robots.txt\"."
+
+msgid "Worms"
+msgstr "תולעים"
+
+msgid "Different worms"
+msgstr "תולעים שונות"
+
+msgid "Target"
+msgstr "יעד"
+
+msgid "Grabber"
+msgstr "כלי חילוץ"
+
+#------------------------------------------------------------------------------
+# תיאורי פורמטים
+#------------------------------------------------------------------------------
+
+msgid "mime_text"
+msgstr "TXT קובץ טקסט פשוט (טקסט פשוט ללא עיצוב, בתקן ASCII משנת 1963. כבסיס לכל קוד מקור, קובצי תצורה ויומני מערכת, בקרת זרם השורה החדשה המותאמת לפלטפורמות שונות (CRLF בחלונות, LF ביוניקס) נותרה תקן העברת הנתונים האוניברסלי ביותר בעולם המחשוב)"
+
+msgid "mime_log"
+msgstr "LOG יומן ריצת מערכת (מתעד מצבי ריצה של מערכת ההפעלה, הליבה והיישומים כנכסי טקסט פשוט. מכסה יומני גישת Nginx/Apache (Combined Log) ואת מפרט syslog הסטנדרטי, מהווה מקור הנתונים המרכזי לאיתור תקלות, ניתוח ביצועי זרימה וביקורת אבטחה)"
+
+msgid "mime_page"
+msgstr "HTML דף אינטרנט היפרטקסט (נוצר על ידי טים ברנרס-לי ב-1989, אבן היסוד של רשת ה-World Wide Web. כשפת סימון היפרטקסט אוניברסלית חינמית, מפרט HTML5 הפך לתקן W3C רשמי ב-2014, תומך באופן מקורי במולטימדיה מובנית, אינטראקציה סמנטית ועיצוב דף זורם, זכה בפרס טיורינג ב-2016)"
+
+msgid "mime_khtml"
+msgstr "KHTML מנוע תבניות אינטרנט (מפרט מנוע עיבוד דפדפן KDE 2.0 משנת 1998. כאמת מידה בקוד פתוח שהניחה את היסודות לעיבוד אינטרנט מודרני, המורשת הטכנית שלו היוותה השראה ישירה לליבות WebKit של אפל ו-Blink של גוגל, והיא ממשיכה לזרום דרך ארכיטקטורות אינטרנט דינמיות וזורמות מודרניות)"
+
+msgid "mime_script"
+msgstr "SCRIPT סקריפט דינמי מפורש (קטגוריה כללית של זרמי קוד מקור המבוצעים שורה אחר שורה על ידי סביבת ריצה ספציפית או מפרש ללא הידור מוקדם. מכסה ASP, JSP, CGI ו-Tcl, נמצא בשימוש נרחב עבור ממשקי שער משותפים בצד השרת, בקרת תהליכי אוטומציה והדבקת משימות ברמת המערכת)"
+
+msgid "mime_js"
+msgstr "JavaScript סקריפט (סביבת התכנות המקורית של דפדפן נטסקייפ משנת 1995. ב-1997 נקבע תקן התעשייה ECMAScript, ב-2009 נולדה סביבת הריצה Node.js, ששברה את גבולות הדפדפן ויצרה ארכיטקטורה אסינכרונית לא חוסמת לכל הערימה, בליווי מערכת האקולוגית של חבילות התוכנה npm, הגדולה בעולם)"
+
+msgid "mime_py"
+msgstr "Python סקריפט (שפת סקריפטים מפורשת ברמה גבוהה שנוצרה על ידי חידו ואן רוסום ב-1991. הודות לקריאותה ללא אובדן באמצעות הזחה מחייבת ועיצובה רב-הפרדיגמטי, היא התבססה כשפת התקן התעשייתית לארכיטקטורת אינטרנט מודרנית, מדעי נתונים מלאים, אימון מודלי בינה מלאכותית (AI) ותפעול אוטומטי ילידי ענן)"
+
+msgid "mime_sh"
+msgstr "Shell סקריפט (סקריפט מפרש פקודות סטנדרטי מתקופת יוניקס של 1971. מכיל פקודות ברמת הליבה כמו Bash, Sh, Dash, מבוצע בדרך כלל עם סיומת .sh, מהווה את הדבק האוניברסלי ברמת הליבה עבור בקרת תהליכים ברמה נמוכה, הגדרת סביבה ללא התקנה ופריסה אוטומטית במערכות הפעלה מודרניות דמויות יוניקס)"
+
+msgid "mime_rb"
+msgstr "Ruby סקריפט (שפת סקריפטים מונחית עצמים שנוצרה על ידי יוקיהירו מטסומוטו ב-1995. עם פילוסופיית העיצוב המרכזית של כבוד קיצוני לחוויית המפתח, מסגרת Ruby on Rails שלו חוללה מהפכה בארכיטקטורת האינטרנט המודרנית ברמה גבוהה על ידי קביעת הפרדיגמה 'מוסכמה על פני תצורה' (CoC))"
+
+msgid "mime_pl"
+msgstr "Perl סקריפט (שפת סקריפטים פרגמטית שנוצרה על ידי לארי וול ב-1987. כחלוצת מנהלי החבילות המודרניים (CPAN), היא ידועה בתור 'הסכין השוויצרית' של עיבוד טקסט. במצב CGI מודרני, עם צריכת זיכרון פיזי נמוכה ביותר ועיבוד יעיל של ביטויים רגולריים, היא משמשת כבסיס אמין ביותר לניתוח יומנים)"
+
+msgid "mime_php"
+msgstr "PHP דף אינטרנט דינמי (נוצר על ידי רסמוס לרדורף ב-1995, תוכנן במיוחד לפיתוח אינטרנט. כטכנולוגיית הליבה המניעה מעל 70% מאתרי האינטרנט בעולם, היא הבסיס ליישומי ייצור גדולים כמו וורדפרס וויקיפדיה. החל מ-PHP 8, עם הצגת מנוע הריצה JIT (בזמן אמת), הוא התפתח לעבר ארכיטקטורת שרת בעלת ביצועים גבוהים לכל הערימה)"
+
+msgid "mime_image"
+msgstr "IMAGE סיווג נכסי תמונה (מכסה מפות סיביות דחוסות עם/ללא אובדן, גרפיקת אינטרנט רספונסיבית מודרנית ווקטורים. אינדיקטור מרכזי להערכת עומס משאבים חזותיים של אתר, קצב פגיעות מטמון בצד הלקוח וצריכת רוחב פס רשת מדיה)"
+
+msgid "mime_document"
+msgstr "DOCUMENT סיווג מסמכים מובנים (מכסה טקסט פשוט, גיליונות אלקטרוניים, מסמכים רשמיים (PDF) ושפות סימון קלות. אינדיקטור מרכזי לסטטיסטיקת הפצת בסיס ידע סטטי בצד השרת, הורדות נכסים ארגוניים ויכולת תפוקת זרם טקסט)"
+
+msgid "mime_package"
+msgstr "PACKAGE סיווג מוצרים מהודרים וחבילות תוכנה (מכסה תוכניות הרצה מקוריות של מערכת ההפעלה, ספריות קישור בזמן ריצה (DLL/SO) וחבילות התקנת הפצת יישומים. משמש לעתים קרובות כמדד להערכת תעבורה יוצאת ושיאי הורדה באתרי הפצת תוכנה)"
+
+msgid "mime_archive"
+msgstr "ARCHIVE קובצי ארכיון ודחוסים (קטגוריה כללית של חבילות דחוסות המבוססות על אלגוריתמי ליבה DEFLATE, LZMA וכו'. בשכבת הרשת, בנוסף להפצת חבילות מסורתית, היא מכסה גם את זרמי התגובה הדינמיים של Gzip מפרויקט GNU משנת 1992. למרות שאלגוריתם Brotli מוצג בהדרגה בחלק מהתרחישים המודרניים, סיווג זה נותר אינדיקטור מרכזי להערכת קצב העברת רוחב הפס של השרת ויעילות הדחיסה של שכבת התעבורה)"
+
+msgid "mime_audio"
+msgstr "AUDIO סיווג זרם אודיו דיגיטלי (מכסה אודיו דחוס, ספרי שמע ומיכלי זרם אודיו. מבוסס על תקני קודק אודיו ספציפיים, משמש לניטור קצב העברת זרם נתוני האודיו באתרי מולטימדיה, רוחב פס הזרמה בו-זמנית וביצועי חיבורים ארוכים)"
+
+msgid "mime_video"
+msgstr "VIDEO סיווג זרם וידאו דיגיטלי (מכסה מיכלי וידאו בהבחנה גבוהה, אנימציות אינטרנט מודרניות וקטעי הזרמה. אינדיקטור מרכזי להערכת גבול רוחב הפס המרבי של השרת ויעילות האצת רשתות אספקת התוכן (CDN) תחת עומס רשת גבוה)"
+
+msgid "mime_jscript"
+msgstr "JScript סקריפט (מימוש קנייני בהנדסה לאחור שפותח על ידי מיקרוסופט ב-1996 עבור אינטרנט אקספלורר 3.0. כמתחרה מארח מוקדם ל-JavaScript הקלאסי, שימש כמנוע הליבה של Windows Script Host (WSH) ושל צדי האחורי של ASP המוקדמים)"
+
+msgid "mime_json"
+msgstr "JSON נתונים מובנים (תבנית החלפת סריאליזציית נתונים קלת משקל שנקבעה על ידי דאגלס קרוקפורד ב-2001. מבוססת על זוגות מפתח-ערך מבוססי טקסט ומבני מערך, עם קריאות אנושית גבוהה ומאפייני ניתוח זרימה ללא אובדן, היא תקן הדה-פקטו עבור ממשקי API מודרניים, ארכיטקטורות מיקרו-שירותים ואינטראקציה עם מודלים גדולים של שפה)"
+
+msgid "mime_vbs"
+msgstr "VBScript סקריפט (וריאציה של שפת סקריפטים ששוחררה על ידי מיקרוסופט עם IE 3.0 ב-1996. שימש כדרייבר מרכזי לאתרי אינטרנט דינמיים מוקדמים של ASP ולניהול מערכת חלונות, אך הוצא רשמית משימוש והוסר מהליבות העדכניות ביותר של חלונות 11, ושייך לטכנולוגיית מורשת היסטורית)"
+
+msgid "mime_conf"
+msgstr "CONF קובץ תצורת מערכת (קטגוריה כללית של קבצי נתונים המאחסנים פרמטרי סביבת ריצת תוכנה בצורת טקסט פשוט. מכסה מפרטי INI ו-YAML, TOML, JSON מודרניים. במערכות לינוקס, מרוכזים בעיקר בספרייה /etc, ומהווים תלות מרכזית לכיוון מצב ריצה ברמת המערכת)"
+
+msgid "mime_css"
+msgstr "CSS גיליון סגנונות מדורג (תקן W3C משנת 1996, יחד עם HTML/JS מהווה את שלוש ליבות פיתוח חזית האינטרנט. תוך התפתחות ממיצוב CSS2 למודולריות של CSS3, תומך באופן מקורי ב-Flexbox, Grid ועיצוב רספונסיבי עם שאילתות מדיה, והוא התקן הדומיננטי להפרדת הצגת דפי אינטרנט בדפדפנים מודרניים)"
+
+msgid "mime_xsl"
+msgstr "XSL גיליון סגנונות (תקן W3C משנת 1999, כולל שפות התמרת XSLT ושפת מיקוד XPath, לעיבוד נתוני XML מובנים כ-HTML, PDF או טקסט פשוט. בפיתוח מודרני, המערכת האקולוגית שלו הוחלפה במידה רבה על ידי מנועי תבניות קלים יותר ותבנית הנתונים JSON)"
+
+msgid "mime_runtime"
+msgstr "קובץ הרצה (תבניות הרצה מקוריות של מערכת ההפעלה כמו EXE, ELF, Mach-O, המכילות קוד מכונה ברמה נמוכה מהודר, נקודת כניסה ומידע טעינת מערכת)"
+
+msgid "mime_library"
+msgstr "קובץ ספרייה (DLL, SO, dylib וכו', ספריות קישור דינמיות או סטטיות, המכילות סמלים משותפים וקוד מיקום מחדש לקריאה וטעינה על ידי תוכניות אחרות בזמן ריצה)"
+
+msgid "mime_swf"
+msgstr "Flash אנימציה (Macromedia 1996, נרכשה על ידי אדובי ב-2005. תקן אנימציית אינטרנט אינטראקטיבית, שלטה פעם באנימציות ומשחקי האינטרנט. חסרונות: תלות בתוספים, חוסר תמיכה בנייד, סיכון אבטחה גבוה. אדובי הכריזה על הפסקת שיווקו ב-2017, התמיכה הופסקה לחלוטין ב-2020, הוחלף ב-HTML5/CSS3/JS)"
+
+msgid "mime_dtd"
+msgstr "DTD הגדרת סוג מסמך (שוחרר עם XML 1.0 ב-1998, משמש להגדרת מבנה מסמך XML/HTML ולאימות חוקיותו. בפיתוח מודרני, הוא הוחלף במידה רבה על ידי פתרונות גמישים יותר כמו XML Schema, RELAX NG וכו')"
+
+msgid "mime_csv"
+msgstr "CSV תבנית נתונים (ערכים מופרדים בפסיקים, תבנית טבלת טקסט פשוט אוניברסלית מתקופת המיינפריים (מהדר IBM Fortran) של 1972. הוגדרה רשמית בשנת 2005 על ידי RFC 4180 כתקן העברת נתונים ללא אובדן חוצה פלטפורמות ושפות. נמצא בשימוש נרחב לייבוא/ייצוא יעיל עם Excel, מסדי נתונים יחסיים וניתוח נתונים (Pandas))"
+
+msgid "mime_cur"
+msgstr "קובץ סמן עכבר (תבנית .cur, משמשת להתאמת סגנון סמן העכבר, כמו סמן האצבע בדפי אינטרנט או סמל שעון החול בהמתנה. הוא 'קרוב משפחה' לסמל .ico הנפוץ, אך כולל 'נקודה חמה' נוספת – מיקום הלחיצה בפועל. היסטוריה: הוצג עם Windows 3.1 (1992), מרכיב מרכזי בעידן המעבר משורת הפקודה לממשק המשתמש הגרפי המופעל על ידי עכבר)"
+
+msgid "mime_jnlp"
+msgstr "Java Web Start (טכנולוגיית הפצת יישומי שולחן עבודה Java משנות ה-2000, מפעילה תוכניות Java מרוחקות באמצעות קבצי .jnlp. עקב בעיות אבטחה ושכיחות שיטות ההפצה המודרניות, היא מיושנת כיום ברובה)"
+
+msgid "mime_lit"
+msgstr "Microsoft Reader ספר אלקטרוני (2000 מיקרוסופט, תבנית LIT. מיושן, ניתן להמיר כיום ל-EPUB או PDF באמצעות כלים כמו Calibre)"
+
+msgid "mime_svg"
+msgstr "SVG גרפיקה וקטורית (תקן W3C משנת 1999, תבנית תמונה דו-ממדית מבוססת XML. מציעה יתרונות של שינוי קנה מידה ללא אובדן והעברת טקסט זורמת. כל הדפדפנים המודרניים תומכים בה באופן מקורי, נמצאת בשימוש נרחב לאיקוני אינטרנט בהבחנה גבוהה, לוגואים ואנימציות וקטוריות, והיא תקן הליבה של גרפיקת האינטרנט המודרנית)"
+
+msgid "mime_ai"
+msgstr "AI גרפיקה וקטורית (תבנית וקטור קניינית של אדובי משנת 1987. כתקן תעשייתי לעימוד, עיצוב דפוס וזהות מותג, היא תומכת במספר שכבות ונתוני עימוד וקטוריים מתקדמים, והיא המדיה המועדפת לאמנות חזותית מקצועית)"
+
+msgid "mime_phshop"
+msgstr "PSD תמונת שכבות (תבנית קוד מקור מפת סיביות קניינית ששוחררה על ידי אדובי עם פוטושופ ב-1990. תומכת במספר שכבות, ערוצים, מסכות ונתוני עריכה ללא אובדן, והתבססה כתקן התעשייתי העולמי לעיבוד תמונה וציור דיגיטלי)"
+
+msgid "mime_ttf"
+msgstr "TrueType גופן (תבנית גופן קווי מתאר דיגיטלית שפותחה במשותף על ידי אפל ומיקרוסופט ב-1989. מבוססת על עקומות בזייר ריבועיות, משיגה עקביות פיקסלים מוחלטת בין תצוגת מסך לפלט דפוס, והיא תבנית גופן ברירת המחדל המקורית של מערכות הפעלה מודרניות לשולחן עבודה)"
+
+msgid "mime_fon"
+msgstr "FON גופן מפת סיביות (תבנית גופן מטריצת נקודות מוקדמת ברמת המערכת של מיקרוסופט משנות ה-80. אינה תומכת בשינוי קנה מידה יחסי ללא אובדן, מוגבלת בדרך כלל לעיבוד טקסט מבוסס פיקסלים במערכות מורשת או ברכיבי מכשירים משובצים מוקדמים)"
+
+msgid "mime_pdf"
+msgstr "PDF מסמך אלקטרוני (פותח על ידי אדובי ב-1993 והפך לתקן בינלאומי ISO 32000 ב-2008. תבנית מסמך בעלת עימוד קבוע חוצה פלטפורמות עם נאמנות מוחלטת לעימוד ולפורמט, היא התקן העולמי להפצת מסמכים אלקטרוניים ולהוצאה לאור דיגיטלית)"
+
+msgid "mime_dotnet"
+msgstr "ASP.NET דף דינמי (טכנולוגיית דף אינטרנט דינמי בצד השרת ששוחררה על ידי מיקרוסופט עם ארכיטקטורת .NET ב-2002. מתארחת במנוע IIS, משמשת לבניית יישומי אינטרנט דינמיים ברמת ארגון ומערכות מבוזרות בצד השרת של חלונות)"
+
+msgid "mime_mdb"
+msgstr "MDB מסד נתונים יחסי (תבנית אחסון מסד נתונים יחסי ברמת שולחן עבודה ששוחררה על ידי מיקרוסופט עם Access ב-1992. בעלת מנוע מסד נתונים Jet מובנה, שימשה כפתרון מסד נתונים יחסי לניהול מידע מוקדם במחשבים אישיים ובעסקים קטנים ובינוניים)"
+
+msgid "mime_md"
+msgstr "Markdown מסמך (שפת סימון קלה שנוצרה על ידי ג'ון גרובר ב-2004. פילוסופיית העיצוב המרכזית שלה 'קריא ניתן לעיבוד' מניעה מפרטים נגזרים מודרניים כמו GFM ו-CommonMark. נמצא בשימוש נרחב כתקן החלפה לתיעוד טכני, מאגרי ידע (Obsidian) וגנרטורים של אתרים סטטיים מודרניים)"
+
+msgid "mime_crystal"
+msgstr "Crystal Reports דוח (תבנית קובץ דוח מקצועית ברמת ארגון של פלטפורמת SAP Business Intelligence (BI). מציעה קישוריות מרובת מקורות נתונים ויכולות עיבוד תרשימים דינמיים מורכבים, נמצא בשימוש נרחב ליצירת דוחות מקצועיים במערכות פיננסיות וניתוח נתונים של חברות רב-לאומיות)"
+
+msgid "mime_libreoffice"
+msgstr "LibreOffice מסמך (תבנית קניינית של חבילת המשרדיות מבוססת הקוד הפתוח, שנוסדה על ידי The Document Foundation ב-2010. מיישמת לעומק את תקן ODF (OpenDocument Format) הבינלאומי של W3C, מהווה את אבן הפינה המשרדית של המערכת האקולוגית המודרנית של הקוד הפתוח)"
+
+msgid "mime_encrypt"
+msgstr "ENCRYPT קובץ מוצפן (נתונים בינאריים או טקסטואליים מקוריים שעובדו על ידי אלגוריתמי הצפנה סימטריים או א-סימטריים ספציפיים. כולל את תבניות הליבה הנגזרות .enc, .pgp, .gpg וכו', ומשמש בשכבת הרשת להבטחת סודיות ואימות שלמות נתונים לא ציבוריים)"
+
+msgid "mime_gpx"
+msgstr "GPX נתוני מעקב לווייני (תבנית החלפת מערכת מיקום גלובלית מבוססת XML. מתמחה בתיאור קואורדינטות גיאוגרפיות, נקודות ציון, קווי מסלול ושבילים היסטוריים, מהווה תקן נתונים פתוח נפוץ להתקני ספורט ניידים מודרניים, ניווט ברכב ומערכות מידע גיאוגרפיות (GIS))"
+
+msgid "mime_diskimage"
+msgstr "Disk Image תמונת דיסק (קובץ תמונת דיסק ברמה נמוכה, סקטור אחר סקטור, של דיסק פיזי או מדיה אופטית, כולל ISO, DMG, IMG. משמש לפריסת מערכת ברמה נמוכה, הפצה מאובטחת של תוכנה בנפח גדול וגיבוי מלא ברמה הפיזית של מדיות אחסון)"
+
+msgid "mime_vm"
+msgstr "VM תמונת מכונה וירטואלית (תמונות דיסק פיזי וירטואלי הכוללות VMDK, VDI, VHDX, OVA. הבסיס לפלטפורמות VMware, VirtualBox ו-Hyper-V, משמש לאמולציית חומרה ברמה נמוכה, תצלומי מצב מופעים והפצת תשתית ענן)"
+
+msgid "mime_torrent"
+msgstr "BitTorrent קובץ טורנט (אינדקס הורדה מבוזרת עמית-לעמית (P2P) שתוכנן על ידי בראם כהן ב-2001. מבוסס על קידוד Bencode, מאחסן מטא-נתוני אימות קובץ מקורי ומידע מיקוד שרת Tracker, מהווה את הספק המרכזי להפצת זרמי רשת מבוזרים)"
+
+msgid "mime_gis"
+msgstr "GIS נתונים גיאו-מרחביים (תקן נתוני מערכת מידע גיאוגרפית עם Shapefile ו-GeoJSON בליבה. מכיל קואורדינטות גיאומטריות רב-ממדיות, טופולוגיית שכבות ונתוני מאפיינים, נמצא בשימוש נרחב לעיבוד מפות דיגיטליות בהבחנה גבוהה, חישה מרחוק לווינית וניתוח גיאומטרי מרחבי)"
+
+msgid "mime_ebook"
+msgstr "EBOOK ספר אלקטרוני (תבנית הוצאה לאור דיגיטלית עם תקן הפתוח הבינלאומי EPUB של W3C וארכיטקטורת MOBI/AZW הקניינית של Amazon Kindle בליבה. תומך בעימוד זורם מסתגל, אנקופסולציית מטא-נתונים וניהול זכויות דיגיטלי DRM, מהווה את הספק האוניברסלי לקריאה דיגיטלית ניידת)"
+
+msgid "mime_avif"
+msgstr "AVIF תמונה יעילה במיוחד (תקן תמונה אולטרה-בהבחנה גבוהה מהדור הבא של ברית המדיה הפתוחה (AOMedia) משנת 2019. מבוסס על טכנולוגיית פריים מפתח בקודק הווידאו AV1, בעל יחס דחיסה טוב ב-50% מ-WebP ותמיכה מקורית בטווח דינמי גבוה (HDR), מהווה את תקן הזרם המרכזי להעברת תמונות אינטרנט מודרניות)"
+
+msgid "mime_markdown"
+msgstr "Markdown מסמך קל (שפת סימון מסמכי טקסט שנוצרה על ידי ג'ון גרובר ב-2004. משתמשת בעיצוב הצהרתי של טקסט פשוט, התחביר שלה קיבל השראה מ-reStructuredText, נמצאת בשימוש נרחב בפרויקטי GitHub, תיעוד טכני ברמת הנדסה ובמערכות אקולוגיות מודרניות לניהול תוכן סטטי)"
+
+msgid "mime_yaml"
+msgstr "YAML תצורה מסודרת (תבנית סריאליזציה קריאה לאדם שעוצבה על ידי קלארק אוונס ואחרים ב-2001. מבוססת על הזחה היררכית ומיפוי מפתח-ערך, התבססה כתקן תצורת תשתית ילידית לענן עבור Kubernetes, אוטומציית Ansible ו-Docker Compose)"
+
+msgid "mime_toml"
+msgstr "TOML תצורה סמנטית (שפה מינימליסטית שעוצבה על ידי טום פרסטון-ורנר ב-2013. בעלת יתרונות עיצוב ברמה נמוכה כמו טיפוסיות חזקה, מיפוי מפורש וסמנטיקה ברורה, נמצאת בשימוש נרחב כיום כקובץ תצורה סטנדרטי עבור שרשראות הכלים המודרניות של Rust (Cargo), Python (pyproject.toml) ו-Go)"
+
+msgid "mime_vue"
+msgstr "Vue רכיב קובץ יחיד (תבנית SFC קניינית של מסגרת האינטרנט הפרוגרסיבית שיצר אוון יו ב-2014. משיגה הפרדת דאגות של HTML/CSS/JS וקשירת מצב ראקטיבית בקובץ בודד, ומניעה לעומק יישומי אינטרנט חזיתיים אינטראקטיביים מודרניים ומנועי אתרים סטטיים בקנה מידה גדול)"
+
+msgid "mime_wasm"
+msgstr "WebAssembly מודול בינארי (תקן בייט-קוד ברמה נמוכה בעל ביצועים גבוהים לרשת שנקבע על ידי W3C ב-2017. מאפשר לשפות בעלות טיפוסיות חזקה כמו C/C++/Rust להידר לסביבת ארגז החול של הדפדפן, ומספק יעילות ביצוע קרובה לחומרה מקורית, מהווה אבן יסוד למחשוב קצה (edge computing) מודרני ברשת)"
+
+msgid "mime_jsx"
+msgstr "React JSX רכיב (הרחבת תחביר JavaScript XML ששוחררה על ידי פייסבוק עם מסגרת React ב-2013. תומכת בבניית מבני DOM וירטואליים בצורה הצהרתית בתוך JavaScript, ומאפשרת את פרדיגמת הפיתוח מבוססת הרכיבים בחזית של 'ממשק משתמש כפונקציה של מצב')"
+
+msgid "mime_tsx"
+msgstr "TypeScript TSX רכיב (שילוב זורם של תחביר הטיפוסיות החזקה של TypeScript (פותח על ידי מיקרוסופט ב-2012) עם JSX. מזריק בדיקת טיפוס סטטית בזמן הידור ואילוצי ממשק לפיתוח רכיבי React, מהווה את תקן הקוד לפיתוח מאובטח של מערכות חזית גדולות מודרניות)"
+
+msgid "mime_heif"
+msgstr "HEIF תמונה יעילה במיוחד (תבנית תמונה יעילה שנקבעה על ידי ארגון MPEG ב-2015. מבוססת על אלגוריתם קידוד הווידאו HEVC (H.265), תומכת במספר פריימי תמונה, מפות עומק ומטא-נתונים בנפח קטן מאוד, מהווה תקן אחסון קנייני למערכות הפעלה ניידות מודרניות ולמכשירי קצה חכמים)"
+
+msgid "mime_heic"
+msgstr "HEIC תמונה יעילה במיוחד (תבנית מפת סיביות קניינית של Apple המבוססת על תקן HEIF הבינלאומי. כתבנית אחסון התמונות המוגדרת כברירת מחדל לאייפון המודרני, היא בעלת קידוד/פענוח ברמת חומרה מ-iOS/macOS ותמיכה מקורית של מערכת ההפעלה, מפחיתה באופן דרמטי את שטח האחסון הבסיסי תוך שמירה על איכות תמונה גבוהה)"
+
+msgid "mime_gltf"
+msgstr "glTF מודל נכס תלת-ממדי (תקן תבנית העברת GL שפורסם על ידי קבוצת Khronos ב-2015. משתמש בארכיטקטורת JSON לתיאור סצנות תלת-ממדיות, מכונה 'ה-JPEG של התלת-ממד', מהווה את תקן התעשייה הקל משקל לעיבוד WebGL/WebGPU מודרני ולריאליטי מדומה)"
+
+msgid "mime_glb"
+msgstr "GLB מודל תלת-ממדי בינארי (גרסת אנקפסולציה בינארית ללא אובדן של נכס מודל glTF. ממזג את מבנה הסצנה, נתוני קודקודי הרשת הבסיסיים, חומרים ומרקמים לקובץ בודד, מתוכנן במיוחד להעברה יעילה ולהפצה זורמת של נכסי תלת-ממד ברשת חוצת-פלטפורמות)"
+
+msgid "mime_gls"
+msgstr "GLOSSARY מילון מונחים (קובץ הגדרות מונחים המיועד במיוחד למערכות ניהול מסמכים ומאגרי טקסט מובנים. מכיל הגדרות מונחים סטנדרטיות, מיפויים רב-לשוניים ומיפויי מטא-נתונים, משמש לשמירה על עקביות מושגית בניתוח טקסט אוטומטי ובמערכות פרסום תוכן)"
+
+msgid "mime_cbz"
+msgstr "CBZ ספר קומיקס (תבנית ארכיון תמונות קומיקס קניינית המבוססת על מבנה דחיסת ZIP. מכילה רצף רציף של תמונות מפת סיביות סטטיות, מהווה תקן מיכל קל משקל אוניברסלי להוצאה לאור של קומיקס דיגיטלי ולאיסוף מקומי חוצה-פלטפורמות)"
+
+msgid "mime_cbr"
+msgstr "CBR ספר קומיקס (תבנית ארכיון תמונות קומיקס קניינית המבוססת על מבנה דחיסת RAR. משתמשת באלגוריתם RAR לאנקפסולציה של רצפי מפות סיביות סטטיות, בעלת יחס דחיסה גבוה ותמיכת תאימות רחבה בתחום הפצת הקומיקס הדיגיטלית)"
+
+msgid "mime_fb2"
+msgstr "FB2 ספר אלקטרוני (תקן ספר אלקטרוני FictionBook 2.0 מתחילת שנות ה-2000. משתמש במבנה XML טהור לתיאור מאפייני ספר והיררכיית טקסט, נתמך באופן נרחב במערכת האקולוגית של ספרים אלקטרוניים בקוד פתוח ובקוראי הוצאה לאור דיגיטלית מיושנים)"
+
+msgid "mime_kepub"
+msgstr "KEPUB ספר אלקטרוני (תבנית ספר אלקטרוני משופרת קניינית של Kobo המבוססת על תקן EPUB. מאופטמת ברמת החומרה לקוראי הספרים האלקטרוניים של Kobo, מציעה עימוד עמוד יעיל יותר ואינטראקציה עם סטטיסטיקות קריאה)"
+
+msgid "mime_m4b"
+msgstr "M4B ספר שמע (תבנית ספר שמע המבוססת על ארכיטקטורת מיכל MPEG-4 Part 14 (MP4). משתמשת בקידוד AAC, תומכת באופן מקורי בסימניות ברמה נמוכה, המשך השמעה מהנקודה בה הופסק והטמעת פרקים, הייתה בעבר תבנית סטנדרטית במערכת האקולוגית של Apple iTunes)"
+
+msgid "mime_kfx"
+msgstr "Kindle KFX תבנית (תבנית הוצאה לאור דיגיטלית משופרת קניינית של Amazon שוחררה עם הקינדל ב-2015. תומכת בטיפוגרפיה מתקדמת עם קשרי אותיות, עיבוד גופן דינמי גבוה וטעינת עמודים זורמת ברמת הליבה (Page Flip), מהווה את תקן הליבה של פלטפורמת הקינדל המודרנית)"
+
+msgid "mime_chm"
+msgstr "CHM קובץ עזרה מהודר (מערכת מידע עזרה של HTML מהודר ששוחררה על ידי מיקרוסופט ב-1997. אורזת נתוני היפרטקסט ואינדקסים בסיסיים למיכל בינארי בודד, מהווה זה זמן רב את תבנית ברירת המחדל לתיעוד עזרה מקומי לא מקוון של תוכנות Windows)"
+
+msgid "mime_mht"
+msgstr "MHT ארכיון אינטרנט (תבנית היפרטקסט מצטבר MIME שוחררה על ידי מיקרוסופט ב-1999. מבוססת על תקן RFC 2557, אורזת קוד מקור HTML, CSS, JS ותמונות מוטמעות לקובץ טקסט בודד, משמשת לשמירת דפי אינטרנט לא מקוונים בדפדפנים מיושנים)"
+
+msgid "mime_wml"
+msgstr "WML שפת סימון אלחוטית (תקן סימון נייד שנקבע על ידי פורום WAP (Wireless Application Protocol) ב-1999. מבוסס על מפרט XML, תוכנן במיוחד לרשתות סלולריות אלחוטיות צרות פס מוקדמות ולטלפונים בסיסיים בעלי כוח חישוב נמוך, שייך לטכנולוגיית מורשת שיצאה משימוש במערכת האקולוגית של האינטרנט המודרני)"
+
+msgid "mime_xhtml"
+msgstr "XHTML דף אינטרנט היפרטקסט (תקן W3C משנת 2000, שפת סימון היפרטקסט קפדנית המבוססת על ארכיטקטורת XML. ב-2009, W3C הפסיק את ההתפתחות הטכנולוגית שלו ופנה לחלוטין למפרט HTML5, כיום משמש בעיקר לעיבוד סמנטי של דפי אינטרנט במערכות מורשת)"
+
+msgid "mime_xml"
+msgstr "XML מסמך מובנה (שפת סימון ניתנת להרחבה, תקן W3C משנת 1998. בעלת ארכיטקטורת תגיות תיאור עצמית, מהווה תבנית בסיס לשירותי אינטרנט ברשת (SOAP/REST), לקבצי תצורה ברמת המערכת (XSD) ולהחלפת נתונים חוצת-פלטפורמות)"
+
+msgid "mime_sgml"
+msgstr "SGML שפת סימון כללית תקנית (תקן בינלאומי ISO 8879 משנת 1986. כחלוצה בתעשיית התיאור המובנה של מסמכים אלקטרוניים, הן XML והן מפרטי HTML המוקדמים נגזרים משפת-העל התקנית הזו)"
+
+msgid "mime_apng"
+msgstr "APNG גרפיקה דינמית (הרחבה דינמית של PNG שפותחה על ידי מוזילה ב-2004. תומכת בצבע אמיתי 24-ביט ובשקיפות חצי-שקופה בערוץ אלפא 8-ביט, מהווה חלופה בהבחנה גבוהה לתבנית GIF בתרחישי אינטרנט מודרניים)"
+
+msgid "mime_bmp"
+msgstr "BMP מפת סיביות מקורית (תבנית מפת סיביות בלתי-תלויה בהתקן של פלטפורמת Microsoft שנקבעה מאז תקופת Windows 1.0. משתמשת באחסון לא דחוס ללא אובדן, לכן נפחה גדול בדרך כלל פי 3-10 מ-PNG, אך מכיוון שאינה דורשת עלויות קידוד/פענוח, היא עדיין מוטמעת באופן נרחב ברכיבי הליבה של Windows 11, במקטעי משאבים של EXE/MSI ובמאגרי גרפיקה של דרייברים מיושנים)"
+
+msgid "mime_cdr"
+msgstr "CDR גרפיקה וקטורית (תבנית קוד מקור עיצוב וקטורי מקצועי קניינית של CorelDRAW של החברה הקנדית Corel. תומכת בניהול צבע לפי שכבות, בצמתי עקומה מתמטית מורכבים ובנתוני עימוד ברמת דפוס, מהווה תבנית מתמחה לתחומי עיצוב גרפי מקצועי ופרסום בדפוס)"
+
+msgid "mime_gif"
+msgstr "GIF תמונת צבע ממופתח (תבנית מפת סיביות 8-ביט בעלת צבע ממופתח של CompuServe משנת 1987. מבוססת על אלגוריתם LZW, מוגבלת ל-256 רמות צבע ושקיפות חד-צבעונית, בעלת נפח מופרז בקצבי פריימים גבוהים, מוחלפת בהדרגה על ידי תקני אנימציה מודרניים יעילים כמו APNG, WebP וכו')"
+
+msgid "mime_ico"
+msgstr "ICO סמל מערכת (תבנית אנקפסולציית משאבי סמלים מקורית של חלונות. תומכת בהטמעת וריאציות תמונה מרובות עם רזולוציות פיקסלים ועומקי צבע שונים בתוך מיכל בודד, מהווה גם את תקן ההפצה האוניברסלי עבור מזהה האתר (Favicon) של דפדפני אינטרנט מודרניים)"
+
+msgid "mime_jpeg"
+msgstr "JPEG תמונה דחוסה (תקן בינלאומי ISO 10918 משנת 1992 לדחיסה עם אובדן. מבוסס על אלגוריתם התמרת הקוסינוס הבדידה (DCT), משיג יחסי דחיסה גבוהים תוך שמירה על איכות תמונה ריאליסטית מצוינת, מהווה תקן הדה-פקטו המוחלט לתצלומים סטטיים באינטרנט העולמי)"
+
+msgid "mime_jpg"
+msgstr "JPEG תמונה דחוסה (תקן בינלאומי ISO 10918 משנת 1992 לדחיסה עם אובדן. מבוסס על אלגוריתם התמרת הקוסינוס הבדידה (DCT), משיג יחסי דחיסה גבוהים תוך שמירה על איכות תמונה ריאליסטית מצוינת, מהווה תקן הדה-פקטו המוחלט לתצלומים סטטיים באינטרנט העולמי)"
+
+msgid "mime_png"
+msgstr "PNG תמונה ללא אובדן (תקן גרפיקת רשת ניידת שהומלץ על ידי W3C ב-1996. משתמש באלגוריתם דחיסה ללא אובדן, תומך באופן מקורי בצבע אמיתי 24-ביט ובשקיפות ערוץ אלפא 8-ביט, כחלופה בהבחנה גבוהה ל-GIF סטטי קלאסי, מהווה תקן הדה-פקטו המוחלט לתמונות פיקסלים ללא אובדן באינטרנט)"
+
+msgid "mime_ps"
+msgstr "PostScript קובץ תיאור דף (שפת תיאור דף מבוססת מחסנית שוחררה על ידי אדובי ב-1985. כמבשרת הטכנולוגית של תבנית PDF, משיגה ברמה נמוכה עימוד טקסט בלתי תלוי בחומרה ועיבוד גרפיקה וקטורית ברמת דיוק גבוהה, מהווה תקן בסיסי לתחומי הדפוס המקצועי והדפסת הלייזר)"
+
+msgid "mime_psb"
+msgstr "PSB מסמך שכבה גדול (תבנית אנקפסולציית קובץ מקור גדול במיוחד קניינית של Adobe Photoshop. שוברת את מגבלות האדריכנות הפנימית של תבנית PSD הסטנדרטית של נפח פיזי 2 ג'יגה-בייט ו-30,000 פיקסלים, מתוכננת במיוחד לאחסון נכסי אמנות דיגיטלית עצומים, עמוקי-שכבות, בקנה מידה גדול)"
+
+msgid "mime_psd"
+msgstr "PSD קובץ מקור עיצוב שכבות (מיכל הנדסת תמונות שכבות קנייני של Adobe Photoshop. כמיכל תקן תעשייתי בתחום התמונות הגרפיות, מאנקפסל באופן מקורי את עץ עיבוד השכבות המלא, ערוצי מפת סיביות, נתיבי גזירה וקטוריים ומצבי מיזוג מורכבים, תומך בעריכת נתונים מלאה ללא אובדן)"
+
+msgid "mime_webp"
+msgstr "WebP תמונה יעילה במיוחד (תקן קידוד גרפיקת אינטרנט אוניברסלי שוחרר על ידי גוגל ב-2010. נגזר מטכנולוגיית פריים המפתח של וידאו VP8, תואם באופן מושלם לעיבוד עם אובדן, ללא אובדן, שקוף למחצה ודינמי, קטן ב-25-35% מ-PNG באותה איכות, מהווה אבן יסוד לטעינה בעלת ביצועים גבוהים של דפי אינטרנט מודרניים)"
+
+msgid "mime_woff"
+msgstr "WOFF קובץ גליפים לאינטרנט (תבנית גופן פתוחה לאינטרנט שנוצרה ב-2009 והפכה לתקן W3C ב-2012. מהותה היא דחיסה ללא אובדן של מבני גופן TTF/OTF סטנדרטיים בזרם, המשפרת באופן דרמטי את עלות רוחב הפס של הרשת, ומהווה תבנית אוניברסלית לאייקוני אתרים מודרניים ולגופני ענן)"
+
+msgid "mime_7z"
+msgstr "7z חבילה דחוסה (תבנית קניינית של 7-Zip שפותחה על ידי איגור פבלוב ב-1999. מבוססת על אלגוריתמי קוד פתוח LZMA/LZMA2, בעלת יחס דחיסה גבוה במיוחד. בתנאים שווים, נפחה קטן בדרך כלל ב-30-50% מ-ZIP, והיא תבנית יחס הדחיסה הגבוה האוניברסלית בקהילת הקוד הפתוח ובהפצת תוכנה)"
+
+msgid "mime_ace"
+msgstr "ACE חבילה דחוסה (תבנית דחיסה קניינית של WinACE משנות ה-90. התחרתה פעם בפורמט RAT והציעה יחסי דחיסה גבוהים. הפיתוח הטכני פסק לאחר 2007, והוחלפה כיום על ידי תבניות 7z ו-RAR, שייכת לתבניות ארכיון של מערכות מורשת)"
+
+msgid "mime_bz2"
+msgstr "BZIP2 חבילה דחוסה (תבנית דחיסת מיון בלוקים שפותחה על ידי ג'וליאן סיוורד ב-1996. יחס הדחיסה של האלגוריתם הבסיסי שלה גבוה ב-15-20% מ-GZIP אך עם עלות חישוב גבוהה יותר. משמשת לעתים קרובות להפצת קוד מקור ליבת לינוקס וחבילות תוכנת קוד פתוח, סיומת הקובץ הסטנדרטית היא .bz2)"
+
+msgid "mime_cab"
+msgstr "CAB חבילה דחוסה (תבנית ארכיון Cabinet שפותחה על ידי מיקרוסופט ב-1995. כתקן התקנה מקורי של מערכת Windows, משמשת להפצת דרייברים וקבצי ליבה, משמשת גם כמיכל האחסון הבסיסי של Windows Installer (MSI))"
+
+msgid "mime_dmg"
+msgstr "DMG תמונת דיסק (תבנית תמונת דיסק שפותחה על ידי אפל משנות ה-80. כמיכל סטנדרטי להפצת תוכנה ב-macOS, תומכת בהרכבה כמערכת קבצים וירטואלית, בדחיסה ברמה נמוכה ובהצפנת נתונים, מהווה את התבנית הדומיננטית להפצת יישומים במערכת האקולוגית של Mac)"
+
+msgid "mime_emz"
+msgstr "EMZ תמונה דחוסה (גרסה דחוסה של Metafile המשופר של Windows EMF. למעשה גרפיקה וקטורית בינארית דחוסה באמצעות אלגוריתם GZIP, נמצאת בשימוש נרחב לאחסון גרפיקה וקטורית מוטמעת במסמכי סדרת Microsoft Office)"
+
+msgid "mime_gz"
+msgstr "GZIP חבילה דחוסה (תבנית דחיסת זרם סטנדרטית של פרויקט GNU שפותחה על ידי ז'אן-לופ גאיילי ומארק אדלר ב-1992. ככלי הדחיסה הסטנדרטי של Unix/Linux, היא גם תקן הליבה לדחיסת שכבת התעבורה HTTP (Gzip), משמשת לעתים קרובות בשילוב עם ארכיון TAR)"
+
+msgid "mime_jar"
+msgstr "JAR חבילה דחוסה (תבנית ארכיון Java ARchive שוחררה על ידי סאן מיקרוסיסטמס ב-1997. למעשה מיכל אריזה מבוסס מבנה ZIP, משמש לאנקפסולציה של ספריות מחלקות Java ומטא-נתונים, מהווה מוצר הידור מרכזי עבור Maven, Gradle והמערכת האקולוגית המוקדמת של Android)"
+
+msgid "mime_lzma"
+msgstr "LZMA חבילה דחוסה (אלגוריתם דחיסת שרשרת Lempel-Ziv-Markov שפותח על ידי איגור פבלוב ב-1998. כמנוע הליבה של תבנית 7z, בעל יחס דחיסה גבוה במיוחד וביזום מהיר, נמצא בשימוש נרחב להפצת קושחת חומרה ומערכות משובצות)"
+
+msgid "mime_rar"
+msgstr "RAR חבילה דחוסה (תבנית ארכיון קניינית של WinRAR שפותחה על ידי יוג'ין רושאל ב-1993. תומכת בפיצול לכרכים, ברשומות שחזור פיזיות (ECC) ובהצפנה חזקה. יחס הדחיסה שלה עדיף על ZIP הסטנדרטי, ונהנית מתמיכת תאימות רחבה בתחומים האישיים והמסחריים)"
+
+msgid "mime_tar"
+msgstr "TAR חבילת ארכיון (תבנית ארכיון סרט מתקופת Unix V7 של 1979. מבצעת רק אריזת זרם קבצים ללא דחיסת נתונים, לעתים קרובות משולבת עם GZIP/BZIP2/XZ, מהווה תקן בסיסי לקוד מקור לינוקס ולאחסון שכבות של תמונות Docker)"
+
+msgid "mime_tgz"
+msgstr "TGZ חבילה דחוסה (תבנית משולבת זורמת של ארכיון TAR ודחיסת GZIP, סיומת .tgz או .tar.gz. כתבנית הפצת חבילות התוכנה האוניברסלית ביותר בסביבות Unix/Linux, נמצאת בשימוש נרחב לפריסת הידור קוד מקור ולהפצת חבילות בינאריות ללא התקנה)"
+
+msgid "mime_tbz2"
+msgstr "TBZ2 חבילה דחוסה (תבנית משולבת זורמת של ארכיון TAR ודחיסת BZIP2, סיומת .tbz2 או .tar.bz2. בהשוואה ל-TGZ, יכולה לשפר את יחס הדחיסה ב-15-20% נוספים, מתאימה להעברות קבצים גדולים, שימשה במשך זמן רב להפצת קוד מקור ליבת לינוקס)"
+
+msgid "mime_xz"
+msgstr "XZ חבילה דחוסה (תבנית יחס דחיסה גבוה מהדור הבא שוחררה ב-2009. מבוססת על אלגוריתם LZMA2, יחס דחיסת הנתונים שלה טוב ב-30-50% מ-GZIP תוך שמירה על ביזום מהיר. התבססה כתקן הפצה מומלץ על ידי ליבת לינוקס ומנהלי חבילות מרכזיים (כמו למשל בתוך .deb של דביאן))"
+
+msgid "mime_z"
+msgstr "Z חבילה דחוסה (תבנית דחיסת LZW של פקודת compress של יוניקס מ-1985. הייתה תקן הדחיסה הסטנדרטי במערכות יוניקס מוקדמות, הוחלפה כיום לחלוטין על ידי תבנית GZIP היעילה בהרבה, מהווה תבנית מורשת היסטורית נדירה בתעבורת הרשת המודרנית)"
+
+msgid "mime_zip"
+msgstr "ZIP חבילה דחוסה (תבנית ארכיון אוניברסלית PKZIP שפותחה על ידי פיל כץ ב-1989. נתמכת באופן מקורי על ידי כל מערכות ההפעלה המרכזיות, מהווה את תקן המיכל הנפוץ ביותר באינטרנט. ה-JAR המודרני של Java, ה-APK של Android ומסמכי Office (OOXML) מבוססים כולם על מבנה ZIP)"
+
+msgid "mime_zst"
+msgstr "Zstandard חבילה דחוסה (תקן דחיסת זרם מהדור הבא שתוכנן על ידי יאן קולה מפייסבוק ב-2015. מתקרב ליחסי הדחיסה של LZMA תוך כדי תפוקה גבוהה בהרבה מ-GZIP. אומץ לעומק על ידי ליבת לינוקס (5.9+) ועל ידי מנהלי החבילות Arch/Debian)"
+
+msgid "mime_lz4"
+msgstr "LZ4 חבילה דחוסה (אלגוריתם דחיסת זרם מהיר במיוחד שפותח על ידי יאן קולה ב-2011. מהירות התפוקה שלו מהירה פי יותר מ-10 מ-GZIP, עם עלות CPU בזמן ריצה נמוכה ביותר. נמצא בשימוש נרחב בליבת לינוקס, במערכת הקבצים OpenZFS ובעיבוד זרם נתונים בזמן אמת של Hadoop)"
+
+msgid "mime_lzo"
+msgstr "LZO חבילה דחוסה (אלגוריתם Lempel-Ziv-Oberhumer שפותח על ידי מרקוס אוברהומר ב-1996. מתמקד בביצועי ביזום מהירים במיוחד. מוטמע באופן נרחב בתמונות Squashfs של ליבת לינוקס, בקושחת OpenWrt ובמערכות משובצות שונות עם משאבים מוגבלים)"
+
+msgid "mime_msi"
+msgstr "MSI חבילת התקנת מערכת (תבנית אנקפסולציית נתוני Windows Installer שוחררה על ידי מיקרוסופט ב-1999. כתקן פריסה ברמת יישום של Windows, תומכת באופן מקורי בגלגול לאחור של טרנזקציות ברמה נמוכה, בניהול מחזור חיי רכיבים ובהתקנה שקטה ללא אצווה, מהווה את תקן הליבה להפצת תוכנה ארגונית מרוכזת ולפריסה מבוססת מדיניות)"
+
+msgid "mime_pkg"
+msgstr "PKG חבילת התקנת תוכנה חוצת-פלטפורמות. 1. חבילת תוכנה של FreeBSD: תקן pkgng, סיומת .pkg או .txz, מבוסס על דחיסת TAR+XZ/Zstd, תומך בפתרון תלויות ואימות חתימות; 2. חבילת התקנה של macOS: מבוססת על תבנית Apple Installer, תומכת ברכיבים מותאמים אישית, בסקריפטים של התקנה ובהסרה ברמת המערכת. הן הספקים העיקריים של הפצה לשרתי BSD ולמערכת Mac, בהתאמה."
+
+msgid "mime_apk"
+msgstr "APK חבילת יישום Android (חבילת התקנת יישומים מסורתית שוחררה על ידי גוגל עם Android ב-2008. מבוססת ברמה הבסיסית על מבנה ארכיון ZIP, אורזת קוד בתים Dalvik מהודר (DEX), מניפסט מטא-נתונים ומשאבים גלובליים, נמצאת כיום בשימוש נרחב לניפוי באגים בפיתוח מקומי, להפצה על ידי צד שלישי ולהתקנה צדדית במכשירים)"
+
+msgid "mime_ipa"
+msgstr "IPA חבילת יישום Apple (מיכל אריזה בלעדי ל-iOS/iPadOS שוחרר עם SDK האייפון ב-2008. למעשה ארכיון ZIP המוגן על ידי DRM FairPlay או חתום בתעודת ארגון, המכיל קובץ הרצה בינארי Mach-O, עץ משאבי היישום ותצורת מטא-נתונים Info.plist)"
+
+msgid "mime_hap"
+msgstr "HAP חבילת יישום HarmonyOS (יחידת פריסה אלסטית בסיסית של HarmonyOS שוחררה עם HarmonyOS 2.0 ב-2020. מורכבת ממודול Entry ראשי או מודולי פונקציה מורחבת Feature, מהווה תבנית הפצה מרובת-קצוות (טלפונים, טאבלטים, מכשירים לבישים) להתקנים חכמים)"
+
+msgid "mime_har"
+msgstr "HAR חבילה משותפת סטטית של HarmonyOS (קובץ ארכיון ספרייה משותפת סטטית קניינית של HarmonyOS. משמש לאנקפסולציה של רכיבים משותפים, קוד משאבים בסיסי ותלויות בזמן הידור, המקושר באופן סטטי על ידי מודולי HAP מרובים לשיתוף, מהווה את הבסיס לפיתוח מבוסס-רכיבים ולשימוש חוזר במודולים מרובים במערכת HarmonyOS)"
+
+msgid "mime_aab"
+msgstr "AAB צרור יישום Android (תבנית הפצה דינמית של Google Play שהושקה על ידי גוגל ב-2018 והוקמה ב-2021. כישות הפצה טהורה, הענן גוזר ומהדר באופן דינמי בהתאם לארכיטקטורת ה-CPU של מכשיר היעד, צפיפות המסך והשפה, ליצירת APK מותאמים לפי דרישה, ומפחית את עלות רוחב הפס של השידור ב-35% בממוצע)"
+
+msgid "mime_xapk"
+msgstr "XAPK חבילת יישום מורחבת (תקן הרחבת יישום לא רשמי שנקבע על ידי קהילת Android של צד שלישי. משלב את קובץ ה-APK הסטנדרטי עם חבילת הרחבת נתוני משחק OBB גדולה, שובר פיזית את מגבלת גודל הקובץ הבודד של 100MB של Google Play, נראה באופן נרחב בפלטפורמות הפצת משחקים)"
+
+msgid "mime_appx"
+msgstr "APPX חבילת יישום מודרנית (תקן פריסת יישומי UWP שוחרר על ידי מיקרוסופט עם Windows 8 ב-2012. בעלת מאפייני ביצוע מבודדים בארגז חול והסרה קלת משקל, הייתה תקן דומיננטי מוקדם של Microsoft Store, אך במערכת האקולוגית המודרנית של Windows היא נכנסה לשלב סופי של מחזור החיים שלה תוך התפתחות לכיוון MSIX)"
+
+msgid "mime_msix"
+msgstr "MSIX חבילת יישום מהדור הבא (מפרט אריזה חדש ותקני לחלוטין של Windows שפורסם על ידי מיקרוסופט ב-2018. ממזג בצורה מושלמת את מאפייני ארגז החול של אבטחת היישום של APPX עם יתרונות ניהול הנכסים הארגוניים של MSI, תואם באופן מלא לכל סוגי יישומי Win32, ומהווה תקן ההפצה המומלץ עבור Windows 11)"
+
+msgid "mime_appimage"
+msgstr "AppImage חבילת יישום עצמאית (מפרט ארכיון הרצה בודד של Linux שיזם ב-2004. מאמץ ארכיטקטורה עצמאית של 'יישום אחד הוא קובץ אחד', המורכב ישירות כמערכת קבצים וירטואלית לקריאה בלבד באמצעות מנגנון FUSE בזמן ריצה, ומשיג הרצה מיידית ללא תלויות על פני הפצות Linux מרובות)"
+
+msgid "mime_flatpak"
+msgstr "Flatpak חבילת יישום בארגז חול (תקן הפצת יישומי שולחן עבודה חוצה-הפצות של Linux בהובלת Red Hat ו-GNOME ב-2015. מבוסס על מנגנוני Namespace ו-Cgroups של ליבת Linux להשגת בידוד ארגז חול אבטחה ברמת יישום קפדני ביותר, מהווה את הבסיס למרכזי התוכנה של מערכות הפעלה מודרניות מבוססות קוד פתוח)"
+
+msgid "mime_snap"
+msgstr "Snap חבילת יישום ממוכלת (תקן פריסה אוניברסלי של Linux שהושק על ידי Canonical, חברת האם של אובונטו, ב-2014. מאמצת ארכיטקטורת הרכבה של תמונת SquashFS עצמאית של היישום, תומכת בעדכונים מצטברים אוטומטיים ובבידוד ארגז חול קפדני של AppArmor, ומהווה את תבנית ברירת המחדל המרכזית של המערכת האקולוגית של מרכז התוכנה של אובונטו)"
+
+msgid "mime_deb"
+msgstr "DEB חבילת תוכנת מערכת (מפרט אנקפסולציית בינארי וקוד מקור שנקבע על ידי פרויקט דביאן ב-1993. כתקן התקנה בסיסי עבור דביאן, אובונטו וכל הנגזרות שלהן, מסתמך על dpkg לפתיחת חבילה ותחזוקה, ומשתמש ב-APT כחזית מנהל חבילות יעילה, מהווה את אבן הפינה להפצת תוכנה בשלה ביותר במערכת האקולוגית של Linux)"
+
+msgid "mime_rpm"
+msgstr "RPM חבילת תוכנת מערכת (מפרט אנקפסולציית מנהל חבילות Red Hat שהושק על ידי Red Hat ב-1997. יחד עם DEB, הם יוצרים את שני המחנות הגדולים של ניהול חבילות Linux המסורתי, בעלי בדיקת תלויות מבוססת טרנזקציות ואימות חתימה דיגיטלית של תוכנה ברמה נמוכה באופן מקורי, ומהווים עדיין את תקן ההפצה הדומיננטי לחלוטין עבור הפצות המערכת האקולוגית של Red Hat כמו RHEL, פדורה ו-CentOS)"
+
+msgid "mime_pacman"
+msgstr "Pacman חבילת תוכנת ארכיון (תבנית אנקפסולציה .pkg.tar.zst שנקבעה על ידי Arch Linux עם מנהל pacman ב-2002. כליבה של מנגנון העדכון המתגלגל של Arch, מבוסס על אלגוריתם הדחיסה הגבוהה המהיר Zstandard, יחד עם מערכת AUR (מאגר תוכנות משתמשי Arch), מהווה תקן הפצת חבילות מודרני המגלם מינימליזם ועקרון KISS (Keep It Simple, Stupid))"
+
+msgid "mime_exe"
+msgstr "EXE קובץ הרצה מקורי (תבנית תוכנית בינארית Portable Executable (PE) של פלטפורמת Windows. השושלת הטכנית שלה נובעת ממבנה הכותרת MZ מתקופת MS-DOS, ומאז Windows NT של 1993 היא התבססה לחלוטין כמפרט מבנה PE, מהווה את תקן ההרצה הנפוץ ביותר בעולם להוראות קוד מכונה, למקטעי משאבים סטטיים ולטעינת ליבת המערכת)"
+
+msgid "mime_dll"
+msgstr "DLL ספריית קישור דינמי (מפרט ספריית קוד משותף Dynamic Link Library של פלטפורמת Windows. באמצעות טעינה דינמית ומיקום מחדש של סמלים בזמן ריצה, חוסכת משמעותית בזיכרון פיזי ובשטח דיסק, כצורת המימוש המרכזית של ממשקי ה-API של Windows. הבעיה המוקדמת של 'גיהנום DLL' טופלה בעידן המודרני באמצעות מנגנון הבידוד המקביל SxS)"
+
+msgid "mime_com"
+msgstr "COM קובץ הרצה קלאסי (תבנית ההרצה העתיקה ביותר של תמונת זיכרון (Command) מתקופת MS-DOS. משתמשת בעיצוב קטע קוד טהור חסר מבנה, מוגבלת למגבלת קטע אמצעי זיכרון פיזי של 64KB, והוצאה כיום משימוש כתבנית מורשת היסטורית, אך בארכיטקטורות Windows מודרניות היא עדיין שומרת על תאימות מוגבלת כממשק רכיב ספציפי)"
+
+msgid "mime_aac"
+msgstr "אודיו AAC (תקן MPEG משנת 1997, Advanced Audio Coding. היורש של MP3, איכות שמע טובה מ-MP3 באותו קצב סיביות, פורמט אודיו ברירת מחדל עבור YouTube, iTunes, Nintendo Switch)"
+
+msgid "mime_alac"
+msgstr "אודיו ALAC (Apple פיתחה ב-2004, Apple Lossless Audio Codec. פורמט ללא אובדן של Apple, הפך לקוד פתוח ב-2011, פורמט ללא אובדן ברירת מחדל עבור iTunes ו-Apple Music)"
+
+msgid "mime_flac"
+msgstr "אודיו FLAC (קרן Xiph.Org פיתחה ב-2001, Free Lossless Audio Codec. דחיסה ללא אובדן, איכות שמע זהה ל-CD, גודל קובץ כמחצית מה-WAV המקורי. קוד פתוח וללא פטנטים, פורמט מועדף עבור אודיופילים ואוספי מוזיקה דיגיטלית)"
+
+msgid "mime_mp3"
+msgstr "אודיו MP3 (מכון Fraunhofer פיתח ב-1993, MPEG-1 Audio Layer 3. פורמט דחיסה מאבדת, קובץ קטן באיכות שמע סבירה, הפורמט העיקרי של מהפכת המוזיקה הדיגיטלית בשנות ה-2000, אחראי לאייפוד ולנפסטר. הפטנטים פג ב-2017, הפך לפורמט נחלת הכלל)"
+
+msgid "mime_oga"
+msgstr "אודיו Ogg Audio (פותח על ידי קרן Xiph.Org, פורמט אודיו טהור של מיכל Ogg, משתמש בקידוד Vorbis. קוד פתוח וללא פטנטים, יעילות דחיסה טובה מ-MP3, בשימוש נרחב בפרויקטי קוד פתוח)"
+
+msgid "mime_ogg"
+msgstr "אודיו OGG (קרן Xiph.Org פיתחה ב-2000, פורמט Ogg Vorbis. קוד פתוח וללא פטנטים, יעילות דחיסה טובה מ-MP3, Spotify המוקדם השתמש בו, בשימוש נרחב לאפקטים קוליים במשחקים)"
+
+msgid "mime_opus"
+msgstr "אודיו Opus (IEEE ביצע סטנדרטיזציה ב-2012, פורמט אודיו פתוח וללא פטנטים, משלב טכנולוגיות SILK ו-CELT, השהייה נמוכה במיוחד, היעילות הגבוהה ביותר בדחיסה, פורמט אודיו ברירת מחדל עבור WebRTC, WhatsApp, Discord)"
+
+msgid "mime_wav"
+msgstr "אודיו WAV (Microsoft ו-IBM פיתחו ב-1991, פורמט אודיו מקורי של Windows. קידוד PCM, לא דחוס, איכות שמע ללא אובדן אך קובץ גדול מאוד, פורמט סטנדרטי לעריכת אודיו מקצועית)"
+
+msgid "mime_wma"
+msgstr "אודיו WMA (Microsoft פיתחה ב-1999, Windows Media Audio. יש גרסאות מאבדות/ללא אובדן, נתמך באופן מקורי ב-Windows, התפשט עם Windows Media Player. כיום בשוליים, הוחלף על ידי MP3/AAC)"
+
+msgid "mime_dsf"
+msgstr "אודיו DSF (פורמט Direct Stream Digital, פותח על ידי Sony ו-Philips. קצב דגימה גבוה של 1 סיבית, פורמט אודיו DSD סטנדרטי, גרסה דיגיטלית של SACD, פורמט אודיו איכותי לאודיופילים, קובץ גדול מאוד)"
+
+msgid "mime_ape"
+msgstr "שמע APE (פותח על ידי Monkey's Audio בשנת 2000, פורמט דחיסה ללא אובדן. דחיסה גבוהה מ-FLAC אך קידוד איטי יותר, עדיין בשימוש בפלטפורמת Windows ובקרב חובבי אודיו)"
+
+msgid "mime_mid"
+msgstr "אודיו MIDI (איגוד MIDI קבע ב-1983, Musical Instrument Digital Interface. פורמט תווים, לא הקלטה, קובץ קטן מאוד, סטנדרט לכלי נגינה אלקטרוניים, צלצולי טלפון, אפקטים קוליים במשחקים. General MIDI תוקנן ב-1991, מגדיר 128 כלים)"
+
+msgid "mime_m4a"
+msgstr "אודיו M4A (MPEG-4 Audio, פורמט מיכל עבור AAC. פורמט סטנדרטי של חנות המוזיקה iTunes, פורמט אודיו ראשי במערכת האקולוגית של Apple, תומך בהגנת DRM)"
+
+msgid "mime_m3u"
+msgstr "רשימת השמעה M3U (פורמט רשימת השמעה של URL MP3, קובץ טקסט פשוט, מתעד נתיבי קבצי אודיו. סטנדרט מתקופת Winamp, משמש לרדיו באינטרנט, הזרמת מוזיקה מקוונת. M3U8 היא גרסת ה-UTF-8 שלו, משמשת להזרמת HTTP Live Streaming)"
+
+msgid "mime_asf"
+msgstr "הזרמת ASF (Microsoft פיתחה ב-1996, Advanced Systems Format. מיכל הזרמת Windows Media, תומך בהעברה סינכרונית של אודיו ווידאו. משמש לשידורים חיים באינטרנט ולהזרמת וידאו לפי דרישה, WMA/WMV מבוססים על מיכל ASF)"
+
+msgid "mime_avi"
+msgstr "וידאו AVI (Microsoft השיקה ב-1992, תקן וידאו מוקדם של Windows. 'Audio Video Interleave', מחליף אודיו ווידאו, היה פורמט הווידאו הפופולרי ביותר בשנות ה-1990-2000, כיום הוחלף על ידי MP4/MKV)"
+
+msgid "mime_divx"
+msgstr "וידאו DivX (חברת DivX פיתחה ב-1998, פורמט קודק וידאו מבוסס MPEG-4. פורמט עיקרי לשיתוף וידאו באינטרנט בשנות ה-2000, הטכנולוגיה הראשונה שדחסה איכות DVD לגודל CD. עקב מחלוקות בנושא זכויות יוצרים, הפך מאוחר יותר לקודק מסחרי)"
+
+msgid "mime_mp4"
+msgstr "וידאו MP4 (תקן MPEG משנת 2001, MPEG-4 Part 14. פורמט הווידאו הנפוץ ביותר בעולם, תומך בקידוד H.264/H.265, פורמט ברירת מחדל לווידאו באינטרנט, צילום בטלפון נייד, YouTube)"
+
+msgid "mime_m4v"
+msgstr "וידאו M4V (פורמט וידאו של iTunes, גרסה של MP4. פורמט וידאו במערכת האקולוגית של Apple, פורמט סטנדרטי עבור סרטים ותוכניות טלוויזיה בחנות iTunes, תומך בהגנה על זכויות יוצרים DRM)"
+
+msgid "mime_mpeg"
+msgstr "וידאו MPEG (ארגון MPEG קבע ב-1988, Moving Picture Experts Group. הניח את היסודות לתקני דחיסת וידאו דיגיטלית, ל-MPEG-1 (VCD), MPEG-2 (DVD), MPEG-4 (וידאו באינטרנט) הייתה השפעה עמוקה)"
+
+msgid "mime_mkv"
+msgstr "וידאו MKV (פרויקט Matroska פיתח ב-2002, מיכל מולטימדיה בקוד פתוח. תומך במספר רצועות אודיו, מספר כתוביות, פרקים, 'כלי אריזה', פורמט מועדף לשיתוף סרטים ברזולוציה גבוהה)"
+
+msgid "mime_mpg"
+msgstr "וידאו MPEG (סיומות וידאו MPEG-1/MPEG-2, פורמט סטנדרטי עבור VCD ו-DVD. פורמט הווידאו העיקרי בדיסקים אופטיים בשנות ה-1990-2000, כיום הוחלף על ידי H.264/H.265)"
+
+msgid "mime_ogv"
+msgstr "וידאו Ogg Video (פותח על ידי קרן Xiph.Org, פורמט וידאו של מיכל Ogg, משתמש בקידוד Theora. קוד פתוח וללא פטנטים, אחד הסטנדרטים המוקדמים לווידאו HTML5, Firefox תומך בו באופן מקורי)"
+
+msgid "mime_ogx"
+msgstr "מיכל מולטימדיה Ogg (פותח על ידי קרן Xiph.Org, הרחבה כללית של מיכל Ogg, יכול להכיל מספר רצועות כמו אודיו, וידאו, כתוביות. תקן מולטימדיה פתוח, משמש למשחקים, הזרמה)"
+
+msgid "mime_rm"
+msgstr "וידאו RealMedia (RealNetworks פיתחה ב-1995, פורמט RealMedia. חלוץ ההזרמה באינטרנט בשנות ה-1990-2000, פורמט עיקרי של נגן RealPlayer. חסרונות: דורש נגן מיוחד, איכות דחיסה ירודה, מאוחר יותר הוחלף על ידי Flash/MP4)"
+
+msgid "mime_flv"
+msgstr "וידאו Flash (הפורמט הופיע ב-2002, פורמט Flash Video. היה פעם פורמט הווידאו העיקרי באינטרנט. YouTube המוקדם השתמש בו. חסרונות: צורך בתוסף Flash, ביצועים ירודים, פגיעויות אבטחה רבות. החל מ-2015, אתרים עיקריים עברו לווידאו HTML5, כיום מיושן)"
+
+msgid "mime_f4v"
+msgstr "וידאו F4V (פורמט וידאו Flash שפותח על ידי Adobe, יורש של FLV. מבוסס על תקן MPEG-4, תומך בקידוד H.264. מיושן יחד עם טכנולוגיית Flash, Adobe הפסיקה את התמיכה ב-2020)"
+
+msgid "mime_wmv"
+msgstr "וידאו WMV (Microsoft פיתחה ב-1999, Windows Media Video. נתמך באופן מקורי ב-Windows, מותאם להזרמה, היה פורמט נפוץ בווידאו מקוון מוקדם, כיום בשוליים)"
+
+msgid "mime_wmf"
+msgstr "פורמט מדיה WMF (Windows Media Format, מסגרת המדיה של Microsoft, כוללת וידאו WMV, אודיו WMA, נתמך באופן מקורי על ידי Windows Media Player)"
+
+msgid "mime_mov"
+msgstr "וידאו MOV (Apple פיתחה ב-1991, פורמט מיכל QuickTime. פורמט סטנדרטי לעריכת וידאו מקצועית, תומך במספר קודקים, נתמך באופן מקורי על ידי Final Cut Pro, Premiere)"
+
+msgid "mime_qt"
+msgstr "וידאו QuickTime (Apple השיקה ב-1991, פורמט QuickTime. תקן וידאו בפלטפורמת Mac, MOV הוא המיכל שלו, נגן QuickTime היה בשימוש נרחב. Apple הפסיקה את הפיתוח של גרסת Windows ב-2016, מחליפה אותו בהדרגה ב-MP4)"
+
+msgid "mime_webm"
+msgstr "וידאו WebM (Google השיקה ב-2010, פורמט וידאו פתוח וללא פטנטים. מבוסס על מיכל Matroska, קידוד VP8/VP9, פורמט וידאו סטנדרטי של HTML5, פורמט ברירת מחדל להפעלה ב-YouTube באינטרנט)"
+
+msgid "mime_3gp"
+msgstr "וידאו 3GP (3GPP קבע ב-2000, פורמט וידאו למכשירים ניידים. קובץ קטן מאוד, איכות נמוכה, פורמט להקלטת וידאו בטלפונים מוקדמים, שימש לשליחת MMS)"
+
+#------------------------------------------------------------------------------
+# מימדים טכניים
+#------------------------------------------------------------------------------
+
+msgid "Operating Systems"
+msgstr "מערכות הפעלה"
+
+msgid "Top 5 Operating Systems"
+msgstr "5 מערכות ההפעלה המובילות"
+
+msgid "Unknown Robot"
+msgstr "לקוח לא ידוע"
+
+msgid "User agent"
+msgstr "סוכן משתמש"
+
+msgid "Browsers"
+msgstr "דפדפנים"
+
+msgid "Top 5 Browsers"
+msgstr "5 הדפדפנים המובילים"
+
+msgid "Unknown Robot RH"
+msgstr "כותרת בקשה לא ידועה"
+
+msgid "Detailed"
+msgstr "גרסת מכשיר ניגש"
+
+msgid "DetailedOS"
+msgstr "גרסת מערכת הפעלה"
+
+msgid "DetailedBS"
+msgstr "גרסת דפדפן"
+
+msgid "Screen sizes"
+msgstr "גדלי מסך"
+
+msgid "Compression"
+msgstr "דחיסה"
+
+msgid "In"
+msgstr "כניסה"
+
+msgid "Out"
+msgstr "יציאה"
+
+msgid "Saved"
+msgstr "נשמר"
+
+#------------------------------------------------------------------------------
+# מימדי מקור
+#------------------------------------------------------------------------------
+
+msgid "Origin"
+msgstr "מקור"
+
+msgid "Referers"
+msgstr "מפנים"
+
+msgid "meta.description"
+msgstr "AWStats מנתח יומני רשת מתקדם - ניטור תעבורת אתר בזמן אמת, ניתוח מבקרים, מילות מפתח במנועי חיפוש, סטטיסטיקות דפי שגיאה. תומך במצב כהה ובממשק רב-לשוני, מספק ניתוח נתונים מקיף למנהלי אתרים."
+
+msgid "meta.keywords"
+msgstr "AWStats,סטטיסטיקות רשת,ניתוח יומנים,ניטור תעבורה,סטטיסטיקות גישה,ניתוח SEO,כלי לניתוח אתרים,Web Analytics,Log Analyzer"
+
+msgid "meta.author"
+msgstr "AWStats"
+
+msgid "og.title"
+msgstr "AWStats - ניתוח יומני רשת"
+
+msgid "og.description"
+msgstr "📊 כלי סטטיסטיקות אתרים מקצועי בקוד פתוח, מנתח את תעבורת האתר שלך ואת התנהגות המבקרים בזמן אמת."
+
+msgid "og.image.alt"
+msgstr "גרפים סטטיסטיים של AWStats"
+
+msgid "Created by"
+msgstr "נוצר על ידי %s"
+
+msgid "plugins"
+msgstr "תוספים"
+
+msgid "dbip by"
+msgstr "נתונים מ"
+
+msgid "IPDB by"
+msgstr "נתוני מיקום גיאוגרפי מסופקים על ידי DB-IP"
+
+# מצב בריאותי
+msgid "Configured"
+msgstr "הוגדר"
+
+msgid "Missing"
+msgstr "חסר"
+
+msgid "OK"
+msgstr "תקין"
+
+msgid "Unused"
+msgstr "לא בשימוש"
+
+# אחר
+msgid "Overall Health"
+msgstr "בריאות כללית"
+
+msgid "Excellent"
+msgstr "מצוין"
+
+msgid "Good"
+msgstr "טוב"
+
+msgid "Fair"
+msgstr "סביר"
+
+msgid "Poor"
+msgstr "רע"
+
+msgid "Missing icon types"
+msgstr "סוגי סמלים חסרים"
+
+msgid "See"
+msgstr "ראה פרטים"
+
+msgid "Expected Path"
+msgstr "תיאור נתיב"
+
+msgid "column for file locations"
+msgstr "עמודה לקבלת מיקומי קבצים"
+
+# עצה
+msgid "Tip: If you need to generate related icons, you can use %s to upload a logo image, and it will automatically generate all the above related icon files"
+msgstr "טיפ: אם אתה צריך ליצור סמלים קשורים, אתה יכול להשתמש ב-%s כדי להעלות תמונת לוגו, והוא ייצר אוטומטית את כל קבצי הסמלים הקשורים לעיל"
+
+msgid "200: success, 404: failure"
+msgstr "200 הוא מספר ההצלחות, 404 הוא מספר הכישלונות"
+
+# נתיבים צפויים
+msgid "_PATH_FAVICON"
+msgstr "/favicon.ico"
+
+msgid "_PATH_APPLE_TOUCH"
+msgstr "/apple-touch-icon.png או /apple-touch-icon-180x180.png"
+
+msgid "_PATH_LOGO"
+msgstr "/logo.svg או /logo.png (יש להפנות ב-HTML/JSON-LD)"
+
+msgid "_PATH_WEBMANIFEST"
+msgstr "/site.webmanifest או /manifest.json"
+
+msgid "_PATH_BROWSERCONFIG"
+msgstr "/browserconfig.xml"
+
+msgid "_PATH_SAFARI_PINNED"
+msgstr "/safari-pinned-tab.svg"
+
+msgid "_PATH_SOCIAL_ICON"
+msgstr "/images/github.svg, /images/paypal.svg וכו'"
+
+# שמות סוגי סמלים
+msgid "Favicon"
+msgstr "סמל אתר"
+
+msgid "Apple Touch Icon (iOS/macOS)"
+msgstr "סמל מגע של Apple (iPhone/iPad/Mac)"
+
+msgid "Site Logo"
+msgstr "לוגו האתר"
+
+msgid "Web App Manifest (Android/Chrome)"
+msgstr "קובץ מניפסט של יישום אינטרנט (Android/Chrome)"
+
+msgid "Windows Browser Config"
+msgstr "תצורת דפדפן Windows"
+
+msgid "Safari Pinned Tab"
+msgstr "סמל לשונית נעוצה של Safari"
+
+msgid "Social Icon"
+msgstr "סמל רשת חברתית"
+
+# כותרות
+msgid "Icon Files Status"
+msgstr "מצב קבצי סמלים"
+
+msgid "Icon Type"
+msgstr "סוג סמל"
+
+msgid "Advanced Web Statistics"
+msgstr "מנתח יומנים מתקדם"
+
+msgid "Advanced Web Statistics %s"
+msgstr "מנתח יומנים מתקדם %s"
+
+msgid "Your browser does not support frames. Please use a modern browser."
+msgstr "הדפדפן שלך אינו תומך במסגרות. אנא השתמש בדפדפן מודרני."
+
+msgid "View statistics directly"
+msgstr "הצג סטטיסטיקות ישירות"
+
+msgid "Close"
+msgstr "סגור"
+
+msgid "Documentation Viewer"
+msgstr "מציג תיעוד"
+
+msgid "Direct address / Bookmarks"
+msgstr "כתובת ישירה / סימניות"
+
+msgid "Search Engines"
+msgstr "מנועי חיפוש"
+
+msgid "Refering search engines"
+msgstr "מנועי חיפוש מפנים"
+
+msgid "External pages"
+msgstr "עמודים חיצוניים"
+
+msgid "Refering pages"
+msgstr "עמודים מפנים"
+
+msgid "Internal pages"
+msgstr "עמודים פנימיים"
+
+msgid "UnknownAccessSource"
+msgstr "מקור גישה לא ידוע"
+
+msgid "Different refering pages"
+msgstr "עמודים מפנים שונים"
+
+msgid "Keyphrases"
+msgstr "ביטויי מפתח"
+
+msgid "Keywords"
+msgstr "מילות מפתח"
+
+msgid "Keyphrases/Keywords"
+msgstr "ביטויי מפתח/מילות מפתח"
+
+msgid "Different keyphrases"
+msgstr "ביטויי מפתח שונים"
+
+msgid "Different keywords"
+msgstr "מילות מפתח שונות"
+
+#------------------------------------------------------------------------------
+# ממדי עמוד
+#------------------------------------------------------------------------------
+
+msgid "Viewed pages"
+msgstr "עמודים שנצפו"
+
+msgid "Different pages"
+msgstr "עמודים שונים"
+
+msgid "Entry"
+msgstr "מיקום כניסה"
+
+msgid "Exit"
+msgstr "מיקום יציאה"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Referer"
+msgstr "מפנה"
+
+msgid "Host"
+msgstr "מארח"
+
+#------------------------------------------------------------------------------
+# שגיאות ומצבים
+#------------------------------------------------------------------------------
+
+msgid "Error"
+msgstr "שגיאה"
+
+msgid "HTTP Status Statistics"
+msgstr "סטטיסטיקות קוד מצב HTTP"
+
+msgid "SMTP Error codes"
+msgstr "קודי שגיאה SMTP"
+
+msgid "Page not found"
+msgstr "העמוד המבוקש לא נמצא"
+
+msgid "Unknown error"
+msgstr "שגיאה לא ידועה"
+
+msgid "Abnormal traffic note"
+msgstr "תעבורת גלישה חריגה כוללת: רובוטי חיפוש, בוטים לאימון בינה מלאכותית, סורקי פגיעויות ובקשות שאינן תואמות מפרטים"
+
+msgid "Page detail"
+msgstr "פרטי עמוד"
+
+# פרטי הודעת שגיאה
+msgid "AWStats did not found the"
+msgstr "AWStats לא מצא"
+
+msgid "in your log records."
+msgstr "ברישומי היומן שלך."
+
+msgid "AWStats did not find any valid log lines that match your"
+msgstr "AWStats לא מצא שורות יומן חוקיות התואמות"
+
+msgid "parameter, in the"
+msgstr "הפרמטר שלך, ב"
+
+msgid "th first non commented lines read of your log."
+msgstr "-השורות הראשונות שאינן מוערות שנקראו מהיומן שלך."
+
+msgid "Your log file"
+msgstr "קובץ היומן שלך"
+
+msgid "must have a bad format or"
+msgstr "כנראה בפורמט שגוי או"
+
+msgid "parameter setup does not match this format."
+msgstr "הגדרת הפרמטר אינה תואמת פורמט זה."
+
+msgid "Your AWStats"
+msgstr "ה-AWStats שלך"
+
+msgid "parameter is:"
+msgstr "הפרמטר הוא:"
+
+msgid "This means each line in your web server log file need to have:"
+msgstr "זה אומר שכל שורה בקובץ היומן של שרת האינטרנט שלך צריכה להכיל:"
+
+msgid "combined log format"
+msgstr "פורמט יומן משולב"
+
+msgid "MSIE Extended W3C log format"
+msgstr "פורמט יומן W3C מורחב של MSIE"
+
+msgid "WebStar native log format"
+msgstr "פורמט יומן מקורי של WebStar"
+
+msgid "common log format"
+msgstr "פורמט יומן נפוץ"
+
+msgid "Lotus Notes/Lotus Domino"
+msgstr "Lotus Notes/Lotus Domino"
+
+msgid "the following personalized log format:"
+msgstr "פורמט היומן המותאם האישי הבא:"
+
+msgid "And this is an example of records AWStats found in your log file (the record number"
+msgstr "וזו דוגמה לרשומות ש-AWStats מצא בקובץ היומן שלך (מספר הרשומה"
+
+msgid "in your log):"
+msgstr "ביומן שלך):"
+
+#------------------------------------------------------------------------------
+# שונות
+#------------------------------------------------------------------------------
+
+msgid "Extra/Marketing"
+msgstr "נוסף/שיווק"
+
+#------------------------------------------------------------------------------
+# טקסט ממשק
+#------------------------------------------------------------------------------
+
+msgid "Current site"
+msgstr "אתר נוכחי"
+
+msgid "Web Site"
+msgstr "אתר אינטרנט"
+
+msgid "Last Update"
+msgstr "עדכון אחרון"
+
+msgid "Never updated"
+msgstr "מעולם לא עודכן"
+
+msgid "No qualified records found in log"
+msgstr "לא נמצאו רשומות מתאימות ביומן"
+
+msgid "corrupted"
+msgstr "פגום"
+
+msgid "comments"
+msgstr "הערות"
+
+msgid "Blank"
+msgstr "ריק"
+
+msgid "dropped"
+msgstr "נשר"
+
+msgid "Update now"
+msgstr "עדכן כעת"
+
+msgid "Back to main page"
+msgstr "חזרה לעמוד הראשי"
+
+msgid "Close window"
+msgstr "סגור חלון"
+
+msgid "Back page"
+msgstr "חזרה לעמוד הקודם"
+
+msgid "Navigation"
+msgstr "ניווט"
+
+msgid "Summary"
+msgstr "סיכום"
+
+msgid "Local"
+msgstr "מקומי"
+
+msgid "External"
+msgstr "חיצוני"
+
+msgid "Others (email senders)"
+msgstr "אחרים (שולחי דואר אלקטרוני)"
+
+msgid "Others (email receivers)"
+msgstr "אחרים (מקבלי דואר אלקטרוני)"
+
+msgid "Others"
+msgstr "אחרים"
+
+msgid "Only 10 lines of browser data are currently displayed"
+msgstr "מוצגות כרגע רק 10 שורות של נתוני דפדפן, עיין ברשימה המלאה"
+
+msgid "Others (unknown browsers)"
+msgstr "אחרים (דפדפנים לא ידועים)"
+
+msgid "Others (operating systems)"
+msgstr "אחרים (מערכות הפעלה)"
+
+msgid "Others (unknown OS)"
+msgstr "אחרים (מערכת הפעלה לא ידועה)"
+
+msgid "Others (search engines)"
+msgstr "אחרים (מנועי חיפוש)"
+
+msgid "Others (referring pages)"
+msgstr "אחרים (עמודים מפנים)"
+
+msgid "Others (keyphrases)"
+msgstr "אחרים (ביטויי מפתח)"
+
+msgid "Others (keywords)"
+msgstr "אחרים (מילות מפתח)"
+
+msgid "Only first 10 robots shown"
+msgstr "הרשימה הנוכחית מציגה רק 10 רובוטים, עיין ברשימה המלאה"
+
+msgid "Failed to obtain access record"
+msgstr "נכשל בקבלת רשומת כניסה"
+
+msgid "Failed to obtain leave record"
+msgstr "נכשל בקבלת רשומת יציאה"
+
+msgid "Other pages"
+msgstr "עמודים אחרים"
+
+msgid "Low Traffic IP Summary"
+msgstr "סיכום IP לא ידועים עם תעבורה נמוכה"
+
+msgid "Failed to obtain IP data"
+msgstr "סיכום IP ידועים אחרים"
+
+msgid "Failed to obtain the relevant data"
+msgstr "נכשל בקבלת הנתונים הרלוונטיים"
+
+msgid "Limited list of countries and regions"
+msgstr "מוצגות כרגע רק 10 שורות, עיין ברשימה המלאה למדינות/אזורים נוספים"
+
+msgid "currentVisitorData"
+msgstr "מוצגות כרגע רק 10 שורות של נתוני מבקרים, עיין ברשימה המלאה"
+
+msgid "Others (robots main)"
+msgstr "אחרים (רובוטים)"
+
+msgid "Others (worms)"
+msgstr "אחרים (תולעים)"
+
+msgid "Displaying10RowsPageMorePleaseViewFullList"
+msgstr "הרשימה הנוכחית מציגה רק 10 עמודים, עיין ברשימה המלאה"
+
+msgid "Others (OS main)"
+msgstr "אחרים (מערכת)"
+
+msgid "Others (browsers main)"
+msgstr "אחרים (דפדפנים)"
+
+msgid "Others (screen sizes)"
+msgstr "אחרים (גודל)"
+
+msgid "Others (search engines main)"
+msgstr "אחרים (מנועי חיפוש)"
+
+msgid "Others (referring pages main)"
+msgstr "אחרים (עמודים מפנים)"
+
+msgid "Others (keyphrases main)"
+msgstr "אחרים (ביטויי מפתח)"
+
+msgid "Others (keywords main)"
+msgstr "אחרים (מילות מפתח)"
+
+# 1xx
+msgid "Continue"
+msgstr "המשך לשלוח את התוכן שנותר"
+
+msgid "Switching Protocols"
+msgstr "מחליף פרוטוקולים"
+
+msgid "Processing (WebDAV)"
+msgstr "מעבד (אנא המתן)"
+
+msgid "Early Hints"
+msgstr "השרת מכין משאבים"
+
+# 2xx
+msgid "[Miscellaneous successes]"
+msgstr "מצבי הצלחה אחרים"
+
+msgid "Request successful"
+msgstr "הבקשה הצליחה"
+
+msgid "Created successfully"
+msgstr "נוצר בהצלחה"
+
+msgid "Accepted - processing"
+msgstr "התקבל, מעבד"
+
+msgid "Non-authoritative information (from cache) (from cache)"
+msgstr "מידע לא סמכותי (ממטמון)"
+
+msgid "Success, no content returned"
+msgstr "הצלחה, לא הוחזר תוכן"
+
+msgid "Reset content"
+msgstr "אפס את הטופס"
+
+msgid "Partial content (resume download)"
+msgstr "תוכן חלקי (תומך בחידוש הורדה)"
+
+msgid "Multi-status (WebDAV)"
+msgstr "מצב מרובה (פעולות אצווה של WebDAV)"
+
+msgid "Already reported (WebDAV)"
+msgstr "כבר דווח (מונע כפילות)"
+
+msgid "IM used"
+msgstr "נעשה שימוש בהרחבת פרוטוקול IM"
+
+# 3xx
+msgid "[Miscellaneous redirections]"
+msgstr "הפניות אחרות"
+
+msgid "Multiple choices"
+msgstr "אפשרויות מרובות"
+
+msgid "Moved permanently - update your links"
+msgstr "הועבר לצמיתות, עדכן את הקישורים שלך"
+
+msgid "Temporary redirect - URL unchanged"
+msgstr "הפניה זמנית, הכתובת אינה משתנה"
+
+msgid "See other"
+msgstr "ראה כתובת אחרת"
+
+msgid "Not modified - using cached version"
+msgstr "לא השתנה, משתמש בגרסה המאוחסנת במטמון"
+
+msgid "Use proxy"
+msgstr "השתמש בפרוקסי"
+
+msgid "Switch proxy"
+msgstr "החלף פרוקסי"
+
+msgid "Temporary redirect (keep method)"
+msgstr "הפניה זמנית (שומר על שיטת הבקשה)"
+
+msgid "Permanent redirect - update your links"
+msgstr "הפניה קבועה, עדכן את הקישורים שלך"
+
+# 4xx
+msgid "[Miscellaneous client/user errors]"
+msgstr "שגיאות לקוח אחרות"
+
+msgid "Bad request"
+msgstr "פורמט הבקשה שגוי"
+
+msgid "Unauthorized - please log in"
+msgstr "לא מורשה, אנא התחבר תחילה"
+
+msgid "Payment required"
+msgstr "נדרש תשלום"
+
+msgid "Forbidden - access denied"
+msgstr "גישה נאסרה, הרשאות לא מספקות"
+
+msgid "Page not found (404) - check for broken links"
+msgstr "העמוד אינו קיים, בדוק קישורים שבורים"
+
+msgid "Method not allowed"
+msgstr "שיטת הבקשה אינה מותרת"
+
+msgid "Not acceptable"
+msgstr "פורמט תגובה לא מקובל"
+
+msgid "Proxy authentication required"
+msgstr "נדרש אימות דרך פרוקסי"
+
+msgid "Request timeout"
+msgstr "זמן ההמתנה לבקשה פג"
+
+msgid "Conflict - please try again"
+msgstr "התנגשות בקשה, אנא נסה שוב מאוחר יותר"
+
+msgid "Gone - permanently deleted"
+msgstr "המשאב נמחק לצמיתות"
+
+msgid "Length required"
+msgstr "יש לציין אורך תוכן"
+
+msgid "Precondition failed"
+msgstr "תנאים מוקדמים לא התקיימו"
+
+msgid "Payload too large"
+msgstr "תוכן הבקשה גדול מדי"
+
+msgid "URI too long"
+msgstr "כתובת הבקשה ארוכה מדי"
+
+msgid "Unsupported media type"
+msgstr "סוג הקובץ אינו נתמך"
+
+msgid "Range not satisfiable"
+msgstr "טווח הבקשה אינו חוקי"
+
+msgid "Expectation failed"
+msgstr "לא ניתן לעמוד בציפייה"
+
+msgid "I am a teapot (April Fools)"
+msgstr "אני קומקום תה (מתיחה של אחד באפריל)"
+
+msgid "Page expired (Laravel)"
+msgstr "העמוד פג תוקף, רענן ונסה שוב"
+
+msgid "Method failure (Spring)"
+msgstr "השיטה נכשלה"
+
+msgid "Misdirected request"
+msgstr "הבקשה הופנתה באופן שגוי"
+
+msgid "Unprocessable entity (WebDAV)"
+msgstr "פורמט הבקשה תקין אך לא ניתן לעיבוד"
+
+msgid "Locked (WebDAV)"
+msgstr "המשאב נעול"
+
+msgid "Failed dependency (WebDAV)"
+msgstr "פעולה תלויה נכשלה"
+
+msgid "Too early"
+msgstr "הבקשה נשלחה מוקדם מדי"
+
+msgid "Upgrade required"
+msgstr "נדרש שדרוג פרוטוקול"
+
+msgid "Precondition required"
+msgstr "חסרים תנאים מוקדמים נחוצים"
+
+msgid "Too many requests - slow down"
+msgstr "הבקשות תכופות מדי, אנא נסה שוב מאוחר יותר"
+
+msgid "Request header fields too large (Shopify)"
+msgstr "שדות כותרת הבקשה גדולים מדי"
+
+msgid "Request header too large"
+msgstr "כותרת הבקשה גדולה מדי"
+
+msgid "Login timeout (IIS)"
+msgstr "זמן ההתחברות פג, אנא התחבר שוב"
+
+msgid "No response (nginx)"
+msgstr "השרת אינו מגיב"
+
+msgid "Retry with (IIS)"
+msgstr "אנא נסה שוב מאוחר יותר"
+
+msgid "Blocked by Windows parental controls"
+msgstr "נחסם על ידי בקרת הורים של Windows"
+
+msgid "Unavailable for legal reasons"
+msgstr "לא זמין מסיבות משפטיות"
+
+msgid "Client closed connection before idle timeout (AWS ELB)"
+msgstr "הלקוח ניתק את החיבור לפני פקיעת זמן ההמתנה לחוסר פעילות"
+
+msgid "X-Forwarded-For header with >30 IP addresses (AWS ELB)"
+msgstr "לשרשרת ההעברה יש יותר מ-30 כתובות IP"
+
+msgid "Incompatible protocol versions (AWS ELB)"
+msgstr "גרסאות הפרוטוקול אינן תואמות"
+
+msgid "Request header too large (nginx)"
+msgstr "כותרת הבקשה גדולה מדי"
+
+msgid "SSL certificate error (nginx)"
+msgstr "שגיאת תעודת SSL"
+
+msgid "SSL certificate required (nginx)"
+msgstr "נדרשת תעודת SSL"
+
+msgid "HTTP request sent to HTTPS port (nginx)"
+msgstr "בקשת HTTP נשלחה ליציאת HTTPS"
+
+msgid "Invalid token (ArcGIS)"
+msgstr "אסימון לא חוקי"
+
+msgid "Token required (ArcGIS) / Client closed request (nginx)"
+msgstr "נדרש אסימון / הלקוח סגר את הבקשה"
+
+msgid "Resource limit reached (cPanel)"
+msgstr "הגבלת משאבים הושגה (CPU/זיכרון)"
+
+msgid "Bandwidth limit exceeded (Apache/cPanel)"
+msgstr "חריגת מגבלת רוחב פס"
+
+# 5xx
+msgid "[Miscellaneous server errors]"
+msgstr "שגיאות שרת אחרות"
+
+msgid "Internal server error - check logs"
+msgstr "שגיאת שרת פנימית, בדוק את היומנים"
+
+msgid "Not implemented"
+msgstr "הפונקציה אינה נתמכת בשרת"
+
+msgid "Bad gateway - backend error"
+msgstr "שגיאת שער, שירות הקצה האחורי אינו תקין"
+
+msgid "Service unavailable - maintenance or overload"
+msgstr "השירות אינו זמין, תחזוקה או עומס יתר"
+
+msgid "Gateway timeout"
+msgstr "זמן ההמתנה לשער פג"
+
+msgid "HTTP version not supported"
+msgstr "גרסת פרוטוקול HTTP אינה נתמכת"
+
+msgid "Variant also negotiates"
+msgstr "הגרסה גם משתתפת במשא ומתן (שגיאת תצורה)"
+
+msgid "Insufficient storage (WebDAV)"
+msgstr "שטח אחסון לא מספיק"
+
+msgid "Loop detected (WebDAV)"
+msgstr "זוהתה הפניה מעגלית"
+
+msgid "Not extended"
+msgstr "נדרשת הרחבה נוספת"
+
+msgid "Network authentication required"
+msgstr "נדרש אימות רשת"
+
+# Cloudflare
+msgid "Unknown error (Cloudflare)"
+msgstr "שגיאה לא ידועה"
+
+msgid "Web server is down (Cloudflare)"
+msgstr "שרת האינטרנט אינו פעיל"
+
+msgid "Connection timeout (Cloudflare)"
+msgstr "זמן ההמתנה לחיבור פג"
+
+msgid "Origin is unreachable (Cloudflare)"
+msgstr "המקור אינו ניתן להשגה"
+
+msgid "A timeout occurred (Cloudflare)"
+msgstr "התרחשה פקיעת זמן"
+
+msgid "SSL handshake failed (Cloudflare)"
+msgstr "לחיצת היד SSL נכשלה"
+
+msgid "Invalid SSL certificate (Cloudflare)"
+msgstr "תעודת SSL לא חוקית"
+
+msgid "Railgun error (Cloudflare - obsolete)"
+msgstr "שגיאת Railgun (מיושן)"
+
+msgid "Site is overloaded (SSLLabs)"
+msgstr "האתר עמוס מדי"
+
+msgid "Origin DNS error (Cloudflare) / Site is frozen (Pantheon)"
+msgstr "שגיאת DNS של המקור (Cloudflare) / האתר קפוא (Pantheon)"
+
+msgid "Temporarily disabled (Shopify)"
+msgstr "מושבת זמנית"
+
+msgid "Unauthorized (AWS ELB)"
+msgstr "לא מורשה"
+
+msgid "Network read timeout error"
+msgstr "שגיאת פקיעת זמן קריאת רשת"
+
+msgid "Network connect timeout error"
+msgstr "שגיאת פקיעת זמן התחברות לרשת"
+
+msgid "Unexpected token (Shopify)"
+msgstr "אסימון לא צפוי"
+
+msgid "Request denied (LinkedIn)"
+msgstr "הבקשה נדחתה"
+
+msgid "HTTP/2 GOAWAY (AWS ELB)"
+msgstr "סגירת חיבור HTTP/2"
+
+msgid "[Unknown]"
+msgstr "קוד מצב לא ידוע"
+
+# SMTP ודואר אלקטרוני
+msgid "Nonstandard success response (ESMTP)"
+msgstr "תגובת הצלחה לא סטנדרטית (ESMTP)"
+
+msgid "System status, or system help reply"
+msgstr "סטטוס מערכת, או תגובת עזרה של המערכת"
+
+msgid "Help message"
+msgstr "הודעת עזרה"
+
+msgid "SMTP service ready (LMTP)"
+msgstr "שירות SMTP מוכן (LMTP)"
+
+msgid "Service ready - server is ready to receive mail"
+msgstr "השירות מוכן - שרת הדואר האלקטרוני מוכן לקבל דואר"
+
+msgid "Service closing - connection is being closed"
+msgstr "השירות נסגר - החיבור נסגר"
+
+msgid "Authentication successful"
+msgstr "האימות הצליח"
+
+msgid "Requested mail action taken and completed"
+msgstr "פעולת הדואר המבוקשת בוצעה והושלמה"
+
+msgid "User not local - will forward to another address"
+msgstr "המשתמש אינו מקומי - יעבור לכתובת אחרת"
+
+msgid "Cannot verify recipient, but will attempt delivery"
+msgstr "לא ניתן לאמת את הנמען, אך ינסה לבצע משלוח"
+
+msgid "Message accepted for delivery (DSN)"
+msgstr "ההודעה התקבלה למשלוח (DSN)"
+
+msgid "User name is a mailbox"
+msgstr "שם המשתמש הוא תיבת דואר"
+
+msgid "Authentication challenge - please respond"
+msgstr "אתגר אימות - אנא הגב"
+
+msgid "Start mail input - end with <CRLF>.<CRLF>"
+msgstr "התחל להזין תוכן דואר - סיים עם <CRLF>.<CRLF>"
+
+msgid "Continue (LMTP)"
+msgstr "המשך (LMTP)"
+
+msgid "Service not available - connection closing, try again later"
+msgstr "השירות אינו זמין - החיבור נסגר, אנא נסה שוב מאוחר יותר"
+
+msgid "Mailbox busy or temporarily unavailable (Exchange)"
+msgstr "תיבת הדואר תפוסה או לא זמינה זמנית (Exchange)"
+
+msgid "Connection rate limit exceeded (Postfix)"
+msgstr "חריגת מגבלת תדירות התחברות (Postfix)"
+
+msgid "Too many concurrent connections (Postfix)"
+msgstr "יותר מדי חיבורים בו-זמנית (Postfix)"
+
+msgid "Unable to establish connection (Postfix)"
+msgstr "לא ניתן ליצור חיבור (Postfix)"
+
+msgid "Connection timed out (Postfix)"
+msgstr "זמן ההמתנה לחיבור פג (Postfix)"
+
+msgid "Connection dropped due to error (Postfix)"
+msgstr "החיבור נותק עקב שגיאה (Postfix)"
+
+msgid "Mailbox temporarily locked (Exchange)"
+msgstr "תיבת הדואר נעולה זמנית (Exchange)"
+
+msgid "Too many recipients (Postfix/Exim)"
+msgstr "יותר מדי נמענים (Postfix/Exim)"
+
+msgid "Mail server error (Exchange)"
+msgstr "שגיאת שרת דואר (Exchange)"
+
+msgid "Received loop detected (Exim)"
+msgstr "זוהתה לולאת קבלה (Exim)"
+
+msgid "Too many hop count (Exim)"
+msgstr "יותר מדי קפיצות (Exim)"
+
+msgid "DNS lookup failed (Postfix)"
+msgstr "חיפוש DNS נכשל (Postfix)"
+
+msgid "Unable to authenticate (Postfix)"
+msgstr "לא ניתן לאמת (Postfix)"
+
+msgid "TLS handshake failed (Postfix)"
+msgstr "לחיצת היד TLS נכשלה (Postfix)"
+
+msgid "SMTP protocol violation (Postfix)"
+msgstr "הפרת פרוטוקול SMTP (Postfix)"
+
+msgid "Message size exceeds limit (Exchange)"
+msgstr "גודל ההודעה חורג מהמגבלה (Exchange)"
+
+msgid "Message rate limit exceeded (Postfix)"
+msgstr "חריגת מגבלת תדירות הודעות (Postfix)"
+
+msgid "Mailbox quota exceeded - temporary"
+msgstr "מכסת תיבת הדואר מלאה - מצב זמני"
+
+msgid "Domain not found (Postfix)"
+msgstr "דומיין לא נמצא (Postfix)"
+
+msgid "Message header invalid (Postfix)"
+msgstr "כותרת ההודעה אינה חוקית (Postfix)"
+
+msgid "Bounce loop detected (Postfix)"
+msgstr "זוהתה לולאת החזרה (Postfix)"
+
+msgid "Unable to route (Postfix)"
+msgstr "לא ניתן לנתב (Postfix)"
+
+msgid "Sender domain not found (Postfix)"
+msgstr "דומיין השולח לא נמצא (Postfix)"
+
+msgid "Recipient domain not found (Postfix)"
+msgstr "דומיין הנמען לא נמצא (Postfix)"
+
+msgid "Greylisting in progress - please try again (Postgrey)"
+msgstr "בדיקת Greylisting מתבצעת - אנא נסה שוב (Postgrey)"
+
+msgid "Spam filtering in progress (SpamAssassin)"
+msgstr "סינון ספאם מתבצע (SpamAssassin)"
+
+msgid "Virus scanning in progress (ClamAV)"
+msgstr "סריקת וירוסים מתבצעת (ClamAV)"
+
+msgid "Mailbox unavailable - try again later"
+msgstr "תיבת הדואר אינה זמינה - נסה שוב מאוחר יותר"
+
+msgid "Requested action aborted - error in processing"
+msgstr "הפעולה המבוקשת בוטלה - שגיאה בעיבוד"
+
+msgid "Insufficient system storage - try again later"
+msgstr "שטח אחסון מערכת לא מספיק - נסה שוב מאוחר יותר"
+
+msgid "Too many messages for this recipient (Exchange)"
+msgstr "יותר מדי הודעות לנמען זה (Exchange)"
+
+msgid "TLS not available (Postfix)"
+msgstr "TLS אינו זמין (Postfix)"
+
+msgid "Server unable to accept messages (Postfix)"
+msgstr "השרת אינו יכול לקבל הודעות (Postfix)"
+
+msgid "Temporary failure in DNS lookup (Exim)"
+msgstr "כשל זמני בחיפוש DNS (Exim)"
+
+msgid "Quota exceeded - temporary"
+msgstr "המכסה חרגה - מצב זמני"
+
+msgid "Message too big - temporary"
+msgstr "ההודעה גדולה מדי - מצב זמני"
+
+msgid "Too many messages per connection"
+msgstr "יותר מדי הודעות לחיבור"
+
+msgid "Load average too high (Postfix)"
+msgstr "עומס המערכת הממוצע גבוה מדי (Postfix)"
+
+msgid "Connection refused (Postfix)"
+msgstr "החיבור סורב (Postfix)"
+
+msgid "Send rate limit exceeded (Postfix)"
+msgstr "חריגת מגבלת תדירות שליחה (Postfix)"
+
+msgid "Recipient rate limit exceeded (Postfix)"
+msgstr "חריגת מגבלת תדירות נמען (Postfix)"
+
+msgid "Sender rate limit exceeded (Postfix)"
+msgstr "חריגת מגבלת תדירות שולח (Postfix)"
+
+msgid "IP address rate limit exceeded (Postfix)"
+msgstr "חריגת מגבלת תדירות כתובת IP (Postfix)"
+
+msgid "MX lookup failed (Postfix)"
+msgstr "חיפוש MX נכשל (Postfix)"
+
+msgid "A record lookup failed (Postfix)"
+msgstr "חיפוש רשומת A נכשל (Postfix)"
+
+msgid "PTR record lookup failed (Postfix)"
+msgstr "חיפוש רשומת PTR נכשל (Postfix)"
+
+msgid "Greylisting active - please try again (Postgrey)"
+msgstr "Greylisting פעיל - אנא נסה שוב (Postgrey)"
+
+msgid "Access denied - unknown SMTP client hostname"
+msgstr "גישה נדחתה - שם מארח לקוח SMTP לא ידוע"
+
+msgid "Access denied - bad syntax for client HELO hostname"
+msgstr "גישה נדחתה - תחביר שגוי עבור שם מארח HELO של הלקוח"
+
+msgid "Access denied - SMTP client hostname rejected"
+msgstr "גישה נדחתה - שם המארח של לקוח SMTP נדחה"
+
+msgid "Access denied - unknown domain for sender or recipient"
+msgstr "גישה נדחתה - דומיין לא ידוע עבור שולח או נמען"
+
+msgid "Sender address rejected - domain not verified (DMARC pending)"
+msgstr "כתובת השולח נדחתה - הדומיין לא אומת (DMARC ממתין)"
+
+msgid "Recipient address rejected - domain not verified (DMARC pending)"
+msgstr "כתובת הנמען נדחתה - הדומיין לא אומת (DMARC ממתין)"
+
+msgid "DKIM verification pending - temporary failure"
+msgstr "אימות DKIM ממתין - כשל זמני"
+
+msgid "SPF verification pending - temporary failure"
+msgstr "אימות SPF ממתין - כשל זמני"
+
+msgid "DMARC verification pending - temporary failure"
+msgstr "אימות DMARC ממתין - כשל זמני"
+
+msgid "DNSBL lookup temporary failure"
+msgstr "חיפוש DNSBL - כשל זמני"
+
+msgid "RHSBL lookup temporary failure"
+msgstr "חיפוש RHSBL - כשל זמני"
+
+msgid "URI DNSBL lookup temporary failure"
+msgstr "חיפוש URI DNSBL - כשל זמני"
+
+msgid "Temporary authentication failure (Dovecot)"
+msgstr "כשל אימות זמני (Dovecot)"
+
+msgid "Temporary authorization failure (Sendmail)"
+msgstr "כשל אישור זמני (Sendmail)"
+
+msgid "Rate limit exceeded per sender (Exim)"
+msgstr "חריגת מגבלת תדירות לכל שולח (Exim)"
+
+msgid "Rate limit exceeded per recipient (Exim)"
+msgstr "חריגת מגבלת תדירות לכל נמען (Exim)"
+
+msgid "Rate limit exceeded per domain (Exim)"
+msgstr "חריגת מגבלת תדירות לכל דומיין (Exim)"
+
+msgid "Rate limit exceeded per IP (Exim)"
+msgstr "חריגת מגבלת תדירות לכל כתובת IP (Exim)"
+
+msgid "Message queued for later delivery (Postfix)"
+msgstr "ההודעה הוכנסה לתור למשלוח מאוחר יותר (Postfix)"
+
+msgid "Delivery delayed due to policy (Exchange)"
+msgstr "המשלוח התעכב עקב מדיניות (Exchange)"
+
+msgid "Temporary failure in content filter"
+msgstr "כשל זמני במסנן התוכן"
+
+msgid "Temporary failure in antivirus scanner"
+msgstr "כשל זמני בסורק הנגיפים"
+
+msgid "Temporary failure in spam filter"
+msgstr "כשל זמני במסנן הספאם"
+
+msgid "Temporary failure in milter (Postfix)"
+msgstr "כשל זמני ב-milter (Postfix)"
+
+msgid "Greylisting - try again later"
+msgstr "בדיקת Greylisting - נסה שוב מאוחר יותר"
+
+msgid "DDoS protection active - try again later"
+msgstr "הגנת DDoS פעילה - נסה שוב מאוחר יותר"
+
+msgid "SMTP policy violation - temporary"
+msgstr "הפרת מדיניות SMTP - מצב זמני"
+
+msgid "Temporary error in RCPT TO processing"
+msgstr "שגיאה זמנית בעיבוד RCPT TO"
+
+msgid "Temporary error in MAIL FROM processing"
+msgstr "שגיאה זמנית בעיבוד MAIL FROM"
+
+msgid "Temporary error in EHLO/HELO processing"
+msgstr "שגיאה זמנית בעיבוד EHLO/HELO"
+
+msgid "Temporary error in DATA processing"
+msgstr "שגיאה זמנית בעיבוד DATA"
+
+msgid "Temporary error - service busy, try again later"
+msgstr "שגיאה זמנית - השירות עמוס, נסה שוב מאוחר יותר"
+
+msgid "Syntax error - command unrecognized or too long"
+msgstr "שגיאת תחביר - הפקודה לא זוהתה או ארוכה מדי"
+
+msgid "Syntax error in parameters or arguments"
+msgstr "שגיאת תחביר בפרמטרים או בארגומנטים"
+
+msgid "Command not implemented"
+msgstr "הפקודה לא מיושמת"
+
+msgid "Bad sequence of commands"
+msgstr "רצף פקודות שגוי"
+
+msgid "Command parameter not implemented"
+msgstr "פרמטר הפקודה לא מיושם"
+
+msgid "Version not supported (ESMTP)"
+msgstr "הגרסה אינה נתמכת (ESMTP)"
+
+msgid "Mailbox path invalid (LMTP)"
+msgstr "נתיב תיבת הדואר אינו חוקי (LMTP)"
+
+msgid "Too many commands in this session (Postfix)"
+msgstr "יותר מדי פקודות בסשן זה (Postfix)"
+
+msgid "Recipient limit exceeded (Postfix)"
+msgstr "מגבלת הנמענים חרגה (Postfix)"
+
+msgid "Sender limit exceeded (Postfix)"
+msgstr "מגבלת השולחים חרגה (Postfix)"
+
+msgid "Domain limit exceeded (Postfix)"
+msgstr "מגבלת הדומיינים חרגה (Postfix)"
+
+msgid "Mailbox does not exist (Exchange)"
+msgstr "תיבת הדואר אינה קיימת (Exchange)"
+
+msgid "DNS failure - permanent"
+msgstr "כשל DNS - קבוע"
+
+msgid "Address type not supported (Postfix)"
+msgstr "סוג הכתובת אינו נתמך (Postfix)"
+
+msgid "Unable to open mailbox (Postfix)"
+msgstr "לא ניתן לפתוח תיבת דואר (Postfix)"
+
+msgid "Mailbox locked - permanent"
+msgstr "תיבת הדואר נעולה - מצב קבוע"
+
+msgid "Message rejected due to policy (Exchange)"
+msgstr "ההודעה נדחתה עקב מדיניות (Exchange)"
+
+msgid "Content rejected - permanent"
+msgstr "התוכן נדחה - קבוע"
+
+msgid "Attachment type not allowed"
+msgstr "סוג הקובץ המצורף אינו מורשה"
+
+msgid "Message encoding not supported"
+msgstr "קידוד ההודעה אינו נתמך"
+
+msgid "Sender domain does not exist - permanent"
+msgstr "דומיין השולח אינו קיים - קבוע"
+
+msgid "Domain does not accept mail or is closing"
+msgstr "הדומיין אינו מקבל דואר או נסגר"
+
+msgid "Recipient domain does not exist - permanent"
+msgstr "דומיין הנמען אינו קיים - קבוע"
+
+msgid "Mailbox quota exceeded - permanent"
+msgstr "מכסת תיבת הדואר מלאה - קבוע"
+
+msgid "Message size exceeds limit - permanent"
+msgstr "גודל ההודעה חורג מהמגבלה - קבוע"
+
+msgid "Authentication required (Sendmail)"
+msgstr "נדרש אימות (Sendmail)"
+
+msgid "Authentication failed (Sendmail)"
+msgstr "האימות נכשל (Sendmail)"
+
+msgid "Authentication mechanism not supported"
+msgstr "מנגנון האימות אינו נתמך"
+
+msgid "Authentication credentials invalid"
+msgstr "פרטי האימות אינם חוקיים"
+
+msgid "Authentication account expired"
+msgstr "חשבון האימות פג תוקף"
+
+msgid "Access denied - authentication required"
+msgstr "גישה נדחתה - נדרש אימות"
+
+msgid "Access denied (Sendmailism)"
+msgstr "גישה נדחתה (Sendmail)"
+
+msgid "Access denied - not authenticated"
+msgstr "גישה נדחתה - לא אומת"
+
+msgid "Access denied - account locked"
+msgstr "גישה נדחתה - החשבון נעול"
+
+msgid "Access denied - account disabled"
+msgstr "גישה נדחתה - החשבון מושבת"
+
+msgid "Authentication failed"
+msgstr "האימות נכשל"
+
+msgid "Authentication required for relay (Postfix)"
+msgstr "נדרש אימות עבור ממסר (Postfix)"
+
+msgid "Authentication failed for relay (Postfix)"
+msgstr "האימות עבור הממסר נכשל (Postfix)"
+
+msgid "Encryption required (STARTTLS)"
+msgstr "נדרש חיבור מוצפן (STARTTLS)"
+
+msgid "TLS required for this recipient"
+msgstr "נמען זה דורש הצפנת TLS"
+
+msgid "Encryption strength insufficient"
+msgstr "עוצמת ההצפנה אינה מספקת"
+
+msgid "Certificate validation failed"
+msgstr "אימות התעודה נכשל"
+
+msgid "Invalid TLS certificate"
+msgstr "תעודת TLS לא חוקית"
+
+msgid "TLS protocol version not supported"
+msgstr "גרסת פרוטוקול TLS אינה נתמכת"
+
+msgid "Cipher suite not supported"
+msgstr "סדרת הצפנה אינה נתמכת"
+
+msgid "Access denied - no valid recipient"
+msgstr "גישה נדחתה - אין נמען חוקי"
+
+msgid "Access denied - no valid sender"
+msgstr "גישה נדחתה - אין שולח חוקי"
+
+msgid "Access denied - domain not allowed"
+msgstr "גישה נדחתה - הדומיין אינו מורשה"
+
+msgid "Access denied - IP address blocked (permanent)"
+msgstr "גישה נדחתה - כתובת IP חסומה (קבוע)"
+
+msgid "Access denied - sender domain blacklisted"
+msgstr "גישה נדחתה - דומיין השולח ברשימה שחורה"
+
+msgid "Mailbox unavailable - requested action not taken"
+msgstr "תיבת הדואר אינה זמינה - הפעולה המבוקשת לא בוצעה"
+
+msgid "User not local - please try forwarding address"
+msgstr "המשתמש אינו מקומי - אנא נסה כתובת העברה"
+
+msgid "Requested action aborted - exceeded storage allocation"
+msgstr "הפעולה המבוקשת בוטלה - חריגת הקצאת אחסון"
+
+msgid "Mailbox name not allowed"
+msgstr "שם תיבת הדואר אינו מורשה"
+
+msgid "Requested action rejected - access denied"
+msgstr "הפעולה המבוקשת נדחתה - הגישה נדחתה"
+
+msgid "MAIL FROM/RCPT TO parameters not recognized"
+msgstr "פרמטרי MAIL FROM/RCPT TO לא זוהו"
+
+msgid "Domain not allowed to send (DMARC reject)"
+msgstr "לדומיין אסור לשלוח (דחיית DMARC)"
+
+msgid "Too many duplicate messages - permanent"
+msgstr "יותר מדי הודעות כפולות - קבוע"
+
+msgid "Sender address rejected - domain not in SPF"
+msgstr "כתובת השולח נדחתה - הדומיין אינו ב-SPF"
+
+msgid "Sender address rejected - DKIM verification failed"
+msgstr "כתובת השולח נדחתה - אימות DKIM נכשל"
+
+msgid "Sender address rejected - DMARC policy reject"
+msgstr "כתובת השולח נדחתה - מדיניות DMARC דוחה"
+
+msgid "Recipient address rejected - DMARC policy reject"
+msgstr "כתובת הנמען נדחתה - מדיניות DMARC דוחה"
+
+msgid "Message rejected due to spam content"
+msgstr "ההודעה נדחתה עקב תוכן ספאם"
+
+msgid "Message rejected due to virus detected"
+msgstr "ההודעה נדחתה עקב זיהוי וירוס"
+
+msgid "Message rejected due to malicious content"
+msgstr "ההודעה נדחתה עקב תוכן זדוני"
+
+msgid "Message rejected due to phishing detection"
+msgstr "ההודעה נדחתה עקב זיהוי דיוג"
+
+msgid "Message rejected due to malware detection"
+msgstr "ההודעה נדחתה עקב זיהוי תוכנה זדונית"
+
+msgid "Message rejected due to policy - permanent"
+msgstr "ההודעה נדחתה עקב מדיניות - קבוע"
+
+msgid "Message rejected due to content filtering"
+msgstr "ההודעה נדחתה עקב סינון תוכן"
+
+msgid "Message rejected due to reputation"
+msgstr "ההודעה נדחתה עקב מוניטין"
+
+msgid "Access denied - access_map violation"
+msgstr "גישה נדחתה - הפרת access_map"
+
+msgid "Access denied - SMTP client listed in RBL"
+msgstr "גישה נדחתה - לקוח SMTP מופיע ברשימת RBL"
+
+msgid "Access denied - relay not authorized"
+msgstr "גישה נדחתה - הממסר אינו מורשה"
+
+msgid "Access denied - unknown client HELO hostname"
+msgstr "גישה נדחתה - שם מארח HELO של לקוח לא ידוע"
+
+msgid "Access denied - invalid domain (not FQDN)"
+msgstr "גישה נדחתה - דומיין לא חוקי (לא FQDN)"
+
+msgid "Access denied - domain not qualified"
+msgstr "גישה נדחתה - דומיין לא מוסמך"
+
+msgid "Access denied - mail server misconfigured"
+msgstr "גישה נדחתה - שרת הדואר מוגדר באופן שגוי"
+
+msgid "Access denied - open relay not allowed"
+msgstr "גישה נדחתה - ממסר פתוח אינו מורשה"
+
+msgid "Access denied - proxy not allowed"
+msgstr "גישה נדחתה - פרוקסי אינו מורשה"
+
+msgid "Access denied - dynamic IP not allowed"
+msgstr "גישה נדחתה - כתובת IP דינמית אינה מורשית"
+
+msgid "Access denied - residential IP not allowed"
+msgstr "גישה נדחתה - כתובת IP למגורים אינה מורשית"
+
+msgid "Access denied - VPN/Tor detected"
+msgstr "גישה נדחתה - התגלה VPN/Tor"
+
+msgid "Access denied - Spamhaus DROP listed"
+msgstr "גישה נדחתה - מופיע ברשימת Spamhaus DROP"
+
+msgid "Access denied - URL listed in URIBL"
+msgstr "גישה נדחתה - URL מופיע ברשימת URIBL"
+
+msgid "Access denied - domain in RHSBL"
+msgstr "גישה נדחתה - הדומיין מופיע ברשימת RHSBL"
+
+msgid "Access denied - IP in DNSWL (policy)"
+msgstr "גישה נדחתה - כתובת IP מופיעה ברשימת DNSWL (מדיניות)"
+
+msgid "Delivery failed - mailbox not found"
+msgstr "המשלוח נכשל - תיבת הדואר לא נמצאה"
+
+msgid "Delivery failed - recipient not local"
+msgstr "המשלוח נכשל - הנמען אינו מקומי"
+
+msgid "Delivery failed - recipient rejected"
+msgstr "המשלוח נכשל - הנמען נדחה"
+
+msgid "Delivery failed - sender rejected"
+msgstr "המשלוח נכשל - השולח נדחה"
+
+msgid "Delivery failed - relay rejected"
+msgstr "המשלוח נכשל - הממסר נדחה"
+
+msgid "Delivery failed - DNS permanent error"
+msgstr "המשלוח נכשל - שגיאת DNS קבועה"
+
+msgid "Delivery failed - MX permanent error"
+msgstr "המשלוח נכשל - שגיאת MX קבועה"
+
+msgid "Delivery failed - A record permanent error"
+msgstr "המשלוח נכשל - שגיאת רשומת A קבועה"
+
+msgid "Delivery failed - PTR record permanent error"
+msgstr "המשלוח נכשל - שגיאת רשומת PTR קבועה"
+
+msgid "Delivery failed - policy permanent error"
+msgstr "המשלוח נכשל - שגיאת מדיניות קבועה"
+
+msgid "DSN: Success - delivery status notification"
+msgstr "DSN: הצלחה - הודעת מצב משלוח"
+
+msgid "DSN: Delivery delayed"
+msgstr "DSN: המשלוח התעכב"
+
+msgid "DSN: Delivery failed - permanent"
+msgstr "DSN: המשלוח נכשל - קבוע"
+
+msgid "DSN: Delivery failed - temporary"
+msgstr "DSN: המשלוח נכשל - זמני"
+
+msgid "DSN: Message expired"
+msgstr "DSN: ההודעה פגה תוקף"
+
+msgid "DSN: Message bounced"
+msgstr "DSN: ההודעה הוחזרה"
+
+msgid "DSN: Message discarded"
+msgstr "DSN: ההודעה הושלכה"
+
+msgid "DSN: Message filtered"
+msgstr "DSN: ההודעה סוננה"
+
+msgid "DSN: Message quarantined"
+msgstr "DSN: ההודעה הוכנסה להסגר"
+
+msgid "DSN: Message held for review"
+msgstr "DSN: ההודעה הוחזקה לבדיקה"
+
+msgid "MTA-STS policy required"
+msgstr "נדרשת מדיניות MTA-STS"
+
+msgid "MTA-STS policy validation failed"
+msgstr "אימות מדיניות MTA-STS נכשל"
+
+msgid "TLS reporting required"
+msgstr "נדרש דיווח TLS"
+
+msgid "TLS report requested"
+msgstr "דו\"ח TLS התבקש"
+
+msgid "SMTP MTA Strict Transport Security active"
+msgstr "SMTP MTA Strict Transport Security פעיל"
+
+msgid "DANE validation required"
+msgstr "נדרש אימות DANE"
+
+msgid "DANE validation failed"
+msgstr "אימות DANE נכשל"
+
+msgid "TLSA record missing"
+msgstr "רשומת TLSA חסרה"
+
+msgid "Certificate name mismatch"
+msgstr "אי התאמה בשם התעודה"
+
+msgid "Certificate expired"
+msgstr "התעודה פגה תוקף"
+
+msgid "AUTH LOGIN required"
+msgstr "נדרש AUTH LOGIN"
+
+msgid "AUTH PLAIN required"
+msgstr "נדרש AUTH PLAIN"
+
+msgid "AUTH CRAM-MD5 required"
+msgstr "נדרש AUTH CRAM-MD5"
+
+msgid "AUTH DIGEST-MD5 required"
+msgstr "נדרש AUTH DIGEST-MD5"
+
+msgid "AUTH GSSAPI required"
+msgstr "נדרש AUTH GSSAPI"
+
+msgid "AUTH NTLM required"
+msgstr "נדרש AUTH NTLM"
+
+msgid "AUTH SCRAM required"
+msgstr "נדרש AUTH SCRAM"
+
+msgid "AUTH OAUTHBEARER required"
+msgstr "נדרש AUTH OAUTHBEARER"
+
+msgid "AUTH XOAUTH2 required"
+msgstr "נדרש AUTH XOAUTH2"
+
+msgid "Exchange: Mailbox database error"
+msgstr "Exchange: שגיאת מסד נתונים של תיבת דואר"
+
+msgid "Exchange: Store driver error"
+msgstr "Exchange: שגיאת מנהל התקן אחסון"
+
+msgid "Exchange: Transport agent error"
+msgstr "Exchange: שגיאת סוכן העברה"
+
+msgid "Exchange: Content conversion error"
+msgstr "Exchange: שגיאת המרת תוכן"
+
+msgid "Exchange: Routing error"
+msgstr "Exchange: שגיאת ניתוב"
+
+msgid "Exchange: Mail flow stalled"
+msgstr "Exchange: זרימת הדואר נעצרה"
+
+msgid "Exchange: Shadow redundancy error"
+msgstr "Exchange: שגיאת יתירות צל"
+
+msgid "Exchange: Safety net error"
+msgstr "Exchange: שגיאת רשת ביטחון"
+
+msgid "Exchange: Queue database error"
+msgstr "Exchange: שגיאת מסד נתונים של תור"
+
+msgid "Exchange: Message throttled"
+msgstr "Exchange: ההודעה הוגבלה"
+
+msgid "Postfix: Bounce queue error"
+msgstr "Postfix: שגיאת תור החזרות"
+
+msgid "Postfix: Deferred queue error"
+msgstr "Postfix: שגיאת תור דחויים"
+
+msgid "Postfix: Hold queue error"
+msgstr "Postfix: שגיאת תור החזקה"
+
+msgid "Postfix: Incoming queue error"
+msgstr "Postfix: שגיאת תור נכנס"
+
+msgid "Postfix: Active queue error"
+msgstr "Postfix: שגיאת תור פעיל"
+
+msgid "Postfix: Corrupted queue file"
+msgstr "Postfix: קובץ תור פגום"
+
+msgid "Sendmail: Queue runner error"
+msgstr "Sendmail: שגיאת רץ תור"
+
+msgid "Sendmail: Alias database error"
+msgstr "Sendmail: שגיאת מסד נתונים של כינויים"
+
+msgid "Sendmail: Virtuser table error"
+msgstr "Sendmail: שגיאת טבלת משתמשים וירטואליים"
+
+msgid "Sendmail: Mailer definition error"
+msgstr "Sendmail: שגיאת הגדרת שולח דואר"
+
+msgid "Exim: Router configuration error"
+msgstr "Exim: שגיאת תצורת נתב"
+
+msgid "Exim: Transport configuration error"
+msgstr "Exim: שגיאת תצורת העברה"
+
+msgid "Exim: Director configuration error"
+msgstr "Exim: שגיאת תצורת במאי"
+
+msgid "Exim: Retry configuration error"
+msgstr "Exim: שגיאת תצורת ניסיון חוזר"
+
+msgid "Exim: Rewrite configuration error"
+msgstr "Exim: שגיאת תצורת שכתוב"
+
+msgid "Exim: Authentication configuration error"
+msgstr "Exim: שגיאת תצורת אימות"
+
+msgid "Exim: ACL configuration error"
+msgstr "Exim: שגיאת תצורת ACL"
+
+msgid "Exim: Local_scan configuration error"
+msgstr "Exim: שגיאת תצורת Local_scan"
+
+msgid "Exim: Lookup configuration error"
+msgstr "Exim: שגיאת תצורת חיפוש"
+
+msgid "Exim: Expansion configuration error"
+msgstr "Exim: שגיאת תצורת הרחבה"
+
+msgid "HTTP Protocol Versions"
+msgstr "גרסאות פרוטוקול HTTP"
+
+msgid "Protocol"
+msgstr "פרוטוקול"
+
+msgid "Request %"
+msgstr "אחוז בקשות"
+
+msgid "Bandwidth %"
+msgstr "אחוז רוחב פס"
+
+msgid "Each request requires a new connection"
+msgstr "כל בקשה דורשת חיבור חדש"
+
+msgid "Multiple requests can reuse one connection"
+msgstr "בקשות מרובות יכולות לעשות שימוש חוזר בחיבור אחד"
+
+msgid "Multiple requests in parallel over one connection"
+msgstr "בקשות מרובות במקביל דרך חיבור אחד"
+
+msgid "Faster connection, better performance on poor networks"
+msgstr "חיבור מהיר יותר, ביצועים טובים יותר ברשתות גרועות"
+
+msgid "No protocol data available"
+msgstr "אין נתוני פרוטוקול זמינים"
+
+msgid "of requests use HTTP/1.0"
+msgstr "מהבקשות משתמשות בפרוטוקול HTTP/1.0"
+
+msgid "From access logs"
+msgstr "מיומני גישה"
+
+msgid "No HTTP/2 requests detected"
+msgstr "לא זוהו בקשות HTTP/2"
+
+msgid "All requests are HTTP/1.0, no HTTP/2 requests"
+msgstr "כל הבקשות הנוכחיות הן HTTP/1.0, אין בקשות HTTP/2"
+
+msgid "HTTP/3 not detected"
+msgstr "לא זוהו בקשות HTTP/3"
+
+msgid "all requests do not include QUIC/HTTP/3 protocol requests"
+msgstr "כל הבקשות הנוכחיות אינן כוללות בקשות פרוטוקול QUIC/HTTP/3"
+
+msgid "Mail Authentication Statistics"
+msgstr "סטטיסטיקות אימות דואר"
+
+msgid "Authentication"
+msgstr "סוג אימות"
+
+msgid "Pass"
+msgstr "הצלחה"
+
+msgid "Fail"
+msgstr "כישלון"
+
+msgid "Softfail"
+msgstr "כשל רך"
+
+msgid "Neutral"
+msgstr "ניטרלי"
+
+msgid "None"
+msgstr "ללא"
+
+msgid "Mail Queue Delay Statistics"
+msgstr "סטטיסטיקות השהיית תור דואר"
+
+msgid "Delay Range"
+msgstr "טווח השהייה"
+
+msgid "Count"
+msgstr "כמות"
+
+msgid "Percentage"
+msgstr "אחוז"
+
+msgid "TLS Encryption Statistics"
+msgstr "סטטיסטיקות הצפנת TLS"
+
+msgid "TLS Versions"
+msgstr "גרסאות TLS"
+
+msgid "Top Ciphers"
+msgstr "סדרות ההצפנה הנפוצות ביותר"
+
+msgid "robot_hits_detail_both"
+msgstr "סה\"כ בקשות: %s (עמודים רגילים: %s, robots.txt: %s)"
+
+msgid "robot_hits_detail_only_robots"
+msgstr "רק robots.txt: %s פעמים, ללא אחזור של עמודים אחרים"
+
+msgid "robot_hits_detail_normal"
+msgstr "בקשות לעמודים רגילים: %s"
+
+# עזרה וטיפים
+msgid "Troubleshooting"
+msgstr "פתרון בעיות"
+
+msgid "Did you use the correct URL?"
+msgstr "האם השתמשת בכתובת ה-URL הנכונה?"
+
+msgid "Example:"
+msgstr "דוגמה:"
+
+msgid "Did you use correct config parameter?"
+msgstr "האם השתמשת בפרמטר התצורה הנכון?"
+
+msgid "Example: If your config file is awstats.mysite.conf, use -config=mysite"
+msgstr "דוגמה: אם קובץ התצורה שלך הוא awstats.mysite.conf, השתמש ב--config=mysite"
+
+msgid "Did you create your config file 'awstats.$SiteConfig.conf'?"
+msgstr "האם יצרת את קובץ התצורה 'awstats.$SiteConfig.conf'?"
+
+msgid "If not, you can run \"awstats_configure.pl\" from command line, or create it manually."
+msgstr "אם לא, אתה יכול להפעיל את \"awstats_configure.pl\" משורת הפקודה, או ליצור אותו באופן ידני."
+
+msgid "Setup"
+msgstr "הגדרה"
+
+msgid "file, web server or permissions may be wrong."
+msgstr "קובץ, שרת אינטרנט או הרשאות עשויים להיות שגויים."
+
+msgid "Check config file, permissions and AWStats documentation (in 'docs' directory)."
+msgstr "בדוק את קובץ התצורה, ההרשאות ותיעוד AWStats (בספריית 'docs')."
+
+msgid "Warning: Can't find language files for \"%s\". English will be used."
+msgstr "אזהרה: לא ניתן למצוא קבצי שפה עבור \"%s\". ישתמשו באנגלית."
+
+#------------------------------------------------------------------------------
+# טיפול בשגיאות ואותות
+#------------------------------------------------------------------------------
+
+msgid "%s process (ID %s) interrupted by signal %s."
+msgstr "התהליך %s (מזהה %s) הופרע על ידי האות %s."
+
+msgid "An AWStats update process seems to be already running for this config file. Try later. If this is not true, remove manually lock file"
+msgstr "נראה כי תהליך עדכון AWStats כבר פועל עבור קובץ תצורה זה. נסה מאוחר יותר. אם זה לא נכון, הסר באופן ידני את קובץ הנעילה"
+
+#------------------------------------------------------------------------------
+# כותרות סטטיסטיות חדשות
+#------------------------------------------------------------------------------
+msgid "Report Overview"
+msgstr "סקירת דו\"ח"
+
+msgid "Monthly Statistics"
+msgstr "סטטיסטיקות חודשיות"
+
+msgid "Daily Statistics"
+msgstr "סטטיסטיקות יומיות"
+
+msgid "Statistics by Day of Week"
+msgstr "סטטיסטיקות לפי יום בשבוע"
+
+msgid "Hourly Page Views"
+msgstr "צפיות בעמוד לפי שעה"
+
+msgid "Traffic Sources"
+msgstr "מקורות תעבורה"
+
+msgid "Other Sources"
+msgstr "מקורות אחרים"
+
+msgid "tooltip_1"
+msgstr "מספר הסשנים של מבקרים באתר. אם אותו מבקר חוזר לאחר יותר מ-30 דקות של חוסר פעילות, זה נחשב כביקור חדש"
+
+msgid "tooltip_2"
+msgstr "מספר המבקרים השונים שביקרו באתר שלך בתקופת הזמן שנבחרה. סטטיסטיקות המבוססות על כתובות IP"
+
+msgid "tooltip_3"
+msgstr "מספר הבקשות הנחשבות כדפים (כגון HTML, PHP, ASP), אינו כולל קבצים סטטיים כמו תמונות, CSS, JS"
+
+msgid "tooltip_4"
+msgstr "המספר הכולל של כל הבקשות שנשלחו לשרת, כולל דפים, תמונות, CSS, JS וכל הקבצים האחרים"
+
+msgid "tooltip_5"
+msgstr "כמות הנתונים הכוללת שהועברה בעת שהשרת עונה לבקשות משתמשים"
+
+msgid "tooltip_13"
+msgstr "סטטיסטיקות מקורות שמגיעים ממנועי חיפוש. מציג אילו מנועי חיפוש מביאים תעבורה ואילו מילות חיפוש המבקרים משתמשים."
+
+msgid "tooltip_14"
+msgstr "סטטיסטיקות מקורות שמגיעים מקישורים חיצוניים מאתרים אחרים. מציג אילו אתרים מקשרים אליך וכמה תעבורה הם מביאים."
+
+msgid "tooltip_15"
+msgstr "מילים שמבקרים משתמשים כשהם מוצאים אותך באמצעות מנועי חיפוש. מילות מפתח הן מילים בודדות, ביטויי מפתח הם שילובים של מספר מילים."
+
+msgid "tooltip_16"
+msgstr "תוכניות אוטומטיות כגון רובוטי חיפוש, בוטים לאימון בינה מלאכותית, סורקי פגיעויות. המספרים בסוגריים מציינים בקשות לדפים רגילים ול-robots.txt."
+
+msgid "tooltip_17"
+msgstr "גרף התפלגות תעבורה של 24 שעות. מציג את הביקורים באתר שלך בשעות שונות של היום, עוזר להבין את זמני הפעילות של המשתמשים."
+
+msgid "tooltip_18"
+msgstr "עמודה זו מציגה את הממוצעים היומיים/שבועיים בתקופת הזמן שנבחרה, עוזרת להבין את המגמה הכללית."
+
+msgid "tooltip_19"
+msgstr "לחץ על פריט בגרף כדי לראות פרטים. רחף עם העכבר מעל אלמנט בגרף כדי לראות ערכים ספציפיים."
+
+msgid "tooltip_20"
+msgstr "נתונים שלא ניתן לסווג לקטגוריות קיימות, בדרך כלל עקב פורמט נתונים חריג או מידע חסר."
+
+msgid "tooltip_21"
+msgstr "רישומים של התקפות תולעים שזוהו. תולעים הן תוכנות זדוניות המשתכפלות בעצמן ומתפשטות בדרך כלל דרך פרצות אבטחה ברשת."
+
+#------------------------------------------------------------------------------
+# הצגת מידע עזרה - מהדורת קהילה
+#------------------------------------------------------------------------------
+msgid "AWStats %s - Advanced Web Statistics"
+msgstr "AWStats %s - סטטיסטיקות רשת מתקדמות"
+
+msgid "Copyright (c) 2000-2025 Laurent Destailleur"
+msgstr "זכויות יוצרים (c) 2000-2025 לורן דסטייר"
+
+msgid "Copyright (c) 2026-latest Community Edition"
+msgstr "זכויות יוצרים (c) 2026-הגרסה העדכנית ביותר, מהדורת קהילה"
+
+msgid "AWStats comes with ABSOLUTELY NO WARRANTY. It's a free software distributed with a GNU General Public License (See LICENSE file for details)."
+msgstr "AWStats מגיע ללא שום אחריות. זוהי תוכנה חופשית המופצת תחת רישיון GNU General Public License (ראה קובץ LICENSE לפרטים)."
+
+msgid "Syntax: %s -config=virtualhostname [options]"
+msgstr "תחביר: %s -config=שם_מארח_וירטואלי [אפשרויות]"
+
+msgid "This runs %s in command line to update statistics (-update option) of a web site, from the log file defined in AWStats config file, or build a HTML report (-output option)."
+msgstr "פקודה זו מפעילה את %s בשורת הפקודה כדי לעדכן סטטיסטיקות (אפשרות -update) של אתר אינטרנט, מקובץ היומן המוגדר בקובץ התצורה של AWStats, או כדי לבנות דו\"ח HTML (אפשרות -output)."
+
+msgid "First, %s tries to read %s.virtualhostname.conf as the config file. If not found, %s tries to read %s.conf, and finally the full path passed to -config="
+msgstr "ראשית, %s מנסה לקרוא את %s.שם_מארח_וירטואלי.conf כקובץ תצורה. אם לא נמצא, %s מנסה לקרוא את %s.conf, ולבסוף את הנתיב המלא שהועבר ל--config="
+
+msgid "Note 1: Config files (*.conf) must be in /etc/awstats, /usr/local/etc/awstats, /etc or same directory than awstats.pl script file."
+msgstr "הערה 1: קבצי תצורה (*.conf) חייבים להיות ב-/etc/awstats, /usr/local/etc/awstats, /etc או באותה ספרייה כמו קובץ התסריט awstats.pl."
+
+msgid "Note 2: If AWSTATS_FORCE_CONFIG environment variable is defined, AWStats will use it as the 'config' value, whatever is the value on command line or URL."
+msgstr "הערה 2: אם משתנה הסביבה AWSTATS_FORCE_CONFIG מוגדר, AWStats ישתמש בו כערך 'config', ללא קשר לערך בשורת הפקודה או בכתובת ה-URL."
+
+msgid "See AWStats documentation for all setup instructions."
+msgstr "כל הוראות ההתקנה נמצאות בתיעוד AWStats."
+
+msgid "Options to update statistics:"
+msgstr "אפשרויות לעדכון סטטיסטיקות:"
+
+msgid "  -update        to update statistics (default)"
+msgstr "  -update        מעדכן סטטיסטיקות (ברירת מחדל)"
+
+msgid "  -showsteps     to add benchmark information every %s lines processed"
+msgstr "  -showsteps     מוסיף מידע על ביצועים כל %s שורות שעובדו"
+
+msgid "  -showcorrupted to add output for each corrupted lines found, with reason"
+msgstr "  -showcorrupted מוסיף פלט עבור כל שורה פגומה שנמצאה, עם סיבה"
+
+msgid "  -showdropped   to add output for each dropped lines found, with reason"
+msgstr "  -showdropped   מוסיף פלט עבור כל שורה שנשרה שנמצאה, עם סיבה"
+
+msgid "  -showunknownorigin  to output referer when it can't be parsed"
+msgstr "  -showunknownorigin   מציג את המפנה כאשר לא ניתן לנתח אותו"
+
+msgid "  -showdirectorigin   to output log line when origin is a direct access"
+msgstr "  -showdirectorigin    מציג את שורת היומן כאשר המקור הוא גישה ישירה"
+
+msgid "  -updatefor=n   to stop the update process after parsing n lines"
+msgstr "  -updatefor=n   עוצר את תהליך העדכון לאחר ניתוח n שורות"
+
+msgid "  -LogFile=x     to change log to analyze whatever is 'LogFile' in config file"
+msgstr "  -LogFile=x     משנה את קובץ היומן לניתוח, ללא קשר לערך 'LogFile' בקובץ התצורה"
+
+msgid "  Be care to process log files in chronological order when updating statistics."
+msgstr "  שים לב לעבד קבצי יומן בסדר כרונולוגי בעת עדכון סטטיסטיקות."
+
+msgid "Options to show statistics:"
+msgstr "אפשרויות להצגת סטטיסטיקות:"
+
+msgid "  -output      to output main HTML report (no update made except with -update)"
+msgstr "  -output       מציג את דו\"ח ה-HTML הראשי (ללא עדכון מלבד עם -update)"
+
+msgid "  -output=x    to output other report pages where x is:"
+msgstr "  -output=x     מציג דפי דו\"ח אחרים כאשר x הוא:"
+
+msgid "build page of all domains/countries"
+msgstr "בונה עמוד של כל הדומיינים/המדינות"
+
+msgid "build page of all hosts"
+msgstr "בונה עמוד של כל המארחים"
+
+msgid "build page of last hits for hosts"
+msgstr "בונה עמוד של הבקשות האחרונות עבור מארחים"
+
+msgid "build page of all unresolved IP"
+msgstr "בונה עמוד של כל כתובות ה-IP שלא נפתרו"
+
+msgid "build page of all email senders (maillog)"
+msgstr "בונה עמוד של כל שולחי הדואר האלקטרוני (maillog)"
+
+msgid "build page of last email senders (maillog)"
+msgstr "בונה עמוד של שולחי הדואר האלקטרוני האחרונים (maillog)"
+
+msgid "build page of all email receivers (maillog)"
+msgstr "בונה עמוד של כל מקבלי הדואר האלקטרוני (maillog)"
+
+msgid "build page of last email receivers (maillog)"
+msgstr "בונה עמוד של מקבלי הדואר האלקטרוני האחרונים (maillog)"
+
+msgid "build page of all logins used"
+msgstr "בונה עמוד של כל הכניסות שבהן נעשה שימוש"
+
+msgid "build page of last hits for logins"
+msgstr "בונה עמוד של הבקשות האחרונות עבור כניסות"
+
+msgid "build page of all robots/spider visits"
+msgstr "בונה עמוד של כל ביקורי הרובוטים/העכבישים"
+
+msgid "build page of last hits for robots"
+msgstr "בונה עמוד של הבקשות האחרונות עבור רובוטים"
+
+msgid "list most often viewed pages"
+msgstr "מפרט את הדפים הנצפים ביותר"
+
+msgid "list most often viewed pages matching filter"
+msgstr "מפרט את הדפים הנצפים ביותר התואמים למסנן"
+
+msgid "list entry pages"
+msgstr "מפרט את דפי הכניסה"
+
+msgid "list entry pages matching filter"
+msgstr "מפרט את דפי הכניסה התואמים למסנן"
+
+msgid "list exit pages"
+msgstr "מפרט את דפי היציאה"
+
+msgid "list exit pages matching filter"
+msgstr "מפרט את דפי היציאה התואמים למסנן"
+
+msgid "build page with os detailed versions"
+msgstr "בונה עמוד עם גרסאות מפורטות של מערכת ההפעלה"
+
+msgid "build page with browsers detailed versions"
+msgstr "בונה עמוד עם גרסאות מפורטות של דפדפנים"
+
+msgid "list 'User Agents' with unknown browser"
+msgstr "מפרט 'סוכני משתמש' עם דפדפן לא ידוע"
+
+msgid "list 'User Agents' with unknown OS"
+msgstr "מפרט 'סוכני משתמש' עם מערכת הפעלה לא ידועה"
+
+msgid "build page of all refering search engines"
+msgstr "בונה עמוד של כל מנועי החיפוש המפנים"
+
+msgid "build page of all refering pages"
+msgstr "בונה עמוד של כל הדפים המפנים"
+
+msgid "list all keyphrases used on search engines"
+msgstr "מפרט את כל ביטויי המפתח שבהם נעשה שימוש במנועי חיפוש"
+
+msgid "list all keywords used on search engines"
+msgstr "מפרט את כל מילות המפתח שבהן נעשה שימוש במנועי חיפוש"
+
+msgid "list 'Referers' for 404 errors"
+msgstr "מפרט 'מפנים' עבור שגיאות 404"
+
+msgid "build page of all values for ExtraSection X"
+msgstr "בונה עמוד של כל הערכים עבור ExtraSection X"
+
+msgid "  -staticlinks           to have static links in HTML report page"
+msgstr "  -staticlinks           משתמש בקישורים סטטיים בדף דו\"ח ה-HTML"
+
+msgid "  -staticlinksext=xxx    to have static links with .xxx extension instead of .html"
+msgstr "  -staticlinksext=xxx    משתמש בקישורים סטטיים עם סיומת .xxx במקום .html"
+
+msgid "  -lang=LL     to output a HTML report in language LL (en,de,es,fr,it,nl,zh-cn,...)"
+msgstr "  -lang=LL     מציג דו\"ח HTML בשפה LL (he,en,de,es,fr,it,nl,zh-cn,...)"
+
+msgid "  -month=MM    to output a HTML report for an old month MM"
+msgstr "  -month=MM    מציג דו\"ח HTML עבור חודש ישן MM"
+
+msgid "  -year=YYYY   to output a HTML report for an old year YYYY"
+msgstr "  -year=YYYY   מציג דו\"ח HTML עבור שנה ישנה YYYY"
+
+msgid "  The 'date' options doesn't allow you to process old log file. They only allow you to see a past report for a chosen month/year period instead of current month/year."
+msgstr "  אפשרויות 'date' אינן מאפשרות לך לעבד קובץ יומן ישן. הן מאפשרות לך לראות רק דו\"ח עבר עבור תקופת חודש/שנה נבחרת במקום החודש/שנה הנוכחיים."
+
+msgid "Other options:"
+msgstr "אפשרויות אחרות:"
+
+msgid "  -debug=X     to add debug informations lesser than level X (speed reduced)"
+msgstr "  -debug=X     מוסיף מידע ניפוי שגיאות נמוך מרמה X (מהירות מופחתת)"
+
+msgid "  -version     show AWStats version"
+msgstr "  -version, -v     מציג את גרסת AWStats"
+
+msgid "Now supports/detects:"
+msgstr "עכשיו תומך/מזהה:"
+
+msgid "  Web/Ftp/Mail/streaming server log analyzis (and load balanced log files)"
+msgstr "  ניתוח יומני שרתי אינטרנט/FTP/דואר/הזרמה (וקבצי יומן מאוזני עומס)"
+
+msgid "  Reverse DNS lookup (IPv4 and IPv6) and GeoIP lookup"
+msgstr "  חיפוש DNS הפוך (IPv4 ו-IPv6) וחיפוש GeoIP"
+
+msgid "  Number of visits, number of unique visitors"
+msgstr "  מספר ביקורים, מספר מבקרים ייחודיים"
+
+msgid "  Visits duration and list of last visits"
+msgstr "  משך ביקור ורשימת ביקורים אחרונים"
+
+msgid "  Authenticated users"
+msgstr "  משתמשים מאומתים"
+
+msgid "  Days of week and rush hours"
+msgstr "  ימי השבוע ושעות שיא"
+
+msgid "  Hosts list and unresolved IP addresses list"
+msgstr "  רשימת מארחים ורשימת כתובות IP לא פתורות"
+
+msgid "  Most viewed, entry and exit pages"
+msgstr "  הדפים הנצפים ביותר, כניסה ויציאה"
+
+msgid "  Files type and Web compression (mod_gzip, mod_deflate stats)"
+msgstr "  סוגי קבצים ודחיסת אינטרנט (סטטיסטיקות mod_gzip, mod_deflate)"
+
+msgid "  Configured Database Statistics"
+msgstr "  סטטיסטיקות מסד נתונים מוגדרות"
+
+msgid "  %s domains/countries"
+msgstr "  %s דומיינים/מדינות"
+
+msgid "  %s robots"
+msgstr "  %s רובוטים"
+
+msgid "  %s worm's families"
+msgstr "  %s משפחות תולעים"
+
+msgid "  %s operating systems"
+msgstr "  %s מערכות הפעלה"
+
+msgid "  %s browsers (%s with phone browsers database)"
+msgstr "  %s דפדפנים (כולל מסד נתונים של דפדפני טלפון %s)"
+
+msgid "  %s search engines (and keyphrases/keywords used from them)"
+msgstr "  %s מנועי חיפוש (וביטויי מפתח/מילות מפתח שבהם נעשה שימוש מהם)"
+
+msgid "  All HTTP errors with last referrer"
+msgstr "  כל שגיאות ה-HTTP עם המפנה האחרון"
+
+msgid "  Report by day/month/year"
+msgstr "  דו\"ח לפי יום/חודש/שנה"
+
+msgid "  Dynamic or static HTML or XHTML reports, static PDF reports"
+msgstr "  דו\"חות HTML או XHTML דינמיים או סטטיים, דו\"חות PDF סטטיים"
+
+msgid "  Indexed text or XML monthly database"
+msgstr "  מסד נתונים חודשי של טקסט עם מפתח או XML"
+
+msgid "  And a lot of other advanced features and options..."  
+msgstr "  והרבה תכונות ואפשרויות מתקדמות אחרות..."
+
+msgid "  New versions and FAQ at http://www.awstats.org"
+msgstr "  גרסאות חדשות ושאלות נפוצות בכתובת https://github.com/hestiacn/vstats/issues"

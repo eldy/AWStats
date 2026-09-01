@@ -1,0 +1,3308 @@
+# AWStats Sinhala (si) translations
+# Copyright (C) 2026 AWStats
+# This file is distributed under the same license as the AWStats package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: AWStats 8.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-10 12:00+0000\n"
+"PO-Revision-Date: 2026-05-10 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Sinhala\n"
+"Language: si\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#------------------------------------------------------------------------------
+# මාසවල නම්
+#------------------------------------------------------------------------------
+
+msgid "month_01"
+msgstr "ජනවාරි"
+
+msgid "month_02"
+msgstr "පෙබරවාරි"
+
+msgid "month_03"
+msgstr "මාර්තු"
+
+msgid "month_04"
+msgstr "අප්‍රේල්"
+
+msgid "month_05"
+msgstr "මැයි"
+
+msgid "month_06"
+msgstr "ජූනි"
+
+msgid "month_07"
+msgstr "ජූලි"
+
+msgid "month_08"
+msgstr "අගෝස්තු"
+
+msgid "month_09"
+msgstr "සැප්තැම්බර්"
+
+msgid "month_10"
+msgstr "ඔක්තෝබර්"
+
+msgid "month_11"
+msgstr "නොවැම්බර්"
+
+msgid "month_12"
+msgstr "දෙසැම්බර්"
+
+#------------------------------------------------------------------------------
+# සතියේ දිනවල නම්
+#------------------------------------------------------------------------------
+
+msgid "DayOfWeek_0"
+msgstr "ඉරිදා"
+
+msgid "DayOfWeek_1"
+msgstr "සඳුදා"
+
+msgid "DayOfWeek_2"
+msgstr "අඟහරුවාදා"
+
+msgid "DayOfWeek_3"
+msgstr "බදාදා"
+
+msgid "DayOfWeek_4"
+msgstr "බ්‍රහස්පතින්දා"
+
+msgid "DayOfWeek_5"
+msgstr "සිකුරාදා"
+
+msgid "DayOfWeek_6"
+msgstr "සෙනසුරාදා"
+
+#------------------------------------------------------------------------------
+# අතුරු මුහුණත මූලද්රව්ය
+#------------------------------------------------------------------------------
+
+msgid "Advanced Web Statistics for"
+msgstr "වෙබ් සංඛ්‍යාලේඛන සඳහා උසස් විශ්ලේෂකය"
+
+msgid "Statistics for"
+msgstr "සංඛ්‍යාලේඛන වාර්තාව"
+
+msgid "main"
+msgstr "දළ විශ්ලේෂණය"
+
+msgid "Switch to light mode"
+msgstr "ලා පැහැ මාදිලියට මාරු වන්න"
+
+msgid "Switch to dark mode"
+msgstr "තද පැහැ මාදිලියට මාරු වන්න"
+
+msgid "TB"
+msgstr "TB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "Bytes"
+msgstr "බයිට්"
+
+msgid "Filter"
+msgstr "පෙරහන"
+
+msgid "Exclude filter"
+msgstr "බැහැර කිරීමේ පෙරහන"
+
+msgid "Top"
+msgstr "ඉහළම"
+
+msgid "Full list"
+msgstr "සම්පූර්ණ ලැයිස්තුව"
+
+msgid "Last"
+msgstr "අවසාන"
+
+msgid "Average"
+msgstr "සාමාන්‍යය"
+
+msgid "Export"
+msgstr "අපනයනය"
+
+msgid "Details"
+msgstr "විස්තර"
+
+msgid "Version"
+msgstr "අනුවාදය"
+
+msgid "thousands_separator"
+msgstr ","
+
+msgid "dateformat_long"
+msgstr "yyyy-mm-dd HH:MM:SS"
+
+msgid "dateformat_short"
+msgstr "yyyy-mm-dd HH:MM"
+
+msgid "date_format_year"
+msgstr "%s"
+
+msgid "date_format_month"
+msgstr "%1$s %2$s"
+
+#------------------------------------------------------------------------------
+# සංචාලන තීරුව
+#------------------------------------------------------------------------------
+
+msgid "AWStats Month Selector"
+msgstr "AWStats මාස තෝරනය"
+
+msgid "nav_category_basic"
+msgstr "මූලික ලේඛනගත කිරීම"
+
+msgid "nav_category_guide"
+msgstr "භාවිත මාර්ගෝපදේශය"
+
+msgid "nav_category_reference"
+msgstr "යොමු සම්පත්"
+
+msgid "nav_category_integration"
+msgstr "ඒකාබද්ධ කිරීම සහ විස්තීරණ"
+
+msgid "nav_category_dev"
+msgstr "සංවර්ධක ලේඛනගත කිරීම"
+
+msgid "nav_changelog"
+msgstr "වෙනස්කම් ඉතිහාසය"
+
+msgid "nav_what"
+msgstr "AWStats යනු කුමක්ද"
+
+msgid "nav_license"
+msgstr "බලපත්‍රය"
+
+msgid "nav_glossary"
+msgstr "පාරිභාෂික ශබ්දකෝෂය"
+
+msgid "nav_setup"
+msgstr "ස්ථාපනය සහ වින්‍යාසය"
+
+msgid "nav_upgrade"
+msgstr "උසස් කිරීමේ මාර්ගෝපදේශය"
+
+msgid "nav_config"
+msgstr "වින්‍යාස පරාමිතීන්"
+
+msgid "nav_extra"
+msgstr "අමතර කොටස්"
+
+msgid "nav_tools"
+msgstr "වෙනත් මෙවලම්"
+
+msgid "nav_faq"
+msgstr "නිතර අසන ප්‍රශ්න"
+
+msgid "nav_security"
+msgstr "ආරක්ෂණ නිර්දේශ"
+
+msgid "nav_compare"
+msgstr "සංසන්දනය"
+
+msgid "nav_benchmark"
+msgstr "කාර්ය සාධන පරීක්ෂණය"
+
+msgid "nav_webmin"
+msgstr "Webmin මොඩියුලය"
+
+msgid "nav_dolibarr"
+msgstr "Dolibarr මොඩියුලය"
+
+msgid "nav_contrib"
+msgstr "දායකත්ව සම්පත්"
+
+msgid "nav_plugins"
+msgstr "ප්ලගින සංවර්ධනය"
+
+msgid "nav_hooks"
+msgstr "ප්ලගින හූක්"
+
+msgid "nav_graphs"
+msgstr "ප්ලගින ප්‍රස්ථාර"
+
+msgid "Back to top"
+msgstr "ඉහළට ආපසු"
+
+msgid "nav_select_month"
+msgstr "මාසය තෝරන්න"
+
+#------------------------------------------------------------------------------
+# ප්‍රධාන සංඛ්‍යාලේඛන දර්ශක
+#------------------------------------------------------------------------------
+
+msgid "Unique visitors"
+msgstr "අනන්‍ය අමුත්තන්"
+
+msgid "Visits"
+msgstr "සංචාර"
+
+msgid "Visits duration"
+msgstr "සංචාර කාලසීමාව"
+
+msgid "First visit"
+msgstr "පළමු සංචාරය"
+
+msgid "Last visit"
+msgstr "අවසන් සංචාරය"
+
+msgid "Visits/Visitor"
+msgstr "සංචාර/අමුත්තා"
+
+msgid "Pages/Visit"
+msgstr "පිටු/සංචාරය"
+
+msgid "Hits/Visit"
+msgstr "පහර/සංචාරය"
+
+msgid "KB/Visit"
+msgstr "කේබී/සංචාරය"
+
+msgid "KB/Visits"
+msgstr "කේබී/සංචාර"
+
+msgid "Pages"
+msgstr "පිටු"
+
+msgid "Hits"
+msgstr "පහර"
+
+msgid "Bandwidth"
+msgstr "කලාප පළල"
+
+msgid "duration_format"
+msgstr "%s-%s"
+
+msgid "unit_s"
+msgstr "තත්"
+
+msgid "unit_min"
+msgstr "මිනි"
+
+msgid "unit_h"
+msgstr "පැය"
+
+msgid "and"
+msgstr "-"
+
+msgid "Device Types"
+msgstr "උපාංග වර්ග"
+
+msgid "Device Type"
+msgstr "උපාංග වර්ගය"
+
+msgid "Percent"
+msgstr "ප්‍රතිශතය"
+
+msgid "Mobile"
+msgstr "ජංගම"
+
+msgid "Pause & Go"
+msgstr "විරාමය සහ ඉදිරියට යන්න"
+
+msgid "Complete"
+msgstr "සම්පූර්ණයි"
+
+msgid "Tablet"
+msgstr "ටැබ්ලටය"
+
+msgid "Tv"
+msgstr "රූපවාහිනිය"
+
+msgid "Wearable"
+msgstr "පැළඳිය හැකි උපාංගය"
+
+msgid "Bot"
+msgstr "බොට්"
+
+msgid "Desktop"
+msgstr "ඩෙස්ක්ටොප් පරිගණකය"
+
+msgid "Normal browsing traffic"
+msgstr "සාමාන්‍ය බ්‍රවුසින් ගමනාගමනය"
+
+msgid "Abnormal browsing traffic"
+msgstr "අසාමාන්‍ය බ්‍රවුසින් ගමනාගමනය"
+
+msgid "Viewed"
+msgstr "නරඹා ඇත"
+
+msgid "Not viewed"
+msgstr "නරඹා නැත"
+
+msgid "Abnormal browsing traffic note"
+msgstr "අසාමාන්‍ය ගමනාගමනයට ඇතුළත් වන්නේ: සෙවුම් යන්ත්‍ර බොට්, කෘතිම බුද්ධි පුහුණු බොට්, අවදානම් ස්කෑනර්, සහ HTTP/HTTPS ප්‍රමිතීන්ට අනුකූල නොවන ඉල්ලීම්"
+
+msgid "File size"
+msgstr "ගොනු ප්‍රමාණය"
+
+msgid "File type"
+msgstr "ගොනු වර්ගය"
+
+msgid "Downloads"
+msgstr "බාගැනීම්"
+
+msgid "Request time"
+msgstr "ඉල්ලීම් කාලය"
+
+msgid "Total requests"
+msgstr "සම්පූර්ණ ඉල්ලීම්"
+
+msgid "Frequency"
+msgstr "සංඛ්‍යාතය"
+
+msgid "Average frequency"
+msgstr "සාමාන්‍ය සංඛ්‍යාතය"
+
+msgid "Seconds"
+msgstr "තත්පර"
+
+msgid "First"
+msgstr "පළමු"
+
+msgid "Mails"
+msgstr "විද්‍යුත් තැපෑල"
+
+msgid "Size"
+msgstr "ප්‍රමාණය"
+
+msgid "If you remove this file, all statistics for date"
+msgstr "අනතුරු ඇඟවීම: මෙම ගොනුව ඉවත් කිරීමෙන් දිනයේ"
+
+msgid "will be lost/reset."
+msgstr "සියලු සංඛ්‍යාලේඛන ස්ථිරවම නැති වේ/නැවත සකසනු ලැබේ"
+
+msgid "Last config file used to build this data file was"
+msgstr "මෙම දත්ත ගොනුව තැනීමට භාවිතා කළ අවසන් වින්‍යාස ගොනුව විය"
+
+msgid "Position (offset in bytes) in this file for beginning of each section for"
+msgstr "මෙම ගොනුවේ MAP කොටස එක් එක් කොටසෙහි බයිට් ඕෆ්සෙට් ස්ථානය තීරණය කරයි"
+
+msgid "direct I/O access. If you made changes somewhere in this file, you should"
+msgstr "AWStats සෘජු ප්‍රවේශය සඳහා. ඔබ මෙම ගොනුවේ කොතැනක හෝ වෙනස් කිරීම් සිදු කර ඇත්නම්, ඔබ"
+
+msgid "also remove completely the MAP section (AWStats will rewrite it at next update)"
+msgstr "MAP කොටස සම්පූර්ණයෙන්ම ඉවත් කළ යුතුය (AWStats ඊළඟ යාවත්කාලීනයේදී එය නැවත ලියයි)"
+
+msgid "LastLine    = Date of last record processed - Last record line number in last log - Last record offset in last log - Last record signature value"
+msgstr "LastLine    = අවසන් වාර්තාවේ දිනය - අවසන් ලොගයේ අවසන් වාර්තාවේ පේළි අංකය - අවසන් ලොගයේ අවසන් වාර්තාවේ ඕෆ්සෙට් - අවසන් වාර්තාවේ අත්සනෙහි අගය"
+
+msgid "FirstTime   = Date of first visit for history file"
+msgstr "FirstTime   = ඉතිහාස ගොනුවේ පළමු සංචාරයේ දිනය"
+
+msgid "LastTime    = Date of last visit for history file"
+msgstr "LastTime    = ඉතිහාස ගොනුවේ අවසන් සංචාරයේ දිනය"
+
+msgid "LastUpdate  = Date of last update - Nb of parsed records - Nb of parsed old records - Nb of parsed new records - Nb of parsed corrupted - Nb of parsed dropped"
+msgstr "LastUpdate  = අවසන් යාවත්කාලීනයේ දිනය - භාවිතා කළ වාර්තා ගණන - පැරණි වාර්තා ගණන - නව වාර්තා ගණන - හානි වූ වාර්තා ගණන - ඉවත දැමූ වාර්තා ගණන"
+
+msgid "TotalVisits = Number of visits"
+msgstr "TotalVisits = සංචාර ගණන"
+
+msgid "TotalUnique = Number of unique visitors"
+msgstr "TotalUnique = අනන්‍ය අමුත්තන් ගණන"
+
+msgid "MonthHostsKnown   = Number of hosts known"
+msgstr "MonthHostsKnown   = දන්නා ධාරක ගණන"
+
+msgid "MonthHostsUnKnown = Number of hosts unknown"
+msgstr "MonthHostsUnKnown = නොදන්නා ධාරක ගණන"
+
+msgid "Cluster ID - Pages - Hits - Bandwidth"
+msgstr "කලස්ටර් ID - පිටු - පහර - කලාප පළල"
+
+msgid "Hour - Pages - Hits - Bandwidth - Not viewed Pages - Not viewed Hits - Not viewed Bandwidth"
+msgstr "පැය - පිටු - පහර - කලාප පළල - නොබැලූ පිටු - නොබැලූ පහර - නොබැලූ කලාප පළල"
+
+msgid "Date - Pages - Hits - Bandwidth - Visits"
+msgstr "දිනය - පිටු - පහර - කලාප පළල - සංචාර"
+
+msgid "Domain - Pages - Hits - Bandwidth"
+msgstr "වසම - පිටු - පහර - කලාප පළල"
+
+msgid "The %s first Pages must be first (order not required for others)"
+msgstr "ප්‍රධාන පිටුවෙහි පළමු %s වැඩිම වාර ගණනක් නරඹන ලද පිටු පමණක් පෙන්වනු ලැබේ, සම්පූර්ණ ලැයිස්තුව සඳහා විස්තර පිටුව බලන්න"
+
+msgid "Host - Pages - Hits - Bandwidth - Last visit date - [Start date of last visit] - [Last page of last visit]"
+msgstr "ධාරකය - පිටු - පහර - කලාප පළල - අවසන් සංචාරයේ දිනය - [අවසන් සංචාරයේ ආරම්භක දිනය] - [අවසන් සංචාරයේ අවසන් පිටුව]"
+
+msgid "[Start date of last visit] and [Last page of last visit] are saved only if session is not finished"
+msgstr "[අවසන් සංචාරයේ ආරම්භක දිනය] සහ [අවසන් සංචාරයේ අවසන් පිටුව] සැසිය අවසන් නොවුනේ නම් පමණක් සුරකිනු ලැබේ"
+
+msgid "The first %s items are sorted by hits in descending order; order of the remaining items is undefined."
+msgstr "පළමු %s අයිතමයන් පහර ගණන අනුව අවරෝහණ අනුපිළිවෙලට වර්ග කර ඇත; ඉතිරි අයිතමයන්ගේ අනුපිළිවෙල අර්ථ දක්වා නැත."
+
+msgid "Login - Pages - Hits - Bandwidth - Last visit"
+msgstr "පරිශීලක - පිටු - පහර - කලාප පළල - අවසන් සංචාරය"
+
+msgid "Robot ID - Hits - Bandwidth - Last visit - Hits on robots.txt"
+msgstr "රොබෝ ID - පහර - කලාප පළල - අවසන් සංචාරය - robots.txt මත පහර"
+
+msgid "Worm ID - Hits - Bandwidth - Last visit"
+msgstr "පණුවා ID - පහර - කලාප පළල - අවසන් සංචාරය"
+
+msgid "EMail - Hits - Bandwidth - Last visit"
+msgstr "විද්‍යුත් තැපෑල - පහර - කලාප පළල - අවසන් සංචාරය"
+
+msgid "The first %s email addresses are sorted by hits in descending order; order of the remaining addresses is undefined."
+msgstr "පළමු %s විද්යුත් තැපැල් ලිපිනයන් පහර ගණන අනුව අවරෝහණ අනුපිළිවෙලට වර්ග කර ඇත; ඉතිරි ලිපිනයන්ගේ අනුපිළිවෙල අර්ථ දක්වා නැත."
+
+msgid "URL - Pages - Bandwidth - Entry - Exit"
+msgstr "URL - පිටු - කලාප පළල - ප්‍රවේශය - පිටවීම"
+
+msgid "Files type - Hits - Bandwidth - Bandwidth without compression - Bandwidth after compression"
+msgstr "ගොනු වර්ගය - පහර - කලාප පළල - සම්පීඩනයකින් තොරව කලාප පළල - සම්පීඩනයෙන් පසු කලාප පළල"
+
+msgid "Request Time Range - Request Time Frequency"
+msgstr "ඉල්ලීම් කාල පරාසය - ඉල්ලීම් සංඛ්‍යාතය"
+
+msgid "Payload Range - Payload Frequency"
+msgstr "ගොනු ප්‍රමාණ පරාසය - ගොනු ගණන"
+
+msgid "Session range - Number of visits"
+msgstr "සැසි කාලසීමා පරාසය - සංචාර ගණන"
+
+msgid "URL with %s errors - Hits"
+msgstr "%s දෝෂ සහිත URL - පහර"
+
+msgid "Last URL referrer"
+msgstr "අවසන් URL මූලාශ්‍රය"
+
+msgid "Errors - Hits - Bandwidth"
+msgstr "දෝෂ - පහර - කලාප පළල"
+
+msgid "Search keywords - Number of search"
+msgstr "සෙවුම් මූල පද - සෙවුම් ගණන"
+
+msgid "Only top %s keywords shown on main page (sorted by search count). See full list on detail page."
+msgstr "ප්‍රධාන පිටුවෙහි පළමු %s වැඩිපුරම සෙවූ මූල පද පමණක් පෙන්වනු ලැබේ (සෙවුම් ගණන අනුව පෙළගස්වා ඇත). සම්පූර්ණ ලැයිස්තුව සඳහා විස්තර පිටුව බලන්න"
+
+msgid "Search keyphrases - Number of search"
+msgstr "සෙවුම් වාක්‍යාංශ - සෙවුම් ගණන"
+
+msgid "Only top %s keyphrases shown on main page (sorted by search count). See full list on detail page."
+msgstr "ප්‍රධාන පිටුවෙහි පළමු %s වැඩිපුරම සෙවූ වාක්‍යාංශ පමණක් පෙන්වනු ලැබේ (සෙවුම් ගණන අනුව පෙළගස්වා ඇත). සම්පූර්ණ ලැයිස්තුව සඳහා විස්තර පිටුව බලන්න"
+
+msgid "External page referers - Pages - Hits"
+msgstr "බාහිර පිටු මූලාශ්‍ර - පිටු - පහර"
+
+msgid "Only top %s external referrers shown on main page (sorted by pages). See full list on detail page."
+msgstr "ප්‍රධාන පිටුවෙහි පළමු %s වැඩිපුරම යොමු කරන ලද බාහිර මූලාශ්‍ර පමණක් පෙන්වනු ලැබේ (පිටු ගණන අනුව පෙළගස්වා ඇත). සම්පූර්ණ ලැයිස්තුව සඳහා විස්තර පිටුව බලන්න"
+
+msgid "Search engine referers ID - Pages - Hits"
+msgstr "සෙවුම් යන්ත්‍ර මූලාශ්‍ර ID - පිටු - පහර"
+
+msgid "Origin - Pages - Hits"
+msgstr "මූලාශ්‍රය - පිටු - පහර"
+
+msgid "Unknown referer Browser - Last visit date"
+msgstr "නොදන්නා මූලාශ්‍ර බ්‍රවුසරය - අවසන් සංචාරයේ දිනය"
+
+msgid "Unknown referer OS - Last visit date"
+msgstr "නොදන්නා මූලාශ්‍ර මෙහෙයුම් පද්ධතිය - අවසන් සංචාරයේ දිනය"
+
+msgid "Screen size - Hits"
+msgstr "තිර ප්‍රමාණය - පහර"
+
+msgid "Browser ID - Hits - Pages"
+msgstr "බ්‍රවුසර ID - පහර - පිටු"
+
+msgid "Downloads - Hits - Bandwidth"
+msgstr "බාගැනීම් - පහර - කලාප පළල"
+
+msgid "Protocol - Hits - Bandwidth"
+msgstr "ප්‍රොටෝකෝලය - පහර - කලාප පළල"
+
+msgid "Icon Status - Type:200:404:Other"
+msgstr "අයිකන තත්ත්වය - වර්ගය:200:404:වෙනත්"
+
+#------------------------------------------------------------------------------
+# කාල පරිච්ඡේද පරිවර්තන
+#------------------------------------------------------------------------------
+
+msgid "period_00"
+msgstr "මධ්‍යම රාත්‍රිය · AWStats නිදාගෙන සිටී, ඔබ තවමත් දත්ත බලා සිටිනවාද? සැබෑ රසිකයෙක්"
+
+msgid "period_01"
+msgstr "රාත්‍රී 1 · මේ වෙලාවට මෙහි සිටිනවාද? නින්ද නැතිකම හෝ දැන් වැඩ අවසන් කර ආවාද"
+
+msgid "period_02"
+msgstr "රාත්‍රී 2 · බොට්ස් පවා ඔබට වඩා වෙහෙස මහන්සි වී වැඩ කරති"
+
+msgid "period_03"
+msgstr "රාත්‍රී 3 · නගරය නිදාගෙන සිටී, සර්වරය අතිකාලීනව වැඩ කරයි, වඩාත් දුක්ඛිත තැනැත්තා කවුද"
+
+msgid "period_04"
+msgstr "රාත්‍රී 4 · අන්ධකාරයේ දීප්තිමත්ම තරුව ඔබේ තිරය හෝ සර්වරයේ දර්ශකය"
+
+msgid "period_05"
+msgstr "උදේ 5 · ඉක්මනින් නැගිටින්නා වාසනාවන්තයා, බොට්ස් දත්ත එකතු කරයි"
+
+msgid "period_06"
+msgstr "උදේ 6 · කෙනෙක් අවදි වෙනවා, කෙනෙක් තවමත් නිදාගෙන නැහැ, අන්තර්ජාලය කිසි විටෙකත් වැසෙන්නේ නැහැ"
+
+msgid "period_07"
+msgstr "උදේ 7 · මෙට්රෝ රථයේ ජනාකීර්ණ කාලය, වෙබ් අඩවි බ්‍රවුස් කිරීමේ කාලයද වේ"
+
+msgid "period_08"
+msgstr "උදේ 8 · වැඩ කරන දිනයේ පළමු කාර්යය: ඊයේ දත්ත බලන්න"
+
+msgid "period_09"
+msgstr "උදේ 9 · රන්වන් කාලය, කම්මැලිකමටද එහිම නීති ඇත"
+
+msgid "period_10"
+msgstr "උදේ 10 · කෝපි කාලය, ගමනාගමනය වැඩි වී තිබේදැයි බලන්න"
+
+msgid "period_11"
+msgstr "උදේ 11 · ආහාර වේලට තවත් පැයක්, තව ටිකක් ඉවසන්න"
+
+msgid "period_12"
+msgstr "දහවල් · සර්වරය: සියල්ලෝම කෑමට ගියහ, මමත් ටිකක් විවේක ගන්නම්"
+
+msgid "period_13"
+msgstr "දහවල් 1 · දහවල් නින්ද එනවා, නමුත් දත්ත නිදාගන්නේ නැහැ"
+
+msgid "period_14"
+msgstr "දහවල් 2 · දහවල් තේ කාලය, දත්ත සමඟ වඩාත් රසවත්"
+
+msgid "period_15"
+msgstr "දහවල් 3 · අද ගමනාගමන ප්‍රස්තාරය ඔබේ මනෝභාවයේ වක්‍රය වැනිය"
+
+msgid "period_16"
+msgstr "දහවල් 4 · වැඩ නිමා වීමට X පැය, ගමනාගමනය වේගවත් වෙයි"
+
+msgid "period_17"
+msgstr "සවස 5 · වැඩ අවසන්! සර්වරයට තවමත් වැඩ කළ යුතුයි"
+
+msgid "period_18"
+msgstr "සවස 6 · රාත්‍රී ආහාර වේලාව, ටිකක් විවේක ගෙන වීඩියෝවක් බලන්න"
+
+msgid "period_19"
+msgstr "රාත්‍රී 7 · ප්‍රාථමික කාලය, ගමනාගමන උච්චතම අවස්ථාව, සර්වරය: මට ඔරොත්තු දිය හැකියි"
+
+msgid "period_20"
+msgstr "රාත්‍රී 8 · සෝෆා මත වැතිර සිටින ඔබ, ඔබ 114514 වන සංචාරකයායි"
+
+msgid "period_21"
+msgstr "රාත්‍රී 9 · රාත්‍රිය ප්‍රමාදයි, රහසේ දත්ත බලන රාත්‍රී පක්ෂියා තවත් කෙනෙක්"
+
+msgid "period_22"
+msgstr "රාත්‍රී 10 · අද දත්ත සූදානම්, ඔබ කුතුහලයෙන් සිටිනවාද"
+
+msgid "period_23"
+msgstr "රාත්‍රී 11 · AWStats: නිදාගැනීමේ කාලය, හෙට නැවත වැඩ කළ යුතුයි"
+
+#------------------------------------------------------------------------------
+# කාල මාන
+#------------------------------------------------------------------------------
+
+msgid "Period"
+msgstr "සංඛ්‍යාලේඛන කාලසීමාව"
+
+msgid "Year"
+msgstr "වර්ෂය"
+
+msgid "Month"
+msgstr "මාසය"
+
+msgid "Months"
+msgstr "මාස"
+
+msgid "Date"
+msgstr "දිනය"
+
+msgid "Day"
+msgstr "දිනය"
+
+msgid "Hour"
+msgstr "පැය"
+
+msgid "Hours"
+msgstr "පැය"
+
+msgid "Day of week"
+msgstr "සතියේ දිනය"
+
+msgid "When"
+msgstr "කවදාද"
+
+msgid "%s Server Management Panel"
+msgstr "%s සර්වර් කළමනාකරණ පුවරුව"
+
+msgid "Server Administration"
+msgstr "සරල හා කාර්යක්ෂම සර්වර් විසඳුම"
+
+#------------------------------------------------------------------------------
+# අමුත්තන්ගේ මානය
+#------------------------------------------------------------------------------
+
+msgid "Invalid URL Parameters"
+msgstr "වලංගු නොවන URL පරාමිති"
+
+msgid "The requested page cannot be loaded due to invalid or malformed URL parameters."
+msgstr "URL පරාමිති වලංගු නොවන හෝ වැරදි ආකෘතියක් තිබීම නිසා ඉල්ලූ පිටුව පූරණය කළ නොහැක"
+
+msgid "This may be caused by typing an incorrect URL, missing parameter separators, or using an invalid configuration name."
+msgstr "වැරදි URL එකක් ටයිප් කිරීම, පරාමිති වෙන්කරන්නන් නොමැතිකම, හෝ වලංගු නොවන වින්‍යාස නාමයක් භාවිතා කිරීම නිසා මෙය සිදු විය හැක"
+
+msgid "Please check the URL you entered and ensure all parameters are correctly formatted."
+msgstr "කරුණාකර ඔබ ඇතුළත් කළ URL පරීක්ෂා කර සියලු පරාමිති නිවැරදිව ආකෘතිකරණය කර ඇති බවට සහතික වන්න"
+
+msgid "SiteDomain parameter not defined in your config/domain file, or you may not have execution permission on the file."
+msgstr "ඔබගේ config/domain ගොනුවේ SiteDomain පරාමිතිය අර්ථ දක්වා නොමැත, නැතහොත් ඔබට ගොනුව මත ක්‍රියාත්මක කිරීමේ අවසරය නොතිබිය හැක."
+
+msgid "Please run as Administrator to set permissions"
+msgstr "අවසරයන් සැකසීමට කරුණාකර පරිපාලක ලෙස ධාවනය කරන්න"
+
+msgid "This directory lacks read permission"
+msgstr "මෙම නාමාවලියට කියවීමේ අවසරය නොමැත"
+
+msgid "Please set read permission for directory"
+msgstr "කරුණාකර නාමාවලිය සඳහා කියවීමේ අවසරය සකසන්න"
+
+msgid "Missing required parameter in config file"
+msgstr "වින්‍යාස ගොනුවේ අවශ්‍ය පරාමිතිය අතුරුදහන්"
+
+msgid "Please check that 'DirData' is defined."
+msgstr "කරුණාකර 'DirData' අර්ථ දක්වා ඇත්දැයි පරීක්ෂා කරන්න."
+
+msgid "Domain name in browser address appears to be missing or incomplete"
+msgstr "බ්‍රවුසර ලිපිනයේ වසම් නම අතුරුදහන් හෝ අසම්පූර්ණ බව පෙනේ"
+
+msgid "Please check the URL parameter"
+msgstr "කරුණාකර URL පරාමිතිය පරීක්ෂා කරන්න"
+
+msgid "Format description"
+msgstr "ආකෘති විස්තරය"
+
+msgid "Please set execute permission"
+msgstr "කරුණාකර ක්‍රියාත්මක කිරීමේ අවසරය සකසන්න"
+
+msgid "Or if you prefer numeric mode"
+msgstr "එසේත් නැතිනම් ඔබ සංඛ්‍යාත්මක ප්‍රකාරයට කැමති නම්"
+
+msgid "View Report Directly"
+msgstr "සෘජුවම වාර්තාව බලන්න"
+
+msgid "AWStats Log Viewer"
+msgstr "AWStats ලොග් දර්ශකය"
+
+msgid "Month Selection"
+msgstr "මාස තේරීම"
+
+msgid "Who"
+msgstr "කවුද"
+
+msgid "Visitors"
+msgstr "අමුත්තන්"
+
+msgid "Countries"
+msgstr "රටවල්/කලාප"
+
+msgid "flag_icon"
+msgstr "කොඩිය"
+
+msgid "Country-Region-City"
+msgstr "රට/කලාපය/නගරය"
+
+msgid "Code"
+msgstr "කේතය"
+
+msgid "Known"
+msgstr "දන්නා"
+
+msgid "unknownos"
+msgstr "නොදන්නා මෙහෙයුම් පද්ධතිය"
+
+msgid "unknownbrowser"
+msgstr "නොදන්නා බ්‍රවුසරය"
+
+msgid "Unresolved IP Address"
+msgstr "නොවිසඳුණු IP ලිපිනය"
+
+msgid "Unknown File Type"
+msgstr "නොදන්නා ගොනු වර්ගය"
+
+msgid "Unknown Size"
+msgstr "නොදන්නා ප්‍රමාණය"
+
+msgid "Unknown Time"
+msgstr "නොදන්නා ඉල්ලීම් කාලය"
+
+msgid "Unknown Browser"
+msgstr "නොදන්නා බ්‍රවුසරය"
+
+msgid "Unknown OS"
+msgstr "නොදන්නා මෙහෙයුම් පද්ධතිය"
+
+msgid "Unknown Visitor"
+msgstr "නොදන්නා අමුත්තා"
+
+msgid "Unknown Visitor (Total)"
+msgstr "නොදන්නා අමුත්තා (සම්පූර්ණ)"
+
+msgid "Unknown Country"
+msgstr "නොදන්නා රට/කලාපය"
+
+msgid "Unknown Country (Region)"
+msgstr "නොදන්නා රට/කලාපය (සම්පූර්ණ)"
+
+msgid "Unknown Visitor (Title)"
+msgstr "නොදන්නා අමුත්තා (ශීර්ෂය)"
+
+msgid "PageStayTime"
+msgstr "පිටුවේ රැඳී සිටින කාලය ගණනය කළ නොහැක"
+
+msgid "Unknown OS (Link)"
+msgstr "නොදන්නා මෙහෙයුම් පද්ධතිය (සබැඳිය)"
+
+msgid "Unknown OS (Row)"
+msgstr "නොදන්නා මෙහෙයුම් පද්ධතිය (ලැයිස්තුව)"
+
+msgid "Unknown Browser (Link)"
+msgstr "නොදන්නා බ්‍රවුසරය (සබැඳිය)"
+
+msgid "Unknown Browser (Row)"
+msgstr "නොදන්නා බ්‍රවුසරය (ලැයිස්තුව)"
+
+msgid "Unknown Screen"
+msgstr "නොදන්නා තිර ප්‍රමාණය"
+
+msgid "Login"
+msgstr "පරිශීලක"
+
+msgid "Anonymous"
+msgstr "නිර්නාමික"
+
+msgid "Robots"
+msgstr "රොබෝවරු"
+
+msgid "Different robots"
+msgstr "විවිධ රොබෝවරු"
+
+msgid "Hits on robots.txt"
+msgstr "ඉහත ලැයිස්තුගත කර ඇති සෙවුම් යන්ත්‍ර රොබෝවරු විසින් ජනනය කරන ලද "අසාමාන්‍ය" ගමනාගමනය වෙනත් ප්‍රස්තාරවලට ඇතුළත් කර නැත. "+" ට පසු ඇති අගය "robots.txt" වෙත සාර්ථක ප්‍රවේශ ගණන නියෝජනය කරයි"
+
+msgid "Worms"
+msgstr "පණුවන්"
+
+msgid "Different worms"
+msgstr "විවිධ පණුවන්"
+
+msgid "Target"
+msgstr "ඉලක්කය"
+
+msgid "Grabber"
+msgstr "ග්රැබර්"
+
+#------------------------------------------------------------------------------
+# ආකෘති විස්තර
+#------------------------------------------------------------------------------
+
+msgid "mime_text"
+msgstr "TXT සරල පෙළ ගොනුව (1963 දී ASCII කේතනය මගින් ප්‍රමිතිගත කරන ලද ආකෘති රහිත සරල පෙළ. සියලු මූලාශ්‍ර කේත, වින්‍යාස ගොනු සහ පද්ධති ලොග්වල පදනම ලෙස, එහි හරස්-වේදිකා වින්ඩෝස් (CRLF) සහ යුනික්ස් (LF) පේළි බිඳීම් පාලන ප්‍රවාහයන්, තවමත් පරිගණක ලෝකයේ වඩාත්ම විශ්වීය දත්ත හුවමාරු ප්‍රමිතිය වේ)"
+
+msgid "mime_log"
+msgstr "LOG පද්ධති ක්‍රියාකාරී ලොගය (මෙහෙයුම් පද්ධතිය, කර්නලය සහ යෙදුම්-මට්ටමේ ධාවන වේලා තත්වයන් වාර්තා කරන සරල පෙළ වත්කමක්. Nginx/Apache ප්‍රවේශ ලොග් (සංයුක්ත ලොගය) සහ සම්මත syslog පිරිවිතර ආවරණය කරයි. දෝෂ නිරාකරණය, ප්‍රවාහ කාර්ය සාධන විශ්ලේෂණය සහ ආරක්ෂක විගණනය සඳහා ප්‍රධාන දත්ත මූලාශ්‍රය වේ)"
+
+msgid "mime_page"
+msgstr "HTML අධිපෙළ වෙබ් පිටුව (1989 දී Tim Berners-Lee විසින් නිර්මාණය කරන ලද වර්ල්ඩ් වයිඩ් වෙබ්හි පදනම් ගල. නොමිලේ ලබා ගත හැකි විශ්වීය අධිපෙළ සලකුණු භාෂාවක් ලෙස, එහි HTML5 පිරිවිතරය 2014 දී W3C නිල ප්‍රමිතිය බවට පත් විය. ව්‍යුහගත බහුමාධ්ය, අර්ථාන්විත අන්තර්ක්‍රියා සහ ප්‍රවාහ පිටු සැලසුම් සඳහා ස්වදේශීය සහාය දක්වයි. 2016 දී ටියුරින් සම්මානය දිනා ගත්තේය)"
+
+msgid "mime_khtml"
+msgstr "KHTML වෙබ් අච්චු එන්ජිම (1998 KDE 2.0 බ්‍රවුසර පෙන්වීමේ එන්ජිම පිරිවිතර. නවීන වෙබ් පෙන්වීම සඳහා අත්තිවාරම දැමූ විවෘත මූලාශ්‍ර ප්‍රජාවේ ප්‍රමිතිය ලෙස, එහි තාක්ෂණික උරුමය සෘජුවම Apple WebKit සහ Google Blink හරයන් බවට පරිණාමය විය. තවමත් නවීන ප්‍රවාහ ගතික වෙබ් ගෘහ නිර්මාණ ශිල්පය හරහා එහි යටින් පවතින මාවත දිගටම කරගෙන යයි)"
+
+msgid "mime_script"
+msgstr "SCRIPT අර්ථකථනය කරන ලද ගතික ස්ක්‍රිප්ට් (කල්තියා සම්පාදනය කිරීම අවශ්‍ය නොවන සහ විශේෂිත ධාවන වේලාවක් හෝ පරිවර්තකයක් මගින් පේළියෙන් පේළිය කියවා ක්‍රියාත්මක කරන මූලාශ්‍ර කේත ප්‍රවාහවල සාමාන්‍ය වර්ගීකරණය. ASP, JSP, CGI සහ Tcl ආදිය ආවරණය කරයි. සේවාදායක-පාර්ශ්ව පොදු ද්වාර අතුරුමුහුණත්, ස්වයංක්‍රීය ක්‍රියාවලි පාලනය සහ පද්ධති-මට්ටමේ කාර්ය මැලියම් සඳහා බහුලව භාවිතා වේ)"
+
+msgid "mime_js"
+msgstr "JavaScript ස්ක්‍රිප්ට් (1995 Netscape බ්‍රවුසරයේ ස්වදේශීය ක්‍රමලේඛන පරිසරය. 1997 දී ECMAScript කර්මාන්ත ප්‍රමිතිය ස්ථාපිත කරන ලදී, 2009 දී Node.js ධාවන වේලාව බිහි විය, බ්‍රවුසර සීමාවන් බිඳ දමා සම්පූර්ණ-ස්ටැක් අසමමුහුර්ත නොබැඳි ගෘහ නිර්මාණ ශිල්පයක් නිර්මාණය කළේය. ලොව විශාලතම npm මෘදුකාංග පැකේජ පරිසර පද්ධතිය සමඟ)"
+
+msgid "mime_py"
+msgstr "Python ස්ක්‍රිප්ට් (1991 දී Guido van Rossum විසින් නිර්මාණය කරන ලද ඉහළ මට්ටමේ අර්ථකථන ස්ක්‍රිප්ට් භාෂාවකි. අනිවාර්ය ඉන්ඩෙන්ටේෂන් නිසා නොනැසී පැවතිය හැකි කියවීමේ හැකියාව සහ බහු-ආකෘති පහත්-මට්ටමේ සැලසුම නිසා, එය දැන් නවීන වෙබ් ගෘහ නිර්මාණ ශිල්පය, සම්පූර්ණ-ස්ටැක් දත්ත විද්‍යාව, කෘතිම බුද්ධි (AI) ආකෘති පුහුණුව සහ වලාකුළු-ස්වදේශීය ස්වයංක්‍රීය මෙහෙයුම් සඳහා කර්මාන්ත ප්‍රමිති භාෂාව ලෙස ස්ථාපිත කර ඇත)"
+
+msgid "mime_sh"
+msgstr "Shell ස්ක්‍රිප්ට් (1971 යුනික්ස් යුගයේ සම්මත විධාන පරිවර්තක ස්ක්‍රිප්ට්. Bash, Sh, Dash වැනි කර්නල්-මට්ටමේ විධාන පිරිවිතර ඇතුළත් වේ. සාමාන්‍යයෙන් .sh දිගුව සමඟ ක්‍රියාත්මක වේ. නවීන යුනික්ස්-වැනි මෙහෙයුම් පද්ධතිවල පහත්-මට්ටමේ ක්‍රියාවලි පාලනය, ස්ථාපනය-රහිත පරිසර වින්‍යාසය සහ ස්වයංක්‍රීය යෙදවීම සඳහා විශ්වීය කර්නල්-මට්ටමේ මැලියම් වේ)"
+
+msgid "mime_rb"
+msgstr "Ruby ස්ක්‍රිප්ට් (1995 දී Yukihiro Matsumoto විසින් නිර්මාණය කරන ලද වස්තු-නැඹුරු ස්ක්‍රිප්ට් භාෂාවකි. සංවර්ධක අත්දැකීම් සඳහා අතිශයින් ගරු කිරීම එහි මූලික නිර්මාණ දර්ශනය වේ. එහි Ruby on Rails රාමුව 'Convention over Configuration (CoC)' නවීන උසස් වෙබ් ගෘහ නිර්මාණ සංවර්ධන ආකෘතිය විප්ලවීය ලෙස ස්ථාපිත කළේය)"
+
+msgid "mime_pl"
+msgstr "Perl ස්ක්‍රිප්ට් (1987 දී Larry Wall විසින් නිර්මාණය කරන ලද ප්‍රායෝගික ස්ක්‍රිප්ට් භාෂාවකි. නවීන පැකේජ කළමනාකරුගේ (CPAN) පියා ලෙස, එය පෙළ සැකසුම්වල 'ස්විස් හමුදා පිහිය' ලෙස ප්‍රසිද්ධය. නවීන CGI මාදිලියේදී, ඉතා අඩු භෞතික මතක පිරිවැය, ඉහළ කාර්යක්ෂමතාව නිත්‍ය ප්‍රකාශන සැකසුම් හේතුවෙන් ලොග් විග්‍රහ කිරීමේ ක්ෂේත්‍රයේ ඉහළ විශ්වසනීය පදනමක් ලෙස ක්‍රියා කරයි)"
+
+msgid "mime_php"
+msgstr "PHP ගතික වෙබ් පිටුව (1995 දී Rasmus Lerdorf විසින් නිර්මාණය කරන ලද, වෙබ් සංවර්ධනය සඳහා විෙශේෂයෙන් නිර්මාණය කර ඇත. ලොව වෙබ් අඩවි වලින් 70% කට වඩා ධාවනය කරන ප්‍රධාන තාක්ෂණය ලෙස, එය WordPress, Wikipedia වැනි විශාල නිෂ්පාදන යෙදුම් ගැඹුරින් සහාය දක්වයි. PHP 8 සිට JIT (Just-In-Time) සම්පාදන ධාවන වේලා එන්ජිම හඳුන්වා දීමෙන් පසු, එය ඉහළ කාර්ය සාධන සම්පූර්ණ-ස්ටැක් සේවාදායක පැත්තට මූලික ආකෘති පරිණාමයක් සාක්ෂාත් කර ගත්තේය)"
+
+msgid "mime_image"
+msgstr "IMAGE රූප වත්කම් වර්ගීකරණය (හානියට/හානි රහිත සම්පීඩන බිට්මැප්, නවීන ප්‍රතිචාරාත්මක වෙබ් ග්‍රැෆික්ස් සහ දෛශික ග්‍රැෆික්ස් පිළිබඳ සාමාන්‍ය වර්ගීකරණය ආවරණය කරයි. වෙබ් අඩවියේ දෘශ්‍ය සම්පත් පැටවීමේ පිරිවැය, සේවාදායක-පාර්ශ්ව හැඹිලි පහර අනුපාතය සහ මාධ්‍ය ජාල කලාප පළල පරිභෝජනය තක්සේරු කිරීම සඳහා ප්‍රධාන දර්ශකයකි)"
+
+msgid "mime_document"
+msgstr "DOCUMENT ව්‍යුහගත ලේඛන වර්ගීකරණය (සරල පෙළ, පැතුරුම්පත්, ස්ථාවර-ආකෘති ලේඛන (PDF) සහ සැහැල්ලු සලකුණු කිරීමේ භාෂා පිළිබඳ සාමාන්‍ය වර්ගීකරණය ආවරණය කරයි. සේවාදායක-පාර්ශ්ව ස්ථිතික දැනුම් පදනම් බෙදා හැරීම, ව්‍යවසාය තොරතුරු වත්කම් බාගැනීම් සහ පෙළ ප්‍රවාහ ප්‍රතිදාන ධාරිතාව පිළිබඳ සංඛ්‍යාලේඛන සඳහා ප්‍රධාන දර්ශකයකි)"
+
+msgid "mime_package"
+msgstr "PACKAGE සම්පාදන නිෂ්පාදන සහ මෘදුකාංග පැකේජ වර්ගීකරණය (මෙහෙයුම් පද්ධතියේ ස්වදේශීය ක්‍රියාත්මක කළ හැකි වැඩසටහන්, ධාවන වේලා සබැඳි පුස්තකාල (DLL/SO) සහ යෙදුම් බෙදාහැරීමේ ස්ථාපන පැකේජ පිළිබඳ සාමාන්‍ය වර්ගීකරණය ආවරණය කරයි. මෘදුකාංග බෙදාහැරීමේ අඩවිවල පිටතට යන ගමනාගමනය සහ බාගැනීම් උච්චතම අවස්ථා තක්සේරු කිරීම සඳහා ප්‍රධාන දර්ශකයක් ලෙස බොහෝ විට භාවිතා වේ)"
+
+msgid "mime_archive"
+msgstr "ARCHIVE සංරක්ෂණ සහ සම්පීඩිත ගොනු (DEFLATE, LZMA වැනි ප්‍රධාන ඇල්ගොරිතම මත පදනම් වූ දත්ත සම්පීඩන පැකේජවල සාමාන්‍ය වර්ගීකරණය. ජාල ස්ථරයේදී, සාම්ප්‍රදායික පැකේජ බෙදාහැරීම නියෝජනය කිරීමට අමතරව, 1992 GNU ව්‍යාපෘතියේ Gzip ගතික ප්‍රතිචාර ප්‍රවාහය ද ආවරණය කරයි. නවීන අවස්ථා වලදී Brotli ඇල්ගොරිතම ක්‍රමයෙන් හඳුන්වා දෙනු ලැබුවද, මෙම වර්ගීකරණය සේවාදායක කලාප පළල ප්‍රතිදාන අනුපාතය සහ ප්‍රවාහන ස්ථර පීඩන අඩු කිරීම තක්සේරු කිරීම සඳහා ප්‍රධාන දර්ශකයක් ලෙස පවතී)"
+
+msgid "mime_audio"
+msgstr "AUDIO ඩිජිටල් ශ්‍රව්‍ය ප්‍රවාහ වර්ගීකරණය (සම්පීඩිත ශ්‍රව්‍ය, ශ්‍රව්‍ය පොත් සහ ප්‍රවාහ මාධ්‍ය ශ්‍රව්‍ය බහාලුම් පිළිබඳ සාමාන්‍ය වර්ගීකරණය ආවරණය කරයි. නිශ්චිත ශ්‍රව්‍ය කෝඩෙක් ප්‍රමිතීන් මත පදනම්ව, බහුමාධ්‍ය අඩවිවල ශ්‍රව්‍ය දත්ත ප්‍රවාහවල ප්‍රතිදාන අනුපාතය, එකවර ප්‍රවාහ කලාප පළල සහ දිගු සම්බන්ධතා කාර්ය සාධනය නිරීක්ෂණය කිරීමට භාවිතා කරයි)"
+
+msgid "mime_video"
+msgstr "VIDEO ඩිජිටල් වීඩියෝ ප්‍රවාහ වර්ගීකරණය (ඉහළ විභේදන වීඩියෝ බහාලුම්, නවීන වෙබ් සජීවිකරණ සහ ප්‍රවාහ මාධ්‍ය කොටස් පිළිබඳ සාමාන්‍ය වර්ගීකරණය ආවරණය කරයි. ඉහළ බර ජාල පරිසරයක සේවාදායක කලාප පළල උච්ච සීමාව, අන්තර්ගත බෙදාහැරීමේ ජාල (CDN) ත්වරණ බලපෑම තක්සේරු කිරීම සඳහා ප්‍රධාන දර්ශකයකි)"
+
+msgid "mime_jscript"
+msgstr "JScript ස්ක්‍රිප්ට් (1996 Microsoft විසින් Internet Explorer 3.0 සඳහා සංවර්ධනය කරන ලද ප්‍රතිලෝම ඉංජිනේරු හිමිකාර ක්‍රියාත්මක කිරීම. මුල් සම්භාව්‍ය JavaScript හි සත්කාරක තරඟකරුවෙකු ලෙස, එය Windows ස්ක්‍රිප්ට් සත්කාරක (WSH) සහ මුල් ASP බැක්එන්ඩ්හි ප්‍රධාන එන්ජිම විය)"
+
+msgid "mime_json"
+msgstr "JSON ව්‍යුහගත දත්ත (2001 දී Douglas Crockford විසින් ස්ථාපිත කරන ලද සැහැල්ලු දත්ත ශ්‍රේණිගත කිරීමේ හුවමාරු ආකෘතිය. පෙළ-පාදක යතුරු-අගය යුගල සහ අරා ගෘහ නිර්මාණ ශිල්පය මත පදනම්ව, ඉතා ඉහළ මානව-කියවීමේ හැකියාව සහ නොනැසී පවතින ප්‍රවාහ විග්‍රහ කිරීමේ ගුණාංගයක් ඇත. නවීන වෙබ් API, ක්ෂුද්‍ර සේවා ගෘහ නිර්මාණ ශිල්පය සහ විශාල භාෂා ආකෘති සමඟ අන්තර් ක්‍රියා කිරීම සඳහා වන සත්‍ය ප්‍රමිතියයි)"
+
+msgid "mime_vbs"
+msgstr "VBScript ස්ක්‍රිප්ට් (1996 Microsoft විසින් IE 3.0 සමඟ නිකුත් කරන ලද ස්ක්‍රිප්ට් භාෂා ප්‍රභේදය. මුල් ASP ගතික වෙබ් අඩවි සහ Windows පද්ධති කළමනාකරණයේ ප්‍රධාන ධාවකය විය, දැන් Windows 11 හි නවතම කර්නලයෙන් Microsoft විසින් නිල වශයෙන් ඉවත් කර ඇත. එය ඓතිහාසික උරුම තාක්ෂණයකි)"
+
+msgid "mime_conf"
+msgstr "CONF පද්ධති වින්‍යාස ගොනුව (මෘදුකාංග ධාවන වේලා පරිසර පරාමිතීන් සරල පෙළ ආකාරයෙන් ස්ථිරව ගබඩා කරන දත්ත ගොනු පිළිබඳ සාමාන්‍ය වර්ගීකරණය. INI සහ නවීන YAML, TOML, JSON පිරිවිතර ආවරණය කරයි. Linux පද්ධතිවල ඒවා බොහෝ විට /etc නාමාවලියෙහි සංකේන්ද්‍රණය වී ඇත. පද්ධති-මට්ටමේ ධාවන වේලා තත්ව ප්‍රශස්තකරණයේ ප්‍රධාන යැපීම වේ)"
+
+msgid "mime_css"
+msgstr "CSS කැස්කැඩින් විලාසිතා පත්‍රිකා (1996 W3C ප්‍රමිතිය, HTML/JS සමඟ ඉදිරිපස අන්තයේ ප්‍රධාන තුන ලෙස හැඳින්වේ. CSS2 ස්ථානගත කිරීම සහ CSS3 මොඩියුලර් පරිණාමය හරහා ගමන් කළේය. Flexbox, Grid සහ මාධ්‍ය විමසුම් ප්‍රතිචාරාත්මක සැලසුම සඳහා ස්වදේශීය සහාය දක්වයි. නවීන බ්‍රවුසරවල වෙබ් පිටු ඉදිරිපත් කිරීම වෙන් කිරීම සඳහා නියත වශයෙන්ම ආධිපත්‍යය දරන ප්‍රමිතියයි)"
+
+msgid "mime_xsl"
+msgstr "XSL විලාසිතා පත්‍රිකාව (1999 W3C ප්‍රමිතිය, XSLT පරිවර්තනය සහ XPath ඇමතුම් භාෂාව අඩංගු වේ, XML ව්‍යුහගත දත්ත HTML, PDF හෝ සරල පෙළ ලෙස පෙන්වීමට භාවිතා කරයි. නවීන සංවර්ධනයේදී එහි පරිසර පද්ධතිය බොහෝ දුරට සැහැල්ලු අච්චු එන්ජින් සහ JSON දත්ත ආකෘතිය මගින් ප්‍රතිස්ථාපනය කර ඇත)"
+
+msgid "mime_runtime"
+msgstr "ක්‍රියාත්මක කළ හැකි ගොනුව (EXE, ELF, Mach-O වැනි මෙහෙයුම් පද්ධතියේ ස්වදේශීය ක්‍රියාත්මක කිරීමේ ආකෘති, සම්පාදනය කරන ලද පහත්-මට්ටමේ යන්ත්‍ර කේතය, ප්‍රවේශ ලක්ෂ්‍යය සහ පද්ධති පූරණ තොරතුරු අඩංගු වේ)"
+
+msgid "mime_library"
+msgstr "පුස්තකාල ගොනුව (DLL, SO, dylib වැනි ගතික හෝ ස්ථිතික සබැඳි පුස්තකාල, වෙනත් වැඩසටහන් ඇමතීමට සහ ධාවන වේලාවේදී පූරණය කිරීමට බෙදාගත් සංකේත සහ නැවත ස්ථානගත කිරීමේ කේතය අඩංගු වේ)"
+
+msgid "mime_swf"
+msgstr "Flash සජීවිකරණය (1996 Macromedia විසින් සංවර්ධනය කරන ලද, 2005 Adobe විසින් අත්පත් කර ගන්නා ලදී. අන්තර්ක්‍රියාකාරී වෙබ් සජීවිකරණ ප්‍රමිතිය, වරක් අන්තර්ජාල සජීවිකරණ සහ ක්‍රීඩා ආධිපත්‍යය දැරීය. දුර්වලතා: ප්ලගීන මත යැපීම, ජංගම දුරකථන සහාය නොමැතිකම, ඉහළ ආරක්ෂක අවදානම. 2017 Adobe ඉවත් කිරීම නිවේදනය කළේය, 2020 සම්පූර්ණ සහාය නතර කළේය, HTML5/CSS3/JS මගින් ප්‍රතිස්ථාපනය කරන ලදී)"
+
+msgid "mime_dtd"
+msgstr "DTD ලේඛන වර්ග අර්ථ දැක්වීම (1998 XML 1.0 සමඟ නිකුත් කරන ලද, XML/HTML ලේඛන ව්‍යුහය නිර්වචනය කිරීමට සහ වලංගු භාවය තහවුරු කිරීමට භාවිතා කරයි. නවීන සංවර්ධනයේදී, එය XML Schema, RELAX NG වැනි වඩාත් නම්‍යශීලී විසඳුම් මගින් ක්‍රමයෙන් ප්‍රතිස්ථාපනය කර ඇත)"
+
+msgid "mime_csv"
+msgstr "CSV දත්ත ආකෘතිය (කොමාවෙන් වෙන් කරන ලද අගයන්, 1972 මෙයින්ෆ්‍රේම් යුගයේ (IBM ෆෝර්ට්‍රාන් සම්පාදක) විශ්වීය සරල පෙළ වගු ආකෘතිය. 2005 RFC 4180 විසින් නිල වශයෙන් ප්‍රමිතිගත කරන ලදී. හරස්-වේදිකා, හරස්-භාෂා නොනැසී පවතින දත්ත හුවමාරු ප්‍රමිතියක් ලෙස. Excel, සම්බන්ධතා දත්ත සමුදායන්, දත්ත විශ්ලේෂණය (Pandas) සඳහා කාර්යක්ෂම ආයාත/නිර්යාත සඳහා බහුලව භාවිතා වේ.)"
+
+msgid "mime_cur"
+msgstr "මූසික දර්ශක ගොනුව (.cur ආකෘතිය, මූසික විලාසය අභිරුචිකරණය කිරීමට භාවිතා කරයි. උදා: වෙබ් පිටුවල ඇඟිලි දර්ශකය, පද්ධතියේ වැලි ඔරලෝසු රැඳී සිටීමේ නිරූපකය. සාමාන්‍ය .ico නිරූපකයේ 'ඥාතියෙකු' වන නමුත්, එයට අමතර 'හොට්ස්පොට්' ස්ථානයක් ඇත — එනම් මූසිකය සැබවින්ම ක්ලික් කරන ස්ථානයයි. ඉතිහාසය: Windows 3.1 (1992) සමඟ හඳුන්වා දෙන ලදී. විධාන රේඛාවේ සිට මූසික මෙහෙයුම් යුගය දක්වා ප්‍රස්ථාර අතුරු මුහුණතේ සංක්‍රමණයේ ප්‍රධාන අංගයකි)"
+
+msgid "mime_jnlp"
+msgstr "Java Web Start (2000 ගණන්වල Java ඩෙස්ක්ටොප් යෙදුම් බෙදාහැරීමේ තාක්ෂණය, .jnlp ගොනුව හරහා දුරස්ථ Java වැඩසටහන් ආරම්භ කරයි. ආරක්ෂක ගැටළු සහ නවීන බෙදාහැරීමේ ක්‍රම පැතිරීම හේතුවෙන්, දැන් මූලික වශයෙන් ඉවත් කර ඇත)"
+
+msgid "mime_lit"
+msgstr "Microsoft Reader විද්‍යුත් පොත (2000 Microsoft විසින් නිකුත් කරන ලද, LIT ආකෘතිය. ඉවත් කර ඇත, දැන් Calibre වැනි මෙවලම් භාවිතයෙන් EPUB හෝ PDF බවට පරිවර්තනය කළ හැක)"
+
+msgid "mime_svg"
+msgstr "SVG දෛශික ග්‍රැෆික්ස් (1999 W3C ප්‍රමිතිය, XML ගෘහ නිර්මාණ ශිල්පය මත පදනම් වූ ද්විමාන දෛශික රූප ආකෘතිය. අත්තනෝමතික ලෙස පරිමාණය කිරීමේදී නොනැසී පැවතීමේ සහ පෙළ ප්‍රවාහ සම්ප්‍රේෂණයේ වාසිය ඇත. සියලුම නවීන බ්‍රවුසර එය ස්වදේශීයව සහාය දක්වයි. ඉහළ විභේදන වෙබ් නිරූපක, ලාංඡන සහ දෛශික සජීවිකරණ පෙන්වීම සඳහා බහුලව භාවිතා වේ. එය නවීන වෙබ් ග්‍රැෆික්ස්වල ප්‍රධාන ප්‍රමිතියයි)"
+
+msgid "mime_ai"
+msgstr "AI දෛශික ග්‍රැෆික්ස් (1987 Adobe විසින් ස්වාධීනව සංවර්ධනය කරන ලද හිමිකාර දෛශික ග්‍රැෆික්ස් ආකෘතිය. ටයිපොග්‍රැෆි, මුද්‍රණ නිර්මාණය සහ වෙළඳ නාම අනන්‍යතා නිර්මාණය සඳහා කර්මාන්ත ප්‍රධාන ප්‍රමිතිය ලෙස, බහු-ස්ථර සහ උසස් මට්ටමේ සැලසුම් දෛශික දත්ත සඳහා සහාය දක්වයි. එය වෘත්තීය දෘශ්‍ය කලාව සඳහා කැමතිම වාහකය වේ)"
+
+msgid "mime_phshop"
+msgstr "PSD ස්ථර රූපය (1990 Adobe විසින් Photoshop සමඟ නිකුත් කරන ලද හිමිකාර රාස්ටර් රූප මූලාශ්‍ර ගොනු ආකෘතිය. බහු-ස්ථර ස්ථරගත කිරීම, නාලිකා, වෙස් මුහුණු සහ නොනැසී පවතින සංස්කරණ දත්ත සඳහා සහාය දක්වයි. එය ගෝලීය රූප සැකසුම් සහ ඩිජිටල් සිතුවම් සඳහා කර්මාන්ත ප්‍රමිතිය ලෙස ස්ථාපිත කර ඇත)"
+
+msgid "mime_ttf"
+msgstr "TrueType අකුරු (1989 Apple සහ Microsoft විසින් සම-සංවර්ධනය කරන ලද ඩිජිටල් සමෝච්ඡ අකුරු ආකෘතිය. චතුරස්රාකාර බෙසියර් වක්‍ර මත පදනම් වූ, තිර දර්ශනය සහ මුද්‍රණ ප්‍රතිදානය අතර නිරපේක්ෂ පික්සල අනුකූලතාවක් ලබා ගනී. එය නවීන ඩෙස්ක්ටොප් මෙහෙයුම් පද්ධතිවල ස්වදේශීය පෙරනිමි අකුරු ආකෘතිය වේ)"
+
+msgid "mime_fon"
+msgstr "FON බිට්මැප් අකුරු (1980 ගණන්වල Microsoft Windows හි මුල් පද්ධති-මට්ටමේ තිත් අනුකෘති අකුරු ආකෘතිය. අත්තනෝමතික සමානුපාතික නොනැසී පවතින පරිමාණය සඳහා සහාය නොදක්වයි. සාමාන්‍යයෙන් උරුම පද්ධති හෝ මුල් කාවැද්දූ උපාංග සංරචක සමඟ සීමිත පික්සල සහිත පෙළ පෙන්වීම සඳහා භාවිතා වේ)"
+
+msgid "mime_pdf"
+msgstr "PDF විද්‍යුත් ලේඛනය (1993 Adobe විසින් සංවර්ධනය කරන ලද සහ 2008 දී ISO 32000 ජාත්‍යන්තර ප්‍රමිතිය බවට පත් වූ හරස්-වේදිකා ස්ථාවර-සැලසුම් ලේඛන ආකෘතිය. නිරපේක්ෂ සැලසුම් සහ ආකෘති විශ්වාසනීයත්වයක් ඇත. එය ගෝලීය විද්‍යුත් රාජකාරි ලේඛන බෙදාහැරීම සහ ඩිජිටල් ප්‍රකාශනය සඳහා වන විශ්වීය ප්‍රමිතිය වේ)"
+
+msgid "mime_dotnet"
+msgstr "ASP.NET ගතික පිටුව (2002 Microsoft විසින් .NET ගෘහ නිර්මාණ ශිල්පය සමඟ නිකුත් කරන ලද සේවාදායක-පාර්ශ්ව ගතික වෙබ් තාක්ෂණය. IIS පෙන්වීමේ එන්ජිම මත ගමන් කරයි. ව්‍යවසාය-මට්ටමේ Windows සේවාදායක-පාර්ශ්ව ගතික වෙබ් යෙදුම් සහ බෙදාහැරීමේ පද්ධති තැනීම සඳහා භාවිතා වේ)"
+
+msgid "mime_mdb"
+msgstr "MDB සම්බන්ධතා දත්ත සමුදාය (1992 Microsoft විසින් Access සමඟ නිකුත් කරන ලද ඩෙස්ක්ටොප්-මට්ටමේ සම්බන්ධතා දත්ත සමුදා ගබඩා ආකෘතිය. ගොඩනඟන ලද Jet දත්ත සමුදා එන්ජිමක් ඇත. පුද්ගලික පරිගණක සහ කුඩා හා මධ්‍යම ප්‍රමාණයේ ව්‍යවසායවල මුල් තොරතුරුකරණ කළමනාකරණයේදී සම්බන්ධතා දත්ත සමුදා විසඳුමක් ලෙස භාවිතා කරන ලදී)"
+
+msgid "mime_md"
+msgstr "Markdown ලේඛනය (2004 John Gruber විසින් ස්වාධීනව නිර්මාණය කරන ලද සැහැල්ලු සලකුණු කිරීමේ භාෂාවකි. මූලික නිර්මාණ දර්ශනය 'කියවිය හැකි යනු පෙන්විය හැකි ය' යන්නයි. එය GFM සහ CommonMark වැනි නවීන ව්‍යුත්පන්න ප්‍රමිතීන් මෙහෙයවයි. තාක්ෂණික ලේඛන, දැනුම් පදනම් (Obsidian) සහ නවීන ස්ථිතික වෙබ් අඩවි උත්පාදක සඳහා ප්‍රධාන හුවමාරු ප්‍රමිතියක් ලෙස බහුලව භාවිතා වේ)"
+
+msgid "mime_crystal"
+msgstr "Crystal Reports (SAP ව්‍යාපාරික බුද්ධි (BI) වේදිකාවේ වෘත්තීය ව්‍යවසාය-මට්ටමේ වාර්තා ගොනු ආකෘතිය. බහු-දත්ත මූලාශ්‍ර පහත්-මට්ටමේ සම්බන්ධතා සහ සංකීර්ණ ගතික ප්‍රස්ථාර පෙන්වීමේ හැකියාවන් ඇත. බහුජාතික සමාගම්වල මූල්‍ය සහ දත්ත විශ්ලේෂණ පද්ධතිවල වෘත්තීය වාර්තා ජනනය කිරීම සඳහා බහුලව භාවිතා වේ)"
+
+msgid "mime_libreoffice"
+msgstr "LibreOffice ලේඛනය (2010 The Document Foundation විසින් OpenOffice අතු බෙදීම මත පදනම්ව ගොඩනගන ලද විවෘත මූලාශ්‍ර කාර්යාල පැකේජයේ හිමිකාර ආකෘතිය. W3C හි ODF (විවෘත ලේඛන ආකෘතිය) ජාත්‍යන්තර ප්‍රමිතිය ගැඹුරින් ක්‍රියාත්මක කරයි. එය නවීන විවෘත මූලාශ්‍ර පරිසර පද්ධතියේ කාර්යාල පදනම වේ)"
+
+msgid "mime_encrypt"
+msgstr "ENCRYPT සංකේතනය කළ ගොනුව (නිශ්චිත සමමිතික හෝ අසමමිතික සංකේතන ඇල්ගොරිතමක් මගින් සකසන ලද අමු ද්විමය හෝ පෙළ දත්ත. .enc, .pgp, .gpg වැනි ප්‍රධාන ව්‍යුත්පන්න ආකෘති ඇතුළත් වේ. ජාල ස්ථරයේදී, පොදු නොවන දත්තවල රහස්‍යභාවය සහ අඛණ්ඩතාව තහවුරු කිරීම සහතික කිරීම සඳහා භාවිතා කරයි)"
+
+msgid "mime_gpx"
+msgstr "GPX චන්ද්‍රිකා ගමන් පථ දත්ත (XML ගෘහ නිර්මාණ ශිල්පය මත පදනම් වූ ගෝලීය ස්ථානගත කිරීමේ පද්ධති හුවමාරු ආකෘතිය. භූගෝලීය ඛණ්ඩාංක, මාර්ග ස්ථාන, මාර්ග සහ ඓතිහාසික ගමන් පථ විස්තර කිරීම සඳහා විෙශේෂයෙන් භාවිතා වේ. එය නවීන ජංගම ක්‍රීඩා උපාංග, මෝටර් රථ සංචලනය සහ භූගෝලීය තොරතුරු පද්ධති (GIS) සඳහා පොදු විවෘත දත්ත ප්‍රමිතියකි)"
+
+msgid "mime_diskimage"
+msgstr "Disk Image තැටි රූපය (ISO, DMG, IMG ඇතුළුව භෞතික තැටි හෝ දෘශ්‍ය මාධ්‍යවල බයිට්-බයිට් පහත්-මට්ටමේ අංශ රූප ගොනු ඇතුළත් වේ. පද්ධති පහත්-මට්ටමේ යෙදවීම, විශාල ධාරිතා මෘදුකාංග ආරක්ෂිත බෙදාහැරීම සහ ගබඩා මාධ්‍යවල භෞතික-මට්ටමේ සම්පූර්ණ දත්ත උපස්ථය සඳහා භාවිතා වේ)"
+
+msgid "mime_vm"
+msgstr "VM අතථ්‍ය යන්ත්‍ර රූපය (VMDK, VDI, VHDX, OVA ඇතුළුව අතථ්‍යගත භෞතික තැටි රූප ඇතුළත් වේ. VMware, VirtualBox සහ Hyper-V වේදිකාවල පදනම ලෙස, පහත්-මට්ටමේ පද්ධති-මට්ටමේ දෘඩාංග අනුකරණය, උදාහරණ ස්නැප්ෂොට් සහ වලාකුළු යටිතල පහසුකම් බෙදාහැරීම සඳහා භාවිතා වේ)"
+
+msgid "mime_torrent"
+msgstr "BitTorrent ටොරන්ට් ගොනුව (2001 Bram Cohen විසින් නිර්මාණය කරන ලද P2P සමාන-සමාන බෙදාහැරීමේ බාගැනීම් දර්ශකය. Bencode කේතනය මත පදනම්ව, මුල් ගොනුවේ පහත්-මට්ටමේ පරීක්ෂාව මෙටාදත්ත සහ Tracker සේවාදායක ඇමතුම් තොරතුරු ගබඩා කරයි. එය විමධ්‍යගත ජාල ප්‍රවාහ බෙදාහැරීමේ ප්‍රධාන වාහකය වේ)"
+
+msgid "mime_gis"
+msgstr "GIS භූ-අවකාශීය දත්ත (Shapefile සහ GeoJSON ප්‍රධාන කරගත් භූගෝලීය තොරතුරු පද්ධති දත්ත ප්‍රමිතිය. බහු-මාන ජ්‍යාමිතික ඛණ්ඩාංක, ස්ථර ස්ථාන විද්‍යාව සහ ගුණාංග දත්ත ඇතුළත් වේ. ඉහළ නිරවද්‍යතා ඩිජිටල් සිතියම් පෙන්වීම, චන්ද්‍රිකා දුරස්ථ සංවේදනය සහ අවකාශීය ජ්‍යාමිතික විශ්ලේෂණය සඳහා බහුලව භාවිතා වේ)"
+
+msgid "mime_ebook"
+msgstr "EBOOK විද්‍යුත් පොත (W3C හි EPUB විවෘත ජාත්‍යන්තර ප්‍රමිතිය, Amazon Kindle හි හිමිකාර MOBI/AZW ගෘහ නිර්මාණ ශිල්පය ප්‍රධාන කරගත් ඩිජිටල් ප්‍රකාශන ආකෘතිය. අනුවර්තන ප්‍රවාහ සැලසුම්, මෙටාදත්ත එන්කැප්සියුලේෂන් සහ DRM ඩිජිටල් අයිතිවාසිකම් ආරක්ෂාව සඳහා සහාය දක්වයි. එය ජංගම උපාංග මත ඩිජිටල් කියවීම සඳහා විශ්වීය වාහකය වේ)"
+
+msgid "mime_avif"
+msgstr "AVIF කාර්යක්ෂම රූපය (2019 දී විවෘත මාධ්‍ය සන්ධානය (AOMedia) විසින් හඳුන්වා දෙන ලද ඊළඟ පරම්පරාවේ අති-ඉහළ විභේදන රූප ප්‍රමිතිය. AV1 වීඩියෝ කේතීකරණ යතුරු රාමු තාක්ෂණය මත පදනම්ව, සම්පීඩන අනුපාතය WebP ට වඩා 50% කින් වැඩි වන අතර ඉහළ ගතික පරාසය (HDR) සඳහා ස්වදේශීය සහාය දක්වයි. එය නවීන වෙබ් රූප සම්ප්‍රේෂණය සඳහා ප්‍රධාන ප්‍රවාහ ප්‍රමිතිය වේ)"
+
+msgid "mime_markdown"
+msgstr "Markdown සැහැල්ලු ලේඛනය (2004 John Gruber විසින් ස්වාධීනව නිර්මාණය කරන ලද පෙළ ලේඛන සලකුණු කිරීමේ භාෂාවකි. සරල පෙළ ප්‍රකාශන සැලසුමක් භාවිතා කරයි, වාක්‍ය රටා සැලසුම reStructuredText වෙතින් ආභාෂය ලබා ඇත. GitHub ව්‍යාපෘති, ඉංජිනේරු-මට්ටමේ තාක්ෂණික ලේඛන සහ නවීන ස්ථිතික අන්තර්ගත කළමනාකරණ පරිසර පද්ධතිය සඳහා බහුලව භාවිතා වේ)"
+
+msgid "mime_yaml"
+msgstr "YAML ශ්‍රේණිගත කිරීමේ වින්‍යාසය (2001 Clark Evans සහ අනෙකුත් අය විසින් නිර්මාණය කරන ලද මානව-කියවිය හැකි දත්ත ශ්‍රේණිගත කිරීමේ ආකෘතිය. ධූරාවලි ඉන්ඩෙන්ටේෂන් සහ යතුරු-අගය සිතියම්ගත කිරීම මත පදනම් වේ. එය දැන් Kubernetes බහාලුම් වාද්‍ය වෘන්දය, Ansible ස්වයංක්‍රීයකරණය සහ Docker Compose සඳහා වලාකුළු-ස්වදේශීය යටිතල පහසුකම් වින්‍යාස ප්‍රමිතිය ලෙස ස්ථාපිත කර ඇත)"
+
+msgid "mime_toml"
+msgstr "TOML අර්ථාන්විත වින්‍යාසය (2013 Tom Preston-Werner විසින් නිර්මාණය කරන ලද අතිශය අවම භාෂාවකි. ශක්තිමත් ටයිප් කිරීම, පැහැදිලි සිතියම්ගත කිරීම සහ අර්ථාන්විත පැහැදිලිකම වැනි පහත්-මට්ටමේ නිර්මාණ වාසි ඇත. එය දැන් Rust (Cargo), Python (pyproject.toml) සහ Go සඳහා නවීන මෙවලම් දාමයන් සඳහා ප්‍රමිතිගත වින්‍යාස ගොනුවක් ලෙස බහුලව භාවිතා වේ)"
+
+msgid "mime_vue"
+msgstr "Vue තනි-ගොනු සංරචකය (2014 Evan You විසින් හඳුන්වා දෙන ලද ප්‍රගතිශීලී වෙබ් රාමුවේ හිමිකාර SFC ආකෘතිය. තනි ගොනුවක් තුළ HTML/CSS/JS හි සැලකිලි වෙන් කිරීම සහ ප්‍රතික්‍රියාශීලී තත්ව බැඳීම සාක්ෂාත් කර ගනී. නවීන වෙබ් අන්තර්ක්‍රියාකාරී පෙර-අන්ත යෙදුම් සහ විශාල පරිමාණ ස්ථිතික අඩවි එන්ජින් ගැඹුරින් මෙහෙයවයි)"
+
+msgid "mime_wasm"
+msgstr "WebAssembly ද්විමය මොඩියුලය (2017 W3C විසින් ස්ථාපිත කරන ලද වෙබ් සඳහා ඉහළ කාර්ය සාධන පහත්-මට්ටමේ බයිට් කේත ප්‍රමිතිය. C/C++/Rust වැනි ශක්තිමත්-වර්ග භාෂා බ්‍රවුසර වැලිපෙට්ටිය ඉලක්කයට සම්පාදනය කිරීමට ඉඩ සලසයි. ස්වදේශීය දෘඩාංගයට ආසන්න ක්‍රියාත්මක කිරීමේ කාර්යක්ෂමතාවයක් සපයයි. එය නවීන වෙබ් අද්දර ගණනය කිරීමේ පදනම් ගල වේ)"
+
+msgid "mime_jsx"
+msgstr "React JSX සංරචකය (2013 Facebook විසින් React රාමුව සමඟ නිකුත් කරන ලද JavaScript XML වාක්‍ය රටා දිගුව. JavaScript හි DOM අතථ්‍ය ව්‍යුහය ප්‍රකාශනාත්මකව ගොඩනැගීමට සහාය දක්වයි, ඉදිරිපස-අන්ත සංවර්ධනයේදී 'UI යනු තත්වයේ ශ්‍රිතයකි' යන සංරචක-පාදක සංවර්ධන ආකෘතිය ක්‍රියාත්මක කරන ලදී)"
+
+msgid "mime_tsx"
+msgstr "TypeScript TSX සංරචකය (2012 Microsoft විසින් සංවර්ධනය කරන ලද TypeScript ශක්තිමත්-වර්ග වාක්‍ය රටාව සහ JSX හි ප්‍රවාහ සංයෝජනය. React සංරචක සංවර්ධනයට ස්ථිතික සම්පාදන-වේලා වර්ග පරීක්ෂාව සහ අතුරු මුහුණත් සීමා කිරීම් එන්නත් කරයි. එය නවීන විශාල ඉදිරිපස-අන්ත පද්ධතිවල ආරක්ෂිත සංවර්ධනය සඳහා කේත ප්‍රමිතියකි)"
+
+msgid "mime_heif"
+msgstr "HEIF කාර්යක්ෂම රූපය (2015 MPEG සංවිධානය විසින් ස්ථාපිත කරන ලද කාර්යක්ෂම රූප ගොනු ආකෘතිය. HEVC (H.265) වීඩියෝ කේතීකරණ ඇල්ගොරිතම මත පදනම්ව, බහු-රාමු රූප, ගැඹුරු සිතියම් සහ මෙටාදත්ත ඉතා කුඩා පරිමාවකින් තැබීමට සහාය දක්වයි. එය නවීන ජංගම මෙහෙයුම් පද්ධති සහ ස්මාර්ට් ටර්මිනල් උපාංග සඳහා හිමිකාර ගබඩා ප්‍රමිතියකි)"
+
+msgid "mime_heic"
+msgstr "HEIC කාර්යක්ෂම රූපය (HEIF ජාත්‍යන්තර ප්‍රමිතිය මත පදනම්ව Apple විසින් ක්‍රියාත්මක කරන ලද හිමිකාර බිට්මැප් ආකෘතිය. නවීන iPhone හි පෙරනිමි ඡායාරූප ගබඩා ප්‍රමිතිය ලෙස, එය iOS/macOS දෘඩාංග-මට්ටමේ කේතීකරණය/විකේතනය සහ ස්වදේශීය මෙහෙයුම් පද්ධති සහාය ලබා ගනී. ඉහළ රූප ගුණාත්මක භාවයක් සහතික කරන අතරම, යටින් පවතින ගබඩා ඉඩ නාටකාකාර ලෙස අඩු කරයි)"
+
+msgid "mime_gltf"
+msgstr "glTF 3D වත්කම් ආකෘතිය (2015 Khronos Group විසින් නිකුත් කරන ලද GL හුවමාරු ආකෘති ප්‍රමිතිය. ත්‍රිමාණ දර්ශන විස්තර කිරීමට JSON ගෘහ නිර්මාණ ශිල්පය භාවිතා කරයි, '3D ක්ෂේත්‍රයේ JPEG' ලෙස ප්‍රසිද්ධය. එය නවීන WebGL/WebGPU සහ අතථ්‍ය යථාර්ථ පෙන්වීම සඳහා සැහැල්ලු කාර්මික ප්‍රමිතියකි)"
+
+msgid "mime_glb"
+msgstr "GLB ද්විමය 3D ආකෘතිය (glTF වත්කම් ආකෘතියේ සම්පූර්ණ ද්විමය, නොනැසී පවතින එන්කැප්සියුලේෂන් අනුවාදය. දර්ශන ව්‍යුහය, පහත්-මට්ටමේ දැල් සිරස් දත්ත, ද්‍රව්‍ය සහ වයනය සිතියම් තනි ගොනුවකට ඒකාබද්ධ කරයි. හරස්-වේදිකා වෙබ් 3D වත්කම්වල කාර්යක්ෂම සම්ප්‍රේෂණය සහ ප්‍රවාහ බෙදාහැරීම සඳහා විෙශේෂයෙන් නිර්මාණය කර ඇත)"
+
+msgid "mime_gls"
+msgstr "GLOSSARY දත්ත වචන මාලාව (ලේඛන කළමනාකරණ පද්ධති සහ ව්‍යුහගත පාඨ සමූහ සඳහා විෙශේෂයෙන් පාරිභාෂික කට්ටල අර්ථ දැක්වීමේ ගොනුව. ගොඩනඟන ලද සම්මත පද අර්ථ දැක්වීම්, බහුභාෂා සිතියම්ගත කිරීම් සහ මෙටාදත්ත සිතියම්ගත කිරීම් ඇතුළත් වේ. ස්වයංක්‍රීය පෙළ විශ්ලේෂණය සහ අන්තර්ගත ප්‍රකාශන පද්ධතිවල සංකල්පීය අනුකූලතාව පවත්වා ගැනීම සඳහා භාවිතා වේ)"
+
+msgid "mime_cbz"
+msgstr "CBZ කාටූන් පොත (ZIP සම්පීඩන ව්‍යුහය මත පදනම් වූ හිමිකාර කාටූන් රූප සංරක්ෂණ ආකෘතිය. අභ්‍යන්තරව අඛණ්ඩ ස්ථිතික බිට්මැප් අනුක්‍රමයක් එන්කැප්සියුලේට් කරයි. එය ඩිජිටල් කාටූන් ප්‍රකාශනය සහ හරස්-වේදිකා දේශීය එකතු කිරීම සඳහා විශ්වීය සැහැල්ලු බහාලුම් ප්‍රමිතියකි)"
+
+msgid "mime_cbr"
+msgstr "CBR කාටූන් පොත (RAR සම්පීඩන ව්‍යුහය මත පදනම් වූ හිමිකාර කාටූන් රූප සංරක්ෂණ ආකෘතිය. ස්ථිතික බිට්මැප් අනුක්‍රම එන්කැප්සියුලේට් කිරීමට RAR ඇල්ගොරිතම භාවිතා කරයි, සාපේක්ෂව ඉහළ සම්පීඩන අනුපාතයක් ඇත. ඩිජිටල් කාටූන් බෙදාහැරීමේ ක්ෂේත්‍රයේ පුළුල් ගැළපුම් සහායක් ඇත)"
+
+msgid "mime_fb2"
+msgstr "FB2 විද්‍යුත් පොත (2000 ගණන්වල මුල් භාගයේ FictionBook 2.0 විද්‍යුත් පොත ප්‍රමිතිය. පොතේ ගුණාංග සහ පෙළ ධූරාවලිය විස්තර කිරීමට පිරිසිදු XML ව්‍යුහයක් භාවිතා කරයි. විවෘත මූලාශ්‍ර විද්‍යුත් පොත පරිසර පද්ධතියේ සහ උරුම ඩිජිටල් ප්‍රකාශන පාඨකයන් තුළ පුළුල් සහායක් ඇත)"
+
+msgid "mime_kepub"
+msgstr "KEPUB විද්‍යුත් පොත (Kobo විසින් EPUB ප්‍රමිතිය මත පදනම්ව විකාශනය වූ හිමිකාර වැඩිදියුණු කළ විද්‍යුත් පොත ආකෘතිය. Kobo හි දෘඩාංග-මට්ටමේ විද්‍යුත් පොත පාඨකයන් සඳහා පහත්-මට්ටමේ පෙන්වීම ප්‍රශස්තිකරණය කරයි. වඩාත් කාර්යක්ෂම පිටු සැලසුම් සහ කියවීමේ සංඛ්‍යාලේඛන අන්තර්ක්‍රියා සපයයි)"
+
+msgid "mime_m4b"
+msgstr "M4B ශ්‍රව්‍ය පොත (MPEG-4 Part 14 (MP4) බහාලුම් ගෘහ නිර්මාණ ශිල්පය මත පදනම් වූ ශ්‍රව්‍ය පොත ආකෘතිය. AAC කේතීකරණය භාවිතා කරයි, පහත්-මට්ටමේ පිටු සලකුණු ස්ථානගත කිරීම, බිඳුම් ලක්ෂ්‍යයෙන් නැවත ධාවනය සහ පරිච්ඡේද කාවැද්දීම සඳහා ස්වදේශීය සහාය දක්වයි. එය වරක් Apple iTunes පරිසර පද්ධතියේ සම්මත ආකෘතිය විය)"
+
+msgid "mime_kfx"
+msgstr "Kindle KFX ආකෘතිය (2015 Amazon විසින් Kindle සමඟ නිකුත් කරන ලද හිමිකාර වැඩිදියුණු කළ ඩිජිටල් ප්‍රකාශන ආකෘතිය. උසස් බැඳුම් අකුරු සැලසුම්, ඉහළ-ගතික අකුරු පෙන්වීම සහ කර්නල්-මට්ටමේ ප්‍රවාහ පිටු පූරණය (Page Flip) සඳහා සහාය දක්වයි. එය නවීන Kindle වේදිකාවේ ප්‍රධාන ප්‍රමිතිය වේ)"
+
+msgid "mime_chm"
+msgstr "CHM සම්පාදිත උදවු ගොනුව (1997 Microsoft විසින් නිකුත් කරන ලද සම්පාදිත HTML උදවු තොරතුරු පද්ධතිය. අධිපෙළ දත්ත සහ යටින් පවතින දර්ශකය තනි ද්විමය බහාලුමකට ඇසුරුම් කරයි. දිගු කලක් Windows මෘදුකාංග සඳහා දේශීය නොබැඳි උදවු ලේඛනගත කිරීමේ සම්මත ආකෘතිය විය)"
+
+msgid "mime_mht"
+msgstr "MHT වෙබ් පිටු සංරක්ෂණය (1999 Microsoft විසින් නිකුත් කරන ලද MIME එකතු කළ අධිපෙළ ආකෘතිය. RFC 2557 ප්‍රමිතිය මත පදනම්ව, HTML මූලාශ්‍රය, CSS, JS සහ කාවැද්දූ රූප තනි පෙළ ගොනුවකට එන්කැප්සියුලේට් කරයි. උරුම බ්‍රවුසරවල නොබැඳි වෙබ් පිටු සුරැකීම සඳහා භාවිතා වේ)"
+
+msgid "mime_wml"
+msgstr "WML රැහැන් රහිත සලකුණු කිරීමේ භාෂාව (1999 WAP (රැහැන් රහිත යෙදුම් ප්‍රොටෝකෝලය) සංසදය විසින් ස්ථාපිත කරන ලද ජංගම සලකුණු කිරීමේ ප්‍රමිතිය. XML පිරිවිතර මත පදනම්ව, මුල් පටු-බැන්ඩ් රැහැන් රහිත සෙලියුලර් ජාල සහ අඩු බලැති පහසුකම් දුරකථන සඳහා විෙශේෂයෙන් නිර්මාණය කර ඇත. නවීන වෙබ් පරිසර පද්ධතියේ එය විශ්‍රාම ගත් උරුම තාක්ෂණයකි)"
+
+msgid "mime_xhtml"
+msgstr "XHTML අධිපෙළ වෙබ් පිටුව (2000 W3C ප්‍රමිතිය, XML ගෘහ නිර්මාණ ශිල්පය මත පදනම් වූ දැඩි-වර්ග අධිපෙළ සලකුණු කිරීමේ භාෂාවේ එන්කැප්සියුලේෂන්. 2009 දී W3C එහි තාක්ෂණික පරිණාමය නතර කර සම්පූර්ණයෙන්ම HTML5 පිරිවිතරයට මාරු විය. දැන් බොහෝ දුරට උරුම පද්ධතිවල අර්ථාන්විත වෙබ් පිටු පෙන්වීම සඳහා භාවිතා වේ)"
+
+msgid "mime_xml"
+msgstr "XML ව්‍යුහගත ලේඛනය (1998 W3C ප්‍රමිතියේ විස්තාරණය කළ හැකි සලකුණු කිරීමේ භාෂාව. ස්වයං-විස්තරාත්මක ටැග් ගෘහ නිර්මාණ ශිල්පයක් ඇත. එය ජාල වෙබ් සේවා (SOAP/REST), පද්ධති-මට්ටමේ වින්‍යාස ගොනු (XSD) සහ හරස්-වේදිකා දත්ත හුවමාරුව සඳහා පදනම් ගල ආකෘතිය වේ)"
+
+msgid "mime_sgml"
+msgstr "SGML සාමාන්‍යකරණය කළ සලකුණු කිරීමේ භාෂාව (1986 ISO 8879 ජාත්‍යන්තර ප්‍රමිතියේ සම්මත සාමාන්‍යකරණය කළ සලකුණු කිරීමේ භාෂාව. විද්‍යුත් ලේඛනවල ව්‍යුහගත විස්තරයේ කර්මාන්ත පුරෝගාමියා ලෙස, XML සහ මුල් HTML පිරිවිතර දෙකම මෙම සම්මත මෙටා-භාෂාවෙන් ව්‍යුත්පන්න වී ඇත)"
+
+msgid "mime_apng"
+msgstr "APNG ගතික ග්‍රැෆික්ස් (2004 Mozilla විසින් සංවර්ධනය කරන ලද අතේ ගෙන යා හැකි ජාල ග්‍රැෆික්ස් (PNG) ගතික දිගුව. 24-බිට් සැබෑ වර්ණ සහ 8-බිට් ඇල්ෆා නාලිකා අර්ධ විනිවිදභාවය සඳහා සහාය දක්වයි. එය නවීන වෙබ් අවස්ථා වලදී GIF ආකෘතිය සඳහා ඉහළ-විභේදන විකල්පයකි)"
+
+msgid "mime_bmp"
+msgstr "BMP ස්වදේශීය බිට්මැප් (Windows 1.0 යුගයේ සිට ස්ථාපිත කරන ලද Microsoft වේදිකාවේ උපාංග-ස්වාධීන බිට්මැප් ආකෘතිය. නොනැසී පවතින, සම්පීඩනය නොකළ ගබඩාවක් භාවිතා කරයි. එහි ප්‍රමාණය සාමාන්‍යයෙන් PNG ට වඩා 3-10 ගුණයකින් විශාල වුවද, කේතීකරණය/විකේතනය කිරීමේ අධික පිරිවැයක් නොමැති බැවින්, එය තවමත් Windows 11 හි ප්‍රධාන සංරචක, EXE/MSI සම්පත් කොටස් සහ උරුම ධාවකවල ග්‍රැෆික් බෆරවල බහුලව කාවැදී ඇත)"
+
+msgid "mime_cdr"
+msgstr "CDR දෛශික ග්‍රැෆික්ස් (කැනඩාවේ Corel සමාගමේ හිමිකාර CorelDRAW වෘත්තීය දෛශික නිර්මාණ මූලාශ්‍ර ගොනු ආකෘතිය. බහු-ස්ථර වර්ණ කළමනාකරණය, සංකීර්ණ ගණිතමය සමෝච්ඡ නෝඩ් සහ මුද්‍රණ-ශ්‍රේණියේ සැලසුම් දත්ත සඳහා සහාය දක්වයි. එය වෘත්තීය පැතලි මුද්‍රණ සහ ප්‍රචාරක නිර්මාණ ක්ෂේත්‍රය සඳහා විශේෂිත ආකෘතියකි)"
+
+msgid "mime_gif"
+msgstr "GIF දර්ශක වර්ණ රූපය (1987 CompuServe විසින් සංවර්ධනය කරන ලද 8-බිට් දර්ශක වර්ණ බිට්මැප් ආකෘතිය. LZW ඇල්ගොරිතම මත පදනම්ව, වර්ණ 256 කට සහ තනි-වර්ණ විනිවිදභාවයට සීමා වේ. ඉහළ රාමු අනුපාතයකදී විශාල වේ. දැන් එය APNG, WebP වැනි නවීන කාර්යක්ෂම ගතික රූප ප්‍රමිතීන් මගින් ක්‍රමයෙන් ප්‍රතිස්ථාපනය වේ)"
+
+msgid "mime_ico"
+msgstr "ICO පද්ධති නිරූපකය (Windows ස්වදේශීය නිරූපක සම්පත් එන්කැප්සියුලේෂන් ආකෘතිය. තනි බහාලුමක් තුළ බහු පික්සල විභේදන සහ වර්ණ ගැඹුරු සහිත රූප ප්‍රභේද මිශ්‍ර කර කාවැද්දීමට සහාය දක්වයි. එය නවීන වෙබ් බ්‍රවුසර අඩවිවල ප්‍රධාන හඳුනාගැනීම (Favicon) සඳහා විශ්වීය බෙදාහැරීමේ ප්‍රමිතියකි)"
+
+msgid "mime_jpeg"
+msgstr "JPEG සම්පීඩිත රූපය (1992 ISO 10918 ජාත්‍යන්තර ප්‍රමිතියේ හානි සහිත සම්පීඩන රූප ආකෘතිය. විවික්ත කොසයින් පරිවර්තන (DCT) ඇල්ගොරිතම මත පදනම්ව, ඉහළ සම්පීඩන අනුපාතයක් ලබා ගනිමින් විශිෂ්ට යථාර්ථවාදී රූප ගුණාත්මක භාවයක් පවත්වා ගනී. එය ගෝලීය අන්තර්ජාල ස්ථිතික ඡායාරූපකරණයේ නිරපේක්ෂ සත්‍ය ප්‍රමිතිය වේ)"
+
+msgid "mime_jpg"
+msgstr "JPEG සම්පීඩිත රූපය (1992 ISO 10918 ජාත්‍යන්තර ප්‍රමිතියේ හානි සහිත සම්පීඩන රූප ආකෘතිය. විවික්ත කොසයින් පරිවර්තන (DCT) ඇල්ගොරිතම මත පදනම්ව, ඉහළ සම්පීඩන අනුපාතයක් ලබා ගනිමින් විශිෂ්ට යථාර්ථවාදී රූප ගුණාත්මක භාවයක් පවත්වා ගනී. එය ගෝලීය අන්තර්ජාල ස්ථිතික ඡායාරූපකරණයේ නිරපේක්ෂ සත්‍ය ප්‍රමිතිය වේ)"
+
+msgid "mime_png"
+msgstr "PNG නොනැසී පවතින රූපය (1996 W3C විසින් නිර්දේශ කරන ලද අතේ ගෙන යා හැකි ජාල ග්‍රැෆික්ස් ප්‍රමිතිය. නොනැසී පවතින සම්පීඩන ඇල්ගොරිතමයක් භාවිතා කරයි, 24-බිට් සැබෑ වර්ණ සහ 8-බිට් ඇල්ෆා නාලිකා විනිවිදභාවය සඳහා ස්වදේශීය සහාය දක්වයි. සම්භාව්‍ය ස්ථිතික GIF සඳහා ඉහළ-විභේදන විකල්පයක් ලෙස, එය අන්තර්ජාලයේ නොනැසී පවතින පික්සල රූප සඳහා නිරපේක්ෂ සත්‍ය ප්‍රමිතිය වේ)"
+
+msgid "mime_ps"
+msgstr "PostScript පිටු විස්තර ගොනුව (1985 Adobe විසින් හඳුන්වා දෙන ලද තොග-පාදක පිටු විස්තර භාෂාව. PDF ආකෘතියේ තාක්ෂණික පූර්වගාමියා ලෙස, එය පහත්-මට්ටමේ දෘඩාංග-ස්වාධීන අකුරු සැකසුම් සහ ඉහළ-නිරවද්‍යතා දෛශික ග්‍රැෆික්ස් පෙන්වීම ක්‍රියාත්මක කරයි. එය වෘත්තීය මුද්‍රණ ප්‍රකාශන සහ ලේසර් මුද්‍රණ ක්ෂේත්‍ර සඳහා පදනම් ප්‍රමිතියකි)"
+
+msgid "mime_psb"
+msgstr "PSB විශාල ස්ථර ලේඛනය (Adobe Photoshop හි හිමිකාර අති-විශාල මූලාශ්‍ර ගොනු එන්කැප්සියුලේෂන් ආකෘතිය. එය සම්මත PSD ආකෘතියේ 2GB භෞතික ප්‍රමාණය සහ 30,000 පික්සල අභ්‍යන්තර ඇමතුම් සීමාවන් බිඳ දමයි. අති-විශාල පරිමාණ, ඉහළ ස්ථර ගැඹුරක් සහිත යෝධ ඩිජිටල් කලා වත්කම් ගබඩා කිරීම සඳහා විෙශේෂයෙන් නිර්මාණය කර ඇත)"
+
+msgid "mime_psd"
+msgstr "PSD ස්ථර නිර්මාණ මූලාශ්‍ර ගොනුව (Adobe Photoshop හි හිමිකාර ස්ථරගත රූප ඉංජිනේරු ආකෘතිය. ග්‍රැෆික්ස් සහ රූප වසමේ කාර්මික සම්මත බහාලුමක් ලෙස, එය සම්පූර්ණ ස්ථර පෙන්වීමේ ගස, බිට්මැප් නාලිකා, දෛශික කැපුම් මාර්ග සහ සංයුක්ත මිශ්‍ර කිරීමේ මාදිලි ස්වදේශීයව එන්කැප්සියුලේට් කරයි, නොනැසී පවතින සම්පූර්ණ දත්ත සංස්කරණය සඳහා සහාය දක්වයි)"
+
+msgid "mime_webp"
+msgstr "WebP කාර්යක්ෂම රූපය (2010 Google විසින් හඳුන්වා දෙන ලද විශ්වීය වෙබ් ග්‍රැෆික්ස් කේතීකරණ ප්‍රමිතිය. VP8 වීඩියෝ යතුරු රාමු තාක්ෂණයෙන් ව්‍යුත්පන්න වූ, එය හානි සහිත, නොනැසී පවතින, අර්ධ-විනිවිද සහ ගතික පෙන්වීම සමඟ පරිපූර්ණ ලෙස ගැළපේ. එකම ගුණාත්මක භාවයේ PNG ට සාපේක්ෂව ප්‍රමාණය 25-35% කින් අඩු කරයි. එය නවීන වෙබ් පිටුවල ඉහළ-කාර්ය සාධන පැටවීමේ පදනම් ගල වේ)"
+
+msgid "mime_woff"
+msgstr "WOFF වෙබ් ග්ලයිෆ් ගොනුව (2009 දී නිර්මාණය කරන ලද සහ 2012 දී W3C ප්‍රමිතිය බවට පත් වූ විවෘත වෙබ් අකුරු ආකෘතිය. සාරාංශයක් ලෙස, එය සම්මත TTF/OTF අකුරු ව්‍යුහයන්ගේ ප්‍රවාහ නොනැසී පවතින සම්පීඩන එන්කැප්සියුලේෂණයකි, එය ජාල සම්ප්‍රේෂණ කලාප පළල පිරිවැය විශාල ලෙස ප්‍රශස්ත කරයි. එය නවීන වෙබ් අඩවි නිරූපක සහ වලාකුළු අකුරු සඳහා විශ්වීය ආකෘතියකි)"
+
+msgid "mime_7z"
+msgstr "7z සම්පීඩිත සංරක්ෂිතය (1999 Igor Pavlov විසින් සංවර්ධනය කරන ලද 7-Zip හි හිමිකාර ආකෘතිය. විවෘත මූලාශ්‍ර LZMA/LZMA2 ඇල්ගොරිතම මත පදනම්ව, එය අතිශයින් ඉහළ සම්පීඩන අනුපාතයක් ඇත. සමාන කොන්දේසි යටතේ එහි ප්‍රමාණය සාමාන්‍යයෙන් ZIP ට වඩා 30-50% කින් කුඩා වේ. එය විවෘත මූලාශ්‍ර ප්‍රජාව සහ මෘදුකාංග බෙදාහැරීම සඳහා විශ්වීය ඉහළ-සම්පීඩන-අනුපාත ආකෘතියකි)"
+
+msgid "mime_ace"
+msgstr "ACE සම්පීඩිත සංරක්ෂිතය (1990 ගණන්වල WinACE හි හිමිකාර සම්පීඩන ආකෘතිය. වරක් RAR ආකෘතිය සමඟ තරඟ කළ අතර සාපේක්ෂව ඉහළ සම්පීඩන අනුපාතයක් තිබුණි. 2007 න් පසු තාක්ෂණික පුනරාවර්තනය නතර විය, දැන් 7z සහ RAR ආකෘති මගින් ප්‍රතිස්ථාපනය කර ඇත. උරුම පද්ධති සංරක්ෂණ ආකෘතියකට අයත් වේ)"
+
+msgid "mime_bz2"
+msgstr "BZIP2 සම්පීඩිත සංරක්ෂිතය (1996 Julian Seward විසින් සංවර්ධනය කරන ලද කොටස්-වර්ග කිරීමේ සම්පීඩන ආකෘතිය. එහි යටින් පවතින ඇල්ගොරිතමයේ සම්පීඩන අනුපාතය GZIP ට වඩා 15-20% වැඩි නමුත් ගණනය කිරීමේ පිරිවැය වැඩිය. Linux කර්නල් මූලාශ්‍ර කේතය සහ විවෘත මූලාශ්‍ර මෘදුකාංග පැකේජ බෙදාහැරීම සඳහා බොහෝ විට භාවිතා වේ. සම්මත දිගුව .bz2 වේ)"
+
+msgid "mime_cab"
+msgstr "CAB සම්පීඩිත සංරක්ෂිතය (1995 Microsoft විසින් ස්වාධීනව සංවර්ධනය කරන ලද Cabinet සංරක්ෂණ ආකෘතිය. Windows පද්ධතියේ ස්වදේශීය ස්ථාපන පැකේජ ප්‍රමිතිය ලෙස, ධාවක සහ කර්නල් ගොනු බෙදාහැරීම සඳහා භාවිතා වේ. එය Windows Installer (MSI) සඳහා යටින් පවතින ගබඩා බහාලුම ද වේ)"
+
+msgid "mime_dmg"
+msgstr "DMG තැටි රූපය (1980 ගණන්වල Apple විසින් පරිණාමය කරන ලද Disk Image ආකෘතිය. macOS මෘදුකාංග බෙදාහැරීමේ සම්මත බහාලුම ලෙස, එය අතථ්‍ය ගොනු පද්ධතියක් ලෙස භෞතික සවි කිරීම, පහත්-මට්ටමේ සම්පීඩනය සහ දත්ත සංකේතනය සඳහා සහාය දක්වයි. එය Mac පරිසර පද්ධතියේ යෙදුම් බෙදාහැරීමේ ප්‍රධාන ආකෘතිය වේ)"
+
+msgid "mime_emz"
+msgstr "EMZ සම්පීඩිත රූපය (Windows වැඩිදියුණු කළ මෙටාගොනු EMF හි සම්පීඩිත අනුවාදය. සාරාංශයක් ලෙස, එය GZIP ඇල්ගොරිතම මගින් සම්පීඩනය කරන ලද ද්විමය දෛශික ග්‍රැෆික් වේ. Microsoft Office මාලාවේ ලේඛනවල කාවැද්දූ දෛශික ග්‍රැෆික්ස් ගබඩා කිරීම සඳහා බහුලව භාවිතා වේ)"
+
+msgid "mime_gz"
+msgstr "GZIP සම්පීඩිත සංරක්ෂිතය (1992 GNU ව්‍යාපෘතියේ Jean-loup Gailly සහ Mark Adler විසින් සංවර්ධනය කරන ලද සම්මත ප්‍රවාහ සම්පීඩන ආකෘතිය. Unix/Linux සම්මත සම්පීඩන මෙවලම ලෙස, එය HTTP ප්‍රවාහන ස්ථර සම්පීඩනයේ (Gzip) ප්‍රධාන ප්‍රමිතිය ද වේ. බොහෝ විට TAR සංරක්ෂණය සමඟ ඒකාබද්ධව භාවිතා වේ)"
+
+msgid "mime_jar"
+msgstr "JAR සම්පීඩිත සංරක්ෂිතය (1997 Sun Microsystems විසින් හඳුන්වා දෙන ලද Java ARchive සංරක්ෂණ ආකෘතිය. සාරාංශයක් ලෙස, එය ZIP ව්‍යුහය මත පදනම් වූ ඇසුරුම් බහාලුමක් වන අතර, Java පන්ති පුස්තකාල සහ මෙටාදත්ත එන්කැප්සියුලේට් කිරීමට භාවිතා කරයි. එය Maven, Gradle සහ මුල් Android පරිසර පද්ධතියේ ප්‍රධාන සම්පාදන නිෂ්පාදනයකි)"
+
+msgid "mime_lzma"
+msgstr "LZMA සම්පීඩිත සංරක්ෂිතය (1998 Igor Pavlov විසින් සංවර්ධනය කරන ලද Lempel-Ziv-Markov දාම සම්පීඩන ඇල්ගොරිතම. 7z ආකෘතියේ ප්‍රධාන එන්ජිම ලෙස, එය අතිශයින් ඉහළ සම්පීඩන අනුපාතයක් සහ ඉහළ-වේග විසම්පීඩන ලක්ෂණ ඇත. දෘඩාංග ස්ථිරාංග සහ කාවැද්දූ පද්ධති බෙදාහැරීම සඳහා බහුලව භාවිතා වේ)"
+
+msgid "mime_rar"
+msgstr "RAR සම්පීඩිත සංරක්ෂිතය (1993 Eugene Roshal විසින් සංවර්ධනය කරන ලද WinRAR හි හිමිකාර සංරක්ෂණ ආකෘතිය. කොටස් වලට බෙදීම, භෞතික ප්‍රතිසාධන වාර්තා (ECC) සහ ඉහළ-ශක්ති සංකේතනය සඳහා සහාය දක්වයි. සම්පීඩන අනුපාතය සම්මත ZIP ට වඩා හොඳය, පුද්ගලික පරිගණක සහ වාණිජ ක්ෂේත්‍රයේ පුළුල් ගැළපුම් සහායක් ඇත)"
+
+msgid "mime_tar"
+msgstr "TAR සංරක්ෂිත පැකේජය (1979 Unix V7 යුගයේ ටේප් සංරක්ෂණ ආකෘතිය. ගොනු ප්‍රවාහය පමණක් ඇසුරුම් කරන අතර දත්ත සම්පීඩනය සිදු නොකරයි. බොහෝ විට GZIP/BZIP2/XZ සමඟ සංයුක්ත වේ. එය Linux මූලාශ්‍ර පැකේජ සහ ඩොකර් රූප ස්ථර ගබඩා කිරීම සඳහා යටින් පවතින ප්‍රමිතිය වේ)"
+
+msgid "mime_tgz"
+msgstr "TGZ සම්පීඩිත සංරක්ෂිතය (TAR සංරක්ෂණය සහ GZIP සම්පීඩනයේ ප්‍රවාහ සංයෝජන ආකෘතිය, දිගුව .tgz හෝ .tar.gz. Unix/Linux පරිසරයේ වඩාත්ම විශ්වීය මෘදුකාංග පැකේජ බෙදාහැරීමේ ආකෘතිය ලෙස, මූලාශ්‍ර කේත සම්පාදන යෙදවීම සහ ස්ථාපනය-රහිත ද්විමය පැකේජ බෙදාහැරීම සඳහා බහුලව භාවිතා වේ)"
+
+msgid "mime_tbz2"
+msgstr "TBZ2 සම්පීඩිත සංරක්ෂිතය (TAR සංරක්ෂණය සහ BZIP2 සම්පීඩනයේ ප්‍රවාහ සංයෝජන ආකෘතිය, දිගුව .tbz2 හෝ .tar.bz2. TGZ හා සසඳන විට සම්පීඩන අනුපාතය තවත් 15-20% කින් වැඩි කළ හැකි අතර, විශාල ගොනු හුවමාරුව සඳහා සුදුසු වේ. දිගු කලක් Linux කර්නල් මූලාශ්‍ර කේතය බෙදාහැරීම සඳහා භාවිතා කරන ලදී)"
+
+msgid "mime_xz"
+msgstr "XZ සම්පීඩිත සංරක්ෂිතය (2009 දී හඳුන්වා දෙන ලද ඊළඟ පරම්පරාවේ ඉහළ-සම්පීඩන-අනුපාත ආකෘතිය. LZMA2 ඇල්ගොරිතම මත පදනම්ව, දත්ත සම්පීඩන අනුපාතය GZIP ට වඩා 30-50% වැඩි වන අතර ඉහළ-වේග විසම්පීඩනය පවත්වා ගනී. එය Linux කර්නලය සහ ප්‍රධාන පැකේජ කළමනාකරුවන් (උදා: Debian .deb ඇතුළත) විසින් නිර්දේශිත බෙදාහැරීමේ ප්‍රමිතිය ලෙස ස්ථාපිත කර ඇත)"
+
+msgid "mime_z"
+msgstr "Z සම්පීඩිත සංරක්ෂිතය (1985 Unix compress විධානයේ LZW සම්පීඩන ආකෘතිය. මුල් Unix පද්ධතිවල සම්මත සම්පීඩන ප්‍රමිතිය ලෙස, දැන් එය වඩාත් කාර්යක්ෂම GZIP ආකෘතිය මගින් සම්පූර්ණයෙන්ම ප්‍රතිස්ථාපනය කර ඇත. නවීන ජාල ගමනාගමනයේදී, එය දුර්ලභ උරුම ඓතිහාසික ආකෘතියකි)"
+
+msgid "mime_zip"
+msgstr "ZIP සම්පීඩිත සංරක්ෂිතය (1989 Phil Katz විසින් සංවර්ධනය කරන ලද PKZIP විශ්වීය සංරක්ෂණ ආකෘතිය. ප්‍රධාන මෙහෙයුම් පද්ධතිවල ස්වදේශීය සහාය ලබා ගනී. එය අන්තර්ජාලයේ බහුලව භාවිතා වන බහාලුම් ප්‍රමිතියයි. නවීන Java හි JAR, Android හි APK සහ Office ලේඛන (OOXML) සියල්ල ZIP ව්‍යුහය මත පදනම් වේ)"
+
+msgid "mime_zst"
+msgstr "Zstandard සම්පීඩිත සංරක්ෂිතය (2015 Facebook හි Yann Collet විසින් නිර්මාණය කරන ලද නව පරම්පරාවේ ප්‍රවාහ සම්පීඩන ප්‍රමිතිය. LZMA සම්පීඩන අනුපාතයට ළඟා වන අතරම GZIP ට වඩා බෙහෙවින් වැඩි ප්‍රතිදානයක් ඇත. එය Linux කර්නලය (5.9+) සහ Arch/Debian පැකේජ කළමනාකරුවන් විසින් ගැඹුරින් සම්මත කර ඇත)"
+
+msgid "mime_lz4"
+msgstr "LZ4 සම්පීඩිත සංරක්ෂිතය (2011 Yann Collet විසින් සංවර්ධනය කරන ලද අතිශය වේගවත් ප්‍රවාහ සම්පීඩන ඇල්ගොරිතම. ප්‍රතිදාන වේගය GZIP ට වඩා 10 ගුණයකට වඩා වේගවත් වන අතර, අතිශය අඩු CPU ධාවන වේලා පිරිවැයක් ඇත. Linux කර්නලය, OpenZFS ගොනු පද්ධතිය සහ Hadoop තත්ය-කාලීන දත්ත ප්‍රවාහ සැකසුම් සඳහා බහුලව භාවිතා වේ)"
+
+msgid "mime_lzo"
+msgstr "LZO සම්පීඩිත සංරක්ෂිතය (1996 Markus Oberhumer විසින් සංවර්ධනය කරන ලද Lempel-Ziv-Oberhumer ඇල්ගොරිතම. අතිශය වේගවත් විසම්පීඩන කාර්ය සාධනය කෙරෙහි අවධානය යොමු කරයි. Linux කර්නල Squashfs රූප, OpenWrt ස්ථිරාංග සහ විවිධ සම්පත්-සීමිත කාවැද්දූ පද්ධතිවල බහුලව කාවැදී ඇත)"
+
+msgid "mime_msi"
+msgstr "MSI පද්ධති ස්ථාපන පැකේජය (1999 Microsoft විසින් හඳුන්වා දෙන ලද Windows Installer දත්ත එන්කැප්සියුලේෂන් ආකෘතිය. Windows යෙදුම්-මට්ටමේ සම්මත යෙදවීමේ පිරිවිතරයක් ලෙස, එය පහත්-මට්ටමේ ගනුදෙනු ආපසු හැරවීම, සංරචක ජීවන චක්ර කළමනාකරණය සහ කණ්ඩායම් සැකසීමකින් තොර නිහඬ ස්ථාපනය සඳහා ස්වදේශීය සහාය දක්වයි. එය ව්‍යවසාය-මට්ටමේ කේන්ද්‍රගත මෘදුකාංග බෙදාහැරීම සහ ප්‍රතිපත්ති යෙදවීම සඳහා ප්‍රධාන ප්‍රමිතිය වේ)"
+
+msgid "mime_pkg"
+msgstr "PKG හරස්-වේදිකා මෘදුකාංග ස්ථාපන පැකේජය. 1. FreeBSD මෘදුකාංග පැකේජය: pkgng ප්‍රමිතිය, දිගුව .pkg හෝ .txz, TAR+XZ/Zstd සම්පීඩනය මත පදනම් වූ, පරායත්ත විභේදනය සහ අත්සන තහවුරු කිරීම සඳහා සහාය දක්වයි; 2. macOS ස්ථාපන පැකේජය: Apple Installer ආකෘතිය මත පදනම් වූ, අභිරුචි සංරචක, ස්ථාපන ස්ක්‍රිප්ට් සහ පද්ධති-මට්ටමේ ඉවත් කිරීම සඳහා සහාය දක්වයි. ඒවා පිළිවෙලින් BSD සේවාදායක සහ Mac පද්ධති සඳහා ප්‍රධාන බෙදාහැරීමේ වාහක වේ."
+
+msgid "mime_apk"
+msgstr "APK Android යෙදුම් පැකේජය (2008 Google විසින් Android සමඟ නිකුත් කරන ලද සාම්ප්‍රදායික යෙදුම් ස්ථාපන පැකේජය. ZIP සංරක්ෂණ ව්‍යුහය මත පදනම්ව, සම්පාදනය කරන ලද Dalvik බයිට් කේතය (DEX), මෙටාදත්ත මැනිෆෙස්ට් සහ ගෝලීය සම්පත් ඇසුරුම් කරයි. දැන් ප්‍රාදේශීය සංවර්ධන නිදොස්කරණය, තෙවන පාර්ශ්ව බෙදාහැරීම සහ උපාංග පැති-පූරණය ස්ථාපනය සඳහා බහුලව භාවිතා වේ)"
+
+msgid "mime_ipa"
+msgstr "IPA Apple යෙදුම් පැකේජය (2008 iPhone SDK සමඟ නිකුත් කරන ලද iOS/iPadOS-විශේෂිත ඇසුරුම් බහාලුම. සාරාංශයක් ලෙස, එය FairPlay DRM ඩිජිටල් අයිතිවාසිකම් හෝ ව්‍යවසාය-මට්ටමේ කේත අත්සන මගින් ආරක්ෂා කරන ලද ZIP සංරක්ෂිතයක් වන අතර, එහි Mach-O ද්විමය ක්‍රියාත්මක කළ හැකි ගොනුවක්, යෙදුම් සම්පත් ගස සහ Info.plist මෙටාදත්ත වින්‍යාසය අඩංගු වේ)"
+
+msgid "mime_hap"
+msgstr "HAP HarmonyOS යෙදුම් පැකේජය (2020 HarmonyOS 2.0 සමඟ නිකුත් කරන ලද HarmonyOS හි ප්‍රත්‍යස්ථ යෙදවීමේ මූලික ඒකකය. ප්‍රවේශ ප්‍රධාන මොඩියුලය හෝ Feature විස්තීර්ණ ක්‍රියාකාරී මොඩියුල වලින් සමන්විත වේ. එය හරස්-අන්ත සියලු අවස්ථා (දුරකථන, ටැබ්ලට්, පැළඳිය හැකි උපාංග) ස්මාර්ට් ටර්මිනල් බෙදාහැරීම සඳහා ප්‍රධාන බහු-අන්ත ආකෘතිය වේ)"
+
+msgid "mime_har"
+msgstr "HAR HarmonyOS ස්ථිතික බෙදාගත් පැකේජය (HarmonyOS හි හිමිකාර ස්ථිතික බෙදාගත් පුස්තකාල සංරක්ෂණ ගොනුව. පොදු සංරචක, පහත්-මට්ටමේ සම්පත් කේතය සහ සම්පාදන-වේලා පරායත්තතා එන්කැප්සියුලේට් කිරීමට භාවිතා කරයි, ඒවා බහු HAP මොඩියුල මගින් ස්ථිතිකව සම්බන්ධ කර බෙදා ගනී. එය HarmonyOS පද්ධතියේ සංරචක-පාදක සංවර්ධනය සහ බහු-මොඩියුල නැවත භාවිතය සඳහා ප්‍රධාන පදනම වේ)"
+
+msgid "mime_aab"
+msgstr "AAB Android යෙදුම් මිටිය (2018 Google විසින් හඳුන්වා දෙන ලද සහ 2021 දී ස්ථාපිත කරන ලද Google Play ගතික බෙදාහැරීමේ ආකෘතිය. පිරිසිදු බෙදාහැරීමේ ආයතනයක් ලෙස, එය ඉලක්ක උපාංගයේ CPU ගෘහ නිර්මාණ ශිල්පය, තිර ඝනත්වය සහ භාෂාව අනුව වලාකුළ මගින් ගතිකව කපා සම්පාදනය කර අවශ්‍ය පරිදි ප්‍රශස්ත APK ජනනය කරයි. සාමාන්‍යයෙන් සම්ප්‍රේෂණ කලාප පළල පිරිවැය 35% කින් අඩු කරයි)"
+
+msgid "mime_xapk"
+msgstr "XAPK විස්තීර්ණ යෙදුම් පැකේජය (තෙවන පාර්ශ්ව Android ප්‍රජාව විසින් ස්ථාපිත කරන ලද අනධිකාරී යෙදුම් විස්තීර්ණ ප්‍රමිතිය. සම්මත APK ගොනුව අති-විශාල OBB ක්‍රීඩා දත්ත විස්තීර්ණ පැකේජය සමඟ ඒකාබද්ධව එන්කැප්සියුලේට් කිරීමෙන්, එය Google Play හි 100MB ස්වාධීන ගොනු ප්‍රමාණයේ සීමාව භෞතිකව බිඳ දමයි. ක්‍රීඩා බෙදාහැරීමේ වේදිකාවල බහුලව දක්නට ලැබේ)"
+
+msgid "mime_appx"
+msgstr "APPX නවීන යෙදුම් පැකේජය (2012 Microsoft විසින් Windows 8 සමඟ නිකුත් කරන ලද UWP යෙදුම් යෙදවීමේ පිරිවිතරය. වැලිපෙට්ටි හුදකලා කිරීමේ ධාවනය සහ සැහැල්ලු ඉවත් කිරීමේ ලක්ෂණ ඇත. Microsoft Store හි මුල් ආධිපත්‍ය ප්‍රමිතිය ලෙස, නවීන Windows පරිසර පද්ධතියේ එය MSIX වෙත පරිණාමය වන ජීවන චක්රයේ අවසන් අදියරට පිවිස ඇත)"
+
+msgid "mime_msix"
+msgstr "MSIX ඊළඟ පරම්පරාවේ යෙදුම් පැකේජය (2018 Microsoft විසින් නිකුත් කරන ලද Windows හි අලුත්ම ප්‍රමිතිගත ඇසුරුම් පිරිවිතරය. එය APPX හි යෙදුම් ආරක්ෂක වැලිපෙට්ටි ලක්ෂණ සහ MSI හි ව්‍යවසාය-මට්ටමේ වත්කම් කළමනාකරණ වාසි පරිපූර්ණ ලෙස විලයනය කරයි. සියලුම Win32 යෙදුම් වර්ග සමඟ සම්පුර්ණයෙන්ම අනුකූල වේ. එය Windows 11 සඳහා නිර්දේශිත බෙදාහැරීමේ ප්‍රමිතිය වේ)"
+
+msgid "mime_appimage"
+msgstr "AppImage ස්ථාපනය-රහිත යෙදුම් පැකේජය (2004 දී ආරම්භ කරන ලද Linux තනි ක්‍රියාත්මක කළ හැකි සංරක්ෂණ පිරිවිතරය. 'එක් යෙදුමක් යනු එක් ගොනුවක්' යන ස්වයං-අන්තර්ගත ගෘහ නිර්මාණ ශිල්පය අනුගමනය කරයි. ධාවන වේලාවේදී, එය FUSE යාන්ත්‍රණය හරහා කියවීමට-පමණක් අතථ්‍ය ගොනු පද්ධතියක් ලෙස සෘජුවම සවි කර ක්‍රියාත්මක වේ. සියලුම Linux බෙදාහැරීම් හරහා ශුන්‍ය-පරායත්තතා සහිත ක්ෂණික භාවිතය සාක්ෂාත් කර ගනී)"
+
+msgid "mime_flatpak"
+msgstr "Flatpak වැලිපෙට්ටි යෙදුම් පැකේජය (2015 Red Hat සහ GNOME විසින් මෙහෙයවන ලද Linux හරස්-බෙදාහැරීමේ ඩෙස්ක්ටොප් යෙදුම් බෙදාහැරීමේ ප්‍රමිතිය. එය අතිශයින් දැඩි යෙදුම්-මට්ටමේ ආරක්ෂක වැලිපෙට්ටි හුදකලා කිරීම සාක්ෂාත් කර ගැනීම සඳහා Linux කර්නලයේ Namespace සහ Cgroups යාන්ත්‍රණ මත යැපේ. එය නවීන විවෘත මූලාශ්‍ර OS මෘදුකාංග මධ්‍යස්ථානවල පදනම වේ)"
+
+msgid "mime_snap"
+msgstr "Snap බහාලුම්ගත කළ යෙදුම් පැකේජය (2014 Ubuntu හි මව් සමාගම වන Canonical විසින් හඳුන්වා දෙන ලද Linux විශ්වීය යෙදවීමේ ප්‍රමිතිය. එය ස්වයං-අන්තර්ගත SquashFS රූප සවි කිරීමේ ගෘහ නිර්මාණ ශිල්පය භාවිතා කරයි, ස්වයංක්‍රීය වර්ධක යාවත්කාලීන කිරීම් සහ දැඩි AppArmor වැලිපෙට්ටි හුදකලා කිරීම සඳහා සහාය දක්වයි. එය Ubuntu මෘදුකාංග මධ්‍යස්ථාන පරිසර පද්ධතියේ ප්‍රධාන පෙරනිමි ආකෘතිය වේ)"
+
+msgid "mime_deb"
+msgstr "DEB පද්ධති මෘදුකාංග පැකේජය (1993 Debian ව්‍යාපෘතිය විසින් ස්ථාපිත කරන ලද ද්විමය සහ මූලාශ්‍ර කේත එන්කැප්සියුලේෂන් පිරිවිතරය. Debian, Ubuntu සහ ඒවායේ සියලුම ව්‍යුත්පන්න පද්ධති සඳහා යටින් පවතින ස්ථාපන ප්‍රමිතිය ලෙස, එය ගොනු විවෘත කිරීම සහ නඩත්තු කිරීම සඳහා dpkg හරය මත රඳා පවතින අතර, APT කාර්යක්ෂම පැකේජ කළමනාකරු ඉදිරිපස අතුරු මුහුණත ලෙස භාවිතා කරයි. එය Linux පරිසර පද්ධතියේ වඩාත්ම පරිණත මෘදුකාංග බෙදාහැරීමේ පදනම වේ)"
+
+msgid "mime_rpm"
+msgstr "RPM පද්ධති මෘදුකාංග පැකේජය (1997 Red Hat විසින් හඳුන්වා දෙන ලද Red Hat පැකේජ කළමනාකරු එන්කැප්සියුලේෂන් පිරිවිතරය. DEB සමඟ Linux සාම්ප්‍රදායික පැකේජ කළමනාකරණයේ ප්‍රධාන කඳවුරු දෙකෙන් එකක් ලෙස සැලකේ. එය ගනුදෙනු-මට්ටමේ පරායත්තතා පරීක්ෂාව සහ යටින් පවතින මෘදුකාංග ඩිජිටල් අත්සන තහවුරු කිරීම සඳහා ස්වදේශීයව ගොඩනගා ඇත. එය තවමත් RHEL, Fedora සහ CentOS වැනි Red Hat පවුලේ පරිසර පද්ධති සඳහා නිරපේක්ෂ ප්‍රධාන ප්‍රවාහ බෙදාහැරීමේ ප්‍රමිතිය වේ)"
+
+msgid "mime_pacman"
+msgstr "Pacman සංරක්ෂිත මෘදුකාංග පැකේජය (2002 Arch Linux විසින් pacman කළමනාකරු සමඟ ස්ථාපිත කරන ලද .pkg.tar.zst එන්කැප්සියුලේෂන් ආකෘතිය. Arch හි රෝලිං යාවත්කාලීන කිරීමේ යාන්ත්‍රණයේ හරය ලෙස, එය Zstandard ඉහළ-වේග ඉහළ-සම්පීඩන ඇල්ගොරිතම මත පදනම් වන අතර, AUR (Arch පරිශීලක මෘදුකාංග ගබඩාව) පරිසර පද්ධතිය සමඟ එක්ව, අතිශය සරල බව සහ KISS මූලධර්ම පිළිබිඹු කරන නවීන පැකේජ බෙදාහැරීමේ ප්‍රමිතියකි)"
+
+msgid "mime_exe"
+msgstr "EXE ස්වදේශීය ක්‍රියාත්මක කළ හැකි ගොනුව (Windows වේදිකාවේ අතේ ගෙන යා හැකි ක්‍රියාත්මක කළ හැකි (PE) ද්විමය වැඩසටහන් ආකෘතිය. තාක්ෂණය MS-DOS යුගයේ MZ ශීර්ෂ ව්‍යුහයෙන් පැවත එන අතර, 1993 Windows NT සිට PE ව්‍යුහ පිරිවිතරය ලෙස සම්පූර්ණයෙන්ම ස්ථාපිත කරන ලදී. එය යන්ත්‍ර කේත උපදෙස්, ස්ථිතික සම්පත් කොටස් සහ පද්ධති කර්නල් ආරම්භ කිරීම සඳහා ලොව බහුලව භාවිතා වන ක්‍රියාත්මක කිරීමේ ප්‍රමිතියයි)"
+
+msgid "mime_dll"
+msgstr "DLL ගතික සබැඳි පුස්තකාලය (Windows වේදිකාවේ Dynamic Link Library බෙදාගත් කේත පුස්තකාල පිරිවිතරය. ධාවන වේලාවේදී ගතිකව පූරණය කිරීම සහ සංකේත නැවත ස්ථානගත කිරීම මගින්, එය භෞතික මතකය සහ තැටි ඉඩ සැලකිය යුතු ලෙස ඉතිරි කරයි. Windows API හි ප්‍රධාන ක්‍රියාත්මක කිරීමේ ආකාරය ලෙස, එහි මුල් DLL Hell වේදනාව නවීන කාලයේදී SxS සමාන්තර හුදකලා කිරීමේ යාන්ත්‍රණය මගින් මුලිනුපුටා දමා ඇත)"
+
+msgid "mime_com"
+msgstr "COM සම්භාව්‍ය ක්‍රියාත්මක කළ හැකි ගොනුව (MS-DOS යුගයේ පැරණිතම මතක රූපය (Command) ක්‍රියාත්මක කිරීමේ ආකෘතිය. එය ව්‍යුහගත නොවන පිරිසිදු කේත කොටස් සැලසුමක් භාවිතා කරයි, 64KB භෞතික මතක ඇමතුම් කොටසේ ඉහළ සීමාවට සීමා වේ. දැන් එය ඓතිහාසික උරුම ආකෘතියක් ලෙස විශ්‍රාම ගොස් ඇත, නමුත් නවීන Windows ගෘහ නිර්මාණ ශිල්පයේදී එය සීමිත ගැළපුම සඳහා නිශ්චිත සංරචක අතුරු මුහුණතක් ලෙස තවමත් භාවිතා වේ)"
+
+msgid "mime_aac"
+msgstr "AAC ශ්‍රව්‍ය (1997 දී MPEG ප්‍රමිතිය, උසස් ශ්‍රව්‍ය කේතනය. MP3 හි අනුප්‍රාප්තිකයා, එකම බිට් අනුපාතයේදී ගුණාත්මක භාවයෙන් MP3 ට වඩා හොඳය, YouTube, iTunes, නින්ටෙන්ඩෝ ස්විච් හි පෙරනිමි ශ්‍රව්‍ය ආකෘතිය)"
+
+msgid "mime_alac"
+msgstr "ALAC ශ්‍රව්‍ය (2004 දී Apple විසින් සංවර්ධනය කරන ලදී, ඇපල් පාඩු රහිත ශ්‍රව්‍ය කෝඩෙක්. Apple හි පාඩු රහිත ආකෘතිය, 2011 දී විවෘත මූලාශ්‍ර විය, iTunes සහ Apple Music හි පාඩු රහිත ශ්‍රව්‍ය සඳහා පෙරනිමි ආකෘතිය)"
+
+msgid "mime_flac"
+msgstr "FLAC ශ්‍රව්‍ය (2001 දී Xiph.Org පදනම විසින් සංවර්ධනය කරන ලදී, නිදහස් පාඩු රහිත ශ්‍රව්‍ය කෝඩෙක්. පාඩු රහිත සම්පීඩනය, ගුණාත්මක භාවය CD එකට සමාන වේ, ගොනුව ආසන්න වශයෙන් WAV හි අඩක් වේ. විවෘත මූලාශ්‍ර සහ පේටන්ට් බලපත්‍රයෙන් තොරය, ශ්‍රව්‍ය ප්‍රියයන් සහ ඩිජිටල් සංගීත එකතු කරන්නන්ගේ කැමති ආකෘතිය)"
+
+msgid "mime_mp3"
+msgstr "MP3 ශ්‍රව්‍ය (1993 දී Fraunhofer ආයතනය විසින් සංවර්ධනය කරන ලදී, MPEG-1 ශ්‍රව්‍ය ස්ථරය 3. පාඩු සහිත සම්පීඩන ආකෘතිය, ගොනුව කුඩා වන අතර ගුණාත්මක භාවය පිළිගත හැකිය, 2000 ගණන්වල ඩිජිටල් සංගීත විප්ලවයේ මූලික ආකෘතිය, iPod සහ Napster හි ජයග්‍රහණය. 2017 දී පේටන්ට් බලපත්‍රය කල් ඉකුත් විය, පොදු වසම් ආකෘතියක් බවට පත් විය)"
+
+msgid "mime_oga"
+msgstr "Ogg Audio ශ්‍රව්‍ය (Xiph.Org පදනම විසින් සංවර්ධනය කරන ලදී, Ogg බහාලුම්වල පිරිසිදු ශ්‍රව්‍ය ආකෘතිය, Vorbis කේතනය භාවිතා කරයි. විවෘත මූලාශ්‍ර සහ පේටන්ට් බලපත්‍රයෙන් තොරය, සම්පීඩන කාර්යක්ෂමතාව MP3 ට වඩා හොඳය, විවෘත මූලාශ්‍ර ව්‍යාපෘතිවල බහුලව භාවිතා වේ)"
+
+msgid "mime_ogg"
+msgstr "OGG ශ්‍රව්‍ය (2000 දී Xiph.Org පදනම විසින් සංවර්ධනය කරන ලදී, Ogg Vorbis ආකෘතිය. විවෘත මූලාශ්‍ර සහ පේටන්ට් බලපත්‍රයෙන් තොරය, සම්පීඩන කාර්යක්ෂමතාව MP3 ට වඩා හොඳය, Spotify මුල් අවදියේදී භාවිතා කළේය, ක්‍රීඩා වල ශබ්ද ප්‍රයෝග සඳහා බහුලව භාවිතා වේ)"
+
+msgid "mime_opus"
+msgstr "Opus ශ්‍රව්‍ය (2012 දී IETF ප්‍රමිතිකරණය කරන ලදී, විවෘත මූලාශ්‍ර සහ පේටන්ට් බලපත්‍රයෙන් තොර ශ්‍රව්‍ය ආකෘතිය. SILK සහ CELT තාක්ෂණ ඒකාබද්ධ කරයි, ඉතා අඩු ප්‍රමාදයක්, ඉහළම සම්පීඩන කාර්යක්ෂමතාව, WebRTC, WhatsApp, Discord හි පෙරනිමි ශ්‍රව්‍ය ආකෘතිය)"
+
+msgid "mime_wav"
+msgstr "WAV ශ්‍රව්‍ය (1991 දී Microsoft සහ IBM විසින් සංවර්ධනය කරන ලදී, Windows හි ස්වදේශීය ශ්‍රව්‍ය ආකෘතිය. සම්පීඩනය නොකළ PCM කේතනය, ගුණාත්මක භාවය පාඩු රහිත නමුත් ගොනුව ඉතා විශාලය, වෘත්තීය ශ්‍රව්‍ය සංස්කරණයේ සම්මත ආකෘතිය)"
+
+msgid "mime_wma"
+msgstr "WMA ශ්‍රව්‍ය (1999 දී Microsoft විසින් සංවර්ධනය කරන ලදී, Windows Media ශ්‍රව්‍ය. පාඩු/පාඩු රහිත අනුවාද දෙකම, Windows හි ස්වදේශීය සහාය, Windows Media Player සමඟ ව්‍යාප්ත විය. දැන් මායිම් වී ඇත, MP3/AAC මගින් ප්‍රතිස්ථාපනය කර ඇත)"
+
+msgid "mime_dsf"
+msgstr "DSF ශ්‍රව්‍ය (සෘජු ප්‍රවාහ ඩිජිටල් ආකෘතිය, සෝනි සහ ෆිලිප්ස් විසින් සංවර්ධනය කරන ලදී. 1bit ඉහළ සාම්පල අනුපාතය, DSD ශ්‍රව්‍ය සඳහා සම්මත ආකෘතිය, SACD හි ඩිජිටල් අනුවාදය, ශ්‍රව්‍ය ප්‍රියයන්ගේ ඉහළ මට්ටමේ ආකෘතිය, ගොනුව අතිවිශාලයි)"
+
+msgid "mime_ape"
+msgstr "APE ශ්‍රව්‍ය (2000 දී Monkey's Audio විසින් සංවර්ධනය කරන ලදී, අලාභ රහිත සම්පීඩන ආකෘතිය. FLAC ට වඩා ඉහළ සම්පීඩනයක් නමුත් මන්දගාමී කේතනයක්, තවමත් Windows වේදිකාවේ සහ ශ්‍රව්‍ය ලෝලීන් අතර භාවිතා වේ)"
+
+msgid "mime_mid"
+msgstr "MIDI ශ්‍රව්‍ය (1983 දී MIDI සංගමය විසින් නිර්ණය කරන ලදී, සංගීත භාණ්ඩ ඩිජිටල් අතුරුමුහුණත. සටහන් ආකෘතිය, ශ්‍රව්‍ය පටිගත කිරීමක් නොවේ, ගොනුව ඉතා කුඩා වේ, ඉලෙක්ට්‍රොනික උපකරණ, ජංගම දුරකථන නාද රටා, ක්‍රීඩා ශබ්ද ප්‍රයෝග සඳහා ප්‍රමිතිය. 1991 දී ජනරාල් MIDI ප්‍රමිතිගත කරන ලදී, උපකරණ 128 ක ටිම්බර් නිර්වචනය කරන ලදී)"
+
+msgid "mime_m4a"
+msgstr "M4A ශ්‍රව්‍ය (MPEG-4 ශ්‍රව්‍ය, AAC හි බහාලුම් ආකෘතිය. iTunes සංගීත වෙළඳසැලේ සම්මත ආකෘතිය, Apple පරිසර පද්ධතියේ ප්‍රධාන ශ්‍රව්‍ය ආකෘතිය, DRM ආරක්ෂණය සහාය දක්වයි)"
+
+msgid "mime_m3u"
+msgstr "M3U ධාවන ලැයිස්තුව (MP3 URL ධාවන ලැයිස්තු ආකෘතිය, සරල පෙළ ගොනුව, ශ්‍රව්‍ය ගොනු මාර්ග වාර්තා කරයි. විනැම්ප් යුගයේ ප්‍රමිතිය, අන්තර්ජාල ගුවන් විදුලිය, මාර්ගගත සංගීත ප්‍රවාහය සඳහා භාවිතා කරයි. M3U8 යනු එහි UTF-8 අනුවාදය වන අතර HTTP සජීවී ප්‍රවාහය සඳහා භාවිතා කරයි)"
+
+msgid "mime_asf"
+msgstr "ASF ප්‍රවාහ ආකෘතිය (1996 දී Microsoft විසින් සංවර්ධනය කරන ලදී, උසස් පද්ධති ආකෘතිය. Windows Media හි ප්‍රවාහ බහාලුම, ශ්‍රව්‍ය සහ වීඩියෝ සමමුහුර්ත සම්ප්‍රේෂණය සහාය දක්වයි. අන්තර්ජාල විකාශන සහ ප්‍රවාහය සඳහා භාවිතා කරයි, WMA/WMV යන දෙකම ASF බහාලුම මත පදනම් වේ)"
+
+msgid "mime_avi"
+msgstr "AVI වීඩියෝව (1992 දී Microsoft විසින් නිකුත් කරන ලදී, Windows හි මුල් කාලීන වීඩියෝ ප්‍රමිතිය. 'ශ්‍රව්‍ය වීඩියෝ අන්තර් සම්බන්ධනය', ශ්‍රව්‍ය සහ වීඩියෝ විකල්ප වශයෙන් ගබඩා කරයි, 1990-2000 ගණන් වල වඩාත් ජනප්‍රිය වීඩියෝ ආකෘතිය, දැන් MP4/MKV මගින් ප්‍රතිස්ථාපනය කර ඇත)"
+
+msgid "mime_divx"
+msgstr "DivX වීඩියෝව (1998 දී DivX සමාගම විසින් සංවර්ධනය කරන ලදී, MPEG-4 මත පදනම් වූ වීඩියෝ කේතන ආකෘතිය. 2000 ගණන් වල අන්තර්ජාල වීඩියෝ බෙදාගැනීමේ ප්‍රධාන ආකෘතිය, DVD ගුණාත්මකභාවය CD ප්‍රමාණයට සම්පීඩනය කළ පළමු තාක්ෂණය. ප්‍රකාශන හිමිකම් ආරවුල් හේතුවෙන්, පසුව වාණිජ කේතනය කරා මාරු විය)"
+
+msgid "mime_mp4"
+msgstr "MP4 වීඩියෝව (2001 දී MPEG ප්‍රමිතිය, MPEG-4 14 වන කොටස. ලෝකයේ වඩාත් පොදු වීඩියෝ ආකෘතිය, H.264/H.265 කේතනය සහාය දක්වයි, අන්තර්ජාල වීඩියෝ, ජංගම දුරකථන පටිගත කිරීම්, YouTube හි පෙරනිමි ආකෘතිය)"
+
+msgid "mime_m4v"
+msgstr "M4V වීඩියෝව (iTunes වීඩියෝ ආකෘතිය, MP4 හි ප්‍රභේදයකි. Apple පරිසර පද්ධතියේ වීඩියෝ ආකෘතිය, iTunes Store චිත්‍රපට, රූපවාහිනී වැඩසටහන් සඳහා සම්මත ආකෘතිය, DRP ප්‍රකාශන හිමිකම් ආරක්ෂණය සහාය දක්වයි)"
+
+msgid "mime_mpeg"
+msgstr "MPEG වීඩියෝව (1988 දී MPEG සංවිධානය විසින් නිර්ණය කරන ලදී, චලන රූප ප්‍රවීණ කණ්ඩායම. ඩිජිටල් වීඩියෝ සම්පීඩන ප්‍රමිතියේ ආරම්භකයා, MPEG-1 (VCD), MPEG-2 (DVD), MPEG-4 (අන්තර්ජාල වීඩියෝ) සැලකිය යුතු බලපෑමක් ඇති කළේය)"
+
+msgid "mime_mkv"
+msgstr "MKV වීඩියෝව (2002 දී Matroska ව්‍යාපෘතිය විසින් සංවර්ධනය කරන ලදී, විවෘත මූලාශ්‍ර බහුමාධ්‍ය බහාලුම් ආකෘතිය. බහු ශ්‍රව්‍ය ධාවන පථ, බහු උපසිරැසි, පරිච්ඡේද සහාය දක්වයි, 'පැකේජකරණයේ මායාකාරයා', ඉහළ විභේදන චිත්‍රපට බෙදාගැනීමේ කැමති ආකෘතිය)"
+
+msgid "mime_mpg"
+msgstr "MPEG වීඩියෝව (MPEG-1/MPEG-2 වීඩියෝ දිගුව, VCD සහ DVD සඳහා සම්මත ආකෘතිය. 1990-2000 ගණන් වල දෘශ්‍ය තැටි වීඩියෝ සඳහා ප්‍රධාන ආකෘතිය, දැන් H.264/H.265 මගින් ප්‍රතිස්ථාපනය කර ඇත)"
+
+msgid "mime_ogv"
+msgstr "Ogg Video වීඩියෝව (Xiph.Org පදනම විසින් සංවර්ධනය කරන ලදී, Ogg බහාලුමේ වීඩියෝ ආකෘතිය, Theora කේතනය භාවිතා කරයි. විවෘත මූලාශ්‍ර සහ පේටන්ට් බලපත්‍රයෙන් තොරය, HTML5 වීඩියෝවේ මුල් කාලීන ප්‍රමිතිය, ෆයර්ෆොක්ස් හි ස්වදේශීය සහායක් ඇත)"
+
+msgid "mime_ogx"
+msgstr "Ogg බහුමාධ්‍ය බහාලුම (Xiph.Org පදනම විසින් සංවර්ධනය කරන ලදී, Ogg බහාලුමේ සාර්වත්‍රික දිගුව, ශ්‍රව්‍ය, වීඩියෝ, උපසිරැසි බහු ධාවන පථ ඇතුළත් කළ හැකිය. විවෘත මූලාශ්‍ර බහුමාධ්‍ය ප්‍රමිතිය, ක්‍රීඩා, ප්‍රවාහයේදී භාවිතා වේ)"
+
+msgid "mime_rm"
+msgstr "රියල්මීඩියා වීඩියෝව (1995 දී RealNetworks විසින් සංවර්ධනය කරන ලදී, රියල්මීඩියා ආකෘතිය. 1990-2000 ගණන් වල අන්තර්ජාල ප්‍රවාහයේ පුරෝගාමියා, රියල්ප්ලේයර් හි ප්‍රධාන ආකෘතිය. අවාසි: විශේෂ ප්ලේයරයක් අවශ්‍ය විය, සම්පීඩන ගුණාත්මක භාවය දුර්වල විය, පසුව Flash/MP4 මගින් ප්‍රතිස්ථාපනය කරන ලදී)"
+
+msgid "mime_flv"
+msgstr "ෆ්ලෑෂ් වීඩියෝව (2002 දී ආකෘතිය දර්ශනය විය, ෆ්ලෑෂ් වීඩියෝ ආකෘතිය. වරෙක අන්තර්ජාල වීඩියෝ සඳහා ප්‍රධාන ආකෘතිය, YouTube මුල් අවදියේදී භාවිතා කළේය. අවාසි: ෆ්ලෑෂ් ප්ලගිනය අවශ්‍ය විය, කාර්‍ය සාධනය දුර්වල විය, ආරක්ෂක සිදුරු තිබුණි. 2015 සිට ප්‍රධාන වෙබ් අඩවි HTML5 වීඩියෝ වෙත මාරු විය, දැන් යල්පැන ගියේය)"
+
+msgid "mime_f4v"
+msgstr "F4V වීඩියෝව (Adobe විසින් සංවර්ධනය කරන ලද ෆ්ලෑෂ් වීඩියෝ ආකෘතිය, FLV හි අනුප්‍රාප්තිකයා. MPEG-4 ප්‍රමිතිය මත පදනම් වේ, H.264 කේතනය සහාය දක්වයි. ෆ්ලෑෂ් තාක්ෂණය සමඟ යල්පැන ගියේය, Adobe 2020 දී සහාය නතර කළේය)"
+
+msgid "mime_wmv"
+msgstr "WMV වීඩියෝව (1999 දී Microsoft විසින් සංවර්ධනය කරන ලදී, Windows Media වීඩියෝ. Windows හි ස්වදේශීය සහාය, ප්‍රවාහය සඳහා ප්‍රශස්ත කර ඇත, මුල් කාලීන මාර්ගගත වීඩියෝ වල පොදු ආකෘතියක් විය, දැන් මායිම් වී ඇත)"
+
+msgid "mime_wmf"
+msgstr "WMF මාධ්‍ය ආකෘතිය (Windows Media Format, Microsoft හි මාධ්‍ය රාමුව. WMV වීඩියෝ, WMA ශ්‍රව්‍ය ඇතුළත් වේ, Windows Media Player හි ස්වදේශීය සහාය ඇත)"
+
+msgid "mime_mov"
+msgstr "MOV වීඩියෝව (1991 දී Apple විසින් සංවර්ධනය කරන ලදී, ක්වික්ටයිම් බහාලුම් ආකෘතිය. වෘත්තීය වීඩියෝ සංස්කරණයේ සම්මත ආකෘතිය, බහු කෝඩෙක් සඳහා සහාය දක්වයි, ෆයිනල් කට් ප්‍රෝ, ප්‍රීමියර් හි ස්වදේශීය සහාය ඇත)"
+
+msgid "mime_qt"
+msgstr "ක්වික්ටයිම් වීඩියෝව (1991 දී Apple විසින් නිකුත් කරන ලදී, ක්වික්ටයිම් ආකෘතිය. මැක් වේදිකාවේ වීඩියෝ ප්‍රමිතිය, MOV එහි බහාලුම වේ, ක්වික්ටයිම් ප්ලේයරය බහුලව භාවිතා විය. 2016 දී Apple Windows අනුවාදය සංවර්ධනය කිරීම නතර කළේය, ක්‍රමයෙන් MP4 මගින් ප්‍රතිස්ථාපනය කරන ලදී)"
+
+msgid "mime_webm"
+msgstr "WebM වීඩියෝව (2010 දී Google විසින් නිකුත් කරන ලදී, විවෘත මූලාශ්‍ර සහ පේටන්ට් බලපත්‍රයෙන් තොර වීඩියෝ ආකෘතිය. Matroska බහාලුම මත පදනම් වේ, VP8/VP9 කේතනය, HTML5 වීඩියෝ සඳහා සම්මත ආකෘතිය, YouTube හි පෙරනිමි වෙබ් ප්ලේයර් ආකෘතිය)"
+
+msgid "mime_3gp"
+msgstr "3GP වීඩියෝව (2000 දී 3GPP විසින් නිර්ණය කරන ලදී, ජංගම උපාංගවල වීඩියෝ ආකෘතිය. ගොනුව ඉතා කුඩා වේ, ගුණාත්මක භාවය අඩුය, මුල් කාලීන විශේෂාංග දුරකථනවල වීඩියෝ පටිගත කිරීමේ ආකෘතිය, MMS පණිවිඩ යැවීමට භාවිතා කරන ලදී)"
+
+#------------------------------------------------------------------------------
+# තාක්ෂණික මානය
+#------------------------------------------------------------------------------
+
+msgid "Operating Systems"
+msgstr "මෙහෙයුම් පද්ධති"
+
+msgid "Top 5 Operating Systems"
+msgstr "ප්‍රථම මෙහෙයුම් පද්ධති 5"
+
+msgid "Unknown Robot"
+msgstr "නොදන්නා සේවාලාභියා"
+
+msgid "User agent"
+msgstr "ප්‍රවේශ මූලාශ්‍රය"
+
+msgid "Browsers"
+msgstr "බ්‍රවුසර"
+
+msgid "Top 5 Browsers"
+msgstr "ප්‍රථම බ්‍රවුසර 5"
+
+msgid "Unknown Robot RH"
+msgstr "නොදන්නා ඉල්ලීම් ශීර්ෂය"
+
+msgid "Detailed"
+msgstr "ප්‍රවේශ උපාංගයේ අනුවාදය"
+
+msgid "DetailedOS"
+msgstr "මෙහෙයුම් පද්ධති අනුවාදය"
+
+msgid "DetailedBS"
+msgstr "බ්‍රවුසර අනුවාදය"
+
+msgid "Screen sizes"
+msgstr "තිර ප්‍රමාණයන්"
+
+msgid "Compression"
+msgstr "සම්පීඩනය"
+
+msgid "In"
+msgstr "ආදානය"
+
+msgid "Out"
+msgstr "ප්‍රතිදානය"
+
+msgid "Saved"
+msgstr "සුරකින ලදී"
+
+#------------------------------------------------------------------------------
+# මූලාශ්‍ර මානය
+#------------------------------------------------------------------------------
+
+msgid "Origin"
+msgstr "මූලාශ්‍රය"
+
+msgid "Referers"
+msgstr "මූලාශ්‍රය"
+
+msgid "meta.description"
+msgstr "AWStats උසස් වෙබ් අඩවි ලොග් විශ්ලේෂකය - තත්‍ය කාලීනව වෙබ් අඩවි ගමනාගමනය, අමුත්තන්ගේ විශ්ලේෂණය, සෙවුම් යන්ත්‍ර මූල පද, දෝෂ පිටුවල සංඛ්‍යාලේඛන නිරීක්ෂණය කරන්න. තද පැහැ මාදිලියට සහාය දක්වයි, බහුභාෂා අතුරු මුහුණත, වෙබ් අඩවි පරිපාලකයන් සඳහා පුළුල් දත්ත විශ්ලේෂණයක් සපයයි"
+
+msgid "meta.keywords"
+msgstr "AWStats,වෙබ් අඩවි සංඛ්‍යාලේඛන,ලොග් විශ්ලේෂණය,ගමනාගමන නිරීක්ෂණය,ප්‍රවේශ සංඛ්‍යාලේඛන,SEO විශ්ලේෂණය,වෙබ් අඩවි විශ්ලේෂණ මෙවලම්,Web Analytics,Log Analyzer"
+
+msgid "meta.author"
+msgstr "AWStats"
+
+msgid "og.title"
+msgstr "AWStats - වෙබ් අඩවි ලොග් විශ්ලේෂණය"
+
+msgid "og.description"
+msgstr "📊 වෘත්තීය විවෘත මූලාශ්‍ර සංඛ්‍යාලේඛන මෙවලමක්, ඔබගේ වෙබ් අඩවියේ ගමනාගමනය සහ අමුත්තන්ගේ හැසිරීම තත්‍ය කාලීනව විශ්ලේෂණය කරන්න"
+
+msgid "og.image.alt"
+msgstr "AWStats සංඛ්‍යාලේඛන ප්‍රස්තාරය"
+
+msgid "Created by"
+msgstr "%s විසින් නිර්මාණය කරන ලදී"
+
+msgid "plugins"
+msgstr "ප්ලගින"
+
+msgid "dbip by"
+msgstr "දත්ත %s වෙතින්"
+
+msgid "IPDB by"
+msgstr "භූගෝලීය ස්ථාන දත්ත DB-IP විසින් සපයනු ලැබේ"
+
+msgid "Configured"
+msgstr "වින්‍යාස කර ඇත"
+
+msgid "Missing"
+msgstr "අතුරුදහන්"
+
+msgid "OK"
+msgstr "සාර්ථකයි"
+
+msgid "Unused"
+msgstr "භාවිතා නොකළ"
+
+msgid "Overall Health"
+msgstr "සමස්ත සෞඛ්‍ය තත්ත්වය"
+
+msgid "Excellent"
+msgstr "ඉතා හොඳයි"
+
+msgid "Good"
+msgstr "හොඳයි"
+
+msgid "Fair"
+msgstr "සාධාරණයි"
+
+msgid "Poor"
+msgstr "දුර්වලයි"
+
+msgid "Missing icon types"
+msgstr "අතුරුදහන් අයිකන වර්ග"
+
+msgid "See"
+msgstr "බලන්න"
+
+msgid "Expected Path"
+msgstr "අපේක්ෂිත මාර්ගය"
+
+msgid "column for file locations"
+msgstr "ගොනු ස්ථාන ලබා ගැනීමේ තීරුව"
+
+msgid "Tip: If you need to generate related icons, you can use %s to upload a logo image, and it will automatically generate all the above related icon files"
+msgstr "ඉඟිය: ඔබට අදාළ අයිකන ජනනය කිරීමට අවශ්‍ය නම්, ඔබට %s භාවිතා කර ලාංඡන රූපයක් උඩුගත කළ හැකිය, එය ස්වයංක්‍රීයව ඉහත සියලු අදාළ අයිකන ගොනු ජනනය කරයි"
+
+msgid "200: success, 404: failure"
+msgstr "200: සාර්ථක සංඛ්‍යාව, 404: අසාර්ථක සංඛ්‍යාව"
+
+msgid "_PATH_FAVICON"
+msgstr "/favicon.ico"
+
+msgid "_PATH_APPLE_TOUCH"
+msgstr "/apple-touch-icon.png හෝ /apple-touch-icon-180x180.png"
+
+msgid "_PATH_LOGO"
+msgstr "/logo.svg හෝ /logo.png (HTML/JSON-LD තුළ යොමු කිරීම අවශ්‍ය වේ)"
+
+msgid "_PATH_WEBMANIFEST"
+msgstr "/site.webmanifest හෝ /manifest.json"
+
+msgid "_PATH_BROWSERCONFIG"
+msgstr "/browserconfig.xml"
+
+msgid "_PATH_SAFARI_PINNED"
+msgstr "/safari-pinned-tab.svg"
+
+msgid "_PATH_SOCIAL_ICON"
+msgstr "/images/github.svg, /images/paypal.svg ආදිය"
+
+msgid "Favicon"
+msgstr "වෙබ් අඩවි අයිකනය"
+
+msgid "Apple Touch Icon (iOS/macOS)"
+msgstr "ඇපල් ස්පර්ශ අයිකනය (iPhone/iPad/Mac)"
+
+msgid "Site Logo"
+msgstr "වෙබ් අඩවි ලාංඡනය"
+
+msgid "Web App Manifest (Android/Chrome)"
+msgstr "වෙබ් යෙදුම් මැනිෆෙස්ට් (Android/Chrome)"
+
+msgid "Windows Browser Config"
+msgstr "වින්ඩෝස් බ්‍රවුසර වින්‍යාසය"
+
+msgid "Safari Pinned Tab"
+msgstr "සෆාරි සවි කළ ටැබ් අයිකනය"
+
+msgid "Social Icon"
+msgstr "සමාජ වේදිකා අයිකනය"
+
+msgid "Icon Files Status"
+msgstr "අයිකන ගොනු තත්ත්වය"
+
+msgid "Icon Type"
+msgstr "අයිකන වර්ගය"
+
+msgid "Total"
+msgstr "එකතුව"
+
+msgid "Advanced Web Statistics"
+msgstr "උසස් ලොග් විශ්ලේෂකය"
+
+msgid "Advanced Web Statistics %s"
+msgstr "%s උසස් ලොග් විශ්ලේෂකය"
+
+msgid "Your browser does not support frames. Please use a modern browser."
+msgstr "ඔබගේ බ්‍රවුසරය රාමු සඳහා සහාය නොදක්වයි. කරුණාකර නවීන බ්‍රවුසරයක් භාවිතා කරන්න"
+
+msgid "View statistics directly"
+msgstr "සෘජුවම සංඛ්‍යාලේඛන බලන්න"
+
+msgid "Close"
+msgstr "වසන්න"
+
+msgid "Documentation Viewer"
+msgstr "ප්‍රලේඛන දර්ශකය"
+
+msgid "Direct address / Bookmarks"
+msgstr "සෘජු ලිපිනය/පිටු සලකුණු"
+
+msgid "Search Engines"
+msgstr "සෙවුම් යන්ත්‍ර"
+
+msgid "Refering search engines"
+msgstr "මූලාශ්‍ර සෙවුම් යන්ත්‍ර"
+
+msgid "External pages"
+msgstr "බාහිර පිටු"
+
+msgid "Refering pages"
+msgstr "මූලාශ්‍ර පිටු"
+
+msgid "Internal pages"
+msgstr "අභ්‍යන්තර පිටු"
+
+msgid "UnknownAccessSource"
+msgstr "නොදන්නා ප්‍රවේශ මූලාශ්‍රය"
+
+msgid "Different refering pages"
+msgstr "විවිධ මූලාශ්‍ර පිටු"
+
+msgid "Keyphrases"
+msgstr "මූල පද වාක්‍යාංශ"
+
+msgid "Keywords"
+msgstr "මූල පද"
+
+msgid "Keyphrases/Keywords"
+msgstr "මූල පද වාක්‍යාංශ/වචන"
+
+msgid "Different keyphrases"
+msgstr "විවිධ මූල පද වාක්‍යාංශ"
+
+msgid "Different keywords"
+msgstr "විවිධ මූල පද"
+
+#------------------------------------------------------------------------------
+# පිටු මානය
+#------------------------------------------------------------------------------
+
+msgid "Viewed pages"
+msgstr "නරඹන ලද පිටු"
+
+msgid "Different pages"
+msgstr "විවිධ පිටු"
+
+msgid "Entry"
+msgstr "ප්‍රවේශ ස්ථානය"
+
+msgid "Exit"
+msgstr "පිටවීමේ ස්ථානය"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Referer"
+msgstr "මූලාශ්‍රය"
+
+msgid "Host"
+msgstr "ධාරකය"
+
+#------------------------------------------------------------------------------
+# දෝෂ සහ තත්ත්වයන්
+#------------------------------------------------------------------------------
+
+msgid "Error"
+msgstr "දෝෂය"
+
+msgid "HTTP Status Statistics"
+msgstr "HTTP තත්ත්ව කේතවල සංඛ්‍යාලේඛන"
+
+msgid "SMTP Error codes"
+msgstr "SMTP දෝෂ කේත"
+
+msgid "Page not found"
+msgstr "ඉල්ලූ පිටුව හමු නොවීය"
+
+msgid "Unknown error"
+msgstr "නොදන්නා දෝෂය"
+
+msgid "Abnormal traffic note"
+msgstr "අසාමාන්‍ය ගමනාගමනයට ඇතුළත් වන්නේ: සෙවුම් යන්ත්‍ර බොට්, කෘතිම බුද්ධි පුහුණු බොට්, අවදානම් ස්කෑනර්, සහ HTTP/HTTPS ප්‍රමිතීන්ට අනුකූල නොවන ඉල්ලීම්"
+
+msgid "Page detail"
+msgstr "පිටු විස්තර"
+
+msgid "AWStats did not found the"
+msgstr "AWStats විසින් සොයා ගත්තේ නැත"
+
+msgid "in your log records."
+msgstr "ඔබගේ ලොග් වාර්තා වල"
+
+msgid "AWStats did not find any valid log lines that match your"
+msgstr "ඔබගේ ලොග් වල පළමු පේළි කිහිපය තුළ පවා AWStats විසින් ඔබගේ"
+
+msgid "parameter, in the"
+msgstr "පරාමිතියට ගැලපෙන වලංගු ලොග් පේළි කිසිවක් සොයා ගත්තේ නැත"
+
+msgid "th first non commented lines read of your log."
+msgstr "පේළි තුළ පවා"
+
+msgid "Your log file"
+msgstr "ඔබගේ ලොග් ගොනුව"
+
+msgid "must have a bad format or"
+msgstr "වැරදි ආකෘතියක් විය හැකිය, නැතහොත්"
+
+msgid "parameter setup does not match this format."
+msgstr "පරාමිති වින්‍යාසය මෙම ආකෘතියට නොගැලපේ"
+
+msgid "Your AWStats"
+msgstr "ඔබගේ AWStats හි"
+
+msgid "parameter is:"
+msgstr "පරාමිතිය වන්නේ:"
+
+msgid "This means each line in your web server log file need to have:"
+msgstr "මෙයින් අදහස් කරන්නේ ඔබගේ වෙබ් සර්වර ලොග් ගොනුවේ සෑම පේළියකම තිබිය යුත්තේ:"
+
+msgid "combined log format"
+msgstr "සංයුක්ත ලොග් ආකෘතිය"
+
+msgid "MSIE Extended W3C log format"
+msgstr "MSIE විස්තීර්ණ W3C ලොග් ආකෘතිය"
+
+msgid "WebStar native log format"
+msgstr "WebStar හි ස්වදේශීය ලොග් ආකෘතිය"
+
+msgid "common log format"
+msgstr "පොදු ලොග් ආකෘතිය"
+
+msgid "Lotus Notes/Lotus Domino"
+msgstr "ලොටස් නොට්ස්/ලොටස් ඩොමිනෝ"
+
+msgid "the following personalized log format:"
+msgstr "පහත දැක්වෙන පුද්ගලීකරණය කළ ලොග් ආකෘතිය:"
+
+msgid "And this is an example of records AWStats found in your log file (the record number"
+msgstr "AWStats විසින් ඔබගේ ලොග් ගොනුවේ සොයා ගත් වාර්තා සඳහා උදාහරණයක් මෙයයි (වාර්තා අංකය"
+
+msgid "in your log):"
+msgstr "ඔබගේ ලොගය තුළ):"
+
+#------------------------------------------------------------------------------
+# වෙනත්
+#------------------------------------------------------------------------------
+
+msgid "Extra/Marketing"
+msgstr "අමතර/අලෙවිකරණය"
+
+#------------------------------------------------------------------------------
+# අතුරු මුහුණත පෙළ
+#------------------------------------------------------------------------------
+
+msgid "Current site"
+msgstr "වත්මන් අඩවිය"
+
+msgid "Web Site"
+msgstr "වෙබ් අඩවිය"
+
+msgid "Last Update"
+msgstr "අවසන් යාවත්කාලීනය"
+
+msgid "Never updated"
+msgstr "කිසිදා යාවත්කාලීන කර නැත"
+
+msgid "No qualified records found in log"
+msgstr "ලොගය තුළ සුදුසුකම් ලත් වාර්තා කිසිවක් හමු නොවීය"
+
+msgid "corrupted"
+msgstr "හානි වූ"
+
+msgid "comments"
+msgstr "අදහස්"
+
+msgid "Blank"
+msgstr "හිස්"
+
+msgid "dropped"
+msgstr "ඉවත දැමූ"
+
+msgid "Update now"
+msgstr "දැන් යාවත්කාලීන කරන්න"
+
+msgid "Back to main page"
+msgstr "ප්‍රධාන පිටුවට ආපසු"
+
+msgid "Close window"
+msgstr "කවුළුව වසන්න"
+
+msgid "Back page"
+msgstr "පෙර පිටුවට ආපසු"
+
+msgid "Navigation"
+msgstr "සංචාලනය"
+
+msgid "Summary"
+msgstr "සාරාංශය"
+
+msgid "Local"
+msgstr "දේශීය"
+
+msgid "External"
+msgstr "බාහිර"
+
+msgid "Others (email senders)"
+msgstr "වෙනත් (යවන්නන්)"
+
+msgid "Others (email receivers)"
+msgstr "වෙනත් (ලබන්නන්)"
+
+msgid "Others"
+msgstr "වෙනත්"
+
+msgid "Only 10 lines of browser data are currently displayed"
+msgstr "වර්තමානයේ බ්‍රවුසර දත්ත පේළි 10 ක් පමණක් පෙන්වනු ලැබේ, වැඩි විස්තර සඳහා සම්පූර්ණ ලැයිස්තුව බලන්න"
+
+msgid "Others (unknown browsers)"
+msgstr "වෙනත් (නොදන්නා බ්‍රවුසර)"
+
+msgid "Others (operating systems)"
+msgstr "වෙනත් (මෙහෙයුම් පද්ධති)"
+
+msgid "Others (unknown OS)"
+msgstr "වෙනත් (නොදන්නා පද්ධති)"
+
+msgid "Others (search engines)"
+msgstr "වෙනත් (සෙවුම් යන්ත්‍ර)"
+
+msgid "Others (referring pages)"
+msgstr "වෙනත් (යොමු කරන පිටු)"
+
+msgid "Others (keyphrases)"
+msgstr "වෙනත් (වාක්‍යාංශ)"
+
+msgid "Others (keywords)"
+msgstr "වෙනත් (වචන)"
+
+msgid "Only first 10 robots shown"
+msgstr "වර්තමානයේ පළමු රොබෝවරු 10 දෙනාගේ දත්ත පමණක් පෙන්වනු ලැබේ, වැඩි විස්තර සඳහා සම්පූර්ණ ලැයිස්තුව බලන්න"
+
+msgid "Failed to obtain access record"
+msgstr "ප්‍රවේශ වාර්තාව ලබා ගැනීමට අසමත් විය"
+
+msgid "Failed to obtain leave record"
+msgstr "පිටවීමේ වාර්තාව ලබා ගැනීමට අසමත් විය"
+
+msgid "Other pages"
+msgstr "වෙනත් පිටු"
+
+msgid "Low Traffic IP Summary"
+msgstr "අඩු ගමනාගමනයක් සහිත නොදන්නා IP සාරාංශය"
+
+msgid "Failed to obtain IP data"
+msgstr "IP දත්ත ලබා ගැනීමට අසමත් විය"
+
+msgid "Failed to obtain the relevant data"
+msgstr "අදාළ දත්ත ලබා ගැනීමට අසමත් විය"
+
+msgid "Limited list of countries and regions"
+msgstr "වර්තමානයේ දත්ත පේළි 10 ක් පමණක් පෙන්වනු ලැබේ, වැඩි රටවල්/කලාප සඳහා සම්පූර්ණ ලැයිස්තුව බලන්න"
+
+msgid "currentVisitorData"
+msgstr "වර්තමානයේ අමුත්තන්ගේ දත්ත පේළි 10 ක් පමණක් පෙන්වනු ලැබේ, වැඩි විස්තර සඳහා සම්පූර්ණ ලැයිස්තුව බලන්න"
+
+msgid "Others (robots main)"
+msgstr "වෙනත් (රොබෝවරු)"
+
+msgid "Others (worms)"
+msgstr "වෙනත් (පණුවන්)"
+
+msgid "Displaying10RowsPageMorePleaseViewFullList"
+msgstr "වර්තමානයේ පිටු 10 ක් පමණක් පෙන්වනු ලැබේ, වැඩි විස්තර සඳහා සම්පූර්ණ ලැයිස්තුව බලන්න"
+
+msgid "Others (OS main)"
+msgstr "වෙනත් (පද්ධති)"
+
+msgid "Others (browsers main)"
+msgstr "වෙනත් (බ්‍රවුසර)"
+
+msgid "Others (screen sizes)"
+msgstr "වෙනත් (ප්‍රමාණ)"
+
+msgid "Others (search engines main)"
+msgstr "වෙනත් (සෙවුම් යන්ත්‍ර)"
+
+msgid "Others (referring pages main)"
+msgstr "වෙනත් (මූලාශ්‍ර පිටු)"
+
+msgid "Others (keyphrases main)"
+msgstr "වෙනත් (වාක්‍යාංශ)"
+
+msgid "Others (keywords main)"
+msgstr "වෙනත් (වචන)"
+
+msgid "Continue"
+msgstr "ඉතිරි අන්තර්ගතය යැවීම දිගටම කරගෙන යන්න"
+
+msgid "Switching Protocols"
+msgstr "ප්‍රොටෝකෝලය වෙනස් වෙමින් පවතී"
+
+msgid "Processing (WebDAV)"
+msgstr "සැකසෙමින් පවතී (කරුණාකර රැඳී සිටින්න)"
+
+msgid "Early Hints"
+msgstr "සර්වරය සම්පත් සූදානම් කරමින් සිටී"
+
+msgid "[Miscellaneous successes]"
+msgstr "වෙනත් සාර්ථක තත්ත්වයන්"
+
+msgid "Request successful"
+msgstr "ඉල්ලීම සාර්ථකව සම්පූර්ණ විය"
+
+msgid "Created successfully"
+msgstr "සාර්ථකව නිර්මාණය කරන ලදී"
+
+msgid "Accepted - processing"
+msgstr "පිළිගනු ලැබුවා, සැකසෙමින් පවතී"
+
+msgid "Non-authoritative information (from cache) (from cache)"
+msgstr "අධිකාරී නොවන තොරතුරු (හැඹිලියෙන්)"
+
+msgid "Success, no content returned"
+msgstr "සාර්ථකයි, අන්තර්ගතය ආපසු ලබා දුන්නේ නැත"
+
+msgid "Reset content"
+msgstr "කරුණාකර පෝරමය නැවත සකසන්න"
+
+msgid "Partial content (resume download)"
+msgstr "අර්ධ අන්තර්ගතය (බාධා වූ බාගැනීම සඳහා සහාය දක්වයි)"
+
+msgid "Multi-status (WebDAV)"
+msgstr "බහු-තත්ත්වය (WebDAV කාණ්ඩ මෙහෙයුම්)"
+
+msgid "Already reported (WebDAV)"
+msgstr "දැනටමත් වාර්තා කර ඇත (පුනරාවර්තනය වැළැක්වීම සඳහා)"
+
+msgid "IM used"
+msgstr "IM විස්තීර්ණ ප්‍රොටෝකෝලය භාවිතා කරන ලදී"
+
+msgid "[Miscellaneous redirections]"
+msgstr "වෙනත් නැවත යොමු කිරීම්"
+
+msgid "Multiple choices"
+msgstr "බහු විකල්ප"
+
+msgid "Moved permanently - update your links"
+msgstr "ස්ථිරවම ගෙන යන ලදී, කරුණාකර ඔබගේ සබැඳි යාවත්කාලීන කරන්න"
+
+msgid "Temporary redirect - URL unchanged"
+msgstr "තාවකාලික නැවත යොමු කිරීම, ලිපිනය නොවෙනස්ව පවතී"
+
+msgid "See other"
+msgstr "කරුණාකර වෙනත් ලිපිනයක් බලන්න"
+
+msgid "Not modified - using cached version"
+msgstr "වෙනස් කර නැත, හැඹිලිගත අනුවාදය භාවිතා කරන්න"
+
+msgid "Use proxy"
+msgstr "කරුණාකර ප්‍රොක්සියක් භාවිතා කරන්න"
+
+msgid "Switch proxy"
+msgstr "කරුණාකර ප්‍රොක්සිය වෙනස් කරන්න"
+
+msgid "Temporary redirect (keep method)"
+msgstr "තාවකාලික නැවත යොමු කිරීම (ඉල්ලීම් ක්‍රමය තබා ගන්න)"
+
+msgid "Permanent redirect - update your links"
+msgstr "ස්ථිර නැවත යොමු කිරීම, කරුණාකර ඔබගේ සබැඳි යාවත්කාලීන කරන්න"
+
+msgid "[Miscellaneous client/user errors]"
+msgstr "වෙනත් සේවාදායක/පරිශීලක දෝෂ"
+
+msgid "Bad request"
+msgstr "ඉල්ලීම් ආකෘතිය වැරදියි"
+
+msgid "Unauthorized - please log in"
+msgstr "අනුමත කර නැත, කරුණාකර පළමුව පිවිසෙන්න"
+
+msgid "Payment required"
+msgstr "ගෙවීම අවශ්‍ය වේ"
+
+msgid "Forbidden - access denied"
+msgstr "ප්‍රවේශය ප්‍රතික්ෂේප කරන ලදී, අවසර ප්‍රමාණවත් නොවේ"
+
+msgid "Page not found (404) - check for broken links"
+msgstr "පිටුව නොපවතී, කරුණාකර කැඩුණු සබැඳි පරීක්ෂා කරන්න"
+
+msgid "Method not allowed"
+msgstr "ඉල්ලීම් ක්‍රමයට අවසර නැත"
+
+msgid "Not acceptable"
+msgstr "පිළිගත නොහැකි ප්‍රතිචාර ආකෘතිය"
+
+msgid "Proxy authentication required"
+msgstr "ප්‍රොක්සි සත්‍යාපනය අවශ්‍ය වේ"
+
+msgid "Request timeout"
+msgstr "ඉල්ලීමේ කාලය ඉකුත් විය"
+
+msgid "Conflict - please try again"
+msgstr "ඉල්ලීම් ගැටුමක්, කරුණාකර ටික වේලාවකට පසු නැවත උත්සාහ කරන්න"
+
+msgid "Gone - permanently deleted"
+msgstr "සම්පත ස්ථිරවම මකා දමන ලදී"
+
+msgid "Length required"
+msgstr "අන්තර්ගතයේ දිග සඳහන් කිරීම අවශ්‍ය වේ"
+
+msgid "Precondition failed"
+msgstr "පූර්ව කොන්දේසිය සපුරා නැත"
+
+msgid "Payload too large"
+msgstr "ඉල්ලීමේ අන්තර්ගතය ඉතා විශාලයි"
+
+msgid "URI too long"
+msgstr "ඉල්ලීමේ ලිපිනය ඉතා දිගුයි"
+
+msgid "Unsupported media type"
+msgstr "සහාය නොදක්වන ගොනු වර්ගය"
+
+msgid "Range not satisfiable"
+msgstr "ඉල්ලීමේ පරාසය වැරදියි"
+
+msgid "Expectation failed"
+msgstr "Expect අවශ්‍යතාවය සපුරාලීමට අසමත් විය"
+
+msgid "I am a teapot (April Fools)"
+msgstr "මම තේ පෝච්චියක් (අප්‍රේල් මෝඩයන්ගේ විහිළුව)"
+
+msgid "Page expired (Laravel)"
+msgstr "පිටුවේ කල් ඉකුත් වී ඇත, කරුණාකර නැවුම් කර නැවත උත්සාහ කරන්න"
+
+msgid "Method failure (Spring)"
+msgstr "ක්‍රමය අසාර්ථක විය"
+
+msgid "Misdirected request"
+msgstr "ඉල්ලීම වැරදි ලෙස නැවත යොමු කරන ලදී"
+
+msgid "Unprocessable entity (WebDAV)"
+msgstr "ඉල්ලීම් ආකෘතිය නිවැරදි නමුත් සැකසීමට නොහැකිය"
+
+msgid "Locked (WebDAV)"
+msgstr "සම්පත දැනටමත් අගුලු දමා ඇත"
+
+msgid "Failed dependency (WebDAV)"
+msgstr "යැපෙන මෙහෙයුම අසාර්ථක විය"
+
+msgid "Too early"
+msgstr "ඉල්ලීම ඉතා ඉක්මනින් යවන ලදී"
+
+msgid "Upgrade required"
+msgstr "ප්‍රොටෝකෝලය උසස් කිරීම අවශ්‍ය වේ"
+
+msgid "Precondition required"
+msgstr "අවශ්‍ය පූර්ව කොන්දේසිය නොමැත"
+
+msgid "Too many requests - slow down"
+msgstr "ඉල්ලීම් ඉතා නිතර සිදු වේ, කරුණාකර ටික වේලාවකට පසු නැවත උත්සාහ කරන්න"
+
+msgid "Request header fields too large (Shopify)"
+msgstr "ඉල්ලීම් ශීර්ෂ ක්ෂේත්‍ර ඉතා විශාලයි"
+
+msgid "Request header too large"
+msgstr "ඉල්ලීම් ශීර්ෂය ඉතා විශාලයි"
+
+msgid "Login timeout (IIS)"
+msgstr "පිවිසුම් කාලය ඉකුත් විය, කරුණාකර නැවත පිවිසෙන්න"
+
+msgid "No response (nginx)"
+msgstr "සර්වරය ප්‍රතිචාර නොදක්වයි"
+
+msgid "Retry with (IIS)"
+msgstr "කරුණාකර ටික වේලාවකට පසු නැවත උත්සාහ කරන්න"
+
+msgid "Blocked by Windows parental controls"
+msgstr "දෙමාපිය පාලනය මගින් අවහිර කරන ලදී"
+
+msgid "Unavailable for legal reasons"
+msgstr "නීතිමය හේතූන් මත ප්‍රවේශ විය නොහැක"
+
+msgid "Client closed connection before idle timeout (AWS ELB)"
+msgstr "සේවාදායකයා විසින්ම සම්බන්ධතාවය කඩා දැමීය"
+
+msgid "X-Forwarded-For header with >30 IP addresses (AWS ELB)"
+msgstr "නැවත යොමු කිරීමේ දාමයේ IP ලිපින 30 කට වඩා තිබේ"
+
+msgid "Incompatible protocol versions (AWS ELB)"
+msgstr "ප්‍රොටෝකෝල අනුවාද නොගැලපේ"
+
+msgid "Request header too large (nginx)"
+msgstr "ඉල්ලීම් ශීර්ෂය ඉතා විශාලයි"
+
+msgid "SSL certificate error (nginx)"
+msgstr "SSL සහතික දෝෂය"
+
+msgid "SSL certificate required (nginx)"
+msgstr "SSL සහතිකය අවශ්‍ය වේ"
+
+msgid "HTTP request sent to HTTPS port (nginx)"
+msgstr "HTTP ඉල්ලීම HTTPS වරායට යවන ලදී"
+
+msgid "Invalid token (ArcGIS)"
+msgstr "වලංගු නොවන ටෝකනය"
+
+msgid "Token required (ArcGIS) / Client closed request (nginx)"
+msgstr "ටෝකනය අවශ්‍ය වේ / සේවාදායකයා ඉල්ලීම වසා දැමීය"
+
+msgid "Resource limit reached (cPanel)"
+msgstr "සම්පත් සීමාවට ළඟා විය (CPU/මතකය)"
+
+msgid "Bandwidth limit exceeded (Apache/cPanel)"
+msgstr "කලාප පළල සීමාව ඉක්මවා ඇත"
+
+msgid "[Miscellaneous server errors]"
+msgstr "වෙනත් සර්වර දෝෂ"
+
+msgid "Internal server error - check logs"
+msgstr "සර්වර අභ්‍යන්තර දෝෂයකි, කරුණාකර ලොගය පරීක්ෂා කරන්න"
+
+msgid "Not implemented"
+msgstr "සර්වරය මෙම කාර්යයට සහාය නොදක්වයි"
+
+msgid "Bad gateway - backend error"
+msgstr "ද්වාර දෝෂයකි, පසුපෙළ සේවය ක්‍රියා නොකරයි"
+
+msgid "Service unavailable - maintenance or overload"
+msgstr "සේවාව ලබා ගත නොහැක, නඩත්තු කිරීම හෝ අධික බර"
+
+msgid "Gateway timeout"
+msgstr "ද්වාර ප්‍රතිචාර කාලය ඉකුත් විය"
+
+msgid "HTTP version not supported"
+msgstr "HTTP ප්‍රොටෝකෝල අනුවාදය සහාය නොදක්වයි"
+
+msgid "Variant also negotiates"
+msgstr "ප්‍රභේදය ද සාකච්ඡාවට සහභාගී වේ (වින්‍යාස දෝෂය)"
+
+msgid "Insufficient storage (WebDAV)"
+msgstr "ගබඩා ඉඩ ප්‍රමාණවත් නොවේ"
+
+msgid "Loop detected (WebDAV)"
+msgstr "ලූප් යොමුවක් හමු විය"
+
+msgid "Not extended"
+msgstr "තවදුරටත් විස්තීරණය අවශ්‍ය වේ"
+
+msgid "Network authentication required"
+msgstr "ජාල අනන්‍යතා සත්‍යාපනය අවශ්‍ය වේ"
+
+msgid "Unknown error (Cloudflare)"
+msgstr "නොදන්නා දෝෂයක්"
+
+msgid "Web server is down (Cloudflare)"
+msgstr "වෙබ් සර්වරය වසා ඇත"
+
+msgid "Connection timeout (Cloudflare)"
+msgstr "සම්බන්ධතා කාලය ඉකුත් විය"
+
+msgid "Origin is unreachable (Cloudflare)"
+msgstr "මූලාශ්‍ර සර්වරයට සම්බන්ධ විය නොහැක"
+
+msgid "A timeout occurred (Cloudflare)"
+msgstr "කාලය ඉකුත් වීමක් සිදු විය"
+
+msgid "SSL handshake failed (Cloudflare)"
+msgstr "SSL අත්හසුන අසාර්ථක විය"
+
+msgid "Invalid SSL certificate (Cloudflare)"
+msgstr "SSL සහතිකය වලංගු නොවේ"
+
+msgid "Railgun error (Cloudflare - obsolete)"
+msgstr "Railgun දෝෂය (යල්පැන ගිය)"
+
+msgid "Site is overloaded (SSLLabs)"
+msgstr "අඩවිය අධික ලෙස පටවා ඇත"
+
+msgid "Origin DNS error (Cloudflare) / Site is frozen (Pantheon)"
+msgstr "මූලාශ්‍ර DNS දෝෂය / අඩවිය ශීත කර ඇත"
+
+msgid "Temporarily disabled (Shopify)"
+msgstr "තාවකාලිකව අක්‍රිය කර ඇත"
+
+msgid "Unauthorized (AWS ELB)"
+msgstr "අනුමත කර නැත"
+
+msgid "Network read timeout error"
+msgstr "ජාල කියවීමේ කාලය ඉකුත් වීමේ දෝෂය"
+
+msgid "Network connect timeout error"
+msgstr "ජාලයට සම්බන්ධ වීමේ කාලය ඉකුත් වීමේ දෝෂය"
+
+msgid "Unexpected token (Shopify)"
+msgstr "අනපේක්ෂිත ටෝකනය"
+
+msgid "Request denied (LinkedIn)"
+msgstr "ඉල්ලීම ප්‍රතික්ෂේප කරන ලදී"
+
+msgid "HTTP/2 GOAWAY (AWS ELB)"
+msgstr "HTTP/2 සම්බන්ධතාවය වසා ඇත"
+
+msgid "[Unknown]"
+msgstr "නොදන්නා තත්ත්ව කේතය"
+
+msgid "Nonstandard success response (ESMTP)"
+msgstr "සම්මත නොවන සාර්ථක ප්‍රතිචාරය (ESMTP)"
+
+msgid "System status, or system help reply"
+msgstr "පද්ධති තත්ත්වය හෝ උදවු තොරතුරු"
+
+msgid "Help message"
+msgstr "උදවු තොරතුරු"
+
+msgid "SMTP service ready (LMTP)"
+msgstr "SMTP සේවාව සූදානම් (LMTP)"
+
+msgid "Service ready - server is ready to receive mail"
+msgstr "සේවාව සූදානම් - මේල් සර්වරයට මේල් ලබා ගත හැකිය"
+
+msgid "Service closing - connection is being closed"
+msgstr "සේවාව වැසෙමින් පවතී - සම්බන්ධතාවය කඩා වැටේ"
+
+msgid "Authentication successful"
+msgstr "අනන්‍යතා සත්‍යාපනය සාර්ථකයි"
+
+msgid "Requested mail action taken and completed"
+msgstr "ඉල්ලූ මේල් ක්‍රියාව ක්‍රියාත්මක කර සම්පූර්ණ කරන ලදී"
+
+msgid "User not local - will forward to another address"
+msgstr "පරිශීලකයා මෙම සර්වරයේ නැත - වෙනත් ලිපිනයකට නැවත යොමු කරනු ලැබේ"
+
+msgid "Cannot verify recipient, but will attempt delivery"
+msgstr "ලබන්නා තහවුරු කිරීමට නොහැකි විය, නමුත් බෙදා හැරීමට උත්සාහ කරනු ලැබේ"
+
+msgid "Message accepted for delivery (DSN)"
+msgstr "මේල් බෙදා හැරීම සඳහා පිළිගනු ලැබුවා (DSN)"
+
+msgid "User name is a mailbox"
+msgstr "පරිශීලක නාමය යනු මේල් පෙට්ටියකි"
+
+msgid "Authentication challenge - please respond"
+msgstr "අනන්‍යතා සත්‍යාපන අභියෝගය - කරුණාකර ප්‍රතිචාර දක්වන්න"
+
+msgid "Start mail input - end with <CRLF>.<CRLF>"
+msgstr "මේල් අන්තර්ගතය ඇතුළත් කිරීම ආරම්භ කරන්න - <CRLF>.<CRLF> සමඟ අවසන් කරන්න"
+
+msgid "Continue (LMTP)"
+msgstr "දිගටම කරගෙන යන්න (LMTP)"
+
+msgid "Service not available - connection closing, try again later"
+msgstr "සේවාව ලබා ගත නොහැක - සම්බන්ධතාවය වැසෙමින් පවතී, කරුණාකර ටික වේලාවකට පසු නැවත උත්සාහ කරන්න"
+
+msgid "Mailbox busy or temporarily unavailable (Exchange)"
+msgstr "මේල් පෙට්ටිය කාර්යබහුලයි හෝ තාවකාලිකව ලබා ගත නොහැක (Exchange)"
+
+msgid "Connection rate limit exceeded (Postfix)"
+msgstr "සම්බන්ධතා සංඛ්‍යාත සීමාව ඉක්මවා ඇත (Postfix)"
+
+msgid "Too many concurrent connections (Postfix)"
+msgstr "එකවර සම්බන්ධතා ගණන ඉතා වැඩියි (Postfix)"
+
+msgid "Unable to establish connection (Postfix)"
+msgstr "සම්බන්ධතාවය ස්ථාපිත කිරීමට නොහැකි විය (Postfix)"
+
+msgid "Connection timed out (Postfix)"
+msgstr "සම්බන්ධතා කාලය ඉකුත් විය (Postfix)"
+
+msgid "Connection dropped due to error (Postfix)"
+msgstr "දෝෂයක් හේතුවෙන් සම්බන්ධතාවය කඩා වැටුණි (Postfix)"
+
+msgid "Mailbox temporarily locked (Exchange)"
+msgstr "මේල් පෙට්ටිය තාවකාලිකව අගුලු දමා ඇත (Exchange)"
+
+msgid "Too many recipients (Postfix/Exim)"
+msgstr "ලබන්නන්ගේ ගණන ඉතා වැඩියි (Postfix/Exim)"
+
+msgid "Mail server error (Exchange)"
+msgstr "මේල් සර්වර දෝෂය (Exchange)"
+
+msgid "Received loop detected (Exim)"
+msgstr "ලැබුණු ලූපයක් හමු විය (Exim)"
+
+msgid "Too many hop count (Exim)"
+msgstr "නැවත යොමු කිරීම් ගණන ඉතා වැඩියි (Exim)"
+
+msgid "DNS lookup failed (Postfix)"
+msgstr "DNS විමසුම අසාර්ථක විය (Postfix)"
+
+msgid "Unable to authenticate (Postfix)"
+msgstr "සත්‍යාපනය කිරීමට නොහැකි විය (Postfix)"
+
+msgid "TLS handshake failed (Postfix)"
+msgstr "TLS අත්හසුන අසාර්ථක විය (Postfix)"
+
+msgid "SMTP protocol violation (Postfix)"
+msgstr "SMTP ප්‍රොටෝකෝල උල්ලංඝනය කිරීම (Postfix)"
+
+msgid "Message size exceeds limit (Exchange)"
+msgstr "මේල් ප්‍රමාණය සීමාව ඉක්මවා ඇත (Exchange)"
+
+msgid "Message rate limit exceeded (Postfix)"
+msgstr "මේල් සංඛ්‍යාත සීමාව ඉක්මවා ඇත (Postfix)"
+
+msgid "Mailbox quota exceeded - temporary"
+msgstr "මේල් පෙට්ටි කෝටාව පිරී ඇත - තාවකාලික තත්ත්වය"
+
+msgid "Domain not found (Postfix)"
+msgstr "වසම හමු නොවීය (Postfix)"
+
+msgid "Message header invalid (Postfix)"
+msgstr "මේල් ශීර්ෂය වැරදියි (Postfix)"
+
+msgid "Bounce loop detected (Postfix)"
+msgstr "බවුන්ස් ලූපයක් හමු විය (Postfix)"
+
+msgid "Unable to route (Postfix)"
+msgstr "මාර්ගය තීරණය කිරීමට නොහැකි විය (Postfix)"
+
+msgid "Sender domain not found (Postfix)"
+msgstr "යවන්නාගේ වසම හමු නොවීය (Postfix)"
+
+msgid "Recipient domain not found (Postfix)"
+msgstr "ලබන්නාගේ වසම හමු නොවීය (Postfix)"
+
+msgid "Greylisting in progress - please try again (Postgrey)"
+msgstr "ග්‍රේලිස්ට් පරීක්ෂාව සිදු වෙමින් පවතී - කරුණාකර ටික වේලාවකට පසු නැවත උත්සාහ කරන්න (Postgrey)"
+
+msgid "Spam filtering in progress (SpamAssassin)"
+msgstr "ස්පෑම් පෙරීම සිදු වෙමින් පවතී (SpamAssassin)"
+
+msgid "Virus scanning in progress (ClamAV)"
+msgstr "වෛරස් පරිලෝකනය සිදු වෙමින් පවතී (ClamAV)"
+
+msgid "Mailbox unavailable - try again later"
+msgstr "මේල් පෙට්ටිය ලබා ගත නොහැක - කරුණාකර ටික වේලාවකට පසු නැවත උත්සාහ කරන්න"
+
+msgid "Requested action aborted - error in processing"
+msgstr "ඉල්ලූ ක්‍රියාව අවලංගු කරන ලදී - සැකසීමේදී දෝෂයක් ඇති විය"
+
+msgid "Insufficient system storage - try again later"
+msgstr "පද්ධති ගබඩා ඉඩ ප්‍රමාණවත් නොවේ - කරුණාකර ටික වේලාවකට පසු නැවත උත්සාහ කරන්න"
+
+msgid "Too many messages for this recipient (Exchange)"
+msgstr "මෙම ලබන්නා සඳහා මේල් ගණන ඉතා වැඩියි (Exchange)"
+
+msgid "TLS not available (Postfix)"
+msgstr "TLS ලබා ගත නොහැක (Postfix)"
+
+msgid "Server unable to accept messages (Postfix)"
+msgstr "සර්වරයට මේල් පිළිගත නොහැක (Postfix)"
+
+msgid "Temporary failure in DNS lookup (Exim)"
+msgstr "DNS විමසුමේ තාවකාලික අසාර්ථකත්වය (Exim)"
+
+msgid "Quota exceeded - temporary"
+msgstr "කෝටාව ඉක්මවා ඇත - තාවකාලික තත්ත්වය"
+
+msgid "Message too big - temporary"
+msgstr "මේල් ඉතා විශාලයි - තාවකාලික තත්ත්වය"
+
+msgid "Too many messages per connection"
+msgstr "එක් සම්බන්ධතාවක මේල් ගණන ඉතා වැඩියි"
+
+msgid "Load average too high (Postfix)"
+msgstr "පද්ධති බර ඉතා ඉහළයි (Postfix)"
+
+msgid "Connection refused (Postfix)"
+msgstr "සම්බන්ධතාවය ප්‍රතික්ෂේප කරන ලදී (Postfix)"
+
+msgid "Send rate limit exceeded (Postfix)"
+msgstr "යැවීමේ සංඛ්‍යාත සීමාව ඉක්මවා ඇත (Postfix)"
+
+msgid "Recipient rate limit exceeded (Postfix)"
+msgstr "ලබන්නාගේ සංඛ්‍යාත සීමාව ඉක්මවා ඇත (Postfix)"
+
+msgid "Sender rate limit exceeded (Postfix)"
+msgstr "යවන්නාගේ සංඛ්‍යාත සීමාව ඉක්මවා ඇත (Postfix)"
+
+msgid "IP address rate limit exceeded (Postfix)"
+msgstr "IP ලිපිනයේ සංඛ්‍යාත සීමාව ඉක්මවා ඇත (Postfix)"
+
+msgid "MX lookup failed (Postfix)"
+msgstr "MX විමසුම අසාර්ථක විය (Postfix)"
+
+msgid "A record lookup failed (Postfix)"
+msgstr "A වාර්තා විමසුම අසාර්ථක විය (Postfix)"
+
+msgid "PTR record lookup failed (Postfix)"
+msgstr "PTR වාර්තා විමසුම අසාර්ථක විය (Postfix)"
+
+msgid "Greylisting active - please try again (Postgrey)"
+msgstr "ග්‍රේලිස්ට් පරීක්ෂාව සක්‍රිය කර ඇත - කරුණාකර ටික වේලාවකට පසු නැවත උත්සාහ කරන්න (Postgrey)"
+
+msgid "Sender address rejected - domain not verified (DMARC pending)"
+msgstr "යවන්නාගේ ලිපිනය ප්‍රතික්ෂේප කරන ලදී - වසම තහවුරු කර නැත (DMARC බලා සිටී)"
+
+msgid "Recipient address rejected - domain not verified (DMARC pending)"
+msgstr "ලබන්නාගේ ලිපිනය ප්‍රතික්ෂේප කරන ලදී - වසම තහවුරු කර නැත (DMARC බලා සිටී)"
+
+msgid "DKIM verification pending - temporary failure"
+msgstr "DKIM තහවුරු කිරීම බලා සිටී - තාවකාලික අසාර්ථකත්වය"
+
+msgid "SPF verification pending - temporary failure"
+msgstr "SPF තහවුරු කිරීම බලා සිටී - තාවකාලික අසාර්ථකත්වය"
+
+msgid "DMARC verification pending - temporary failure"
+msgstr "DMARC තහවුරු කිරීම බලා සිටී - තාවකාලික අසාර්ථකත්වය"
+
+msgid "DNSBL lookup temporary failure"
+msgstr "DNSBL විමසුමේ තාවකාලික අසාර්ථකත්වය"
+
+msgid "RHSBL lookup temporary failure"
+msgstr "RHSBL විමසුමේ තාවකාලික අසාර්ථකත්වය"
+
+msgid "URI DNSBL lookup temporary failure"
+msgstr "URI DNSBL විමසුමේ තාවකාලික අසාර්ථකත්වය"
+
+msgid "Temporary authentication failure (Dovecot)"
+msgstr "තාවකාලික සත්‍යාපන අසාර්ථකත්වය (Dovecot)"
+
+msgid "Temporary authorization failure (Sendmail)"
+msgstr "තාවකාලික අනුමත කිරීමේ අසාර්ථකත්වය (Sendmail)"
+
+msgid "Rate limit exceeded per sender (Exim)"
+msgstr "එක් යවන්නෙකුගේ සංඛ්‍යාත සීමාව ඉක්මවා ඇත (Exim)"
+
+msgid "Rate limit exceeded per recipient (Exim)"
+msgstr "එක් ලබන්නෙකුගේ සංඛ්‍යාත සීමාව ඉක්මවා ඇත (Exim)"
+
+msgid "Rate limit exceeded per domain (Exim)"
+msgstr "එක් වසමක සංඛ්‍යාත සීමාව ඉක්මවා ඇත (Exim)"
+
+msgid "Rate limit exceeded per IP (Exim)"
+msgstr "එක් IP එකක සංඛ්‍යාත සීමාව ඉක්මවා ඇත (Exim)"
+
+msgid "Message queued for later delivery (Postfix)"
+msgstr "මේල් පසුව බෙදා හැරීම සඳහා පෝලිමට ඇතුළත් කර ඇත (Postfix)"
+
+msgid "Delivery delayed due to policy (Exchange)"
+msgstr "ප්‍රතිපත්තිය හේතුවෙන් බෙදා හැරීම ප්‍රමාද විය (Exchange)"
+
+msgid "Temporary failure in content filter"
+msgstr "අන්තර්ගත පෙරහනෙහි තාවකාලික අසාර්ථකත්වය"
+
+msgid "Temporary failure in antivirus scanner"
+msgstr "ප්‍රති වයිරස පරිලෝකනයේ තාවකාලික අසාර්ථකත්වය"
+
+msgid "Temporary failure in spam filter"
+msgstr "ස්පෑම් පෙරහනෙහි තාවකාලික අසාර්ථකත්වය"
+
+msgid "Temporary failure in milter (Postfix)"
+msgstr "Milter හි තාවකාලික අසාර්ථකත්වය (Postfix)"
+
+msgid "Greylisting - try again later"
+msgstr "ග්‍රේලිස්ට් - කරුණාකර ටික වේලාවකට පසු නැවත උත්සාහ කරන්න"
+
+msgid "DDoS protection active - try again later"
+msgstr "DDoS ආරක්ෂණය සක්‍රිය කර ඇත - කරුණාකර ටික වේලාවකට පසු නැවත උත්සාහ කරන්න"
+
+msgid "SMTP policy violation - temporary"
+msgstr "SMTP ප්‍රතිපත්ති උල්ලංඝනය කිරීම - තාවකාලික තත්ත්වය"
+
+msgid "Temporary error in RCPT TO processing"
+msgstr "RCPT TO සැකසීමේ තාවකාලික දෝෂය"
+
+msgid "Temporary error in MAIL FROM processing"
+msgstr "MAIL FROM සැකසීමේ තාවකාලික දෝෂය"
+
+msgid "Temporary error in EHLO/HELO processing"
+msgstr "EHLO/HELO සැකසීමේ තාවකාලික දෝෂය"
+
+msgid "Temporary error in DATA processing"
+msgstr "DATA සැකසීමේ තාවකාලික දෝෂය"
+
+msgid "Temporary error - service busy, try again later"
+msgstr "තාවකාලික දෝෂය - සේවාව කාර්යබහුලයි, කරුණාකර ටික වේලාවකට පසු නැවත උත්සාහ කරන්න"
+
+msgid "Syntax error - command unrecognized or too long"
+msgstr "වාක්‍ය ඛණ්ඩ දෝෂය - විධානය හඳුනා නොගත් හෝ ඉතා දිගුයි"
+
+msgid "Syntax error in parameters or arguments"
+msgstr "පරාමිති හෝ තර්ක වල වාක්‍ය ඛණ්ඩ දෝෂය"
+
+msgid "Command not implemented"
+msgstr "විධානය ක්‍රියාත්මක කර නැත"
+
+msgid "Bad sequence of commands"
+msgstr "විධාන අනුපිළිවෙල වැරදියි"
+
+msgid "Command parameter not implemented"
+msgstr "විධානයේ පරාමිතිය ක්‍රියාත්මක කර නැත"
+
+msgid "Version not supported (ESMTP)"
+msgstr "අනුවාදය සහාය නොදක්වයි (ESMTP)"
+
+msgid "Mailbox path invalid (LMTP)"
+msgstr "මේල් පෙට්ටි මාර්ගය වලංගු නොවේ (LMTP)"
+
+msgid "Too many commands in this session (Postfix)"
+msgstr "මෙම සැසියේ විධාන ගණන ඉතා වැඩියි (Postfix)"
+
+msgid "Recipient limit exceeded (Postfix)"
+msgstr "ලබන්නන්ගේ සීමාව ඉක්මවා ඇත (Postfix)"
+
+msgid "Sender limit exceeded (Postfix)"
+msgstr "යවන්නන්ගේ සීමාව ඉක්මවා ඇත (Postfix)"
+
+msgid "Domain limit exceeded (Postfix)"
+msgstr "වසම් සීමාව ඉක්මවා ඇත (Postfix)"
+
+msgid "Mailbox does not exist (Exchange)"
+msgstr "මේල් පෙට්ටිය නොපවතී (Exchange)"
+
+msgid "DNS failure - permanent"
+msgstr "DNS අසාර්ථකත්වය - ස්ථිර දෝෂය"
+
+msgid "Address type not supported (Postfix)"
+msgstr "ලිපින වර්ගය සහාය නොදක්වයි (Postfix)"
+
+msgid "Unable to open mailbox (Postfix)"
+msgstr "මේල් පෙට්ටිය විවෘත කිරීමට නොහැකි විය (Postfix)"
+
+msgid "Mailbox locked - permanent"
+msgstr "මේල් පෙට්ටිය අගුලු දමා ඇත - ස්ථිර තත්ත්වය"
+
+msgid "Message rejected due to policy (Exchange)"
+msgstr "ප්‍රතිපත්තිය හේතුවෙන් මේල් ප්‍රතික්ෂේප කරන ලදී (Exchange)"
+
+msgid "Content rejected - permanent"
+msgstr "අන්තර්ගතය ප්‍රතික්ෂේප කරන ලදී - ස්ථිර තත්ත්වය"
+
+msgid "Attachment type not allowed"
+msgstr "ඇමිණුම් වර්ගයට අවසර නැත"
+
+msgid "Message encoding not supported"
+msgstr "මේල් කේතනයට සහාය නොදක්වයි"
+
+msgid "Sender domain does not exist - permanent"
+msgstr "යවන්නාගේ වසම නොපවතී - ස්ථිර තත්ත්වය"
+
+msgid "Domain does not accept mail or is closing"
+msgstr "වසම මේල් පිළිගන්නේ නැත හෝ වැසෙමින් පවතී"
+
+msgid "Recipient domain does not exist - permanent"
+msgstr "ලබන්නාගේ වසම නොපවතී - ස්ථිර තත්ත්වය"
+
+msgid "Mailbox quota exceeded - permanent"
+msgstr "මේල් පෙට්ටි කෝටාව පිරී ඇත - ස්ථිර තත්ත්වය"
+
+msgid "Message size exceeds limit - permanent"
+msgstr "මේල් ප්‍රමාණය සීමාව ඉක්මවා ඇත - ස්ථිර තත්ත්වය"
+
+msgid "Authentication required (Sendmail)"
+msgstr "සත්‍යාපනය අවශ්‍ය වේ (Sendmail)"
+
+msgid "Authentication failed (Sendmail)"
+msgstr "සත්‍යාපනය අසාර්ථක විය (Sendmail)"
+
+msgid "Authentication mechanism not supported"
+msgstr "සත්‍යාපන යාන්ත්‍රණයට සහාය නොදක්වයි"
+
+msgid "Authentication credentials invalid"
+msgstr "සත්‍යාපන අක්තපත්‍ර වලංගු නොවේ"
+
+msgid "Authentication account expired"
+msgstr "සත්‍යාපන ගිණුමේ කල් ඉකුත් විය"
+
+msgid "Access denied - authentication required"
+msgstr "ප්‍රවේශය ප්‍රතික්ෂේප කරන ලදී - සත්‍යාපනය අවශ්‍ය වේ"
+
+msgid "Access denied (Sendmailism)"
+msgstr "ප්‍රවේශය ප්‍රතික්ෂේප කරන ලදී (Sendmail)"
+
+msgid "Access denied - not authenticated"
+msgstr "ප්‍රවේශය ප්‍රතික්ෂේප කරන ලදී - සත්‍යාපනය කර නැත"
+
+msgid "Access denied - account locked"
+msgstr "ප්‍රවේශය ප්‍රතික්ෂේප කරන ලදී - ගිණුම අගුලු දමා ඇත"
+
+msgid "Access denied - account disabled"
+msgstr "ප්‍රවේශය ප්‍රතික්ෂේප කරන ලදී - ගිණුම අක්‍රිය කර ඇත"
+
+msgid "Authentication failed"
+msgstr "සත්‍යාපනය අසාර්ථක විය"
+
+msgid "Authentication required for relay (Postfix)"
+msgstr "රිලේ නැවත යොමු කිරීම සඳහා සත්‍යාපනය අවශ්‍ය වේ (Postfix)"
+
+msgid "Authentication failed for relay (Postfix)"
+msgstr "රිලේ නැවත යොමු කිරීමේ සත්‍යාපනය අසාර්ථක විය (Postfix)"
+
+msgid "Encryption required (STARTTLS)"
+msgstr "ගුප්තකේතනය කළ සම්බන්ධතාවයක් අවශ්‍ය වේ (STARTTLS)"
+
+msgid "TLS required for this recipient"
+msgstr "මෙම ලබන්නා සඳහා TLS ගුප්තකේතනය අවශ්‍ය වේ"
+
+msgid "Encryption strength insufficient"
+msgstr "ගුප්තකේතන ශක්තිය ප්‍රමාණවත් නොවේ"
+
+msgid "Certificate validation failed"
+msgstr "සහතික තහවුරු කිරීම අසාර්ථක විය"
+
+msgid "Invalid TLS certificate"
+msgstr "TLS සහතිකය වලංගු නොවේ"
+
+msgid "TLS protocol version not supported"
+msgstr "TLS ප්‍රොටෝකෝල අනුවාදය සහාය නොදක්වයි"
+
+msgid "Cipher suite not supported"
+msgstr "ගුප්ත කේත කට්ටලයට සහාය නොදක්වයි"
+
+msgid "Access denied - no valid recipient"
+msgstr "ප්‍රවේශය ප්‍රතික්ෂේප කරන ලදී - වලංගු ලබන්නෙකු නැත"
+
+msgid "Access denied - no valid sender"
+msgstr "ප්‍රවේශය ප්‍රතික්ෂේප කරන ලදී - වලංගු යවන්නෙකු නැත"
+
+msgid "Access denied - domain not allowed"
+msgstr "ප්‍රවේශය ප්‍රතික්ෂේප කරන ලදී - වසමට අවසර නැත"
+
+msgid "Access denied - IP address blocked (permanent)"
+msgstr "ප්‍රවේශය ප්‍රතික්ෂේප කරන ලදී - IP ලිපිනය අවහිර කර ඇත (ස්ථිර)"
+
+msgid "Access denied - sender domain blacklisted"
+msgstr "ප්‍රවේශය ප්‍රතික්ෂේප කරන ලදී - යවන්නාගේ වසම කළු ලැයිස්තුවේ ඇත"
+
+msgid "Mailbox unavailable - requested action not taken"
+msgstr "මේල් පෙට්ටිය ලබා ගත නොහැක - ඉල්ලූ ක්‍රියාව ක්‍රියාත්මක කර නැත"
+
+msgid "User not local - please try forwarding address"
+msgstr "පරිශීලකයා මෙම සර්වරයේ නැත - කරුණාකර නැවත යොමු කිරීමේ ලිපිනය භාවිතා කරන්න"
+
+msgid "Requested action aborted - exceeded storage allocation"
+msgstr "ඉල්ලූ ක්‍රියාව අවලංගු කරන ලදී - ගබඩා වෙන් කිරීම ඉක්මවා ඇත"
+
+msgid "Mailbox name not allowed"
+msgstr "මේල් පෙට්ටියේ නමට අවසර නැත"
+
+msgid "Requested action rejected - access denied"
+msgstr "ඉල්ලූ ක්‍රියාව ප්‍රතික්ෂේප කරන ලදී - ප්‍රවේශය ප්‍රතික්ෂේප කරන ලදී"
+
+msgid "MAIL FROM/RCPT TO parameters not recognized"
+msgstr "MAIL FROM/RCPT TO පරාමිති හඳුනා ගත්තේ නැත"
+
+msgid "Domain not allowed to send (DMARC reject)"
+msgstr "වසමට යැවීමේ අවසර නැත (DMARC ප්‍රතික්ෂේප කිරීම)"
+
+msgid "Too many duplicate messages - permanent"
+msgstr "පුනරාවර්තන මේල් ගණන ඉතා වැඩියි - ස්ථිර තත්ත්වය"
+
+msgid "Sender address rejected - domain not in SPF"
+msgstr "යවන්නාගේ ලිපිනය ප්‍රතික්ෂේප කරන ලදී - වසම SPF හි නැත"
+
+msgid "Sender address rejected - DKIM verification failed"
+msgstr "යවන්නාගේ ලිපිනය ප්‍රතික්ෂේප කරන ලදී - DKIM තහවුරු කිරීම අසාර්ථක විය"
+
+msgid "Sender address rejected - DMARC policy reject"
+msgstr "යවන්නාගේ ලිපිනය ප්‍රතික්ෂේප කරන ලදී - DMARC ප්‍රතිපත්ති ප්‍රතික්ෂේප කිරීම"
+
+msgid "Recipient address rejected - DMARC policy reject"
+msgstr "ලබන්නාගේ ලිපිනය ප්‍රතික්ෂේප කරන ලදී - DMARC ප්‍රතිපත්ති ප්‍රතික්ෂේප කිරීම"
+
+msgid "Message rejected due to spam content"
+msgstr "ස්පෑම් අන්තර්ගතය හේතුවෙන් මේල් ප්‍රතික්ෂේප කරන ලදී"
+
+msgid "Message rejected due to virus detected"
+msgstr "වයිරසයක් හමු වූ නිසා මේල් ප්‍රතික්ෂේප කරන ලදී"
+
+msgid "Message rejected due to malicious content"
+msgstr "හානිකර අන්තර්ගතය හේතුවෙන් මේල් ප්‍රතික්ෂේප කරන ලදී"
+
+msgid "Message rejected due to phishing detection"
+msgstr "මසුන් ඇල්ලීමක් හමු වූ නිසා මේල් ප්‍රතික්ෂේප කරන ලදී"
+
+msgid "Message rejected due to malware detection"
+msgstr "අනිෂ්ට මෘදුකාංගයක් හමු වූ නිසා මේල් ප්‍රතික්ෂේප කරන ලදී"
+
+msgid "Message rejected due to policy - permanent"
+msgstr "ප්‍රතිපත්තිය හේතුවෙන් මේල් ප්‍රතික්ෂේප කරන ලදී - ස්ථිර තත්ත්වය"
+
+msgid "Message rejected due to content filtering"
+msgstr "අන්තර්ගත පෙරීම හේතුවෙන් මේල් ප්‍රතික්ෂේප කරන ලදී"
+
+msgid "Message rejected due to reputation"
+msgstr "කීර්තිය හේතුවෙන් මේල් ප්‍රතික්ෂේප කරන ලදී"
+
+msgid "Access denied - access_map violation"
+msgstr "ප්‍රවේශය ප්‍රතික්ෂේප කරන ලදී - access_map උල්ලංඝනය කිරීම"
+
+msgid "Access denied - SMTP client listed in RBL"
+msgstr "ප්‍රවේශය ප්‍රතික්ෂේප කරන ලදී - SMTP සේවාදායකයා RBL හි ඇත"
+
+msgid "Access denied - relay not authorized"
+msgstr "ප්‍රවේශය ප්‍රතික්ෂේප කරන ලදී - රිලේ නැවත යොමු කිරීම බලයලත් නොවේ"
+
+msgid "Access denied - unknown SMTP client hostname"
+msgstr "ප්‍රවේශය ප්‍රතික්ෂේප කරන ලදී - නොදන්නා SMTP සේවාදායක ධාරක නාමය"
+
+msgid "Access denied - bad syntax for client HELO hostname"
+msgstr "ප්‍රවේශය ප්‍රතික්ෂේප කරන ලදී - සේවාදායක HELO ධාරක නාමයේ වාක්‍ය ඛණ්ඩ දෝෂය"
+
+msgid "Access denied - SMTP client hostname rejected"
+msgstr "ප්‍රවේශය ප්‍රතික්ෂේප කරන ලදී - SMTP සේවාදායක ධාරක නාමය ප්‍රතික්ෂේප කරන ලදී"
+
+msgid "Access denied - unknown domain for sender or recipient"
+msgstr "ප්‍රවේශය ප්‍රතික්ෂේප කරන ලදී - යවන්නාගේ හෝ ලබන්නාගේ වසම නොදනී"
+
+msgid "Access denied - unknown client HELO hostname"
+msgstr "ප්‍රවේශය ප්‍රතික්ෂේප කරන ලදී - නොදන්නා සේවාදායක HELO ධාරක නාමය"
+
+msgid "Access denied - invalid domain (not FQDN)"
+msgstr "ප්‍රවේශය ප්‍රතික්ෂේප කරන ලදී - වලංගු නොවන වසම (FQDN නොවේ)"
+
+msgid "Access denied - domain not qualified"
+msgstr "ප්‍රවේශය ප්‍රතික්ෂේප කරන ලදී - වසම සුදුසුකම් නැත"
+
+msgid "Access denied - mail server misconfigured"
+msgstr "ප්‍රවේශය ප්‍රතික්ෂේප කරන ලදී - මේල් සර්වරය වැරදි ලෙස වින්‍යාස කර ඇත"
+
+msgid "Access denied - open relay not allowed"
+msgstr "ප්‍රවේශය ප්‍රතික්ෂේප කරන ලදී - විවෘත රිලේ වලට අවසර නැත"
+
+msgid "Access denied - proxy not allowed"
+msgstr "ප්‍රවේශය ප්‍රතික්ෂේප කරන ලදී - ප්‍රොක්සි භාවිතයට අවසර නැත"
+
+msgid "Access denied - dynamic IP not allowed"
+msgstr "ප්‍රවේශය ප්‍රතික්ෂේප කරන ලදී - ගතික IP වලට අවසර නැත"
+
+msgid "Access denied - residential IP not allowed"
+msgstr "ප්‍රවේශය ප්‍රතික්ෂේප කරන ලදී - නේවාසික IP වලට අවසර නැත"
+
+msgid "Access denied - VPN/Tor detected"
+msgstr "ප්‍රවේශය ප්‍රතික්ෂේප කරන ලදී - VPN/Tor හමු විය"
+
+msgid "Access denied - Spamhaus DROP listed"
+msgstr "ප්‍රවේශය ප්‍රතික්ෂේප කරන ලදී - Spamhaus DROP ලැයිස්තුවේ ඇත"
+
+msgid "Access denied - URL listed in URIBL"
+msgstr "ප්‍රවේශය ප්‍රතික්ෂේප කරන ලදී - URL URIBL ලැයිස්තුවේ ඇත"
+
+msgid "Access denied - domain in RHSBL"
+msgstr "ප්‍රවේශය ප්‍රතික්ෂේප කරන ලදී - වසම RHSBL ලැයිස්තුවේ ඇත"
+
+msgid "Access denied - IP in DNSWL (policy)"
+msgstr "ප්‍රවේශය ප්‍රතික්ෂේප කරන ලදී - IP DNSWL ලැයිස්තුවේ ඇත (ප්‍රතිපත්තිය)"
+
+msgid "Delivery failed - mailbox not found"
+msgstr "බෙදා හැරීම අසාර්ථක විය - මේල් පෙට්ටිය හමු නොවීය"
+
+msgid "Delivery failed - recipient not local"
+msgstr "බෙදා හැරීම අසාර්ථක විය - ලබන්නා මෙම සර්වරයේ නැත"
+
+msgid "Delivery failed - recipient rejected"
+msgstr "බෙදා හැරීම අසාර්ථක විය - ලබන්නා ප්‍රතික්ෂේප කරන ලදී"
+
+msgid "Delivery failed - sender rejected"
+msgstr "බෙදා හැරීම අසාර්ථක විය - යවන්නා ප්‍රතික්ෂේප කරන ලදී"
+
+msgid "Delivery failed - relay rejected"
+msgstr "බෙදා හැරීම අසාර්ථක විය - රිලේ ප්‍රතික්ෂේප කරන ලදී"
+
+msgid "Delivery failed - DNS permanent error"
+msgstr "බෙදා හැරීම අසාර්ථක විය - DNS ස්ථිර දෝෂය"
+
+msgid "Delivery failed - MX permanent error"
+msgstr "බෙදා හැරීම අසාර්ථක විය - MX ස්ථිර දෝෂය"
+
+msgid "Delivery failed - A record permanent error"
+msgstr "බෙදා හැරීම අසාර්ථක විය - A වාර්තා ස්ථිර දෝෂය"
+
+msgid "Delivery failed - PTR record permanent error"
+msgstr "බෙදා හැරීම අසාර්ථක විය - PTR වාර්තා ස්ථිර දෝෂය"
+
+msgid "Delivery failed - policy permanent error"
+msgstr "බෙදා හැරීම අසාර්ථක විය - ප්‍රතිපත්ති ස්ථිර දෝෂය"
+
+msgid "DSN: Success - delivery status notification"
+msgstr "DSN: සාර්ථකයි - බෙදා හැරීමේ තත්ත්ව දැනුම් දීම"
+
+msgid "DSN: Delivery delayed"
+msgstr "DSN: බෙදා හැරීම ප්‍රමාද විය"
+
+msgid "DSN: Delivery failed - permanent"
+msgstr "DSN: බෙදා හැරීම අසාර්ථක විය - ස්ථිර"
+
+msgid "DSN: Delivery failed - temporary"
+msgstr "DSN: බෙදා හැරීම අසාර්ථක විය - තාවකාලික"
+
+msgid "DSN: Message expired"
+msgstr "DSN: මේල් කල් ඉකුත් විය"
+
+msgid "DSN: Message bounced"
+msgstr "DSN: මේල් ආපසු පැමිණියේය"
+
+msgid "DSN: Message discarded"
+msgstr "DSN: මේල් ඉවත දමන ලදී"
+
+msgid "DSN: Message filtered"
+msgstr "DSN: මේල් පෙරා ඇත"
+
+msgid "DSN: Message quarantined"
+msgstr "DSN: මේල් නිරෝධායනය කර ඇත"
+
+msgid "DSN: Message held for review"
+msgstr "DSN: මේල් සමාලෝචනය සඳහා රඳවා තබා ඇත"
+
+msgid "MTA-STS policy required"
+msgstr "MTA-STS ප්‍රතිපත්තිය අවශ්‍ය වේ"
+
+msgid "MTA-STS policy validation failed"
+msgstr "MTA-STS ප්‍රතිපත්ති තහවුරු කිරීම අසාර්ථක විය"
+
+msgid "TLS reporting required"
+msgstr "TLS වාර්තා කිරීම අවශ්‍ය වේ"
+
+msgid "TLS report requested"
+msgstr "TLS වාර්තාවක් ඉල්ලා ඇත"
+
+msgid "SMTP MTA Strict Transport Security active"
+msgstr "SMTP MTA දැඩි ප්‍රවාහන ආරක්ෂණය සක්‍රිය කර ඇත"
+
+msgid "DANE validation required"
+msgstr "DANE තහවුරු කිරීම අවශ්‍ය වේ"
+
+msgid "DANE validation failed"
+msgstr "DANE තහවුරු කිරීම අසාර්ථක විය"
+
+msgid "TLSA record missing"
+msgstr "TLSA වාර්තාව අතුරුදහන්"
+
+msgid "Certificate name mismatch"
+msgstr "සහතික නාමය නොගැලපේ"
+
+msgid "Certificate expired"
+msgstr "සහතිකය කල් ඉකුත් විය"
+
+msgid "AUTH LOGIN required"
+msgstr "AUTH LOGIN සත්‍යාපනය අවශ්‍ය වේ"
+
+msgid "AUTH PLAIN required"
+msgstr "AUTH PLAIN සත්‍යාපනය අවශ්‍ය වේ"
+
+msgid "AUTH CRAM-MD5 required"
+msgstr "AUTH CRAM-MD5 සත්‍යාපනය අවශ්‍ය වේ"
+
+msgid "AUTH DIGEST-MD5 required"
+msgstr "AUTH DIGEST-MD5 සත්‍යාපනය අවශ්‍ය වේ"
+
+msgid "AUTH GSSAPI required"
+msgstr "AUTH GSSAPI සත්‍යාපනය අවශ්‍ය වේ"
+
+msgid "AUTH NTLM required"
+msgstr "AUTH NTLM සත්‍යාපනය අවශ්‍ය වේ"
+
+msgid "AUTH SCRAM required"
+msgstr "AUTH SCRAM සත්‍යාපනය අවශ්‍ය වේ"
+
+msgid "AUTH OAUTHBEARER required"
+msgstr "AUTH OAUTHBEARER සත්‍යාපනය අවශ්‍ය වේ"
+
+msgid "AUTH XOAUTH2 required"
+msgstr "AUTH XOAUTH2 සත්‍යාපනය අවශ්‍ය වේ"
+
+msgid "Exchange: Mailbox database error"
+msgstr "Exchange: මේල් පෙට්ටි දත්ත ගබඩා දෝෂය"
+
+msgid "Exchange: Store driver error"
+msgstr "Exchange: ගබඩා ධාවක දෝෂය"
+
+msgid "Exchange: Transport agent error"
+msgstr "Exchange: ප්‍රවාහන නියෝජිත දෝෂය"
+
+msgid "Exchange: Content conversion error"
+msgstr "Exchange: අන්තර්ගත පරිවර්තන දෝෂය"
+
+msgid "Exchange: Routing error"
+msgstr "Exchange: මාර්ගගත කිරීමේ දෝෂය"
+
+msgid "Exchange: Mail flow stalled"
+msgstr "Exchange: මේල් ප්‍රවාහය නතර විය"
+
+msgid "Exchange: Shadow redundancy error"
+msgstr "Exchange: සෙවනැලි අතිරික්ත දෝෂය"
+
+msgid "Exchange: Safety net error"
+msgstr "Exchange: ආරක්ෂිත දැල දෝෂය"
+
+msgid "Exchange: Queue database error"
+msgstr "Exchange: පෝලිම් දත්ත ගබඩා දෝෂය"
+
+msgid "Exchange: Message throttled"
+msgstr "Exchange: මේල් සීමා කර ඇත"
+
+msgid "Postfix: Bounce queue error"
+msgstr "Postfix: බවුන්ස් පෝලිම් දෝෂය"
+
+msgid "Postfix: Deferred queue error"
+msgstr "Postfix: කල් දැමූ පෝලිම් දෝෂය"
+
+msgid "Postfix: Hold queue error"
+msgstr "Postfix: රඳවා තබා ඇති පෝලිම් දෝෂය"
+
+msgid "Postfix: Incoming queue error"
+msgstr "Postfix: එන පෝලිම් දෝෂය"
+
+msgid "Postfix: Active queue error"
+msgstr "Postfix: ක්‍රියාකාරී පෝලිම් දෝෂය"
+
+msgid "Postfix: Corrupted queue file"
+msgstr "Postfix: පෝලිම් ගොනුව හානි වී ඇත"
+
+msgid "Sendmail: Queue runner error"
+msgstr "Sendmail: පෝලිම් ධාවක දෝෂය"
+
+msgid "Sendmail: Alias database error"
+msgstr "Sendmail: ව්‍යාජ නාම දත්ත ගබඩා දෝෂය"
+
+msgid "Sendmail: Virtuser table error"
+msgstr "Sendmail: අතථ්‍ය පරිශීලක වගු දෝෂය"
+
+msgid "Sendmail: Mailer definition error"
+msgstr "Sendmail: මේලර් අර්ථ දැක්වීමේ දෝෂය"
+
+msgid "Exim: Router configuration error"
+msgstr "Exim: රවුටර් වින්‍යාස දෝෂය"
+
+msgid "Exim: Transport configuration error"
+msgstr "Exim: ප්‍රවාහන වින්‍යාස දෝෂය"
+
+msgid "Exim: Director configuration error"
+msgstr "Exim: අධ්‍යක්ෂක වින්‍යාස දෝෂය"
+
+msgid "Exim: Retry configuration error"
+msgstr "Exim: නැවත උත්සාහ කිරීමේ වින්‍යාස දෝෂය"
+
+msgid "Exim: Rewrite configuration error"
+msgstr "Exim: නැවත ලිවීමේ වින්‍යාස දෝෂය"
+
+msgid "Exim: Authentication configuration error"
+msgstr "Exim: සත්‍යාපන වින්‍යාස දෝෂය"
+
+msgid "Exim: ACL configuration error"
+msgstr "Exim: ACL වින්‍යාස දෝෂය"
+
+msgid "Exim: Local_scan configuration error"
+msgstr "Exim: Local_scan වින්‍යාස දෝෂය"
+
+msgid "Exim: Lookup configuration error"
+msgstr "Exim: විමසුම් වින්‍යාස දෝෂය"
+
+msgid "Exim: Expansion configuration error"
+msgstr "Exim: ප්‍රසාරණ වින්‍යාස දෝෂය"
+
+msgid "HTTP Protocol Versions"
+msgstr "HTTP ප්‍රොටෝකෝල අනුවාද"
+
+msgid "Protocol"
+msgstr "ප්‍රොටෝකෝලය"
+
+msgid "Request %"
+msgstr "ඉල්ලීම් කොටස"
+
+msgid "Bandwidth %"
+msgstr "කලාප පළල කොටස"
+
+msgid "Each request requires a new connection"
+msgstr "සෑම ඉල්ලීමක් සඳහාම නව සම්බන්ධතාවයක් අවශ්‍ය වේ"
+
+msgid "Multiple requests can reuse one connection"
+msgstr "බහු ඉල්ලීම් එකම සම්බන්ධතාවයක් නැවත භාවිතා කළ හැකිය"
+
+msgid "Multiple requests in parallel over one connection"
+msgstr "එක් සම්බන්ධතාවයක් තුළ බහු ඉල්ලීම් සමාන්තරව සැකසිය හැකිය"
+
+msgid "Faster connection, better performance on poor networks"
+msgstr "වේගවත් සම්බන්ධතාවය, දුර්වල ජාලවල වඩා හොඳ කාර්‍ය සාධනයක්"
+
+msgid "No protocol data available"
+msgstr "ප්‍රොටෝකෝල දත්ත නොමැත"
+
+msgid "of requests use HTTP/1.0"
+msgstr "ඉල්ලීම් වලින් HTTP/1.0 ප්‍රොටෝකෝලය භාවිතා කරයි"
+
+msgid "From access logs"
+msgstr "ප්‍රවේශ ලොග වලින්"
+
+msgid "No HTTP/2 requests detected"
+msgstr "HTTP/2 ප්‍රොටෝකෝල ඉල්ලීම් කිසිවක් හමු නොවීය"
+
+msgid "All requests are HTTP/1.0, no HTTP/2 requests"
+msgstr "සියලුම ඉල්ලීම් HTTP/1.0 වේ, HTTP/2 ඉල්ලීම් නොමැත"
+
+msgid "HTTP/3 not detected"
+msgstr "HTTP/3 ප්‍රොටෝකෝල ඉල්ලීම් කිසිවක් හමු නොවීය"
+
+msgid "all requests do not include QUIC/HTTP/3 protocol requests"
+msgstr "සියලුම ඉල්ලීම් QUIC/HTTP/3 ප්‍රොටෝකෝල ඉල්ලීම් ඇතුළත් නොවේ"
+
+msgid "Mail Authentication Statistics"
+msgstr "මේල් සත්‍යාපන සංඛ්‍යාලේඛන"
+
+msgid "Authentication"
+msgstr "සත්‍යාපන වර්ගය"
+
+msgid "Pass"
+msgstr "සාර්ථකයි"
+
+msgid "Fail"
+msgstr "අසාර්ථකයි"
+
+msgid "Softfail"
+msgstr "මෘදු අසාර්ථකත්වය"
+
+msgid "Neutral"
+msgstr "උදාසීන"
+
+msgid "None"
+msgstr "කිසිවක් නැත"
+
+msgid "Mail Queue Delay Statistics"
+msgstr "මේල් පෝලිම් ප්‍රමාද සංඛ්‍යාලේඛන"
+
+msgid "Delay Range"
+msgstr "ප්‍රමාද පරාසය"
+
+msgid "Count"
+msgstr "ගණන"
+
+msgid "Percentage"
+msgstr "ප්‍රතිශත කොටස"
+
+msgid "TLS Encryption Statistics"
+msgstr "TLS ගුප්තකේතන සංඛ්‍යාලේඛන"
+
+msgid "TLS Versions"
+msgstr "TLS අනුවාද"
+
+msgid "Top Ciphers"
+msgstr "බහුලව භාවිතා වන ගුප්ත කේත කට්ටල"
+
+msgid "robot_hits_detail_both"
+msgstr "සම්පූර්ණ ඉල්ලීම්: %s (සාමාන්‍ය පිටු: %s, robots.txt: %s)"
+
+msgid "robot_hits_detail_only_robots"
+msgstr "robots.txt වෙත පමණක් ප්‍රවේශය: %s වාරයක්, වෙනත් පිටු ඉල්ලා නැත"
+
+msgid "robot_hits_detail_normal"
+msgstr "සාමාන්‍ය පිටු සඳහා ඉල්ලීම්: %s"
+
+msgid "Troubleshooting"
+msgstr "ගැටළු විසඳීම"
+
+msgid "Did you use the correct URL?"
+msgstr "ඔබ නිවැරදි URL එකක් භාවිතා කළාද?"
+
+msgid "Example:"
+msgstr "උදාහරණය:"
+
+msgid "Did you use correct config parameter?"
+msgstr "ඔබ නිවැරදි වින්‍යාස පරාමිතිය භාවිතා කළාද?"
+
+msgid "Example: If your config file is awstats.mysite.conf, use -config=mysite"
+msgstr "උදාහරණය: ඔබගේ වින්‍යාස ගොනුව awstats.mysite.conf නම්, -config=mysite භාවිතා කරන්න"
+
+msgid "Did you create your config file 'awstats.$SiteConfig.conf'?"
+msgstr "ඔබ 'awstats.$SiteConfig.conf' වින්‍යාස ගොනුව සාදා තිබේද?"
+
+msgid "If not, you can run \"awstats_configure.pl\" from command line, or create it manually."
+msgstr "නැතිනම්, ඔබට විධාන පේළියෙන් \"awstats_configure.pl\" ධාවනය කළ හැකිය, නැතහොත් අතින් එය සෑදිය හැකිය"
+
+msgid "Setup"
+msgstr "සැකසුම"
+
+msgid "file, web server or permissions may be wrong."
+msgstr "ගොනුව, වෙබ් සර්වරය හෝ අවසරයන් වැරදි විය හැකිය"
+
+msgid "Check config file, permissions and AWStats documentation (in 'docs' directory)."
+msgstr "වින්‍යාස ගොනුව, අවසරයන් සහ AWStats ප්‍රලේඛනය ('docs' නාමාවලිය තුළ) පරීක්ෂා කරන්න"
+
+msgid "Warning: Can't find language files for \"%s\". English will be used."
+msgstr "අනතුරු ඇඟවීම: \"%s\" සඳහා භාෂා ගොනු සොයාගත නොහැක. ඉංග්‍රීසි භාවිතා කරනු ලැබේ"
+
+#------------------------------------------------------------------------------
+# දෝෂ සහ සංඥා සැකසීම
+#------------------------------------------------------------------------------
+
+msgid "%s process (ID %s) interrupted by signal %s."
+msgstr "%s ක්‍රියාවලිය (ID %s) %s සංඥාව මගින් බාධා විය"
+
+msgid "An AWStats update process seems to be already running for this config file. Try later. If this is not true, remove manually lock file"
+msgstr "මෙම වින්‍යාස ගොනුව සඳහා AWStats යාවත්කාලීන ක්‍රියාවලියක් දැනටමත් ක්‍රියාත්මක වන බව පෙනේ. කරුණාකර පසුව නැවත උත්සාහ කරන්න. මෙය ඇත්ත නොවේ නම්, අගුලු ගොනුව අතින් ඉවත් කරන්න"
+
+#------------------------------------------------------------------------------
+# නව සංඛ්‍යාලේඛන ශීර්ෂ
+#------------------------------------------------------------------------------
+
+msgid "Report Overview"
+msgstr "වාර්තා දළ විශ්ලේෂණය"
+
+msgid "Monthly Statistics"
+msgstr "මාස අනුව සංඛ්‍යාලේඛන"
+
+msgid "Daily Statistics"
+msgstr "දින අනුව සංඛ්‍යාලේඛන"
+
+msgid "Statistics by Day of Week"
+msgstr "සතියේ දින අනුව සංඛ්‍යාලේඛන"
+
+msgid "Hourly Page Views"
+msgstr "පැයකට පිටු දර්ශන ගණන"
+
+msgid "Traffic Sources"
+msgstr "ප්‍රවේශ මූලාශ්‍ර"
+
+msgid "Other Sources"
+msgstr "වෙනත් මූලාශ්‍ර"
+
+msgid "tooltip_1"
+msgstr "අඩවියේ අමුත්තන්ගේ සැසි ගණන. අමුත්තෙකු විනාඩි 30 කට වඩා වැඩි නිෂ්ක්‍රියාවකින් පසු නැවත පැමිණෙන්නේ නම්, එය නව සංචාරයක් ලෙස ගණන් ගනු ලැබේ"
+
+msgid "tooltip_2"
+msgstr "තෝරාගත් කාල සීමාව තුළ ඔබගේ වෙබ් අඩවියට පැමිණි විවිධ අමුත්තන්ගේ ගණන. IP ලිපිනය මත පදනම්ව ගණනය කෙරේ"
+
+msgid "tooltip_3"
+msgstr "පිටු ලෙස සලකන ඉල්ලීම් ගණන (HTML, PHP, ASP වැනි), රූප, CSS, JS ස්ථිතික ගොනු ඇතුළත් නොවේ"
+
+msgid "tooltip_4"
+msgstr "සර්වරය වෙත යවන ලද සියලුම ඉල්ලීම්වල සම්පූර්ණ ගණන, සියලුම වර්ගවල ගොනු ඇතුළත් වේ"
+
+msgid "tooltip_5"
+msgstr "පරිශීලක ඉල්ලීම් වලට ප්‍රතිචාර වශයෙන් සර්වරය විසින් මාරු කරන ලද දත්ත ප්‍රමාණය"
+
+msgid "tooltip_13"
+msgstr "සෙවුම් යන්ත්‍ර මගින් ඔබගේ අඩවියට පැමිණෙන මූලාශ්‍රවල සංඛ්‍යාලේඛන. කුමන සෙවුම් යන්ත්‍ර ඔබට ගමනාගමනය ගෙන එන්නේද සහ ඔවුන් භාවිතා කළ සෙවුම් පද මොනවාද යන්න පෙන්වයි"
+
+msgid "tooltip_14"
+msgstr "වෙනත් වෙබ් අඩවි වල බාහිර සබැඳි මගින් ඔබගේ අඩවියට පැමිණෙන මූලාශ්‍රවල සංඛ්‍යාලේඛන. කුමන අඩවි ඔබට සබැඳි කරන්නේද සහ ඒවා ගෙන එන ගමනාගමනය කුමක්ද යන්න පෙන්වයි"
+
+msgid "tooltip_15"
+msgstr "අමුත්තන් විසින් සෙවුම් යන්ත්‍රවල භාවිතා කළ සෙවුම් පද. මූල පදය තනි වචනයකි, මූල පද වාක්‍යාංශය යනු වචන කිහිපයක එකතුවකි"
+
+msgid "tooltip_16"
+msgstr "සෙවුම් යන්ත්‍ර බොට්, කෘතිම බුද්ධි පුහුණු බොට්, අවදානම් ස්කෑනර් (ස්වයංක්‍රීය වැඩසටහන්). වරහන් තුළ ඇති අගය සාමාන්‍ය පිටු සහ robots.txt සඳහා වන ඉල්ලීම් ගණන නියෝජනය කරයි"
+
+msgid "tooltip_17"
+msgstr "පැය 24 ක ගමනාගමන බෙදා හැරීමේ ප්‍රස්තාරය. ඔබගේ වෙබ් අඩවියේ පැමිණීම්වල තත්ත්වය දිනයේ පැය අනුව පෙන්වයි, පරිශීලකයින්ගේ ක්‍රියාකාරී කාලය අවබෝධ කර ගැනීමට උපකාරී වේ"
+
+msgid "tooltip_18"
+msgstr "මෙම තීරුව තෝරාගත් කාල සීමාව තුළ දෛනික/සාප්තාහික සාමාන්‍ය අගයන් පෙන්වයි, සමස්ත ප්‍රවණතාවය අවබෝධ කර ගැනීමට උපකාරී වේ"
+
+msgid "tooltip_19"
+msgstr "ප්‍රස්තාරයේ ඇති අයිතම මත ක්ලික් කිරීමෙන් සවිස්තරාත්මක තොරතුරු දැකගත හැකිය. ප්‍රස්තාරයේ ඇති අයිතම මත මූසිකය ගෙන යාමෙන් නිශ්චිත අගයන් දැකගත හැකිය"
+
+msgid "tooltip_20"
+msgstr "පවතින කාණ්ඩවලට නොගැලපෙන දත්ත, සාමාන්‍යයෙන් දත්ත ආකෘතියේ උල්ලංඝනයක් හෝ එහි නොපැවතීම නිසා"
+
+msgid "tooltip_21"
+msgstr "හමු වූ පණු වයිරස ප්‍රහාරවල වාර්තා. පණුවා යනු ස්වයං-ප්‍රතිවර්තනය වන අනිෂ්ට මෘදුකාංගයක් වන අතර, එය සාමාන්‍යයෙන් ජාල අවදානම් හරහා පැතිරෙයි"
+
+#------------------------------------------------------------------------------
+# උදවු තොරතුරු - ප්‍රජා සංස්කරණය
+#------------------------------------------------------------------------------
+
+msgid "AWStats %s - Advanced Web Statistics"
+msgstr "AWStats %s - උසස් වෙබ් සංඛ්‍යාලේඛන"
+
+msgid "Copyright (c) 2000-2025 Laurent Destailleur"
+msgstr "ප්‍රකාශන හිමිකම (c) 2000-2025 Laurent Destailleur"
+
+msgid "Copyright (c) 2026-latest Community Edition"
+msgstr "ප්‍රකාශන හිමිකම (c) 2026-මේ දක්වා ප්‍රජා සංස්කරණය"
+
+msgid "AWStats comes with ABSOLUTELY NO WARRANTY. It's a free software distributed with a GNU General Public License (See LICENSE file for details)."
+msgstr "AWStats සම්පූර්ණයෙන්ම කිසිදු වගකීමක් සහිත නොවේ. එය GNU ජනරාල් පොදු බලපත්‍රය යටතේ බෙදා හරින ලද නිදහස් මෘදුකාංගයකි (විස්තර සඳහා LICENSE ගොනුව බලන්න)"
+
+msgid "Syntax: %s -config=virtualhostname [options]"
+msgstr "වාක්‍ය ඛණ්ඩය: %s -config=අතථ්‍ය ධාරක නම [විකල්ප]"
+
+msgid "This runs %s in command line to update statistics (-update option) of a web site, from the log file defined in AWStats config file, or build a HTML report (-output option)."
+msgstr "මෙම විධානය AWStats වින්‍යාස ගොනුවේ අර්ථ දක්වා ඇති ලොග් ගොනුවෙන් වෙබ් අඩවියක සංඛ්‍යාලේඛන යාවත්කාලීන කිරීමට (-update විකල්පය) හෝ HTML වාර්තාවක් තැනීමට (-output විකල්පය) %s විධාන පේළියේ ධාවනය කරයි"
+
+msgid "First, %s tries to read %s.virtualhostname.conf as the config file. If not found, %s tries to read %s.conf, and finally the full path passed to -config="
+msgstr "පළමුව, %s වින්‍යාස ගොනුව ලෙස %s.අතථ්‍ය ධාරක නම.conf කියවීමට උත්සාහ කරයි. හමු නොවුනහොත්, %s %s.conf කියවීමට උත්සාහ කරයි, අවසාන වශයෙන් -config= වෙත ලබා දුන් සම්පූර්ණ මාර්ගය උත්සාහ කරයි"
+
+msgid "Note 1: Config files (*.conf) must be in /etc/awstats, /usr/local/etc/awstats, /etc or same directory than awstats.pl script file."
+msgstr "සටහන 1: වින්‍යාස ගොනු (*.conf) /etc/awstats, /usr/local/etc/awstats, /etc හෝ awstats.pl ස්ක්‍රිප්ට් ගොනුව හා සමාන නාමාවලියේ තිබිය යුතුය"
+
+msgid "Note 2: If AWSTATS_FORCE_CONFIG environment variable is defined, AWStats will use it as the 'config' value, whatever is the value on command line or URL."
+msgstr "සටහන 2: AWSTATS_FORCE_CONFIG පරිසර විචල්‍යය අර්ථ දක්වා ඇත්නම්, AWStats එය 'config' අගය ලෙස භාවිතා කරයි, විධාන පේළියේ හෝ URL හි අගය කුමක් වුවත්"
+
+msgid "See AWStats documentation for all setup instructions."
+msgstr "සියලු සැකසුම් උපදෙස් සඳහා AWStats ප්‍රලේඛනය බලන්න"
+
+msgid "Options to update statistics:"
+msgstr "සංඛ්‍යාලේඛන යාවත්කාලීන කිරීමේ විකල්ප:"
+
+msgid "  -update        to update statistics (default)"
+msgstr "  -update        සංඛ්‍යාලේඛන යාවත්කාලීන කරන්න (පෙරනිමිය)"
+
+msgid "  -showsteps     to add benchmark information every %s lines processed"
+msgstr "  -showsteps      සෑම %s පේළි සැකසූ විට මිණුම් ලකුණු තොරතුරු එක් කරන්න"
+
+msgid "  -showcorrupted to add output for each corrupted lines found, with reason"
+msgstr "  -showcorrupted   හමු වන සෑම හානි වූ පේළියක් සඳහා, හේතුව සමඟ ප්‍රතිදානය එක් කරන්න"
+
+msgid "  -showdropped   to add output for each dropped lines found, with reason"
+msgstr "  -showdropped     හමු වන සෑම ඉවත දැමූ පේළියක් සඳහා, හේතුව සමඟ ප්‍රතිදානය එක් කරන්න"
+
+msgid "  -showunknownorigin  to output referer when it can't be parsed"
+msgstr "  -showunknownorigin    මූලාශ්‍රය විග්‍රහ කළ නොහැකි විට, එහි තොරතුරු ප්‍රතිදානය කරන්න"
+
+msgid "  -showdirectorigin   to output log line when origin is a direct access"
+msgstr "  -showdirectorigin     මූලාශ්‍රය සෘජු ප්‍රවේශයක් වන විට, ලොග් පේළිය ප්‍රතිදානය කරන්න"
+
+msgid "  -updatefor=n   to stop the update process after parsing n lines"
+msgstr "  -updatefor=n    n පේළි විග්‍රහ කිරීමෙන් පසු යාවත්කාලීන ක්‍රියාවලිය නවත්වන්න"
+
+msgid "  -LogFile=x     to change log to analyze whatever is 'LogFile' in config file"
+msgstr "  -LogFile=x      විශ්ලේෂණය කළ යුතු ලොගය වෙනස් කරන්න, වින්‍යාස ගොනුවේ 'LogFile' කුමක් වුවත්"
+
+msgid "  Be care to process log files in chronological order when updating statistics."
+msgstr "  සංඛ්‍යාලේඛන යාවත්කාලීන කිරීමේදී, ලොග් ගොනු කාලානුක්‍රමිකව සැකසීමට වග බලා ගන්න"
+
+msgid "Options to show statistics:"
+msgstr "සංඛ්‍යාලේඛන පෙන්වීමේ විකල්ප:"
+
+msgid "  -output      to output main HTML report (no update made except with -update)"
+msgstr "  -output       ප්‍රධාන HTML වාර්තාව ප්‍රතිදානය කරන්න (-update සමඟ භාවිතා කළහොත් මිස යාවත්කාලීනයක් සිදු නොවේ)"
+
+msgid "  -output=x    to output other report pages where x is:"
+msgstr "  -output=x     වෙනත් වාර්තා පිටු ප්‍රතිදානය කරන්න, x මෙයයි:"
+
+msgid "build page of all domains/countries"
+msgstr "සියලු වසම්/රටවල පිටුව ගොඩනඟන්න"
+
+msgid "build page of all hosts"
+msgstr "සියලු ධාරකවල පිටුව ගොඩනඟන්න"
+
+msgid "build page of last hits for hosts"
+msgstr "ධාරක සඳහා අවසන් පහරවල පිටුව ගොඩනඟන්න"
+
+msgid "build page of all unresolved IP"
+msgstr "සියලු නොවිසඳුණු IP සඳහා පිටුව ගොඩනඟන්න"
+
+msgid "build page of all email senders (maillog)"
+msgstr "සියලු විද්‍යුත් තැපැල් යවන්නන්ගේ පිටුව ගොඩනඟන්න (තැපැල් ලොගය)"
+
+msgid "build page of last email senders (maillog)"
+msgstr "අවසන් විද්‍යුත් තැපැල් යවන්නන්ගේ පිටුව ගොඩනඟන්න (තැපැල් ලොගය)"
+
+msgid "build page of all email receivers (maillog)"
+msgstr "සියලු විද්‍යුත් තැපැල් ලබන්නන්ගේ පිටුව ගොඩනඟන්න (තැපැල් ලොගය)"
+
+msgid "build page of last email receivers (maillog)"
+msgstr "අවසන් විද්‍යුත් තැපැල් ලබන්නන්ගේ පිටුව ගොඩනඟන්න (තැපැල් ලොගය)"
+
+msgid "build page of all logins used"
+msgstr "භාවිතා කළ සියලු පිවිසුම් සඳහා පිටුව ගොඩනඟන්න"
+
+msgid "build page of last hits for logins"
+msgstr "පිවිසුම් සඳහා අවසන් පහරවල පිටුව ගොඩනඟන්න"
+
+msgid "build page of all robots/spider visits"
+msgstr "සියලු රොබෝ/මකුළු සංචාර සඳහා පිටුව ගොඩනඟන්න"
+
+msgid "build page of last hits for robots"
+msgstr "රොබෝවරු සඳහා අවසන් පහරවල පිටුව ගොඩනඟන්න"
+
+msgid "list most often viewed pages"
+msgstr "නිතර නරඹන ලද පිටු ලැයිස්තුගත කරන්න"
+
+msgid "list most often viewed pages matching filter"
+msgstr "පෙරහනට ගැලපෙන නිතර නරඹන ලද පිටු ලැයිස්තුගත කරන්න"
+
+msgid "list entry pages"
+msgstr "ප්‍රවේශ පිටු ලැයිස්තුගත කරන්න"
+
+msgid "list entry pages matching filter"
+msgstr "පෙරහනට ගැලපෙන ප්‍රවේශ පිටු ලැයිස්තුගත කරන්න"
+
+msgid "list exit pages"
+msgstr "පිටවීමේ පිටු ලැයිස්තුගත කරන්න"
+
+msgid "list exit pages matching filter"
+msgstr "පෙරහනට ගැලපෙන පිටවීමේ පිටු ලැයිස්තුගත කරන්න"
+
+msgid "build page with os detailed versions"
+msgstr "මෙහෙයුම් පද්ධති සවිස්තරාත්මක අනුවාද සහිත පිටුව ගොඩනඟන්න"
+
+msgid "build page with browsers detailed versions"
+msgstr "බ්‍රවුසර සවිස්තරාත්මක අනුවාද සහිත පිටුව ගොඩනඟන්න"
+
+msgid "list 'User Agents' with unknown browser"
+msgstr "නොදන්නා බ්‍රවුසර සහිත පරිශීලක නියෝජිතයන් ලැයිස්තුගත කරන්න"
+
+msgid "list 'User Agents' with unknown OS"
+msgstr "නොදන්නා මෙහෙයුම් පද්ධතිය සහිත පරිශීලක නියෝජිතයන් ලැයිස්තුගත කරන්න"
+
+msgid "build page of all refering search engines"
+msgstr "සියලු මූලාශ්‍ර සෙවුම් යන්ත්‍ර සඳහා පිටුව ගොඩනඟන්න"
+
+msgid "build page of all refering pages"
+msgstr "සියලු මූලාශ්‍ර පිටු සඳහා පිටුව ගොඩනඟන්න"
+
+msgid "list all keyphrases used on search engines"
+msgstr "සෙවුම් යන්ත්‍රවල භාවිතා කළ සියලු මූල පද වාක්‍යාංශ ලැයිස්තුගත කරන්න"
+
+msgid "list all keywords used on search engines"
+msgstr "සෙවුම් යන්ත්‍රවල භාවිතා කළ සියලු මූල පද ලැයිස්තුගත කරන්න"
+
+msgid "list 'Referers' for 404 errors"
+msgstr "404 දෝෂ සඳහා මූලාශ්‍ර ලැයිස්තුගත කරන්න"
+
+msgid "build page of all values for ExtraSection X"
+msgstr "ExtraSection X සඳහා සියලු අගයන්ගේ පිටුව ගොඩනඟන්න"
+
+msgid "  -staticlinks           to have static links in HTML report page"
+msgstr "  -staticlinks           HTML වාර්තා පිටුවේ ස්ථිතික සබැඳි තිබීමට"
+
+msgid "  -staticlinksext=xxx    to have static links with .xxx extension instead of .html"
+msgstr "  -staticlinksext=xxx    .html වෙනුවට .xxx දිගුව සහිත ස්ථිතික සබැඳි තිබීමට"
+
+msgid "  -lang=LL     to output a HTML report in language LL (en,de,es,fr,it,nl,zh-cn,...)"
+msgstr "  -lang=LL      HTML වාර්තාව LL භාෂාවෙන් ප්‍රතිදානය කරන්න (en,de,es,fr,it,nl,zh-cn,...)"
+
+msgid "  -month=MM    to output a HTML report for an old month MM"
+msgstr "  -month=MM     MM මාසය සඳහා HTML වාර්තාව ප්‍රතිදානය කරන්න"
+
+msgid "  -year=YYYY   to output a HTML report for an old year YYYY"
+msgstr "  -year=YYYY    YYYY වර්ෂය සඳහා HTML වාර්තාව ප්‍රතිදානය කරන්න"
+
+msgid "  The 'date' options doesn't allow you to process old log file. They only allow you to see a past report for a chosen month/year period instead of current month/year."
+msgstr "  'date' විකල්ප මඟින් ඔබට පැරණි ලොග් ගොනුවක් සැකසීමට ඉඩ නොදේ. ඒවා වත්මන් මාසය/වර්ෂය වෙනුවට තෝරාගත් මාසය/වර්ෂ කාල සීමාවක් සඳහා පැරණි වාර්තාවක් බැලීමට පමණක් ඉඩ දෙයි"
+
+msgid "Other options:"
+msgstr "වෙනත් විකල්ප:"
+
+msgid "  -debug=X     to add debug informations lesser than level X (speed reduced)"
+msgstr "  -debug=X      X මට්ටමට වඩා අඩු නිදොස්කරණ තොරතුරු එක් කරන්න (වේගය අඩු වේ)"
+
+msgid "  -version     show AWStats version"
+msgstr "  -version, -v     AWStats අනුවාදය පෙන්වන්න"
+
+msgid "Now supports/detects:"
+msgstr "දැන් සහාය දක්වයි/හඳුනා ගනී:"
+
+msgid "  Web/Ftp/Mail/streaming server log analyzis (and load balanced log files)"
+msgstr "  Web/FTP/තැපැල්/ප්‍රවාහ සර්වර ලොග් විශ්ලේෂණය (සහ බර සමතුලිත ලොග් ගොනු)"
+
+msgid "  Reverse DNS lookup (IPv4 and IPv6) and GeoIP lookup"
+msgstr "  ප්‍රතිලෝම DNS විමසුම (IPv4 සහ IPv6) සහ GeoIP විමසුම"
+
+msgid "  Number of visits, number of unique visitors"
+msgstr "  සංචාර ගණන, අනන්‍ය අමුත්තන් ගණන"
+
+msgid "  Visits duration and list of last visits"
+msgstr "  සංචාර කාලසීමාව සහ අවසන් සංචාර ලැයිස්තුව"
+
+msgid "  Authenticated users"
+msgstr "  සත්‍යාපිත පරිශීලකයින්"
+
+msgid "  Days of week and rush hours"
+msgstr "  සතියේ දින සහ උත්සන්න වේලාවන්"
+
+msgid "  Hosts list and unresolved IP addresses list"
+msgstr "  ධාරක ලැයිස්තුව සහ නොවිසඳුණු IP ලිපින ලැයිස්තුව"
+
+msgid "  Most viewed, entry and exit pages"
+msgstr "  වැඩිපුරම නරඹන ලද, ප්‍රවේශ සහ පිටවීමේ පිටු"
+
+msgid "  Files type and Web compression (mod_gzip, mod_deflate stats)"
+msgstr "  ගොනු වර්ගය සහ වෙබ් සම්පීඩනය (mod_gzip, mod_deflate සංඛ්‍යාලේඛන)"
+
+msgid "  Configured Database Statistics"
+msgstr "  වින්‍යාස කළ දත්ත ගබඩා සංඛ්‍යාලේඛන"
+
+msgid "  %s domains/countries"
+msgstr "  %s වසම්/රටවල්"
+
+msgid "  %s robots"
+msgstr "  %s රොබෝවරු"
+
+msgid "  %s worm's families"
+msgstr "  %s පණු පවුල්"
+
+msgid "  %s operating systems"
+msgstr "  %s මෙහෙයුම් පද්ධති"
+
+msgid "  %s browsers (%s with phone browsers database)"
+msgstr "  %s බ්‍රවුසර (දුරකථන බ්‍රවුසර දත්ත ගබඩාව සමඟ %s)"
+
+msgid "  %s search engines (and keyphrases/keywords used from them)"
+msgstr "  %s සෙවුම් යන්ත්‍ර (සහ ඒවායින් භාවිතා කරන මූල පද වාක්‍යාංශ/මූල පද)"
+
+msgid "  All HTTP errors with last referrer"
+msgstr "  සියලුම HTTP දෝෂ අවසන් මූලාශ්‍රය සමඟ"
+
+msgid "  Report by day/month/year"
+msgstr "  දින/මාස/වර්ෂ අනුව වාර්තාව"
+
+msgid "  Dynamic or static HTML or XHTML reports, static PDF reports"
+msgstr "  ගතික හෝ ස්ථිතික HTML හෝ XHTML වාර්තා, ස්ථිතික PDF වාර්තා"
+
+msgid "  Indexed text or XML monthly database"
+msgstr "  දර්ශකගත පෙළ හෝ XML මාසික දත්ත ගබඩාව"
+
+msgid "  And a lot of other advanced features and options..."  
+msgstr "  සහ තවත් බොහෝ උසස් විශේෂාංග සහ විකල්ප..."
+
+msgid "  New versions and FAQ at http://www.awstats.org"
+msgstr "  නව අනුවාද සහ නිතර අසන ප්‍රශ්න: https://github.com/hestiacn/vstats/issues"

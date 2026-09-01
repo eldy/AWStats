@@ -1,0 +1,541 @@
+#!/bin/bash
+# info: update domain statistics
+# options: USER DOMAIN
+#
+# example: v-update-web-domain-stat alice acme.com
+#
+# This function runs log analyser for specific webdomain.
+
+#----------------------------------------------------------#
+#                Variables & Functions                     #
+#----------------------------------------------------------#
+
+# Argument definition
+user=$1
+domain=$2
+domain_idn=$2
+
+# Use different log file names for different domains
+LOG_DIR="/var/log/awstats"
+mkdir -p "$LOG_DIR" 2>/dev/null
+chmod 755 "$LOG_DIR" 2>/dev/null
+
+LOG_FILE="$LOG_DIR/awstats-update-${domain}.log"
+> "$LOG_FILE" 2>/dev/null 
+
+log_message() {
+    local level="$1"
+    local message="$2"
+    local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
+    echo "[$timestamp] [$level] $message" >> "$LOG_FILE"
+}
+
+log_message "INFO" "开始更新域名 $domain 的统计信息"
+log_message "INFO" "用户: $user"
+
+#----------------------------------------------------------#
+#                    锁文件检查和清理                        #
+#----------------------------------------------------------#
+
+LOCK_FILE="/tmp/awstats-update-${domain}.lock"
+
+if [ -f "$LOCK_FILE" ]; then
+    LOCK_PID=$(cat "$LOCK_FILE" 2>/dev/null)
+    if [ -n "$LOCK_PID" ] && kill -0 "$LOCK_PID" 2>/dev/null; then
+        log_message "ERROR" "AWStats 更新进程正在运行中 (PID: $LOCK_PID, 锁文件: $LOCK_FILE)"
+        exit 1
+    else
+        log_message "WARNING" "发现残留锁文件 (PID: $LOCK_PID 已不存在)，正在清理..."
+        rm -f "$LOCK_FILE"
+        log_message "INFO" "已清理残留锁文件: $LOCK_FILE"
+    fi
+fi
+
+# 创建新的锁文件
+exec 200>"$LOCK_FILE"
+flock -n 200 || {
+    log_message "ERROR" "AWStats 更新进程正在运行中 (锁文件: $LOCK_FILE)"
+    exit 1
+}
+
+echo $$ >&200
+log_message "INFO" "获取锁文件: $LOCK_FILE (PID: $$)"
+
+trap 'rm -f "$LOCK_FILE"; exec 200>&-; log_message "INFO" "释放锁文件: $LOCK_FILE"' EXIT
+
+source /etc/hestiacp/hestia.conf
+source $HESTIA/func/main.sh
+source $HESTIA/func/domain.sh
+source_conf "$HESTIA/conf/hestia.conf"
+
+current_lang="${LANGUAGE:-en}"
+log_message "INFO" "系统语言: $current_lang"
+
+case "$current_lang" in
+    zh-cn|zh-sg)                      awstats_lang="zh-cn" ;;
+    zh-tw|zh-hk|zh-mo)                awstats_lang="zh-tw" ;;
+    pt-br)                            awstats_lang="pt-br" ;;
+    no|nb|nn)                         awstats_lang="nb" ;;
+    *)                                awstats_lang="$current_lang" ;;
+esac
+
+# Additional argument formatting
+format_domain
+format_domain_idn
+
+#----------------------------------------------------------#
+#                    Verifications                         #
+#----------------------------------------------------------#
+
+check_args '2' "$#" 'USER DOMAIN'
+is_format_valid 'user' 'domain'
+is_system_enabled "$WEB_SYSTEM" 'WEB_SYSTEM'
+is_object_valid 'user' 'USER' "$user"
+is_object_unsuspended 'user' 'USER' "$user"
+is_object_valid 'web' 'DOMAIN' "$domain"
+is_object_unsuspended 'web' 'DOMAIN' "$domain"
+is_object_value_exist 'web' 'DOMAIN' "$domain" '$STATS'
+
+log_message "INFO" "验证通过"
+
+#----------------------------------------------------------#
+#                       Action                             #
+#----------------------------------------------------------#
+
+get_domain_values 'web'
+
+# Checking config
+config="$HOMEDIR/$user/conf/web/$domain/$STATS.conf"
+if [ ! -e "$config" ]; then
+    check_result $E_NOTEXISTS "$config doesn't exist"
+fi
+
+user_group="$user"
+
+# Checking statistics directory
+dir="$HOMEDIR/$user/web/$domain/stats"
+if [ ! -e "$dir" ]; then
+    mkdir -p $dir
+    chown "$user:$user_group" "$dir" 2>/dev/null
+    chmod 755 "$dir"
+else
+    # Check directory permissions; if they are not 755, change them to 755.
+    current_perms=$(stat -c "%a" "$dir")
+    if [ "$current_perms" != "755" ]; then
+        log_message "INFO" "stats 目录权限为 $current_perms，正在修改为 755"
+        chmod 755 "$dir"
+    fi
+    chown "$user:$user_group" "$dir" 2>/dev/null
+fi
+
+#----------------------------------------------------------#
+#                 AWStats 核心自适应更新引擎                 #
+#----------------------------------------------------------#
+
+build_awstats() {
+    awstats="/usr/lib/cgi-bin/awstats.pl"
+    wwwroot="/usr/share/awstats"
+    local current_year=$(date "+%Y")
+    local current_month=$(date "+%m")
+    
+    echo "使用 AWStats: $awstats"
+    echo "使用 WWWROOT: $wwwroot"
+    log_message "INFO" "使用 AWStats: $awstats"
+    log_message "INFO" "使用 WWWROOT: $wwwroot"
+    log_message "INFO" "当前处理月份: ${current_year}-${current_month}"
+
+    if [ ! -x "$awstats" ]; then
+        echo "错误: AWStats 不存在或不可执行: $awstats" >&2
+        log_message "ERROR" "AWStats 不存在或不可执行: $awstats"
+        return 1
+    fi
+    
+
+    local index_file="$dir/index.cgi"
+    local index_created=0
+
+    if [ ! -f "$index_file" ]; then
+        log_message "INFO" "index.cgi 不存在，正在创建: $index_file"
+    
+        cat > "$index_file" << 'EOF'
+#!/usr/bin/perl
+use strict;
+use warnings;
+
+# Ensure output is refreshed immediately
+$| = 1;
+
+# Get current year and month using efficient slice
+my ($mon, $year_num) = (localtime(time))[4, 5];
+my $year  = $year_num + 1900;
+my $month = sprintf("%02d", $mon + 1);
+
+# Get the domain name from the configuration file
+my $config = "DOMAIN_PLACEHOLDER";
+
+# Build the target URL
+my $target = "/cgi-bin/awstats.pl?config=$config&framename=mainright&year=$year&month=$month";
+
+# Send HTTP redirect (Strict RFC Standard)
+print "Status: 302 Found\r\n";
+print "Location: $target\r\n";
+print "Content-Type: text/html; charset=utf-8\r\n";
+print "\r\n";
+
+print "<!DOCTYPE html>\n<html>\n<head>\n<title>Redirecting...</title>\n";
+print "<meta http-equiv=\"refresh\" content=\"0;url=$target\"></head>\n";
+print "<body>Redirecting to <a href=\"$target\">AWStats</a>...</body>\n</html>\n";
+EOF
+
+        sed -i "s#DOMAIN_PLACEHOLDER#$domain#g" "$index_file"
+        
+        [ -n "$user_group" ] && chown "$user:$user_group" "$index_file" 2>/dev/null
+        chmod 755 "$index_file"
+        log_message "INFO" "index.cgi 已创建: $index_file"
+        index_created=1
+    else
+        log_message "INFO" "index.cgi 已存在: $index_file"
+    fi
+
+    if command -v apache2 >/dev/null 2>&1 || command -v httpd >/dev/null 2>&1; then
+        log_message "INFO" "检测到系统已安装 Apache，启动 Apache 专属配置流程..."
+        
+        local conf_dir="$HOMEDIR/$user/conf/web/$domain"
+        local conf_file="$conf_dir/apache2.conf_cgi"
+        local file_created=0
+
+        if [ ! -f "$conf_file" ]; then
+            log_message "INFO" "配置文件不存在，正在创建: $conf_file"
+            mkdir -p "$conf_dir"
+            
+            cat > "$conf_file" << EOF
+# CGI Configuration - Use the correct syntax for cgid_module
+<FilesMatch "\.(pl|cgi)$">
+    SetHandler cgi-script
+</FilesMatch>
+
+# Configure the cgi-bin directory
+ScriptAlias /cgi-bin/ $HOMEDIR/$user/web/$domain/cgi-bin/
+
+<Directory "$HOMEDIR/$user/web/$domain/cgi-bin">
+    Options +ExecCGI -Indexes
+    <FilesMatch "\.(pl|cgi)$">
+        SetHandler cgi-script
+    </FilesMatch>
+    Require all granted
+</Directory>
+
+# Make sure it's ScriptAlias, not Alias
+ScriptAlias /vstats/ $HOMEDIR/$user/web/$domain/stats/
+
+<Directory "$HOMEDIR/$user/web/$domain/stats">
+    Options +ExecCGI -Indexes
+    AddHandler cgi-script .cgi
+    DirectoryIndex index.cgi
+    Require all granted
+</Directory>
+EOF
+        
+            [ -n "$user_group" ] && chown "$user:$user_group" "$conf_file" 2>/dev/null
+            chmod 644 "$conf_file"
+            log_message "INFO" "Apache 配置文件已创建: $conf_file"
+            file_created=1
+        else
+            log_message "INFO" "Apache 配置文件已存在: $conf_file"
+        fi
+
+        # 检查并创建 .htaccess 文件（仅 Apache 环境需要）
+        local htaccess_file="$dir/.htaccess"
+        local htaccess_created=0
+
+        if [ ! -f "$htaccess_file" ]; then
+            log_message "INFO" ".htaccess 不存在，正在创建: $htaccess_file"
+            cat > "$htaccess_file" << EOF
+Options +ExecCGI
+AddHandler cgi-script .cgi
+DirectoryIndex index.cgi
+EOF
+            [ -n "$user_group" ] && chown "$user:$user_group" "$htaccess_file" 2>/dev/null
+            chmod 644 "$htaccess_file"
+            log_message "INFO" ".htaccess 已创建: $htaccess_file"
+            htaccess_created=1
+        else
+            log_message "INFO" ".htaccess 已存在: $htaccess_file"
+        fi
+
+        # 触发 Apache CGI 模块检查
+        if [ $file_created -eq 1 ] || [ $index_created -eq 1 ] || [ $htaccess_created -eq 1 ]; then
+            log_message "INFO" "检测到新文件创建，正在检查 Apache CGI 模块状态..."
+
+            # === Debian / Ubuntu 环境 ===
+            if command -v apache2ctl >/dev/null 2>&1; then
+                if ! apache2ctl -M 2>/dev/null | grep -q "cgid_module"; then
+                    log_message "INFO" "正在启用 cgid 模块 (Debian/Ubuntu)..."
+                    a2enmod cgid
+                    systemctl restart apache2
+                    log_message "INFO" "cgid 模块已成功启用，Apache 服务已重启"
+                fi
+
+            # === Red Hat / CentOS / Rocky 环境 ===
+            elif command -v httpd >/dev/null 2>&1; then
+                if ! httpd -M 2>/dev/null | grep -q "cgid_module"; then
+                    log_message "INFO" "检测到红帽系环境，且 cgid 模块未启用。正在尝试开启..."
+                    
+                    HTTPD_ROOT=$(httpd -V | grep "HTTPD_ROOT" | cut -d'"' -f2)
+                    [ -z "$HTTPD_ROOT" ] && HTTPD_ROOT="/etc/httpd"
+                    
+                    MOD_DIR="$HTTPD_ROOT/conf.modules.d"
+                    
+                    if [ -d "$MOD_DIR" ]; then
+                        AUTO_CONF="$MOD_DIR/99-auto-cgid.conf"
+                        
+                        log_message "INFO" "正在创建独立配置文件: $AUTO_CONF"
+                        echo "LoadModule cgid_module modules/mod_cgid.so" > "$AUTO_CONF"
+
+                        if httpd -t >/dev/null 2>&1; then
+                            systemctl restart httpd
+                            log_message "INFO" "httpd 服务重启成功，已通过新文件 $AUTO_CONF 启用 cgid"
+                        else
+                            log_message "WARNING" "独立加载引发模块冲突。正在切换到动态取消注释方案..."
+                            rm -f "$AUTO_CONF"
+                            
+                            TARGET_FILE=$(grep -l "mod_cgid.so" "$MOD_DIR"/*.conf 2>/dev/null | head -n 1)
+                            
+                            if [ -n "$TARGET_FILE" ] && grep -q "^#.*LoadModule cgid_module" "$TARGET_FILE"; then
+                                sed -i 's/^#\(.*LoadModule cgid_module.*\)/\1/' "$TARGET_FILE"
+                                log_message "INFO" "已成功取消动态检索文件中的模块注释: $TARGET_FILE"
+                                
+                                if httpd -t >/dev/null 2>&1; then
+                                    systemctl restart httpd
+                                    log_message "INFO" "修改 $TARGET_FILE 后，httpd 服务重启成功"
+                                else
+                                    log_message "ERROR" "配置语法仍有错误。自动启用 cgid 模块失败！"
+                                fi
+                            else
+                                log_message "ERROR" "未在配置目录中找到包含 cgid_module 的有效文件，无法修改。"
+                            fi
+                        fi
+                    else
+                        log_message "ERROR" "未找到 Apache 模块配置目录: $MOD_DIR"
+                    fi
+                else
+                    log_message "INFO" "红帽环境下的 cgid 模块已处于启用状态，无需操作。"
+                fi
+            fi
+        fi
+
+    else
+        log_message "INFO" "未检测到 Apache，正在切换为纯 Nginx + fcgiwrap 环境配置..."
+        
+        # 1. 跨平台检查并安装 fcgiwrap 及其依赖
+        log_message "INFO" "正在检查并安装 fcgiwrap..."
+        local socket_path="unix:/var/run/fcgiwrap.socket" 
+
+        if ! command -v fcgiwrap >/dev/null 2>&1; then
+            if command -v dnf >/dev/null 2>&1; then
+                log_message "INFO" "检测到 RHEL 系列系统，正在启用 EPEL 并安装 fcgiwrap..."
+                dnf install -y epel-release >/dev/null 2>&1
+                dnf install -y fcgiwrap >/dev/null 2>&1
+                socket_path="127.0.0.1:9000" 
+            elif command -v apt-get >/dev/null 2>&1; then
+                log_message "INFO" "检测到 Debian 系列系统，正在安装 fcgiwrap..."
+                apt-get update >/dev/null 2>&1
+                apt-get install -y fcgiwrap >/dev/null 2>&1
+            fi
+        else
+            if command -v dnf >/dev/null 2>&1; then
+                socket_path="127.0.0.1:9000"
+            fi
+        fi
+        
+        # 2. 检查 fcgiwrap 服务状态并设置自启动
+        log_message "INFO" "正在配置 fcgiwrap 服务..."
+        systemctl daemon-reload
+        
+        if systemctl list-unit-files | grep -q "fcgiwrap"; then
+            systemctl enable fcgiwrap >/dev/null 2>&1
+            systemctl restart fcgiwrap >/dev/null 2>&1
+        fi
+
+        # 3. 声明目标文件路径
+        local ssl_conf="$HOMEDIR/$user/conf/web/$domain/nginx.ssl.conf"
+        local norm_conf="$HOMEDIR/$user/conf/web/$domain/nginx.conf"
+        local nginx_need_reload=0
+
+        local new_nginx_block="	location /cgi-bin/ {
+	    alias   $HOMEDIR/$user/web/$domain/cgi-bin/;
+	    location ~ \.(pl|cgi)$ {
+	        include fastcgi_params;
+	        fastcgi_param SCRIPT_FILENAME \$request_filename;
+	        fastcgi_pass $socket_path;
+	    }
+	}
+
+	location /vstats/ {
+	    alias   $HOMEDIR/$user/web/$domain/stats/;
+	    include $HOMEDIR/$user/web/$domain/stats/auth.conf*;
+	    index index.cgi;
+	    location ~ \.cgi$ {
+	        include $HOMEDIR/$user/web/$domain/stats/auth.conf*;
+	        include fastcgi_params;
+	        fastcgi_param SCRIPT_FILENAME \$request_filename;
+	        fastcgi_pass $socket_path;
+	    }
+	}"
+
+        for conf_file in "$ssl_conf" "$norm_conf"; do
+            if [ -f "$conf_file" ]; then
+
+                if grep -q "location /cgi-bin/" "$conf_file"; then
+                    log_message "INFO" "配置文件已是全新 CGI 架构，跳过升级: $conf_file"
+                    continue
+                fi
+
+                log_message "INFO" "正在将配置文件升级为全新 CGI 架构: $conf_file"
+
+                cp "$conf_file" "${conf_file}.bak"
+                sed -i '/location \/vstats\/ {/,/}/c\__AWSTATS_PLACEHOLDER__' "$conf_file"
+
+                local tmp_conf="${conf_file}.tmp"
+                rm -f "$tmp_conf"
+
+                while IFS= read -r line; do
+                    if [[ "$line" == *"__AWSTATS_PLACEHOLDER__"* ]]; then
+                        echo "$new_nginx_block" >> "$tmp_conf"
+                    else
+                        echo "$line" >> "$tmp_conf"
+                    fi
+                done < "$conf_file"
+
+                mv "$tmp_conf" "$conf_file"
+                rm -f "${conf_file}.bak"
+                log_message "INFO" "配置文件升级成功: $conf_file"
+                nginx_need_reload=1
+            fi
+        done
+
+        # 4. 安全重载 Nginx
+        if [ "$nginx_need_reload" = "1" ] && command -v nginx >/dev/null 2>&1; then
+            if nginx -t >/dev/null 2>&1; then
+                systemctl reload nginx
+                log_message "INFO" "Nginx 配置验证成功，已平滑重载！"
+            else
+                log_message "ERROR" "⚠️ 警告：Nginx 配置语法测试失败，请检查文件！"
+            fi
+        fi
+    fi
+
+    # Icon directory check
+    if [ ! -e "$dir/icon" ]; then
+        ln -s "$wwwroot/icon" "$dir/icon" 2>/dev/null
+        log_message "INFO" "已创建 icon 软链接"
+    fi
+    
+    # Logo file check
+    if [ ! -e "$dir/logo.svg" ]; then
+        ln -s "$HESTIA/web/images/logo.svg" "$dir/logo.svg" 2>/dev/null
+        log_message "INFO" "已创建 logo 软链接"
+    fi
+
+    cgi_bin_dir="$HOMEDIR/$user/web/$domain/cgi-bin"
+    if [ ! -e "$cgi_bin_dir/awstats.pl" ]; then
+        mkdir -p "$cgi_bin_dir" 2>/dev/null
+        ln -s /usr/lib/cgi-bin/awstats.pl "$cgi_bin_dir/awstats.pl" 2>/dev/null
+        [ -n "$user_group" ] && chown -h "$user:$user_group" "$cgi_bin_dir/awstats.pl" 2>/dev/null
+        log_message "INFO" "已创建 awstats.pl 软链接: $cgi_bin_dir/awstats.pl"
+    fi
+    
+    # 清理 AWStats 残留锁文件
+    local awstats_lock="/tmp/awstats.${domain_idn}.lock"
+    if [ -f "$awstats_lock" ]; then
+        local lock_pid=$(cat "$awstats_lock" 2>/dev/null)
+        if [ -n "$lock_pid" ] && ! kill -0 "$lock_pid" 2>/dev/null; then
+            log_message "INFO" "清理残留的 AWStats 锁文件: $awstats_lock"
+            rm -f "$awstats_lock"
+        fi
+    fi
+    
+    # 只处理当前月份
+    local data_file="$dir/awstats${current_month}${current_year}.${domain_idn}.txt"
+
+    log_message "INFO" "处理当前月份: ${current_year}-${current_month}"
+    log_message "INFO" "数据文件: $data_file"
+    
+    # 检查数据文件是否存在
+    if [ ! -f "$data_file" ]; then
+        echo "数据文件不存在，执行首次更新"
+        log_message "INFO" "数据文件不存在，执行首次更新"
+        
+        # 首次更新：不使用 -databasepath，让 AWStats 创建数据文件
+        $awstats -config="$domain_idn" -lang="$awstats_lang" -year="$current_year" -month="$current_month" -update >> "$LOG_FILE" 2>&1
+        
+        # 检查数据文件是否成功生成
+        if [ -f "$data_file" ] && [ -s "$data_file" ]; then
+            log_message "INFO" "首次更新成功: ${current_year}-${current_month}"
+            [ -n "$user_group" ] && chown "$user:$user_group" "$data_file" 2>/dev/null
+            log_message "INFO" "已设置数据文件权限: $data_file"
+            if [ -f "${data_file}.bak" ]; then
+                [ -n "$user_group" ] && chown "$user:$user_group" "${data_file}.bak" 2>/dev/null
+            fi
+        else
+            log_message "ERROR" "首次更新失败: ${current_year}-${current_month}"
+            echo "错误: AWStats 首次更新失败，请检查日志: $LOG_FILE"
+            return 1
+        fi
+    else
+        echo "数据文件已存在，执行增量更新"
+        log_message "INFO" "数据文件已存在，执行增量更新"
+        
+        # 记录更新前的文件修改时间
+        local old_mtime=$(stat -c %Y "$data_file" 2>/dev/null || echo 0)
+        
+        # 增量更新：使用 -databasepath（忽略退出码，因为警告也会导致非零）
+        $awstats -config="$domain_idn" -lang="$awstats_lang" -year="$current_year" -month="$current_month" -update -databasepath="$data_file" >> "$LOG_FILE" 2>&1
+        
+        # 检查文件是否被更新（时间戳变化）
+        local new_mtime=$(stat -c %Y "$data_file" 2>/dev/null || echo 0)
+        
+        if [ "$new_mtime" -gt "$old_mtime" ]; then
+            log_message "INFO" "增量更新成功: ${current_year}-${current_month}"
+            [ -n "$user_group" ] && chown "$user:$user_group" "$data_file" 2>/dev/null
+            if [ -f "${data_file}.bak" ]; then
+                [ -n "$user_group" ] && chown "$user:$user_group" "${data_file}.bak" 2>/dev/null
+            fi
+        else
+            # 文件未更新，可能没有新日志
+            log_message "INFO" "增量更新完成: ${current_year}-${current_month} (无新日志)"
+        fi
+    fi
+    
+    # 验证数据文件是否存在并最终打印
+    if [ -f "$data_file" ] && [ -s "$data_file" ]; then
+        local file_size=$(stat -c%s "$data_file")
+        echo "✅ AWStats 更新完成！"
+        echo "数据文件: $data_file"
+        echo "文件大小: $file_size 字节"
+        log_message "INFO" "AWStats 更新完成，数据文件大小: $file_size 字节"
+        return 0
+    else
+        echo "⚠️  警告: 数据文件未生成或为空"
+        log_message "WARNING" "数据文件未生成或为空: $data_file"
+        return 1
+    fi
+}
+
+# 根据统计类型安全触发更新
+case $STATS in
+    awstats) 
+        build_awstats
+        exit_code=$? 
+        ;;
+    *)
+        exit_code=0
+        ;;
+esac
+chown -Rh "$user:$user" "$dir" 2>/dev/null
+
+#----------------------------------------------------------#
+#                       Hestia                             #
+#----------------------------------------------------------#
+
+exit $exit_code

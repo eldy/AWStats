@@ -1,0 +1,3317 @@
+# AWStats Turkish (tr) translations
+# Copyright (C) 2026 AWStats
+# This file is distributed under the same license as the AWStats package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: AWStats 8.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-10 12:00+0000\n"
+"PO-Revision-Date: 2026-05-10 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Turkish\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#------------------------------------------------------------------------------
+# Ay İsimleri
+#------------------------------------------------------------------------------
+
+msgid "month_01"
+msgstr "Oca"
+
+msgid "month_02"
+msgstr "Şub"
+
+msgid "month_03"
+msgstr "Mar"
+
+msgid "month_04"
+msgstr "Nis"
+
+msgid "month_05"
+msgstr "May"
+
+msgid "month_06"
+msgstr "Haz"
+
+msgid "month_07"
+msgstr "Tem"
+
+msgid "month_08"
+msgstr "Ağu"
+
+msgid "month_09"
+msgstr "Eyl"
+
+msgid "month_10"
+msgstr "Eki"
+
+msgid "month_11"
+msgstr "Kas"
+
+msgid "month_12"
+msgstr "Ara"
+
+#------------------------------------------------------------------------------
+# Haftanın Gün İsimleri
+#------------------------------------------------------------------------------
+
+msgid "DayOfWeek_0"
+msgstr "Paz"
+
+msgid "DayOfWeek_1"
+msgstr "Pzt"
+
+msgid "DayOfWeek_2"
+msgstr "Sal"
+
+msgid "DayOfWeek_3"
+msgstr "Çar"
+
+msgid "DayOfWeek_4"
+msgstr "Per"
+
+msgid "DayOfWeek_5"
+msgstr "Cum"
+
+msgid "DayOfWeek_6"
+msgstr "Cmt"
+
+#------------------------------------------------------------------------------
+# Arayüz Elemanları
+#------------------------------------------------------------------------------
+
+msgid "Advanced Web Statistics for"
+msgstr "için Gelişmiş Web İstatistikleri"
+
+msgid "Statistics for"
+msgstr "için İstatistikler"
+
+msgid "main"
+msgstr "ana"
+
+msgid "Switch to light mode"
+msgstr "Açık moda geç"
+
+msgid "Switch to dark mode"
+msgstr "Koyu moda geç"
+
+msgid "TB"
+msgstr "TB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "Bytes"
+msgstr "Bayt"
+
+msgid "Filter"
+msgstr "Filtre"
+
+msgid "Exclude filter"
+msgstr "Hariç tutma filtresi"
+
+msgid "Top"
+msgstr "En yüksek"
+
+msgid "Full list"
+msgstr "Tam liste"
+
+msgid "Last"
+msgstr "Son"
+
+msgid "Average"
+msgstr "Ortalama"
+
+msgid "Export"
+msgstr "Dışa aktar"
+
+msgid "Details"
+msgstr "Detaylar"
+
+msgid "Version"
+msgstr "Sürüm"
+
+msgid "thousands_separator"
+msgstr "."
+
+msgid "dateformat_long"
+msgstr "dd.mm.yyyy HH:MM:SS"
+
+msgid "dateformat_short"
+msgstr "dd.mm.yyyy HH:MM"
+
+msgid "date_format_year"
+msgstr "%s"
+
+msgid "date_format_month"
+msgstr "%1$s %2$s"
+
+#------------------------------------------------------------------------------
+# Navigasyon Çubuğu
+#------------------------------------------------------------------------------
+
+msgid "AWStats Month Selector"
+msgstr "AWStats Ay Seçici"
+
+msgid "nav_category_basic"
+msgstr "Temel Belgeler"
+
+msgid "nav_category_guide"
+msgstr "Kullanım Kılavuzu"
+
+msgid "nav_category_reference"
+msgstr "Referans Kaynakları"
+
+msgid "nav_category_integration"
+msgstr "Entegrasyon ve Uzantılar"
+
+msgid "nav_category_dev"
+msgstr "Geliştirici Dokümanları"
+
+msgid "nav_changelog"
+msgstr "Değişiklik Günlüğü"
+
+msgid "nav_what"
+msgstr "AWStats Nedir"
+
+msgid "nav_license"
+msgstr "Lisans"
+
+msgid "nav_glossary"
+msgstr "Sözlük"
+
+msgid "nav_setup"
+msgstr "Kurulum ve Yapılandırma"
+
+msgid "nav_upgrade"
+msgstr "Yükseltme Kılavuzu"
+
+msgid "nav_config"
+msgstr "Yapılandırma Parametreleri"
+
+msgid "nav_extra"
+msgstr "Ekstra Bölümler"
+
+msgid "nav_tools"
+msgstr "Diğer Araçlar"
+
+msgid "nav_faq"
+msgstr "SSS"
+
+msgid "nav_security"
+msgstr "Güvenlik Tavsiyeleri"
+
+msgid "nav_compare"
+msgstr "Karşılaştırma"
+
+msgid "nav_benchmark"
+msgstr "Performans Testleri"
+
+msgid "nav_webmin"
+msgstr "Webmin Modülü"
+
+msgid "nav_dolibarr"
+msgstr "Dolibarr Modülü"
+
+msgid "nav_contrib"
+msgstr "Katkı Kaynakları"
+
+msgid "nav_plugins"
+msgstr "Eklenti Geliştirme"
+
+msgid "nav_hooks"
+msgstr "Eklenti Kancaları"
+
+msgid "nav_graphs"
+msgstr "Eklenti Grafikleri"
+
+msgid "Back to top"
+msgstr "Başa dön"
+
+msgid "nav_select_month"
+msgstr "Ay seçin"
+
+#------------------------------------------------------------------------------
+# Ana İstatistik Göstergeleri
+#------------------------------------------------------------------------------
+
+msgid "Unique visitors"
+msgstr "Benzersiz ziyaretçiler"
+
+msgid "Visits"
+msgstr "Ziyaretler"
+
+msgid "Visits duration"
+msgstr "Ziyaret süresi"
+
+msgid "First visit"
+msgstr "İlk ziyaret"
+
+msgid "Last visit"
+msgstr "Son ziyaret"
+
+msgid "Visits/Visitor"
+msgstr "Ziyaretler/Ziyaretçi"
+
+msgid "Pages/Visit"
+msgstr "Sayfalar/Ziyaret"
+
+msgid "Hits/Visit"
+msgstr "Hitler/Ziyaret"
+
+msgid "KB/Visit"
+msgstr "KB/Ziyaret"
+
+msgid "KB/Visits"
+msgstr "KB/Ziyaretler"
+
+msgid "Pages"
+msgstr "Sayfalar"
+
+msgid "Hits"
+msgstr "Hitler"
+
+msgid "Bandwidth"
+msgstr "Bant genişliği"
+
+msgid "duration_format"
+msgstr "%s-%s"
+
+msgid "unit_s"
+msgstr "sn"
+
+msgid "unit_min"
+msgstr "dk"
+
+msgid "unit_h"
+msgstr "sa"
+
+msgid "and"
+msgstr "-"
+
+msgid "Device Types"
+msgstr "Cihaz Türleri"
+
+msgid "Device Type"
+msgstr "Cihaz Türü"
+
+msgid "Percent"
+msgstr "Yüzde"
+
+msgid "Mobile"
+msgstr "Mobil"
+
+msgid "Pause & Go"
+msgstr "Duraklat ve Devam Et"
+
+msgid "Complete"
+msgstr "Tamamla"
+
+msgid "Tablet"
+msgstr "Tablet"
+
+msgid "Tv"
+msgstr "TV"
+
+msgid "Wearable"
+msgstr "Giyilebilir cihaz"
+
+msgid "Bot"
+msgstr "Bot"
+
+msgid "Desktop"
+msgstr "Masaüstü"
+
+msgid "Normal browsing traffic"
+msgstr "Normal gezinme trafiği"
+
+msgid "Abnormal browsing traffic"
+msgstr "Anormal gezinme trafiği"
+
+msgid "Viewed"
+msgstr "Görüntülendi"
+
+msgid "Not viewed"
+msgstr "Görüntülenmedi"
+
+msgid "Abnormal browsing traffic note"
+msgstr "Anormal gezinme trafiği şunları içerir: arama motoru robotları, AI eğitim robotları, güvenlik açığı tarayıcıları ve HTTP/HTTPS özelliklerine uymayan istekler"
+
+msgid "File size"
+msgstr "Dosya boyutu"
+
+msgid "File type"
+msgstr "Dosya türü"
+
+msgid "Downloads"
+msgstr "İndirmeler"
+
+msgid "Request time"
+msgstr "İstek süresi"
+
+msgid "Total requests"
+msgstr "Toplam istek"
+
+msgid "Frequency"
+msgstr "Frekans"
+
+msgid "Average frequency"
+msgstr "Ortalama frekans"
+
+msgid "Seconds"
+msgstr "Saniye"
+
+msgid "First"
+msgstr "İlk"
+
+msgid "Mails"
+msgstr "E-postalar"
+
+msgid "Size"
+msgstr "Boyut"
+
+msgid "If you remove this file, all statistics for date"
+msgstr "Uyarı: Bu dosyayı silerseniz, tarihi için tüm istatistikler"
+
+msgid "will be lost/reset."
+msgstr "kaybolacak/sıfırlanacaktır!"
+
+msgid "Last config file used to build this data file was"
+msgstr "Bu veri dosyasını oluşturmak için kullanılan son yapılandırma dosyası"
+
+msgid "Position (offset in bytes) in this file for beginning of each section for"
+msgstr "Bu dosyadaki her bölümün başlangıcı için konum (bayt cinsinden ofset)"
+
+msgid "direct I/O access. If you made changes somewhere in this file, you should"
+msgstr "doğrudan G/Ç erişimi. Bu dosyanın herhangi bir yerinde değişiklik yaptıysanız,"
+
+msgid "also remove completely the MAP section (AWStats will rewrite it at next update)"
+msgstr "ayrıca MAP bölümünü tamamen kaldırın (AWStats bir sonraki güncellemede onu yeniden yazacaktır)"
+
+msgid "LastLine    = Date of last record processed - Last record line number in last log - Last record offset in last log - Last record signature value"
+msgstr "LastLine    = İşlenen son kaydın tarihi - Son logdaki son kaydın satır numarası - Son logdaki son kaydın ofseti - Son kaydın imza değeri"
+
+msgid "FirstTime   = Date of first visit for history file"
+msgstr "FirstTime   = Tarih dosyası için ilk ziyaretin tarihi"
+
+msgid "LastTime    = Date of last visit for history file"
+msgstr "LastTime    = Tarih dosyası için son ziyaretin tarihi"
+
+msgid "LastUpdate  = Date of last update - Nb of parsed records - Nb of parsed old records - Nb of parsed new records - Nb of parsed corrupted - Nb of parsed dropped"
+msgstr "LastUpdate  = Son güncelleme tarihi - Ayrıştırılan kayıt sayısı - Ayrıştırılan eski kayıt sayısı - Ayrıştırılan yeni kayıt sayısı - Ayrıştırılan bozuk kayıt sayısı - Ayrıştırılan atılan kayıt sayısı"
+
+msgid "TotalVisits = Number of visits"
+msgstr "TotalVisits = Ziyaret sayısı"
+
+msgid "TotalUnique = Number of unique visitors"
+msgstr "TotalUnique = Benzersiz ziyaretçi sayısı"
+
+msgid "MonthHostsKnown   = Number of hosts known"
+msgstr "MonthHostsKnown   = Bilinen ana bilgisayar sayısı"
+
+msgid "MonthHostsUnKnown = Number of hosts unknown"
+msgstr "MonthHostsUnKnown = Bilinmeyen ana bilgisayar sayısı"
+
+msgid "Cluster ID - Pages - Hits - Bandwidth"
+msgstr "Küme Kimliği - Sayfalar - Hitler - Bant genişliği"
+
+msgid "Hour - Pages - Hits - Bandwidth - Not viewed Pages - Not viewed Hits - Not viewed Bandwidth"
+msgstr "Saat - Sayfalar - Hitler - Bant genişliği - Görüntülenmeyen sayfalar - Görüntülenmeyen hitler - Görüntülenmeyen bant genişliği"
+
+msgid "Date - Pages - Hits - Bandwidth - Visits"
+msgstr "Tarih - Sayfalar - Hitler - Bant genişliği - Ziyaretler"
+
+msgid "Domain - Pages - Hits - Bandwidth"
+msgstr "Alan adı - Sayfalar - Hitler - Bant genişliği"
+
+msgid "The %s first Pages must be first (order not required for others)"
+msgstr "Ana sayfa yalnızca sayfa gösterim sayısına göre ilk %s sayfayı gösterir, tam liste detay sayfasındadır."
+
+msgid "Host - Pages - Hits - Bandwidth - Last visit date - [Start date of last visit] - [Last page of last visit]"
+msgstr "Ana bilgisayar - Sayfalar - Hitler - Bant genişliği - Son ziyaret tarihi - [Son ziyaretin başlangıç tarihi] - [Son ziyaretin son sayfası]"
+
+msgid "[Start date of last visit] and [Last page of last visit] are saved only if session is not finished"
+msgstr "[Son ziyaretin başlangıç tarihi] ve [Son ziyaretin son sayfası] yalnızca oturum bitmemişse kaydedilir"
+
+msgid "The first %s items are sorted by hits in descending order; order of the remaining items is undefined."
+msgstr "İlk %s öğe, isabet sayısına göre azalan düzende sıralanmıştır; kalan öğelerin sırası tanımlanmamıştır."
+
+msgid "Login - Pages - Hits - Bandwidth - Last visit"
+msgstr "Giriş - Sayfalar - Hitler - Bant genişliği - Son ziyaret"
+
+msgid "Robot ID - Hits - Bandwidth - Last visit - Hits on robots.txt"
+msgstr "Robot Kimliği - Hitler - Bant genişliği - Son ziyaret - robots.txt üzerindeki hitler"
+
+msgid "Worm ID - Hits - Bandwidth - Last visit"
+msgstr "Solucan Kimliği - Hitler - Bant genişliği - Son ziyaret"
+
+msgid "EMail - Hits - Bandwidth - Last visit"
+msgstr "E-posta - Hitler - Bant genişliği - Son ziyaret"
+
+msgid "The first %s email addresses are sorted by hits in descending order; order of the remaining addresses is undefined."
+msgstr "İlk %s e-posta adresi, isabet sayısına göre azalan düzende sıralanmıştır; kalan adreslerin sırası tanımlanmamıştır."
+
+msgid "URL - Pages - Bandwidth - Entry - Exit"
+msgstr "URL - Sayfalar - Bant genişliği - Giriş - Çıkış"
+
+msgid "Files type - Hits - Bandwidth - Bandwidth without compression - Bandwidth after compression"
+msgstr "Dosya türü - Hitler - Bant genişliği - Sıkıştırmasız bant genişliği - Sıkıştırma sonrası bant genişliği"
+
+msgid "Request Time Range - Request Time Frequency"
+msgstr "İstek Zaman Aralığı - İstek Zamanı Frekansı"
+
+msgid "Payload Range - Payload Frequency"
+msgstr "Yük Aralığı - Yük Frekansı"
+
+msgid "Session range - Number of visits"
+msgstr "Oturum aralığı - Ziyaret sayısı"
+
+msgid "URL with %s errors - Hits"
+msgstr "%s hatası olan URL - Hitler"
+
+msgid "Last URL referrer"
+msgstr "Son URL yönlendiren"
+
+msgid "Errors - Hits - Bandwidth"
+msgstr "Hatalar - Hitler - Bant genişliği"
+
+msgid "Search keywords - Number of search"
+msgstr "Anahtar kelimeler - Arama sayısı"
+
+msgid "Only top %s keywords shown on main page (sorted by search count). See full list on detail page."
+msgstr "Ana sayfa yalnızca arama sayısına göre ilk %s anahtar kelimeyi gösterir, tam liste detay sayfasındadır."
+
+msgid "Search keyphrases - Number of search"
+msgstr "Anahtar ifadeler - Arama sayısı"
+
+msgid "Only top %s keyphrases shown on main page (sorted by search count). See full list on detail page."
+msgstr "Ana sayfa yalnızca arama sayısına göre ilk %s anahtar ifadeyi gösterir, tam liste detay sayfasındadır."
+
+msgid "External page referers - Pages - Hits"
+msgstr "Harici sayfa yönlendirenler - Sayfalar - Hitler"
+
+msgid "Only top %s external referrers shown on main page (sorted by pages). See full list on detail page."
+msgstr "Ana sayfa yalnızca sayfa sayısına göre ilk %s harici yönlendireni gösterir, tam liste detay sayfasındadır."
+
+msgid "Search engine referers ID - Pages - Hits"
+msgstr "Arama motoru yönlendiren kimliği - Sayfalar - Hitler"
+
+msgid "Origin - Pages - Hits"
+msgstr "Kaynak - Sayfalar - Hitler"
+
+msgid "Unknown referer Browser - Last visit date"
+msgstr "Bilinmeyen yönlendiren tarayıcısı - Son ziyaret tarihi"
+
+msgid "Unknown referer OS - Last visit date"
+msgstr "Bilinmeyen yönlendiren İŞL - Son ziyaret tarihi"
+
+msgid "Screen size - Hits"
+msgstr "Ekran boyutu - Hitler"
+
+msgid "Browser ID - Hits - Pages"
+msgstr "Tarayıcı Kimliği - Hitler - Sayfalar"
+
+msgid "Downloads - Hits - Bandwidth"
+msgstr "İndirmeler - Hitler - Bant genişliği"
+
+msgid "Protocol - Hits - Bandwidth"
+msgstr "Protokol - Hitler - Bant genişliği"
+
+msgid "Icon Status - Type:200:404:Other"
+msgstr "Simge Durumu - Tür:200:404:Diğer"
+
+#------------------------------------------------------------------------------
+# Zaman Dilimi Çevirileri
+#------------------------------------------------------------------------------
+
+msgid "period_00"
+msgstr "Gece yarısı · AWStats uyuyor, sen hala verilere bakıyorsun? İnanılmaz"
+
+msgid "period_01"
+msgstr "Sabah 1 · Uyuyamıyor musun yoksa işten mi yeni çıktın?"
+
+msgid "period_02"
+msgstr "Sabah 2 · Botlar bile senden daha çalışkan"
+
+msgid "period_03"
+msgstr "Sabah 3 · Şehir uyuyor, sunucu fazla mesai yapıyor"
+
+msgid "period_04"
+msgstr "Sabah 4 · Hangisi daha parlak, ekranın mı yoksa sunucu ışığı mı?"
+
+msgid "period_05"
+msgstr "Sabah 5 · Erken kalkan kuş solucanı yakalar"
+
+msgid "period_06"
+msgstr "Sabah 6 · Biri uyanıyor, biri hala uyumadı"
+
+msgid "period_07"
+msgstr "Sabah 7 · İşe giderken internette gezinme zamanı"
+
+msgid "period_08"
+msgstr "Sabah 8 · İlk iş: dünün verilerini kontrol et"
+
+msgid "period_09"
+msgstr "Sabah 9 · Altın saat, çalışmak için en iyi zaman"
+
+msgid "period_10"
+msgstr "Sabah 10 · Kahve zamanı, trafiğin artıp artmadığını kontrol et"
+
+msgid "period_11"
+msgstr "Sabah 11 · Öğle yemeğine bir saat kaldı, biraz daha dayan"
+
+msgid "period_12"
+msgstr "Öğlen 12 · Sunucu: herkes öğle yemeğine gitti, ben biraz dinleneyim"
+
+msgid "period_13"
+msgstr "Öğleden sonra 13 · Uyku geliyor, ama veriler uyumaz"
+
+msgid "period_14"
+msgstr "Öğleden sonra 14 · İkindi çayı zamanı, verilerle daha lezzetli"
+
+msgid "period_15"
+msgstr "Öğleden sonra 15 · Bugünün trafik grafiği ruh halinin değişimine benziyor"
+
+msgid "period_16"
+msgstr "Öğleden sonra 16 · Mesai bitimine X saat kaldı, trafik hızlanıyor"
+
+msgid "period_17"
+msgstr "Akşam 17 · Mesai bitti! Ama sunucu hala çalışıyor"
+
+msgid "period_18"
+msgstr "Akşam 18 · Akşam yemeği zamanı"
+
+msgid "period_19"
+msgstr "Akşam 19 · Altın saat, yoğun trafik"
+
+msgid "period_20"
+msgstr "Akşam 20 · Kanepede uzanmış, sen 114514. ziyaretçisin"
+
+msgid "period_21"
+msgstr "Akşam 21 · Gece derinleşiyor, gizlice verilere bakan gece kuşu +1"
+
+msgid "period_22"
+msgstr "Akşam 22 · Bugünün verileri neredeyse hazır, gergin misin?"
+
+msgid "period_23"
+msgstr "Akşam 23 · AWStats: uyuma zamanı, yarın yine çalışmalısın"
+
+#------------------------------------------------------------------------------
+# Zaman Boyutları
+#------------------------------------------------------------------------------
+
+msgid "Period"
+msgstr "Dönem"
+
+msgid "Year"
+msgstr "Yıl"
+
+msgid "Month"
+msgstr "Ay"
+
+msgid "Months"
+msgstr "Aylar"
+
+msgid "Date"
+msgstr "Tarih"
+
+msgid "Day"
+msgstr "Gün"
+
+msgid "Hour"
+msgstr "Saat"
+
+msgid "Hours"
+msgstr "Saat"
+
+msgid "Day of week"
+msgstr "Haftanın günü"
+
+msgid "When"
+msgstr "Ne zaman"
+
+msgid "%s Server Management Panel"
+msgstr "%s  Sunucu Yönetim Paneli"
+
+msgid "Server Administration"
+msgstr "Basit ve verimli sunucu çözümü"
+
+#------------------------------------------------------------------------------
+# Ziyaretçi boyutları
+#------------------------------------------------------------------------------
+
+msgid "Invalid URL Parameters"
+msgstr "Geçersiz URL Parametreleri"
+
+msgid "The requested page cannot be loaded due to invalid or malformed URL parameters."
+msgstr "İstenen sayfa, geçersiz veya hatalı biçimlendirilmiş URL parametreleri nedeniyle yüklenemiyor."
+
+msgid "This may be caused by typing an incorrect URL, missing parameter separators, or using an invalid configuration name."
+msgstr "Bu, hatalı bir URL yazmaktan, eksik parametre ayırıcılarından veya geçersiz bir yapılandırma adı kullanmaktan kaynaklanıyor olabilir."
+
+msgid "Please check the URL you entered and ensure all parameters are correctly formatted."
+msgstr "Lütfen girdiğiniz URL'yi kontrol edin ve tüm parametrelerin doğru biçimlendirildiğinden emin olun."
+
+msgid "SiteDomain parameter not defined in your config/domain file, or you may not have execution permission on the file."
+msgstr "SiteDomain parametresi config/domain dosyanızda tanımlanmamış veya dosya üzerinde çalıştırma izniniz olmayabilir."
+
+msgid "Please run as Administrator to set permissions"
+msgstr "İzinleri ayarlamak için lütfen Yönetici olarak çalıştırın"
+
+msgid "This directory lacks read permission"
+msgstr "Bu dizinde okuma izni yok"
+
+msgid "Please set read permission for directory"
+msgstr "Lütfen dizin için okuma izni ayarlayın"
+
+msgid "Missing required parameter in config file"
+msgstr "Yapılandırma dosyasında gerekli parametre eksik"
+
+msgid "Please check that 'DirData' is defined."
+msgstr "Lütfen 'DirData' tanımlı mı kontrol edin."
+
+msgid "Domain name in browser address appears to be missing or incomplete"
+msgstr "Tarayıcı adresindeki alan adı eksik veya tamamlanmamış görünüyor"
+
+msgid "Please check the URL parameter"
+msgstr "Lütfen URL parametresini kontrol edin"
+
+msgid "Format description"
+msgstr "Biçim açıklaması"
+
+msgid "Please set execute permission"
+msgstr "Lütfen çalıştırma iznini ayarlayın"
+
+msgid "Or if you prefer numeric mode"
+msgstr "Veya sayısal modu tercih ediyorsanız"
+
+msgid "View Report Directly"
+msgstr "Raporu doğrudan görüntüle"
+
+msgid "AWStats Log Viewer"
+msgstr "AWStats Günlük Görüntüleyici"
+
+msgid "Month Selection"
+msgstr "Ay Seçimi"
+
+msgid "Who"
+msgstr "Kim"
+
+msgid "Visitors"
+msgstr "Ziyaretçiler"
+
+msgid "Countries"
+msgstr "Ülkeler"
+
+msgid "flag_icon"
+msgstr "bayrak"
+
+msgid "Country-Region-City"
+msgstr "Ülke-Bölge-Şehir"
+
+msgid "Code"
+msgstr "Kod"
+
+msgid "Known"
+msgstr "Bilinen"
+
+msgid "unknownos"
+msgstr "bilinmeyen İŞL"
+
+msgid "unknownbrowser"
+msgstr "bilinmeyen tarayıcı"
+
+msgid "Unresolved IP Address"
+msgstr "Çözümlenmemiş IP Adresi"
+
+msgid "Unknown File Type"
+msgstr "Bilinmeyen Dosya Türü"
+
+msgid "Unknown Size"
+msgstr "Bilinmeyen Boyut"
+
+msgid "Unknown Time"
+msgstr "Bilinmeyen Zaman"
+
+msgid "Unknown Browser"
+msgstr "Bilinmeyen Tarayıcı"
+
+msgid "Unknown OS"
+msgstr "Bilinmeyen İŞL"
+
+msgid "Unknown Visitor"
+msgstr "Bilinmeyen Ziyaretçi"
+
+msgid "Unknown Visitor (Total)"
+msgstr "Bilinmeyen Ziyaretçi (Toplam)"
+
+msgid "Unknown Country"
+msgstr "Bilinmeyen Ülke"
+
+msgid "Unknown Country (Region)"
+msgstr "Bilinmeyen Ülke (Bölge)"
+
+msgid "Unknown Visitor (Title)"
+msgstr "Bilinmeyen Ziyaretçi (başlık)"
+
+msgid "PageStayTime"
+msgstr "Sayfada kalma süresi tahmin edilemiyor"
+
+msgid "Unknown OS (Link)"
+msgstr "Bilinmeyen İŞL (bağlantı)"
+
+msgid "Unknown OS (Row)"
+msgstr "bilinmeyen işletim sistemi"
+
+msgid "Unknown Browser (Link)"
+msgstr "Bilinmeyen tarayıcı (bağlantı)"
+
+msgid "Unknown Browser (Row)"
+msgstr "bilinmeyen tarayıcı"
+
+msgid "Unknown Screen"
+msgstr "Bilinmeyen ekran boyutu"
+
+msgid "Login"
+msgstr "Giriş"
+
+msgid "Anonymous"
+msgstr "Anonim"
+
+msgid "Robots"
+msgstr "Robotlar"
+
+msgid "Different robots"
+msgstr "Farklı robotlar"
+
+msgid "Hits on robots.txt"
+msgstr "Yukarıda listelenen arama motoru robotlarından gelen \"anormal gezinme trafiği\" olarak kategorize edilen trafik, diğer tablo ve grafiklere dahil edilmemiştir. \"+\" işaretinden sonraki sayı, robots.txt dosyasına yapılan başarılı isteklerin sayısını temsil eder"
+
+msgid "Worms"
+msgstr "Solucanlar"
+
+msgid "Different worms"
+msgstr "Farklı solucanlar"
+
+msgid "Target"
+msgstr "Hedef"
+
+msgid "Grabber"
+msgstr "Grabber"
+
+#------------------------------------------------------------------------------
+# Format Açıklamaları
+#------------------------------------------------------------------------------
+
+msgid "mime_text"
+msgstr "TXT düz metin dosyası (1963'te ASCII kodlamasıyla standartlaştırılmış biçimlendirilmemiş düz metin. Tüm kaynak kodlarının, yapılandırma dosyalarının ve sistem günlüklerinin temel taşı olarak, platformlar arası Windows (CRLF) ve Unix (LF) satır sonu kontrol akışları, bugün hala bilgisayar dünyasının en evrensel veri değişim standardıdır)"
+
+msgid "mime_log"
+msgstr "LOG sistem işlem günlüğü (işletim sisteminin, çekirdeğin ve uygulama düzeyindeki çalışma zamanı durumlarını kaydeden düz metin varlığı. Nginx/Apache erişim günlüklerini (Birleşik Günlük) ve standart syslog belirtimini kapsar. Sorun giderme, akış performansı analizi ve güvenlik denetimi için temel veri kaynağıdır)"
+
+msgid "mime_page"
+msgstr "HTML hipermetin web sayfası (1989'da Tim Berners-Lee tarafından oluşturulan Dünya Çapında Ağ'ın temel taşı. Ücretsiz olarak sunulan evrensel bir hipermetin işaretleme dili olarak, HTML5 belirtimi 2014'te W3C resmi standardı haline geldi ve yapılandırılmış multimedya, anlamsal etkileşim ve akış sayfa düzeni için yerel destek sunar. 2016'da Turing Ödülü'nü kazanmıştır)"
+
+msgid "mime_khtml"
+msgstr "KHTML web şablon motoru (1998 KDE 2.0 tarayıcı işleme motoru belirtimi. Modern web işlemenin temelini atan açık kaynak topluluk ölçütü olarak, teknik mirası doğrudan Apple WebKit ve Google Blink çekirdeklerine ilham vermiş ve evrilmiştir. Günümüzde hala modern akış dinamik web mimarisi aracılığıyla temel yolunu sürdürmektedir)"
+
+msgid "mime_script"
+msgstr "SCRIPT yorumlanan dinamik betik (önceden derlenmesi gerekmeyen ve belirli bir çalışma zamanı veya yorumlayıcı tarafından satır satır okunarak yürütülen kaynak kodu akışlarının genel sınıflandırması. ASP, JSP, CGI ve Tcl vb.'yi kapsar. Sunucu tarafı ortak ağ geçidi arayüzleri, otomatik süreç kontrolü ve sistem seviyesi görev yapıştırma için yaygın olarak kullanılır)"
+
+msgid "mime_js"
+msgstr "JavaScript betiği (1995 Netscape tarayıcısının yerel programlama ortamı. 1997'de ECMAScript endüstri standardını oluşturdu, 2009'da Node.js çalışma zamanı doğdu, tarayıcı sınırlarını kırdı ve tam yığın asenkron engellemeyen mimari yarattı. Dünyanın en büyük npm yazılım paketi ekosistemi eşlik etmektedir)"
+
+msgid "mime_py"
+msgstr "Python betiği (1991'de Guido van Rossum tarafından oluşturulan yüksek seviyeli yorumlanan betik dili. Zorunlu girinti sayesinde kayıpsız okunabilirlik ve çok paradigmalı düşük seviyeli tasarım sayesinde, artık modern web mimarisi, tam yığın veri bilimi, yapay zeka (AI) model eğitimi ve bulut yerel otomatik operasyonlar için endüstri standardı dil olarak kurulmuştur)"
+
+msgid "mime_sh"
+msgstr "Shell betiği (1971 Unix döneminin standart komut yorumlayıcı betiği. Bash, Sh, Dash gibi çekirdek seviyesi komut belirtimlerini içerir, genellikle .sh uzantısıyla yürütülür. Modern Unix benzeri işletim sistemlerinde düşük seviyeli süreç kontrolü, kurulum gerektirmeyen ortam yapılandırması ve otomatik dağıtım için evrensel bir çekirdek seviyesi yapıştırıcıdır)"
+
+msgid "mime_rb"
+msgstr "Ruby betiği (1995'te Yukihiro Matsumoto tarafından oluşturulan nesne yönelimli betik dili. Geliştirici deneyimine aşırı saygı duymak temel tasarım felsefesidir. Ruby on Rails çerçevesi, 'Kural Yapılandırmadan Üstündür (CoC)' modern yüksek seviyeli web mimarisi geliştirme paradigmasını devrimci bir şekilde kurmuştur)"
+
+msgid "mime_pl"
+msgstr "Perl betiği (1987'de Larry Wall tarafından oluşturulan pragmatik betik dili. Modern paket yöneticilerinin (CPAN) öncüsü olarak, metin işlemenin 'İsviçre Çakısı' olarak bilinir. Modern CGI modunda, çok düşük fiziksel bellek maliyeti ve yüksek verimli düzenli ifade işleme sayesinde, günlük ayrıştırma alanında yüksek güvenilirlikli bir temel olarak hizmet vermektedir)"
+
+msgid "mime_php"
+msgstr "PHP dinamik web sayfası (1995'te Rasmus Lerdorf tarafından oluşturulmuş, özellikle web geliştirme için tasarlanmıştır. Dünyadaki web sitelerinin %70'inden fazlasını çalıştıran temel teknoloji olarak, WordPress, Wikipedia gibi büyük üretim seviyesi uygulamaları derinlemesine destekler. PHP 8'den itibaren JIT (Just-In-Time) derleme çalışma zamanı motorunun tanıtılmasıyla, yüksek performanslı tam yığın sunucu tarafına doğru temel paradigma evrimi gerçekleştirmiştir)"
+
+msgid "mime_image"
+msgstr "IMAGE görüntü varlığı sınıflandırması (kayıplı/kayıpsız sıkıştırılmış bitmap, modern duyarlı web grafikleri ve vektör grafiklerinin genel sınıflandırmasını kapsar. Sitelerin görsel kaynak yükleme maliyetini, istemci tarafı önbellek isabet oranını ve medya ağ bant genişliği tüketimini değerlendirmek için temel bir göstergedir)"
+
+msgid "mime_document"
+msgstr "DOCUMENT yapılandırılmış belge sınıflandırması (düz metin, elektronik tablolar, sabit biçimli belgeler (PDF) ve hafif işaretleme dillerinin genel sınıflandırmasını kapsar. Sunucu tarafı statik bilgi tabanı dağıtımı, kurumsal bilgi varlığı indirme ve metin akışı verim kapasitesinin istatistikleri için temel bir göstergedir)"
+
+msgid "mime_package"
+msgstr "PACKAGE derleme ürünleri ve yazılım paketi sınıflandırması (işletim sisteminin yerel çalıştırılabilir programlarını, çalışma zamanı bağlantı kitaplıklarını (DLL/SO) ve uygulama dağıtım kurulum paketlerinin genel sınıflandırmasını kapsar. Yazılım dağıtım sitelerinin giden trafiğini ve indirme zirvelerini değerlendirmek için temel bir gösterge olarak sıklıkla kullanılır)"
+
+msgid "mime_archive"
+msgstr "ARCHIVE arşiv ve sıkıştırılmış dosyalar (DEFLATE, LZMA gibi temel algoritmalara dayalı veri sıkıştırma paketlerinin genel sınıflandırması. Ağ katmanında, geleneksel paket dağıtımını temsil etmenin yanı sıra, 1992 GNU projesinin Gzip dinamik yanıt akışını da kapsar. Modern senaryolarda Brotli algoritması kademeli olarak tanıtılsa da, bu sınıflandırma sunucu bant genişliği aktarım hızını ve taşıma katmanı basınç azaltımını değerlendirmek için temel bir gösterge olarak kalmaktadır)"
+
+msgid "mime_audio"
+msgstr "AUDIO dijital ses akışı sınıflandırması (sıkıştırılmış ses, sesli kitap ve akışlı medya ses kaplarının genel sınıflandırmasını kapsar. Belirli ses codec standartlarına dayanarak, multimedya sitelerinin ses veri akışlarının aktarım hızını, eşzamanlı akış bant genişliğini ve uzun bağlantı performansını izlemek için kullanılır)"
+
+msgid "mime_video"
+msgstr "VIDEO dijital video akışı sınıflandırması (yüksek çözünürlüklü video kaplarını, modern web animasyonunu ve akışlı medya segmentlerinin genel sınıflandırmasını kapsar. Yüksek yük ağ ortamında sunucu bant genişliği tepe sınırını ve İçerik Dağıtım Ağı (CDN) hızlandırma etkisini değerlendirmek için temel bir göstergedir)"
+
+msgid "mime_jscript"
+msgstr "JScript betiği (1996'da Microsoft'un Internet Explorer 3.0 için geliştirdiği tersine mühendislik özel mülk uygulama. Klasik JavaScript'in erken dönem ana bilgisayar rakibi olarak, Windows Betik Ana Bilgisayarı'nın (WSH) ve erken ASP arka ucunun temel motoruydu)"
+
+msgid "mime_json"
+msgstr "JSON yapılandırılmış veri (2001'de Douglas Crockford tarafından kurulan hafif veri serileştirme değişim formatı. Metin tabanlı anahtar-değer çiftleri ve dizi mimarisine dayanır, son derece yüksek insan okunabilirliğine ve kayıpsız akış ayrıştırma özelliğine sahiptir. Modern web API'leri, mikro hizmet mimarisi ve büyük dil modelleriyle etkileşim için fiili standarttır)"
+
+msgid "mime_vbs"
+msgstr "VBScript betiği (1996'da Microsoft tarafından IE 3.0 ile birlikte piyasaya sürülen betik dili varyantı. Bir zamanlar erken ASP dinamik web sitelerinin ve Windows sistem yönetiminin temel sürücüsüydü, şimdi Windows 11'in en yeni çekirdeğinden Microsoft tarafından resmen kullanımdan kaldırılmış ve kaldırılmıştır. Tarihsel miras teknolojisine aittir)"
+
+msgid "mime_conf"
+msgstr "CONF sistem yapılandırma dosyası (yazılım çalışma zamanı ortamı parametrelerini düz metin biçiminde kalıcı olarak depolayan veri dosyalarının genel sınıflandırması. INI ve modern YAML, TOML, JSON belirtimlerini kapsar. Linux sistemlerinde çoğunlukla /etc dizininde yoğunlaşmıştır. Sistem seviyesi çalışma zamanı durumu optimizasyonunun temel bağımlılığıdır)"
+
+msgid "mime_css"
+msgstr "CSS basamaklı stil sayfaları (1996 W3C standardı, HTML/JS ile birlikte ön ucun üç temel bileşeninden biridir. CSS2 konumlandırma ve CSS3 modüler evriminden geçmiştir. Flexbox, Grid ve medya sorgusu duyarlı tasarımı için yerel destek sunar. Modern tarayıcılarda web sayfası sunumunu ayırmak için kesinlikle baskın standarttır)"
+
+msgid "mime_xsl"
+msgstr "XSL stil sayfası (1999 W3C standardı, XSLT dönüşümü ve XPath adresleme dilini içerir, yapılandırılmış XML verilerini HTML, PDF veya düz metin olarak işlemek için kullanılır. Modern geliştirmede, ekosistemi büyük ölçüde daha hafif şablon motorları ve JSON veri formatı ile değiştirilmiştir)"
+
+msgid "mime_runtime"
+msgstr "Çalıştırılabilir dosya (EXE, ELF, Mach-O gibi işletim sisteminin yerel yürütme biçimleri, derlenmiş düşük seviyeli makine kodu, giriş noktası ve sistem yükleme bilgilerini içerir)"
+
+msgid "mime_library"
+msgstr "Kitaplık dosyası (DLL, SO, dylib gibi dinamik veya statik bağlantı kitaplıkları, diğer programlar tarafından çağrılmak ve çalışma zamanında yüklenmek için paylaşılan sembolleri ve yeniden konumlandırma kodunu içerir)"
+
+msgid "mime_swf"
+msgstr "Flash animasyonu (1996'da Macromedia tarafından geliştirildi, 2005'te Adobe tarafından satın alındı. Etkileşimli web animasyon standardı, bir zamanlar internet animasyonlarına ve oyunlarına egemen oldu. Zayıf noktalar: eklentilere bağımlılık, mobil cihaz desteği yok, yüksek güvenlik riski. Adobe 2017'de kullanımdan kaldırma duyurusu yaptı, 2020'de desteği tamamen durdurdu, HTML5/CSS3/JS ile değiştirildi)"
+
+msgid "mime_dtd"
+msgstr "DTD belge türü tanımı (1998'de XML 1.0 ile birlikte yayınlandı, XML/HTML belge yapısını tanımlamak ve geçerliliği doğrulamak için kullanılır. Modern geliştirmede, XML Schema, RELAX NG gibi daha esnek çözümlerle kademeli olarak değiştirilmiştir)"
+
+msgid "mime_csv"
+msgstr "CSV veri formatı (virgülle ayrılmış değerler, 1972 ana bilgisayar çağının (IBM Fortran derleyicisi) evrensel düz metin tablo formatı. 2005'te RFC 4180 tarafından resmen standartlaştırıldı. Platformlar arası, diller arası kayıpsız veri değişim standardı olarak. Excel, ilişkisel veritabanları, veri analizi (Pandas) için verimli içe/dışa aktarma için yaygın olarak kullanılır.)"
+
+msgid "mime_cur"
+msgstr "Fare işaretçisi dosyası (.cur formatı, fare stilini özelleştirmek için kullanılır. Örneğin web sayfalarındaki parmak imleci, sistemdeki kum saati bekleme simgesi. Yaygın .ico simgesinin 'akrabasıdır', ancak ek bir 'sıcak nokta' konumu vardır — farenin gerçekte tıkladığı konum. Tarih: Windows 3.1 ile (1992) tanıtıldı, grafik arayüzün komut satırından fare işlemi çağına geçişinde önemli bir bileşendi)"
+
+msgid "mime_jnlp"
+msgstr "Java Web Start (2000'lerin Java masaüstü uygulama dağıtım teknolojisi, .jnlp dosyası aracılığıyla uzak Java programlarını başlatır. Güvenlik sorunları ve modern dağıtım yöntemlerinin yaygınlaşması nedeniyle, artık büyük ölçüde kullanımdan kaldırılmıştır)"
+
+msgid "mime_lit"
+msgstr "Microsoft Reader e-kitabı (2000'de Microsoft tarafından piyasaya sürüldü, LIT formatı. Kullanımdan kaldırıldı, artık Calibre gibi araçlarla EPUB veya PDF'ye dönüştürülebilir)"
+
+msgid "mime_svg"
+msgstr "SVG vektör grafiği (1999 W3C standardı, XML mimarisine dayalı iki boyutlu vektör görüntü formatı. Keyfi ölçeklemede netlik kaybı olmaması ve metin akışı iletimi avantajına sahiptir. Tüm modern tarayıcılar bunu yerel olarak destekler. Yüksek çözünürlüklü web simgeleri, logolar ve vektör animasyonu işleme için yaygın olarak kullanılır. Modern web grafiklerinin temel standardıdır)"
+
+msgid "mime_ai"
+msgstr "AI vektör grafiği (1987'de Adobe tarafından bağımsız olarak geliştirilen özel mülk vektör grafik formatı. Tipografi, baskı tasarımı ve marka kimliği tasarımı için endüstri temel standardı olarak, çok katmanlı ve yüksek seviyeli düzen vektör verilerini destekler. Profesyonel görsel sanatlar için tercih edilen taşıyıcıdır)"
+
+msgid "mime_phshop"
+msgstr "PSD katmanlı görüntü (1990'da Adobe tarafından Photoshop ile birlikte piyasaya sürülen özel mülk raster görüntü kaynak dosyası formatı. Çok katmanlı katmanlamayı, kanalları, maskeleri ve kayıpsız düzenleme verilerini destekler. Küresel görüntü işleme ve dijital boyama için endüstri standardı olarak kurulmuştur)"
+
+msgid "mime_ttf"
+msgstr "TrueType yazı tipi (1989'da Apple ve Microsoft tarafından ortaklaşa geliştirilen dijital kontur yazı tipi formatı. İkinci dereceden Bézier eğrilerine dayanır, ekran görüntüsü ile baskı çıktısı arasında mutlak piksel tutarlılığı sağlar. Modern masaüstü işletim sistemlerinin yerel varsayılan yazı tipi formatıdır)"
+
+msgid "mime_fon"
+msgstr "FON bitmap yazı tipi (1980'lerin Microsoft Windows'unun erken sistem seviyesi nokta matris yazı tipi formatı. Keyfi orantılı kayıpsız ölçeklemeyi desteklemez. Genellikle eski sistemler veya erken gömülü cihaz bileşenleri ile sınırlı pikselleştirilmiş metin işleme için kullanılır)"
+
+msgid "mime_pdf"
+msgstr "PDF elektronik belge (1993'te Adobe tarafından geliştirilen ve 2008'de ISO 32000 uluslararası standardı haline gelen platformlar arası sabit düzenli belge formatı. Mutlak düzen ve format sadakatine sahiptir. Küresel elektronik resmi belge dağıtımı ve dijital yayıncılık için evrensel standarttır)"
+
+msgid "mime_dotnet"
+msgstr "ASP.NET dinamik sayfa (2002'de Microsoft tarafından .NET mimarisi ile birlikte piyasaya sürülen sunucu tarafı dinamik web teknolojisi. IIS işleme motorunda taşınır. Kurumsal seviye Windows sunucu tarafı dinamik web uygulamaları ve dağıtık sistemler oluşturmak için kullanılır)"
+
+msgid "mime_mdb"
+msgstr "MDB ilişkisel veritabanı (1992'de Microsoft tarafından Access ile birlikte piyasaya sürülen masaüstü seviyesi ilişkisel veritabanı depolama formatı. Yerleşik Jet veritabanı motoruna sahiptir, kişisel bilgisayarların ve küçük ve orta ölçekli işletmelerin erken bilgilendirme yönetiminde ilişkisel veritabanı çözümü olarak kullanılmıştır)"
+
+msgid "mime_md"
+msgstr "Markdown belgesi (2004'te John Gruber tarafından bağımsız olarak oluşturulan hafif işaretleme dili. Temel tasarım felsefesi 'okunabilir olan işlenebilir' şeklindedir ve bu, GFM ve CommonMark gibi modern türev standartları yönlendirir. Teknik dokümantasyon, bilgi tabanları (Obsidian) ve modern statik web sitesi oluşturucuları için temel değişim standardı olarak yaygın şekilde kullanılır)"
+
+msgid "mime_crystal"
+msgstr "Crystal Reports (SAP İş Zekası (BI) platformunun profesyonel kurumsal seviye rapor dosyası formatı. Çoklu veri kaynağı düşük seviyeli bağlantı ve karmaşık dinamik grafik işleme yeteneklerine sahiptir, çok uluslu şirketlerin finansal ve veri analiz sistemlerinde profesyonel rapor oluşturma için yaygın olarak kullanılır)"
+
+msgid "mime_libreoffice"
+msgstr "LibreOffice belgesi (2010'da The Document Foundation tarafından OpenOffice çatalına dayalı olarak oluşturulan açık kaynak ofis paketinin özel mülk formatı. W3C'nin ODF (Açık Belge Formatı) uluslararası standardını derinlemesine uygular. Modern açık kaynak ekosisteminin ofis temelidir)"
+
+msgid "mime_encrypt"
+msgstr "ENCRYPT şifrelenmiş dosya (belirli bir simetrik veya asimetrik şifreleme algoritmasıyla işlenmiş ham ikili veya metin verileri. .enc, .pgp, .gpg gibi temel türev formatları içerir. Ağ katmanında, kamuya açık olmayan verilerin gizliliğini ve bütünlük doğrulamasını sağlamak için kullanılır)"
+
+msgid "mime_gpx"
+msgstr "GPX uydu izleme verisi (XML mimarisine dayalı küresel konumlandırma sistemi değişim formatı. Coğrafi koordinatları, rota noktalarını, güzergahları ve tarihi izleri tanımlamak için özel olarak kullanılır. Modern mobil spor cihazları, araç navigasyonu ve Coğrafi Bilgi Sistemleri (GIS) için ortak açık veri standardıdır)"
+
+msgid "mime_diskimage"
+msgstr "Disk Image disk görüntüsü (ISO, DMG, IMG gibi fiziksel disklerin veya optik ortamların bayt bayt düşük seviyeli sektör görüntü dosyalarını içerir. Sistem düşük seviyeli dağıtımı, büyük kapasiteli yazılımın güvenli dağıtımı ve depolama ortamlarının fiziksel seviyeli tam veri yedeklemesi için kullanılır)"
+
+msgid "mime_vm"
+msgstr "VM sanal makine görüntüsü (VMDK, VDI, VHDX, OVA gibi sanallaştırılmış fiziksel disk görüntülerini içerir. VMware, VirtualBox ve Hyper-V platformlarının temeli olarak, düşük seviyeli sistem seviyesi donanım öykünmesi, örnek anlık görüntüleri ve bulut altyapı dağıtımı için kullanılır)"
+
+msgid "mime_torrent"
+msgstr "BitTorrent torrent dosyası (2001'de Bram Cohen tarafından tasarlanan P2P eşten eşe dağıtılmış indirme indeksi. Bencode kodlamasına dayanır, orijinal dosyanın düşük seviyeli sağlama toplamı meta verilerini ve Tracker sunucu adresleme bilgilerini depolar. Merkezi olmayan ağ akışı dağıtımının temel taşıyıcısıdır)"
+
+msgid "mime_gis"
+msgstr "GIS coğrafi uzamsal veri (Shapefile ve GeoJSON'ı temel alan coğrafi bilgi sistemi veri standardı. Çok boyutlu geometrik koordinatlar, katman topolojisi ve öznitelik verilerini içerir. Yüksek hassasiyetli dijital harita işleme, uydu uzaktan algılama ve uzamsal geometri analizi için yaygın olarak kullanılır)"
+
+msgid "mime_ebook"
+msgstr "EBOOK e-kitap (W3C'nin EPUB açık uluslararası standardı ve Amazon Kindle'ın özel mülk MOBI/AZW mimarisini temel alan dijital yayıncılık formatı. Uyarlanabilir akış düzeni, meta veri kapsülleme ve DRM dijital haklar korumasını destekler. Mobil cihazlarda dijital okuma için evrensel bir taşıyıcıdır)"
+
+msgid "mime_avif"
+msgstr "AVIF yüksek verimli görüntü (2019'da Açık Medya İttifakı (AOMedia) tarafından tanıtılan yeni nesil ultra yüksek çözünürlüklü görüntü standardı. AV1 video kodlama ana kare teknolojisine dayanır, sıkıştırma oranı WebP'den %50 daha iyidir ve Yüksek Dinamik Aralığı (HDR) yerel olarak destekler. Modern web görüntü iletiminin ana akım standardıdır)"
+
+msgid "mime_markdown"
+msgstr "Markdown hafif belge (2004'te John Gruber tarafından bağımsız olarak oluşturulan metin belgesi işaretleme dili. Düz metin bildirimsel tasarım kullanır, sözdizimi tasarımı reStructuredText'ten ilham almıştır. GitHub projeleri, mühendislik seviyesi teknik dokümantasyon ve modern statik içerik yönetimi ekosistemi için yaygın olarak kullanılır)"
+
+msgid "mime_yaml"
+msgstr "YAML serileştirme yapılandırması (2001'de Clark Evans ve diğerleri tarafından tasarlanan insan tarafından okunabilir veri serileştirme formatı. Hiyerarşik girinti ve anahtar-değer eşlemesine dayanır. Artık Kubernetes konteyner orkestrasyonu, Ansible otomasyonu ve Docker Compose için bulut yerel altyapı yapılandırma standardı olarak kurulmuştur)"
+
+msgid "mime_toml"
+msgstr "TOML anlamsal yapılandırma (2013'te Tom Preston-Werner tarafından tasarlanan minimalist dil. Güçlü tipleme, açık eşleme ve anlamsal netlik gibi düşük seviyeli tasarım avantajlarına sahiptir. Artık Rust (Cargo), Python (pyproject.toml) ve Go'nun modern araç zincirleri için standartlaştırılmış bir yapılandırma dosyası olarak yaygın şekilde kullanılmaktadır)"
+
+msgid "mime_vue"
+msgstr "Vue tek dosyalı bileşen (2014'te Evan You tarafından tanıtılan ilerici web çerçevesinin özel mülk SFC formatı. Tek bir dosyada HTML/CSS/JS'nin endişelerinin ayrılmasını ve tepkisel durum bağlamasını gerçekleştirir. Modern web etkileşimli ön uç uygulamalarını ve büyük ölçekli statik site motorlarını derinlemesine yönlendirir)"
+
+msgid "mime_wasm"
+msgstr "WebAssembly ikili modül (2017'de W3C tarafından kurulan web için yüksek performanslı düşük seviyeli bayt kodu standardı. C/C++/Rust gibi güçlü türdeki dillerin tarayıcı korumalı alan hedefine derlenmesine izin verir, yerel donanıma yakın yürütme verimliliği sağlar. Modern web uç bilişimin temel taşıdır)"
+
+msgid "mime_jsx"
+msgstr "React JSX bileşeni (2013'te Facebook tarafından React çerçevesiyle birlikte yayınlanan JavaScript XML sözdizimi uzantısı. JavaScript'te DOM sanal yapısının bildirimsel olarak oluşturulmasını destekler, ön uç geliştirmede 'UI durumun bir fonksiyonudur' bileşen tabanlı geliştirme paradigmasını uygulamıştır)"
+
+msgid "mime_tsx"
+msgstr "TypeScript TSX bileşeni (2012'de Microsoft tarafından geliştirilen TypeScript güçlü tür sözdizimi ve JSX'in akış kombinasyonu. React bileşeni geliştirmeye statik derleme zamanı tür denetimi ve arayüz kısıtlamaları enjekte eder. Modern büyük ön uç sistemlerinin güvenli geliştirilmesi için bir kod standardıdır)"
+
+msgid "mime_heif"
+msgstr "HEIF yüksek verimli görüntü (2015'te MPEG organizasyonu tarafından kurulan yüksek verimli görüntü dosyası formatı. HEVC (H.265) video kodlama algoritmasına dayanır, çok küçük hacimde çoklu kare görüntüleri, derinlik haritalarını ve meta verileri barındırmayı destekler. Modern mobil işletim sistemleri ve akıllı terminal cihazları için özel mülk bir depolama standardıdır)"
+
+msgid "mime_heic"
+msgstr "HEIC yüksek verimli görüntü (HEIF uluslararası standardına dayalı olarak Apple tarafından uygulanan özel mülk bitmap formatı. Modern iPhone'un varsayılan fotoğraf depolama standardı olarak, iOS/macOS donanım seviyesi kodlama/kod çözme ve yerel işletim sistemi desteği alır. Yüksek görüntü kalitesini sağlarken, temel depolama alanını önemli ölçüde azaltır)"
+
+msgid "mime_gltf"
+msgstr "glTF 3D varlık modeli (2015'te Khronos Group tarafından yayınlanan GL aktarım formatı standardı. Üç boyutlu sahneleri tanımlamak için JSON mimarisi kullanır, '3D alanının JPEG'i' olarak bilinir. Modern WebGL/WebGPU ve sanal gerçeklik işleme için hafif bir endüstri standardıdır)"
+
+msgid "mime_glb"
+msgstr "GLB ikili 3D model (glTF varlık modelinin tam ikili, kayıpsız kapsülleme sürümü. Sahne yapısını, düşük seviyeli ağ tepe noktası verilerini, malzemeleri ve doku haritalarını tek bir dosyada birleştirir. Platformlar arası web 3D varlıklarının verimli iletimi ve akış dağıtımı için özel olarak tasarlanmıştır)"
+
+msgid "mime_gls"
+msgstr "GLOSSARY veri sözlüğü (belge yönetim sistemleri ve yapılandırılmış derlemler için özel olarak hazırlanmış terminoloji seti tanım dosyası. Yerleşik standart terim tanımları, çok dilli eşlemeler ve meta veri eşlemeleri içerir. Otomatik metin analizi ve içerik yayınlama sistemlerinin kavramsal tutarlılığını korumak için kullanılır)"
+
+msgid "mime_cbz"
+msgstr "CBZ çizgi roman kitabı (ZIP sıkıştırma yapısına dayalı özel mülk çizgi roman görüntüsü arşivleme formatı. İçte sürekli bir statik bitmap dizisini kapsüller. Dijital çizgi roman yayıncılığı ve platformlar arası yerel koleksiyon için evrensel bir hafif kap standardıdır)"
+
+msgid "mime_cbr"
+msgstr "CBR çizgi roman kitabı (RAR sıkıştırma yapısına dayalı özel mülk çizgi roman görüntüsü arşivleme formatı. Statik bitmap dizilerini kapsüllemek için RAR algoritmasını kullanır, nispeten yüksek sıkıştırma oranına sahiptir, dijital çizgi roman dağıtım alanında geniş uyumluluk desteğine sahiptir)"
+
+msgid "mime_fb2"
+msgstr "FB2 e-kitap (2000'lerin başındaki FictionBook 2.0 e-kitap standardı. Kitap özelliklerini ve metin hiyerarşisini tanımlamak için saf XML yapısı kullanır. Açık kaynak e-kitap ekosisteminde ve eski dijital yayıncılık okuyucularında geniş destek bulur)"
+
+msgid "mime_kepub"
+msgstr "KEPUB e-kitap (Kobo'nun EPUB standardından gelişen özel mülk gelişmiş e-kitap formatı. Kobo'nun donanım seviyesi e-kitap okuyucuları için düşük seviyeli işleme optimizasyonu gerçekleştirir, daha verimli sayfa düzeni ve okuma istatistikleri etkileşimi sağlar)"
+
+msgid "mime_m4b"
+msgstr "M4B sesli kitap (MPEG-4 Part 14 (MP4) kap mimarisine dayalı sesli kitap formatı. AAC kodlaması kullanır, düşük seviyeli yer imi konumlandırmayı, kesme noktasından devam eden oynatmayı ve bölüm yerleştirmeyi yerel olarak destekler. Bir zamanlar Apple iTunes ekosisteminin standart formatıydı)"
+
+msgid "mime_kfx"
+msgstr "Kindle KFX formatı (2015'te Amazon tarafından Kindle ile birlikte yayınlanan özel mülk gelişmiş dijital yayıncılık formatı. Gelişmiş bitişik harf düzeni, yüksek dinamik yazı tipi işleme ve çekirdek seviyesi akış sayfa yüklemeyi (Sayfa Çevirme) destekler. Modern Kindle platformunun temel standardıdır)"
+
+msgid "mime_chm"
+msgstr "CHM derlenmiş yardım dosyası (1997'de Microsoft tarafından yayınlanan derlenmiş HTML yardım bilgi sistemi. Hipermetin verilerini ve temel dizini tek bir ikili kapsayıcıya paketler. Uzun süre Windows yazılımı için yerel çevrimdışı yardım dokümantasyonunun standart formatıydı)"
+
+msgid "mime_mht"
+msgstr "MHT web sayfası arşivi (1999'da Microsoft tarafından yayınlanan MIME toplanmış hipermetin formatı. RFC 2557 standardına dayanır, HTML kaynağını, CSS, JS ve gömülü görüntüleri tek bir metin dosyasında kapsüller. Eski tarayıcılarda çevrimdışı web sayfası kaydetmek için kullanılır)"
+
+msgid "mime_wml"
+msgstr "WML kablosuz işaretleme dili (1999'da WAP (Kablosuz Uygulama Protokolü) forumu tarafından kurulan mobil işaretleme standardı. XML belirtimine dayanır, özellikle erken dar bantlı kablosuz hücresel ağlar ve düşük işlem gücüne sahip özellikli telefonlar için tasarlanmıştır. Modern web ekosisteminde emekliye ayrılmış bir miras teknolojisidir)"
+
+msgid "mime_xhtml"
+msgstr "XHTML hipermetin web sayfası (2000 W3C standardı, XML mimarisine dayalı katı hipermetin işaretleme dilinin kapsüllenmesi. 2009'da W3C teknik gelişimini durdurdu ve tamamen HTML5 belirtimine geçti. Şimdi çoğunlukla eski sistemlerde anlamsal web sayfası işleme için kullanılır)"
+
+msgid "mime_xml"
+msgstr "XML yapılandırılmış belge (1998 W3C standardının genişletilebilir işaretleme dili. Kendini tanımlayan etiket mimarisine sahiptir. Ağ web hizmetleri (SOAP/REST), sistem seviyesi yapılandırma dosyaları (XSD) ve platformlar arası veri değişimi için temel bir format oluşturur)"
+
+msgid "mime_sgml"
+msgstr "SGML genelleştirilmiş işaretleme dili (1986 ISO 8879 uluslararası standardının standart genelleştirilmiş işaretleme dili. Elektronik belgelerin yapılandırılmış tanımının endüstri öncüsü olarak, hem XML hem de erken HTML belirtimleri bu standart meta dilden türemiştir)"
+
+msgid "mime_apng"
+msgstr "APNG dinamik grafik (2004'te Mozilla tarafından geliştirilen Taşınabilir Ağ Grafikleri (PNG) dinamik uzantısı. 24-bit gerçek renkleri ve 8-bit Alfa kanalı yarı saydamlığını destekler. Modern web senaryolarında GIF formatına yüksek çözünürlüklü bir alternatiftir)"
+
+msgid "mime_bmp"
+msgstr "BMP yerel bitmap (Windows 1.0 döneminden bu yana kurulan Microsoft platformunun cihazdan bağımsız bitmap formatı. Kayıpsız, sıkıştırılmamış depolama kullanır, boyutu genellikle PNG'den 3-10 kat daha büyük olmasına rağmen, kodlama/kod çözme maliyeti olmadığı için, bugün hala Windows 11'in temel bileşenlerinde, EXE/MSI kaynak segmentlerinde ve eski sürücülerin grafik arabelleklerinde yaygın olarak gömülüdür)"
+
+msgid "mime_cdr"
+msgstr "CDR vektör grafiği (Kanadalı Corel şirketinin özel mülk CorelDRAW profesyonel vektör tasarımı kaynak dosyası formatı. Çok katmanlı renk yönetimini, karmaşık matematiksel kontur düğümlerini ve baskı seviyesi düzen verilerini destekler. Profesyonel düz baskı ve reklam tasarımı alanı için özel bir formattır)"
+
+msgid "mime_gif"
+msgstr "GIF indekslenmiş renkli görüntü (1987'de CompuServe tarafından geliştirilen 8-bit indekslenmiş renkli bitmap formatı. LZW algoritmasına dayanır, 256 renk seviyesi ve tek renk şeffaflık ile sınırlıdır, yüksek kare hızında hacimli hale gelir. Şimdi APNG, WebP gibi modern yüksek verimli dinamik görüntü standartları tarafından kademeli olarak değiştirilmektedir)"
+
+msgid "mime_ico"
+msgstr "ICO sistem simgesi (Windows yerel simge kaynağı kapsülleme formatı. Tek bir kapsayıcıda birden çok piksel çözünürlüğü ve renk derinliğine sahip görüntü varyantlarının karışık gömülmesini destekler. Ayrıca modern web tarayıcı sitesinin temel tanımlayıcısı (Favicon) için evrensel bir dağıtım standardıdır)"
+
+msgid "mime_jpeg"
+msgstr "JPEG sıkıştırılmış görüntü (1992 ISO 10918 uluslararası standardının kayıplı sıkıştırma görüntü formatı. Ayrık Kosinüs Dönüşümü (DCT) algoritmasına dayanır, yüksek sıkıştırma oranı elde ederken mükemmel gerçekçi görüntü kalitesini korur. Küresel internet statik fotoğrafçılığının mutlak fiili standardıdır)"
+
+msgid "mime_jpg"
+msgstr "JPEG sıkıştırılmış görüntü (1992 ISO 10918 uluslararası standardının kayıplı sıkıştırma görüntü formatı. Ayrık Kosinüs Dönüşümü (DCT) algoritmasına dayanır, yüksek sıkıştırma oranı elde ederken mükemmel gerçekçi görüntü kalitesini korur. Küresel internet statik fotoğrafçılığının mutlak fiili standardıdır)"
+
+msgid "mime_png"
+msgstr "PNG kayıpsız görüntü (1996'da W3C tarafından önerilen Taşınabilir Ağ Grafikleri standardı. Kayıpsız sıkıştırma algoritması kullanır, 24-bit gerçek renkleri ve 8-bit Alfa kanalı şeffaflığını yerel olarak destekler. Klasik statik GIF'e yüksek çözünürlüklü bir alternatif olarak, internet üzerindeki kayıpsız piksel görüntülerinin mutlak fiili standardıdır)"
+
+msgid "mime_ps"
+msgstr "PostScript sayfa tanımlama dosyası (1985'te Adobe tarafından tanıtılan yığın tabanlı sayfa tanımlama dili. PDF formatının teknolojik öncüsü olarak, düşük seviyede donanımdan bağımsız tipografi ve yüksek hassasiyetli vektör grafik işlemeyi uygular. Profesyonel baskı yayıncılığı ve lazer baskı alanları için temel bir standarttır)"
+
+msgid "mime_psb"
+msgstr "PSB büyük katmanlı belge (Adobe Photoshop'un özel mülk süper büyük kaynak dosyası kapsülleme formatı. Standart PSD formatının 2 GB fiziksel boyut ve 30.000 piksel dahili adresleme sınırlarını aşar. Süper büyük ölçekli, yüksek katman derinliğine sahip dev dijital sanat varlıklarını depolamak için özel olarak tasarlanmıştır)"
+
+msgid "mime_psd"
+msgstr "PSD katman tasarım kaynak dosyası (Adobe Photoshop'un özel mülk katmanlı görüntü mühendisliği formatı. Grafik ve görüntü alanında endüstri standardı bir kap olarak, tam katman işleme ağacını, bitmap kanallarını, vektör kırpma yollarını ve karma karıştırma modlarını yerel olarak kapsüller, kayıpsız tam veri düzenlemeyi destekler)"
+
+msgid "mime_webp"
+msgstr "WebP yüksek verimli görüntü (2010'da Google tarafından tanıtılan evrensel web grafikleri kodlama standardı. VP8 video ana kare teknolojisinden türemiştir, kayıplı, kayıpsız, yarı saydam ve dinamik işleme ile mükemmel uyumludur. Aynı kalitedeki PNG'ye kıyasla boyutu %25-35 oranında azaltır. Modern web sayfasının yüksek performanslı yüklenmesinin temel taşıdır)"
+
+msgid "mime_woff"
+msgstr "WOFF web glif dosyası (2009'da oluşturulan ve 2012'de W3C standardı haline gelen açık web yazı tipi formatı. Özünde, standart TTF/OTF yazı tipi yapılarının akış kayıpsız sıkıştırma kapsüllemesidir, bu da ağ iletim bant genişliği maliyetini önemli ölçüde optimize eder. Modern web sitesi simgeleri ve bulut yazı tipleri için evrensel bir formattır)"
+
+msgid "mime_7z"
+msgstr "7z sıkıştırılmış arşiv (1999'da Igor Pavlov tarafından geliştirilen 7-Zip'in özel mülk formatı. Açık kaynak LZMA/LZMA2 algoritmalarına dayanır, son derece yüksek sıkıştırma oranına sahiptir. Aynı koşullar altında boyutu genellikle ZIP'ten %30-50 daha küçüktür. Açık kaynak topluluğu ve yazılım dağıtımı için evrensel bir yüksek sıkıştırma oranlı formattır)"
+
+msgid "mime_ace"
+msgstr "ACE sıkıştırılmış arşiv (1990'ların WinACE özel mülk sıkıştırma formatı. Bir zamanlar RAR formatıyla rekabet etti ve nispeten yüksek sıkıştırma oranına sahipti. 2007'den sonra teknolojik yineleme durdu, şimdi 7z ve RAR formatlarıyla değiştirildi. Eski sistem arşivleme formatına aittir)"
+
+msgid "mime_bz2"
+msgstr "BZIP2 sıkıştırılmış arşiv (1996'da Julian Seward tarafından geliştirilen blok sıralama sıkıştırma formatı. Temel algoritmasının sıkıştırma oranı GZIP'ten %15-20 daha yüksektir ancak hesaplama maliyeti daha yüksektir. Linux çekirdek kaynak kodunun ve açık kaynak yazılım paketlerinin dağıtımı için sıklıkla kullanılır. Standart uzantı .bz2'dir)"
+
+msgid "mime_cab"
+msgstr "CAB sıkıştırılmış arşiv (1995'te Microsoft tarafından bağımsız olarak geliştirilen Kabine arşivleme formatı. Windows sisteminin yerel kurulum paketi standardı olarak, sürücüler ve çekirdek dosyalarının dağıtımı için kullanılır. Ayrıca Windows Installer (MSI) için temel depolama kabıdır)"
+
+msgid "mime_dmg"
+msgstr "DMG disk görüntüsü (1980'lerde Apple tarafından geliştirilen Disk Görüntüsü formatı. macOS yazılım dağıtımının standart kabı olarak, fiziksel bağlamayı sanal dosya sistemi olarak, düşük seviyeli sıkıştırmayı ve veri şifrelemeyi destekler. Mac ekosistemindeki uygulama dağıtımının ana akım formatıdır)"
+
+msgid "mime_emz"
+msgstr "EMZ sıkıştırılmış görüntü (Windows Gelişmiş Meta Dosyası EMF'nin sıkıştırılmış sürümü. Özünde, GZIP algoritmasıyla sıkıştırılmış ikili vektör grafiklerdir. Microsoft Office serisi belgelerindeki gömülü vektör grafiklerinin depolanması için yaygın olarak kullanılır)"
+
+msgid "mime_gz"
+msgstr "GZIP sıkıştırılmış arşiv (1992'de GNU projesinin Jean-loup Gailly ve Mark Adler tarafından geliştirilen standart akış sıkıştırma formatı. Unix/Linux standart sıkıştırma aracı olarak, aynı zamanda HTTP taşıma katmanı sıkıştırmasının (Gzip) temel standardıdır. Genellikle TAR arşivleme ile birlikte kullanılır)"
+
+msgid "mime_jar"
+msgstr "JAR sıkıştırılmış arşiv (1997'de Sun Microsystems tarafından tanıtılan Java ARşivi arşivleme formatı. Özünde, ZIP yapısına dayalı bir paketleme kabıdır, Java sınıf kitaplıklarını ve meta verileri kapsüllemek için kullanılır. Maven, Gradle ve erken Android ekosisteminin temel derleme ürünüdür)"
+
+msgid "mime_lzma"
+msgstr "LZMA sıkıştırılmış arşiv (1998'de Igor Pavlov tarafından geliştirilen Lempel-Ziv-Markov zincir sıkıştırma algoritması. 7z formatının temel motoru olarak, son derece yüksek sıkıştırma oranına ve yüksek hızlı açma özelliklerine sahiptir. Donanım ürün yazılımı ve gömülü sistem dağıtımı için yaygın olarak kullanılır)"
+
+msgid "mime_rar"
+msgstr "RAR sıkıştırılmış arşiv (1993'te Eugene Roshal tarafından geliştirilen WinRAR'ın özel mülk arşivleme formatı. Birimlere bölme, fiziksel kurtarma kayıtları (ECC) ve yüksek dayanıklı şifrelemeyi destekler. Sıkıştırma oranı standart ZIP'ten daha iyidir, kişisel bilgisayarlarda ve ticari sektörde geniş uyumluluk desteğine sahiptir)"
+
+msgid "mime_tar"
+msgstr "TAR arşiv paketi (1979 Unix V7 döneminin Bant ARşivi arşivleme formatı. Yalnızca dosya akışı paketlemesi yapar, veri sıkıştırması yapmaz. Genellikle GZIP/BZIP2/XZ ile birleştirilir, Linux kaynak paketleri ve Docker görüntü katmanlı depolama için temel bir standarttır)"
+
+msgid "mime_tgz"
+msgstr "TGZ sıkıştırılmış arşiv (TAR arşivleme ve GZIP sıkıştırmasının akış kombinasyon formatı, uzantılar .tgz veya .tar.gz. Unix/Linux ortamındaki en evrensel yazılım paketi dağıtım formatı olarak, kaynak kodu derleme dağıtımı ve kurulum gerektirmeyen ikili paket dağıtımı için yaygın olarak kullanılır)"
+
+msgid "mime_tbz2"
+msgstr "TBZ2 sıkıştırılmış arşiv (TAR arşivleme ve BZIP2 sıkıştırmasının akış kombinasyon formatı, uzantılar .tbz2 veya .tar.bz2. TGZ ile karşılaştırıldığında sıkıştırma oranını %15-20 daha artırabilir, büyük dosya iletimi için uygundur, uzun süre Linux çekirdek kaynak kodunun dağıtımı için kullanılmıştır)"
+
+msgid "mime_xz"
+msgstr "XZ sıkıştırılmış arşiv (2009'da tanıtılan yeni nesil yüksek sıkıştırma oranlı format. LZMA2 algoritmasına dayanır, veri sıkıştırma oranı GZIP'ten %30-50 daha yüksektir ve yüksek hızlı açmayı korur. Linux çekirdeği ve ana akım paket yöneticileri (Debian .deb içi gibi) tarafından önerilen dağıtım standardı olarak kurulmuştur)"
+
+msgid "mime_z"
+msgstr "Z sıkıştırılmış arşiv (1985 Unix compress komutunun LZW sıkıştırma formatı. Erken Unix sistemlerinin standart sıkıştırma standardı olarak, şimdi daha verimli GZIP formatı tarafından tamamen değiştirilmiştir. Modern ağ trafiğinde nadir görülen bir tarihsel miras formatıdır)"
+
+msgid "mime_zip"
+msgstr "ZIP sıkıştırılmış arşiv (1989'da Phil Katz tarafından geliştirilen PKZIP evrensel arşivleme formatı. Ana akım işletim sistemlerinin yerel desteğini alır. İnternette en yaygın kullanılan kap standardıdır. Modern Java'nın JAR'ı, Android'in APK'sı ve Office belgeleri (OOXML) ZIP yapısına dayanır)"
+
+msgid "mime_zst"
+msgstr "Zstandard sıkıştırılmış arşiv (2015'te Facebook'tan Yann Collet tarafından tasarlanan yeni nesil akış sıkıştırma standardı. LZMA sıkıştırma oranına yaklaşırken GZIP'ten çok daha yüksek verime sahiptir. Linux çekirdeği (5.9+) ve Arch/Debian paket yöneticileri tarafından derinlemesine benimsenmiştir)"
+
+msgid "mime_lz4"
+msgstr "LZ4 sıkıştırılmış arşiv (2011'de Yann Collet tarafından geliştirilen son derece hızlı akış sıkıştırma algoritması. Verim hızı GZIP'ten 10 kattan daha hızlıdır, son derece düşük CPU çalışma zamanı maliyetine sahiptir. Linux çekirdeğinde, OpenZFS dosya sisteminde ve Hadoop gerçek zamanlı veri akışı işlemede yaygın olarak kullanılır)"
+
+msgid "mime_lzo"
+msgstr "LZO sıkıştırılmış arşiv (1996'da Markus Oberhumer tarafından geliştirilen Lempel-Ziv-Oberhumer algoritması. Son derece hızlı açma performansına odaklanır. Linux çekirdeği Squashfs görüntülerinde, OpenWrt ürün yazılımında ve çeşitli kaynak sınırlı gömülü sistemlerde yaygın olarak gömülüdür)"
+
+msgid "mime_msi"
+msgstr "MSI sistem kurulum paketi (1999'da Microsoft tarafından tanıtılan Windows Installer veri kapsülleme formatı. Bir Windows uygulama seviyesi standart dağıtım belirtimi olarak, düşük seviyeli işlem geri almayı, bileşen yaşam döngüsü yönetimini ve toplu işlem gerektirmeyen sessiz kurulumu yerel olarak destekler. Kurumsal seviye merkezi yazılım dağıtımı ve politika dağıtımı için temel standarttır)"
+
+msgid "mime_pkg"
+msgstr "PKG platformlar arası yazılım kurulum paketi. 1. FreeBSD yazılım paketi: pkgng standardı, uzantı .pkg veya .txz, TAR+XZ/Zstd sıkıştırmasına dayalı, bağımlılık çözümlemesini ve imza doğrulamasını destekler; 2. macOS kurulum paketi: Apple Installer formatına dayalı, özel bileşenleri, kurulum betiklerini ve sistem seviyesi kaldırmayı destekler. Bunlar sırasıyla BSD sunucuları ve Mac sistemlerinin ana dağıtım taşıyıcılarıdır."
+
+msgid "mime_apk"
+msgstr "APK Android uygulama paketi (2008'de Google tarafından Android ile birlikte yayınlanan geleneksel uygulama kurulum paketi. ZIP arşiv yapısına dayanır, derlenmiş Dalvik bayt kodunu (DEX), meta veri manifestosunu ve küresel kaynakları paketler. Şimdi yerel geliştirme hata ayıklaması, üçüncü taraf dağıtımı ve cihaza yandan yükleme kurulumu için yaygın olarak kullanılır)"
+
+msgid "mime_ipa"
+msgstr "IPA Apple uygulama paketi (2008'de iPhone SDK ile birlikte yayınlanan iOS/iPadOS'a özel paketleme kabı. Özünde, FairPlay DRM veya kurumsal seviye kod imzasıyla korunan bir ZIP arşividir, Mach-O ikili çalıştırılabilir dosya, uygulama kaynak ağacı ve Info.plist meta veri yapılandırmasını içerir)"
+
+msgid "mime_hap"
+msgstr "HAP HarmonyOS uygulama paketi (2020'de HarmonyOS 2.0 ile birlikte yayınlanan HarmonyOS'un esnek dağıtım temel birimi. Giriş ana modülü veya Özellik uzantı fonksiyonel modüllerinden oluşur. Çapraz uç tüm senaryolar (telefonlar, tabletler, giyilebilir cihazlar) için akıllı terminal dağıtımının temel çoklu uç formatıdır)"
+
+msgid "mime_har"
+msgstr "HAR HarmonyOS statik paylaşımlı paket (HarmonyOS'un özel mülk statik paylaşımlı kitaplık arşiv dosyası. Ortak bileşenleri, düşük seviyeli kaynak kodunu ve derleme zamanı bağımlılıklarını kapsüllemek için kullanılır, bunlar birden çok HAP modülü tarafından statik olarak bağlanır ve paylaşılır. HarmonyOS sisteminin bileşen tabanlı geliştirme ve çok modüllü yeniden kullanımının temel temelidir)"
+
+msgid "mime_aab"
+msgstr "AAB Android uygulama paketi (2018'de Google tarafından tanıtılan ve 2021'de kurulan Google Play dinamik dağıtım formatı. Saf bir dağıtım varlığı olarak, hedef cihazın CPU mimarisine, ekran yoğunluğuna ve diline göre bulut tarafından dinamik olarak kırpılır ve derlenir ve ihtiyaç halinde optimize edilmiş APK'ler üretir. Ortalama %35 oranında iletim bant genişliği maliyetini azaltır)"
+
+msgid "mime_xapk"
+msgstr "XAPK genişletilmiş uygulama paketi (üçüncü taraf Android topluluğu tarafından kurulan resmi olmayan uygulama uzantısı standardı. Standart APK dosyasını çok büyük OBB oyun verisi uzantı paketi ile birlikte kapsülleyerek, Google Play'in 100 MB bağımsız dosya boyutu sınırını fiziksel olarak aşar. Oyun dağıtım platformlarında yaygın olarak görülür)"
+
+msgid "mime_appx"
+msgstr "APPX modern uygulama paketi (2012'de Microsoft tarafından Windows 8 ile birlikte yayınlanan UWP uygulama dağıtım belirtimi. Korumalı alan izolasyonlu çalıştırma ve hafif kaldırma özelliklerine sahiptir. Microsoft Store'un erken dönem baskın standardı olarak, modern Windows ekosisteminde MSIX'e doğru evrilen yaşam döngüsünün son aşamasına girmiştir)"
+
+msgid "mime_msix"
+msgstr "MSIX yeni nesil uygulama paketi (2018'de Microsoft tarafından yayınlanan Windows'un yepyeni standartlaştırılmış paketleme belirtimi. APPX'in uygulama güvenliği korumalı alan özelliklerini ve MSI'ın kurumsal seviye varlık yönetimi avantajlarını mükemmel bir şekilde harmanlar. Tüm Win32 uygulama türleriyle tamamen uyumludur. Windows 11 için önerilen dağıtım standardıdır)"
+
+msgid "mime_appimage"
+msgstr "AppImage kurulum gerektirmeyen uygulama paketi (2004'te başlatılan Linux tek çalıştırılabilir arşiv belirtimi. 'Bir uygulama bir dosyadır' kendine yeten mimarisini kullanır. Çalışma zamanında, doğrudan FUSE mekanizması aracılığıyla salt okunur sanal dosya sistemi olarak bağlanarak çalıştırılır, tüm Linux dağıtımlarında sıfır bağımlılıkla anında kullanım sağlar)"
+
+msgid "mime_flatpak"
+msgstr "Flatpak korumalı alan uygulama paketi (2015'te Red Hat ve GNOME tarafından yönetilen Linux çapraz dağıtım masaüstü uygulama dağıtım standardı. Düşük seviyede, Linux çekirdeğinin Ad Alanı ve Cgroups mekanizmalarına dayanarak son derece katı uygulama seviyesi güvenlik korumalı alan izolasyonu sağlar. Modern açık kaynak OS yazılım merkezlerinin temelidir)"
+
+msgid "mime_snap"
+msgstr "Snap konteynerize uygulama paketi (2014'te Ubuntu'nun ana şirketi Canonical tarafından tanıtılan Linux evrensel dağıtım standardı. Kendine yeten SquashFS görüntüsü bağlama mimarisini kullanır, otomatik artımlı güncellemeleri ve katı AppArmor korumalı alan izolasyonunu destekler. Ubuntu Yazılım Merkezi ekosisteminin temel varsayılan formatıdır)"
+
+msgid "mime_deb"
+msgstr "DEB sistem yazılım paketi (1993'te Debian projesi tarafından kurulan ikili ve kaynak kodu kapsülleme belirtimi. Debian, Ubuntu ve tüm türev sistemleri için temel kurulum standardı olarak, açma ve bakım için dpkg çekirdeğine dayanır ve APT'yi verimli paket yöneticisi ön ucu olarak kullanır. Linux ekosistemindeki en olgun yazılım dağıtım temelidir)"
+
+msgid "mime_rpm"
+msgstr "RPM sistem yazılım paketi (1997'de Red Hat tarafından tanıtılan Red Hat paket yöneticisi kapsülleme belirtimi. DEB ile birlikte Linux geleneksel paket yönetiminin iki büyük kampından biri olarak kabul edilir. Yerel olarak işlem seviyesi bağımlılık denetimine ve temel yazılım dijital imza doğrulamasına sahiptir. RHEL, Fedora ve CentOS gibi Red Hat ailesi ekosistemleri için bugün hala mutlak ana akım dağıtım standardıdır)"
+
+msgid "mime_pacman"
+msgstr "Pacman arşivlenmiş yazılım paketi (2002'de Arch Linux tarafından pacman yöneticisi ile birlikte kurulan .pkg.tar.zst kapsülleme formatı. Arch'ın yuvarlanan güncelleme mekanizmasının çekirdeği olarak, Zstandard yüksek hızlı yüksek sıkıştırma algoritmasına dayanır, AUR (Arch Kullanıcı Yazılım Deposu) ekosistemi ile birlikte. Minimalist ve KISS ilkelerini yansıtan modern bir paket dağıtım standardıdır)"
+
+msgid "mime_exe"
+msgstr "EXE yerel çalıştırılabilir dosya (Windows platformunun Taşınabilir Çalıştırılabilir (PE) ikili program formatı. Teknolojik olarak MS-DOS döneminin MZ başlık yapısından gelir ve 1993 Windows NT'den itibaren PE yapı belirtimi olarak tamamen kurulmuştur. Makine kodu talimatları, statik kaynak segmentleri ve sistem çekirdeği başlatma için dünyanın en yaygın kullanılan yürütme standardıdır)"
+
+msgid "mime_dll"
+msgstr "DLL dinamik bağlantı kitaplığı (Windows platformunun Dinamik Bağlantı Kitaplığı paylaşılan kod kitaplığı belirtimi. Çalışma zamanında dinamik olarak yükleyerek ve sembolleri yeniden konumlandırarak, fiziksel belleği ve disk alanını önemli ölçüde tasarruf sağlar. Windows API'sinin temel uygulama biçimi olarak, erken dönem DLL Cehennemi sorunu modern zamanlarda SxS paralel izolasyon mekanizmasıyla kökten çözülmüştür)"
+
+msgid "mime_com"
+msgstr "COM klasik çalıştırılabilir dosya (MS-DOS döneminin en eski bellek görüntüsü (Komut) yürütme formatı. Yapılandırılmamış saf kod segmenti tasarımı kullanır, 64KB fiziksel bellek adresleme segmenti üst sınırıyla sınırlıdır. Şimdi tarihsel bir miras formatı olarak emekliye ayrılmıştır, ancak modern Windows mimarisinde sınırlı uyumluluk için belirli bir bileşen arayüzü olarak hala kullanılmaktadır)"
+
+msgid "mime_aac"
+msgstr "AAC sesi (1997 MPEG standardı, Gelişmiş Ses Kodlaması. MP3'ün halefi, aynı bit hızında ses kalitesi MP3'ten üstündür, YouTube, iTunes, Nintendo Switch'in varsayılan ses formatı)"
+
+msgid "mime_alac"
+msgstr "ALAC sesi (2004'te Apple tarafından geliştirildi, Apple Kayıpsız Ses Kodeki. Apple'ın kayıpsız formatı, 2011'de açık kaynak oldu, iTunes ve Apple Music'in kayıpsız ses için varsayılan formatı)"
+
+msgid "mime_flac"
+msgstr "FLAC sesi (2001'de Xiph.Org Vakfı tarafından geliştirildi, Ücretsiz Kayıpsız Ses Kodeki. Kayıpsız sıkıştırma, CD ile aynı ses kalitesi, dosya boyutu orijinal WAV'ın yaklaşık yarısı kadardır. Açık kaynak patentsiz, ses tutkunları ve dijital müzik koleksiyoncuları için tercih edilen formattır)"
+
+msgid "mime_mp3"
+msgstr "MP3 sesi (1993'te Fraunhofer Enstitüsü tarafından geliştirildi, MPEG-1 Ses Katmanı 3. Kayıplı sıkıştırma formatı, küçük dosya boyutu kabul edilebilir kalite, 2000'lerin dijital müzik devriminin temel formatı, iPod ve Napster'ın itici gücüdür. 2017'de patenti sona erdi, kamu malı formatı haline geldi)"
+
+msgid "mime_oga"
+msgstr "Ogg Audio sesi (Xiph.Org Vakfı tarafından geliştirildi, Ogg konteynerinin saf ses formatı, Vorbis kodlamasını kullanır. Açık kaynak patentsiz, sıkıştırma verimliliği MP3'ten daha iyidir, açık kaynak projelerinde yaygın olarak kullanılır)"
+
+msgid "mime_ogg"
+msgstr "OGG sesi (2000'de Xiph.Org Vakfı tarafından geliştirildi, Ogg Vorbis formatı. Açık kaynak patentsiz, sıkıştırma verimliliği MP3'ten daha iyidir, erken kullanıcısı Spotify'dı, oyun ses efektlerinde yaygın olarak kullanılır)"
+
+msgid "mime_opus"
+msgstr "Opus sesi (2012'de IETF tarafından standartlaştırıldı, açık kaynak patentsiz ses formatı. SILK ve CELT teknolojilerini birleştirir, gecikme son derece düşüktür, en yüksek sıkıştırma verimliliği, WebRTC, WhatsApp, Discord için varsayılan ses formatı)"
+
+msgid "mime_wav"
+msgstr "WAV sesi (1991'de Microsoft ve IBM tarafından geliştirildi, Windows'un yerel ses formatı. Sıkıştırılmamış PCM kodlaması, kayıpsız ses kalitesi, ancak dosya boyutu çok büyüktür, profesyonel ses düzenleme standardı formatı)"
+
+msgid "mime_wma"
+msgstr "WMA sesi (1999'da Microsoft tarafından geliştirildi, Windows Media Audio. Kayıplı/kayıpsız iki versiyonu vardır, Windows tarafından yerel olarak desteklenir, Windows Media Player ile yaygınlaştı. Şimdi marjinalleşti, MP3/AAC ile değiştirildi)"
+
+msgid "mime_dsf"
+msgstr "DSF sesi (Direct Stream Digital formatı, Sony ve Philips tarafından geliştirildi. 1bit yüksek örnekleme hızı, DSD ses standart formatı, SACD'nin dijital versiyonu, ses tutkunları için üst düzey ses formatı, dosya boyutu çok büyüktür)"
+
+msgid "mime_ape"
+msgstr "APE Ses (2000 yılında Monkey's Audio tarafından geliştirildi, kayıpsız sıkıştırma formatı. FLAC'tan daha yüksek sıkıştırma ancak daha yavaş kodlama, hâlâ Windows platformunda ve ses meraklıları arasında kullanılmaktadır)"
+
+msgid "mime_mid"
+msgstr "MIDI sesi (1983'te MIDI Derneği tarafından belirlendi, Müzik Aleti Dijital Arayüzü. Nota formatı, kayıt değil, dosya boyutu çok küçüktür, elektronik enstrümanlar, cep telefonu zil sesleri, oyun ses efektleri için standarttır. 1991'de General MIDI standardize edildi, 128 enstrüman tınısı tanımladı)"
+
+msgid "mime_m4a"
+msgstr "M4A sesi (MPEG-4 Ses, AAC'nin konteyner formatı. iTunes Müzik Mağazası'nın standart formatı, Apple ekosisteminin ana ses formatı, DRM korumasını destekler)"
+
+msgid "mime_m3u"
+msgstr "M3U oynatma listesi (MP3 URL oynatma listesi formatı, düz metin dosyası, ses dosyası yollarını kaydeder. Winamp döneminin standardı, internet radyosu, çevrimiçi müzik akışı için kullanılır. M3U8, onun UTF-8 versiyonudur, HTTP Canlı Yayını için kullanılır)"
+
+msgid "mime_asf"
+msgstr "ASF akışı (1996'da Microsoft tarafından geliştirildi, Gelişmiş Sistemler Formatı. Windows Media akış konteyneri, senkron ses ve video iletimini destekler. Canlı yayın ve isteğe bağlı video akışı için kullanılır, WMA/WMV ASF konteynerine dayanır)"
+
+msgid "mime_avi"
+msgstr "AVI videosu (1992'de Microsoft tarafından piyasaya sürüldü, Windows'un erken video standardı. 'Ses Video Geçişi', ses ve video aralıklı depolama, 1990-2000'lerin en popüler video formatı, şimdi MP4/MKV ile değiştirildi)"
+
+msgid "mime_divx"
+msgstr "DivX videosu (1998'de DivX şirketi tarafından geliştirildi, MPEG-4 tabanlı video kodlama formatı. 2000'lerde internet video paylaşımının ana formatı, DVD kalitesini CD boyutuna sıkıştıran ilk teknoloji. Telif hakkı anlaşmazlıkları nedeniyle, daha sonra ticari bir kodlayıcıya dönüştü)"
+
+msgid "mime_mp4"
+msgstr "MP4 videosu (2001 MPEG standardı, MPEG-4 Bölüm 14. Dünyanın en evrensel video formatı, H.264/H.265 kodlamasını destekler, internet videosu, telefon kaydı, YouTube için varsayılan format)"
+
+msgid "mime_m4v"
+msgstr "M4V videosu (iTunes video formatı, MP4'ün bir varyantı. Apple ekosisteminde video formatı, iTunes Store filmleri, TV programları için standart format, DRM telif hakkı korumasını destekler)"
+
+msgid "mime_mpeg"
+msgstr "MPEG videosu (1988'de MPEG organizasyonu tarafından belirlendi, Hareketli Resim Uzmanları Grubu. Dijital video sıkıştırma standartlarının kurucusu, MPEG-1 (VCD), MPEG-2 (DVD), MPEG-4 (internet videosu) derin etkiye sahiptir)"
+
+msgid "mime_mkv"
+msgstr "MKV videosu (2002'de Matroska projesi tarafından geliştirildi, açık kaynak multimedya konteyneri. Birden çok ses parçasını, birden çok altyazıyı, bölümleri destekler, 'paketleme aracı', HD film paylaşımı için tercih edilen formattır)"
+
+msgid "mime_mpg"
+msgstr "MPEG videosu (MPEG-1/MPEG-2 video uzantısı, VCD ve DVD için standart format. 1990-2000'lerde optik disklerde ana video formatıydı, şimdi H.264/H.265 ile değiştirildi)"
+
+msgid "mime_ogv"
+msgstr "Ogg Video videosu (Xiph.Org Vakfı tarafından geliştirildi, Ogg konteynerinin video formatı, Theora kodlamasını kullanır. Açık kaynak patentsiz, HTML5 videosunun erken standartlarından biridir, Firefox tarafından yerel olarak desteklenir)"
+
+msgid "mime_ogx"
+msgstr "Ogg multimedya konteyneri (Xiph.Org Vakfı tarafından geliştirildi, Ogg konteynerinin evrensel uzantısı, ses, video, altyazı gibi birden çok parça içerebilir. Açık kaynak multimedya standardı, oyunlar, akış için kullanılır)"
+
+msgid "mime_rm"
+msgstr "RealMedia videosu (1995'te RealNetworks tarafından geliştirildi, RealMedia formatı. 1990-2000'lerde internet akışının öncüsü, RealPlayer oynatıcısının temel formatı. Zayıflıklar: özel oynatıcı gerektirir, zayıf sıkıştırma kalitesi, daha sonra Flash/MP4 ile değiştirildi)"
+
+msgid "mime_flv"
+msgstr "Flash videosu (format 2002'de ortaya çıktı, Flash Video formatı. Bir zamanlar internet videosunun ana formatıydı, erken kullanıcısı YouTube'du. Zayıflıklar: Flash eklentisi gerektirir, zayıf performans, birçok güvenlik açığı. 2015'ten itibaren ana web siteleri HTML5 videosuna geçti, şimdi kullanımdan kaldırıldı)"
+
+msgid "mime_f4v"
+msgstr "F4V videosu (Adobe tarafından geliştirilen Flash video formatı, FLV'nin halefi. MPEG-4 standardına dayalıdır, H.264 kodlamasını destekler. Flash teknolojisi ile birlikte kullanımdan kaldırıldı, Adobe 2020'de desteği durdurdu)"
+
+msgid "mime_wmv"
+msgstr "WMV videosu (1999'da Microsoft tarafından geliştirildi, Windows Media Video. Windows tarafından yerel olarak desteklenir, akış iletimi için optimize edilmiştir, erken çevrimiçi videolarda yaygın bir formattı, şimdi marjinalleşti)"
+
+msgid "mime_wmf"
+msgstr "WMF medya formatı (Windows Media Formatı, Microsoft'un medya çerçevesi. WMV videosu ve WMA sesi için genel adı kapsar, Windows Media Player tarafından yerel olarak desteklenir)"
+
+msgid "mime_mov"
+msgstr "MOV videosu (1991'de Apple tarafından geliştirildi, QuickTime konteyner formatı. Profesyonel video düzenleme için standart format, birden çok codec'i destekler, Final Cut Pro, Premiere tarafından yerel olarak desteklenir)"
+
+msgid "mime_qt"
+msgstr "QuickTime videosu (1991'de Apple tarafından piyasaya sürüldü, QuickTime formatı. Mac platformu için video standardı, MOV onun konteyneridir, QuickTime oynatıcısı yaygın olarak kullanıldı. 2016'da Apple Windows sürümünün geliştirilmesini durdurdu, kademeli olarak MP4 ile değiştiriliyor)"
+
+msgid "mime_webm"
+msgstr "WebM videosu (2010'da Google tarafından piyasaya sürüldü, açık kaynak patentsiz video formatı. Matroska konteynerine, VP8/VP9 kodlamasına dayalıdır, HTML5 video standart formatı, YouTube'un varsayılan web oynatma formatıdır)"
+
+msgid "mime_3gp"
+msgstr "3GP videosu (2000'de 3GPP tarafından belirlendi, mobil cihazlar için video formatı. Dosya boyutu çok küçüktür, kalitesi düşüktür, erken özellikli telefonların video kayıt formatı, MMS gönderimi için kullanılır)"
+
+#------------------------------------------------------------------------------
+# Teknik Boyutlar
+#------------------------------------------------------------------------------
+
+msgid "Operating Systems"
+msgstr "İşletim Sistemleri"
+
+msgid "Top 5 Operating Systems"
+msgstr "En İyi 5 İşletim Sistemi"
+
+msgid "Unknown Robot"
+msgstr "Bilinmeyen istemci"
+
+msgid "User agent"
+msgstr "Kullanıcı aracısı"
+
+msgid "Browsers"
+msgstr "Tarayıcılar"
+
+msgid "Top 5 Browsers"
+msgstr "En İyi 5 Tarayıcı"
+
+msgid "Unknown Robot RH"
+msgstr "Bilinmeyen istek başlığı"
+
+msgid "Detailed"
+msgstr "Ayrıntılı"
+
+msgid "DetailedOS"
+msgstr "İşletim sistemi sürümü"
+
+msgid "DetailedBS"
+msgstr "Tarayıcı sürümü"
+
+msgid "Screen sizes"
+msgstr "Ekran boyutları"
+
+msgid "Compression"
+msgstr "Sıkıştırma"
+
+msgid "In"
+msgstr "Giriş"
+
+msgid "Out"
+msgstr "Çıkış"
+
+msgid "Saved"
+msgstr "Kaydedildi"
+
+#------------------------------------------------------------------------------
+# Kaynak Boyutları
+#------------------------------------------------------------------------------
+
+msgid "Origin"
+msgstr "Kaynak"
+
+msgid "Referers"
+msgstr "Yönlendirenler"
+
+msgid "meta.description"
+msgstr "AWStats gelişmiş web günlüğü analizörü - gerçek zamanlı web sitesi trafik izleme, ziyaretçi analizi, arama motoru anahtar kelimeleri, hata sayfası istatistikleri. Koyu modu, çok dilli arayüzü destekler, web sitesi yöneticileri için kapsamlı veri analizi sağlar."
+
+msgid "meta.keywords"
+msgstr "AWStats,web istatistikleri,günlük analizi,trafik izleme,ziyaret istatistikleri,SEO analizi,web sitesi analiz aracı,Web Analytics,Günlük Analizörü"
+
+msgid "meta.author"
+msgstr "AWStats"
+
+msgid "og.title"
+msgstr "AWStats - Web Günlüğü Analizi"
+
+msgid "og.description"
+msgstr "📊 Profesyonel açık kaynak web istatistikleri aracı, web sitenizin trafiğini ve ziyaretçi davranışını gerçek zamanlı olarak analiz eder."
+
+msgid "og.image.alt"
+msgstr "AWStats istatistik grafikleri"
+
+msgid "Created by"
+msgstr "Oluşturan: %s"
+
+msgid "plugins"
+msgstr "eklentiler"
+
+msgid "dbip by"
+msgstr "veriler"
+
+msgid "IPDB by"
+msgstr "Coğrafi konum verileri DB-IP tarafından sağlanmaktadır"
+
+# Sağlık
+msgid "Configured"
+msgstr "Yapılandırıldı"
+
+msgid "Missing"
+msgstr "Eksik"
+
+msgid "OK"
+msgstr "Tamam"
+
+msgid "Unused"
+msgstr "Kullanılmayan"
+
+msgid "Overall Health"
+msgstr "Genel Sağlık Durumu"
+
+msgid "Excellent"
+msgstr "Mükemmel"
+
+msgid "Good"
+msgstr "İyi"
+
+msgid "Fair"
+msgstr "Orta"
+
+msgid "Poor"
+msgstr "Kötü"
+
+msgid "Missing icon types"
+msgstr "Eksik simge türleri"
+
+msgid "See"
+msgstr "Ayrıntılar"
+
+msgid "Expected Path"
+msgstr "Beklenen Yol"
+
+msgid "column for file locations"
+msgstr "dosya konumlarını almak için sütun"
+
+msgid "Tip: If you need to generate related icons, you can use %s to upload a logo image, and it will automatically generate all the above related icon files"
+msgstr "İpucu: İlgili simgeler oluşturmanız gerekiyorsa, bir logo görüntüsü yüklemek için %s kullanabilirsiniz, bu otomatik olarak yukarıdaki tüm ilgili simge dosyalarını oluşturacaktır"
+
+msgid "200: success, 404: failure"
+msgstr "200 başarı sayısıdır, 404 başarısızlık sayısıdır"
+
+msgid "_PATH_FAVICON"
+msgstr "/favicon.ico"
+
+msgid "_PATH_APPLE_TOUCH"
+msgstr "/apple-touch-icon.png veya /apple-touch-icon-180x180.png"
+
+msgid "_PATH_LOGO"
+msgstr "/logo.svg veya /logo.png (HTML/JSON-LD içinde referans verilmelidir)"
+
+msgid "_PATH_WEBMANIFEST"
+msgstr "/site.webmanifest veya /manifest.json"
+
+msgid "_PATH_BROWSERCONFIG"
+msgstr "/browserconfig.xml"
+
+msgid "_PATH_SAFARI_PINNED"
+msgstr "/safari-pinned-tab.svg"
+
+msgid "_PATH_SOCIAL_ICON"
+msgstr "/images/github.svg, /images/paypal.svg vb."
+
+msgid "Favicon"
+msgstr "Web sitesi simgesi"
+
+msgid "Apple Touch Icon (iOS/macOS)"
+msgstr "Apple Touch Simgesi (iPhone/iPad/Mac)"
+
+msgid "Site Logo"
+msgstr "Web Sitesi Logosu"
+
+msgid "Web App Manifest (Android/Chrome)"
+msgstr "Web Uygulama Bildirimi (Android/Chrome)"
+
+msgid "Windows Browser Config"
+msgstr "Windows Tarayıcı Yapılandırması"
+
+msgid "Safari Pinned Tab"
+msgstr "Safari Sabitlenmiş Sekme Simgesi"
+
+msgid "Social Icon"
+msgstr "Sosyal Platform Simgesi"
+
+msgid "Icon Files Status"
+msgstr "Simge Dosyaları Durumu"
+
+msgid "Icon Type"
+msgstr "Simge Türü"
+
+msgid "Total"
+msgstr "Toplam"
+
+msgid "Advanced Web Statistics"
+msgstr "Gelişmiş günlük analizörü"
+
+msgid "Advanced Web Statistics %s"
+msgstr "%s Gelişmiş günlük analizörü"
+
+msgid "Your browser does not support frames. Please use a modern browser."
+msgstr "Tarayıcınız çerçeveleri desteklemiyor. Lütfen modern bir tarayıcı kullanın."
+
+msgid "View statistics directly"
+msgstr "İstatistikleri doğrudan görüntüle"
+
+msgid "Close"
+msgstr "Kapat"
+
+msgid "Documentation Viewer"
+msgstr "Dokümantasyon Görüntüleyici"
+
+msgid "Direct address / Bookmarks"
+msgstr "Doğrudan adres / Yer imleri"
+
+msgid "Search Engines"
+msgstr "Arama Motorları"
+
+msgid "Refering search engines"
+msgstr "Yönlendiren arama motorları"
+
+msgid "External pages"
+msgstr "Harici sayfalar"
+
+msgid "Refering pages"
+msgstr "Yönlendiren sayfalar"
+
+msgid "Internal pages"
+msgstr "Dahili sayfalar"
+
+msgid "UnknownAccessSource"
+msgstr "Bilinmeyen erişim kaynağı"
+
+msgid "Different refering pages"
+msgstr "Farklı yönlendiren sayfalar"
+
+msgid "Keyphrases"
+msgstr "Anahtar ifadeler"
+
+msgid "Keywords"
+msgstr "Anahtar kelimeler"
+
+msgid "Keyphrases/Keywords"
+msgstr "Anahtar ifadeler/Anahtar kelimeler"
+
+msgid "Different keyphrases"
+msgstr "Farklı anahtar ifadeler"
+
+msgid "Different keywords"
+msgstr "Farklı anahtar kelimeler"
+
+#------------------------------------------------------------------------------
+# Sayfa Boyutları
+#------------------------------------------------------------------------------
+
+msgid "Viewed pages"
+msgstr "Görüntülenen sayfalar"
+
+msgid "Different pages"
+msgstr "Farklı sayfalar"
+
+msgid "Entry"
+msgstr "Giriş"
+
+msgid "Exit"
+msgstr "Çıkış"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Referer"
+msgstr "Yönlendiren"
+
+msgid "Host"
+msgstr "Ana bilgisayar"
+
+#------------------------------------------------------------------------------
+# Hatalar ve Durumlar
+#------------------------------------------------------------------------------
+
+msgid "Error"
+msgstr "Hata"
+
+msgid "HTTP Status Statistics"
+msgstr "HTTP durum kodu istatistikleri"
+
+msgid "SMTP Error codes"
+msgstr "SMTP hata kodları"
+
+msgid "Page not found"
+msgstr "İstenen sayfa bulunamadı"
+
+msgid "Unknown error"
+msgstr "Bilinmeyen hata"
+
+msgid "Abnormal traffic note"
+msgstr "Anormal gezinme trafiği şunları içerir: arama motoru robotları, AI eğitim robotları, güvenlik açığı tarayıcıları ve standartlara uymayan istekler"
+
+msgid "Page detail"
+msgstr "Sayfa detayı"
+
+# Ayrıntılı hata mesajları
+msgid "AWStats did not found the"
+msgstr "AWStats bulamadı"
+
+msgid "in your log records."
+msgstr "günlük kayıtlarınızda."
+
+msgid "AWStats did not find any valid log lines that match your"
+msgstr "AWStats, parametrenizle eşleşen herhangi bir geçerli günlük satırı bulamadı"
+
+msgid "parameter, in the"
+msgstr "parametre, günlüğünüzün"
+
+msgid "th first non commented lines read of your log."
+msgstr " okunan ilk yorumsuz satırlarında."
+
+msgid "Your log file"
+msgstr "Günlük dosyanız"
+
+msgid "must have a bad format or"
+msgstr "hatalı bir formata sahip olmalı veya"
+
+msgid "parameter setup does not match this format."
+msgstr "parametre kurulumu bu formata uymuyor."
+
+msgid "Your AWStats"
+msgstr "AWStats parametreniz"
+
+msgid "parameter is:"
+msgstr "şöyledir:"
+
+msgid "This means each line in your web server log file need to have:"
+msgstr "Bu, web sunucunuzun günlük dosyasındaki her satırın şunları içermesi gerektiği anlamına gelir:"
+
+msgid "combined log format"
+msgstr "birleşik günlük formatı"
+
+msgid "MSIE Extended W3C log format"
+msgstr "MSIE Genişletilmiş W3C günlük formatı"
+
+msgid "WebStar native log format"
+msgstr "WebStar yerel günlük formatı"
+
+msgid "common log format"
+msgstr "ortak günlük formatı"
+
+msgid "Lotus Notes/Lotus Domino"
+msgstr "Lotus Notes/Lotus Domino"
+
+msgid "the following personalized log format:"
+msgstr "aşağıdaki kişiselleştirilmiş günlük formatı:"
+
+msgid "And this is an example of records AWStats found in your log file (the record number"
+msgstr "Ve bu, AWStats'ın günlük dosyanızda bulduğu kayıtlara bir örnektir (kayıt numarası"
+
+msgid "in your log):"
+msgstr "günlüğünüzde):"
+
+#------------------------------------------------------------------------------
+# Çeşitli
+#------------------------------------------------------------------------------
+
+msgid "Extra/Marketing"
+msgstr "Ekstra/Pazarlama"
+
+#------------------------------------------------------------------------------
+# Arayüz Metinleri
+#------------------------------------------------------------------------------
+
+msgid "Current site"
+msgstr "Mevcut site"
+
+msgid "Web Site"
+msgstr "Web Sitesi"
+
+msgid "Last Update"
+msgstr "Son Güncelleme"
+
+msgid "Never updated"
+msgstr "Hiç güncellenmedi"
+
+msgid "No qualified records found in log"
+msgstr "Günlükte uygun kayıt bulunamadı"
+
+msgid "corrupted"
+msgstr "bozuk"
+
+msgid "comments"
+msgstr "yorumlar"
+
+msgid "Blank"
+msgstr "Boş"
+
+msgid "dropped"
+msgstr "atıldı"
+
+msgid "Update now"
+msgstr "Şimdi güncelle"
+
+msgid "Back to main page"
+msgstr "Ana sayfaya dön"
+
+msgid "Close window"
+msgstr "Pencereyi kapat"
+
+msgid "Back page"
+msgstr "Önceki sayfa"
+
+msgid "Navigation"
+msgstr "Navigasyon"
+
+msgid "Summary"
+msgstr "Özet"
+
+msgid "Local"
+msgstr "Yerel"
+
+msgid "External"
+msgstr "Harici"
+
+msgid "Others (email senders)"
+msgstr "Diğerleri (gönderenler)"
+
+msgid "Others (email receivers)"
+msgstr "Diğerleri (alıcılar)"
+
+msgid "Others"
+msgstr "Diğerleri"
+
+msgid "Only 10 lines of browser data are currently displayed"
+msgstr "Şu anda yalnızca 10 satır tarayıcı verisi görüntüleniyor, tam liste için ayrıntı sayfasına bakın"
+
+msgid "Others (unknown browsers)"
+msgstr "Diğerleri (bilinmeyen tarayıcılar)"
+
+msgid "Others (operating systems)"
+msgstr "Diğerleri (işletim sistemleri)"
+
+msgid "Others (unknown OS)"
+msgstr "Diğerleri (bilinmeyen İŞL)"
+
+msgid "Others (search engines)"
+msgstr "Diğerleri (arama motorları)"
+
+msgid "Others (referring pages)"
+msgstr "Diğerleri (yönlendiren sayfalar)"
+
+msgid "Others (keyphrases)"
+msgstr "Diğerleri (ifadeler)"
+
+msgid "Others (keywords)"
+msgstr "Diğerleri (anahtar kelimeler)"
+
+msgid "Only first 10 robots shown"
+msgstr "Yalnızca ilk 10 robot gösteriliyor, tam liste için ayrıntı sayfasına bakın"
+
+msgid "Failed to obtain access record"
+msgstr "Giriş kaydı alınamadı"
+
+msgid "Failed to obtain leave record"
+msgstr "Çıkış kaydı alınamadı"
+
+msgid "Other pages"
+msgstr "Diğer sayfalar"
+
+msgid "Low Traffic IP Summary"
+msgstr "Düşük Trafikli Bilinmeyen IP Özeti"
+
+msgid "Failed to obtain IP data"
+msgstr "Diğer bilinen IP özeti"
+
+msgid "Failed to obtain the relevant data"
+msgstr "İlgili veriler alınamadı"
+
+msgid "Limited list of countries and regions"
+msgstr "Şu anda yalnızca 10 satır veri görüntüleniyor, daha fazla ülke ve bölge için tam liste ayrıntı sayfasındadır"
+
+msgid "currentVisitorData"
+msgstr "Şu anda yalnızca 10 satır ziyaretçi verisi görüntüleniyor, tam liste için ayrıntı sayfasına bakın"
+
+msgid "Others (robots main)"
+msgstr "Diğerleri (robotlar)"
+
+msgid "Others (worms)"
+msgstr "Diğerleri (solucanlar)"
+
+msgid "Displaying10RowsPageMorePleaseViewFullList"
+msgstr "Şu anda yalnızca 10 sayfa görüntüleniyor, tam liste için ayrıntı sayfasına bakın"
+
+msgid "Others (OS main)"
+msgstr "Diğerleri (sistemler)"
+
+msgid "Others (browsers main)"
+msgstr "Diğerleri (tarayıcılar)"
+
+msgid "Others (screen sizes)"
+msgstr "Diğerleri (boyutlar)"
+
+msgid "Others (search engines main)"
+msgstr "Diğerleri (arama motorları)"
+
+msgid "Others (referring pages main)"
+msgstr "Diğerleri (yönlendiren sayfalar)"
+
+msgid "Others (keyphrases main)"
+msgstr "Diğerleri (ifadeler)"
+
+msgid "Others (keywords main)"
+msgstr "Diğerleri (anahtar kelimeler)"
+
+# 1xx
+msgid "Continue"
+msgstr "Devam et"
+
+msgid "Switching Protocols"
+msgstr "Protokoller değiştiriliyor"
+
+msgid "Processing (WebDAV)"
+msgstr "İşleniyor (WebDAV)"
+
+msgid "Early Hints"
+msgstr "Erken İpuçları"
+
+# 2xx
+msgid "[Miscellaneous successes]"
+msgstr "[Diğer başarılar]"
+
+msgid "Request successful"
+msgstr "İstek başarılı"
+
+msgid "Created successfully"
+msgstr "Başarıyla oluşturuldu"
+
+msgid "Accepted - processing"
+msgstr "Kabul edildi - işleniyor"
+
+msgid "Non-authoritative information (from cache) (from cache)"
+msgstr "Yetkili olmayan bilgi (önbellekten)"
+
+msgid "Success, no content returned"
+msgstr "Başarılı, içerik döndürülmedi"
+
+msgid "Reset content"
+msgstr "İçeriği sıfırla"
+
+msgid "Partial content (resume download)"
+msgstr "Kısmi içerik (indirmeye devam et)"
+
+msgid "Multi-status (WebDAV)"
+msgstr "Çoklu durum (WebDAV)"
+
+msgid "Already reported (WebDAV)"
+msgstr "Zaten rapor edildi (WebDAV)"
+
+msgid "IM used"
+msgstr "IM kullanıldı"
+
+# 3xx
+msgid "[Miscellaneous redirections]"
+msgstr "[Diğer yönlendirmeler]"
+
+msgid "Multiple choices"
+msgstr "Birden çok seçim"
+
+msgid "Moved permanently - update your links"
+msgstr "Kalıcı olarak taşındı - bağlantılarınızı güncelleyin"
+
+msgid "Temporary redirect - URL unchanged"
+msgstr "Geçici yönlendirme - URL değişmedi"
+
+msgid "See other"
+msgstr "Diğerine bakın"
+
+msgid "Not modified - using cached version"
+msgstr "Değiştirilmedi - önbelleğe alınmış sürüm kullanılıyor"
+
+msgid "Use proxy"
+msgstr "Proxy kullan"
+
+msgid "Switch proxy"
+msgstr "Proxy değiştir"
+
+msgid "Temporary redirect (keep method)"
+msgstr "Geçici yönlendirme (yöntemi koru)"
+
+msgid "Permanent redirect - update your links"
+msgstr "Kalıcı yönlendirme - bağlantılarınızı güncelleyin"
+
+# 4xx
+msgid "[Miscellaneous client/user errors]"
+msgstr "[Diğer istemci/kullanıcı hataları]"
+
+msgid "Bad request"
+msgstr "Hatalı istek"
+
+msgid "Unauthorized - please log in"
+msgstr "Yetkisiz - lütfen giriş yapın"
+
+msgid "Payment required"
+msgstr "Ödeme gerekli"
+
+msgid "Forbidden - access denied"
+msgstr "Yasak - erişim engellendi"
+
+msgid "Page not found (404) - check for broken links"
+msgstr "Sayfa bulunamadı (404) - bozuk bağlantıları kontrol edin"
+
+msgid "Method not allowed"
+msgstr "Yönteme izin verilmiyor"
+
+msgid "Not acceptable"
+msgstr "Kabul edilemez"
+
+msgid "Proxy authentication required"
+msgstr "Proxy kimlik doğrulaması gerekli"
+
+msgid "Request timeout"
+msgstr "İstek zaman aşımına uğradı"
+
+msgid "Conflict - please try again"
+msgstr "Çakışma - lütfen tekrar deneyin"
+
+msgid "Gone - permanently deleted"
+msgstr "Gitmiş - kalıcı olarak silindi"
+
+msgid "Length required"
+msgstr "Uzunluk gerekli"
+
+msgid "Precondition failed"
+msgstr "Ön koşul başarısız"
+
+msgid "Payload too large"
+msgstr "Yük çok büyük"
+
+msgid "URI too long"
+msgstr "URI çok uzun"
+
+msgid "Unsupported media type"
+msgstr "Desteklenmeyen medya türü"
+
+msgid "Range not satisfiable"
+msgstr "Aralık karşılanamıyor"
+
+msgid "Expectation failed"
+msgstr "Beklenti başarısız"
+
+msgid "I am a teapot (April Fools)"
+msgstr "Ben bir çaydanlığım (Nisan Şakası)"
+
+msgid "Page expired (Laravel)"
+msgstr "Sayfanın süresi doldu (Laravel)"
+
+msgid "Method failure (Spring)"
+msgstr "Yöntem başarısızlığı (Spring)"
+
+msgid "Misdirected request"
+msgstr "Yanlış yönlendirilmiş istek"
+
+msgid "Unprocessable entity (WebDAV)"
+msgstr "İşlenemeyen varlık (WebDAV)"
+
+msgid "Locked (WebDAV)"
+msgstr "Kilitli (WebDAV)"
+
+msgid "Failed dependency (WebDAV)"
+msgstr "Başarısız bağımlılık (WebDAV)"
+
+msgid "Too early"
+msgstr "Çok erken"
+
+msgid "Upgrade required"
+msgstr "Yükseltme gerekli"
+
+msgid "Precondition required"
+msgstr "Ön koşul gerekli"
+
+msgid "Too many requests - slow down"
+msgstr "Çok fazla istek - yavaşlayın"
+
+msgid "Request header fields too large (Shopify)"
+msgstr "İstek başlık alanları çok büyük (Shopify)"
+
+msgid "Request header too large"
+msgstr "İstek başlığı çok büyük"
+
+msgid "Login timeout (IIS)"
+msgstr "Giriş zaman aşımı (IIS)"
+
+msgid "No response (nginx)"
+msgstr "Yanıt yok (nginx)"
+
+msgid "Retry with (IIS)"
+msgstr "Şununla tekrar dene (IIS)"
+
+msgid "Blocked by Windows parental controls"
+msgstr "Windows ebeveyn denetimleri tarafından engellendi"
+
+msgid "Unavailable for legal reasons"
+msgstr "Yasal nedenlerle kullanılamıyor"
+
+msgid "Client closed connection before idle timeout (AWS ELB)"
+msgstr "İstemci, boşta kalma zaman aşımından önce bağlantıyı kapattı (AWS ELB)"
+
+msgid "X-Forwarded-For header with >30 IP addresses (AWS ELB)"
+msgstr ">30 IP adresi içeren X-Forwarded-For başlığı (AWS ELB)"
+
+msgid "Incompatible protocol versions (AWS ELB)"
+msgstr "Uyumsuz protokol sürümleri (AWS ELB)"
+
+msgid "Request header too large (nginx)"
+msgstr "İstek başlığı çok büyük (nginx)"
+
+msgid "SSL certificate error (nginx)"
+msgstr "SSL sertifikası hatası (nginx)"
+
+msgid "SSL certificate required (nginx)"
+msgstr "SSL sertifikası gerekli (nginx)"
+
+msgid "HTTP request sent to HTTPS port (nginx)"
+msgstr "HTTP isteği HTTPS portuna gönderildi (nginx)"
+
+msgid "Invalid token (ArcGIS)"
+msgstr "Geçersiz jeton (ArcGIS)"
+
+msgid "Token required (ArcGIS) / Client closed request (nginx)"
+msgstr "Jeton gerekli (ArcGIS) / İstemci isteği kapattı (nginx)"
+
+msgid "Resource limit reached (cPanel)"
+msgstr "Kaynak sınırına ulaşıldı (cPanel)"
+
+msgid "Bandwidth limit exceeded (Apache/cPanel)"
+msgstr "Bant genişliği sınırı aşıldı (Apache/cPanel)"
+
+# 5xx
+msgid "[Miscellaneous server errors]"
+msgstr "[Diğer sunucu hataları]"
+
+msgid "Internal server error - check logs"
+msgstr "İç sunucu hatası - günlükleri kontrol edin"
+
+msgid "Not implemented"
+msgstr "Uygulanmadı"
+
+msgid "Bad gateway - backend error"
+msgstr "Kötü ağ geçidi - arka uç hatası"
+
+msgid "Service unavailable - maintenance or overload"
+msgstr "Hizmet kullanılamıyor - bakım veya aşırı yük"
+
+msgid "Gateway timeout"
+msgstr "Ağ geçidi zaman aşımı"
+
+msgid "HTTP version not supported"
+msgstr "HTTP sürümü desteklenmiyor"
+
+msgid "Variant also negotiates"
+msgstr "Varyant da müzakere eder"
+
+msgid "Insufficient storage (WebDAV)"
+msgstr "Yetersiz depolama (WebDAV)"
+
+msgid "Loop detected (WebDAV)"
+msgstr "Döngü algılandı (WebDAV)"
+
+msgid "Not extended"
+msgstr "Genişletilmedi"
+
+msgid "Network authentication required"
+msgstr "Ağ kimlik doğrulaması gerekli"
+
+# Cloudflare
+msgid "Unknown error (Cloudflare)"
+msgstr "Bilinmeyen hata (Cloudflare)"
+
+msgid "Web server is down (Cloudflare)"
+msgstr "Web sunucusu kapalı (Cloudflare)"
+
+msgid "Connection timeout (Cloudflare)"
+msgstr "Bağlantı zaman aşımı (Cloudflare)"
+
+msgid "Origin is unreachable (Cloudflare)"
+msgstr "Kaynağa ulaşılamıyor (Cloudflare)"
+
+msgid "A timeout occurred (Cloudflare)"
+msgstr "Bir zaman aşımı oluştu (Cloudflare)"
+
+msgid "SSL handshake failed (Cloudflare)"
+msgstr "SSL anlaşması başarısız (Cloudflare)"
+
+msgid "Invalid SSL certificate (Cloudflare)"
+msgstr "Geçersiz SSL sertifikası (Cloudflare)"
+
+msgid "Railgun error (Cloudflare - obsolete)"
+msgstr "Railgun hatası (Cloudflare - geçersiz)"
+
+msgid "Site is overloaded (SSLLabs)"
+msgstr "Site aşırı yüklendi (SSLLabs)"
+
+msgid "Origin DNS error (Cloudflare) / Site is frozen (Pantheon)"
+msgstr "Kaynak DNS hatası (Cloudflare) / Site dondu (Pantheon)"
+
+msgid "Temporarily disabled (Shopify)"
+msgstr "Geçici olarak devre dışı (Shopify)"
+
+msgid "Unauthorized (AWS ELB)"
+msgstr "Yetkisiz (AWS ELB)"
+
+msgid "Network read timeout error"
+msgstr "Ağ okuma zaman aşımı hatası"
+
+msgid "Network connect timeout error"
+msgstr "Ağ bağlantı zaman aşımı hatası"
+
+msgid "Unexpected token (Shopify)"
+msgstr "Beklenmeyen jeton (Shopify)"
+
+msgid "Request denied (LinkedIn)"
+msgstr "İstek reddedildi (LinkedIn)"
+
+msgid "HTTP/2 GOAWAY (AWS ELB)"
+msgstr "HTTP/2 GOAWAY (AWS ELB)"
+
+msgid "[Unknown]"
+msgstr "[Bilinmiyor]"
+
+msgid "Nonstandard success response (ESMTP)"
+msgstr "Standart dışı başarı yanıtı (ESMTP)"
+
+msgid "System status, or system help reply"
+msgstr "Sistem durumu veya sistem yardım yanıtı"
+
+msgid "Help message"
+msgstr "Yardım mesajı"
+
+msgid "SMTP service ready (LMTP)"
+msgstr "SMTP hizmeti hazır (LMTP)"
+
+msgid "Service ready - server is ready to receive mail"
+msgstr "Hizmet hazır - sunucu e-posta almaya hazır"
+
+msgid "Service closing - connection is being closed"
+msgstr "Hizmet kapanıyor - bağlantı kapatılıyor"
+
+msgid "Authentication successful"
+msgstr "Kimlik doğrulama başarılı"
+
+msgid "Requested mail action taken and completed"
+msgstr "İstenen e-posta işlemi yapıldı ve tamamlandı"
+
+msgid "User not local - will forward to another address"
+msgstr "Kullanıcı yerel değil - başka bir adrese yönlendirilecek"
+
+msgid "Cannot verify recipient, but will attempt delivery"
+msgstr "Alıcı doğrulanamıyor, ancak teslim edilmeye çalışılacak"
+
+msgid "Message accepted for delivery (DSN)"
+msgstr "Mesaj teslim için kabul edildi (DSN)"
+
+msgid "User name is a mailbox"
+msgstr "Kullanıcı adı bir posta kutusudur"
+
+msgid "Authentication challenge - please respond"
+msgstr "Kimlik doğrulama sorusu - lütfen yanıtlayın"
+
+msgid "Start mail input - end with <CRLF>.<CRLF>"
+msgstr "E-posta girişini başlat - <CRLF>.<CRLF> ile bitir"
+
+msgid "Continue (LMTP)"
+msgstr "Devam et (LMTP)"
+
+msgid "Service not available - connection closing, try again later"
+msgstr "Hizmet kullanılamıyor - bağlantı kapanıyor, daha sonra tekrar deneyin"
+
+msgid "Mailbox busy or temporarily unavailable (Exchange)"
+msgstr "Posta kutusu meşgul veya geçici olarak kullanılamıyor (Exchange)"
+
+msgid "Connection rate limit exceeded (Postfix)"
+msgstr "Bağlantı hız sınırı aşıldı (Postfix)"
+
+msgid "Too many concurrent connections (Postfix)"
+msgstr "Çok fazla eşzamanlı bağlantı (Postfix)"
+
+msgid "Unable to establish connection (Postfix)"
+msgstr "Bağlantı kurulamıyor (Postfix)"
+
+msgid "Connection timed out (Postfix)"
+msgstr "Bağlantı zaman aşımına uğradı (Postfix)"
+
+msgid "Connection dropped due to error (Postfix)"
+msgstr "Hata nedeniyle bağlantı kesildi (Postfix)"
+
+msgid "Mailbox temporarily locked (Exchange)"
+msgstr "Posta kutusu geçici olarak kilitlendi (Exchange)"
+
+msgid "Too many recipients (Postfix/Exim)"
+msgstr "Çok fazla alıcı (Postfix/Exim)"
+
+msgid "Mail server error (Exchange)"
+msgstr "E-posta sunucusu hatası (Exchange)"
+
+msgid "Received loop detected (Exim)"
+msgstr "Alma döngüsü algılandı (Exim)"
+
+msgid "Too many hop count (Exim)"
+msgstr "Çok fazla sıçrama sayısı (Exim)"
+
+msgid "DNS lookup failed (Postfix)"
+msgstr "DNS araması başarısız (Postfix)"
+
+msgid "Unable to authenticate (Postfix)"
+msgstr "Kimlik doğrulanamıyor (Postfix)"
+
+msgid "TLS handshake failed (Postfix)"
+msgstr "TLS anlaşması başarısız (Postfix)"
+
+msgid "SMTP protocol violation (Postfix)"
+msgstr "SMTP protokol ihlali (Postfix)"
+
+msgid "Message size exceeds limit (Exchange)"
+msgstr "Mesaj boyutu sınırı aşıyor (Exchange)"
+
+msgid "Message rate limit exceeded (Postfix)"
+msgstr "Mesaj hız sınırı aşıldı (Postfix)"
+
+msgid "Mailbox quota exceeded - temporary"
+msgstr "Posta kutusu kotası aşıldı - geçici"
+
+msgid "Domain not found (Postfix)"
+msgstr "Alan adı bulunamadı (Postfix)"
+
+msgid "Message header invalid (Postfix)"
+msgstr "Mesaj başlığı geçersiz (Postfix)"
+
+msgid "Bounce loop detected (Postfix)"
+msgstr "Geri dönüş döngüsü algılandı (Postfix)"
+
+msgid "Unable to route (Postfix)"
+msgstr "Yönlendirilemiyor (Postfix)"
+
+msgid "Sender domain not found (Postfix)"
+msgstr "Gönderen alan adı bulunamadı (Postfix)"
+
+msgid "Recipient domain not found (Postfix)"
+msgstr "Alıcı alan adı bulunamadı (Postfix)"
+
+msgid "Greylisting in progress - please try again (Postgrey)"
+msgstr "Gri listeleme devam ediyor - lütfen tekrar deneyin (Postgrey)"
+
+msgid "Spam filtering in progress (SpamAssassin)"
+msgstr "Spam filtreleme devam ediyor (SpamAssassin)"
+
+msgid "Virus scanning in progress (ClamAV)"
+msgstr "Virüs taraması devam ediyor (ClamAV)"
+
+msgid "Mailbox unavailable - try again later"
+msgstr "Posta kutusu kullanılamıyor - daha sonra tekrar deneyin"
+
+msgid "Requested action aborted - error in processing"
+msgstr "İstenen işlem iptal edildi - işlemede hata"
+
+msgid "Insufficient system storage - try again later"
+msgstr "Yetersiz sistem deposu - daha sonra tekrar deneyin"
+
+msgid "Too many messages for this recipient (Exchange)"
+msgstr "Bu alıcı için çok fazla mesaj (Exchange)"
+
+msgid "TLS not available (Postfix)"
+msgstr "TLS kullanılamıyor (Postfix)"
+
+msgid "Server unable to accept messages (Postfix)"
+msgstr "Sunucu mesajları kabul edemiyor (Postfix)"
+
+msgid "Temporary failure in DNS lookup (Exim)"
+msgstr "DNS aramasında geçici hata (Exim)"
+
+msgid "Quota exceeded - temporary"
+msgstr "Kota aşıldı - geçici"
+
+msgid "Message too big - temporary"
+msgstr "Mesaj çok büyük - geçici"
+
+msgid "Too many messages per connection"
+msgstr "Bağlantı başına çok fazla mesaj"
+
+msgid "Load average too high (Postfix)"
+msgstr "Ortalama yük çok yüksek (Postfix)"
+
+msgid "Connection refused (Postfix)"
+msgstr "Bağlantı reddedildi (Postfix)"
+
+msgid "Send rate limit exceeded (Postfix)"
+msgstr "Gönderme hız sınırı aşıldı (Postfix)"
+
+msgid "Recipient rate limit exceeded (Postfix)"
+msgstr "Alıcı hız sınırı aşıldı (Postfix)"
+
+msgid "Sender rate limit exceeded (Postfix)"
+msgstr "Gönderen hız sınırı aşıldı (Postfix)"
+
+msgid "IP address rate limit exceeded (Postfix)"
+msgstr "IP adresi hız sınırı aşıldı (Postfix)"
+
+msgid "MX lookup failed (Postfix)"
+msgstr "MX araması başarısız (Postfix)"
+
+msgid "A record lookup failed (Postfix)"
+msgstr "A kaydı araması başarısız (Postfix)"
+
+msgid "PTR record lookup failed (Postfix)"
+msgstr "PTR kaydı araması başarısız (Postfix)"
+
+msgid "Greylisting active - please try again (Postgrey)"
+msgstr "Gri listeleme aktif - lütfen tekrar deneyin (Postgrey)"
+
+msgid "Sender address rejected - domain not verified (DMARC pending)"
+msgstr "Gönderen adresi reddedildi - alan adı doğrulanmadı (DMARC bekliyor)"
+
+msgid "Recipient address rejected - domain not verified (DMARC pending)"
+msgstr "Alıcı adresi reddedildi - alan adı doğrulanmadı (DMARC bekliyor)"
+
+msgid "DKIM verification pending - temporary failure"
+msgstr "DKIM doğrulaması bekliyor - geçici hata"
+
+msgid "SPF verification pending - temporary failure"
+msgstr "SPF doğrulaması bekliyor - geçici hata"
+
+msgid "DMARC verification pending - temporary failure"
+msgstr "DMARC doğrulaması bekliyor - geçici hata"
+
+msgid "DNSBL lookup temporary failure"
+msgstr "DNSBL araması geçici hata"
+
+msgid "RHSBL lookup temporary failure"
+msgstr "RHSBL araması geçici hata"
+
+msgid "URI DNSBL lookup temporary failure"
+msgstr "URI DNSBL araması geçici hata"
+
+msgid "Temporary authentication failure (Dovecot)"
+msgstr "Geçici kimlik doğrulama hatası (Dovecot)"
+
+msgid "Temporary authorization failure (Sendmail)"
+msgstr "Geçici yetkilendirme hatası (Sendmail)"
+
+msgid "Rate limit exceeded per sender (Exim)"
+msgstr "Gönderen başına hız sınırı aşıldı (Exim)"
+
+msgid "Rate limit exceeded per recipient (Exim)"
+msgstr "Alıcı başına hız sınırı aşıldı (Exim)"
+
+msgid "Rate limit exceeded per domain (Exim)"
+msgstr "Alan adı başına hız sınırı aşıldı (Exim)"
+
+msgid "Rate limit exceeded per IP (Exim)"
+msgstr "IP başına hız sınırı aşıldı (Exim)"
+
+msgid "Message queued for later delivery (Postfix)"
+msgstr "Mesaj daha sonra teslim edilmek üzere sıraya alındı (Postfix)"
+
+msgid "Delivery delayed due to policy (Exchange)"
+msgstr "Politika nedeniyle teslimat gecikti (Exchange)"
+
+msgid "Temporary failure in content filter"
+msgstr "İçerik filtresinde geçici hata"
+
+msgid "Temporary failure in antivirus scanner"
+msgstr "Antivirüs tarayıcısında geçici hata"
+
+msgid "Temporary failure in spam filter"
+msgstr "Spam filtresinde geçici hata"
+
+msgid "Temporary failure in milter (Postfix)"
+msgstr "Milter'de geçici hata (Postfix)"
+
+msgid "Greylisting - try again later"
+msgstr "Gri listeleme - daha sonra tekrar deneyin"
+
+msgid "DDoS protection active - try again later"
+msgstr "DDoS koruması aktif - daha sonra tekrar deneyin"
+
+msgid "SMTP policy violation - temporary"
+msgstr "SMTP politika ihlali - geçici"
+
+msgid "Temporary error in RCPT TO processing"
+msgstr "RCPT TO işlemesinde geçici hata"
+
+msgid "Temporary error in MAIL FROM processing"
+msgstr "MAIL FROM işlemesinde geçici hata"
+
+msgid "Temporary error in EHLO/HELO processing"
+msgstr "EHLO/HELO işlemesinde geçici hata"
+
+msgid "Temporary error in DATA processing"
+msgstr "DATA işlemesinde geçici hata"
+
+msgid "Temporary error - service busy, try again later"
+msgstr "Geçici hata - hizmet meşgul, daha sonra tekrar deneyin"
+
+msgid "Syntax error - command unrecognized or too long"
+msgstr "Sözdizimi hatası - komut tanınmıyor veya çok uzun"
+
+msgid "Syntax error in parameters or arguments"
+msgstr "Parametrelerde veya argümanlarda sözdizimi hatası"
+
+msgid "Command not implemented"
+msgstr "Komut uygulanmadı"
+
+msgid "Bad sequence of commands"
+msgstr "Kötü komut sırası"
+
+msgid "Command parameter not implemented"
+msgstr "Komut parametresi uygulanmadı"
+
+msgid "Version not supported (ESMTP)"
+msgstr "Sürüm desteklenmiyor (ESMTP)"
+
+msgid "Mailbox path invalid (LMTP)"
+msgstr "Posta kutusu yolu geçersiz (LMTP)"
+
+msgid "Too many commands in this session (Postfix)"
+msgstr "Bu oturumda çok fazla komut (Postfix)"
+
+msgid "Recipient limit exceeded (Postfix)"
+msgstr "Alıcı sınırı aşıldı (Postfix)"
+
+msgid "Sender limit exceeded (Postfix)"
+msgstr "Gönderen sınırı aşıldı (Postfix)"
+
+msgid "Domain limit exceeded (Postfix)"
+msgstr "Alan adı sınırı aşıldı (Postfix)"
+
+msgid "Mailbox does not exist (Exchange)"
+msgstr "Posta kutusu mevcut değil (Exchange)"
+
+msgid "DNS failure - permanent"
+msgstr "DNS hatası - kalıcı"
+
+msgid "Address type not supported (Postfix)"
+msgstr "Adres türü desteklenmiyor (Postfix)"
+
+msgid "Unable to open mailbox (Postfix)"
+msgstr "Posta kutusu açılamıyor (Postfix)"
+
+msgid "Mailbox locked - permanent"
+msgstr "Posta kutusu kilitli - kalıcı"
+
+msgid "Message rejected due to policy (Exchange)"
+msgstr "Politika nedeniyle mesaj reddedildi (Exchange)"
+
+msgid "Content rejected - permanent"
+msgstr "İçerik reddedildi - kalıcı"
+
+msgid "Attachment type not allowed"
+msgstr "Ek türüne izin verilmiyor"
+
+msgid "Message encoding not supported"
+msgstr "Mesaj kodlaması desteklenmiyor"
+
+msgid "Sender domain does not exist - permanent"
+msgstr "Gönderen alan adı mevcut değil - kalıcı"
+
+msgid "Domain does not accept mail or is closing"
+msgstr "Alan adı e-posta kabul etmiyor veya kapanıyor"
+
+msgid "Recipient domain does not exist - permanent"
+msgstr "Alıcı alan adı mevcut değil - kalıcı"
+
+msgid "Mailbox quota exceeded - permanent"
+msgstr "Posta kutusu kotası aşıldı - kalıcı"
+
+msgid "Message size exceeds limit - permanent"
+msgstr "Mesaj boyutu sınırı aşıyor - kalıcı"
+
+msgid "Authentication required (Sendmail)"
+msgstr "Kimlik doğrulaması gerekli (Sendmail)"
+
+msgid "Authentication failed (Sendmail)"
+msgstr "Kimlik doğrulaması başarısız (Sendmail)"
+
+msgid "Authentication mechanism not supported"
+msgstr "Kimlik doğrulama mekanizması desteklenmiyor"
+
+msgid "Authentication credentials invalid"
+msgstr "Kimlik doğrulama bilgileri geçersiz"
+
+msgid "Authentication account expired"
+msgstr "Kimlik doğrulama hesabının süresi doldu"
+
+msgid "Access denied - authentication required"
+msgstr "Erişim engellendi - kimlik doğrulama gerekli"
+
+msgid "Access denied (Sendmailism)"
+msgstr "Erişim engellendi (Sendmail)"
+
+msgid "Access denied - not authenticated"
+msgstr "Erişim engellendi - kimlik doğrulanmadı"
+
+msgid "Access denied - account locked"
+msgstr "Erişim engellendi - hesap kilitli"
+
+msgid "Access denied - account disabled"
+msgstr "Erişim engellendi - hesap devre dışı"
+
+msgid "Authentication failed"
+msgstr "Kimlik doğrulaması başarısız"
+
+msgid "Authentication required for relay (Postfix)"
+msgstr "Röle için kimlik doğrulaması gerekli (Postfix)"
+
+msgid "Authentication failed for relay (Postfix)"
+msgstr "Röle için kimlik doğrulaması başarısız (Postfix)"
+
+msgid "Encryption required (STARTTLS)"
+msgstr "Şifreleme gerekli (STARTTLS)"
+
+msgid "TLS required for this recipient"
+msgstr "Bu alıcı için TLS gerekli"
+
+msgid "Encryption strength insufficient"
+msgstr "Şifreleme gücü yetersiz"
+
+msgid "Certificate validation failed"
+msgstr "Sertifika doğrulaması başarısız"
+
+msgid "Invalid TLS certificate"
+msgstr "Geçersiz TLS sertifikası"
+
+msgid "TLS protocol version not supported"
+msgstr "TLS protokol sürümü desteklenmiyor"
+
+msgid "Cipher suite not supported"
+msgstr "Şifre paketi desteklenmiyor"
+
+msgid "Access denied - no valid recipient"
+msgstr "Erişim engellendi - geçerli alıcı yok"
+
+msgid "Access denied - no valid sender"
+msgstr "Erişim engellendi - geçerli gönderen yok"
+
+msgid "Access denied - domain not allowed"
+msgstr "Erişim engellendi - alan adına izin verilmiyor"
+
+msgid "Access denied - IP address blocked (permanent)"
+msgstr "Erişim engellendi - IP adresi engellendi (kalıcı)"
+
+msgid "Access denied - sender domain blacklisted"
+msgstr "Erişim engellendi - gönderen alan adı kara listede"
+
+msgid "Mailbox unavailable - requested action not taken"
+msgstr "Posta kutusu kullanılamıyor - istenen işlem yapılmadı"
+
+msgid "User not local - please try forwarding address"
+msgstr "Kullanıcı yerel değil - lütfen yönlendirme adresini deneyin"
+
+msgid "Requested action aborted - exceeded storage allocation"
+msgstr "İstenen işlem iptal edildi - depolama tahsisini aştı"
+
+msgid "Mailbox name not allowed"
+msgstr "Posta kutusu adına izin verilmiyor"
+
+msgid "Requested action rejected - access denied"
+msgstr "İstenen işlem reddedildi - erişim engellendi"
+
+msgid "MAIL FROM/RCPT TO parameters not recognized"
+msgstr "MAIL FROM/RCPT TO parametreleri tanınmıyor"
+
+msgid "Domain not allowed to send (DMARC reject)"
+msgstr "Alan adının göndermesine izin verilmiyor (DMARC reddi)"
+
+msgid "Too many duplicate messages - permanent"
+msgstr "Çok fazla yinelenen mesaj - kalıcı"
+
+msgid "Sender address rejected - domain not in SPF"
+msgstr "Gönderen adresi reddedildi - alan adı SPF'de değil"
+
+msgid "Sender address rejected - DKIM verification failed"
+msgstr "Gönderen adresi reddedildi - DKIM doğrulaması başarısız"
+
+msgid "Sender address rejected - DMARC policy reject"
+msgstr "Gönderen adresi reddedildi - DMARC politikası reddi"
+
+msgid "Recipient address rejected - DMARC policy reject"
+msgstr "Alıcı adresi reddedildi - DMARC politikası reddi"
+
+msgid "Message rejected due to spam content"
+msgstr "Spam içerik nedeniyle mesaj reddedildi"
+
+msgid "Message rejected due to virus detected"
+msgstr "Virüs tespit edildiği için mesaj reddedildi"
+
+msgid "Message rejected due to malicious content"
+msgstr "Kötü amaçlı içerik nedeniyle mesaj reddedildi"
+
+msgid "Message rejected due to phishing detection"
+msgstr "Kimlik avı tespit edildiği için mesaj reddedildi"
+
+msgid "Message rejected due to malware detection"
+msgstr "Kötü amaçlı yazılım tespit edildiği için mesaj reddedildi"
+
+msgid "Message rejected due to policy - permanent"
+msgstr "Politika nedeniyle mesaj reddedildi - kalıcı"
+
+msgid "Message rejected due to content filtering"
+msgstr "İçerik filtreleme nedeniyle mesaj reddedildi"
+
+msgid "Message rejected due to reputation"
+msgstr "İtibar nedeniyle mesaj reddedildi"
+
+msgid "Access denied - access_map violation"
+msgstr "Erişim engellendi - access_map ihlali"
+
+msgid "Access denied - SMTP client listed in RBL"
+msgstr "Erişim engellendi - SMTP istemcisi RBL'de listelenmiş"
+
+msgid "Access denied - relay not authorized"
+msgstr "Erişim engellendi - röle yetkili değil"
+
+msgid "Access denied - unknown SMTP client hostname"
+msgstr "Erişim engellendi - bilinmeyen SMTP istemci ana bilgisayar adı"
+
+msgid "Access denied - bad syntax for client HELO hostname"
+msgstr "Erişim engellendi - istemci HELO ana bilgisayar adı için hatalı sözdizimi"
+
+msgid "Access denied - SMTP client hostname rejected"
+msgstr "Erişim engellendi - SMTP istemci ana bilgisayar adı reddedildi"
+
+msgid "Access denied - unknown domain for sender or recipient"
+msgstr "Erişim engellendi - gönderen veya alıcı için bilinmeyen alan adı"
+
+msgid "Access denied - unknown client HELO hostname"
+msgstr "Erişim engellendi - bilinmeyen istemci HELO ana bilgisayar adı"
+
+msgid "Access denied - invalid domain (not FQDN)"
+msgstr "Erişim engellendi - geçersiz alan adı (FQDN değil)"
+
+msgid "Access denied - domain not qualified"
+msgstr "Erişim engellendi - alan adı nitelikli değil"
+
+msgid "Access denied - mail server misconfigured"
+msgstr "Erişim engellendi - e-posta sunucusu yanlış yapılandırılmış"
+
+msgid "Access denied - open relay not allowed"
+msgstr "Erişim engellendi - açık röleye izin verilmiyor"
+
+msgid "Access denied - proxy not allowed"
+msgstr "Erişim engellendi - proxy'ye izin verilmiyor"
+
+msgid "Access denied - dynamic IP not allowed"
+msgstr "Erişim engellendi - dinamik IP'ye izin verilmiyor"
+
+msgid "Access denied - residential IP not allowed"
+msgstr "Erişim engellendi - konut IP'sine izin verilmiyor"
+
+msgid "Access denied - VPN/Tor detected"
+msgstr "Erişim engellendi - VPN/Tor tespit edildi"
+
+msgid "Access denied - Spamhaus DROP listed"
+msgstr "Erişim engellendi - Spamhaus DROP listesinde"
+
+msgid "Access denied - URL listed in URIBL"
+msgstr "Erişim engellendi - URL URIBL'de listelenmiş"
+
+msgid "Access denied - domain in RHSBL"
+msgstr "Erişim engellendi - alan adı RHSBL'de"
+
+msgid "Access denied - IP in DNSWL (policy)"
+msgstr "Erişim engellendi - IP DNSWL'de (politika)"
+
+msgid "Delivery failed - mailbox not found"
+msgstr "Teslimat başarısız - posta kutusu bulunamadı"
+
+msgid "Delivery failed - recipient not local"
+msgstr "Teslimat başarısız - alıcı yerel değil"
+
+msgid "Delivery failed - recipient rejected"
+msgstr "Teslimat başarısız - alıcı reddedildi"
+
+msgid "Delivery failed - sender rejected"
+msgstr "Teslimat başarısız - gönderen reddedildi"
+
+msgid "Delivery failed - relay rejected"
+msgstr "Teslimat başarısız - röle reddedildi"
+
+msgid "Delivery failed - DNS permanent error"
+msgstr "Teslimat başarısız - DNS kalıcı hatası"
+
+msgid "Delivery failed - MX permanent error"
+msgstr "Teslimat başarısız - MX kalıcı hatası"
+
+msgid "Delivery failed - A record permanent error"
+msgstr "Teslimat başarısız - A kaydı kalıcı hatası"
+
+msgid "Delivery failed - PTR record permanent error"
+msgstr "Teslimat başarısız - PTR kaydı kalıcı hatası"
+
+msgid "Delivery failed - policy permanent error"
+msgstr "Teslimat başarısız - politika kalıcı hatası"
+
+msgid "DSN: Success - delivery status notification"
+msgstr "DSN: Başarılı - teslimat durumu bildirimi"
+
+msgid "DSN: Delivery delayed"
+msgstr "DSN: Teslimat gecikti"
+
+msgid "DSN: Delivery failed - permanent"
+msgstr "DSN: Teslimat başarısız - kalıcı"
+
+msgid "DSN: Delivery failed - temporary"
+msgstr "DSN: Teslimat başarısız - geçici"
+
+msgid "DSN: Message expired"
+msgstr "DSN: Mesajın süresi doldu"
+
+msgid "DSN: Message bounced"
+msgstr "DSN: Mesaj geri döndü"
+
+msgid "DSN: Message discarded"
+msgstr "DSN: Mesaj atıldı"
+
+msgid "DSN: Message filtered"
+msgstr "DSN: Mesaj filtrelendi"
+
+msgid "DSN: Message quarantined"
+msgstr "DSN: Mesaj karantinaya alındı"
+
+msgid "DSN: Message held for review"
+msgstr "DSN: Mesaj inceleme için tutuldu"
+
+msgid "MTA-STS policy required"
+msgstr "MTA-STS politikası gerekli"
+
+msgid "MTA-STS policy validation failed"
+msgstr "MTA-STS politika doğrulaması başarısız"
+
+msgid "TLS reporting required"
+msgstr "TLS raporlaması gerekli"
+
+msgid "TLS report requested"
+msgstr "TLS raporu istendi"
+
+msgid "SMTP MTA Strict Transport Security active"
+msgstr "SMTP MTA Katı Aktarım Güvenliği aktif"
+
+msgid "DANE validation required"
+msgstr "DANE doğrulaması gerekli"
+
+msgid "DANE validation failed"
+msgstr "DANE doğrulaması başarısız"
+
+msgid "TLSA record missing"
+msgstr "TLSA kaydı eksik"
+
+msgid "Certificate name mismatch"
+msgstr "Sertifika adı uyuşmazlığı"
+
+msgid "Certificate expired"
+msgstr "Sertifikanın süresi doldu"
+
+msgid "AUTH LOGIN required"
+msgstr "AUTH LOGIN gerekli"
+
+msgid "AUTH PLAIN required"
+msgstr "AUTH PLAIN gerekli"
+
+msgid "AUTH CRAM-MD5 required"
+msgstr "AUTH CRAM-MD5 gerekli"
+
+msgid "AUTH DIGEST-MD5 required"
+msgstr "AUTH DIGEST-MD5 gerekli"
+
+msgid "AUTH GSSAPI required"
+msgstr "AUTH GSSAPI gerekli"
+
+msgid "AUTH NTLM required"
+msgstr "AUTH NTLM gerekli"
+
+msgid "AUTH SCRAM required"
+msgstr "AUTH SCRAM gerekli"
+
+msgid "AUTH OAUTHBEARER required"
+msgstr "AUTH OAUTHBEARER gerekli"
+
+msgid "AUTH XOAUTH2 required"
+msgstr "AUTH XOAUTH2 gerekli"
+
+msgid "Exchange: Mailbox database error"
+msgstr "Exchange: Posta kutusu veritabanı hatası"
+
+msgid "Exchange: Store driver error"
+msgstr "Exchange: Mağaza sürücü hatası"
+
+msgid "Exchange: Transport agent error"
+msgstr "Exchange: Aktarım aracısı hatası"
+
+msgid "Exchange: Content conversion error"
+msgstr "Exchange: İçerik dönüştürme hatası"
+
+msgid "Exchange: Routing error"
+msgstr "Exchange: Yönlendirme hatası"
+
+msgid "Exchange: Mail flow stalled"
+msgstr "Exchange: Posta akışı durdu"
+
+msgid "Exchange: Shadow redundancy error"
+msgstr "Exchange: Gölge artıklık hatası"
+
+msgid "Exchange: Safety net error"
+msgstr "Exchange: Güvenlik ağı hatası"
+
+msgid "Exchange: Queue database error"
+msgstr "Exchange: Kuyruk veritabanı hatası"
+
+msgid "Exchange: Message throttled"
+msgstr "Exchange: Mesaj kısıtlandı"
+
+msgid "Postfix: Bounce queue error"
+msgstr "Postfix: Geri dönüş kuyruğu hatası"
+
+msgid "Postfix: Deferred queue error"
+msgstr "Postfix: Ertelenmiş kuyruk hatası"
+
+msgid "Postfix: Hold queue error"
+msgstr "Postfix: Bekletme kuyruğu hatası"
+
+msgid "Postfix: Incoming queue error"
+msgstr "Postfix: Gelen kuyruk hatası"
+
+msgid "Postfix: Active queue error"
+msgstr "Postfix: Aktif kuyruk hatası"
+
+msgid "Postfix: Corrupted queue file"
+msgstr "Postfix: Bozuk kuyruk dosyası"
+
+msgid "Sendmail: Queue runner error"
+msgstr "Sendmail: Kuyruk çalıştırıcı hatası"
+
+msgid "Sendmail: Alias database error"
+msgstr "Sendmail: Takma ad veritabanı hatası"
+
+msgid "Sendmail: Virtuser table error"
+msgstr "Sendmail: Sanal kullanıcı tablosu hatası"
+
+msgid "Sendmail: Mailer definition error"
+msgstr "Sendmail: Postacı tanımı hatası"
+
+msgid "Exim: Router configuration error"
+msgstr "Exim: Yönlendirici yapılandırma hatası"
+
+msgid "Exim: Transport configuration error"
+msgstr "Exim: Aktarım yapılandırma hatası"
+
+msgid "Exim: Director configuration error"
+msgstr "Exim: Yönetmen yapılandırma hatası"
+
+msgid "Exim: Retry configuration error"
+msgstr "Exim: Yeniden deneme yapılandırma hatası"
+
+msgid "Exim: Rewrite configuration error"
+msgstr "Exim: Yeniden yazma yapılandırma hatası"
+
+msgid "Exim: Authentication configuration error"
+msgstr "Exim: Kimlik doğrulama yapılandırma hatası"
+
+msgid "Exim: ACL configuration error"
+msgstr "Exim: ACL yapılandırma hatası"
+
+msgid "Exim: Local_scan configuration error"
+msgstr "Exim: Local_scan yapılandırma hatası"
+
+msgid "Exim: Lookup configuration error"
+msgstr "Exim: Arama yapılandırma hatası"
+
+msgid "Exim: Expansion configuration error"
+msgstr "Exim: Genişletme yapılandırma hatası"
+
+msgid "HTTP Protocol Versions"
+msgstr "HTTP Protokol Sürümleri"
+
+msgid "Protocol"
+msgstr "Protokol"
+
+msgid "Request %"
+msgstr "İstek payı"
+
+msgid "Bandwidth %"
+msgstr "Bant genişliği payı"
+
+msgid "Each request requires a new connection"
+msgstr "Her istek yeni bir bağlantı gerektirir"
+
+msgid "Multiple requests can reuse one connection"
+msgstr "Birden çok istek tek bir bağlantıyı yeniden kullanabilir"
+
+msgid "Multiple requests in parallel over one connection"
+msgstr "Tek bir bağlantı üzerinden paralel birden çok istek"
+
+msgid "Faster connection, better performance on poor networks"
+msgstr "Daha hızlı bağlantı, zayıf ağlarda daha iyi performans"
+
+msgid "No protocol data available"
+msgstr "Protokol verisi yok"
+
+msgid "of requests use HTTP/1.0"
+msgstr "istek HTTP/1.0 kullanıyor"
+
+msgid "From access logs"
+msgstr "Erişim günlüklerinden"
+
+msgid "No HTTP/2 requests detected"
+msgstr "HTTP/2 isteği algılanmadı"
+
+msgid "All requests are HTTP/1.0, no HTTP/2 requests"
+msgstr "Tüm istekler HTTP/1.0, HTTP/2 isteği yok"
+
+msgid "HTTP/3 not detected"
+msgstr "HTTP/3 algılanmadı"
+
+msgid "all requests do not include QUIC/HTTP/3 protocol requests"
+msgstr "tüm istekler QUIC/HTTP/3 protokol isteklerini içermiyor"
+
+msgid "Mail Authentication Statistics"
+msgstr "E-posta Kimlik Doğrulama İstatistikleri"
+
+msgid "Authentication"
+msgstr "Kimlik doğrulama türü"
+
+msgid "Pass"
+msgstr "Başarılı"
+
+msgid "Fail"
+msgstr "Başarısız"
+
+msgid "Softfail"
+msgstr "Yumuşak başarısız"
+
+msgid "Neutral"
+msgstr "Tarafsız"
+
+msgid "None"
+msgstr "Yok"
+
+msgid "Mail Queue Delay Statistics"
+msgstr "E-posta Kuyruğu Gecikme İstatistikleri"
+
+msgid "Delay Range"
+msgstr "Gecikme Aralığı"
+
+msgid "Count"
+msgstr "Sayı"
+
+msgid "Percentage"
+msgstr "Yüzde"
+
+msgid "TLS Encryption Statistics"
+msgstr "TLS Şifreleme İstatistikleri"
+
+msgid "TLS Versions"
+msgstr "TLS Sürümleri"
+
+msgid "Top Ciphers"
+msgstr "En İyi Şifreler"
+
+msgid "robot_hits_detail_both"
+msgstr "Toplam istek: %s (normal sayfalar: %s, robots.txt: %s)"
+
+msgid "robot_hits_detail_only_robots"
+msgstr "Yalnızca robots.txt istekleri: %s, başka sayfa yok"
+
+msgid "robot_hits_detail_normal"
+msgstr "Normal sayfa istekleri: %s"
+
+# Yardım ve ipuçları
+msgid "Troubleshooting"
+msgstr "Sorun Giderme"
+
+msgid "Did you use the correct URL?"
+msgstr "Doğru URL'yi kullandınız mı?"
+
+msgid "Example:"
+msgstr "Örnek:"
+
+msgid "Did you use correct config parameter?"
+msgstr "Doğru yapılandırma parametresini kullandınız mı?"
+
+msgid "Example: If your config file is awstats.mysite.conf, use -config=mysite"
+msgstr "Örnek: Yapılandırma dosyanız awstats.mysite.conf ise, -config=mysite kullanın"
+
+msgid "Did you create your config file 'awstats.$SiteConfig.conf'?"
+msgstr "'awstats.$SiteConfig.conf' yapılandırma dosyanızı oluşturdunuz mu?"
+
+msgid "If not, you can run \"awstats_configure.pl\" from command line, or create it manually."
+msgstr "Değilse, komut satırından \"awstats_configure.pl\" çalıştırabilir veya manuel olarak oluşturabilirsiniz."
+
+msgid "Setup"
+msgstr "Kurulum"
+
+msgid "file, web server or permissions may be wrong."
+msgstr "dosya, web sunucusu veya izinler yanlış olabilir."
+
+msgid "Check config file, permissions and AWStats documentation (in 'docs' directory)."
+msgstr "Yapılandırma dosyasını, izinleri ve AWStats belgelerini ('docs' dizininde) kontrol edin."
+
+msgid "Warning: Can't find language files for \"%s\". English will be used."
+msgstr "Uyarı: \"%s\" için dil dosyaları bulunamadı. İngilizce kullanılacaktır."
+
+#------------------------------------------------------------------------------
+# Hata ve sinyal işleme
+#------------------------------------------------------------------------------
+
+msgid "%s process (ID %s) interrupted by signal %s."
+msgstr "%s işlemi (ID %s) %s sinyali ile kesildi."
+
+msgid "An AWStats update process seems to be already running for this config file. Try later. If this is not true, remove manually lock file"
+msgstr "Bu yapılandırma dosyası için bir AWStats güncelleme işlemi zaten çalışıyor gibi görünüyor. Daha sonra deneyin. Eğer bu doğru değilse, kilitleme dosyasını manuel olarak kaldırın"
+
+#------------------------------------------------------------------------------
+# Yeni istatistik başlıkları
+#------------------------------------------------------------------------------
+
+msgid "Report Overview"
+msgstr "Rapor Özeti"
+
+msgid "Monthly Statistics"
+msgstr "Aylık İstatistikler"
+
+msgid "Daily Statistics"
+msgstr "Günlük İstatistikler"
+
+msgid "Statistics by Day of Week"
+msgstr "Haftanın Gününe Göre İstatistikler"
+
+msgid "Hourly Page Views"
+msgstr "Saatlik Sayfa Görüntülemeleri"
+
+msgid "Traffic Sources"
+msgstr "Trafik Kaynakları"
+
+msgid "Other Sources"
+msgstr "Diğer Kaynaklar"
+
+msgid "tooltip_1"
+msgstr "Ziyaretçilerin web sitesindeki oturum sayısı. Aynı ziyaretçi 30 dakikadan fazla hareketsiz kaldıktan sonra tekrar gelirse, bu yeni bir ziyaret olarak sayılır."
+
+msgid "tooltip_2"
+msgstr "Seçilen zaman diliminde web sitenizi ziyaret eden farklı ziyaretçilerin sayısı. IP adresine göre hesaplanır."
+
+msgid "tooltip_3"
+msgstr "Sayfa olarak kabul edilen isteklerin sayısı (HTML, PHP, ASP vb.), resimler, CSS, JS gibi statik dosyalar hariç."
+
+msgid "tooltip_4"
+msgstr "Sunucuya yapılan tüm isteklerin toplam sayısı, sayfalar, resimler, CSS, JS ve tüm dosyalar dahil."
+
+msgid "tooltip_5"
+msgstr "Sunucunun kullanıcı isteklerine yanıt olarak ilettiği toplam veri miktarı."
+
+msgid "tooltip_13"
+msgstr "Arama motorlarından web sitenize gelen trafik kaynaklarının istatistikleri. Hangi arama motorlarının size trafik getirdiğini ve ziyaretçilerin hangi arama terimlerini kullandığını gösterir."
+
+msgid "tooltip_14"
+msgstr "Diğer web sitelerinin harici bağlantılarından web sitenize gelen trafik kaynaklarının istatistikleri. Hangi sitelerin size bağlantı verdiğini ve getirdikleri trafiği gösterir."
+
+msgid "tooltip_15"
+msgstr "Ziyaretçilerin sizi arama motorları aracılığıyla bulmak için kullandıkları arama terimleri. Anahtar kelimeler tek kelimelerdir, anahtar ifadeler kelime kombinasyonlarıdır."
+
+msgid "tooltip_16"
+msgstr "Arama motoru robotları, AI eğitim robotları, güvenlik açığı tarayıcıları gibi otomatikleştirilmiş programlar. Parantez içindeki sayılar normal sayfa isteklerini ve robots.txt isteklerini gösterir."
+
+msgid "tooltip_17"
+msgstr "24 saatlik trafik dağılımı. Web sitenizin günün hangi saatlerinde daha çok ziyaret edildiğini gösterir, kullanıcıların aktif zamanlarını anlamaya yardımcı olur."
+
+msgid "tooltip_18"
+msgstr "Bu sütun, seçilen zaman dilimi için günlük/haftalık ortalama değerleri gösterir, genel eğilimi anlamanıza yardımcı olur."
+
+msgid "tooltip_19"
+msgstr "Ayrıntılı bilgileri görmek için grafikteki öğelere tıklayın. Değerleri görmek için fareyi grafik öğelerinin üzerine getirin."
+
+msgid "tooltip_20"
+msgstr "Mevcut aralıklara sınıflandırılamayan veriler, genellikle veri formatının anormal veya eksik olması nedeniyle oluşur."
+
+msgid "tooltip_21"
+msgstr "Tespit edilen solucan virüs saldırı kayıtları. Solucan, kendini kopyalayan kötü amaçlı bir programdır, genellikle ağ güvenlik açıkları yoluyla yayılır."
+
+#------------------------------------------------------------------------------
+# Yardım bilgilerini görüntüleme - Topluluk Sürümü
+#------------------------------------------------------------------------------
+
+msgid "AWStats %s - Advanced Web Statistics"
+msgstr "AWStats %s - Gelişmiş Web İstatistikleri"
+
+msgid "Copyright (c) 2000-2025 Laurent Destailleur"
+msgstr "Telif Hakkı (c) 2000-2025 Laurent Destailleur"
+
+msgid "Copyright (c) 2026-latest Community Edition"
+msgstr "Telif Hakkı (c) 2026-en son Topluluk Sürümü"
+
+msgid "AWStats comes with ABSOLUTELY NO WARRANTY. It's a free software distributed with a GNU General Public License (See LICENSE file for details)."
+msgstr "AWStats KESİNLİKLE HİÇBİR GARANTİ OLMADAN GELİR. GNU Genel Kamu Lisansı ile dağıtılan ücretsiz bir yazılımdır (Ayrıntılar için LİSANS dosyasına bakın)."
+
+msgid "Syntax: %s -config=virtualhostname [options]"
+msgstr "Sözdizimi: %s -config=sanal_ana_bilgisayar_adı [seçenekler]"
+
+msgid "This runs %s in command line to update statistics (-update option) of a web site, from the log file defined in AWStats config file, or build a HTML report (-output option)."
+msgstr "Bu, AWStats yapılandırma dosyasında tanımlanan günlük dosyasından bir web sitesinin istatistiklerini güncellemek (-update seçeneği) veya bir HTML raporu oluşturmak (-output seçeneği) için komut satırında %s çalıştırır."
+
+msgid "First, %s tries to read %s.virtualhostname.conf as the config file. If not found, %s tries to read %s.conf, and finally the full path passed to -config="
+msgstr "İlk olarak, %s yapılandırma dosyası olarak %s.sanal_ana_bilgisayar_adı.conf okumaya çalışır. Bulunamazsa, %s %s.conf okumaya çalışır ve son olarak -config= parametresine iletilen tam yolu okur."
+
+msgid "Note 1: Config files (*.conf) must be in /etc/awstats, /usr/local/etc/awstats, /etc or same directory than awstats.pl script file."
+msgstr "Not 1: Yapılandırma dosyaları (*.conf) /etc/awstats, /usr/local/etc/awstats, /etc veya awstats.pl betik dosyasıyla aynı dizinde olmalıdır."
+
+msgid "Note 2: If AWSTATS_FORCE_CONFIG environment variable is defined, AWStats will use it as the 'config' value, whatever is the value on command line or URL."
+msgstr "Not 2: AWSTATS_FORCE_CONFIG ortam değişkeni tanımlanmışsa, AWStats onu 'config' değeri olarak kullanır, komut satırındaki veya URL'deki değer ne olursa olsun."
+
+msgid "See AWStats documentation for all setup instructions."
+msgstr "Tüm kurulum talimatları için AWStats belgelerine bakın."
+
+msgid "Options to update statistics:"
+msgstr "İstatistikleri güncelleme seçenekleri:"
+
+msgid "  -update        to update statistics (default)"
+msgstr "  -update        istatistikleri güncelle (varsayılan)"
+
+msgid "  -showsteps     to add benchmark information every %s lines processed"
+msgstr "  -showsteps     her %s satır işlendiğinde kıyaslama bilgisi ekle"
+
+msgid "  -showcorrupted to add output for each corrupted lines found, with reason"
+msgstr "  -showcorrupted bulunan her bozuk satır için nedenini belirterek çıktı ekle"
+
+msgid "  -showdropped   to add output for each dropped lines found, with reason"
+msgstr "  -showdropped   bulunan her atılan satır için nedenini belirterek çıktı ekle"
+
+msgid "  -showunknownorigin  to output referer when it can't be parsed"
+msgstr "  -showunknownorigin  yönlendiren ayrıştırılamadığında onu çıkar"
+
+msgid "  -showdirectorigin   to output log line when origin is a direct access"
+msgstr "  -showdirectorigin   kaynak doğrudan erişim olduğunda günlük satırını çıkar"
+
+msgid "  -updatefor=n   to stop the update process after parsing n lines"
+msgstr "  -updatefor=n   n satır ayrıştırıldıktan sonra güncelleme işlemini durdur"
+
+msgid "  -LogFile=x     to change log to analyze whatever is 'LogFile' in config file"
+msgstr "  -LogFile=x     yapılandırma dosyasında 'LogFile' ne olursa olsun analiz etmek için günlüğü değiştir"
+
+msgid "  Be care to process log files in chronological order when updating statistics."
+msgstr "  İstatistikleri güncellerken günlük dosyalarını kronolojik sırayla işlemeye dikkat edin."
+
+msgid "Options to show statistics:"
+msgstr "İstatistikleri gösterme seçenekleri:"
+
+msgid "  -output      to output main HTML report (no update made except with -update)"
+msgstr "  -output      ana HTML raporunu çıkar (-update ile olmadıkça güncelleme yapılmaz)"
+
+msgid "  -output=x    to output other report pages where x is:"
+msgstr "  -output=x    diğer rapor sayfalarını çıkar, burada x:"
+
+msgid "build page of all domains/countries"
+msgstr "tüm alan adları/ülkeler sayfasını oluştur"
+
+msgid "build page of all hosts"
+msgstr "tüm ana bilgisayarlar sayfasını oluştur"
+
+msgid "build page of last hits for hosts"
+msgstr "ana bilgisayarlar için son hitler sayfasını oluştur"
+
+msgid "build page of all unresolved IP"
+msgstr "tüm çözümlenmemiş IP'ler sayfasını oluştur"
+
+msgid "build page of all email senders (maillog)"
+msgstr "tüm e-posta gönderenler sayfasını oluştur (posta günlüğü)"
+
+msgid "build page of last email senders (maillog)"
+msgstr "son e-posta gönderenler sayfasını oluştur (posta günlüğü)"
+
+msgid "build page of all email receivers (maillog)"
+msgstr "tüm e-posta alıcıları sayfasını oluştur (posta günlüğü)"
+
+msgid "build page of last email receivers (maillog)"
+msgstr "son e-posta alıcıları sayfasını oluştur (posta günlüğü)"
+
+msgid "build page of all logins used"
+msgstr "kullanılan tüm girişler sayfasını oluştur"
+
+msgid "build page of last hits for logins"
+msgstr "girişler için son hitler sayfasını oluştur"
+
+msgid "build page of all robots/spider visits"
+msgstr "tüm robot/örümcek ziyaretleri sayfasını oluştur"
+
+msgid "build page of last hits for robots"
+msgstr "robotlar için son hitler sayfasını oluştur"
+
+msgid "list most often viewed pages"
+msgstr "en sık görüntülenen sayfaları listele"
+
+msgid "list most often viewed pages matching filter"
+msgstr "filtreyle eşleşen en sık görüntülenen sayfaları listele"
+
+msgid "list entry pages"
+msgstr "giriş sayfalarını listele"
+
+msgid "list entry pages matching filter"
+msgstr "filtreyle eşleşen giriş sayfalarını listele"
+
+msgid "list exit pages"
+msgstr "çıkış sayfalarını listele"
+
+msgid "list exit pages matching filter"
+msgstr "filtreyle eşleşen çıkış sayfalarını listele"
+
+msgid "build page with os detailed versions"
+msgstr "işletim sistemi ayrıntılı sürümleriyle sayfa oluştur"
+
+msgid "build page with browsers detailed versions"
+msgstr "tarayıcı ayrıntılı sürümleriyle sayfa oluştur"
+
+msgid "list 'User Agents' with unknown browser"
+msgstr "bilinmeyen tarayıcılı 'Kullanıcı Aracıları'nı listele"
+
+msgid "list 'User Agents' with unknown OS"
+msgstr "bilinmeyen İŞL'li 'Kullanıcı Aracıları'nı listele"
+
+msgid "build page of all refering search engines"
+msgstr "tüm yönlendiren arama motorları sayfasını oluştur"
+
+msgid "build page of all refering pages"
+msgstr "tüm yönlendiren sayfalar sayfasını oluştur"
+
+msgid "list all keyphrases used on search engines"
+msgstr "arama motorlarında kullanılan tüm anahtar ifadeleri listele"
+
+msgid "list all keywords used on search engines"
+msgstr "arama motorlarında kullanılan tüm anahtar kelimeleri listele"
+
+msgid "list 'Referers' for 404 errors"
+msgstr "404 hataları için 'Yönlendirenler'i listele"
+
+msgid "build page of all values for ExtraSection X"
+msgstr "ExtraSection X için tüm değerlerin sayfasını oluştur"
+
+msgid "  -staticlinks           to have static links in HTML report page"
+msgstr "  -staticlinks           HTML rapor sayfasında statik bağlantılara sahip ol"
+
+msgid "  -staticlinksext=xxx    to have static links with .xxx extension instead of .html"
+msgstr "  -staticlinksext=xxx    .html yerine .xxx uzantılı statik bağlantılara sahip ol"
+
+msgid "  -lang=LL     to output a HTML report in language LL (en,de,es,fr,it,nl,zh-cn,...)"
+msgstr "  -lang=LL     HTML raporunu LL dilinde çıkar (tr,en,de,fr,...)"
+
+msgid "  -month=MM    to output a HTML report for an old month MM"
+msgstr "  -month=MM    eski bir MM ayı için HTML raporu çıkar"
+
+msgid "  -year=YYYY   to output a HTML report for an old year YYYY"
+msgstr "  -year=YYYY   eski bir YYYY yılı için HTML raporu çıkar"
+
+msgid "  The 'date' options doesn't allow you to process old log file. They only allow you to see a past report for a chosen month/year period instead of current month/year."
+msgstr "  'Tarih' seçenekleri eski günlük dosyasını işlemenize izin vermez. Yalnızca geçerli ay/yıl yerine seçilen bir ay/yıl dönemi için geçmiş bir rapor görmenize izin verir."
+
+msgid "Other options:"
+msgstr "Diğer seçenekler:"
+
+msgid "  -debug=X     to add debug informations lesser than level X (speed reduced)"
+msgstr "  -debug=X     X seviyesinden daha az hata ayıklama bilgisi ekle (hız azalır)"
+
+msgid "  -version     show AWStats version"
+msgstr "  -version, -v     AWStats sürümünü göster"
+
+msgid "Now supports/detects:"
+msgstr "Şimdi destekliyor/algılıyor:"
+
+msgid "  Web/Ftp/Mail/streaming server log analyzis (and load balanced log files)"
+msgstr "  Web/FTP/E-posta/akış sunucusu günlük analizi (ve yük dengeli günlük dosyaları)"
+
+msgid "  Reverse DNS lookup (IPv4 and IPv6) and GeoIP lookup"
+msgstr "  Ters DNS araması (IPv4 ve IPv6) ve GeoIP araması"
+
+msgid "  Number of visits, number of unique visitors"
+msgstr "  Ziyaret sayısı, benzersiz ziyaretçi sayısı"
+
+msgid "  Visits duration and list of last visits"
+msgstr "  Ziyaret süresi ve son ziyaretlerin listesi"
+
+msgid "  Authenticated users"
+msgstr "  Kimliği doğrulanmış kullanıcılar"
+
+msgid "  Days of week and rush hours"
+msgstr "  Haftanın günleri ve yoğun saatler"
+
+msgid "  Hosts list and unresolved IP addresses list"
+msgstr "  Ana bilgisayar listesi ve çözümlenmemiş IP adresleri listesi"
+
+msgid "  Most viewed, entry and exit pages"
+msgstr "  En çok görüntülenen, giriş ve çıkış sayfaları"
+
+msgid "  Files type and Web compression (mod_gzip, mod_deflate stats)"
+msgstr "  Dosya türü ve Web sıkıştırması (mod_gzip, mod_deflate istatistikleri)"
+
+msgid "  Configured Database Statistics"
+msgstr "  Yapılandırılmış Veritabanı İstatistikleri"
+
+msgid "  %s domains/countries"
+msgstr "  %s alan adı/ülke"
+
+msgid "  %s robots"
+msgstr "  %s robot"
+
+msgid "  %s worm's families"
+msgstr "  %s solucan ailesi"
+
+msgid "  %s operating systems"
+msgstr "  %s işletim sistemi"
+
+msgid "  %s browsers (%s with phone browsers database)"
+msgstr "  %s tarayıcı (telefon tarayıcı veritabanı ile %s)"
+
+msgid "  %s search engines (and keyphrases/keywords used from them)"
+msgstr "  %s arama motoru (ve bunlardan kullanılan anahtar ifadeler/anahtar kelimeler)"
+
+msgid "  All HTTP errors with last referrer"
+msgstr "  Son yönlendiren ile tüm HTTP hataları"
+
+msgid "  Report by day/month/year"
+msgstr "  Gün/ay/yıl raporu"
+
+msgid "  Dynamic or static HTML or XHTML reports, static PDF reports"
+msgstr "  Dinamik veya statik HTML veya XHTML raporları, statik PDF raporları"
+
+msgid "  Indexed text or XML monthly database"
+msgstr "  Dizine eklenmiş metin veya XML aylık veritabanı"
+
+msgid "  And a lot of other advanced features and options..."
+msgstr "  Ve diğer birçok gelişmiş özellik ve seçenek..."
+
+msgid "  New versions and FAQ at http://www.awstats.org"
+msgstr "  Yeni sürümler ve SSS için https://github.com/hestiacn/vstats/issues adresini ziyaret edin"

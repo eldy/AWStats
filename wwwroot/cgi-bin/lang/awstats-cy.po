@@ -1,0 +1,3305 @@
+# AWStats Welsh (cy) translations
+# Copyright (C) 2026 AWStats
+# This file is distributed under the same license as the AWStats package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: AWStats 8.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-10 12:00+0000\n"
+"PO-Revision-Date: 2026-05-10 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Welsh\n"
+"Language: cy\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n==3 ? 3 : n==6 ? 4 : 5);\n"
+
+#------------------------------------------------------------------------------
+# Enwau Mis
+#------------------------------------------------------------------------------
+
+msgid "month_01"
+msgstr "Ionawr"
+
+msgid "month_02"
+msgstr "Chwefror"
+
+msgid "month_03"
+msgstr "Mawrth"
+
+msgid "month_04"
+msgstr "Ebrill"
+
+msgid "month_05"
+msgstr "Mai"
+
+msgid "month_06"
+msgstr "Mehefin"
+
+msgid "month_07"
+msgstr "Gorffennaf"
+
+msgid "month_08"
+msgstr "Awst"
+
+msgid "month_09"
+msgstr "Medi"
+
+msgid "month_10"
+msgstr "Hydref"
+
+msgid "month_11"
+msgstr "Tachwedd"
+
+msgid "month_12"
+msgstr "Rhagfyr"
+
+#------------------------------------------------------------------------------
+# Enwau Dyddiau'r Wythnos
+#------------------------------------------------------------------------------
+
+msgid "DayOfWeek_0"
+msgstr "Dydd Sul"
+
+msgid "DayOfWeek_1"
+msgstr "Dydd Llun"
+
+msgid "DayOfWeek_2"
+msgstr "Dydd Mawrth"
+
+msgid "DayOfWeek_3"
+msgstr "Dydd Mercher"
+
+msgid "DayOfWeek_4"
+msgstr "Dydd Iau"
+
+msgid "DayOfWeek_5"
+msgstr "Dydd Gwener"
+
+msgid "DayOfWeek_6"
+msgstr "Dydd Sadwrn"
+
+#------------------------------------------------------------------------------
+# Elfennau Rhyngwyneb
+#------------------------------------------------------------------------------
+
+msgid "Advanced Web Statistics for"
+msgstr "Ystadegau Gwe Uwch ar gyfer"
+
+msgid "Statistics for"
+msgstr "Ystadegau ar gyfer"
+
+msgid "main"
+msgstr "Trosolwg"
+
+# Newid thema
+msgid "Switch to light mode"
+msgstr "Newid i fodd golau"
+
+msgid "Switch to dark mode"
+msgstr "Newid i fodd tywyll"
+
+# Unedau cynhwysedd
+msgid "TB"
+msgstr "TB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "Bytes"
+msgstr "Beit"
+
+# Elfennau ffurflen
+msgid "Filter"
+msgstr "Hidlo"
+
+msgid "Exclude filter"
+msgstr "Hidlo allan"
+
+msgid "Top"
+msgstr "Uchaf"
+
+msgid "Full list"
+msgstr "Rhestr lawn"
+
+msgid "Last"
+msgstr "Olaf"
+
+msgid "Average"
+msgstr "Cyfartaledd"
+
+msgid "Export"
+msgstr "Allforio"
+
+msgid "Details"
+msgstr "Manylion"
+
+msgid "Version"
+msgstr "Fersiwn"
+
+# Gwahanwr miloedd
+msgid "thousands_separator"
+msgstr ","
+
+# Fformat dyddiad hir (ar gyfer diweddariad olaf, ymweliad cyntaf, ac ati)
+msgid "dateformat_long"
+msgstr "dd/mm/yyyy HH:MM:SS"
+
+# Fformat dyddiad byr (ar gyfer labeli graff, ac ati)
+msgid "dateformat_short"
+msgstr "dd/mm/yyyy HH:MM"
+
+msgid "date_format_year"
+msgstr "%s"
+
+msgid "date_format_month"
+msgstr "%1$s %2$s"
+
+#------------------------------------------------------------------------------
+# Dewislen Lywio
+#------------------------------------------------------------------------------
+
+msgid "AWStats Month Selector"
+msgstr "Dewisydd Mis AWStats"
+
+msgid "nav_category_basic"
+msgstr "Dogfennaeth Sylfaenol"
+
+msgid "nav_category_guide"
+msgstr "Canllawiau Defnyddio"
+
+msgid "nav_category_reference"
+msgstr "Adnoddau Cyfeirio"
+
+msgid "nav_category_integration"
+msgstr "Integreiddio ac Estyniadau"
+
+msgid "nav_category_dev"
+msgstr "Dogfennaeth Datblygwyr"
+
+msgid "nav_changelog"
+msgstr "Cofnod Newidiadau"
+
+msgid "nav_what"
+msgstr "Beth yw AWStats"
+
+msgid "nav_license"
+msgstr "Trwydded"
+
+msgid "nav_glossary"
+msgstr "Geirfa"
+
+msgid "nav_setup"
+msgstr "Gosod a Chyflunio"
+
+msgid "nav_upgrade"
+msgstr "Canllaw Uwchraddio"
+
+msgid "nav_config"
+msgstr "Paramedrau Cyfluniad"
+
+msgid "nav_extra"
+msgstr "Adrannau Ychwanegol"
+
+msgid "nav_tools"
+msgstr "Offer Eraill"
+
+msgid "nav_faq"
+msgstr "Cwestiynau Cyffredin"
+
+msgid "nav_security"
+msgstr "Argymhellion Diogelwch"
+
+msgid "nav_compare"
+msgstr "Cymharu"
+
+msgid "nav_benchmark"
+msgstr "Prawf Meincnod"
+
+msgid "nav_webmin"
+msgstr "Modiwl Webmin"
+
+msgid "nav_dolibarr"
+msgstr "Modiwl Dolibarr"
+
+msgid "nav_contrib"
+msgstr "Cyfrannu"
+
+msgid "nav_plugins"
+msgstr "Datblygu Ategion"
+
+msgid "nav_hooks"
+msgstr "Bachau Ategion"
+
+msgid "nav_graphs"
+msgstr "Graffiau Ategion"
+
+msgid "Back to top"
+msgstr "Yn ôl i'r brig"
+
+msgid "nav_select_month"
+msgstr "Dewiswch fis"
+
+#------------------------------------------------------------------------------
+# Prif Ddangosyddion Ystadegol
+#------------------------------------------------------------------------------
+
+msgid "Unique visitors"
+msgstr "Ymwelwyr unigryw"
+
+msgid "Visits"
+msgstr "Ymweliadau"
+
+msgid "Visits duration"
+msgstr "Hyd yr ymweliadau"
+
+msgid "First visit"
+msgstr "Diweddariad cyntaf"
+
+msgid "Last visit"
+msgstr "Diweddariad olaf"
+
+msgid "Visits/Visitor"
+msgstr "Ymweliad/Ymwelwr"
+
+msgid "Pages/Visit"
+msgstr "Tudalen/Ymwellad"
+
+msgid "Hits/Visit"
+msgstr "Cais/Ymwellad"
+
+msgid "KB/Visit"
+msgstr "KB/Ymwellad"
+
+msgid "KB/Visits"
+msgstr "KB/Ymweliadau"
+
+msgid "Pages"
+msgstr "Tudalennau"
+
+msgid "Hits"
+msgstr "Ceisiadau"
+
+msgid "Bandwidth"
+msgstr "Lled band"
+
+msgid "duration_format"
+msgstr "%s-%s"
+
+msgid "unit_s"
+msgstr "eiliad"
+
+msgid "unit_min"
+msgstr "munud"
+
+msgid "unit_h"
+msgstr "awr"
+
+msgid "and"
+msgstr "-"
+
+msgid "Device Types"
+msgstr "Mathau Dyfais"
+
+msgid "Device Type"
+msgstr "Math Dyfais"
+
+msgid "Percent"
+msgstr "Canran"
+
+msgid "Mobile"
+msgstr "Ffôn symudol"
+
+msgid "Pause & Go"
+msgstr "Ailgychwyn llwytho i lawr"
+
+msgid "Complete"
+msgstr "Wedi'i gwblhau"
+
+msgid "Tablet"
+msgstr "Tabled"
+
+msgid "Tv"
+msgstr "Teledu"
+
+msgid "Wearable"
+msgstr "Dyfais gwisgadwy"
+
+msgid "Bot"
+msgstr "Robot"
+
+msgid "Desktop"
+msgstr "Cyfrifiadur bwrdd gwaith"
+
+msgid "Normal browsing traffic"
+msgstr "Traffig pori arferol"
+
+msgid "Abnormal browsing traffic"
+msgstr "Traffig pori annormal"
+
+msgid "Viewed"
+msgstr "Wedi'i weld"
+
+msgid "Not viewed"
+msgstr "Heb ei weld"
+
+msgid "Abnormal browsing traffic note"
+msgstr "Mae traffig pori annormal yn cynnwys: robotiaid peiriannau chwilio, robotiaid hyfforddi AI, sganwyr gwendidau, a cheisiadau nad ydynt yn dilyn manylebau HTTP/HTTPS"
+
+msgid "File size"
+msgstr "Maint ffeil"
+
+msgid "File type"
+msgstr "Math ffeil"
+
+msgid "Downloads"
+msgstr "Llwythiadau i lawr"
+
+msgid "Request time"
+msgstr "Amser cais"
+
+msgid "Total requests"
+msgstr "Cyfanswm ceisiadau"
+
+msgid "Frequency"
+msgstr "Amlder"
+
+msgid "Average frequency"
+msgstr "Amlder cyfartalog"
+
+msgid "Seconds"
+msgstr "Eiliadau"
+
+msgid "First"
+msgstr "Cyntaf"
+
+msgid "Mails"
+msgstr "Ne ges"
+
+msgid "Size"
+msgstr "Maint"
+
+msgid "If you remove this file, all statistics for date"
+msgstr "Rhybudd: Bydd dileu'r ffeil hon yn achosi colli/gosod yr holl ystadegau ar gyfer y dyddiad"
+
+msgid "will be lost/reset."
+msgstr "yn barhaol!"
+
+msgid "Last config file used to build this data file was"
+msgstr "Y ffeil gyfluniad olaf a ddefnyddiwyd i adeiladu'r ffeil ddata hon oedd"
+
+msgid "Position (offset in bytes) in this file for beginning of each section for"
+msgstr "Y safle (gwrthbwyso mewn beit) yn y ffeil hon ar gyfer dechrau pob adran ar gyfer"
+
+msgid "direct I/O access. If you made changes somewhere in this file, you should"
+msgstr "mynediad I/O uniongyrchol. Os gwnaethoch newidiadau yn rhywle yn y ffeil hon, dylech"
+
+msgid "also remove completely the MAP section (AWStats will rewrite it at next update)"
+msgstr "hefyd gael gwared yn llwyr ar yr adran MAP (bydd AWStats yn ei ailysgrifennu yn y diweddariad nesaf)."
+
+msgid "LastLine    = Date of last record processed - Last record line number in last log - Last record offset in last log - Last record signature value"
+msgstr "LastLine    = Dyddiad yr olaf record a broseswyd - rhif llinell olaf record yn y log olaf - gwrthbwyso olaf record yn y log olaf - gwerth llofnod yr olaf record"
+
+msgid "FirstTime   = Date of first visit for history file"
+msgstr "FirstTime   = Dyddiad yr ymweliad cyntaf ar gyfer y ffeil hanes"
+
+msgid "LastTime    = Date of last visit for history file"
+msgstr "LastTime    = Dyddiad yr ymweliad olaf ar gyfer y ffeil hanes"
+
+msgid "LastUpdate  = Date of last update - Nb of parsed records - Nb of parsed old records - Nb of parsed new records - Nb of parsed corrupted - Nb of parsed dropped"
+msgstr "LastUpdate  = Dyddiad y diweddariad olaf - Nifer y cofnodion a didolnwyd - Nifer y cofnodion hen a didolnwyd - Nifer y cofnodion newydd a didolnwyd - Nifer y cofnodion llygredig a didolnwyd - Nifer y cofnodion a ollwng a didolnwyd"
+
+msgid "TotalVisits = Number of visits"
+msgstr "TotalVisits = Nifer yr ymweliadau"
+
+msgid "TotalUnique = Number of unique visitors"
+msgstr "TotalUnique = Nifer yr ymwelwyr unigryw"
+
+msgid "MonthHostsKnown   = Number of hosts known"
+msgstr "MonthHostsKnown   = Nifer y gwesteiwyr hysbys"
+
+msgid "MonthHostsUnKnown = Number of hosts unknown"
+msgstr "MonthHostsUnKnown = Nifer y gwesteiwyr anhysbys"
+
+msgid "Cluster ID - Pages - Hits - Bandwidth"
+msgstr "ID Clwstwr - Nifer tudalennau - Nifer ceisiadau - Lled band"
+
+msgid "Hour - Pages - Hits - Bandwidth - Not viewed Pages - Not viewed Hits - Not viewed Bandwidth"
+msgstr "Awr - Nifer tudalennau - Nifer ceisiadau - Lled band - Tudalennau heb eu gweld - Ceisiadau heb eu gweld - Lled band heb ei weld"
+
+msgid "Date - Pages - Hits - Bandwidth - Visits"
+msgstr "Dyddiad - Nifer tudalennau - Nifer ceisiadau - Lled band - Nifer ymweliadau"
+
+msgid "Domain - Pages - Hits - Bandwidth"
+msgstr "Parth - Nifer tudalennau - Nifer ceisiadau - Lled band"
+
+msgid "The %s first Pages must be first (order not required for others)"
+msgstr "Dim ond y %s tudalennau cyntaf gyda'r mwyaf o weithiau yw eu gweld sy'n cael eu harddangos ar y dudalen gartref. Gweler y rhestr lawn ar y dudalen fanylion."
+
+msgid "Host - Pages - Hits - Bandwidth - Last visit date - [Start date of last visit] - [Last page of last visit]"
+msgstr "Gwesteiwr - Nifer tudalennau - Nifer ceisiadau - Lled band - Amser yr ymweliad olaf - [Amser cychwyn yr ymweliad olaf] - [Tudalen olaf yr ymweliad olaf]"
+
+msgid "[Start date of last visit] and [Last page of last visit] are saved only if session is not finished"
+msgstr "[Amser cychwyn yr ymweliad olaf] a [Thudalen olaf yr ymweliad olaf] yn cael eu cadw dim ond os nad yw'r sesiwn wedi gorffen"
+
+msgid "The first %s items are sorted by hits in descending order; order of the remaining items is undefined."
+msgstr "Mae'r eitemau %s cyntaf wedi'u didoli yn ôl nifer y trawiadau mewn trefn ddisgynnol; nid yw trefn yr eitemau sy'n weddill wedi'i diffinio."
+
+msgid "Login - Pages - Hits - Bandwidth - Last visit"
+msgstr "Defnyddiwr wedi mewngofnodi - Nifer tudalennau - Nifer ceisiadau - Lled band - Amser yr ymweliad olaf"
+
+msgid "Robot ID - Hits - Bandwidth - Last visit - Hits on robots.txt"
+msgstr "ID robot - Nifer ceisiadau - Lled band - Amser yr ymweliad olaf - Nifer ceisiadau ar gyfer robots.txt"
+
+msgid "Worm ID - Hits - Bandwidth - Last visit"
+msgstr "ID abwydyn - Nifer ceisiadau - Lled band - Amser yr ymweliad olaf"
+
+msgid "EMail - Hits - Bandwidth - Last visit"
+msgstr "E-bost - Nifer ceisiadau - Lled band - Amser yr ymweliad olaf"
+
+msgid "The first %s email addresses are sorted by hits in descending order; order of the remaining addresses is undefined."
+msgstr "Mae'r cyfeiriadau e-bost %s cyntaf wedi'u didoli yn ôl nifer y trawiadau mewn trefn ddisgynnol; nid yw trefn y cyfeiriadau sy'n weddill wedi'i diffinio."
+
+msgid "URL - Pages - Bandwidth - Entry - Exit"
+msgstr "URL - Nifer tudalennau - Lled band - Mynedfa - Allanfa"
+
+msgid "Files type - Hits - Bandwidth - Bandwidth without compression - Bandwidth after compression"
+msgstr "Math ffeil - Nifer ceisiadau - Lled band - Lled band cyn cywasgu - Lled band ar ôl cywasgu"
+
+msgid "Request Time Range - Request Time Frequency"
+msgstr "Ystod amser cais - Nifer ceisiadau"
+
+msgid "Payload Range - Payload Frequency"
+msgstr "Ystod maint ffeil - Nifer ffeiliau"
+
+msgid "Session range - Number of visits"
+msgstr "Ystod hyd sesiwn - Nifer ymweliadau"
+
+msgid "URL with %s errors - Hits"
+msgstr "URL gyda %s gwall - Nifer ceisiadau"
+
+msgid "Last URL referrer"
+msgstr "URL cyfeirydd olaf"
+
+msgid "Errors - Hits - Bandwidth"
+msgstr "Gwallau - Nifer ceisiadau - Lled band"
+
+msgid "Search keywords - Number of search"
+msgstr "Geiriau allweddol chwilio - Nifer chwiliadau"
+
+msgid "Only top %s keywords shown on main page (sorted by search count). See full list on detail page."
+msgstr "Dim ond y %s gair allweddol cyntaf yn ôl nifer y chwiliadau sy'n cael eu harddangos ar y dudalen gartref. Gweler y rhestr lawn ar y dudalen fanylion."
+
+msgid "Search keyphrases - Number of search"
+msgstr "Ymadroddion allweddol chwilio - Nifer chwiliadau"
+
+msgid "Only top %s keyphrases shown on main page (sorted by search count). See full list on detail page."
+msgstr "Dim ond y %s ymadrodd allweddol cyntaf yn ôl nifer y chwiliadau sy'n cael eu harddangos ar y dudalen gartref. Gweler y rhestr lawn ar y dudalen fanylion."
+
+msgid "External page referers - Pages - Hits"
+msgstr "Cyfeirydd tudalen allanol - Nifer tudalennau - Nifer ceisiadau"
+
+msgid "Only top %s external referrers shown on main page (sorted by pages). See full list on detail page."
+msgstr "Dim ond y %s cyfeirydd allanol cyntaf yn ôl nifer y tudalennau sy'n cael eu harddangos ar y dudalen gartref. Gweler y rhestr lawn ar y dudalen fanylion."
+
+msgid "Search engine referers ID - Pages - Hits"
+msgstr "ID cyfeirydd peiriant chwilio - Nifer tudalennau - Nifer ceisiadau"
+
+msgid "Origin - Pages - Hits"
+msgstr "Tarddiad - Nifer tudalennau - Nifer ceisiadau"
+
+msgid "Unknown referer Browser - Last visit date"
+msgstr "Cyfeirydd porwr anhysbys - Amser yr ymweliad olaf"
+
+msgid "Unknown referer OS - Last visit date"
+msgstr "Cyfeirydd OS anhysbys - Amser yr ymweliad olaf"
+
+msgid "Screen size - Hits"
+msgstr "Cydraniad sgrin - Nifer ceisiadau"
+
+msgid "Browser ID - Hits - Pages"
+msgstr "ID porwr - Nifer ceisiadau - Nifer tudalennau"
+
+msgid "Downloads - Hits - Bandwidth"
+msgstr "Llwythiadau i lawr - Nifer ceisiadau - Lled band"
+
+msgid "Protocol - Hits - Bandwidth"
+msgstr "Protocol - Nifer ceisiadau - Lled band"
+
+msgid "Icon Status - Type:200:404:Other"
+msgstr "Statws eicon - Math:200:404:Arall"
+
+#------------------------------------------------------------------------------
+# Cyfieithiadau Cyfnod Amser
+#------------------------------------------------------------------------------
+
+msgid "period_00"
+msgstr "Hanner nos · Mae'r ystadegau'n cysgu, rydych chi'n dal i ddarllen data? Ymroddiad gwirioneddol"
+
+msgid "period_01"
+msgstr "Un o'r gloch y bore · Yn cyrchu ar yr adeg hon? Anhunedd neu newydd ddod o'r gwaith"
+
+msgid "period_02"
+msgstr "Dau o'r gloch y bore · Mae'r robotiaid yn fwy diwyd, maen nhw'n dal i weithio"
+
+msgid "period_03"
+msgstr "Tair o'r gloch y bore · Mae'r dref yn cysgu, mae'r gweinydd yn gweithio dros amser, pwy sy'n colli?"
+
+msgid "period_04"
+msgstr "Pedwar o'r gloch y bore · Y seren fwyaf disglair yn y tywyllwch yw eich sgrin neu oleuni dangosydd y gweinydd"
+
+msgid "period_05"
+msgstr "Pump o'r gloch y bore · Aderyn cynnar yn dal pryf genwair, robot cynnar yn dal data"
+
+msgid "period_06"
+msgstr "Chwech o'r gloch y bore · Mae rhywun wedi codi, mae rhywun heb fynd i'w wely eto, nid yw'r rhyngrwyd byth yn cysgu"
+
+msgid "period_07"
+msgstr "Saith o'r gloch y bore · Amser tagfeydd ar y ffyrdd, amser hefyd i bori ar y we"
+
+msgid "period_08"
+msgstr "Wyth o'r gloch y bore · Y peth cyntaf yn y gwaith: edrych ar ddata ddoe"
+
+msgid "period_09"
+msgstr "Naw o'r gloch y bore · Oriau aur, mae gan hyd yn oed ymlacio ei reolau ei hun"
+
+msgid "period_10"
+msgstr "Deg o'r gloch y bore · Amser paned o goffi, tra'n gwirio a yw'r traffig wedi cynyddu"
+
+msgid "period_11"
+msgstr "Un ar ddeg o'r gloch y bore · Un awr arall cyn cinio, ychydig mwy o amynedd"
+
+msgid "period_12"
+msgstr "Hanner dydd · Gweinydd: rydych chi i gyd wedi mynd i ginio, byddaf finnau'n gorffwys"
+
+msgid "period_13"
+msgstr "Un o'r gloch y prynhawn · Syrthni prynhawn, ond nid yw'r data yn cysgu"
+
+msgid "period_14"
+msgstr "Dau o'r gloch y prynhawn · Amser byrbryd prynhawn, yn well gyda data"
+
+msgid "period_15"
+msgstr "Tair o'r gloch y prynhawn · Graff traffig heddiw, yn debyg i gromlin eich hwyliau?"
+
+msgid "period_16"
+msgstr "Pedwar o'r gloch y prynhawn · X awr ar ôl cyn diwedd y diwrnod gwaith, mae'r traffig yn dechrau cyflymu"
+
+msgid "period_17"
+msgstr "Pump o'r gloch y prynhawn · Diwedd y diwrnod gwaith! Ond mae'r gweinydd yn parhau i weithio"
+
+msgid "period_18"
+msgstr "Chwech o'r gloch yr hwyr · Amser cinio, ymlaciwch wrth wylio fideo"
+
+msgid "period_19"
+msgstr "Saith o'r gloch yr hwyr · Amser brig, uchafbwynt y traffig, gweinydd: bydda i'n gallu ei drin"
+
+msgid "period_20"
+msgstr "Wyth o'r gloch yr hwyr · Yn llipa ar y soffa, chi yw'r 114514eg ymwelydd"
+
+msgid "period_21"
+msgstr "Naw o'r gloch yr hwyr · Hwyr y nos, aderyn nos yn edrych ar ddata yn ddirgel +1"
+
+msgid "period_22"
+msgstr "Deg o'r gloch yr hwyr · Data heddiw ar fin cyrraedd, yn nerfus?"
+
+msgid "period_23"
+msgstr "Un ar ddeg o'r gloch yr hwyr · AWStats: amser i gysgu, mae gwaith eto yfory"
+
+#------------------------------------------------------------------------------
+# Dimensiynau Amser
+#------------------------------------------------------------------------------
+
+msgid "Period"
+msgstr "Cyfnod ystadegol"
+
+msgid "Year"
+msgstr "Blwyddyn"
+
+msgid "Month"
+msgstr "Mis"
+
+msgid "Months"
+msgstr "Misoedd"
+
+msgid "Date"
+msgstr "Dyddiad"
+
+msgid "Day"
+msgstr "Diwrnod"
+
+msgid "Hour"
+msgstr "Awr"
+
+msgid "Hours"
+msgstr "Oriau"
+
+msgid "Day of week"
+msgstr "Diwrnod o'r wythnos"
+
+msgid "When"
+msgstr "Pryd"
+
+msgid "%s Server Management Panel"
+msgstr "Panel Rheoli Gweinydd %s "
+
+msgid "Server Administration"
+msgstr "Gweinyddiaeth Gweinydd"
+
+#------------------------------------------------------------------------------
+# Dimensiwn Ymwelwyr
+#------------------------------------------------------------------------------
+
+msgid "Invalid URL Parameters"
+msgstr "Paramedrau URL annilys"
+
+msgid "The requested page cannot be loaded due to invalid or malformed URL parameters."
+msgstr "Ni ellir llwytho'r dudalen y gofynnwyd amdani oherwydd paramedrau URL annilys neu wedi'u ffurfio'n anghywir."
+
+msgid "This may be caused by typing an incorrect URL, missing parameter separators, or using an invalid configuration name."
+msgstr "Gall hyn fod oherwydd teipio URL anghywir, gwahanwyr paramedr ar goll, neu ddefnyddio enw cyfluniad annilys."
+
+msgid "Please check the URL you entered and ensure all parameters are correctly formatted."
+msgstr "Gwiriwch y URL a nodoch a sicrhewch fod yr holl baramedrau wedi'u fformatio'n gywir."
+
+msgid "SiteDomain parameter not defined in your config/domain file, or you may not have execution permission on the file."
+msgstr "Nid yw'r paramedr SiteDomain wedi'i ddiffinio yn eich ffeil config/domain, efallai nad oes gennych ganiatâd gweithredu ar y ffeil."
+
+msgid "Please run as Administrator to set permissions"
+msgstr "Rhedeg fel Gweinyddwr i osod caniatadau"
+
+msgid "This directory lacks read permission"
+msgstr "Nid oes gan y cyfeiriadur hwn ganiatâd darllen"
+
+msgid "Please set read permission for directory"
+msgstr "Gosodwch ganiatâd darllen ar gyfer y cyfeiriadur, os gwelwch yn dda"
+
+msgid "Missing required parameter in config file"
+msgstr "Mae paramedr gofynnol ar goll yn y ffeil ffurfweddu"
+
+msgid "Please check that 'DirData' is defined."
+msgstr "Gwiriwch fod 'DirData' wedi'i ddiffinio, os gwelwch yn dda."
+
+msgid "Domain name in browser address appears to be missing or incomplete"
+msgstr "Mae'n ymddangos bod enw parth yn y cyfeiriad porwr ar goll neu'n anghyflawn"
+
+msgid "Please check the URL parameter"
+msgstr "Gwiriwch baramedr yr URL, os gwelwch yn dda"
+
+msgid "Format description"
+msgstr "Disgrifiad o'r fformat"
+
+msgid "Please set execute permission"
+msgstr "Gosodwch ganiatâd gweithredu os gwelwch yn dda"
+
+msgid "Or if you prefer numeric mode"
+msgstr "Neu os ydych yn well gennych y modd rhifol"
+
+msgid "View Report Directly"
+msgstr "Gweld yr adroddiad yn uniongyrchol"
+
+msgid "AWStats Log Viewer"
+msgstr "Gweldwr Log AWStats"
+
+msgid "Month Selection"
+msgstr "Dewis Mis"
+
+msgid "Who"
+msgstr "Pwy"
+
+msgid "Visitors"
+msgstr "Ymwelwyr"
+
+msgid "Countries"
+msgstr "Gwledydd/rhannbarthau"
+
+msgid "flag_icon"
+msgstr "Baner"
+
+msgid "Country-Region-City"
+msgstr "Gwlad/Rhanbarth/Dinas"
+
+msgid "Code"
+msgstr "Côd"
+
+msgid "Known"
+msgstr "Hysbys"
+
+msgid "unknownos"
+msgstr "system weithredu anhysbys"
+
+msgid "unknownbrowser"
+msgstr "porwr anhysbys"
+
+msgid "Unresolved IP Address"
+msgstr "Cyfeiriad IP heb ei ddatrys"
+
+msgid "Unknown File Type"
+msgstr "Math ffeil anhysbys"
+
+msgid "Unknown Size"
+msgstr "Maint anhysbys"
+
+msgid "Unknown Time"
+msgstr "Amser cais anhysbys"
+
+msgid "Unknown Browser"
+msgstr "Porwr anhysbys"
+
+msgid "Unknown OS"
+msgstr "System weithredu anhysbys"
+
+msgid "Unknown Visitor"
+msgstr "Ymwelwr anhysbys"
+
+msgid "Unknown Visitor (Total)"
+msgstr "Ymwelwyr anhysbys (cyfanswm)"
+
+msgid "Unknown Country"
+msgstr "Gwlad/ranbarth anhysbys"
+
+msgid "Unknown Country (Region)"
+msgstr "Gwlad/ranbarth anhysbys (cyfanswm)"
+
+msgid "Unknown Visitor (Title)"
+msgstr "Ymwelwr anhysbys (teitl)"
+
+msgid "PageStayTime"
+msgstr "Ni ellir amcangyfrif amser aros ar y dudalen"
+
+msgid "Unknown OS (Link)"
+msgstr "System weithredu anhysbys (dolen)"
+
+msgid "Unknown OS (Row)"
+msgstr "System weithredu anhysbys (rhestr)"
+
+msgid "Unknown Browser (Link)"
+msgstr "Porwr anhysbys (dolen)"
+
+msgid "Unknown Browser (Row)"
+msgstr "Porwr anhysbys (rhestr)"
+
+msgid "Unknown Screen"
+msgstr "Maint sgrin anhysbys"
+
+msgid "Login"
+msgstr "Enw defnyddiwr"
+
+msgid "Anonymous"
+msgstr "Anhysbys"
+
+msgid "Robots"
+msgstr "Robotiaid"
+
+msgid "Different robots"
+msgstr "Robotiaid gwahanol"
+
+msgid "Hits on robots.txt"
+msgstr "Nid yw'r traffig 'pori annormal' a gynhyrchir gan robotiaid y peiriannau chwilio a restrir uchod wedi'i gynnwys mewn graffiau eraill. Mae'r rhif ar ôl '+' yn cynrychioli ymweliadau llwyddiannus â'r ffeil 'robots.txt'"
+
+msgid "Worms"
+msgstr "Abwydod"
+
+msgid "Different worms"
+msgstr "Abwydod gwahanol"
+
+msgid "Target"
+msgstr "Targed"
+
+msgid "Grabber"
+msgstr "Cipiwr"
+
+#------------------------------------------------------------------------------
+# Disgrifiadau Fformat Ffeil
+#------------------------------------------------------------------------------
+
+msgid "mime_text"
+msgstr "TXT ffeil destun pla (testun pla heb fformat wedi'i safoni gan ASCII ym 1963. Yn sylfaen i god ffynhonnell, ffeiliau ffurfweddu a chofnodion system, mae'r rheolyddion llifo newid llinell (CRLF ar Windows, LF ar Unix) yn parhau i fod y safon cyfnewid data mwyaf cyffredin yn y byd cyfrifiadurol)"
+
+msgid "mime_log"
+msgstr "LOG cofnod rhedeg system (ased testun plaig sy'n cofnodi statws rhedeg y system weithredu, cnewyllyn a lefel yr apiau. Yn cynnwys cofnodion mynediad Nginx/Apache (Cofnod Cyfun) a'r fanyleb syslog safonol, yn ffynhonnell graidd ar gyfer datrys problemau, dadansoddi perfformiad llif ac archwilio diogelwch)"
+
+msgid "mime_page"
+msgstr "HTML tudalen we (a grëwyd ym 1989 gan Tim Berners-Lee, craidd sylfaenol y We Fyd-eang. Yn iaith farcïo hyperdestun cyffredinol agored, daeth fanyleb HTML5 yn safon W3C swyddogol yn 2014, yn cefnogi amlgyfryngau strwythuredig, rhyngweithiad semantig a chynllun llif tudalennau'n frodorol, enillodd Wobr Turing yn 2016)"
+
+msgid "mime_khtml"
+msgstr "KHTML peiriannydd templedi gwe (manyleb peiriannydd rendro porwr KDE 2.0 o 1998. Yn safon meddalwedd agored a osododd y sylfeini ar gyfer rendro gwe modern, ysbrydolodd ei etifeddiaeth dechnegol yn uniongyrchol greiddiau WebKit Apple a Blink Google, ac mae'n parhau i fod yn sail i bensaernïaeth gwe ddeinamig, lifogol modern)"
+
+msgid "mime_script"
+msgstr "SCRIPT sgript ddehongledig ddeinamig (yn cyfeirio at lif ffynhonnell sy'n cael ei weithredu fesul llinell gan ddehonglydd penodol heb ei grynhoi ymlaen llaw. Yn cynnwys ASP, JSP, CGI a Tcl, a ddefnyddir yn eang ar gyfer rhyngwynebau cydffordd cyhoeddus gweinyddion, rheoli prosesau awtomataidd a chlytio tasgau ar lefel system)"
+
+msgid "mime_js"
+msgstr "JavaScript sgript (amgylchedd rhaglennu brodorol porwr Netscape o 1995. Sefydlwyd safon ECMAScript ym 1997, ac ym 2009 fe anwyd yr amgylchedd rhedeg Node.js a dorrodd ffiniau porwyr ac a greodd bensaernïaeth dialiadol, aflociaidd ar draws y pentwr cyfan, gyda'r ecosystem pecynnau meddalwedd fwyaf yn y byd, npm)"
+
+msgid "mime_py"
+msgstr "Python sgript (iaith sgriptio lefel uchel a ddehonglir a grëwyd gan Guido van Rossum ym 1991. Gyda'i ddarllenadwyedd di-golled trwy fynnu mewnoliad a'i ddyluniad aml-baradeim, bellach wedi'i sefydlu fel iaith safonol ar gyfer pensaernïaeth we fodern, gwyddoniaeth data pentwr cyfan, hyfforddi modelau Deallusrwydd Artiffisial (AI) a gweithredu awtomeiddio cwmwl-brodorol)"
+
+msgid "mime_sh"
+msgstr "Shell sgript (sgript dehonglydd gorchmynion safonol o oes Unix (1971). Yn cynnwys gorchmynion lefel cnewyllyn fel Bash, Sh, Dash, fel arfer gyda'r estyniad .sh i'w gweithredu, yn glud cnewyllyn cyffredinol ar gyfer rheoli prosesau lefel isel, gosod amgylcheddau heb osod meddalwedd a datblygiad awtomataidd mewn systemau tebyg i Unix modern)"
+
+msgid "mime_rb"
+msgstr "Ruby sgript (iaith sgriptio a grëwyd ym 1995 gan Yukihiro Matsumoto gyda phwyslais ar wrthrychau. Gyda'i hathroniaeth ddylunio sy'n parchu profiad y datblygwr yn fawr, chwyldroadodd ei fframwaith Ruby on Rails bensaernïaeth we ddatblygedig modern trwy sefydlu'r patrwm 'Confensiwn dros Gyfluniad' (CoC))"
+
+msgid "mime_pl"
+msgstr "Perl sgript (iaith sgriptio ymarferol a grëwyd ym 1987 gan Larry Wall. Yn arloeswr rheolwyr pecynnau modern (CPAN), fe'i elwir yn 'gyllell swistir' prosesu testun. Mewn modd CGI modern, mae'n gweithredu fel sylfaen ddibynadwy iawn mewn dadansoddi cofnodion diolch i'w gost cof ffisegol isel iawn a'i brosesu mynegiannau rheolaidd effeithlon)"
+
+msgid "mime_php"
+msgstr "PHP tudalen we ddeinamig (a grëwyd ym 1995 gan Rasmus Lerdorf, wedi'i chynllunio ar gyfer datblygu gwe. Yn dechnoleg graidd sy'n gyrru dros 70% o wefannau'r byd, yn sylfaen i gymwysiadau cynhyrchu mawr fel WordPress a Wikipedia. O PHP 8 ymlaen, gyda'r injan rhedeg JIT (Crynhoi Pryd Union), mae wedi esblygu tuag at bensaernïaeth weinydd pwrpas cyffredinol perfformiad uchel)"
+
+msgid "mime_image"
+msgstr "IMAGE ased delwedd (yn cynnwys mapiau did gyda/ heb golledion, graffeg we ymatebol modern a fectorau. Yn fetrig allweddol ar gyfer asesu cost llwytho adnoddau gweledol safle, cyfradd taro storfa ochr y cleient a defnydd lled band cyfryngau)"
+
+msgid "mime_document"
+msgstr "DOCUMENT dogfen strwythuredig (yn cynnwys testun plaen, taenlenni, dogfennau ffurfiol (PDF) ac ieithoedd marciog ysgafn. Yn fetrig allweddol ar gyfer dosbarthu gwybodaeth statig ar y gweinydd, lawrlwytho asedau menter a gallu llif testun mewnbwn/allbwn)"
+
+msgid "mime_package"
+msgstr "PACKAGE cynnyrch a luniwyd a phecyn meddalwedd (yn cynnwys rhaglenni gweithredadwy brodorol system weithredu, llyfrgelloedd cyswllt amser rhedeg (DLL/SO) a phecynnau gosod dosbarthu apiau. Yn fetrig allweddol ar gyfer asesu llif allan a brigau lawrlwytho safleoedd dosbarthu meddalwedd)"
+
+msgid "mime_archive"
+msgstr "ARCHIVE ffeil archifo a chywasgu (yn cyfeirio at becynnau data cywasgedig wedi'u hamgáu â algorithmau fel DEFLATE, LZMA. Ar lefel rhwydwaith, yn cynnwys llifoedd ymateb deinamig Gzip Prosiect GNU o 1992. Er bod algorithm Brotli yn cael ei gyflwyno'n raddol mewn rhai senarios modern, mae'r dosbarthiad hwn yn dal yn fetrig allweddol ar gyfer asesu cyfradd trwybwn lled band y gweinydd a gostyngiad pwysau'r haen cludo)"
+
+msgid "mime_audio"
+msgstr "AUDIO llif sain digidol (yn cynnwys sain gywasgedig, llyfrau sain a chynwysyddion llif sain. Yn seiliedig ar safonau codec sain penodol, fe'i defnyddir i fonitro cyfradd trwybwn llif data sain ar safleoedd amlgyfrwng, lled band llif cyfochrog ac ymddygiad cysylltiadau hir)"
+
+msgid "mime_video"
+msgstr "VIDEO llif fideo digidol (yn cynnwys cynwysyddion fideo diffiniad uchel, animeiddiadau gwe modern a thameidiau llif. Yn fetrig allweddol ar gyfer asesu terfyn brig lled band y gweinydd ac effaith cyflymu rhwydweithiau dosbarthu cynnwys (CDN) o dan lwyth rhwydwaith uchel)"
+
+msgid "mime_jscript"
+msgstr "JScript sgript (gweithrediad perchnogol peirianneg wrthdro a ddatblygwyd gan Microsoft ar gyfer Internet Explorer 3.0 ym 1996. Yn gystadleuydd cynnar i JavaScript, bu'n beiriant craidd i Windows Script Host (WSH) a chefngeiriau ASP cynnar)"
+
+msgid "mime_json"
+msgstr "JSON data strwythuredig (fformat cyfnewid dilyniad data ysgafn a sefydlwyd gan Douglas Crockford yn 2001. Yn seiliedig ar barau allwedd-gwerth a strwythurau rhesi ar ffurf testun, gyda darllenadwyedd uchel i fodau a nodweddion didoli llif di-golled, yw'r safon 'de facto' ar gyfer APIs gwe modern, pensaernïaeth ficro-wasanaeth a rhyngweithio â modelau iaith mawr)"
+
+msgid "mime_vbs"
+msgstr "VBScript sgript (amrywiad iaith sgriptio a lansiwyd gan Microsoft gydag IE 3.0 ym 1996. Bu'n injan graidd ar gyfer gwefannau deinamig ASP cynnar a rheoli systemau Windows, bellach wedi'i ddadgomisiynu a'i thynnu o greiddiau diweddaraf Windows 11, yn dechnoleg etifeddol hanesyddol)"
+
+msgid "mime_conf"
+msgstr "CONF ffeil ffurfweddu system (yn cyfeirio at ffeiliau data sy'n storio paramedrau amgylchedd meddalwedd ar ffurf testun plaen. Yn cynnwys manylebau INI a safonau modern fel YAML, TOML, JSON. Mewn systemau Linux, wedi'u canoli yn y cyfeiriadur /etc, yn ddibyniaeth graidd ar gyfer tiwnio statws rhedeg y system)"
+
+msgid "mime_css"
+msgstr "CSS dalen arddull rhaeadru (safon W3C o 1996, ynghyd ag HTML/JS yn dair craidd y blaen. Wedi esblygu o safle CSS2 a modiwleiddio CSS3, yn cefnogi Blwch Hyblyg (Flexbox), Grid a dylunio ymatebol â chwestiynau cyfryngau, yw'r safon bennaf ar gyfer datgysylltu cynrychiolaeth tudalennau gwe mewn porwyr modern)"
+
+msgid "mime_xsl"
+msgstr "XSL dalen arddull (safon W3C o 1999, yn cynnwys trawsnewid XSLT ac iaith gyfeirio XPath, ar gyfer rendro data XML strwythuredig fel HTML, PDF neu destun plaen. Mewn datblygiad modern, mae ei ecosystem wedi cael ei disodli i raddau helaeth gan beiriannau templedi ysgafnach a'r fformat data JSON)"
+
+msgid "mime_runtime"
+msgstr "ffeil weithredadwy (fformat gweithredadwy brodorol system weithredu fel EXE, ELF, Mach-O, yn cynnwys cod peiriant lefel isel wedi'i grynhoi, y pwynt mynediad a gwybodaeth llwytho system)"
+
+msgid "mime_library"
+msgstr "ffeil llyfrgell (DLL, SO, dylib, ac ati, llyfrgelloedd cyswllt deinamig neu statig sy'n cynnwys symbolau a rennir a chod ail-leoli i'w galw gan raglenni eraill)"
+
+msgid "mime_swf"
+msgstr "Flash animeiddiad (a ddatblygwyd gan Macromedia ym 1996, ei brynu gan Adobe yn 2005. Y safon ar gyfer animeiddiadau a gemau rhyngweithiol ar y we. Gwendidau: dibyniaeth ar ategion, dim cefnogaeth symudol, risg diogelwch uchel. Cyhoeddodd Adobe ei bod yn darfod yn 2017, daeth cefnogaeth i ben yn llwyr yn 2020, wedi'i disodli gan HTML5/CSS3/JS)"
+
+msgid "mime_dtd"
+msgstr "DTD diffiniad math dogfen (a ryddhawyd gydag XML 1.0 ym 1998, i ddiffinio strwythur dogfennau XML/HTML a dilysu ei chywairdeb. Mewn datblygiad modern, mae wedi cael ei ddisodli gan atebion mwy hyblyg fel Cynllun XML, RELAX NG, ac ati)"
+
+msgid "mime_csv"
+msgstr "CSV fformat data (gwerthoedd wedi'u gwahanu gan goma, fformat tabl testun plaen cyffredinol o oes y prifgyfrifiaduron (crynhowr IBM Fortran) ym 1972. Wedi'i normaleiddio gan RFC 4180 yn 2005, fel safon cyfnewid data di-golled croes-ffatffurf a chroes-iaith. Fe'i defnyddir yn eang ar gyfer mewnforio/allforio effeithlon i Excel, cronfeydd data perthynnol a dadansoddi data (Pandas))"
+
+msgid "mime_cur"
+msgstr "CUR cyrchwr (fformat .cur, ar gyfer addasu arddull llygoden. Er enghraifft, cyrchwr bys ar dudalennau gwe, eicon awr dywod yn aros. Yn 'gared' i'r eicon .ico cyffredin, ond gyda 'phwynt poeth' ychwanegol sy'n diffinio lle mae'r clic gwirioneddol yn digwydd. Hanes: cyflwynwyd gyda Windows 3.1 (1992), yn gydran allweddol yn y cyfnod pontio o ryngwyneb llinell orchymyn i ryngwyneb graffigol llygoden)"
+
+msgid "mime_jnlp"
+msgstr "Java Web Start (technoleg dosbarthu apiau bwrdd gwaith Java yn y 2000au, yn cychwyn rhaglenni o bell gyda ffeiliau .jnlp. Wedi darfod oherwydd problemau diogelwch a ffyrdd modern o ddosbarthu)"
+
+msgid "mime_lit"
+msgstr "Microsoft Reader llyfr electronig (llyfr electronig Microsoft, 2000, fformat LIT. Wedi darfod, gellir ei drosi i EPUB neu PDF gydag offer fel Calibre)"
+
+msgid "mime_svg"
+msgstr "SVG graffeg fectoraidd (safon W3C o 1999, fformat delwedd fectoraidd 2D yn seiliedig ar XML. Yn gallu graddio heb golli ansawdd a throsglwyddo testun llif. Yn cael ei gefnogi'n frodorol gan bob porwr modern, yn cael ei ddefnyddio'n eang ar gyfer eiconau, logos ac animeiddiadau fectoraidd cydraniad uchel, yw safon graidd graffeg we modern)"
+
+msgid "mime_ai"
+msgstr "AI graffeg fectoraidd (fformat fector perchnogol a ddatblygwyd gan Adobe ym 1987. Y safon diwydiannol graidd ar gyfer trefnu tudalennau, dylunio argraffu a dylunio brand, yn cynnal haenau lluosog a data trefnu tudalennau fectoraidd uwch, y dewis cyntaf ar gyfer celf weledol proffesiynol)"
+
+msgid "mime_phshop"
+msgstr "PSD delwedd haen (fformat ffeil ffynhonnell fap did perchnogol a lansiwyd gan Adobe gyda Photoshop ym 1990. Yn cynnal haenau lluosog, sianeli, masgiau a data golygu di-golled, wedi'i sefydlu fel safon ddiwydiannol byd-eang ar gyfer prosesu delweddau a phaentio digidol)"
+
+msgid "mime_ttf"
+msgstr "TrueType ffont (fformat cyfuchlin ddigidol a ddatblygwyd ar y cyd gan Apple a Microsoft ym 1989. Yn seiliedig ar gromliniau Bézier cwadratig, yn sicrhau cysondeb llwyr rhwng arddangos ar sgrin ac allbwn argraffu, yw fformat ffont brodorol diofyn systemau gweithredu bwrdd gwaith modern)"
+
+msgid "mime_fon"
+msgstr "FON ffont map did (fformat ffont lefel system pwynt cynnar Microsoft yn y 1980au. Nid yw'n cynnal graddio cyfrannol di-golled, fel arfer wedi'i gyfyngu i rendro testun picsel mewn systemau etifeddol neu gydrannau dyfeisiau gwreiddio cynnar)"
+
+msgid "mime_pdf"
+msgstr "PDF dogfen electronig (a ddatblygwyd gan Adobe ym 1993 ac a ddaeth yn safon ISO 32000 rhyngwladol yn 2008. Fformat dogfen tudalennau sefydlog croes-ffatffurf gyda ffyddlondeb llwyr i'r trefn tudalennau, yw'r safon cyffredinol ar gyfer dosbarthu dogfennau electronig a chyhoeddi digidol)"
+
+msgid "mime_dotnet"
+msgstr "ASP.NET tudalen we ddeinamig (technoleg tudalennau gwe deinamig ochr gweinydd a lansiwyd gan Microsoft gyda phensaernïaeth .NET yn 2002. Yn cael ei gweithredu ar injan IIS ar gyfer adeiladu cymwysiadau gwe deinamig menter a systemau dosbarthedig ochr gweinydd Windows)"
+
+msgid "mime_mdb"
+msgstr "MDB cronfa ddata berthynnol (fformat storio cronfa ddata berthynnol lefel bwrdd gwaith a lansiwyd gan Microsoft gydag Access yn 1992. Yn cynnwys injan gronfa ddata Jet, yn ddatrysiad cronfa ddata berthynnol ar gyfer cyfrifiaduron personol a rheoli gwybodaeth cynnar mewn busnesau bach a chanolig)"
+
+msgid "mime_md"
+msgstr "Markdown dogfen (iaith farcïo ysgafn a grëwyd gan John Gruber yn 2004. Ei hathroniaeth ddylunio graidd yw 'darllenadwy yn rendradwy', gan yrru manylebau deilliedig modern fel GFM a CommonMark. Fe'i defnyddir yn eang fel safon cyfnewid ar gyfer dogfennaeth dechnegol, cronfeydd gwybodaeth (Obsidian) a generaduron gwefannau statig modern)"
+
+msgid "mime_crystal"
+msgstr "Crystal Reports adroddiad (fformat ffeil adroddiad menter proffesiynol o blatfform SAP Business Intelligence (BI). Yn gallu cysylltu â ffynonellau data lluosog a rendro siartiau deinamig cymhleth, yn cael ei ddefnyddio'n eang ar gyfer cynhyrchu adroddiadau proffesiynol mewn systemau ariannol a dadansoddi data cwmnïau rhyngwladol)"
+
+msgid "mime_libreoffice"
+msgstr "LibreOffice dogfen (fformat perchnogol y swît swyddfa ffynhonnell agored a seiliwyd ar OpenOffice, a sefydlwyd gan The Document Foundation yn 2010. Yn gweithredu safon rhyngwladol ODF (Fformat Dogfen Agored) W3C yn fanwl, yw conglfaen swyddfa yn ecosystem ffynhonnell agored modern)"
+
+msgid "mime_encrypt"
+msgstr "ENCRYPT ffeil amgryptiedig (data deuaidd neu destun gwreiddiol wedi'i brosesu gan algorithmau amgryptio penodol, cymesur neu anghymesur. Yn cynnwys y prif fformatau deilliedig .enc, .pgp, .gpg, ac ati, ar lefel rhwydwaith fe'i defnyddir i sicrhau cyfrinachedd a chywairdeb data nad yw'n gyhoeddus)"
+
+msgid "mime_gpx"
+msgstr "GPX data olrhain lloeren (fformat cyfnewid system lleoli byd-eang yn seiliedig ar XML. Yn arbenigo mewn disgrifio cyfesurynnau daearyddol, mannau llwybr, llinellau llwybr ac olion hanesyddol, yw safon data agored cyffredin ar gyfer dyfeisiau chwaraeon symudol modern, llywio ceir a systemau gwybodaeth ddaearyddol (GIS))"
+
+msgid "mime_diskimage"
+msgstr "Disk Image delwedd ddisg (ffeil delwedd sector lefel isel o ddisg ffisegol neu ddisg optegol, yn cynnwys ISO, DMG, IMG. Fe'i defnyddir ar gyfer datblygu system lefel isel, dosbarthu meddalwedd mawr yn ddiogel a chopïau wrth gefn cyflawn lefel ffisegol o gyfryngau storio)"
+
+msgid "mime_vm"
+msgstr "VM delwedd peiriant rhithwir (delwedd disg ffisegol rhithwirol yn cynnwys VMDK, VDI, VHDX, OVA. Yn sylfaen i lwyfannau fel VMware, VirtualBox a Hyper-V, fe'i defnyddir ar gyfer efelychu caledwedd lefel isel, cymryd ciplun o achosion a dosbarthu seilwaith cwmwl)"
+
+msgid "mime_torrent"
+msgstr "BitTorrent ffeil had (mynegai dosbarthu pwynt-i-bwynt (P2P) a gynlluniwyd gan Bram Cohen yn 2001. Wedi'i amgodio â Bencode, yn storio metadata gwirio'r ffeil wreiddiol a gwybodaeth cyfeirio gweinydd Tracker, yw craidd llif rhwydwaith datganoledig)"
+
+msgid "mime_gis"
+msgstr "GIS data gofod-ddaearyddol (safon data system gwybodaeth ddaearyddol gyda Shapefile a GeoJSON wrth ei graidd. Yn cynnwys cyfesurynnau geometrig aml-ddimensiwn, topoleg haenau a data priodoleddau, yn cael ei ddefnyddio'n eang ar gyfer rendro mapiau digidol cydraniad uchel, synhwyro o bell trwy loeren a dadansoddi geometreg ofodol)"
+
+msgid "mime_ebook"
+msgstr "EBOOK llyfr electronig (fformat cyhoeddi digidol gyda safon agored ryngwladol EPUB W3C a phensaernïaeth perchnogol MOBI/AZW Amazon Kindle wrth ei graidd. Yn cynnal trefn tudalennau llif addasol, amgáu metadata a diogelwch hawlfraint digidol (DRM), yw cludwr cyffredinol ar gyfer darllen digidol ar ddyfeisiau symudol)"
+
+msgid "mime_avif"
+msgstr "AVIF delwedd effeithlon iawn (safon delwedd uwch-ddiffiniad nesaf y Gynghrair Cyfryngau Agored (AOMedia) o 2019. Yn seiliedig ar dechnoleg fframiau allwedd codio fideo AV1, mae cyfradd cywasgu 50% yn well na WebP ac yn cynnal HDR (Ystod Deinamig Uchel) yn frodorol, yw safon arweiniol ar gyfer trosglwyddo delweddau gwe modern)"
+
+msgid "mime_markdown"
+msgstr "Markdown dogfen ysgafn (iaith farcïo dogfennau testun plaen a grëwyd gan John Gruber yn 2004. Yn defnyddio dyluniad datganiadol testun plaen, ysbrydolwyd ei gystrawen gan reStructuredText, yn cael ei defnyddio'n eang ar gyfer prosiectau GitHub, dogfennaeth dechnegol lefel peirianneg ac ecosystemau rheoli cynnwys statig modern)"
+
+msgid "mime_yaml"
+msgstr "YAML cyfluniad cyfresol (fformat cyfresoli data darllenadwy i fodau a gynlluniwyd gan Clark Evans ac eraill yn 2001. Yn seiliedig ar fewnoliad hierarchaidd a mapio parau allwedd-gwerth, wedi'i sefydlu fel safon cyfluniad ar gyfer seilwaith cwmwl-brodorol fel Kubernetes, awtomeiddio Ansible a Docker Compose)"
+
+msgid "mime_toml"
+msgstr "TOML cyfluniad semantig (iaith leiaf posibl a gynlluniwyd gan Tom Preston-Werner yn 2013. Yn cynnwys manteision dylunio lefel isel fel teipio cryf, mapiau eglur a semanteg glir, bellach yn cael ei ddefnyddio'n eang fel ffeil ffurfweddu safonol mewn offer modern Rust (Cargo), Python (pyproject.toml) a Go)"
+
+msgid "mime_vue"
+msgstr "Vue cydran un ffeil (fformat SFC perchnogol y fframwaith gwe cynyddol a lansiwyd gan Evan You yn 2014. Yn gwireddu gwahanu pryderon HTML/CSS/JS a chlymu cyflwr adweithiol mewn un ffeil, yn gyrru cymwysiadau blaen gwe rhyngweithiol modern ac injans safleoedd statig ar raddfa fawr i raddau helaeth)"
+
+msgid "mime_wasm"
+msgstr "WebAssembly modiwl deuaidd (safon beitgod lefel isel perfformiad uchel ar gyfer y we a sefydlwyd gan W3C yn 2017. Yn caniatáu crynhoi ieithoedd teipio cryf fel C/C++/Rust tuag at flwch tywod y porwr, gan ddarparu effeithlonrwydd gweithredu sy'n agos at galedwedd brodorol, yw craidd craidd cyfrifiadura ymyl y we modern)"
+
+msgid "mime_jsx"
+msgstr "React JSX cydran (estyniad cystrawen JavaScript XML a lansiwyd gan Facebook gyda fframwaith React yn 2013. Yn cefnogi adeiladu strwythurau DOM rhithwir yn ddatganiadol o fewn JavaScript, gan wireddu'r patrwm datblygu cydrannau 'UI fel ffwythiant o'r cyflwr' ar y blaen)"
+
+msgid "mime_tsx"
+msgstr "TypeScript TSX cydran (cyfuniad llifol o gystrawen gref TypeScript, a ddatblygwyd gan Microsoft yn 2012, â JSX. Yn chwistrellu gwirio math statig amser crynhoi a chyfyngiadau rhyngwyneb i mewn i ddatblygiad cydrannau React, yw safon cod ar gyfer datblygiad diogel systemau blaen mawr modern)"
+
+msgid "mime_heif"
+msgstr "HEIF delwedd effeithlon iawn (fformat delwedd effeithlon a sefydlwyd gan sefydliad MPEG yn 2015. Yn seiliedig ar algorithm codio fideo HEVC (H.265), yn cynnal lluosog o fframiau delwedd, mapiau dyfnder a metadata mewn cyfaint bach iawn, yw safon storio perchnogol ar gyfer systemau gweithredu symudol modern a dyfeisiau terfynell craff)"
+
+msgid "mime_heic"
+msgstr "HEIC delwedd effeithlon iawn (fformat map did perchnogol a weithredwyd gan Apple yn seiliedig ar y safon ryngwladol HEIF. Yw fformat storio lluniau diofyn yr iPhone modern, yn cael cefnogaeth codio/datgodio lefel caledwedd gan iOS/macOS a chefnogaeth frodorol system weithredu, yn lleihau gofod storio lefel isel yn sylweddol wrth gynnal ansawdd delwedd uchel)"
+
+msgid "mime_gltf"
+msgstr "glTF model ased 3D (safon fformat trosglwyddo GL a gyhoeddwyd gan Grŵp Khronos yn 2015. Yn disgrifio golygfeydd tri dimensiwn gan ddefnyddio pensaernïaeth JSON, fe'i gelwir yn 'JPEG y byd 3D', yw'r safon ddiwydiannol ysgafn ar gyfer rendro WebGL/WebGPU a realiti rhithwir modern)"
+
+msgid "mime_glb"
+msgstr "GLB model 3D deuaidd (fersiwn amgáu deuaidd di-golled o ased model glTF. Yn cyfuno strwythur yr olygfa, data fertigau rhwyll (Mesh) lefel isel, deunyddiau a gweadau mewn un ffeil, wedi'i gynllunio'n benodol ar gyfer trosglwyddo effeithlon a dosbarthu llifol o asedau 3D ar draws y we aml-ffatffurf)"
+
+msgid "mime_gls"
+msgstr "GLOSSARY geirfa ddata (ffeil diffiniad termau yn arbennig ar gyfer systemau rheoli dogfennau a chorpws strwythuredig. Yn cynnwys diffiniadau termau safonol, cyfieithiadau amlieithog a mapiau metadata, a ddefnyddir i gynnal cysondeb cysyniadol mewn dadansoddi testun awtomataidd a systemau cyhoeddi cynnwys)"
+
+msgid "mime_cbz"
+msgstr "CBZ llyfr comig (fformat archif delweddau comig perchnogol yn seiliedig ar strwythur cywasgu ZIP. Yn cynnwys dilyniant parhaus o ddelweddau map did statig, yw safon cynhwysydd ysgafn cyffredin ar gyfer cyhoeddi comig digidol a chasglu lleol ar draws llwyfannau)"
+
+msgid "mime_cbr"
+msgstr "CBR llyfr comig (fformat archif delweddau comig perchnogol yn seiliedig ar strwythur cywasgu RAR. Yn defnyddio algorithm RAR i amgáu dilyniannau map did statig, gyda chyfradd gywasgu uchel, yn mwynhau cefnogaeth eang ar gyfer dosbarthu comig digidol)"
+
+msgid "mime_fb2"
+msgstr "FB2 llyfr electronig (safon llyfr electronig FictionBook 2.0 o ddechrau'r 2000au. Yn defnyddio XML pur i ddisgrifio priodoleddau llyfrau a hierarchaeth testun, yn cael cefnogaeth eang mewn ecosystem llyfrau electronig ffynhonnell agored a darllenwyr cyhoeddi digidol etifeddol)"
+
+msgid "mime_kepub"
+msgstr "KEPUB llyfr electronig (fformat llyfr electronig perchnogol gwell Kobo yn seiliedig ar safon EPUB. Wedi'i optimeiddio ar lefel isel ar gyfer rendro ar ddarllenwyr llyfrau electronig caledwedd Kobo, yn cynnig trefn tudalennau mwy effeithlon a rhyngweithiad ystadegau darllen)"
+
+msgid "mime_m4b"
+msgstr "M4B llyfr sain (fformat llyfr sain yn seiliedig ar bensaernïaeth cynhwysydd MPEG-4 Part 14 (MP4). Yn defnyddio amgodio AAC, yn cynnal marcwyr llyfr lefel isel, ailgychwyn lle'r oedd person wedi stopio a mewnosod penodau yn frodorol, bu'n fformat safonol yn ecosystem Apple iTunes)"
+
+msgid "mime_kfx"
+msgstr "Kindle KFX fformat (fformat cyhoeddi digidol perchnogol gwell a lansiwyd gan Amazon gyda Kindle yn 2015. Yn cynnal trefn tudalennau glyfar uwch, rendro ffont dynamig uchel a llwytho tudalennau llifol lefel cnewyllyn (Page Flip), yw safon graidd llwyfan Kindle modern)"
+
+msgid "mime_chm"
+msgstr "CHM ffeil gymorth wedi'i chrynhoi (system wybodaeth gymorth HTML wedi'i chrynhoi a lansiwyd gan Microsoft ym 1997. Yn pecynnu data hyperdestun a mynegai lefel isel i un cynhwysydd deuaidd, bu'n fformat safonol ers tro ar gyfer dogfennaeth gymorth leol all-lein meddalwedd Windows)"
+
+msgid "mime_mht"
+msgstr "MHT archif gwe (fformat agregu hyperdestun MIME a lansiwyd gan Microsoft ym 1999. Yn seiliedig ar safon RFC 2557, yn pecynnu cod ffynhonnell HTML, CSS, JS a delweddau mewnosodedig i mewn i un ffeil destun, a ddefnyddir ar gyfer cadw tudalennau gwe all-lein mewn porwyr etifeddol)"
+
+msgid "mime_wml"
+msgstr "WML iaith farcïo diwifr (safon marciog symudol a sefydlwyd gan fforwm WAP (Protocol Cymhwysiad Diwifr) ym 1999. Yn seiliedig ar fanyleb XML, wedi'i chynllunio'n arbennig ar gyfer rhwydweithiau cellog cul-band cynnar a ffonau symudol pŵer cyfrifiannol isel, yn dechnoleg etifeddol sydd wedi ymddeol yn ecosystem y we fodern)"
+
+msgid "mime_xhtml"
+msgstr "XHTML tudalen we (safon W3C o 2000, iaith farcïo hyperdestun lem yn seiliedig ar bensaernïaeth XML. Ym 2009, stopiodd W3C ei datblygiad technegol a throi'n llwyr at fanyleb HTML5, bellach fe'i defnyddir mewn systemau etifeddol ar gyfer rendro tudalennau gwe semantig)"
+
+msgid "mime_xml"
+msgstr "XML dogfen strwythuredig (iaith farciog estynadwy safon W3C o 1998. Yn cynnwys pensaernïaeth tagiau hunan-ddisgrifiol, yw fformat sylfaen craidd ar gyfer gwasanaethau gwe (SOAP/REST), ffeiliau ffurfweddu system (XSD) a chyfnewid data croes-ffatffurf)"
+
+msgid "mime_sgml"
+msgstr "SGML iaith farciog cyffredinol (safon rhyngwladol ISO 8879 o 1986. Yn arloeswr disgrifio strwythuredig dogfennau electronig, mae XML a manylebau HTML cynnar yn deillio o'r uwch-iaith safonol hon)"
+
+msgid "mime_apng"
+msgstr "APNG graffeg ddeinamig (estyniad deinamig PNG a ddatblygwyd gan Mozilla yn 2004. Yn cynnal lliw gwir 24-did a thryloywder sianel alffa 8-did, yn ddewis arall modern o ansawdd uchel yn lle fformat GIF ar gyfer senarios gwe modern)"
+
+msgid "mime_bmp"
+msgstr "BMP map did brodorol (fformat map did annibynnol ar ddyfais llwyfan Microsoft a sefydlwyd ers oes Windows 1.0. Yn defnyddio cywasgu di-golled heb storio, felly mae ei gyfaint fel arfer 3-10 gwaith yn fwy na PNG, ond oherwydd nad oes angen cost codio/datgodio, mae'n dal i gael ei fewnosod yn eang yng nghydrannau craidd Windows 11, adrannau adnoddau EXE/MSI a byfferau graffeg gyrwyr etifeddol)"
+
+msgid "mime_cdr"
+msgstr "CDR graffeg fectoraidd (fformat ffeil ffynhonnell dylunio fectoraidd proffesiynol perchnogol CorelDRAW, Corel Canada. Yn cynnal rheoli lliw fesul haen, nodau cromlin fathemategol cymhleth a data trefn tudalennau lefel argraffu, yw fformat penodol ar gyfer y meysydd dylunio graffeg proffesiynol a hysbysebu)"
+
+msgid "mime_gif"
+msgstr "GIF delwedd lliw mynegai (fformat map did lliw mynegai 8-did a ddatblygwyd gan CompuServe ym 1987. Yn seiliedig ar algorithm LZW lefel isel, wedi'i gyfyngu i 256 lefel lliw a thryloywder unlliw, mae ei gyfaint yn ormodol ar gyfraddau ffrâm uchel, bellach yn cael ei ddisodli'n raddol gan safonau delwedd animeiddiedig modern effeithlon fel APNG, WebP, ac ati)"
+
+msgid "mime_ico"
+msgstr "ICO eicon system (fformat amgáu adnoddau eicon brodorol Windows. Yn cynnal mewnosod delweddau â chydraniad picsel a dyfnder lliw amrywiol o fewn un cynhwysydd, yw safon dosbarthu gyffredin ar gyfer adnabod safleoedd (Ffavicon) porwyr gwe modern hefyd)"
+
+msgid "mime_jpeg"
+msgstr "JPEG delwedd gywasgedig (fformat delwedd â cholled, safon ryngwladol ISO 10918 o 1992. Yn seiliedig ar algorithm trawsnewid cosin cwbl arwahanol (DCT), yn cyflawni cyfradd gywasgu uchel tra'n cynnal ansawdd delwedd realaidd rhagorol, yw safon 'de facto' llwyr ar gyfer ffotograffau statig ar draws y byd)"
+
+msgid "mime_jpg"
+msgstr "JPEG delwedd gywasgedig (fformat delwedd â cholled, safon ryngwladol ISO 10918 o 1992. Yn seiliedig ar algorithm trawsnewid cosin cwbl arwahanol (DCT), yn cyflawni cyfradd gywasgu uchel tra'n cynnal ansawdd delwedd realaidd rhagorol, yw safon 'de facto' llwyr ar gyfer ffotograffau statig ar draws y byd)"
+
+msgid "mime_png"
+msgstr "PNG delwedd ddi-golled (safon graffeg rhwydwaith gludadwy a argymhellwyd gan W3C ym 1996. Yn defnyddio algorithm cywasgu di-golled, yn cynnal lliw gwir 24-did a thryloywder sianel alffa 8-did yn frodorol, yn ddewis arall o ansawdd uchel yn lle GIF statig clasurol, yw safon 'de facto' llwyr ar gyfer delweddau picsel di-golled ar y rhyngrwyd)"
+
+msgid "mime_ps"
+msgstr "PostScript ffeil disgrifio tudalen (iaith disgrifio tudalen pentwr a lansiwyd gan Adobe ym 1985. Yn rhagflaenydd technegol i fformat PDF, yn cyflawni ar lefel isel rendro testun a graffeg fectoraidd manwl gywir annibynnol ar galedwedd, yw safon sylfaenol ym meysydd argraffu proffesiynol ac argraffu laser)"
+
+msgid "mime_psb"
+msgstr "PSB dogfen haen fawr (fformat amgáu ffeil ffynhonnell maint ultra-fawr perchnogol Adobe Photoshop. Yn torri cyfyngiadau cyfeirio mewnol 2GB o gyfaint ffisegol a 30,000 picsel y fformat PSD safonol, wedi'i arbenigo ar gyfer storio asedau celf digidol ar raddfa fawr, ultra-fawr â haenau dwfn cymhleth)"
+
+msgid "mime_psd"
+msgstr "PSD ffeil ffynhonnell dylunio haen (cynhwysydd peirianneg delwedd haen perchnogol Adobe Photoshop. Fel cynhwysydd safonol yn y diwydiant delweddu graffig, yn amgáu'r goeden rendro haen gyflawn, sianeli map did, masgiau torri fector a dulliau cyfuno cyfansawdd yn frodorol, yn cynnal golygu data llawn di-golled)"
+
+msgid "mime_webp"
+msgstr "WebP delwedd effeithlon iawn (safon amgodio graffeg we gyffredinol a lansiwyd gan Google yn 2010. Yn deillio o dechnoleg fframiau allwedd fideo VP8, yn gydnaws yn berffaith â rendro â cholled, di-golled, lled-dryloyw a deinamig, yn 25-35% llai na PNG am yr un ansawdd, yw conglfaen llwytho perfformiad uchel tudalennau gwe modern)"
+
+msgid "mime_woff"
+msgstr "WOFF ffeil glyffau gwe (fformat ffont agored ar gyfer y we a grëwyd yn 2009 ac a ddaeth yn safon W3C yn 2012. Ei hanfod yw pecynnu strwythurau ffont TTF/OTF safonol trwy gywasgu di-golled mewn llif, yn gwneud y defnydd o led band trosglwyddo rhwydwaith yn llawer mwy effeithlon, yw fformat cyffredin ar gyfer eiconau a ffontiau cwmwl gwefannau modern)"
+
+msgid "mime_7z"
+msgstr "7Z pecyn cywasgedig (fformat perchnogol 7-Zip a ddatblygwyd gan Igor Pavlov yn 1999. Yn seiliedig ar algorithmau ffynhonnell agored LZMA/LZMA2, gyda chyfradd gywasgu uchel iawn. Mewn amodau cyfatebol, mae ei gyfaint fel arfer 30-50% yn llai na ZIP, yw fformat cywasgu cymhareb uchel cyffredin yn y gymuned ffynhonnell agored ac wrth ddosbarthu meddalwedd)"
+
+msgid "mime_ace"
+msgstr "ACE pecyn cywasgedig (fformat cywasgu perchnogol WinACE ym 1990au. Bu'n cystadlu â fformat RAR ac roedd ganddo gyfradd gywasgu uchel. Ar ôl 2007, daeth datblygiad technegol i ben, bellach wedi'i ddisodli gan fformatau 7z a RAR, yn perthyn i fformatau archif system etifeddol)"
+
+msgid "mime_bz2"
+msgstr "BZIP2 pecyn cywasgedig (fformat cywasgu fesul bloc a ddatblygwyd gan Julian Seward yn 1996. Mae cyfradd gywasgu ei algorithm lefel isel 15-20% yn well na GZIP ond â chost gyfrifiannol uwch. Fe'i defnyddir yn aml ar gyfer dosbarthu cod ffynhonnell cnewyllyn Linux a phecynnau meddalwedd ffynhonnell agored, ei estyniad safonol yw .bz2)"
+
+msgid "mime_cab"
+msgstr "CAB pecyn cywasgedig (fformat archif Cabinet a ddatblygwyd gan Microsoft yn 1995. Yw safon becyn gosod brodorol system Windows, a ddefnyddir ar gyfer dosbarthu gyrwyr a chydrannau cnewyllyn, hefyd yn gynhwysydd storio lefel isel ar gyfer Gosodwr Windows (MSI))"
+
+msgid "mime_dmg"
+msgstr "DMG delwedd ddisg (fformat delwedd ddisg a ddatblygwyd gan Apple o'r 1980au. Yn gynhwysydd safonol ar gyfer dosbarthu meddalwedd macOS, yn cynnal mowntio fel system ffeiliau rhithwir, cywasgu lefel isel ac amgryptio data, yw prif fformat dosbarthu cymwysiadau yn ecosystem Mac)"
+
+msgid "mime_emz"
+msgstr "EMZ delwedd gywasgedig (fersiwn gywasgedig o fetaffeil well Windows EMF. Yn hanfodol graffeg fectoraidd deuaidd wedi'i chywasgu gan algorithm GZIP, fe'i defnyddir yn eang ar gyfer storio graffeg fectoraidd fewnosodedig yng nghyfres Microsoft Office)"
+
+msgid "mime_gz"
+msgstr "GZIP pecyn cywasgedig (fformat cywasgu llif safonol Prosiect GNU a ddatblygwyd gan Jean-loup Gailly a Mark Adler yn 1992. Yw offeryn cywasgu safonol Unix/Linux, hefyd yn safon graidd ar gyfer cywasgu haen cludo HTTP (Gzip). Yn aml yn cael ei ddefnyddio gydag archif TAR)"
+
+msgid "mime_jar"
+msgstr "JAR pecyn cywasgedig (fformat archif Java ARchive a lansiwyd gan Sun Microsystems yn 1997. Yn hanfodol gynhwysydd pecynnu yn seiliedig ar strwythur ZIP, a ddefnyddir i amgáu llyfrgelloedd dosbarth Java a metadata, yw cynnyrch crynhoi craidd ar gyfer Maven, Gradle ac ecosystem gynnar Android)"
+
+msgid "mime_lzma"
+msgstr "LZMA pecyn cywasgedig (algorithm cywasgu cadwyn Lempel-Ziv-Markov a ddatblygwyd gan Igor Pavlov yn 1998. Yw peiriant canolog fformat 7z, gyda chyfradd gywasgu uchel iawn a dadgywasgu cyflym, fe'i defnyddir yn eang ar gyfer dosbarthu firmware caledwedd a systemau gwreiddio)"
+
+msgid "mime_rar"
+msgstr "RAR pecyn cywasgedig (fformat archif perchnogol WinRAR a ddatblygwyd gan Eugene Roshal yn 1993. Yn cynnal isrannu cyfrolau, cofnodion adfer ffisegol (ECC) ac amgryptio cryf. Mae ei gyfradd gywasgu yn well na ZIP safonol, ac mae'n mwynhau cefnogaeth eang mewn meysydd personol a busnes)"
+
+msgid "mime_tar"
+msgstr "TAR archif pecyn (fformat archif tâp o oes Unix V7 (1979). Dim ond yn pecynnu llif ffeiliau heb gywasgu data, yn aml yn cael ei gyfuno â GZIP/BZIP2/XZ, yw safon lefel isel ar gyfer cod ffynhonnell Linux a storio haenau delweddau Docker)"
+
+msgid "mime_tgz"
+msgstr "TGZ pecyn cywasgedig (fformat cyfuniad llifol o archif TAR a chywasgiad GZIP, gydag estyniad .tgz neu .tar.gz. Yw fformat dosbarthu meddalwedd mwyaf cyffredin mewn amgylcheddau Unix/Linux, fe'i defnyddir yn eang ar gyfer datblygu trwy grynhoi cod ffynhonnell a dosbarthu pecynnau deuaidd heb osod)"
+
+msgid "mime_tbz2"
+msgstr "TBZ2 pecyn cywasgedig (fformat cyfuniad llifol o archif TAR a chywasgiad BZIP2, gydag estyniad .tbz2 neu .tar.bz2. O'i gymharu â TGZ, gall wella'r gyfradd gywasgu 15-20% yn ychwanegol, yn addas ar gyfer trosglwyddo ffeiliau mawr, fe'i defnyddiwyd ers tro ar gyfer dosbarthu cod ffynhonnell cnewyllyn Linux)"
+
+msgid "mime_xz"
+msgstr "XZ pecyn cywasgedig (fformat cymhareb gywasgu uchel cenhedlaeth nesaf a lansiwyd yn 2009. Yn seiliedig ar algorithm LZMA2, mae ei gyfradd gywasgu data 30-50% yn well na GZIP tra'n cynnal dadgywasgu cyflym. Wedi'i sefydlu fel safon ddosbarthu a argymhellir gan y cnewyllyn Linux a'r prif reolwyr pecynnau (fel tu mewn i .deb Debian))"
+
+msgid "mime_z"
+msgstr "Z pecyn cywasgedig (fformat cywasgu LZW gorchymyn compress Unix o 1985. Yn safon gywasgu safonol yn systemau Unix cynnar, bellach wedi'i ddisodli'n llwyr gan fformat GZIP llawer mwy effeithlon, yn fformat etifeddol hanesyddol prin mewn llif rhwydwaith modern)"
+
+msgid "mime_zip"
+msgstr "ZIP pecyn cywasgedig (fformat archif cyffredinol PKZIP a ddatblygwyd gan Phil Katz yn 1989. Yn cael cefnogaeth frodorol gan brif systemau gweithredu, yw safon cynhwysydd mwyaf cyffredin ar y rhyngrwyd. Mae JAR Java modern, APK Android a dogfennau Office (OOXML) yn seiliedig ar strwythur ZIP)"
+
+msgid "mime_zst"
+msgstr "Zstandard pecyn cywasgedig (safon cywasgu llif cenhedlaeth nesaf a gynlluniwyd gan Yann Collet o Facebook yn 2015. Yn agosáu at gyfradd gywasgu LZMA tra'n llawer perfformiadol na GZIP. Wedi'i fabwysiadu'n ddwfn gan y cnewyllyn Linux (5.9+) a rheolwyr pecynnau Arch/Debian)"
+
+msgid "mime_lz4"
+msgstr "LZ4 pecyn cywasgedig (algorithm cywasgu llif ultra-gyflym a ddatblygwyd gan Yann Collet yn 2011. Mae ei gyflymder trwybwn dros 10 gwaith yn gyflymach na GZIP, gyda chost CPU amser rhedeg isel iawn. Fe'i defnyddir yn eang yn y cnewyllyn Linux, system ffeiliau OpenZFS a phrosesu llif data amser real Hadoop)"
+
+msgid "mime_lzo"
+msgstr "LZO pecyn cywasgedig (algorithm Lempel-Ziv-Oberhumer a ddatblygwyd gan Markus Oberhumer yn 1996. Yn canolbwyntio ar berfformiad dadgywasgu ultra-gyflym. Yn cael ei fewnosod yn eang mewn delweddau Squashfs cnewyllyn Linux, firmware OpenWrt ac amrywiol systemau gwreiddio gydag adnoddau cyfyngedig)"
+
+msgid "mime_msi"
+msgstr "MSI pecyn gosod system (fformat amgáu data Gosodwr Windows a lansiwyd gan Microsoft ym 1999. Fel safon datblygu lefel cymhwysiad Windows, yn cynnal dadwneud trafodion lefel isel, rheoli cylch bywyd cydrannau a gosod tawel heb swp yn frodorol, yw safon graidd ar gyfer dosbarthu meddalwedd menter a datblygu trwy bolisïau)"
+
+msgid "mime_pkg"
+msgstr "PKG pecyn gosod meddalwedd croes-ffatffurf. 1. Pecyn meddalwedd FreeBSD: safon pkgng, estyniad .pkg neu .txz, yn seiliedig ar gywasgiad TAR+XZ/Zstd, yn cynnal datrys dibyniaethau a gwirio llofnodion; 2. Pecyn gosod macOS: yn seiliedig ar fformat Gosodwr Apple, yn cynnal cydrannau personadwy, sgriptiau gosod a dad-ddileu lefel system. Dyma'r prif fformatau dosbarthu ar weinyddion BSD a system Mac."
+
+msgid "mime_apk"
+msgstr "APK pecyn cymhwysiad Android (pecyn gosod cymwysiadau traddodiadol a lansiwyd gan Google gydag Android yn 2008. Yn seiliedig ar strwythur archif ZIP lefel isel, yn pecynnu bytecode Dalvik (DEX) ar ôl ei grynhoi, manifest metadata ac adnoddau byd-eang, bellach fe'i defnyddir yn eang ar gyfer datblygu a dadfygio lleol, dosbarthu trydydd parti a gosod ochrol ar ddyfeisiau)"
+
+msgid "mime_ipa"
+msgstr "IPA pecyn cymhwysiad Apple (cynhwysydd unigryw ar gyfer iOS/iPadOS a lansiwyd gyda'r iPhone SDK yn 2008. Yn hanfodol ZIP wedi'i warchod gan DRM FairPlay neu wedi'i lofnodi â thystysgrif lefel menter, yn cynnwys y gweithredadwy deuaidd Mach-O, goeden adnoddau'r cymhwysiad a ffurfweddiad metadata Info.plist)"
+
+msgid "mime_hap"
+msgstr "HAP pecyn cymhwysiad HarmonyOS (uned datblygu elastig sylfaenol HarmonyOS a lansiwyd gyda HarmonyOS 2.0 yn 2020. Yn cynnwys prif fodd mynediad neu fodiwlau ymarferoldeb estynedig, yw fformat datblygu aml-ben (ffonau, llechi, dyfeisiau gwisgadwy) ar gyfer dosbarthu i bob math o ddyfeisiau craff)"
+
+msgid "mime_har"
+msgstr "HAR pecyn a rennir statig HarmonyOS (ffeil archif llyfrgell a rennir statig perchnogol HarmonyOS. Fe'i defnyddir i amgáu cydrannau cyffredin, cod adnoddau a dibyniaethau amser crynhoi, yn cael ei gysylltu'n statig gan luosog o fodiwlau HAP i'w rannu, yw sylfaen ar gyfer datblygu cydrannau ac ail-ddefnyddio modiwlau lluosog yn system HarmonyOS)"
+
+msgid "mime_aab"
+msgstr "AAB bwndel cymhwysiad Android (fformat dosbarthu deinamig Google Play a lansiwyd gan Google yn 2018 ac a sefydlwyd yn 2021. Fel endid dosbarthu pur, mae'r cwmwl yn tocio ac yn crynhoi yn ddeinamig yn ôl pensaernïaeth CPU y ddyfais darged, dwysedd sgrin ac iaith i gynhyrchu APK wedi'u optimeiddio yn ôl galw, gan leihau lled band trosglwyddo 35% ar gyfartaledd)"
+
+msgid "mime_xapk"
+msgstr "XAPK pecyn cymhwysiad estynedig (safon cymhwysiad answyddogol a sefydlwyd gan gymuned trydydd parti Android. Yn pecynnu'r ffeil APK safonol gyda ffeil data gêm OBB fawr, yn torri'n ffisegol derfyn 100MB o faint ffeil annibynnol Google Play, i'w gweld yn eang ar lwyfannau dosbarthu gemau)"
+
+msgid "mime_appx"
+msgstr "APPX pecyn cymhwysiad modern (safon datblygu cymwysiadau UWP a lansiwyd gan Microsoft gyda Windows 8 yn 2012. Yn cynnwys nodweddion gweithredu mewn blwch tywod a dad-ddileu ysgafn, bu'n safon arweiniol cynnar Microsoft Store, ond yn ecosystem Windows modern mae wedi mynd i gyfnod terfynol ei gylch bywyd tuag at esblygiad MSIX)"
+
+msgid "mime_msix"
+msgstr "MSIX pecyn cymhwysiad cenhedlaeth nesaf (safon pecynnu newydd, gwbl normaleiddiedig a gyhoeddwyd gan Microsoft yn 2018. Yn asio'n berffaith nodweddion blwch tywod diogelwch APPX â manteision rheoli asedau menter MSI, yn gydnaws yn llwyr â phob math o gymwysiadau Win32, yw safon ddosbarthu a argymhellir ar gyfer Windows 11)"
+
+msgid "mime_appimage"
+msgstr "AppImage pecyn cymhwysiad hunangynhwysol (safon archif gweithredadwy unigol Linux a gychwynnwyd yn 2004. Yn mabwysiadu pensaernïaeth hunangynhwysol 'un cymhwysiad yn un ffeil', sy'n cael ei mowntio'n uniongyrchol fel system ffeiliau rhithwir darlleniad yn unig trwy fecanwaith FUSE yn ystod rhedeg, yn cyflawni gweithrediad ar unwaith heb ddibyniaethau ar draws lluosog o ddosbarthiadau Linux)"
+
+msgid "mime_flatpak"
+msgstr "Flatpak pecyn cymhwysiad blwch tywod (safan dosbarthu cymwysiadau bwrdd gwaith croes-ffatffurf ar gyfer Linux a ddatblygwyd gan Red Hat a GNOME yn 2015. Ar lefel isel, yn seiliedig ar fecanweithiau Enwofod a Chgriwiau cnewyllyn Linux i gyflawni ynysu diogelwch blwch tywod hynod lem ar lefel cymhwysiad, yw sylfaen canolfannau meddalwedd systemau gweithredu ffynhonnell agored modern)"
+
+msgid "mime_snap"
+msgstr "Snap pecyn cymhwysiad cynhwysydd (safan datblygu cyffredinol Linux a lansiwyd gan Canonical, cwmni rhiant Ubuntu, yn 2014. Yn mabwysiadu pensaernïaeth mowntio delwedd SquashFS hunangynhwysol, yn cynnal diweddariadau cynyddrannol awtomataidd ac ynysu blwch tywod llym gydag AppArmor, yw fformat diofyn ecosystem canolfan feddalwedd Ubuntu)"
+
+msgid "mime_deb"
+msgstr "DEB pecyn meddalwedd system (safon amgáu deuaidd a chod ffynhonnell a sefydlwyd gan brosiect Debian ym 1993. Yw safon gosod lefel isel ar gyfer Debian, Ubuntu a'u holl ddeilliadau, yn dibynnu ar dpkg ar gyfer dadosod a chynnal a chadw, ac yn defnyddio APT fel rheolwr pecynnau blaen perfformiad uchel. Yw conglfaen dosbarthu meddalwedd mwyaf aeddfed ecosystem Linux)"
+
+msgid "mime_rpm"
+msgstr "RPM pecyn meddalwedd system (safon amgáu rheolwr pecynnau Red Hat a lansiwyd gan Red Hat ym 1997. Ynghyd â DEB, yw dau brif linach rheolwyr pecynnau traddodiadol Linux. Yn cynnwys gwirio dibyniaethau trafodion a dilysu llofnodion digidol meddalwedd lefel isel yn frodorol, yn dal i fod y safon ddosbarthu gwbl amlycaf yn ecosystemau Red Hat fel RHEL, Fedora a CentOS)"
+
+msgid "mime_pacman"
+msgstr "Pacman pecyn meddalwedd archif (fformat amgáu .pkg.tar.zst a sefydlwyd gan Arch Linux gyda rheolwr pacman yn 2002. Fel craidd mecanwaith rholio parhaus Arch, yn seiliedig ar algorithm cywasgu uchel cyflym Zstandard, ynghyd ag ecosystem AUR (Arch User Software Repository), yn safon dosbarthu pecynnau modern sy'n adlewyrchu egwyddorion symlrwydd a ChADW (Cadwch yn Syml, Twpsyn))"
+
+msgid "mime_exe"
+msgstr "EXE ffeil weithredadwy frodorol (fformat rhaglen deuaidd Cludadwy Gweithredadwy (PE) llwyfan Windows. Mae ei esblygiad technegol yn tarddu o strwythur pennawd MZ oes MS-DOS, ac fe'i cydgrynhowyd yn llwyr fel strwythur PE o Windows NT ym 1993 ymlaen. Yw safon weithredu fwyaf cyffredin yn y byd ar gyfer cyfarwyddiadau cod peiriant, adrannau adnoddau statig a chychwyn cnewyllyn system)"
+
+msgid "mime_dll"
+msgstr "DLL llyfrgell cyswllt deinamig (safon llyfrgell cod a rennir Cyswllt Deinamig llwyfan Windows. Trwy lwytho deinamig ac ail-leoli symbolau yn ystod rhedeg, yn arbed cof ffisegol a lle disg yn sylweddol. Fel prif ffurf weithredu API Windows, datryswyd cyn broblem Uffern DLL trwy fecanwaith ynysu cyfochrog SxS mewn cyfnod modern)"
+
+msgid "mime_com"
+msgstr "COM ffeil weithredadwy glasurol (fformat gweithredu delwedd cof hynaf o oes MS-DOS. Yn defnyddio dyluniad segment cod pur heb strwythur, wedi'i gyfyngu i derfyn chwilio cof ffisegol 64KB. Bellach wedi ymddeol fel fformat etifeddol hanesyddol, ond ym mhensaernïaeth fodern Windows mae'n dal i gael cydnawsedd cyfyngedig fel rhyngwyneb cydrannau penodol)"
+
+msgid "mime_aac"
+msgstr "Sain AAC (safon MPEG 1997, Advanced Audio Coding. Olynydd MP3, mae ansawdd sain yn well na MP3 ar yr un gyfradd didau, fformat sain diofyn ar gyfer YouTube, iTunes, Nintendo Switch)"
+
+msgid "mime_alac"
+msgstr "Sain ALAC (a ddatblygwyd gan Apple yn 2004, Apple Lossless Audio Codec. Fformat di-golled Apple, daeth yn ffynhonnell agored yn 2011, fformat diofyn ar gyfer sain di-golled yn iTunes ac Apple Music)"
+
+msgid "mime_flac"
+msgstr "Sain FLAC (a ddatblygwyd gan Sefydliad Xiph.Org yn 2001, Free Lossless Audio Codec. Cywasgu di-golled, mae ansawdd sain yr un fath â CD, mae'r ffeil tua hanner maint WAV gwreiddiol. Ffynhonnell agored a heb batent, dewis cyntaf ar gyfer seineuwyr a chasglwyr cerddoriaeth ddigidol)"
+
+msgid "mime_mp3"
+msgstr "Sain MP3 (a ddatblygwyd gan Sefydliad Fraunhofer yn 1993, MPEG-1 Audio Layer 3. Fformat cywasgu gyda cholled, ffeiliau bach gydag ansawdd sain derbyniol, prif fformat chwyldro cerddoriaeth ddigidol y 2000au, yn gyfrifol am iPod a Napster. Daeth y patent i ben yn 2017, gan ddod yn barth cyhoeddus)"
+
+msgid "mime_oga"
+msgstr "Sain Ogg Audio (a ddatblygwyd gan Sefydliad Xiph.Org, fformat sain pur cynhwysydd Ogg, yn defnyddio codec Vorbis. Ffynhonnell agored a heb batent, mae effeithlonrwydd cywasgu yn well na MP3, yn cael ei ddefnyddio'n helaeth mewn prosiectau ffynhonnell agored)"
+
+msgid "mime_ogg"
+msgstr "Sain OGG (a ddatblygwyd gan Sefydliad Xiph.Org yn 2000, fformat Ogg Vorbis. Ffynhonnell agored a heb batent, mae effeithlonrwydd cywasgu yn well na MP3, fe'i defnyddiwyd yn gynnar gan Spotify, yn cael ei ddefnyddio'n helaeth mewn effeithiau sain ar gyfer gemau)"
+
+msgid "mime_opus"
+msgstr "Sain Opus (Safonwyd gan IETF yn 2012, ffynhonnell agored a heb batent. Yn cyfuno technolegau SILK a CELT, hwyrni hynod o isel, yr effeithlonrwydd cywasgu uchaf, fformat sain diofyn ar gyfer WebRTC, WhatsApp, Discord)"
+
+msgid "mime_wav"
+msgstr "Sain WAV (a ddatblygwyd gan Microsoft ac IBM yn 1991, fformat sain brodorol Windows. Amgodio PCM heb gywasgu, ansawdd di-fefl ond ffeiliau enfawr, fformat safonol ar gyfer golygu sain proffesiynol)"
+
+msgid "mime_wma"
+msgstr "Sain WMA (a ddatblygwyd gan Microsoft yn 1999, Windows Media Audio. Mae fersiynau gyda cholled a di-golled, mae Windows yn ei gefnogi'n frodorol, daeth yn boblogaidd gyda Windows Media Player. Bellach mae ar y cyrion, wedi'i ddisodli gan MP3/AAC)"
+
+msgid "mime_dsf"
+msgstr "Sain DSF (fformat Direct Stream Digital, a ddatblygwyd gan Sony a Philips. 1-bit cyfradd samplo uchel, fformat safonol sain DSD, fersiwn ddigidol o SACD, fformat sain pen uchel ar gyfer seineuwyr, ffeiliau enfawr)"
+
+msgid "mime_ape"
+msgstr "Sain APE (a ddatblygwyd gan Monkey's Audio yn 2000, fformat cywasgu di-goll. Cywasgu uwch na FLAC ond amgodio arafach, yn dal i gael ei ddefnyddio ar lwyfan Windows a chymhlith selogion sain)"
+
+msgid "mime_mid"
+msgstr "Sain MIDI (sefydlodd Cymdeithas MIDI y safon yn 1983, Musical Instrument Digital Interface. Fformat sgôr cerddorol yn hytrach na recordiad, ffeiliau hynod o fach, safon ar gyfer offerynnau cerdd electronig, tonau ffôn symudol, effeithiau sain mewn gemau. Safonwyd General MIDI ym 1991, yn diffinio 128 o offerynnau)"
+
+msgid "mime_m4a"
+msgstr "Sain M4A (MPEG-4 Audio, fformat cynhwysydd ar gyfer AAC. Fformat safonol ar gyfer iTunes Music Store, prif fformat sain yn ecosystem Apple, yn cefnogi amddiffyniad DRM)"
+
+msgid "mime_m3u"
+msgstr "Rhestr chwarae M3U (fformat rhestr chwarae URL MP3, ffeil destun plaen, yn cofnodi llwybrau ffeiliau sain. Safon o oes Winamp, a ddefnyddir ar gyfer radio rhyngrwyd, ffrydio cerddoriaeth ar-lein. M3U8 yw ei fersiwn UTF-8, a ddefnyddir ar gyfer Ffrwd Fyw HTTP)"
+
+msgid "mime_asf"
+msgstr "Cyfrwng ffrydio ASF (a ddatblygwyd gan Microsoft yn 1996, Advanced Systems Format. Cynhwysydd ffrydio Windows Media, yn cefnogi trosglwyddo cydamserol sain a fideo. Fe'i defnyddir ar gyfer darlledu byw ar-lein a fideo ar gais, mae WMA/WMV yn seiliedig ar gynhwysydd ASF)"
+
+msgid "mime_avi"
+msgstr "Fideo AVI (lansiwyd gan Microsoft yn 1992, safon fideo cynnar Windows. 'Audio Video Interleave', mae sain a fideo wedi'u cydblethu, oedd y fformat fideo mwyaf poblogaidd yn y 1990au a'r 2000au, bellach wedi'i ddisodli gan MP4/MKV)"
+
+msgid "mime_divx"
+msgstr "Fideo DivX (a ddatblygwyd gan gwmni DivX yn 1998, codec fideo yn seiliedig ar MPEG-4. Prif fformat ar gyfer rhannu fideos ar y rhyngrwyd yn y 2000au, y cyntaf i alluogi cywasgu ansawdd DVD i faint CD. Oherwydd dadleuon hawlfraint, trawsnewidiodd yn ddiweddarach yn god masnachol)"
+
+msgid "mime_mp4"
+msgstr "Fideo MP4 (safon MPEG 2001, MPEG-4 Part 14. Y fformat fideo mwyaf cyffredin yn y byd, yn cefnogi amgodio H.264/H.265, fformat diofyn ar gyfer fideo rhyngrwyd, recordio ffôn symudol, YouTube)"
+
+msgid "mime_m4v"
+msgstr "Fideo M4V (fformat fideo iTunes, amrywiad o MP4. Fformat fideo yn ecosystem Apple, fformat safonol ar gyfer ffilmiau a chyfresi teledu yn iTunes Store, yn cefnogi amddiffyniad hawlfraint DRM)"
+
+msgid "mime_mpeg"
+msgstr "Fideo MPEG (sefydlodd sefydliad MPEG y safon yn 1988, Moving Picture Experts Group. Prif safonau ar gyfer cywasgu fideo digidol, cafodd MPEG-1 (VCD), MPEG-2 (DVD), MPEG-4 (fideo rhyngrwyd) ddylanwad dwfn)"
+
+msgid "mime_mkv"
+msgstr "Fideo MKV (a ddatblygwyd gan brosiect Matroska yn 2002, fformat cynhwysydd amlgyfrwng ffynhonnell agored. Yn cefnogi traciau sain lluosog, isdeitlau lluosog, pennodau, 'galluog i becynnu popeth', dewis cyntaf ar gyfer rhannu ffilmiau cydraniad uchel)"
+
+msgid "mime_mpg"
+msgstr "Fideo MPEG (estyniad ar gyfer fideo MPEG-1/MPEG-2, fformat safonol ar gyfer VCD a DVD. Prif fformat ar gyfer fideo ar CD yn y 1990au a'r 2000au, bellach wedi'i ddisodli gan H.264/H.265)"
+
+msgid "mime_ogv"
+msgstr "Fideo Ogg Video (a ddatblygwyd gan Sefydliad Xiph.Org, fformat fideo cynhwysydd Ogg, yn defnyddio codec Theora. Ffynhonnell agored a heb batent, yn un o safonau cynnar ar gyfer fideo HTML5, mae Firefox yn ei gefnogi'n frodorol)"
+
+msgid "mime_ogx"
+msgstr "Cynhwysydd amlgyfrwng Ogg (a ddatblygwyd gan Sefydliad Xiph.Org, estyniad cyffredinol cynhwysydd Ogg, gall gynnwys traciau lluosog fel sain, fideo, isdeitlau. Safon amlgyfrwng ffynhonnell agored, a ddefnyddir mewn gemau a ffrydio cyfryngau)"
+
+msgid "mime_rm"
+msgstr "Fideo RealMedia (a ddatblygwyd gan RealNetworks yn 1995, fformat RealMedia. Oedd yn arloeswr ffrydio cyfryngau ar y rhyngrwyd yn y 1990au a'r 2000au, prif fformat RealPlayer. Anfanteision: angen chwaraewr arbenigol, ansawdd cywasgu gwael, wedi'i ddisodli gan Flash/MP4)"
+
+msgid "mime_flv"
+msgstr "Fideo Flash (daeth y fformat i fodolaeth yn 2002, Flash Video format. Yn arfer bod yn brif ffurf fideo rhyngrwyd, fe'i defnyddiwyd yn gynnar gan YouTube. Anfanteision: angen ategyn Flash, perfformiad gwael, llawer o dyllau diogelwch. O 2015 ymlaen, symudodd prif wefannau i fideo HTML5, bellach wedi'i ddileu)"
+
+msgid "mime_f4v"
+msgstr "Fideo F4V (fformat fideo Flash a ddatblygwyd gan Adobe, olynydd FLV. Yn seiliedig ar safon MPEG-4, yn cefnogi amgodio H.264. Wedi'i ddileu gyda thechnoleg Flash, daeth Adobe â chefnogaeth i ben yn 2020)"
+
+msgid "mime_wmv"
+msgstr "Fideo WMV (a ddatblygwyd gan Microsoft yn 1999, Windows Media Video. Mae Windows yn ei gefnogi'n frodorol, wedi'i optimeiddio ar gyfer trosglwyddo ffrydio cyfryngau, oedd yn fformat cyffredin ar gyfer fideo ar-lein yn y 2000au, bellach ar y cyrion)"
+
+msgid "mime_wmf"
+msgstr "Fformat cyfrwng WMF (Windows Media Format, fframwaith Microsoft ar gyfer cyfryngau. Yn cynnwys fideo WMV, sain WMA, mae Windows Media Player yn ei gefnogi'n frodorol)"
+
+msgid "mime_mov"
+msgstr "Fideo MOV (a ddatblygwyd gan Apple yn 1991, fformat cynhwysydd QuickTime. Fformat safonol ar gyfer golygu fideo proffesiynol, yn cefnogi lluosog o godau, mae Final Cut Pro, Premiere yn ei gefnogi'n frodorol)"
+
+msgid "mime_qt"
+msgstr "Fideo QuickTime (lansiwyd gan Apple yn 1991, fformat QuickTime. Safon ar gyfer fideo ar lwyfan Mac, MOV yw ei gynhwysydd, roedd chwaraewr QuickTime yn cael ei ddefnyddio'n helaeth. Daeth Apple â datblygiad y fersiwn Windows i ben yn 2016, gan ei ddisodli'n raddol gan MP4)"
+
+msgid "mime_webm"
+msgstr "Fideo WebM (lansiwyd gan Google yn 2010, ffynhonnell agored a heb batent. Yn seiliedig ar gynhwysydd Matroska, amgodio VP8/VP9, fformat safonol HTML5 fideo, fformat diofyn ar gyfer chwaraewr gwe YouTube)"
+
+msgid "mime_3gp"
+msgstr "Fideo 3GP (sefydlwyd gan 3GPP yn 2000, fformat fideo ar gyfer dyfais symudol. Ffeiliau hynod o fach, ansawdd isel, fformat ar gyfer recordio ar hen ffonau symudol, a ddefnyddir ar gyfer anfon trwy MMS)"
+
+#------------------------------------------------------------------------------
+# Dimensiwn Technegol
+#------------------------------------------------------------------------------
+
+msgid "Operating Systems"
+msgstr "Systemau Gweithredu"
+
+msgid "Top 5 Operating Systems"
+msgstr "Y 5 System Weithredu Uchaf"
+
+msgid "Unknown Robot"
+msgstr "Cleient anhysbys"
+
+msgid "User agent"
+msgstr "Asiant defnyddiwr"
+
+msgid "Browsers"
+msgstr "Porwyr"
+
+msgid "Top 5 Browsers"
+msgstr "Y 5 Porwr Uchaf"
+
+msgid "Unknown Robot RH"
+msgstr "Pennawd cais anhysbys"
+
+msgid "Detailed"
+msgstr "Fersiwn dyfais mynediad"
+
+msgid "DetailedOS"
+msgstr "Fersiwn system weithredu"
+
+msgid "DetailedBS"
+msgstr "Fersiwn porwr"
+
+msgid "Screen sizes"
+msgstr "Meintiau sgrin"
+
+msgid "Compression"
+msgstr "Cywasgu"
+
+msgid "In"
+msgstr "Mewnbwn"
+
+msgid "Out"
+msgstr "Allbwn"
+
+msgid "Saved"
+msgstr "Arbedwyd"
+
+#------------------------------------------------------------------------------
+# Dimensiwn Tarddiad
+#------------------------------------------------------------------------------
+
+msgid "Origin"
+msgstr "Tarddiad"
+
+msgid "Referers"
+msgstr "Cyfeiryddion"
+
+msgid "meta.description"
+msgstr "Dadansoddwr logiau gwe uwch AWStats - monitro traffig gwefan mewn amser real, dadansoddi ymwelwyr, geiriau allweddol peiriannau chwilio, ystadegau gwallau. Yn cefnogi modd tywyll, rhyngwyneb amlieithog, yn darparu dadansoddiad data cynhwysfawr i weinyddwyr gwefannau."
+
+msgid "meta.keywords"
+msgstr "AWStats,ystadegau gwe,dadansoddi logiau,monitro traffig,ystadegau ymweliadau,dadansoddi SEO,offeryn dadansoddi gwefan,Web Analytics,Log Analyzer"
+
+msgid "meta.author"
+msgstr "AWStats"
+
+msgid "og.title"
+msgstr "AWStats - Dadansoddi Logiau Gwe"
+
+msgid "og.description"
+msgstr "📊 Offeryn ystadegau gwean ffynhonnell agored proffesiynol, dadansoddwch draffig eich gwefan ac ymddygiad ymwelwyr mewn amser real."
+
+msgid "og.image.alt"
+msgstr "Siart ystadegol AWStats"
+
+msgid "Created by"
+msgstr "Crëwyd gan %s"
+
+msgid "plugins"
+msgstr "Ategion"
+
+msgid "dbip by"
+msgstr "Data gan"
+
+msgid "IPDB by"
+msgstr "Darperir data geolocation gan DB-IP"
+
+# Iechyd
+msgid "Configured"
+msgstr "Wedi'i gyflunio"
+
+msgid "Missing"
+msgstr "Ar goll"
+
+msgid "OK"
+msgstr "Llwyddiant"
+
+msgid "Unused"
+msgstr "Heb ei ddefnyddio"
+
+# Arall
+msgid "Overall Health"
+msgstr "Iechyd Cyffredinol"
+
+msgid "Excellent"
+msgstr "Rhagorol"
+
+msgid "Good"
+msgstr "Da"
+
+msgid "Fair"
+msgstr "Cymedrol"
+
+msgid "Poor"
+msgstr "Gwael"
+
+msgid "Missing icon types"
+msgstr "Mathau eicon ar goll"
+
+msgid "See"
+msgstr "Gweler"
+
+msgid "Expected Path"
+msgstr "Llwybr Disgwyliedig"
+
+msgid "column for file locations"
+msgstr "colofn ar gyfer lleoliadau ffeiliau"
+
+
+msgid "Tip: If you need to generate related icons, you can use %s to upload a logo image, and it will automatically generate all the above related icon files"
+msgstr "Awgrym: Os oes angen i chi gynhyrchu eiconau cysylltiedig, gallwch ddefnyddio %s i uwchlwytho delwedd logo, a bydd yn cynhyrchu'r holl ffeiliau eicon cysylltiedig uchod yn awtomatig"
+
+msgid "200: success, 404: failure"
+msgstr "200 yw nifer y llwyddiannau, 404 yw nifer y methiannau"
+
+msgid "_PATH_FAVICON"
+msgstr "/favicon.ico"
+
+msgid "_PATH_APPLE_TOUCH"
+msgstr "/apple-touch-icon.png neu /apple-touch-icon-180x180.png"
+
+msgid "_PATH_LOGO"
+msgstr "/logo.svg neu /logo.png (mae angen cyfeirio yn HTML/JSON-LD)"
+
+msgid "_PATH_WEBMANIFEST"
+msgstr "/site.webmanifest neu /manifest.json"
+
+msgid "_PATH_BROWSERCONFIG"
+msgstr "/browserconfig.xml"
+
+msgid "_PATH_SAFARI_PINNED"
+msgstr "/safari-pinned-tab.svg"
+
+msgid "_PATH_SOCIAL_ICON"
+msgstr "/images/github.svg, /images/paypal.svg, ac ati"
+
+msgid "Favicon"
+msgstr "Eicon gwefan"
+
+msgid "Apple Touch Icon (iOS/macOS)"
+msgstr "Eicon Cyffwrdd Apple (iPhone/iPad/Mac)"
+
+msgid "Site Logo"
+msgstr "Logo Gwefan"
+
+msgid "Web App Manifest (Android/Chrome)"
+msgstr "Maniffest Cymhwysiad Gwe (Android/Chrome)"
+
+msgid "Windows Browser Config"
+msgstr "Cyfluniad Porwr Windows"
+
+msgid "Safari Pinned Tab"
+msgstr "Eicon tab binio Safari"
+
+msgid "Social Icon"
+msgstr "Eicon cyfryngau cymdeithasol"
+
+msgid "Icon Files Status"
+msgstr "Statws Ffeiliau Eicon"
+
+msgid "Icon Type"
+msgstr "Math Eicon"
+
+msgid "Total"
+msgstr "Cyfanswm"
+
+msgid "Advanced Web Statistics"
+msgstr "Ystadegau Gwe Uwch"
+
+msgid "Advanced Web Statistics %s"
+msgstr "Ystadegau Gwe Uwch %s"
+
+msgid "Your browser does not support frames. Please use a modern browser."
+msgstr "Nid yw eich porwr yn cefnogi fframiau. Defnyddiwch borwr modern."
+
+msgid "View statistics directly"
+msgstr "Gweld ystadegau'n uniongyrchol"
+
+msgid "Close"
+msgstr "Cau"
+
+msgid "Documentation Viewer"
+msgstr "Gweldwr Dogfennaeth"
+
+msgid "Direct address / Bookmarks"
+msgstr "Cyfeiriad uniongyrchol / Nodau tudalen"
+
+msgid "Search Engines"
+msgstr "Peiriannau Chwilio"
+
+msgid "Refering search engines"
+msgstr "Peiriannau chwilio cyfeirio"
+
+msgid "External pages"
+msgstr "Tudalennau allanol"
+
+msgid "Refering pages"
+msgstr "Tudalennau cyfeirio"
+
+msgid "Internal pages"
+msgstr "Tudalennau mewnol"
+
+msgid "UnknownAccessSource"
+msgstr "Ffynhonnell fynediad anhysbys"
+
+msgid "Different refering pages"
+msgstr "Gwahanol dudalennau cyfeirio"
+
+msgid "Keyphrases"
+msgstr "Ymadroddion Allweddol"
+
+msgid "Keywords"
+msgstr "Geiriau Allweddol"
+
+msgid "Keyphrases/Keywords"
+msgstr "Ymadroddion Allweddol/Geiriau Allweddol"
+
+msgid "Different keyphrases"
+msgstr "Gwahanol ymadroddion allweddol"
+
+msgid "Different keywords"
+msgstr "Gwahanol eiriau allweddol"
+
+#------------------------------------------------------------------------------
+# Dimensiwn Tudalen
+#------------------------------------------------------------------------------
+
+msgid "Viewed pages"
+msgstr "Tudalennau a welwyd"
+
+msgid "Different pages"
+msgstr "Gwahanol dudalennau"
+
+msgid "Entry"
+msgstr "Mynedfa"
+
+msgid "Exit"
+msgstr "Allanfa"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Referer"
+msgstr "Cyfeirydd"
+
+msgid "Host"
+msgstr "Gwesteiwr"
+
+#------------------------------------------------------------------------------
+# Gwallau a Statws
+#------------------------------------------------------------------------------
+
+msgid "Error"
+msgstr "Gwall"
+
+msgid "HTTP Status Statistics"
+msgstr "Ystadegau Cod Statws HTTP"
+
+msgid "SMTP Error codes"
+msgstr "Codau gwall SMTP"
+
+msgid "Page not found"
+msgstr "Ni ddaethpwyd o hyd i'r dudalen a gafodd ei gofyn"
+
+msgid "Unknown error"
+msgstr "Gwall anhysbys"
+
+msgid "Abnormal traffic note"
+msgstr "Mae traffig pori annormal yn cynnwys: robotiaid peiriannau chwilio, robotiaid hyfforddi AI, sganwyr gwendidau, a cheisiadau nad ydynt yn dilyn manylebau"
+
+msgid "Page detail"
+msgstr "Manylion y dudalen"
+
+msgid "AWStats did not found the"
+msgstr "Ni ddaethpwyd o hyd i AWStats"
+
+msgid "in your log records."
+msgstr "yn eich cofnodion log."
+
+msgid "AWStats did not find any valid log lines that match your"
+msgstr "Ni ddaethpwyd o hyd i unrhyw linellau log dilys sy'n cyfateb i'ch"
+
+msgid "parameter, in the"
+msgstr "paramedr, yn y"
+
+msgid "th first non commented lines read of your log."
+msgstr "-fed llinellau cyntaf heb eu rhoi sylw a ddarllenwyd o'ch log."
+
+msgid "Your log file"
+msgstr "Mae eich ffeil log"
+
+msgid "must have a bad format or"
+msgstr "yn debygol o fod â fformat gwael neu"
+
+msgid "parameter setup does not match this format."
+msgstr "nid yw setup y paramedr yn cyfateb i'r fformat hwn."
+
+msgid "Your AWStats"
+msgstr "Mae eich AWStats"
+
+msgid "parameter is:"
+msgstr "paramedr yw:"
+
+msgid "This means each line in your web server log file need to have:"
+msgstr "Mae hyn yn golygu bod angen i bob llinell yn eich ffeil log gweinydd gwe gael:"
+
+msgid "combined log format"
+msgstr "fformat log cyfun"
+
+msgid "MSIE Extended W3C log format"
+msgstr "Fformat log W3C Estynedig MSIE"
+
+msgid "WebStar native log format"
+msgstr "Fformat log brodorol WebStar"
+
+msgid "common log format"
+msgstr "fformat log cyffredin"
+
+msgid "Lotus Notes/Lotus Domino"
+msgstr "Lotus Notes/Lotus Domino"
+
+msgid "the following personalized log format:"
+msgstr "y fformat log personol canlynol:"
+
+msgid "And this is an example of records AWStats found in your log file (the record number"
+msgstr "A dyma enghraifft o gofnodion y daeth AWStats o hyd iddynt yn eich ffeil log (rhif y cofnod"
+
+msgid "in your log):"
+msgstr "yn eich log):"
+
+#------------------------------------------------------------------------------
+# Amrywiol
+#------------------------------------------------------------------------------
+
+msgid "Extra/Marketing"
+msgstr "Ychwanegol/Marchnata"
+
+#------------------------------------------------------------------------------
+# Testun Rhyngwyneb
+#------------------------------------------------------------------------------
+
+msgid "Current site"
+msgstr "Gwefan gyfredol"
+
+msgid "Web Site"
+msgstr "Gwefan"
+
+msgid "Last Update"
+msgstr "Diweddariad Diwethaf"
+
+msgid "Never updated"
+msgstr "Byth wedi'i ddiweddaru"
+
+msgid "No qualified records found in log"
+msgstr "Ni ddaethpwyd o hyd i gofnodion cymwys yn y log"
+
+msgid "corrupted"
+msgstr "llygredig"
+
+msgid "comments"
+msgstr "sylwadau"
+
+msgid "Blank"
+msgstr "Gwag"
+
+msgid "dropped"
+msgstr "gollwng"
+
+msgid "Update now"
+msgstr "Diweddaru nawr"
+
+msgid "Back to main page"
+msgstr "Yn ôl i'r dudalen gartref"
+
+msgid "Close window"
+msgstr "Cau'r ffenestr"
+
+msgid "Back page"
+msgstr "Yn ôl i'r dudalen flaenorol"
+
+msgid "Navigation"
+msgstr "Llywio"
+
+msgid "Summary"
+msgstr "Crynodeb"
+
+msgid "Local"
+msgstr "Lleol"
+
+msgid "External"
+msgstr "Allanol"
+
+msgid "Others (email senders)"
+msgstr "Eraill (anfonwyr)"
+
+msgid "Others (email receivers)"
+msgstr "Eraill (derbynwyr)"
+
+msgid "Others"
+msgstr "Eraill"
+
+msgid "Only 10 lines of browser data are currently displayed"
+msgstr "Dim ond 10 llinell o ddata porwr sy'n cael eu harddangos ar hyn o bryd, gweler y rhestr lawn am ragor"
+
+msgid "Others (unknown browsers)"
+msgstr "Eraill (porwyr anhysbys)"
+
+msgid "Others (operating systems)"
+msgstr "Eraill (systemau gweithredu)"
+
+msgid "Others (unknown OS)"
+msgstr "Eraill (system anhysbys)"
+
+msgid "Others (search engines)"
+msgstr "Eraill (peiriannau chwilio)"
+
+msgid "Others (referring pages)"
+msgstr "Eraill (tudalennau cyfeirio)"
+
+msgid "Others (keyphrases)"
+msgstr "Eraill (ymadroddion)"
+
+msgid "Others (keywords)"
+msgstr "Eraill (geiriau allweddol)"
+
+msgid "Only first 10 robots shown"
+msgstr "Dim ond y 10 robot cyntaf sy'n cael eu harddangos, gweler y rhestr lawn am ragor"
+
+msgid "Failed to obtain access record"
+msgstr "Methodd cael cofnod mynediad"
+
+msgid "Failed to obtain leave record"
+msgstr "Methodd cael cofnod gadael"
+
+msgid "Other pages"
+msgstr "Tudalennau eraill"
+
+msgid "Low Traffic IP Summary"
+msgstr "Crynodeb IP traffig isel anhysbys"
+
+msgid "Failed to obtain IP data"
+msgstr "Crynodeb IP hysbys eraill"
+
+msgid "Failed to obtain the relevant data"
+msgstr "Methodd cael y data perthnasol"
+
+msgid "Limited list of countries and regions"
+msgstr "Rhestr gyfyngedig o wledydd a rhanbarthau, gweler y rhestr lawn am ragor"
+
+msgid "currentVisitorData"
+msgstr "Dim ond 10 llinell o ddata ymwelwyr sy'n cael eu harddangos ar hyn o bryd, gweler y rhestr lawn am ragor"
+
+msgid "Others (robots main)"
+msgstr "Eraill (robotiaid)"
+
+msgid "Others (worms)"
+msgstr "Eraill (abwydod)"
+
+msgid "Displaying10RowsPageMorePleaseViewFullList"
+msgstr "Dim ond 10 llinell o dudalennau sy'n cael eu harddangos ar hyn o bryd, gweler y rhestr lawn am ragor"
+
+msgid "Others (OS main)"
+msgstr "Eraill (systemau)"
+
+msgid "Others (browsers main)"
+msgstr "Eraill (porwyr)"
+
+msgid "Others (screen sizes)"
+msgstr "Eraill (meintiau)"
+
+msgid "Others (search engines main)"
+msgstr "Eraill (peiriannau chwilio)"
+
+msgid "Others (referring pages main)"
+msgstr "Eraill (tudalennau ffynhonnell)"
+
+msgid "Others (keyphrases main)"
+msgstr "Eraill (ymadroddion)"
+
+msgid "Others (keywords main)"
+msgstr "Eraill (geiriau allweddol)"
+
+msgid "Continue"
+msgstr "Parhau i anfon gweddill y cynnwys"
+
+msgid "Switching Protocols"
+msgstr "Wrth newid protocol"
+
+msgid "Processing (WebDAV)"
+msgstr "Wrth brosesu (arhoswch os gwelwch yn dda)"
+
+msgid "Early Hints"
+msgstr "Mae'r gweinydd yn paratoi adnoddau"
+
+msgid "[Miscellaneous successes]"
+msgstr "Statws llwyddiant eraill"
+
+msgid "Request successful"
+msgstr "Cais llwyddiannus"
+
+msgid "Created successfully"
+msgstr "Wedi'i greu'n llwyddiannus"
+
+msgid "Accepted - processing"
+msgstr "Wedi'i dderbyn, wrth brosesu"
+
+msgid "Non-authoritative information (from cache) (from cache)"
+msgstr "Gwybodaeth anawdurdodol (o'r storfa)"
+
+msgid "Success, no content returned"
+msgstr "Llwyddiant, ni ddychwelwyd cynnwys"
+
+msgid "Reset content"
+msgstr "Ailosod y ffurflen"
+
+msgid "Partial content (resume download)"
+msgstr "Cynnwys rhannol (yn cefnogi ailddechrau lawrlwytho)"
+
+msgid "Multi-status (WebDAV)"
+msgstr "Statws lluosog (gweithrediadau grŵp WebDAV)"
+
+msgid "Already reported (WebDAV)"
+msgstr "Wedi'i adrodd eisoes (yn osgoi dyblygu)"
+
+msgid "IM used"
+msgstr "Defnyddiwyd protocol estynedig IM"
+
+msgid "[Miscellaneous redirections]"
+msgstr "Ailgyfeiriadau eraill"
+
+msgid "Multiple choices"
+msgstr "Dewisiadau lluosog"
+
+msgid "Moved permanently - update your links"
+msgstr "Wedi'i symud yn barhaol - diweddarwch eich dolenni"
+
+msgid "Temporary redirect - URL unchanged"
+msgstr "Ailgyfeirio dros dro - ni newidiwyd y cyfeiriad"
+
+msgid "See other"
+msgstr "Gweler gyfeiriad arall"
+
+msgid "Not modified - using cached version"
+msgstr "Heb ei addasu - defnyddio'r fersiwn stôr"
+
+msgid "Use proxy"
+msgstr "Defnyddiwch ddirprwy"
+
+msgid "Switch proxy"
+msgstr "Newidiwch ddirprwy"
+
+msgid "Temporary redirect (keep method)"
+msgstr "Ailgyfeirio dros dro (cadw dull y cais)"
+
+msgid "Permanent redirect - update your links"
+msgstr "Ailgyfeirio parhaol - diweddarwch eich dolenni"
+
+msgid "[Miscellaneous client/user errors]"
+msgstr "Gwallau ochr y cleient/defnyddiwr eraill"
+
+msgid "Bad request"
+msgstr "Fformat cais gwael"
+
+msgid "Unauthorized - please log in"
+msgstr "Heb awdurdod - mewngofnodwch os gwelwch yn dda"
+
+msgid "Payment required"
+msgstr "Mae angen talu"
+
+msgid "Forbidden - access denied"
+msgstr "Gwaharddwyd mynediad, hawliau annigonol"
+
+msgid "Page not found (404) - check for broken links"
+msgstr "Nid yw'r dudalen yn bodoli, gwiriwch am ddolenni wedi torri"
+
+msgid "Method not allowed"
+msgstr "Nid yw'r dull cais wedi'i ganiatáu"
+
+msgid "Not acceptable"
+msgstr "Fformat ymateb annerbyniol"
+
+msgid "Proxy authentication required"
+msgstr "Mae angen dilysiad dirprwy"
+
+msgid "Request timeout"
+msgstr "Amser cais wedi dod i ben"
+
+msgid "Conflict - please try again"
+msgstr "Gwrthdaro cais - ceisiwch eto yn nes ymlaen"
+
+msgid "Gone - permanently deleted"
+msgstr "Mae'r adnodd wedi'i ddileu'n barhaol"
+
+msgid "Length required"
+msgstr "Mae angen pennu hyd y cynnwys"
+
+msgid "Precondition failed"
+msgstr "Ni chafodd yr amodau eu bodloni"
+
+msgid "Payload too large"
+msgstr "Mae cynnwys y cais yn rhy fawr"
+
+msgid "URI too long"
+msgstr "Mae cyfeiriad y cais yn rhy hir"
+
+msgid "Unsupported media type"
+msgstr "Math ffeil heb ei gefnogi"
+
+msgid "Range not satisfiable"
+msgstr "Mae'r ystod a geisiwyd yn annilys"
+
+msgid "Expectation failed"
+msgstr "Ni ellir bodloni'r disgwyliad"
+
+msgid "I am a teapot (April Fools)"
+msgstr "Tebot ydw i (jôc Ebrill Ffôl)"
+
+msgid "Page expired (Laravel)"
+msgstr "Mae'r dudalen wedi dod i ben, adnewyddwch a cheisiwch eto"
+
+msgid "Method failure (Spring)"
+msgstr "Methodd y dull"
+
+msgid "Misdirected request"
+msgstr "Mae'r cais wedi'i gyfeirio'n anghywir"
+
+msgid "Unprocessable entity (WebDAV)"
+msgstr "Mae fformat y cais yn gywir ond ni ellir ei brosesu"
+
+msgid "Locked (WebDAV)"
+msgstr "Mae'r adnodd wedi'i gloi"
+
+msgid "Failed dependency (WebDAV)"
+msgstr "Methodd y gweithrediad dibynnol"
+
+msgid "Too early"
+msgstr "Anfonwyd y cais yn rhy gynnar"
+
+msgid "Upgrade required"
+msgstr "Mae angen uwchraddio'r protocol"
+
+msgid "Precondition required"
+msgstr "Mae'r amodau angenrheidiol ar goll"
+
+msgid "Too many requests - slow down"
+msgstr "Mae'r ceisiadau'n rhy aml, ceisiwch eto yn nes ymlaen"
+
+msgid "Request header fields too large (Shopify)"
+msgstr "Mae meysydd pennawd y cais yn rhy fawr"
+
+msgid "Request header too large"
+msgstr "Mae pennawd y cais yn rhy fawr"
+
+msgid "Login timeout (IIS)"
+msgstr "Amser mewngofnodi wedi dod i ben, mewngofnodwch eto"
+
+msgid "No response (nginx)"
+msgstr "Dim ymateb gan y gweinydd"
+
+msgid "Retry with (IIS)"
+msgstr "Ceisiwch eto yn nes ymlaen"
+
+msgid "Blocked by Windows parental controls"
+msgstr "Wedi'i flocio gan reolaethau rhieni Windows"
+
+msgid "Unavailable for legal reasons"
+msgstr "Ddim ar gael am resymau cyfreithiol"
+
+msgid "Client closed connection before idle timeout (AWS ELB)"
+msgstr "Gwnaeth y cleient dorri'r cysylltiad yn weithredol"
+
+msgid "X-Forwarded-For header with >30 IP addresses (AWS ELB)"
+msgstr "Mae'r gadwyn drosglwyddo yn fwy na 30 cyfeiriad IP"
+
+msgid "Incompatible protocol versions (AWS ELB)"
+msgstr "Fersiynau protocol anghydnaws"
+
+msgid "Request header too large (nginx)"
+msgstr "Mae pennawd y cais yn rhy fawr"
+
+msgid "SSL certificate error (nginx)"
+msgstr "Gwall tystysgrif SSL"
+
+msgid "SSL certificate required (nginx)"
+msgstr "Mae angen tystysgrif SSL"
+
+msgid "HTTP request sent to HTTPS port (nginx)"
+msgstr "Cais HTTP wedi'i anfon i borth HTTPS"
+
+msgid "Invalid token (ArcGIS)"
+msgstr "Tocyn annilys"
+
+msgid "Token required (ArcGIS) / Client closed request (nginx)"
+msgstr "Mae angen tocyn / Gwnaeth y cleient gau'r cais"
+
+msgid "Resource limit reached (cPanel)"
+msgstr "Cyrhaeddwyd terfyn adnoddau (CPU/cof)"
+
+msgid "Bandwidth limit exceeded (Apache/cPanel)"
+msgstr "Rhagorwyd ar derfyn lled band"
+
+msgid "[Miscellaneous server errors]"
+msgstr "Gwallau gweinydd eraill"
+
+msgid "Internal server error - check logs"
+msgstr "Gwall mewnol gweinydd - gwiriwch y logiau"
+
+msgid "Not implemented"
+msgstr "Nid yw'r gweinydd yn cefnogi'r swyddogaeth hon"
+
+msgid "Bad gateway - backend error"
+msgstr "Gwall porth - nid yw'r gwasanaeth cefndir yn gweithio'n iawn"
+
+msgid "Service unavailable - maintenance or overload"
+msgstr "Gwasanaeth ddim ar gael - cynnal a chadw neu orlwytho"
+
+msgid "Gateway timeout"
+msgstr "Amser ymateb y porth wedi dod i ben"
+
+msgid "HTTP version not supported"
+msgstr "Fersiwn protocol HTTP heb ei chefnogi"
+
+msgid "Variant also negotiates"
+msgstr "Mae'r amrywiad hefyd yn cymryd rhan yn y trafodaethau (cyfluniad gwallus)"
+
+msgid "Insufficient storage (WebDAV)"
+msgstr "Heb ddigon o le storio"
+
+msgid "Loop detected (WebDAV)"
+msgstr "Canfuwyd cyfeiriad cylchol"
+
+msgid "Not extended"
+msgstr "Angen estyniad pellach"
+
+msgid "Network authentication required"
+msgstr "Angen dilysiad rhwydwaith"
+
+msgid "Unknown error (Cloudflare)"
+msgstr "Gwall anhysbys"
+
+msgid "Web server is down (Cloudflare)"
+msgstr "Mae'r gweinydd gwe wedi diffodd"
+
+msgid "Connection timeout (Cloudflare)"
+msgstr "Amser cysylltu wedi dod i ben"
+
+msgid "Origin is unreachable (Cloudflare)"
+msgstr "Ni ellir cyrraedd y gweinydd tarddiad"
+
+msgid "A timeout occurred (Cloudflare)"
+msgstr "Digwyddodd amseru allan"
+
+msgid "SSL handshake failed (Cloudflare)"
+msgstr "Methodd ysgwyd llaw SSL"
+
+msgid "Invalid SSL certificate (Cloudflare)"
+msgstr "Tystysgrif SSL annilys"
+
+msgid "Railgun error (Cloudflare - obsolete)"
+msgstr "Gwall Railgun (wedi darfod)"
+
+msgid "Site is overloaded (SSLLabs)"
+msgstr "Mae'r safle wedi'i orlwytho"
+
+msgid "Origin DNS error (Cloudflare) / Site is frozen (Pantheon)"
+msgstr "Gwall DNS gweinydd tarddiad / Mae'r safle wedi'i rewi"
+
+msgid "Temporarily disabled (Shopify)"
+msgstr "Wedi'i analluogi dros dro"
+
+msgid "Unauthorized (AWS ELB)"
+msgstr "Heb awdurdod"
+
+msgid "Network read timeout error"
+msgstr "Gwall amseru darllen rhwydwaith"
+
+msgid "Network connect timeout error"
+msgstr "Gwall amseru cysylltu â'r rhwydwaith"
+
+msgid "Unexpected token (Shopify)"
+msgstr "Tocyn annisgwyl"
+
+msgid "Request denied (LinkedIn)"
+msgstr "Gwrthodwyd y cais"
+
+msgid "HTTP/2 GOAWAY (AWS ELB)"
+msgstr "Cysylltiad HTTP/2 ar gau"
+
+msgid "[Unknown]"
+msgstr "Cod statws anhysbys"
+
+msgid "Nonstandard success response (ESMTP)"
+msgstr "Ymateb llwyddiant an safonol (ESMTP)"
+
+msgid "System status, or system help reply"
+msgstr "Statws system neu gymorth"
+
+msgid "Help message"
+msgstr "Neges gymorth"
+
+msgid "SMTP service ready (LMTP)"
+msgstr "Gwasanaeth SMTP yn barod (LMTP)"
+
+msgid "Service ready - server is ready to receive mail"
+msgstr "Gwasanaeth yn barod - mae'r gweinydd post yn barod i dderbyn post"
+
+msgid "Service closing - connection is being closed"
+msgstr "Gwasanaeth yn cau - bydd y cysylltiad yn cael ei dorri"
+
+msgid "Authentication successful"
+msgstr "Dilysiad llwyddiannus"
+
+msgid "Requested mail action taken and completed"
+msgstr "Mae'r weithred post a geisiwyd wedi'i chyflawni a'i chwblhau"
+
+msgid "User not local - will forward to another address"
+msgstr "Nid yw'r defnyddiwr ar y gweinydd hwn - bydd yn cael ei drosglwyddo i gyfeiriad arall"
+
+msgid "Cannot verify recipient, but will attempt delivery"
+msgstr "Ni ellir gwirio'r derbynnydd, ond bydd yn ceisio danfon"
+
+msgid "Message accepted for delivery (DSN)"
+msgstr "Derbyniwyd y neges i'w danfon (DSN)"
+
+msgid "User name is a mailbox"
+msgstr "Mae'r enw defnyddiwr yn flwch post"
+
+msgid "Authentication challenge - please respond"
+msgstr "Her dilysu - ymatebwch os gwelwch yn dda"
+
+msgid "Start mail input - end with <CRLF>.<CRLF>"
+msgstr "Dechreuwch nodi cynnwys y post - gorffennwch gyda <CRLF>.<CRLF>"
+
+msgid "Continue (LMTP)"
+msgstr "Parhau (LMTP)"
+
+msgid "Service not available - connection closing, try again later"
+msgstr "Gwasanaeth ddim ar gael - cysylltiad yn cau, ceisiwch eto yn nes ymlaen"
+
+msgid "Mailbox busy or temporarily unavailable (Exchange)"
+msgstr "Blwch post yn brysur neu ddim ar gael dros dro (Exchange)"
+
+msgid "Connection rate limit exceeded (Postfix)"
+msgstr "Rhagorwyd ar derfyn amlder cysylltu (Postfix)"
+
+msgid "Too many concurrent connections (Postfix)"
+msgstr "Gormod o gysylltiadau ar yr un pryd (Postfix)"
+
+msgid "Unable to establish connection (Postfix)"
+msgstr "Ni ellir sefydlu cysylltiad (Postfix)"
+
+msgid "Connection timed out (Postfix)"
+msgstr "Amser cysylltu wedi dod i ben (Postfix)"
+
+msgid "Connection dropped due to error (Postfix)"
+msgstr "Cysylltiad wedi'i dorri oherwydd gwall (Postfix)"
+
+msgid "Mailbox temporarily locked (Exchange)"
+msgstr "Blwch post wedi'i gloi dros dro (Exchange)"
+
+msgid "Too many recipients (Postfix/Exim)"
+msgstr "Gormod o dderbynwyr (Postfix/Exim)"
+
+msgid "Mail server error (Exchange)"
+msgstr "Gwall gweinydd post (Exchange)"
+
+msgid "Received loop detected (Exim)"
+msgstr "Canfuwyd dolen dderbyn (Exim)"
+
+msgid "Too many hop count (Exim)"
+msgstr "Gormod o neidiau (Exim)"
+
+msgid "DNS lookup failed (Postfix)"
+msgstr "Methodd chwiliad DNS (Postfix)"
+
+msgid "Unable to authenticate (Postfix)"
+msgstr "Ni ellir dilysu (Postfix)"
+
+msgid "TLS handshake failed (Postfix)"
+msgstr "Methodd ysgwyd llaw TLS (Postfix)"
+
+msgid "SMTP protocol violation (Postfix)"
+msgstr "Torri protocol SMTP (Postfix)"
+
+msgid "Message size exceeds limit (Exchange)"
+msgstr "Maint y post yn fwy na'r terfyn (Exchange)"
+
+msgid "Message rate limit exceeded (Postfix)"
+msgstr "Rhagorwyd ar derfyn amlder anfon post (Postfix)"
+
+msgid "Mailbox quota exceeded - temporary"
+msgstr "Cwota blwch post yn llawn - statws dros dro"
+
+msgid "Domain not found (Postfix)"
+msgstr "Ni ddaethpwyd o hyd i'r parth (Postfix)"
+
+msgid "Message header invalid (Postfix)"
+msgstr "Pennawd y post yn annilys (Postfix)"
+
+msgid "Bounce loop detected (Postfix)"
+msgstr "Canfuwyd dolen bownsio (Postfix)"
+
+msgid "Unable to route (Postfix)"
+msgstr "Ni ellir llwybro (Postfix)"
+
+msgid "Sender domain not found (Postfix)"
+msgstr "Ni ddaethpwyd o hyd i barth yr anfonwr (Postfix)"
+
+msgid "Recipient domain not found (Postfix)"
+msgstr "Ni ddaethpwyd o hyd i barth y derbynnydd (Postfix)"
+
+msgid "Greylisting in progress - please try again (Postgrey)"
+msgstr "Rhestr lwyd yn cael ei llunio - ceisiwch eto yn nes ymlaen (Postgrey)"
+
+msgid "Spam filtering in progress (SpamAssassin)"
+msgstr "Hidlo sbam yn cael ei wneud (SpamAssassin)"
+
+msgid "Virus scanning in progress (ClamAV)"
+msgstr "Sganio firws yn cael ei wneud (ClamAV)"
+
+msgid "Mailbox unavailable - try again later"
+msgstr "Blwch post ddim ar gael - ceisiwch eto yn nes ymlaen"
+
+msgid "Requested action aborted - error in processing"
+msgstr "Torrwyd y weithred a geisiwyd - gwall wrth brosesu"
+
+msgid "Insufficient system storage - try again later"
+msgstr "Heb ddigon o le yn y system - ceisiwch eto yn nes ymlaen"
+
+msgid "Too many messages for this recipient (Exchange)"
+msgstr "Gormod o negeseuon i'r derbynnydd hwn (Exchange)"
+
+msgid "TLS not available (Postfix)"
+msgstr "TLS ddim ar gael (Postfix)"
+
+msgid "Server unable to accept messages (Postfix)"
+msgstr "Ni all y gweinydd dderbyn post (Postfix)"
+
+msgid "Temporary failure in DNS lookup (Exim)"
+msgstr "Methiant dros dro mewn chwiliad DNS (Exim)"
+
+msgid "Quota exceeded - temporary"
+msgstr "Rhagorwyd ar gwota - statws dros dro"
+
+msgid "Message too big - temporary"
+msgstr "Post yn rhy fawr - statws dros dro"
+
+msgid "Too many messages per connection"
+msgstr "Gormod o negeseuon fesul cysylltiad"
+
+msgid "Load average too high (Postfix)"
+msgstr "Llwyth cyfartalog y system yn rhy uchel (Postfix)"
+
+msgid "Connection refused (Postfix)"
+msgstr "Gwrthodwyd y cysylltiad (Postfix)"
+
+msgid "Send rate limit exceeded (Postfix)"
+msgstr "Rhagorwyd ar derfyn amlder anfon (Postfix)"
+
+msgid "Recipient rate limit exceeded (Postfix)"
+msgstr "Rhagorwyd ar derfyn amlder ar gyfer y derbynnydd (Postfix)"
+
+msgid "Sender rate limit exceeded (Postfix)"
+msgstr "Rhagorwyd ar derfyn amlder ar gyfer yr anfonwr (Postfix)"
+
+msgid "IP address rate limit exceeded (Postfix)"
+msgstr "Rhagorwyd ar derfyn amlder ar gyfer y cyfeiriad IP (Postfix)"
+
+msgid "MX lookup failed (Postfix)"
+msgstr "Methodd chwiliad MX (Postfix)"
+
+msgid "A record lookup failed (Postfix)"
+msgstr "Methodd chwiliad cofnod A (Postfix)"
+
+msgid "PTR record lookup failed (Postfix)"
+msgstr "Methodd chwiliad cofnod PTR (Postfix)"
+
+msgid "Greylisting active - please try again (Postgrey)"
+msgstr "Rhestr lwyd yn weithredol - ceisiwch eto yn nes ymlaen (Postgrey)"
+
+msgid "Sender address rejected - domain not verified (DMARC pending)"
+msgstr "Gwrthodwyd cyfeiriad yr anfonwr - nid yw'r parth wedi'i wirio (DMARC yn aros)"
+
+msgid "Recipient address rejected - domain not verified (DMARC pending)"
+msgstr "Gwrthodwyd cyfeiriad y derbynnydd - nid yw'r parth wedi'i wirio (DMARC yn aros)"
+
+msgid "DKIM verification pending - temporary failure"
+msgstr "Gwiriad DKIM yn aros - methiant dros dro"
+
+msgid "SPF verification pending - temporary failure"
+msgstr "Gwiriad SPF yn aros - methiant dros dro"
+
+msgid "DMARC verification pending - temporary failure"
+msgstr "Gwiriad DMARC yn aros - methiant dros dro"
+
+msgid "DNSBL lookup temporary failure"
+msgstr "Methiant dros dro mewn chwiliad DNSBL"
+
+msgid "RHSBL lookup temporary failure"
+msgstr "Methiant dros dro mewn chwiliad RHSBL"
+
+msgid "URI DNSBL lookup temporary failure"
+msgstr "Methiant dros dro mewn chwiliad URI DNSBL"
+
+msgid "Temporary authentication failure (Dovecot)"
+msgstr "Methiant dilysu dros dro (Dovecot)"
+
+msgid "Temporary authorization failure (Sendmail)"
+msgstr "Methiant awdurdodi dros dro (Sendmail)"
+
+msgid "Rate limit exceeded per sender (Exim)"
+msgstr "Rhagorwyd ar derfyn amlder ar gyfer un anfonwr (Exim)"
+
+msgid "Rate limit exceeded per recipient (Exim)"
+msgstr "Rhagorwyd ar derfyn amlder ar gyfer un derbynnydd (Exim)"
+
+msgid "Rate limit exceeded per domain (Exim)"
+msgstr "Rhagorwyd ar derfyn amlder ar gyfer un parth (Exim)"
+
+msgid "Rate limit exceeded per IP (Exim)"
+msgstr "Rhagorwyd ar derfyn amlder ar gyfer un cyfeiriad IP (Exim)"
+
+msgid "Message queued for later delivery (Postfix)"
+msgstr "Mae'r post wedi'i roi yn y ciw ar gyfer danfon yn nes ymlaen (Postfix)"
+
+msgid "Delivery delayed due to policy (Exchange)"
+msgstr "Oediwyd danfon oherwydd polisïau (Exchange)"
+
+msgid "Temporary failure in content filter"
+msgstr "Methiant dros dro yn hidlo cynnwys"
+
+msgid "Temporary failure in antivirus scanner"
+msgstr "Methiant dros dro yn y sganwr gwrth-firws"
+
+msgid "Temporary failure in spam filter"
+msgstr "Methiant dros dro yn yr hidlydd sbam"
+
+msgid "Temporary failure in milter (Postfix)"
+msgstr "Methiant dros dro yn y milter (Postfix)"
+
+msgid "Greylisting - try again later"
+msgstr "Rhestr lwyd - ceisiwch eto yn nes ymlaen"
+
+msgid "DDoS protection active - try again later"
+msgstr "Amddiffyniad DDoS yn weithredol - ceisiwch eto yn nes ymlaen"
+
+msgid "SMTP policy violation - temporary"
+msgstr "Torri polisi SMTP - statws dros dro"
+
+msgid "Temporary error in RCPT TO processing"
+msgstr "Gwall dros dro wrth brosesu RCPT TO"
+
+msgid "Temporary error in MAIL FROM processing"
+msgstr "Gwall dros dro wrth brosesu MAIL FROM"
+
+msgid "Temporary error in EHLO/HELO processing"
+msgstr "Gwall dros dro wrth brosesu EHLO/HELO"
+
+msgid "Temporary error in DATA processing"
+msgstr "Gwall dros dro wrth brosesu DATA"
+
+msgid "Temporary error - service busy, try again later"
+msgstr "Gwall dros dro - gwasanaeth yn brysur, ceisiwch eto yn nes ymlaen"
+
+msgid "Syntax error - command unrecognized or too long"
+msgstr "Gwall gystrawen - gorchymyn heb ei adnabod neu'n rhy hir"
+
+msgid "Syntax error in parameters or arguments"
+msgstr "Gwall gystrawen ym mharamedrau neu ddadleuon"
+
+msgid "Command not implemented"
+msgstr "Nid yw'r gorchymyn wedi'i weithredu"
+
+msgid "Bad sequence of commands"
+msgstr "Dilyniant gorchmynion gwael"
+
+msgid "Command parameter not implemented"
+msgstr "Nid yw paramedr y gorchymyn wedi'i weithredu"
+
+msgid "Version not supported (ESMTP)"
+msgstr "Fersiwn heb ei chefnogi (ESMTP)"
+
+msgid "Mailbox path invalid (LMTP)"
+msgstr "Llwybr blwch post annilys (LMTP)"
+
+msgid "Too many commands in this session (Postfix)"
+msgstr "Gormod o orchmynion yn y sesiwn hon (Postfix)"
+
+msgid "Recipient limit exceeded (Postfix)"
+msgstr "Rhagorwyd ar derfyn nifer y derbynwyr (Postfix)"
+
+msgid "Sender limit exceeded (Postfix)"
+msgstr "Rhagorwyd ar derfyn nifer yr anfonwyr (Postfix)"
+
+msgid "Domain limit exceeded (Postfix)"
+msgstr "Rhagorwyd ar derfyn nifer y parthau (Postfix)"
+
+msgid "Mailbox does not exist (Exchange)"
+msgstr "Nid yw'r blwch post yn bodoli (Exchange)"
+
+msgid "DNS failure - permanent"
+msgstr "Methiant DNS - gwall parhaol"
+
+msgid "Address type not supported (Postfix)"
+msgstr "Nid yw'r math cyfeiriad wedi'i gefnogi (Postfix)"
+
+msgid "Unable to open mailbox (Postfix)"
+msgstr "Ni ellir agor y blwch post (Postfix)"
+
+msgid "Mailbox locked - permanent"
+msgstr "Blwch post wedi'i gloi - statws parhaol"
+
+msgid "Message rejected due to policy (Exchange)"
+msgstr "Gwrthodwyd y neges oherwydd polisïau (Exchange)"
+
+msgid "Content rejected - permanent"
+msgstr "Gwrthodwyd y cynnwys - statws parhaol"
+
+msgid "Attachment type not allowed"
+msgstr "Nid yw'r math atodiad wedi'i ganiatáu"
+
+msgid "Message encoding not supported"
+msgstr "Nid yw amgodio'r neges wedi'i gefnogi"
+
+msgid "Sender domain does not exist - permanent"
+msgstr "Nid yw parth yr anfonwr yn bodoli - gwall parhaol"
+
+msgid "Domain does not accept mail or is closing"
+msgstr "Nid yw'r parth yn derbyn post neu mae'n cau"
+
+msgid "Recipient domain does not exist - permanent"
+msgstr "Nid yw parth y derbynnydd yn bodoli - gwall parhaol"
+
+msgid "Mailbox quota exceeded - permanent"
+msgstr "Rhagorwyd ar gwota blwch post - statws parhaol"
+
+msgid "Message size exceeds limit - permanent"
+msgstr "Maint y neges yn fwy na'r terfyn - statws parhaol"
+
+msgid "Authentication required (Sendmail)"
+msgstr "Angen dilysiad (Sendmail)"
+
+msgid "Authentication failed (Sendmail)"
+msgstr "Methodd dilysiad (Sendmail)"
+
+msgid "Authentication mechanism not supported"
+msgstr "Nid yw'r mecanwaith dilysu wedi'i gefnogi"
+
+msgid "Authentication credentials invalid"
+msgstr "Credynau dilysu annilys"
+
+msgid "Authentication account expired"
+msgstr "Mae cyfrif dilysu wedi dod i ben"
+
+msgid "Access denied - authentication required"
+msgstr "Gwrthodwyd mynediad - mae angen dilysiad"
+
+msgid "Access denied (Sendmailism)"
+msgstr "Gwrthodwyd mynediad (Sendmail)"
+
+msgid "Access denied - not authenticated"
+msgstr "Gwrthodwyd mynediad - nid ydych wedi'ch dilysu"
+
+msgid "Access denied - account locked"
+msgstr "Gwrthodwyd mynediad - mae'r cyfrif wedi'i gloi"
+
+msgid "Access denied - account disabled"
+msgstr "Gwrthodwyd mynediad - mae'r cyfrif wedi'i analluogi"
+
+msgid "Authentication failed"
+msgstr "Methodd dilysiad"
+
+msgid "Authentication required for relay (Postfix)"
+msgstr "Mae angen dilysiad ar gyfer trosglwyddo (Postfix)"
+
+msgid "Authentication failed for relay (Postfix)"
+msgstr "Methodd dilysiad ar gyfer trosglwyddo (Postfix)"
+
+msgid "Encryption required (STARTTLS)"
+msgstr "Angen cysylltiad amgryptiedig (STARTTLS)"
+
+msgid "TLS required for this recipient"
+msgstr "Angen amgryptiad TLS ar gyfer y derbynnydd hwn"
+
+msgid "Encryption strength insufficient"
+msgstr "Cryfder amgryptio annigonol"
+
+msgid "Certificate validation failed"
+msgstr "Methodd dilysu'r dystysgrif"
+
+msgid "Invalid TLS certificate"
+msgstr "Tystysgrif TLS annilys"
+
+msgid "TLS protocol version not supported"
+msgstr "Nid yw fersiwn protocol TLS wedi'i chefnogi"
+
+msgid "Cipher suite not supported"
+msgstr "Nid yw'r set siffr wedi'i chefnogi"
+
+msgid "Access denied - no valid recipient"
+msgstr "Gwrthodwyd mynediad - dim derbynnydd dilys"
+
+msgid "Access denied - no valid sender"
+msgstr "Gwrthodwyd mynediad - dim anfonwr dilys"
+
+msgid "Access denied - domain not allowed"
+msgstr "Gwrthodwyd mynediad - nid yw'r parth wedi'i ganiatáu"
+
+msgid "Access denied - IP address blocked (permanent)"
+msgstr "Gwrthodwyd mynediad - mae'r cyfeiriad IP wedi'i flocio'n barhaol"
+
+msgid "Access denied - sender domain blacklisted"
+msgstr "Gwrthodwyd mynediad - mae parth yr anfonwr ar y rhestr ddu"
+
+msgid "Mailbox unavailable - requested action not taken"
+msgstr "Blwch post ddim ar gael - ni chyflawnwyd y weithred a geisiwyd"
+
+msgid "User not local - please try forwarding address"
+msgstr "Nid yw'r defnyddiwr yn lleol - ceisiwch ddefnyddio cyfeiriad trosglwyddo"
+
+msgid "Requested action aborted - exceeded storage allocation"
+msgstr "Torrwyd y weithred a geisiwyd - rhagorwyd ar y storfa a ddyrannwyd"
+
+msgid "Mailbox name not allowed"
+msgstr "Nid yw enw'r blwch post wedi'i ganiatáu"
+
+msgid "Requested action rejected - access denied"
+msgstr "Gwrthodwyd y weithred a geisiwyd - mynediad wedi'i wrthod"
+
+msgid "MAIL FROM/RCPT TO parameters not recognized"
+msgstr "Ni adnabuwyd paramedrau MAIL FROM/RCPT TO"
+
+msgid "Domain not allowed to send (DMARC reject)"
+msgstr "Nid yw'r parth wedi'i ganiatáu i anfon (gwrthodiad DMARC)"
+
+msgid "Too many duplicate messages - permanent"
+msgstr "Gormod o negeseuon dyblyg - statws parhaol"
+
+msgid "Sender address rejected - domain not in SPF"
+msgstr "Gwrthodwyd cyfeiriad yr anfonwr - nid yw'r parth yn y cofnod SPF"
+
+msgid "Sender address rejected - DKIM verification failed"
+msgstr "Gwrthodwyd cyfeiriad yr anfonwr - methodd gwiriad DKIM"
+
+msgid "Sender address rejected - DMARC policy reject"
+msgstr "Gwrthodwyd cyfeiriad yr anfonwr - gwrthodiad polisi DMARC"
+
+msgid "Recipient address rejected - DMARC policy reject"
+msgstr "Gwrthodwyd cyfeiriad y derbynnydd - gwrthodiad polisi DMARC"
+
+msgid "Message rejected due to spam content"
+msgstr "Gwrthodwyd y neges oherwydd cynnwys sbam"
+
+msgid "Message rejected due to virus detected"
+msgstr "Gwrthodwyd y neges oherwydd canfod firws"
+
+msgid "Message rejected due to malicious content"
+msgstr "Gwrthodwyd y neges oherwydd cynnwys maleisus"
+
+msgid "Message rejected due to phishing detection"
+msgstr "Gwrthodwyd y neges oherwydd canfod gwe-rwydo"
+
+msgid "Message rejected due to malware detection"
+msgstr "Gwrthodwyd y neges oherwydd canfod meddalwedd faleisus"
+
+msgid "Message rejected due to policy - permanent"
+msgstr "Gwrthodwyd y neges oherwydd polisïau - statws parhaol"
+
+msgid "Message rejected due to content filtering"
+msgstr "Gwrthodwyd y neges oherwydd hidlo cynnwys"
+
+msgid "Message rejected due to reputation"
+msgstr "Gwrthodwyd y neges oherwydd enw da"
+
+msgid "Access denied - access_map violation"
+msgstr "Gwrthodwyd mynediad - torri rheolau access_map"
+
+msgid "Access denied - SMTP client listed in RBL"
+msgstr "Gwrthodwyd mynediad - mae cleient SMTP ar restr RBL"
+
+msgid "Access denied - relay not authorized"
+msgstr "Gwrthodwyd mynediad - nid yw trosglwyddo wedi'i awdurdodi"
+
+msgid "Access denied - unknown SMTP client hostname"
+msgstr "Gwrthodwyd mynediad - enw gwesteiwr cleient SMTP anhysbys"
+
+msgid "Access denied - bad syntax for client HELO hostname"
+msgstr "Gwrthodwyd mynediad - cystrawen wael yn enw gwesteiwr HELO y cleient"
+
+msgid "Access denied - SMTP client hostname rejected"
+msgstr "Gwrthodwyd mynediad - gwrthodwyd enw gwesteiwr y cleient SMTP"
+
+msgid "Access denied - unknown domain for sender or recipient"
+msgstr "Gwrthodwyd mynediad - parth anhysbys i'r anfonwr neu'r derbynnydd"
+
+msgid "Access denied - unknown client HELO hostname"
+msgstr "Gwrthodwyd mynediad - enw gwesteiwr HELO y cleient anhysbys"
+
+msgid "Access denied - invalid domain (not FQDN)"
+msgstr "Gwrthodwyd mynediad - parth annilys (nid FQDN)"
+
+msgid "Access denied - domain not qualified"
+msgstr "Gwrthodwyd mynediad - nid yw'r parth wedi'i gymhwyso"
+
+msgid "Access denied - mail server misconfigured"
+msgstr "Gwrthodwyd mynediad - gweinydd post wedi'i gyflunio'n anghywir"
+
+msgid "Access denied - open relay not allowed"
+msgstr "Gwrthodwyd mynediad - nid yw trosglwyddo agored wedi'i ganiatáu"
+
+msgid "Access denied - proxy not allowed"
+msgstr "Gwrthodwyd mynediad - nid yw dirprwy wedi'i ganiatáu"
+
+msgid "Access denied - dynamic IP not allowed"
+msgstr "Gwrthodwyd mynediad - nid yw cyfeiriad IP deinamig wedi'i ganiatáu"
+
+msgid "Access denied - residential IP not allowed"
+msgstr "Gwrthodwyd mynediad - nid yw cyfeiriad IP preswyl wedi'i ganiatáu"
+
+msgid "Access denied - VPN/Tor detected"
+msgstr "Gwrthodwyd mynediad - canfuwyd VPN/Tor"
+
+msgid "Access denied - Spamhaus DROP listed"
+msgstr "Gwrthodwyd mynediad - mae'r cyfeiriad IP ar restr DROP Spamhaus"
+
+msgid "Access denied - URL listed in URIBL"
+msgstr "Gwrthodwyd mynediad - mae'r URL ar URIBL"
+
+msgid "Access denied - domain in RHSBL"
+msgstr "Gwrthodwyd mynediad - mae'r parth ar RHSBL"
+
+msgid "Access denied - IP in DNSWL (policy)"
+msgstr "Gwrthodwyd mynediad - mae IP ar DNSWL (polisïau)"
+
+msgid "Delivery failed - mailbox not found"
+msgstr "Methodd danfon - ni ddaethpwyd o hyd i'r blwch post"
+
+msgid "Delivery failed - recipient not local"
+msgstr "Methodd danfon - nid yw'r derbynnydd yn lleol"
+
+msgid "Delivery failed - recipient rejected"
+msgstr "Methodd danfon - gwrthodwyd y derbynnydd"
+
+msgid "Delivery failed - sender rejected"
+msgstr "Methodd danfon - gwrthodwyd yr anfonwr"
+
+msgid "Delivery failed - relay rejected"
+msgstr "Methodd danfon - gwrthodwyd trosglwyddo"
+
+msgid "Delivery failed - DNS permanent error"
+msgstr "Methodd danfon - gwall DNS parhaol"
+
+msgid "Delivery failed - MX permanent error"
+msgstr "Methodd danfon - gwall MX parhaol"
+
+msgid "Delivery failed - A record permanent error"
+msgstr "Methodd danfon - gwall cofnod A parhaol"
+
+msgid "Delivery failed - PTR record permanent error"
+msgstr "Methodd danfon - gwall cofnod PTR parhaol"
+
+msgid "Delivery failed - policy permanent error"
+msgstr "Methodd danfon - gwall polisi parhaol"
+
+msgid "DSN: Success - delivery status notification"
+msgstr "DSN: Llwyddiant - hysbysiad statws danfon"
+
+msgid "DSN: Delivery delayed"
+msgstr "DSN: Oediwyd danfon"
+
+msgid "DSN: Delivery failed - permanent"
+msgstr "DSN: Methodd danfon - parhaol"
+
+msgid "DSN: Delivery failed - temporary"
+msgstr "DSN: Methodd danfon - dros dro"
+
+msgid "DSN: Message expired"
+msgstr "DSN: Mae'r neges wedi dod i ben"
+
+msgid "DSN: Message bounced"
+msgstr "DSN: Bownsiodd y neges"
+
+msgid "DSN: Message discarded"
+msgstr "DSN: Cafodd y neges ei thaflu"
+
+msgid "DSN: Message filtered"
+msgstr "DSN: Cafodd y neges ei hidlo"
+
+msgid "DSN: Message quarantined"
+msgstr "DSN: Mae'r neges mewn cwarantîn"
+
+msgid "DSN: Message held for review"
+msgstr "DSN: Dalwyd y neges i'w hadolygu"
+
+msgid "MTA-STS policy required"
+msgstr "Angen polisi MTA-STS"
+
+msgid "MTA-STS policy validation failed"
+msgstr "Methodd dilysu polisi MTA-STS"
+
+msgid "TLS reporting required"
+msgstr "Angen adrodd TLS"
+
+msgid "TLS report requested"
+msgstr "Gofynnwyd am adroddiad TLS"
+
+msgid "SMTP MTA Strict Transport Security active"
+msgstr "SMTP MTA Strict Transport Security yn weithredol"
+
+msgid "DANE validation required"
+msgstr "Angen dilysiad DANE"
+
+msgid "DANE validation failed"
+msgstr "Methodd dilysiad DANE"
+
+msgid "TLSA record missing"
+msgstr "Cofnod TLSA ar goll"
+
+msgid "Certificate name mismatch"
+msgstr "Enw'r dystysgrif yn anghyfateb"
+
+msgid "Certificate expired"
+msgstr "Mae'r dystysgrif wedi dod i ben"
+
+msgid "AUTH LOGIN required"
+msgstr "Angen dilysiad AUTH LOGIN"
+
+msgid "AUTH PLAIN required"
+msgstr "Angen dilysiad AUTH PLAIN"
+
+msgid "AUTH CRAM-MD5 required"
+msgstr "Angen dilysiad AUTH CRAM-MD5"
+
+msgid "AUTH DIGEST-MD5 required"
+msgstr "Angen dilysiad AUTH DIGEST-MD5"
+
+msgid "AUTH GSSAPI required"
+msgstr "Angen dilysiad AUTH GSSAPI"
+
+msgid "AUTH NTLM required"
+msgstr "Angen dilysiad AUTH NTLM"
+
+msgid "AUTH SCRAM required"
+msgstr "Angen dilysiad AUTH SCRAM"
+
+msgid "AUTH OAUTHBEARER required"
+msgstr "Angen dilysiad AUTH OAUTHBEARER"
+
+msgid "AUTH XOAUTH2 required"
+msgstr "Angen dilysiad AUTH XOAUTH2"
+
+msgid "Exchange: Mailbox database error"
+msgstr "Exchange: Gwall cronfa ddata blwch post"
+
+msgid "Exchange: Store driver error"
+msgstr "Exchange: Gwall gyrrwr storio"
+
+msgid "Exchange: Transport agent error"
+msgstr "Exchange: Gwall asiant trafnidiaeth"
+
+msgid "Exchange: Content conversion error"
+msgstr "Exchange: Gwall trosi cynnwys"
+
+msgid "Exchange: Routing error"
+msgstr "Exchange: Gwall llwybro"
+
+msgid "Exchange: Mail flow stalled"
+msgstr "Exchange: Llif post yn sownd"
+
+msgid "Exchange: Shadow redundancy error"
+msgstr "Exchange: Gwall diswyddiad cysgodol"
+
+msgid "Exchange: Safety net error"
+msgstr "Exchange: Gwall rhwyd ddiogelwch"
+
+msgid "Exchange: Queue database error"
+msgstr "Exchange: Gwall cronfa ddata ciw"
+
+msgid "Exchange: Message throttled"
+msgstr "Exchange: Cyfyngwyd ar neges"
+
+msgid "Postfix: Bounce queue error"
+msgstr "Postfix: Gwall ciw bownsio"
+
+msgid "Postfix: Deferred queue error"
+msgstr "Postfix: Gwall ciw gohiriedig"
+
+msgid "Postfix: Hold queue error"
+msgstr "Postfix: Gwall ciw dal"
+
+msgid "Postfix: Incoming queue error"
+msgstr "Postfix: Gwall ciw mewnol"
+
+msgid "Postfix: Active queue error"
+msgstr "Postfix: Gwall ciw gweithredol"
+
+msgid "Postfix: Corrupted queue file"
+msgstr "Postfix: Ffeil ciw wedi'i llygru"
+
+msgid "Sendmail: Queue runner error"
+msgstr "Sendmail: Gwall rhedwr ciw"
+
+msgid "Sendmail: Alias database error"
+msgstr "Sendmail: Gwall cronfa ddata alias"
+
+msgid "Sendmail: Virtuser table error"
+msgstr "Sendmail: Gwall tabl defnyddiwr rhithwir"
+
+msgid "Sendmail: Mailer definition error"
+msgstr "Sendmail: Gwall diffiniad postiwr"
+
+msgid "Exim: Router configuration error"
+msgstr "Exim: Gwall cyfluniad llwybrydd"
+
+msgid "Exim: Transport configuration error"
+msgstr "Exim: Gwall cyfluniad trafnidiaeth"
+
+msgid "Exim: Director configuration error"
+msgstr "Exim: Gwall cyfluniad cyfarwyddwr"
+
+msgid "Exim: Retry configuration error"
+msgstr "Exim: Gwall cyfluniad ailgeisio"
+
+msgid "Exim: Rewrite configuration error"
+msgstr "Exim: Gwall cyfluniad ailysgrifennu"
+
+msgid "Exim: Authentication configuration error"
+msgstr "Exim: Gwall cyfluniad dilysu"
+
+msgid "Exim: ACL configuration error"
+msgstr "Exim: Gwall cyfluniad ACL"
+
+msgid "Exim: Local_scan configuration error"
+msgstr "Exim: Gwall cyfluniad Local_scan"
+
+msgid "Exim: Lookup configuration error"
+msgstr "Exim: Gwall cyfluniad chwilio"
+
+msgid "Exim: Expansion configuration error"
+msgstr "Exim: Gwall cyfluniad ehangu"
+
+msgid "HTTP Protocol Versions"
+msgstr "Fersiynau Protocol HTTP"
+
+msgid "Protocol"
+msgstr "Protocol"
+
+msgid "Request %"
+msgstr "Cyfran ceisiadau"
+
+msgid "Bandwidth %"
+msgstr "Cyfran lled band"
+
+msgid "Each request requires a new connection"
+msgstr "Mae angen cysylltiad newydd ar bob cais"
+
+msgid "Multiple requests can reuse one connection"
+msgstr "Gall sawl cais rannu'r un cysylltiad"
+
+msgid "Multiple requests in parallel over one connection"
+msgstr "Gellir prosesu sawl cais yn gyfochrog o fewn un cysylltiad"
+
+msgid "Faster connection, better performance on poor networks"
+msgstr "Cysylltiad cyflymach, perfformiad gwell ar rwydweithiau araf"
+
+msgid "No protocol data available"
+msgstr "Dim data protocol ar gael"
+
+msgid "of requests use HTTP/1.0"
+msgstr "o geisiadau yn defnyddio protocol HTTP/1.0"
+
+msgid "From access logs"
+msgstr "O logiau mynediad"
+
+msgid "No HTTP/2 requests detected"
+msgstr "Ni chanfuwyd unrhyw geisiadau HTTP/2"
+
+msgid "All requests are HTTP/1.0, no HTTP/2 requests"
+msgstr "Mae'r holl geisiadau presennol yn HTTP/1.0, dim ceisiadau HTTP/2"
+
+msgid "HTTP/3 not detected"
+msgstr "Ni chanfuwyd unrhyw geisiadau HTTP/3"
+
+msgid "all requests do not include QUIC/HTTP/3 protocol requests"
+msgstr "Nid yw'r holl geisiadau presennol yn cynnwys protocol QUIC/HTTP/3"
+
+msgid "Mail Authentication Statistics"
+msgstr "Ystadegau Dilysu Post"
+
+msgid "Authentication"
+msgstr "Math dilysu"
+
+msgid "Pass"
+msgstr "Llwyddiant"
+
+msgid "Fail"
+msgstr "Methiant"
+
+msgid "Softfail"
+msgstr "Methiant meddal"
+
+msgid "Neutral"
+msgstr "Niwtral"
+
+msgid "None"
+msgstr "Dim"
+
+msgid "Mail Queue Delay Statistics"
+msgstr "Ystadegau Oedi Ciw Post"
+
+msgid "Delay Range"
+msgstr "Ystod oedi"
+
+msgid "Count"
+msgstr "Nifer"
+
+msgid "Percentage"
+msgstr "Canran"
+
+msgid "TLS Encryption Statistics"
+msgstr "Ystadegau Amgryptio TLS"
+
+msgid "TLS Versions"
+msgstr "Fersiynau TLS"
+
+msgid "Top Ciphers"
+msgstr "Y setiau siffr mwyaf cyffredin"
+
+msgid "robot_hits_detail_both"
+msgstr "Cyfanswm ceisiadau: %s (tudalennau arferol: %s, robots.txt: %s)"
+
+msgid "robot_hits_detail_only_robots"
+msgstr "Mynediad i robots.txt yn unig: %s gwaith, ni gasglodd dudalennau eraill"
+
+msgid "robot_hits_detail_normal"
+msgstr "Ceisiadau ar gyfer tudalennau arferol: %s"
+
+msgid "Troubleshooting"
+msgstr "Datrys Problemau"
+
+msgid "Did you use the correct URL?"
+msgstr "A wnaethoch chi ddefnyddio'r URL cywir?"
+
+msgid "Example:"
+msgstr "Enghraifft:"
+
+msgid "Did you use correct config parameter?"
+msgstr "A wnaethoch chi ddefnyddio'r paramedr cyfluniad cywir?"
+
+msgid "Example: If your config file is awstats.mysite.conf, use -config=mysite"
+msgstr "Enghraifft: Os yw'ch ffeil gyfluniad yn awstats.mysite.conf, defnyddiwch -config=mysite"
+
+msgid "Did you create your config file 'awstats.$SiteConfig.conf'?"
+msgstr "A wnaethoch chi greu'ch ffeil gyfluniad 'awstats.$SiteConfig.conf'?"
+
+msgid "If not, you can run \"awstats_configure.pl\" from command line, or create it manually."
+msgstr "Os na, gallwch redeg \"awstats_configure.pl\" o'r llinell orchymyn, neu ei greu â llaw."
+
+msgid "Setup"
+msgstr "Gosod"
+
+msgid "file, web server or permissions may be wrong."
+msgstr "mae'n bosibl bod y ffeil, y gweinydd gwe, neu'r caniatadau'n anghywir."
+
+msgid "Check config file, permissions and AWStats documentation (in 'docs' directory)."
+msgstr "Gwiriwch y ffeil gyfluniad, y caniatadau, a dogfennaeth AWStats (yn y cyfeiriadur 'docs')."
+
+msgid "Warning: Can't find language files for \"%s\". English will be used."
+msgstr "Rhybudd: Ni ellir dod o hyd i ffeiliau iaith ar gyfer \"%s\". Defnyddir Saesneg."
+
+msgid "%s process (ID %s) interrupted by signal %s."
+msgstr "Torrwyd y broses %s (ID %s) gan signal %s."
+
+msgid "An AWStats update process seems to be already running for this config file. Try later. If this is not true, remove manually lock file"
+msgstr "Mae'n ymddangos bod proses diweddaru AWStats eisoes yn rhedeg ar gyfer y ffeil gyfluniad hon. Ceisiwch yn nes ymlaen. Os nad yw hyn yn wir, tynnwch y ffeil clo â llaw"
+
+msgid "Report Overview"
+msgstr "Trosolwg o'r Adroddiad"
+
+msgid "Monthly Statistics"
+msgstr "Ystadegau yn ôl Mis"
+
+msgid "Daily Statistics"
+msgstr "Ystadegau yn ôl Dyddiad"
+
+msgid "Statistics by Day of Week"
+msgstr "Ystadegau yn ôl Diwrnod o'r Wythnos"
+
+msgid "Hourly Page Views"
+msgstr "Golygfeydd Tudalennau yn ôl Awr"
+
+msgid "Traffic Sources"
+msgstr "Ffynonellau Traffig"
+
+msgid "Other Sources"
+msgstr "Ffynonellau Eraill"
+
+msgid "tooltip_1"
+msgstr "Nifer sesiynau ymwelydd ar y wefan. Pan nad oes gweithgaredd am fwy na 30 munud, mae'r ymweliad nesaf yn cael ei gyfrif fel un newydd."
+
+msgid "tooltip_2"
+msgstr "Nifer yr ymwelwyr gwahanol a ymwelodd â'ch gwefan yn y cyfnod amser a ddewiswyd."
+
+msgid "tooltip_3"
+msgstr "Nifer y ceisiadau sy'n cael eu hystyried yn dudalennau (fel HTML, PHP, ASP, ac ati), ac eithrio ffeiliau statig fel delweddau, CSS, JS."
+
+msgid "tooltip_4"
+msgstr "Cyfanswm yr holl geisiadau a anfonwyd i'r gweinydd, gan gynnwys tudalennau, delweddau, CSS, JS, a phob ffeil arall."
+
+msgid "tooltip_5"
+msgstr "Cyfanswm y data a drosglwyddwyd gan y gweinydd mewn ymateb i geisiadau defnyddwyr."
+
+msgid "tooltip_13"
+msgstr "Ystadegau ffynonellau sy'n dod i'ch gwefan trwy beiriannau chwilio. Yn dangos pa beiriannau chwilio sy'n dod â thraffig a pha dermau chwilio y mae ymwelwyr yn eu defnyddio."
+
+msgid "tooltip_14"
+msgstr "Ystadegau ffynonellau sy'n dod i'ch gwefan trwy ddolenni allanol o wefannau eraill. Yn dangos pa wefannau sy'n cysylltu â chi a faint o draffig maent yn ei ddod."
+
+msgid "tooltip_15"
+msgstr "Termau chwilio y mae ymwelwyr yn eu defnyddio i ddod o hyd i'ch gwefan trwy beiriannau chwilio. Geiriau allweddol yw geiriau unigol, ymadroddion allweddol yw cyfuniadau o sawl gair."
+
+msgid "tooltip_16"
+msgstr "Rhaglenni awtomataidd fel robotiaid peiriannau chwilio, robotiaid hyfforddi AI, sganwyr gwendidau, ac ati. Mae'r rhif mewn cromfachau yn cynrychioli nifer y ceisiadau ar gyfer tudalennau arferol a robots.txt."
+
+msgid "tooltip_17"
+msgstr "Graff dosbarthiad traffig dros 24 awr. Yn dangos traffig eich gwefan ar wahanol oriau, yn eich helpu i ddeall amseroedd gweithgaredd defnyddwyr."
+
+msgid "tooltip_18"
+msgstr "Mae'r golofn hon yn dangos gwerthoedd cyfartalog ar gyfer pob diwrnod/wythnos yn y cyfnod amser a ddewiswyd, yn eich helpu i ddeall y tueddiad cyffredinol."
+
+msgid "tooltip_19"
+msgstr "Cliciwch ar eitemau yn y graff i weld gwybodaeth fanwl. Mae hofran y llygoden dros elfennau'r graff yn dangos gwerthoedd penodol."
+
+msgid "tooltip_20"
+msgstr "Data na ellir ei ddosbarthu i'r ystodau presennol, fel arfer oherwydd fformat data anarferol neu goll."
+
+msgid "tooltip_21"
+msgstr "Cofnodwyd ymosodiadau abwydod. Mae abwydod yn rhaglenni maleisus hunan-ddyblygu sy'n lledu fel arfer trwy wendidau rhwydwaith."
+
+msgid "AWStats %s - Advanced Web Statistics"
+msgstr "AWStats %s - Ystadegau Gwe Uwch"
+
+msgid "Copyright (c) 2000-2025 Laurent Destailleur"
+msgstr "Hawlfraint (c) 2000-2025 Laurent Destailleur"
+
+msgid "Copyright (c) 2026-latest Community Edition"
+msgstr "Hawlfraint (c) 2026-presennol Rhifyn Cymunedol"
+
+msgid "AWStats comes with ABSOLUTELY NO WARRANTY. It's a free software distributed with a GNU General Public License (See LICENSE file for details)."
+msgstr "Dosberthir AWStats HEB UNRHYW WARANT. Mae'n feddalwedd rhad ac am ddim a ddosberthir o dan Drwydded Gyhoeddus Cyffredinol GNU (Gweler ffeil LICENSE am fanylion)."
+
+msgid "Syntax: %s -config=virtualhostname [options]"
+msgstr "Cystrawen: %s -config=enw gwesteiwr rhithwir [dewisiadau]"
+
+msgid "This runs %s in command line to update statistics (-update option) of a web site, from the log file defined in AWStats config file, or build a HTML report (-output option)."
+msgstr "Mae hwn yn rhedeg %s yn y llinell orchymyn i ddiweddaru ystadegau (-option -update) gwefan, o'r ffeil log a ddiffinnir yn ffeil cyfluniad AWStats, neu i adeiladu adroddiad HTML (-option -output)."
+
+msgid "First, %s tries to read %s.virtualhostname.conf as the config file. If not found, %s tries to read %s.conf, and finally the full path passed to -config="
+msgstr "Yn gyntaf, mae %s yn ceisio darllen %s.enw gwesteiwr rhithwir.conf fel y ffeil gyfluniad. Os na chaiff ei darganfod, mae %s yn ceisio darllen %s.conf, ac yn olaf y llwybr llawn a drosglwyddir i -config="
+
+msgid "Note 1: Config files (*.conf) must be in /etc/awstats, /usr/local/etc/awstats, /etc or same directory than awstats.pl script file."
+msgstr "Nodyn 1: Rhaid i ffeiliau cyfluniad (*.conf) fod yn /etc/awstats, /usr/local/etc/awstats, /etc neu'r un cyfeiriadur â ffeil sgript awstats.pl."
+
+msgid "Note 2: If AWSTATS_FORCE_CONFIG environment variable is defined, AWStats will use it as the 'config' value, whatever is the value on command line or URL."
+msgstr "Nodyn 2: Os diffinnir newidyn amgylchedd AWSTATS_FORCE_CONFIG, bydd AWStats yn ei ddefnyddio fel gwerth 'config', waeth beth yw'r gwerth ar y llinell orchymyn neu URL."
+
+msgid "See AWStats documentation for all setup instructions."
+msgstr "Gweler dogfennaeth AWStats am yr holl gyfarwyddiadau gosod."
+
+msgid "Options to update statistics:"
+msgstr "Dewisiadau i ddiweddaru ystadegau:"
+
+msgid "  -update        to update statistics (default)"
+msgstr "  -update        diweddaru ystadegau (diofyn)"
+
+msgid "  -showsteps     to add benchmark information every %s lines processed"
+msgstr "  -showsteps     ychwanegu gwybodaeth meincnod ar ôl pob %s llinell wedi'i phrosesu"
+
+msgid "  -showcorrupted to add output for each corrupted lines found, with reason"
+msgstr "  -showcorrupted dangos allbwn ar gyfer pob llinell lygredig a ganfuwyd, gyda rheswm"
+
+msgid "  -showdropped   to add output for each dropped lines found, with reason"
+msgstr "  -showdropped   dangos allbwn ar gyfer pob llinell a ollyngwyd a ganfuwyd, gyda rheswm"
+
+msgid "  -showunknownorigin  to output referer when it can't be parsed"
+msgstr "  -showunknownorigin    dangos cyfeirydd pan na ellir ei ddosrannu"
+
+msgid "  -showdirectorigin   to output log line when origin is a direct access"
+msgstr "  -showdirectorigin     dangos llinell log pan fo'r tarddiad yn fynediad uniongyrchol"
+
+msgid "  -updatefor=n   to stop the update process after parsing n lines"
+msgstr "  -updatefor=n    stopio'r broses ddiweddaru ar ôl dosrannu n llinell"
+
+msgid "  -LogFile=x     to change log to analyze whatever is 'LogFile' in config file"
+msgstr "  -LogFile=x      newid y log i'w ddadansoddi, waeth beth yw 'LogFile' yn y ffeil gyfluniad"
+
+msgid "  Be care to process log files in chronological order when updating statistics."
+msgstr "  Byddwch yn ofalus i brosesu ffeiliau log yn nhrefn gronolegol wrth ddiweddaru ystadegau."
+
+msgid "Options to show statistics:"
+msgstr "Dewisiadau i ddangos ystadegau:"
+
+msgid "  -output      to output main HTML report (no update made except with -update)"
+msgstr "  -output       dangos y prif adroddiad HTML (dim diweddariad oni bai fod -update)"
+
+msgid "  -output=x    to output other report pages where x is:"
+msgstr "  -output=x     dangos tudalennau adroddiad eraill lle mae x yn:"
+
+msgid "build page of all domains/countries"
+msgstr "adeiladu tudalen yr holl barthau/gwledydd"
+
+msgid "build page of all hosts"
+msgstr "adeiladu tudalen yr holl westeiwyr"
+
+msgid "build page of last hits for hosts"
+msgstr "adeiladu tudalen y ceisiadau olaf ar gyfer gwesteiwyr"
+
+msgid "build page of all unresolved IP"
+msgstr "adeiladu tudalen yr holl gyfeiriadau IP nas datryswyd"
+
+msgid "build page of all email senders (maillog)"
+msgstr "adeiladu tudalen yr holl anfonwyr post (maillog)"
+
+msgid "build page of last email senders (maillog)"
+msgstr "adeiladu tudalen yr anfonwyr post olaf (maillog)"
+
+msgid "build page of all email receivers (maillog)"
+msgstr "adeiladu tudalen yr holl dderbynwyr post (maillog)"
+
+msgid "build page of last email receivers (maillog)"
+msgstr "adeiladu tudalen y derbynwyr post olaf (maillog)"
+
+msgid "build page of all logins used"
+msgstr "adeiladu tudalen yr holl fewngofnodion a ddefnyddiwyd"
+
+msgid "build page of last hits for logins"
+msgstr "adeiladu tudalen y ceisiadau olaf ar gyfer mewngofnodion"
+
+msgid "build page of all robots/spider visits"
+msgstr "adeiladu tudalen yr holl ymweliadau robot/pry cop"
+
+msgid "build page of last hits for robots"
+msgstr "adeiladu tudalen y ceisiadau olaf ar gyfer robotiaid"
+
+msgid "list most often viewed pages"
+msgstr "rhestru'r tudalennau a welir amlaf"
+
+msgid "list most often viewed pages matching filter"
+msgstr "rhestru'r tudalennau a welir amlaf sy'n cyfateb i'r hidlydd"
+
+msgid "list entry pages"
+msgstr "rhestru tudalennau mynediad"
+
+msgid "list entry pages matching filter"
+msgstr "rhestru tudalennau mynediad sy'n cyfateb i'r hidlydd"
+
+msgid "list exit pages"
+msgstr "rhestru tudalennau ymadael"
+
+msgid "list exit pages matching filter"
+msgstr "rhestru tudalennau ymadael sy'n cyfateb i'r hidlydd"
+
+msgid "build page with os detailed versions"
+msgstr "adeiladu tudalen gyda manylion fersiynau system weithredu"
+
+msgid "build page with browsers detailed versions"
+msgstr "adeiladu tudalen gyda manylion fersiynau porwr"
+
+msgid "list 'User Agents' with unknown browser"
+msgstr "rhestru 'User Agents' gyda phorwr anhysbys"
+
+msgid "list 'User Agents' with unknown OS"
+msgstr "rhestru 'User Agents' gyda system weithredu anhysbys"
+
+msgid "build page of all refering search engines"
+msgstr "adeiladu tudalen yr holl beiriannau chwilio cyfeiriol"
+
+msgid "build page of all refering pages"
+msgstr "adeiladu tudalen yr holl dudalennau cyfeiriol"
+
+msgid "list all keyphrases used on search engines"
+msgstr "rhestru'r holl ymadroddion allweddol a ddefnyddir ar beiriannau chwilio"
+
+msgid "list all keywords used on search engines"
+msgstr "rhestru'r holl eiriau allweddol a ddefnyddir ar beiriannau chwilio"
+
+msgid "list 'Referers' for 404 errors"
+msgstr "rhestru'r 'Cyfeiryddion' ar gyfer gwallau 404"
+
+msgid "build page of all values for ExtraSection X"
+msgstr "adeiladu tudalen yr holl werthoedd ar gyfer ExtraSection X"
+
+msgid "  -staticlinks           to have static links in HTML report page"
+msgstr "  -staticlinks           defnyddio dolenni statig ar dudalen adroddiad HTML"
+
+msgid "  -staticlinksext=xxx    to have static links with .xxx extension instead of .html"
+msgstr "  -staticlinksext=xxx    defnyddio dolenni statig gydag estyniad .xxx yn lle .html"
+
+msgid "  -lang=LL     to output a HTML report in language LL (en,de,es,fr,it,nl,cy,...)"
+msgstr "  -lang=LL     dangos adroddiad HTML yn yr iaith LL (en,de,es,fr,it,nl,cy,...)"
+
+msgid "  -month=MM    to output a HTML report for an old month MM"
+msgstr "  -month=MM    dangos adroddiad HTML ar gyfer mis hŷn MM"
+
+msgid "  -year=YYYY   to output a HTML report for an old year YYYY"
+msgstr "  -year=YYYY   dangos adroddiad HTML ar gyfer blwyddyn hŷn YYYY"
+
+msgid "  The 'date' options doesn't allow you to process old log file. They only allow you to see a past report for a chosen month/year period instead of current month/year."
+msgstr "  Nid yw'r dewisiadau 'dyddiad' yn caniatáu ichi brosesu hen ffeil log. Maent ond yn caniatáu ichi weld adroddiad yn y gorffennol ar gyfer cyfnod mis/blwyddyn a ddewiswyd yn lle'r mis/blwyddyn cyfredol."
+
+msgid "Other options:"
+msgstr "Dewisiadau eraill:"
+
+msgid "  -debug=X     to add debug informations lesser than level X (speed reduced)"
+msgstr "  -debug=X     ychwanegu gwybodaeth dadfygio sy'n llai na lefel X (cyflymder wedi'i leihau)"
+
+msgid "  -version     show AWStats version"
+msgstr "  -version, -v      dangos fersiwn AWStats"
+
+msgid "Now supports/detects:"
+msgstr "Nawr yn cefnogi/canfod:"
+
+msgid "  Web/Ftp/Mail/streaming server log analyzis (and load balanced log files)"
+msgstr "  Dadansoddi log gweinydd gwe/FTP/post/ffrydio (a ffeiliau log wedi'u cydbwyso llwyth)"
+
+msgid "  Reverse DNS lookup (IPv4 and IPv6) and GeoIP lookup"
+msgstr "  Chwiliad DNS gwrthdro (IPv4 ac IPv6) a chwiliad GeoIP"
+
+msgid "  Number of visits, number of unique visitors"
+msgstr "  Nifer yr ymweliadau, nifer yr ymwelwyr unigryw"
+
+msgid "  Visits duration and list of last visits"
+msgstr "  Hyd yr ymweliadau a rhestr yr ymweliadau diwethaf"
+
+msgid "  Authenticated users"
+msgstr "  Defnyddwyr wedi'u dilysu"
+
+msgid "  Days of week and rush hours"
+msgstr "  Diwrnodau'r wythnos ac oriau brig"
+
+msgid "  Hosts list and unresolved IP addresses list"
+msgstr "  Rhestr gwesteiwyr a rhestr cyfeiriadau IP nas datryswyd"
+
+msgid "  Most viewed, entry and exit pages"
+msgstr "  Tudalennau a welir fwyaf, mynediad ac ymadael"
+
+msgid "  Files type and Web compression (mod_gzip, mod_deflate stats)"
+msgstr "  Mathau ffeiliau a chywasgu gwe (ystadegau mod_gzip, mod_deflate)"
+
+msgid "  Configured Database Statistics"
+msgstr "  Ystadegau Cronfa Ddata wedi'u Cyflunio"
+
+msgid "  %s domains/countries"
+msgstr "  %s parth/gwlad"
+
+msgid "  %s robots"
+msgstr "  %s robot"
+
+msgid "  %s worm's families"
+msgstr "  %s teulu abwydyn"
+
+msgid "  %s operating systems"
+msgstr "  %s system weithredu"
+
+msgid "  %s browsers (%s with phone browsers database)"
+msgstr "  %s porwr (%s gyda chronfa ddata porwyr ffôn)"
+
+msgid "  %s search engines (and keyphrases/keywords used from them)"
+msgstr "  %s peiriant chwilio (a'r ymadroddion allweddol/geiriau allweddol a ddefnyddir ganddynt)"
+
+msgid "  All HTTP errors with last referrer"
+msgstr "  Holl wallau HTTP gyda'r cyfeirydd diwethaf"
+
+msgid "  Report by day/month/year"
+msgstr "  Adroddiad yn ôl dydd/mis/blwyddyn"
+
+msgid "  Dynamic or static HTML or XHTML reports, static PDF reports"
+msgstr "  Adroddiadau HTML neu XHTML deinamig neu statig, adroddiadau PDF statig"
+
+msgid "  Indexed text or XML monthly database"
+msgstr "  Testun mynegai neu gronfa ddata fisol XML"
+
+msgid "  And a lot of other advanced features and options..."
+msgstr "  A llawer o nodweddion a dewisiadau uwch eraill..."
+
+msgid "  New versions and FAQ at http://www.awstats.org"
+msgstr "  Fersiynau newydd a Chwestiynau Cyffredin yn https://github.com/hestiacn/vstats/issues"

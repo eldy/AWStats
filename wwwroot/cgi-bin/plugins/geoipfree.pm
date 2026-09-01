@@ -1,109 +1,114 @@
 #!/usr/bin/perl
 #-----------------------------------------------------------------------------
-# GeoIpFree AWStats plugin
-# This plugin allow you to get AWStats country report with countries detected
-# from a Geographical database (GeoIP internal database) instead of domain
-# hostname suffix.
-#-----------------------------------------------------------------------------
-# Perl Required Modules: Geo::IPfree (version 0.2+)
+# GeoIpFree AWStats plugin - Fixed
 #-----------------------------------------------------------------------------
 
-
-# <-----
-# ENTER HERE THE USE COMMAND FOR ALL REQUIRED PERL MODULES
 push @INC, "${DIR}/plugins";
-if (!eval ('require "Geo/IPfree.pm";')) { return $@?"Error: $@":"Error: Need Perl module Geo::IPfree"; }
-# ----->
-#use strict;
+if (!eval ('require Geo::IPfree;')) { 
+    return $@?"Error: $@":"Error: Need Perl module Geo::IPfree"; 
+}
 no strict "refs";
 
-
-
-#-----------------------------------------------------------------------------
-# PLUGIN VARIABLES
-#-----------------------------------------------------------------------------
-# <-----
-# ENTER HERE THE MINIMUM AWSTATS VERSION REQUIRED BY YOUR PLUGIN
-# AND THE NAME OF ALL FUNCTIONS THE PLUGIN MANAGE.
 my $PluginNeedAWStatsVersion="5.5";
 my $PluginHooksFunctions="GetCountryCodeByAddr GetCountryCodeByName";
-# ----->
 
-# <-----
-# IF YOUR PLUGIN NEED GLOBAL VARIABLES, THEY MUST BE DECLARED HERE.
 use vars qw/
 %TmpDomainLookup
+%TmpDomainFullLocation
 $gi
 /;
-# ----->
-
-
-
-#-----------------------------------------------------------------------------
-# PLUGIN FUNCTION: Init_pluginname
-#-----------------------------------------------------------------------------
-sub Init_geoipfree {
-	my $InitParams=shift;
-	my $checkversion=&Check_Plugin_Version($PluginNeedAWStatsVersion);
-
-	# <-----
-	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
-	debug(" Plugin geoipfree: InitParams=$InitParams",1);
-	%TmpDomainLookup=();
-	$gi = Geo::IPfree->new();
-#	$gi->Faster; 	# Do not enable Faster as the Memoize module is rarely available
-	# ----->
-
-	return ($checkversion?$checkversion:"$PluginHooksFunctions");
+use Encode qw(encode_utf8 decode_utf8);
+use open ':std', ':encoding(UTF-8)';
+sub _t {
+    my $str = shift;
+    return $str;
 }
 
+sub Init_geoipfree {
+    my $InitParams=shift;
+    my $checkversion=&Check_Plugin_Version($PluginNeedAWStatsVersion);
+    debug(" Plugin geoipfree: InitParams=$InitParams",1);
+    %TmpDomainLookup=();
+    %TmpDomainFullLocation=();
+    $gi = Geo::IPfree->new();
+    return ($checkversion?$checkversion:"$PluginHooksFunctions");
+}
 
-#-----------------------------------------------------------------------------
-# PLUGIN FUNCTION: GetCountryCodeByName_pluginname
-# UNIQUE: YES (Only one plugin using this function can be loaded)
-# GetCountryCodeByName is called to translate a host name into a country name.
-#-----------------------------------------------------------------------------
 sub GetCountryCodeByName_geoipfree {
     my $param="$_[0]";
-	# <-----
-	my $res=$TmpDomainLookup{$param}||'';
-	if (! $res) {
-		($res,undef)=$gi->LookUp($param);
-		if ($res !~ /\w\w/) { $res='ip'; }
-		else { $res=lc($res); }
-		$TmpDomainLookup{$param}=$res;
-		if ($Debug) { debug("  Plugin geoipfree: GetCountryCodeByName for $param: $res",5); }
-	}
-	elsif ($Debug) { debug("  Plugin geoipfree: GetCountryCodeByName for $param: Already resolved to $res",5); }
-	# ----->
-	return $res;
+    my $res=$TmpDomainLookup{$param}||'';
+    if (! $res) {
+        my ($country_code, $full_location, $state, $city) = $gi->LookUp($param);
+        
+        my $display_location = '';
+        if ($full_location && $full_location ne '' && $full_location ne _t("Unknown")) {
+            $display_location = $full_location;
+        } elsif ($city && $city ne '') {
+            $display_location = "$country_code, $city";
+        } elsif ($state && $state ne '') {
+            $display_location = "$country_code, $state";
+        } else {
+            $display_location = $country_code;
+        }
+        
+        $display_location =~ s/,\s*$//;
+        $display_location =~ s/^\s*//;
+        
+        if ($display_location && $display_location ne '' && $display_location ne '--' && $display_location ne 'ip') {
+            $res = $display_location;
+        } else {
+            $res = $country_code;
+            if ($res !~ /\w\w/) { $res='ip'; }
+            else { $res=lc($res); }
+        }
+        
+        $TmpDomainLookup{$param}=$res;
+    }
+    return $res;
 }
 
-#-----------------------------------------------------------------------------
-# PLUGIN FUNCTION: GetCountryCodeByAddr_pluginname
-# UNIQUE: YES (Only one plugin using this function can be loaded)
-# GetCountryCodeByAddr is called to translate an ip into a country name.
-#-----------------------------------------------------------------------------
 sub GetCountryCodeByAddr_geoipfree {
     my $param="$_[0]";
-	# <-----
-	my $res=$TmpDomainLookup{$param}||'';
-	if (! $res) {
-		($res,undef)=$gi->LookUp($param);
-		if ($res !~ /\w\w/) { $res='ip'; }
-		else { $res=lc($res); }
-		$TmpDomainLookup{$param}=$res;
-		if ($Debug) { debug("  Plugin geoipfree: GetCountryCodeByAddr for $param: $res",5); }
-	}
-	elsif ($Debug) { debug("  Plugin geoipfree: GetCountryCodeByAddr for $param: Already resolved to $res",5); }
-	# ----->
-	return $res;
+    my $res=$TmpDomainLookup{$param}||'';
+    if (! $res) {
+        my ($country_code, $full_location, $state, $city) = $gi->LookUp($param);
+        
+        my $display_location = '';
+        if ($full_location && $full_location ne '' && $full_location ne _t("Unknown")) {
+            $display_location = $full_location;
+        } elsif ($city && $city ne '') {
+            $display_location = "$country_code, $city";
+        } elsif ($state && $state ne '') {
+            $display_location = "$country_code, $state";
+        } else {
+            $display_location = $country_code;
+        }
+        
+        $display_location =~ s/,\s*/, /g;
+        $display_location =~ s/^\s*//;
+        $display_location =~ s/\s*$//;
+
+        my $storage_location = $display_location;
+        $storage_location =~ s/ /_/g;
+        $storage_location = encode_utf8($storage_location);
+        
+        my $code = lc($country_code);
+        $TmpDomainFullLocation{$code} = {
+            display => $display_location,
+            code => $code,
+            country_name => $country_code,
+            state => $state,
+            city => $city
+        };
+        
+        $res = $storage_location;
+        $TmpDomainLookup{$param} = $res;
+        
+        if ($Debug) {
+            debug(" Plugin geoipfree: IP=$param -> Code=$code, Location=$display_location",2);
+        }
+    }
+    return $res;
 }
 
-1;	# Do not remove this line
-
-
-# Internal IP address:
-# 10.x.x.x
-# 192.168.x.x
-
+1;

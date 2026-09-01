@@ -1,0 +1,54 @@
+
+
+
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="41.8523mm" height="41.8523mm" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 5.35288 5.35288"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .str0 {stroke:#FF9900;stroke-width:0.0255798}
+    .fil1 {fill:url(#id1)}
+    .fil0 {fill:url(#id2)}
+    .fil3 {fill:url(#id3)}
+    .fil2 {fill:url(#id4)}
+    .fil4 {fill:url(#id5)}
+    .fil5 {fill:url(#id6);fill-rule:nonzero}
+   ]]>
+  </style>
+    <clipPath id="id0">
+     <path d="M1.24392 0.493947l2.89495 0 0 4.36758 -2.89495 0 0 -4.36758z"/>
+    </clipPath>
+  <radialGradient id="id1" gradientUnits="userSpaceOnUse" cx="2.79226" cy="2.7556" r="7.79853" fx="2.79226" fy="2.7556">
+   <stop offset="0" style="stop-color:white"/>
+   <stop offset="1" style="stop-color:#FFCC00"/>
+  </radialGradient>
+  <radialGradient id="id2" gradientUnits="userSpaceOnUse" xlink:href="#id1" cx="4.27462" cy="2.3568" r="7.79853" fx="4.27462" fy="2.3568">
+  </radialGradient>
+  <radialGradient id="id3" gradientUnits="userSpaceOnUse" xlink:href="#id1" cx="1.07953" cy="2.33506" r="7.31261" fx="1.07953" fy="2.33506">
+  </radialGradient>
+  <radialGradient id="id4" gradientUnits="userSpaceOnUse" xlink:href="#id1" cx="1.08484" cy="2.46894" r="7.79853" fx="1.08484" fy="2.46894">
+  </radialGradient>
+  <radialGradient id="id5" gradientUnits="userSpaceOnUse" xlink:href="#id1" cx="-0.564521" cy="2.34437" r="8.03383" fx="-0.564521" fy="2.34437">
+  </radialGradient>
+  <radialGradient id="id6" gradientUnits="userSpaceOnUse" cx="0.652337" cy="3.19643" r="1.995" fx="0.652337" fy="3.19643">
+   <stop offset="0" style="stop-color:yellow"/>
+   <stop offset="1" style="stop-color:#33FF66"/>
+  </radialGradient>
+ </defs>
+ <g id="图层_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <circle class="fil0 str0" cx="2.67644" cy="2.67644" r="2.66365"/>
+  <circle class="fil1" cx="2.42573" cy="2.97552" r="1.83262"/>
+  <circle class="fil1" cx="2.55977" cy="2.00245" r="1.96715"/>
+  <circle class="fil2" cx="3.25875" cy="2.8642" r="1.97628"/>
+  <path class="fil3" d="M3.27974 0.349817c1.04711,0 2.06125,1.5695 1.7953,2.52721 -0.265954,0.957709 -0.912292,2.19955 -1.89628,1.93445 -0.984005,-0.265109 -1.8963,-0.849174 -1.8963,-1.8963 0,-1.04711 0.950176,-2.56536 1.99729,-2.56536z"/>
+  <path class="fil4" d="M0.388404 2.07781c0.357606,-1.15406 1.15241,-1.57307 2.79049,-1.45823 1.63807,0.114853 2.26392,2.50442 1.41468,3.47918 -0.849238,0.974758 -2.17558,1.00503 -3.01438,0.559265 -0.838814,-0.445754 -1.5484,-1.42615 -1.19079,-2.58021z"/>
+  <g id="_390979328">
+   <g style="clip-path:url(#id0)">
+    <image id="_390976208" transform="matrix(1 0 0 1 -19.6822 5.43839)" x="20.9262" y="-4.94444" width="2.89495" height="4.36758" xlink:href="xmms_Images\xmms_ImgID1.png"/>
+   </g>
+  </g>
+  <path class="fil5" d="M2.11538 1.7129c-0.0267565,-0.108599 0.0461972,-0.170106 0.106003,-0.229119 0.823185,-0.812416 1.12906,-0.318635 1.69735,-0.755078 0.0546641,-0.0419893 0.0219475,-0.112116 0.0185198,0.0967557 -0.0127899,0.776067 -0.831178,1.32295 -1.49918,1.05526l0.311038 1.39544c0.00276262,0.065024 0.0564675,0.155334 0.0878923,0.214372 0.487168,0.915055 -1.14208,1.71568 -1.39099,0.731328 -0.0811137,-0.320784 0.221956,-0.698445 0.459478,-0.843303 0.0760872,-0.0464018 0.154617,-0.0912944 0.240566,-0.11667 0.0935966,-0.0276262 0.170618,-0.0256054 0.264828,-0.00920874 0.054792,0.00954128 0.109507,0.0167548 0.142748,-0.0035556 -0.18736,-0.740178 -0.14028,-0.786606 -0.438247,-1.53622z"/>
+ </g>
+</svg>

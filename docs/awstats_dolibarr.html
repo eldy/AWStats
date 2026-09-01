@@ -1,71 +1,825 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-<meta name="description" content="AWStats Documentation - Using AWStats Dolibarr ERP CRM module">
-<meta name="keywords" content="awstats, awstat, module, dolibarr, addon">
-<meta name="robots" content="noindex,nofollow">
-<meta name="title" content="AWStats Documentation for AWStats Dolibarr ERP and CRM module">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>AWStats Documentation - AWStats Dolibarr module</title>
-<link rel="stylesheet" href="styles.css" type="text/css">
-<link href="https://plus.google.com/+LaurentDestailleur-Open-Source-Expert" rel="publisher" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWStats · Dolibarr 模块</title>
+    <meta name="description" content="AWStats Documentation - Using AWStats Dolibarr ERP CRM module (中文/English)">
+    <meta name="keywords" content="awstats, dolibarr, erp, crm, module, addon, 模块">
+    <meta name="author" content="Laurent Destailleur (多语言重构)">
+    <meta name="robots" content="noindex,nofollow">
+    <style>
+        /* ========== 现代化全局设计 ========== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-page: #f8fafc; --surface: #ffffff; --surface-secondary: #f1f5f9;
+            --text-primary: #0f172a; --text-secondary: #475569; --accent: #4f46e5;
+            --accent-light: #818cf8; --accent-soft: #eef2ff; --border: #e2e8f0;
+            --card-shadow: 0 20px 25px -5px rgba(0,0,0,0.05), 0 10px 10px -5px rgba(0,0,0,0.02);
+            --header-bg: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            --footer-bg: #eef2ff; --link-color: #4f46e5; --link-visited: #7c3aed;
+            --code-bg: #f1f5f9; --success: #10b981; --warning: #f59e0b; --danger: #ef4444;
+            --step-bg: #dbeafe;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-page: #0f172a; --surface: #1e293b; --surface-secondary: #334155;
+                --text-primary: #f1f5f9; --text-secondary: #cbd5e1; --accent: #818cf8;
+                --accent-light: #a5b4fc; --accent-soft: #2d3a5e; --border: #475569;
+                --card-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
+                --header-bg: linear-gradient(135deg, #4f46e5 0%, #6d28d9 100%);
+                --footer-bg: #1e293b; --link-color: #a5b4fc; --link-visited: #c4b5fd;
+                --code-bg: #334155; --success: #34d399; --warning: #fbbf24; --danger: #f87171;
+                --step-bg: #2d3a5e;
+            }
+        }
+
+        body {
+            background-color: var(--bg-page); color: var(--text-primary);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6; margin: 0; padding: 0;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            display: flex; flex-direction: column; min-height: 100vh;
+        }
+        .container { max-width: 1300px; margin: 0 auto; padding: 0 28px; width: 100%; }
+
+        /* 现代化导航栏 */
+        .nav-bar {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+            background-color: rgba(var(--surface-rgb), 0.8);
+        }
+        .nav-container {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 20px;
+        }
+        .nav-home {
+            font-weight: 700; font-size: 1.3rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-decoration: none; display: flex; align-items: center; gap: 8px;
+        }
+        .nav-links {
+            display: flex; gap: 8px; flex-wrap: wrap;
+        }
+        .nav-links a {
+            color: var(--text-secondary); text-decoration: none;
+            font-weight: 500; padding: 8px 16px; border-radius: 40px;
+            transition: all 0.2s; font-size: 0.95rem;
+        }
+        .nav-links a:hover {
+            background: var(--accent-soft); color: var(--accent);
+        }
+        .nav-links a.active {
+            background: var(--accent); color: white;
+        }
+        .breadcrumb {
+            display: flex; gap: 8px; align-items: center;
+            color: var(--text-secondary); font-size: 0.9rem;
+        }
+        .breadcrumb a { color: var(--link-color); text-decoration: none; }
+
+        /* 现代化头部 */
+        .header {
+            background: var(--header-bg); color: white; border-radius: 0 0 40px 40px;
+            padding: 24px 0 32px; box-shadow: var(--card-shadow); margin-bottom: 30px;
+        }
+        .header-row {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 20px;
+        }
+        .logo-area { display: flex; align-items: center; gap: 16px; }
+        .logo-area img { height: 56px; width: auto; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
+        .site-title {
+            font-size: 2rem; font-weight: 700; background: rgba(255,255,255,0.1);
+            padding: 8px 24px; border-radius: 60px; backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .header-center {
+            flex: 1; text-align: center; font-weight: 500; font-size: 1.2rem;
+            background: rgba(0,0,0,0.1); padding: 8px 24px; border-radius: 60px;
+            backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.15);
+        }
+        .header-right { display: flex; gap: 12px; align-items: center; }
+        .lang-switch {
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 40px; padding: 6px 16px; color: white; font-weight: 500;
+            display: flex; align-items: center; gap: 8px; backdrop-filter: blur(8px);
+        }
+        .lang-switch select {
+            background: transparent; border: none; color: white; font-weight: 500;
+            outline: none; font-size: 0.95rem; cursor: pointer;
+        }
+        .lang-switch select option { background: var(--accent); color: white; }
+        .theme-toggle {
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 40px; padding: 8px 20px; font-size: 0.95rem; color: white;
+            cursor: pointer; display: flex; align-items: center; gap: 8px; backdrop-filter: blur(8px);
+        }
+
+        /* 现代化文档卡片 */
+        .doc-card {
+            background-color: var(--surface); border-radius: 40px;
+            padding: 3rem; box-shadow: var(--card-shadow);
+            border: 1px solid var(--border); margin: 20px 0 40px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5rem; font-weight: 700; letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin: 0 0 25px 0;
+        }
+        h2 {
+            font-size: 2rem; font-weight: 600; margin: 2.5rem 0 1.5rem;
+            color: var(--text-primary); border-bottom: 3px solid var(--accent-soft);
+            padding-bottom: 12px;
+        }
+        h3 {
+            font-size: 1.3rem; font-weight: 600; margin: 2rem 0 1rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* 特性卡片 */
+        .feature-card {
+            background: linear-gradient(135deg, var(--accent-soft), var(--surface));
+            padding: 30px;
+            border-radius: 30px;
+            margin: 30px 0;
+            border: 1px solid var(--border);
+        }
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        /* 步骤卡片 */
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .step-card {
+            background: var(--surface-secondary);
+            padding: 25px;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            position: relative;
+        }
+        .step-number {
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: var(--accent);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
+        }
+        .step-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin: 15px 0 10px 0;
+        }
+
+        /* 配置参数卡片 */
+        .params-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .param-card {
+            background: var(--surface-secondary);
+            padding: 20px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+        }
+        .param-name {
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        .param-desc {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+        .param-example {
+            background: var(--code-bg);
+            padding: 10px 15px;
+            border-radius: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            border: 1px solid var(--border);
+        }
+        /* 模块卡片样式 */
+        .module-card {
+            background: var(--surface-secondary);
+            border-radius: 30px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 1px solid var(--border);
+        }
+        .module-description {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* 链接卡片 */
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .link-card {
+            background: var(--surface-secondary);
+            padding: 25px 20px;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+        .link-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-shadow);
+            border-color: var(--accent-light);
+        }
+        .link-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        .link-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+        .link-url {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            word-break: break-all;
+            margin-bottom: 15px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .link-url a {
+            color: var(--link-color);
+            text-decoration: none;
+            border-bottom: 1px dotted var(--accent-light);
+        }
+        .link-url a:hover {
+            color: var(--accent-light);
+        }
+        .link-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* 徽章样式 */
+        .badge {
+            display: inline-block;
+            background: var(--accent-soft);
+            color: var(--accent);
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin: 10px 5px;
+        }
+
+        /* 代码块 */
+        .code-block {
+            background: var(--code-bg);
+            padding: 15px 20px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        /* 注意框 */
+        .note-box {
+            background: var(--accent-soft);
+            padding: 20px;
+            border-radius: 20px;
+            border-left: 6px solid var(--accent);
+            margin: 20px 0;
+        }
+
+        /* 现代化页脚 */
+        .footer {
+            background-color: var(--footer-bg); margin-top: 60px;
+            padding: 32px 24px; border-radius: 40px 40px 0 0;
+            border-top: 1px solid var(--border); color: var(--text-secondary);
+        }
+        .footer-content {
+            display: flex; flex-wrap: wrap; justify-content: space-between;
+            align-items: center; gap: 20px; max-width: 1300px; margin: 0 auto;
+        }
+        .footer-copyright {
+            background: var(--surface); padding: 8px 24px; border-radius: 60px;
+            border: 1px solid var(--border); font-size: 0.95rem;
+        }
+        
+        .back-to-top {
+            position: fixed; bottom: 30px; right: 30px;
+            background: var(--accent); color: white;
+            width: 56px; height: 56px; border-radius: 28px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; border: none; box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
+            transition: all 0.2s; z-index: 99; font-size: 1.2rem;
+        }
+        .back-to-top:hover {
+            transform: scale(1.1); background: var(--accent-light);
+        }
+        
+        @media (max-width: 700px) {
+            .header-row { flex-direction: column; }
+            .doc-card { padding: 1.8rem; }
+            h1 { font-size: 2rem; }
+            .links-grid, .steps-container, .params-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
+<body>
+    <!-- 导航栏 -->
+    <div class="nav-bar">
+        <div class="container nav-container">
+            <a href="index.html" class="nav-home">
+                <span>🏠</span> AWStats 文档
+            </a>
+            <div class="nav-links">
+                <a href="index.html" data-i18n="navHome">主页</a>
+                <a href="awstats_what.html" data-i18n="navWhat">什么是AWStats</a>
+                <a href="awstats_setup.html" data-i18n="navSetup">安装配置</a>
+                <a href="awstats_webmin.html" data-i18n="navWebmin">Webmin模块</a>
+                <a href="awstats_upgrade.html" data-i18n="navUpgrade">升级指南</a>
+                <a href="awstats_tools.html" data-i18n="navTools">其他工具</a>
+                <a href="awstats_security.html" data-i18n="navSecurity">安全建议</a>
+                <a href="awstats_license.html" data-i18n="navLicense">许可证</a>
+                <a href="awstats_glossary.html" data-i18n="navGlossary">术语表</a>
+                <a href="awstats_faq.html" data-i18n="navFAQ">FAQ</a>
+                <a href="awstats_extra.html" data-i18n="navExtra">额外部分</a>
+                <a href="awstats_dolibarr.html" class="active" data-i18n="navDolibarr">Dolibarr模块</a>
+            </div>
+            <div class="breadcrumb">
+                <a href="index.html" data-i18n="home">主页</a>
+                <span>›</span>
+                <span data-i18n="currentPage">Dolibarr 模块</span>
+            </div>
+        </div>
+    </div>
 
-<body topmargin=10 leftmargin=5>
+    <header class="header">
+        <div class="container header-row">
+            <div class="logo-area">
+                <img src="images/awstats_logo6.png" alt="AWStats" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'56\' height=\'56\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%234f46e5\' rx=\'20\'/%3E%3Ctext x=\'20\' y=\'68\' fill=\'%23ffffff\' font-size=\'60\' font-weight=\'bold\'%3EAW%3C/text%3E%3C/svg%3E';">
+                <span class="site-title" data-i18n="siteTitle">AWStats 8.1</span>
+            </div>
+            <div class="header-center" data-i18n="headerSlogan">
+                ⚡ 先进的日志分析器 · 官方文档
+            </div>
+            <div class="header-right">
+                <div class="lang-switch">
+                    <span>🌐</span>
+                    <select id="langSelector">
+                        <option value="zh" selected>中文</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+                <button class="theme-toggle" id="themeToggleBtn">
+                    <span>🌓</span> <span class="theme-text" data-i18n="themeAuto">自动</span>
+                </button>
+            </div>
+        </div>
+    </header>
 
+    <main class="container">
+        <div class="doc-card">
+            <h1 data-i18n="mainTitle">📊 AWStats Dolibarr ERP-CRM 模块</h1>
 
-<table style="font: 10pt arial,helvetica,verdana" cellpadding=0 cellspacing=0 border=0 bgcolor=#FFFFFF width=100%>
+            <div class="module-card">
+                <div class="module-description" data-i18n="moduleDesc">
+                    现在有很多开源的 ERP 和 CRM 软件（用于管理公司的软件，如发票、商业提案、产品、日程、联系人、库存、销售点等）。其中最著名且易于使用的是 <a href="https://www.dolibarr.org" title="开源 ERP CRM 网站" style="color: var(--accent);">Dolibarr ERP-CRM</a>。
+                    为了为公司管理者提供完整的解决方案，我在这个软件中添加了一个 AWStats 报告模块。
+                </div>
 
-<!-- Large -->
-<tr style="font: 10pt arial,helvetica,verdana">
-<td bgcolor=#9999cc align=center><a href="/"><img src="images/awstats_logo6.png" border=0></a></td>
-<td bgcolor=#9999cc align=center>
-<br>
-<font style="font: 16pt arial,helvetica,sans-serif" color=#EEEEFF><b>AWStats logfile analyzer 8.0 Documentation</b></font><br>
-<br>
-</td>
-<td bgcolor=#9999cc align=center>
-&nbsp;
-</td>
-</tr>
+                <div class="badges">
+                    <span class="badge" data-i18n="badgeOpenSource">✨ 开源</span>
+                    <span class="badge" data-i18n="badgeERP">📦 ERP</span>
+                    <span class="badge" data-i18n="badgeCRM">👥 CRM</span>
+                    <span class="badge" data-i18n="badgeAnalytics">📈 分析</span>
+                </div>
+            <!-- 特性部分 -->
+            <div class="feature-card">
+                <div class="feature-icon">✨</div>
+                <h2 data-i18n="features">特性</h2>
+                <p style="font-size: 1.1rem; color: var(--text-primary);" data-i18n="featuresDesc">
+                    在 Dolibarr ERP/CRM 软件中添加一个新的菜单项，用于查看由 AWStats 日志分析器编译的统计数据。
+                </p>
+            </div>
 
-</table>
+            <!-- 相关链接 -->
+            <h2 data-i18n="relatedLinks">🔗 相关链接</h2>
+            <div class="links-grid">
+                <!-- Dolibarr 项目链接 -->
+                <div class="link-card">
+                    <div class="link-icon">🏢</div>
+                    <div class="link-title" data-i18n="dolibarrProject">Dolibarr 项目</div>
+                    <div class="link-url">
+                        <a href="https://www.dolibarr.org" target="_blank" rel="noopener">https://www.dolibarr.org</a>
+                    </div>
+                    <div data-i18n="dolibarrProjectDesc">开源 ERP CRM 项目门户网站，用于管理您的公司</div>
+                </div>
 
+                <!-- doliStore 下载链接 -->
+                <div class="link-card">
+                    <div class="link-icon">🛒</div>
+                    <div class="link-title" data-i18n="doliStore">doliStore</div>
+                    <div class="link-url">
+                        <a href="https://www.dolistore.com" target="_blank" rel="noopener">https://www.dolistore.com</a>
+                    </div>
+                    <div data-i18n="doliStoreDesc">下载 AWStats Dolibarr 模块的市场平台</div>
+                </div>
 
-<br><br><H1 style="font: 26px arial,helvetica,sans-serif">AWStats Dolibarr ERP-CRM module</H1>
+                <!-- Wiki 文档链接 -->
+                <div class="link-card">
+                    <div class="link-icon">📚</div>
+                    <div class="link-title" data-i18n="wikiDoc">Wiki 文档</div>
+                    <div class="link-url">
+                        <a href="https://wiki.dolibarr.org/index.php/Module_AWStats_En" target="_blank" rel="noopener">wiki.dolibarr.org</a>
+                    </div>
+                    <div data-i18n="wikiDocDesc">模块的 Wiki 文档（英文）</div>
+                </div>
+            </div>
 
-A lot of ERP and CRM softwares (software to manage a company like invoices, commercial proposal, products, agenda, contacts, stocks, point of sale...),
-exists now in OpenSource. On of the most famous and easy to use is <a href="https://www.dolibarr.org" title="Web site of Open source ERP CRM">Dolibarr ERP-CRM</a>.<br>
-So to offer a complete solution for companie's manager, I added a module to add AWStats reporting inside this software.<br>
-This is links to have more informations:<br>
-* Link to dolibarr ERP-CRM project: <a href="https://www.dolibarr.org" title="Portal of Open source project to manage your company">https://www.dolibarr.org</a><br>
-* Link to doliStore where to download AWStats module for Dolibarr: <a href="https://www.dolistore.com" title="Market place for modules">https://www.dolistore.com</a><br>
-* Link to wiki documentation of module: <a href="https://wiki.dolibarr.org/index.php/Module_AWStats_En">https://wiki.dolibarr.org/index.php/Module_AWStats_En</a><br>
-<br>
+            <!-- 安装部分 -->
+            <h2 data-i18n="installation">📥 安装</h2>
+            <div class="steps-container">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-title" data-i18n="step1Title">下载模块</div>
+                    <p data-i18n="step1Desc">从网站 www.dolistore.com 或任何其他来源下载模块的归档文件（.zip 文件）。</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-title" data-i18n="step2Title">安装到 /custom 文件夹</div>
+                    <p data-i18n="step2Desc">将模块安装到 Dolibarr 的 /custom 文件夹：</p>
+                    <ul style="margin-top: 10px; padding-left: 20px;">
+                        <li data-i18n="step2Opt1">进入 主页 - 设置 - 模块 - 部署/安装外部应用/模块</li>
+                        <li data-i18n="step2Opt2">上传文件。如果由于托管提供商锁定而无法从此页面上传，可以手动解压文件：进入 /custom 目录，使用命令 <code class="code-inline">unzip modulefile.zip</code> 解压文件，然后检查包含模块名称的目录是否在 /custom 目录内。如果在子目录中，将其移动到 /custom。</li>
+                    </ul>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-title" data-i18n="step3Title">准备激活</div>
+                    <p data-i18n="step3Desc">模块现在可以激活和使用。</p>
+                </div>
+            </div>
 
+            <!-- 设置部分 -->
+            <h2 data-i18n="setup">⚙️ 设置</h2>
+            <div class="steps-container">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-title" data-i18n="setupStep1Title">启用模块</div>
+                    <p data-i18n="setupStep1Desc">要使用此模块，必须首先使用管理员帐户通过菜单选项"主页 - 设置 - 模块"启用它。选择模块所在的选项卡，然后点击"激活"。</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-title" data-i18n="setupStep2Title">配置模块</div>
+                    <p data-i18n="setupStep2Desc">如果模块缩略图上或模块行末尾出现齿轮图标，点击它以访问模块特定的设置页面。</p>
+                </div>
+            </div>
 
-<hr>
+            <!-- 配置参数 -->
+            <h3>🔧 <span data-i18n="configParams">配置参数</span></h3>
+            <div class="note-box">
+                <p data-i18n="configNote">以下 4 个参数用于告诉 Dolibarr AWStats 的安装位置和使用方式（AWStats 的安装和设置不是此模块的一部分，也不属于本文档，但这是先决条件）。</p>
+            </div>
 
-<!-- You can remove this part if you distribution need documentation without external tags -->
-<!-- BEGIN_SOCIAL_NETWORKS -->
-<div class="htmldoc-ignore">
-<!-- google plus -->
-<span style="color: #bbb; font-weight: normal;">Article written by <a href="https://www.destailleur.fr" rel="author" style="color: #ccc; font-weight: normal;">Laurent Destailleur</a>.</span><br>
-<br>
-<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-<g:plusone></g:plusone>
-<!-- facebook -->
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/fr_FR/all.js#xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-<div class="fb-like" data-href="http://www.awstats.org/docs/awstats_dolibarr.html" data-layout="button_count" data-action="recommend" data-show-faces="false" data-share="true"></div>
-</div>
-<!-- END_SOCIAL_NETWORKS -->
+            <div class="params-grid">
+                <div class="param-card">
+                    <div class="param-name" data-i18n="param1Name">AWStats 数据文件目录（磁盘路径）</div>
+                    <div class="param-desc" data-i18n="param1Desc">在此输入 AWStats 数据文件在文件系统中的存储路径（数据文件是名称匹配 awstatsMMYYYY.txt 的文件）。如果您不知道此目录的位置，请查看 /var/lib/awstats 或搜索名为 awstats*0*.txt 的文件（使用 Unix 命令：<code class="code-inline">find / -name awstats*0*.txt</code>）。</div>
+                </div>
+                <div class="param-card">
+                    <div class="param-name" data-i18n="param2Name">AWStats URL（CGI）</div>
+                    <div class="param-desc" data-i18n="param2Desc">在此输入在浏览器中访问 AWStats 时需要输入的 URL。可能是类似 http://localhost/cgi-bin/awstats.pl 或 http://localhost/awstats/ 的地址。这不是必填项，但如果未提供，切换到 AWStats URL 的链接将不可见。</div>
+                </div>
+                <div class="param-card">
+                    <div class="param-name" data-i18n="param3Name">AWStats 程序位置（磁盘路径）</div>
+                    <div class="param-desc" data-i18n="param3Desc">在此输入 awstats.pl 文件的完整路径。如果您不知道 AWStats 安装在哪里，请检查文件 /usr/lib/cgi-bin/awstats.pl 是否存在。如果不存在，请在磁盘上搜索 awstats.pl 文件（使用 Unix：<code class="code-inline">find / -name awstats.pl</code>）。</div>
+                </div>
+                <div class="param-card">
+                    <div class="param-name" data-i18n="param4Name">显示的配置限制列表</div>
+                    <div class="param-desc" data-i18n="param4Desc">留空此字段（空表示无过滤，或使用","作为分隔符）。</div>
+                </div>
+            </div>
 
+            <!-- 使用部分 -->
+            <h2 data-i18n="usage">📊 使用</h2>
+            <div class="feature-card" style="background: var(--surface-secondary);">
+                <p style="font-size: 1.1rem;" data-i18n="usageDesc">启用模块后，会出现一个名为"AWStats"的菜单。点击它可以查看 AWStats 编译的所有统计数据。</p>
+            </div>
+
+            <!-- 额外说明 -->
+                <div style="margin-top: 30px; padding: 20px; background: var(--surface); border-radius: 20px; border: 1px solid var(--border); text-align: left;">
+                    <p style="margin: 0; color: var(--text-secondary);" data-i18n="moreInfo">
+                        通过这些链接，您可以找到有关 AWStats Dolibarr 模块的更多信息，包括安装说明、配置指南和使用示例。该模块让您可以直接在 Dolibarr 界面中查看网站统计数据，为您的企业管理提供完整的数据分析解决方案。
+                    </p>
+                <p data-i18n="prerequisiteNote"><strong>先决条件：</strong> 在使用此模块之前，您需要先安装和配置 AWStats 日志分析器。AWStats 的安装和配置不在本文档范围内，请参考 AWStats 主文档。</p>
+            </div>
+
+            <hr>
+
+            <!-- 署名 -->
+            <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-top: 20px;">
+                <span style="color: var(--text-secondary);" data-i18n="writtenBy">文章作者：<a href="https://www.destailleur.fr" rel="author" style="color: var(--accent);">Laurent Destailleur</a>。</span>
+                <span class="badge" style="background: var(--accent); color: white;" data-i18n="version">版本 8.1</span>
+            </div>
+        </div>
+    </main>
+
+    <!-- 返回顶部按钮 -->
+    <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="返回顶部">
+        ↑
+    </button>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-copyright">
+                © 1997 - <span id="currentYear"></span> Laurent Destailleur & AWStats <span data-i18n="copyright">团队</span>
+            </div>
+            <div class="footer-license">
+                <a href="awstats_license.html" data-i18n="licenseLink">GNU General Public License</a> · 
+                <a href="https://github.com/eldy/AWStats" rel="publisher" target="_blank" style="display: inline-flex; align-items: center;"><a data-i18n="authorLink"></a> 
+                </a>
+                    <img src="images/favicon.pub/github.svg" style="width: 24px; height: 24px;">
+                </div>
+            <div class="attribution" data-i18n="darkAttr">
+                🌓 自适应暗黑 · 现代化重构
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+            // 完整翻译资源
+            const translations = {
+                zh: {
+                    navHome: "主页",
+                    navWhat: "什么是AWStats",
+                    navSetup: "安装配置",
+                    navWebmin: "Webmin模块",
+                    navUpgrade: "升级指南",
+                    navTools: "其他工具",
+                    navSecurity: "安全建议",
+                    navLicense: "许可证",
+                    navGlossary: "术语表",
+                    navFAQ: "FAQ",
+                    navExtra: "额外部分",
+                    navDolibarr: "Dolibarr模块",
+                    home: "主页",
+                    currentPage: "Dolibarr 模块",
+                    
+                    siteTitle: "AWStats 8.1",
+                    headerSlogan: "⚡ 先进的日志分析器 · 官方文档",
+                    themeAuto: "自动",
+                    mainTitle: "📊 AWStats Dolibarr ERP-CRM 模块",
+                    
+                    features: "特性",
+                    featuresDesc: "在 Dolibarr ERP/CRM 软件中添加一个新的菜单项，用于查看由 AWStats 日志分析器编译的统计数据。",
+                    moduleDesc: "现在有很多开源的 ERP 和 CRM 软件（用于管理公司的软件，如发票、商业提案、产品、日程、联系人、库存、销售点等）。其中最著名且易于使用的是 <a href=\"https://www.dolibarr.org\" title=\"开源 ERP CRM 网站\" style=\"color: var(--accent);\">Dolibarr ERP-CRM</a>。为了为公司管理者提供完整的解决方案，我在这个软件中添加了一个 AWStats 报告模块。",
+                    
+                    badgeOpenSource: "✨ 开源",
+                    badgeERP: "📦 ERP",
+                    badgeCRM: "👥 CRM",
+                    badgeAnalytics: "📈 分析",                    
+                    relatedLinks: "🔗 相关链接",
+                    dolibarrProject: "Dolibarr 项目",
+                    dolibarrProjectDesc: "开源 ERP CRM 项目门户网站，用于管理您的公司",
+                    doliStore: "doliStore",
+                    doliStoreDesc: "下载 AWStats Dolibarr 模块的市场平台",
+                    wikiDoc: "Wiki 文档",
+                    wikiDocDesc: "模块的 Wiki 文档（英文）",
+                    
+                    moreInfo: "通过这些链接，您可以找到有关 AWStats Dolibarr 模块的更多信息，包括安装说明、配置指南和使用示例。该模块让您可以直接在 Dolibarr 界面中查看网站统计数据，为您的企业管理提供完整的数据分析解决方案。",
+
+                    installation: "📥 安装",
+                    step1Title: "下载模块",
+                    step1Desc: "从网站 www.dolistore.com 或任何其他来源下载模块的归档文件（.zip 文件）。",
+                    step2Title: "安装到 /custom 文件夹",
+                    step2Desc: "将模块安装到 Dolibarr 的 /custom 文件夹：",
+                    step2Opt1: "进入 主页 - 设置 - 模块 - 部署/安装外部应用/模块",
+                    step2Opt2: "上传文件。如果由于托管提供商锁定而无法从此页面上传，可以手动解压文件：进入 /custom 目录，使用命令 <code class=\"code-inline\">unzip modulefile.zip</code> 解压文件，然后检查包含模块名称的目录是否在 /custom 目录内。如果在子目录中，将其移动到 /custom。",
+                    step3Title: "准备激活",
+                    step3Desc: "模块现在可以激活和使用。",
+                    
+                    setup: "⚙️ 设置",
+                    setupStep1Title: "启用模块",
+                    setupStep1Desc: "要使用此模块，必须首先使用管理员帐户通过菜单选项\"主页 - 设置 - 模块\"启用它。选择模块所在的选项卡，然后点击\"激活\"。",
+                    setupStep2Title: "配置模块",
+                    setupStep2Desc: "如果模块缩略图上或模块行末尾出现齿轮图标，点击它以访问模块特定的设置页面。",
+                    
+                    configParams: "配置参数",
+                    configNote: "以下 4 个参数用于告诉 Dolibarr AWStats 的安装位置和使用方式（AWStats 的安装和设置不是此模块的一部分，也不属于本文档，但这是先决条件）。",
+                    
+                    param1Name: "AWStats 数据文件目录（磁盘路径）",
+                    param1Desc: "在此输入 AWStats 数据文件在文件系统中的存储路径（数据文件是名称匹配 awstatsMMYYYY.txt 的文件）。如果您不知道此目录的位置，请查看 /var/lib/awstats 或搜索名为 awstats*0*.txt 的文件（使用 Unix 命令：<code class=\"code-inline\">find / -name awstats*0*.txt</code>）。",
+                    
+                    param2Name: "AWStats URL（CGI）",
+                    param2Desc: "在此输入在浏览器中访问 AWStats 时需要输入的 URL。可能是类似 http://localhost/cgi-bin/awstats.pl 或 http://localhost/awstats/ 的地址。这不是必填项，但如果未提供，切换到 AWStats URL 的链接将不可见。",
+                    
+                    param3Name: "AWStats 程序位置（磁盘路径）",
+                    param3Desc: "在此输入 awstats.pl 文件的完整路径。如果您不知道 AWStats 安装在哪里，请检查文件 /usr/lib/cgi-bin/awstats.pl 是否存在。如果不存在，请在磁盘上搜索 awstats.pl 文件（使用 Unix：<code class=\"code-inline\">find / -name awstats.pl</code>）。",
+                    
+                    param4Name: "显示的配置限制列表",
+                    param4Desc: "留空此字段（空表示无过滤，或使用\",\"作为分隔符）。",
+                    
+                    usage: "📊 使用",
+                    usageDesc: "启用模块后，会出现一个名为\"AWStats\"的菜单。点击它可以查看 AWStats 编译的所有统计数据。",
+                    
+                    prerequisiteNote: "<strong>先决条件：</strong> 在使用此模块之前，您需要先安装和配置 AWStats 日志分析器。AWStats 的安装和配置不在本文档范围内，请参考 AWStats 主文档。",
+                    
+                    writtenBy: "文章作者：<a href=\"https://www.destailleur.fr\" rel=\"author\" style=\"color: var(--accent);\">Laurent Destailleur</a>。",
+                    version: "版本 8.1",
+                    copyright: "© 2000 - {year} Laurent Destailleur & AWStats 团队",
+                    licenseLink: "GNU通用公共许可证",
+                    authorLink: "原作者",
+                    darkAttr: "🌓 自适应暗黑 · 中文/English",
+                },
+                en: {
+                    navHome: "Home",
+                    navWhat: "What is AWStats",
+                    navSetup: "Setup",
+                    navWebmin: "Webmin Module",
+                    navUpgrade: "Upgrade Guide",
+                    navTools: "Other Tools",
+                    navSecurity: "Security Tips",
+                    navLicense: "License",
+                    navGlossary: "Glossary",
+                    navFAQ: "FAQ",
+                    navExtra: "Extra Sections",
+                    navDolibarr: "Dolibarr Module",
+                    home: "Home",
+                    currentPage: "Dolibarr Module",
+                    
+                    siteTitle: "AWStats 8.1",
+                    headerSlogan: "⚡ Advanced Log Analyzer · Official Docs",
+                    themeAuto: "Auto",
+                    mainTitle: "📊 AWStats Dolibarr ERP-CRM Module",
+                    
+                    features: "Features",
+                    featuresDesc: "Adds a new menu item in Dolibarr ERP/CRM software to view statistics compiled by AWStats log analyzer.",
+                    moduleDesc: "A lot of ERP and CRM softwares (software to manage a company like invoices, commercial proposal, products, agenda, contacts, stocks, point of sale...), exists now in OpenSource. One of the most famous and easy to use is <a href=\"https://www.dolibarr.org\" title=\"Web site of Open source ERP CRM\" style=\"color: var(--accent);\">Dolibarr ERP-CRM</a>. So to offer a complete solution for companie's manager, I added a module to add AWStats reporting inside this software.",
+                    
+                    relatedLinks: "🔗 Related Links",
+                    badgeOpenSource: "✨ Open Source",
+                    badgeERP: "📦 ERP",
+                    badgeCRM: "👥 CRM",
+                    badgeAnalytics: "📈 Analytics",
+                    dolibarrProject: "Dolibarr Project",
+                    dolibarrProjectDesc: "Portal of Open source project to manage your company",
+                    doliStore: "doliStore",
+                    doliStoreDesc: "Market place for modules",
+                    wikiDoc: "Wiki Documentation",
+                    wikiDocDesc: "Wiki documentation of module (English)",
+                    
+                    installation: "📥 Installation",
+                    step1Title: "Download module",
+                    step1Desc: "Download archive file of module (.zip file) from web site www.dolistore.com or from any other source.",
+                    step2Title: "Install into /custom folder",
+                    step2Desc: "Install module into the /custom folder of Dolibarr:",
+                    step2Opt1: "Go to Home - Setup - Modules - Deploy/install external app/module",
+                    step2Opt2: "Upload the file. Note: If it fails because upload from this page has been locked by your web hosting provider, you can manually unzip the file into the /custom directory from command line: Go into the /custom directory and uncompress file with command unzip modulefile.zip then check that the directory with the name of the module is inside the /custom directory. If into a subdirectory, just move it into /custom.",
+                    step3Title: "Ready to activate",
+                    step3Desc: "Module should be ready to be activated and used.",
+                    moreInfo: "Through these links, you can find more information about the AWStats Dolibarr module, including installation instructions, configuration guides, and usage examples. This module allows you to view website statistics directly in the Dolibarr interface, providing a complete data analysis solution for your business management.",
+                    setup: "⚙️ Setup",
+                    setupStep1Title: "Enable module",
+                    setupStep1Desc: "To use this module, you must first enable it using an administrator account, via the menu option \"Home - Setup - Modules\". Choose the tab where the module is listed. Then click on \"Activate\".",
+                    setupStep2Title: "Configure module",
+                    setupStep2Desc: "If a cog icon appears on module thumb or at end of the line of the module, click on it to access the setup page specific to the module.",
+                    
+                    configParams: "Configuration Parameters",
+                    configNote: "The 4 parameters you can set are available to tell Dolibarr where AWStats is installed and how to use it (Installation and setup of AWStats is not part of this module nor this documentation, but is a prerequisite):",
+                    
+                    param1Name: "AWStats data files directory (path on disk)",
+                    param1Desc: "Put here the path onto your filesystem where you AWStats data files are store (data files are files whose name match awstatsMMYYYY.txt) . If you don't know where is this directory, take a look into /var/lib/awstats or search for files called awstats*0*.txt (with unix command: <code class=\"code-inline\">find / -name awstats*0*.txt</code>).",
+                    
+                    param2Name: "AWStats URL (CGI)",
+                    param2Desc: "Put here the URL you must type onto your browser to use AWStats from URL. It may be something like http://localhost/cgi-bin/awstats.pl or http://localhost/awstats/. Filling this is not required, be if not provided, link to switch to AWStats URL link will not be visible.",
+                    
+                    param3Name: "Localisation of AWStats program (path on disk)",
+                    param3Desc: "Put here full path to awstats.pl file. If you don't know where was installed AWStats, take a look if file /usr/lib/cgi-bin/awstats.pl exists. If not, make a search onto disk to awstats.pl file (with unix: <code class=\"code-inline\">find / -name awstats.pl</code>).",
+                    
+                    param4Name: "Limit config shown to this list",
+                    param4Desc: "Keep this field empty (empty for no filter or use \",\" as separator).",
+                    
+                    usage: "📊 Usage",
+                    usageDesc: "A menu called AWStats appears when you enable the module. Click onto it, allows you to read all statistics compiled by AWStats.",
+                    
+                    prerequisiteNote: "<strong>Prerequisite:</strong> Before using this module, you need to install and configure AWStats log analyzer. Installation and configuration of AWStats is not covered in this documentation, please refer to the main AWStats documentation.",
+                    
+                    writtenBy: "Article written by <a href=\"https://www.destailleur.fr\" rel=\"author\" style=\"color: var(--accent);\">Laurent Destailleur</a>.",
+                    version: "Version 8.1",
+                    copyright: "© 2000 - {year} Laurent Destailleur & AWStats Team",
+                    licenseLink: "GNU General Public License",
+                    authorLink: "Author",
+                    darkAttr: "🌓 Adaptive dark mode · 中文/English",
+                }
+            };
+
+            const i18nElements = document.querySelectorAll('[data-i18n]');
+            const langSelector = document.getElementById('langSelector');
+            let currentLang = localStorage.getItem('awstats_lang') || 'zh';
+            langSelector.value = currentLang;
+
+            function applyLanguage(lang) {
+                const t = translations[lang] || translations.zh;
+                i18nElements.forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (t[key] !== undefined) {
+                        if (key === 'copyright') {
+                            const year = new Date().getFullYear();
+                            el.innerHTML = t[key].replace('{year}', year);
+                        } else if (key === 'featuresDesc' || key === 'step2Opt2' || key === 'param1Desc' || key === 'param3Desc' || key === 'writtenBy' || key === 'prerequisiteNote' || key.includes('Desc')) {
+                            el.innerHTML = t[key];
+                        } else {
+                            el.textContent = t[key];
+                        }
+                    }
+                });
+                localStorage.setItem('awstats_lang', lang);
+                
+                const themeState = localStorage.getItem('awstats_theme') || 'auto';
+                const themeText = document.querySelector('.theme-text');
+                if (themeText) {
+                    if (themeState === 'auto') themeText.textContent = t.themeAuto;
+                    else if (themeState === 'light') themeText.textContent = (lang === 'zh' ? '浅色' : 'Light');
+                    else themeText.textContent = (lang === 'zh' ? '深色' : 'Dark');
+                }
+            }
+
+            applyLanguage(currentLang);
+
+            langSelector.addEventListener('change', (e) => {
+                currentLang = e.target.value;
+                applyLanguage(currentLang);
+            });
+
+            // 暗黑模式切换
+            const root = document.documentElement;
+            const themeBtn = document.getElementById('themeToggleBtn');
+            let themeState = localStorage.getItem('awstats_theme') || 'auto';
+
+            function applyTheme(state) {
+                root.classList.remove('force-light', 'force-dark');
+                if (state === 'light') root.classList.add('force-light');
+                else if (state === 'dark') root.classList.add('force-dark');
+                const themeText = document.querySelector('.theme-text');
+                if (themeText) {
+                    const lang = currentLang;
+                    const t = translations[lang];
+                    if (state === 'auto') themeText.textContent = t.themeAuto;
+                    else if (state === 'light') themeText.textContent = (lang === 'zh' ? '浅色' : 'Light');
+                    else themeText.textContent = (lang === 'zh' ? '深色' : 'Dark');
+                }
+                localStorage.setItem('awstats_theme', state);
+            }
+            applyTheme(themeState);
+            themeBtn.addEventListener('click', () => {
+                if (themeState === 'auto') themeState = 'light';
+                else if (themeState === 'light') themeState = 'dark';
+                else themeState = 'auto';
+                applyTheme(themeState);
+            });
+        })();
+    </script>
 </body>
 </html>

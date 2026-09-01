@@ -1,440 +1,1218 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html><head>
-<meta name="description" content="AWStats Documentation - Contrib and resource page">
-<meta name="keywords" content="awstats, awstat, log, file, analyzer, contrib, plugins, resources, maxmind, geoipfree, geoip, cities, regions, countries, frontend">
-<meta name="robots" content="index,follow">
-<meta name="title" content="AWStats Documentation - Contrib and resource page">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>AWStats Documentation - Contrib and resource page</title>
-<link rel="stylesheet" href="styles.css" type="text/css">
-<link href="https://plus.google.com/+LaurentDestailleur-Open-Source-Expert" rel="publisher" />
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWStats · 插件与贡献资源</title>
+    <meta name="description" content="AWStats Documentation - Contrib and resource page (中文/English)">
+    <meta name="keywords" content="awstats, plugins, contrib, resources, geoip, 插件, 贡献">
+    <meta name="author" content="Laurent Destailleur (多语言重构)">
+    <meta name="robots" content="index,follow">
+    <style>
+        /* ========== 现代化全局设计 ========== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-page: #f8fafc; --surface: #ffffff; --surface-secondary: #f1f5f9;
+            --text-primary: #0f172a; --text-secondary: #475569; --accent: #4f46e5;
+            --accent-light: #818cf8; --accent-soft: #eef2ff; --border: #e2e8f0;
+            --card-shadow: 0 20px 25px -5px rgba(0,0,0,0.05), 0 10px 10px -5px rgba(0,0,0,0.02);
+            --header-bg: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            --footer-bg: #eef2ff; --link-color: #4f46e5; --link-visited: #7c3aed;
+            --code-bg: #f1f5f9; --success: #10b981; --warning: #f59e0b; --danger: #ef4444;
+            --plugin-free: #10b981; --plugin-geoip: #818cf8;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-page: #0f172a; --surface: #1e293b; --surface-secondary: #334155;
+                --text-primary: #f1f5f9; --text-secondary: #cbd5e1; --accent: #818cf8;
+                --accent-light: #a5b4fc; --accent-soft: #2d3a5e; --border: #475569;
+                --card-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
+                --header-bg: linear-gradient(135deg, #4f46e5 0%, #6d28d9 100%);
+                --footer-bg: #1e293b; --link-color: #a5b4fc; --link-visited: #c4b5fd;
+                --code-bg: #334155; --success: #34d399; --warning: #fbbf24; --danger: #f87171;
+            }
+        }
+
+        body {
+            background-color: var(--bg-page); color: var(--text-primary);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6; margin: 0; padding: 0;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            display: flex; flex-direction: column; min-height: 100vh;
+        }
+        .container { max-width: 1300px; margin: 0 auto; padding: 0 28px; width: 100%; }
+
+        /* 现代化导航栏 */
+        .nav-bar {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+            background-color: rgba(var(--surface-rgb), 0.8);
+        }
+        .nav-container {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 20px;
+        }
+        .nav-home {
+            font-weight: 700; font-size: 1.3rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-decoration: none; display: flex; align-items: center; gap: 8px;
+        }
+        .nav-links {
+            display: flex; gap: 8px; flex-wrap: wrap;
+        }
+        .nav-links a {
+            color: var(--text-secondary); text-decoration: none;
+            font-weight: 500; padding: 8px 16px; border-radius: 40px;
+            transition: all 0.2s; font-size: 0.95rem;
+        }
+        .nav-links a:hover {
+            background: var(--accent-soft); color: var(--accent);
+        }
+        .nav-links a.active {
+            background: var(--accent); color: white;
+        }
+        .breadcrumb {
+            display: flex; gap: 8px; align-items: center;
+            color: var(--text-secondary); font-size: 0.9rem;
+        }
+        .breadcrumb a { color: var(--link-color); text-decoration: none; }
+
+        /* 现代化头部 */
+        .header {
+            background: var(--header-bg); color: white; border-radius: 0 0 40px 40px;
+            padding: 24px 0 32px; box-shadow: var(--card-shadow); margin-bottom: 30px;
+        }
+        .header-row {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 20px;
+        }
+        .logo-area { display: flex; align-items: center; gap: 16px; }
+        .logo-area img { height: 56px; width: auto; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
+        .site-title {
+            font-size: 2rem; font-weight: 700; background: rgba(255,255,255,0.1);
+            padding: 8px 24px; border-radius: 60px; backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .header-center {
+            flex: 1; text-align: center; font-weight: 500; font-size: 1.2rem;
+            background: rgba(0,0,0,0.1); padding: 8px 24px; border-radius: 60px;
+            backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.15);
+        }
+        .header-right { display: flex; gap: 12px; align-items: center; }
+        .lang-switch {
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 40px; padding: 6px 16px; color: white; font-weight: 500;
+            display: flex; align-items: center; gap: 8px; backdrop-filter: blur(8px);
+        }
+        .lang-switch select {
+            background: transparent; border: none; color: white; font-weight: 500;
+            outline: none; font-size: 0.95rem; cursor: pointer;
+        }
+        .lang-switch select option { background: var(--accent); color: white; }
+        .theme-toggle {
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 40px; padding: 8px 20px; font-size: 0.95rem; color: white;
+            cursor: pointer; display: flex; align-items: center; gap: 8px; backdrop-filter: blur(8px);
+        }
+
+        /* 现代化文档卡片 */
+        .doc-card {
+            background-color: var(--surface); border-radius: 40px;
+            padding: 3rem; box-shadow: var(--card-shadow);
+            border: 1px solid var(--border); margin: 20px 0 40px;
+        }
+        h1 {
+            font-size: 2.5rem; font-weight: 700; letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin: 0 0 25px 0;
+        }
+        h2 {
+            font-size: 2rem; font-weight: 600; margin: 2.5rem 0 1.5rem;
+            color: var(--text-primary); border-bottom: 3px solid var(--accent-soft);
+            padding-bottom: 12px;
+        }
+        h3 {
+            font-size: 1.5rem; font-weight: 600; margin: 2rem 0 1rem;
+            color: var(--accent);
+        }
+
+        /* 目录卡片 */
+        .toc-card {
+            background: var(--surface-secondary);
+            border-radius: 30px;
+            padding: 25px;
+            margin: 30px 0;
+            border: 1px solid var(--border);
+        }
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 12px;
+        }
+        .toc-item {
+            padding: 12px 18px;
+            background: var(--surface);
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+        .toc-item:hover {
+            background: var(--accent-soft);
+            transform: translateX(5px);
+        }
+        .toc-item a {
+            color: var(--text-primary);
+            text-decoration: none;
+            display: block;
+            font-weight: 500;
+        }
+
+        /* 插件卡片网格 */
+        .plugins-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .plugin-card {
+            background: var(--surface-secondary);
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+        .plugin-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--card-shadow);
+        }
+        .plugin-header {
+            background: var(--accent-soft);
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .plugin-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .plugin-badge {
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+        }
+        .badge-free { background: var(--plugin-free); }
+        .badge-geoip { background: var(--plugin-geoip); }
+        
+        .plugin-body {
+            padding: 20px;
+        }
+        .plugin-modules {
+            margin: 10px 0;
+            font-size: 0.9rem;
+        }
+        .plugin-params {
+            margin: 10px 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--code-bg);
+            padding: 8px 12px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        .plugin-desc {
+            color: var(--text-secondary);
+            margin-top: 10px;
+            font-size: 0.95rem;
+        }
+
+        /* 贡献卡片 */
+        .contrib-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .contrib-card {
+            background: var(--surface-secondary);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid var(--border);
+        }
+        .contrib-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+        .contrib-link {
+            margin: 10px 0;
+            word-break: break-all;
+        }
+        .contrib-link a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        .contrib-link a:hover {
+            text-decoration: underline;
+        }
+        .contrib-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+        .contrib-author {
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        /* 赞助商卡片 */
+        .sponsor-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+        .sponsor-card {
+            background: var(--surface-secondary);
+            padding: 15px 25px;
+            border-radius: 40px;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+        .sponsor-card:hover {
+            transform: scale(1.05);
+            border-color: var(--accent);
+        }
+        .sponsor-card a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* 注意框 */
+        .note-box {
+            background: var(--accent-soft);
+            padding: 20px;
+            border-radius: 20px;
+            border-left: 6px solid var(--accent);
+            margin: 20px 0;
+        }
+
+        /* PayPal按钮 */
+        .paypal-button {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        /* 现代化页脚 */
+        .footer {
+            background-color: var(--footer-bg); margin-top: 60px;
+            padding: 32px 24px; border-radius: 40px 40px 0 0;
+            border-top: 1px solid var(--border); color: var(--text-secondary);
+        }
+        .footer-content {
+            display: flex; flex-wrap: wrap; justify-content: space-between;
+            align-items: center; gap: 20px; max-width: 1300px; margin: 0 auto;
+        }
+        .footer-copyright {
+            background: var(--surface); padding: 8px 24px; border-radius: 60px;
+            border: 1px solid var(--border); font-size: 0.95rem;
+        }
+        
+        .back-to-top {
+            position: fixed; bottom: 30px; right: 30px;
+            background: var(--accent); color: white;
+            width: 56px; height: 56px; border-radius: 28px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; border: none; box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
+            transition: all 0.2s; z-index: 99; font-size: 1.2rem;
+        }
+        .back-to-top:hover {
+            transform: scale(1.1); background: var(--accent-light);
+        }
+        
+        @media (max-width: 700px) {
+            .header-row { flex-direction: column; }
+            .doc-card { padding: 1.8rem; }
+            h1 { font-size: 2rem; }
+            .toc-grid, .plugins-grid, .contrib-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
-
-<body topmargin="10" leftmargin="5">
-
-<table style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10pt; line-height: normal; font-size-adjust: none; font-stretch: normal;" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" width="100%">
-
-<!-- Large -->
-<tbody><tr style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">
-<td align="center" bgcolor="#9999cc"><a href="/"><img src="images/awstats_logo1.png" border="0"></a></td>
-<td align="center" bgcolor="#9999cc">
-<br>
-<font style="font-family: arial,helvetica,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 16pt; line-height: normal; font-size-adjust: none; font-stretch: normal;" color="#eeeeff"><b>AWStats logfile analyzer 8.0 Documentation</b></font><br>
-<br>
-</td>
-<td align="center" bgcolor="#9999cc">
-&nbsp;
-</td>
-</tr>
-
-</tbody></table>
-
-
-<br><br><h1 style="font-family: arial,helvetica,sanserif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 26px; line-height: normal; font-size-adjust: none; font-stretch: normal;">Plugins, contribs and related programs</h1>
-
-You will find here description for different kinds of ressource files :<br>
-- <a href="#PLUGINS">AWStats plugins</a><br>
-- <a href="#CONTRIB">Other AWStats contribs/tools/package</a><br>
-- <a href="#RELATED">Other Non AWStats contribs/tools (not related to AWStats but related to log analysis)</a><br>
-- <a href="#DOC">Documents on AWStats or related to log analysis</a><br>
-<br>
-
-
-<br><a name="PLUGINS"></a><br>
-<font color="#665544" size="3"><b>AWStats plugins</b></font><br>
-<hr>
-Plugins are .pm files you can put in your AWStats plugins directory to add new features.<br>
-Note that you must enable the plugin by adding a new line in your config files to make
-it works (See <a href="awstats_config.html#LoadPlugin">LoadPlugin</a> parameter).<br>
-<br>
-
-<a href="#plugin_standards">Standard free plugins</a> : <b>tooltips, decodeutfkeys, ipv6, hashfiles,&nbsp; userinfo, hostinfo, clusterinfo, urlalias, timehires, timezone, rawlog,
-graphapplet, graphgooglechartsapi </b><b>geoipfree</b><br>
-<a href="#plugin_geoip">GeoIP Plugins</a> (may require other licensed product to work) :
-<b>geoip,</b><b> geoip_city_maxmind, geoip_asn_maxmind, </b><b>geoip_region_maxmind</b>,
-<b>geoip_isp_maxmind</b>,
-<b>geoip_org_maxmind</b>,
-<br>
-<br>
-
-<br><a name="plugin_standards"><b>List of standard plugins</b></a> (Provided with AWStats) :
-<br>
-
-<br><span style="font-weight: bold;">Tooltips
-</span><br><span style="font-style: italic;">Required Modules:</span> None
-<br><span style="font-style: italic;">Parameters:</span> None<br><span style="font-style: italic;">Description</span>: Add&nbsp;tooltips pop-up help boxes to HTML report pages.
-&nbsp;<br>Provided with AWStats (5.4+).
-
-<br>
-
-<br><span style="font-weight: bold;">DecodeUTFKeys
-</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;Encode and URI::Escape
-<br><span style="font-style: italic;">Parameters:</span> None<br><span style="font-style: italic;">Description:</span> Allow AWStats to show correctly (in language charset) keywords/keyphrases
-strings even if they were UTF8 coded by the referer search engine.
-<br>Plugin provided with AWStats (6.0+).
-
-<br>
-
-<br><span style="font-weight: bold;">IPv6
-</span><br><span style="font-style: italic;">Required Modules: </span>Net::IP and Net::DNS
-<br><span style="font-style: italic;">Parameters:</span> None<br><span style="font-style: italic;">Description:</span> This plugin gives AWStats capability to make reverse DNS lookup on IPv6&nbsp;addresses.
-<br>Note: IPv6 addresses are currently incompatible with the GeoIP databases<br>Plugin provided with AWStats (5.5+)
-
-<br>
-
-<br><span style="font-weight: bold;">HashFiles
-</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;Storable
-<br><span style="font-style: italic;">Parameters:</span> None<br><span style="font-style: italic;">Description:</span> AWStats DNS cache files are read/saved as native hash files. This improves
-cache file loading speed, especially for very large web sites.
-
-<br>Plugin provided with AWStats (5.1+)
-
-<br><br><span style="font-weight: bold;">UserInfo
-</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;None
-<br><span style="font-style: italic;">Parameters:</span> None<br><span style="font-style: italic;">Description:&nbsp;</span> Add&nbsp;text (Firtname, Lastname, Office Department, ...) to authenticated user&nbsp;reports for each login value.
-A text file called userinfo.myconfig.txt, with two fields (first is login,
-second is text to show, separated by a tab char) must be created in DirData&nbsp;directory.
-
-<br>Plugin provided with AWStats (5.5+)
-
-<br>
-
-<br><span style="font-weight: bold;">ClusterInfo
-</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;None
-<br><span style="font-style: italic;">Parameters:</span> None<br><span style="font-style: italic;">Description:</span>
-Add text (for example a full hostname) to cluster reports for each
-cluster
-number.&nbsp;A text file called clusterinfo.myconfig.txt, with two
-fields (first is&nbsp;cluster number, second is text to show) separated
-by a tab character must be&nbsp;created in DirData directory. <br>Note: This plugin is useless if ShowClusterStats is set to 0 or if you don't&nbsp;use a personalized log format that contains <span style="font-style: italic;">%cluster</span> tag.
-
-<br>Plugin provided with AWStats (6.2+)
-
-<br>
-
-<br><span style="font-weight: bold;">HostInfo
-</span><br><span style="font-style: italic;">Required Modules:</span> Net::XWhois
-<br><span style="font-style: italic;">Parameters:</span> None<br><span style="font-style: italic;">Description:</span>&nbsp;Add a column into host chart with a link to open a popup window that shows&nbsp;info on host (like whois records).
-
-<br>Plugin provided with AWStats (6.0+)
-
-<br>
-
-<br><span style="font-weight: bold;">UrlAliases
-</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;None
-<br><span style="font-style: italic;">Parameters:</span> None<br><span style="font-style: italic;">Description:</span>&nbsp;Add&nbsp;text
-(Page title, description...) to URL reports before URL value.&nbsp;A
-text file called urlalias.myconfig.txt, with two fields (first is
-URL,&nbsp;second is text to show, separated by a tab char) must be
-created in DirData&nbsp;directory.
-<br>You can build your urlalias file manually or use <a href="awstats_tools.html#urlaliasbuilder">urlaliasbuilder.pl</a> tool (provided with 5.4+)
-
-<br>Plugin provided with AWStats (5.2+)
-<br>
-
-<br><span style="font-weight: bold;">TimeHiRes
-</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;Time::HiRes
-<br><span style="font-style: italic;">Parameters:</span> None<br><span style="font-style: italic;">Description:</span>&nbsp;Time reported by -showsteps option is in millisecond. For debug purpose.
-
-<br>Plugin provided with AWStats (5.1+)
-
-<br>
-
-<br><span style="font-weight: bold;">TimeZone
-</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;Time::Local
-<br><span style="font-style: italic;">Parameters:</span> &lt;offset or local timezone&gt;<br><span style="font-style: italic;">Description:</span>
-Converts the timezone of log files before processing using the offset
-provided in the parameters. This is useful for some IIS users if logs
-are stored in GMT or for users who have servers in a different
-timezone. You must provide either the abreviated name of the timezone
-you wish to convert to or the offset value in hours. For example<br><span style="font-style: italic;">LoadPlugin="timezone +2"</span> &nbsp;would add two hours to the log timestamps<br><span style="font-style: italic;">LoadPlugin="timezone CET"</span> &nbsp;would convert the log from GMT to CET<br>Note: This plugin reduces AWStats speed by about 40%!<br>Plugin provided with AWStats (5.1+)
-
-<br>
-
-<br><span style="font-weight: bold;">Rawlog
-</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;None
-<br><span style="font-style: italic;">Parameters:</span> None<br><span style="font-style: italic;">Description: </span>This
-plugin adds a form in AWStats main page to allow users to see
-raw&nbsp;content of current log files. A display filter will also be
-displayed.
-<br>Plugin provided with AWStats (5.7+)
-
-<br>
-
-<br><span style="font-weight: bold;">GraphApplet
-</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;None
-<br><span style="font-style: italic;">Parameters:</span> None<br><span style="font-style: italic;">Description:</span>&nbsp;Supported charts are built by a 3D graphic applet.
-<br>LoadPlugin="graphapplet"				# EXPERIMENTAL FEATURE
-
-<br>Plugin provided with AWStats (6.0+)
-
-<br><br><span style="font-weight: bold;">GraphGoogleChartAPI</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;None
-<br><span style="font-style: italic;">Parameters:</span> None<br><span style="font-style: italic;">Description:</span>
-Replaces the standard charts with free Google API generated images in
-HTML reports. If country data is available and more than one country
-has hits, a map will be generated using Google Visualizations.<br>Note:
-The machine where reports are displayed must have Internet access for
-the charts to be generated. The only data sent to Google includes the
-statistic numbers, legend names and country names. <br>Plugin provided with AWStats (6.0+)
-
-<br><br>
-
-<a name="plugin_geoip">&nbsp;</a>
-<br><span style="font-weight: bold;">Maxmind GeoIP Plugin Notes</span><br>Maxmind
-is a company that sells geolocation technology that matches IP
-addresses to countries, regions, cities and ISPs. All of their databses
-are available for an initial fee and a monthly update subscription and
-include greater accuracy and a higher frequency of updating. Some
-databases are available for free but they are not updated as often and
-may not be as accurate.<br><br><span style="text-decoration: underline;">Install:</span><br>First choose a database. When downloading a database for AWStats, please download the <span style="font-style: italic;">Binary Format</span> version. Current databases AWStats supports are:<br><span style="font-style: italic;"><br>Commercial</span>: <a href="http://www.maxmind.com/app/country?rId=awstats">Country</a>, <a href="http://www.maxmind.com/app/region?rId=awstats">Region</a>, <a href="http://www.maxmind.com/app/city?rId=awstats">City</a>, <a href="http://www.maxmind.com/app/organization?rId=awstats">Organization</a>, <a href="http://www.maxmind.com/app/isp?rId=awstats">ISP</a><br><span style="font-style: italic;">Open Source</span> <a href="http://www.maxmind.com/app/geolitecountry?rId=awstats">Country</a>, <a href="http://www.maxmind.com/app/geolitecity?rId=awstats">City</a>, <a href="http://www.maxmind.com/app/asnum?rId=awstats">ASN</a><br><br>If you choose to purchase a commercial database for country
-information, you only need to purchase the one with the greatest level
-of detail you want to appear in your report. For example, if you only
-want country information, you can purchase just the Country database.
-If you want City detail, you do <span style="font-style: italic;">not</span>
-need to purcahse the Country and Region databases, just the City
-database. (Organization and ISP databases do not include country or
-region info so you must purchase those in addition to Country, Region
-or City if you desire more information)<br><br>Next, install the
-Geo::IP Perl module. Then choose a Maxmind API to access the databse.
-Maxmind also has two Perl API's available for interacting with their
-databases. There is a a C/Perl library that will run&nbsp; quickly and
-there is a pure Perl API that is a little slower but does not require
-any C depdencies. Choose <a href="http://www.maxmind.com/en/city?rId=awstats">one of the API</a>s and install it on your machine.<br><br><span style="font-style: italic;">Parameters</span>:
-Each GeoIP database can be loaded entirely into memory or lookups can
-scan through the file. When editing your AWStats configuration, you
-have to specify if you want to use memory or file lookups. Specify
-GEOIP_STANDARD for file lookups or GEOIP_MEMORY_CACHE for memory
-loading. Please note that the memory method may crash on some Linux
-distributions so if that happens, try the standard method. Also, using
-the C API with Activestate Perl may crash on Windows machines, so use
-the PurePerl module instead.<br><br>You may also override some
-databases by generating a comma seperated text file with IP addresses
-and associated data. This is useful if you are reporting on an Intranet
-site, have a mixture of internal and external users or the data for a
-specific IP is incorrect in the database. You can use the included
-geoip_generator tool to create override files. (Overrides only available in AWStats version 6.96 and later)<br><b>Override Formats:</b><br><i>GeoIP</i>
- - ip_address,"countrycode"<br><i>GeoIP City</i> - 
-ip_address,"countrycode","regioncode","cityname","postalcode",latitude,longitude,"metrocode","areacode"<br><i>GeoIP
- ASN</i> - ip_address,"asn ispname"<br><i>GeoIP Region - </i>ip_address,"countrycode","regioncode"<br><i>GeoIP
- Org</i> - ip_address,"organisation"<i><br></i><i>GeoIP ISP</i> - 
-ip_address,"ISP"<br><br>Note: AWStats
-does not currently support IPv6 for GeoIP lookups as Maxmind only
-offers the country DB with IPv6 at this time. As Maxmind includes IPv6
-support in more DBs, we will update AWStats.<br>Enabling GeoIP plugins 
-will reduce the speed of AWStats processing.<br><br><span style="font-weight: bold;">GeoIP
-</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;Geo::IP or Geo::IP::PurePerl (from Maxmind)
-<br><span style="font-style: italic;">Parameters:</span> [GEOIP_STANDARD | GEOIP_MEMORY_CACHE] [/pathto/geoip.dat] &lt;/pathto/override.txt&gt;<br><span style="font-style: italic;">Description:</span> Country chart is built from an Internet IP-Country database.
-<br>Note: You must choose between using this plugin&nbsp;or the
-GeoIPfree plugin&nbsp;(need Perl Geo::IPfree module, database is free
-but not up to date).
-<br>Example <span style="font-style: italic;">LoadPlugin="geoip GEOIP_STANDARD /usr/local/geoip.dat /usr/local/geoip_override.txt"
-
-</span><br>Plugin provided with AWStats (5.2+)
-
-<br><br><span style="font-weight: bold;">GeoIP_City_Maxmind
-</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;Geo::IP or Geo::IP::PurePerl (from Maxmind)
-<br><span style="font-style: italic;">Parameters:</span> [GEOIP_STANDARD | GEOIP_MEMORY_CACHE] [/pathto/GeoIPCity.dat] &lt;/pathto/override.txt&gt;<br><span style="font-style: italic;">Description: </span>This plugin adds a chart of hits by cities (with country and regions&nbsp;informations for major countries).
-<br>
-By enabling this plugin, you will see a new link called 'Cities' on 
-reports menu.<br>Example <span style="font-style: italic;">LoadPlugin="geoip_city_maxmind GEOIP_STANDARD /usr/local/geoip.dat /usr/local/GeoIPCity_override.txt"
-
-</span><br>Plugin provided with AWStats (6.2+)
-
-<br><br><span style="font-weight: bold;">GeoIP_ASN_Maxmind</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;Geo::IP or Geo::IP::PurePerl (from Maxmind)
-<br><span style="font-style: italic;">Parameters:</span> [GEOIP_STANDARD | GEOIP_MEMORY_CACHE] [/pathto/GeoIPASN.dat] &lt;/pathto/override.txt&gt; &lt;link to AS lookup&gt;<br><span style="font-style: italic;">Description: </span>This
-plugin adds a chart of AS numbers where the host IP address is
-registered. This plugin can display some ISP information if included in
-the database. You can also provide a link that will be used to lookup
-additional registration data. Put the link at the end of the parameter
-string and the report page will include the link with the full AS
-number at the end.<br>Example <span style="font-style: italic;">LoadPlugin="geoip_asn_maxmind
-GEOIP_STANDARD /usr/local/geoip.dat /usr/local/GeoIPASN_override.txt
-http://enc.com.au/itools/aut-num.php?autnum="
-</span><br>Plugin provided with AWStats (6.9+)
-
-<br><br><span style="font-weight: bold;">GeoIP_Region_Maxmind
-(Commercial Only)</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;Geo::IP or Geo::IP::PurePerl (from Maxmind)
-<br><span style="font-style: italic;">Parameters:</span> [GEOIP_STANDARD | GEOIP_MEMORY_CACHE] [/pathto/GeoIPRegion.dat] &lt;/pathto/override.txt&gt;<br><span style="font-style: italic;">Description: </span>This plugin adds a chart of hits by regions. Only regions for US and&nbsp;Canada can be detected at this time.
-<br>By enabling this plugin, you will see a new link called 'Regions' on reports menu. For
-the moment this link works only when AWStats reports are build as CGI (static built not yet
-supported).
-<br>Example <span style="font-style: italic;">LoadPlugin="geoip_region_maxmind GEOIP_STANDARD /usr/local/GeoIPRegion.dat /usr/local/geoip_override.txt"
-
-</span><br>Plugin provided with AWStats (6.2+)
-
-<br><br><span style="font-weight: bold;">GeoIP_ISP_Maxmind
-(Commercial Only)</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;Geo::IP or Geo::IP::PurePerl (from Maxmind)
-<br><span style="font-style: italic;">Parameters:</span> [GEOIP_STANDARD | GEOIP_MEMORY_CACHE] [/pathto/GeoIPISP.dat] &lt;/pathto/override.txt&gt;<br><span style="font-style: italic;">Description:</span>&nbsp;This plugin adds a chart of hits by ISP.
-<br>By enabling this plugin, you will see a new link called 'ISP' on reports menu. For
-the moment this link works only when AWStats reports are build as CGI (static built not yet
-supported).
-<br>Example <span style="font-style: italic;">LoadPlugin="geoip_isp_maxmind GEOIP_STANDARD /usr/local/GeoIPISP.dat </span><span style="font-style: italic;">/usr/local/geoip_override.txt"</span><br>Plugin provided with AWStats (6.3+)
-
-<br><br><span style="font-weight: bold;">GeoIP_Org_Maxmind
-(Commercial Only)</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;Geo::IP or Geo::IP::PurePerl (from Maxmind)
-<br><span style="font-style: italic;">Parameters:</span> [GEOIP_STANDARD | GEOIP_MEMORY_CACHE] [/pathto/GeoIPOrg.dat] &lt;/pathto/override.txt&gt;<br><span style="font-style: italic;">Description:</span>&nbsp;This plugin adds a chart of hits by Organization names.
-<br>By enabling this plugin, you will see a new link called 'Organizations' on reports menu. For
-the moment this link works only when AWStats reports are build as CGI (static built not yet
-supported).
-<br>Example <span style="font-style: italic;">LoadPlugin="geoip_org_maxmind GEOIP_STANDARD /usr/local/GeoIPOrg.dat </span><span style="font-style: italic;">/usr/local/geoip_override.txt"</span><br>Plugin provided with AWStats (6.3+)
-
-<br><br>
-
-<br><br><span style="font-weight: bold;">GeoIPfree
-</span><br><span style="font-style: italic;">Required Modules:</span>&nbsp;Geo::IPfree version 0.2+ (from Graciliano M.P.)
-<br><span style="font-style: italic;">Parameters:</span> None<br><span style="font-style: italic;">Description:</span>&nbsp;Country
-chart is built from an Internet IP-Country database.&nbsp;This plugin
-is useless for intranet only log files.&nbsp; <br>Note: You must
-choose between using this plugin (need Perl Geo::IPfree&nbsp;module,
-database is free but not up to date) or the GeoIP plugin
-(need&nbsp;Perl Geo::IP module from Maxmind, database is also free and
-up to date). <br>Note: Activestate provide a corrupted version of Geo::IPfree 0.2 Perl&nbsp;module, so install it from elsewhere (from <a href="http://www.cpan.org/">www.cpan.org</a> for example).
-<br>This plugin reduces AWStats speed by about 10% !
-<br>Plugin provided with AWStats (5.5+).
-<br>You can find Geo::IPfree Perl Module on :
-<br>- All OS: <a href="http://www.cpan.org/">CPAN site</a>
-<br>- ActiveState: GeoIPfree module provided by Activestate is not working correctly so I removed
-the link. You can follow the following setup instead: Download from <a href="http://www.cpan.org/">CPAN site</a>
-and copy 'Geo' directory (found in 'lib') into AWStats plugins directory.
-This is a fast tip to install Geo-IPfree perl module to be used by AWStats geoipfree plugin.
-<br>Note: The Geo::IPfree database has not been updated in a long time, so using
-the <a href="awstats_contrib.html#geoip">geoip</a> plugin (using the Geo::IP Perl module, now free for countries) is highly recommended.
-<br>You can use the following tool to test your geoipfree setup: <a href="file:///files/testgeoipfree.pl">testgeoipfree.pl</a>. Just
-put this file into your plugins directory and run it.
-
-
-<br><br><a name="CONTRIB"></a><br>
-<font color="#665544" size="3"><b>Other AWStats contribs/tools/package</b></font><br>
-<hr>
-
-<br>
-All following files/products were developped and submitted by contributors.
-I haven't tried them, so I can't tell you if they work and how they work...<br>
-They can enhance AWStats use or save you time giving you a start for a new development.<br>
-<br>
-
-<!--
-<b>Other available packages (provided by contributors):</b><br>
-<a href="http://nx.dyndns.info/sme/awstats/awstats.php" target=new>A SME (E-Smith) package</a> (Based on AWStats 6.0 version)<br>
-<a href="http://www.nuonce.net/awstats-cobalt.php" target=new> Cobalt RaQ 3/4/550 Package Files </a> (Based on AWStats 5.9)<br>
-<a href="http://www.turro.org/Portal?xpc=1$@8$@1$@1&folder=20050104154634840" target=new> A war package</a><br>
-<br>
--->
-
-<b>Other tools:</b><br>
-<br>
-
-<a href="https://github.com/ip2location/ip2location_awstats">A plugin for geoip location</a>.<br>
-
-<a href="http://wordpress.org/extend/plugins/awstats-script/">A plugin for WordPress</a> that allow WordPress users
-to add tags required by AWStats to report the "miscellanous chart".<br>
-
-<a href="http://sourceforge.net/projects/exim2awstats/">Exim2Awstats</a> is a tool to convert Exim MTA log file to a format readable by AWSTats.<br>
-
-<a href="http://www.digievo.co.uk/software.asp?category=2">Logprocess</a> automate the collection, merging, processing and archiving of IIS 
-log files in a hosting (mult-domain) environment using AWStats to generate and manage stats/reports.<br>
-
-<a href="/files/configurador.tgz" target="_new">Configurador</a> is a piece of CGI perl scripts to allow you to edit an AWStats config file from
-the web. Code comments are in Spanish but it may be a goo start to develop your own tool.
-<i>Hector Garcia Alvarez</i><br>
-
-<a href="/files/logtrans.py" target="_new">logtrans.py</a> is a python small example on how to convert an old
-log file from IIS4.0 to a new format compatible with AWStats. Don't know if it works, just here
-to provide you a code sample if you like python.<br>
-
-<a href="http://www.ruwenzori.net/code/go_awstats/" target="_new">go_awstats</a>, is a tool to automate build of
-AWStats statics reports for all config files but also for all month.<br>
-
-
-
-<br><a name="RELATED"></a><br>
-<font color="#665544" size="3"><b>Other Non AWStats contribs/tools (not related to AWStats but related to log analysis)</b></font><br>
-<hr>
-
-<a href="/files/maillog2commonlog.pl" target="_new">maillog2commonlog.pl</a> converts mail logs in
-smail or qmail format to the common log format.
-Note that if you want to analyze, with AWStats, mail log files from postfix, sendmail or qmail,
-a better solution is to use instead maillogconvert.pl preprocessor (See AWStats
-<a href="awstats_faq.html#MAIL">F.A.Q</a> about analyzing mail logs).<br>
-<i>Joey Hess, freeware.</i><br>
-
-<a href="http://www.kristoffersen.us/software/" target="_new">maillogconv.pl</a> is another mail log processor that
-can be used to change mail log files into a log file that AWStats can understand.<br>
-Note that a derivated and enhanced tool called maillogconvert.pl is provided with AWStats
-since 5.7. See <a href="awstats_faq.html#MAIL">F.A.Q</a> about analyzing mail logs to know
-how to setup AWStats with maillogconv.pl or maillogconvert.pl to analyze
-Postfix, Sendmail, Qmail or MDaemon log files.<br>
-
-<a href="/files/access_referer_agent2combined.pl" target="_new">access_referer_agent2combined.pl</a> is a perl script that converts a
-directory of common log format (CLF) access-files, referer-files and agent-files to a single combined.log
-This is usefull if you have seperate access/referer/agent logfiles and want to use all features of a loganalyzer
-that require a combined log file.<br>
-<a href="http://anonlog.sourceforge.net/" target="_new">anonlog</a> "anonymizes" your logfile by encoding sensitive information.<br>
-<i>Stephen Turner, freeware.</i><br> 
-
-<br>
-<u>If you don't like AWStats, you can try thoose other popular similar tools :</u><br>
-<a href="http://www.mrunix.net/webalizer/" target="_new">Webalizer</a>. Another very old log analyzer (written in C).<br>
-<br>
-There is also commercial products you can find doing a search on 'log file analyzer' with <a href="http://www.google.com">Google</a>.<br>
-<br>
-
-
-
-<br><a name="DOC"></a><br>
-<font color="#665544" size="3"><b>Documents on AWStats or related to log analysis</b></font><br>
-<hr>
-<!--<img src="/images/us.png">-->AWStats official documentation for last version can be found here: <a href="index.html">HTML On line</a> or <a href="awstats.pdf">PDF file</a><br>
-<br>
-An intro and install doc 'Using AWStats on GNU/Linux or Windows' in <a href="http://www.chedong.com/tech/awstats.html">Chinese</a><br>
-A setup tutorial in <a href="http://www.baudelet.net/awstats.htm" target="_doc">French for Windows users</a><br>
-<br>
-
-
-<br><a name="SPONSOR"></a><br>
-<font color="#665544" size="3"><b>Sponsors</b></font><br>
-<hr>
-<!-- You can remove this part if your distribution need documentation without external tags -->
-<!-- BEGIN_PAYPAL_LINK -->
-You can make a donation to support AWStats project with this link:
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-<input type="hidden" name="cmd" value="_s-xclick">
-<input type="hidden" name="hosted_button_id" value="8968579">
-<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online.">
-<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
-</form>
-<br>
-Special thanks goes to the following sponsor for their important support:<br>
-<a href="https://www.dolibarr.org" target="open source erp and crm project">dolibarr.org</a><br>
-<a href="http://www.arrestier.fr" target="rhumatologue pessac, talence, bordeaux">arrestier.fr</a><br>
-<a href="http://www.ballanger-dermatologue.fr" target="dermatologue talence">www.ballanger-dermatologue.fr</a><br>
-...<i>your name/link here: contact@destailleur.fr</i>... <br>
-<!-- END_PAYPAL_LINK -->
-
-
-<br><br>
-<br>
-<hr>
-
-<!-- You can remove this part if you distribution need documentation without external tags -->
-<!-- BEGIN_SOCIAL_NETWORKS -->
-<div class="htmldoc-ignore">
-<!-- google plus -->
-<span style="color: #bbb; font-weight: normal;">Article written by <a href="https://plus.google.com/+LaurentDestailleur-Open-Source-Expert?Open-Source-Expert?rel=author" rel="author" style="color: #ccc; font-weight: normal;">Laurent Destailleur</a>.</span><br>
-<br>
-<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-<g:plusone></g:plusone>
-<!-- facebook -->
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/fr_FR/all.js#xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-<div class="fb-like" data-href="http://www.awstats.org/docs/awstats_contrib.html" data-layout="button_count" data-action="recommend" data-show-faces="false" data-share="true"></div>
-</div>
-<!-- END_SOCIAL_NETWORKS -->
-
-</body></html>
+<body>
+    <!-- 导航栏 -->
+    <div class="nav-bar">
+        <div class="container nav-container">
+            <a href="index.html" class="nav-home">
+                <span>🏠</span> AWStats 文档
+            </a>
+            <div class="nav-links">
+                <a href="index.html" data-i18n="navHome">主页</a>
+                <a href="awstats_what.html" data-i18n="navWhat">什么是AWStats</a>
+                <a href="awstats_setup.html" data-i18n="navSetup">安装配置</a>
+                <a href="awstats_webmin.html" data-i18n="navWebmin">Webmin模块</a>
+                <a href="awstats_upgrade.html" data-i18n="navUpgrade">升级指南</a>
+                <a href="awstats_tools.html" data-i18n="navTools">其他工具</a>
+                <a href="awstats_security.html" data-i18n="navSecurity">安全建议</a>
+                <a href="awstats_license.html" data-i18n="navLicense">许可证</a>
+                <a href="awstats_glossary.html" data-i18n="navGlossary">术语表</a>
+                <a href="awstats_faq.html" data-i18n="navFAQ">FAQ</a>
+                <a href="awstats_extra.html" data-i18n="navExtra">额外部分</a>
+                <a href="awstats_dolibarr.html" data-i18n="navDolibarr">Dolibarr模块</a>
+                <a href="awstats_dev_plugins.html" data-i18n="navPlugins">插件开发</a>
+                <a href="awstats_dev_plugins_hooks.html" data-i18n="navHooks">插件钩子</a>
+                <a href="awstats_dev_plugins_graphs.html" data-i18n="navGraphs">插件图形</a>
+                <a href="awstats_contrib.html" class="active" data-i18n="navContrib">贡献资源</a>
+            </div>
+            <div class="breadcrumb">
+                <a href="index.html" data-i18n="home">主页</a>
+                <span>›</span>
+                <span data-i18n="currentPage">插件与贡献资源</span>
+            </div>
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="container header-row">
+            <div class="logo-area">
+                <img src="images/awstats_logo6.png" alt="AWStats" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'56\' height=\'56\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%234f46e5\' rx=\'20\'/%3E%3Ctext x=\'20\' y=\'68\' fill=\'%23ffffff\' font-size=\'60\' font-weight=\'bold\'%3EAW%3C/text%3E%3C/svg%3E';">
+                <span class="site-title" data-i18n="siteTitle">AWStats 8.1</span>
+            </div>
+            <div class="header-center" data-i18n="headerSlogan">
+                ⚡ 先进的日志分析器 · 官方文档
+            </div>
+            <div class="header-right">
+                <div class="lang-switch">
+                    <span>🌐</span>
+                    <select id="langSelector">
+                        <option value="zh" selected>中文</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+                <button class="theme-toggle" id="themeToggleBtn">
+                    <span>🌓</span> <span class="theme-text" data-i18n="themeAuto">自动</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="doc-card">
+            <h1 data-i18n="mainTitle">🔌 插件、贡献和相关程序</h1>
+
+            <p data-i18n="intro">您可以在这里找到不同类型的资源文件描述：</p>
+
+            <!-- 目录 -->
+            <div class="toc-card">
+                <div class="toc-grid">
+                    <div class="toc-item"><a href="#PLUGINS" data-i18n="tocPlugins">🔌 AWStats 插件</a></div>
+                    <div class="toc-item"><a href="#CONTRIB" data-i18n="tocContrib">📦 其他贡献/工具/包</a></div>
+                    <div class="toc-item"><a href="#RELATED" data-i18n="tocRelated">🛠️ 非 AWStats 相关工具</a></div>
+                    <div class="toc-item"><a href="#DOC" data-i18n="tocDoc">📚 文档资源</a></div>
+                    <div class="toc-item"><a href="#SPONSOR" data-i18n="tocSponsor">❤️ 赞助商</a></div>
+                </div>
+            </div>
+
+            <!-- AWStats 插件 -->
+            <a name="PLUGINS"></a>
+            <h2>🔌 <span data-i18n="pluginsTitle">AWStats 插件</span></h2>
+            <hr>
+            <p data-i18n="pluginsDesc">插件是 .pm 文件，您可以放入 AWStats 插件目录以添加新功能。请注意，您必须通过在配置文件中添加新行来启用插件（请参阅 <a href="awstats_config.html#LoadPlugin">LoadPlugin</a> 参数）。</p>
+
+            <p><strong data-i18n="standardPlugins">标准免费插件：</strong> <span style="color: var(--accent);">tooltips, decodeutfkeys, ipv6, hashfiles, userinfo, hostinfo, clusterinfo, urlalias, timehires, timezone, rawlog, graphapplet, graphgooglechartsapi, geoipfree</span></p>
+            <p><strong data-i18n="geoipPlugins">GeoIP 插件：</strong> <span style="color: var(--accent);">geoip, geoip_city_maxmind, geoip_asn_maxmind, geoip_region_maxmind, geoip_isp_maxmind, geoip_org_maxmind</span></p>
+
+            <!-- 标准插件卡片网格 -->
+            <h3 data-i18n="standardPluginsTitle">标准插件列表（随 AWStats 提供）</h3>
+            <div class="plugins-grid">
+                <!-- Tooltips -->
+                <div class="plugin-card">
+                    <div class="plugin-header">
+                        <span class="plugin-name">Tooltips</span>
+                        <span class="plugin-badge badge-free" data-i18n="free">免费</span>
+                    </div>
+                    <div class="plugin-body">
+                        <div class="plugin-modules"><strong data-i18n="requiredModules">所需模块：</strong> <span data-i18n="none">无</span></div>
+                        <div class="plugin-params"><strong data-i18n="parameters">参数：</strong> <span data-i18n="none">无</span></div>
+                        <div class="plugin-desc" data-i18n="tooltipsDesc">向 HTML 报告页面添加工具提示弹出帮助框。随 AWStats (5.4+) 提供。</div>
+                    </div>
+                </div>
+
+                <!-- DecodeUTFKeys -->
+                <div class="plugin-card">
+                    <div class="plugin-header">
+                        <span class="plugin-name">DecodeUTFKeys</span>
+                        <span class="plugin-badge badge-free" data-i18n="free">免费</span>
+                    </div>
+                    <div class="plugin-body">
+                        <div class="plugin-modules"><strong data-i18n="requiredModules">所需模块：</strong> Encode, URI::Escape</div>
+                        <div class="plugin-params"><strong data-i18n="parameters">参数：</strong> <span data-i18n="none">无</span></div>
+                        <div class="plugin-desc" data-i18n="decodeUTFKeysDesc">允许 AWStats 正确显示关键词/短语字符串（使用语言字符集），即使它们被引用搜索引擎以 UTF8 编码。随 AWStats (6.0+) 提供。</div>
+                    </div>
+                </div>
+
+                <!-- IPv6 -->
+                <div class="plugin-card">
+                    <div class="plugin-header">
+                        <span class="plugin-name">IPv6</span>
+                        <span class="plugin-badge badge-free" data-i18n="free">免费</span>
+                    </div>
+                    <div class="plugin-body">
+                        <div class="plugin-modules"><strong data-i18n="requiredModules">所需模块：</strong> Net::IP, Net::DNS</div>
+                        <div class="plugin-params"><strong data-i18n="parameters">参数：</strong> <span data-i18n="none">无</span></div>
+                        <div class="plugin-desc" data-i18n="ipv6Desc">此插件使 AWStats 能够对 IPv6 地址进行反向 DNS 查找。注意：IPv6 地址目前与 GeoIP 数据库不兼容。随 AWStats (5.5+) 提供。</div>
+                    </div>
+                </div>
+
+                <!-- HashFiles -->
+                <div class="plugin-card">
+                    <div class="plugin-header">
+                        <span class="plugin-name">HashFiles</span>
+                        <span class="plugin-badge badge-free" data-i18n="free">免费</span>
+                    </div>
+                    <div class="plugin-body">
+                        <div class="plugin-modules"><strong data-i18n="requiredModules">所需模块：</strong> Storable</div>
+                        <div class="plugin-params"><strong data-i18n="parameters">参数：</strong> <span data-i18n="none">无</span></div>
+                        <div class="plugin-desc" data-i18n="hashFilesDesc">AWStats DNS 缓存文件作为本地哈希文件读取/保存。这提高了缓存文件加载速度，特别是对于非常大的网站。随 AWStats (5.1+) 提供。</div>
+                    </div>
+                </div>
+
+                <!-- UserInfo -->
+                <div class="plugin-card">
+                    <div class="plugin-header">
+                        <span class="plugin-name">UserInfo</span>
+                        <span class="plugin-badge badge-free" data-i18n="free">免费</span>
+                    </div>
+                    <div class="plugin-body">
+                        <div class="plugin-modules"><strong data-i18n="requiredModules">所需模块：</strong> <span data-i18n="none">无</span></div>
+                        <div class="plugin-params"><strong data-i18n="parameters">参数：</strong> <span data-i18n="none">无</span></div>
+                        <div class="plugin-desc" data-i18n="userInfoDesc">为每个登录值向认证用户报告添加文本（名字、姓氏、部门等）。必须在 DirData 目录中创建一个名为 userinfo.myconfig.txt 的文本文件，包含两个字段（第一个是登录名，第二个是要显示的文本，用制表符分隔）。随 AWStats (5.5+) 提供。</div>
+                    </div>
+                </div>
+
+                <!-- ClusterInfo -->
+                <div class="plugin-card">
+                    <div class="plugin-header">
+                        <span class="plugin-name">ClusterInfo</span>
+                        <span class="plugin-badge badge-free" data-i18n="free">免费</span>
+                    </div>
+                    <div class="plugin-body">
+                        <div class="plugin-modules"><strong data-i18n="requiredModules">所需模块：</strong> <span data-i18n="none">无</span></div>
+                        <div class="plugin-params"><strong data-i18n="parameters">参数：</strong> <span data-i18n="none">无</span></div>
+                        <div class="plugin-desc" data-i18n="clusterInfoDesc">为每个集群编号向集群报告添加文本（例如完整主机名）。必须在 DirData 目录中创建一个名为 clusterinfo.myconfig.txt 的文本文件，包含两个字段（第一个是集群编号，第二个是要显示的文本），用制表符分隔。注意：如果 ShowClusterStats 设为 0 或您没有使用包含 <span style="font-style: italic;">%cluster</span> 标签的自定义日志格式，此插件无用。随 AWStats (6.2+) 提供。</div>
+                    </div>
+                </div>
+
+                <!-- HostInfo -->
+                <div class="plugin-card">
+                    <div class="plugin-header">
+                        <span class="plugin-name">HostInfo</span>
+                        <span class="plugin-badge badge-free" data-i18n="free">免费</span>
+                    </div>
+                    <div class="plugin-body">
+                        <div class="plugin-modules"><strong data-i18n="requiredModules">所需模块：</strong> Net::XWhois</div>
+                        <div class="plugin-params"><strong data-i18n="parameters">参数：</strong> <span data-i18n="none">无</span></div>
+                        <div class="plugin-desc" data-i18n="hostInfoDesc">向主机图表添加一列，其中包含打开弹出窗口的链接，显示有关主机的信息（如 whois 记录）。随 AWStats (6.0+) 提供。</div>
+                    </div>
+                </div>
+
+                <!-- UrlAliases -->
+                <div class="plugin-card">
+                    <div class="plugin-header">
+                        <span class="plugin-name">UrlAliases</span>
+                        <span class="plugin-badge badge-free" data-i18n="free">免费</span>
+                    </div>
+                    <div class="plugin-body">
+                        <div class="plugin-modules"><strong data-i18n="requiredModules">所需模块：</strong> <span data-i18n="none">无</span></div>
+                        <div class="plugin-params"><strong data-i18n="parameters">参数：</strong> <span data-i18n="none">无</span></div>
+                        <div class="plugin-desc" data-i18n="urlAliasesDesc">在 URL 值之前向 URL 报告添加文本（页面标题、描述等）。必须在 DirData 目录中创建一个名为 urlalias.myconfig.txt 的文本文件，包含两个字段（第一个是 URL，第二个是要显示的文本），用制表符分隔。您可以手动构建 urlalias 文件，或使用 <a href="awstats_tools.html#urlaliasbuilder">urlaliasbuilder.pl</a> 工具。随 AWStats (5.2+) 提供。</div>
+                    </div>
+                </div>
+
+                <!-- TimeHiRes -->
+                <div class="plugin-card">
+                    <div class="plugin-header">
+                        <span class="plugin-name">TimeHiRes</span>
+                        <span class="plugin-badge badge-free" data-i18n="free">免费</span>
+                    </div>
+                    <div class="plugin-body">
+                        <div class="plugin-modules"><strong data-i18n="requiredModules">所需模块：</strong> Time::HiRes</div>
+                        <div class="plugin-params"><strong data-i18n="parameters">参数：</strong> <span data-i18n="none">无</span></div>
+                        <div class="plugin-desc" data-i18n="timeHiResDesc">-showsteps 选项报告的时间以毫秒为单位。用于调试目的。随 AWStats (5.1+) 提供。</div>
+                    </div>
+                </div>
+
+                <!-- TimeZone -->
+                <div class="plugin-card">
+                    <div class="plugin-header">
+                        <span class="plugin-name">TimeZone</span>
+                        <span class="plugin-badge badge-free" data-i18n="free">免费</span>
+                    </div>
+                    <div class="plugin-body">
+                        <div class="plugin-modules"><strong data-i18n="requiredModules">所需模块：</strong> Time::Local</div>
+                        <div class="plugin-params"><strong data-i18n="parameters">参数：</strong> &lt;偏移量或本地时区&gt;</div>
+                        <div class="plugin-desc" data-i18n="timeZoneDesc">在处理之前使用参数中提供的偏移量转换日志文件的时区。这对于某些 IIS 用户（如果日志以 GMT 存储）或服务器位于不同时区的用户很有用。您必须提供要转换到的时区的缩写名称或小时偏移值。例如 <span style="font-style: italic;">LoadPlugin="timezone +2"</span> 会给日志时间戳增加两小时。注意：此插件将 AWStats 速度降低约 40%！随 AWStats (5.1+) 提供。</div>
+                    </div>
+                </div>
+
+                <!-- Rawlog -->
+                <div class="plugin-card">
+                    <div class="plugin-header">
+                        <span class="plugin-name">Rawlog</span>
+                        <span class="plugin-badge badge-free" data-i18n="free">免费</span>
+                    </div>
+                    <div class="plugin-body">
+                        <div class="plugin-modules"><strong data-i18n="requiredModules">所需模块：</strong> <span data-i18n="none">无</span></div>
+                        <div class="plugin-params"><strong data-i18n="parameters">参数：</strong> <span data-i18n="none">无</span></div>
+                        <div class="plugin-desc" data-i18n="rawlogDesc">此插件在 AWStats 主页中添加一个表单，允许用户查看当前日志文件的原始内容。还将显示一个显示过滤器。随 AWStats (5.7+) 提供。</div>
+                    </div>
+                </div>
+
+                <!-- GraphApplet -->
+                <div class="plugin-card">
+                    <div class="plugin-header">
+                        <span class="plugin-name">GraphApplet</span>
+                        <span class="plugin-badge badge-free" data-i18n="free">免费</span>
+                    </div>
+                    <div class="plugin-body">
+                        <div class="plugin-modules"><strong data-i18n="requiredModules">所需模块：</strong> <span data-i18n="none">无</span></div>
+                        <div class="plugin-params"><strong data-i18n="parameters">参数：</strong> <span data-i18n="none">无</span></div>
+                        <div class="plugin-desc" data-i18n="graphAppletDesc">支持的图表由 3D 图形小程序构建。LoadPlugin="graphapplet"（实验性功能）。随 AWStats (6.0+) 提供。</div>
+                    </div>
+                </div>
+
+                <!-- GraphGoogleChartAPI -->
+                <div class="plugin-card">
+                    <div class="plugin-header">
+                        <span class="plugin-name">GraphGoogleChartAPI</span>
+                        <span class="plugin-badge badge-free" data-i18n="free">免费</span>
+                    </div>
+                    <div class="plugin-body">
+                        <div class="plugin-modules"><strong data-i18n="requiredModules">所需模块：</strong> <span data-i18n="none">无</span></div>
+                        <div class="plugin-params"><strong data-i18n="parameters">参数：</strong> <span data-i18n="none">无</span></div>
+                        <div class="plugin-desc" data-i18n="graphGoogleDesc">用免费的 Google API 生成的图像替换 HTML 报告中的标准图表。如果有国家数据且多个国家有请求，将使用 Google 可视化生成地图。注意：显示报告的机器必须能够访问互联网才能生成图表。发送给 Google 的唯一数据包括统计数字、图例名称和国家名称。随 AWStats (6.0+) 提供。</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GeoIP 插件说明 -->
+            <h3 data-i18n="geoipNotes">Maxmind GeoIP 插件说明</h3>
+            <div class="note-box">
+                <p data-i18n="geoipIntro">Maxmind 是一家销售地理定位技术的公司，该技术将 IP 地址匹配到国家、地区、城市和 ISP。他们的所有数据库都需要初始费用和月度更新订阅，并包括更高的准确性和更高的更新频率。一些数据库是免费的，但更新频率较低，可能不那么准确。</p>
+                
+                <p><strong data-i18n="geoipInstall">安装：</strong></p>
+                <p data-i18n="geoipInstallDesc">首先选择数据库。为 AWStats 下载数据库时，请下载<span style="font-style: italic;">二进制格式</span>版本。AWStats 当前支持的数据库有：</p>
+                <p><strong data-i18n="commercial">商业版：</strong> <a href="http://www.maxmind.com/app/country?rId=awstats">国家</a>, <a href="http://www.maxmind.com/app/region?rId=awstats">地区</a>, <a href="http://www.maxmind.com/app/city?rId=awstats">城市</a>, <a href="http://www.maxmind.com/app/organization?rId=awstats">组织</a>, <a href="http://www.maxmind.com/app/isp?rId=awstats">ISP</a></p>
+                <p><strong data-i18n="openSource">开源版：</strong> <a href="http://www.maxmind.com/app/geolitecountry?rId=awstats">国家</a>, <a href="http://www.maxmind.com/app/geolitecity?rId=awstats">城市</a>, <a href="http://www.maxmind.com/app/asnum?rId=awstats">ASN</a></p>
+                
+                <p data-i18n="geoipNote">接下来，安装 Geo::IP Perl 模块。然后选择访问数据库的 Maxmind API。Maxmind 还有两个用于与数据库交互的 Perl API：一个运行快速的 C/Perl 库，和一个稍慢但不依赖 C 的纯 Perl API。选择其中一个 API 并在您的机器上安装。</p>
+                
+                <p><strong data-i18n="parameters">参数：</strong> 每个 GeoIP 数据库可以完全加载到内存中，或者查找可以扫描文件。编辑 AWStats 配置时，您必须指定要使用内存查找还是文件查找。指定 GEOIP_STANDARD 进行文件查找，或 GEOIP_MEMORY_CACHE 进行内存加载。请注意，内存方法在某些 Linux 发行版上可能崩溃，如果发生这种情况，请尝试标准方法。此外，在 Windows 机器上使用 Activestate Perl 使用 C API 可能崩溃，因此请改用 PurePerl 模块。</p>
+            </div>
+
+            <!-- GeoIP 插件卡片网格 -->
+            <div class="plugins-grid">
+                <!-- GeoIP -->
+                <div class="plugin-card">
+                    <div class="plugin-header">
+                        <span class="plugin-name">GeoIP</span>
+                        <span class="plugin-badge badge-geoip" data-i18n="geoip">GeoIP</span>
+                    </div>
+                    <div class="plugin-body">
+                        <div class="plugin-modules"><strong data-i18n="requiredModules">所需模块：</strong> Geo::IP 或 Geo::IP::PurePerl</div>
+                        <div class="plugin-params"><strong data-i18n="parameters">参数：</strong> [GEOIP_STANDARD | GEOIP_MEMORY_CACHE] [/path/geoip.dat] &lt;/path/override.txt&gt;</div>
+                        <div class="plugin-desc" data-i18n="geoipDesc">国家图表从互联网 IP-国家数据库构建。注意：您必须在使用此插件或 GeoIPfree 插件之间做出选择。示例：LoadPlugin="geoip GEOIP_STANDARD /usr/local/geoip.dat /usr/local/geoip_override.txt"。随 AWStats (5.2+) 提供。</div>
+                    </div>
+                </div>
+
+                <!-- GeoIP_City_Maxmind -->
+                <div class="plugin-card">
+                    <div class="plugin-header">
+                        <span class="plugin-name">GeoIP_City_Maxmind</span>
+                        <span class="plugin-badge badge-geoip" data-i18n="geoip">GeoIP</span>
+                    </div>
+                    <div class="plugin-body">
+                        <div class="plugin-modules"><strong data-i18n="requiredModules">所需模块：</strong> Geo::IP 或 Geo::IP::PurePerl</div>
+                        <div class="plugin-params"><strong data-i18n="parameters">参数：</strong> [GEOIP_STANDARD | GEOIP_MEMORY_CACHE] [/path/GeoIPCity.dat] &lt;/path/override.txt&gt;</div>
+                        <div class="plugin-desc" data-i18n="geoipCityDesc">此插件按城市添加请求图表（包括主要国家的地区和城市信息）。启用此插件后，您将在报告菜单中看到名为"城市"的新链接。示例：LoadPlugin="geoip_city_maxmind GEOIP_STANDARD /usr/local/geoip.dat /usr/local/GeoIPCity_override.txt"。随 AWStats (6.2+) 提供。</div>
+                    </div>
+                </div>
+
+                <!-- GeoIP_ASN_Maxmind -->
+                <div class="plugin-card">
+                    <div class="plugin-header">
+                        <span class="plugin-name">GeoIP_ASN_Maxmind</span>
+                        <span class="plugin-badge badge-geoip" data-i18n="geoip">GeoIP</span>
+                    </div>
+                    <div class="plugin-body">
+                        <div class="plugin-modules"><strong data-i18n="requiredModules">所需模块：</strong> Geo::IP 或 Geo::IP::PurePerl</div>
+                        <div class="plugin-params"><strong data-i18n="parameters">参数：</strong> [GEOIP_STANDARD | GEOIP_MEMORY_CACHE] [/path/GeoIPASN.dat] &lt;/path/override.txt&gt; &lt;AS查找链接&gt;</div>
+                        <div class="plugin-desc" data-i18n="geoipASNDesc">此插件添加主机 IP 地址注册的 AS 编号图表。如果数据库中包含某些 ISP 信息，此插件可以显示。您还可以提供用于查找额外注册数据的链接。将链接放在参数字符串的末尾，报告页面将在完整 AS 编号末尾包含该链接。示例：LoadPlugin="geoip_asn_maxmind GEOIP_STANDARD /usr/local/geoip.dat /usr/local/GeoIPASN_override.txt http://enc.com.au/itools/aut-num.php?autnum="。随 AWStats (6.9+) 提供。</div>
+                    </div>
+                </div>
+
+                <!-- GeoIP_Region_Maxmind -->
+                <div class="plugin-card">
+                    <div class="plugin-header">
+                        <span class="plugin-name">GeoIP_Region_Maxmind</span>
+                        <span class="plugin-badge badge-geoip" data-i18n="commercialOnly">仅商业版</span>
+                    </div>
+                    <div class="plugin-body">
+                        <div class="plugin-modules"><strong data-i18n="requiredModules">所需模块：</strong> Geo::IP 或 Geo::IP::PurePerl</div>
+                        <div class="plugin-params"><strong data-i18n="parameters">参数：</strong> [GEOIP_STANDARD | GEOIP_MEMORY_CACHE] [/path/GeoIPRegion.dat] &lt;/path/override.txt&gt;</div>
+                        <div class="plugin-desc" data-i18n="geoipRegionDesc">此插件按地区添加请求图表。目前只能检测美国和加拿大的地区。启用此插件后，您将在报告菜单中看到名为"地区"的新链接。目前此链接仅在 AWStats 报告作为 CGI 构建时有效。示例：LoadPlugin="geoip_region_maxmind GEOIP_STANDARD /usr/local/GeoIPRegion.dat /usr/local/geoip_override.txt"。随 AWStats (6.2+) 提供。</div>
+                    </div>
+                </div>
+
+                <!-- GeoIP_ISP_Maxmind -->
+                <div class="plugin-card">
+                    <div class="plugin-header">
+                        <span class="plugin-name">GeoIP_ISP_Maxmind</span>
+                        <span class="plugin-badge badge-geoip" data-i18n="commercialOnly">仅商业版</span>
+                    </div>
+                    <div class="plugin-body">
+                        <div class="plugin-modules"><strong data-i18n="requiredModules">所需模块：</strong> Geo::IP 或 Geo::IP::PurePerl</div>
+                        <div class="plugin-params"><strong data-i18n="parameters">参数：</strong> [GEOIP_STANDARD | GEOIP_MEMORY_CACHE] [/path/GeoIPISP.dat] &lt;/path/override.txt&gt;</div>
+                        <div class="plugin-desc" data-i18n="geoipISPDesc">此插件按 ISP 添加请求图表。启用此插件后，您将在报告菜单中看到名为"ISP"的新链接。目前此链接仅在 AWStats 报告作为 CGI 构建时有效。示例：LoadPlugin="geoip_isp_maxmind GEOIP_STANDARD /usr/local/GeoIPISP.dat /usr/local/geoip_override.txt"。随 AWStats (6.3+) 提供。</div>
+                    </div>
+                </div>
+
+                <!-- GeoIP_Org_Maxmind -->
+                <div class="plugin-card">
+                    <div class="plugin-header">
+                        <span class="plugin-name">GeoIP_Org_Maxmind</span>
+                        <span class="plugin-badge badge-geoip" data-i18n="commercialOnly">仅商业版</span>
+                    </div>
+                    <div class="plugin-body">
+                        <div class="plugin-modules"><strong data-i18n="requiredModules">所需模块：</strong> Geo::IP 或 Geo::IP::PurePerl</div>
+                        <div class="plugin-params"><strong data-i18n="parameters">参数：</strong> [GEOIP_STANDARD | GEOIP_MEMORY_CACHE] [/path/GeoIPOrg.dat] &lt;/path/override.txt&gt;</div>
+                        <div class="plugin-desc" data-i18n="geoipOrgDesc">此插件按组织名称添加请求图表。启用此插件后，您将在报告菜单中看到名为"组织"的新链接。目前此链接仅在 AWStats 报告作为 CGI 构建时有效。示例：LoadPlugin="geoip_org_maxmind GEOIP_STANDARD /usr/local/GeoIPOrg.dat /usr/local/geoip_override.txt"。随 AWStats (6.3+) 提供。</div>
+                    </div>
+                </div>
+
+                <!-- GeoIPfree -->
+                <div class="plugin-card">
+                    <div class="plugin-header">
+                        <span class="plugin-name">GeoIPfree</span>
+                        <span class="plugin-badge badge-free" data-i18n="free">免费</span>
+                    </div>
+                    <div class="plugin-body">
+                        <div class="plugin-modules"><strong data-i18n="requiredModules">所需模块：</strong> Geo::IPfree 0.2+</div>
+                        <div class="plugin-params"><strong data-i18n="parameters">参数：</strong> <span data-i18n="none">无</span></div>
+                        <div class="plugin-desc" data-i18n="geoipfreeDesc">国家图表从互联网 IP-国家数据库构建。此插件仅对内网日志文件无用。注意：您必须在使用此插件（需要 Perl Geo::IPfree 模块，数据库免费但未更新）或 GeoIP 插件（需要 Perl Geo::IP 模块，数据库免费且更新）之间做出选择。此插件将 AWStats 速度降低约 10%！随 AWStats (5.5+) 提供。</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 其他贡献/工具/包 -->
+            <a name="CONTRIB"></a>
+            <h2>📦 <span data-i18n="contribTitle">其他 AWStats 贡献/工具/包</span></h2>
+            <hr>
+            <p data-i18n="contribDesc">以下所有文件/产品均由贡献者开发和提交。我尚未尝试过它们，因此无法告知您它们是否有效以及如何工作...它们可以增强 AWStats 的使用，或为您的新开发提供起点，节省时间。</p>
+
+            <div class="contrib-grid">
+                <!-- GeoIP 位置插件 -->
+                <div class="contrib-card">
+                    <div class="contrib-title">IP2Location GeoIP 插件</div>
+                    <div class="contrib-link"><a href="https://github.com/ip2location/ip2location_awstats">github.com/ip2location/ip2location_awstats</a></div>
+                    <div class="contrib-desc" data-i18n="ip2locationDesc">用于地理定位的插件。</div>
+                </div>
+
+                <!-- WordPress 插件 -->
+                <div class="contrib-card">
+                    <div class="contrib-title">WordPress 插件</div>
+                    <div class="contrib-link"><a href="http://wordpress.org/extend/plugins/awstats-script/">wordpress.org/extend/plugins/awstats-script</a></div>
+                    <div class="contrib-desc" data-i18n="wordpressDesc">允许 WordPress 用户添加 AWStats 报告"杂项图表"所需的标签。</div>
+                </div>
+
+                <!-- Exim2Awstats -->
+                <div class="contrib-card">
+                    <div class="contrib-title">Exim2Awstats</div>
+                    <div class="contrib-link"><a href="http://sourceforge.net/projects/exim2awstats/">sourceforge.net/projects/exim2awstats</a></div>
+                    <div class="contrib-desc" data-i18n="exim2Desc">将 Exim MTA 日志文件转换为 AWStats 可读格式的工具。</div>
+                </div>
+
+                <!-- Logprocess -->
+                <div class="contrib-card">
+                    <div class="contrib-title">Logprocess</div>
+                    <div class="contrib-link"><a href="http://www.digievo.co.uk/software.asp?category=2">digievo.co.uk/software.asp</a></div>
+                    <div class="contrib-desc" data-i18n="logprocessDesc">在托管（多域）环境中自动化收集、合并、处理和归档 IIS 日志文件，使用 AWStats 生成和管理统计/报告。</div>
+                </div>
+
+                <!-- Configurador -->
+                <div class="contrib-card">
+                    <div class="contrib-title">Configurador</div>
+                    <div class="contrib-link"><a href="/files/configurador.tgz">configurador.tgz</a></div>
+                    <div class="contrib-desc" data-i18n="configuradorDesc">一组 CGI perl 脚本，允许您从 Web 编辑 AWStats 配置文件。代码注释为西班牙语，但可能是开发您自己工具的良好起点。<br><span class="contrib-author">Hector Garcia Alvarez</span></div>
+                </div>
+
+                <!-- logtrans.py -->
+                <div class="contrib-card">
+                    <div class="contrib-title">logtrans.py</div>
+                    <div class="contrib-link"><a href="/files/logtrans.py">logtrans.py</a></div>
+                    <div class="contrib-desc" data-i18n="logtransDesc">一个 Python 小示例，演示如何将旧的 IIS4.0 日志文件转换为与 AWStats 兼容的新格式。不确定是否有效，只是在此提供代码示例，如果您喜欢 Python 的话。</div>
+                </div>
+
+                <!-- go_awstats -->
+                <div class="contrib-card">
+                    <div class="contrib-title">go_awstats</div>
+                    <div class="contrib-link"><a href="http://www.ruwenzori.net/code/go_awstats/">ruwenzori.net/code/go_awstats</a></div>
+                    <div class="contrib-desc" data-i18n="goAwstatsDesc">一个自动化工具，为所有配置文件以及所有月份构建 AWStats 静态报告。</div>
+                </div>
+            </div>
+
+            <!-- 非 AWStats 相关工具 -->
+            <a name="RELATED"></a>
+            <h2>🛠️ <span data-i18n="relatedTitle">其他非 AWStats 贡献/工具（与日志分析相关）</span></h2>
+            <hr>
+
+            <div class="contrib-grid">
+                <!-- maillog2commonlog.pl -->
+                <div class="contrib-card">
+                    <div class="contrib-title">maillog2commonlog.pl</div>
+                    <div class="contrib-link"><a href="/files/maillog2commonlog.pl">maillog2commonlog.pl</a></div>
+                    <div class="contrib-desc" data-i18n="maillog2Desc">将 smail 或 qmail 格式的邮件日志转换为 common 日志格式。注意，如果您想使用 AWStats 分析 postfix、sendmail 或 qmail 的邮件日志文件，更好的解决方案是使用 maillogconvert.pl 预处理器。Joey Hess, 免费软件。</div>
+                </div>
+
+                <!-- maillogconv.pl -->
+                <div class="contrib-card">
+                    <div class="contrib-title">maillogconv.pl</div>
+                    <div class="contrib-link"><a href="http://www.kristoffersen.us/software/">kristoffersen.us/software</a></div>
+                    <div class="contrib-desc" data-i18n="maillogconvDesc">另一个邮件日志处理器，可以将邮件日志文件转换为 AWStats 可以理解的日志文件。注意，自 5.7 起，AWStats 提供了一个派生和增强的工具，称为 maillogconvert.pl。查看关于分析邮件日志的 FAQ，了解如何使用 maillogconv.pl 或 maillogconvert.pl 设置 AWStats 来分析 Postfix、Sendmail、Qmail 或 MDaemon 日志文件。</div>
+                </div>
+
+                <!-- access_referer_agent2combined.pl -->
+                <div class="contrib-card">
+                    <div class="contrib-title">access_referer_agent2combined.pl</div>
+                    <div class="contrib-link"><a href="/files/access_referer_agent2combined.pl">access_referer_agent2combined.pl</a></div>
+                    <div class="contrib-desc" data-i18n="accessRefererDesc">一个 Perl 脚本，将目录中的 common 日志格式访问文件、引用文件和代理文件转换为单个 combined.log。如果您有单独的访问/引用/代理日志文件，并希望使用需要 combined 日志文件的日志分析器的所有功能，这将非常有用。</div>
+                </div>
+
+                <!-- anonlog -->
+                <div class="contrib-card">
+                    <div class="contrib-title">anonlog</div>
+                    <div class="contrib-link"><a href="http://anonlog.sourceforge.net/">anonlog.sourceforge.net</a></div>
+                    <div class="contrib-desc" data-i18n="anonlogDesc">通过对敏感信息进行编码来"匿名化"您的日志文件。Stephen Turner, 免费软件。</div>
+                </div>
+            </div>
+
+            <!-- 其他日志分析器 -->
+            <div class="note-box">
+                <p><strong data-i18n="otherAnalyzers">如果您不喜欢 AWStats，可以尝试这些其他流行的类似工具：</strong><br>
+                <a href="http://www.mrunix.net/webalizer/">Webalizer</a> - 另一个非常古老的日志分析器（用 C 编写）。</p>
+                <p data-i18n="commercialSearch">还有商业产品，可以通过在 <a href="http://www.google.com">Google</a> 上搜索"日志文件分析器"找到。</p>
+            </div>
+
+            <!-- 文档资源 -->
+            <a name="DOC"></a>
+            <h2>📚 <span data-i18n="docTitle">AWStats 相关文档</span></h2>
+            <hr>
+
+            <div class="contrib-grid">
+                <!-- 官方文档 -->
+                <div class="contrib-card">
+                    <div class="contrib-title" data-i18n="officialDoc">AWStats 官方文档</div>
+                    <div class="contrib-link"><a href="index.html">HTML 在线版</a> | <a href="awstats.pdf">PDF 文件</a></div>
+                    <div class="contrib-desc" data-i18n="officialDocDesc">最新版本的 AWStats 官方文档。</div>
+                </div>
+
+                <!-- 中文文档 -->
+                <div class="contrib-card">
+                    <div class="contrib-title" data-i18n="chineseDoc">中文介绍和安装文档</div>
+                    <div class="contrib-link"><a href="http://www.chedong.com/tech/awstats.html">chedong.com/tech/awstats.html</a></div>
+                    <div class="contrib-desc" data-i18n="chineseDocDesc">'在 GNU/Linux 或 Windows 上使用 AWStats' 的介绍和安装文档。</div>
+                </div>
+
+                <!-- 法语文档 -->
+                <div class="contrib-card">
+                    <div class="contrib-title" data-i18n="frenchDoc">法文设置教程</div>
+                    <div class="contrib-link"><a href="http://www.baudelet.net/awstats.htm">baudelet.net/awstats.htm</a></div>
+                    <div class="contrib-desc" data-i18n="frenchDocDesc">针对 Windows 用户的设置教程（法文）。</div>
+                </div>
+            </div>
+
+            <!-- 赞助商 -->
+            <a name="SPONSOR"></a>
+            <h2>❤️ <span data-i18n="sponsorTitle">赞助商</span></h2>
+            <hr>
+
+            <div class="paypal-button">
+                <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+                    <input type="hidden" name="cmd" value="_s-xclick">
+                    <input type="hidden" name="hosted_button_id" value="8968579">
+                    <input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online.">
+                    <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                </form>
+                <p data-i18n="donateText">您可以通过此链接捐款支持 AWStats 项目：</p>
+            </div>
+
+            <p data-i18n="sponsorThanks">特别感谢以下赞助商的重要支持：</p>
+            <div class="sponsor-grid">
+                <div class="sponsor-card"><a href="https://www.dolibarr.org">dolibarr.org</a></div>
+                <div class="sponsor-card"><a href="http://www.arrestier.fr">arrestier.fr</a></div>
+                <div class="sponsor-card"><a href="http://www.ballanger-dermatologue.fr">ballanger-dermatologue.fr</a></div>
+                <div class="sponsor-card">...<i data-i18n="yourLink">您的名称/链接在这里</i>...</div>
+            </div>
+
+            <hr>
+
+            <!-- 署名 -->
+            <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-top: 20px;">
+                <span style="color: var(--text-secondary);" data-i18n="writtenBy">文章作者：<a href="https://plus.google.com/+LaurentDestailleur-Open-Source-Expert" rel="author" style="color: var(--accent);">Laurent Destailleur</a>。</span>
+                <span class="plugin-badge" style="background: var(--accent); color: white; padding: 4px 16px; border-radius: 30px; font-size: 0.9rem;" data-i18n="version">版本 8.1</span>
+            </div>
+        </div>
+    </main>
+
+    <!-- 返回顶部按钮 -->
+    <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="返回顶部">
+        ↑
+    </button>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-copyright">
+                © 1997 - <span id="currentYear"></span> Laurent Destailleur & AWStats <span data-i18n="copyright">团队</span>
+            </div>
+            <div class="footer-license">
+                <a href="awstats_license.html" data-i18n="licenseLink">GNU General Public License</a> · 
+                <a href="https://github.com/eldy/AWStats" rel="publisher" target="_blank" style="display: inline-flex; align-items: center;"><a data-i18n="authorLink"></a> 
+                </a>
+                    <img src="images/favicon.pub/github.svg" style="width: 24px; height: 24px;">
+                </div>
+            <div class="attribution" data-i18n="darkAttr">
+                🌓 自适应暗黑 · 现代化重构
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+            // 完整翻译资源
+            const translations = {
+                zh: {
+                    navHome: "主页",
+                    navWhat: "什么是AWStats",
+                    navSetup: "安装配置",
+                    navWebmin: "Webmin模块",
+                    navUpgrade: "升级指南",
+                    navTools: "其他工具",
+                    navSecurity: "安全建议",
+                    navLicense: "许可证",
+                    navGlossary: "术语表",
+                    navFAQ: "FAQ",
+                    navExtra: "额外部分",
+                    navDolibarr: "Dolibarr模块",
+                    navPlugins: "插件开发",
+                    navHooks: "插件钩子",
+                    navGraphs: "插件图形",
+                    navContrib: "贡献资源",
+                    home: "主页",
+                    currentPage: "插件与贡献资源",
+                    
+                    siteTitle: "AWStats 8.1",
+                    headerSlogan: "⚡ 先进的日志分析器 · 官方文档",
+                    themeAuto: "自动",
+                    mainTitle: "🔌 插件、贡献和相关程序",
+                    
+                    intro: "您可以在这里找到不同类型的资源文件描述：",
+                    
+                    tocPlugins: "🔌 AWStats 插件",
+                    tocContrib: "📦 其他贡献/工具/包",
+                    tocRelated: "🛠️ 非 AWStats 相关工具",
+                    tocDoc: "📚 文档资源",
+                    tocSponsor: "❤️ 赞助商",
+                    
+                    pluginsTitle: "AWStats 插件",
+                    pluginsDesc: "插件是 .pm 文件，您可以放入 AWStats 插件目录以添加新功能。请注意，您必须通过在配置文件中添加新行来启用插件（请参阅 <a href=\"awstats_config.html#LoadPlugin\">LoadPlugin</a> 参数）。",
+                    
+                    standardPlugins: "标准免费插件：",
+                    geoipPlugins: "GeoIP 插件：",
+                    standardPluginsTitle: "标准插件列表（随 AWStats 提供）",
+                    
+                    requiredModules: "所需模块：",
+                    parameters: "参数：",
+                    none: "无",
+                    free: "免费",
+                    geoip: "GeoIP",
+                    commercialOnly: "仅商业版",
+                    
+                    tooltipsDesc: "向 HTML 报告页面添加工具提示弹出帮助框。随 AWStats (5.4+) 提供。",
+                    decodeUTFKeysDesc: "允许 AWStats 正确显示关键词/短语字符串（使用语言字符集），即使它们被引用搜索引擎以 UTF8 编码。随 AWStats (6.0+) 提供。",
+                    ipv6Desc: "此插件使 AWStats 能够对 IPv6 地址进行反向 DNS 查找。注意：IPv6 地址目前与 GeoIP 数据库不兼容。随 AWStats (5.5+) 提供。",
+                    hashFilesDesc: "AWStats DNS 缓存文件作为本地哈希文件读取/保存。这提高了缓存文件加载速度，特别是对于非常大的网站。随 AWStats (5.1+) 提供。",
+                    userInfoDesc: "为每个登录值向认证用户报告添加文本（名字、姓氏、部门等）。必须在 DirData 目录中创建一个名为 userinfo.myconfig.txt 的文本文件，包含两个字段（第一个是登录名，第二个是要显示的文本，用制表符分隔）。随 AWStats (5.5+) 提供。",
+                    clusterInfoDesc: "为每个集群编号向集群报告添加文本（例如完整主机名）。必须在 DirData 目录中创建一个名为 clusterinfo.myconfig.txt 的文本文件，包含两个字段（第一个是集群编号，第二个是要显示的文本），用制表符分隔。注意：如果 ShowClusterStats 设为 0 或您没有使用包含 <span style=\"font-style: italic;\">%cluster</span> 标签的自定义日志格式，此插件无用。随 AWStats (6.2+) 提供。",
+                    hostInfoDesc: "向主机图表添加一列，其中包含打开弹出窗口的链接，显示有关主机的信息（如 whois 记录）。随 AWStats (6.0+) 提供。",
+                    urlAliasesDesc: "在 URL 值之前向 URL 报告添加文本（页面标题、描述等）。必须在 DirData 目录中创建一个名为 urlalias.myconfig.txt 的文本文件，包含两个字段（第一个是 URL，第二个是要显示的文本），用制表符分隔。您可以手动构建 urlalias 文件，或使用 <a href=\"awstats_tools.html#urlaliasbuilder\">urlaliasbuilder.pl</a> 工具。随 AWStats (5.2+) 提供。",
+                    timeHiResDesc: "-showsteps 选项报告的时间以毫秒为单位。用于调试目的。随 AWStats (5.1+) 提供。",
+                    timeZoneDesc: "在处理之前使用参数中提供的偏移量转换日志文件的时区。这对于某些 IIS 用户（如果日志以 GMT 存储）或服务器位于不同时区的用户很有用。您必须提供要转换到的时区的缩写名称或小时偏移值。例如 <span style=\"font-style: italic;\">LoadPlugin=\"timezone +2\"</span> 会给日志时间戳增加两小时。注意：此插件将 AWStats 速度降低约 40%！随 AWStats (5.1+) 提供。",
+                    rawlogDesc: "此插件在 AWStats 主页中添加一个表单，允许用户查看当前日志文件的原始内容。还将显示一个显示过滤器。随 AWStats (5.7+) 提供。",
+                    graphAppletDesc: "支持的图表由 3D 图形小程序构建。LoadPlugin=\"graphapplet\"（实验性功能）。随 AWStats (6.0+) 提供。",
+                    graphGoogleDesc: "用免费的 Google API 生成的图像替换 HTML 报告中的标准图表。如果有国家数据且多个国家有请求，将使用 Google 可视化生成地图。注意：显示报告的机器必须能够访问互联网才能生成图表。发送给 Google 的唯一数据包括统计数字、图例名称和国家名称。随 AWStats (6.0+) 提供。",
+                    
+                    geoipNotes: "Maxmind GeoIP 插件说明",
+                    geoipIntro: "Maxmind 是一家销售地理定位技术的公司，该技术将 IP 地址匹配到国家、地区、城市和 ISP。他们的所有数据库都需要初始费用和月度更新订阅，并包括更高的准确性和更高的更新频率。一些数据库是免费的，但更新频率较低，可能不那么准确。",
+                    geoipInstall: "安装：",
+                    geoipInstallDesc: "首先选择数据库。为 AWStats 下载数据库时，请下载<span style=\"font-style: italic;\">二进制格式</span>版本。AWStats 当前支持的数据库有：",
+                    commercial: "商业版：",
+                    openSource: "开源版：",
+                    geoipNote: "接下来，安装 Geo::IP Perl 模块。然后选择访问数据库的 Maxmind API。Maxmind 还有两个用于与数据库交互的 Perl API：一个运行快速的 C/Perl 库，和一个稍慢但不依赖 C 的纯 Perl API。选择其中一个 API 并在您的机器上安装。",
+                    
+                    geoipDesc: "国家图表从互联网 IP-国家数据库构建。注意：您必须在使用此插件或 GeoIPfree 插件之间做出选择。示例：LoadPlugin=\"geoip GEOIP_STANDARD /usr/local/geoip.dat /usr/local/geoip_override.txt\"。随 AWStats (5.2+) 提供。",
+                    geoipCityDesc: "此插件按城市添加请求图表（包括主要国家的地区和城市信息）。启用此插件后，您将在报告菜单中看到名为\"城市\"的新链接。示例：LoadPlugin=\"geoip_city_maxmind GEOIP_STANDARD /usr/local/geoip.dat /usr/local/GeoIPCity_override.txt\"。随 AWStats (6.2+) 提供。",
+                    geoipASNDesc: "此插件添加主机 IP 地址注册的 AS 编号图表。如果数据库中包含某些 ISP 信息，此插件可以显示。您还可以提供用于查找额外注册数据的链接。将链接放在参数字符串的末尾，报告页面将在完整 AS 编号末尾包含该链接。示例：LoadPlugin=\"geoip_asn_maxmind GEOIP_STANDARD /usr/local/geoip.dat /usr/local/GeoIPASN_override.txt http://enc.com.au/itools/aut-num.php?autnum=\"。随 AWStats (6.9+) 提供。",
+                    geoipRegionDesc: "此插件按地区添加请求图表。目前只能检测美国和加拿大的地区。启用此插件后，您将在报告菜单中看到名为\"地区\"的新链接。目前此链接仅在 AWStats 报告作为 CGI 构建时有效。示例：LoadPlugin=\"geoip_region_maxmind GEOIP_STANDARD /usr/local/GeoIPRegion.dat /usr/local/geoip_override.txt\"。随 AWStats (6.2+) 提供。",
+                    geoipISPDesc: "此插件按 ISP 添加请求图表。启用此插件后，您将在报告菜单中看到名为\"ISP\"的新链接。目前此链接仅在 AWStats 报告作为 CGI 构建时有效。示例：LoadPlugin=\"geoip_isp_maxmind GEOIP_STANDARD /usr/local/GeoIPISP.dat /usr/local/geoip_override.txt\"。随 AWStats (6.3+) 提供。",
+                    geoipOrgDesc: "此插件按组织名称添加请求图表。启用此插件后，您将在报告菜单中看到名为\"组织\"的新链接。目前此链接仅在 AWStats 报告作为 CGI 构建时有效。示例：LoadPlugin=\"geoip_org_maxmind GEOIP_STANDARD /usr/local/GeoIPOrg.dat /usr/local/geoip_override.txt\"。随 AWStats (6.3+) 提供。",
+                    geoipfreeDesc: "国家图表从互联网 IP-国家数据库构建。此插件仅对内网日志文件无用。注意：您必须在使用此插件（需要 Perl Geo::IPfree 模块，数据库免费但未更新）或 GeoIP 插件（需要 Perl Geo::IP 模块，数据库免费且更新）之间做出选择。此插件将 AWStats 速度降低约 10%！随 AWStats (5.5+) 提供。",
+                    
+                    contribTitle: "其他 AWStats 贡献/工具/包",
+                    contribDesc: "以下所有文件/产品均由贡献者开发和提交。我尚未尝试过它们，因此无法告知您它们是否有效以及如何工作...它们可以增强 AWStats 的使用，或为您的新开发提供起点，节省时间。",
+                    
+                    ip2locationDesc: "用于地理定位的插件。",
+                    wordpressDesc: "允许 WordPress 用户添加 AWStats 报告\"杂项图表\"所需的标签。",
+                    exim2Desc: "将 Exim MTA 日志文件转换为 AWStats 可读格式的工具。",
+                    logprocessDesc: "在托管（多域）环境中自动化收集、合并、处理和归档 IIS 日志文件，使用 AWStats 生成和管理统计/报告。",
+                    configuradorDesc: "一组 CGI perl 脚本，允许您从 Web 编辑 AWStats 配置文件。代码注释为西班牙语，但可能是开发您自己工具的良好起点。<br><span class=\"contrib-author\">Hector Garcia Alvarez</span>",
+                    logtransDesc: "一个 Python 小示例，演示如何将旧的 IIS4.0 日志文件转换为与 AWStats 兼容的新格式。不确定是否有效，只是在此提供代码示例，如果您喜欢 Python 的话。",
+                    goAwstatsDesc: "一个自动化工具，为所有配置文件以及所有月份构建 AWStats 静态报告。",
+                    
+                    relatedTitle: "其他非 AWStats 贡献/工具（与日志分析相关）",
+                    
+                    maillog2Desc: "将 smail 或 qmail 格式的邮件日志转换为 common 日志格式。注意，如果您想使用 AWStats 分析 postfix、sendmail 或 qmail 的邮件日志文件，更好的解决方案是使用 maillogconvert.pl 预处理器。Joey Hess, 免费软件。",
+                    maillogconvDesc: "另一个邮件日志处理器，可以将邮件日志文件转换为 AWStats 可以理解的日志文件。注意，自 5.7 起，AWStats 提供了一个派生和增强的工具，称为 maillogconvert.pl。查看关于分析邮件日志的 FAQ，了解如何使用 maillogconv.pl 或 maillogconvert.pl 设置 AWStats 来分析 Postfix、Sendmail、Qmail 或 MDaemon 日志文件。",
+                    accessRefererDesc: "一个 Perl 脚本，将目录中的 common 日志格式访问文件、引用文件和代理文件转换为单个 combined.log。如果您有单独的访问/引用/代理日志文件，并希望使用需要 combined 日志文件的日志分析器的所有功能，这将非常有用。",
+                    anonlogDesc: "通过对敏感信息进行编码来\"匿名化\"您的日志文件。Stephen Turner, 免费软件。",
+                    
+                    otherAnalyzers: "如果您不喜欢 AWStats，可以尝试这些其他流行的类似工具：",
+                    commercialSearch: "还有商业产品，可以通过在 <a href=\"http://www.google.com\">Google</a> 上搜索\"日志文件分析器\"找到。",
+                    
+                    docTitle: "AWStats 相关文档",
+                    officialDoc: "AWStats 官方文档",
+                    officialDocDesc: "最新版本的 AWStats 官方文档。",
+                    chineseDoc: "中文介绍和安装文档",
+                    chineseDocDesc: "'在 GNU/Linux 或 Windows 上使用 AWStats' 的介绍和安装文档。",
+                    frenchDoc: "法文设置教程",
+                    frenchDocDesc: "针对 Windows 用户的设置教程（法文）。",
+                    
+                    sponsorTitle: "赞助商",
+                    donateText: "您可以通过此链接捐款支持 AWStats 项目：",
+                    sponsorThanks: "特别感谢以下赞助商的重要支持：",
+                    yourLink: "您的名称/链接在这里",
+                    
+                    writtenBy: "文章作者：<a href=\"https://plus.google.com/+LaurentDestailleur-Open-Source-Expert\" rel=\"author\" style=\"color: var(--accent);\">Laurent Destailleur</a>。",
+                    version: "版本 8.1",
+                    copyright: "© 2000 - {year} Laurent Destailleur & AWStats 团队",
+                    licenseLink: "GNU通用公共许可证",
+                    authorLink: "原作者",
+                    darkAttr: "🌓 自适应暗黑 · 中文/English",
+                },
+                en: {
+                    navHome: "Home",
+                    navWhat: "What is AWStats",
+                    navSetup: "Setup",
+                    navWebmin: "Webmin Module",
+                    navUpgrade: "Upgrade Guide",
+                    navTools: "Other Tools",
+                    navSecurity: "Security Tips",
+                    navLicense: "License",
+                    navGlossary: "Glossary",
+                    navFAQ: "FAQ",
+                    navExtra: "Extra Sections",
+                    navDolibarr: "Dolibarr Module",
+                    navPlugins: "Plugin Development",
+                    navHooks: "Plugin Hooks",
+                    navGraphs: "Plugin Graphs",
+                    navContrib: "Contrib",
+                    home: "Home",
+                    currentPage: "Plugins, Contribs and Resources",
+                    
+                    siteTitle: "AWStats 8.1",
+                    headerSlogan: "⚡ Advanced Log Analyzer · Official Docs",
+                    themeAuto: "Auto",
+                    mainTitle: "🔌 Plugins, contribs and related programs",
+                    
+                    intro: "You will find here description for different kinds of ressource files :",
+                    
+                    tocPlugins: "🔌 AWStats plugins",
+                    tocContrib: "📦 Other AWStats contribs/tools/package",
+                    tocRelated: "🛠️ Other Non AWStats contribs/tools",
+                    tocDoc: "📚 Documents on AWStats",
+                    tocSponsor: "❤️ Sponsors",
+                    
+                    pluginsTitle: "AWStats plugins",
+                    pluginsDesc: "Plugins are .pm files you can put in your AWStats plugins directory to add new features.<br>Note that you must enable the plugin by adding a new line in your config files to make it works (See <a href=\"awstats_config.html#LoadPlugin\">LoadPlugin</a> parameter).",
+                    
+                    standardPlugins: "Standard free plugins:",
+                    geoipPlugins: "GeoIP Plugins:",
+                    standardPluginsTitle: "List of standard plugins (Provided with AWStats)",
+                    
+                    requiredModules: "Required Modules:",
+                    parameters: "Parameters:",
+                    none: "None",
+                    free: "Free",
+                    geoip: "GeoIP",
+                    commercialOnly: "Commercial Only",
+                    
+                    tooltipsDesc: "Add tooltips pop-up help boxes to HTML report pages. Provided with AWStats (5.4+).",
+                    decodeUTFKeysDesc: "Allow AWStats to show correctly (in language charset) keywords/keyphrases strings even if they were UTF8 coded by the referer search engine. Provided with AWStats (6.0+).",
+                    ipv6Desc: "This plugin gives AWStats capability to make reverse DNS lookup on IPv6 addresses. Note: IPv6 addresses are currently incompatible with the GeoIP databases. Provided with AWStats (5.5+)",
+                    hashFilesDesc: "AWStats DNS cache files are read/saved as native hash files. This improves cache file loading speed, especially for very large web sites. Provided with AWStats (5.1+)",
+                    userInfoDesc: "Add text (Firtname, Lastname, Office Department, ...) to authenticated user reports for each login value. A text file called userinfo.myconfig.txt, with two fields (first is login, second is text to show, separated by a tab char) must be created in DirData directory. Provided with AWStats (5.5+)",
+                    clusterInfoDesc: "Add text (for example a full hostname) to cluster reports for each cluster number. A text file called clusterinfo.myconfig.txt, with two fields (first is cluster number, second is text to show) separated by a tab character must be created in DirData directory. Note: This plugin is useless if ShowClusterStats is set to 0 or if you don't use a personalized log format that contains <span style=\"font-style: italic;\">%cluster</span> tag. Provided with AWStats (6.2+)",
+                    hostInfoDesc: "Add a column into host chart with a link to open a popup window that shows info on host (like whois records). Provided with AWStats (6.0+)",
+                    urlAliasesDesc: "Add text (Page title, description...) to URL reports before URL value. A text file called urlalias.myconfig.txt, with two fields (first is URL, second is text to show, separated by a tab char) must be created in DirData directory. You can build your urlalias file manually or use <a href=\"awstats_tools.html#urlaliasbuilder\">urlaliasbuilder.pl</a> tool. Provided with AWStats (5.2+)",
+                    timeHiResDesc: "Time reported by -showsteps option is in millisecond. For debug purpose. Provided with AWStats (5.1+)",
+                    timeZoneDesc: "Converts the timezone of log files before processing using the offset provided in the parameters. This is useful for some IIS users if logs are stored in GMT or for users who have servers in a different timezone. You must provide either the abreviated name of the timezone you wish to convert to or the offset value in hours. For example <span style=\"font-style: italic;\">LoadPlugin=\"timezone +2\"</span> would add two hours to the log timestamps. Note: This plugin reduces AWStats speed by about 40%! Provided with AWStats (5.1+)",
+                    rawlogDesc: "This plugin adds a form in AWStats main page to allow users to see raw content of current log files. A display filter will also be displayed. Provided with AWStats (5.7+)",
+                    graphAppletDesc: "Supported charts are built by a 3D graphic applet. LoadPlugin=\"graphapplet\" (EXPERIMENTAL FEATURE). Provided with AWStats (6.0+)",
+                    graphGoogleDesc: "Replaces the standard charts with free Google API generated images in HTML reports. If country data is available and more than one country has hits, a map will be generated using Google Visualizations. Note: The machine where reports are displayed must have Internet access for the charts to be generated. The only data sent to Google includes the statistic numbers, legend names and country names. Provided with AWStats (6.0+)",
+                    
+                    geoipNotes: "Maxmind GeoIP Plugin Notes",
+                    geoipIntro: "Maxmind is a company that sells geolocation technology that matches IP addresses to countries, regions, cities and ISPs. All of their databses are available for an initial fee and a monthly update subscription and include greater accuracy and a higher frequency of updating. Some databases are available for free but they are not updated as often and may not be as accurate.",
+                    geoipInstall: "Install:",
+                    geoipInstallDesc: "First choose a database. When downloading a database for AWStats, please download the <span style=\"font-style: italic;\">Binary Format</span> version. Current databases AWStats supports are:",
+                    commercial: "Commercial:",
+                    openSource: "Open Source:",
+                    geoipNote: "Next, install the Geo::IP Perl module. Then choose a Maxmind API to access the databse. Maxmind also has two Perl API's available for interacting with their databases. There is a a C/Perl library that will run quickly and there is a pure Perl API that is a little slower but does not require any C depdencies. Choose one of the APIs and install it on your machine.",
+                    
+                    geoipDesc: "Country chart is built from an Internet IP-Country database. Note: You must choose between using this plugin or the GeoIPfree plugin. Example <span style=\"font-style: italic;\">LoadPlugin=\"geoip GEOIP_STANDARD /usr/local/geoip.dat /usr/local/geoip_override.txt\"</span>. Provided with AWStats (5.2+)",
+                    geoipCityDesc: "This plugin adds a chart of hits by cities (with country and regions informations for major countries). By enabling this plugin, you will see a new link called 'Cities' on reports menu. Example <span style=\"font-style: italic;\">LoadPlugin=\"geoip_city_maxmind GEOIP_STANDARD /usr/local/geoip.dat /usr/local/GeoIPCity_override.txt\"</span>. Provided with AWStats (6.2+)",
+                    geoipASNDesc: "This plugin adds a chart of AS numbers where the host IP address is registered. This plugin can display some ISP information if included in the database. You can also provide a link that will be used to lookup additional registration data. Put the link at the end of the parameter string and the report page will include the link with the full AS number at the end. Example <span style=\"font-style: italic;\">LoadPlugin=\"geoip_asn_maxmind GEOIP_STANDARD /usr/local/geoip.dat /usr/local/GeoIPASN_override.txt http://enc.com.au/itools/aut-num.php?autnum=\"</span>. Provided with AWStats (6.9+)",
+                    geoipRegionDesc: "This plugin adds a chart of hits by regions. Only regions for US and Canada can be detected at this time. By enabling this plugin, you will see a new link called 'Regions' on reports menu. For the moment this link works only when AWStats reports are build as CGI (static built not yet supported). Example <span style=\"font-style: italic;\">LoadPlugin=\"geoip_region_maxmind GEOIP_STANDARD /usr/local/GeoIPRegion.dat /usr/local/geoip_override.txt\"</span>. Provided with AWStats (6.2+)",
+                    geoipISPDesc: "This plugin adds a chart of hits by ISP. By enabling this plugin, you will see a new link called 'ISP' on reports menu. For the moment this link works only when AWStats reports are build as CGI (static built not yet supported). Example <span style=\"font-style: italic;\">LoadPlugin=\"geoip_isp_maxmind GEOIP_STANDARD /usr/local/GeoIPISP.dat /usr/local/geoip_override.txt\"</span>. Provided with AWStats (6.3+)",
+                    geoipOrgDesc: "This plugin adds a chart of hits by Organization names. By enabling this plugin, you will see a new link called 'Organizations' on reports menu. For the moment this link works only when AWStats reports are build as CGI (static built not yet supported). Example <span style=\"font-style: italic;\">LoadPlugin=\"geoip_org_maxmind GEOIP_STANDARD /usr/local/GeoIPOrg.dat /usr/local/geoip_override.txt\"</span>. Provided with AWStats (6.3+)",
+                    geoipfreeDesc: "Country chart is built from an Internet IP-Country database. This plugin is useless for intranet only log files. Note: You must choose between using this plugin (need Perl Geo::IPfree module, database is free but not up to date) or the GeoIP plugin (need Perl Geo::IP module from Maxmind, database is also free and up to date). This plugin reduces AWStats speed by about 10%! Provided with AWStats (5.5+).",
+                    
+                    contribTitle: "Other AWStats contribs/tools/package",
+                    contribDesc: "All following files/products were developped and submitted by contributors. I haven't tried them, so I can't tell you if they work and how they work... They can enhance AWStats use or save you time giving you a start for a new development.",
+                    
+                    ip2locationDesc: "A plugin for geoip location.",
+                    wordpressDesc: "A plugin for WordPress that allow WordPress users to add tags required by AWStats to report the \"miscellanous chart\".",
+                    exim2Desc: "A tool to convert Exim MTA log file to a format readable by AWSTats.",
+                    logprocessDesc: "Automate the collection, merging, processing and archiving of IIS log files in a hosting (mult-domain) environment using AWStats to generate and manage stats/reports.",
+                    configuradorDesc: "A piece of CGI perl scripts to allow you to edit an AWStats config file from the web. Code comments are in Spanish but it may be a goo start to develop your own tool.<br><span class=\"contrib-author\">Hector Garcia Alvarez</span>",
+                    logtransDesc: "A python small example on how to convert an old log file from IIS4.0 to a new format compatible with AWStats. Don't know if it works, just here to provide you a code sample if you like python.",
+                    goAwstatsDesc: "A tool to automate build of AWStats statics reports for all config files but also for all month.",
+                    
+                    relatedTitle: "Other Non AWStats contribs/tools (not related to AWStats but related to log analysis)",
+                    
+                    maillog2Desc: "Converts mail logs in smail or qmail format to the common log format. Note that if you want to analyze, with AWStats, mail log files from postfix, sendmail or qmail, a better solution is to use instead maillogconvert.pl preprocessor. Joey Hess, freeware.",
+                    maillogconvDesc: "Another mail log processor that can be used to change mail log files into a log file that AWStats can understand. Note that a derivated and enhanced tool called maillogconvert.pl is provided with AWStats since 5.7. See F.A.Q about analyzing mail logs to know how to setup AWStats with maillogconv.pl or maillogconvert.pl to analyze Postfix, Sendmail, Qmail or MDaemon log files.",
+                    accessRefererDesc: "A perl script that converts a directory of common log format (CLF) access-files, referer-files and agent-files to a single combined.log. This is usefull if you have seperate access/referer/agent logfiles and want to use all features of a loganalyzer that require a combined log file.",
+                    anonlogDesc: "\"anonymizes\" your logfile by encoding sensitive information. Stephen Turner, freeware.",
+                    
+                    otherAnalyzers: "If you don't like AWStats, you can try thoose other popular similar tools :",
+                    commercialSearch: "There is also commercial products you can find doing a search on 'log file analyzer' with <a href=\"http://www.google.com\">Google</a>.",
+                    
+                    docTitle: "Documents on AWStats or related to log analysis",
+                    officialDoc: "AWStats official documentation",
+                    officialDocDesc: "AWStats official documentation for last version.",
+                    chineseDoc: "Chinese intro and install doc",
+                    chineseDocDesc: "An intro and install doc 'Using AWStats on GNU/Linux or Windows' in Chinese.",
+                    frenchDoc: "French setup tutorial",
+                    frenchDocDesc: "A setup tutorial in French for Windows users.",
+                    
+                    sponsorTitle: "Sponsors",
+                    donateText: "You can make a donation to support AWStats project with this link:",
+                    sponsorThanks: "Special thanks goes to the following sponsor for their important support:",
+                    yourLink: "your name/link here",
+                    
+                    writtenBy: "Article written by <a href=\"https://plus.google.com/+LaurentDestailleur-Open-Source-Expert\" rel=\"author\" style=\"color: var(--accent);\">Laurent Destailleur</a>.",
+                    version: "Version 8.1",
+                    copyright: "© 2000 - {year} Laurent Destailleur & AWStats Team",
+                    licenseLink: "GNU General Public License",
+                    authorLink: "Author",
+                    darkAttr: "🌓 Adaptive dark mode · 中文/English",
+                }
+            };
+
+            const i18nElements = document.querySelectorAll('[data-i18n]');
+            const langSelector = document.getElementById('langSelector');
+            let currentLang = localStorage.getItem('awstats_lang') || 'zh';
+            langSelector.value = currentLang;
+
+            function applyLanguage(lang) {
+                const t = translations[lang] || translations.zh;
+                i18nElements.forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (t[key] !== undefined) {
+                        if (key === 'copyright') {
+                            const year = new Date().getFullYear();
+                            el.innerHTML = t[key].replace('{year}', year);
+                        } else if (key === 'pluginsDesc' || key === 'clusterInfoDesc' || key === 'urlAliasesDesc' || key === 'timeZoneDesc' || key === 'geoipInstallDesc' || key === 'geoipDesc' || key === 'geoipCityDesc' || key === 'geoipASNDesc' || key === 'geoipRegionDesc' || key === 'geoipISPDesc' || key === 'geoipOrgDesc' || key === 'geoipfreeDesc' || key === 'configuradorDesc' || key === 'writtenBy' || key === 'commercialSearch') {
+                            el.innerHTML = t[key];
+                        } else {
+                            el.textContent = t[key];
+                        }
+                    }
+                });
+                localStorage.setItem('awstats_lang', lang);
+                
+                const themeState = localStorage.getItem('awstats_theme') || 'auto';
+                const themeText = document.querySelector('.theme-text');
+                if (themeText) {
+                    if (themeState === 'auto') themeText.textContent = t.themeAuto;
+                    else if (themeState === 'light') themeText.textContent = (lang === 'zh' ? '浅色' : 'Light');
+                    else themeText.textContent = (lang === 'zh' ? '深色' : 'Dark');
+                }
+            }
+
+            applyLanguage(currentLang);
+
+            langSelector.addEventListener('change', (e) => {
+                currentLang = e.target.value;
+                applyLanguage(currentLang);
+            });
+
+            // 暗黑模式切换
+            const root = document.documentElement;
+            const themeBtn = document.getElementById('themeToggleBtn');
+            let themeState = localStorage.getItem('awstats_theme') || 'auto';
+
+            function applyTheme(state) {
+                root.classList.remove('force-light', 'force-dark');
+                if (state === 'light') root.classList.add('force-light');
+                else if (state === 'dark') root.classList.add('force-dark');
+                const themeText = document.querySelector('.theme-text');
+                if (themeText) {
+                    const lang = currentLang;
+                    const t = translations[lang];
+                    if (state === 'auto') themeText.textContent = t.themeAuto;
+                    else if (state === 'light') themeText.textContent = (lang === 'zh' ? '浅色' : 'Light');
+                    else themeText.textContent = (lang === 'zh' ? '深色' : 'Dark');
+                }
+                localStorage.setItem('awstats_theme', state);
+            }
+            applyTheme(themeState);
+            themeBtn.addEventListener('click', () => {
+                if (themeState === 'auto') themeState = 'light';
+                else if (themeState === 'light') themeState = 'dark';
+                else themeState = 'auto';
+                applyTheme(themeState);
+            });
+        })();
+    </script>
+</body>
+</html>

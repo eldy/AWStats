@@ -1,147 +1,643 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta name="description" content="AWStats Documentation - Upgrade setup">
-<meta name="keywords" content="awstats, awstat, udpate, upgrade">
-<meta name="robots" content="index,follow">
-<meta name="title" content="AWStats Documentation - Upgrade setup">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>AWStats Documentation - Upgrade setup</title>
-<link rel="stylesheet" href="styles.css" type="text/css">
-<link href="https://plus.google.com/+LaurentDestailleur-Open-Source-Expert" rel="publisher" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWStats · 升级指南</title>
+    <meta name="description" content="AWStats Documentation - Upgrade setup (多语言版)">
+    <meta name="keywords" content="awstats, upgrade, update, migration, 升级, 更新">
+    <meta name="author" content="Laurent Destailleur (多语言重构)">
+    <meta name="robots" content="index,follow">
+    <style>
+        /* ========== 全局设计 ========== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-page: #f8f9fc; --surface: #ffffff; --surface-secondary: #f1f3f8;
+            --text-primary: #1e293b; --text-secondary: #334155; --accent: #5b5f97;
+            --accent-light: #7f83b0; --border: #d0d5e0; --card-shadow: 0 8px 20px rgba(0,0,0,0.03), 0 2px 6px rgba(0,20,40,0.05);
+            --header-bg: linear-gradient(135deg, #7f83b0 0%, #5b5f97 100%);
+            --footer-bg: #ecedf2; --logo-filter: none; --link-color: #4f46e5;
+            --link-visited: #7c3aed; --code-bg: #e9e9f2;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-page: #12131f; --surface: #1f2130; --surface-secondary: #2a2c3e;
+                --text-primary: #edf2f7; --text-secondary: #cbd5e1; --accent: #a9acd9;
+                --accent-light: #b9bce6; --border: #3c405a; --card-shadow: 0 8px 20px rgba(0,0,0,0.6);
+                --header-bg: linear-gradient(145deg, #353a60, #222544);
+                --footer-bg: #1a1c2c; --logo-filter: brightness(1.1) drop-shadow(0 0 4px #aeaef0);
+                --link-color: #b1b3ff; --link-visited: #caa5ff; --code-bg: #2c2f44;
+            }
+        }
+        .force-light { --bg-page: #f8f9fc !important; --surface: #ffffff !important; --surface-secondary: #f1f3f8 !important; --text-primary: #1e293b !important; --text-secondary: #334155 !important; --accent: #5b5f97 !important; --border: #d0d5e0 !important; --footer-bg: #ecedf2 !important; --link-color: #4f46e5 !important; }
+        .force-dark { --bg-page: #12131f !important; --surface: #1f2130 !important; --surface-secondary: #2a2c3e !important; --text-primary: #edf2f7 !important; --text-secondary: #cbd5e1 !important; --accent: #a9acd9 !important; --border: #3c405a !important; --footer-bg: #1a1c2c !important; --link-color: #b1b3ff !important; }
+
+        body {
+            background-color: var(--bg-page); color: var(--text-primary);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6; margin: 0; padding: 0;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            display: flex; flex-direction: column; min-height: 100vh;
+        }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 28px; width: 100%; }
+
+        /* 导航栏 */
+        .nav-bar {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background-color: var(--surface);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        @supports (backdrop-filter: blur(10px)) {
+            .nav-bar {
+                background-color: color-mix(in srgb, var(--surface) 80%, transparent);
+                backdrop-filter: blur(10px);
+            }
+        }
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 30px;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .nav-links a:hover {
+            background: var(--surface-secondary);
+            color: var(--accent);
+        }
+        .nav-links a.active {
+            background: var(--accent);
+            color: white;
+        }
+        .nav-home {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: var(--accent);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .breadcrumb {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        .breadcrumb a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        .breadcrumb .separator {
+            color: var(--border);
+        }
+
+        /* 头部 */
+        .header {
+            background: var(--header-bg); color: white; border-radius: 0 0 32px 32px;
+            padding: 16px 0 20px; box-shadow: var(--card-shadow); margin-bottom: 20px;
+        }
+        .header-row {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 16px;
+        }
+        .logo-area { display: flex; align-items: center; gap: 12px; }
+        .logo-area img { height: 52px; width: auto; filter: var(--logo-filter); }
+        .site-title {
+            font-size: 1.75rem; font-weight: 600; background: rgba(255,255,255,0.1);
+            padding: 6px 18px; border-radius: 60px; backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .header-center {
+            flex: 1; text-align: center; font-weight: 500; font-size: 1.2rem;
+            background: rgba(0,0,0,0.1); padding: 8px 16px; border-radius: 40px;
+            backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.15);
+        }
+        .header-right { display: flex; gap: 12px; align-items: center; }
+        .lang-switch {
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 40px; padding: 6px 12px; color: white; font-weight: 500;
+            display: flex; align-items: center; gap: 6px; backdrop-filter: blur(4px);
+        }
+        .lang-switch select {
+            background: transparent; border: none; color: white; font-weight: 500;
+            outline: none; font-size: 0.95rem; cursor: pointer;
+        }
+        .lang-switch select option { background: #5b5f97; color: white; }
+        .theme-toggle {
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 40px; padding: 8px 16px; font-size: 0.9rem; color: white;
+            cursor: pointer; display: flex; align-items: center; gap: 6px; backdrop-filter: blur(4px);
+        }
+
+        /* 文档卡片样式 */
+        .doc-card {
+            background-color: var(--surface); border-radius: 32px;
+            padding: 2.5rem 2.8rem; box-shadow: var(--card-shadow);
+            border: 1px solid var(--border); margin: 20px 0 30px;
+        }
+        h1 {
+            font-size: 2.2rem; font-weight: 600; letter-spacing: -0.02em;
+            border-left: 10px solid var(--accent); padding-left: 24px;
+            margin: 0 0 25px 0; color: var(--text-primary);
+        }
+        h2 {
+            font-size: 1.8rem; font-weight: 600; margin: 2rem 0 1rem;
+            color: var(--accent); border-bottom: 2px solid var(--border); padding-bottom: 6px;
+        }
+        h3 { font-size: 1.4rem; margin: 1.8rem 0 0.8rem; color: var(--text-primary); font-weight: 600; }
+        hr { border: none; border-top: 2px dashed var(--border); margin: 2rem 0; }
+        ul, ol { padding-left: 1.8rem; margin: 1rem 0; }
+        li { margin: 0.6rem 0; color: var(--text-secondary); }
+        li strong { color: var(--text-primary); }
+        a { color: var(--link-color); text-decoration: none; border-bottom: 1px dotted var(--accent-light); }
+        a:hover { color: var(--accent-light); border-bottom-style: solid; }
+        code, .file-path {
+            background: var(--code-bg); padding: 0.2rem 0.6rem; border-radius: 20px;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.9rem;
+            border: 1px solid var(--border); color: var(--text-primary);
+        }
+        .badge {
+            background: var(--accent); color: white; font-size: 0.9rem;
+            padding: 2px 10px; border-radius: 30px; display: inline-block;
+        }
+        .step-number {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+        .warning-note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            color: #856404;
+        }
+        .dark .warning-note {
+            background: #332e1c;
+            border-left-color: #ffb347;
+            color: #ffd966;
+        }
+        .footer {
+            background-color: var(--footer-bg); margin-top: 48px;
+            padding: 28px 24px; border-radius: 30px 30px 0 0;
+            border-top: 1px solid var(--border); color: var(--text-secondary);
+        }
+        .footer-content {
+            display: flex; flex-wrap: wrap; justify-content: space-between;
+            align-items: center; gap: 16px; max-width: 1200px; margin: 0 auto;
+        }
+        .footer-copyright {
+            background: var(--surface); padding: 6px 18px; border-radius: 60px;
+            border: 1px solid var(--border);
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.2s, background 0.2s;
+            z-index: 99;
+        }
+        .back-to-top:hover {
+            transform: scale(1.1);
+            background: var(--accent-light);
+        }
+        
+        @media (max-width: 700px) {
+            .header-row { flex-direction: column; }
+            .doc-card { padding: 1.8rem; }
+            h1 { font-size: 1.8rem; }
+            .nav-container { flex-direction: column; align-items: flex-start; }
+            .nav-links { justify-content: center; width: 100%; }
+            .back-to-top { bottom: 20px; right: 20px; }
+        }
+    </style>
 </head>
+<body>
+    <!-- 导航栏 -->
+    <div class="nav-bar">
+        <div class="container nav-container">
+            <a href="index.html" class="nav-home">
+                <span>🏠</span> AWStats 文档
+            </a>
+            <div class="nav-links">
+                <a href="index.html" data-i18n="navHome">主页</a>
+                <a href="awstats_what.html" data-i18n="navWhat">什么是AWStats</a>
+                <a href="awstats_webmin.html" data-i18n="navWebmin">Webmin模块</a>
+                <a href="awstats_upgrade.html" class="active" data-i18n="navUpgrade">升级指南</a>
+                <a href="awstats_faq.html" data-i18n="navFAQ">FAQ</a>
+                <a href="awstats_config.html" data-i18n="navConfig">配置</a>
+            </div>
+            <div class="breadcrumb">
+                <a href="index.html" data-i18n="home">主页</a>
+                <span class="separator">›</span>
+                <span data-i18n="currentPage">升级指南</span>
+            </div>
+        </div>
+    </div>
 
-<body topmargin="10" leftmargin="5">
-<table
- style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"
- bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0"
- width="100%">
-<!-- Large --> <tbody>
-    <tr
- style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">
-      <td align="center" bgcolor="#9999cc"><a href="/"><img
- src="images/awstats_logo6.png" border="0"></a></td>
-      <td align="center" bgcolor="#9999cc"> <br>
-      <font
- style="font-family: arial,helvetica,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 16pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"
- color="#eeeeff"><b>AWStats logfile analyzer 8.0 Documentation</b></font><br>
-<br>
-</td>
-      <td align="center" bgcolor="#9999cc">&nbsp; </td>
-</tr>
-  </tbody>
-</table>
-<br>
-<br>
-<h1
- style="font-family: arial,helvetica,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 26px; line-height: normal; font-size-adjust: none; font-stretch: normal;">Upgrading
-AWStats from a previous version</h1>
-To upgrade AWStats, all you have
-to do is:<br>
-<br>
-1. Read this page completely before beginning the upgrade.<br>
-<br>
-2. <b>Optionally backup your AWStats configuration and history
-data files</b>.<br>
-Standard AWStats distributions do not change these, but
-backing them up allows you to recover them if something does go
-amiss.&nbsp; The AWStats default distribution will only overwrite the
-configuration file example called <i>awstats.model.conf</i>.&nbsp;
-Your
-history data files are saved in the
-directory defined with the DirData parameter in your AWStats
-configuration file (awstats.<span style="font-style: italic;">mysite</span>.conf).<br>
-<br>
-3. <b>Replace AWStats runtime files</b> with the new ones.<br>
-To do this you can:<br>
-- decompress the new AWStats zip or tgz
-package over the old installation directory (old AWStats runtime files
-are replaced by new ones. This works for AWStats versions 3.x and
-higher).<br>
-- or just run your OS package tool (i.e.
-rpm, apt for Linux, .exe for MS Windows).<br>
-<br>
-Migrating to 6.x versions from earlier versions, observe the following additional notes:<br>
-<u>i.</u> As of AWStats 6.9+, Perl version is 5.007 or
-higher is required. To see the version number, run the command <i>perl
--v</i>&nbsp;
-from your operating system's command line.<br>
-<span style="text-decoration: underline;">ii</span>. If you use the <a href="awstats_extra.html#Extra">ExtraSections</a> feature, you
-must check that the parameter(s) ExtraSectionConditionX uses a full
-REGEX syntax (with the 5.x series, this parameter could contain simple
-string values). If you don't update your configuration, the feature
-will be broken.
-<br>
-<u>iii</u>. If you use the <a href="awstats_config.html#MiscTrackerUrl">MiscTrackerUrl</a>
-feature, you must check
-that your <a href="awstats_config.html#ShowMiscStats">ShowMiscStats</a> parameter is set to "ajdfrqwp" in addition to
-setting up <a href="awstats_config.html#MiscTrackerUrl">MiscTrackerUrl</a> tags and a JavaScript include for your web
-site. Otherwise the new default value "a" will be used (only the "Add
-to favorites" will be reported).
-<br>
-<u>iv</u>. The MaxLengthOfURL parameter has been renamed
-<a href="awstats_config.html#MiscTrackerUrl">MaxLengthOfShownURL</a>;
-update&nbsp; your configuration file accordingly.
-<br>
-<u>v</u>. To enable the worm
-detection feature (not enabled by default), you must add
-the parameter <a href="awstats_config.html#MiscTrackerUrl">LevelForWormsDetection</a>=2
-in your configuration file.
-<br>
-<u>vi</u>. If you use the <span style="font-weight: italic;">urlalias</span>
-or <span style="font-weight: italic;">userinfo</span> plugins, you must
-move the urlalias.*.txt
-or userinfo.*.txt file from the Plugins directory to the DirData
-directory.
-<br>
-<br>
-4. <b>Convert your AWStats history files when migrating from 3.x or
-4.x
-versions to 5.x or higher</b>.<br>
-If you upgrade from the 3.x or 4.x
-series to 5.x or higher, AWStats will still be able to 'read' your
-old history files but
-a warning may appear to ask you to run the 'migrate' process on your
-old data files.
-Just run the command that will appear in warning message.
-This warning will only appear if data migration is necessary after an
-upgrade from the 3.x or 4.x series to a
-5.x or higher
-version.<br>
-<br>
-5. <b>Review new feature </b><b> default </b><b>settings</b>.<br>
-Sometimes new feature parameters are introduced in a new AWStats
-version. AWStats will
-use default values for them, maintaining backward compatibility with
-your existing AWStats configuration.&nbsp; However, you can review the
-"New Features / Change Log" to see how you might change the new
-feature's
-behavior.<br>
-<br>
-<br>
+    <header class="header">
+        <div class="container header-row">
+            <div class="logo-area">
+                <img src="images/awstats_logo6.png" alt="AWStats" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'52\' height=\'52\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%235b5f97\'/%3E%3Ctext x=\'20\' y=\'68\' fill=\'%23ffffff\' font-size=\'60\' font-weight=\'bold\'%3EAW%3C/text%3E%3C/svg%3E';">
+                <span class="site-title" data-i18n="siteTitle">AWStats 8.1</span>
+            </div>
+            <div class="header-center" data-i18n="headerSlogan">
+                ⚡ 先进的日志分析器 · 官方文档
+            </div>
+            <div class="header-right">
+                <div class="lang-switch">
+                    <span>🌐</span>
+                    <select id="langSelector">
+                        <option value="en" selected>English</option>
+                        <option value="zh">中文</option>
+                    </select>
+                </div>
+                <button class="theme-toggle" id="themeToggleBtn">
+                    <span>🌓</span> <span class="theme-text" data-i18n="themeAuto">自动</span>
+                </button>
+            </div>
+        </div>
+    </header>
 
-<hr>
+    <main class="container">
+        <div class="doc-card">
+            <h1 data-i18n="mainTitle">从旧版本升级 AWStats</h1>
 
-<!-- You can remove this part if you distribution need documentation without external tags -->
-<!-- BEGIN_SOCIAL_NETWORKS -->
-<div class="htmldoc-ignore">
-<!-- google plus -->
-<span style="color: #bbb; font-weight: normal;">Article written by <a href="https://www.destailleur.fr" rel="author" style="color: #ccc; font-weight: normal;">Laurent Destailleur</a>.</span><br>
-<br>
-<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-<g:plusone></g:plusone>
-<!-- facebook -->
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/fr_FR/all.js#xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-<div class="fb-like" data-href="http://www.awstats.org/docs/awstats_upgrade.html" data-layout="button_count" data-action="recommend" data-show-faces="false" data-share="true"></div>
-</div>
-<!-- END_SOCIAL_NETWORKS -->
+            <!-- 快速导航 -->
+            <div style="background: var(--surface-secondary); padding: 15px 20px; border-radius: 50px; margin: 20px 0;">
+                <span style="font-weight: bold; margin-right: 20px;" data-i18n="quickNav">📑 升级步骤：</span>
+                <a href="#step1" style="margin-right: 15px;" data-i18n="step1Link">1. 阅读</a>
+                <a href="#step2" style="margin-right: 15px;" data-i18n="step2Link">2. 备份</a>
+                <a href="#step3" style="margin-right: 15px;" data-i18n="step3Link">3. 替换文件</a>
+                <a href="#step4" style="margin-right: 15px;" data-i18n="step4Link">4. 迁移数据</a>
+                <a href="#step5" data-i18n="step5Link">5. 检查新功能</a>
+            </div>
 
+            <p data-i18n="intro">要升级 AWStats，您需要执行以下步骤：</p>
+
+            <!-- 步骤1 -->
+            <a name="step1"></a>
+            <h2><span class="step-number">1</span> <span data-i18n="step1Title">完整阅读</span></h2>
+            <p data-i18n="step1Desc">在开始升级之前，请完整阅读此页面。</p>
+            <div style="text-align: right; margin-top: 10px;">
+                <a href="#" style="font-size: 0.9rem;" data-i18n="backToTop">↑ 返回顶部</a>
+            </div>
+
+            <!-- 步骤2 -->
+            <a name="step2"></a>
+            <h2><span class="step-number">2</span> <span data-i18n="step2Title">备份配置和历史数据</span></h2>
+            <p data-i18n="step2Desc"><strong>可选择备份您的 AWStats 配置和历史数据文件。</strong></p>
+            <p data-i18n="step2Detail">标准的 AWStats 分发不会修改这些文件，但备份可以让您在出现问题时恢复。AWStats 默认分发只会覆盖名为 <i>awstats.model.conf</i> 的配置文件示例。您的历史数据文件保存在 AWStats 配置文件中用 DirData 参数定义的目录中（awstats.<i>mysite</i>.conf）。</p>
+            <div style="text-align: right; margin-top: 10px;">
+                <a href="#" style="font-size: 0.9rem;" data-i18n="backToTop">↑ 返回顶部</a>
+            </div>
+
+            <!-- 步骤3 -->
+            <a name="step3"></a>
+            <h2><span class="step-number">3</span> <span data-i18n="step3Title">替换 AWStats 运行时文件</span></h2>
+            <p data-i18n="step3Desc"><strong>用新版本替换 AWStats 运行时文件。</strong></p>
+            <p data-i18n="step3Methods">操作方法：</p>
+            <ul>
+                <li data-i18n="step3Method1">将新的 AWStats zip 或 tgz 压缩包解压到旧的安装目录上（旧 AWStats 运行时文件会被新文件替换。适用于 AWStats 3.x 及更高版本）。</li>
+                <li data-i18n="step3Method2">或者直接运行您的操作系统包管理工具（例如 Linux 的 rpm、apt，Windows 的 .exe）。</li>
+            </ul>
+
+            <!-- 从6.x迁移的注意事项 -->
+            <h3 data-i18n="migrateTitle">从旧版本迁移到 6.x 版本的额外注意事项</h3>
+            <ul>
+                <li><strong data-i18n="note1Title">Perl 版本要求：</strong> <span data-i18n="note1Desc">从 AWStats 6.9+ 开始，需要 Perl 5.007 或更高版本。要查看版本号，请在操作系统的命令行中运行 <i>perl -v</i>。</span></li>
+                <li><strong data-i18n="note2Title">ExtraSections 功能：</strong> <span data-i18n="note2Desc">如果您使用 <a href="awstats_extra.html#Extra">ExtraSections</a> 功能，必须检查 ExtraSectionConditionX 参数是否使用完整的 REGEX 语法（在 5.x 系列中，此参数可以包含简单的字符串值）。如果不更新配置，该功能将失效。</span></li>
+                <li><strong data-i18n="note3Title">MiscTrackerUrl 功能：</strong> <span data-i18n="note3Desc">如果您使用 <a href="awstats_config.html#MiscTrackerUrl">MiscTrackerUrl</a> 功能，必须检查您的 <a href="awstats_config.html#ShowMiscStats">ShowMiscStats</a> 参数是否设置为 "ajdfrqwp"，同时设置 <a href="awstats_config.html#MiscTrackerUrl">MiscTrackerUrl</a> 标签并在您的网站中包含 JavaScript。否则将使用新的默认值 "a"（只会报告"添加到收藏夹"）。</span></li>
+                <li><strong data-i18n="note4Title">参数重命名：</strong> <span data-i18n="note4Desc">MaxLengthOfURL 参数已重命名为 <a href="awstats_config.html#MiscTrackerUrl">MaxLengthOfShownURL</a>；请相应更新您的配置文件。</span></li>
+                <li><strong data-i18n="note5Title">蠕虫检测：</strong> <span data-i18n="note5Desc">要启用蠕虫检测功能（默认未启用），您必须在配置文件中添加参数 <a href="awstats_config.html#MiscTrackerUrl">LevelForWormsDetection</a>=2。</span></li>
+                <li><strong data-i18n="note6Title">插件文件迁移：</strong> <span data-i18n="note6Desc">如果您使用 <i>urlalias</i> 或 <i>userinfo</i> 插件，必须将 urlalias.*.txt 或 userinfo.*.txt 文件从 Plugins 目录移动到 DirData 目录。</span></li>
+            </ul>
+            <div style="text-align: right; margin-top: 10px;">
+                <a href="#" style="font-size: 0.9rem;" data-i18n="backToTop">↑ 返回顶部</a>
+            </div>
+
+            <!-- 步骤4 -->
+            <a name="step4"></a>
+            <h2><span class="step-number">4</span> <span data-i18n="step4Title">转换历史文件（从 3.x/4.x 迁移到 5.x 或更高版本）</span></h2>
+            <p data-i18n="step4Desc"><strong>当从 3.x 或 4.x 版本迁移到 5.x 或更高版本时，转换您的 AWStats 历史文件。</strong></p>
+            <p data-i18n="step4Detail">如果您从 3.x 或 4.x 系列升级到 5.x 或更高版本，AWStats 仍然能够"读取"您的旧历史文件，但可能会出现警告信息，要求您在旧数据文件上运行"迁移"过程。只需运行警告信息中显示的命令即可。只有当从 3.x 或 4.x 系列升级到 5.x 或更高版本后需要数据迁移时，此警告才会出现。</p>
+            <div style="text-align: right; margin-top: 10px;">
+                <a href="#" style="font-size: 0.9rem;" data-i18n="backToTop">↑ 返回顶部</a>
+            </div>
+
+            <!-- 步骤5 -->
+            <a name="step5"></a>
+            <h2><span class="step-number">5</span> <span data-i18n="step5Title">检查新功能的默认设置</span></h2>
+            <p data-i18n="step5Desc"><strong>检查新功能的默认设置。</strong></p>
+            <p data-i18n="step5Detail">有时新版本的 AWStats 会引入新的功能参数。AWStats 会为它们使用默认值，保持与现有 AWStats 配置的向后兼容性。但是，您可以查看"新功能/更新日志"，了解如何更改新功能的行为。</p>
+            <div style="text-align: right; margin-top: 10px;">
+                <a href="#" style="font-size: 0.9rem;" data-i18n="backToTop">↑ 返回顶部</a>
+            </div>
+
+            <hr>
+
+            <!-- 相关文档 -->
+            <div style="background: var(--surface-secondary); padding: 20px; border-radius: 20px; margin-top: 20px;">
+                <h3 style="margin-top: 0; color: var(--accent);" data-i18n="relatedLinks">📎 相关文档</h3>
+                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                    <a href="awstats_what.html" data-i18n="linkWhat">什么是AWStats</a>
+                    <a href="awstats_config.html" data-i18n="linkConfig">配置指南</a>
+                    <a href="awstats_extra.html" data-i18n="linkExtra">Extra Sections</a>
+                    <a href="awstats_changelog.txt" data-i18n="linkChangelog">更新日志</a>
+                </div>
+            </div>
+
+            <!-- 署名 -->
+            <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-top: 20px;">
+                <span style="color: var(--text-secondary);" data-i18n="writtenBy">文章作者：<a href="https://www.destailleur.fr" rel="author">Laurent Destailleur</a>。</span>
+                <span class="badge" data-i18n="version">版本 8.1</span>
+            </div>
+        </div>
+    </main>
+
+    <!-- 返回顶部按钮 -->
+    <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="返回顶部">
+        ↑
+    </button>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-copyright">
+                © 1997 - <span id="currentYear"></span> Laurent Destailleur & AWStats <span data-i18n="copyright">团队</span>
+            </div>
+            <div class="footer-license">
+                <a href="awstats_license.html" data-i18n="licenseLink">GNU General Public License</a> · 
+                <a href="https://github.com/eldy/AWStats" rel="publisher" target="_blank" style="display: inline-flex; align-items: center;"><a data-i18n="authorLink"></a> 
+                </a>
+                    <img src="images/favicon.pub/github.svg" style="width: 24px; height: 24px;">
+                </div>
+            <div class="attribution" data-i18n="darkAttr">
+                🌓 自适应暗黑 · 现代化重构
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+            // 翻译资源
+            const translations = {
+                en: {
+                    navHome: "Home",
+                    navWhat: "What is AWStats",
+                    navWebmin: "Webmin Module",
+                    navUpgrade: "Upgrade Guide",
+                    navFAQ: "FAQ",
+                    navConfig: "Configuration",
+                    home: "Home",
+                    currentPage: "Upgrade Guide",
+                    quickNav: "📑 Upgrade Steps:",
+                    step1Link: "1. Read",
+                    step2Link: "2. Backup",
+                    step3Link: "3. Replace",
+                    step4Link: "4. Migrate",
+                    step5Link: "5. Review",
+                    backToTop: "↑ Back to top",
+                    
+                    siteTitle: "AWStats 8.1",
+                    headerSlogan: "⚡ Advanced Log Analyzer · Official Docs",
+                    themeAuto: "Auto",
+                    mainTitle: "Upgrading AWStats from a previous version",
+                    intro: "To upgrade AWStats, all you have to do is:",
+                    
+                    step1Title: "Read completely",
+                    step1Desc: "Read this page completely before beginning the upgrade.",
+                    
+                    step2Title: "Backup configuration and history files",
+                    step2Desc: "Optionally backup your AWStats configuration and history data files.",
+                    step2Detail: "Standard AWStats distributions do not change these, but backing them up allows you to recover them if something does go amiss. The AWStats default distribution will only overwrite the configuration file example called awstats.model.conf. Your history data files are saved in the directory defined with the DirData parameter in your AWStats configuration file (awstats.mysite.conf).",
+                    
+                    step3Title: "Replace AWStats runtime files",
+                    step3Desc: "Replace AWStats runtime files with the new ones.",
+                    step3Methods: "To do this you can:",
+                    step3Method1: "decompress the new AWStats zip or tgz package over the old installation directory (old AWStats runtime files are replaced by new ones. This works for AWStats versions 3.x and higher).",
+                    step3Method2: "or just run your OS package tool (i.e. rpm, apt for Linux, .exe for MS Windows).",
+                    
+                    migrateTitle: "Migrating to 6.x versions from earlier versions, observe the following additional notes:",
+                    note1Title: "Perl version requirement:",
+                    note1Desc: "As of AWStats 6.9+, Perl version 5.007 or higher is required. To see the version number, run the command perl -v from your operating system's command line.",
+                    note2Title: "ExtraSections feature:",
+                    note2Desc: "If you use the ExtraSections feature, you must check that the parameter(s) ExtraSectionConditionX uses a full REGEX syntax (with the 5.x series, this parameter could contain simple string values). If you don't update your configuration, the feature will be broken.",
+                    note3Title: "MiscTrackerUrl feature:",
+                    note3Desc: "If you use the MiscTrackerUrl feature, you must check that your ShowMiscStats parameter is set to \"ajdfrqwp\" in addition to setting up MiscTrackerUrl tags and a JavaScript include for your web site. Otherwise the new default value \"a\" will be used (only the \"Add to favorites\" will be reported).",
+                    note4Title: "Parameter renamed:",
+                    note4Desc: "The MaxLengthOfURL parameter has been renamed MaxLengthOfShownURL; update your configuration file accordingly.",
+                    note5Title: "Worm detection:",
+                    note5Desc: "To enable the worm detection feature (not enabled by default), you must add the parameter LevelForWormsDetection=2 in your configuration file.",
+                    note6Title: "Plugin files migration:",
+                    note6Desc: "If you use the urlalias or userinfo plugins, you must move the urlalias.*.txt or userinfo.*.txt file from the Plugins directory to the DirData directory.",
+                    
+                    step4Title: "Convert history files (migrating from 3.x/4.x to 5.x or higher)",
+                    step4Desc: "Convert your AWStats history files when migrating from 3.x or 4.x versions to 5.x or higher.",
+                    step4Detail: "If you upgrade from the 3.x or 4.x series to 5.x or higher, AWStats will still be able to 'read' your old history files but a warning may appear to ask you to run the 'migrate' process on your old data files. Just run the command that will appear in warning message. This warning will only appear if data migration is necessary after an upgrade from the 3.x or 4.x series to a 5.x or higher version.",
+                    
+                    step5Title: "Review new feature default settings",
+                    step5Desc: "Review new feature default settings.",
+                    step5Detail: "Sometimes new feature parameters are introduced in a new AWStats version. AWStats will use default values for them, maintaining backward compatibility with your existing AWStats configuration. However, you can review the \"New Features / Change Log\" to see how you might change the new feature's behavior.",
+                    
+                    relatedLinks: "📎 Related Documents",
+                    linkWhat: "What is AWStats",
+                    linkConfig: "Configuration Guide",
+                    linkExtra: "Extra Sections",
+                    linkChangelog: "Change Log",
+                    
+                    writtenBy: "Article written by <a href=\"https://www.destailleur.fr\" rel=\"author\">Laurent Destailleur</a>.",
+                    version: "Version 8.1",
+                    copyright: "© 2000 - {year} Laurent Destailleur & AWStats Team",
+                    licenseLink: "GNU General Public License",
+                    authorLink: "Author",
+                    darkAttr: "🌓 Adaptive dark mode · Multilingual docs",
+                },
+                zh: {
+                    navHome: "主页",
+                    navWhat: "什么是AWStats",
+                    navWebmin: "Webmin模块",
+                    navUpgrade: "升级指南",
+                    navFAQ: "常见问题",
+                    navConfig: "配置指南",
+                    home: "主页",
+                    currentPage: "升级指南",
+                    quickNav: "📑 升级步骤：",
+                    step1Link: "1. 阅读",
+                    step2Link: "2. 备份",
+                    step3Link: "3. 替换",
+                    step4Link: "4. 迁移",
+                    step5Link: "5. 检查",
+                    backToTop: "↑ 返回顶部",
+                    
+                    siteTitle: "AWStats 8.1",
+                    headerSlogan: "⚡ 先进的日志分析器 · 官方文档",
+                    themeAuto: "自动",
+                    mainTitle: "从旧版本升级 AWStats",
+                    intro: "要升级 AWStats，您需要执行以下步骤：",
+                    
+                    step1Title: "完整阅读",
+                    step1Desc: "在开始升级之前，请完整阅读此页面。",
+                    
+                    step2Title: "备份配置和历史数据",
+                    step2Desc: "可选择备份您的 AWStats 配置和历史数据文件。",
+                    step2Detail: "标准的 AWStats 分发不会修改这些文件，但备份可以让您在出现问题时恢复。AWStats 默认分发只会覆盖名为 awstats.model.conf 的配置文件示例。您的历史数据文件保存在 AWStats 配置文件中用 DirData 参数定义的目录中（awstats.mysite.conf）。",
+                    
+                    step3Title: "替换 AWStats 运行时文件",
+                    step3Desc: "用新版本替换 AWStats 运行时文件。",
+                    step3Methods: "操作方法：",
+                    step3Method1: "将新的 AWStats zip 或 tgz 压缩包解压到旧的安装目录上（旧 AWStats 运行时文件会被新文件替换。适用于 AWStats 3.x 及更高版本）。",
+                    step3Method2: "或者直接运行您的操作系统包管理工具（例如 Linux 的 rpm、apt，Windows 的 .exe）。",
+                    
+                    migrateTitle: "从旧版本迁移到 6.x 版本的额外注意事项：",
+                    note1Title: "Perl 版本要求：",
+                    note1Desc: "从 AWStats 6.9+ 开始，需要 Perl 5.007 或更高版本。要查看版本号，请在操作系统的命令行中运行 perl -v。",
+                    note2Title: "ExtraSections 功能：",
+                    note2Desc: "如果您使用 ExtraSections 功能，必须检查 ExtraSectionConditionX 参数是否使用完整的 REGEX 语法（在 5.x 系列中，此参数可以包含简单的字符串值）。如果不更新配置，该功能将失效。",
+                    note3Title: "MiscTrackerUrl 功能：",
+                    note3Desc: "如果您使用 MiscTrackerUrl 功能，必须检查您的 ShowMiscStats 参数是否设置为 \"ajdfrqwp\"，同时设置 MiscTrackerUrl 标签并在您的网站中包含 JavaScript。否则将使用新的默认值 \"a\"（只会报告\"添加到收藏夹\"）。",
+                    note4Title: "参数重命名：",
+                    note4Desc: "MaxLengthOfURL 参数已重命名为 MaxLengthOfShownURL；请相应更新您的配置文件。",
+                    note5Title: "蠕虫检测：",
+                    note5Desc: "要启用蠕虫检测功能（默认未启用），您必须在配置文件中添加参数 LevelForWormsDetection=2。",
+                    note6Title: "插件文件迁移：",
+                    note6Desc: "如果您使用 urlalias 或 userinfo 插件，必须将 urlalias.*.txt 或 userinfo.*.txt 文件从 Plugins 目录移动到 DirData 目录。",
+                    
+                    step4Title: "转换历史文件（从 3.x/4.x 迁移到 5.x 或更高版本）",
+                    step4Desc: "当从 3.x 或 4.x 版本迁移到 5.x 或更高版本时，转换您的 AWStats 历史文件。",
+                    step4Detail: "如果您从 3.x 或 4.x 系列升级到 5.x 或更高版本，AWStats 仍然能够\"读取\"您的旧历史文件，但可能会出现警告信息，要求您在旧数据文件上运行\"迁移\"过程。只需运行警告信息中显示的命令即可。只有当从 3.x 或 4.x 系列升级到 5.x 或更高版本后需要数据迁移时，此警告才会出现。",
+                    
+                    step5Title: "检查新功能的默认设置",
+                    step5Desc: "检查新功能的默认设置。",
+                    step5Detail: "有时新版本的 AWStats 会引入新的功能参数。AWStats 会为它们使用默认值，保持与现有 AWStats 配置的向后兼容性。但是，您可以查看\"新功能/更新日志\"，了解如何更改新功能的行为。",
+                    
+                    relatedLinks: "📎 相关文档",
+                    linkWhat: "什么是AWStats",
+                    linkConfig: "配置指南",
+                    linkExtra: "Extra Sections",
+                    linkChangelog: "更新日志",
+                    
+                    writtenBy: "文章作者：<a href=\"https://www.destailleur.fr\" rel=\"author\">Laurent Destailleur</a>。",
+                    version: "版本 8.1",
+                    copyright: "© 2000 - {year} Laurent Destailleur & AWStats 团队",
+                    licenseLink: "GNU通用公共许可证",
+                    authorLink: "原作者",
+                    darkAttr: "🌓 自适应暗黑 · 多语言文档",
+                }
+            };
+
+            const i18nElements = document.querySelectorAll('[data-i18n]');
+            const langSelector = document.getElementById('langSelector');
+            let currentLang = localStorage.getItem('awstats_lang') || 'en';
+            langSelector.value = currentLang;
+
+            function applyLanguage(lang) {
+                const t = translations[lang] || translations.en;
+                i18nElements.forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (t[key] !== undefined) {
+                        if (key === 'copyright') {
+                            const year = new Date().getFullYear();
+                            el.innerHTML = t[key].replace('{year}', year);
+                        } else if (key === 'writtenBy' || key.includes('Desc') || key.includes('Detail') || key.includes('Method')) {
+                            el.innerHTML = t[key];
+                        } else {
+                            el.textContent = t[key];
+                        }
+                    }
+                });
+                localStorage.setItem('awstats_lang', lang);
+                
+                const themeState = localStorage.getItem('awstats_theme') || 'auto';
+                const themeText = document.querySelector('.theme-text');
+                if (themeText) {
+                    if (themeState === 'auto') themeText.textContent = t.themeAuto;
+                    else if (themeState === 'light') themeText.textContent = (lang === 'zh' ? '浅色' : 'Light');
+                    else themeText.textContent = (lang === 'zh' ? '深色' : 'Dark');
+                }
+            }
+
+            applyLanguage(currentLang);
+
+            langSelector.addEventListener('change', (e) => {
+                currentLang = e.target.value;
+                applyLanguage(currentLang);
+            });
+
+            // 暗黑模式切换
+            const root = document.documentElement;
+            const themeBtn = document.getElementById('themeToggleBtn');
+            let themeState = localStorage.getItem('awstats_theme') || 'auto';
+
+            function applyTheme(state) {
+                root.classList.remove('force-light', 'force-dark');
+                if (state === 'light') root.classList.add('force-light');
+                else if (state === 'dark') root.classList.add('force-dark');
+                const themeText = document.querySelector('.theme-text');
+                if (themeText) {
+                    const lang = currentLang;
+                    const t = translations[lang];
+                    if (state === 'auto') themeText.textContent = t.themeAuto;
+                    else if (state === 'light') themeText.textContent = (lang === 'zh' ? '浅色' : 'Light');
+                    else themeText.textContent = (lang === 'zh' ? '深色' : 'Dark');
+                }
+                localStorage.setItem('awstats_theme', state);
+            }
+            applyTheme(themeState);
+            themeBtn.addEventListener('click', () => {
+                if (themeState === 'auto') themeState = 'light';
+                else if (themeState === 'light') themeState = 'dark';
+                else themeState = 'auto';
+                applyTheme(themeState);
+            });
+        })();
+    </script>
 </body>
 </html>

@@ -1,0 +1,3332 @@
+# AWStats Latvian (lv) translations
+# Copyright (C) 2026 AWStats
+# This file is distributed under the same license as the AWStats package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: AWStats 8.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-10 12:00+0000\n"
+"PO-Revision-Date: 2026-05-10 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Latvian\n"
+"Language: lv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);\n"
+
+#------------------------------------------------------------------------------
+# Mēnešu nosaukumi
+#------------------------------------------------------------------------------
+
+msgid "month_01"
+msgstr "Janvāris"
+
+msgid "month_02"
+msgstr "Februāris"
+
+msgid "month_03"
+msgstr "Marts"
+
+msgid "month_04"
+msgstr "Aprīlis"
+
+msgid "month_05"
+msgstr "Maijs"
+
+msgid "month_06"
+msgstr "Jūnijs"
+
+msgid "month_07"
+msgstr "Jūlijs"
+
+msgid "month_08"
+msgstr "Augusts"
+
+msgid "month_09"
+msgstr "Septembris"
+
+msgid "month_10"
+msgstr "Oktobris"
+
+msgid "month_11"
+msgstr "Novembris"
+
+msgid "month_12"
+msgstr "Decembris"
+
+#------------------------------------------------------------------------------
+# Dienu nosaukumi
+#------------------------------------------------------------------------------
+
+msgid "DayOfWeek_0"
+msgstr "Svētdiena"
+
+msgid "DayOfWeek_1"
+msgstr "Pirmdiena"
+
+msgid "DayOfWeek_2"
+msgstr "Otrdiena"
+
+msgid "DayOfWeek_3"
+msgstr "Trešdiena"
+
+msgid "DayOfWeek_4"
+msgstr "Ceturtdiena"
+
+msgid "DayOfWeek_5"
+msgstr "Piektdiena"
+
+msgid "DayOfWeek_6"
+msgstr "Sestdiena"
+
+#------------------------------------------------------------------------------
+# Lietotāja saskarnes elementi
+#------------------------------------------------------------------------------
+
+msgid "Advanced Web Statistics for"
+msgstr "Uzlabotā tīmekļa statistika"
+
+msgid "Statistics for"
+msgstr "Statistika"
+
+msgid "main"
+msgstr "Pārskats"
+
+# Tēmas maiņa
+msgid "Switch to light mode"
+msgstr "Pārslēgties uz gaišo režīmu"
+
+msgid "Switch to dark mode"
+msgstr "Pārslēgties uz tumšo režīmu"
+
+# Kapacitātes vienības
+msgid "TB"
+msgstr "TB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "Bytes"
+msgstr "Baiti"
+
+# Veidlapas elementi
+msgid "Filter"
+msgstr "Filtrēt"
+
+msgid "Exclude filter"
+msgstr "Izslēgt filtru"
+
+msgid "Top"
+msgstr "Augšā"
+
+msgid "Full list"
+msgstr "Pilns saraksts"
+
+msgid "Last"
+msgstr "Pēdējais"
+
+msgid "Average"
+msgstr "Vidējais"
+
+msgid "Total"
+msgstr "Kopā"
+
+msgid "Percent"
+msgstr "Procenti"
+
+msgid "Export"
+msgstr "Eksportēt"
+
+msgid "Details"
+msgstr "Sīkāk"
+
+msgid "Version"
+msgstr "Versija"
+
+# Tūkstošu atdalītājs
+msgid "thousands_separator"
+msgstr " "
+
+# Garā datuma formatējums (pēdējam atjauninājumam, pirmajai vizītei utt.)
+msgid "dateformat_long"
+msgstr "dd.mm.yyyy HH:MM:SS"
+
+# Īsā datuma formatējums (diagrammu etiķetēm utt.)
+msgid "dateformat_short"
+msgstr "dd.mm.yyyy HH:MM"
+
+msgid "date_format_year"
+msgstr "%s. g."
+
+msgid "date_format_month"
+msgstr "%1$s %2$s"
+
+#------------------------------------------------------------------------------
+# Navigācijas josla
+#------------------------------------------------------------------------------
+
+msgid "AWStats Month Selector"
+msgstr "AWStats mēneša izvēlētājs"
+
+msgid "nav_category_basic"
+msgstr "Pamatdokumentācija"
+
+msgid "nav_category_guide"
+msgstr "Lietošanas pamācība"
+
+msgid "nav_category_reference"
+msgstr "Atsauces resursi"
+
+msgid "nav_category_integration"
+msgstr "Integrācija un paplašināšana"
+
+msgid "nav_category_dev"
+msgstr "Izstrādātāja dokumentācija"
+
+msgid "nav_changelog"
+msgstr "Izmaiņu žurnāls"
+
+msgid "nav_what"
+msgstr "Kas ir AWStats"
+
+msgid "nav_license"
+msgstr "Licence"
+
+msgid "nav_glossary"
+msgstr "Terminu vārdnīca"
+
+msgid "nav_setup"
+msgstr "Instalācija un konfigurācija"
+
+msgid "nav_upgrade"
+msgstr "Jaunināšanas pamācība"
+
+msgid "nav_config"
+msgstr "Konfigurācijas parametri"
+
+msgid "nav_extra"
+msgstr "Papildu sadaļas"
+
+msgid "nav_tools"
+msgstr "Citi rīki"
+
+msgid "nav_faq"
+msgstr "BUJ"
+
+msgid "nav_security"
+msgstr "Drošības ieteikumi"
+
+msgid "nav_compare"
+msgstr "Salīdzinājums"
+
+msgid "nav_benchmark"
+msgstr "Veiktspējas tests"
+
+msgid "nav_webmin"
+msgstr "Webmin modulis"
+
+msgid "nav_dolibarr"
+msgstr "Dolibarr modulis"
+
+msgid "nav_contrib"
+msgstr "Ieguldījuma resursi"
+
+msgid "nav_plugins"
+msgstr "Spraudņu izstrāde"
+
+msgid "nav_hooks"
+msgstr "Spraudņu āķi"
+
+msgid "nav_graphs"
+msgstr "Spraudņu diagrammas"
+
+msgid "Back to top"
+msgstr "Atpakaļ uz augšu"
+
+msgid "nav_select_month"
+msgstr "Izvēlieties mēnesi"
+
+#------------------------------------------------------------------------------
+# Galvenie statistikas rādītāji
+#------------------------------------------------------------------------------
+
+# Apmeklējumi
+msgid "Unique visitors"
+msgstr "Unikālie apmeklētāji"
+
+msgid "Visits"
+msgstr "Apmeklējumi"
+
+msgid "Visits duration"
+msgstr "Apmeklējumu ilgums"
+
+msgid "First visit"
+msgstr "Pirmais atjauninājums"
+
+msgid "Last visit"
+msgstr "Pēdējais atjauninājums"
+
+msgid "Visits/Visitor"
+msgstr "Apmeklējumi/Apmeklētājs"
+
+msgid "Pages/Visit"
+msgstr "Lapas/Apmeklējums"
+
+msgid "Hits/Visit"
+msgstr "Pieprasījumi/Apmeklējums"
+
+msgid "KB/Visit"
+msgstr "KB/Apmeklējums"
+
+msgid "KB/Visits"
+msgstr "KB/Apmeklējumi"
+
+# Satiksme
+msgid "Pages"
+msgstr "Lapu skaits"
+
+msgid "Hits"
+msgstr "Pieprasījumu skaits"
+
+msgid "Bandwidth"
+msgstr "Joslas platums"
+
+msgid "duration_format"
+msgstr "%s-%s"
+
+msgid "unit_s"
+msgstr "s"
+
+msgid "unit_min"
+msgstr "min"
+
+msgid "unit_h"
+msgstr "st"
+
+msgid "and"
+msgstr "-"
+
+msgid "Device Types"
+msgstr "Ierīču tipi"
+
+msgid "Device Type"
+msgstr "Ierīces tips"
+
+# Ierīču tipu nosaukumi
+msgid "Mobile"
+msgstr "Mobilais tālrunis"
+
+msgid "Pause & Go"
+msgstr "Apturēt un turpināt"
+
+msgid "Complete"
+msgstr "Pabeigt"
+
+msgid "Tablet"
+msgstr "Planšetdators"
+
+msgid "Tv"
+msgstr "Televizors"
+
+msgid "Wearable"
+msgstr "Valkājama ierīce"
+
+msgid "Bot"
+msgstr "Bots"
+
+msgid "Desktop"
+msgstr "Galddators"
+
+msgid "Normal browsing traffic"
+msgstr "Normāla pārlūkošanas satiksme"
+
+msgid "Abnormal browsing traffic"
+msgstr "Nenormāla pārlūkošanas satiksme"
+
+msgid "Viewed"
+msgstr "Skatīts"
+
+msgid "Not viewed"
+msgstr "Nav skatīts"
+
+msgid "Abnormal browsing traffic note"
+msgstr "Nenormālā pārlūkošanas satiksme ietver: meklētājprogrammu robotus, AI apmācības botus, ievainojamību skenerus un pieprasījumus, kas neatbilst HTTP/HTTPS specifikācijām"
+
+# Faili
+msgid "File size"
+msgstr "Faila lielums"
+
+msgid "File type"
+msgstr "Faila tips"
+
+msgid "Downloads"
+msgstr "Lejupielādes"
+
+msgid "Request time"
+msgstr "Pieprasījuma laiks"
+
+msgid "Total requests"
+msgstr "Kopējais pieprasījumu skaits"
+
+msgid "Frequency"
+msgstr "Biežums"
+
+msgid "Average frequency"
+msgstr "Vidējais biežums"
+
+msgid "Seconds"
+msgstr "Sekundes"
+
+# E-pasts (paredzēts LogType eq 'M')
+msgid "First"
+msgstr "Pirmais"
+
+msgid "Mails"
+msgstr "E-pastu skaits"
+
+msgid "Size"
+msgstr "Lielums"
+
+msgid "If you remove this file, all statistics for date"
+msgstr "Brīdinājums: ja noņemsiet šo failu, visa statistika par datumu"
+
+msgid "will be lost/reset."
+msgstr "tiks neatgriezeniski zaudēta/atiestatīta."
+
+msgid "Last config file used to build this data file was"
+msgstr "Pēdējais konfigurācijas fails, kas izmantots šī datu faila izveidei, bija"
+
+msgid "Position (offset in bytes) in this file for beginning of each section for"
+msgstr "MAP segments šajā failā reģistrē baitu nobīdes pozīcijas katras sadaļas sākumam, lai"
+
+msgid "direct I/O access. If you made changes somewhere in this file, you should"
+msgstr "AWStats varētu ātri piekļūt datiem. Ja esat veicis manuālas izmaiņas jebkurā šī faila vietā, jums vajadzētu"
+
+msgid "also remove completely the MAP section (AWStats will rewrite it at next update)"
+msgstr "pilnībā noņemt MAP segmentu (AWStats to pārrakstīs nākamajā atjaunināšanas reizē)."
+
+msgid "LastLine    = Date of last record processed - Last record line number in last log - Last record offset in last log - Last record signature value"
+msgstr "LastLine    = Pēdējā apstrādātā ieraksta datums - Pēdējā ieraksta rindas numurs pēdējā žurnālā - Pēdējā ieraksta nobīde pēdējā žurnālā - Pēdējā ieraksta paraksta vērtība"
+
+msgid "FirstTime   = Date of first visit for history file"
+msgstr "FirstTime   = Pirmā apmeklējuma datums vēstures failam"
+
+msgid "LastTime    = Date of last visit for history file"
+msgstr "LastTime    = Pēdējā apmeklējuma datums vēstures failam"
+
+msgid "LastUpdate  = Date of last update - Nb of parsed records - Nb of parsed old records - Nb of parsed new records - Nb of parsed corrupted - Nb of parsed dropped"
+msgstr "LastUpdate  = Pēdējā atjauninājuma datums - Apstrādāto ierakstu skaits - Apstrādāto veco ierakstu skaits - Apstrādāto jauno ierakstu skaits - Apstrādāto bojāto ierakstu skaits - Apstrādāto atmesto ierakstu skaits"
+
+msgid "TotalVisits = Number of visits"
+msgstr "TotalVisits = Apmeklējumu skaits"
+
+msgid "TotalUnique = Number of unique visitors"
+msgstr "TotalUnique = Unikālo apmeklētāju skaits"
+
+msgid "MonthHostsKnown   = Number of hosts known"
+msgstr "MonthHostsKnown   = Zināmo serveru skaits"
+
+msgid "MonthHostsUnKnown = Number of hosts unknown"
+msgstr "MonthHostsUnKnown = Nezināmo serveru skaits"
+
+msgid "Cluster ID - Pages - Hits - Bandwidth"
+msgstr "Klastera ID - Lapu skaits - Pieprasījumu skaits - Joslas platums"
+
+msgid "Hour - Pages - Hits - Bandwidth - Not viewed Pages - Not viewed Hits - Not viewed Bandwidth"
+msgstr "Stunda - Lapu skaits - Pieprasījumu skaits - Joslas platums - Neredzētās lapas - Neredzētie pieprasījumi - Neredzētais joslas platums"
+
+msgid "Date - Pages - Hits - Bandwidth - Visits"
+msgstr "Datums - Lapu skaits - Pieprasījumu skaits - Joslas platums - Apmeklējumi"
+
+msgid "Domain - Pages - Hits - Bandwidth"
+msgstr "Domēns - Lapu skaits - Pieprasījumu skaits - Joslas platums"
+
+msgid "The %s first Pages must be first (order not required for others)"
+msgstr "Galvenajā lapā tiek parādītas tikai pirmās %s lapas ar visvairāk skatījumu. Pilnu sarakstu skatiet detalizētajā lapā."
+
+msgid "Host - Pages - Hits - Bandwidth - Last visit date - [Start date of last visit] - [Last page of last visit]"
+msgstr "Serveris - Lapu skaits - Pieprasījumu skaits - Joslas platums - Pēdējā apmeklējuma datums - [Pēdējā apmeklējuma sākuma datums] - [Pēdējā apmeklējuma pēdējā lapa]"
+
+msgid "[Start date of last visit] and [Last page of last visit] are saved only if session is not finished"
+msgstr "[Pēdējā apmeklējuma sākuma datums] un [Pēdējā apmeklējuma pēdējā lapa] tiek saglabāti tikai tad, ja sesija nav beigusies"
+
+msgid "The first %s items are sorted by hits in descending order; order of the remaining items is undefined."
+msgstr "Pirmie %s vienumi ir sakārtoti pēc trāpījumu skaita dilstošā secībā; pārējo vienumu secība nav noteikta."
+
+msgid "Login - Pages - Hits - Bandwidth - Last visit"
+msgstr "Autorizēts lietotājs - Lapu skaits - Pieprasījumu skaits - Joslas platums - Pēdējā apmeklējuma laiks"
+
+msgid "Robot ID - Hits - Bandwidth - Last visit - Hits on robots.txt"
+msgstr "Robota ID - Pieprasījumu skaits - Joslas platums - Pēdējā apmeklējuma laiks - Pieprasījumi uz robots.txt"
+
+msgid "Worm ID - Hits - Bandwidth - Last visit"
+msgstr "Tārpa ID - Pieprasījumu skaits - Joslas platums - Pēdējā apmeklējuma laiks"
+
+msgid "EMail - Hits - Bandwidth - Last visit"
+msgstr "E-pasts - Pieprasījumu skaits - Joslas platums - Pēdējā apmeklējuma laiks"
+
+msgid "The first %s email addresses are sorted by hits in descending order; order of the remaining addresses is undefined."
+msgstr "Pirmās %s e-pasta adreses ir sakārtotas pēc trāpījumu skaita dilstošā secībā; pārējo adrešu secība nav noteikta."
+
+msgid "URL - Pages - Bandwidth - Entry - Exit"
+msgstr "URL - Lapu skaits - Joslas platums - Ieiešana - Iziešana"
+
+msgid "Files type - Hits - Bandwidth - Bandwidth without compression - Bandwidth after compression"
+msgstr "Faila tips - Pieprasījumu skaits - Joslas platums - Joslas platums bez kompresijas - Joslas platums pēc kompresijas"
+
+msgid "Request Time Range - Request Time Frequency"
+msgstr "Pieprasījuma laika diapazons - Pieprasījuma laika biežums"
+
+msgid "Payload Range - Payload Frequency"
+msgstr "Faila lieluma diapazons - Failu skaits"
+
+msgid "Session range - Number of visits"
+msgstr "Sesijas ilguma diapazons - Apmeklējumu skaits"
+
+msgid "URL with %s errors - Hits"
+msgstr "URL ar %s kļūdām - Pieprasījumu skaits"
+
+msgid "Last URL referrer"
+msgstr "Pēdējais URL atsauce"
+
+msgid "Errors - Hits - Bandwidth"
+msgstr "Kļūdas - Pieprasījumu skaits - Joslas platums"
+
+msgid "Search keywords - Number of search"
+msgstr "Atslēgvārdi - Meklēšanas reižu skaits"
+
+msgid "Only top %s keywords shown on main page (sorted by search count). See full list on detail page."
+msgstr "Galvenajā lapā tiek parādīti tikai pirmie %s atslēgvārdi (sakārtoti pēc meklēšanas reižu skaita). Pilnu sarakstu skatiet detalizētajā lapā."
+
+msgid "Search keyphrases - Number of search"
+msgstr "Atslēgfrases - Meklēšanas reižu skaits"
+
+msgid "Only top %s keyphrases shown on main page (sorted by search count). See full list on detail page."
+msgstr "Galvenajā lapā tiek parādītas tikai pirmās %s atslēgfrāzes (sakārtotas pēc meklēšanas reižu skaita). Pilnu sarakstu skatiet detalizētajā lapā."
+
+msgid "External page referers - Pages - Hits"
+msgstr "Ārējo lapu atsauces - Lapu skaits - Pieprasījumu skaits"
+
+msgid "Only top %s external referrers shown on main page (sorted by pages). See full list on detail page."
+msgstr "Galvenajā lapā tiek parādīti tikai pirmie %s ārējie atsauces avoti (sakārtoti pēc lapu skaita). Pilnu sarakstu skatiet detalizētajā lapā."
+
+msgid "Search engine referers ID - Pages - Hits"
+msgstr "Meklētājprogrammas atsauces ID - Lapu skaits - Pieprasījumu skaits"
+
+msgid "Origin - Pages - Hits"
+msgstr "Izcelsme - Lapu skaits - Pieprasījumu skaits"
+
+msgid "Unknown referer Browser - Last visit date"
+msgstr "Nezināms atsauces pārlūks - Pēdējā apmeklējuma datums"
+
+msgid "Unknown referer OS - Last visit date"
+msgstr "Nezināma atsauces OS - Pēdējā apmeklējuma datums"
+
+msgid "Screen size - Hits"
+msgstr "Ekrāna izšķirtspēja - Pieprasījumu skaits"
+
+msgid "Browser ID - Hits - Pages"
+msgstr "Pārlūka ID - Klikšķu skaits - Lapu skaits"
+
+msgid "Downloads - Hits - Bandwidth"
+msgstr "Lejupielādes - Pieprasījumu skaits - Joslas platums"
+
+msgid "Protocol - Hits - Bandwidth"
+msgstr "Protokols - Pieprasījumu skaits - Joslas platums"
+
+msgid "Icon Status - Type:200:404:Other"
+msgstr "Ikonas statuss - Tips:200:404:Cits"
+
+#------------------------------------------------------------------------------
+# Laika periodu tulkojumi
+#------------------------------------------------------------------------------
+
+msgid "period_00"
+msgstr "Pusnakts · AWStats guļ, bet jūs joprojām skatāties datus? Īsta mīlestība"
+
+msgid "period_01"
+msgstr "1:00 · Apmeklējat šajā laikā? Bezmiegs vai tikko pabeidzāt darbu"
+
+msgid "period_02"
+msgstr "2:00 · Boti ir čaklāki par jums, viņi joprojām strādā"
+
+msgid "period_03"
+msgstr "3:00 · Pilsēta guļ, serveris strādā virsstundas, kam sliktāk?"
+
+msgid "period_04"
+msgstr "4:00 · Visspilgtākā zvaigzne tumsā, jūsu ekrāns vai servera indikatora lampiņa"
+
+msgid "period_05"
+msgstr "5:00 · Agri putni ķer tārpu, agri boti vāc datus"
+
+msgid "period_06"
+msgstr "6:00 · Kāds ceļas, kāds vēl nav gulējis, internets nekad neaizveras"
+
+msgid "period_07"
+msgstr "7:00 · Sastrēgumu laiks metro, arī laiks sērfot tīmeklī"
+
+msgid "period_08"
+msgstr "8:00 · Pirmā lieta, uzsākot darbu: ieskatieties vakardienas datos"
+
+msgid "period_09"
+msgstr "9:00 · Zelta laiks, pat slinkošanai ir savi noteikumi"
+
+msgid "period_10"
+msgstr "10:00 · Kafijas laiks, pa ceļam pārbaudiet, vai satiksme ir palielinājusies"
+
+msgid "period_11"
+msgstr "11:00 · Vēl stunda līdz pusdienām, turiet vēl mazliet"
+
+msgid "period_12"
+msgstr "12:00 · Serveris: Jūs visi aizgājāt pusdienās, es mazliet atpūtīšos"
+
+msgid "period_13"
+msgstr "13:00 · Miegainība pēc pusdienām, bet dati neguļ"
+
+msgid "period_14"
+msgstr "14:00 · Pēcpusdienas uzkodu laiks, ar datiem ir garšīgāk"
+
+msgid "period_15"
+msgstr "15:00 · Šodienas satiksmes tendenču diagramma, vai tā atgādina jūsu garastāvokļa līkni?"
+
+msgid "period_16"
+msgstr "16:00 · Līdz darba beigām atlikušas X stundas, satiksme sāk skriet"
+
+msgid "period_17"
+msgstr "17:00 · Darba diena beigusies! Bet serverim jāturpina strādāt"
+
+msgid "period_18"
+msgstr "18:00 · Vakariņu laiks, noskatieties video, lai atpūstos"
+
+msgid "period_19"
+msgstr "19:00 · Labākais raidlaiks, satiksmes maksimums, serveris: es izturēšu"
+
+msgid "period_20"
+msgstr "20:00 · Izgāzies uz dīvāna, jūs esat apmeklētājs numurs 114514"
+
+msgid "period_21"
+msgstr "21:00 · Vēlu vakarā, slepenie datu vērotāji +1"
+
+msgid "period_22"
+msgstr "22:00 · Šodienas dati drīz būs gatavi, vai esat satraukts?"
+
+msgid "period_23"
+msgstr "23:00 · AWStats: Laiks gulēt, rīt atkal strādāsim"
+
+#------------------------------------------------------------------------------
+# Laika dimensijas
+#------------------------------------------------------------------------------
+
+msgid "Period"
+msgstr "Statistikas periods"
+
+msgid "Year"
+msgstr "Gads"
+
+msgid "Month"
+msgstr "Mēnesis"
+
+msgid "Months"
+msgstr "Mēneši"
+
+msgid "Date"
+msgstr "Datums"
+
+msgid "Day"
+msgstr "Diena"
+
+msgid "Hour"
+msgstr "Stunda"
+
+msgid "Hours"
+msgstr "Stundas"
+
+msgid "Day of week"
+msgstr "Nedēļas diena"
+
+msgid "When"
+msgstr "Kad"
+
+msgid "%s Server Management Panel"
+msgstr "%s  servera pārvaldības panelis"
+
+msgid "Server Administration"
+msgstr "Vienkāršs un efektīvs servera risinājums"
+
+#------------------------------------------------------------------------------
+# Apmeklētāju dimensijas
+#------------------------------------------------------------------------------
+
+msgid "Invalid URL Parameters"
+msgstr "Nederīgi URL parametri"
+
+msgid "The requested page cannot be loaded due to invalid or malformed URL parameters."
+msgstr "Pieprasīto lapu nevar ielādēt nederīgu vai nepareizi formatētu URL parametru dēļ."
+
+msgid "This may be caused by typing an incorrect URL, missing parameter separators, or using an invalid configuration name."
+msgstr "To var izraisīt nepareiza URL ievadīšana, trūkstoši parametru atdalītāji vai nederīga konfigurācijas nosaukuma izmantošana."
+
+msgid "Please check the URL you entered and ensure all parameters are correctly formatted."
+msgstr "Lūdzu, pārbaudiet ievadīto URL un pārliecinieties, ka visi parametri ir pareizi formatēti."
+
+msgid "SiteDomain parameter not defined in your config/domain file, or you may not have execution permission on the file."
+msgstr "SiteDomain parametrs nav definēts jūsu config/domain failā, vai arī jums var nebūt izpildes tiesību šim failam."
+
+msgid "Please run as Administrator to set permissions"
+msgstr "Lai iestatītu atļaujas, palaidiet kā administrators"
+
+msgid "This directory lacks read permission"
+msgstr "Šim direktorijam trūkst lasīšanas tiesību"
+
+msgid "Please set read permission for directory"
+msgstr "Lūdzu, iestatiet direktorijas lasīšanas tiesības"
+
+msgid "Missing required parameter in config file"
+msgstr "Konfigurācijas failā trūkst obligātā parametra"
+
+msgid "Please check that 'DirData' is defined."
+msgstr "Lūdzu, pārbaudiet, vai ir definēts 'DirData' parametrs."
+
+msgid "Domain name in browser address appears to be missing or incomplete"
+msgstr "Šķiet, ka pārlūkprogrammas adreses joslā trūkst domēna nosaukuma vai tas ir nepilnīgs"
+
+msgid "Please check the URL parameter"
+msgstr "Lūdzu, pārbaudiet URL parametru"
+
+msgid "Format description"
+msgstr "Formāta apraksts"
+
+msgid "Please set execute permission"
+msgstr "Lūdzu, iestatiet izpildes atļauju"
+
+msgid "Or if you prefer numeric mode"
+msgstr "Vai ja dodat priekšroku ciparu režīmam"
+
+msgid "View Report Directly"
+msgstr "Skatīt pārskatu tieši"
+
+msgid "AWStats Log Viewer"
+msgstr "AWStats žurnālu skatītājs"
+
+msgid "Month Selection"
+msgstr "Mēneša izvēle"
+
+msgid "Who"
+msgstr "Kas"
+
+msgid "Visitors"
+msgstr "Apmeklētāji"
+
+msgid "Countries"
+msgstr "Valstis/Reģioni"
+
+msgid "flag_icon"
+msgstr "Karogs"
+
+msgid "Country-Region-City"
+msgstr "Valsts/Reģions/Pilsēta"
+
+msgid "Code"
+msgstr "Kods"
+
+msgid "Known"
+msgstr "Zināms"
+
+msgid "unknownos"
+msgstr "Nezināma operētājsistēma"
+
+msgid "unknownbrowser"
+msgstr "Nezināms pārlūks"
+
+msgid "Unresolved IP Address"
+msgstr "Neatrisināta IP adrese"
+
+msgid "Unknown File Type"
+msgstr "Nezināms faila tips"
+
+msgid "Unknown Size"
+msgstr "Nezināms lielums"
+
+msgid "Unknown Time"
+msgstr "Nezināms pieprasījuma laiks"
+
+msgid "Unknown Browser"
+msgstr "Nezināms pārlūks"
+
+msgid "Unknown OS"
+msgstr "Nezināma operētājsistēma"
+
+msgid "Unknown Visitor"
+msgstr "Nezināms apmeklētājs"
+
+msgid "Unknown Visitor (Total)"
+msgstr "Nezināms apmeklētājs (kopā)"
+
+msgid "Unknown Country"
+msgstr "Nezināma valsts/reģions"
+
+msgid "Unknown Country (Region)"
+msgstr "Nezināma valsts/reģions (kopā)"
+
+msgid "Unknown Visitor (Title)"
+msgstr "Nezināms apmeklētājs (virsraksts)"
+
+msgid "PageStayTime"
+msgstr "Nevar aprēķināt lapā pavadīto laiku"
+
+msgid "Unknown OS (Link)"
+msgstr "Nezināma operētājsistēma (saite)"
+
+msgid "Unknown OS (Row)"
+msgstr "Nezināma operētājsistēma (saraksts)"
+
+msgid "Unknown Browser (Link)"
+msgstr "Nezināms pārlūks (saite)"
+
+msgid "Unknown Browser (Row)"
+msgstr "Nezināms pārlūks (saraksts)"
+
+msgid "Unknown Screen"
+msgstr "Nezināms ekrāna izmērs"
+
+msgid "Login"
+msgstr "Lietotājvārds"
+
+msgid "Anonymous"
+msgstr "Anonīms"
+
+msgid "Robots"
+msgstr "Roboti"
+
+msgid "Different robots"
+msgstr "Dažādi roboti"
+
+msgid "Hits on robots.txt"
+msgstr "Iepriekš uzskaitītie meklētājprogrammu roboti rada \"nenormālu\" pārlūkošanas satiksmi, kas nav iekļauta citos grafikos. Skaitlis aiz '+' ir veiksmīgo piekļūšanu skaits failam \"robots.txt\"."
+
+msgid "Worms"
+msgstr "Tārpi"
+
+msgid "Different worms"
+msgstr "Dažādi tārpi"
+
+msgid "Target"
+msgstr "Mērķis"
+
+msgid "Grabber"
+msgstr "Ieguves rīks"
+
+#------------------------------------------------------------------------------
+# Formātu apraksti
+#------------------------------------------------------------------------------
+
+msgid "mime_text"
+msgstr "TXT vienkārša teksta fails (1963. gadā ar ASCII kodējumu standartizēts neformatēts vienkāršs teksts. Kā visu pirmkodu, konfigurācijas failu un sistēmas žurnālu pamats, tā starpplatformu Windows (CRLF) un Unix (LF) rindu pārtraukumu vadības plūsmas joprojām ir visizplatītākais datu apmaiņas standarts datoru pasaulē)"
+
+msgid "mime_log"
+msgstr "LOG sistēmas darbības žurnāls (vienkārša teksta līdzeklis, kas reģistrē operētājsistēmas, kodola un lietojumprogrammu darbības stāvokli. Ietver Nginx/Apache piekļuves žurnālus (Combined Log) un standarta syslog specifikāciju, ir galvenais datu avots problēmu novēršanai, plūsmas veiktspējas analīzei un drošības auditam)"
+
+msgid "mime_page"
+msgstr "HTML hiperteksta tīmekļa lapa (1989. gadā Tim Berners-Lee izveidotā Visuma tīmekļa pamatakmens. Kā bezmaksas atvērta universāla hiperteksta iezīmēšanas valoda, tās HTML5 specifikācija 2014. gadā kļuva par oficiālu W3C standartu, kas nodrošina strukturētu multividi, semantisku mijiedarbību un plūsmas lapas izkārtojumu. 2016. gadā saņēma Tjūringa balvu)"
+
+msgid "mime_khtml"
+msgstr "KHTML tīmekļa veidņu dzinējs (1998. gada KDE 2.0 pārlūkprogrammas atveidošanas dzinēja specifikācija. Kā atvērtā koda kopienas stūrakmens, kas lika pamatus mūsdienu tīmekļa atveidošanai, tā tehniskais mantojums tieši iedvesmoja un attīstījās par Apple WebKit un Google Blink serdeņiem, un joprojām turpina savu pamatā esošo līniju, izmantojot mūsdienu plūsmas dinamisko tīmekļa arhitektūru)"
+
+msgid "mime_script"
+msgstr "SCRIPT interpretējams dinamisks skripts (vispārīga pirmkoda plūsmu klasifikācija, kas nav iepriekš jākompilē un kuru pa rindiņām nolasa un izpilda konkrēts izpildlaiks vai interpretators. Ietver ASP, JSP, CGI, Tcl u.c., plaši izmanto servera puses vispārējām saskarnēm, automatizētai procesu vadībai un sistēmas līmeņa uzdevumu saistīšanai)"
+
+msgid "mime_js"
+msgstr "JavaScript skripts (1995. gada Netscape pārlūkprogrammas sākotnējā programmēšanas vide. 1997. gadā izveidots ECMAScript nozares standarts, 2009. gadā dzimušais Node.js izpildlaiks pārkāpa pārlūkprogrammas robežas un radīja pilna krāvuma asinhrono nebloķējošo arhitektūru, kam pievienota visplašākā npm programmatūras pakotņu ekosistēma pasaulē)"
+
+msgid "mime_py"
+msgstr "Python skripts (1991. gadā Guido van Rossum izveidota augsta līmeņa interpretējama skriptu valoda. Pateicoties obligātajai atkāpei, kas nodrošina nesamazināmu lasāmību, un daudzparadigmu pamatā esošajam dizainam, tā tagad ir izveidota kā nozares standarta valoda mūsdienu tīmekļa arhitektūrai, pilna krāvuma datu zinātnei, mākslīgā intelekta (AI) modeļu apmācībai un mākoņdatošanas automatizētai darbībai)"
+
+msgid "mime_sh"
+msgstr "Shell skripts (1971. gada Unix laikmeta standarta komandu interpretatora skripts. Ietver tādas kodola līmeņa komandu specifikācijas kā Bash, Sh, Dash, parasti izpilda ar paplašinājumu .sh, ir universāls kodola līmeņa saistviela mūsdienu Unix līdzīgu operētājsistēmu zemā līmeņa procesu vadībai, bezinstalācijas vides konfigurācijai un automatizētai izvietošanai)"
+
+msgid "mime_rb"
+msgstr "Ruby skripts (1995. gadā Yukihiro Matsumoto izveidota objektorientēta skriptu valoda. Tās pamatā esošā dizaina filozofija ir ārkārtīgi liela cieņa pret izstrādātāja pieredzi. Tās ietvars Ruby on Rails revolucionāri izveidoja mūsdienu augsta līmeņa tīmekļa arhitektūras paradigmu 'Konvencija pirms konfigurācijas' (CoC))"
+
+msgid "mime_pl"
+msgstr "Perl skripts (1987. gadā Larry Wall izveidota pragmatiska skriptu valoda. Kā mūsdienu pakotņu pārvaldnieku (CPAN) pamatlicējs, tā tiek dēvēta par teksta apstrādes 'Šveices armijas nazi'. Mūsdienu CGI režīmā tā joprojām kalpo kā augsti uzticama bāze žurnālu parsēšanas jomā, pateicoties ļoti zemajām fiziskās atmiņas izmaksām un augstas efektivitātes regulāro izteiksmju apstrādei)"
+
+msgid "mime_php"
+msgstr "PHP dinamiska tīmekļa lapa (1995. gadā Rasmus Lerdorf izveidota, īpaši izstrādāta tīmekļa izstrādei. Kā galvenā tehnoloģija, kas nodrošina vairāk nekā 70% visu pasaules tīmekļa vietņu darbību, tā dziļi atbalsta tādas liela mēroga ražošanas lietojumprogrammas kā WordPress un Wikipedia. Kopš PHP 8 ieviesa JIT (tiešlaikas kompilācijas) izpildlaika dzinēju, tā ir veikusi pamatā esošo paradigmas attīstību uz augstas veiktspējas pilna krāvuma servera pusi)"
+
+msgid "mime_image"
+msgstr "IMAGE attēlu līdzekļu klasifikācija (ietver kopējo klasifikāciju attēliem ar zudumiem/bez zudumiem kompresētiem bitkartes attēliem, mūsdienīgu atsaucīgu tīmekļa grafiku un vektorgrafiku. Tas ir galvenais rādītājs, lai novērtētu vietnes vizuālo resursu ielādes izmaksas, klienta puses kešatmiņas (Cache) trāpījumu biežumu un multivides tīkla joslas platuma patēriņu)"
+
+msgid "mime_document"
+msgstr "DOCUMENT strukturētu dokumentu klasifikācija (ietver kopējo klasifikāciju vienkāršam tekstam, izklājlapām, fiksēta formāta dokumentiem (PDF) un vieglajām iezīmēšanas valodām. Tas ir galvenais rādītājs, lai statistikas nolūkos analizētu servera puses statisko zināšanu bāzu izplatīšanu, uzņēmuma informācijas sistēmu līdzekļu lejupielādi un teksta plūsmas caurlaidspēju)"
+
+msgid "mime_package"
+msgstr "PACKAGE kompilācijas produktu un programmatūras pakotņu klasifikācija (ietver kopējo klasifikāciju operētājsistēmas sākotnēji izpildāmajiem failiem, izpildlaika saišu bibliotēkām (DLL/SO) un lietojumprogrammu izplatīšanas instalācijas pakotnēm. To bieži izmanto kā galveno rādītāju, lai novērtētu programmatūras izplatīšanas vietņu izejošo datplūsmu un lejupielādes maksimumus)"
+
+msgid "mime_archive"
+msgstr "ARCHIVE arhivēšanas un kompresijas faili (vispārīga datu kompresijas pakotņu klasifikācija, kas pamatota uz tādiem galvenajiem algoritmiem kā DEFLATE, LZMA. Tīkla slānī, papildus tradicionālajai pakotņu izplatīšanai, ietver arī 1992. gada GNU projekta Gzip dinamiskās atbildes plūsmas. Lai gan mūsdienu scenārijos pakāpeniski tiek ieviests Brotli algoritms, šī klasifikācija joprojām ir galvenais rādītājs, lai novērtētu servera joslas platuma caurlaidību un transporta slāņa spiediena samazināšanu)"
+
+msgid "mime_audio"
+msgstr "AUDIO digitālās audio plūsmas klasifikācija (ietver kopējo klasifikāciju kompresētam audio, audiogrāmatām un straumēšanas audio konteineriem. Pamatojoties uz konkrētiem audio kodēšanas/dekodēšanas standartiem, to izmanto, lai uzraudzītu multivides vietņu audio datu plūsmu caurlaidspēju, vienlaicīgu straumēšanas joslas platumu un ilgo savienojumu veiktspēju)"
+
+msgid "mime_video"
+msgstr "VIDEO digitālās video plūsmas klasifikācija (ietver kopējo klasifikāciju augstas izšķirtspējas video konteineriem, mūsdienīgai tīmekļa animācijai un straumēšanas segmentiem. Tas ir galvenais rādītājs, lai novērtētu servera joslas platuma maksimumu un satura piegādes tīkla (CDN) paātrinājuma efektivitāti lielas slodzes tīkla vidē)"
+
+msgid "mime_jscript"
+msgstr "JScript skripts (1996. gadā Microsoft izstrādāts apgrieztās inženierijas patentēts ieviešanas variants pārlūkam Internet Explorer 3.0. Kā agras klasiskās JavaScript saimnieka konkurents, tas kādreiz bija galvenais Windows skriptu saimnieka (WSH) un agrīnās ASP servera puses dzinējs)"
+
+msgid "mime_json"
+msgstr "JSON strukturēti dati (2001. gadā Douglas Crockford izveidots viegls datu serializācijas apmaiņas formāts. Pamatojoties uz teksta atslēgu-vērtību pāriem un masīvu arhitektūru, tam piemīt ļoti augsta cilvēku lasāmība un bezzudumu plūsmas parsēšanas īpašības. Tas ir faktiskais standarts mūsdienu tīmekļa API, mikroservisu arhitektūrai un mijiedarbībai ar lieliem valodas modeļiem)"
+
+msgid "mime_vbs"
+msgstr "VBScript skripts (1996. gadā Microsoft kopā ar IE 3.0 izlaists skriptu valodas variants. Kādreiz bija galvenais agrīno ASP dinamisko vietņu un Windows sistēmu pārvaldības dzinējs, tagad tas ir oficiāli atteikts un izņemts no jaunākā Windows 11 kodola, tāpēc pieder pie vēsturiskā mantojuma tehnoloģijām)"
+
+msgid "mime_conf"
+msgstr "CONF sistēmas konfigurācijas fails (vispārīga datu failu klasifikācija, kas pastāvīgi glabā programmatūras izpildlaika vides parametrus vienkārša teksta formā. Ietver INI un mūsdienu YAML, TOML, JSON specifikācijas, Linux sistēmā bieži atrodas /etc direktorijā. Tā ir galvenā atkarība sistēmas līmeņa darbības stāvokļa optimizācijai)"
+
+msgid "mime_css"
+msgstr "CSS kaskadējamie stila lapas (1996. gada W3C standarts, kopā ar HTML/JS veido trīs galvenos priekšgala komponentus. Izgājis CSS2 pozicionēšanas un CSS3 modulārās attīstības posmus, nodrošina elastīgo kārbu (Flexbox), režģi (Grid) un adaptīvu dizainu ar multivides vaicājumiem. Tas ir absolūti dominējošais standarts, lai atsaistītu tīmekļa lapas izskatu mūsdienu pārlūkprogrammās)"
+
+msgid "mime_xsl"
+msgstr "XSL stila lapa (1999. gada W3C standarts, ietver XSLT transformāciju un XPath adresācijas valodu, ko izmanto, lai strukturētus XML datus attēlotu kā HTML, PDF vai vienkāršu tekstu. Mūsdienu izstrādē tā ekosistēmu lielākoties ir aizstājuši vieglāki veidņu dzinēji un JSON datu formāts)"
+
+msgid "mime_runtime"
+msgstr "Izpildāmais fails (operētājsistēmas sākotnējie izpildāmie formāti, piemēram, EXE, ELF, Mach-O, kas satur kompilētu zema līmeņa mašīnkodu, ievades punktu un sistēmas ielādes informāciju)"
+
+msgid "mime_library"
+msgstr "Bibliotēkas fails (dinamiski vai statiski saistītas bibliotēkas, piemēram, DLL, SO, dylib, kas satur koplietojamus simbolus un pārvietošanas kodu, ko var izsaukt citas programmas un ielādēt izpildlaikā)"
+
+msgid "mime_swf"
+msgstr "Flash animācija (1996. gadā Macromedia izstrādāta, 2005. gadā to iegādājās Adobe. Interaktīva tīmekļa animācijas standarts, kas kādreiz dominēja interneta animācijā un spēlēs. Trūkumi: atkarība no spraudņiem, neatbalsta mobilās ierīces, augsts drošības risks. 2017. gadā Adobe paziņoja par atteikšanos, 2020. gadā pilnībā pārtrauca atbalstu, to aizstāj ar HTML5/CSS3/JS)"
+
+msgid "mime_dtd"
+msgstr "DTD dokumenta tipa definīcija (izlaista 1998. gadā kopā ar XML 1.0, ko izmanto, lai definētu XML/HTML dokumenta struktūru un pārbaudītu tā derīgumu. Mūsdienu izstrādē to pakāpeniski aizstāj elastīgāki risinājumi, piemēram, XML Schema, RELAX NG)"
+
+msgid "mime_csv"
+msgstr "CSV datu formāts (komatu atdalītās vērtības, 1972. gada lieldatoru laikmeta (IBM Fortran kompilators) universāls vienkārša teksta tabulas formāts. 2005. gadā to oficiāli standartizēja RFC 4180 kā bezzudumu datu apmaiņas standaru starp platformām un valodām. To plaši izmanto efektīvai importēšanai un eksportēšanai uz Excel, relāciju datu bāzēm, datu analīzi (Pandas))"
+
+msgid "mime_cur"
+msgstr "Peles rādītāja fails (.cur formāts, ko izmanto, lai pielāgotu peles stilu, piemēram, pirksta rādītājs tīmekļa lapās, smilšu pulksteņa gaidīšanas ikona sistēmā. Tas ir 'radinieks' parastajai .ico ikonai, taču tam ir papildu 'karstā punkta' noteikšana — tā ir peles faktiskā klikšķa vieta. Vēsture: ieviesa Windows 3.1 (1992. gadā), bija galvenais komponents laikmetā, kad grafiskais interfeiss pārgāja no komandrindas uz peles vadību)"
+
+msgid "mime_jnlp"
+msgstr "Java Web Start (2000. gadu Java darbvirsmas lietojumprogrammu izplatīšanas tehnoloģija, kas palaiž attālinātas Java programmas, izmantojot .jnlp failu. Drošības problēmu un mūsdienu izplatīšanas veidu popularitātes dēļ tagad ir praktiski iznīkusi)"
+
+msgid "mime_lit"
+msgstr "Microsoft Reader elektroniskā grāmata (2000. gadā Microsoft izlaista, LIT formāts. Novecojusi, tagad to var konvertēt uz EPUB vai PDF, izmantojot tādus rīkus kā Calibre)"
+
+msgid "mime_svg"
+msgstr "SVG vektorgrafika (1999. gada W3C standarts, uz XML arhitektūras balstīts divdimensiju vektora attēla formāts. Tam piemīt iespēja patvaļīgi mērogot nezaudējot kvalitāti un teksta straumes pārraides priekšrocības. Visas mūsdienu pārlūkprogrammas to atbalsta sākotnēji. To plaši izmanto augstas izšķirtspējas tīmekļa ikonām, logotipiem un vektora animācijas atveidošanai. Tas ir mūsdienu tīmekļa grafikas pamatstandarts)"
+
+msgid "mime_ai"
+msgstr "AI vektorgrafika (1987. gadā Adobe neatkarīgi izstrādāts patentēts vektorgrafikas formāts. Kā galvenais maketēšanas, poligrāfijas dizaina un zīmola identitātes nozares standarts, tas atbalsta daudzslāņu un augsta līmeņa maketēšanas vektordatus. Tas ir profesionālas vizuālās mākslas izvēlētais nesējs)"
+
+msgid "mime_phshop"
+msgstr "PSD slāņu attēls (1990. gadā Adobe kopā ar Photoshop izlaists patentēts rastra attēla avota faila formāts. Atbalsta daudzslāņu slāņošanu, kanālus, maskas un bezzudumu rediģēšanas datus. Tas ir izveidots kā globāls attēlu apstrādes un digitālās gleznošanas nozares standarts)"
+
+msgid "mime_ttf"
+msgstr "TrueType fonts (1989. gadā Apple un Microsoft kopīgi izstrādāts digitālā kontūra fonta formāts. Pamatojoties uz kvadrātiskajām Bēziera līknēm, tas nodrošina absolūtu pikseļu precizitāti starp ekrāna attēlošanu un druku. Tas ir mūsdienu darbvirsmas operētājsistēmu sākotnējais noklusējuma fonta formāts)"
+
+msgid "mime_fon"
+msgstr "FON bitu kartes fonts (1980. gadu Microsoft Windows agrīnais sistēmas līmeņa punktu fonta formāts. Neatbalsta bezzudumu proporcionālu mērogošanu. Parasti tiek izmantots kopā ar mantojuma sistēmām vai agrīniem iebūvētu ierīču komponentiem ierobežotai pikseļu teksta atveidošanai)"
+
+msgid "mime_pdf"
+msgstr "PDF elektronisks dokuments (1993. gadā Adobe izstrādāts un 2008. gadā kļuvis par ISO 32000 starptautisko standartu starpplatformu fiksēta izkārtojuma dokumentu formātam. Tam ir absolūta izkārtojuma un formāta uzticība. Tas ir universāls standarts globālai elektronisko oficiālo dokumentu izplatīšanai un digitālajai izdevējdarbībai)"
+
+msgid "mime_dotnet"
+msgstr "ASP.NET dinamiska lapa (2002. gadā Microsoft kopā ar .NET arhitektūru izlaista servera puses dinamiska tīmekļa tehnoloģija. Tā darbojas IIS atveidošanas dzinējā, un to izmanto, lai izveidotu uzņēmumu līmeņa Windows servera puses dinamiskas tīmekļa lietojumprogrammas un sadalītas sistēmas)"
+
+msgid "mime_mdb"
+msgstr "MDB relāciju datu bāze (1992. gadā Microsoft kopā ar Access izlaists darbvirsmas līmeņa relāciju datu bāzes krātuves formāts. Ar iebūvētu Jet datu bāzes dzinēju, agrīnā personālo datoru un mazo un vidējo uzņēmumu informācijas sistēmu pārvaldībā tas kalpoja kā relāciju datu bāzes risinājums)"
+
+msgid "mime_md"
+msgstr "Markdown dokuments (2004. gadā John Gruber neatkarīgi izveidota viegla iezīmēšanas valoda. Tās pamatā esošā dizaina filozofija ir 'lasāms nozīmē attēlojams', kas ir pamatā tādiem mūsdienu atvasinātiem standartiem kā GFM un CommonMark. To plaši izmanto kā galveno apmaiņas standartu tehniskajai dokumentācijai, zināšanu bāzēm (Obsidian) un mūsdienu statisko tīmekļa vietņu ģeneratoriem)"
+
+msgid "mime_crystal"
+msgstr "Crystal Reports (SAP biznesa izlūkošanas (BI) platformas profesionāls uzņēmumu līmeņa atskaišu faila formāts. Tam ir vairāku datu avotu pamatā esošs savienojums un sarežģītas dinamisko diagrammu atveidošanas iespējas. To plaši izmanto profesionālu atskaišu ģenerēšanai starptautisku uzņēmumu finanšu un datu analīzes sistēmās)"
+
+msgid "mime_libreoffice"
+msgstr "LibreOffice dokuments (2010. gadā The Document Foundation, pamatojoties uz OpenOffice atzarojumu, izveidots atvērtā koda biroja programmu komplekta patentēts formāts. Tas dziļi īsteno W3C ODF (atvērtā dokumenta formāta) starptautisko standartu. Tas ir mūsdienu atvērtā koda ekosistēmas biroja darba pamats)"
+
+msgid "mime_encrypt"
+msgstr "ENCRYPT šifrēts fails (izejas binārie vai teksta dati, kas apstrādāti ar konkrētu simetrisku vai asimetrisku šifrēšanas algoritmu. Ietver tādus galvenos atvasinātos formātus kā .enc, .pgp, .gpg. Tīkla slānī to izmanto, lai nodrošinātu nepublicētu datu konfidencialitāti un integritātes pārbaudi)"
+
+msgid "mime_gpx"
+msgstr "GPX satelīta trajektorijas dati (uz XML arhitektūras balstīts globālās pozicionēšanas sistēmas apmaiņas formāts. Īpaši izstrādāts, lai aprakstītu ģeogrāfiskās koordinātas, maršruta punktus, trases un vēsturiskās trajektorijas. Tas ir atvērts datu standarts, kas ir kopīgs mūsdienu mobilajām sporta ierīcēm, automašīnu navigācijai un ģeogrāfiskajām informācijas sistēmām (GIS))"
+
+msgid "mime_diskimage"
+msgstr "Disk Image diska attēls (ietver fiziska diska vai optiskā diska nesēja sektoru līmeņa attēlu failus, piemēram, ISO, DMG, IMG. To izmanto zema līmeņa sistēmas izvietošanai, lielapjoma programmatūras drošai izplatīšanai un uzglabāšanas nesēju pilnīgai fiziskā līmeņa datu dublēšanai)"
+
+msgid "mime_vm"
+msgstr "VM virtuālās mašīnas attēls (ietver virtualizētus fizisko disku attēlus, piemēram, VMDK, VDI, VHDX, OVA. Kā VMware, VirtualBox un Hyper-V platformu pamats, to izmanto zema līmeņa sistēmas līmeņa aparatūras emulācijai, instanču momentuzņēmumiem un mākoņa infrastruktūras izplatīšanai)"
+
+msgid "mime_torrent"
+msgstr "BitTorrent sēklas fails (2001. gadā Bram Cohen izstrādāts P2P punkts-punktā sadalītas lejupielādes indekss. Pamatojoties uz Bencode kodējumu, tas glabā izejas faila pamatā esošos pārbaudes metadatus un Trackera servera adresācijas informāciju. Tas ir galvenais decentralizēta tīkla plūsmu izplatīšanas nesējs)"
+
+msgid "mime_gis"
+msgstr "GIS ģeotelpiskie dati (ģeogrāfiskās informācijas sistēmas datu standarts, kura pamatā ir Shapefile un GeoJSON. Ietver daudzdimensiju ģeometriskas koordinātas, slāņu topoloģiju un atribūtu datus. To plaši izmanto augstas precizitātes digitālo karšu atveidošanai, satelītu attālinātai izpētei un telpiskai ģeometriskai analīzei)"
+
+msgid "mime_ebook"
+msgstr "EBOOK elektroniskā grāmata (digitālas izdevniecības formāts, kura pamatā ir W3C atvērtais EPUB starptautiskais standarts un Amazon Kindle patentētā MOBI/AZW arhitektūra. Atbalsta adaptīvu plūsmas izkārtojumu, metadatu iesaiņošanu un DRM digitālo tiesību aizsardzību. Tas ir universāls nesējs digitālai lasīšanai mobilajās ierīcēs)"
+
+msgid "mime_avif"
+msgstr "AVIF efektīvs attēls (2019. gadā Atvērtās mediju alianses (AOMedia) izstrādāts nākamās paaudzes ultra augstas izšķirtspējas attēla standarts. Pamatojoties uz AV1 video kodēšanas atslēgas kadru tehnoloģiju, tā kompresijas pakāpe ir par 50% augstāka nekā WebP, un tā sākotnēji atbalsta augstu dinamisko diapazonu (HDR). Tas ir mūsdienu tīmekļa attēlu pārsūtīšanas galvenais standarts)"
+
+msgid "mime_markdown"
+msgstr "Markdown viegls dokuments (2004. gadā John Gruber neatkarīgi izveidota teksta dokumenta iezīmēšanas valoda. Tā izmanto vienkārša teksta deklaratīvu dizainu, tās sintakse ir iedvesmota no reStructuredText. To plaši izmanto GitHub projektos, inženiertehniskajā tehniskajā dokumentācijā un mūsdienu statiskā satura pārvaldības ekosistēmā)"
+
+msgid "mime_yaml"
+msgstr "YAML serializācijas konfigurācija (2001. gadā Clark Evans un citi izstrādāts cilvēkiem lasāms datu serializācijas formāts. Pamatojoties uz hierarhiskām atkāpēm un atslēgu-vērtību kartēšanu, tagad tas ir izveidots kā mākoņdatošanas pamatinfrastruktūras konfigurācijas standarts Kubernetes konteineru orķestrēšanai, Ansible automatizācijai un Docker Compose)"
+
+msgid "mime_toml"
+msgstr "TOML semantiska konfigurācija (2013. gadā Tom Preston-Werner izstrādāta minimālisma valoda. Tai ir tādas pamatā esošas dizaina priekšrocības kā spēcīga tipizēšana, skaidra kartēšana un semantiska skaidrība. Tagad to plaši izmanto kā standartizētu konfigurācijas failu mūsdienu rīku ķēdēm, piemēram, Rust (Cargo), Python (pyproject.toml) un Go)"
+
+msgid "mime_vue"
+msgstr "Vue viena faila komponents (2014. gadā Evan You izstrādāts progresīva tīmekļa ietvara patentēts SFC formāts. Vienā failā tas realizē atbildību atdalīšanu HTML/CSS/JS un reakcijas stāvokļa saistīšanu. Tas dziļi vada mūsdienu interaktīvas priekšgala lietojumprogrammas un liela mēroga statisko vietņu dzinējus)"
+
+msgid "mime_wasm"
+msgstr "WebAssembly binārais modulis (2017. gadā W3C izveidots augstas veiktspējas zema līmeņa baitu koda standarts tīmeklim. Tas ļauj tādām spēcīgi tipizētām valodām kā C/C++/Rust tikt kompilētām līdz pārlūkprogrammas smilškastes mērķim, nodrošinot izpildes efektivitāti, kas ir tuvu sākotnējai aparatūrai. Tas ir mūsdienu tīmekļa perifērijas skaitļošanas pamatakmens)"
+
+msgid "mime_jsx"
+msgstr "React JSX komponents (2013. gadā Facebook kopā ar React ietvaru izlaists JavaScript XML sintakses paplašinājums. Tas atbalsta deklaratīvu DOM virtuālās struktūras veidošanu JavaScript, realizējot priekšgala izstrādes paradigmu 'UI kā stāvokļa funkcija', kas balstīta uz komponentiem)"
+
+msgid "mime_tsx"
+msgstr "TypeScript TSX komponents (2012. gadā Microsoft izstrādātās TypeScript spēcīgas tipizācijas sintakses un JSX plūsmas apvienojums. Tas injicē statisku kompilācijas laika tipu pārbaudi un saskarņu ierobežojumus React komponentu izstrādē. Tas ir koda standarts drošai mūsdienu lielu priekšgala sistēmu izstrādei)"
+
+msgid "mime_heif"
+msgstr "HEIF efektīvs attēls (2015. gadā MPEG organizācijas izveidots efektīva attēla faila formāts. Pamatojoties uz HEVC (H.265) video kodēšanas algoritmu, tas atbalsta vairāku kadru attēlus, dziļuma kartes un metadatus ļoti mazā apjomā. Tas ir patentēts krātuves standarts mūsdienu mobilajām operētājsistēmām un viedajām gala ierīcēm)"
+
+msgid "mime_heic"
+msgstr "HEIC efektīvs attēls (Apple patentēts bitu kartes formāts, kas ieviests saskaņā ar HEIF starptautisko standartu. Kā mūsdienu iPhone noklusējuma fotoattēlu krātuves standarts, tas saņem iOS/macOS aparatūras līmeņa kodēšanas/dekodēšanas un sākotnējo operētājsistēmas atbalstu. Nodrošinot augstu attēla kvalitāti, tas ievērojami samazina pamatā esošo krātuves vietu)"
+
+msgid "mime_gltf"
+msgstr "glTF 3D aktīvu modelis (2015. gadā Khronos Group izlaists GL pārsūtīšanas formāta standarts. Tā izmanto JSON arhitektūru, lai aprakstītu trīsdimensiju ainu, un to dēvē par '3D jomas JPEG'. Tas ir viegls rūpniecības standarts mūsdienu WebGL/WebGPU un virtuālās realitātes atveidošanai)"
+
+msgid "mime_glb"
+msgstr "GLB binārais 3D modelis (glTF aktīvu modeļa pilnīgi binārs, bezzudumu iesaiņojuma variants. Tas apvieno ainas struktūru, pamatā esošos tīkla virsotņu datus, materiālus un tekstūras karšus vienā failā. Īpaši izstrādāts efektīvai pārsūtīšanai un straumēšanas izplatīšanai starpplatformu tīmekļa 3D aktīviem)"
+
+msgid "mime_gls"
+msgstr "GLOSSARY datu glosārijs (īpaši dokumentu pārvaldības sistēmām un strukturētiem tekstu korpusiem paredzēts terminu kopas definīcijas fails. Tajā ir iebūvētas standarta terminu definīcijas, daudzvalodu atbilstības un metadatu kartējumi. To izmanto, lai uzturētu konceptuālo konsekvenci automatizētā teksta analīzē un satura publicēšanas sistēmās)"
+
+msgid "mime_cbz"
+msgstr "CBZ komiksu grāmata (patentēts komiksu attēlu arhivēšanas formāts, kas balstīts uz ZIP kompresijas struktūru. Tā iekšējā struktūrā tiek iesaiņota nepārtraukta statisku bitu karšu attēlu secība. Tas ir universāls viegls konteinera standarts digitālai komiksu izdevējdarbībai un starpplatformu vietējai kolekcionēšanai)"
+
+msgid "mime_cbr"
+msgstr "CBR komiksu grāmata (patentēts komiksu attēlu arhivēšanas formāts, kas balstīts uz RAR kompresijas struktūru. Statisku bitu karšu attēlu secības iesaiņošanai tiek izmantots RAR algoritms, kam piemīt salīdzinoši augsts kompresijas līmenis. Tam ir plašs saderības atbalsts digitālo komiksu izplatīšanas jomā)"
+
+msgid "mime_fb2"
+msgstr "FB2 elektroniskā grāmata (2000. gadu sākuma FictionBook 2.0 elektroniskās grāmatas standarts. Tā izmanto tīru XML struktūru, lai aprakstītu grāmatas atribūtus un teksta hierarhiju. Tam ir plašs atbalsts atvērtā koda elektronisko grāmatu ekosistēmā un mantojuma digitālās izdevējdarbības lasītājos)"
+
+msgid "mime_kepub"
+msgstr "KEPUB elektroniskā grāmata (Kobo patentēts uzlabots elektroniskās grāmatas formāts, kas izveidots, pamatojoties uz EPUB standartu. Tas ir veicis pamatā esošu atveidošanas optimizāciju Kobo aparatūras līmeņa elektronisko grāmatu lasītājiem, nodrošinot efektīvāku lapu izkārtojumu un lasīšanas statistikas mijiedarbību)"
+
+msgid "mime_m4b"
+msgstr "M4B audiogrāmata (audiogrāmatas formāts, kas balstīts uz MPEG-4 Part 14 (MP4) konteinera arhitektūru. Tas izmanto AAC kodējumu, sākotnēji atbalsta pamatā esošu grāmatzīmju noteikšanu, pārtraukuma vietas turpināšanu un nodaļu iegulšanu. Kādreiz tas bija Apple iTunes ekosistēmas standarta formāts)"
+
+msgid "mime_kfx"
+msgstr "Kindle KFX formāts (2015. gadā Amazon kopā ar Kindle izlaists patentēts uzlabots digitālās izdevējdarbības formāts. Tas atbalsta uzlabotu ligatūru izkārtojumu, augstas dinamikas fontu atveidošanu un kodola līmeņa plūsmas lapu ielādi (Page Flip). Tas ir mūsdienu Kindle platformas pamatstandarts)"
+
+msgid "mime_chm"
+msgstr "CHM kompilēta palīdzības fails (1997. gadā Microsoft izlaista kompilēta HTML palīdzības informācijas sistēma. Tā iesaiņo hiperteksta datus un pamatā esošo indeksu vienā binārā konteinerā. Ilgu laiku tas bija standarta lokālās bezsaistes palīdzības dokumentācijas formāts Windows programmatūrai)"
+
+msgid "mime_mht"
+msgstr "MHT tīmekļa lapas arhīvs (1999. gadā Microsoft izlaists MIME apkopots hiperteksta formāts. Pamatojoties uz RFC 2557 standartu, tas iesaiņo HTML pirmkodu, CSS, JS un iegultos attēlus vienā teksta failā. To izmanto bezsaistes tīmekļa lapu saglabāšanai mantojuma pārlūkprogrammās)"
+
+msgid "mime_wml"
+msgstr "WML bezvadu iezīmēšanas valoda (1999. gadā WAP foruma izveidots mobilais iezīmēšanas standarts. Pamatojoties uz XML specifikāciju, īpaši izstrādāts agrīnajiem šaurjoslas bezvadu šūnu tīkliem un zemas veiktspējas funkciju tālruņiem. Mūsdienu tīmekļa ekosistēmā tas pieder pie novecojušas, pamestas tehnoloģijas)"
+
+msgid "mime_xhtml"
+msgstr "XHTML hiperteksta tīmekļa lapa (2000. gada W3C standarts, stingra hiperteksta iezīmēšanas valoda, kas balstīta uz XML arhitektūru. 2009. gadā W3C pārtrauca tā tehnisko attīstību un pilnībā pārgāja uz HTML5 specifikāciju. Tagad to galvenokārt izmanto semantiskai tīmekļa lapu atveidošanai mantojuma sistēmās)"
+
+msgid "mime_xml"
+msgstr "XML strukturēts dokuments (1998. gada W3C standarta paplašināma iezīmēšanas valoda. Tai ir pašaprakstoša tagu arhitektūra. Tas ir pamatā esošais formāts tīmekļa pakalpojumiem (SOAP/REST), sistēmas līmeņa konfigurācijas failiem (XSD) un starpplatformu datu apmaiņai)"
+
+msgid "mime_sgml"
+msgstr "SGML universāla iezīmēšanas valoda (1986. gada ISO 8879 starptautiskā standarta universāla iezīmēšanas valoda. Kā elektronisko dokumentu strukturēta apraksta nozares pionieris, gan XML, gan agrīnās HTML specifikācijas ir cēlušās no šīs standarta metavalodas)"
+
+msgid "mime_apng"
+msgstr "APNG dinamiskā grafika (2004. gadā Mozilla izstrādāts Portable Network Graphics (PNG) dinamiskais paplašinājums. Tas atbalsta 24 bitu patiesās krāsas un 8 bitu alfa kanāla caurspīdīguma īpašības. Tas ir augstas izšķirtspējas GIF formāta alternatīva mūsdienu tīmekļa scenārijos)"
+
+msgid "mime_bmp"
+msgstr "BMP sākotnējais bitu kartes attēls (no Windows 1.0 laikmeta izveidots Microsoft platformas no ierīces neatkarīgs bitu kartes formāts. Tas izmanto bezzudumu, nesaspiestu glabāšanu. Lai gan tā izmērs parasti ir 3-10 reizes lielāks nekā PNG, tāpēc ka nav nepieciešamas kodēšanas/dekodēšanas izmaksas, to joprojām plaši izmanto Windows 11 pamatkomponentos, EXE/MSI resursu sadaļās un mantojuma draiveru grafikas buferos)"
+
+msgid "mime_cdr"
+msgstr "CDR vektorgrafika (Kanādas uzņēmuma Corel patentēts profesionāla vektordizaina CorelDRAW avota faila formāts. Tas atbalsta daudzslāņu krāsu pārvaldību, sarežģītus matemātiskus kontūru mezglus un poligrāfijas līmeņa maketēšanas datus. Tas ir specializēts formāts profesionālai plakanās drukas un reklāmas dizaina jomai)"
+
+msgid "mime_gif"
+msgstr "GIF indeksētu krāsu attēls (1987. gadā CompuServe izstrādāts 8 bitu indeksētu krāsu bitu kartes formāts. Tā pamatā ir LZW algoritms, to ierobežo 256 krāsu toņi un vienas krāsas caurspīdīgums. Pie liela kadru ātruma tas kļūst apjomīgs. Tagad to pakāpeniski aizstāj mūsdienu efektīvi dinamiskās grafikas standarti, piemēram, APNG, WebP)"
+
+msgid "mime_ico"
+msgstr "ICO sistēmas ikona (Windows sākotnējais ikonu resursu iesaiņošanas formāts. Tas atbalsta vairāku dažādu pikseļu izšķirtspēju un krāsu dziļumu attēlu variantu sajauktu iegulšanu vienā konteinerā. Tas ir arī universāls izplatīšanas standarts mūsdienu tīmekļa pārlūkprogrammu vietņu pamata identifikācijai (Favicon))"
+
+msgid "mime_jpeg"
+msgstr "JPEG kompresēts attēls (1992. gada ISO 10918 starptautiskā standarta formāts ar zudumiem. Pamatojoties uz diskrētā kosinusa transformācijas (DCT) algoritmu, tas nodrošina augstu kompresijas pakāpi, vienlaikus saglabājot izcilu reālistisku attēla kvalitāti. Tas ir absolūts faktiskais globālā interneta statisko fotogrāfiju standarts)"
+
+msgid "mime_jpg"
+msgstr "JPEG kompresēts attēls (1992. gada ISO 10918 starptautiskā standarta formāts ar zudumiem. Pamatojoties uz diskrētā kosinusa transformācijas (DCT) algoritmu, tas nodrošina augstu kompresijas pakāpi, vienlaikus saglabājot izcilu reālistisku attēla kvalitāti. Tas ir absolūts faktiskais globālā interneta statisko fotogrāfiju standarts)"
+
+msgid "mime_png"
+msgstr "PNG bezzudumu attēls (1996. gada W3C ieteiktais pārnēsājamās tīkla grafikas standarts. Tas izmanto bezzudumu kompresijas algoritmu, sākotnēji atbalsta 24 bitu patiesās krāsas un 8 bitu alfa kanāla caurspīdīgumu. Kā augstas izšķirtspējas klasiskā statiskā GIF alternatīva, tas ir absolūts faktiskais interneta bezzudumu pikseļu attēlu standarts)"
+
+msgid "mime_ps"
+msgstr "PostScript lapas apraksta fails (1985. gadā Adobe izlaista kaudzē balstīta lapas apraksta valoda. Kā PDF formāta tehnoloģiskais priekštecis, tas pamatā esošā līmenī realizē no aparatūras neatkarīgu teksta izkārtojumu un augstas precizitātes vektorgrafikas atveidošanu. Tas ir pamats profesionālai poligrāfijas izdevējdarbībai un lāzerdrukas jomai)"
+
+msgid "mime_psb"
+msgstr "PSB liela izmēra slāņu dokuments (Adobe Photoshop patentēts īpaši liela avota faila iesaiņošanas formāts. Tas pārkāpj standarta PSD formāta 2 GB fiziskā izmēra un 30 000 pikseļu iekšējās adresācijas robežas. Īpaši izstrādāts, lai glabātu īpaši lielu, augsta slāņu dziļuma milzīgu digitālo mākslas aktīvu)"
+
+msgid "mime_psd"
+msgstr "PSD slāņu dizaina avota fails (Adobe Photoshop patentēts slāņu attēla inženierijas formāts. Kā grafikas un attēlu jomas nozares standarta konteiners, tas sākotnēji iesaiņo pilnu slāņu atveidošanas koku, bitu karšu kanālus, vektoru apgriešanas ceļus un salikto sajaukšanas režīmus, atbalstot bezzudumu pilnu datu rediģēšanu)"
+
+msgid "mime_webp"
+msgstr "WebP efektīvs attēls (2010. gadā Google izlaists universāls tīmekļa grafikas kodēšanas standarts. Tas radies no VP8 video atslēgas kadru tehnoloģijas, lieliski saderīgs ar kompresiju ar zudumiem, bez zudumiem, caurspīdīgumu un dinamisku atveidošanu. Salīdzinot ar tādas pašas kvalitātes PNG, tas samazina apjomu par 25-35%. Tas ir mūsdienu tīmekļa lapu augstas veiktspējas ielādes pamatakmens)"
+
+msgid "mime_woff"
+msgstr "WOFF tīmekļa burtu fails (2009. gadā izveidots un 2012. gadā kļuvis par W3C standartu, atvērts tīmekļa fontu formāts. Būtībā tas ir standarta TTF/OTF fontu struktūru plūsmas bezzudumu kompresijas iesaiņojums, kas ievērojami optimizē tīkla pārraides joslas platuma izmaksas. Tas ir universāls mūsdienu tīmekļa vietņu ikonu un mākoņa fontu formāts)"
+
+msgid "mime_7z"
+msgstr "7z kompresēts arhīvs (1999. gadā Igor Pavlov izstrādāts patentēts 7-Zip formāts. Pamatojoties uz atvērtā koda LZMA/LZMA2 algoritmiem, tam piemīt ļoti augsts kompresijas līmenis. Līdzvērtīgos apstākļos tā apjoms parasti ir par 30-50% mazāks nekā ZIP. Tas ir universāls augstas kompresijas pakāpes formāts atvērtā koda kopienai un programmatūras izplatīšanai)"
+
+msgid "mime_ace"
+msgstr "ACE kompresēts arhīvs (1990. gadu patentēts WinACE kompresijas formāts. Kādreiz konkurēja ar RAR formātu un tam bija salīdzinoši augsts kompresijas līmenis. Pēc 2007. gada tehnoloģiskā attīstība apstājās, tagad to ir aizstājuši 7z un RAR formāti. Tas pieder pie mantojuma sistēmu arhivēšanas formātiem)"
+
+msgid "mime_bz2"
+msgstr "BZIP2 kompresēts arhīvs (1996. gadā Julian Seward izstrādāts bloku šķirošanas kompresijas formāts. Tā pamatā esošā algoritma kompresijas pakāpe ir par 15-20% augstāka nekā GZIP, bet skaitļošanas izmaksas ir lielākas. To bieži izmanto Linux kodola pirmkodam un atvērtā koda programmatūras pakotņu izplatīšanai. Standarta paplašinājums ir .bz2)"
+
+msgid "mime_cab"
+msgstr "CAB kompresēts arhīvs (1995. gadā Microsoft neatkarīgi izstrādāts Cabinet arhivēšanas formāts. Kā Windows sistēmas sākotnējais instalācijas pakotņu standarts, to izmanto draiveru un kodola failu izplatīšanai. Tas ir arī pamatā esošais krātuves konteiners Windows Installer (MSI))"
+
+msgid "mime_dmg"
+msgstr "DMG diska attēls (1980. gados Apple izstrādāts Disk Image formāts. Kā macOS programmatūras izplatīšanas standarta konteiners, atbalsta fizisku pievienošanu kā virtuālo failu sistēmu, pamata kompresiju un datu šifrēšanu. Tas ir Mac ekosistēmas lietojumprogrammu izplatīšanas galvenais formāts)"
+
+msgid "mime_emz"
+msgstr "EMZ kompresēts attēls (Windows uzlabotā metafaila EMF kompresēta versija. Būtībā tā ir ar GZIP algoritmu kompresēta bināra vektorgrafika. To plaši izmanto Microsoft Office dokumentu sērijā iegultu vektora attēlu glabāšanai)"
+
+msgid "mime_gz"
+msgstr "GZIP kompresēts arhīvs (1992. gada GNU projekta Jean-loup Gailly un Mark Adler izstrādāts standarta plūsmas kompresijas formāts. Kā Unix/Linux standarta kompresijas rīks, tas ir arī HTTP transporta slāņa kompresijas (Gzip) pamatstandarts. To bieži izmanto kopā ar TAR arhivēšanu)"
+
+msgid "mime_jar"
+msgstr "JAR kompresēts arhīvs (1997. gada Sun Microsystems izlaists Java ARchive arhivēšanas formāts. Būtībā tas ir uz ZIP struktūras balstīts iesaiņošanas konteiners, ko izmanto Java klašu bibliotēku un metadatu iesaiņošanai. Tas ir Maven, Gradle un agrīnās Android ekosistēmas galvenais kompilācijas produkts)"
+
+msgid "mime_lzma"
+msgstr "LZMA kompresēts arhīvs (1998. gadā Igor Pavlov izstrādāts Lempel-Ziv-Markov ķēdes kompresijas algoritms. Kā 7z formāta galvenais dzinējs, tam piemīt ļoti augsts kompresijas līmenis un liels atspiešanas ātrums. To plaši izmanto aparatūras programmatūras un iebūvētu sistēmu izplatīšanai)"
+
+msgid "mime_rar"
+msgstr "RAR kompresēts arhīvs (1993. gadā Eugene Roshal izstrādāts patentēts WinRAR arhivēšanas formāts. Atbalsta sadalīšanu sējumos, fiziskus atkopšanas ierakstus (ECC) un augstas stiprības šifrēšanu. Tā kompresijas pakāpe ir labāka nekā standarta ZIP, un tam ir plašs saderības atbalsts personālajos datoros un komerciālajā jomā)"
+
+msgid "mime_tar"
+msgstr "TAR arhivēšanas pakotne (1979. gada Unix V7 laikmeta lentes arhivēšanas formāts. Veic tikai failu plūsmas iesaiņošanu bez datu kompresijas. To bieži kombinē ar GZIP/BZIP2/XZ. Tas ir Linux pirmkodu pakotņu un Docker attēlu slāņu krātuves pamatstandarts)"
+
+msgid "mime_tgz"
+msgstr "TGZ kompresēts arhīvs (TAR arhivēšanas un GZIP kompresijas plūsmas kombinācija, paplašinājumi .tgz vai .tar.gz. Kā visizplatītākais programmatūras pakotņu izplatīšanas formāts Unix/Linux vidē, to plaši izmanto izvietošanai no pirmkoda un bezinstalācijas bināro pakotņu izplatīšanai)"
+
+msgid "mime_tbz2"
+msgstr "TBZ2 kompresēts arhīvs (TAR arhivēšanas un BZIP2 kompresijas plūsmas kombinācija, paplašinājumi .tbz2 vai .tar.bz2. Salīdzinot ar TGZ, var palielināt kompresijas pakāpi vēl par 15-20%, piemērots lielu failu pārsūtīšanai. Ilgu laiku tika izmantots Linux kodola pirmkodu izplatīšanai)"
+
+msgid "mime_xz"
+msgstr "XZ kompresēts arhīvs (2009. gadā izlaists nākamās paaudzes augstas kompresijas pakāpes formāts. Pamatojoties uz LZMA2 algoritmu, datu kompresijas pakāpe ir par 30-50% augstāka nekā GZIP, saglabājot lielu atspiešanas ātrumu. Tas ir noteikts kā ieteicamais izplatīšanas standarts, ko izmanto Linux kodols un galvenie pakotņu pārvaldnieki (piemēram, Debian .deb iekšpusē))"
+
+msgid "mime_z"
+msgstr "Z kompresēts arhīvs (1985. gada Unix komandas compress LZW kompresijas formāts. Kā agrīnās Unix sistēmas standarta kompresijas standarts, tagad to ir pilnībā aizstājis efektīvāks GZIP formāts. Mūsdienu tīkla datplūsmā tas ir rets vēsturisks formāts)"
+
+msgid "mime_zip"
+msgstr "ZIP kompresēts arhīvs (1989. gadā Phil Katz izstrādāts PKZIP universāls arhivēšanas formāts. To sākotnēji atbalsta galvenās operētājsistēmas. Tas ir visplašāk izmantotais konteinera standarts internetā. Mūsdienu Java JAR, Android APK un Office dokumenti (OOXML) balstās uz ZIP struktūru)"
+
+msgid "mime_zst"
+msgstr "Zstandard kompresēts arhīvs (2015. gadā Facebook darbinieka Yann Collet izstrādāts jaunas paaudzes plūsmas kompresijas standarts. Sasniedz gandrīz LZMA kompresijas pakāpi, vienlaikus nodrošinot daudz lielāku caurlaidspēju nekā GZIP. To dziļi ieviesuši Linux kodols (5.9+) un Arch/Debian pakotņu pārvaldnieki)"
+
+msgid "mime_lz4"
+msgstr "LZ4 kompresēts arhīvs (2011. gadā Yann Collet izstrādāts ārkārtīgi ātrs plūsmas kompresijas algoritms. Tā caurlaidspējas ātrums ir vairāk nekā 10 reizes lielāks nekā GZIP, un tam ir ļoti zemas CPU izpildes izmaksas. To plaši izmanto Linux kodolā, OpenZFS failu sistēmā un Hadoop reāllaika datu plūsmu apstrādē)"
+
+msgid "mime_lzo"
+msgstr "LZO kompresēts arhīvs (1996. gadā Markus Oberhumer izstrādāts Lempel-Ziv-Oberhumer algoritms. Tā galvenā prioritāte ir ārkārtīgi ātra atspiešanas veiktspēja. To plaši iegulst Linux kodola Squashfs attēlos, OpenWrt programmatūrā un dažādās resursu ierobežotās iebūvētās sistēmās)"
+
+msgid "mime_msi"
+msgstr "MSI sistēmas instalācijas pakotne (1999. gadā Microsoft izlaists Windows Installer datu iesaiņošanas formāts. Kā Windows lietojumprogrammu līmeņa standarta izvietošanas specifikācija, sākotnēji atbalsta pamatā esošo darbību atsaukšanu, komponentu dzīves cikla pārvaldību un klusu instalēšanu bez pakešu apstrādes. Tas ir uzņēmumu līmeņa centralizētas programmatūras izplatīšanas un politiku ieviešanas pamatstandarts)"
+
+msgid "mime_pkg"
+msgstr "PKG starpplatformu programmatūras instalācijas pakotne. 1. FreeBSD programmatūras pakotne: pkgng standarts, paplašinājumi .pkg vai .txz, pamatojoties uz TAR+XZ/Zstd kompresiju, atbalsta atkarību atrisināšanu un parakstu pārbaudi; 2. macOS instalācijas pakotne: pamatojoties uz Apple Installer formātu, atbalsta pielāgotus komponentus, instalācijas skriptus un sistēmas līmeņa atinstalēšanu. Tie ir attiecīgi BSD serveru un Mac sistēmu galvenie izplatīšanas nesēji."
+
+msgid "mime_apk"
+msgstr "APK Android lietojumprogrammu pakotne (2008. gadā Google kopā ar Android izlaista tradicionāla lietojumprogrammu instalācijas pakotne. Pamatojoties uz ZIP arhivēšanas struktūru, iesaiņo kompilētu Dalvik baitu kodu (DEX), metadatu manifestu un globālos resursus. Tagad to plaši izmanto vietējai izstrādes atkļūdošanai, trešo pušu izplatīšanai un instalēšanai no sāniem)"
+
+msgid "mime_ipa"
+msgstr "IPA Apple lietojumprogrammu pakotne (2008. gadā kopā ar iPhone SDK izlaists iOS/iPadOS specifisks iesaiņošanas konteiners. Būtībā tas ir ZIP arhīvs, kas aizsargāts ar FairPlay digitālo tiesību pārvaldību vai uzņēmuma līmeņa koda parakstu. Tas satur Mach-O bināru izpildāmu failu, lietojumprogrammas resursu koku un Info.plist metadatu konfigurāciju)"
+
+msgid "mime_hap"
+msgstr "HAP HarmonyOS lietojumprogrammu pakotne (2020. gadā kopā ar HarmonyOS 2.0 izlaista HarmonyOS elastīgas izvietošanas pamatvienība. To veido galvenais Entry modulis vai Feature paplašinājuma funkcionālie moduļi. Tas ir galvenais vairāku gala ierīču (telefonu, planšetdatoru, valkājamo ierīču) viedo gala ierīču izplatīšanas formāts)"
+
+msgid "mime_har"
+msgstr "HAR HarmonyOS statiskā koplietojamā pakotne (HarmonyOS patentēts statiskas koplietojamās bibliotēkas arhivēšanas fails. To izmanto kopīgu komponentu, pamata resursu kodu un kompilācijas laika atkarību iesaiņošanai. To statiski saista un koplieto vairāki HAP moduļi. Tas ir HarmonyOS sistēmas komponentu izstrādes un vairāku moduļu atkārtotas izmantošanas pamats)"
+
+msgid "mime_aab"
+msgstr "AAB Android lietojumprogrammu saišķis (2018. gadā Google izlaists un 2021. gadā izveidots Google Play dinamiskās izplatīšanas formāts. Kā tīrs izplatīšanas objekts, mākonī to dinamiski apgriež un kompilē atbilstoši mērķa ierīces CPU arhitektūrai, ekrāna blīvumam un valodai, pēc vajadzības ģenerējot optimizētus APK failus. Tas vidēji par 35% samazina pārraides joslas platuma izmaksas)"
+
+msgid "mime_xapk"
+msgstr "XAPK paplašināta lietojumprogrammu pakotne (trešo pušu Android kopienas izveidots neoficiāls lietojumprogrammu paplašinājuma standarts. Apvienojot standarta APK failu ar lielu OBB spēles datu paplašinājumu, fiziski pārkāpj Google Play 100 MB viena faila izmēra ierobežojumu. To bieži izmanto spēļu izplatīšanas platformās)"
+
+msgid "mime_appx"
+msgstr "APPX mūsdienīga lietojumprogrammu pakotne (2012. gadā Microsoft kopā ar Windows 8 izlaista UWP lietojumprogrammu izvietošanas specifikācija. Tai piemīt smilškastes izolācijas izpilde un viegla atinstalēšana. Kā agrīns galvenais Microsoft Store standarts, mūsdienu Windows ekosistēmā tā jau ir ienākusi dzīves cikla beigu posmā, attīstoties uz MSIX)"
+
+msgid "mime_msix"
+msgstr "MSIX jaunās paaudzes lietojumprogrammu pakotne (2018. gadā Microsoft izlaists pilnīgi jauns Windows standartizācijas iesaiņošanas standarts. Lieliski apvieno APPX lietojumprogrammu drošības smilškastes īpašības ar MSIX uzņēmumu līmeņa aktīvu pārvaldības priekšrocībām. Pilnībā saderīgs ar visu veidu Win32 lietojumprogrammām. Tas ir ieteicamais izplatīšanas standarts Windows 11)"
+
+msgid "mime_appimage"
+msgstr "AppImage bezinstalācijas lietojumprogrammu pakotne (2004. gadā aizsākts Linux viena izpildāma arhīva standarts. Izmanto 'viena lietojumprogramma – viens fails' pašpietiekamu arhitektūru. Izpildlaikā to tieši pievieno kā tikai lasāmu virtuālo failu sistēmu, izmantojot FUSE mehānismu, lai izpildītu, nodrošinot nulles atkarības darbību uzreiz visos Linux izplatījumos)"
+
+msgid "mime_flatpak"
+msgstr "Flatpak smilškastes lietojumprogrammu pakotne (2015. gadā Red Hat un GNOME izstrādāts starp Linux izplatījumiem darbvirsmas lietojumprogrammu izplatīšanas standarts. Tas pamatā balstās uz Linux kodola Namespace un Cgroups mehānismiem, lai īstenotu ārkārtīgi stingru lietojumprogrammu līmeņa drošības smilškastes izolāciju. Tas ir mūsdienu atvērtā koda OS programmatūras centru pamats)"
+
+msgid "mime_snap"
+msgstr "Snap konteinerizēta lietojumprogrammu pakotne (2014. gadā Ubuntu mātes uzņēmuma Canonical izlaists universāls Linux izvietošanas standarts. Izmanto pašpietiekamu SquashFS attēla pievienošanas arhitektūru, atbalsta automatizētus papildu atjauninājumus un stingru AppArmor smilškastes izolāciju. Tas ir Ubuntu programmatūras centra ekosistēmas galvenais noklusējuma formāts)"
+
+msgid "mime_deb"
+msgstr "DEB sistēmas programmatūras pakotne (1993. gadā Debian projekta izveidota bināro un pirmkodu iesaiņošanas specifikācija. Kā Debian, Ubuntu un visu to atvasinājumu sistēmu pamatā esošais instalācijas standarts, tā paļaujas uz dpkg kodolu atpakošanai un uzturēšanai, kā priekšējo daļu izmantojot APT kā efektīvu pakotņu pārvaldnieku. Tas ir visnobriedušākais programmatūras izplatīšanas pamats Linux ekosistēmā)"
+
+msgid "mime_rpm"
+msgstr "RPM sistēmas programmatūras pakotne (1997. gadā Red Hat izlaists Red Hat pakotņu pārvaldnieka iesaiņošanas standarts. Kopā ar DEB to dēvē par vienu no diviem galvenajiem tradicionālās Linux pakotņu pārvaldības virzieniem. Sākotnēji tam ir transakciju līmeņa atkarību pārbaude un pamatā esoša programmatūras digitālā paraksta pārbaude. Joprojām tas ir absolūti dominējošais izplatīšanas standarts tādām Red Hat ekosistēmām kā RHEL, Fedora un CentOS)"
+
+msgid "mime_pacman"
+msgstr "Pacman arhivēta programmatūras pakotne (2002. gadā Arch Linux kopā ar pacman pārvaldnieku izveidots .pkg.tar.zst iesaiņošanas formāts. Kā Arch rites atjaunināšanas mehānisma pamats, tas balstās uz Zstandard ātrgaitas un augstas kompresijas pakāpes algoritmu, kopā ar AUR (Arch lietotāju programmatūras krātuvi) ekosistēmu. Tas ir mūsdienīgs pakotņu izplatīšanas standarts, kas atspoguļo minimālisma un KISS principu)"
+
+msgid "mime_exe"
+msgstr "EXE sākotnējais izpildāmais fails (Windows platformas pārnēsājama izpildāmā (PE) binārās programmas formāts. Tehnoloģiski tas cēlies no MS-DOS laikmeta MZ galvenes struktūras. Kopš 1993. gada Windows NT tas ir pilnībā izveidots kā PE struktūras specifikācija. Tas ir visplašāk izmantotais izpildes standarts pasaulē mašīnkoda instrukcijām, statisko resursu sadaļām un sistēmas kodola ielādei)"
+
+msgid "mime_dll"
+msgstr "DLL dinamiskās saistīšanas bibliotēka (Windows platformas Dynamic Link Library koplietojamā koda bibliotēkas specifikācija. Dinamiski ielādējot un pārvietojot simbolus izpildlaikā, tā ievērojami taupa fizisko atmiņu un diska vietu. Kā galvenais Windows API ieviešanas veids, tās agrīnā DLL Hell problēma mūsdienu sistēmās ir atrisināta, izmantojot SxS paralēlās izolācijas mehānismu)"
+
+msgid "mime_com"
+msgstr "COM klasisks izpildāmais fails (MS-DOS laikmeta vecākais atmiņas attēla (Command) izpildes formāts. Izmanto nestrukturētu tīra koda sadaļas dizainu, ko ierobežo 64 KB fiziskās atmiņas adresācijas segmenta augšējā robeža. Tagad tas ir novecojis un pieder pie vēsturiskā mantojuma, taču mūsdienu Windows arhitektūrā to joprojām izmanto kā noteiktu komponentu saskarni, lai nodrošinātu ierobežotu saderību)"
+
+msgid "mime_aac"
+msgstr "AAC audio (MPEG standarts 1997. gadā, Advanced Audio Coding. MP3 pēctecis, audio kvalitāte labāka nekā MP3 pie tāda paša bitu pārraides ātruma, noklusējuma audio formāts YouTube, iTunes, Nintendo Switch)"
+
+msgid "mime_alac"
+msgstr "ALAC audio (Apple to izstrādāja 2004. gadā, Apple Lossless Audio Codec. Apple bezzudumu formāts, atvērtā koda 2011. gadā, noklusējuma bezzudumu formāts iTunes un Apple Music)"
+
+msgid "mime_flac"
+msgstr "FLAC audio (Xiph.Org fonds to izstrādāja 2001. gadā, Free Lossless Audio Codec. Bezzudumu kompresija, audio kvalitāte tāda pati kā kompaktdiskam, faila lielums ir aptuveni puse no sākotnējā WAV. Atvērtā koda un bez patentiem, vēlamais formāts audiofiliem un digitālajām mūzikas kolekcijām)"
+
+msgid "mime_mp3"
+msgstr "MP3 audio (Fraunhofer institūts to izstrādāja 1993. gadā, MPEG-1 Audio Layer 3. Zudumains kompresijas formāts, mazs fails ar pieņemamu audio kvalitāti, galvenais 2000. gadu digitālās mūzikas revolūcijas formāts, atbildīgs par iPod un Napster. Patenti beidzās 2017. gadā, kļuva par publiskā domēna formātu)"
+
+msgid "mime_oga"
+msgstr "Ogg Audio audio (izstrādāja Xiph.Org fonds, tīra audio formāts Ogg konteinerā, izmanto Vorbis kodēšanu. Atvērtā koda un bez patentiem, kompresijas efektivitāte labāka nekā MP3, plaši izmantots atvērtā koda projektos)"
+
+msgid "mime_ogg"
+msgstr "OGG audio (Xiph.Org fonds to izstrādāja 2000. gadā, Ogg Vorbis formāts. Atvērtā koda un bez patentiem, kompresijas efektivitāte labāka nekā MP3, agrīnais Spotify to izmantoja, plaši izmantots skaņas efektiem spēlēs)"
+
+msgid "mime_opus"
+msgstr "Opus audio (IETF to standartizēja 2012. gadā, atvērts un bez patentiem audio formāts, apvieno SILK un CELT tehnoloģijas, ļoti maza aizkave, visaugstākā kompresijas efektivitāte, noklusējuma audio formāts WebRTC, WhatsApp, Discord)"
+
+msgid "mime_wav"
+msgstr "WAV audio (Microsoft un IBM to izstrādāja 1991. gadā, Windows dzimtais audio formāts. PCM kodēšana, nesaspiests, bezzudumu audio kvalitāte, bet fails ļoti liels, standarta formāts profesionālai audio rediģēšanai)"
+
+msgid "mime_wma"
+msgstr "WMA audio (Microsoft to izstrādāja 1999. gadā, Windows Media Audio. Ir zudumainas/bezzudumu versijas, Windows atbalsta natively, izplatījās ar Windows Media Player. Tagad marginalizēts, aizstāts ar MP3/AAC)"
+
+msgid "mime_dsf"
+msgstr "DSF audio (Direct Stream Digital formāts, izstrādāja Sony un Philips. 1 bitu augsts paraugu ņemšanas ātrums, standarta DSD audio formāts, SACD digitālā versija, augstas klases audio formāts audiofiliem, fails ļoti liels)"
+
+msgid "mime_ape"
+msgstr "APE Audio (izstrādāja Monkey's Audio 2000. gadā, bezzudumu saspiešanas formāts. Augstāka saspiešana nekā FLAC, bet lēnāka kodēšana, joprojām tiek izmantots Windows platformā un audio entuziastu vidū)"
+
+msgid "mime_mid"
+msgstr "MIDI audio (MIDI asociācija to noteica 1983. gadā, Musical Instrument Digital Interface. Nošu formāts, nevis ieraksts, fails ļoti mazs, standarts elektroniskiem mūzikas instrumentiem, telefona zvanu signāliem, skaņas efektiem spēlēs. General MIDI tika standartizēts 1991. gadā, definē 128 instrumentus)"
+
+msgid "mime_m4a"
+msgstr "M4A audio (MPEG-4 Audio, konteinera formāts AAC. Standarta formāts iTunes mūzikas veikalam, galvenais audio formāts Apple ekosistēmā, atbalsta DRM aizsardzību)"
+
+msgid "mime_m3u"
+msgstr "M3U atskaņošanas saraksts (MP3 URL atskaņošanas saraksta formāts, vienkāršs teksta fails, reģistrē audio failu ceļus. Standarts no Winamp laikmeta, izmanto interneta radio, tiešsaistes mūzikas straumēšanai. M3U8 ir tā UTF-8 versija, izmanto HTTP tiešraides straumēšanai)"
+
+msgid "mime_asf"
+msgstr "ASF straumēšana (Microsoft to izstrādāja 1996. gadā, Advanced Systems Format. Windows Media straumēšanas konteiners, atbalsta sinhronu audio un video pārraidi. Izmanto tiešsaistes tiešraidēm un video pēc pieprasījuma straumēšanai, WMA/WMV ir balstīti uz ASF konteineru)"
+
+msgid "mime_avi"
+msgstr "AVI video (Microsoft to izlaida 1992. gadā, agrīns Windows video standarts. 'Audio Video Interleave', mijas audio un video, bija populārākais video formāts 1990-2000 gados, tagad aizstāts ar MP4/MKV)"
+
+msgid "mime_divx"
+msgstr "DivX video (DivX Corporation to izstrādāja 1998. gadā, MPEG-4 balstīts video kodeka formāts. Galvenais formāts tiešsaistes video koplietošanai 2000. gados, pirmā tehnoloģija, kas saspieda DVD kvalitāti līdz kompaktdiska izmēram. Autortiesību strīdu dēļ vēlāk pārvērtās par komerciālu kodētāju)"
+
+msgid "mime_mp4"
+msgstr "MP4 video (MPEG standarts 2001. gadā, MPEG-4 14. daļa. Visizplatītākais video formāts pasaulē, atbalsta H.264/H.265 kodēšanu, noklusējuma formāts interneta videoklipiem, mobilā tālruņa ierakstīšanai, YouTube)"
+
+msgid "mime_m4v"
+msgstr "M4V video (iTunes video formāts, MP4 variants. Video formāts Apple ekosistēmā, standarta formāts iTunes Store filmām un TV programmām, atbalsta DRM autortiesību aizsardzību)"
+
+msgid "mime_mpeg"
+msgstr "MPEG video (MPEG organizācija to noteica 1988. gadā, Moving Picture Experts Group. Noteica digitālās video kompresijas standartu pamatus, MPEG-1 (VCD), MPEG-2 (DVD), MPEG-4 (interneta video) ir bijusi dziļa ietekme)"
+
+msgid "mime_mkv"
+msgstr "MKV video (Matroska projekts to izstrādāja 2002. gadā, atvērtā koda multivides konteiners. Atbalsta vairākas audio celiņus, vairākus subtitrus, nodaļas, 'iesaiņošanas rīks', vēlamais formāts augstas izšķirtspējas filmu koplietošanai)"
+
+msgid "mime_mpg"
+msgstr "MPEG video (MPEG-1/MPEG-2 video paplašinājumi, standarta formāts VCD un DVD. Galvenais video formāts optiskajos diskos 1990-2000 gados, tagad aizstāts ar H.264/H.265)"
+
+msgid "mime_ogv"
+msgstr "Ogg Video video (izstrādāja Xiph.Org fonds, Ogg konteinera video formāts, izmanto Theora kodēšanu. Atvērtā koda un bez patentiem, viens no agrīnajiem standartiem HTML5 video, Firefox to atbalsta natively)"
+
+msgid "mime_ogx"
+msgstr "Ogg multivides konteiners (izstrādāja Xiph.Org fonds, Ogg konteinera vispārējs paplašinājums, var saturēt vairākas celiņus, piemēram, audio, video, subtitrus. Atvērtā koda multivides standarts, izmanto spēlēm, straumēšanai)"
+
+msgid "mime_rm"
+msgstr "RealMedia video (RealNetworks to izstrādāja 1995. gadā, RealMedia formāts. Interneta straumēšanas pionieris 1990-2000 gados, RealPlayer atskaņotāja galvenais formāts. Trūkumi: nepieciešams speciāls atskaņotājs, slikta kompresijas kvalitāte, vēlāk aizstāts ar Flash/MP4)"
+
+msgid "mime_flv"
+msgstr "Flash video (formāts parādījās 2002. gadā, Flash Video formāts. Savulaik bija galvenais tiešsaistes video formāts. Agrīnais YouTube to izmantoja. Trūkumi: nepieciešams Flash spraudnis, slikta veiktspēja, daudzas drošības nepilnības. Kopš 2015. gada galvenās vietnes pārgāja uz HTML5 video, tagad novecojis)"
+
+msgid "mime_f4v"
+msgstr "F4V video (Adobe izstrādāts Flash video formāts, FLV pēctecis. Balstīts uz MPEG-4 standartu, atbalsta H.264 kodēšanu. Novecojis kopā ar Flash tehnoloģiju, Adobe pārtrauca atbalstu 2020. gadā)"
+
+msgid "mime_wmv"
+msgstr "WMV video (Microsoft to izstrādāja 1999. gadā, Windows Media Video. Windows atbalsta natively, optimizēts straumēšanai, bija izplatīts formāts agrīnā tiešsaistes videoklipā, tagad marginalizēts)"
+
+msgid "mime_wmf"
+msgstr "WMF mediju formāts (Windows Media Format, Microsoft mediju ietvars, ietver WMV video, WMA audio, Windows Media Player atbalsta natively)"
+
+msgid "mime_mov"
+msgstr "MOV video (Apple to izstrādāja 1991. gadā, QuickTime konteinera formāts. Standarta formāts profesionālai video rediģēšanai, atbalsta vairākus kodekus, Final Cut Pro un Premiere atbalsta natively)"
+
+msgid "mime_qt"
+msgstr "QuickTime video (Apple to izlaida 1991. gadā, QuickTime formāts. Video standarts Mac platformā, MOV ir tā konteiners, QuickTime atskaņotājs kādreiz bija plaši izmantots. Apple pārtrauca Windows versijas izstrādi 2016. gadā, pakāpeniski to aizstājot ar MP4)"
+
+msgid "mime_webm"
+msgstr "WebM video (Google to izlaida 2010. gadā, atvērts un bez patentiem video formāts. Balstīts uz Matroska konteineru, VP8/VP9 kodēšana, standarta HTML5 video formāts, noklusējuma formāts atskaņošanai YouTube tīmeklī)"
+
+msgid "mime_3gp"
+msgstr "3GP video (3GPP to noteica 2000. gadā, video formāts mobilajām ierīcēm. Ļoti mazs fails, zema kvalitāte, formāts video ierakstīšanai agrīnajiem mobilajiem tālruņiem, izmantoja MMS sūtīšanai)"
+
+#------------------------------------------------------------------------------
+# Tehniskās dimensijas
+#------------------------------------------------------------------------------
+
+msgid "Operating Systems"
+msgstr "Operētājsistēmas"
+
+msgid "Top 5 Operating Systems"
+msgstr "5 populārākās operētājsistēmas"
+
+msgid "Unknown Robot"
+msgstr "Nezināms klients"
+
+msgid "User agent"
+msgstr "Lietotāja aģents"
+
+msgid "Browsers"
+msgstr "Pārlūkprogrammas"
+
+msgid "Top 5 Browsers"
+msgstr "5 populārākās pārlūkprogrammas"
+
+msgid "Unknown Robot RH"
+msgstr "Nezināms pieprasījuma galvene"
+
+msgid "Detailed"
+msgstr "Piekļūstošās ierīces versija"
+
+msgid "DetailedOS"
+msgstr "Operētājsistēmas versija"
+
+msgid "DetailedBS"
+msgstr "Pārlūkprogrammas versija"
+
+msgid "Screen sizes"
+msgstr "Ekrānu izmēri"
+
+msgid "Compression"
+msgstr "Kompresija"
+
+msgid "In"
+msgstr "Iešana"
+
+msgid "Out"
+msgstr "Izešana"
+
+msgid "Saved"
+msgstr "Ietaupīts"
+
+#------------------------------------------------------------------------------
+# Avotu dimensijas
+#------------------------------------------------------------------------------
+
+msgid "Origin"
+msgstr "Izcelsme"
+
+msgid "Referers"
+msgstr "Atsauces"
+
+msgid "meta.description"
+msgstr "AWStats uzlabots tīmekļa žurnālu analizators - reāllaika vietnes satiksmes uzraudzība, apmeklētāju analīze, meklētājprogrammu atslēgvārdi, kļūdu lapu statistika. Atbalsta tumšo režīmu un daudzvalodu saskarni, nodrošina visaptverošu datu analīzi vietņu administratoriem."
+
+msgid "meta.keywords"
+msgstr "AWStats,tīmekļa statistika,žurnālu analīze,satiksmes uzraudzība,piekļuves statistika,SEO analīze,tīmekļa analīzes rīks,Web Analytics,Log Analyzer"
+
+msgid "meta.author"
+msgstr "AWStats"
+
+msgid "og.title"
+msgstr "AWStats - Tīmekļa žurnālu analīze"
+
+msgid "og.description"
+msgstr "📊 Profesionāls atvērtā koda tīmekļa statistikas rīks, reāllaikā analizē jūsu vietnes satiksmi un apmeklētāju uzvedību."
+
+msgid "og.image.alt"
+msgstr "AWStats statistikas diagrammas"
+
+msgid "Created by"
+msgstr "Izveidoja %s"
+
+msgid "plugins"
+msgstr "spraudņi"
+
+msgid "dbip by"
+msgstr "dati no"
+
+msgid "IPDB by"
+msgstr "ģeogrāfiskās atrašanās vietas datus nodrošina DB-IP"
+
+# Veselības stāvoklis
+msgid "Configured"
+msgstr "Konfigurēts"
+
+msgid "Missing"
+msgstr "Trūkst"
+
+msgid "OK"
+msgstr "Labi"
+
+msgid "Unused"
+msgstr "Neizmantots"
+
+# Cits
+msgid "Overall Health"
+msgstr "Vispārējā veselība"
+
+msgid "Excellent"
+msgstr "Izcili"
+
+msgid "Good"
+msgstr "Labi"
+
+msgid "Fair"
+msgstr "Viduvēji"
+
+msgid "Poor"
+msgstr "Slikti"
+
+msgid "Missing icon types"
+msgstr "Trūkstošie ikonu veidi"
+
+msgid "See"
+msgstr "Skatīt detaļas"
+
+msgid "Expected Path"
+msgstr "Ceļa apraksts"
+
+msgid "column for file locations"
+msgstr "kolonna failu atrašanās vietu iegūšanai"
+
+# Padoms
+msgid "Tip: If you need to generate related icons, you can use %s to upload a logo image, and it will automatically generate all the above related icon files"
+msgstr "Padoms: ja jums ir jāģenerē saistītās ikonas, varat izmantot %s, lai augšupielādētu logotipa attēlu, un tas automātiski ģenerēs visus iepriekš minētos saistīto ikonu failus"
+
+msgid "200: success, 404: failure"
+msgstr "200 ir veiksmīgo mēģinājumu skaits, 404 ir neveiksmīgo mēģinājumu skaits"
+
+# Paredzamie ceļi
+msgid "_PATH_FAVICON"
+msgstr "/favicon.ico"
+
+msgid "_PATH_APPLE_TOUCH"
+msgstr "/apple-touch-icon.png vai /apple-touch-icon-180x180.png"
+
+msgid "_PATH_LOGO"
+msgstr "/logo.svg vai /logo.png (jānorāda HTML/JSON-LD)"
+
+msgid "_PATH_WEBMANIFEST"
+msgstr "/site.webmanifest vai /manifest.json"
+
+msgid "_PATH_BROWSERCONFIG"
+msgstr "/browserconfig.xml"
+
+msgid "_PATH_SAFARI_PINNED"
+msgstr "/safari-pinned-tab.svg"
+
+msgid "_PATH_SOCIAL_ICON"
+msgstr "/images/github.svg, /images/paypal.svg utt."
+
+# Ikonu veidu nosaukumi
+msgid "Favicon"
+msgstr "Vietnes ikona"
+
+msgid "Apple Touch Icon (iOS/macOS)"
+msgstr "Apple Touch ikona (iPhone/iPad/Mac)"
+
+msgid "Site Logo"
+msgstr "Vietnes logotips"
+
+msgid "Web App Manifest (Android/Chrome)"
+msgstr "Tīmekļa lietotnes manifesta fails (Android/Chrome)"
+
+msgid "Windows Browser Config"
+msgstr "Windows pārlūka konfigurācija"
+
+msgid "Safari Pinned Tab"
+msgstr "Safari piespraustās cilnes ikona"
+
+msgid "Social Icon"
+msgstr "Sociālo mediju ikona"
+
+# Galvenes
+msgid "Icon Files Status"
+msgstr "Ikonu failu statuss"
+
+msgid "Icon Type"
+msgstr "Ikonas veids"
+
+msgid "Advanced Web Statistics"
+msgstr "Uzlabots žurnālu analizators"
+
+msgid "Advanced Web Statistics %s"
+msgstr "Uzlabots žurnālu analizators %s"
+
+msgid "Your browser does not support frames. Please use a modern browser."
+msgstr "Jūsu pārlūkprogramma neatbalsta rāmjus. Lūdzu, izmantojiet modernu pārlūkprogrammu."
+
+msgid "View statistics directly"
+msgstr "Skatīt statistiku tieši"
+
+msgid "Close"
+msgstr "Aizvērt"
+
+msgid "Documentation Viewer"
+msgstr "Dokumentācijas skatītājs"
+
+msgid "Direct address / Bookmarks"
+msgstr "Tiešā adrese / Grāmatzīmes"
+
+msgid "Search Engines"
+msgstr "Meklētājprogrammas"
+
+msgid "Refering search engines"
+msgstr "Atsauces meklētājprogrammas"
+
+msgid "External pages"
+msgstr "Ārējās lapas"
+
+msgid "Refering pages"
+msgstr "Atsauces lapas"
+
+msgid "Internal pages"
+msgstr "Iekšējās lapas"
+
+msgid "UnknownAccessSource"
+msgstr "Nezināms piekļuves avots"
+
+msgid "Different refering pages"
+msgstr "Dažādas atsauces lapas"
+
+msgid "Keyphrases"
+msgstr "Atslēgfrāzes"
+
+msgid "Keywords"
+msgstr "Atslēgvārdi"
+
+msgid "Keyphrases/Keywords"
+msgstr "Atslēgfrāzes/Atslēgvārdi"
+
+msgid "Different keyphrases"
+msgstr "Dažādas atslekfrāzes"
+
+msgid "Different keywords"
+msgstr "Dažādi atslēgvārdi"
+
+#------------------------------------------------------------------------------
+# Lapu dimensijas
+#------------------------------------------------------------------------------
+
+msgid "Viewed pages"
+msgstr "Skatītās lapas"
+
+msgid "Different pages"
+msgstr "Dažādas lapas"
+
+msgid "Entry"
+msgstr "Ieejas pozīcija"
+
+msgid "Exit"
+msgstr "Izejas pozīcija"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Referer"
+msgstr "Atsauce"
+
+msgid "Host"
+msgstr "Serveris"
+
+#------------------------------------------------------------------------------
+# Kļūdas un statusi
+#------------------------------------------------------------------------------
+
+msgid "Error"
+msgstr "Kļūda"
+
+msgid "HTTP Status Statistics"
+msgstr "HTTP statusa kodu statistika"
+
+msgid "SMTP Error codes"
+msgstr "SMTP kļūdu kodi"
+
+msgid "Page not found"
+msgstr "Pieprasītā lapa nav atrasta"
+
+msgid "Unknown error"
+msgstr "Nezināma kļūda"
+
+msgid "Abnormal traffic note"
+msgstr "Nenormālā pārlūkošanas satiksme ietver: meklētājprogrammu robotus, AI apmācības botus, ievainojamību skenerus un pieprasījumus, kas neatbilst specifikācijām"
+
+msgid "Page detail"
+msgstr "Lapas informācija"
+
+# Detalizēta kļūdas ziņojuma informācija
+msgid "AWStats did not found the"
+msgstr "AWStats neatrada"
+
+msgid "in your log records."
+msgstr "jūsu žurnāla ierakstos."
+
+msgid "AWStats did not find any valid log lines that match your"
+msgstr "AWStats neatrada nevienu derīgu žurnāla rindu, kas atbilst jūsu"
+
+msgid "parameter, in the"
+msgstr "parametram,"
+
+msgid "th first non commented lines read of your log."
+msgstr "pirmajās nekomentētajās rindās, kas nolasītas no jūsu žurnāla."
+
+msgid "Your log file"
+msgstr "Jūsu žurnāla fails"
+
+msgid "must have a bad format or"
+msgstr "ir sliktā formātā vai"
+
+msgid "parameter setup does not match this format."
+msgstr "parametra iestatījums neatbilst šim formātam."
+
+msgid "Your AWStats"
+msgstr "Jūsu AWStats"
+
+msgid "parameter is:"
+msgstr "parametrs ir:"
+
+msgid "This means each line in your web server log file need to have:"
+msgstr "Tas nozīmē, ka katrai rindai jūsu tīmekļa servera žurnāla failā ir jābūt:"
+
+msgid "combined log format"
+msgstr "kombinētajam žurnāla formātam"
+
+msgid "MSIE Extended W3C log format"
+msgstr "MSIE paplašinātajam W3C žurnāla formātam"
+
+msgid "WebStar native log format"
+msgstr "WebStar vietējam žurnāla formātam"
+
+msgid "common log format"
+msgstr "parastajam žurnāla formātam"
+
+msgid "Lotus Notes/Lotus Domino"
+msgstr "Lotus Notes/Lotus Domino"
+
+msgid "the following personalized log format:"
+msgstr "šim personalizētajam žurnāla formātam:"
+
+msgid "And this is an example of records AWStats found in your log file (the record number"
+msgstr "Un šis ir piemērs ierakstiem, ko AWStats atrada jūsu žurnāla failā (ieraksta numurs"
+
+msgid "in your log):"
+msgstr "jūsu žurnālā):"
+
+#------------------------------------------------------------------------------
+# Dažādi
+#------------------------------------------------------------------------------
+
+msgid "Extra/Marketing"
+msgstr "Papildus/Mārketings"
+
+#------------------------------------------------------------------------------
+# Saskarnes teksts
+#------------------------------------------------------------------------------
+
+msgid "Current site"
+msgstr "Pašreizējā vietne"
+
+msgid "Web Site"
+msgstr "Vietne"
+
+msgid "Last Update"
+msgstr "Pēdējais atjauninājums"
+
+msgid "Never updated"
+msgstr "Nekad nav atjaunināts"
+
+msgid "No qualified records found in log"
+msgstr "Žurnālā nav atrasti piemēroti ieraksti"
+
+msgid "corrupted"
+msgstr "bojāts"
+
+msgid "comments"
+msgstr "komentāri"
+
+msgid "Blank"
+msgstr "Tukšs"
+
+msgid "dropped"
+msgstr "atmests"
+
+msgid "Update now"
+msgstr "Atjaunināt tagad"
+
+msgid "Back to main page"
+msgstr "Atpakaļ uz galveno lapu"
+
+msgid "Close window"
+msgstr "Aizvērt logu"
+
+msgid "Back page"
+msgstr "Atpakaļ uz iepriekšējo lapu"
+
+msgid "Navigation"
+msgstr "Navigācija"
+
+msgid "Summary"
+msgstr "Kopsavilkums"
+
+msgid "Local"
+msgstr "Lokāls"
+
+msgid "External"
+msgstr "Ārējs"
+
+msgid "Others (email senders)"
+msgstr "Citi (sūtītāji)"
+
+msgid "Others (email receivers)"
+msgstr "Citi (saņēmēji)"
+
+msgid "Others"
+msgstr "Citi"
+
+msgid "Only 10 lines of browser data are currently displayed"
+msgstr "Pašlaik tiek parādītas tikai 10 pārlūka datu rindas, pilnu sarakstu skatiet detalizētajā lapā"
+
+msgid "Others (unknown browsers)"
+msgstr "Citi (nezināmi pārlūki)"
+
+msgid "Others (operating systems)"
+msgstr "Citi (operētājsistēmas)"
+
+msgid "Others (unknown OS)"
+msgstr "Citi (nezināma OS)"
+
+msgid "Others (search engines)"
+msgstr "Citi (meklētājprogrammas)"
+
+msgid "Others (referring pages)"
+msgstr "Citi (atsauces lapas)"
+
+msgid "Others (keyphrases)"
+msgstr "Citi (atslēgfrāzes)"
+
+msgid "Others (keywords)"
+msgstr "Citi (atslēgvārdi)"
+
+msgid "Only first 10 robots shown"
+msgstr "Pašreizējā sarakstā tiek rādīti tikai 10 roboti, pilnu sarakstu skatiet detalizētajā lapā"
+
+msgid "Failed to obtain access record"
+msgstr "Neizdevās iegūt ieejas ierakstu"
+
+msgid "Failed to obtain leave record"
+msgstr "Neizdevās iegūt izejas ierakstu"
+
+msgid "Other pages"
+msgstr "Citas lapas"
+
+msgid "Low Traffic IP Summary"
+msgstr "Zemas satiksmes nezināmo IP kopsavilkums"
+
+msgid "Failed to obtain IP data"
+msgstr "Citu zināmo IP kopsavilkums"
+
+msgid "Failed to obtain the relevant data"
+msgstr "Neizdevās iegūt attiecīgos datus"
+
+msgid "Limited list of countries and regions"
+msgstr "Pašlaik tiek parādītas tikai 10 rindas, pilnu valstu/reģionu sarakstu skatiet detalizētajā lapā"
+
+msgid "currentVisitorData"
+msgstr "Pašlaik tiek parādītas tikai 10 apmeklētāju datu rindas, pilnu sarakstu skatiet detalizētajā lapā"
+
+msgid "Others (robots main)"
+msgstr "Citi (roboti)"
+
+msgid "Others (worms)"
+msgstr "Citi (tārpi)"
+
+msgid "Displaying10RowsPageMorePleaseViewFullList"
+msgstr "Pašreizējā sarakstā tiek rādītas tikai 10 lapas, pilnu sarakstu skatiet detalizētajā lapā"
+
+msgid "Others (OS main)"
+msgstr "Citi (sistēma)"
+
+msgid "Others (browsers main)"
+msgstr "Citi (pārlūki)"
+
+msgid "Others (screen sizes)"
+msgstr "Citi (izmērs)"
+
+msgid "Others (search engines main)"
+msgstr "Citi (meklētājprogrammas)"
+
+msgid "Others (referring pages main)"
+msgstr "Citi (atsauces lapas)"
+
+msgid "Others (keyphrases main)"
+msgstr "Citi (atslēgfrāzes)"
+
+msgid "Others (keywords main)"
+msgstr "Citi (atslēgvārdi)"
+
+# 1xx
+msgid "Continue"
+msgstr "Turpiniet sūtīt atlikušo saturu"
+
+msgid "Switching Protocols"
+msgstr "Maina protokolus"
+
+msgid "Processing (WebDAV)"
+msgstr "Apstrādā (lūdzu, uzgaidiet)"
+
+msgid "Early Hints"
+msgstr "Serveris sagatavo resursus"
+
+# 2xx
+msgid "[Miscellaneous successes]"
+msgstr "Citi veiksmīgie statusi"
+
+msgid "Request successful"
+msgstr "Pieprasījums veiksmīgs"
+
+msgid "Created successfully"
+msgstr "Veiksmīgi izveidots"
+
+msgid "Accepted - processing"
+msgstr "Pieņemts, apstrādā"
+
+msgid "Non-authoritative information (from cache) (from cache)"
+msgstr "Neautoritatīva informācija (no kešatmiņas)"
+
+msgid "Success, no content returned"
+msgstr "Veiksmīgi, saturs nav atgriezts"
+
+msgid "Reset content"
+msgstr "Atiestatiet veidlapu"
+
+msgid "Partial content (resume download)"
+msgstr "Daļējs saturs (atbalsta lejupielādes atsākšanu)"
+
+msgid "Multi-status (WebDAV)"
+msgstr "Vairāku statusu (WebDAV partijas operācijas)"
+
+msgid "Already reported (WebDAV)"
+msgstr "Jau ziņots (izvairās no dublēšanās)"
+
+msgid "IM used"
+msgstr "Izmantots IM protokola paplašinājums"
+
+# 3xx
+msgid "[Miscellaneous redirections]"
+msgstr "Citi pāradresācijas"
+
+msgid "Multiple choices"
+msgstr "Vairākas izvēles"
+
+msgid "Moved permanently - update your links"
+msgstr "Pārvietots neatgriezeniski, lūdzu, atjauniniet savas saites"
+
+msgid "Temporary redirect - URL unchanged"
+msgstr "Pagaidu pāradresācija, adrese nemainās"
+
+msgid "See other"
+msgstr "Skatiet citu adresi"
+
+msgid "Not modified - using cached version"
+msgstr "Nav modificēts, izmanto kešatmiņā saglabāto versiju"
+
+msgid "Use proxy"
+msgstr "Izmantojiet starpniekserveri"
+
+msgid "Switch proxy"
+msgstr "Mainiet starpniekserveri"
+
+msgid "Temporary redirect (keep method)"
+msgstr "Pagaidu pāradresācija (saglabā pieprasījuma metodi)"
+
+msgid "Permanent redirect - update your links"
+msgstr "Pastāvīga pāradresācija, lūdzu, atjauniniet savas saites"
+
+# 4xx
+msgid "[Miscellaneous client/user errors]"
+msgstr "Citas klienta kļūdas"
+
+msgid "Bad request"
+msgstr "Pieprasījuma formāts ir nepareizs"
+
+msgid "Unauthorized - please log in"
+msgstr "Nav atļauts, lūdzu, vispirms piesakieties"
+
+msgid "Payment required"
+msgstr "Nepieciešams maksājums"
+
+msgid "Forbidden - access denied"
+msgstr "Pieeja liegta, nepietiekamas tiesības"
+
+msgid "Page not found (404) - check for broken links"
+msgstr "Lapa nepastāv, lūdzu, pārbaudiet bojātās saites"
+
+msgid "Method not allowed"
+msgstr "Pieprasījuma metode nav atļauta"
+
+msgid "Not acceptable"
+msgstr "Nepieņemams atbildes formāts"
+
+msgid "Proxy authentication required"
+msgstr "Nepieciešama autentifikācija caur starpniekserveri"
+
+msgid "Request timeout"
+msgstr "Pieprasījuma laiks beidzies"
+
+msgid "Conflict - please try again"
+msgstr "Pieprasījumu konflikts, lūdzu, mēģiniet vēlreiz vēlāk"
+
+msgid "Gone - permanently deleted"
+msgstr "Resurss ir neatgriezeniski izdzēsts"
+
+msgid "Length required"
+msgstr "Jānorāda satura garums"
+
+msgid "Precondition failed"
+msgstr "Priekšnosacījums nav izpildīts"
+
+msgid "Payload too large"
+msgstr "Pieprasījuma saturs ir pārāk liels"
+
+msgid "URI too long"
+msgstr "Pieprasījuma adrese ir pārāk gara"
+
+msgid "Unsupported media type"
+msgstr "Faila tips nav atbalstīts"
+
+msgid "Range not satisfiable"
+msgstr "Pieprasījuma diapazons nav derīgs"
+
+msgid "Expectation failed"
+msgstr "Nevar izpildīt gaidīto"
+
+msgid "I am a teapot (April Fools)"
+msgstr "Es esmu tējkanna (pirmā aprīļa joks)"
+
+msgid "Page expired (Laravel)"
+msgstr "Lapas derīguma termiņš beidzies, atsvaidziniet un mēģiniet vēlreiz"
+
+msgid "Method failure (Spring)"
+msgstr "Metodes kļūme"
+
+msgid "Misdirected request"
+msgstr "Pieprasījums tika novirzīts nepareizi"
+
+msgid "Unprocessable entity (WebDAV)"
+msgstr "Pieprasījuma formāts ir pareizs, bet to nevar apstrādāt"
+
+msgid "Locked (WebDAV)"
+msgstr "Resurss ir bloķēts"
+
+msgid "Failed dependency (WebDAV)"
+msgstr "Atkarīgā operācija neizdevās"
+
+msgid "Too early"
+msgstr "Pieprasījums nosūtīts pārāk agri"
+
+msgid "Upgrade required"
+msgstr "Nepieciešams protokola jauninājums"
+
+msgid "Precondition required"
+msgstr "Trūkst nepieciešamo priekšnosacījumu"
+
+msgid "Too many requests - slow down"
+msgstr "Pieprasījumi ir pārāk bieži, lūdzu, mēģiniet vēlreiz vēlāk"
+
+msgid "Request header fields too large (Shopify)"
+msgstr "Pieprasījuma galvenes lauki ir pārāk lieli"
+
+msgid "Request header too large"
+msgstr "Pieprasījuma galvene ir pārāk liela"
+
+msgid "Login timeout (IIS)"
+msgstr "Pieteikšanās laiks beidzies, lūdzu, piesakieties vēlreiz"
+
+msgid "No response (nginx)"
+msgstr "Serveris neatbild"
+
+msgid "Retry with (IIS)"
+msgstr "Lūdzu, mēģiniet vēlreiz vēlāk"
+
+msgid "Blocked by Windows parental controls"
+msgstr "Bloķējusi Windows vecāku kontrole"
+
+msgid "Unavailable for legal reasons"
+msgstr "Nav pieejams juridisku iemeslu dēļ"
+
+msgid "Client closed connection before idle timeout (AWS ELB)"
+msgstr "Klients aizvēra savienojumu pirms neaktivitātes taimauta"
+
+msgid "X-Forwarded-For header with >30 IP addresses (AWS ELB)"
+msgstr "Pāradresācijas ķēdē ir vairāk nekā 30 IP adrešu"
+
+msgid "Incompatible protocol versions (AWS ELB)"
+msgstr "Protokolu versijas nav savienojamas"
+
+msgid "Request header too large (nginx)"
+msgstr "Pieprasījuma galvene ir pārāk liela"
+
+msgid "SSL certificate error (nginx)"
+msgstr "SSL sertifikāta kļūda"
+
+msgid "SSL certificate required (nginx)"
+msgstr "Nepieciešams SSL sertifikāts"
+
+msgid "HTTP request sent to HTTPS port (nginx)"
+msgstr "HTTP pieprasījums nosūtīts uz HTTPS portu"
+
+msgid "Invalid token (ArcGIS)"
+msgstr "Nederīgs tokens"
+
+msgid "Token required (ArcGIS) / Client closed request (nginx)"
+msgstr "Nepieciešams tokens / Klients aizvēra pieprasījumu"
+
+msgid "Resource limit reached (cPanel)"
+msgstr "Sasniegts resursu ierobežojums (CPU/atmiņa)"
+
+msgid "Bandwidth limit exceeded (Apache/cPanel)"
+msgstr "Pārsniegts joslas platuma ierobežojums"
+
+# 5xx
+msgid "[Miscellaneous server errors]"
+msgstr "Citas servera kļūdas"
+
+msgid "Internal server error - check logs"
+msgstr "Iekšēja servera kļūda, lūdzu, pārbaudiet žurnālus"
+
+msgid "Not implemented"
+msgstr "Funkcija nav atbalstīta serverī"
+
+msgid "Bad gateway - backend error"
+msgstr "Slikta vārteja, aizmugures serviss ir nenormāls"
+
+msgid "Service unavailable - maintenance or overload"
+msgstr "Pakalpojums nav pieejams, apkope vai pārslodze"
+
+msgid "Gateway timeout"
+msgstr "Vārtejas taimauts"
+
+msgid "HTTP version not supported"
+msgstr "HTTP protokola versija nav atbalstīta"
+
+msgid "Variant also negotiates"
+msgstr "Variants arī piedalās sarunās (konfigurācijas kļūda)"
+
+msgid "Insufficient storage (WebDAV)"
+msgstr "Nepietiek krātuves vietas"
+
+msgid "Loop detected (WebDAV)"
+msgstr "Atklāta cirkulāra atsauce"
+
+msgid "Not extended"
+msgstr "Nepieciešams papildu paplašinājums"
+
+msgid "Network authentication required"
+msgstr "Nepieciešama tīkla autentifikācija"
+
+# Cloudflare
+msgid "Unknown error (Cloudflare)"
+msgstr "Nezināma kļūda"
+
+msgid "Web server is down (Cloudflare)"
+msgstr "Tīmekļa serveris nedarbojas"
+
+msgid "Connection timeout (Cloudflare)"
+msgstr "Savienojuma taimauts"
+
+msgid "Origin is unreachable (Cloudflare)"
+msgstr "Izcelsme nav sasniedzama"
+
+msgid "A timeout occurred (Cloudflare)"
+msgstr "Notika taimauts"
+
+msgid "SSL handshake failed (Cloudflare)"
+msgstr "SSL rokasspiediens neizdevās"
+
+msgid "Invalid SSL certificate (Cloudflare)"
+msgstr "Nederīgs SSL sertifikāts"
+
+msgid "Railgun error (Cloudflare - obsolete)"
+msgstr "Railgun kļūda (novecojusi)"
+
+msgid "Site is overloaded (SSLLabs)"
+msgstr "Vietne ir pārslogota"
+
+msgid "Origin DNS error (Cloudflare) / Site is frozen (Pantheon)"
+msgstr "Izcelsmes DNS kļūda (Cloudflare) / Vietne ir iesaldēta (Pantheon)"
+
+msgid "Temporarily disabled (Shopify)"
+msgstr "Uz laiku atspējots"
+
+msgid "Unauthorized (AWS ELB)"
+msgstr "Neautorizēts"
+
+msgid "Network read timeout error"
+msgstr "Tīkla lasīšanas taimauta kļūda"
+
+msgid "Network connect timeout error"
+msgstr "Tīkla savienojuma taimauta kļūda"
+
+msgid "Unexpected token (Shopify)"
+msgstr "Negaidīts tokens"
+
+msgid "Request denied (LinkedIn)"
+msgstr "Pieprasījums noraidīts"
+
+msgid "HTTP/2 GOAWAY (AWS ELB)"
+msgstr "HTTP/2 savienojuma slēgšana"
+
+msgid "[Unknown]"
+msgstr "Nezināms statusa kods"
+
+# SMTP un pasts
+msgid "Nonstandard success response (ESMTP)"
+msgstr "Nestandarta veiksmīga atbilde (ESMTP)"
+
+msgid "System status, or system help reply"
+msgstr "Sistēmas statuss vai sistēmas palīdzības atbilde"
+
+msgid "Help message"
+msgstr "Palīdzības ziņojums"
+
+msgid "SMTP service ready (LMTP)"
+msgstr "SMTP pakalpojums gatavs (LMTP)"
+
+msgid "Service ready - server is ready to receive mail"
+msgstr "Pakalpojums gatavs - pasta serveris ir gatavs saņemt pastu"
+
+msgid "Service closing - connection is being closed"
+msgstr "Pakalpojums tiek slēgts - savienojums tiek aizvērts"
+
+msgid "Authentication successful"
+msgstr "Autentifikācija veiksmīga"
+
+msgid "Requested mail action taken and completed"
+msgstr "Pieprasītā pasta darbība veikta un pabeigta"
+
+msgid "User not local - will forward to another address"
+msgstr "Lietotājs nav lokāls - tiks pārsūtīts uz citu adresi"
+
+msgid "Cannot verify recipient, but will attempt delivery"
+msgstr "Nevar verificēt saņēmēju, bet mēģinās piegādāt"
+
+msgid "Message accepted for delivery (DSN)"
+msgstr "Ziņojums pieņemts piegādei (DSN)"
+
+msgid "User name is a mailbox"
+msgstr "Lietotājvārds ir pasta kaste"
+
+msgid "Authentication challenge - please respond"
+msgstr "Autentifikācijas izaicinājums - lūdzu, atbildiet"
+
+msgid "Start mail input - end with <CRLF>.<CRLF>"
+msgstr "Sāciet pasta satura ievadīšanu - beidziet ar <CRLF>.<CRLF>"
+
+msgid "Continue (LMTP)"
+msgstr "Turpināt (LMTP)"
+
+msgid "Service not available - connection closing, try again later"
+msgstr "Pakalpojums nav pieejams - savienojums tiek slēgts, lūdzu, mēģiniet vēlreiz vēlāk"
+
+msgid "Mailbox busy or temporarily unavailable (Exchange)"
+msgstr "Pasta kaste ir aizņemta vai īslaicīgi nav pieejama (Exchange)"
+
+msgid "Connection rate limit exceeded (Postfix)"
+msgstr "Pārsniegts savienojuma biežuma ierobežojums (Postfix)"
+
+msgid "Too many concurrent connections (Postfix)"
+msgstr "Pārāk daudz vienlaicīgu savienojumu (Postfix)"
+
+msgid "Unable to establish connection (Postfix)"
+msgstr "Nevar izveidot savienojumu (Postfix)"
+
+msgid "Connection timed out (Postfix)"
+msgstr "Savienojuma taimauts (Postfix)"
+
+msgid "Connection dropped due to error (Postfix)"
+msgstr "Savienojums pārtraukts kļūdas dēļ (Postfix)"
+
+msgid "Mailbox temporarily locked (Exchange)"
+msgstr "Pasta kaste īslaicīgi bloķēta (Exchange)"
+
+msgid "Too many recipients (Postfix/Exim)"
+msgstr "Pārāk daudz saņēmēju (Postfix/Exim)"
+
+msgid "Mail server error (Exchange)"
+msgstr "Pasta servera kļūda (Exchange)"
+
+msgid "Received loop detected (Exim)"
+msgstr "Atklāta saņemšanas cilpa (Exim)"
+
+msgid "Too many hop count (Exim)"
+msgstr "Pārāk daudz lēcienu (Exim)"
+
+msgid "DNS lookup failed (Postfix)"
+msgstr "DNS meklēšana neizdevās (Postfix)"
+
+msgid "Unable to authenticate (Postfix)"
+msgstr "Nevar autentificēt (Postfix)"
+
+msgid "TLS handshake failed (Postfix)"
+msgstr "TLS rokasspiediens neizdevās (Postfix)"
+
+msgid "SMTP protocol violation (Postfix)"
+msgstr "SMTP protokola pārkāpums (Postfix)"
+
+msgid "Message size exceeds limit (Exchange)"
+msgstr "Ziņojuma lielums pārsniedz ierobežojumu (Exchange)"
+
+msgid "Message rate limit exceeded (Postfix)"
+msgstr "Pārsniegts ziņojumu biežuma ierobežojums (Postfix)"
+
+msgid "Mailbox quota exceeded - temporary"
+msgstr "Pasta kastes kvota pārsniegta - īslaicīgs stāvoklis"
+
+msgid "Domain not found (Postfix)"
+msgstr "Domēns nav atrasts (Postfix)"
+
+msgid "Message header invalid (Postfix)"
+msgstr "Ziņojuma galvene nav derīga (Postfix)"
+
+msgid "Bounce loop detected (Postfix)"
+msgstr "Atklāta atsitiena cilpa (Postfix)"
+
+msgid "Unable to route (Postfix)"
+msgstr "Nevar maršrutēt (Postfix)"
+
+msgid "Sender domain not found (Postfix)"
+msgstr "Sūtītāja domēns nav atrasts (Postfix)"
+
+msgid "Recipient domain not found (Postfix)"
+msgstr "Saņēmēja domēns nav atrasts (Postfix)"
+
+msgid "Greylisting in progress - please try again (Postgrey)"
+msgstr "Pelēkais saraksts notiek - lūdzu, mēģiniet vēlreiz (Postgrey)"
+
+msgid "Spam filtering in progress (SpamAssassin)"
+msgstr "Notiek surogātpasta filtrēšana (SpamAssassin)"
+
+msgid "Virus scanning in progress (ClamAV)"
+msgstr "Notiek vīrusu skenēšana (ClamAV)"
+
+msgid "Mailbox unavailable - try again later"
+msgstr "Pasta kaste nav pieejama - mēģiniet vēlreiz vēlāk"
+
+msgid "Requested action aborted - error in processing"
+msgstr "Pieprasītā darbība pārtraukta - kļūda apstrādē"
+
+msgid "Insufficient system storage - try again later"
+msgstr "Nepietiek sistēmas krātuves vietas - mēģiniet vēlreiz vēlāk"
+
+msgid "Too many messages for this recipient (Exchange)"
+msgstr "Pārāk daudz ziņojumu šim saņēmējam (Exchange)"
+
+msgid "TLS not available (Postfix)"
+msgstr "TLS nav pieejams (Postfix)"
+
+msgid "Server unable to accept messages (Postfix)"
+msgstr "Serveris nevar pieņemt ziņojumus (Postfix)"
+
+msgid "Temporary failure in DNS lookup (Exim)"
+msgstr "Īslaicīga kļūme DNS meklēšanā (Exim)"
+
+msgid "Quota exceeded - temporary"
+msgstr "Kvota pārsniegta - īslaicīgs stāvoklis"
+
+msgid "Message too big - temporary"
+msgstr "Ziņojums pārāk liels - īslaicīgs stāvoklis"
+
+msgid "Too many messages per connection"
+msgstr "Pārāk daudz ziņojumu vienā savienojumā"
+
+msgid "Load average too high (Postfix)"
+msgstr "Sistēmas vidējā slodze ir pārāk augsta (Postfix)"
+
+msgid "Connection refused (Postfix)"
+msgstr "Savienojums noraidīts (Postfix)"
+
+msgid "Send rate limit exceeded (Postfix)"
+msgstr "Pārsniegts sūtīšanas biežuma ierobežojums (Postfix)"
+
+msgid "Recipient rate limit exceeded (Postfix)"
+msgstr "Pārsniegts saņēmēja biežuma ierobežojums (Postfix)"
+
+msgid "Sender rate limit exceeded (Postfix)"
+msgstr "Pārsniegts sūtītāja biežuma ierobežojums (Postfix)"
+
+msgid "IP address rate limit exceeded (Postfix)"
+msgstr "Pārsniegts IP adreses biežuma ierobežojums (Postfix)"
+
+msgid "MX lookup failed (Postfix)"
+msgstr "MX meklēšana neizdevās (Postfix)"
+
+msgid "A record lookup failed (Postfix)"
+msgstr "A ieraksta meklēšana neizdevās (Postfix)"
+
+msgid "PTR record lookup failed (Postfix)"
+msgstr "PTR ieraksta meklēšana neizdevās (Postfix)"
+
+msgid "Greylisting active - please try again (Postgrey)"
+msgstr "Pelēkais saraksts aktīvs - lūdzu, mēģiniet vēlreiz (Postgrey)"
+
+msgid "Access denied - unknown SMTP client hostname"
+msgstr "Pieeja liegta - nezināms SMTP klienta servera nosaukums"
+
+msgid "Access denied - bad syntax for client HELO hostname"
+msgstr "Pieeja liegta - nepareiza klienta HELO servera nosaukuma sintakse"
+
+msgid "Access denied - SMTP client hostname rejected"
+msgstr "Pieeja liegta - SMTP klienta servera nosaukums noraidīts"
+
+msgid "Access denied - unknown domain for sender or recipient"
+msgstr "Pieeja liegta - nezināms domēns sūtītājam vai saņēmējam"
+
+msgid "Sender address rejected - domain not verified (DMARC pending)"
+msgstr "Sūtītāja adrese noraidīta - domēns nav verificēts (DMARC gaida)"
+
+msgid "Recipient address rejected - domain not verified (DMARC pending)"
+msgstr "Saņēmēja adrese noraidīta - domēns nav verificēts (DMARC gaida)"
+
+msgid "DKIM verification pending - temporary failure"
+msgstr "DKIM verifikācija gaida - īslaicīga kļūme"
+
+msgid "SPF verification pending - temporary failure"
+msgstr "SPF verifikācija gaida - īslaicīga kļūme"
+
+msgid "DMARC verification pending - temporary failure"
+msgstr "DMARC verifikācija gaida - īslaicīga kļūme"
+
+msgid "DNSBL lookup temporary failure"
+msgstr "DNSBL meklēšana - īslaicīga kļūme"
+
+msgid "RHSBL lookup temporary failure"
+msgstr "RHSBL meklēšana - īslaicīga kļūme"
+
+msgid "URI DNSBL lookup temporary failure"
+msgstr "URI DNSBL meklēšana - īslaicīga kļūme"
+
+msgid "Temporary authentication failure (Dovecot)"
+msgstr "Īslaicīga autentifikācijas kļūme (Dovecot)"
+
+msgid "Temporary authorization failure (Sendmail)"
+msgstr "Īslaicīga autorizācijas kļūme (Sendmail)"
+
+msgid "Rate limit exceeded per sender (Exim)"
+msgstr "Pārsniegts biežuma ierobežojums uz vienu sūtītāju (Exim)"
+
+msgid "Rate limit exceeded per recipient (Exim)"
+msgstr "Pārsniegts biežuma ierobežojums uz vienu saņēmēju (Exim)"
+
+msgid "Rate limit exceeded per domain (Exim)"
+msgstr "Pārsniegts biežuma ierobežojums uz vienu domēnu (Exim)"
+
+msgid "Rate limit exceeded per IP (Exim)"
+msgstr "Pārsniegts biežuma ierobežojums uz vienu IP adresi (Exim)"
+
+msgid "Message queued for later delivery (Postfix)"
+msgstr "Ziņojums ievietots rindā vēlākai piegādei (Postfix)"
+
+msgid "Delivery delayed due to policy (Exchange)"
+msgstr "Piegāde aizkavēta politikas dēļ (Exchange)"
+
+msgid "Temporary failure in content filter"
+msgstr "Īslaicīga kļūme satura filtrā"
+
+msgid "Temporary failure in antivirus scanner"
+msgstr "Īslaicīga kļūme pretvīrusu skenerī"
+
+msgid "Temporary failure in spam filter"
+msgstr "Īslaicīga kļūme surogātpasta filtrā"
+
+msgid "Temporary failure in milter (Postfix)"
+msgstr "Īslaicīga kļūme milter (Postfix)"
+
+msgid "Greylisting - try again later"
+msgstr "Pelēkais saraksts - mēģiniet vēlreiz vēlāk"
+
+msgid "DDoS protection active - try again later"
+msgstr "DDoS aizsardzība aktīva - mēģiniet vēlreiz vēlāk"
+
+msgid "SMTP policy violation - temporary"
+msgstr "SMTP politikas pārkāpums - īslaicīgs stāvoklis"
+
+msgid "Temporary error in RCPT TO processing"
+msgstr "Īslaicīga kļūda RCPT TO apstrādē"
+
+msgid "Temporary error in MAIL FROM processing"
+msgstr "Īslaicīga kļūda MAIL FROM apstrādē"
+
+msgid "Temporary error in EHLO/HELO processing"
+msgstr "Īslaicīga kļūda EHLO/HELO apstrādē"
+
+msgid "Temporary error in DATA processing"
+msgstr "Īslaicīga kļūda DATA apstrādē"
+
+msgid "Temporary error - service busy, try again later"
+msgstr "Īslaicīga kļūda - pakalpojums aizņemts, mēģiniet vēlreiz vēlāk"
+
+msgid "Syntax error - command unrecognized or too long"
+msgstr "Sintakses kļūda - komanda nav atpazīta vai ir pārāk gara"
+
+msgid "Syntax error in parameters or arguments"
+msgstr "Sintakses kļūda parametros vai argumentos"
+
+msgid "Command not implemented"
+msgstr "Komanda nav ieviesta"
+
+msgid "Bad sequence of commands"
+msgstr "Slikta komandu secība"
+
+msgid "Command parameter not implemented"
+msgstr "Komandas parametrs nav ieviests"
+
+msgid "Version not supported (ESMTP)"
+msgstr "Versija nav atbalstīta (ESMTP)"
+
+msgid "Mailbox path invalid (LMTP)"
+msgstr "Pasta kastes ceļš nav derīgs (LMTP)"
+
+msgid "Too many commands in this session (Postfix)"
+msgstr "Pārāk daudz komandu šajā sesijā (Postfix)"
+
+msgid "Recipient limit exceeded (Postfix)"
+msgstr "Pārsniegts saņēmēju ierobežojums (Postfix)"
+
+msgid "Sender limit exceeded (Postfix)"
+msgstr "Pārsniegts sūtītāju ierobežojums (Postfix)"
+
+msgid "Domain limit exceeded (Postfix)"
+msgstr "Pārsniegts domēnu ierobežojums (Postfix)"
+
+msgid "Mailbox does not exist (Exchange)"
+msgstr "Pasta kaste neeksistē (Exchange)"
+
+msgid "DNS failure - permanent"
+msgstr "DNS kļūme - pastāvīga"
+
+msgid "Address type not supported (Postfix)"
+msgstr "Adreses tips nav atbalstīts (Postfix)"
+
+msgid "Unable to open mailbox (Postfix)"
+msgstr "Nevar atvērt pasta kasti (Postfix)"
+
+msgid "Mailbox locked - permanent"
+msgstr "Pasta kaste bloķēta - pastāvīgs stāvoklis"
+
+msgid "Message rejected due to policy (Exchange)"
+msgstr "Ziņojums noraidīts politikas dēļ (Exchange)"
+
+msgid "Content rejected - permanent"
+msgstr "Saturs noraidīts - pastāvīgs"
+
+msgid "Attachment type not allowed"
+msgstr "Pielikuma tips nav atļauts"
+
+msgid "Message encoding not supported"
+msgstr "Ziņojuma kodējums nav atbalstīts"
+
+msgid "Sender domain does not exist - permanent"
+msgstr "Sūtītāja domēns nepastāv - pastāvīgs"
+
+msgid "Domain does not accept mail or is closing"
+msgstr "Domēns nepieņem pastu vai tiek slēgts"
+
+msgid "Recipient domain does not exist - permanent"
+msgstr "Saņēmēja domēns nepastāv - pastāvīgs"
+
+msgid "Mailbox quota exceeded - permanent"
+msgstr "Pasta kastes kvota pārsniegta - pastāvīgs"
+
+msgid "Message size exceeds limit - permanent"
+msgstr "Ziņojuma lielums pārsniedz ierobežojumu - pastāvīgs"
+
+msgid "Authentication required (Sendmail)"
+msgstr "Nepieciešama autentifikācija (Sendmail)"
+
+msgid "Authentication failed (Sendmail)"
+msgstr "Autentifikācija neizdevās (Sendmail)"
+
+msgid "Authentication mechanism not supported"
+msgstr "Autentifikācijas mehānisms nav atbalstīts"
+
+msgid "Authentication credentials invalid"
+msgstr "Autentifikācijas akreditācijas dati nav derīgi"
+
+msgid "Authentication account expired"
+msgstr "Autentifikācijas konta derīguma termiņš beidzies"
+
+msgid "Access denied - authentication required"
+msgstr "Pieeja liegta - nepieciešama autentifikācija"
+
+msgid "Access denied (Sendmailism)"
+msgstr "Pieeja liegta (Sendmail)"
+
+msgid "Access denied - not authenticated"
+msgstr "Pieeja liegta - neautentificēts"
+
+msgid "Access denied - account locked"
+msgstr "Pieeja liegta - konts bloķēts"
+
+msgid "Access denied - account disabled"
+msgstr "Pieeja liegta - konts atspējots"
+
+msgid "Authentication failed"
+msgstr "Autentifikācija neizdevās"
+
+msgid "Authentication required for relay (Postfix)"
+msgstr "Nepieciešama autentifikācija retranslācijai (Postfix)"
+
+msgid "Authentication failed for relay (Postfix)"
+msgstr "Autentifikācija retranslācijai neizdevās (Postfix)"
+
+msgid "Encryption required (STARTTLS)"
+msgstr "Nepieciešams šifrēts savienojums (STARTTLS)"
+
+msgid "TLS required for this recipient"
+msgstr "Šim saņēmējam nepieciešama TLS šifrēšana"
+
+msgid "Encryption strength insufficient"
+msgstr "Šifrēšanas stiprums ir nepietiekams"
+
+msgid "Certificate validation failed"
+msgstr "Sertifikāta validācija neizdevās"
+
+msgid "Invalid TLS certificate"
+msgstr "Nederīgs TLS sertifikāts"
+
+msgid "TLS protocol version not supported"
+msgstr "TLS protokola versija nav atbalstīta"
+
+msgid "Cipher suite not supported"
+msgstr "Šifru komplekts nav atbalstīts"
+
+msgid "Access denied - no valid recipient"
+msgstr "Pieeja liegta - nav derīga saņēmēja"
+
+msgid "Access denied - no valid sender"
+msgstr "Pieeja liegta - nav derīga sūtītāja"
+
+msgid "Access denied - domain not allowed"
+msgstr "Pieeja liegta - domēns nav atļauts"
+
+msgid "Access denied - IP address blocked (permanent)"
+msgstr "Pieeja liegta - IP adrese bloķēta (pastāvīga)"
+
+msgid "Access denied - sender domain blacklisted"
+msgstr "Pieeja liegta - sūtītāja domēns melnajā sarakstā"
+
+msgid "Mailbox unavailable - requested action not taken"
+msgstr "Pasta kaste nav pieejama - pieprasītā darbība netika veikta"
+
+msgid "User not local - please try forwarding address"
+msgstr "Lietotājs nav lokāls - lūdzu, mēģiniet pārsūtīšanas adresi"
+
+msgid "Requested action aborted - exceeded storage allocation"
+msgstr "Pieprasītā darbība pārtraukta - pārsniegts krātuves sadalījums"
+
+msgid "Mailbox name not allowed"
+msgstr "Pasta kastes nosaukums nav atļauts"
+
+msgid "Requested action rejected - access denied"
+msgstr "Pieprasītā darbība noraidīta - pieeja liegta"
+
+msgid "MAIL FROM/RCPT TO parameters not recognized"
+msgstr "MAIL FROM/RCPT TO parametri nav atpazīti"
+
+msgid "Domain not allowed to send (DMARC reject)"
+msgstr "Domēnam nav atļauts sūtīt (DMARC noraidījums)"
+
+msgid "Too many duplicate messages - permanent"
+msgstr "Pārāk daudz dublētu ziņojumu - pastāvīgs"
+
+msgid "Sender address rejected - domain not in SPF"
+msgstr "Sūtītāja adrese noraidīta - domēns nav SPF"
+
+msgid "Sender address rejected - DKIM verification failed"
+msgstr "Sūtītāja adrese noraidīta - DKIM verifikācija neizdevās"
+
+msgid "Sender address rejected - DMARC policy reject"
+msgstr "Sūtītāja adrese noraidīta - DMARC politika noraida"
+
+msgid "Recipient address rejected - DMARC policy reject"
+msgstr "Saņēmēja adrese noraidīta - DMARC politika noraida"
+
+msgid "Message rejected due to spam content"
+msgstr "Ziņojums noraidīts surogātpasta satura dēļ"
+
+msgid "Message rejected due to virus detected"
+msgstr "Ziņojums noraidīts atklāta vīrusa dēļ"
+
+msgid "Message rejected due to malicious content"
+msgstr "Ziņojums noraidīts ļaunprātīga satura dēļ"
+
+msgid "Message rejected due to phishing detection"
+msgstr "Ziņojums noraidīts pikšķerēšanas atklāšanas dēļ"
+
+msgid "Message rejected due to malware detection"
+msgstr "Ziņojums noraidīts ļaunprogrammatūras atklāšanas dēļ"
+
+msgid "Message rejected due to policy - permanent"
+msgstr "Ziņojums noraidīts politikas dēļ - pastāvīgs"
+
+msgid "Message rejected due to content filtering"
+msgstr "Ziņojums noraidīts satura filtrēšanas dēļ"
+
+msgid "Message rejected due to reputation"
+msgstr "Ziņojums noraidīts reputācijas dēļ"
+
+msgid "Access denied - access_map violation"
+msgstr "Pieeja liegta - access_map pārkāpums"
+
+msgid "Access denied - SMTP client listed in RBL"
+msgstr "Pieeja liegta - SMTP klients iekļauts RBL"
+
+msgid "Access denied - relay not authorized"
+msgstr "Pieeja liegta - retranslācija nav atļauta"
+
+msgid "Access denied - unknown client HELO hostname"
+msgstr "Pieeja liegta - nezināms klienta HELO servera nosaukums"
+
+msgid "Access denied - invalid domain (not FQDN)"
+msgstr "Pieeja liegta - nederīgs domēns (nav FQDN)"
+
+msgid "Access denied - domain not qualified"
+msgstr "Pieeja liegta - domēns nav kvalificēts"
+
+msgid "Access denied - mail server misconfigured"
+msgstr "Pieeja liegta - pasta serveris nepareizi konfigurēts"
+
+msgid "Access denied - open relay not allowed"
+msgstr "Pieeja liegta - atvērta retranslācija nav atļauta"
+
+msgid "Access denied - proxy not allowed"
+msgstr "Pieeja liegta - starpniekserveris nav atļauts"
+
+msgid "Access denied - dynamic IP not allowed"
+msgstr "Pieeja liegta - dinamiskā IP adrese nav atļauta"
+
+msgid "Access denied - residential IP not allowed"
+msgstr "Pieeja liegta - dzīvojamā IP adrese nav atļauta"
+
+msgid "Access denied - VPN/Tor detected"
+msgstr "Pieeja liegta - atklāts VPN/Tor"
+
+msgid "Access denied - Spamhaus DROP listed"
+msgstr "Pieeja liegta - iekļauts Spamhaus DROP"
+
+msgid "Access denied - URL listed in URIBL"
+msgstr "Pieeja liegta - URL iekļauts URIBL"
+
+msgid "Access denied - domain in RHSBL"
+msgstr "Pieeja liegta - domēns iekļauts RHSBL"
+
+msgid "Access denied - IP in DNSWL (policy)"
+msgstr "Pieeja liegta - IP adrese iekļauta DNSWL (politika)"
+
+msgid "Delivery failed - mailbox not found"
+msgstr "Piegāde neizdevās - pasta kaste nav atrasta"
+
+msgid "Delivery failed - recipient not local"
+msgstr "Piegāde neizdevās - saņēmējs nav lokāls"
+
+msgid "Delivery failed - recipient rejected"
+msgstr "Piegāde neizdevās - saņēmējs noraidīts"
+
+msgid "Delivery failed - sender rejected"
+msgstr "Piegāde neizdevās - sūtītājs noraidīts"
+
+msgid "Delivery failed - relay rejected"
+msgstr "Piegāde neizdevās - retranslācija noraidīta"
+
+msgid "Delivery failed - DNS permanent error"
+msgstr "Piegāde neizdevās - pastāvīga DNS kļūda"
+
+msgid "Delivery failed - MX permanent error"
+msgstr "Piegāde neizdevās - pastāvīga MX kļūda"
+
+msgid "Delivery failed - A record permanent error"
+msgstr "Piegāde neizdevās - pastāvīga A ieraksta kļūda"
+
+msgid "Delivery failed - PTR record permanent error"
+msgstr "Piegāde neizdevās - pastāvīga PTR ieraksta kļūda"
+
+msgid "Delivery failed - policy permanent error"
+msgstr "Piegāde neizdevās - pastāvīga politikas kļūda"
+
+msgid "DSN: Success - delivery status notification"
+msgstr "DSN: Veiksmīgi - piegādes statusa paziņojums"
+
+msgid "DSN: Delivery delayed"
+msgstr "DSN: Piegāde aizkavēta"
+
+msgid "DSN: Delivery failed - permanent"
+msgstr "DSN: Piegāde neizdevās - pastāvīga"
+
+msgid "DSN: Delivery failed - temporary"
+msgstr "DSN: Piegāde neizdevās - īslaicīga"
+
+msgid "DSN: Message expired"
+msgstr "DSN: Ziņojuma derīguma termiņš beidzies"
+
+msgid "DSN: Message bounced"
+msgstr "DSN: Ziņojums atsities"
+
+msgid "DSN: Message discarded"
+msgstr "DSN: Ziņojums atmests"
+
+msgid "DSN: Message filtered"
+msgstr "DSN: Ziņojums filtrēts"
+
+msgid "DSN: Message quarantined"
+msgstr "DSN: Ziņojums karantīnā"
+
+msgid "DSN: Message held for review"
+msgstr "DSN: Ziņojums aizturēts pārskatīšanai"
+
+msgid "MTA-STS policy required"
+msgstr "Nepieciešama MTA-STS politika"
+
+msgid "MTA-STS policy validation failed"
+msgstr "MTA-STS politikas validācija neizdevās"
+
+msgid "TLS reporting required"
+msgstr "Nepieciešama TLS atskaitīšanās"
+
+msgid "TLS report requested"
+msgstr "TLS ziņojums pieprasīts"
+
+msgid "SMTP MTA Strict Transport Security active"
+msgstr "SMTP MTA Strict Transport Security aktīvs"
+
+msgid "DANE validation required"
+msgstr "Nepieciešama DANE validācija"
+
+msgid "DANE validation failed"
+msgstr "DANE validācija neizdevās"
+
+msgid "TLSA record missing"
+msgstr "TLSA ieraksts trūkst"
+
+msgid "Certificate name mismatch"
+msgstr "Sertifikāta nosaukums nesakrīt"
+
+msgid "Certificate expired"
+msgstr "Sertifikāta derīguma termiņš beidzies"
+
+msgid "AUTH LOGIN required"
+msgstr "Nepieciešams AUTH LOGIN"
+
+msgid "AUTH PLAIN required"
+msgstr "Nepieciešams AUTH PLAIN"
+
+msgid "AUTH CRAM-MD5 required"
+msgstr "Nepieciešams AUTH CRAM-MD5"
+
+msgid "AUTH DIGEST-MD5 required"
+msgstr "Nepieciešams AUTH DIGEST-MD5"
+
+msgid "AUTH GSSAPI required"
+msgstr "Nepieciešams AUTH GSSAPI"
+
+msgid "AUTH NTLM required"
+msgstr "Nepieciešams AUTH NTLM"
+
+msgid "AUTH SCRAM required"
+msgstr "Nepieciešams AUTH SCRAM"
+
+msgid "AUTH OAUTHBEARER required"
+msgstr "Nepieciešams AUTH OAUTHBEARER"
+
+msgid "AUTH XOAUTH2 required"
+msgstr "Nepieciešams AUTH XOAUTH2"
+
+msgid "Exchange: Mailbox database error"
+msgstr "Exchange: Pasta kastes datu bāzes kļūda"
+
+msgid "Exchange: Store driver error"
+msgstr "Exchange: Krātuves draivera kļūda"
+
+msgid "Exchange: Transport agent error"
+msgstr "Exchange: Transporta aģenta kļūda"
+
+msgid "Exchange: Content conversion error"
+msgstr "Exchange: Satura konvertēšanas kļūda"
+
+msgid "Exchange: Routing error"
+msgstr "Exchange: Maršrutēšanas kļūda"
+
+msgid "Exchange: Mail flow stalled"
+msgstr "Exchange: Pasta plūsma apstājusies"
+
+msgid "Exchange: Shadow redundancy error"
+msgstr "Exchange: Ēnu liekuma kļūda"
+
+msgid "Exchange: Safety net error"
+msgstr "Exchange: Drošības tīkla kļūda"
+
+msgid "Exchange: Queue database error"
+msgstr "Exchange: Rindas datu bāzes kļūda"
+
+msgid "Exchange: Message throttled"
+msgstr "Exchange: Ziņojums ierobežots"
+
+msgid "Postfix: Bounce queue error"
+msgstr "Postfix: Atsitiena rindas kļūda"
+
+msgid "Postfix: Deferred queue error"
+msgstr "Postfix: Atliktās rindas kļūda"
+
+msgid "Postfix: Hold queue error"
+msgstr "Postfix: Turēšanas rindas kļūda"
+
+msgid "Postfix: Incoming queue error"
+msgstr "Postfix: Ienākošās rindas kļūda"
+
+msgid "Postfix: Active queue error"
+msgstr "Postfix: Aktīvās rindas kļūda"
+
+msgid "Postfix: Corrupted queue file"
+msgstr "Postfix: Bojāts rindas fails"
+
+msgid "Sendmail: Queue runner error"
+msgstr "Sendmail: Rindas izpildītāja kļūda"
+
+msgid "Sendmail: Alias database error"
+msgstr "Sendmail: Aliasu datu bāzes kļūda"
+
+msgid "Sendmail: Virtuser table error"
+msgstr "Sendmail: Virtuālo lietotāju tabulas kļūda"
+
+msgid "Sendmail: Mailer definition error"
+msgstr "Sendmail: Sūtītāja definīcijas kļūda"
+
+msgid "Exim: Router configuration error"
+msgstr "Exim: Maršrutētāja konfigurācijas kļūda"
+
+msgid "Exim: Transport configuration error"
+msgstr "Exim: Transporta konfigurācijas kļūda"
+
+msgid "Exim: Director configuration error"
+msgstr "Exim: Direktora konfigurācijas kļūda"
+
+msgid "Exim: Retry configuration error"
+msgstr "Exim: Atkārtota mēģinājuma konfigurācijas kļūda"
+
+msgid "Exim: Rewrite configuration error"
+msgstr "Exim: Pārrakstīšanas konfigurācijas kļūda"
+
+msgid "Exim: Authentication configuration error"
+msgstr "Exim: Autentifikācijas konfigurācijas kļūda"
+
+msgid "Exim: ACL configuration error"
+msgstr "Exim: ACL konfigurācijas kļūda"
+
+msgid "Exim: Local_scan configuration error"
+msgstr "Exim: Local_scan konfigurācijas kļūda"
+
+msgid "Exim: Lookup configuration error"
+msgstr "Exim: Meklēšanas konfigurācijas kļūda"
+
+msgid "Exim: Expansion configuration error"
+msgstr "Exim: Paplašināšanas konfigurācijas kļūda"
+
+msgid "HTTP Protocol Versions"
+msgstr "HTTP protokola versijas"
+
+msgid "Protocol"
+msgstr "Protokols"
+
+msgid "Request %"
+msgstr "Pieprasījumu daļa"
+
+msgid "Bandwidth %"
+msgstr "Joslas platuma daļa"
+
+msgid "Each request requires a new connection"
+msgstr "Katram pieprasījumam nepieciešams jauns savienojums"
+
+msgid "Multiple requests can reuse one connection"
+msgstr "Vairāki pieprasījumi var atkārtoti izmantot vienu savienojumu"
+
+msgid "Multiple requests in parallel over one connection"
+msgstr "Vairāki pieprasījumi paralēli vienā savienojumā"
+
+msgid "Faster connection, better performance on poor networks"
+msgstr "Ātrāks savienojums, labāka veiktspēja sliktos tīklos"
+
+msgid "No protocol data available"
+msgstr "Nav pieejamu protokola datu"
+
+msgid "of requests use HTTP/1.0"
+msgstr "pieprasījumu izmanto HTTP/1.0 protokolu"
+
+msgid "From access logs"
+msgstr "No piekļuves žurnāliem"
+
+msgid "No HTTP/2 requests detected"
+msgstr "Nav atklātu HTTP/2 protokola pieprasījumu"
+
+msgid "All requests are HTTP/1.0, no HTTP/2 requests"
+msgstr "Visi pašreizējie pieprasījumi ir HTTP/1.0, nav HTTP/2 pieprasījumu"
+
+msgid "HTTP/3 not detected"
+msgstr "Nav atklātu HTTP/3 protokola pieprasījumu"
+
+msgid "all requests do not include QUIC/HTTP/3 protocol requests"
+msgstr "visi pašreizējie pieprasījumi neietver QUIC/HTTP/3 protokola pieprasījumus"
+
+msgid "Mail Authentication Statistics"
+msgstr "Pasta autentifikācijas statistika"
+
+msgid "Authentication"
+msgstr "Autentifikācijas veids"
+
+msgid "Pass"
+msgstr "Veiksmīgs"
+
+msgid "Fail"
+msgstr "Neveiksmīgs"
+
+msgid "Softfail"
+msgstr "Mīksts neveiksmīgs"
+
+msgid "Neutral"
+msgstr "Neitrāls"
+
+msgid "None"
+msgstr "Nav"
+
+msgid "Mail Queue Delay Statistics"
+msgstr "Pasta rindas kavēšanās statistika"
+
+msgid "Delay Range"
+msgstr "Kavēšanās diapazons"
+
+msgid "Count"
+msgstr "Skaits"
+
+msgid "Percentage"
+msgstr "Procenti"
+
+msgid "TLS Encryption Statistics"
+msgstr "TLS šifrēšanas statistika"
+
+msgid "TLS Versions"
+msgstr "TLS versijas"
+
+msgid "Top Ciphers"
+msgstr "Visizplatītākie šifri"
+
+msgid "robot_hits_detail_both"
+msgstr "Kopējās pieprasījumi: %s (normālas lapas: %s, robots.txt: %s)"
+
+msgid "robot_hits_detail_only_robots"
+msgstr "Tikai robots.txt: %s reizes, bez citu lapu ielādes"
+
+msgid "robot_hits_detail_normal"
+msgstr "Normālo lapu pieprasījumi: %s"
+
+# Palīdzība un padomi
+msgid "Troubleshooting"
+msgstr "Problēmu risināšana"
+
+msgid "Did you use the correct URL?"
+msgstr "Vai izmantojāt pareizo URL?"
+
+msgid "Example:"
+msgstr "Piemērs:"
+
+msgid "Did you use correct config parameter?"
+msgstr "Vai izmantojāt pareizo konfigurācijas parametru?"
+
+msgid "Example: If your config file is awstats.mysite.conf, use -config=mysite"
+msgstr "Piemērs: ja jūsu konfigurācijas fails ir awstats.manserviss.conf, izmantojiet -config=manserviss"
+
+msgid "Did you create your config file 'awstats.$SiteConfig.conf'?"
+msgstr "Vai izveidojāt konfigurācijas failu 'awstats.$SiteConfig.conf'?"
+
+msgid "If not, you can run \"awstats_configure.pl\" from command line, or create it manually."
+msgstr "Ja nē, varat palaist \"awstats_configure.pl\" no komandrindas vai izveidot to manuāli."
+
+msgid "Setup"
+msgstr "Iestatīšana"
+
+msgid "file, web server or permissions may be wrong."
+msgstr "faila, tīmekļa servera vai atļaujas var būt nepareizas."
+
+msgid "Check config file, permissions and AWStats documentation (in 'docs' directory)."
+msgstr "Pārbaudiet konfigurācijas failu, atļaujas un AWStats dokumentāciju ('docs' direktorijā)."
+
+msgid "Warning: Can't find language files for \"%s\". English will be used."
+msgstr "Brīdinājums: nevar atrast valodas failus priekš \"%s\". Tiks izmantota angļu valoda."
+
+#------------------------------------------------------------------------------
+# Kļūdu un signālu apstrāde
+#------------------------------------------------------------------------------
+
+msgid "%s process (ID %s) interrupted by signal %s."
+msgstr "%s process (ID %s) tika pārtraukts ar signālu %s."
+
+msgid "An AWStats update process seems to be already running for this config file. Try later. If this is not true, remove manually lock file"
+msgstr "Šķiet, ka AWStats atjaunināšanas process jau darbojas šim konfigurācijas failam. Mēģiniet vēlāk. Ja tā nav, manuāli noņemiet bloķēšanas failu"
+
+#------------------------------------------------------------------------------
+# Jauni statistikas nosaukumi
+#------------------------------------------------------------------------------
+msgid "Report Overview"
+msgstr "Pārskata pārskats"
+
+msgid "Monthly Statistics"
+msgstr "Mēneša statistika"
+
+msgid "Daily Statistics"
+msgstr "Dienas statistika"
+
+msgid "Statistics by Day of Week"
+msgstr "Statistika pa nedēļas dienām"
+
+msgid "Hourly Page Views"
+msgstr "Lapu skatījumi stundā"
+
+msgid "Traffic Sources"
+msgstr "Satiksmes avoti"
+
+msgid "Other Sources"
+msgstr "Citi avoti"
+
+msgid "tooltip_1"
+msgstr "Apmeklētāju sesiju skaits vietnē. Ja tas pats apmeklētājs atgriežas pēc vairāk nekā 30 minūšu neaktivitātes, tas tiek skaitīts kā jauns apmeklējums"
+
+msgid "tooltip_2"
+msgstr "Dažādo apmeklētāju skaits, kuri apmeklēja jūsu vietni izvēlētajā laika periodā. Statistika balstīta uz IP adresēm"
+
+msgid "tooltip_3"
+msgstr "Pieprasījumu skaits, kas tiek uzskatīti par lapām (piem., HTML, PHP, ASP), neietver statiskos failus, piemēram, attēlus, CSS, JS"
+
+msgid "tooltip_4"
+msgstr "Kopējais visu serverim nosūtīto pieprasījumu skaits, ieskaitot lapas, attēlus, CSS, JS un visus citus failus"
+
+msgid "tooltip_5"
+msgstr "Kopējais pārsūtīto datu apjoms, kamēr serveris atbild uz lietotāju pieprasījumiem"
+
+msgid "tooltip_13"
+msgstr "Statistika par avotiem, kas nāk no meklētājprogrammām. Parāda, kuras meklētājprogrammas nes satiksmi un kādus meklēšanas vārdus lieto apmeklētāji."
+
+msgid "tooltip_14"
+msgstr "Statistika par avotiem, kas nāk no ārējām saitēm no citām vietnēm. Parāda, kuras vietnes saista uz jums un cik daudz satiksmes tās nes."
+
+msgid "tooltip_15"
+msgstr "Vārdi, ko apmeklētāji izmanto, kad viņi atrod jūs, izmantojot meklētājprogrammas. Atslēgvārdi ir atsevišķi vārdi, atslēgfrāzes ir vairāku vārdu kombinācijas."
+
+msgid "tooltip_16"
+msgstr "Automātiskas programmas, piemēram, meklētājprogrammu roboti, AI apmācības boti, ievainojamību skeneri. Skaitļi iekavās norāda uz parasto lapu un robots.txt pieprasījumiem."
+
+msgid "tooltip_17"
+msgstr "24 stundu satiksmes sadalījuma diagramma. Parāda jūsu vietnes apmeklējumus dažādos diennakts laikos, palīdz izprast lietotāju aktivitātes laikus."
+
+msgid "tooltip_18"
+msgstr "Šajā kolonnā tiek parādīti dienas/nedēļas vidējie rādītāji izvēlētajā laika periodā, palīdz izprast kopējo tendenci."
+
+msgid "tooltip_19"
+msgstr "Noklikšķiniet uz diagrammas vienuma, lai redzētu detaļas. Turiet peles kursoru virs diagrammas elementa, lai redzētu konkrētas vērtības."
+
+msgid "tooltip_20"
+msgstr "Dati, kurus nevar klasificēt esošajās kategorijās, parasti neparasta datu formāta vai trūkstošas informācijas dēļ."
+
+msgid "tooltip_21"
+msgstr "Reģistrēti tārpu uzbrukumi. Tārpi ir pašpavairotas ļaunprātīgas programmas, kas parasti izplatās caur tīkla ievainojamībām."
+
+#------------------------------------------------------------------------------
+# Palīdzības informācijas parādīšana - Kopienas izdevums
+#------------------------------------------------------------------------------
+msgid "AWStats %s - Advanced Web Statistics"
+msgstr "AWStats %s - Uzlabota tīmekļa statistika"
+
+msgid "Copyright (c) 2000-2025 Laurent Destailleur"
+msgstr "Autortiesības (c) 2000-2025 Laurent Destailleur"
+
+msgid "Copyright (c) 2026-latest Community Edition"
+msgstr "Autortiesības (c) 2026-jaunākais Kopienas izdevums"
+
+msgid "AWStats comes with ABSOLUTELY NO WARRANTY. It's a free software distributed with a GNU General Public License (See LICENSE file for details)."
+msgstr "AWStats ir BEZ JEBKĀDAS GARANTIJAS. Tā ir bezmaksas programmatūra, kas tiek izplatīta saskaņā ar GNU Vispārējo publisko licenci (sīkāku informāciju skatīt LICENSE failā)."
+
+msgid "Syntax: %s -config=virtualhostname [options]"
+msgstr "Sintakse: %s -config=virtuālā_servera_nosaukums [opcijas]"
+
+msgid "This runs %s in command line to update statistics (-update option) of a web site, from the log file defined in AWStats config file, or build a HTML report (-output option)."
+msgstr "Šī komanda palaiž %s komandrindā, lai atjauninātu statistikas datus (-update opcija) vietnei no AWStats konfigurācijas failā definētā žurnāla faila, vai izveidotu HTML atskaiti (-output opcija)."
+
+msgid "First, %s tries to read %s.virtualhostname.conf as the config file. If not found, %s tries to read %s.conf, and finally the full path passed to -config="
+msgstr "Pirmkārt, %s mēģina nolasīt %s.virtuālā_servera_nosaukums.conf kā konfigurācijas failu. Ja tas netiek atrasts, %s mēģina nolasīt %s.conf un visbeidzot pilnu ceļu, kas nodots -config="
+
+msgid "Note 1: Config files (*.conf) must be in /etc/awstats, /usr/local/etc/awstats, /etc or same directory than awstats.pl script file."
+msgstr "1. piezīme. Konfigurācijas failiem (*.conf) jāatrodas /etc/awstats, /usr/local/etc/awstats, /etc vai tajā pašā direktorijā, kurā atrodas awstats.pl skripta fails."
+
+msgid "Note 2: If AWSTATS_FORCE_CONFIG environment variable is defined, AWStats will use it as the 'config' value, whatever is the value on command line or URL."
+msgstr "2. piezīme. Ja ir definēts vides mainīgais AWSTATS_FORCE_CONFIG, AWStats to izmantos kā 'config' vērtību, neatkarīgi no vērtības komandrindā vai URL."
+
+msgid "See AWStats documentation for all setup instructions."
+msgstr "Visus iestatīšanas norādījumus skatiet AWStats dokumentācijā."
+
+msgid "Options to update statistics:"
+msgstr "Statistikas atjaunināšanas opcijas:"
+
+msgid "  -update        to update statistics (default)"
+msgstr "  -update        atjaunina statistiku (noklusējums)"
+
+msgid "  -showsteps     to add benchmark information every %s lines processed"
+msgstr "  -showsteps     pievieno etalona informāciju ik pēc %s apstrādātām rindām"
+
+msgid "  -showcorrupted to add output for each corrupted lines found, with reason"
+msgstr "  -showcorrupted pievieno izvadi katrai atrastai bojātai rindai ar iemeslu"
+
+msgid "  -showdropped   to add output for each dropped lines found, with reason"
+msgstr "  -showdropped   pievieno izvadi katrai atrastai atmestai rindai ar iemeslu"
+
+msgid "  -showunknownorigin  to output referer when it can't be parsed"
+msgstr "  -showunknownorigin   izvada atsauces avotu, ja to nevar parsēt"
+
+msgid "  -showdirectorigin   to output log line when origin is a direct access"
+msgstr "  -showdirectorigin    izvada žurnāla rindu, ja izcelsme ir tieša piekļuve"
+
+msgid "  -updatefor=n   to stop the update process after parsing n lines"
+msgstr "  -updatefor=n   aptur atjaunināšanas procesu pēc n rindu parsēšanas"
+
+msgid "  -LogFile=x     to change log to analyze whatever is 'LogFile' in config file"
+msgstr "  -LogFile=x     maina analizējamo žurnāla failu neatkarīgi no 'LogFile' konfigurācijas failā"
+
+msgid "  Be care to process log files in chronological order when updating statistics."
+msgstr "  Atjauninot statistiku, apstrādājiet žurnāla failus hronoloģiskā secībā."
+
+msgid "Options to show statistics:"
+msgstr "Statistikas parādīšanas opcijas:"
+
+msgid "  -output      to output main HTML report (no update made except with -update)"
+msgstr "  -output       izvada galveno HTML atskaiti (netiek veikts neviens atjauninājums, izņemot ar -update)"
+
+msgid "  -output=x    to output other report pages where x is:"
+msgstr "  -output=x     izvada citas atskaites lapas, kur x ir:"
+
+msgid "build page of all domains/countries"
+msgstr "veido lapu ar visiem domēniem/valstīm"
+
+msgid "build page of all hosts"
+msgstr "veido lapu ar visiem serveriem"
+
+msgid "build page of last hits for hosts"
+msgstr "veido lapu ar pēdējiem serveru pieprasījumiem"
+
+msgid "build page of all unresolved IP"
+msgstr "veido lapu ar visām neatrisinātajām IP adresēm"
+
+msgid "build page of all email senders (maillog)"
+msgstr "veido lapu ar visiem e-pasta sūtītājiem (maillog)"
+
+msgid "build page of last email senders (maillog)"
+msgstr "veido lapu ar pēdējiem e-pasta sūtītājiem (maillog)"
+
+msgid "build page of all email receivers (maillog)"
+msgstr "veido lapu ar visiem e-pasta saņēmējiem (maillog)"
+
+msgid "build page of last email receivers (maillog)"
+msgstr "veido lapu ar pēdējiem e-pasta saņēmējiem (maillog)"
+
+msgid "build page of all logins used"
+msgstr "veido lapu ar visiem izmantotajiem pieteikumiem"
+
+msgid "build page of last hits for logins"
+msgstr "veido lapu ar pēdējiem pieteikumu pieprasījumiem"
+
+msgid "build page of all robots/spider visits"
+msgstr "veido lapu ar visiem robotu/zirnekļu apmeklējumiem"
+
+msgid "build page of last hits for robots"
+msgstr "veido lapu ar pēdējiem robotu pieprasījumiem"
+
+msgid "list most often viewed pages"
+msgstr "uzskaita visbiežāk skatītās lapas"
+
+msgid "list most often viewed pages matching filter"
+msgstr "uzskaita visbiežāk skatītās lapas, kas atbilst filtram"
+
+msgid "list entry pages"
+msgstr "uzskaita ieejas lapas"
+
+msgid "list entry pages matching filter"
+msgstr "uzskaita ieejas lapas, kas atbilst filtram"
+
+msgid "list exit pages"
+msgstr "uzskaita izejas lapas"
+
+msgid "list exit pages matching filter"
+msgstr "uzskaita izejas lapas, kas atbilst filtram"
+
+msgid "build page with os detailed versions"
+msgstr "veido lapu ar detalizētām OS versijām"
+
+msgid "build page with browsers detailed versions"
+msgstr "veido lapu ar detalizētām pārlūkprogrammu versijām"
+
+msgid "list 'User Agents' with unknown browser"
+msgstr "uzskaita 'Lietotāja aģentus' ar nezināmu pārlūkprogrammu"
+
+msgid "list 'User Agents' with unknown OS"
+msgstr "uzskaita 'Lietotāja aģentus' ar nezināmu OS"
+
+msgid "build page of all refering search engines"
+msgstr "veido lapu ar visām atsaucēm uz meklētājprogrammām"
+
+msgid "build page of all refering pages"
+msgstr "veido lapu ar visām atsaucēm uz lapām"
+
+msgid "list all keyphrases used on search engines"
+msgstr "uzskaita visas meklētājprogrammās lietotās atslēgfrāzes"
+
+msgid "list all keywords used on search engines"
+msgstr "uzskaita visus meklētājprogrammās lietotos atslēgvārdus"
+
+msgid "list 'Referers' for 404 errors"
+msgstr "uzskaita 'Atsauces' 404 kļūdām"
+
+msgid "build page of all values for ExtraSection X"
+msgstr "veido lapu ar visām ExtraSection X vērtībām"
+
+msgid "  -staticlinks           to have static links in HTML report page"
+msgstr "  -staticlinks           izmanto statiskas saites HTML atskaites lapā"
+
+msgid "  -staticlinksext=xxx    to have static links with .xxx extension instead of .html"
+msgstr "  -staticlinksext=xxx    izmanto statiskas saites ar .xxx paplašinājumu, nevis .html"
+
+msgid "  -lang=LL     to output a HTML report in language LL (en,de,es,fr,it,nl,zh-cn,...)"
+msgstr "  -lang=LL     izvada HTML atskaiti valodā LL (lv,en,de,es,fr,it,nl,zh-cn,...)"
+
+msgid "  -month=MM    to output a HTML report for an old month MM"
+msgstr "  -month=MM    izvada HTML atskaiti par vecu mēnesi MM"
+
+msgid "  -year=YYYY   to output a HTML report for an old year YYYY"
+msgstr "  -year=YYYY   izvada HTML atskaiti par vecu gadu YYYY"
+
+msgid "  The 'date' options doesn't allow you to process old log file. They only allow you to see a past report for a chosen month/year period instead of current month/year."
+msgstr "  'date' opcijas neļauj jums apstrādāt vecu žurnāla failu. Tās ļauj jums redzēt tikai iepriekšējo atskaiti par izvēlēto mēneša/gada periodu, nevis pašreizējo mēnesi/gadu."
+
+msgid "Other options:"
+msgstr "Citas opcijas:"
+
+msgid "  -debug=X     to add debug informations lesser than level X (speed reduced)"
+msgstr "  -debug=X     pievieno atkļūdošanas informāciju, kas ir zemāka par X līmeni (ātrums samazināts)"
+
+msgid "  -version     show AWStats version"
+msgstr "  -version, -v     parāda AWStats versiju"
+
+msgid "Now supports/detects:"
+msgstr "Tagad atbalsta/atklāj:"
+
+msgid "  Web/Ftp/Mail/streaming server log analyzis (and load balanced log files)"
+msgstr "  Tīmekļa/FTP/pasta/straumēšanas servera žurnālu analīze (un līdzsvarotas slodzes žurnāla faili)"
+
+msgid "  Reverse DNS lookup (IPv4 and IPv6) and GeoIP lookup"
+msgstr "  Reverse DNS meklēšana (IPv4 un IPv6) un GeoIP meklēšana"
+
+msgid "  Number of visits, number of unique visitors"
+msgstr "  Apmeklējumu skaits, unikālo apmeklētāju skaits"
+
+msgid "  Visits duration and list of last visits"
+msgstr "  Apmeklējumu ilgums un pēdējo apmeklējumu saraksts"
+
+msgid "  Authenticated users"
+msgstr "  Autentificēti lietotāji"
+
+msgid "  Days of week and rush hours"
+msgstr "  Nedēļas dienas un sastrēguma stundas"
+
+msgid "  Hosts list and unresolved IP addresses list"
+msgstr "  Serveru saraksts un neatrisināto IP adrešu saraksts"
+
+msgid "  Most viewed, entry and exit pages"
+msgstr "  Visvairāk skatītās, ieejas un izejas lapas"
+
+msgid "  Files type and Web compression (mod_gzip, mod_deflate stats)"
+msgstr "  Failu tipi un tīmekļa kompresija (mod_gzip, mod_deflate statistika)"
+
+msgid "  Configured Database Statistics"
+msgstr "  Konfigurētā datu bāzes statistika"
+
+msgid "  %s domains/countries"
+msgstr "  %s domēni/valstis"
+
+msgid "  %s robots"
+msgstr "  %s roboti"
+
+msgid "  %s worm's families"
+msgstr "  %s tārpu ģimenes"
+
+msgid "  %s operating systems"
+msgstr "  %s operētājsistēmas"
+
+msgid "  %s browsers (%s with phone browsers database)"
+msgstr "  %s pārlūkprogrammas (ieskaitot mobilo pārlūkprogrammu datu bāzi %s)"
+
+msgid "  %s search engines (and keyphrases/keywords used from them)"
+msgstr "  %s meklētājprogrammas (un no tām izmantotās atslēgfrāzes/atslēgvārdi)"
+
+msgid "  All HTTP errors with last referrer"
+msgstr "  Visas HTTP kļūdas ar pēdējo atsauces avotu"
+
+msgid "  Report by day/month/year"
+msgstr "  Pārskats pa dienām/mēnešiem/gadiem"
+
+msgid "  Dynamic or static HTML or XHTML reports, static PDF reports"
+msgstr "  Dinamiskas vai statiskas HTML vai XHTML atskaites, statiskas PDF atskaites"
+
+msgid "  Indexed text or XML monthly database"
+msgstr "  Indeksēts teksts vai XML mēneša datu bāze"
+
+msgid "  And a lot of other advanced features and options..."  
+msgstr "  Un daudzas citas uzlabotas funkcijas un opcijas..."
+
+msgid "  New versions and FAQ at http://www.awstats.org"
+msgstr "  Jaunās versijas un BUJ vietnē https://github.com/hestiacn/vstats/issues"

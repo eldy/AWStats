@@ -1,0 +1,3312 @@
+# AWStats Persian (fa) translations
+# Copyright (C) 2026 AWStats
+# This file is distributed under the same license as the AWStats package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: AWStats 8.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-10 12:00+0000\n"
+"PO-Revision-Date: 2026-05-10 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Persian\n"
+"Language: fa\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+
+#------------------------------------------------------------------------------
+# نام ماه‌ها
+#------------------------------------------------------------------------------
+
+msgid "month_01"
+msgstr "فروردین"
+
+msgid "month_02"
+msgstr "اردیبهشت"
+
+msgid "month_03"
+msgstr "خرداد"
+
+msgid "month_04"
+msgstr "تیر"
+
+msgid "month_05"
+msgstr "مرداد"
+
+msgid "month_06"
+msgstr "شهریور"
+
+msgid "month_07"
+msgstr "مهر"
+
+msgid "month_08"
+msgstr "آبان"
+
+msgid "month_09"
+msgstr "آذر"
+
+msgid "month_10"
+msgstr "دی"
+
+msgid "month_11"
+msgstr "بهمن"
+
+msgid "month_12"
+msgstr "اسفند"
+
+#------------------------------------------------------------------------------
+# نام روزهای هفته
+#------------------------------------------------------------------------------
+
+msgid "DayOfWeek_0"
+msgstr "یکشنبه"
+
+msgid "DayOfWeek_1"
+msgstr "دوشنبه"
+
+msgid "DayOfWeek_2"
+msgstr "سه‌شنبه"
+
+msgid "DayOfWeek_3"
+msgstr "چهارشنبه"
+
+msgid "DayOfWeek_4"
+msgstr "پنج‌شنبه"
+
+msgid "DayOfWeek_5"
+msgstr "جمعه"
+
+msgid "DayOfWeek_6"
+msgstr "شنبه"
+
+#------------------------------------------------------------------------------
+# عناصر رابط کاربری
+#------------------------------------------------------------------------------
+
+msgid "Advanced Web Statistics for"
+msgstr "آمار پیشرفته وب برای"
+
+msgid "Statistics for"
+msgstr "آمار برای"
+
+msgid "main"
+msgstr "نمای کلی"
+
+msgid "Switch to light mode"
+msgstr "تغییر به حالت روشن"
+
+msgid "Switch to dark mode"
+msgstr "تغییر به حالت تاریک"
+
+msgid "TB"
+msgstr "TB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "Bytes"
+msgstr "بایت"
+
+msgid "Filter"
+msgstr "فیلتر"
+
+msgid "Exclude filter"
+msgstr "حذف فیلتر"
+
+msgid "Top"
+msgstr "بالا"
+
+msgid "Full list"
+msgstr "لیست کامل"
+
+msgid "Last"
+msgstr "آخرین"
+
+msgid "Average"
+msgstr "میانگین"
+
+msgid "Export"
+msgstr "خروجی"
+
+msgid "Details"
+msgstr "جزئیات"
+
+msgid "Version"
+msgstr "نسخه"
+
+msgid "thousands_separator"
+msgstr "٬"
+
+msgid "dateformat_long"
+msgstr "HH:MM:SS yyyy/mm/dd"
+
+msgid "dateformat_short"
+msgstr "HH:MM yyyy/mm/dd"
+
+msgid "date_format_year"
+msgstr "سال %s"
+
+msgid "date_format_month"
+msgstr "%2$s %1$s"
+
+#------------------------------------------------------------------------------
+# نوار ناوبری
+#------------------------------------------------------------------------------
+
+msgid "AWStats Month Selector"
+msgstr "انتخابگر ماه AWStats"
+
+msgid "nav_category_basic"
+msgstr "مستندات پایه"
+
+msgid "nav_category_guide"
+msgstr "راهنمای استفاده"
+
+msgid "nav_category_reference"
+msgstr "منابع مرجع"
+
+msgid "nav_category_integration"
+msgstr "ادغام و افزونه‌ها"
+
+msgid "nav_category_dev"
+msgstr "مستندات توسعه‌دهندگان"
+
+msgid "nav_changelog"
+msgstr "تاریخچه تغییرات"
+
+msgid "nav_what"
+msgstr "AWStats چیست"
+
+msgid "nav_license"
+msgstr "مجوز"
+
+msgid "nav_glossary"
+msgstr "واژه‌نامه"
+
+msgid "nav_setup"
+msgstr "نصب و پیکربندی"
+
+msgid "nav_upgrade"
+msgstr "راهنمای ارتقا"
+
+msgid "nav_config"
+msgstr "پارامترهای پیکربندی"
+
+msgid "nav_extra"
+msgstr "بخش اضافی"
+
+msgid "nav_tools"
+msgstr "ابزارهای دیگر"
+
+msgid "nav_faq"
+msgstr "سؤالات متداول"
+
+msgid "nav_security"
+msgstr "توصیه‌های امنیتی"
+
+msgid "nav_compare"
+msgstr "مقایسه"
+
+msgid "nav_benchmark"
+msgstr "معیار سنجش"
+
+msgid "nav_webmin"
+msgstr "ماژول Webmin"
+
+msgid "nav_dolibarr"
+msgstr "ماژول Dolibarr"
+
+msgid "nav_contrib"
+msgstr "منابع مشارکتی"
+
+msgid "nav_plugins"
+msgstr "توسعه افزونه"
+
+msgid "nav_hooks"
+msgstr "هوک‌های افزونه"
+
+msgid "nav_graphs"
+msgstr "نمودارهای افزونه"
+
+msgid "Back to top"
+msgstr "بازگشت به بالا"
+
+msgid "nav_select_month"
+msgstr "انتخاب ماه"
+
+#------------------------------------------------------------------------------
+# شاخص‌های اصلی
+#------------------------------------------------------------------------------
+
+msgid "Unique visitors"
+msgstr "بازدیدکنندگان منحصر به فرد"
+
+msgid "Visits"
+msgstr "تعداد بازدیدها"
+
+msgid "Visits duration"
+msgstr "مدت زمان بازدید"
+
+msgid "First visit"
+msgstr "به‌روزرسانی اول"
+
+msgid "Last visit"
+msgstr "به‌روزرسانی آخر"
+
+msgid "Visits/Visitor"
+msgstr "بازدید/بازدیدکننده"
+
+msgid "Pages/Visit"
+msgstr "صفحه/بازدید"
+
+msgid "Hits/Visit"
+msgstr "درخواست/بازدید"
+
+msgid "KB/Visit"
+msgstr "کیلوبایت/بازدید"
+
+msgid "KB/Visits"
+msgstr "کیلوبایت/تعداد بازدید"
+
+msgid "Pages"
+msgstr "تعداد صفحات"
+
+msgid "Hits"
+msgstr "تعداد درخواست‌ها"
+
+msgid "Bandwidth"
+msgstr "پهنای باند"
+
+msgid "duration_format"
+msgstr "%s-%s"
+
+msgid "unit_s"
+msgstr "ثانیه"
+
+msgid "unit_min"
+msgstr "دقیقه"
+
+msgid "unit_h"
+msgstr "ساعت"
+
+msgid "and"
+msgstr "-"
+
+msgid "Device Types"
+msgstr "انواع دستگاه"
+
+msgid "Device Type"
+msgstr "نوع دستگاه"
+
+msgid "Percent"
+msgstr "درصد"
+
+msgid "Mobile"
+msgstr "تلفن همراه"
+
+msgid "Pause & Go"
+msgstr "توقف و ادامه"
+
+msgid "Complete"
+msgstr "کامل"
+
+msgid "Tablet"
+msgstr "تبلت"
+
+msgid "Tv"
+msgstr "تلویزیون"
+
+msgid "Wearable"
+msgstr "پوشیدنی"
+
+msgid "Bot"
+msgstr "ربات"
+
+msgid "Desktop"
+msgstr "رومیزی"
+
+msgid "Normal browsing traffic"
+msgstr "ترافیک مرور عادی"
+
+msgid "Abnormal browsing traffic"
+msgstr "ترافیک مرور غیرعادی"
+
+msgid "Viewed"
+msgstr "دیده شده"
+
+msgid "Not viewed"
+msgstr "دیده نشده"
+
+msgid "Abnormal browsing traffic note"
+msgstr "ترافیک مرور غیرعادی شامل: ربات‌های جستجو، ربات‌های آموزش هوش مصنوعی، اسکنرهای آسیب‌پذیری و درخواست‌های غیرمطابق با استانداردهای HTTP/HTTPS"
+
+msgid "File size"
+msgstr "اندازه فایل"
+
+msgid "File type"
+msgstr "نوع فایل"
+
+msgid "Downloads"
+msgstr "دانلودها"
+
+msgid "Request time"
+msgstr "زمان درخواست"
+
+msgid "Total requests"
+msgstr "کل درخواست‌ها"
+
+msgid "Frequency"
+msgstr "تکرار"
+
+msgid "Average frequency"
+msgstr "میانگین تکرار"
+
+msgid "Seconds"
+msgstr "ثانیه"
+
+msgid "First"
+msgstr "اولین"
+
+msgid "Mails"
+msgstr "تعداد ایمیل‌ها"
+
+msgid "Size"
+msgstr "اندازه"
+
+msgid "If you remove this file, all statistics for date"
+msgstr "هشدار: حذف این فایل باعث می‌شود تمام آمار تاریخ"
+
+msgid "will be lost/reset."
+msgstr "به طور دائم از بین برود/بازنشانی شود!"
+
+msgid "Last config file used to build this data file was"
+msgstr "آخرین فایل پیکربندی استفاده شده برای ساخت این فایل داده بود"
+
+msgid "Position (offset in bytes) in this file for beginning of each section for"
+msgstr "بخش MAP در این فایل موقعیت آفست بایت را برای شروع هر بخش ثبت می‌کند تا"
+
+msgid "direct I/O access. If you made changes somewhere in this file, you should"
+msgstr "AWStats بتواند مستقیماً به داده‌ها دسترسی پیدا کند. اگر در جایی از این فایل تغییراتی ایجاد کرده‌اید، باید"
+
+msgid "also remove completely the MAP section (AWStats will rewrite it at next update)"
+msgstr "بخش MAP را کاملاً حذف کنید (AWStats آن را در به‌روزرسانی بعدی بازنویسی می‌کند)"
+
+msgid "LastLine    = Date of last record processed - Last record line number in last log - Last record offset in last log - Last record signature value"
+msgstr "LastLine    = تاریخ آخرین رکورد پردازش شده - شماره خط آخرین رکورد در آخرین لاگ - آفست آخرین رکورد در آخرین لاگ - مقدار امضای آخرین رکورد"
+
+msgid "FirstTime   = Date of first visit for history file"
+msgstr "FirstTime   = تاریخ اولین بازدید برای فایل تاریخچه"
+
+msgid "LastTime    = Date of last visit for history file"
+msgstr "LastTime    = تاریخ آخرین بازدید برای فایل تاریخچه"
+
+msgid "LastUpdate  = Date of last update - Nb of parsed records - Nb of parsed old records - Nb of parsed new records - Nb of parsed corrupted - Nb of parsed dropped"
+msgstr "LastUpdate  = تاریخ آخرین به‌روزرسانی - تعداد رکوردهای تجزیه شده - تعداد رکوردهای قدیمی تجزیه شده - تعداد رکوردهای جدید تجزیه شده - تعداد خراب‌های تجزیه شده - تعداد حذف‌های تجزیه شده"
+
+msgid "TotalVisits = Number of visits"
+msgstr "TotalVisits = تعداد بازدیدها"
+
+msgid "TotalUnique = Number of unique visitors"
+msgstr "TotalUnique = تعداد بازدیدکنندگان منحصر به فرد"
+
+msgid "MonthHostsKnown   = Number of hosts known"
+msgstr "MonthHostsKnown   = تعداد میزبان‌های شناخته شده"
+
+msgid "MonthHostsUnKnown = Number of hosts unknown"
+msgstr "MonthHostsUnKnown = تعداد میزبان‌های ناشناس"
+
+msgid "Cluster ID - Pages - Hits - Bandwidth"
+msgstr "شناسه خوشه - تعداد صفحات - تعداد درخواست‌ها - پهنای باند"
+
+msgid "Hour - Pages - Hits - Bandwidth - Not viewed Pages - Not viewed Hits - Not viewed Bandwidth"
+msgstr "ساعت - تعداد صفحات - تعداد درخواست‌ها - پهنای باند - صفحات دیده نشده - درخواست‌های دیده نشده - پهنای باند دیده نشده"
+
+msgid "Date - Pages - Hits - Bandwidth - Visits"
+msgstr "تاریخ - تعداد صفحات - تعداد درخواست‌ها - پهنای باند - بازدیدها"
+
+msgid "Domain - Pages - Hits - Bandwidth"
+msgstr "دامنه - تعداد صفحات - تعداد درخواست‌ها - پهنای باند"
+
+msgid "The %s first Pages must be first (order not required for others)"
+msgstr "صفحه اصلی فقط %s صفحه برتر را نشان می‌دهد، لطفاً لیست کامل را در صفحه جزئیات ببینید"
+
+msgid "Host - Pages - Hits - Bandwidth - Last visit date - [Start date of last visit] - [Last page of last visit]"
+msgstr "میزبان - تعداد صفحات - تعداد درخواست‌ها - پهنای باند - زمان آخرین بازدید - [زمان شروع آخرین بازدید] - [آخرین صفحه آخرین بازدید]"
+
+msgid "[Start date of last visit] and [Last page of last visit] are saved only if session is not finished"
+msgstr "[زمان شروع آخرین بازدید] و [آخرین صفحه آخرین بازدید] فقط زمانی ذخیره می‌شوند که جلسه به پایان نرسیده باشد"
+
+msgid "The first %s items are sorted by hits in descending order; order of the remaining items is undefined."
+msgstr "%s آیتم اول بر اساس تعداد بازدیدها به ترتیب نزولی مرتب شده‌اند؛ ترتیب آیتم‌های باقی‌مانده تعریف نشده است."
+
+msgid "Login - Pages - Hits - Bandwidth - Last visit"
+msgstr "کاربر وارد شده - تعداد صفحات - تعداد درخواست‌ها - پهنای باند - زمان آخرین بازدید"
+
+msgid "Robot ID - Hits - Bandwidth - Last visit - Hits on robots.txt"
+msgstr "شناسه ربات - تعداد درخواست‌ها - پهنای باند - زمان آخرین بازدید - تعداد درخواست‌های robots.txt"
+
+msgid "Worm ID - Hits - Bandwidth - Last visit"
+msgstr "شناسه کرم - تعداد درخواست‌ها - پهنای باند - زمان آخرین بازدید"
+
+msgid "EMail - Hits - Bandwidth - Last visit"
+msgstr "ایمیل - تعداد درخواست‌ها - پهنای باند - زمان آخرین بازدید"
+
+msgid "The first %s email addresses are sorted by hits in descending order; order of the remaining addresses is undefined."
+msgstr "%s آدرس ایمیل اول بر اساس تعداد بازدیدها به ترتیب نزولی مرتب شده‌اند؛ ترتیب آدرس‌های باقی‌مانده تعریف نشده است."
+
+msgid "URL - Pages - Bandwidth - Entry - Exit"
+msgstr "URL - تعداد صفحات - پهنای باند - ورود - خروج"
+
+msgid "Files type - Hits - Bandwidth - Bandwidth without compression - Bandwidth after compression"
+msgstr "نوع فایل - تعداد درخواست‌ها - پهنای باند - پهنای باند قبل از فشرده‌سازی - پهنای باند بعد از فشرده‌سازی"
+
+msgid "Request Time Range - Request Time Frequency"
+msgstr "محدوده زمان درخواست - تکرار زمان درخواست"
+
+msgid "Payload Range - Payload Frequency"
+msgstr "محدوده اندازه فایل - تعداد فایل‌ها"
+
+msgid "Session range - Number of visits"
+msgstr "محدوده مدت جلسه - تعداد بازدیدها"
+
+msgid "URL with %s errors - Hits"
+msgstr "URL با خطاهای %s - تعداد درخواست‌ها"
+
+msgid "Last URL referrer"
+msgstr "آخرین URL ارجاع‌دهنده"
+
+msgid "Errors - Hits - Bandwidth"
+msgstr "خطاها - تعداد درخواست‌ها - پهنای باند"
+
+msgid "Search keywords - Number of search"
+msgstr "کلمات کلیدی - تعداد جستجوها"
+
+msgid "Only top %s keywords shown on main page (sorted by search count). See full list on detail page."
+msgstr "صفحه اصلی فقط %s کلمه کلیدی برتر را نشان می‌دهد (مرتب شده بر اساس تعداد جستجو). لطفاً لیست کامل را در صفحه جزئیات ببینید"
+
+msgid "Search keyphrases - Number of search"
+msgstr "عبارات کلیدی - تعداد جستجوها"
+
+msgid "Only top %s keyphrases shown on main page (sorted by search count). See full list on detail page."
+msgstr "صفحه اصلی فقط %s عبارت کلیدی برتر را نشان می‌دهد (مرتب شده بر اساس تعداد جستجو). لطفاً لیست کامل را در صفحه جزئیات ببینید"
+
+msgid "External page referers - Pages - Hits"
+msgstr "ارجاع‌دهنده‌های صفحه خارجی - تعداد صفحات - تعداد درخواست‌ها"
+
+msgid "Only top %s external referrers shown on main page (sorted by pages). See full list on detail page."
+msgstr "صفحه اصلی فقط %s منبع ارجاع خارجی برتر را نشان می‌دهد (مرتب شده بر اساس تعداد صفحات). لطفاً لیست کامل را در صفحه جزئیات ببینید"
+
+msgid "Search engine referers ID - Pages - Hits"
+msgstr "شناسه ارجاع‌دهنده موتور جستجو - تعداد صفحات - تعداد درخواست‌ها"
+
+msgid "Origin - Pages - Hits"
+msgstr "مبدأ - تعداد صفحات - تعداد درخواست‌ها"
+
+msgid "Unknown referer Browser - Last visit date"
+msgstr "مرورگر ارجاع‌دهنده ناشناس - زمان آخرین بازدید"
+
+msgid "Unknown referer OS - Last visit date"
+msgstr "سیستم عامل ارجاع‌دهنده ناشناس - زمان آخرین بازدید"
+
+msgid "Screen size - Hits"
+msgstr "رزولوشن صفحه - تعداد درخواست‌ها"
+
+msgid "Browser ID - Hits - Pages"
+msgstr "شناسه مرورگر - تعداد کلیک - تعداد صفحات"
+
+msgid "Downloads - Hits - Bandwidth"
+msgstr "دانلودها - تعداد درخواست‌ها - پهنای باند"
+
+msgid "Protocol - Hits - Bandwidth"
+msgstr "پروتکل - تعداد درخواست‌ها - پهنای باند"
+
+msgid "Icon Status - Type:200:404:Other"
+msgstr "وضعیت آیکون - نوع:200:404:سایر"
+
+#------------------------------------------------------------------------------
+# ترجمه بازه‌های زمانی
+#------------------------------------------------------------------------------
+
+msgid "period_00"
+msgstr "نیمه شب · AWStats همه خوابند، تو هنوز داری داده می‌بینی؟ عشق واقعی"
+
+msgid "period_01"
+msgstr "ساعت ۱ بامداد · بازدید در این ساعت؟ بی‌خوابی یا تازه از سر کار اومدی"
+
+msgid "period_02"
+msgstr "ساعت ۲ بامداد · ربات از تو هم پرکارتره، هنوز داره کار می‌کنه"
+
+msgid "period_03"
+msgstr "ساعت ۳ بامداد · شهر خوابه، سرور داره اضافه کار می‌کنه، کدوم بدتره؟"
+
+msgid "period_04"
+msgstr "ساعت ۴ بامداد · درخشان‌ترین ستاره در تاریکی، صفحه نمایش توست یا چراغ نشانگر سرور"
+
+msgid "period_05"
+msgstr "ساعت ۵ صبح · پرنده‌ای که زود بیدار بشه کرم می‌خوره، رباتی که زود بیدار بشه داده جمع می‌کنه"
+
+msgid "period_06"
+msgstr "ساعت ۶ صبح · یکی بیدار می‌شه، یکی هنوز نخوابیده، اینترنت هیچوقت تعطیل نیست"
+
+msgid "period_07"
+msgstr "ساعت ۷ صبح · ساعت شلوغی مترو، وقت گشت و گذار تو وب هم هست"
+
+msgid "period_08"
+msgstr "ساعت ۸ صبح · اولین کار وقتی کار شروع می‌شه: نگاه کردن به داده‌های دیروز"
+
+msgid "period_09"
+msgstr "ساعت ۹ صبح · ساعت طلایی، تنبلی کردن هم قاعده داره"
+
+msgid "period_10"
+msgstr "ساعت ۱۰ صبح · وقت قهوه، ببین ترافیک زیاد شده یا نه"
+
+msgid "period_11"
+msgstr "ساعت ۱۱ صبح · یک ساعت دیگه وقت ناهاره، یه کم دیگه صبر کن"
+
+msgid "period_12"
+msgstr "ظهر · سرور: شما همه رفتید ناهار، من یه کمی استراحت می‌کنم"
+
+msgid "period_13"
+msgstr "ساعت ۱۳ · خواب آلودگی بعد از ناهار، ولی داده‌ها نمی‌خوابند"
+
+msgid "period_14"
+msgstr "ساعت ۱۴ · وقت عصرانه"
+
+msgid "period_15"
+msgstr "ساعت ۱۵ · نمودار روند ترافیک امروز، مثل نمودار احساسات تو نیست؟"
+
+msgid "period_16"
+msgstr "ساعت ۱۶ · X ساعت دیگه وقت تعطیلیه، ترافیک شروع به مسابقه می‌کنه"
+
+msgid "period_17"
+msgstr "ساعت ۱۷ · تعطیلی! ولی سرور هنوز باید کار کنه"
+
+msgid "period_18"
+msgstr "ساعت ۱۸ · وقت شام، یه کمی ویدیو ببین، استراحت کن"
+
+msgid "period_19"
+msgstr "ساعت ۱۹ · ساعت طلایی، ترافیک زیاد می‌شه، سرور: تحمل می‌کنم"
+
+msgid "period_20"
+msgstr "ساعت ۲۰ · دراز کش روی مبل، تو بازدیدکننده شماره ۱۱۴۵۱۴ هستی"
+
+msgid "period_21"
+msgstr "ساعت ۲۱ · شب آروم، آدمای شب‌زده که مخفیانه داده می‌بینند +۱"
+
+msgid "period_22"
+msgstr "ساعت ۲۲ · داده‌های امروز داره میاد، هیجان زده نیستی؟"
+
+msgid "period_23"
+msgstr "ساعت ۲۳ · AWStats: وقت خوابه، فردا باید کار کنم"
+
+#------------------------------------------------------------------------------
+# بعد زمان
+#------------------------------------------------------------------------------
+
+msgid "Period"
+msgstr "دوره آماری"
+
+msgid "Year"
+msgstr "سال"
+
+msgid "Month"
+msgstr "ماه"
+
+msgid "Months"
+msgstr "ماه"
+
+msgid "Date"
+msgstr "تاریخ"
+
+msgid "Day"
+msgstr "روز"
+
+msgid "Hour"
+msgstr "ساعت"
+
+msgid "Hours"
+msgstr "ساعت"
+
+msgid "Day of week"
+msgstr "روز هفته"
+
+msgid "When"
+msgstr "زمان"
+
+msgid "%s Server Management Panel"
+msgstr "پنل مدیریت سرور %s "
+
+msgid "Server Administration"
+msgstr "راهکار ساده و کارآمد سرور"
+
+#------------------------------------------------------------------------------
+# ابعاد بازدیدکننده
+#------------------------------------------------------------------------------
+
+msgid "Invalid URL Parameters"
+msgstr "پارامترهای URL نامعتبر"
+
+msgid "The requested page cannot be loaded due to invalid or malformed URL parameters."
+msgstr "صفحه درخواستی به دلیل پارامترهای URL نامعتبر یا با فرمت نادرست قابل بارگذاری نیست."
+
+msgid "This may be caused by typing an incorrect URL, missing parameter separators, or using an invalid configuration name."
+msgstr "این ممکن است به دلیل تایپ URL نادرست، عدم وجود جداکننده‌های پارامتر، یا استفاده از نام تنظیمات نامعتبر باشد."
+
+msgid "Please check the URL you entered and ensure all parameters are correctly formatted."
+msgstr "لطفاً URL وارد شده را بررسی کرده و اطمینان حاصل کنید که همه پارامترها به درستی قالب‌بندی شده‌اند."
+
+msgid "SiteDomain parameter not defined in your config/domain file, or you may not have execution permission on the file."
+msgstr "پارامتر SiteDomain در فایل config/domain شما تعریف نشده است، یا ممکن است مجوز اجرا روی فایل را نداشته باشید."
+
+msgid "Please run as Administrator to set permissions"
+msgstr "لطفاً به عنوان مدیر اجرا کنید تا مجوزها را تنظیم کنید"
+
+msgid "This directory lacks read permission"
+msgstr "این دایرکتوری فاقد مجوز خواندن است"
+
+msgid "Please set read permission for directory"
+msgstr "لطفاً مجوز خواندن را برای دایرکتوری تنظیم کنید"
+
+msgid "Missing required parameter in config file"
+msgstr "پارامتر مورد نیاز در فایل پیکربندی وجود ندارد"
+
+msgid "Please check that 'DirData' is defined."
+msgstr "لطفاً بررسی کنید که 'DirData' تعریف شده باشد."
+
+msgid "Domain name in browser address appears to be missing or incomplete"
+msgstr "به نظر می‌رسد نام دامنه در آدرس مرورگر وجود ندارد یا ناقص است"
+
+msgid "Please check the URL parameter"
+msgstr "لطفاً پارامتر URL را بررسی کنید"
+
+msgid "Format description"
+msgstr "توضیحات قالب"
+
+msgid "Please set execute permission"
+msgstr "لطفاً مجوز اجرا را تنظیم کنید"
+
+msgid "Or if you prefer numeric mode"
+msgstr "یا اگر حالت عددی را ترجیح می‌دهید"
+
+msgid "View Report Directly"
+msgstr "مشاهده مستقیم گزارش"
+
+msgid "AWStats Log Viewer"
+msgstr "نمایشگر لاگ AWStats"
+
+msgid "Month Selection"
+msgstr "انتخاب ماه"
+
+msgid "Who"
+msgstr "چه کسی"
+
+msgid "Visitors"
+msgstr "بازدیدکنندگان"
+
+msgid "Countries"
+msgstr "کشور/منطقه"
+
+msgid "flag_icon"
+msgstr "پرچم"
+
+msgid "Country-Region-City"
+msgstr "کشور/منطقه/شهر"
+
+msgid "Code"
+msgstr "کد"
+
+msgid "Known"
+msgstr "شناخته شده"
+
+msgid "unknownos"
+msgstr "سیستم عامل ناشناس"
+
+msgid "unknownbrowser"
+msgstr "مرورگر ناشناس"
+
+msgid "Unresolved IP Address"
+msgstr "آدرس IP حل نشده"
+
+msgid "Unknown File Type"
+msgstr "نوع فایل ناشناس"
+
+msgid "Unknown Size"
+msgstr "اندازه فایل ناشناس"
+
+msgid "Unknown Time"
+msgstr "زمان درخواست ناشناس"
+
+msgid "Unknown Browser"
+msgstr "مرورگر ناشناس"
+
+msgid "Unknown OS"
+msgstr "سیستم عامل ناشناس"
+
+msgid "Unknown Visitor"
+msgstr "بازدیدکننده ناشناس"
+
+msgid "Unknown Visitor (Total)"
+msgstr "بازدیدکننده ناشناس (مجموع)"
+
+msgid "Unknown Country"
+msgstr "کشور/منطقه ناشناس"
+
+msgid "Unknown Country (Region)"
+msgstr "کشور/منطقه ناشناس (مجموع)"
+
+msgid "Unknown Visitor (Title)"
+msgstr "بازدیدکننده ناشناس (عنوان)"
+
+msgid "PageStayTime"
+msgstr "امکان تخمین زمان ماندن در صفحه وجود ندارد"
+
+msgid "Unknown OS (Link)"
+msgstr "سیستم عامل ناشناس (پیوند)"
+
+msgid "Unknown OS (Row)"
+msgstr "سیستم عامل ناشناس (لیست)"
+
+msgid "Unknown Browser (Link)"
+msgstr "مرورگر ناشناس (پیوند)"
+
+msgid "Unknown Browser (Row)"
+msgstr "مرورگر ناشناس (لیست)"
+
+msgid "Unknown Screen"
+msgstr "اندازه صفحه ناشناس"
+
+msgid "Login"
+msgstr "نام کاربری"
+
+msgid "Anonymous"
+msgstr "ناشناس"
+
+msgid "Robots"
+msgstr "ربات‌ها"
+
+msgid "Different robots"
+msgstr "ربات‌های مختلف"
+
+msgid "Hits on robots.txt"
+msgstr "ترافیک غیرعادی از ربات‌های موتور جستجوی نشان داده شده در بالا در نمودارهای دیگر گنجانده نشده است. عدد بعد از '+' تعداد رکوردهای دسترسی موفق به 'robots.txt' است"
+
+msgid "Worms"
+msgstr "کرم‌ها"
+
+msgid "Different worms"
+msgstr "کرم‌های مختلف"
+
+msgid "Target"
+msgstr "هدف"
+
+msgid "Grabber"
+msgstr "ابزار دریافت داده"
+
+#------------------------------------------------------------------------------
+# توضیحات فرمت
+#------------------------------------------------------------------------------
+
+msgid "mime_text"
+msgstr "TXT پروندهٔ متنی ساده (متن ساده بدون قالب‌بندی که در سال ۱۹۶۳ توسط ASCII استاندارد شد. به‌عنوان زیربنای همهٔ کدهای منبع، پرونده‌های پیکربندی و لاگ‌های سیستم، جریان کنترل خط جدید آن (CRLF در ویندوز، LF در یونیکس) همچنان جهانی‌ترین استاندارد تبادل داده در دنیای رایانه است)"
+
+msgid "mime_log"
+msgstr "LOG لاگ اجرای سیستم (وضعیت‌های زمان اجرای سیستم‌عامل، هسته و برنامه‌ها را به‌عنوان دارایی متنی ساده ثبت می‌کند. شامل لاگ‌های دسترسی Nginx/Apache (قالب Combined Log) و استاندارد syslog است، منبع داده اصلی برای عیب‌یابی، تحلیل عملکرد جریانی و حسابرسی امنیتی است)"
+
+msgid "mime_page"
+msgstr "HTML صفحه وب ابرمتن (ایجاد شده توسط تیم برنرز-لی در سال ۱۹۸۹، سنگ بنای وب جهان‌گستر. به‌عنوان زبان نشانه‌گذاری ابرمتن جهانی رایگان، مشخصات HTML5 در سال ۲۰۱۴ به استاندارد رسمی W3C تبدیل شد، به طور بومی از چندرسانه‌ای ساختاریافته، تعامل معنایی و چیدمان صفحه روان پشتیبانی می‌کند، در سال ۲۰۱۶ برنده جایزه تورینگ شد)"
+
+msgid "mime_khtml"
+msgstr "KHTML موتور قالب وب (مشخصات موتور رندر مرورگر KDE 2.0 در سال ۱۹۹۸. به‌عنوان معیار منبع‌باز که پایه‌های رندرینگ وب مدرن را بنا نهاد، میراث فنی آن مستقیماً الهام‌بخش هسته‌های WebKit اپل و Blink گوگل بود و همچنان از طریق معماری‌های وب جاری و پویای مدرن، ردپای بنیادین خود را ادامه می‌دهد)"
+
+msgid "mime_script"
+msgstr "SCRIPT اسکریپت پویای تفسیری (رده کلی جریان‌های کد منبع که بدون نیاز به کامپایل قبلی، خط به خط توسط محیط اجرا یا مفسر خاصی اجرا می‌شوند. شامل ASP، JSP، CGI و Tcl است، به طور گسترده برای رابط‌های دروازه مشترک سمت سرور، کنترل فرآیندهای خودکار و چسباندن وظایف در سطح سیستم استفاده می‌شود)"
+
+msgid "mime_js"
+msgstr "JavaScript اسکریپت (محیط برنامه‌نویسی بومی مرورگر نت اسکیپ در سال ۱۹۹۵. در سال ۱۹۹۷ استاندارد صنعتی ECMAScript تعیین شد، در سال ۲۰۰۹ محیط اجرای Node.js متولد شد و مرزهای مرورگر را شکست و معماری ناهمگام بدون بلوک تمام-پشته را ایجاد کرد، همراه با بزرگترین اکوسیستم پکیج نرم‌افزاری جهان، npm)"
+
+msgid "mime_py"
+msgstr "Python اسکریپت (زبان اسکریپت‌نویسی تفسیری سطح بالا که توسط گیدو ون روسوم در سال ۱۹۹۱ ایجاد شد. به لطف خوانایی بدون افت ناشی از تورفتگی اجباری و طراحی چندالگویه، اکنون به عنوان زبان استاندارد صنعتی برای معماری وب مدرن، علم داده تمام-پشته، آموزش مدل‌های هوش مصنوعی (AI) و عملیات خودکار بومی ابری تثبیت شده است)"
+
+msgid "mime_sh"
+msgstr "Shell اسکریپت (اسکریپت مفسر دستور استاندارد از دوران یونیکس در سال ۱۹۷۱. شامل دستورات سطح هسته مانند Bash، Sh، Dash است که معمولاً با پسوند .sh اجرا می‌شوند، به عنوان چسب جهانی سطح هسته برای کنترل فرآیندهای سطح پایین، پیکربندی محیط بدون نیاز به نصب و استقرار خودکار در سیستم‌عامل‌های مدرن شبه یونیکس عمل می‌کند)"
+
+msgid "mime_rb"
+msgstr "Ruby اسکریپت (زبان اسکریپت‌نویسی شیءگرا که توسط یوکیهیرو ماتسوموتو در سال ۱۹۹۵ ایجاد شد. با فلسفه طراحی هسته‌ای خود که احترام فوق‌العاده به تجربه توسعه‌دهنده را در اولویت قرار می‌دهد، چارچوب Ruby on Rails آن با ایجاد پارادایم «قرارداد بر پیکربندی (CoC)» انقلابی در معماری وب پیشرفته مدرن ایجاد کرد)"
+
+msgid "mime_pl"
+msgstr "Perl اسکریپت (زبان اسکریپت‌نویسی عمل‌گرا که توسط لری وال در سال ۱۹۸۷ ایجاد شد. به عنوان پیشگام مدیر بسته مدرن (CPAN)، به «چاقوی ارتش سوئیس» پردازش متن معروف است. در حالت مدرن CGI، با مصرف حافظه فیزیکی فوق‌العاده کم و پردازش کارآمد عبارت باقاعده، به عنوان پایگاهی با قابلیت اطمینان بالا در تجزیه و تحلیل لاگ عمل می‌کند)"
+
+msgid "mime_php"
+msgstr "PHP صفحه وب پویا (ایجاد شده توسط راسموس لردورف در سال ۱۹۹۵، به طور خاص برای توسعه وب طراحی شده است. به عنوان فناوری اصلی که بیش از ۷۰٪ وب‌سایت‌های جهان را تغذیه می‌کند، زیربنای برنامه‌های تولیدی بزرگی مانند وردپرس و ویکی‌پدیا است. از PHP 8 به بعد، با معرفی موتور زمان اجرای JIT (درست-به‌موقع)، به سمت معماری سمت سرور تمام-پشته با کارایی بالا تکامل یافته است)"
+
+msgid "mime_image"
+msgstr "IMAGE رده دارایی تصویر (شامل بیت‌مپ‌های فشرده با/بدون اتلاف، گرافیک وب پاسخگوی مدرن و وکتورها است. شاخص کلیدی برای ارزیابی بار منابع بصری سایت، نرخ برخورد حافظه نهان سمت کاربر و مصرف پهنای باند شبکه رسانه است)"
+
+msgid "mime_document"
+msgstr "DOCUMENT رده سند ساختاریافته (شامل متن ساده، صفحات گسترده، اسناد رسمی با قالب PDF و زبان‌های نشانه‌گذاری سبک است. شاخص کلیدی برای آمار توزیع پایگاه دانش استاتیک سمت سرور، دانلود دارایی‌های سازمانی و توان عملیاتی جریان متن است)"
+
+msgid "mime_package"
+msgstr "PACKAGE رده محصول کامپایل شده و بسته نرم‌افزاری (شامل برنامه‌های قابل اجرای بومی سیستم‌عامل، کتابخانه‌های پیوند زمان اجرا (DLL/SO) و بسته‌های نصب توزیع برنامه است. اغلب به عنوان شاخصی برای ارزیابی ترافیک خروجی و اوج دانلود در سایت‌های توزیع نرم‌افزار استفاده می‌شود)"
+
+msgid "mime_archive"
+msgstr "ARCHIVE پرونده بایگانی و فشرده (رده عمومی بسته‌های فشرده داده مبتنی بر الگوریتم‌های اصلی DEFLATE، LZMA و غیره. در لایه شبکه، علاوه بر توزیع سنتی بسته، جریان‌های پاسخ پویای Gzip پروژه گنو از سال ۱۹۹۲ را نیز شامل می‌شود. اگرچه الگوریتم Brotli به تدریج در برخی سناریوهای مدرن معرفی می‌شود، این رده هنوز یک شاخص کلیدی برای ارزیابی نرخ توان عملیاتی پهنای باند سرور و کاهش فشار لایه حمل و نقل است)"
+
+msgid "mime_audio"
+msgstr "AUDIO رده جریان صدای دیجیتال (شامل صدای فشرده، کتاب‌های صوتی و ظروف جریان صوتی است. مبتنی بر استانداردهای خاص کدک صوتی، برای نظارت بر نرخ توان عملیاتی جریان داده صوتی در سایت‌های چندرسانه‌ای، پهنای باند جریان همزمان و عملکرد اتصالات طولانی استفاده می‌شود)"
+
+msgid "mime_video"
+msgstr "VIDEO رده جریان ویدیوی دیجیتال (شامل ظروف ویدیوی با کیفیت بالا، انیمیشن‌های وب مدرن و قطعات جریانی است. شاخص کلیدی برای ارزیابی حد بالای پهنای باند سرور و اثربخشی شتاب شبکه توزیع محتوا (CDN) تحت بار شبکه بالا)"
+
+msgid "mime_jscript"
+msgstr "JScript اسکریپت (پیاده‌سازی اختصاصی مهندسی معکوس که توسط مایکروسافت در سال ۱۹۹۶ برای اینترنت اکسپلورر ۳.۰ توسعه یافت. به عنوان یک رقیب میزبان اولیه برای جاوااسکریپت کلاسیک، موتور اصلی Windows Script Host (WSH) و پس‌زمینه ASP اولیه بود)"
+
+msgid "mime_json"
+msgstr "JSON داده ساختاریافته (قالب تبادل سری‌سازی داده سبک که توسط داگلاس کراکفورد در سال ۲۰۰۱ تعیین شد. مبتنی بر جفت‌های کلید-مقدار متنی و ساختارهای آرایه، با قابلیت خوانایی بالا برای انسان و ویژگی‌های تجزیه جریان بدون اتلاف، استاندارد واقعی برای APIهای وب مدرن، معماری میکروسرویس و تعامل با مدل‌های زبانی بزرگ است)"
+
+msgid "mime_vbs"
+msgstr "VBScript اسکریپت (نوعی زبان اسکریپت‌نویسی که توسط مایکروسافت با IE ۳.۰ در سال ۱۹۹۶ عرضه شد. به عنوان درایور اصلی برای وب‌سایت‌های پویای ASP اولیه و مدیریت سیستم ویندوز بود، اما اکنون به طور رسمی از رده خارج شده و از جدیدترین هسته‌های ویندوز ۱۱ حذف شده است، متعلق به فناوری میراثی تاریخی است)"
+
+msgid "mime_conf"
+msgstr "CONF پرونده پیکربندی سیستم (رده عمومی پرونده‌های داده که پارامترهای محیط زمان اجرای نرم‌افزار را به صورت متن ساده ذخیره می‌کنند. شامل مشخصات INI و YAML، TOML، JSON مدرن است. در سیستم‌های لینوکس، عمدتاً در دایرکتوری /etc متمرکز شده‌اند، وابستگی اصلی برای تنظیم وضعیت زمان اجرا در سطح سیستم هستند)"
+
+msgid "mime_css"
+msgstr "CSS صفحه سبک آبشاری (استاندارد W3C در سال ۱۹۹۶، همراه با HTML/JS یکی از سه هسته اصلی توسعه فرانت‌اند است. با تکامل از موقعیت‌یابی CSS2 تا ماژولار شدن CSS3، به طور بومی از Flexbox، Grid و طراحی واکنشگرا با پرس‌وجوی رسانه پشتیبانی می‌کند، استاندارد غالب برای جداسازی ارائه صفحه وب در مرورگرهای مدرن است)"
+
+msgid "mime_xsl"
+msgstr "XSL صفحه سبک (استاندارد W3C در سال ۱۹۹۹، شامل زبان تبدیل XSLT و زبان آدرس‌دهی XPath است، برای رندر کردن داده‌های ساختاریافته XML به HTML، PDF یا متن ساده استفاده می‌شود. در توسعه مدرن، اکوسیستم آن تا حد زیادی توسط موتورهای قالب سبک‌تر و قالب داده JSON جایگزین شده است)"
+
+msgid "mime_runtime"
+msgstr "پرونده قابل اجرا (قالب‌های قابل اجرای بومی سیستم‌عامل مانند EXE، ELF، Mach-O، شامل کد ماشین سطح پایین کامپایل شده، نقطه ورود و اطلاعات بارگذاری سیستم است)"
+
+msgid "mime_library"
+msgstr "پرونده کتابخانه (DLL، SO، dylib و غیره، کتابخانه‌های پیوند پویا یا ایستا، شامل نمادهای مشترک و کد جابجایی برای فراخوانی و بارگذاری توسط سایر برنامه‌ها در زمان اجرا هستند)"
+
+msgid "mime_swf"
+msgstr "انیمیشن فلش (Macromedia در سال ۱۹۹۶، در سال ۲۰۰۵ توسط ادوبی خریداری شد. استاندارد انیمیشن تعاملی وب، زمانی بر انیمیشن‌ها و بازی‌های اینترنت تسلط داشت. معایب: وابستگی به پلاگین، عدم پشتیبانی موبایل، ریسک امنیتی بالا. ادوبی در سال ۲۰۱۷ بازنشستگی آن را اعلام کرد، پشتیبانی در سال ۲۰۲۰ به طور کامل متوقف شد، توسط HTML5/CSS3/JS جایگزین شد)"
+
+msgid "mime_dtd"
+msgstr "DTD تعریف نوع سند (همراه با XML 1.0 در سال ۱۹۹۸ منتشر شد، برای تعریف ساختار سند XML/HTML و اعتبارسنجی قانونی بودن آن استفاده می‌شود. در توسعه مدرن، تا حد زیادی با راه‌حل‌های انعطاف‌پذیرتر مانند XML Schema، RELAX NG و غیره جایگزین شده است)"
+
+msgid "mime_csv"
+msgstr "CSV قالب داده (مقادیر جدا شده با کاما، یک قالب جدول متنی ساده جهانی از دوران رایانه‌های بزرگ (کامپایلر IBM Fortran) در سال ۱۹۷۲. در سال ۲۰۰۵ توسط RFC 4180 به عنوان یک استاندارد تبادل داده بدون اتلاف، مستقل از پلتفرم و زبان، رسمیت یافت. به طور گسترده برای واردات/صادرات کارآمد با Excel، پایگاه‌های داده رابطه‌ای و تحلیل داده (Pandas) استفاده می‌شود)"
+
+msgid "mime_cur"
+msgstr "پرونده نشانگر ماوس (قالب .cur، برای سفارشی‌سازی سبک اشاره‌گر ماوس استفاده می‌شود. مانند اشاره‌گر انگشت در صفحات وب یا آیکون ساعت شنی در حالت انتظار. با آیکون معمولی .ico «نسبت» دارد، اما یک «نقطه داغ» اضافی دارد که مکان واقعی کلیک را مشخص می‌کند. تاریخچه: با ویندوز ۳.۱ (۱۹۹۲) معرفی شد، یک مؤلفه کلیدی در دوران گذار از خط فرمان به رابط کاربری گرافیکی مبتنی بر ماوس بود)"
+
+msgid "mime_jnlp"
+msgstr "جاوا وب استارت (فناوری توزیع برنامه دسکتاپ جاوا در دهه ۲۰۰۰، برنامه‌های جاوا از راه دور را از طریق پرونده‌های .jnlp راه‌اندازی می‌کند. به دلیل مسائل امنیتی و رواج روش‌های توزیع مدرن، اکنون تا حد زیادی منسوخ شده است)"
+
+msgid "mime_lit"
+msgstr "مایکروسافت ریدر کتاب الکترونیک (مایکروسافت ۲۰۰۰، قالب LIT. منسوخ شده، اکنون می‌توان با ابزارهایی مانند Calibre آن را به EPUB یا PDF تبدیل کرد)"
+
+msgid "mime_svg"
+msgstr "SVG گرافیک برداری (استاندارد W3C در سال ۱۹۹۹، قالب تصویر برداری دو بعدی مبتنی بر XML. دارای مزایای مقیاس‌پذیری بدون افت و انتقال متن جریانی است. همه مرورگرهای مدرن به طور بومی از آن پشتیبانی می‌کنند، به طور گسترده برای آیکون‌های وب با کیفیت بالا، لوگوها و انیمیشن‌های برداری استفاده می‌شود، استاندارد اصلی گرافیک وب مدرن است)"
+
+msgid "mime_ai"
+msgstr "AI گرافیک برداری (قالب برداری اختصاصی ادوبی در سال ۱۹۸۷. به عنوان استاندارد صنعتی برای صفحه‌آرایی، طراحی چاپ و هویت برند، از چندین لایه و داده‌های برداری صفحه‌آرایی پیشرفته پشتیبانی می‌کند، وسیله انتخابی برای هنر بصری حرفه‌ای است)"
+
+msgid "mime_phshop"
+msgstr "PSD تصویر لایه‌دار (قالب منبع بیت‌مپ اختصاصی که توسط ادوبی با فتوشاپ در سال ۱۹۹۰ منتشر شد. از چندین لایه، کانال، ماسک و داده‌های ویرایش بدون اتلاف پشتیبانی می‌کند، و به عنوان استاندارد صنعتی جهانی برای پردازش تصویر و نقاشی دیجیتال تثبیت شده است)"
+
+msgid "mime_ttf"
+msgstr "TrueType قلم (قالب قلم دیجیتال کانتور که به طور مشترک توسط اپل و مایکروسافت در سال ۱۹۸۹ توسعه یافت. مبتنی بر منحنی‌های بزیه درجه دو، سازگاری مطلق پیکسل بین نمایش روی صفحه و خروجی چاپ را فراهم می‌کند، قالب قلم پیش‌فرض بومی سیستم‌عامل‌های مدرن رومیزی است)"
+
+msgid "mime_fon"
+msgstr "FON قلم بیت‌مپ (قالب قلم ماتریس نقطه‌ای اولیه در سطح سیستم از مایکروسافت در دهه ۱۹۸۰. از مقیاس‌گذاری متناسب بدون افت پشتیبانی نمی‌کند، معمولاً به رندر متن مبتنی بر پیکسل در سیستم‌های میراثی یا مؤلفه‌های اولیه دستگاه‌های توکار محدود می‌شود)"
+
+msgid "mime_pdf"
+msgstr "PDF سند الکترونیک (توسعه یافته توسط ادوبی در سال ۱۹۹۳ و در سال ۲۰۰۸ به استاندارد بین‌المللی ISO 32000 تبدیل شد. قالبی مستقل از پلتفرم با صفحه‌آرایی ثابت و وفاداری مطلق به صفحه‌آرایی و قالب، استاندارد جهانی برای توزیع سند الکترونیک و نشر دیجیتال است)"
+
+msgid "mime_dotnet"
+msgstr "ASP.NET صفحه پویا (فناوری صفحه وب پویا سمت سرور که توسط مایکروسافت با معماری دات نت در سال ۲۰۰۲ عرضه شد. میزبانی شده در موتور IIS، برای ساخت برنامه‌های وب پویا در سطح سازمانی و سیستم‌های توزیع شده سمت سرور ویندوز استفاده می‌شود)"
+
+msgid "mime_mdb"
+msgstr "MDB پایگاه داده رابطه‌ای (قالب ذخیره‌سازی پایگاه داده رابطه‌ای سطح رومیزی که توسط مایکروسافت با اکسس در سال ۱۹۹۲ منتشر شد. دارای موتور پایگاه داده Jet داخلی، به عنوان راه‌حل پایگاه داده رابطه‌ای در مدیریت اطلاعات اولیه رایانه‌های شخصی و شرکت‌های کوچک و متوسط بود)"
+
+msgid "mime_md"
+msgstr "Markdown سند (زبان نشانه‌گذاری سبک که توسط جان گروبر در سال ۲۰۰۴ ایجاد شد. فلسفه اصلی طراحی آن «خوانا بودن مساوی با رندر شدن است» که مشخصات مشتق شده مدرن مانند GFM و CommonMark را هدایت می‌کند. به طور گسترده به عنوان استاندارد تبادل برای مستندسازی فنی، پایگاه‌های دانش (Obsidian) و تولیدکنندگان وب‌سایت استاتیک مدرن استفاده می‌شود)"
+
+msgid "mime_crystal"
+msgstr "Crystal Reports گزارش (قالب پرونده گزارش حرفه‌ای سطح سازمانی پلتفرم SAP Business Intelligence (BI). دارای اتصال به منابع داده چندگانه و قابلیت‌های پیچیده رندر نمودار پویا است، به طور گسترده برای تولید گزارش حرفه‌ای در سیستم‌های مالی و تحلیل داده شرکت‌های چندملیتی استفاده می‌شود)"
+
+msgid "mime_libreoffice"
+msgstr "LibreOffice سند (قالب اختصاصی سوئیت اداری منبع‌باز مبتنی بر OpenOffice، که توسط بنیاد سند در سال ۲۰۱۰ تأسیس شد. به طور عمیق استاندارد بین‌المللی ODF (قالب سند باز) W3C را پیاده‌سازی می‌کند، سنگ بنای اداری اکوسیستم منبع‌باز مدرن است)"
+
+msgid "mime_encrypt"
+msgstr "ENCRYPT پرونده رمزگذاری شده (داده باینری یا متنی اصلی که توسط الگوریتم‌های رمزنگاری متقارن یا نامتقارن خاص پردازش شده است. شامل قالب‌های اصلی مشتق شده مانند .enc، .pgp، .gpg و غیره است، در لایه شبکه برای تضمین محرمانگی و تأیید یکپارچگی داده‌های غیرعمومی استفاده می‌شود)"
+
+msgid "mime_gpx"
+msgstr "GPX داده ردیابی ماهواره‌ای (قالب تبادل سیستم موقعیت‌یابی جهانی مبتنی بر XML. تخصص در توصیف مختصات جغرافیایی، نقاط مسیر، خطوط مسیر و ردهای تاریخی دارد، یک استاندارد داده باز رایج برای دستگاه‌های ورزشی سیار مدرن، ناوبری خودرو و سیستم‌های اطلاعات جغرافیایی (GIS) است)"
+
+msgid "mime_diskimage"
+msgstr "Disk Image تصویر دیسک (شامل ISO، DMG، IMG و غیره، پرونده تصویر سطح پایین بخش به بخش دیسک فیزیکی یا رسانه نوری. برای استقرار سطح پایین سیستم، توزیع امن نرم‌افزار حجیم و پشتیبان‌گیری کامل در سطح فیزیکی از رسانه‌های ذخیره‌سازی استفاده می‌شود)"
+
+msgid "mime_vm"
+msgstr "VM تصویر ماشین مجازی (شامل VMDK، VDI، VHDX، OVA و غیره، تصاویر دیسک فیزیکی مجازی‌سازی شده. پایه و اساس پلتفرم‌های VMware، VirtualBox و Hyper-V، برای شبیه‌سازی سخت‌افزار سطح پایین، عکس‌های فوری نمونه و توزیع زیرساخت ابری استفاده می‌شود)"
+
+msgid "mime_torrent"
+msgstr "BitTorrent پرونده تورنت (نمایه دانلود توزیع شده همتا به همتا (P2P) طراحی شده توسط برام کوهن در سال ۲۰۰۱. مبتنی بر رمزگذاری Bencode، فراداده تأیید پرونده اصلی و اطلاعات آدرس‌دهی سرور Tracker را ذخیره می‌کند، حامل اصلی توزیع جریان غیرمتمرکز شبکه است)"
+
+msgid "mime_gis"
+msgstr "GIS داده جغرافیایی (استاندارد داده سیستم اطلاعات جغرافیایی با محوریت Shapefile و GeoJSON. شامل مختصات هندسی چند بعدی، توپولوژی لایه و داده‌های صفت است، به طور گسترده برای رندر نقشه دیجیتال با کیفیت بالا، سنجش از دور ماهواره‌ای و تحلیل هندسه مکانی استفاده می‌شود)"
+
+msgid "mime_ebook"
+msgstr "EBOOK کتاب الکترونیک (قالب نشر دیجیتال با هسته استاندارد باز بین‌المللی EPUB W3C و معماری اختصاصی MOBI/AZW آمازون کیندل. از صفحه‌آرایی جریان تطبیقی، کپسوله‌سازی فراداده و مدیریت حقوق دیجیتال DRM پشتیبانی می‌کند، حامل جهانی برای خواندن دیجیتال روی دستگاه‌های سیار است)"
+
+msgid "mime_avif"
+msgstr "AVIF تصویر با کارایی بالا (استاندارد تصویر فوق با کیفیت نسل بعدی ائتلاف رسانه باز (AOMedia) در سال ۲۰۱۹. مبتنی بر فناوری فریم کلیدی کدک ویدیوی AV1، نرخ فشردهسازی ۵۰٪ بهتر از WebP و پشتیبانی بومی از دامنه دینامیکی بالا (HDR)، استاندارد اصلی برای انتقال تصویر وب مدرن است)"
+
+msgid "mime_markdown"
+msgstr "Markdown سند سبک (زبان نشانه‌گذاری سند متنی که توسط جان گروبر در سال ۲۰۰۴ ایجاد شد. از طراحی اعلانی متن ساده استفاده می‌کند، نحو آن از reStructuredText الهام گرفته شده است، به طور گسترده در پروژه‌های GitHub، مستندسازی فنی سطح مهندسی و اکوسیستم‌های مدرن مدیریت محتوای ایستا استفاده می‌شود)"
+
+msgid "mime_yaml"
+msgstr "YAML پیکربندی سریالی (قالب سری‌سازی داده قابل خواندن توسط انسان که توسط کلارک ایوانز و دیگران در سال ۲۰۰۱ طراحی شد. مبتنی بر تورفتگی سلسله‌مراتبی و نگاشت کلید-مقدار، اکنون به عنوان استاندارد پیکربندی زیرساخت بومی ابری برای Kubernetes، خودکارسازی Ansible و Docker Compose تثبیت شده است)"
+
+msgid "mime_toml"
+msgstr "TOML پیکربندی معنایی (زبان مینیمالیستی طراحی شده توسط تام پرستون-ورنر در سال ۲۰۱۳. دارای مزایای طراحی سطح پایین مانند نوع‌دهی قوی، نگاشت صریح و معنایی واضح است، اکنون به طور گسترده به عنوان پرونده پیکربندی استاندارد برای زنجیره ابزارهای مدرن Rust (Cargo)، Python (pyproject.toml) و Go استفاده می‌شود)"
+
+msgid "mime_vue"
+msgstr "Vue کامپوننت تک‌پرونده‌ای (قالب اختصاصی SFC چارچوب وب پیشرونده که توسط ایوان یو در سال ۲۰۱۴ عرضه شد. جداسازی دغدغه‌های HTML/CSS/JS و پیوند حالت واکنش‌گرا را در یک پرونده واحد محقق می‌کند، عمیقاً برنامه‌های تعاملی فرانت‌اند وب مدرن و موتورهای وب‌سایت ایستا در مقیاس بزرگ را هدایت می‌کند)"
+
+msgid "mime_wasm"
+msgstr "WebAssembly ماژول دودویی (استاندارد بایت‌کد سطح پایین با کارایی بالا برای وب که توسط W3C در سال ۲۰۱۷ تعیین شد. اجازه می‌دهد زبان‌های با نوع‌دهی قوی مانند C/C++/Rust به محیط جعبه شنی مرورگر کامپایل شوند، کارایی اجرای نزدیک به سخت‌افزار بومی را فراهم می‌کند، سنگ بنای محاسبات لبه وب مدرن است)"
+
+msgid "mime_jsx"
+msgstr "React JSX کامپوننت (افزونه نحوی JavaScript XML که توسط فیسبوک با چارچوب React در سال ۲۰۱۳ عرضه شد. از ساخت اعلانی ساختارهای DOM مجازی در داخل JavaScript پشتیبانی می‌کند، پارادایم توسعه کامپوننت محور فرانت‌اند «UI به عنوان تابعی از حالت» را ممکن می‌سازد)"
+
+msgid "mime_tsx"
+msgstr "TypeScript TSX کامپوننت (ترکیب جریانی نحو نوع‌دهی قوی TypeScript (توسعه یافته توسط مایکروسافت در سال ۲۰۱۲) با JSX. بررسی نوع ایستا در زمان کامپایل و محدودیت‌های رابط را به توسعه کامپوننت React تزریق می‌کند، استاندارد کد برای توسعه امن سیستم‌های فرانت‌اند بزرگ مدرن است)"
+
+msgid "mime_heif"
+msgstr "HEIF تصویر با کارایی بالا (قالب تصویر کارآمد که توسط سازمان MPEG در سال ۲۰۱۵ تعیین شد. مبتنی بر الگوریتم کدک ویدیوی HEVC (H.265)، از چندین فریم تصویر، نقشه‌های عمق و فراداده در حجم بسیار کم پشتیبانی می‌کند، یک استاندارد ذخیره‌سازی اختصاصی برای سیستم‌عامل‌های سیار مدرن و دستگاه‌های ترمینال هوشمند است)"
+
+msgid "mime_heic"
+msgstr "HEIC تصویر با کارایی بالا (قالب بیت‌مپ اختصاصی اپل مبتنی بر استاندارد بین‌المللی HEIF. به عنوان قالب پیش‌فرض ذخیره‌سازی عکس برای آیفون مدرن، دارای رمزگذاری/رمزگشایی سطح سخت‌افزار از iOS/macOS و پشتیبانی بومی سیستم‌عامل است، فضای ذخیره‌سازی سطح پایین را به طور چشمگیری کاهش می‌دهد و در عین حال کیفیت بالای تصویر را حفظ می‌کند)"
+
+msgid "mime_gltf"
+msgstr "glTF مدل دارایی سه بعدی (استاندارد قالب انتقال GL که توسط گروه کرونوس در سال ۲۰۱۵ منتشر شد. از معماری JSON برای توصیف صحنه‌های سه بعدی استفاده می‌کند، به عنوان «JPEG دنیای سه بعدی» شناخته می‌شود، استاندارد صنعتی سبک وزن برای رندر WebGL/WebGPU مدرن و واقعیت مجازی است)"
+
+msgid "mime_glb"
+msgstr "GLB مدل سه بعدی دودویی (نسخه کپسوله‌سازی دودویی بدون اتلاف دارایی مدل glTF. ساختار صحنه، داده‌های رأس مش سطح پایین، مواد و بافت‌ها را در یک پرونده واحد ادغام می‌کند، به طور خاص برای انتقال کارآمد و توزیع جریانی دارایی‌های سه بعدی وب در پلتفرم‌های مختلف طراحی شده است)"
+
+msgid "mime_gls"
+msgstr "GLOSSARY واژگان داده (پرونده تعریف اصطلاحات به طور خاص برای سیستم‌های مدیریت اسناد و پیکره‌های ساختاریافته. شامل تعاریف اصطلاحات استاندارد، نگاشت‌های چندزبانه و نگاشت‌های فراداده است، برای حفظ سازگاری مفهومی در تحلیل خودکار متن و سیستم‌های انتشار محتوا استفاده می‌شود)"
+
+msgid "mime_cbz"
+msgstr "CBZ کتاب کمیک (قالب آرشیو تصویر کمیک اختصاصی مبتنی بر ساختار فشرده ZIP. شامل دنباله پیوسته‌ای از تصاویر بیت‌مپ ایستا است، به عنوان یک استاندارد ظرف سبک وزن جهانی برای انتشار کمیک دیجیتال و مجموعه محلی چند پلتفرمی عمل می‌کند)"
+
+msgid "mime_cbr"
+msgstr "CBR کتاب کمیک (قالب آرشیو تصویر کمیک اختصاصی مبتنی بر ساختار فشرده RAR. از الگوریتم RAR برای کپسوله‌سازی دنباله‌های بیت‌مپ ایستا استفاده می‌کند، دارای نرخ فشرده‌سازی بالا و پشتیبانی سازگاری گسترده در زمینه توزیع کمیک دیجیتال است)"
+
+msgid "mime_fb2"
+msgstr "FB2 کتاب الکترونیک (استاندارد کتاب الکترونیک FictionBook 2.0 از اوایل دهه ۲۰۰۰. از ساختار XML خالص برای توصیف ویژگی‌های کتاب و سلسله‌مراتب متن استفاده می‌کند، پشتیبانی گسترده‌ای در اکوسیستم کتاب الکترونیک منبع‌باز و خوانندگان نشر دیجیتال میراثی دارد)"
+
+msgid "mime_kepub"
+msgstr "KEPUB کتاب الکترونیک (قالب کتاب الکترونیک اختصاصی پیشرفته Kobo مبتنی بر استاندارد EPUB. بهینه‌سازی شده در سطح سخت‌افزار برای خوانندگان کتاب الکترونیک Kobo، ارائه صفحه‌آرایی کارآمدتر و تعامل آمار خواندن)"
+
+msgid "mime_m4b"
+msgstr "M4B کتاب صوتی (قالب کتاب صوتی مبتنی بر معماری ظرف MPEG-4 Part 14 (MP4). از رمزگذاری AAC استفاده می‌کند، به طور بومی از نشانک‌گذاری سطح پایین، پخش از نقطه توقف و جاسازی فصل پشتیبانی می‌کود، زمانی قالب استاندارد اکوسیستم اپل آیتونز بود)"
+
+msgid "mime_kfx"
+msgstr "Kindle KFX قالب (قالب نشر دیجیتال پیشرفته اختصاصی آمازون که با کیندل در سال ۲۰۱۵ عرضه شد. از اتصال حروف پیشرفته، رندر قلم پویای بالا و بارگذاری جریانی صفحه در سطح هسته (Page Flip) پشتیبانی می‌کند، استاندارد اصلی پلتفرم کیندل مدرن است)"
+
+msgid "mime_chm"
+msgstr "CHM پرونده راهنمای کامپایل شده (سیستم اطلاعات راهنمای HTML کامپایل شده که توسط مایکروسافت در سال ۱۹۹۷ عرضه شد. داده‌های ابرمتن و نمایه‌های سطح پایین را در یک ظرف دودویی واحد بسته‌بندی می‌کند، مدتهاست که قالب استاندارد برای مستندات راهنمای محلی آفلاین نرم‌افزار ویندوز است)"
+
+msgid "mime_mht"
+msgstr "MHT آرشیو وب (قالب ابرمتن تجمیع MIME که توسط مایکروسافت در سال ۱۹۹۹ عرضه شد. مبتنی بر استاندارد RFC 2557، کد منبع HTML، CSS، JS و تصاویر جاسازی شده را در یک پرونده متنی واحد بسته‌بندی می‌کند، برای ذخیره صفحه وب آفلاین در مرورگرهای میراثی استفاده می‌شود)"
+
+msgid "mime_wml"
+msgstr "WML زبان نشانه‌گذاری بی‌سیم (استاندارد نشانه‌گذاری موبایل که توسط انجمن WAP (پروتکل کاربردی بی‌سیم) در سال ۱۹۹۹ تعیین شد. مبتنی بر مشخصات XML، به طور خاص برای شبکه‌های سلولی بی‌سیم باریک باند اولیه و تلفن‌های ساده با توان محاسباتی پایین طراحی شده است، متعلق به فناوری میراثی بازنشسته در اکوسیستم وب مدرن است)"
+
+msgid "mime_xhtml"
+msgstr "XHTML صفحه وب ابرمتن (استاندارد W3C در سال ۲۰۰۰، زبان نشانه‌گذاری ابرمتن سختگیرانه مبتنی بر معماری XML. در سال ۲۰۰۹، W3C تکامل فنی آن را متوقف کرد و به طور کامل به سمت مشخصات HTML5 حرکت کرد، اکنون عمدتاً برای رندر صفحه وب معنایی در سیستم‌های میراثی استفاده می‌شود)"
+
+msgid "mime_xml"
+msgstr "XML سند ساختاریافته (زبان نشانه‌گذاری توسعه‌پذیر استاندارد W3C در سال ۱۹۹۸. با معماری تگ خودتوصیفگر، یک قالب بنیادی برای خدمات وب شبکه (SOAP/REST)، پرونده‌های پیکربندی سطح سیستم (XSD) و تبادل داده بین پلتفرمی است)"
+
+msgid "mime_sgml"
+msgstr "SGML زبان نشانه‌گذاری عمومی استاندارد (استاندارد بین‌المللی ISO 8879 در سال ۱۹۸۶. به عنوان پیشگام صنعت در توصیف ساختاریافته سند الکترونیک، XML و مشخصات اولیه HTML از این فرا زبان استاندارد مشتق شده‌اند)"
+
+msgid "mime_apng"
+msgstr "APNG گرافیک پویا (الحاقیه پویای PNG که توسط موزیلا در سال ۲۰۰۴ توسعه یافت. از رنگ واقعی ۲۴ بیتی و شفافیت نیمه‌شفاف کانال آلفای ۸ بیتی پشتیبانی می‌کند، به عنوان یک جایگزین با کیفیت بالا برای قالب GIF در سناریوهای وب مدرن است)"
+
+msgid "mime_bmp"
+msgstr "BMP بیت‌مپ بومی (قالب بیت‌مپ مستقل از دستگاه پلتفرم مایکروسافت که از دوران ویندوز ۱.۰ تعیین شده است. از ذخیره‌سازی بدون فشرده‌سازی بدون اتلاف استفاده می‌کند، بنابراین حجم آن معمولاً ۳ تا ۱۰ برابر PNG است، اما از آنجایی که نیاز به سربار رمزگذاری/رمزگشایی ندارد، هنوز به طور گسترده در مؤلفه‌های اصلی ویندوز ۱۱، بخش‌های منابع EXE/MSI و بافرهای گرافیکی درایورهای میراثی جاسازی شده است)"
+
+msgid "mime_cdr"
+msgstr "CDR گرافیک برداری (قالب منبع طراحی برداری حرفه‌ای اختصاصی CorelDRAW از شرکت کانادایی Corel. از مدیریت رنگ لایه‌ای، گره‌های منحنی ریاضی پیچیده و داده‌های صفحه‌آرایی در سطح چاپ پشتیبانی می‌کند، قالبی تخصصی برای زمینه‌های طراحی گرافیک حرفه‌ای و تبلیغات چاپی است)"
+
+msgid "mime_gif"
+msgstr "GIF تصویر رنگی نمایه‌شده (قالب بیت‌مپ ۸ بیتی نمایه‌شده رنگی از CompuServe در سال ۱۹۸۷. مبتنی بر الگوریتم LZW، محدود به ۲۵۶ سطح رنگی و شفافیت تک‌رنگ، در نرخ فریم بالا حجیم می‌شود، به تدریج در حال جایگزینی با استانداردهای انیمیشن کارآمد مدرن مانند APNG، WebP و غیره است)"
+
+msgid "mime_ico"
+msgstr "ICO آیکون سیستم (قالب کپسوله‌سازی منابع آیکون بومی ویندوز. از ترکیب چندین نوع تصویر با وضوح پیکسلی و عمق رنگی متفاوت در یک ظرف واحد پشتیبانی می‌کند، همچنین استاندارد توزیع جهانی برای شناسه سایت (Favicon) مرورگرهای وب مدرن است)"
+
+msgid "mime_jpeg"
+msgstr "JPEG تصویر فشرده (استاندارد بین‌المللی ISO 10918 در سال ۱۹۹۲ برای فشرده‌سازی با اتلاف. مبتنی بر الگوریتم تبدیل کسینوسی گسسته (DCT)، با دستیابی به نسبت فشرده‌سازی بالا در عین حفظ کیفیت عالی تصویر واقع‌گرایانه، استاندارد واقعی مطلق برای عکس‌های ایستا در اینترنت جهانی است)"
+
+msgid "mime_jpg"
+msgstr "JPEG تصویر فشرده (استاندارد بین‌المللی ISO 10918 در سال ۱۹۹۲ برای فشرده‌سازی با اتلاف. مبتنی بر الگوریتم تبدیل کسینوسی گسسته (DCT)، با دستیابی به نسبت فشرده‌سازی بالا در عین حفظ کیفیت عالی تصویر واقع‌گرایانه، استاندارد واقعی مطلق برای عکس‌های ایستا در اینترنت جهانی است)"
+
+msgid "mime_png"
+msgstr "PNG تصویر بدون اتلاف (استاندارد گرافیک شبکه قابل حمل که توسط W3C در سال ۱۹۹۶ توصیه شد. از الگوریتم فشرده‌سازی بدون اتلاف استفاده می‌کند، به طور بومی از رنگ واقعی ۲۴ بیتی و شفافیت کانال آلفای ۸ بیتی پشتیبانی می‌کند، به عنوان جایگزینی با کیفیت بالا برای GIF ایستای کلاسیک، استاندارد واقعی مطلق برای تصاویر پیکسلی بدون اتلاف در اینترنت است)"
+
+msgid "mime_ps"
+msgstr "PostScript پرونده توصیف صفحه (زبان توصیف صفحه مبتنی بر پشته که توسط ادوبی در سال ۱۹۸۵ عرضه شد. به عنوان پیشرو فناوری قالب PDF، در سطح پایین صفحه‌آرایی متن مستقل از سخت‌افزار و رندر گرافیک برداری با دقت بالا را فراهم می‌کند، استاندارد بنیادی برای زمینه‌های چاپ حرفه‌ای و چاپ لیزری است)"
+
+msgid "mime_psb"
+msgstr "PSB سند لایه بزرگ (قالب کپسوله‌سازی پرونده منبع فوق بزرگ اختصاصی ادوبی فتوشاپ. محدودیت‌های آدرس‌دهی داخلی حجم فیزیکی ۲ گیگابایتی و ۳۰,۰۰۰ پیکسل قالب استاندارد PSD را می‌شکند، به طور خاص برای ذخیره دارایی‌های هنری دیجیتال عظیم، عمیقاً لایه‌دار و در مقیاس بزرگ طراحی شده است)"
+
+msgid "mime_psd"
+msgstr "PSD پرونده منبع طراحی لایه‌دار (ظرف مهندسی تصویر لایه‌دار اختصاصی ادوبی فتوشاپ. به عنوان ظرف استاندارد صنعتی در زمینه تصاویر گرافیکی، به طور بومی درخت رندر کامل لایه، کانال‌های بیت‌مپ، مسیرهای برش برداری و حالت‌های ترکیبی پیچیده را کپسوله می‌کند، از ویرایش کامل داده بدون اتلاف پشتیبانی می‌کند)"
+
+msgid "mime_webp"
+msgstr "WebP تصویر با کارایی بالا (استاندارد رمزگذاری گرافیک وب جهانی که توسط گوگل در سال ۲۰۱۰ عرضه شد. مشتق شده از فناوری فریم کلیدی ویدیوی VP8، کاملاً سازگار با رندر با اتلاف، بدون اتلاف، نیمه شفاف و پویا، ۲۵-۳۵٪ کوچک‌تر از PNG با همان کیفیت، سنگ بنای بارگذاری با کارایی بالا برای صفحات وب مدرن است)"
+
+msgid "mime_woff"
+msgstr "WOFF پرونده گلیف وب (قالب قلم باز وب که در سال ۲۰۰۹ ایجاد شد و در سال ۲۰۱۲ به استاندارد W3C تبدیل شد. ماهیت آن فشرده‌سازی بدون اتلاف جریانی ساختارهای قلم استاندارد TTF/OTF است، که هزینه پهنای باند شبکه را به طور چشمگیری بهینه می‌کند، قالبی رایج برای آیکون‌های وب‌سایت مدرن و قلم‌های ابری است)"
+
+msgid "mime_7z"
+msgstr "7z بسته فشرده (قالب اختصاصی 7-Zip که توسط ایگور پاولوف در سال ۱۹۹۹ توسعه یافت. مبتنی بر الگوریتم‌های منبع‌باز LZMA/LZMA2، دارای نرخ فشرده‌سازی بسیار بالا است. در شرایط معادل، معمولاً ۳۰-۵۰٪ کوچک‌تر از ZIP است، قالب نسبت فشرده‌سازی بالا جهانی در جامعه منبع‌باز و توزیع نرم‌افزار است)"
+
+msgid "mime_ace"
+msgstr "ACE بسته فشرده (قالب فشرده‌سازی اختصاصی WinACE از دهه ۱۹۹۰. زمانی با قالب RAR رقابت می‌کرد و نرخ فشرده‌سازی بالایی داشت. توسعه فنی پس از ۲۰۰۷ متوقف شد، اکنون توسط قالب‌های 7z و RAR جایگزین شده است، متعلق به قالب‌های آرشیو سیستم‌های میراثی است)"
+
+msgid "mime_bz2"
+msgstr "BZIP2 بسته فشرده (قالب فشرده‌سازی مرتب‌سازی بلوکی که توسط جولیان سورارد در سال ۱۹۹۶ توسعه یافت. نرخ فشرده‌سازی الگوریتم سطح پایین آن ۱۵-۲۰٪ بیشتر از GZIP است اما با هزینه محاسباتی بالاتر. اغلب برای توزیع کد منبع هسته لینوکس و بسته‌های نرم‌افزاری منبع‌باز استفاده می‌شود، پسوند فایل استاندارد .bz2 است)"
+
+msgid "mime_cab"
+msgstr "CAB بسته فشرده (قالب آرشیو Cabinet که توسط مایکروسافت در سال ۱۹۹۵ توسعه یافت. به عنوان استاندارد نصب بومی سیستم ویندوز، برای توزیع درایورها و فایل‌های هسته استفاده می‌شود، همچنین به عنوان ظرف ذخیره‌سازی سطح پایین برای Windows Installer (MSI) عمل می‌کند)"
+
+msgid "mime_dmg"
+msgstr "DMG تصویر دیسک (قالب تصویر دیسک که توسط اپل از دهه ۱۹۸۰ تکامل یافت. به عنوان ظرف استاندارد برای توزیع نرم‌افزار macOS، از نصب به عنوان سیستم فایل مجازی، فشرده‌سازی سطح پایین و رمزگذاری داده پشتیبانی می‌کند، قالب اصلی برای توزیع برنامه در اکوسیستم Mac است)"
+
+msgid "mime_emz"
+msgstr "EMZ تصویر فشرده (نسخه فشرده متافایل پیشرفته ویندوز EMF. اساساً گرافیک برداری باینری است که از طریق الگوریتم GZIP فشرده شده است، به طور گسترده برای ذخیره گرافیک برداری جاسازی شده در اسناد مجموعه مایکروسافت آفیس استفاده می‌شود)"
+
+msgid "mime_gz"
+msgstr "GZIP بسته فشرده (قالب فشرده‌سازی جریان استاندارد پروژه گنو که توسط ژان-لوپ گایلی و مارک آدلر در سال ۱۹۹۲ توسعه یافت. به عنوان ابزار فشرده‌سازی استاندارد یونیکس/لینوکس، همچنین استاندارد اصلی برای فشرده‌سازی لایه حمل و نقل HTTP (Gzip) است، اغلب همراه با آرشیو TAR استفاده می‌شود)"
+
+msgid "mime_jar"
+msgstr "JAR بسته فشرده (قالب آرشیو Java ARchive که توسط سان مایکروسیستمز در سال ۱۹۹۷ عرضه شد. اساساً یک ظرف بسته‌بندی مبتنی بر ساختار ZIP است که برای کپسوله‌سازی کتابخانه‌های کلاس جاوا و فراداده استفاده می‌شود، یک محصول کامپایل اصلی برای Maven، Gradle و اکوسیستم اولیه اندروید است)"
+
+msgid "mime_lzma"
+msgstr "LZMA بسته فشرده (الگوریتم فشرده‌سازی زنجیره‌ای Lempel-Ziv-Markov که توسط ایگور پاولوف در سال ۱۹۹۸ توسعه یافت. به عنوان موتور اصلی قالب 7z، دارای نرخ فشرده‌سازی بسیار بالا و گشایش سریع است، به طور گسترده برای توزیع میان‌افزار سخت‌افزار و سیستم‌های توکار استفاده می‌شود)"
+
+msgid "mime_rar"
+msgstr "RAR بسته فشرده (قالب آرشیو اختصاصی WinRAR که توسط یوجین روشال در سال ۱۹۹۳ توسعه یافت. از تقسیم به مجلد، رکوردهای بازیابی فیزیکی (ECC) و رمزگذاری قوی پشتیبانی می‌کند. نرخ فشرده‌سازی آن برتر از ZIP استاندارد است و از پشتیبانی سازگاری گسترده ای در زمینه‌های شخصی و تجاری برخوردار است)"
+
+msgid "mime_tar"
+msgstr "TAR بسته آرشیو (قالب آرشیو نوار از دوران Unix V7 در سال ۱۹۷۹. فقط بسته‌بندی جریان فایل را بدون فشرده‌سازی داده انجام می‌دهد، اغلب با GZIP/BZIP2/XZ ترکیب می‌شود، استاندارد سطح پایین برای کد منبع لینوکس و ذخیره‌سازی لایه‌ای تصاویر داکر است)"
+
+msgid "mime_tgz"
+msgstr "TGZ بسته فشرده (قالب ترکیبی جریانی از آرشیو TAR و فشرده‌سازی GZIP، با پسوند .tgz یا .tar.gz. به عنوان جهانی‌ترین قالب توزیع بسته نرم‌افزاری در محیط‌های یونیکس/لینوکس، به طور گسترده برای استقرار کامپایل کد منبع و توزیع بسته دودویی بدون نیاز به نصب استفاده می‌شود)"
+
+msgid "mime_tbz2"
+msgstr "TBZ2 بسته فشرده (قالب ترکیبی جریانی از آرشیو TAR و فشرده‌سازی BZIP2، با پسوند .tbz2 یا .tar.bz2. در مقایسه با TGZ، می‌تواند نرخ فشرده‌سازی را ۱۵-۲۰٪ دیگر بهبود بخشد، برای انتقال فایل‌های بزرگ مناسب است، برای مدت طولانی برای توزیع کد منبع هسته لینوکس استفاده می‌شد)"
+
+msgid "mime_xz"
+msgstr "XZ بسته فشرده (قالب نسبت فشرده‌سازی بالا نسل بعدی که در سال ۲۰۰۹ عرضه شد. مبتنی بر الگوریتم LZMA2، نرخ فشرده‌سازی داده ۳۰-۵۰٪ بهتر از GZIP است در حالی که گشایش سریع را حفظ می‌کند. توسط هسته لینوکس و مدیران بسته اصلی (مانند داخل دبیان .deb) به عنوان استاندارد توزیع توصیه شده تعیین شده است)"
+
+msgid "mime_z"
+msgstr "Z بسته فشرده (قالب فشرده‌سازی LZW فرمان compress یونیکس در سال ۱۹۸۵. به عنوان استاندارد فشرده‌سازی استاندارد در سیستم‌های اولیه یونیکس، اکنون به طور کامل توسط قالب کارآمدتر GZIP جایگزین شده است، قالبی نادر و میراثی تاریخی در ترافیک شبکه مدرن است)"
+
+msgid "mime_zip"
+msgstr "ZIP بسته فشرده (قالب آرشیو جهانی PKZIP که توسط فیل کاتز در سال ۱۹۸۹ توسعه یافت. به طور بومی توسط تمام سیستم‌عامل‌های اصلی پشتیبانی می‌شود، پرکاربردترین استاندارد ظرف در اینترنت است. JAR مدرن جاوا، APK اندروید و اسناد آفیس (OOXML) همگی بر اساس ساختار ZIP هستند)"
+
+msgid "mime_zst"
+msgstr "Zstandard بسته فشرده (استاندارد فشرده‌سازی جریانی نسل بعدی که توسط یان کوله از فیسبوک در سال ۲۰۱۵ طراحی شد. به نرخ فشرده‌سازی LZMA نزدیک می‌شود در حالی که توان عملیاتی بسیار بالاتری نسبت به GZIP دارد. به طور عمیق توسط هسته لینوکس (۵.۹+) و مدیران بسته آرچ/دبیان پذیرفته شده است)"
+
+msgid "mime_lz4"
+msgstr "LZ4 بسته فشرده (الگوریتم فشرده‌سازی جریانی فوق سریع که توسط یان کوله در سال ۲۰۱۱ توسعه یافت. سرعت توان عملیاتی آن بیش از ۱۰ برابر سریع‌تر از GZIP است، با سربار CPU زمان اجرا بسیار کم. به طور گسترده در هسته لینوکس، سیستم فایل OpenZFS و پردازش جریان داده بلادرنگ هادوپ استفاده می‌شود)"
+
+msgid "mime_lzo"
+msgstr "LZO بسته فشرده (الگوریتم Lempel-Ziv-Oberhumer که توسط مارکوس اوبرهومر در سال ۱۹۹۶ توسعه یافت. بر عملکرد گشایش فوق سریع تمرکز دارد. به طور گسترده در تصاویر Squashfs هسته لینوکس، میان‌افزار OpenWrt و سیستم‌های توکار مختلف با منابع محدود جاسازی شده است)"
+
+msgid "mime_msi"
+msgstr "MSI بسته نصب سیستم (قالب کپسوله‌سازی داده Windows Installer که توسط مایکروسافت در سال ۱۹۹۹ عرضه شد. به عنوان استاندارد استقرار سطح برنامه ویندوز، به طور بومی از بازگشت تراکنش سطح پایین، مدیریت چرخه حیات مؤلفه و نصب بی‌صدا بدون دسته پشتیبانی می‌کند، استاندارد اصلی برای توزیع متمرکز نرم‌افزار سازمانی و استقرار مبتنی بر سیاست است)"
+
+msgid "mime_pkg"
+msgstr "PKG بسته نصب نرم‌افزار چند پلتفرمی. ۱. بسته نرم‌افزاری FreeBSD: استاندارد pkgng، پسوند .pkg یا .txz، مبتنی بر فشرده‌سازی TAR+XZ/Zstd، پشتیبانی از وضوح وابستگی و تأیید امضا؛ ۲. بسته نصب macOS: مبتنی بر قالب Apple Installer، پشتیبانی از مؤلفه‌های سفارشی، اسکریپت‌های نصب و حذف نصب در سطح سیستم. به ترتیب حامل‌های اصلی توزیع برای سرورهای BSD و سیستم Mac هستند."
+
+msgid "mime_apk"
+msgstr "APK بسته برنامه اندروید (بسته نصب برنامه سنتی که توسط گوگل با اندروید در سال ۲۰۰۸ عرضه شد. مبتنی بر ساختار آرشیو ZIP در سطح پایین، بایت‌کد Dalvik کامپایل شده (DEX)، مانیفست فراداده و منابع جهانی را بسته‌بندی می‌کند، اکنون به طور گسترده برای اشکال‌زدایی توسعه محلی، توزیع شخص ثالث و نصب جانبی روی دستگاه‌ها استفاده می‌شود)"
+
+msgid "mime_ipa"
+msgstr "IPA بسته برنامه اپل (ظرف بسته‌بندی انحصاری iOS/iPadOS که با iPhone SDK در سال ۲۰۰۸ عرضه شد. اساساً یک آرشیو ZIP است که توسط DRM FairPlay یا گواهی سازمانی امضا شده است، شامل فایل باینری قابل اجرا Mach-O، درخت منابع برنامه و پیکربندی فراداده Info.plist است)"
+
+msgid "mime_hap"
+msgstr "HAP بسته برنامه هارمونی اواس (واحد پایه استقرار الاستیک هارمونی اواس که با هارمونی اواس ۲.۰ در سال ۲۰۲۰ عرضه شد. از ماژول اصلی Entry یا ماژول‌های عملکرد توسعه یافته Feature تشکیل شده است، قالب توزیع چند پایانه (تلفن‌ها، تبلت‌ها، دستگاه‌های پوشیدنی) برای توزیع دستگاه‌های هوشمند است)"
+
+msgid "mime_har"
+msgstr "HAR بسته اشتراکی ایستا هارمونی اواس (پرونده آرشیو کتابخانه اشتراکی ایستا اختصاصی هارمونی اواس. برای کپسوله‌سازی مؤلفه‌های مشترک، کد منبع سطح پایین و وابستگی‌های زمان کامپایل استفاده می‌شود، توسط چندین ماژول HAP به طور ایستا برای اشتراک گذاری پیوند می‌شود، پایه اساسی برای توسعه مبتنی بر مؤلفه و استفاده مجدد از چند ماژول در سیستم هارمونی اواس است)"
+
+msgid "mime_aab"
+msgstr "AAB بسته برنامه اندروید (قالب توزیع پویای گوگل پلی که توسط گوگل در سال ۲۰۱۸ راه‌اندازی شد و در سال ۲۰۲۱ تعیین گردید. به عنوان یک نهاد توزیع خالص، ابر به طور پویا بر اساس معماری CPU دستگاه هدف، چگالی صفحه نمایش و زبان، بسته را برش داده و کامپایل می‌کند تا APKهای بهینه‌سازی شده را بر اساس تقاضا تولید کند، به طور متوسط ۳۵٪ هزینه پهنای باند انتقال را کاهش می‌دهد)"
+
+msgid "mime_xapk"
+msgstr "XAPK بسته برنامه توسعه یافته (استاندارد توسعه برنامه غیر رسمی که توسط جامعه شخص ثالث اندروید تعیین شده است. پرونده APK استاندارد را با بسته توسعه داده بازی بزرگ OBB ترکیب می‌کند، به طور فیزیکی محدودیت حجم فایل ۱۰۰ مگابایتی مستقل گوگل پلی را می‌شکند، به طور گسترده در پلتفرم‌های توزیع بازی دیده می‌شود)"
+
+msgid "mime_appx"
+msgstr "APPX بسته برنامه مدرن (استاندارد استقرار برنامه UWP که توسط مایکروسافت با ویندوز ۸ در سال ۲۰۱۲ عرضه شد. دارای ویژگی‌های اجرای ایزوله جعبه شنی و حذف نصب سبک است، به عنوان استاندارد غالب اولیه مایکروسافت استور بود، اما در اکوسیستم ویندوز مدرن وارد مرحله پایانی چرخه حیات خود شده و به سمت MSIX در حال تکامل است)"
+
+msgid "mime_msix"
+msgstr "MSIX بسته برنامه نسل جدید (مشخصات بسته‌بندی جدید کاملاً استاندارد شده ویندوز که توسط مایکروسافت در سال ۲۰۱۸ منتشر شد. ویژگی‌های جعبه شنی امنیت برنامه APPX را با مزایای مدیریت دارایی سازمانی MSI کاملاً ترکیب می‌کند، به طور کامل با همه انواع برنامه‌های Win32 سازگار است، و استاندارد توزیع توصیه شده برای ویندوز ۱۱ است)"
+
+msgid "mime_appimage"
+msgstr "AppImage بسته برنامه خودمحتوا (مشخصات آرشیو قابل اجرای تک فایل لینوکس که در سال ۲۰۰۴ آغاز شد. معماری خودمحتوی «یک برنامه یک فایل است» را اتخاذ می‌کند که در زمان اجرا از طریق مکانیسم FUSE مستقیماً به عنوان یک سیستم فایل مجازی فقط خواندنی نصب می‌شود، اجرای بدون وابستگی فوری را در توزیع‌های مختلف لینوکس فراهم می‌کند)"
+
+msgid "mime_flatpak"
+msgstr "Flatpak بسته برنامه جعبه شنی (استاندارد توزیع برنامه دسکتاپ چند توزیعی لینوکس که توسط رد هت و گنوم در سال ۲۰۱۵ رهبری شد. با تکیه بر مکانیسم‌های Namespace و Cgroups هسته لینوکس، ایزوله‌سازی جعبه شنی امنیتی سطح برنامه بسیار دقیقی را فراهم می‌کند، پایه و اساس مراکز نرم‌افزاری سیستم‌عامل‌های منبع‌باز مدرن است)"
+
+msgid "mime_snap"
+msgstr "Snap بسته برنامه کانتینری (استاندارد استقرار جهانی لینوکس که توسط کانونیکال، شرکت مادر اوبونتو، در سال ۲۰۱۴ عرضه شد. معماری نصب تصویر SquashFS خودمحتوا را اتخاذ می‌کند، از به‌روزرسانی‌های افزایشی خودکار و ایزوله‌سازی جعبه شنی سختگیرانه AppArmor پشتیبانی می‌کند، قالب پیش‌فرض اصلی اکوسیستم مرکز نرم‌افزار اوبونتو است)"
+
+msgid "mime_deb"
+msgstr "DEB بسته نرم‌افزاری سیستم (مشخصات کپسوله‌سازی باینری و کد منبع که توسط پروژه دبیان در سال ۱۹۹۳ تعیین شد. به عنوان استاندارد نصب سطح پایین برای دبیان، اوبونتو و تمام مشتقات آنها، برای باز کردن بسته و نگهداری به dpkg متکی است و از APT به عنوان Frontend مدیر بسته کارآمد استفاده می‌کند، بالغ‌ترین سنگ بنای توزیع نرم‌افزار در اکوسیستم لینوکس است)"
+
+msgid "mime_rpm"
+msgstr "RPM بسته نرم‌افزاری سیستم (مشخصات کپسوله‌سازی مدیر بسته رد هت که توسط رد هت در سال ۱۹۹۷ عرضه شد. همراه با DEB، دو اردوگاه اصلی مدیریت بسته سنتی لینوکس را تشکیل می‌دهند، به طور بومی دارای بررسی وابستگی مبتنی بر تراکنش و تأیید امضای دیجیتال نرم‌افزار سطح پایین است، و همچنان استاندارد توزیع کاملاً غالب برای توزیع‌های اکوسیستم رد هت مانند RHEL، فدورا و سنت اواس است)"
+
+msgid "mime_pacman"
+msgstr "Pacman بسته نرم‌افزاری آرشیو (قالب کپسوله‌سازی .pkg.tar.zst که توسط آرچ لینوکس با مدیر pacman در سال ۲۰۰۲ تعیین شد. به عنوان هسته مکانیسم به‌روزرسانی غلتان آرچ، مبتنی بر الگوریتم فشرده‌سازی بالا و پرسرعت Zstandard، همراه با اکوسیستم AUR، یک استاندارد توزیع بسته مدرن است که مینیمالیسم و اصل KISS (ساده نگهش دار، احمق!) را تجسم می‌بخشد)"
+
+msgid "mime_exe"
+msgstr "EXE پرونده قابل اجرای بومی (قالب برنامه باینری Portable Executable (PE) پلتفرم ویندوز. نسب فنی آن از ساختار سربرگ MZ دوران MS-DOS نشات می‌گیرد و از سال ۱۹۹۳ با ویندوز NT به طور کامل به عنوان مشخصات ساختار PE تثبیت شد، پرمصرف‌ترین استاندارد اجرا در جهان برای دستورالعمل‌های کد ماشین، بخش‌های منابع ایستا و راه‌اندازی هسته سیستم است)"
+
+msgid "mime_dll"
+msgstr "DLL کتابخانه پیوند پویا (مشخصات کتابخانه کد مشترک Dynamic Link Library پلتفرم ویندوز. از طریق بارگذاری پویا و جابجایی نماد در زمان اجرا، حافظه فیزیکی و فضای دیسک را به طور قابل توجهی ذخیره می‌کند، به عنوان شکل اصلی پیاده‌سازی API ویندوز، مشکل اولیه 'دوزخ DLL' در دوران مدرن از طریق مکانیسم ایزوله موازی SxS ریشه‌کن شد)"
+
+msgid "mime_com"
+msgstr "COM پرونده قابل اجرای کلاسیک (قدیمی‌ترین قالب اجرای تصویر حافظه (Command) از دوران MS-DOS. از طراحی بخش کد خالص بدون ساختار استفاده می‌کند، محدود به محدوده آدرس‌دهی حافظه فیزیکی ۶۴ کیلوبایت، اکنون به عنوان قالبی میراثی تاریخی بازنشسته شده است، اما در معماری‌های مدرن ویندوز هنوز به عنوان یک رابط کامپوننت خاص، سازگاری محدودی حفظ می‌شود)"
+
+msgid "mime_aac"
+msgstr "صدای AAC (استاندارد MPEG در سال ۱۹۹۷، Advanced Audio Coding. جانشین MP3، کیفیت صدا بهتر از MP3 در نرخ بیت یکسان، فرمت صدای پیش‌فرض YouTube، iTunes، نینتندو سوییچ)"
+
+msgid "mime_alac"
+msgstr "صدای ALAC (اپل در سال ۲۰۰۴ توسعه داد، Apple Lossless Audio Codec. فرمت بدون اتلاف اپل، در سال ۲۰۱۱ متن‌باز شد، فرمت پیش‌فرض برای صدای بدون اتلاف در iTunes و Apple Music)"
+
+msgid "mime_flac"
+msgstr "صدای FLAC (بنیاد Xiph.Org در سال ۲۰۰۱ توسعه داد، Free Lossless Audio Codec. فشرده‌سازی بدون اتلاف، کیفیت صدا برابر با CD، فایل حدود نیمی از WAV اصلی. متن‌باز بدون حق امتیاز، فرمت ارجح برای علاقه‌مندان به صدا و مجموعه‌های موسیقی دیجیتال)"
+
+msgid "mime_mp3"
+msgstr "صدای MP3 (موسسه فرانهوفر در سال ۱۹۹۳ توسعه داد، MPEG-1 Audio Layer 3. فرمت فشرده‌سازی با اتلاف، فایل کوچک کیفیت قابل قبول، فرمت اصلی انقلاب موسیقی دیجیتال در دهه ۲۰۰۰، عامل موفقیت آیپاد و نپستر. حق اختراع در سال ۲۰۱۷ منقضی شد، به فرمت عمومی تبدیل شد)"
+
+msgid "mime_oga"
+msgstr "صدای Ogg Audio (بنیاد Xiph.Org توسعه داد، فرمت صدای خالص کانتینر Ogg، با استفاده از کدک Vorbis. متن‌باز بدون حق امتیاز، کارایی فشرده‌سازی بهتر از MP3، به طور گسترده در پروژه‌های متن‌باز استفاده می‌شود)"
+
+msgid "mime_ogg"
+msgstr "صدای OGG (بنیاد Xiph.Org در سال ۲۰۰۰ توسعه داد، فرمت Ogg Vorbis. متن‌باز بدون حق امتیاز، کارایی فشرده‌سازی بهتر از MP3، اسپاتیفای اولیه از آن استفاده می‌کرد، به طور گسترده در افکت‌های صوتی بازی استفاده می‌شود)"
+
+msgid "mime_opus"
+msgstr "صدای Opus (IETF در سال ۲۰۱۲ استاندارد کرد، فرمت صوتی متن‌باز بدون حق امتیاز، ترکیبی از فناوری‌های SILK و CELT، تأخیر بسیار کم، بالاترین کارایی فشرده‌سازی، فرمت صدای پیش‌فرض WebRTC، WhatsApp، Discord)"
+
+msgid "mime_wav"
+msgstr "صدای WAV (مایکروسافت و آی‌بی‌ام در سال ۱۹۹۱ توسعه دادند، فرمت صدای بومی ویندوز. کدک PCM بدون فشرده‌سازی، کیفیت بدون اتلاف اما فایل بسیار بزرگ، فرمت استاندارد برای ویرایش حرفه‌ای صدا)"
+
+msgid "mime_wma"
+msgstr "صدای WMA (مایکروسافت در سال ۱۹۹۹ توسعه داد، Windows Media Audio. دارای هر دو نسخه با اتلاف/بدون اتلاف، پشتیبانی بومی در ویندوز، با Windows Media Player فراگیر شد. اکنون به حاشیه رانده شده، با MP3/AAC جایگزین شده است)"
+
+msgid "mime_dsf"
+msgstr "صدای DSF (فرمت Direct Stream Digital، توسعه یافته توسط سونی و فیلیپس. نمونه‌برداری با فرکانس بالا ۱ بیتی، فرمت استاندارد صدای DSD، نسخه دیجیتال SACD، فرمت صدای درجه یک برای علاقه‌مندان، فایل بسیار بزرگ)"
+
+msgid "mime_ape"
+msgstr "صوت APE (توسعه یافته توسط Monkey's Audio در سال 2000، فرمت فشرده سازی بدون اتلاف. فشرده سازی بالاتر از FLAC اما رمزگذاری کندتر، هنوز در پلتفرم ویندوز و بین علاقه‌مندان به صدا استفاده می‌شود)"
+
+msgid "mime_mid"
+msgstr "صدای MIDI (انجمن MIDI در سال ۱۹۸۳ تعیین کرد، رابط ابزار موسیقی دیجیتال. فرمت نت موسیقی به جای ضبط، فایل بسیار کوچک، استاندارد برای ابزارهای موسیقی الکترونیک، زنگ تلفن همراه، افکت‌های صوتی بازی. General MIDI در سال ۱۹۹۱ استاندارد شد، ۱۲۸ صدای ابزار را تعریف کرد)"
+
+msgid "mime_m4a"
+msgstr "صدای M4A (MPEG-4 Audio، فرمت کانتینر AAC. فرمت استاندارد فروشگاه موسیقی iTunes، فرمت صدای اصلی در اکوسیستم اپل، پشتیبانی از حفاظت DRM)"
+
+msgid "mime_m3u"
+msgstr "لیست پخش M3U (فرمت لیست پخش URL MP3، فایل متنی ساده، ثبت مسیر فایل‌های صوتی. استاندارد دوران وینامپ، برای پخش رادیویی آنلاین، استریم موسیقی آنلاین استفاده می‌شود. M3U8 نسخه UTF-8 آن است، برای HTTP Live Streaming استفاده می‌شود)"
+
+msgid "mime_asf"
+msgstr "رسانه جریانی ASF (مایکروسافت در سال ۱۹۹۶ توسعه داد، Advanced Systems Format. کانتینر رسانه جریانی ویندوز مدیا، پشتیبانی از انتقال همزمان صدا و تصویر. برای پخش زنده اینترنتی و استریم ویدیو بر اساس تقاضا استفاده می‌شود، WMA/WMV هر دو بر اساس کانتینر ASF هستند)"
+
+msgid "mime_avi"
+msgstr "ویدیوی AVI (مایکروسافت در سال ۱۹۹۲ عرضه کرد، استاندارد اولیه ویدیوی ویندوز. 'Audio Video Interleave'، ذخیره‌سازی متناوب صدا و تصویر، محبوب‌ترین فرمت ویدیو در دهه‌های ۱۹۹۰-۲۰۰۰، اکنون با MP4/MKV جایگزین شده است)"
+
+msgid "mime_divx"
+msgstr "ویدیوی DivX (شرکت DivX در سال ۱۹۹۸ توسعه داد، فرمت کدگذاری ویدیو مبتنی بر MPEG-4. فرمت اصلی به اشتراک‌گذاری ویدیوی آنلاین در دهه ۲۰۰۰، اولین فناوری که کیفیت DVD را به اندازه CD فشرده کرد. به دلیل اختلافات حق کپی‌رایت، بعداً به رمزگذار تجاری تبدیل شد)"
+
+msgid "mime_mp4"
+msgstr "ویدیوی MP4 (استاندارد MPEG در سال ۲۰۰۱، MPEG-4 Part 14. رایج‌ترین فرمت ویدیو در جهان، پشتیبانی از کدک H.264/H.265، فرمت پیش‌فرض برای ویدیوی اینترنتی، ضبط تلفن همراه، یوتیوب)"
+
+msgid "mime_m4v"
+msgstr "ویدیوی M4V (فرمت ویدیوی iTunes، گونه‌ای از MP4. فرمت ویدیو در اکوسیستم اپل، فرمت استاندارد فیلم‌ها و برنامه‌های تلویزیونی iTunes Store، پشتیبانی از حفاظت کپی‌رایت DRM)"
+
+msgid "mime_mpeg"
+msgstr "ویدیوی MPEG (سازمان MPEG در سال ۱۹۸۸ تعیین کرد، گروه کارشناسان تصاویر متحرک. بنیان‌گذار استانداردهای فشرده‌سازی ویدیوی دیجیتال، MPEG-1 (VCD)، MPEG-2 (DVD)، MPEG-4 (ویدیوی آنلاین) تأثیر عمیقی داشته است)"
+
+msgid "mime_mkv"
+msgstr "ویدیوی MKV (پروژه ماتروسکا در سال ۲۰۰۲ توسعه داد، فرمت کانتینر چندرسانه‌ای متن‌باز. پشتیبانی از چندین آهنگ صوتی، چندین زیرنویس، فصل‌ها، 'ابزار بسته‌بندی'، فرمت ارجح برای به اشتراک‌گذاری فیلم‌های با وضوح بالا)"
+
+msgid "mime_mpg"
+msgstr "ویدیوی MPEG (پسوندهای ویدیوی MPEG-1/MPEG-2، فرمت استاندارد برای VCD و DVD. فرمت اصلی برای ویدیوی روی دیسک در دهه‌های ۱۹۹۰-۲۰۰۰، اکنون با H.264/H.265 جایگزین شده است)"
+
+msgid "mime_ogv"
+msgstr "ویدیوی Ogg Video (بنیاد Xiph.Org توسعه داد، فرمت ویدیوی کانتینر Ogg، با استفاده از کدک Theora. متن‌باز بدون حق امتیاز، یکی از استانداردهای اولیه ویدیوی HTML5، فایرفاکس به صورت بومی پشتیبانی می‌کند)"
+
+msgid "mime_ogx"
+msgstr "کانتینر چندرسانه‌ای Ogg (بنیاد Xiph.Org توسعه داد، افزونه عمومی کانتینر Ogg، می‌تواند شامل چندین آهنگ مانند صدا، ویدیو، زیرنویس باشد. استاندارد چندرسانه‌ای متن‌باز، برای بازی، استریم استفاده می‌شود)"
+
+msgid "mime_rm"
+msgstr "ویدیوی RealMedia (RealNetworks در سال ۱۹۹۵ توسعه داد، فرمت RealMedia. پیشگام پخش جریانی روی اینترنت در دهه‌های ۱۹۹۰-۲۰۰۰، فرمت اصلی پخش‌کننده RealPlayer. نقاط ضعف: نیاز به پخش‌کننده خاص، کیفیت فشرده‌سازی ضعیف، با Flash/MP4 جایگزین شد)"
+
+msgid "mime_flv"
+msgstr "ویدیوی Flash (فرمت در سال ۲۰۰۲ ظاهر شد، فرمت Flash Video. زمانی فرمت اصلی ویدیوی آنلاین بود، YouTube اولیه از آن استفاده می‌کرد. نقاط ضعف: نیاز به افزونه Flash، عملکرد ضعیف، آسیب‌پذیری‌های امنیتی زیاد. از سال ۲۰۱۵ به بعد وب‌سایت‌های اصلی به ویدیوی HTML5 روی آوردند، اکنون حذف شده است)"
+
+msgid "mime_f4v"
+msgstr "ویدیوی F4V (فرمت ویدیوی Flash که توسط Adobe توسعه یافت، جانشین FLV. مبتنی بر استاندارد MPEG-4، پشتیبانی از کدک H.264. همراه با فناوری Flash منسوخ شد، Adobe در سال ۲۰۲۰ پشتیبانی را متوقف کرد)"
+
+msgid "mime_wmv"
+msgstr "ویدیوی WMV (مایکروسافت در سال ۱۹۹۹ توسعه داد، Windows Media Video. پشتیبانی بومی در ویندوز، بهینه‌سازی شده برای انتقال استریم، فرمت رایج در ویدیوی آنلاین اولیه، اکنون به حاشیه رانده شده است)"
+
+msgid "mime_wmf"
+msgstr "فرمت رسانه WMF (Windows Media Format، چارچوب رسانه مایکروسافت، شامل ویدیوی WMV و صدای WMA، به صورت بومی توسط Windows Media Player پشتیبانی می‌شود)"
+
+msgid "mime_mov"
+msgstr "ویدیوی MOV (اپل در سال ۱۹۹۱ توسعه داد، فرمت کانتینر QuickTime. فرمت استاندارد برای تدوین ویدیوی حرفه‌ای، پشتیبانی از چندین کدک، به صورت بومی توسط Final Cut Pro، Premiere پشتیبانی می‌شود)"
+
+msgid "mime_qt"
+msgstr "ویدیوی QuickTime (اپل در سال ۱۹۹۱ عرضه کرد، فرمت QuickTime. استاندارد ویدیو در پلتفرم مک، MOV کانتینر آن است، پخش‌کننده QuickTime زمانی به طور گسترده استفاده می‌شد. اپل در سال ۲۰۱۶ توسعه نسخه ویندوز را متوقف کرد، به تدریج با MP4 جایگزین شد)"
+
+msgid "mime_webm"
+msgstr "ویدیوی WebM (گوگل در سال ۲۰۱۰ عرضه کرد، فرمت ویدیوی متن‌باز بدون حق امتیاز. مبتنی بر کانتینر ماتروسکا، کدک VP8/VP9، فرمت استاندارد ویدیوی HTML5، فرمت پخش پیش‌فرض یوتیوب بر روی وب)"
+
+msgid "mime_3gp"
+msgstr "ویدیوی 3GP (3GPP در سال ۲۰۰۰ تعیین کرد، فرمت ویدیو برای دستگاه‌های تلفن همراه. فایل بسیار کوچک، کیفیت پایین، فرمت ضبط ویدیوی تلفن‌های همراه اولیه، برای ارسال MMS استفاده می‌شد)"
+
+#------------------------------------------------------------------------------
+# بعد فنی
+#------------------------------------------------------------------------------
+
+msgid "Operating Systems"
+msgstr "سیستم‌های عامل"
+
+msgid "Top 5 Operating Systems"
+msgstr "۵ سیستم عامل برتر"
+
+msgid "Unknown Robot"
+msgstr "کلاینت ناشناس"
+
+msgid "User agent"
+msgstr "User agent"
+
+msgid "Browsers"
+msgstr "مرورگرها"
+
+msgid "Top 5 Browsers"
+msgstr "۵ مرورگر برتر"
+
+msgid "Unknown Robot RH"
+msgstr "هدر درخواست ناشناس"
+
+msgid "Detailed"
+msgstr "نسخه دستگاه در حال دسترسی"
+
+msgid "DetailedOS"
+msgstr "نسخه سیستم عامل"
+
+msgid "DetailedBS"
+msgstr "نسخه مرورگر"
+
+msgid "Screen sizes"
+msgstr "اندازه صفحه"
+
+msgid "Compression"
+msgstr "فشرده‌سازی"
+
+msgid "In"
+msgstr "ورودی"
+
+msgid "Out"
+msgstr "خروجی"
+
+msgid "Saved"
+msgstr "صرفه‌جویی"
+
+#------------------------------------------------------------------------------
+# بعد منبع
+#------------------------------------------------------------------------------
+
+msgid "Origin"
+msgstr "منبع"
+
+msgid "Referers"
+msgstr "منابع"
+
+msgid "meta.description"
+msgstr "AWStats تحلیلگر پیشرفته لاگ وب - نظارت بر ترافیک وب در زمان واقعی، تحلیل بازدیدکنندگان، کلمات کلیدی موتورهای جستجو، آمار صفحات خطا. پشتیبانی از حالت تاریک، رابط چندزبانه، ارائه تحلیل داده جامع برای مدیران وب سایت."
+
+msgid "meta.keywords"
+msgstr "AWStats,آمار وب,تحلیل لاگ,نظارت بر ترافیک,آمار دسترسی,تحلیل SEO,ابزار تحلیل وب,Web Analytics,Log Analyzer"
+
+msgid "meta.author"
+msgstr "AWStats"
+
+msgid "og.title"
+msgstr "AWStats - تحلیل لاگ وب"
+
+msgid "og.description"
+msgstr "📊 ابزار آمار وب منبع باز حرفه‌ای، ترافیک وب سایت و رفتار بازدیدکنندگان شما را در زمان واقعی تحلیل می‌کند."
+
+msgid "og.image.alt"
+msgstr "نمودارهای آماری AWStats"
+
+msgid "Created by"
+msgstr "ایجاد شده توسط %s"
+
+msgid "plugins"
+msgstr "افزونه‌ها"
+
+msgid "dbip by"
+msgstr "داده از"
+
+msgid "IPDB by"
+msgstr "داده موقعیت جغرافیایی توسط DB-IP"
+
+msgid "Configured"
+msgstr "پیکربندی شده"
+
+msgid "Missing"
+msgstr "وجود ندارد"
+
+msgid "OK"
+msgstr "موفق"
+
+msgid "Unused"
+msgstr "استفاده نشده"
+
+msgid "Overall Health"
+msgstr "سلامت کلی"
+
+msgid "Excellent"
+msgstr "عالی"
+
+msgid "Good"
+msgstr "خوب"
+
+msgid "Fair"
+msgstr "متوسط"
+
+msgid "Poor"
+msgstr "ضعیف"
+
+msgid "Missing icon types"
+msgstr "انواع آیکون موجود نیست"
+
+msgid "See"
+msgstr "مشاهده جزئیات"
+
+msgid "Expected Path"
+msgstr "توضیحات مسیر"
+
+msgid "column for file locations"
+msgstr "ستون برای دریافت مکان فایل"
+
+msgid "Tip: If you need to generate related icons, you can use %s to upload a logo image, and it will automatically generate all the above related icon files"
+msgstr "نکته: اگر نیاز به تولید آیکون‌های مرتبط دارید، می‌توانید از %s برای آپلود تصویر لوگو استفاده کنید، و به طور خودکار تمام فایل‌های آیکون مرتبط بالا را تولید می‌کند"
+
+msgid "200: success, 404: failure"
+msgstr "۲۰۰ تعداد موفقیت ۴۰۴ تعداد شکست"
+
+msgid "_PATH_FAVICON"
+msgstr "/favicon.ico"
+
+msgid "_PATH_APPLE_TOUCH"
+msgstr "/apple-touch-icon.png یا /apple-touch-icon-180x180.png"
+
+msgid "_PATH_LOGO"
+msgstr "/logo.svg یا /logo.png (نیاز به ارجاع در HTML/JSON-LD)"
+
+msgid "_PATH_WEBMANIFEST"
+msgstr "/site.webmanifest یا /manifest.json"
+
+msgid "_PATH_BROWSERCONFIG"
+msgstr "/browserconfig.xml"
+
+msgid "_PATH_SAFARI_PINNED"
+msgstr "/safari-pinned-tab.svg"
+
+msgid "_PATH_SOCIAL_ICON"
+msgstr "/images/github.svg, /images/paypal.svg و غیره"
+
+msgid "Favicon"
+msgstr "آیکون وب سایت"
+
+msgid "Apple Touch Icon (iOS/macOS)"
+msgstr "آیکون Apple Touch (iPhone/iPad/Mac)"
+
+msgid "Site Logo"
+msgstr "لوگوی سایت"
+
+msgid "Web App Manifest (Android/Chrome)"
+msgstr "فایل مانیفست برنامه وب (Android/Chrome)"
+
+msgid "Windows Browser Config"
+msgstr "پیکربندی مرورگر Windows"
+
+msgid "Safari Pinned Tab"
+msgstr "آیکون تب سنجاق شده سافاری"
+
+msgid "Social Icon"
+msgstr "آیکون شبکه اجتماعی"
+
+msgid "Icon Files Status"
+msgstr "وضعیت فایل‌های آیکون"
+
+msgid "Icon Type"
+msgstr "نوع آیکون"
+
+msgid "Total"
+msgstr "مجموع"
+
+msgid "Advanced Web Statistics"
+msgstr "تحلیلگر پیشرفته لاگ"
+
+msgid "Advanced Web Statistics %s"
+msgstr "تحلیلگر پیشرفته لاگ %s"
+
+msgid "Your browser does not support frames. Please use a modern browser."
+msgstr "مرورگر شما از فریم پشتیبانی نمی‌کند. لطفاً از یک مرورگر مدرن استفاده کنید."
+
+msgid "View statistics directly"
+msgstr "مشاهده مستقیم آمار"
+
+msgid "Close"
+msgstr "بستن"
+
+msgid "Documentation Viewer"
+msgstr "نمایشگر مستندات"
+
+msgid "Direct address / Bookmarks"
+msgstr "آدرس دسترسی مستقیم / نشانک‌ها"
+
+msgid "Search Engines"
+msgstr "موتورهای جستجو"
+
+msgid "Refering search engines"
+msgstr "موتورهای جستجوی ارجاع‌دهنده"
+
+msgid "External pages"
+msgstr "صفحات خارجی"
+
+msgid "Refering pages"
+msgstr "صفحات ارجاع‌دهنده"
+
+msgid "Internal pages"
+msgstr "صفحات داخلی"
+
+msgid "UnknownAccessSource"
+msgstr "منبع دسترسی ناشناس"
+
+msgid "Different refering pages"
+msgstr "صفحات ارجاع‌دهنده مختلف"
+
+msgid "Keyphrases"
+msgstr "عبارات کلیدی"
+
+msgid "Keywords"
+msgstr "کلمات کلیدی"
+
+msgid "Keyphrases/Keywords"
+msgstr "عبارات کلیدی/کلمات کلیدی"
+
+msgid "Different keyphrases"
+msgstr "عبارات کلیدی مختلف"
+
+msgid "Different keywords"
+msgstr "کلمات کلیدی مختلف"
+
+#------------------------------------------------------------------------------
+# بعد صفحه
+#------------------------------------------------------------------------------
+
+msgid "Viewed pages"
+msgstr "صفحات مشاهده شده"
+
+msgid "Different pages"
+msgstr "صفحات مختلف"
+
+msgid "Entry"
+msgstr "موقعیت ورود"
+
+msgid "Exit"
+msgstr "موقعیت خروج"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Referer"
+msgstr "ارجاع‌دهنده"
+
+msgid "Host"
+msgstr "میزبان"
+
+#------------------------------------------------------------------------------
+# خطاها و وضعیت‌ها
+#------------------------------------------------------------------------------
+
+msgid "Error"
+msgstr "خطا"
+
+msgid "HTTP Status Statistics"
+msgstr "آمار کد وضعیت HTTP"
+
+msgid "SMTP Error codes"
+msgstr "کدهای خطای SMTP"
+
+msgid "Page not found"
+msgstr "صفحه درخواستی یافت نشد"
+
+msgid "Unknown error"
+msgstr "خطای ناشناس"
+
+msgid "Abnormal traffic note"
+msgstr "ترافیک غیرعادی شامل: ربات‌های جستجو، ربات‌های آموزش هوش مصنوعی، اسکنرهای آسیب‌پذیری و درخواست‌های غیرمطابق با مشخصات"
+
+msgid "Page detail"
+msgstr "جزئیات صفحه"
+
+msgid "AWStats did not found the"
+msgstr "AWStats پیدا نکرد"
+
+msgid "in your log records."
+msgstr "در رکوردهای لاگ شما"
+
+msgid "AWStats did not find any valid log lines that match your"
+msgstr "AWStats هیچ خط لاگ معتبری مطابق با"
+
+msgid "parameter, in the"
+msgstr "پارامتر، در"
+
+msgid "th first non commented lines read of your log."
+msgstr "اولین خطوط غیر نظر از لاگ شما که خوانده شد"
+
+msgid "Your log file"
+msgstr "فایل لاگ شما"
+
+msgid "must have a bad format or"
+msgstr "احتمالاً فرمت نامناسبی دارد یا"
+
+msgid "parameter setup does not match this format."
+msgstr "تنظیمات پارامتر با این قالب مطابقت ندارد"
+
+msgid "Your AWStats"
+msgstr "AWStats شما"
+
+msgid "parameter is:"
+msgstr "پارامتر این است:"
+
+msgid "This means each line in your web server log file need to have:"
+msgstr "این به این معنی است که هر خط در فایل لاگ سرور وب شما باید شامل:"
+
+msgid "combined log format"
+msgstr "فرمت لاگ ترکیبی"
+
+msgid "MSIE Extended W3C log format"
+msgstr "فرمت لاگ W3C توسعه یافته MSIE"
+
+msgid "WebStar native log format"
+msgstr "فرمت لاگ بومی WebStar"
+
+msgid "common log format"
+msgstr "فرمت لاگ رایج"
+
+msgid "Lotus Notes/Lotus Domino"
+msgstr "Lotus Notes/Lotus Domino"
+
+msgid "the following personalized log format:"
+msgstr "فرمت لاگ شخصی‌سازی شده زیر:"
+
+msgid "And this is an example of records AWStats found in your log file (the record number"
+msgstr "و این نمونه‌ای از رکوردهایی است که AWStats در فایل لاگ شما پیدا کرده است (شماره رکورد"
+
+msgid "in your log):"
+msgstr "در لاگ شما):"
+
+#------------------------------------------------------------------------------
+# متفرقه
+#------------------------------------------------------------------------------
+
+msgid "Extra/Marketing"
+msgstr "اضافی/بازاریابی"
+
+#------------------------------------------------------------------------------
+# متن رابط کاربری
+#------------------------------------------------------------------------------
+
+msgid "Current site"
+msgstr "وب‌سایت جاری"
+
+msgid "Web Site"
+msgstr "وب سایت"
+
+msgid "Last Update"
+msgstr "آخرین به‌روزرسانی"
+
+msgid "Never updated"
+msgstr "هرگز به‌روزرسانی نشده"
+
+msgid "No qualified records found in log"
+msgstr "هیچ رکورد واجد شرایطی در لاگ یافت نشد"
+
+msgid "corrupted"
+msgstr "خراب"
+
+msgid "comments"
+msgstr "نظرات"
+
+msgid "Blank"
+msgstr "خالی"
+
+msgid "dropped"
+msgstr "حذف شده"
+
+msgid "Update now"
+msgstr "به‌روزرسانی اکنون"
+
+msgid "Back to main page"
+msgstr "بازگشت به صفحه اصلی"
+
+msgid "Close window"
+msgstr "بستن پنجره"
+
+msgid "Back page"
+msgstr "بازگشت به صفحه قبل"
+
+msgid "Navigation"
+msgstr "ناوبری"
+
+msgid "Summary"
+msgstr "خلاصه"
+
+msgid "Local"
+msgstr "داخلی"
+
+msgid "External"
+msgstr "خارجی"
+
+msgid "Others (email senders)"
+msgstr "سایر (فرستندگان ایمیل)"
+
+msgid "Others (email receivers)"
+msgstr "سایر (گیرندگان ایمیل)"
+
+msgid "Others"
+msgstr "سایر"
+
+msgid "Only 10 lines of browser data are currently displayed"
+msgstr "در حال حاضر فقط ۱۰ خط داده مرورگر نمایش داده می‌شود، لطفاً لیست کامل را ببینید"
+
+msgid "Others (unknown browsers)"
+msgstr "سایر (مرورگرهای ناشناس)"
+
+msgid "Others (operating systems)"
+msgstr "سایر (سیستم‌های عامل)"
+
+msgid "Others (unknown OS)"
+msgstr "سایر (سیستم‌عامل ناشناس)"
+
+msgid "Others (search engines)"
+msgstr "سایر (موتورهای جستجو)"
+
+msgid "Others (referring pages)"
+msgstr "سایر (صفحات ارجاع‌دهنده)"
+
+msgid "Others (keyphrases)"
+msgstr "سایر (عبارات کلیدی)"
+
+msgid "Others (keywords)"
+msgstr "سایر (کلمات کلیدی)"
+
+msgid "Only first 10 robots shown"
+msgstr "لیست فعلی فقط ۱۰ ربات را نشان می‌دهد، لطفاً لیست کامل را ببینید"
+
+msgid "Failed to obtain access record"
+msgstr "امکان دریافت رکورد ورود وجود ندارد"
+
+msgid "Failed to obtain leave record"
+msgstr "امکان دریافت رکورد خروج وجود ندارد"
+
+msgid "Other pages"
+msgstr "سایر صفحات"
+
+msgid "Low Traffic IP Summary"
+msgstr "خلاصه IP ناشناس با ترافیک کم"
+
+msgid "Failed to obtain IP data"
+msgstr "خلاصه سایر IPهای شناخته شده"
+
+msgid "Failed to obtain the relevant data"
+msgstr "داده‌های مربوطه دریافت نشد"
+
+msgid "Limited list of countries and regions"
+msgstr "در حال حاضر فقط ۱۰ خط نمایش داده می‌شود، لطفاً لیست کامل را برای کشورها و مناطق اضافی ببینید"
+
+msgid "currentVisitorData"
+msgstr "در حال حاضر فقط ۱۰ خط داده بازدیدکننده نمایش داده می‌شود، لطفاً لیست کامل را ببینید"
+
+msgid "Others (robots main)"
+msgstr "سایر (ربات‌ها)"
+
+msgid "Others (worms)"
+msgstr "سایر (کرم‌ها)"
+
+msgid "Displaying10RowsPageMorePleaseViewFullList"
+msgstr "لیست فعلی فقط ۱۰ صفحه را نشان می‌دهد، لطفاً لیست کامل را ببینید"
+
+msgid "Others (OS main)"
+msgstr "سایر (سیستم)"
+
+msgid "Others (browsers main)"
+msgstr "سایر (مرورگرها)"
+
+msgid "Others (screen sizes)"
+msgstr "سایر (اندازه)"
+
+msgid "Others (search engines main)"
+msgstr "سایر (موتورهای جستجو)"
+
+msgid "Others (referring pages main)"
+msgstr "سایر (صفحات ارجاع‌دهنده)"
+
+msgid "Others (keyphrases main)"
+msgstr "سایر (عبارات کلیدی)"
+
+msgid "Others (keywords main)"
+msgstr "سایر (کلمات کلیدی)"
+
+# 1xx
+msgid "Continue"
+msgstr "ادامه ارسال محتوای باقیمانده"
+
+msgid "Switching Protocols"
+msgstr "در حال تغییر پروتکل"
+
+msgid "Processing (WebDAV)"
+msgstr "در حال پردازش (لطفاً کمی صبر کنید)"
+
+msgid "Early Hints"
+msgstr "سرور در حال آماده‌سازی منابع"
+
+# 2xx
+msgid "[Miscellaneous successes]"
+msgstr "وضعیت موفقیت دیگر"
+
+msgid "Request successful"
+msgstr "درخواست موفقیت‌آمیز بود"
+
+msgid "Created successfully"
+msgstr "با موفقیت ایجاد شد"
+
+msgid "Accepted - processing"
+msgstr "پذیرفته شد، در حال پردازش"
+
+msgid "Non-authoritative information (from cache) (from cache)"
+msgstr "اطلاعات غیر معتبر (از حافظه کش)"
+
+msgid "Success, no content returned"
+msgstr "موفقیت، هیچ محتوایی برگردانده نشد"
+
+msgid "Reset content"
+msgstr "لطفاً فرم را بازنشانی کنید"
+
+msgid "Partial content (resume download)"
+msgstr "محتوای جزئی (پشتیبانی از ادامه دانلود)"
+
+msgid "Multi-status (WebDAV)"
+msgstr "چند وضعیت (عملیات دسته‌ای WebDAV)"
+
+msgid "Already reported (WebDAV)"
+msgstr "گزارش شده است (جلوگیری از تکرار)"
+
+msgid "IM used"
+msgstr "از افزونه پروتکل IM استفاده شده است"
+
+# 3xx
+msgid "[Miscellaneous redirections]"
+msgstr "تغییر مسیرهای دیگر"
+
+msgid "Multiple choices"
+msgstr "چندین گزینه"
+
+msgid "Moved permanently - update your links"
+msgstr "به طور دائم منتقل شده است، لطفاً پیوندهای خود را به‌روز کنید"
+
+msgid "Temporary redirect - URL unchanged"
+msgstr "تغییر مسیر موقت، آدرس بدون تغییر"
+
+msgid "See other"
+msgstr "لطفاً آدرس دیگر را ببینید"
+
+msgid "Not modified - using cached version"
+msgstr "تغییری نکرده، استفاده از نسخه حافظه کش"
+
+msgid "Use proxy"
+msgstr "لطفاً از پراکسی استفاده کنید"
+
+msgid "Switch proxy"
+msgstr "لطفاً پراکسی را تغییر دهید"
+
+msgid "Temporary redirect (keep method)"
+msgstr "تغییر مسیر موقت (حفظ روش درخواست)"
+
+msgid "Permanent redirect - update your links"
+msgstr "تغییر مسیر دائم، لطفاً پیوندهای خود را به‌روز کنید"
+
+# 4xx
+msgid "[Miscellaneous client/user errors]"
+msgstr "خطاهای کلاینت دیگر"
+
+msgid "Bad request"
+msgstr "فرمت درخواست اشتباه است"
+
+msgid "Unauthorized - please log in"
+msgstr "مجاز نیست، لطفاً ابتدا وارد شوید"
+
+msgid "Payment required"
+msgstr "نیاز به پرداخت"
+
+msgid "Forbidden - access denied"
+msgstr "دسترسی ممنوع، مجوز کافی نیست"
+
+msgid "Page not found (404) - check for broken links"
+msgstr "صفحه وجود ندارد، لطفاً پیوندهای شکسته را بررسی کنید"
+
+msgid "Method not allowed"
+msgstr "روش درخواست مجاز نیست"
+
+msgid "Not acceptable"
+msgstr "فرمت پاسخ قابل قبول نیست"
+
+msgid "Proxy authentication required"
+msgstr "نیاز به احراز هویت از طریق پراکسی"
+
+msgid "Request timeout"
+msgstr "زمان درخواست به پایان رسید"
+
+msgid "Conflict - please try again"
+msgstr "درخواست تداخل دارد، لطفاً بعداً دوباره تلاش کنید"
+
+msgid "Gone - permanently deleted"
+msgstr "منبع به طور دائم حذف شده است"
+
+msgid "Length required"
+msgstr "باید طول محتوا مشخص شود"
+
+msgid "Precondition failed"
+msgstr "شرایط اولیه برآورده نشد"
+
+msgid "Payload too large"
+msgstr "محتوای درخواست خیلی بزرگ است"
+
+msgid "URI too long"
+msgstr "آدرس درخواست خیلی طولانی است"
+
+msgid "Unsupported media type"
+msgstr "نوع فایل پشتیبانی نمی‌شود"
+
+msgid "Range not satisfiable"
+msgstr "محدوده درخواست نامعتبر است"
+
+msgid "Expectation failed"
+msgstr "نمی‌توان انتظار را برآورده کرد"
+
+msgid "I am a teapot (April Fools)"
+msgstr "من یک قوری هستم (شوخی روز اول آوریل)"
+
+msgid "Page expired (Laravel)"
+msgstr "صفحه منقضی شده است، لطفاً بازخوانی کنید و دوباره تلاش کنید"
+
+msgid "Method failure (Spring)"
+msgstr "روش شکست خورد"
+
+msgid "Misdirected request"
+msgstr "درخواست به اشتباه هدایت شده است"
+
+msgid "Unprocessable entity (WebDAV)"
+msgstr "فرمت درخواست صحیح است اما قابل پردازش نیست"
+
+msgid "Locked (WebDAV)"
+msgstr "منبع قفل شده است (WebDAV)"
+
+msgid "Failed dependency (WebDAV)"
+msgstr "عملیات وابسته شکست خورد"
+
+msgid "Too early"
+msgstr "درخواست خیلی زود ارسال شده است"
+
+msgid "Upgrade required"
+msgstr "نیاز به ارتقاء پروتکل"
+
+msgid "Precondition required"
+msgstr "شرایط اولیه لازم وجود ندارد"
+
+msgid "Too many requests - slow down"
+msgstr "درخواست‌ها بیش از حد مکرر است، لطفاً بعداً دوباره تلاش کنید"
+
+msgid "Request header fields too large (Shopify)"
+msgstr "فیلدهای هدر درخواست خیلی بزرگ هستند"
+
+msgid "Request header too large"
+msgstr "هدر درخواست خیلی بزرگ است"
+
+msgid "Login timeout (IIS)"
+msgstr "زمان ورود به پایان رسید، لطفاً دوباره وارد شوید"
+
+msgid "No response (nginx)"
+msgstr "سرور پاسخ نمی‌دهد"
+
+msgid "Retry with (IIS)"
+msgstr "لطفاً بعداً دوباره تلاش کنید"
+
+msgid "Blocked by Windows parental controls"
+msgstr "توسط کنترل والدین ویندوز مسدود شده است"
+
+msgid "Unavailable for legal reasons"
+msgstr "به دلایل قانونی قابل دسترسی نیست"
+
+msgid "Client closed connection before idle timeout (AWS ELB)"
+msgstr "کلاینت اتصال را قبل از پایان زمان انتظار عدم فعالیت بسته است (AWS ELB)"
+
+msgid "X-Forwarded-For header with >30 IP addresses (AWS ELB)"
+msgstr "زنجیره ارسال بیش از ۳۰ آدرس IP دارد"
+
+msgid "Incompatible protocol versions (AWS ELB)"
+msgstr "نسخه‌های پروتکل ناسازگار هستند"
+
+msgid "Request header too large (nginx)"
+msgstr "هدر درخواست خیلی بزرگ است"
+
+msgid "SSL certificate error (nginx)"
+msgstr "خطای گواهی SSL"
+
+msgid "SSL certificate required (nginx)"
+msgstr "نیاز به گواهی SSL"
+
+msgid "HTTP request sent to HTTPS port (nginx)"
+msgstr "درخواست HTTP به پورت HTTPS ارسال شده است"
+
+msgid "Invalid token (ArcGIS)"
+msgstr "توکن نامعتبر است"
+
+msgid "Token required (ArcGIS) / Client closed request (nginx)"
+msgstr "نیاز به توکن / کلاینت درخواست را بسته است"
+
+msgid "Resource limit reached (cPanel)"
+msgstr "به حد مجاز منابع رسیده است (CPU/حافظه)"
+
+msgid "Bandwidth limit exceeded (Apache/cPanel)"
+msgstr "از حد مجاز پهنای باند فراتر رفته است"
+
+# 5xx
+msgid "[Miscellaneous server errors]"
+msgstr "خطاهای سرور دیگر"
+
+msgid "Internal server error - check logs"
+msgstr "خطای داخلی سرور، لطفاً لاگ‌ها را بررسی کنید"
+
+msgid "Not implemented"
+msgstr "سرور از این عملکرد پشتیبانی نمی‌کند"
+
+msgid "Bad gateway - backend error"
+msgstr "خطای دروازه، سرویس بک‌اند غیرعادی است"
+
+msgid "Service unavailable - maintenance or overload"
+msgstr "سرویس در دسترس نیست، در حال تعمیرات یا بیش از حد بارگذاری شده است"
+
+msgid "Gateway timeout"
+msgstr "زمان پاسخگویی دروازه به پایان رسید"
+
+msgid "HTTP version not supported"
+msgstr "نسخه پروتکل HTTP پشتیبانی نمی‌شود"
+
+msgid "Variant also negotiates"
+msgstr "متغیر نیز در مذاکره شرکت می‌کند (خطای پیکربندی)"
+
+msgid "Insufficient storage (WebDAV)"
+msgstr "فضای ذخیره‌سازی کافی نیست"
+
+msgid "Loop detected (WebDAV)"
+msgstr "ارجاع حلقه‌ای شناسایی شد"
+
+msgid "Not extended"
+msgstr "نیاز به گسترش بیشتر دارد"
+
+msgid "Network authentication required"
+msgstr "نیاز به احراز هویت شبکه"
+
+# Cloudflare
+msgid "Unknown error (Cloudflare)"
+msgstr "خطای ناشناس"
+
+msgid "Web server is down (Cloudflare)"
+msgstr "سرور وب بسته است"
+
+msgid "Connection timeout (Cloudflare)"
+msgstr "زمان اتصال به پایان رسید"
+
+msgid "Origin is unreachable (Cloudflare)"
+msgstr "دسترسی به منبع ممکن نیست"
+
+msgid "A timeout occurred (Cloudflare)"
+msgstr "یک وقفه زمانی رخ داده است"
+
+msgid "SSL handshake failed (Cloudflare)"
+msgstr "مصافحه SSL ناموفق بود"
+
+msgid "Invalid SSL certificate (Cloudflare)"
+msgstr "گواهی SSL نامعتبر است"
+
+msgid "Railgun error (Cloudflare - obsolete)"
+msgstr "خطای Railgun (منسوخ شده)"
+
+msgid "Site is overloaded (SSLLabs)"
+msgstr "وب سایت بیش از حد بارگذاری شده است"
+
+msgid "Origin DNS error (Cloudflare) / Site is frozen (Pantheon)"
+msgstr "خطای DNS منبع (Cloudflare) / وب سایت یخ زده است (Pantheon)"
+
+msgid "Temporarily disabled (Shopify)"
+msgstr "به طور موقت غیرفعال شده است"
+
+msgid "Unauthorized (AWS ELB)"
+msgstr "مجاز نیست"
+
+msgid "Network read timeout error"
+msgstr "خطای زمان انتظار خواندن شبکه"
+
+msgid "Network connect timeout error"
+msgstr "خطای زمان انتظار اتصال شبکه"
+
+msgid "Unexpected token (Shopify)"
+msgstr "توکن غیرمنتظره"
+
+msgid "Request denied (LinkedIn)"
+msgstr "درخواست رد شد"
+
+msgid "HTTP/2 GOAWAY (AWS ELB)"
+msgstr "بستن اتصال HTTP/2"
+
+msgid "[Unknown]"
+msgstr "کد وضعیت ناشناس"
+
+msgid "Nonstandard success response (ESMTP)"
+msgstr "پاسخ موفقیت غیر استاندارد (ESMTP)"
+
+msgid "System status, or system help reply"
+msgstr "وضعیت سیستم یا پیام کمک سیستم"
+
+msgid "Help message"
+msgstr "پیام راهنما"
+
+msgid "SMTP service ready (LMTP)"
+msgstr "سرویس SMTP آماده است (LMTP)"
+
+msgid "Service ready - server is ready to receive mail"
+msgstr "سرویس آماده است - سرور ایمیل آماده دریافت ایمیل است"
+
+msgid "Service closing - connection is being closed"
+msgstr "سرویس در حال بسته شدن است - اتصال در حال بسته شدن است"
+
+msgid "Authentication successful"
+msgstr "احراز هویت موفقیت‌آمیز بود"
+
+msgid "Requested mail action taken and completed"
+msgstr "اقدام ایمیل درخواستی انجام و تکمیل شد"
+
+msgid "User not local - will forward to another address"
+msgstr "کاربر در این سرور نیست - به آدرس دیگری ارسال خواهد شد"
+
+msgid "Cannot verify recipient, but will attempt delivery"
+msgstr "نمی‌توان گیرنده را تأیید کرد، اما تلاش برای ارسال خواهد شد"
+
+msgid "Message accepted for delivery (DSN)"
+msgstr "ایمیل برای ارسال پذیرفته شد (DSN)"
+
+msgid "User name is a mailbox"
+msgstr "نام کاربری یک صندوق پستی است"
+
+msgid "Authentication challenge - please respond"
+msgstr "چالش احراز هویت - لطفاً پاسخ دهید"
+
+msgid "Start mail input - end with <CRLF>.<CRLF>"
+msgstr "شروع ورودی ایمیل - پایان با <CRLF>.<CRLF>"
+
+msgid "Continue (LMTP)"
+msgstr "ادامه (LMTP)"
+
+msgid "Service not available - connection closing, try again later"
+msgstr "سرویس در دسترس نیست - اتصال بسته می‌شود، لطفاً بعداً دوباره تلاش کنید"
+
+msgid "Mailbox busy or temporarily unavailable (Exchange)"
+msgstr "صندوق پستی مشغول یا به طور موقت در دسترس نیست (Exchange)"
+
+msgid "Connection rate limit exceeded (Postfix)"
+msgstr "از حد مجاز نرخ اتصال فراتر رفته است (Postfix)"
+
+msgid "Too many concurrent connections (Postfix)"
+msgstr "تعداد اتصالات همزمان خیلی زیاد است (Postfix)"
+
+msgid "Unable to establish connection (Postfix)"
+msgstr "امکان برقراری اتصال وجود ندارد (Postfix)"
+
+msgid "Connection timed out (Postfix)"
+msgstr "زمان اتصال به پایان رسید (Postfix)"
+
+msgid "Connection dropped due to error (Postfix)"
+msgstr "اتصال به دلیل خطا قطع شد (Postfix)"
+
+msgid "Mailbox temporarily locked (Exchange)"
+msgstr "صندوق پستی به طور موقت قفل شده است (Exchange)"
+
+msgid "Too many recipients (Postfix/Exim)"
+msgstr "تعداد گیرندگان خیلی زیاد است (Postfix/Exim)"
+
+msgid "Mail server error (Exchange)"
+msgstr "خطای سرور ایمیل (Exchange)"
+
+msgid "Received loop detected (Exim)"
+msgstr "دریافت حلقه‌ای شناسایی شد (Exim)"
+
+msgid "Too many hop count (Exim)"
+msgstr "تعداد پرش‌ها خیلی زیاد است (Exim)"
+
+msgid "DNS lookup failed (Postfix)"
+msgstr "جستجوی DNS ناموفق بود (Postfix)"
+
+msgid "Unable to authenticate (Postfix)"
+msgstr "امکان احراز هویت وجود ندارد (Postfix)"
+
+msgid "TLS handshake failed (Postfix)"
+msgstr "مصافحه TLS ناموفق بود (Postfix)"
+
+msgid "SMTP protocol violation (Postfix)"
+msgstr "نقض پروتکل SMTP (Postfix)"
+
+msgid "Message size exceeds limit (Exchange)"
+msgstr "اندازه ایمیل از حد مجاز فراتر رفته است (Exchange)"
+
+msgid "Message rate limit exceeded (Postfix)"
+msgstr "از حد مجاز نرخ ایمیل فراتر رفته است (Postfix)"
+
+msgid "Mailbox quota exceeded - temporary"
+msgstr "سهمیه صندوق پستی پر شده است - وضعیت موقت"
+
+msgid "Domain not found (Postfix)"
+msgstr "دامنه پیدا نشد (Postfix)"
+
+msgid "Message header invalid (Postfix)"
+msgstr "هدر ایمیل نامعتبر است (Postfix)"
+
+msgid "Bounce loop detected (Postfix)"
+msgstr "بازگشت حلقه‌ای شناسایی شد (Postfix)"
+
+msgid "Unable to route (Postfix)"
+msgstr "امکان مسیریابی وجود ندارد (Postfix)"
+
+msgid "Sender domain not found (Postfix)"
+msgstr "دامنه فرستنده پیدا نشد (Postfix)"
+
+msgid "Recipient domain not found (Postfix)"
+msgstr "دامنه گیرنده پیدا نشد (Postfix)"
+
+msgid "Greylisting in progress - please try again (Postgrey)"
+msgstr "در حال بررسی Greylisting - لطفاً بعداً دوباره تلاش کنید (Postgrey)"
+
+msgid "Spam filtering in progress (SpamAssassin)"
+msgstr "در حال فیلتر کردن هرزنامه (SpamAssassin)"
+
+msgid "Virus scanning in progress (ClamAV)"
+msgstr "در حال اسکن ویروس (ClamAV)"
+
+msgid "Mailbox unavailable - try again later"
+msgstr "صندوق پستی در دسترس نیست - لطفاً بعداً دوباره تلاش کنید"
+
+msgid "Requested action aborted - error in processing"
+msgstr "اقدام درخواستی لغو شد - خطا در طول پردازش"
+
+msgid "Insufficient system storage - try again later"
+msgstr "فضای ذخیره‌سازی سیستم کافی نیست - لطفاً بعداً دوباره تلاش کنید"
+
+msgid "Too many messages for this recipient (Exchange)"
+msgstr "ایمیل برای این گیرنده خیلی زیاد است (Exchange)"
+
+msgid "TLS not available (Postfix)"
+msgstr "TLS در دسترس نیست (Postfix)"
+
+msgid "Server unable to accept messages (Postfix)"
+msgstr "سرور نمی‌تواند ایمیل دریافت کند (Postfix)"
+
+msgid "Temporary failure in DNS lookup (Exim)"
+msgstr "شکست موقت در جستجوی DNS (Exim)"
+
+msgid "Quota exceeded - temporary"
+msgstr "از سهمیه فراتر رفته است - وضعیت موقت"
+
+msgid "Message too big - temporary"
+msgstr "ایمیل خیلی بزرگ است - وضعیت موقت"
+
+msgid "Too many messages per connection"
+msgstr "تعداد ایمیل در هر اتصال خیلی زیاد است"
+
+msgid "Load average too high (Postfix)"
+msgstr "میانگین بار بسیار زیاد است (Postfix)"
+
+msgid "Connection refused (Postfix)"
+msgstr "اتصال رد شد (Postfix)"
+
+msgid "Send rate limit exceeded (Postfix)"
+msgstr "از حد مجاز نرخ ارسال فراتر رفته است (Postfix)"
+
+msgid "Recipient rate limit exceeded (Postfix)"
+msgstr "از حد مجاز نرخ گیرنده فراتر رفته است (Postfix)"
+
+msgid "Sender rate limit exceeded (Postfix)"
+msgstr "از حد مجاز نرخ فرستنده فراتر رفته است (Postfix)"
+
+msgid "IP address rate limit exceeded (Postfix)"
+msgstr "از حد مجاز نرخ آدرس IP فراتر رفته است (Postfix)"
+
+msgid "MX lookup failed (Postfix)"
+msgstr "جستجوی MX ناموفق بود (Postfix)"
+
+msgid "A record lookup failed (Postfix)"
+msgstr "جستجوی رکورد A ناموفق بود (Postfix)"
+
+msgid "PTR record lookup failed (Postfix)"
+msgstr "جستجوی رکورد PTR ناموفق بود (Postfix)"
+
+msgid "Greylisting active - please try again (Postgrey)"
+msgstr "Greylisting فعال است - لطفاً بعداً دوباره تلاش کنید (Postgrey)"
+
+msgid "Access denied - unknown domain for sender or recipient"
+msgstr "دسترسی رد شد - دامنه برای فرستنده یا گیرنده ناشناس است"
+
+msgid "Sender address rejected - domain not verified (DMARC pending)"
+msgstr "آدرس فرستنده رد شد - دامنه تأیید نشده است (DMARC در انتظار)"
+
+msgid "Recipient address rejected - domain not verified (DMARC pending)"
+msgstr "آدرس گیرنده رد شد - دامنه تأیید نشده است (DMARC در انتظار)"
+
+msgid "DKIM verification pending - temporary failure"
+msgstr "تأیید DKIM در انتظار - شکست موقت"
+
+msgid "SPF verification pending - temporary failure"
+msgstr "تأیید SPF در انتظار - شکست موقت"
+
+msgid "DMARC verification pending - temporary failure"
+msgstr "تأیید DMARC در انتظار - شکست موقت"
+
+msgid "DNSBL lookup temporary failure"
+msgstr "جستجوی DNSBL شکست موقت"
+
+msgid "RHSBL lookup temporary failure"
+msgstr "جستجوی RHSBL شکست موقت"
+
+msgid "URI DNSBL lookup temporary failure"
+msgstr "جستجوی URI DNSBL شکست موقت"
+
+msgid "Temporary authentication failure (Dovecot)"
+msgstr "شکست موقت احراز هویت (Dovecot)"
+
+msgid "Temporary authorization failure (Sendmail)"
+msgstr "شکست موقت مجوز (Sendmail)"
+
+msgid "Rate limit exceeded per sender (Exim)"
+msgstr "از حد مجاز نرخ هر فرستنده فراتر رفته است (Exim)"
+
+msgid "Rate limit exceeded per recipient (Exim)"
+msgstr "از حد مجاز نرخ هر گیرنده فراتر رفته است (Exim)"
+
+msgid "Rate limit exceeded per domain (Exim)"
+msgstr "از حد مجاز نرخ هر دامنه فراتر رفته است (Exim)"
+
+msgid "Rate limit exceeded per IP (Exim)"
+msgstr "از حد مجاز نرخ هر IP فراتر رفته است (Exim)"
+
+msgid "Message queued for later delivery (Postfix)"
+msgstr "ایمیل در صف برای ارسال بعدی قرار گرفت (Postfix)"
+
+msgid "Delivery delayed due to policy (Exchange)"
+msgstr "ارسال به دلیل سیاست به تأخیر افتاد (Exchange)"
+
+msgid "Temporary failure in content filter"
+msgstr "شکست موقت در فیلتر محتوا"
+
+msgid "Temporary failure in antivirus scanner"
+msgstr "شکست موقت در اسکنر آنتی ویروس"
+
+msgid "Temporary failure in spam filter"
+msgstr "شکست موقت در فیلتر هرزنامه"
+
+msgid "Temporary failure in milter (Postfix)"
+msgstr "شکست موقت در milter (Postfix)"
+
+msgid "Greylisting - try again later"
+msgstr "Greylisting - لطفاً بعداً دوباره تلاش کنید"
+
+msgid "DDoS protection active - try again later"
+msgstr "محافظت DDoS فعال است - لطفاً بعداً دوباره تلاش کنید"
+
+msgid "SMTP policy violation - temporary"
+msgstr "نقض سیاست SMTP - وضعیت موقت"
+
+msgid "Temporary error in RCPT TO processing"
+msgstr "خطای موقت در پردازش RCPT TO"
+
+msgid "Temporary error in MAIL FROM processing"
+msgstr "خطای موقت در پردازش MAIL FROM"
+
+msgid "Temporary error in EHLO/HELO processing"
+msgstr "خطای موقت در پردازش EHLO/HELO"
+
+msgid "Temporary error in DATA processing"
+msgstr "خطای موقت در پردازش DATA"
+
+msgid "Temporary error - service busy, try again later"
+msgstr "خطای موقت - سرویس مشغول است، لطفاً بعداً دوباره تلاش کنید"
+
+msgid "Syntax error - command unrecognized or too long"
+msgstr "خطای نحوی - دستور ناشناخته یا خیلی طولانی است"
+
+msgid "Syntax error in parameters or arguments"
+msgstr "خطای نحوی در پارامترها یا آرگومان‌ها"
+
+msgid "Command not implemented"
+msgstr "دستور استفاده نشده است"
+
+msgid "Bad sequence of commands"
+msgstr "ترتیب دستورات نادرست است"
+
+msgid "Command parameter not implemented"
+msgstr "پارامتر دستور استفاده نشده است"
+
+msgid "Version not supported (ESMTP)"
+msgstr "نسخه پشتیبانی نمی‌شود (ESMTP)"
+
+msgid "Mailbox path invalid (LMTP)"
+msgstr "مسیر صندوق پستی نامعتبر است (LMTP)"
+
+msgid "Too many commands in this session (Postfix)"
+msgstr "دستورات زیادی در این جلسه وجود دارد (Postfix)"
+
+msgid "Recipient limit exceeded (Postfix)"
+msgstr "از حد مجاز گیرنده فراتر رفته است (Postfix)"
+
+msgid "Sender limit exceeded (Postfix)"
+msgstr "از حد مجاز فرستنده فراتر رفته است (Postfix)"
+
+msgid "Domain limit exceeded (Postfix)"
+msgstr "از حد مجاز دامنه فراتر رفته است (Postfix)"
+
+msgid "Mailbox does not exist (Exchange)"
+msgstr "صندوق پستی وجود ندارد (Exchange)"
+
+msgid "DNS failure - permanent"
+msgstr "DNS شکست خورد - خطای دائمی"
+
+msgid "Address type not supported (Postfix)"
+msgstr "نوع آدرس پشتیبانی نمی‌شود (Postfix)"
+
+msgid "Unable to open mailbox (Postfix)"
+msgstr "امکان باز کردن صندوق پستی وجود ندارد (Postfix)"
+
+msgid "Mailbox locked - permanent"
+msgstr "صندوق پستی قفل شده است - وضعیت دائمی"
+
+msgid "Message rejected due to policy (Exchange)"
+msgstr "ایمیل به دلیل سیاست رد شد (Exchange)"
+
+msgid "Content rejected - permanent"
+msgstr "محتوا رد شد - وضعیت دائمی"
+
+msgid "Attachment type not allowed"
+msgstr "نوع فایل پیوست مجاز نیست"
+
+msgid "Message encoding not supported"
+msgstr "رمزگذاری ایمیل پشتیبانی نمی‌شود"
+
+msgid "Sender domain does not exist - permanent"
+msgstr "دامنه فرستنده وجود ندارد - وضعیت دائمی"
+
+msgid "Domain does not accept mail or is closing"
+msgstr "دامنه ایمیل قبول نمی‌کند یا در حال بسته شدن است"
+
+msgid "Recipient domain does not exist - permanent"
+msgstr "دامنه گیرنده وجود ندارد - وضعیت دائمی"
+
+msgid "Mailbox quota exceeded - permanent"
+msgstr "سهمیه صندوق پستی پر شده است - وضعیت دائمی"
+
+msgid "Message size exceeds limit - permanent"
+msgstr "اندازه ایمیل از حد مجاز فراتر رفته است - وضعیت دائمی"
+
+msgid "Authentication required (Sendmail)"
+msgstr "نیاز به احراز هویت (Sendmail)"
+
+msgid "Authentication failed (Sendmail)"
+msgstr "احراز هویت ناموفق بود (Sendmail)"
+
+msgid "Authentication mechanism not supported"
+msgstr "مکانیسم احراز هویت پشتیبانی نمی‌شود"
+
+msgid "Authentication credentials invalid"
+msgstr "اعتبارنامه احراز هویت نامعتبر است"
+
+msgid "Authentication account expired"
+msgstr "حساب احراز هویت منقضی شده است"
+
+msgid "Access denied - authentication required"
+msgstr "دسترسی رد شد - نیاز به احراز هویت"
+
+msgid "Access denied (Sendmailism)"
+msgstr "دسترسی رد شد (Sendmail)"
+
+msgid "Access denied - not authenticated"
+msgstr "دسترسی رد شد - احراز هویت نشده است"
+
+msgid "Access denied - account locked"
+msgstr "دسترسی رد شد - حساب قفل شده است"
+
+msgid "Access denied - account disabled"
+msgstr "دسترسی رد شد - حساب غیرفعال شده است"
+
+msgid "Authentication failed"
+msgstr "احراز هویت ناموفق بود"
+
+msgid "Authentication required for relay (Postfix)"
+msgstr "ارسال نیاز به احراز هویت دارد (Postfix)"
+
+msgid "Authentication failed for relay (Postfix)"
+msgstr "احراز هویت برای ارسال ناموفق بود (Postfix)"
+
+msgid "Encryption required (STARTTLS)"
+msgstr "نیاز به اتصال رمزگذاری شده (STARTTLS)"
+
+msgid "TLS required for this recipient"
+msgstr "این گیرنده نیاز به رمزگذاری TLS دارد"
+
+msgid "Encryption strength insufficient"
+msgstr "قدرت رمزگذاری کافی نیست"
+
+msgid "Certificate validation failed"
+msgstr "اعتبارسنجی گواهی ناموفق بود"
+
+msgid "Invalid TLS certificate"
+msgstr "گواهی TLS نامعتبر است"
+
+msgid "TLS protocol version not supported"
+msgstr "نسخه پروتکل TLS پشتیبانی نمی‌شود"
+
+msgid "Cipher suite not supported"
+msgstr "مجموعه رمز پشتیبانی نمی‌شود"
+
+msgid "Access denied - no valid recipient"
+msgstr "دسترسی رد شد - گیرنده معتبری وجود ندارد"
+
+msgid "Access denied - no valid sender"
+msgstr "دسترسی رد شد - فرستنده معتبری وجود ندارد"
+
+msgid "Access denied - domain not allowed"
+msgstr "دسترسی رد شد - دامنه مجاز نیست"
+
+msgid "Access denied - IP address blocked (permanent)"
+msgstr "دسترسی رد شد - آدرس IP مسدود شده است (دائمی)"
+
+msgid "Access denied - sender domain blacklisted"
+msgstr "دسترسی رد شد - دامنه فرستنده در لیست سیاه قرار دارد"
+
+msgid "Mailbox unavailable - requested action not taken"
+msgstr "صندوق پستی در دسترس نیست - اقدامی صورت نگرفت"
+
+msgid "User not local - please try forwarding address"
+msgstr "کاربر در این سرور نیست - لطفاً از آدرس ارسال استفاده کنید"
+
+msgid "Requested action aborted - exceeded storage allocation"
+msgstr "اقدام درخواستی لغو شد - از تخصیص فضای ذخیره‌سازی فراتر رفته است"
+
+msgid "Mailbox name not allowed"
+msgstr "نام صندوق پستی مجاز نیست"
+
+msgid "Requested action rejected - access denied"
+msgstr "اقدام درخواستی رد شد - دسترسی رد شد"
+
+msgid "MAIL FROM/RCPT TO parameters not recognized"
+msgstr "پارامترهای MAIL FROM/RCPT TO شناسایی نشدند"
+
+msgid "Domain not allowed to send (DMARC reject)"
+msgstr "دامنه مجاز به ارسال نیست (DMARC reject)"
+
+msgid "Too many duplicate messages - permanent"
+msgstr "ایمیل‌های تکراری زیاد است - وضعیت دائمی"
+
+msgid "Sender address rejected - domain not in SPF"
+msgstr "آدرس فرستنده رد شد - دامنه در SPF نیست"
+
+msgid "Sender address rejected - DKIM verification failed"
+msgstr "آدرس فرستنده رد شد - تأیید DKIM ناموفق بود"
+
+msgid "Sender address rejected - DMARC policy reject"
+msgstr "آدرس فرستنده رد شد - سیاست DMARC رد کرد"
+
+msgid "Recipient address rejected - DMARC policy reject"
+msgstr "آدرس گیرنده رد شد - سیاست DMARC رد کرد"
+
+msgid "Message rejected due to spam content"
+msgstr "ایمیل به دلیل محتوای هرزنامه رد شد"
+
+msgid "Message rejected due to virus detected"
+msgstr "ایمیل به دلیل تشخیص ویروس رد شد"
+
+msgid "Message rejected due to malicious content"
+msgstr "ایمیل به دلیل محتوای مخرب رد شد"
+
+msgid "Message rejected due to phishing detection"
+msgstr "ایمیل به دلیل تشخیص فیشینگ رد شد"
+
+msgid "Message rejected due to malware detection"
+msgstr "ایمیل به دلیل تشخیص بدافزار رد شد"
+
+msgid "Message rejected due to policy - permanent"
+msgstr "ایمیل به دلیل سیاست رد شد - وضعیت دائمی"
+
+msgid "Message rejected due to content filtering"
+msgstr "ایمیل به دلیل فیلتر محتوا رد شد"
+
+msgid "Message rejected due to reputation"
+msgstr "ایمیل به دلیل شهرت رد شد"
+
+msgid "Access denied - access_map violation"
+msgstr "دسترسی رد شد - نقض access_map"
+
+msgid "Access denied - SMTP client listed in RBL"
+msgstr "دسترسی رد شد - کلاینت SMTP در RBL قرار دارد"
+
+msgid "Access denied - relay not authorized"
+msgstr "دسترسی رد شد - ارسال مجاز نیست"
+
+msgid "Access denied - unknown SMTP client hostname"
+msgstr "دسترسی رد شد - نام میزبان کلاینت SMTP ناشناس است"
+
+msgid "Access denied - bad syntax for client HELO hostname"
+msgstr "دسترسی رد شد - نحو نام میزبان HELO کلاینت نادرست است"
+
+msgid "Access denied - SMTP client hostname rejected"
+msgstr "دسترسی رد شد - نام میزبان کلاینت SMTP رد شد"
+
+msgid "Access denied - unknown client HELO hostname"
+msgstr "دسترسی رد شد - نام میزبان HELO کلاینت ناشناس است"
+
+msgid "Access denied - invalid domain (not FQDN)"
+msgstr "دسترسی رد شد - دامنه نامعتبر است (FQDN نیست)"
+
+msgid "Access denied - domain not qualified"
+msgstr "دسترسی رد شد - دامنه واجد شرایط نیست"
+
+msgid "Access denied - mail server misconfigured"
+msgstr "دسترسی رد شد - پیکربندی سرور ایمیل نادرست است"
+
+msgid "Access denied - open relay not allowed"
+msgstr "دسترسی رد شد - ارسال باز مجاز نیست"
+
+msgid "Access denied - proxy not allowed"
+msgstr "دسترسی رد شد - استفاده از پروکسی مجاز نیست"
+
+msgid "Access denied - dynamic IP not allowed"
+msgstr "دسترسی رد شد - IP پویا مجاز نیست"
+
+msgid "Access denied - residential IP not allowed"
+msgstr "دسترسی رد شد - IP مسکونی مجاز نیست"
+
+msgid "Access denied - VPN/Tor detected"
+msgstr "دسترسی رد شد - VPN/Tor شناسایی شد"
+
+msgid "Access denied - Spamhaus DROP listed"
+msgstr "دسترسی رد شد - در لیست Spamhaus DROP قرار دارد"
+
+msgid "Access denied - URL listed in URIBL"
+msgstr "دسترسی رد شد - URL در URIBL قرار دارد"
+
+msgid "Access denied - domain in RHSBL"
+msgstr "دسترسی رد شد - دامنه در RHSBL قرار دارد"
+
+msgid "Access denied - IP in DNSWL (policy)"
+msgstr "دسترسی رد شد - IP در DNSWL است (سیاست)"
+
+msgid "Delivery failed - mailbox not found"
+msgstr "ارسال ناموفق بود - صندوق پستی پیدا نشد"
+
+msgid "Delivery failed - recipient not local"
+msgstr "ارسال ناموفق بود - گیرنده در این سرور نیست"
+
+msgid "Delivery failed - recipient rejected"
+msgstr "ارسال ناموفق بود - گیرنده رد شد"
+
+msgid "Delivery failed - sender rejected"
+msgstr "ارسال ناموفق بود - فرستنده رد شد"
+
+msgid "Delivery failed - relay rejected"
+msgstr "ارسال ناموفق بود - ارسال رد شد"
+
+msgid "Delivery failed - DNS permanent error"
+msgstr "ارسال ناموفق بود - خطای دائمی DNS"
+
+msgid "Delivery failed - MX permanent error"
+msgstr "ارسال ناموفق بود - خطای دائمی MX"
+
+msgid "Delivery failed - A record permanent error"
+msgstr "ارسال ناموفق بود - خطای دائمی رکورد A"
+
+msgid "Delivery failed - PTR record permanent error"
+msgstr "ارسال ناموفق بود - خطای دائمی رکورد PTR"
+
+msgid "Delivery failed - policy permanent error"
+msgstr "ارسال ناموفق بود - خطای دائمی سیاست"
+
+msgid "DSN: Success - delivery status notification"
+msgstr "DSN: موفقیت - اعلان وضعیت تحویل"
+
+msgid "DSN: Delivery delayed"
+msgstr "DSN: تحویل به تأخیر افتاد"
+
+msgid "DSN: Delivery failed - permanent"
+msgstr "DSN: تحویل ناموفق بود - دائمی"
+
+msgid "DSN: Delivery failed - temporary"
+msgstr "DSN: تحویل ناموفق بود - موقت"
+
+msgid "DSN: Message expired"
+msgstr "DSN: ایمیل منقضی شده است"
+
+msgid "DSN: Message bounced"
+msgstr "DSN: ایمیل برگشت خورد"
+
+msgid "DSN: Message discarded"
+msgstr "DSN: ایمیل دور انداخته شد"
+
+msgid "DSN: Message filtered"
+msgstr "DSN: ایمیل فیلتر شد"
+
+msgid "DSN: Message quarantined"
+msgstr "DSN: ایمیل قرنطینه شد"
+
+msgid "DSN: Message held for review"
+msgstr "DSN: ایمیل برای بررسی متوقف شد"
+
+msgid "MTA-STS policy required"
+msgstr "سیاست MTA-STS مورد نیاز است"
+
+msgid "MTA-STS policy validation failed"
+msgstr "اعتبارسنجی سیاست MTA-STS ناموفق بود"
+
+msgid "TLS reporting required"
+msgstr "گزارش TLS مورد نیاز است"
+
+msgid "TLS report requested"
+msgstr "گزارش TLS درخواست شد"
+
+msgid "SMTP MTA Strict Transport Security active"
+msgstr "SMTP MTA Strict Transport Security فعال است"
+
+msgid "DANE validation required"
+msgstr "اعتبارسنجی DANE مورد نیاز است"
+
+msgid "DANE validation failed"
+msgstr "اعتبارسنجی DANE ناموفق بود"
+
+msgid "TLSA record missing"
+msgstr "رکورد TLSA وجود ندارد"
+
+msgid "Certificate name mismatch"
+msgstr "نام گواهی مطابقت ندارد"
+
+msgid "Certificate expired"
+msgstr "گواهی منقضی شده است"
+
+msgid "AUTH LOGIN required"
+msgstr "AUTH LOGIN مورد نیاز است"
+
+msgid "AUTH PLAIN required"
+msgstr "AUTH PLAIN مورد نیاز است"
+
+msgid "AUTH CRAM-MD5 required"
+msgstr "AUTH CRAM-MD5 مورد نیاز است"
+
+msgid "AUTH DIGEST-MD5 required"
+msgstr "AUTH DIGEST-MD5 مورد نیاز است"
+
+msgid "AUTH GSSAPI required"
+msgstr "AUTH GSSAPI مورد نیاز است"
+
+msgid "AUTH NTLM required"
+msgstr "AUTH NTLM مورد نیاز است"
+
+msgid "AUTH SCRAM required"
+msgstr "AUTH SCRAM مورد نیاز است"
+
+msgid "AUTH OAUTHBEARER required"
+msgstr "AUTH OAUTHBEARER مورد نیاز است"
+
+msgid "AUTH XOAUTH2 required"
+msgstr "AUTH XOAUTH2 مورد نیاز است"
+
+msgid "Exchange: Mailbox database error"
+msgstr "Exchange: خطای پایگاه داده صندوق پستی"
+
+msgid "Exchange: Store driver error"
+msgstr "Exchange: خطای درایور ذخیره‌سازی"
+
+msgid "Exchange: Transport agent error"
+msgstr "Exchange: خطای عامل حمل و نقل"
+
+msgid "Exchange: Content conversion error"
+msgstr "Exchange: خطای تبدیل محتوا"
+
+msgid "Exchange: Routing error"
+msgstr "Exchange: خطای مسیریابی"
+
+msgid "Exchange: Mail flow stalled"
+msgstr "Exchange: جریان ایمیل متوقف شد"
+
+msgid "Exchange: Shadow redundancy error"
+msgstr "Exchange: خطای افزونگی سایه"
+
+msgid "Exchange: Safety net error"
+msgstr "Exchange: خطای شبکه ایمنی"
+
+msgid "Exchange: Queue database error"
+msgstr "Exchange: خطای پایگاه داده صف"
+
+msgid "Exchange: Message throttled"
+msgstr "Exchange: ایمیل محدود شد"
+
+msgid "Postfix: Bounce queue error"
+msgstr "Postfix: خطای صف برگشت"
+
+msgid "Postfix: Deferred queue error"
+msgstr "Postfix: خطای صف تعویق"
+
+msgid "Postfix: Hold queue error"
+msgstr "Postfix: خطای صف نگهداری"
+
+msgid "Postfix: Incoming queue error"
+msgstr "Postfix: خطای صف ورودی"
+
+msgid "Postfix: Active queue error"
+msgstr "Postfix: خطای صف فعال"
+
+msgid "Postfix: Corrupted queue file"
+msgstr "Postfix: فایل صف خراب است"
+
+msgid "Sendmail: Queue runner error"
+msgstr "Sendmail: خطای اجراکننده صف"
+
+msgid "Sendmail: Alias database error"
+msgstr "Sendmail: خطای پایگاه داده نام مستعار"
+
+msgid "Sendmail: Virtuser table error"
+msgstr "Sendmail: خطای جدول کاربر مجازی"
+
+msgid "Sendmail: Mailer definition error"
+msgstr "Sendmail: خطای تعریف فرستنده"
+
+msgid "Exim: Router configuration error"
+msgstr "Exim: خطای پیکربندی مسیریاب"
+
+msgid "Exim: Transport configuration error"
+msgstr "Exim: خطای پیکربندی حمل و نقل"
+
+msgid "Exim: Director configuration error"
+msgstr "Exim: خطای پیکربندی کارگردان"
+
+msgid "Exim: Retry configuration error"
+msgstr "Exim: خطای پیکربندی تلاش مجدد"
+
+msgid "Exim: Rewrite configuration error"
+msgstr "Exim: خطای پیکربندی بازنویسی"
+
+msgid "Exim: Authentication configuration error"
+msgstr "Exim: خطای پیکربندی احراز هویت"
+
+msgid "Exim: ACL configuration error"
+msgstr "Exim: خطای پیکربندی ACL"
+
+msgid "Exim: Local_scan configuration error"
+msgstr "Exim: خطای پیکربندی Local_scan"
+
+msgid "Exim: Lookup configuration error"
+msgstr "Exim: خطای پیکربندی جستجو"
+
+msgid "Exim: Expansion configuration error"
+msgstr "Exim: خطای پیکربندی گسترش"
+
+msgid "HTTP Protocol Versions"
+msgstr "نسخه‌های پروتکل HTTP"
+
+msgid "Protocol"
+msgstr "پروتکل"
+
+msgid "Request %"
+msgstr "درصد درخواست"
+
+msgid "Bandwidth %"
+msgstr "درصد پهنای باند"
+
+msgid "Each request requires a new connection"
+msgstr "هر درخواست نیاز به ایجاد اتصال جدید دارد"
+
+msgid "Multiple requests can reuse one connection"
+msgstr "چندین درخواست می‌توانند از یک اتصال استفاده مجدد کنند"
+
+msgid "Multiple requests in parallel over one connection"
+msgstr "می‌توان چندین درخواست را به صورت موازی از طریق یک اتصال پردازش کرد"
+
+msgid "Faster connection, better performance on poor networks"
+msgstr "اتصال سریع‌تر، عملکرد بهتر در شبکه‌های ضعیف"
+
+msgid "No protocol data available"
+msgstr "داده پروتکلی در دسترس نیست"
+
+msgid "of requests use HTTP/1.0"
+msgstr "از درخواست‌ها از پروتکل HTTP/1.0 استفاده می‌کنند"
+
+msgid "From access logs"
+msgstr "از لاگ‌های دسترسی"
+
+msgid "No HTTP/2 requests detected"
+msgstr "هیچ درخواست پروتکل HTTP/2 شناسایی نشد"
+
+msgid "All requests are HTTP/1.0, no HTTP/2 requests"
+msgstr "همه درخواست‌ها HTTP/1.0 هستند، درخواست HTTP/2 وجود ندارد"
+
+msgid "HTTP/3 not detected"
+msgstr "هیچ درخواست پروتکل HTTP/3 شناسایی نشد"
+
+msgid "all requests do not include QUIC/HTTP/3 protocol requests"
+msgstr "هیچ یک از درخواست‌ها شامل درخواست پروتکل QUIC/HTTP/3 نیست"
+
+msgid "Mail Authentication Statistics"
+msgstr "آمار احراز هویت ایمیل"
+
+msgid "Authentication"
+msgstr "نوع احراز هویت"
+
+msgid "Pass"
+msgstr "گذر"
+
+msgid "Fail"
+msgstr "شکست"
+
+msgid "Softfail"
+msgstr "شکست نرم"
+
+msgid "Neutral"
+msgstr "خنثی"
+
+msgid "None"
+msgstr "هیچ"
+
+msgid "Mail Queue Delay Statistics"
+msgstr "آمار تأخیر صف ایمیل"
+
+msgid "Delay Range"
+msgstr "محدوده تأخیر"
+
+msgid "Count"
+msgstr "تعداد"
+
+msgid "Percentage"
+msgstr "درصد"
+
+msgid "TLS Encryption Statistics"
+msgstr "آمار رمزگذاری TLS"
+
+msgid "TLS Versions"
+msgstr "نسخه‌های TLS"
+
+msgid "Top Ciphers"
+msgstr "مجموعه رمزهای رایج"
+
+msgid "robot_hits_detail_both"
+msgstr "کل درخواست‌ها: %s بار (صفحه عادی: %s بار، robots.txt: %s بار)"
+
+msgid "robot_hits_detail_only_robots"
+msgstr "فقط به robots.txt دسترسی یافته: %s بار، داده صفحه دیگری دریافت نشده است"
+
+msgid "robot_hits_detail_normal"
+msgstr "درخواست صفحه عادی: %s بار"
+
+msgid "Troubleshooting"
+msgstr "رفع اشکال"
+
+msgid "Did you use the correct URL?"
+msgstr "آیا از URL صحیح استفاده کرده‌اید؟"
+
+msgid "Example:"
+msgstr "مثال:"
+
+msgid "Did you use correct config parameter?"
+msgstr "آیا از پارامتر پیکربندی صحیح استفاده کرده‌اید؟"
+
+msgid "Example: If your config file is awstats.mysite.conf, use -config=mysite"
+msgstr "مثال: اگر فایل پیکربندی شما awstats.mysite.conf است، از -config=mysite استفاده کنید"
+
+msgid "Did you create your config file 'awstats.$SiteConfig.conf'?"
+msgstr "آیا فایل پیکربندی 'awstats.$SiteConfig.conf' را ایجاد کرده‌اید؟"
+
+msgid "If not, you can run \"awstats_configure.pl\" from command line, or create it manually."
+msgstr "اگر نه، می‌توانید \"awstats_configure.pl\" را از خط فرمان اجرا کنید، یا آن را به صورت دستی ایجاد کنید."
+
+msgid "Setup"
+msgstr "تنظیم"
+
+msgid "file, web server or permissions may be wrong."
+msgstr "فایل، سرور وب یا مجوزها ممکن است اشتباه باشند."
+
+msgid "Check config file, permissions and AWStats documentation (in 'docs' directory)."
+msgstr "فایل پیکربندی، مجوزها و مستندات AWStats (در دایرکتوری 'docs') را بررسی کنید."
+
+msgid "Warning: Can't find language files for \"%s\". English will be used."
+msgstr "هشدار: فایل‌های زبان برای \"%s\" یافت نشد. از زبان انگلیسی استفاده خواهد شد."
+
+#------------------------------------------------------------------------------
+# مدیریت خطا و سیگنال
+#------------------------------------------------------------------------------
+
+msgid "%s process (ID %s) interrupted by signal %s."
+msgstr "فرآیند %s (شناسه %s) توسط سیگنال %s قطع شد."
+
+msgid "An AWStats update process seems to be already running for this config file. Try later. If this is not true, remove manually lock file"
+msgstr "به نظر می‌رسد یک فرآیند به‌روزرسانی AWStats برای این فایل پیکربندی در حال اجرا است. لطفاً بعداً تلاش کنید. اگر چنین نیست، فایل قفل را به صورت دستی حذف کنید"
+
+#------------------------------------------------------------------------------
+# عنوان‌های آماری جدید
+#------------------------------------------------------------------------------
+msgid "Report Overview"
+msgstr "نمای کلی گزارش"
+
+msgid "Monthly Statistics"
+msgstr "آمار ماهانه"
+
+msgid "Daily Statistics"
+msgstr "آمار روزانه"
+
+msgid "Statistics by Day of Week"
+msgstr "آمار بر اساس روز هفته"
+
+msgid "Hourly Page Views"
+msgstr "تعداد بازدید در ساعت"
+
+msgid "Traffic Sources"
+msgstr "منابع ترافیک"
+
+msgid "Other Sources"
+msgstr "سایر منابع"
+
+msgid "tooltip_1"
+msgstr "تعداد جلسات بازدیدکننده در وب سایت. همان بازدیدکننده پس از بیش از ۳۰ دقیقه عدم فعالیت که دوباره بازدید کند، به عنوان یک بازدید جدید محاسبه می‌شود"
+
+msgid "tooltip_2"
+msgstr "تعداد بازدیدکنندگان متفاوتی که در بازه زمانی انتخاب شده از وب سایت شما بازدید کرده‌اند. بر اساس آدرس IP"
+
+msgid "tooltip_3"
+msgstr "تعداد درخواست‌هایی که به عنوان صفحه محاسبه می‌شوند (مانند HTML، PHP، ASP و غیره)، به استثنای فایل‌های ایستا مانند تصاویر، CSS، JS"
+
+msgid "tooltip_4"
+msgstr "کل درخواست‌های ارسال شده به سرور، شامل همه صفحات، تصاویر، CSS، JS و سایر فایل‌ها"
+
+msgid "tooltip_5"
+msgstr "مجموع داده‌هایی که سرور در پاسخ به درخواست کاربر ارسال می‌کند"
+
+msgid "tooltip_13"
+msgstr "آمار منابع دسترسی به وب سایت شما از طریق موتورهای جستجو. نشان می‌دهد کدام موتور جستجو ترافیک را برای شما به ارمغان آورده و کلمات جستجویی که کاربران استفاده کرده‌اند"
+
+msgid "tooltip_14"
+msgstr "آمار منابع دسترسی به وب سایت شما از طریق پیوندهای خارجی از وب سایت‌های دیگر. نشان می‌دهد کدام وب سایت‌ها به شما پیوند داده‌اند و ترافیکی که آورده‌اند"
+
+msgid "tooltip_15"
+msgstr "کلمات جستجویی که کاربران هنگام جستجوی وب سایت شما از طریق موتورهای جستجو استفاده می‌کنند. کلمه کلیدی یک کلمه است، عبارت کلیدی ترکیبی از چند کلمه است"
+
+msgid "tooltip_16"
+msgstr "برنامه‌های خودکار مانند ربات‌های جستجو، ربات‌های آموزش هوش مصنوعی، اسکنرهای آسیب‌پذیری. عدد داخل پرانتز تعداد درخواست‌های صفحه عادی و تعداد درخواست‌های robots.txt را نشان می‌دهد"
+
+msgid "tooltip_17"
+msgstr "نمودار توزیع ترافیک ۲۴ ساعته. نشان می‌دهد وب سایت شما در هر ساعت از روز چه مقدار بازدید دارد، به درک زمان فعالیت کاربران کمک می‌کند"
+
+msgid "tooltip_18"
+msgstr "این ستون میانگین روزانه/هفتگی را در بازه زمانی انتخاب شده نشان می‌دهد، به شما در درک روند کلی کمک می‌کند"
+
+msgid "tooltip_19"
+msgstr "برای مشاهده جزئیات روی آیتم نمودار کلیک کنید. برای مشاهده مقدار خاص، ماوس را روی عنصر نمودار ببرید"
+
+msgid "tooltip_20"
+msgstr "داده‌هایی که قابل طبقه‌بندی در محدوده موجود نیستند، معمولاً به دلیل فرمت داده غیرعادی یا ناقص ایجاد می‌شوند"
+
+msgid "tooltip_21"
+msgstr "رکوردهای حملات کرم شناسایی شده. کرم برنامه مخربی است که خود را تکثیر می‌کند، معمولاً از طریق آسیب‌پذیری‌های شبکه منتشر می‌شود"
+
+#------------------------------------------------------------------------------
+# نمایش پیام راهنما - نسخه انجمن
+#------------------------------------------------------------------------------
+msgid "AWStats %s - Advanced Web Statistics"
+msgstr "AWStats %s - آمار پیشرفته وب"
+
+msgid "Copyright (c) 2000-2025 Laurent Destailleur"
+msgstr "کپی‌رایت (c) 2000-2025 Laurent Destailleur"
+
+msgid "Copyright (c) 2026-latest Community Edition"
+msgstr "کپی‌رایت (c) 2026-اکنون نسخه انجمن"
+
+msgid "AWStats comes with ABSOLUTELY NO WARRANTY. It's a free software distributed with a GNU General Public License (See LICENSE file for details)."
+msgstr "AWStats هیچ ضمانتی ندارد. این یک نرم‌افزار رایگان است که تحت مجوز عمومی همگانی گنو توزیع می‌شود (برای جزئیات به فایل LICENSE مراجعه کنید)."
+
+msgid "Syntax: %s -config=virtualhostname [options]"
+msgstr "نحو: %s -config=نام_میزبان_مجازی [گزینه‌ها]"
+
+msgid "This runs %s in command line to update statistics (-update option) of a web site, from the log file defined in AWStats config file, or build a HTML report (-output option)."
+msgstr "این دستور %s را در خط فرمان اجرا می‌کند تا آمار یک وب سایت را از فایل لاگ تعریف شده در فایل پیکربندی AWStats به‌روزرسانی کند (-update option)، یا یک گزارش HTML ایجاد کند (-output option)."
+
+msgid "First, %s tries to read %s.virtualhostname.conf as the config file. If not found, %s tries to read %s.conf, and finally the full path passed to -config="
+msgstr "ابتدا، %s سعی می‌کند %s.نام_میزبان_مجازی.conf را به عنوان فایل پیکربندی بخواند. اگر پیدا نشد، %s سعی می‌کند %s.conf را بخواند، و در نهایت مسیر کامل ارسال شده به -config="
+
+msgid "Note 1: Config files (*.conf) must be in /etc/awstats, /usr/local/etc/awstats, /etc or same directory than awstats.pl script file."
+msgstr "نکته 1: فایل‌های پیکربندی (*.conf) باید در /etc/awstats، /usr/local/etc/awstats، /etc یا همان دایرکتوری فایل اسکریپت awstats.pl باشند."
+
+msgid "Note 2: If AWSTATS_FORCE_CONFIG environment variable is defined, AWStats will use it as the 'config' value, whatever is the value on command line or URL."
+msgstr "نکته 2: اگر متغیر محیطی AWSTATS_FORCE_CONFIG تعریف شده باشد، AWStats از آن به عنوان مقدار 'config' استفاده می‌کند، صرف نظر از مقداری که در خط فرمان یا URL است."
+
+msgid "See AWStats documentation for all setup instructions."
+msgstr "برای همه دستورالعمل‌های نصب به مستندات AWStats مراجعه کنید."
+
+msgid "Options to update statistics:"
+msgstr "گزینه‌های به‌روزرسانی آمار:"
+
+msgid "  -update        to update statistics (default)"
+msgstr "  -update        به‌روزرسانی آمار (پیش‌فرض)"
+
+msgid "  -showsteps     to add benchmark information every %s lines processed"
+msgstr "  -showsteps     اضافه کردن اطلاعات معیار هر %s خط پردازش شده"
+
+msgid "  -showcorrupted to add output for each corrupted lines found, with reason"
+msgstr "  -showcorrupted اضافه کردن خروجی برای هر خط خراب یافت شده، همراه با دلیل"
+
+msgid "  -showdropped   to add output for each dropped lines found, with reason"
+msgstr "  -showdropped   اضافه کردن خروجی برای هر خط حذف شده یافت شده، همراه با دلیل"
+
+msgid "  -showunknownorigin  to output referer when it can't be parsed"
+msgstr "  -showunknownorigin   نمایش ارجاع‌دهنده زمانی که قابل تجزیه نیست"
+
+msgid "  -showdirectorigin   to output log line when origin is a direct access"
+msgstr "  -showdirectorigin    نمایش خط لاگ زمانی که منبع یک دسترسی مستقیم است"
+
+msgid "  -updatefor=n   to stop the update process after parsing n lines"
+msgstr "  -updatefor=n    توقف فرآیند به‌روزرسانی پس از تجزیه n خط"
+
+msgid "  -LogFile=x     to change log to analyze whatever is 'LogFile' in config file"
+msgstr "  -LogFile=x      تغییر لاگ برای تجزیه و تحلیل هر چیزی که 'LogFile' در فایل پیکربندی است"
+
+msgid "  Be care to process log files in chronological order when updating statistics."
+msgstr "  هنگام به‌روزرسانی آمار، مراقب باشید فایل‌های لاگ را به ترتیب زمانی پردازش کنید."
+
+msgid "Options to show statistics:"
+msgstr "گزینه‌های نمایش آمار:"
+
+msgid "  -output      to output main HTML report (no update made except with -update)"
+msgstr "  -output      خروجی گزارش HTML اصلی (هیچ به‌روزرسانی انجام نمی‌شود مگر با -update)"
+
+msgid "  -output=x    to output other report pages where x is:"
+msgstr "  -output=x    خروجی صفحات گزارش دیگر که x عبارت است از:"
+
+msgid "build page of all domains/countries"
+msgstr "ایجاد صفحه همه دامنه‌ها/کشورها"
+
+msgid "build page of all hosts"
+msgstr "ایجاد صفحه همه میزبان‌ها"
+
+msgid "build page of last hits for hosts"
+msgstr "ایجاد صفحه آخرین بازدیدها برای میزبان‌ها"
+
+msgid "build page of all unresolved IP"
+msgstr "ایجاد صفحه همه IPهای حل نشده"
+
+msgid "build page of all email senders (maillog)"
+msgstr "ایجاد صفحه همه فرستندگان ایمیل (maillog)"
+
+msgid "build page of last email senders (maillog)"
+msgstr "ایجاد صفحه آخرین فرستندگان ایمیل (maillog)"
+
+msgid "build page of all email receivers (maillog)"
+msgstr "ایجاد صفحه همه گیرندگان ایمیل (maillog)"
+
+msgid "build page of last email receivers (maillog)"
+msgstr "ایجاد صفحه آخرین گیرندگان ایمیل (maillog)"
+
+msgid "build page of all logins used"
+msgstr "ایجاد صفحه همه نام‌های کاربری استفاده شده"
+
+msgid "build page of last hits for logins"
+msgstr "ایجاد صفحه آخرین بازدیدها برای نام‌های کاربری"
+
+msgid "build page of all robots/spider visits"
+msgstr "ایجاد صفحه همه بازدیدهای ربات‌ها/عنکبوت‌ها"
+
+msgid "build page of last hits for robots"
+msgstr "ایجاد صفحه آخرین بازدیدها برای ربات‌ها"
+
+msgid "list most often viewed pages"
+msgstr "نمایش صفحاتی که بیشترین بازدید را دارند"
+
+msgid "list most often viewed pages matching filter"
+msgstr "نمایش صفحاتی که بیشترین بازدید را دارند و با فیلتر مطابقت دارند"
+
+msgid "list entry pages"
+msgstr "نمایش صفحات ورود"
+
+msgid "list entry pages matching filter"
+msgstr "نمایش صفحات ورود مطابق با فیلتر"
+
+msgid "list exit pages"
+msgstr "نمایش صفحات خروج"
+
+msgid "list exit pages matching filter"
+msgstr "نمایش صفحات خروج مطابق با فیلتر"
+
+msgid "build page with os detailed versions"
+msgstr "ایجاد صفحه با نسخه‌های دقیق سیستم عامل"
+
+msgid "build page with browsers detailed versions"
+msgstr "ایجاد صفحه با نسخه‌های دقیق مرورگرها"
+
+msgid "list 'User Agents' with unknown browser"
+msgstr "نمایش 'User Agents' با مرورگر ناشناس"
+
+msgid "list 'User Agents' with unknown OS"
+msgstr "نمایش 'User Agents' با سیستم عامل ناشناس"
+
+msgid "build page of all refering search engines"
+msgstr "ایجاد صفحه همه موتورهای جستجوی ارجاع‌دهنده"
+
+msgid "build page of all refering pages"
+msgstr "ایجاد صفحه همه صفحات ارجاع‌دهنده"
+
+msgid "list all keyphrases used on search engines"
+msgstr "نمایش همه عبارات کلیدی استفاده شده در موتورهای جستجو"
+
+msgid "list all keywords used on search engines"
+msgstr "نمایش همه کلمات کلیدی استفاده شده در موتورهای جستجو"
+
+msgid "list 'Referers' for 404 errors"
+msgstr "نمایش 'Referers' برای خطاهای 404"
+
+msgid "build page of all values for ExtraSection X"
+msgstr "ایجاد صفحه همه مقادیر برای ExtraSection X"
+
+msgid "  -staticlinks           to have static links in HTML report page"
+msgstr "  -staticlinks           داشتن پیوندهای ایستا در صفحه گزارش HTML"
+
+msgid "  -staticlinksext=xxx    to have static links with .xxx extension instead of .html"
+msgstr "  -staticlinksext=xxx    داشتن پیوندهای ایستا با پسوند .xxx به جای .html"
+
+msgid "  -lang=LL     to output a HTML report in language LL (en,de,es,fr,it,nl,zh-cn,...)"
+msgstr "  -lang=LL     خروجی گزارش HTML به زبان LL (en,de,es,fr,it,nl,fa,...)"
+
+msgid "  -month=MM    to output a HTML report for an old month MM"
+msgstr "  -month=MM    خروجی گزارش HTML برای ماه MM گذشته"
+
+msgid "  -year=YYYY   to output a HTML report for an old year YYYY"
+msgstr "  -year=YYYY   خروجی گزارش HTML برای سال YYYY گذشته"
+
+msgid "  The 'date' options doesn't allow you to process old log file. They only allow you to see a past report for a chosen month/year period instead of current month/year."
+msgstr "  گزینه‌های 'date' به شما اجازه پردازش فایل لاگ قدیمی را نمی‌دهند. آنها فقط به شما اجازه می‌دهند گزارش گذشته را برای دوره ماه/سال انتخاب شده به جای ماه/سال جاری ببینید."
+
+msgid "Other options:"
+msgstr "سایر گزینه‌ها:"
+
+msgid "  -debug=X     to add debug informations lesser than level X (speed reduced)"
+msgstr "  -debug=X     اضافه کردن اطلاعات اشکال‌زدایی کمتر از سطح X (سرعت کاهش می‌یابد)"
+
+msgid "  -version     show AWStats version"
+msgstr "  -version, -v     نمایش نسخه AWStats"
+
+msgid "Now supports/detects:"
+msgstr "اکنون پشتیبانی/تشخیص می‌دهد:"
+
+msgid "  Web/Ftp/Mail/streaming server log analyzis (and load balanced log files)"
+msgstr "  تجزیه و تحلیل لاگ سرور وب/FTP/ایمیل/استریم (و فایل‌های لاگ متوازن بار)"
+
+msgid "  Reverse DNS lookup (IPv4 and IPv6) and GeoIP lookup"
+msgstr "  جستجوی معکوس DNS (IPv4 و IPv6) و جستجوی GeoIP"
+
+msgid "  Number of visits, number of unique visitors"
+msgstr "  تعداد بازدیدها، تعداد بازدیدکنندگان منحصر به فرد"
+
+msgid "  Visits duration and list of last visits"
+msgstr "  مدت زمان بازدیدها و لیست آخرین بازدیدها"
+
+msgid "  Authenticated users"
+msgstr "  کاربران احراز هویت شده"
+
+msgid "  Days of week and rush hours"
+msgstr "  روزهای هفته و ساعات شلوغ"
+
+msgid "  Hosts list and unresolved IP addresses list"
+msgstr "  لیست میزبان‌ها و لیست آدرس‌های IP حل نشده"
+
+msgid "  Most viewed, entry and exit pages"
+msgstr "  پربازدیدترین صفحات، صفحات ورود و خروج"
+
+msgid "  Files type and Web compression (mod_gzip, mod_deflate stats)"
+msgstr "  نوع فایل‌ها و فشرده‌سازی وب (آمار mod_gzip, mod_deflate)"
+
+msgid "  Configured Database Statistics"
+msgstr "  آمار پایگاه داده پیکربندی شده"
+
+msgid "  %s domains/countries"
+msgstr "  %s دامنه/کشور"
+
+msgid "  %s robots"
+msgstr "  %s ربات"
+
+msgid "  %s worm's families"
+msgstr "  %s خانواده کرم"
+
+msgid "  %s operating systems"
+msgstr "  %s سیستم عامل"
+
+msgid "  %s browsers (%s with phone browsers database)"
+msgstr "  %s مرورگر (شامل پایگاه داده مرورگر تلفن همراه %s)"
+
+msgid "  %s search engines (and keyphrases/keywords used from them)"
+msgstr "  %s موتور جستجو (و عبارات کلیدی/کلمات کلیدی استفاده شده از آنها)"
+
+msgid "  All HTTP errors with last referrer"
+msgstr "  تمام خطاهای HTTP با آخرین ارجاع‌دهنده"
+
+msgid "  Report by day/month/year"
+msgstr "  گزارش بر اساس روز/ماه/سال"
+
+msgid "  Dynamic or static HTML or XHTML reports, static PDF reports"
+msgstr "  گزارش‌های HTML یا XHTML پویا یا ایستا، گزارش‌های PDF ایستا"
+
+msgid "  Indexed text or XML monthly database"
+msgstr "  پایگاه داده ماهانه متنی یا XML نمایه شده"
+
+msgid "  And a lot of other advanced features and options..."  
+msgstr "  و بسیاری از ویژگی‌ها و گزینه‌های پیشرفته دیگر..."
+
+msgid "  New versions and FAQ at http://www.awstats.org"
+msgstr "  نسخه‌های جدید و سؤالات متداول در https://github.com/hestiacn/vstats/issues"

@@ -1,601 +1,725 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-<meta name="description" content="AWStats Documentation - Setup page">
-<meta name="keywords" content="awstats, awstat, setup, config, install">
-<meta name="robots" content="index,follow">
-<meta name="title" content="AWStats Documentation - Setup page">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>AWStats Documentation - Setup page</title>
-<link rel="stylesheet" href="styles.css" type="text/css">
-<link href="https://plus.google.com/+LaurentDestailleur-Open-Source-Expert" rel="publisher" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWStats · 安装配置指南</title>
+    <meta name="description" content="AWStats Documentation - Setup, installation and configuration (中文/English)">
+    <meta name="keywords" content="awstats, setup, install, configuration, 安装, 配置">
+    <meta name="author" content="Laurent Destailleur (多语言重构)">
+    <meta name="robots" content="index,follow">
+    <style>
+        /* ========== 全局设计 ========== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-page: #f8f9fc; --surface: #ffffff; --surface-secondary: #f1f3f8;
+            --text-primary: #1e293b; --text-secondary: #334155; --accent: #5b5f97;
+            --accent-light: #7f83b0; --border: #d0d5e0; --card-shadow: 0 8px 20px rgba(0,0,0,0.03), 0 2px 6px rgba(0,20,40,0.05);
+            --header-bg: linear-gradient(135deg, #7f83b0 0%, #5b5f97 100%);
+            --footer-bg: #ecedf2; --logo-filter: none; --link-color: #4f46e5;
+            --link-visited: #7c3aed; --code-bg: #e9e9f2;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-page: #12131f; --surface: #1f2130; --surface-secondary: #2a2c3e;
+                --text-primary: #edf2f7; --text-secondary: #cbd5e1; --accent: #a9acd9;
+                --accent-light: #b9bce6; --border: #3c405a; --card-shadow: 0 8px 20px rgba(0,0,0,0.6);
+                --header-bg: linear-gradient(145deg, #353a60, #222544);
+                --footer-bg: #1a1c2c; --logo-filter: brightness(1.1) drop-shadow(0 0 4px #aeaef0);
+                --link-color: #b1b3ff; --link-visited: #caa5ff; --code-bg: #2c2f44;
+            }
+        }
+        .force-light { --bg-page: #f8f9fc !important; --surface: #ffffff !important; --surface-secondary: #f1f3f8 !important; --text-primary: #1e293b !important; --text-secondary: #334155 !important; --accent: #5b5f97 !important; --border: #d0d5e0 !important; --footer-bg: #ecedf2 !important; --link-color: #4f46e5 !important; }
+        .force-dark { --bg-page: #12131f !important; --surface: #1f2130 !important; --surface-secondary: #2a2c3e !important; --text-primary: #edf2f7 !important; --text-secondary: #cbd5e1 !important; --accent: #a9acd9 !important; --border: #3c405a !important; --footer-bg: #1a1c2c !important; --link-color: #b1b3ff !important; }
+
+        body {
+            background-color: var(--bg-page); color: var(--text-primary);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6; margin: 0; padding: 0;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            display: flex; flex-direction: column; min-height: 100vh;
+        }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 28px; width: 100%; }
+
+        /* 导航栏 */
+        .nav-bar {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background-color: var(--surface);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        @supports (backdrop-filter: blur(10px)) {
+            .nav-bar {
+                background-color: color-mix(in srgb, var(--surface) 80%, transparent);
+                backdrop-filter: blur(10px);
+            }
+        }
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 30px;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .nav-links a:hover {
+            background: var(--surface-secondary);
+            color: var(--accent);
+        }
+        .nav-links a.active {
+            background: var(--accent);
+            color: white;
+        }
+        .nav-home {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: var(--accent);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .breadcrumb {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        .breadcrumb a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        .breadcrumb .separator {
+            color: var(--border);
+        }
+
+        /* 头部 */
+        .header {
+            background: var(--header-bg); color: white; border-radius: 0 0 32px 32px;
+            padding: 16px 0 20px; box-shadow: var(--card-shadow); margin-bottom: 20px;
+        }
+        .header-row {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 16px;
+        }
+        .logo-area { display: flex; align-items: center; gap: 12px; }
+        .logo-area img { height: 52px; width: auto; filter: var(--logo-filter); }
+        .site-title {
+            font-size: 1.75rem; font-weight: 600; background: rgba(255,255,255,0.1);
+            padding: 6px 18px; border-radius: 60px; backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .header-center {
+            flex: 1; text-align: center; font-weight: 500; font-size: 1.2rem;
+            background: rgba(0,0,0,0.1); padding: 8px 16px; border-radius: 40px;
+            backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.15);
+        }
+        .header-right { display: flex; gap: 12px; align-items: center; }
+        .lang-switch {
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 40px; padding: 6px 12px; color: white; font-weight: 500;
+            display: flex; align-items: center; gap: 6px; backdrop-filter: blur(4px);
+        }
+        .lang-switch select {
+            background: transparent; border: none; color: white; font-weight: 500;
+            outline: none; font-size: 0.95rem; cursor: pointer;
+        }
+        .lang-switch select option { background: #5b5f97; color: white; }
+        .theme-toggle {
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 40px; padding: 8px 16px; font-size: 0.9rem; color: white;
+            cursor: pointer; display: flex; align-items: center; gap: 6px; backdrop-filter: blur(4px);
+        }
+
+        /* 文档卡片样式 */
+        .doc-card {
+            background-color: var(--surface); border-radius: 32px;
+            padding: 2.5rem 2.8rem; box-shadow: var(--card-shadow);
+            border: 1px solid var(--border); margin: 20px 0 30px;
+        }
+        h1 {
+            font-size: 2.2rem; font-weight: 600; letter-spacing: -0.02em;
+            border-left: 10px solid var(--accent); padding-left: 24px;
+            margin: 0 0 25px 0; color: var(--text-primary);
+        }
+        h2 {
+            font-size: 1.8rem; font-weight: 600; margin: 2rem 0 1rem;
+            color: var(--accent); border-bottom: 2px solid var(--border); padding-bottom: 6px;
+        }
+        h3 { font-size: 1.4rem; margin: 1.8rem 0 0.8rem; color: var(--text-primary); font-weight: 600; }
+        hr { border: none; border-top: 2px dashed var(--border); margin: 2rem 0; }
+        ul, ol { padding-left: 1.8rem; margin: 1rem 0; }
+        li { margin: 0.6rem 0; color: var(--text-secondary); }
+        li strong { color: var(--text-primary); }
+        a { color: var(--link-color); text-decoration: none; border-bottom: 1px dotted var(--accent-light); }
+        a:hover { color: var(--accent-light); border-bottom-style: solid; }
+        code, .file-path {
+            background: var(--code-bg); padding: 0.2rem 0.6rem; border-radius: 20px;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.9rem;
+            border: 1px solid var(--border); color: var(--text-primary);
+        }
+        pre {
+            background: var(--code-bg);
+            padding: 20px;
+            border-radius: 16px;
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin: 20px 0;
+            /* 代码块内容不翻译 */
+            -moz-user-select: text;
+            -webkit-user-select: text;
+            user-select: text;
+        }
+        .badge {
+            background: var(--accent); color: white; font-size: 0.9rem;
+            padding: 2px 10px; border-radius: 30px; display: inline-block;
+        }
+        .setup-section {
+            margin: 40px 0;
+            padding: 20px;
+            background: var(--surface-secondary);
+            border-radius: 24px;
+            border: 1px solid var(--border);
+        }
+        .footer {
+            background-color: var(--footer-bg); margin-top: 48px;
+            padding: 28px 24px; border-radius: 30px 30px 0 0;
+            border-top: 1px solid var(--border); color: var(--text-secondary);
+        }
+        .footer-content {
+            display: flex; flex-wrap: wrap; justify-content: space-between;
+            align-items: center; gap: 16px; max-width: 1200px; margin: 0 auto;
+        }
+        .footer-copyright {
+            background: var(--surface); padding: 6px 18px; border-radius: 60px;
+            border: 1px solid var(--border);
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.2s, background 0.2s;
+            z-index: 99;
+        }
+        .back-to-top:hover {
+            transform: scale(1.1);
+            background: var(--accent-light);
+        }
+        
+        @media (max-width: 700px) {
+            .header-row { flex-direction: column; }
+            .doc-card { padding: 1.8rem; }
+            h1 { font-size: 1.8rem; }
+            .nav-container { flex-direction: column; align-items: flex-start; }
+            .nav-links { justify-content: center; width: 100%; }
+            .back-to-top { bottom: 20px; right: 20px; }
+        }
+        
+        /* 代码表格样式 */
+        .code-table {
+            width: 95%;
+            border: 1px solid var(--border);
+            border-collapse: collapse;
+            background-color: var(--code-bg);
+            margin: 15px 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .code-table td {
+            padding: 8px 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+        .note-box {
+            background: var(--surface-secondary);
+            border-left: 4px solid var(--accent);
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        .step-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+    </style>
 </head>
+<body>
+    <!-- 导航栏 -->
+    <div class="nav-bar">
+        <div class="container nav-container">
+            <a href="index.html" class="nav-home">
+                <span>🏠</span> AWStats 文档
+            </a>
+            <div class="nav-links">
+                <a href="index.html" data-i18n="navHome">主页</a>
+                <a href="awstats_what.html" data-i18n="navWhat">什么是AWStats</a>
+                <a href="awstats_setup.html" class="active" data-i18n="navSetup">安装配置</a>
+                <a href="awstats_webmin.html" data-i18n="navWebmin">Webmin模块</a>
+                <a href="awstats_upgrade.html" data-i18n="navUpgrade">升级指南</a>
+                <a href="awstats_tools.html" data-i18n="navTools">其他工具</a>
+                <a href="awstats_faq.html" data-i18n="navFAQ">FAQ</a>
+            </div>
+            <div class="breadcrumb">
+                <a href="index.html" data-i18n="home">主页</a>
+                <span class="separator">›</span>
+                <span data-i18n="currentPage">安装配置指南</span>
+            </div>
+        </div>
+    </div>
 
-<body topmargin="10" leftmargin="5">
-<table
- style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"
- bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0"
- width="100%">
-<!-- Large --> <tbody>
-    <tr
- style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">
-      <td align="center" bgcolor="#9999cc"><a href="/"><img
- src="images/awstats_logo6.png" border="0"></a></td>
-      <td align="center" bgcolor="#9999cc"> <br>
-      <font
- style="font-family: arial,helvetica,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 16pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"
- color="#eeeeff"><b>AWStats logfile analyzer 8.0 Documentation</b></font><br>
-<br>
-</td>
-      <td align="center" bgcolor="#9999cc">&nbsp; </td>
-</tr>
-  </tbody>
-</table>
-<br>
-<br>
-<h1
- style="font-family: arial,helvetica,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 26px; line-height: normal; font-size-adjust: none; font-stretch: normal;">AWStats
-Installation, Configuration and Reporting</h1>
-There are 3 steps to begin using AWStats:<br>
-<ul>
-  <li><a href="#INSTALL">I. Setup: Installation and configuration</a><br>
-  </li>
-  <li><a href="#BUILD_UPDATE">II. Process logs: Building/updating
-statistics database</a><br>
-  </li>
-  <li><a href="#READ">III. Run Reports: Building and reading reports</a><br>
-  </li>
-</ul>
-<br>
+    <header class="header">
+        <div class="container header-row">
+            <div class="logo-area">
+                <img src="images/awstats_logo6.png" alt="AWStats" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'52\' height=\'52\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%235b5f97\'/%3E%3Ctext x=\'20\' y=\'68\' fill=\'%23ffffff\' font-size=\'60\' font-weight=\'bold\'%3EAW%3C/text%3E%3C/svg%3E';">
+                <span class="site-title" data-i18n="siteTitle">AWStats 8.1</span>
+            </div>
+            <div class="header-center" data-i18n="headerSlogan">
+                ⚡ 先进的日志分析器 · 官方文档
+            </div>
+            <div class="header-right">
+                <div class="lang-switch">
+                    <span>🌐</span>
+                    <select id="langSelector">
+                        <option value="zh" selected>中文</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+                <button class="theme-toggle" id="themeToggleBtn">
+                    <span>🌓</span> <span class="theme-text" data-i18n="themeAuto">自动</span>
+                </button>
+            </div>
+        </div>
+    </header>
 
-<!--
-<br>
-Before starting, check that your Perl version is at least 5.007 (or higher) by running the <i>perl -v</i> command.
-If not, you can install a recent Perl interpreter from <a href="http://www.activestate.com/ActivePerl/">ActivePerl</a> (<font color=#221188>Win32</font>) or <a href="http://www.perl.com/pub/language/info/software.html">Perl.com</a> (<font color=#221188>Unix/Linux/Other</font>).<br>
--->
-<br>
-<a name="INSTALL">
-<h2 style=""><u>I. Setup: Installation and configuration using
-awstats_configure.pl</u></h2>
-</a><br>
-<a name="INSTALLAPACHE"><b>A) Setup for an Apache or compatible web
-server (on Unix/Linux, Windows, MacOS...)</b></a><br>
-<br>
-<font style="color: rgb(17, 17, 85);"><b>* Step 1</b>:</font><br>
-<br>
-(if you use a package provided with a Linux distribution or Windows
-installer, step 1
-might have already been done; if you don't know, you can run this step
-again)<br>
-<br>
-After downloading and extracting the AWStats package, you should run
-the awstats_configure.pl script to do
-several setup actions.
-You will find it in the AWStats <b>tools</b> directory (If using the
-Windows installer, the script is
-automatically launched):<br>
-<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
-perl awstats_configure.pl
-</td></tr></table>
-<br>
-<ul>
-  <u>This is what the script does/asks (you can do all these steps
-manually instead of running awstats_configure.pl if you prefer):</u><br>
-<br>
-A) awstats_configure.pl tries to determine your current log format from
-your Apache web server
-configuration file httpd.conf (it asks for the path if not found).
-If you use a <b>common</b> log, awstats_configure.pl will
-suggest changing it to the <b>NCSA combined/XLF/ELF</b> format (you
-can use your own custom log
-format but this predefined log format is often the best choice and
-makes setup easier).<br>
-If you answer yes, awstats_configure.pl will modify your <b>httpd.conf</b>,
-changing the
-following directive:<br>
-  <i>from<br>
-CustomLog /yourlogpath/yourlogfile common</i><br>
-to<br>
-<i>CustomLog /yourlogpath/yourlogfile combined</i><br>
-<br>
-See the Apache manual for more information on this directive (possibly
-installed on your server as www.mysite.com/manual).<br>
-  <br>
-B) awstats_configure.pl will then add, if not already present, the
-following directives to your Apache configuration file
-(note that the "/usr/local/awstats/wwwroot" path might differ according
-to your distribution or OS:<br>
-  <i> <br>
-# <br>
-# Directives to add to your Apache conf file to allow use of AWStats as
-a CGI. <br>
-# Note that path "/usr/local/awstats/" must reflect your AWStats
-Installation path. <br>
-# <br>
-Alias /awstatsclasses "/usr/local/awstats/wwwroot/classes/" <br>
-Alias /awstatscss "/usr/local/awstats/wwwroot/css/" <br>
-Alias /awstatsicons "/usr/local/awstats/wwwroot/icon/" <br>
-ScriptAlias /awstats/ "/usr/local/awstats/wwwroot/cgi-bin/" <br>
-# <br>
-# This is to permit URL access to scripts/files in AWStats directory. <br>
-# <br>
-&lt;Directory "/usr/local/awstats/wwwroot"&gt; <br>
-Options None <br>
-AllowOverride None <br>
-Order allow,deny <br>
-Allow from all <br>
-&lt;/Directory&gt; </i><br>
-  <br>
-C) if changes were made as indicated in parts A and B,
-awstats_configure.pl restarts Apache to apply the changes.&nbsp; To be
-sure the log format change is effective, go to your homepage. This is
-an example of the type of records you should see inserted in your new
-log file after Apache
-was restarted:<br>
-  <br>
-62.161.78.75 - - [dd/mmm/yyyy:hh:mm:ss +0000] "GET / HTTP/1.1" 200 1234
-"http://www.from.com/from.html" "Mozilla/4.0 (compatible; MSIE 5.01;
-Windows NT 5.0)"<br>
-  <br>
-D) awstats_configure.pl will ask you for a name for the configuration
-profile file. Enter an appropriate name such as that of your
-web server or the virtual domain to be analyzed, i.e. <b
- style="font-style: italic;">mysite</b>.<br>
-  <br>
-awstats_configure.pl will create a new file called <b>awstats.<span
- style="font-style: italic;">mysite</span>.conf</b>
-by copying the template file <b>awstats.model.conf</b>.
-The new file location is:<br>
-- For Linux/BSD/Unix users: /etc/awstats.<br>
-- For macOS, Windows and other operating systems: the same directory
-as awstats.pl
-(cgi-bin).<br>
-<br>
+    <main class="container">
+        <div class="doc-card">
+            <h1 data-i18n="mainTitle">AWStats 安装、配置和报告生成</h1>
 
-E) awstats_configure.pl ends.<br>
-<br>
-</ul>
-<font style="color: rgb(17, 17, 85);"><b>* Step 2</b>:</font><br>
-<br>
-Once a configuration file has been created (by
-awstats_configure.pl, by your package
-installer or just by a manual copy of awstats.model.conf), it's
-important to verify that the "MAIN PARAMETERS"
-match your needs.&nbsp; Open awstats.<span
- style="font-style: italic; font-weight: bold;">mysite</span>.conf in
-your favorite text editor (i.e. notepad.exe, vi, gedit, etc) -
-don&acute;t use a word processor - and make changes as required.<br>
-<br>
-Particular attention should be given to these parameters:<br>
-- Verify the <a href="awstats_config.html#LogFile">LogFile</a>
-value.&nbsp; It should be the full path of your server log file (You
-can also use a relative path from your awstats.pl directory, but a full
-path avoids errors).<br>
-- Verify the <a href="awstats_config.html#LogType">LogType</a>
-value.&nbsp; It should be "W" for analyzing
-web log files.<br>
-- Check if <a href="awstats_config.html#LogFormat">LogFormat</a> is
-set to "1" (for "NCSA apache combined/ELF/XLF log format")
-or use a custom log format if you don't use the combined log format.<br>
-- Set the <a href="awstats_config.html#SiteDomain">SiteDomain</a>
-parameter to the main domain name or the intranet web server name
-used to reach the web site to analyze (Example: www.mysite.com). If
-you have several
-possible names for same site, use the main domain name and add the
-others to the list in the <a href="awstats_config.html#HostAlias">HostAlias</a>
-parameter.<br>
-- You can also change other parameters if you want. The full list is
-described in <a href="awstats_config.html">Configurations/Directives
-options</a> page.<br>
-<br>
-Installation and configuration is finished. You can jump to the <a
- href="#BUILD_UPDATE">Process logs: Building/updating statistics
-database</a> section.<br>
-<br>
-<br>	
-<br>
-<a name="INSTALLIIS"><b>B) Setup for Microsoft's IIS server</b></a><br>
-<br>
-<font style="color: rgb(17, 17, 85);"><b>* Step 1</b>:</font><br>
-<br>
-Configure IIS to create logs in the <b>"Extended W3C log format"</b> (You can
-still use
-your own custom log format but setup is easier if you use the standard
-extended format). To do so, start the IIS management console snap-in,
-select the
-appropriate web site and open its
-<span style="font-weight: bold;">Properties</span>. Choose "<span
- style="font-weight: bold;">W3C Extended Log Format</span>", then <span
- style="font-weight: bold;">Properties</span>, then the
-Tab "<span style="font-weight: bold;">Extended Properties</span>" and
-uncheck everything under Extended
-Properties.
-Once they are all cleared, check just the following fields:<br>
-<table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
-date<br>
-time<br>
-c-ip<br>
-cs-username<br>
-cs-method<br>
-cs-uri-stem<br>
-cs-uri-query<br>
-sc-status<br>
-sc-bytes<br>
-cs-version<br>
-cs(User-Agent)<br>
-cs(Referer)<br>
-</td></tr></table>
-<br>
-To be sure the log format change is effective, you must stop IIS,
-backup it up (if you desire) and remove all of the old log files, restart IIS and go to
-your homepage. This is an example of the type of records you should
-find in the
-new log file:<br>
-<table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
-2000-07-19 14:14:14 62.161.78.73 - GET / 200 1234 HTTP/1.1
-Mozilla/4.0+(compatible;+MSIE+5.01;+Windows+NT+5.0)
-http://www.from.com/from.htm
-</td></tr></table>
-<br>
+            <p data-i18n="intro">开始使用 AWStats 需要三个步骤：</p>
+            <ul>
+                <li><a href="#INSTALL" data-i18n="step1Link">I. 安装和配置</a></li>
+                <li><a href="#BUILD_UPDATE" data-i18n="step2Link">II. 处理日志：构建/更新统计数据库</a></li>
+                <li><a href="#READ" data-i18n="step3Link">III. 运行报告：构建和阅读报告</a></li>
+            </ul>
 
-<font style="color: rgb(17, 17, 85);"><b>* Step 2</b>:</font><br>
-<br>
-Copy the contents of the AWStats provided cgi-bin folder, from where
-the AWStats package put it on your local hard
-drive,
-to your server's cgi-bin
-directory (this includes <b>awstats.pl</b>, <b>awstats.model.conf</b>,
-and the <b>lang</b>, <b>lib</b> and <b>plugins</b> sub-directories).<br>
-<br>
-<font style="color: rgb(17, 17, 85);"><b>* Step 3</b>:</font><br>
-<br>
-Move AWStats <b>icon sub-directories</b> and its content into a
-directory readable by your
-web server, for example C:\yourwwwroot\icon.<br>
-<br>
-<font style="color: rgb(17, 17, 85);"><b>* Step 4</b>:</font><br>
-<br>
-Create a configuration file by copying <b>awstats.model.conf</b> to a
-new file named <b>awstats.<span style="font-style: italic;">mysite</span>.conf</b>
-where "<span style="font-style: italic;">mysite</span>" is a
-value of your choice but usually is the domain or virtual host name.
-This new file must be saved in the same directory as awstats.pl (i.e.
-cgi-bin).<br>
-<br>
-<font style="color: rgb(17, 17, 85);"><b>* Step 5</b>:</font><br>
-<br>
-Edit your new <b>awstats.<span style="font-style: italic;">mysite</span>.conf</b>
-file to match your specific environment:<br>
-- Change the <a href="awstats_config.html#LogFile">LogFile</a> value
-to the
-full path of your web server log file (You
-can also use a relative path from your awstats.pl (cgi-bin) directory).<br>
-- Change the <a href="awstats_config.html#LogType">LogType</a> value
-to
-"W" for analyzing
-web log files.<br>
-- Change the <a href="awstats_config.html#LogFormat">LogFormat</a> to
-2 if you are using the <b>"Extended W3C log format"</b> described in
-step 1; in the case of a custom format, list the IIS fields
-being logged, for example:<br>
-<i>LogFormat="date time c-ip cs-username cs-method cs-uri-stem
-cs-uri-query sc-status sc-bytes cs-version cs(User-Agent) cs(Referer)"</i><br>
-- Change the <a href="awstats_config.html#DirIcons">DirIcons</a>
-parameter to reflect relative path of icon directory.<br>
-- Set the <a href="awstats_config.html#SiteDomain">SiteDomain</a>
-parameter to the main domain name or the intranet
-web server name used to reach the web site being analyzed (Example:
-www.mydomain.com).<br>
-- Set the <a href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a>
-parameter to 1 if you don't have command line access and have only cgi
-access.<br>
-- Review and change other parameters if appropriate.<br>
-<br>
-Installation and configuration is finished. You can jump to the <a
- href="#BUILD_UPDATE">Process logs: Building/Updating statistics
-database</a> section.<br>
-<br>
-<b>C) Setup for other web servers</b><br>
-<br>
-The setup process is similar to the setup for Apache or IIS.<br>
-Use <a href="awstats_config.html#LogFormat">LogFormat</a> to value "3"
-if you have WebStar native log format.
-Use a personalized <a href="awstats_config.html#LogFormat">LogFormat</a>
-if your log format is other.<br>
-<br>
-<b>D) Setup for other Internet servers, i.e. FTP, Mail, Streaming media</b><br>
-<br>
-The setup process for other file formats is described in the relevant
-FAQ topics:&nbsp;
-<a href="awstats_faq.html#FTP">FAQ-COM090: FTP</a>&nbsp;
-<a href="awstats_faq.html#MAIL">FAQ-COM100: Mail</a> and <a
- href="awstats_faq.html#MEDIASERVER">FAQ-COM110: Streaming media</a>.<br>
-<br>
+            <!-- 安装部分 -->
+            <a name="INSTALL"></a>
+            <div class="setup-section">
+                <h2 data-i18n="installTitle"><u>I. 安装和配置（使用 awstats_configure.pl）</u></h2>
 
-<br>
-<a name="BUILD_UPDATE">
-<h2 style=""><u>II. Process logs: Building/updating statistics database</u></h2>
-</a><br>
-<font style="color: rgb(17, 17, 85);"><b>* Update from command line (recommended)</b>:</font><br>
-<br>
-The first log analysis should be done
-manually from the command line since the
-process may be long and it's easier to solve problems when you can see
-the
-command output (if you don't
-have Command Line access, skip to Step 2). The
-AWStats create (and update) statistics database command is:<br>
-<br>
-<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
-perl awstats.pl -config=mysite -update
-</td></tr></table>
-<br>
-where <span style="font-style: italic;">mysite</span> must
-be substituted with the domain/virtual host name you selected earlier
-during AWStats configuration.<br>
-<br>
-AWStats will read the configuration file awstats.mysite.conf
-(or if
-not found, awstats.conf)
-and create/update its database with all summary information issued from
-analyzed log file.<br>
-<br>
-AWStats statistics database files are saved in directory defined by the
-<a href="awstats_config.html#DirData">DirData</a> parameter in
-configuration file.<br>
-When the create/update is finished, you should see a similar result on
-your screen:<br>
-<br>
-<table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
-Update for config "/etc/awstats/awstats.mysite.conf"<br>
-With data in log file "/pathtoyourlog/yourlog.log"...<br>
-Phase 1 : First bypass old records, searching new record...<br>
-Searching new records from beginning of log file...<br>
-Phase 2 : Now process new records (Flush history on disk after 20000
-hosts)...<br>
-Jumped lines in file: 0<br>
-Parsed lines in file: 225730<br>
-&nbsp;Found 122 dropped records,<br>
-&nbsp;Found 87 corrupted records,<br>
-&nbsp;Found 0 old records,<br>
-&nbsp;Found 225521 new qualified records.<br>
-</td></tr></table>
-<br>
-<b>Dropped records</b> are records discarded because they were not
-"user HTTP requests" or were requests matching AWStats filters (See the
-<a href="awstats_config.html#SkipHosts">SkipHosts</a>,
-<a href="awstats_config.html#SkipUserAgents">SkipUserAgents</a>,
-<a href="awstats_config.html#SkipFiles">SkipFiles</a>, <a
- href="awstats_config.html#OnlyHosts">OnlyHosts</a>,
-<a href="awstats_config.html#OnlyUserAgents">OnlyUserAgents</a> and <a
- href="awstats_config.html#OnlyFiles">OnlyFiles</a> parameters).
-If you want to see which lines were dropped, you can add the <b>-showdropped</b>
-option on the command line.<br>
-<br>
-<b>Corrupted records</b> are records that do not match the log format
-defined by the "LogFormat" parameter in the AWStats configuration file.
-All web servers will typically have a few corrupted records
-(&lt;5%) even when everything works correctly.
-This can result for several reasons: 1) Web server internal bugs,
-2) bad requests made by buggy browsers, 3) a dirty web server shutdown,
-such as unplugging the server...&nbsp; <br>
-<br>
-If all of your lines are corrupted and the <a
- href="awstats_config.html#LogFormat">LogFormat</a> parameter in
-AWStats configuration file is
-correct, then there may be a setup problem with your web server log format.
-Don't forget that
-your <a href="awstats_config.html#OnlyFiles">LogFormat</a> parameter
-in the AWStats configuration file MUST match
-the log file format you analyze.&nbsp; If you want to see which lines
-are corrupted, you can add the <b>-showcorrupted</b>
-option on the command line.<br>
-<br>
-<b>Old records</b> are simply records that were already processed by a
-previous update session.
-Although it is not necessary to purge your log file after
-each update process, it is highly recommended that you do so as often
-as possible.<br>
-<br>
-<b>New records</b> are records in your log file that were successfully
-used to build/update the statistics database.<br>
-<br>
-Note: A log analysis process might be slow (one second for each 4500
-lines of your
-logfile with an Athlon 1Ghz, plus DNS resolution time for each
-different
-IP
-address in your logfile if <a href="awstats_config.html#DNSLookup">DNSLookup</a>
-is set to 1 and not already done in your log file).&nbsp; See the <a
- href="awstats_benchmark.html">Benchmarks page</a> for more detailed
-information.<br>
-<br>
-<!-- <span style="font-weight: bold;">Flush history </span>messages referer
-to ...&nbsp; (Flush history on disk after 20000 hosts). Flush history
-file on disk (unique url reach flush limit of 5000 -->
+                <!-- Apache 部分 -->
+                <h3 data-i18n="apacheTitle">A) Apache 或兼容 Web 服务器设置（Unix/Linux, Windows, MacOS...）</h3>
 
-<br>
-<font style="color: rgb(17, 17, 85);"><b>* Update from a browser</b>:</font><br>
-<br>
-AWStats statistics can also be updated from a browser, providing
-real-time statistics, by clicking
-the "Update now" link that appears when AWStats is used as a CGI (The
-URL is described in the next
-section '<a href="#READ">Run reports: Building and reading reports</a>').<br>
-<br>
-<b>Warning</b>!!<br>
-To enable this link, the configuration file parameter <a
- href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a>
-must be set to 1 (The link is not enabled by
-default).<br>
-Using the on-line update does not prevent you from running the update
-process automatically on a scheduled basis (the command is same as that
-of the first update process above).<br>
-For this, you have two choices:<br>
-- Include the update command in your <b>logrotate</b> process. See <a
- href="awstats_faq.html#ROTATE">FAQ-COM120</a> for details.<br>
-- Or add instructions in your <b>crontab</b> (Unix/Linux) or your <b>task
-scheduler</b> (Windows), to regularly launch the Awstats update
-process. See <a href="awstats_faq.html#CRONTAB">FAQ-COM130</a> for
-details.<br>
-<br>
-See the AWStats <a href="awstats_benchmark.html">Benchmarks page</a>
-for
-the recommended update/logrotate frequency.<br>
-<br>
+                <p><span class="step-badge" data-i18n="step1">步骤 1</span></p>
+                <p data-i18n="apacheStep1Note">（如果您使用的是 Linux 发行版或 Windows 安装程序提供的软件包，步骤 1 可能已经完成；如果不确定，可以再次运行此步骤）</p>
+                <p data-i18n="apacheStep1Desc">下载并解压 AWStats 软件包后，应运行 awstats_configure.pl 脚本执行一些设置操作。您可以在 AWStats 的 <b>tools</b> 目录中找到它（如果使用 Windows 安装程序，脚本会自动启动）：</p>
+                <pre>perl awstats_configure.pl</pre>
 
-<br>
-<a name="READ">
-<h2 style=""><u>III. Run reports: Building and reading reports</u></h2>
-</a><br>
-To see the analysis results, you have several options depending on your
-<a href="awstats_security.html">security policy</a>.<br>
-<br>
-Note: you must have created a statistics data base for the analysis
-period by processing your
-log files before you try to create reports.&nbsp; See the previous
-section.<br>
-<br>
-1. The first option is to build the main reports, in a static HTML
-page,
-from the command line,
-using the following syntax (skip to the second option if you only have
-CGI access):<br>
-<br>
-<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
-perl awstats.pl -config=mysite -output -staticlinks
-&gt; awstats.mysite.html
-</td></tr></table>
-<br>
-where <span style="font-style: italic;">mysite</span> must
-be substituted with the domain/virtual host name you selected earlier
-during AWStats configuration.<br>
-<br>
-To create specific individual reports, specify the report name on the
-command
-line as follows&sup1;:<br>
-<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
-perl awstats.pl -config=mysite -output=alldomains
--staticlinks &gt; awstats.mysite.alldomains.html<br>
-perl awstats.pl -config=mysite -output=allhosts
--staticlinks &gt; awstats.mysite.allhosts.html<br>
-perl awstats.pl -config=mysite -output=lasthosts
--staticlinks &gt; awstats.mysite.lasthosts.html<br>
-perl awstats.pl -config=mysite -output=unknownip
--staticlinks &gt; awstats.mysite.unknownip.html<br>
-perl awstats.pl -config=mysite -output=alllogins
--staticlinks &gt; awstats.mysite.alllogins.html<br>
-perl awstats.pl -config=mysite -output=lastlogins
--staticlinks &gt; awstats.mysite.lastlogins.html<br>
-perl awstats.pl -config=mysite -output=allrobots
--staticlinks &gt; awstats.mysite.allrobots.html<br>
-perl awstats.pl -config=mysite -output=lastrobots
--staticlinks &gt; awstats.mysite.lastrobots.html<br>
-perl awstats.pl -config=mysite -output=urldetail
--staticlinks &gt; awstats.mysite.urldetail.html<br>
-perl awstats.pl -config=mysite -output=urlentry
--staticlinks &gt; awstats.mysite.urlentry.html<br>
-perl awstats.pl -config=mysite -output=urlexit
--staticlinks &gt; awstats.mysite.urlexit.html<br>
-perl awstats.pl -config=mysite -output=browserdetail
--staticlinks &gt; awstats.mysite.browserdetail.html<br>
-perl awstats.pl -config=mysite -output=osdetail
--staticlinks &gt; awstats.mysite.osdetail.html<br>
-perl awstats.pl -config=mysite -output=unknownbrowser
--staticlinks &gt; awstats.mysite.unknownbrowser.html<br>
-perl awstats.pl -config=mysite -output=unknownos
--staticlinks &gt; awstats.mysite.unknownos.html<br>
-perl awstats.pl -config=mysite -output=refererse
--staticlinks &gt; awstats.mysite.refererse.html<br>
-perl awstats.pl -config=mysite -output=refererpages
--staticlinks &gt; awstats.mysite.refererpages.html<br>
-perl awstats.pl -config=mysite -output=keyphrases
--staticlinks &gt; awstats.mysite.keyphrases.html<br>
-perl awstats.pl -config=mysite -output=keywords
--staticlinks &gt; awstats.mysite.keywords.html<br>
-perl awstats.pl -config=mysite -output=errors404
--staticlinks &gt; awstats.mysite.errors404.html<br>
-</td></tr></table>
-<br>
-&sup1;If you prefer, you can use the <a
- href="awstats_tools.html#awstats_buildstaticpages">awstats_buildstaticpages</a>
-tool to
-build all these pages in one command, or to generate PDF files.<br>
-<br>
-Notes:<br>
-<br>
-a) You can also add a <i>filter</i> on the following reports: <b>urldetail,
-urlentry, urlexit, allhosts, refererpages</b>.&nbsp; The <i>filter</i>
-can be a regexp (regular expression) on the full key you want AWStats
-to report on and is appended to the output
-parameter separated by a ":".<br>
-<br>
-For example, to output the urldetail report, including only pages which
-contain /news in their URL, you
-can use the following command line:<br>
-<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
-perl awstats.pl -config=mysite -output=urldetail:</b>/news<b>
--staticlinks &gt; awstats.mysite.urldetailwithfilter.html</b>
-</td></tr></table>
-<br>
-b) If you want to build a report for a particular month, add
-the options <i><b>-month=MM -year=YYYY</b></i> where MM is the month
-expressed as two digits, i.e. 03, and year is the four digit
-year.&nbsp; To build a
-report for a full year, add the options <i><b>-month=all -year=YYYY</b></i>
-(warning: this is often resource intensive and might use a lot of
-memory
-and CPU.&nbsp; Unix/Linux like operating systems might benefit from use
-of the "nice" command.)<br>
-<br>
-<br>
-2) The second option is to dynamically view your statistics from a
-browser.&nbsp; To do this, use the URL:<br>
-<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
-http://www.myserver.mydomain/awstats/awstats.pl?config=mysite
-</td></tr></table>
-<br>
-where <i>mysite</i> specifies the configuration
-file to
-use (AWStats will use the file awstats.<i>mysite</i>.conf).<br>
-<br>
-All output command line options (except -staticlinks and -logfile) are
-also available when using AWStats with a browser. Just use them as URL
-parameters: change "-option" to
-"&amp;option", i.e.&nbsp; <b><i>http://www.myserver.mydomain/awstats/awstats.pl?month=MM&amp;year=YYYY&amp;output=unknownos</i></b><br>
-<br>
-Reports are generated in real time from the statistics data
-base.&nbsp; If this is slow, or putting too much load on your server,
-consider generating static reports instead.<br>
-<br>
-If the <a href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a>
-parameter is set to 1 in AWStats configuration file,
-you will also be able to run the update process from your browser. Just
-click on the link "Update now".<br>
-<br>
-<br>
-<hr>
+                <p><span class="step-badge" data-i18n="step2">步骤 2</span></p>
+                <p data-i18n="apacheStep2Desc">创建配置文件后（通过 awstats_configure.pl、软件包安装程序或手动复制 awstats.model.conf），验证"主要参数"是否符合您的需求非常重要。用您喜欢的文本编辑器打开 awstats.<i>mysite</i>.conf，根据需要修改。</p>
+                <p data-i18n="apacheStep2Params">特别关注以下参数：</p>
+                <ul>
+                    <li><span data-i18n="paramLogfile">验证 <a href="awstats_config.html#LogFile">LogFile</a> 值。应为服务器日志文件的完整路径。</span></li>
+                    <li><span data-i18n="paramLogtype">验证 <a href="awstats_config.html#LogType">LogType</a> 值。分析 Web 日志文件应设为 "W"。</span></li>
+                    <li><span data-i18n="paramLogformat">检查 <a href="awstats_config.html#LogFormat">LogFormat</a> 是否设为 "1"（用于"NCSA apache combined/ELF/XLF 日志格式"）</span></li>
+                    <li><span data-i18n="paramSitedomain">将 <a href="awstats_config.html#SiteDomain">SiteDomain</a> 参数设为主要域名或内网 Web 服务器名称</span></li>
+                </ul>
+                <p data-i18n="apacheStep2Finish">安装和配置完成。您可以跳转到<a href="#BUILD_UPDATE">处理日志：构建/更新统计数据库</a>部分。</p>
 
-<!-- You can remove this part if you distribution need documentation without external tags -->
-<!-- BEGIN_SOCIAL_NETWORKS -->
-<div class="htmldoc-ignore">
-<!-- google plus -->
-<span style="color: #bbb; font-weight: normal;">Article written by <a href="https://www.destailleur.fr" rel="author" style="color: #ccc; font-weight: normal;">Laurent Destailleur</a>.</span><br>
-<br>
-<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-<g:plusone></g:plusone>
-<!-- facebook -->
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/fr_FR/all.js#xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-<div class="fb-like" data-href="http://www.awstats.org/docs/awstats_setup.html" data-layout="button_count" data-action="recommend" data-show-faces="false" data-share="true"></div>
-</div>
-<!-- END_SOCIAL_NETWORKS -->
+                <!-- IIS 部分 -->
+                <h3 data-i18n="iisTitle">B) Microsoft IIS 服务器设置</h3>
 
+                <p><span class="step-badge" data-i18n="step1">步骤 1</span></p>
+                <p data-i18n="iisStep1Desc">配置 IIS 以"扩展 W3C 日志格式"创建日志。启动 IIS 管理控制台，选择网站，打开"属性"，选择"W3C 扩展日志格式"，然后"属性"，在"扩展属性"选项卡中只勾选以下字段：</p>
+                <table class="code-table">
+                    <tr><td>date<br>time<br>c-ip<br>cs-username<br>cs-method<br>cs-uri-stem<br>cs-uri-query<br>sc-status<br>sc-bytes<br>cs-version<br>cs(User-Agent)<br>cs(Referer)</td></tr>
+                </table>
+
+                <p><span class="step-badge" data-i18n="step2">步骤 2</span></p>
+                <p data-i18n="iisStep2Desc">将 AWStats 提供的 cgi-bin 文件夹内容复制到服务器的 cgi-bin 目录（包括 awstats.pl、awstats.model.conf 以及 lang、lib 和 plugins 子目录）。</p>
+
+                <p><span class="step-badge" data-i18n="step3">步骤 3</span></p>
+                <p data-i18n="iisStep3Desc">将 AWStats 的 icon 子目录及其内容移动到 Web 服务器可读的目录，例如 C:\yourwwwroot\icon。</p>
+
+                <p><span class="step-badge" data-i18n="step4">步骤 4</span></p>
+                <p data-i18n="iisStep4Desc">通过复制 awstats.model.conf 创建配置文件，新文件命名为 awstats.<i>mysite</i>.conf，保存在与 awstats.pl 相同的目录中。</p>
+
+                <p><span class="step-badge" data-i18n="step5">步骤 5</span></p>
+                <p data-i18n="iisStep5Desc">编辑新的 awstats.<i>mysite</i>.conf 文件以匹配您的环境：</p>
+                <ul>
+                    <li><span data-i18n="iisParamLogfile">更改 <a href="awstats_config.html#LogFile">LogFile</a> 值为 Web 服务器日志文件的完整路径</span></li>
+                    <li><span data-i18n="iisParamLogtype">更改 <a href="awstats_config.html#LogType">LogType</a> 值为 "W"</span></li>
+                    <li><span data-i18n="iisParamLogformat">如果使用步骤1的"扩展 W3C 日志格式"，将 <a href="awstats_config.html#LogFormat">LogFormat</a> 改为 2</span></li>
+                    <li><span data-i18n="iisParamDoricons">更改 <a href="awstats_config.html#DirIcons">DirIcons</a> 参数为 icon 目录的相对路径</span></li>
+                    <li><span data-i18n="iisParamSitedomain">设置 <a href="awstats_config.html#SiteDomain">SiteDomain</a> 参数</span></li>
+                    <li><span data-i18n="iisParamAllowupdate">如果您没有命令行访问权限，将 <a href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a> 设为 1</span></li>
+                </ul>
+
+                <!-- 其他服务器 -->
+                <h3 data-i18n="otherTitle">C) 其他 Web 服务器设置</h3>
+                <p data-i18n="otherDesc">设置过程类似于 Apache 或 IIS 的设置。如果您使用 WebStar 本地日志格式，将 <a href="awstats_config.html#LogFormat">LogFormat</a> 设为 "3"。如果您的日志格式是其他格式，使用自定义的 <a href="awstats_config.html#LogFormat">LogFormat</a>。</p>
+
+                <!-- 其他互联网服务器 -->
+                <h3 data-i18n="internetTitle">D) 其他互联网服务器设置（FTP、邮件、流媒体）</h3>
+                <p data-i18n="internetDesc">其他文件格式的设置过程在相关 FAQ 主题中描述：<a href="awstats_faq.html#FTP">FAQ-COM090: FTP</a>、<a href="awstats_faq.html#MAIL">FAQ-COM100: 邮件</a> 和 <a href="awstats_faq.html#MEDIASERVER">FAQ-COM110: 流媒体</a>。</p>
+            </div>
+
+            <!-- 更新部分 -->
+            <a name="BUILD_UPDATE"></a>
+            <div class="setup-section">
+                <h2 data-i18n="updateTitle"><u>II. 处理日志：构建/更新统计数据库</u></h2>
+
+                <p><strong data-i18n="cliUpdate">* 从命令行更新（推荐）</strong></p>
+                <p data-i18n="cliUpdateDesc">首次日志分析应手动从命令行执行，因为过程可能较长，当您能看到命令输出时更容易解决问题。AWStats 创建（和更新）统计数据库的命令是：</p>
+                <pre>perl awstats.pl -config=mysite -update</pre>
+                <p data-i18n="cliUpdateNote">其中 <i>mysite</i> 必须替换为您在 AWStats 配置期间选择的域名/虚拟主机名。</p>
+
+                <div class="note-box">
+                    <p data-i18n="updateNote"><strong>注意：</strong> 被丢弃的记录是那些不是"用户 HTTP 请求"或匹配 AWStats 过滤器的记录。损坏的记录是不匹配 LogFormat 参数定义的日志格式的记录。旧记录是之前更新会话已处理的记录。新记录是成功用于构建/更新统计数据库的记录。</p>
+                </div>
+
+                <p><strong data-i18n="browserUpdate">* 从浏览器更新</strong></p>
+                <p data-i18n="browserUpdateDesc">AWStats 统计也可以通过浏览器更新，点击 AWStats 作为 CGI 使用时出现的"立即更新"链接。要启用此链接，配置文件参数 <a href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a> 必须设为 1。</p>
+                <p data-i18n="browserUpdateSchedule">您有两个选择自动运行更新：</p>
+                <ul>
+                    <li data-i18n="browserUpdateOpt1">将更新命令包含在您的 <b>logrotate</b> 过程中。详情见 <a href="awstats_faq.html#ROTATE">FAQ-COM120</a>。</li>
+                    <li data-i18n="browserUpdateOpt2">在 <b>crontab</b>（Unix/Linux）或 <b>任务计划程序</b>（Windows）中添加指令，定期启动 AWStats 更新过程。详情见 <a href="awstats_faq.html#CRONTAB">FAQ-COM130</a>。</li>
+                </ul>
+            </div>
+
+            <!-- 报告部分 -->
+            <a name="READ"></a>
+            <div class="setup-section">
+                <h2 data-i18n="reportTitle"><u>III. 运行报告：构建和阅读报告</u></h2>
+
+                <p data-i18n="reportIntro">要查看分析结果，根据您的<a href="awstats_security.html">安全策略</a>有几种选项。注意：在尝试创建报告之前，必须已通过处理日志文件为分析周期创建了统计数据库。</p>
+
+                <p><strong data-i18n="option1">1. 从命令行构建主要报告（静态 HTML 页面）</strong></p>
+                <pre>perl awstats.pl -config=mysite -output -staticlinks > awstats.mysite.html</pre>
+
+                <p><strong data-i18n="option2">2. 从浏览器动态查看统计信息</strong></p>
+                <pre>http://www.myserver.mydomain/awstats/awstats.pl?config=mysite</pre>
+                <p data-i18n="option2Note">所有输出命令行选项（除了 -staticlinks 和 -logfile）在使用浏览器时也可用。只需将它们用作 URL 参数：将 "-option" 改为 "&amp;option"。</p>
+
+                <p data-i18n="reportNote">如果配置文件中的 <a href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a> 参数设为 1，您还可以从浏览器运行更新过程。只需点击"立即更新"链接。</p>
+            </div>
+
+            <hr>
+
+            <!-- 署名 -->
+            <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-top: 20px;">
+                <span style="color: var(--text-secondary);" data-i18n="writtenBy">文章作者：<a href="https://www.destailleur.fr" rel="author">Laurent Destailleur</a>。</span>
+                <span class="badge" data-i18n="version">版本 8.1</span>
+            </div>
+        </div>
+    </main>
+
+    <!-- 返回顶部按钮 -->
+    <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="返回顶部">
+        ↑
+    </button>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-copyright">
+                © 1997 - <span id="currentYear"></span> Laurent Destailleur & AWStats <span data-i18n="copyright">团队</span>
+            </div>
+            <div class="footer-license">
+                <a href="awstats_license.html" data-i18n="licenseLink">GNU General Public License</a> · 
+                <a href="https://github.com/eldy/AWStats" rel="publisher" target="_blank" style="display: inline-flex; align-items: center;"><a data-i18n="authorLink"></a> 
+                </a>
+                    <img src="images/favicon.pub/github.svg" style="width: 24px; height: 24px;">
+                </div>
+            <div class="attribution" data-i18n="darkAttr">
+                🌓 自适应暗黑 · 现代化重构
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+            // 翻译资源 - 中文和英文
+            const translations = {
+                zh: {
+                    navHome: "主页",
+                    navWhat: "什么是AWStats",
+                    navSetup: "安装配置",
+                    navWebmin: "Webmin模块",
+                    navUpgrade: "升级指南",
+                    navTools: "其他工具",
+                    navFAQ: "FAQ",
+                    home: "主页",
+                    currentPage: "安装配置指南",
+                    
+                    siteTitle: "AWStats 8.1",
+                    headerSlogan: "⚡ 先进的日志分析器 · 官方文档",
+                    themeAuto: "自动",
+                    mainTitle: "AWStats 安装、配置和报告生成",
+                    intro: "开始使用 AWStats 需要三个步骤：",
+                    step1Link: "I. 安装和配置",
+                    step2Link: "II. 处理日志：构建/更新统计数据库",
+                    step3Link: "III. 运行报告：构建和阅读报告",
+                    
+                    installTitle: "I. 安装和配置（使用 awstats_configure.pl）",
+                    apacheTitle: "A) Apache 或兼容 Web 服务器设置（Unix/Linux, Windows, MacOS...）",
+                    step1: "步骤 1",
+                    step2: "步骤 2",
+                    step3: "步骤 3",
+                    step4: "步骤 4",
+                    step5: "步骤 5",
+                    apacheStep1Note: "（如果您使用的是 Linux 发行版或 Windows 安装程序提供的软件包，步骤 1 可能已经完成；如果不确定，可以再次运行此步骤）",
+                    apacheStep1Desc: "下载并解压 AWStats 软件包后，应运行 awstats_configure.pl 脚本执行一些设置操作。您可以在 AWStats 的 <b>tools</b> 目录中找到它（如果使用 Windows 安装程序，脚本会自动启动）：",
+                    apacheStep2Desc: "创建配置文件后（通过 awstats_configure.pl、软件包安装程序或手动复制 awstats.model.conf），验证\"主要参数\"是否符合您的需求非常重要。用您喜欢的文本编辑器打开 awstats.<i>mysite</i>.conf，根据需要修改。",
+                    apacheStep2Params: "特别关注以下参数：",
+                    paramLogfile: "验证 <a href=\"awstats_config.html#LogFile\">LogFile</a> 值。应为服务器日志文件的完整路径。",
+                    paramLogtype: "验证 <a href=\"awstats_config.html#LogType\">LogType</a> 值。分析 Web 日志文件应设为 \"W\"。",
+                    paramLogformat: "检查 <a href=\"awstats_config.html#LogFormat\">LogFormat</a> 是否设为 \"1\"（用于\"NCSA apache combined/ELF/XLF 日志格式\"）",
+                    paramSitedomain: "将 <a href=\"awstats_config.html#SiteDomain\">SiteDomain</a> 参数设为主要域名或内网 Web 服务器名称",
+                    apacheStep2Finish: "安装和配置完成。您可以跳转到<a href=\"#BUILD_UPDATE\">处理日志：构建/更新统计数据库</a>部分。",
+                    
+                    iisTitle: "B) Microsoft IIS 服务器设置",
+                    iisStep1Desc: "配置 IIS 以\"扩展 W3C 日志格式\"创建日志。启动 IIS 管理控制台，选择网站，打开\"属性\"，选择\"W3C 扩展日志格式\"，然后\"属性\"，在\"扩展属性\"选项卡中只勾选以下字段：",
+                    iisStep2Desc: "将 AWStats 提供的 cgi-bin 文件夹内容复制到服务器的 cgi-bin 目录（包括 awstats.pl、awstats.model.conf 以及 lang、lib 和 plugins 子目录）。",
+                    iisStep3Desc: "将 AWStats 的 icon 子目录及其内容移动到 Web 服务器可读的目录，例如 C:\\yourwwwroot\\icon。",
+                    iisStep4Desc: "通过复制 awstats.model.conf 创建配置文件，新文件命名为 awstats.<i>mysite</i>.conf，保存在与 awstats.pl 相同的目录中。",
+                    iisStep5Desc: "编辑新的 awstats.<i>mysite</i>.conf 文件以匹配您的环境：",
+                    iisParamLogfile: "更改 <a href=\"awstats_config.html#LogFile\">LogFile</a> 值为 Web 服务器日志文件的完整路径",
+                    iisParamLogtype: "更改 <a href=\"awstats_config.html#LogType\">LogType</a> 值为 \"W\"",
+                    iisParamLogformat: "如果使用步骤1的\"扩展 W3C 日志格式\"，将 <a href=\"awstats_config.html#LogFormat\">LogFormat</a> 改为 2",
+                    iisParamDoricons: "更改 <a href=\"awstats_config.html#DirIcons\">DirIcons</a> 参数为 icon 目录的相对路径",
+                    iisParamSitedomain: "设置 <a href=\"awstats_config.html#SiteDomain\">SiteDomain</a> 参数",
+                    iisParamAllowupdate: "如果您没有命令行访问权限，将 <a href=\"awstats_config.html#AllowToUpdateStatsFromBrowser\">AllowToUpdateStatsFromBrowser</a> 设为 1",
+                    
+                    otherTitle: "C) 其他 Web 服务器设置",
+                    otherDesc: "设置过程类似于 Apache 或 IIS 的设置。如果您使用 WebStar 本地日志格式，将 <a href=\"awstats_config.html#LogFormat\">LogFormat</a> 设为 \"3\"。如果您的日志格式是其他格式，使用自定义的 <a href=\"awstats_config.html#LogFormat\">LogFormat</a>。",
+                    
+                    internetTitle: "D) 其他互联网服务器设置（FTP、邮件、流媒体）",
+                    internetDesc: "其他文件格式的设置过程在相关 FAQ 主题中描述：<a href=\"awstats_faq.html#FTP\">FAQ-COM090: FTP</a>、<a href=\"awstats_faq.html#MAIL\">FAQ-COM100: 邮件</a> 和 <a href=\"awstats_faq.html#MEDIASERVER\">FAQ-COM110: 流媒体</a>。",
+                    
+                    updateTitle: "II. 处理日志：构建/更新统计数据库",
+                    cliUpdate: "* 从命令行更新（推荐）",
+                    cliUpdateDesc: "首次日志分析应手动从命令行执行，因为过程可能较长，当您能看到命令输出时更容易解决问题。AWStats 创建（和更新）统计数据库的命令是：",
+                    cliUpdateNote: "其中 <i>mysite</i> 必须替换为您在 AWStats 配置期间选择的域名/虚拟主机名。",
+                    updateNote: "<strong>注意：</strong> 被丢弃的记录是那些不是\"用户 HTTP 请求\"或匹配 AWStats 过滤器的记录。损坏的记录是不匹配 LogFormat 参数定义的日志格式的记录。旧记录是之前更新会话已处理的记录。新记录是成功用于构建/更新统计数据库的记录。",
+                    
+                    browserUpdate: "* 从浏览器更新",
+                    browserUpdateDesc: "AWStats 统计也可以通过浏览器更新，点击 AWStats 作为 CGI 使用时出现的\"立即更新\"链接。要启用此链接，配置文件参数 <a href=\"awstats_config.html#AllowToUpdateStatsFromBrowser\">AllowToUpdateStatsFromBrowser</a> 必须设为 1。",
+                    browserUpdateSchedule: "您有两个选择自动运行更新：",
+                    browserUpdateOpt1: "将更新命令包含在您的 <b>logrotate</b> 过程中。详情见 <a href=\"awstats_faq.html#ROTATE\">FAQ-COM120</a>。",
+                    browserUpdateOpt2: "在 <b>crontab</b>（Unix/Linux）或 <b>任务计划程序</b>（Windows）中添加指令，定期启动 AWStats 更新过程。详情见 <a href=\"awstats_faq.html#CRONTAB\">FAQ-COM130</a>。",
+                    
+                    reportTitle: "III. 运行报告：构建和阅读报告",
+                    reportIntro: "要查看分析结果，根据您的<a href=\"awstats_security.html\">安全策略</a>有几种选项。注意：在尝试创建报告之前，必须已通过处理日志文件为分析周期创建了统计数据库。",
+                    option1: "1. 从命令行构建主要报告（静态 HTML 页面）",
+                    option2: "2. 从浏览器动态查看统计信息",
+                    option2Note: "所有输出命令行选项（除了 -staticlinks 和 -logfile）在使用浏览器时也可用。只需将它们用作 URL 参数：将 \"-option\" 改为 \"&amp;option\"。",
+                    reportNote: "如果配置文件中的 <a href=\"awstats_config.html#AllowToUpdateStatsFromBrowser\">AllowToUpdateStatsFromBrowser</a> 参数设为 1，您还可以从浏览器运行更新过程。只需点击\"立即更新\"链接。",
+                    
+                    writtenBy: "文章作者：<a href=\"https://www.destailleur.fr\" rel=\"author\">Laurent Destailleur</a>。",
+                    version: "版本 8.1",
+                    copyright: "© 2000 - {year} Laurent Destailleur & AWStats 团队",
+                    licenseLink: "GNU通用公共许可证",
+                    authorLink: "原作者",
+                    darkAttr: "🌓 自适应暗黑 · 中文/English",
+                },
+                en: {
+                    navHome: "Home",
+                    navWhat: "What is AWStats",
+                    navSetup: "Setup",
+                    navWebmin: "Webmin Module",
+                    navUpgrade: "Upgrade Guide",
+                    navTools: "Other Tools",
+                    navFAQ: "FAQ",
+                    home: "Home",
+                    currentPage: "Setup Guide",
+                    
+                    siteTitle: "AWStats 8.1",
+                    headerSlogan: "⚡ Advanced Log Analyzer · Official Docs",
+                    themeAuto: "Auto",
+                    mainTitle: "AWStats Installation, Configuration and Reporting",
+                    intro: "There are 3 steps to begin using AWStats:",
+                    step1Link: "I. Setup: Installation and configuration",
+                    step2Link: "II. Process logs: Building/updating statistics database",
+                    step3Link: "III. Run Reports: Building and reading reports",
+                    
+                    installTitle: "I. Setup: Installation and configuration using awstats_configure.pl",
+                    apacheTitle: "A) Setup for an Apache or compatible web server (on Unix/Linux, Windows, MacOS...)",
+                    step1: "Step 1",
+                    step2: "Step 2",
+                    step3: "Step 3",
+                    step4: "Step 4",
+                    step5: "Step 5",
+                    apacheStep1Note: "(if you use a package provided with a Linux distribution or Windows installer, step 1 might have already been done; if you don't know, you can run this step again)",
+                    apacheStep1Desc: "After downloading and extracting the AWStats package, you should run the awstats_configure.pl script to do several setup actions. You will find it in the AWStats <b>tools</b> directory (If using the Windows installer, the script is automatically launched):",
+                    apacheStep2Desc: "Once a configuration file has been created (by awstats_configure.pl, by your package installer or just by a manual copy of awstats.model.conf), it's important to verify that the \"MAIN PARAMETERS\" match your needs. Open awstats.<i>mysite</i>.conf in your favorite text editor and make changes as required.",
+                    apacheStep2Params: "Particular attention should be given to these parameters:",
+                    paramLogfile: "Verify the <a href=\"awstats_config.html#LogFile\">LogFile</a> value. It should be the full path of your server log file.",
+                    paramLogtype: "Verify the <a href=\"awstats_config.html#LogType\">LogType</a> value. It should be \"W\" for analyzing web log files.",
+                    paramLogformat: "Check if <a href=\"awstats_config.html#LogFormat\">LogFormat</a> is set to \"1\" (for \"NCSA apache combined/ELF/XLF log format\")",
+                    paramSitedomain: "Set the <a href=\"awstats_config.html#SiteDomain\">SiteDomain</a> parameter to the main domain name or the intranet web server name",
+                    apacheStep2Finish: "Installation and configuration is finished. You can jump to the <a href=\"#BUILD_UPDATE\">Process logs: Building/updating statistics database</a> section.",
+                    
+                    iisTitle: "B) Setup for Microsoft's IIS server",
+                    iisStep1Desc: "Configure IIS to create logs in the \"Extended W3C log format\". Start the IIS management console snap-in, select the appropriate web site and open its Properties. Choose \"W3C Extended Log Format\", then Properties, then the Tab \"Extended Properties\" and uncheck everything under Extended Properties. Once they are all cleared, check just the following fields:",
+                    iisStep2Desc: "Copy the contents of the AWStats provided cgi-bin folder, from where the AWStats package put it on your local hard drive, to your server's cgi-bin directory (this includes awstats.pl, awstats.model.conf, and the lang, lib and plugins sub-directories).",
+                    iisStep3Desc: "Move AWStats icon sub-directories and its content into a directory readable by your web server, for example C:\\yourwwwroot\\icon.",
+                    iisStep4Desc: "Create a configuration file by copying awstats.model.conf to a new file named awstats.<i>mysite</i>.conf. This new file must be saved in the same directory as awstats.pl (i.e. cgi-bin).",
+                    iisStep5Desc: "Edit your new awstats.<i>mysite</i>.conf file to match your specific environment:",
+                    iisParamLogfile: "Change the <a href=\"awstats_config.html#LogFile\">LogFile</a> value to the full path of your web server log file",
+                    iisParamLogtype: "Change the <a href=\"awstats_config.html#LogType\">LogType</a> value to \"W\"",
+                    iisParamLogformat: "If you are using the \"Extended W3C log format\" described in step 1, change the <a href=\"awstats_config.html#LogFormat\">LogFormat</a> to 2",
+                    iisParamDoricons: "Change the <a href=\"awstats_config.html#DirIcons\">DirIcons</a> parameter to reflect relative path of icon directory",
+                    iisParamSitedomain: "Set the <a href=\"awstats_config.html#SiteDomain\">SiteDomain</a> parameter",
+                    iisParamAllowupdate: "Set the <a href=\"awstats_config.html#AllowToUpdateStatsFromBrowser\">AllowToUpdateStatsFromBrowser</a> parameter to 1 if you don't have command line access",
+                    
+                    otherTitle: "C) Setup for other web servers",
+                    otherDesc: "The setup process is similar to the setup for Apache or IIS. Use <a href=\"awstats_config.html#LogFormat\">LogFormat</a> to value \"3\" if you have WebStar native log format. Use a personalized <a href=\"awstats_config.html#LogFormat\">LogFormat</a> if your log format is other.",
+                    
+                    internetTitle: "D) Setup for other Internet servers, i.e. FTP, Mail, Streaming media",
+                    internetDesc: "The setup process for other file formats is described in the relevant FAQ topics: <a href=\"awstats_faq.html#FTP\">FAQ-COM090: FTP</a> <a href=\"awstats_faq.html#MAIL\">FAQ-COM100: Mail</a> and <a href=\"awstats_faq.html#MEDIASERVER\">FAQ-COM110: Streaming media</a>.",
+                    
+                    updateTitle: "II. Process logs: Building/updating statistics database",
+                    cliUpdate: "* Update from command line (recommended)",
+                    cliUpdateDesc: "The first log analysis should be done manually from the command line since the process may be long and it's easier to solve problems when you can see the command output. The AWStats create (and update) statistics database command is:",
+                    cliUpdateNote: "where <i>mysite</i> must be substituted with the domain/virtual host name you selected earlier during AWStats configuration.",
+                    updateNote: "<strong>Note:</strong> Dropped records are records discarded because they were not \"user HTTP requests\" or were requests matching AWStats filters. Corrupted records are records that do not match the log format defined by the LogFormat parameter. Old records are records that were already processed by a previous update session. New records are records that were successfully used to build/update the statistics database.",
+                    
+                    browserUpdate: "* Update from a browser",
+                    browserUpdateDesc: "AWStats statistics can also be updated from a browser, providing real-time statistics, by clicking the \"Update now\" link that appears when AWStats is used as a CGI. To enable this link, the configuration file parameter <a href=\"awstats_config.html#AllowToUpdateStatsFromBrowser\">AllowToUpdateStatsFromBrowser</a> must be set to 1.",
+                    browserUpdateSchedule: "For automatic updates, you have two choices:",
+                    browserUpdateOpt1: "Include the update command in your <b>logrotate</b> process. See <a href=\"awstats_faq.html#ROTATE\">FAQ-COM120</a> for details.",
+                    browserUpdateOpt2: "Add instructions in your <b>crontab</b> (Unix/Linux) or your <b>task scheduler</b> (Windows), to regularly launch the Awstats update process. See <a href=\"awstats_faq.html#CRONTAB\">FAQ-COM130</a> for details.",
+                    
+                    reportTitle: "III. Run reports: Building and reading reports",
+                    reportIntro: "To see the analysis results, you have several options depending on your <a href=\"awstats_security.html\">security policy</a>. Note: you must have created a statistics data base for the analysis period by processing your log files before you try to create reports.",
+                    option1: "1. Build the main reports, in a static HTML page, from the command line",
+                    option2: "2. Dynamically view your statistics from a browser",
+                    option2Note: "All output command line options (except -staticlinks and -logfile) are also available when using AWStats with a browser. Just use them as URL parameters: change \"-option\" to \"&amp;option\".",
+                    reportNote: "If the <a href=\"awstats_config.html#AllowToUpdateStatsFromBrowser\">AllowToUpdateStatsFromBrowser</a> parameter is set to 1 in AWStats configuration file, you will also be able to run the update process from your browser. Just click on the link \"Update now\".",
+                    
+                    writtenBy: "Article written by <a href=\"https://www.destailleur.fr\" rel=\"author\">Laurent Destailleur</a>.",
+                    version: "Version 8.1",
+                    copyright: "© 2000 - {year} Laurent Destailleur & AWStats Team",
+                    licenseLink: "GNU General Public License",
+                    authorLink: "Author",
+                    darkAttr: "🌓 Adaptive dark mode · 中文/English",
+                }
+            };
+
+            const i18nElements = document.querySelectorAll('[data-i18n]');
+            const langSelector = document.getElementById('langSelector');
+            let currentLang = localStorage.getItem('awstats_lang') || 'zh';
+            langSelector.value = currentLang;
+
+            function applyLanguage(lang) {
+                const t = translations[lang] || translations.zh;
+                i18nElements.forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (t[key] !== undefined) {
+                        if (key === 'copyright') {
+                            const year = new Date().getFullYear();
+                            el.innerHTML = t[key].replace('{year}', year);
+                        } else if (key === 'apacheStep1Desc' || key === 'apacheStep2Desc' || key === 'iisStep1Desc' || key === 'iisStep5Desc' || key === 'intro' || key === 'writtenBy' || key.includes('Desc') || key.includes('Note') || key.includes('Opt')) {
+                            el.innerHTML = t[key];
+                        } else {
+                            el.textContent = t[key];
+                        }
+                    }
+                });
+                localStorage.setItem('awstats_lang', lang);
+                
+                const themeState = localStorage.getItem('awstats_theme') || 'auto';
+                const themeText = document.querySelector('.theme-text');
+                if (themeText) {
+                    if (themeState === 'auto') themeText.textContent = t.themeAuto;
+                    else if (themeState === 'light') themeText.textContent = (lang === 'zh' ? '浅色' : 'Light');
+                    else themeText.textContent = (lang === 'zh' ? '深色' : 'Dark');
+                }
+            }
+
+            applyLanguage(currentLang);
+
+            langSelector.addEventListener('change', (e) => {
+                currentLang = e.target.value;
+                applyLanguage(currentLang);
+            });
+
+            // 暗黑模式切换
+            const root = document.documentElement;
+            const themeBtn = document.getElementById('themeToggleBtn');
+            let themeState = localStorage.getItem('awstats_theme') || 'auto';
+
+            function applyTheme(state) {
+                root.classList.remove('force-light', 'force-dark');
+                if (state === 'light') root.classList.add('force-light');
+                else if (state === 'dark') root.classList.add('force-dark');
+                const themeText = document.querySelector('.theme-text');
+                if (themeText) {
+                    const lang = currentLang;
+                    const t = translations[lang];
+                    if (state === 'auto') themeText.textContent = t.themeAuto;
+                    else if (state === 'light') themeText.textContent = (lang === 'zh' ? '浅色' : 'Light');
+                    else themeText.textContent = (lang === 'zh' ? '深色' : 'Dark');
+                }
+                localStorage.setItem('awstats_theme', state);
+            }
+            applyTheme(themeState);
+            themeBtn.addEventListener('click', () => {
+                if (themeState === 'auto') themeState = 'light';
+                else if (themeState === 'light') themeState = 'dark';
+                else themeState = 'auto';
+                applyTheme(themeState);
+            });
+        })();
+    </script>
 </body>
 </html>

@@ -1,73 +1,951 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-<meta name="description" content="AWStats Documentation - License description">
-<meta name="keywords" content="awstats, awstat, license, permissions, agreements, allow, rights, GNU, GPL, general, public, license">
-<meta name="robots" content="index,follow">
-<meta name="title" content="AWStats Documentation - License description">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>AWStats Documentation - License description</title>
-<link rel="stylesheet" href="styles.css" type="text/css">
-<link href="https://plus.google.com/+LaurentDestailleur-Open-Source-Expert" rel="publisher" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWStats · 许可证</title>
+    <meta name="description" content="AWStats Documentation - License description (中文/English)">
+    <meta name="keywords" content="awstats, license, GPL, GNU, 许可证">
+    <meta name="author" content="Laurent Destailleur (多语言重构)">
+    <meta name="robots" content="index,follow">
+    <style>
+        /* ========== 现代化全局设计 ========== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-page: #f8fafc; --surface: #ffffff; --surface-secondary: #f1f5f9;
+            --text-primary: #0f172a; --text-secondary: #475569; --accent: #4f46e5;
+            --accent-light: #818cf8; --accent-soft: #eef2ff; --border: #e2e8f0;
+            --card-shadow: 0 20px 25px -5px rgba(0,0,0,0.05), 0 10px 10px -5px rgba(0,0,0,0.02);
+            --header-bg: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            --footer-bg: #eef2ff; --link-color: #4f46e5; --link-visited: #7c3aed;
+            --code-bg: #f1f5f9; --success: #10b981; --warning: #f59e0b; --danger: #ef4444;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-page: #0f172a; --surface: #1e293b; --surface-secondary: #334155;
+                --text-primary: #f1f5f9; --text-secondary: #cbd5e1; --accent: #818cf8;
+                --accent-light: #a5b4fc; --accent-soft: #2d3a5e; --border: #475569;
+                --card-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
+                --header-bg: linear-gradient(135deg, #4f46e5 0%, #6d28d9 100%);
+                --footer-bg: #1e293b; --link-color: #a5b4fc; --link-visited: #c4b5fd;
+                --code-bg: #334155; --success: #34d399; --warning: #fbbf24; --danger: #f87171;
+            }
+        }
+
+        body {
+            background-color: var(--bg-page); color: var(--text-primary);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6; margin: 0; padding: 0;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            display: flex; flex-direction: column; min-height: 100vh;
+        }
+        .container { max-width: 1300px; margin: 0 auto; padding: 0 28px; width: 100%; }
+
+        /* 现代化导航栏 */
+        .nav-bar {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+            background-color: rgba(var(--surface-rgb), 0.8);
+        }
+        .nav-container {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 20px;
+        }
+        .nav-home {
+            font-weight: 700; font-size: 1.3rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-decoration: none; display: flex; align-items: center; gap: 8px;
+        }
+        .nav-links {
+            display: flex; gap: 8px; flex-wrap: wrap;
+        }
+        .nav-links a {
+            color: var(--text-secondary); text-decoration: none;
+            font-weight: 500; padding: 8px 16px; border-radius: 40px;
+            transition: all 0.2s; font-size: 0.95rem;
+        }
+        .nav-links a:hover {
+            background: var(--accent-soft); color: var(--accent);
+        }
+        .nav-links a.active {
+            background: var(--accent); color: white;
+        }
+        .breadcrumb {
+            display: flex; gap: 8px; align-items: center;
+            color: var(--text-secondary); font-size: 0.9rem;
+        }
+        .breadcrumb a { color: var(--link-color); text-decoration: none; }
+
+        /* 现代化头部 */
+        .header {
+            background: var(--header-bg); color: white; border-radius: 0 0 40px 40px;
+            padding: 24px 0 32px; box-shadow: var(--card-shadow); margin-bottom: 30px;
+        }
+        .header-row {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 20px;
+        }
+        .logo-area { display: flex; align-items: center; gap: 16px; }
+        .logo-area img { height: 56px; width: auto; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
+        .site-title {
+            font-size: 2rem; font-weight: 700; background: rgba(255,255,255,0.1);
+            padding: 8px 24px; border-radius: 60px; backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .header-center {
+            flex: 1; text-align: center; font-weight: 500; font-size: 1.2rem;
+            background: rgba(0,0,0,0.1); padding: 8px 24px; border-radius: 60px;
+            backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.15);
+        }
+        .header-right { display: flex; gap: 12px; align-items: center; }
+        .lang-switch {
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 40px; padding: 6px 16px; color: white; font-weight: 500;
+            display: flex; align-items: center; gap: 8px; backdrop-filter: blur(8px);
+        }
+        .lang-switch select {
+            background: transparent; border: none; color: white; font-weight: 500;
+            outline: none; font-size: 0.95rem; cursor: pointer;
+        }
+        .lang-switch select option { background: var(--accent); color: white; }
+        .theme-toggle {
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 40px; padding: 8px 20px; font-size: 0.95rem; color: white;
+            cursor: pointer; display: flex; align-items: center; gap: 8px; backdrop-filter: blur(8px);
+        }
+
+        /* 现代化文档卡片 */
+        .doc-card {
+            background-color: var(--surface); border-radius: 40px;
+            padding: 3rem; box-shadow: var(--card-shadow);
+            border: 1px solid var(--border); margin: 20px 0 40px;
+        }
+        h1 {
+            font-size: 2.5rem; font-weight: 700; letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin: 0 0 25px 0;
+        }
+        h2 {
+            font-size: 2rem; font-weight: 600; margin: 2.5rem 0 1.5rem;
+            color: var(--text-primary); border-bottom: 3px solid var(--accent-soft);
+            padding-bottom: 12px;
+        }
+
+        /* 现代化表格设计 */
+        .license-chart-container {
+            overflow-x: auto;
+            margin: 30px 0;
+            border-radius: 24px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            box-shadow: var(--card-shadow);
+        }
+        .license-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            min-width: 1200px;
+        }
+        .license-table th {
+            background: var(--accent-soft);
+            color: var(--accent);
+            font-weight: 600;
+            padding: 16px 12px;
+            text-align: center;
+            border-bottom: 2px solid var(--border);
+            white-space: nowrap;
+        }
+        .license-table td {
+            padding: 14px 12px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+        }
+        .license-table tr:last-child td {
+            border-bottom: none;
+        }
+        .license-table tr:hover td {
+            background: var(--accent-soft);
+        }
+
+        /* 分类行样式 */
+        .category-row {
+            background: var(--surface-secondary) !important;
+            border-top: 2px solid var(--border);
+            border-bottom: 2px solid var(--border);
+        }
+        .category-row td {
+            background: var(--surface-secondary);
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding: 12px 16px;
+        }
+
+        /* 权限标签 */
+        .permission-yes {
+            color: var(--success);
+            font-weight: 600;
+            text-align: center;
+            background: rgba(16, 185, 129, 0.1);
+            padding: 4px 8px;
+            border-radius: 20px;
+            display: inline-block;
+            width: 60px;
+        }
+        .permission-no {
+            color: var(--danger);
+            font-weight: 600;
+            text-align: center;
+            background: rgba(239, 68, 68, 0.1);
+            padding: 4px 8px;
+            border-radius: 20px;
+            display: inline-block;
+            width: 60px;
+        }
+        .permission-maybe {
+            color: var(--warning);
+            font-weight: 600;
+            text-align: center;
+            background: rgba(245, 158, 11, 0.1);
+            padding: 4px 8px;
+            border-radius: 20px;
+            display: inline-block;
+            width: 60px;
+        }
+        .permission-special {
+            color: var(--accent);
+            font-weight: 500;
+            text-align: center;
+            background: var(--accent-soft);
+            padding: 4px 8px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 0.85rem;
+        }
+
+        /* 许可证名称标签 */
+        .license-badge {
+            background: var(--accent-soft);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-weight: 500;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+
+        /* 注脚区域 */
+        .license-notes {
+            margin-top: 40px;
+            padding: 24px;
+            background: var(--surface-secondary);
+            border-radius: 24px;
+            border: 1px solid var(--border);
+        }
+        .license-notes p {
+            margin: 10px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .note-number {
+            display: inline-block;
+            min-width: 24px;
+            height: 24px;
+            background: var(--accent);
+            color: white;
+            border-radius: 12px;
+            text-align: center;
+            line-height: 24px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .license-date {
+            text-align: right;
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--border);
+        }
+
+        /* 现代化页脚 */
+        .footer {
+            background-color: var(--footer-bg); margin-top: 60px;
+            padding: 32px 24px; border-radius: 40px 40px 0 0;
+            border-top: 1px solid var(--border); color: var(--text-secondary);
+        }
+        .footer-content {
+            display: flex; flex-wrap: wrap; justify-content: space-between;
+            align-items: center; gap: 20px; max-width: 1300px; margin: 0 auto;
+        }
+        .footer-copyright {
+            background: var(--surface); padding: 8px 24px; border-radius: 60px;
+            border: 1px solid var(--border); font-size: 0.95rem;
+        }
+        
+        .back-to-top {
+            position: fixed; bottom: 30px; right: 30px;
+            background: var(--accent); color: white;
+            width: 56px; height: 56px; border-radius: 28px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; border: none; box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
+            transition: all 0.2s; z-index: 99; font-size: 1.2rem;
+        }
+        .back-to-top:hover {
+            transform: scale(1.1); background: var(--accent-light);
+        }
+        
+        @media (max-width: 700px) {
+            .header-row { flex-direction: column; }
+            .doc-card { padding: 1.8rem; }
+            h1 { font-size: 2rem; }
+        }
+    </style>
 </head>
+<body>
+    <!-- 导航栏 -->
+    <div class="nav-bar">
+        <div class="container nav-container">
+            <a href="index.html" class="nav-home">
+                <span>🏠</span> AWStats 文档
+            </a>
+            <div class="nav-links">
+                <a href="index.html" data-i18n="navHome">主页</a>
+                <a href="awstats_what.html" data-i18n="navWhat">什么是AWStats</a>
+                <a href="awstats_setup.html" data-i18n="navSetup">安装配置</a>
+                <a href="awstats_webmin.html" data-i18n="navWebmin">Webmin模块</a>
+                <a href="awstats_upgrade.html" data-i18n="navUpgrade">升级指南</a>
+                <a href="awstats_tools.html" data-i18n="navTools">其他工具</a>
+                <a href="awstats_security.html" data-i18n="navSecurity">安全建议</a>
+                <a href="awstats_license.html" class="active" data-i18n="navLicense">许可证</a>
+                <a href="awstats_faq.html" data-i18n="navFAQ">FAQ</a>
+            </div>
+            <div class="breadcrumb">
+                <a href="index.html" data-i18n="home">主页</a>
+                <span>›</span>
+                <span data-i18n="currentPage">许可证</span>
+            </div>
+        </div>
+    </div>
 
-<body topmargin=10 leftmargin=5>
+    <header class="header">
+        <div class="container header-row">
+            <div class="logo-area">
+                <img src="images/awstats_logo6.png" alt="AWStats" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'56\' height=\'56\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%234f46e5\' rx=\'20\'/%3E%3Ctext x=\'20\' y=\'68\' fill=\'%23ffffff\' font-size=\'60\' font-weight=\'bold\'%3EAW%3C/text%3E%3C/svg%3E';">
+                <span class="site-title" data-i18n="siteTitle">AWStats 8.1</span>
+            </div>
+            <div class="header-center" data-i18n="headerSlogan">
+                ⚡ 先进的日志分析器 · 官方文档
+            </div>
+            <div class="header-right">
+                <div class="lang-switch">
+                    <span>🌐</span>
+                    <select id="langSelector">
+                        <option value="zh" selected>中文</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+                <button class="theme-toggle" id="themeToggleBtn">
+                    <span>🌓</span> <span class="theme-text" data-i18n="themeAuto">自动</span>
+                </button>
+            </div>
+        </div>
+    </header>
 
+    <main class="container">
+        <div class="doc-card">
+            <h1 data-i18n="mainTitle">AWStats 许可证 / 版权</h1>
 
-<table style="font: 10pt arial,helvetica,verdana" cellpadding=0 cellspacing=0 border=0 bgcolor=#FFFFFF width=100%>
+            <div style="background: var(--accent-soft); padding: 24px; border-radius: 30px; margin-bottom: 30px;">
+                <p data-i18n="licenseDesc" style="font-size: 1.1rem;">AWStats 遵循 <a href="http://www.gnu.org/copyleft/gpl.html" target="_gnugpl" style="color: var(--accent); font-weight: 600;">GNU 通用公共许可证 (GPL)</a> 发布。</p>
+                <p data-i18n="licenseFollow" style="color: var(--text-secondary); margin-top: 10px;">因此您应遵循"自由软件 - Copyleft - GPL"的原则，了解 AWStats 的主要许可协议。</p>
+            </div>
 
-<!-- Large -->
-<tr style="font: 10pt arial,helvetica,verdana">
-<td bgcolor=#9999cc align=center><a href="/"><img src="images/awstats_logo6.png" border=0></a></td>
-<td bgcolor=#9999cc align=center>
-<br>
-<font style="font: 16pt arial,helvetica,sans-serif" color=#EEEEFF><b>AWStats logfile analyzer 8.0 Documentation</b></font><br>
-<br>
-</td>
-<td bgcolor=#9999cc align=center>
-&nbsp;
-</td>
-</tr>
+            <h2 data-i18n="chartTitle">📊 许可证分类与权限对照表</h2>
+            
+            <!-- 现代化表格 -->
+            <div class="license-chart-container">
+                <table class="license-table">
+                    <thead>
+                        <tr>
+                            <th data-i18n="libertyPolicy">自由政策</th>
+                            <th data-i18n="copyleft">Copyleft</th>
+                            <th data-i18n="copyright1">版权</th>
+                            <th data-i18n="licenseFamily">许可证家族</th>
+                            <th data-i18n="licenseName">许可证名称</th>
+                            <th data-i18n="downloadUse">下载使用<br>完全免费</th>
+                            <th data-i18n="sourceAvailable">源代码<br>免费获取</th>
+                            <th data-i18n="useModifyDistribute">使用/修改/分发</th>
+                            <th data-i18n="examples">典型示例</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 自由软件分类 -->
+                        <tr class="category-row">
+                            <td colspan="9" data-i18n="freeSoftware">📦 自由软件</td>
+                        </tr>
+                        
+                        <!-- 公共领域 -->
+                        <tr>
+                            <td data-i18n="liberty">自由</td>
+                            <td data-i18n="nonCopyleft">非 Copyleft</td>
+                            <td data-i18n="noCopyright">无版权</td>
+                            <td data-i18n="publicDomain">公共领域</td>
+                            <td><span class="license-badge">Public Domain</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 可以</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 是</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 可以<sup>5,6</sup></span></td>
+                            <td>X Window System</td>
+                        </tr>
+                        
+                        <!-- MIT 家族 -->
+                        <tr>
+                            <td data-i18n="liberty">自由</td>
+                            <td data-i18n="nonCopyleft">非 Copyleft</td>
+                            <td data-i18n="copyright1">版权保留</td>
+                            <td data-i18n="mitFamily">MIT 家族</td>
+                            <td><span class="license-badge">MIT License</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 可以</span></td>
+                            <td><span class="permission-maybe" data-i18n="permissionMaybe">○ 未必</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 可以<sup>7</sup></span></td>
+                            <td>Node.js, jQuery, React</td>
+                        </tr>
+                        
+                        <!-- BSD 2-Clause -->
+                        <tr>
+                            <td data-i18n="liberty">自由</td>
+                            <td data-i18n="nonCopyleft">非 Copyleft</td>
+                            <td data-i18n="copyright1">版权保留</td>
+                            <td data-i18n="bsdFamily">BSD 家族</td>
+                            <td><span class="license-badge">BSD 2-Clause</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 可以</span></td>
+                            <td><span class="permission-maybe" data-i18n="permissionMaybe">○ 未必</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 可以<sup>7</sup></span></td>
+                            <td>Nginx, Go语言</td>
+                        </tr>
+                        
+                        <!-- BSD 3-Clause -->
+                        <tr>
+                            <td data-i18n="liberty">自由</td>
+                            <td data-i18n="nonCopyleft">非 Copyleft</td>
+                            <td data-i18n="copyright1">版权保留</td>
+                            <td data-i18n="bsdFamily">BSD 家族</td>
+                            <td><span class="license-badge">BSD 3-Clause</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 可以</span></td>
+                            <td><span class="permission-maybe" data-i18n="permissionMaybe">○ 未必</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 可以<sup>8</sup></span></td>
+                            <td>Redis, BSD操作系统</td>
+                        </tr>
+                        
+                        <!-- Apache 2.0 -->
+                        <tr>
+                            <td data-i18n="liberty">自由</td>
+                            <td data-i18n="nonCopyleft">非 Copyleft</td>
+                            <td data-i18n="copyright1">版权保留</td>
+                            <td data-i18n="apacheFamily">Apache 家族</td>
+                            <td><span class="license-badge">Apache 2.0</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 可以</span></td>
+                            <td><span class="permission-maybe" data-i18n="permissionMaybe">○ 未必</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 可以<sup>8</sup></span></td>
+                            <td>Android, Swift, Spring</td>
+                        </tr>
+                        
+                        <!-- ISC -->
+                        <tr>
+                            <td data-i18n="liberty">自由</td>
+                            <td data-i18n="nonCopyleft">非 Copyleft</td>
+                            <td data-i18n="copyright1">版权保留</td>
+                            <td data-i18n="iscFamily">ISC 家族</td>
+                            <td><span class="license-badge">ISC License</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 可以</span></td>
+                            <td><span class="permission-maybe" data-i18n="permissionMaybe">○ 未必</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 可以<sup>7</sup></span></td>
+                            <td>OpenBSD, BIND</td>
+                        </tr>
+                        
+                        <!-- LGPL -->
+                        <tr>
+                            <td data-i18n="liberty">自由</td>
+                            <td data-i18n="weakCopyleft">弱 Copyleft</td>
+                            <td data-i18n="copyright1">版权保留</td>
+                            <td data-i18n="lgplFamily">LGPL 家族</td>
+                            <td><span class="license-badge">LGPL 2.1/3.0</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 可以</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 是</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 可以<sup>3,9</sup></span></td>
+                            <td>glibc, OpenVRML</td>
+                        </tr>
+                        
+                        <!-- MPL -->
+                        <tr>
+                            <td data-i18n="liberty">自由</td>
+                            <td data-i18n="weakCopyleft">弱 Copyleft</td>
+                            <td data-i18n="copyright1">版权保留</td>
+                            <td data-i18n="mplFamily">MPL 家族</td>
+                            <td><span class="license-badge">MPL 2.0</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 可以</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 是</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 可以<sup>3</sup></span></td>
+                            <td>Firefox, Thunderbird</td>
+                        </tr>
+                        
+                        <!-- GPL -->
+                        <tr>
+                            <td data-i18n="liberty">自由</td>
+                            <td data-i18n="strongCopyleft">强 Copyleft</td>
+                            <td data-i18n="copyright1">版权保留</td>
+                            <td data-i18n="gplFamily">GPL 家族</td>
+                            <td><span class="license-badge">GPL 2.0/3.0</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 可以</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 是</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 可以<sup>3</sup></span></td>
+                            <td>Linux内核, Git, WordPress</td>
+                        </tr>
+                        
+                        <!-- AGPL -->
+                        <tr>
+                            <td data-i18n="liberty">自由</td>
+                            <td data-i18n="strongCopyleft">强 Copyleft</td>
+                            <td data-i18n="copyright1">版权保留</td>
+                            <td data-i18n="agplFamily">AGPL 家族</td>
+                            <td><span class="license-badge">AGPL 3.0</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 可以</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 是</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 可以<sup>3,10</sup></span></td>
+                            <td>MongoDB, Nextcloud</td>
+                        </tr>
+                        
+                        <!-- Eclipse 系列 -->
+                        <tr>
+                            <td data-i18n="liberty">自由</td>
+                            <td data-i18n="weakCopyleft">弱 Copyleft</td>
+                            <td data-i18n="copyright1">版权保留</td>
+                            <td data-i18n="eplFamily">EPL 家族</td>
+                            <td><span class="license-badge">EPL 2.0</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 可以</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 是</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 可以<sup>3,9</sup></span></td>
+                            <td>Eclipse IDE</td>
+                        </tr>
+                        
+                        <!-- CDDL -->
+                        <tr>
+                            <td data-i18n="liberty">自由</td>
+                            <td data-i18n="weakCopyleft">弱 Copyleft</td>
+                            <td data-i18n="copyright1">版权保留</td>
+                            <td data-i18n="cddlFamily">CDDL 家族</td>
+                            <td><span class="license-badge">CDDL 1.0</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 可以</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 是</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 可以<sup>3,9</sup></span></td>
+                            <td>OpenSolaris, ZFS</td>
+                        </tr>
+                        
+                        <!-- 半自由软件分类 -->
+                        <tr class="category-row">
+                            <td colspan="9" data-i18n="semiFreeSoftware">⚠️ 半自由软件</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="semiFree">半自由</td>
+                            <td data-i18n="nonCopyleft">非 Copyleft</td>
+                            <td data-i18n="copyright1">版权保留</td>
+                            <td data-i18n="semiFreeSoftware">半自由软件</td>
+                            <td><span class="license-badge">Semi-Free</span></td>
+                            <td><span class="permission-special" data-i18n="permissionSpecial">个人非营利<sup>1</sup></span></td>
+                            <td><span class="permission-no" data-i18n="permissionNo">✗ 否</span></td>
+                            <td><span class="permission-maybe" data-i18n="permissionMaybe">○ 可能<sup>4</sup></span></td>
+                            <td>Sonique, 部分ASP软件</td>
+                        </tr>
+                        
+                        <!-- 专有软件分类 -->
+                        <tr class="category-row">
+                            <td colspan="9" data-i18n="proprietarySoftware">🔒 专有软件</td>
+                        </tr>
+                        
+                        <!-- 免费软件 -->
+                        <tr>
+                            <td data-i18n="proprietary">专有</td>
+                            <td data-i18n="nonCopyleft">非 Copyleft</td>
+                            <td data-i18n="copyright1">版权保留</td>
+                            <td data-i18n="freeware">免费软件</td>
+                            <td><span class="license-badge">Freeware</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 可以</span></td>
+                            <td><span class="permission-no" data-i18n="permissionNo">✗ 否</span></td>
+                            <td><span class="permission-maybe" data-i18n="permissionMaybe">○ 可能<sup>4</sup></span></td>
+                            <td>Paint Shop Pro, IE</td>
+                        </tr>
+                        
+                        <!-- 共享软件 -->
+                        <tr>
+                            <td data-i18n="proprietary">专有</td>
+                            <td data-i18n="nonCopyleft">非 Copyleft</td>
+                            <td data-i18n="copyright1">版权保留</td>
+                            <td data-i18n="shareware">共享软件</td>
+                            <td><span class="license-badge">Shareware</span></td>
+                            <td><span class="permission-special" data-i18n="permissionSpecial">仅评估<sup>2</sup></span></td>
+                            <td><span class="permission-no" data-i18n="permissionNo">✗ 否</span></td>
+                            <td><span class="permission-maybe" data-i18n="permissionMaybe">○ 可能<sup>4</sup></span></td>
+                            <td>WinZip, 早期Windows</td>
+                        </tr>
+                        
+                        <!-- 商业软件 -->
+                        <tr>
+                            <td data-i18n="proprietary">专有</td>
+                            <td data-i18n="nonCopyleft">非 Copyleft</td>
+                            <td data-i18n="copyright1">版权保留</td>
+                            <td data-i18n="commercialSoftware">商业软件</td>
+                            <td><span class="license-badge">Commercial</span></td>
+                            <td><span class="permission-no" data-i18n="permissionNo">✗ 否</span></td>
+                            <td><span class="permission-no" data-i18n="permissionNo">✗ 否</span></td>
+                            <td><span class="permission-no" data-i18n="permissionNo">✗ 否</span></td>
+                            <td>Windows, Office, PS</td>
+                        </tr>
+                        
+                        <!-- 现代开源协议分类 -->
+                        <tr class="category-row">
+                            <td colspan="9" data-i18n="modernOpenSource">🚀 现代开源协议</td>
+                        </tr>
+                        
+                        <!-- Python License -->
+                        <tr>
+                            <td data-i18n="liberty">自由</td>
+                            <td data-i18n="nonCopyleft">非 Copyleft</td>
+                            <td data-i18n="copyright1">版权保留</td>
+                            <td data-i18n="pythonFamily">Python 家族</td>
+                            <td><span class="license-badge">Python License</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 可以</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 是</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 可以<sup>7</sup></span></td>
+                            <td>Python语言</td>
+                        </tr>
+                        
+                        <!-- PHP License -->
+                        <tr>
+                            <td data-i18n="liberty">自由</td>
+                            <td data-i18n="nonCopyleft">非 Copyleft</td>
+                            <td data-i18n="copyright1">版权保留</td>
+                            <td data-i18n="phpFamily">PHP 家族</td>
+                            <td><span class="license-badge">PHP License</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 可以</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 是</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 可以<sup>7</sup></span></td>
+                            <td>PHP语言</td>
+                        </tr>
+                        
+                        <!-- Artistic License -->
+                        <tr>
+                            <td data-i18n="liberty">自由</td>
+                            <td data-i18n="nonCopyleft">非 Copyleft</td>
+                            <td data-i18n="copyright1">版权保留</td>
+                            <td data-i18n="perlFamily">Perl 家族</td>
+                            <td><span class="license-badge">Artistic License</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 可以</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 是</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 可以<sup>7</sup></span></td>
+                            <td>Perl语言</td>
+                        </tr>
+                        
+                        <!-- OSL -->
+                        <tr>
+                            <td data-i18n="liberty">自由</td>
+                            <td data-i18n="strongCopyleft">强 Copyleft</td>
+                            <td data-i18n="copyright1">版权保留</td>
+                            <td data-i18n="oslFamily">OSL 家族</td>
+                            <td><span class="license-badge">OSL 3.0</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 可以</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 是</span></td>
+                            <td><span class="permission-yes" data-i18n="permissionYes">✓ 可以<sup>3</sup></span></td>
+                            <td data-i18n="multipleOpenSourceProjects">多种开源项目</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-</table>
+            <!-- 现代化注脚 -->
+            <div class="license-notes">
+                <p><strong style="font-size: 1.2rem; display: block; margin-bottom: 15px;">📝 表格注脚</strong></p>
+                <p><span class="note-number">1</span> <span data-i18n="note1">如果您是个人且仅出于非营利目的</span></p>
+                <p><span class="note-number">2</span> <span data-i18n="note2">仅用于评估目的</span></p>
+                <p><span class="note-number">3</span> <span data-i18n="note3">必须提供源代码</span></p>
+                <p><span class="note-number">4</span> <span data-i18n="note4">如果作者给予授权，则可行</span></p>
+                <p><span class="note-number">5</span> <span data-i18n="note5">所有对非 Copyleft 且非版权保留的软件进行修改的人，均可为其所修改的版本使用自己的许可证。因此，某些修改/分发的版本可能成为专有软件。</span></p>
+                <p><span class="note-number">6</span> <span data-i18n="note6">如果您愿意，您的修改版本可以成为专有软件</span></p>
+                <p><span class="note-number">7</span> <span data-i18n="note7">作者/贡献者的姓名不得被用于宣传或推广由该软件衍生的产品</span></p>
+                <p><span class="note-number">8</span> <span data-i18n="note8">修改版本不能以原始名称调用。作者/贡献者的姓名不得被用于宣传或推广由该软件衍生的产品。</span></p>
+                <p><span class="note-number">9</span> <span data-i18n="note9">您可以将 LGPL/MPL/CDDL/EPL 协议的库链接到商业程序中，但必须允许用户使用该库的另一版本。</span></p>
+                <p><span class="note-number">10</span> <span data-i18n="note10">AGPL 要求如果软件通过网络被使用，也必须提供源代码。</span></p>
+                
+                <p style="margin-top: 20px; padding-top: 20px; border-top: 1px dashed var(--border);">
+                    <strong data-i18n="important">🔔 重要说明</strong><br>
+                    <span data-i18n="important1">别忘了，“免费”软件所指的是使用与分发的“自由权”。因此，对于一款价格为零的程序，切勿使用“收费软件”。Copyleft 意味着可以对软件进行修改和分发，且无需附加任何限制条件。因此，免费软件必须保持其免费性质。</span>
+                </p>
+            </div>
 
-<br><br><H1 style="font: 26px arial,helvetica,sans-serif">AWStats License / Copyright</H1>
+            <div class="license-date" data-i18n="licenseDate">
+                * 许可证表已于2026年3月10日更新添加补充了现代许可证,（原许可证更新于2002年09月21日）
+            </div>
 
-<br>
-AWStats is distributed under the <a href="http://www.gnu.org/copyleft/gpl.html" target=_gnugpl>GNU General Public License (GPL)</a>.<br>
-So you must follow the line "Free software - Copylefted - GPL" to know what are major license agreements with AWStats.<br>
-<br>
+            <hr style="margin: 40px 0; border: 1px dashed var(--border);">
 
-<hr>
-<br>
+            <!-- 署名 -->
+            <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center; justify-content: space-between;">
+                <span style="color: var(--text-secondary);" data-i18n="writtenBy">文章作者：<a href="https://www.destailleur.fr" rel="author" style="color: var(--accent);">Laurent Destailleur</a>。</span>
+                <span class="license-badge" style="background: var(--accent); color: white;" data-i18n="version">版本 8.1</span>
+            </div>
+        </div>
+    </main>
 
-<img src="images/license_chart.png"><br>
-<br>
+    <!-- 返回顶部按钮 -->
+    <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="返回顶部">
+        ↑
+    </button>
 
-<hr>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-copyright">
+                © 1997 - <span id="currentYear"></span> Laurent Destailleur & AWStats <span data-i18n="copyright">团队</span>
+            </div>
+            <div class="footer-license">
+                <a href="awstats_license.html" data-i18n="licenseLink">GNU General Public License</a> · 
+                <a href="https://github.com/eldy/AWStats" rel="publisher" target="_blank" style="display: inline-flex; align-items: center;"><a data-i18n="authorLink"></a> 
+                </a>
+                    <img src="images/favicon.pub/github.svg" style="width: 24px; height: 24px;">
+                </div>
+            <div class="attribution" data-i18n="darkAttr">
+                🌓 自适应暗黑 · 现代化重构
+            </div>
+        </div>
+    </footer>
 
-<!-- You can remove this part if you distribution need documentation without external tags -->
-<!-- BEGIN_SOCIAL_NETWORKS -->
-<div class="htmldoc-ignore">
-<!-- google plus -->
-<span style="color: #bbb; font-weight: normal;">Article written by <a href="https://www.destailleur.fr" rel="author" style="color: #ccc; font-weight: normal;">Laurent Destailleur</a>.</span><br>
-<br>
-<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-<g:plusone></g:plusone>
-<!-- facebook -->
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/fr_FR/all.js#xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-<div class="fb-like" data-href="http://www.awstats.org/docs/awstats_license.html" data-layout="button_count" data-action="recommend" data-show-faces="false" data-share="true"></div>
-</div>
-<!-- END_SOCIAL_NETWORKS -->
+    <script>
+        (function() {
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
 
+            // 完整翻译资源
+            const translations = {
+                zh: {
+                    navHome: "主页",
+                    navWhat: "什么是AWStats",
+                    navSetup: "安装配置",
+                    navWebmin: "Webmin模块",
+                    navUpgrade: "升级指南",
+                    navTools: "其他工具",
+                    navSecurity: "安全建议",
+                    navLicense: "许可证",
+                    navFAQ: "FAQ",
+                    home: "主页",
+                    currentPage: "许可证",
+                    
+                    siteTitle: "AWStats 8.1",
+                    headerSlogan: "⚡ 先进的日志分析器 · 官方文档",
+                    themeAuto: "自动",
+                    mainTitle: "AWStats 许可证 / 版权",
+                    licenseDesc: "AWStats 遵循 <a href=\"http://www.gnu.org/copyleft/gpl.html\" target=\"_gnugpl\" style=\"color: var(--accent); font-weight: 600;\">GNU 通用公共许可证 (GPL)</a> 发布。",
+                    licenseFollow: "因此您应遵循\"自由软件 - Copyleft - GPL\"的原则，了解 AWStats 的主要许可协议。",
+                    
+                    chartTitle: "📊 许可证分类与权限对照表",
+                    libertyPolicy: "自由政策",
+                    copyleft: "Copyleft",
+                    copyright: "版权",
+                    licenseFamily: "许可证家族",
+                    licenseName: "许可证名称",
+                    downloadUse: "下载使用<br>完全免费",
+                    sourceAvailable: "源代码<br>免费获取",
+                    useModifyDistribute: "使用/修改/分发",
+                    examples: "典型示例",
+                    
+                    freeSoftware: "📦 自由软件",
+                    semiFreeSoftware: "⚠️ 半自由软件",
+                    proprietarySoftware: "🔒 专有软件",
+                    modernOpenSource: "🚀 现代开源协议",
+                    
+                    note1: "如果您是个人且仅出于非营利目的",
+                    note2: "仅用于评估目的",
+                    note3: "必须提供源代码",
+                    note4: "如果作者给予授权，则可行",
+                    note5: "所有对非 Copyleft 且非版权保留的软件进行修改的人，均可为其所修改的版本使用自己的许可证。因此，某些修改/分发的版本可能成为专有软件。",
+                    note6: "如果您愿意，您的修改版本可以成为专有软件",
+                    note7: "作者/贡献者的姓名不得被用于宣传或推广由该软件衍生的产品",
+                    note8: "修改版本不能以原始名称调用。作者/贡献者的姓名不得被用于宣传或推广由该软件衍生的产品。",
+                    note9: "您可以将 LGPL/MPL/CDDL/EPL 协议的库链接到商业程序中，但必须允许用户使用该库的另一版本。",
+                    note10: "AGPL 要求如果软件通过网络被使用，也必须提供源代码。",
+                    
+                    important: "🔔 重要说明",
+                    important1: "别忘了，“免费”软件所指的是使用与分发的“自由权”。因此，对于一款价格为零的程序，切勿使用“收费软件”。Copyleft 意味着可以对软件进行修改和分发，且无需附加任何限制条件。因此，免费软件必须保持其免费性质。",
+                    
+                    licenseDate : "* 许可证表已于2026年3月10日更新添加补充了现代许可证,（原许可证更新于2002年09月21日）",
 
+                    writtenBy: "文章作者：<a href=\"https://www.destailleur.fr\" rel=\"author\" style=\"color: var(--accent);\">Laurent Destailleur</a>。",
+                    version: "版本 8.1",
+                    copyright: "© 2000 - {year} Laurent Destailleur & AWStats 团队",
+                    licenseLink: "GNU通用公共许可证",
+
+                    permissionYes: "✓ 可以",
+                    permissionNo: "✗ 否",
+                    permissionMaybe: "○ 可能",
+                    permissionSpecial: "特殊权限",
+                    oslFamily: "OSL 家族",
+                    gplFamily: "GPL 家族",
+                    copyright1: "版权保留",
+                    liberty: "自由",
+                    nonCopyleft: "非 Copyleft",
+                    nonCopylght: "无版权",
+                    proprietary: "专有",
+                    publicDomain: "公共领域",
+                    mitFamily: "MIT 家族",
+                    authorLink: "原作者",
+                    darkAttr: "🌓 自适应暗黑 · 中文/English",
+                },
+                en: {
+                    navHome: "Home",
+                    navWhat: "What is AWStats",
+                    navSetup: "Setup",
+                    navWebmin: "Webmin Module",
+                    navUpgrade: "Upgrade Guide",
+                    navTools: "Other Tools",
+                    navSecurity: "Security Tips",
+                    navLicense: "License",
+                    navFAQ: "FAQ",
+                    home: "Home",
+                    currentPage: "License",
+                    
+                    siteTitle: "AWStats 8.1",
+                    headerSlogan: "⚡ Advanced Log Analyzer · Official Docs",
+                    themeAuto: "Auto",
+                    mainTitle: "AWStats License / Copyright",
+                    licenseDesc: "AWStats is distributed under the <a href=\"http://www.gnu.org/copyleft/gpl.html\" target=\"_gnugpl\" style=\"color: var(--accent); font-weight: 600;\">GNU General Public License (GPL)</a>.",
+                    licenseFollow: "So you must follow the line \"Free software - Copylefted - GPL\" to know what are major license agreements with AWStats.",
+                    
+                    chartTitle: "📊 License Categories and Permissions",
+                    libertyPolicy: "Liberty Policy",
+                    copyleft: "Copyleft",
+                    copyright: "Copyright",
+                    licenseFamily: "License Family",
+                    licenseName: "License Name",
+                    downloadUse: "Download & Use<br>Free",
+                    sourceAvailable: "Source<br>Available",
+                    useModifyDistribute: "Use/Modify/Distribute",
+                    examples: "Examples",
+                    
+                    freeSoftware: "📦 Free Software",
+                    semiFreeSoftware: "⚠️ Semi-Free Software",
+                    proprietarySoftware: "🔒 Proprietary Software",
+                    modernOpenSource: "🚀 Modern Open Source",
+                    
+                    note1: "If you are an individual and for non-profit purposes only",
+                    note2: "For evaluation purposes only",
+                    note3: "Source code must be provided",
+                    note4: "Possible if authorized by the author",
+                    note5: "Anyone who modifies non-Copyleft and non-copyrighted software can use their own license for their version. Therefore, some modified/distributed versions may become proprietary software.",
+                    note6: "Your modified version can become proprietary software if you wish",
+                    note7: "Author/contributor names may not be used to endorse or promote products derived from this software",
+                    note8: "Modified version cannot be called by its original name. Author/contributor names may not be used to endorse or promote products derived from this software.",
+                    note9: "You can link LGPL/MPL/CDDL/EPL libraries into commercial programs, but must allow users to use another version of this library.",
+                    note10: "AGPL requires that if the software is used over a network, source code must also be provided.",
+                    
+                    licenseDate : "* License chart updated with modern licenses on March 10, 2026 (originally updated on September 21, 2002)",
+
+                    important: "🔔 Important Notes",
+                    important1: "Don't forget that 'free' software refers to the 'freedom' to use and distribute it. So don't use 'free software' for a program which price is null. Copyleft means that changes and distributions can be made with no additional restrictions. So a gratis software must be kept gratis.",
+                    
+                    writtenBy: "Article written by <a href=\"https://www.destailleur.fr\" rel=\"author\" style=\"color: var(--accent);\">Laurent Destailleur</a>.",
+                    version: "Version 8.1",
+                    copyright: "© 2000 - {year} Laurent Destailleur & AWStats Team",
+                    permissionYes: "✓ Yes",
+                    permissionNo: "✗ No",
+                    permissionMaybe: "○ Maybe",
+                    permissionSpecial: "Special Permission",
+                    oslFamily: "OSL Family",
+                    gplFamily: "GPL Family",
+                    copyright1: "Copyright",
+                    liberty: "Liberty",
+                    nonCopyleft: "Non-Copyleft",
+                    nonCopylght: "No Copyright",
+                    proprietary: "Proprietary",
+                    publicDomain: "Public Domain",
+                    permissionYes: "✓ Yes",
+                    permissionNo: "✗ No",
+                    permissionMaybe: "○ Maybe",
+                    mitFamily: "MIT Family",
+                    licenseLink: "GNU General Public License",
+                    authorLink: "Author",
+                    darkAttr: "🌓 Adaptive dark mode · 中文/English",
+                }
+            };
+
+            const i18nElements = document.querySelectorAll('[data-i18n]');
+            const langSelector = document.getElementById('langSelector');
+            let currentLang = localStorage.getItem('awstats_lang') || 'zh';
+            langSelector.value = currentLang;
+
+            function applyLanguage(lang) {
+                const t = translations[lang] || translations.zh;
+                i18nElements.forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (t[key] !== undefined) {
+                        if (key === 'copyright') {
+                            const year = new Date().getFullYear();
+                            el.innerHTML = t[key].replace('{year}', year);
+                        } else if (key === 'licenseDesc' || key === 'licenseFollow' || key === 'writtenBy' || key.includes('note') || key.includes('important')) {
+                            el.innerHTML = t[key];
+                        } else {
+                            el.textContent = t[key];
+                        }
+                    }
+                });
+                localStorage.setItem('awstats_lang', lang);
+                
+                const themeState = localStorage.getItem('awstats_theme') || 'auto';
+                const themeText = document.querySelector('.theme-text');
+                if (themeText) {
+                    if (themeState === 'auto') themeText.textContent = t.themeAuto;
+                    else if (themeState === 'light') themeText.textContent = (lang === 'zh' ? '浅色' : 'Light');
+                    else themeText.textContent = (lang === 'zh' ? '深色' : 'Dark');
+                }
+            }
+
+            applyLanguage(currentLang);
+
+            langSelector.addEventListener('change', (e) => {
+                currentLang = e.target.value;
+                applyLanguage(currentLang);
+            });
+
+            // 暗黑模式切换
+            const root = document.documentElement;
+            const themeBtn = document.getElementById('themeToggleBtn');
+            let themeState = localStorage.getItem('awstats_theme') || 'auto';
+
+            function applyTheme(state) {
+                root.classList.remove('force-light', 'force-dark');
+                if (state === 'light') root.classList.add('force-light');
+                else if (state === 'dark') root.classList.add('force-dark');
+                const themeText = document.querySelector('.theme-text');
+                if (themeText) {
+                    const lang = currentLang;
+                    const t = translations[lang];
+                    if (state === 'auto') themeText.textContent = t.themeAuto;
+                    else if (state === 'light') themeText.textContent = (lang === 'zh' ? '浅色' : 'Light');
+                    else themeText.textContent = (lang === 'zh' ? '深色' : 'Dark');
+                }
+                localStorage.setItem('awstats_theme', state);
+            }
+            applyTheme(themeState);
+            themeBtn.addEventListener('click', () => {
+                if (themeState === 'auto') themeState = 'light';
+                else if (themeState === 'light') themeState = 'dark';
+                else themeState = 'auto';
+                applyTheme(themeState);
+            });
+        })();
+    </script>
 </body>
 </html>
-<!-- MEDIA LANDSCAPE NO -->

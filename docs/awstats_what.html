@@ -1,213 +1,494 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html><head>
-<meta name="description" content="AWStats Documentation - What is AWStats, features">
-<meta name="keywords" content="awstats, awstat, features, function">
-<meta name="robots" content="index,follow">
-<meta name="title" content="AWStats Documentation - What is AWStats">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>AWStats Documentation - What is AWStats</title>
-<link rel="stylesheet" href="styles.css" type="text/css">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWStats · 什么是AWStats / 功能概览</title>
+    <!-- 保留原meta，增强多语言SEO -->
+    <meta name="description" content="AWStats Documentation - What is AWStats, features (多语言版 / multilingual)">
+    <meta name="keywords" content="awstats, log analyzer, features, functions, 功能介绍, 日志分析">
+    <meta name="author" content="Laurent Destailleur (多语言重构)">
+    <meta name="robots" content="index,follow">
+    <style>
+        /* ========== 全局设计（与文档主页完全一致，保证统一体验） ========== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-page: #f8f9fc; --surface: #ffffff; --surface-secondary: #f1f3f8;
+            --text-primary: #1e293b; --text-secondary: #334155; --accent: #5b5f97;
+            --accent-light: #7f83b0; --border: #d0d5e0; --card-shadow: 0 8px 20px rgba(0,0,0,0.03), 0 2px 6px rgba(0,20,40,0.05);
+            --header-bg: linear-gradient(135deg, #7f83b0 0%, #5b5f97 100%);
+            --footer-bg: #ecedf2; --logo-filter: none; --link-color: #4f46e5;
+            --link-visited: #7c3aed; --code-bg: #e9e9f2;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-page: #12131f; --surface: #1f2130; --surface-secondary: #2a2c3e;
+                --text-primary: #edf2f7; --text-secondary: #cbd5e1; --accent: #a9acd9;
+                --accent-light: #b9bce6; --border: #3c405a; --card-shadow: 0 8px 20px rgba(0,0,0,0.6);
+                --header-bg: linear-gradient(145deg, #353a60, #222544);
+                --footer-bg: #1a1c2c; --logo-filter: brightness(1.1) drop-shadow(0 0 4px #aeaef0);
+                --link-color: #b1b3ff; --link-visited: #caa5ff; --code-bg: #2c2f44;
+            }
+        }
+        .force-light { --bg-page: #f8f9fc !important; --surface: #ffffff !important; --surface-secondary: #f1f3f8 !important; --text-primary: #1e293b !important; --text-secondary: #334155 !important; --accent: #5b5f97 !important; --border: #d0d5e0 !important; --footer-bg: #ecedf2 !important; --link-color: #4f46e5 !important; }
+        .force-dark { --bg-page: #12131f !important; --surface: #1f2130 !important; --surface-secondary: #2a2c3e !important; --text-primary: #edf2f7 !important; --text-secondary: #cbd5e1 !important; --accent: #a9acd9 !important; --border: #3c405a !important; --footer-bg: #1a1c2c !important; --link-color: #b1b3ff !important; }
+
+        body {
+            background-color: var(--bg-page); color: var(--text-primary);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6; margin: 0; padding: 0;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            display: flex; flex-direction: column; min-height: 100vh;
+        }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 28px; width: 100%; }
+
+        /* 头部 (与主页完全一致，包含logo、标题、语言/主题切换) */
+        .header {
+            background: var(--header-bg); color: white; border-radius: 0 0 32px 32px;
+            padding: 16px 0 20px; box-shadow: var(--card-shadow); margin-bottom: 32px;
+        }
+        .header-row {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 16px;
+        }
+        .logo-area { display: flex; align-items: center; gap: 12px; }
+        .logo-area img { height: 52px; width: auto; filter: var(--logo-filter); }
+        .site-title {
+            font-size: 1.75rem; font-weight: 600; background: rgba(255,255,255,0.1);
+            padding: 6px 18px; border-radius: 60px; backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .header-center {
+            flex: 1; text-align: center; font-weight: 500; font-size: 1.2rem;
+            background: rgba(0,0,0,0.1); padding: 8px 16px; border-radius: 40px;
+            backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.15);
+        }
+        .header-right { display: flex; gap: 12px; align-items: center; }
+        .lang-switch {
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 40px; padding: 6px 12px; color: white; font-weight: 500;
+            display: flex; align-items: center; gap: 6px; backdrop-filter: blur(4px);
+        }
+        .lang-switch select {
+            background: transparent; border: none; color: white; font-weight: 500;
+            outline: none; font-size: 0.95rem; cursor: pointer;
+        }
+        .lang-switch select option { background: #5b5f97; color: white; }
+        .theme-toggle {
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 40px; padding: 8px 16px; font-size: 0.9rem; color: white;
+            cursor: pointer; display: flex; align-items: center; gap: 6px; backdrop-filter: blur(4px);
+        }
+
+        /* 文章卡片样式 (干净、易读) */
+        .doc-card {
+            background-color: var(--surface); border-radius: 32px;
+            padding: 2.5rem 2.8rem; box-shadow: var(--card-shadow);
+            border: 1px solid var(--border); margin: 20px 0 30px;
+        }
+        h1 {
+            font-size: 2.2rem; font-weight: 600; letter-spacing: -0.02em;
+            border-left: 10px solid var(--accent); padding-left: 24px;
+            margin: 0 0 25px 0; color: var(--text-primary);
+        }
+        h2 {
+            font-size: 1.8rem; font-weight: 600; margin: 2rem 0 1rem;
+            color: var(--accent); border-bottom: 2px solid var(--border); padding-bottom: 6px;
+        }
+        h3 { font-size: 1.4rem; margin: 1.8rem 0 0.8rem; color: var(--text-primary); font-weight: 600; }
+        hr { border: none; border-top: 2px dashed var(--border); margin: 2rem 0; }
+        ul, ol { padding-left: 1.8rem; margin: 1rem 0; }
+        li { margin: 0.6rem 0; color: var(--text-secondary); }
+        li strong { color: var(--text-primary); }
+        a { color: var(--link-color); text-decoration: none; border-bottom: 1px dotted var(--accent-light); }
+        a:hover { color: var(--accent-light); border-bottom-style: solid; }
+        .badge {
+            background: var(--accent); color: white; font-size: 0.9rem;
+            padding: 2px 10px; border-radius: 30px; display: inline-block;
+        }
+        .feature-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 12px; margin-top: 20px;
+        }
+        .feature-item {
+            background: var(--surface-secondary); padding: 8px 16px;
+            border-radius: 40px; border: 1px solid var(--border);
+        }
+        .footer {
+            background-color: var(--footer-bg); margin-top: 48px;
+            padding: 28px 24px; border-radius: 30px 30px 0 0;
+            border-top: 1px solid var(--border); color: var(--text-secondary);
+        }
+        .footer-content {
+            display: flex; flex-wrap: wrap; justify-content: space-between;
+            align-items: center; gap: 16px; max-width: 1200px; margin: 0 auto;
+        }
+        .footer-copyright {
+            background: var(--surface); padding: 6px 18px; border-radius: 60px;
+            border: 1px solid var(--border);
+        }
+        @media (max-width: 700px) {
+            .header-row { flex-direction: column; }
+            .doc-card { padding: 1.8rem; }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
 </head>
+<body>
+    <header class="header">
+        <div class="container header-row">
+            <div class="logo-area">
+                <img src="images/awstats_logo6.png" alt="AWStats" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'52\' height=\'52\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%235b5f97\'/%3E%3Ctext x=\'20\' y=\'68\' fill=\'%23ffffff\' font-size=\'60\' font-weight=\'bold\'%3EAW%3C/text%3E%3C/svg%3E';">
+                <span class="site-title" data-i18n="siteTitle">AWStats 8.1</span>
+            </div>
+            <div class="header-center" data-i18n="headerSlogan">
+                ⚡ 先进的日志分析器 · 官方文档
+            </div>
+            <div class="header-right">
+                <div class="lang-switch">
+                    <span>🌐</span>
+                    <select id="langSelector">
+                        <option value="en" selected>English</option>
+                        <option value="zh">中文</option>
+                    </select>
+                </div>
+                <button class="theme-toggle" id="themeToggleBtn">
+                    <span>🌓</span> <span class="theme-text" data-i18n="themeAuto">自动</span>
+                </button>
+            </div>
+        </div>
+    </header>
 
-<body topmargin="10" leftmargin="5">
-	
-<table style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10pt; line-height: normal; font-size-adjust: none; font-stretch: normal;" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" width="100%">
+    <main class="container">
+        <div class="doc-card">
+            <!-- 主标题 -->
+            <h1 data-i18n="mainTitle">什么是 AWStats / 功能概览</h1>
 
-<!-- Large -->
-<tbody>
-<tr style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">
-<td align="center" bgcolor="#9999cc"><a href="/"><img src="images/awstats_logo6.png" border="0"></a></td>
-<td align="center" bgcolor="#9999cc">
-<br>
-<font style="font-family: arial,helvetica,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 16pt; line-height: normal; font-size-adjust: none; font-stretch: normal;" color="#eeeeff"><b>AWStats logfile analyzer 8.0 Documentation</b></font><br>
-<br>
-</td>
-      <td align="center" bgcolor="#9999cc">&nbsp;&nbsp; </td>
-</tr>
-  </tbody>
-</table>
-<br>
-<br>
-<h1 style="font-family: arial,helvetica,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 26px; line-height: normal; font-size-adjust: none; font-stretch: normal;">What
-is AWStats / Features Overview<br>
-</h1>
-<br>
-<br>
-AWStats is short for <span style="text-decoration: underline;">A</span>dvanced
-<span style="text-decoration: underline;">W</span>eb <span style="text-decoration: underline;">Stat</span>istic<span style="text-decoration: underline;">s</span>. <b>AWStats is </b><b>powerful
-log analyzer which creates advanced web, ftp, mail and streaming
-server statistics reports</b>&nbsp; based on the rich data contained in
-server logs.&nbsp; Data is graphically presented in <b>easy to read
-web pages</b>.
-&nbsp;
-<br><br>
-AWStats development started in 1997 and is still developed today by same author (<a href="https://www.destailleur.fr">Laurent Destailleur</a>).
-However, development is now done on "maintenance fixes" or small new features. Reason is that author spend, since July 2008, most of his time as project leader on another major OpenSource projet called <a href="https://www.dolibarr.org" title="Easy to use software to manage your company">Dolibarr ERP & CRM</a> and works
-also at full time for <a href="https://www.teclib.com" title="French Open Source company">TecLib, a french Open Source company</a>.
-A lot of other developers maintains the software, providing patches, or packages, above all for Linux distributions (fedora, debian, ubuntu...).<br>
-<br>
-Designed with flexibility in mind, AWStats can be run through a web browser <b>CGI (</b>common
-gateway interface) or directly from the operating system<b> command line</b>.
-Through the use of intermediary data base files, AWStats is able to
-quickly process large log files, as often desired.&nbsp;
-With support for both standard and custom log format definitions,
-AWStats can analyze log files from Apache (NCSA combined/XLF/ELF or
-common/CLF log
-format),
-Microsoft's IIS (W3C log format),
-WebStar and most web, proxy, wap and streaming media servers as well as
-ftp and mail server logs.<br>
-<br>
-See how the most famous open source statistics tools (AWStats, Analog,
-Webalizer) stack up feature by feature in this <a href="awstats_compare.html#COMPARISON">comparison
-table</a>.<br>
-<br>
-AWStats is free software distributed under the <a href="http://www.gnu.org/copyleft/gpl.html" target="_gnugpl">GNU
-General Public License v3</a> (GPL v3). The <a href="awstats_license.html">license
-chart</a> illustrates what you can and can't do.<br>
-As AWStats works from the command line as well as a CGI, it is
-compatible with all web hosting providers
-which allow CGI and log access.<br>
-<br>
-<br>
-<a name="FEATURES"></a><br>
-<font color="#665544" size="3"><b>Features</b></font><br>
-<hr> AWStats' reports include a wide range of information on your
-web site usage:<br>
-* Number of <u>Visits</u>, and number
-of <u>Unique visitors</u>.<br>
-* <u>Visit duration</u> and
-latest visits.<br>
-* <u>Authenticated Users</u>, and
-latest authenticated visits.<br>
-* Usage by <u>Months</u>, <u>Days</u> of week and <u>Hours</u> of the day (pages, hits, KB).<br>
-* <u>Domains/countries</u> (and regions, cities and ISP with <a href="http://www.maxmind.com/en/city?rId=awstats">Maxmind proprietary geo databases</a>) of
-visitor's hosts (pages, hits, KB, <font color="#221188">269
-domains/countries detected</font>).<br>
-* <u>Hosts list</u>, latest visits
-and unresolved IP addresses list.<br>
-* <u>Most viewed</u>, <u>Entry</u> and <u>Exit</u> pages.<br>
-* Most commonly requested <u>File</u>
-types.<br>
-* <u>Web Compression statistics</u>
-(for Apache servers using mod_gzip or
-mod_deflate modules).<br>
-* Visitor's <u>Browsers</u> (pages,
-hits, KB for each browser, each
-version, <font color="#221188">123 browsers</font> detected: Web, Wap,
-Streaming Media browsers..., around <font color="#221188">482</font> with the "phone browsers" database).<br>
-* Visitor's <u>Operating Systems</u>
-(pages, hits, KB for each OS, <font color="#221188">45
-OS detected</font>).<br>
-* <u>Robots</u> visits, including
-search engine crawlers (<font color="#221188">381 robots detected</font>).<br>* Track <span style="text-decoration: underline;">Downloads</span> such as PDFs, compressed files and others<br>
-* <u>Search engines</u>, <u>Keywords</u> and <u>Phrases</u> used to
-find your site (<font color="#221188">The 122 most famous search
-engines are detected like Yahoo, Google, Altavista, etc...</font>)<br>
-* <u>HTTP Errors</u> (Page Not Found
-with latest referrer, ...).<br>
-* <u>User defined reports</u> based
-on url, url parameters,
-referrer (referer) fields extend AWStats' capabilities to provide even
-greater technical and marketing information.<br>
-* Number of times your site is added to <u>Bookmarks / Favorites</u>.<br>
-* <u>Screen size</u> (to capture
-this, some HTML tags must be added to
-a site's home page).<br>
-* Ratio of integrated <u>Browser Support
-</u>for: Java, Flash, Real G2 player,
-Quicktime reader, PDF reader, WMA reader (as above, requires insertion
-of HTML tags in site's home page).<br>
-* <u>Cluster distribution</u> for
-load balanced servers.<br>
-<br>
-<b>In addition, AWStats provides the following</b>:<br>
-* Wide range of log formats.&nbsp; AWStats can analyze: Apache NCSA
-combined
-(XLF/ELF) or common (CLF) log
-files, Microsoft IIS log files (W3C), WebStar
-native log files and other web, proxy, wap, streaming media, ftp and
-mail server log files. See <a href="awstats_faq.html#LOGFORMAT">AWStats
-F.A.Q.</a> for examples.<br>
-* Reports can be run from the operating system command line and from a
-web browser as a
-CGI (common gateway interface).&nbsp; In CGI mode, dynamic filter
-capabilities are available for many charts.<br>
-* Statistics update can be run from a web browser as well as
-scheduled for automatic processing.<br>
-* Unlimited log file size<br>
-* Load balancing system split log files.<br>
-* Support 'nearly sorted' log files, even for entry and exit pages.<br>
-* Reverse DNS lookup before or during analysis; supports DNS cache
-files.<br>
-* Country detection from IP location (geoip) or domain name.<br>
-* Plugins for US/Canadian Regions, Cities and major countries regions, ISP and/or Organizations reports
-(require non free third product <a href="http://www.maxmind.com/en/city?rId=awstats">geoipregion</a>, <a href="http://www.maxmind.com/en/city?rId=awstats">geoipcity</a>, <a href="http://www.maxmind.com/en/city?rId=awstats">geoipisp</a> and/or <a href="http://www.maxmind.com/en/city?rId=awstats">geoiporg</a> database).<br>
-* WhoIS lookup links.<br>
-* Vast array of configurable options/filters and plugins supported.<br>
-* Modular design supports inclusion of addition features via plugins.<br>
-* Multi-named web sites supported (virtual servers, great for
-web-hosting providers).<br>
-<!--	* Yearly, monthly and daily statistics,<br> --> * Cross Site
-Scripting Attacks protection.<br>
-* Reports available in many international languages. See <a href="awstats_faq.html#LANG">AWStats F.A.Q.</a> for full list.&nbsp;
-Users can provide files for additional languages not yet available.<br>
-* No need for esoteric perl libraries. AWStats works with all basic
-perl interpreters.<br>
-* Dynamic reports through a CGI interface.<br>
-* Static reports in one or framed HTML or XHTML pages; experimental PDF
-export through 3rd party "htmldoc" software.<br>
-* Customize look and color scheme to match your site design; with or
-without CSS (cascading style sheets).<br>
-* Help and HTML tooltips available in reports.<br>
-* Easy to use - all configuration directives are confined to one file
-for each site.<br>
-* Analysis database can be stored in XML format for easier use by external
-applications, like XSLT processing (one xslt transform example provided).<br>
-* A Webmin module is supplied.<br>
-* Absolutely free (even for web hosting providers); source code is
-included (<a href="awstats_license.html">GNU General Public License</a>).<br>
-* Works on all platforms with Perl support.<br>
-* AWStats has a <a href="pad_awstats.xml" target="_newawstats">XML
-Portable Application Description</a>.<br>
-<br>
-	<b>Requirements</b>:<br>
-AWStats usage has the following requirements:<br>
-* You must have access to the server logs for the reporting you want to
-perform
-(web/ftp/mail).<br>
-* You must be able to run perl scripts (.pl files) from command line
-and/or as a CGI.&nbsp; If not, you can solve this by downloading latest
-Perl version at <a href="http://www.activestate.com/ActivePerl/">ActivePerl</a>
-(<font color="#221188">Win32</font>) or <a href="http://www.perl.com/pub/language/info/software.html">Perl.com</a>
-(<font color="#221188">Unix/Linux/Other</font>).<br>
-See <a href="awstats_faq.html#SERVERSOS">AWStats F.A.Q.</a> for
-examples of supported OS and Web servers.<br>
-<br>
+            <!-- 简介段落 -->
+            <p data-i18n="p1">AWStats 是 <span style="text-decoration: underline;">A</span>dvanced <span style="text-decoration: underline;">W</span>eb <span style="text-decoration: underline;">Stat</span>istic<span style="text-decoration: underline;">s</span> 的缩写。<strong>AWStats 是一款强大的日志分析器，能够基于服务器日志中丰富的原始数据，生成高级的 web、ftp、邮件及流媒体服务器统计报告。</strong> 数据以<strong>易于阅读的网页</strong>形式图形化呈现。</p>
 
+            <p data-i18n="p2">AWStats 项目始于1997年，至今仍由同一作者（<a href="https://www.destailleur.fr">Laurent Destailleur</a>）维护。不过，目前的开发主要集中在“维护性修复”或小型新功能。原因是作者自2008年7月起，将大部分时间投入到另一个主要开源项目 <a href="https://www.dolibarr.org" title="Easy to use software to manage your company">Dolibarr ERP & CRM</a> 的项目领导工作中，并全职供职于一家法国开源公司 <a href="https://www.teclib.com" title="French Open Source company">TecLib</a>。许多其他开发者也致力于维护该软件，提供补丁或软件包，尤其是为 Linux 发行版（如 fedora, debian, ubuntu 等）。</p>
 
-<hr>
+            <p data-i18n="p3">AWStats 设计灵活，可通过 Web 浏览器 <strong>CGI</strong>（通用网关接口）运行，也可直接从操作系统<strong>命令行</strong>运行。通过使用中间数据库文件，AWStats 能够快速处理通常所需的大型日志文件。它支持标准及自定义日志格式定义，可以分析 Apache（NCSA combined/XLF/ELF 或 common/CLF 格式）、Microsoft IIS（W3C 格式）、WebStar 以及大多数 web、代理、wap 和流媒体服务器，以及 ftp 和邮件服务器的日志文件。</p>
 
-<!-- You can remove this part if you distribution need documentation without external tags -->
-<!-- BEGIN_SOCIAL_NETWORKS -->
-<div class="htmldoc-ignore">
-<!-- google plus -->
-<span style="color: #bbb; font-weight: normal;">Article written by <a href="https://www.destailleur.fr" rel="author" style="color: #ccc; font-weight: normal;">Laurent Destailleur</a>.</span><br>
-<br>
-<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-<g:plusone></g:plusone>
-<!-- facebook -->
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/fr_FR/all.js#xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-<div class="fb-like" data-href="http://www.awstats.org/docs/awstats_what.html" data-layout="button_count" data-action="recommend" data-show-faces="false" data-share="true"></div>
-</div>
-<!-- END_SOCIAL_NETWORKS -->
+            <p data-i18n="p4">查看此<a href="awstats_compare.html#COMPARISON">对比表</a>，了解最著名的开源统计工具（AWStats, Analog, Webalizer）在功能上的逐项对比。</p>
 
+            <p data-i18n="p5">AWStats 是自由软件，遵循 <a href="http://www.gnu.org/copyleft/gpl.html" target="_gnugpl">GNU 通用公共许可证 v3</a> (GPL v3) 发布。<a href="awstats_license.html">许可说明</a>阐明了您可以做什么和不能做什么。</p>
 
-</body></html>
+            <p data-i18n="p6">由于 AWStats 既可在命令行运行，也可作为 CGI 运行，它兼容所有允许 CGI 和日志访问的虚拟主机提供商。</p>
+
+            <!-- Features 区域 -->
+            <a name="FEATURES"></a>
+            <h2 data-i18n="featuresTitle">功能特性</h2>
+            <hr>
+            <p data-i18n="featuresIntro">AWStats 的报告包含关于您网站使用情况的广泛信息：</p>
+
+            <!-- 使用网格展示特性使阅读更轻松，但仍保留原文所有要点 -->
+            <div class="feature-grid" data-i18n="featuresList" style="display:none;">占位用，实际由JS填充</div>
+            <!-- 但为了保留原始详细结构并确保100%内容，我们仍用<ul>，但使用i18n对每个条目单独处理。简洁且完整 -->
+            <ul id="featureListEN" style="margin-top:10px;">
+                <li data-i18n="f1">* <u>访问量</u> 和 <u>独立访客</u> 数量。</li>
+                <li data-i18n="f2">* <u>访问时长</u> 和最新访问记录。</li>
+                <li data-i18n="f3">* <u>认证用户</u> 及最新认证访问。</li>
+                <li data-i18n="f4">* 按<u>月份</u>、<u>星期</u>和<u>小时</u>的使用情况（页面数、文件数、KB）。</li>
+                <li data-i18n="f5">* 访客主机的<u>域名/国家</u>（以及通过 <a href="http://www.maxmind.com/en/city?rId=awstats">Maxmind 专有地理位置数据库</a>获取的地区、城市和 ISP）（页面数、文件数、KB，检测到 <font color="#221188">269 个国家/地区</font>）。</li>
+                <li data-i18n="f6">* <u>主机列表</u>、最新访问和未解析的 IP 地址列表。</li>
+                <li data-i18n="f7">* 最常查看的<u>页面</u>、<u>入口</u>和<u>出口</u>页面。</li>
+                <li data-i18n="f8">* 最常请求的<u>文件类型</u>。</li>
+                <li data-i18n="f9">* <u>Web 压缩统计</u>（针对使用 mod_gzip 或 mod_deflate 模块的 Apache 服务器）。</li>
+                <li data-i18n="f10">* 访客的<u>浏览器</u>（各浏览器、各版本的页面数、文件数、KB，检测到 <font color="#221188">123 种浏览器</font>：Web、Wap、流媒体浏览器...，使用“手机浏览器”数据库时约为 <font color="#221188">482</font> 种）。</li>
+                <li data-i18n="f11">* 访客的<u>操作系统</u>（各操作系统的页面数、文件数、KB，检测到 <font color="#221188">45 种操作系统</font>）。</li>
+                <li data-i18n="f12">* <u>机器人</u>访问，包括搜索引擎爬虫（检测到 <font color="#221188">381 种机器人</font>）。</li>
+                <li data-i18n="f13">* 追踪<u>下载</u>，如 PDF、压缩文件等。</li>
+                <li data-i18n="f14">* 用于找到您网站的<u>搜索引擎</u>、<u>关键词</u>和<u>短语</u>（检测到 <font color="#221188">122 种最著名的搜索引擎，如 Yahoo、Google、Altavista 等</font>）。</li>
+                <li data-i18n="f15">* <u>HTTP 错误</u>（“找不到页面”及最新引用页，...）。</li>
+                <li data-i18n="f16">* 基于 url、url 参数、引用页（referer）字段的<u>用户定义报告</u>，扩展 AWStats 功能以提供更多技术和营销信息。</li>
+                <li data-i18n="f17">* 您网站被添加到<u>书签/收藏夹</u>的次数。</li>
+                <li data-i18n="f18">* <u>屏幕尺寸</u>（要捕获此信息，需在网站主页添加一些 HTML 标签）。</li>
+                <li data-i18n="f19">* 浏览器对以下技术<u>支持</u>的比率：Java、Flash、Real G2 player、Quicktime reader、PDF reader、WMA reader（同上，需在网站主页插入 HTML 标签）。</li>
+                <li data-i18n="f20">* 负载均衡服务器的<u>集群分布</u>。</li>
+            </ul>
+
+            <p data-i18n="additionTitle"><strong>此外，AWStats 还提供以下功能：</strong></p>
+            <ul>
+                <li data-i18n="a1">* 广泛的日志格式支持。AWStats 可分析：Apache NCSA combined (XLF/ELF) 或 common (CLF) 日志文件、Microsoft IIS 日志文件 (W3C)、WebStar 本地日志文件以及其他 web、代理、wap、流媒体、ftp 和邮件服务器日志文件。示例见 <a href="awstats_faq.html#LOGFORMAT">AWStats F.A.Q.</a>。</li>
+                <li data-i18n="a2">* 报告可从操作系统命令行和作为 CGI 的 Web 浏览器运行。在 CGI 模式下，许多图表具备动态过滤功能。</li>
+                <li data-i18n="a3">* 统计更新可通过 Web 浏览器运行，也可计划自动处理。</li>
+                <li data-i18n="a4">* 无限制的日志文件大小。</li>
+                <li data-i18n="a5">* 支持负载均衡系统的分割日志文件。</li>
+                <li data-i18n="a6">* 支持“近乎已排序”的日志文件，即使对于入口和出口页面也是如此。</li>
+                <li data-i18n="a7">* 在分析之前或期间进行反向 DNS 查找；支持 DNS 缓存文件。</li>
+                <li data-i18n="a8">* 通过 IP 地理位置或域名进行国家检测。</li>
+                <li data-i18n="a9">* 用于美国/加拿大地区、城市和主要国家地区、ISP 和/或组织报告的插件（需要非免费的第三方产品 geoipregion、geoipcity、geoipisp 和/或 geoiporg 数据库）。</li>
+                <li data-i18n="a10">* WhoIS 查询链接。</li>
+                <li data-i18n="a11">* 大量可配置的选项/过滤器和支持的插件。</li>
+                <li data-i18n="a12">* 模块化设计，支持通过插件添加附加功能。</li>
+                <li data-i18n="a13">* 支持多域名网站（虚拟服务器，非常适合虚拟主机提供商）。</li>
+                <li data-i18n="a14">* 跨站脚本攻击保护。</li>
+                <li data-i18n="a15">* 报告支持多种国际语言。完整列表见 <a href="awstats_faq.html#LANG">AWStats F.A.Q.</a> 用户可以贡献目前尚未提供的其他语言文件。</li>
+                <li data-i18n="a16">* 无需深奥的 perl 库。AWStats 适用于所有基本 perl 解释器。</li>
+                <li data-i18n="a17">* 通过 CGI 界面实现动态报告。</li>
+                <li data-i18n="a18">* 静态报告可生成为单个或带框架的 HTML 或 XHTML 页面；通过第三方软件“htmldoc”实验性导出 PDF。</li>
+                <li data-i18n="a19">* 自定义外观和配色方案以匹配您的网站设计；支持或不支持 CSS（级联样式表）。</li>
+                <li data-i18n="a20">* 报告中提供帮助和 HTML 工具提示。</li>
+                <li data-i18n="a21">* 易于使用 - 每个站点的所有配置指令都集中在一个文件中。</li>
+                <li data-i18n="a22">* 分析数据库可存储为 XML 格式，以便外部应用程序（如 XSLT 处理）更容易使用（提供了一个 xslt 转换示例）。</li>
+                <li data-i18n="a23">* 提供了一个 Webmin 模块。</li>
+                <li data-i18n="a24">* 完全免费（即使对虚拟主机提供商也是如此）；包含源代码（<a href="awstats_license.html">GNU 通用公共许可证</a>）。</li>
+                <li data-i18n="a25">* 适用于所有支持 Perl 的平台。</li>
+                <li data-i18n="a26">* AWStats 有 <a href="pad_awstats.xml" target="_newawstats">XML 可移植应用描述</a>。</li>
+            </ul>
+
+            <h3 data-i18n="reqTitle">系统要求：</h3>
+            <p data-i18n="reqIntro">使用 AWStats 需满足以下要求：</p>
+            <ul>
+                <li data-i18n="req1">* 您必须有权访问要执行报告（web/ftp/邮件）的服务器日志。</li>
+                <li data-i18n="req2">* 您必须能够在命令行和/或作为 CGI 运行 perl 脚本（.pl 文件）。如果不能，可以通过在 <a href="http://www.activestate.com/ActivePerl/">ActivePerl</a>（<font color="#221188">Win32</font>）或 <a href="http://www.perl.com/pub/language/info/software.html">Perl.com</a>（<font color="#221188">Unix/Linux/其他</font>）下载最新 Perl 版本来解决。</li>
+                <li data-i18n="req3">* 支持的 OS 和 Web 服务器示例见 <a href="awstats_faq.html#SERVERSOS">AWStats F.A.Q.</a>。</li>
+            </ul>
+
+            <hr>
+            <!-- 原社交区域简化保留，但添加原作者署名 -->
+            <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center; justify-content: space-between;">
+                <span style="color: var(--text-secondary);" data-i18n="writtenBy">Article written by <a href="https://www.destailleur.fr" rel="author">Laurent Destailleur</a>.</span>
+                <!-- 保留原始社交按钮占位，但可以简化或者不加载外部js（避免过时），保持视觉简洁，就留一个标识 -->
+                <span class="badge" data-i18n="since1997">since 1997</span>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-copyright">
+                © 1997 - <span id="currentYear"></span> Laurent Destailleur & AWStats <span data-i18n="copyright">团队</span>
+            </div>
+            <div class="footer-license">
+                <a href="awstats_license.html" data-i18n="licenseLink">GNU General Public License</a> · 
+                <a href="https://github.com/eldy/AWStats" rel="publisher" target="_blank" style="display: inline-flex; align-items: center;"><a data-i18n="authorLink"></a> 
+                </a>
+                    <img src="images/favicon.pub/github.svg" style="width: 24px; height: 24px;">
+                </div>
+            <div class="attribution" data-i18n="darkAttr">
+                🌓 自适应暗黑 · 现代化重构
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+            // 中英文翻译资源 (与主页一致，但扩充了当前页面的所有条目)
+            const translations = {
+                en: {
+                    siteTitle: "AWStats 8.1",
+                    headerSlogan: "⚡ Advanced Log Analyzer · Official Docs",
+                    themeAuto: "Auto",
+                    mainTitle: "What is AWStats / Features Overview",
+                    p1: "AWStats is short for Advanced Web Statistics. AWStats is powerful log analyzer which creates advanced web, ftp, mail and streaming server statistics reports based on the rich data contained in server logs. Data is graphically presented in easy to read web pages.",
+                    p2: "AWStats development started in 1997 and is still developed today by same author (Laurent Destailleur). However, development is now done on \"maintenance fixes\" or small new features. Reason is that author spend, since July 2008, most of his time as project leader on another major OpenSource projet called Dolibarr ERP & CRM and works also at full time for TecLib, a french Open Source company. A lot of other developers maintains the software, providing patches, or packages, above all for Linux distributions (fedora, debian, ubuntu...).",
+                    p3: "Designed with flexibility in mind, AWStats can be run through a web browser CGI (common gateway interface) or directly from the operating system command line. Through the use of intermediary data base files, AWStats is able to quickly process large log files, as often desired. With support for both standard and custom log format definitions, AWStats can analyze log files from Apache (NCSA combined/XLF/ELF or common/CLF log format), Microsoft's IIS (W3C log format), WebStar and most web, proxy, wap and streaming media servers as well as ftp and mail server logs.",
+                    p4: "See how the most famous open source statistics tools (AWStats, Analog, Webalizer) stack up feature by feature in this comparison table.",
+                    p5: "AWStats is free software distributed under the GNU General Public License v3 (GPL v3). The license chart illustrates what you can and can't do.",
+                    p6: "As AWStats works from the command line as well as a CGI, it is compatible with all web hosting providers which allow CGI and log access.",
+                    featuresTitle: "Features",
+                    featuresIntro: "AWStats' reports include a wide range of information on your web site usage:",
+                    f1: "Number of Visits, and number of Unique visitors.",
+                    f2: "Visit duration and latest visits.",
+                    f3: "Authenticated Users, and latest authenticated visits.",
+                    f4: "Usage by Months, Days of week and Hours of the day (pages, hits, KB).",
+                    f5: "Domains/countries (and regions, cities and ISP with Maxmind proprietary geo databases) of visitor's hosts (pages, hits, KB, 269 domains/countries detected).",
+                    f6: "Hosts list, latest visits and unresolved IP addresses list.",
+                    f7: "Most viewed, Entry and Exit pages.",
+                    f8: "Most commonly requested File types.",
+                    f9: "Web Compression statistics (for Apache servers using mod_gzip or mod_deflate modules).",
+                    f10: "Visitor's Browsers (pages, hits, KB for each browser, each version, 123 browsers detected: Web, Wap, Streaming Media browsers..., around 482 with the \"phone browsers\" database).",
+                    f11: "Visitor's Operating Systems (pages, hits, KB for each OS, 45 OS detected).",
+                    f12: "Robots visits, including search engine crawlers (381 robots detected).",
+                    f13: "Track Downloads such as PDFs, compressed files and others",
+                    f14: "Search engines, Keywords and Phrases used to find your site (The 122 most famous search engines are detected like Yahoo, Google, Altavista, etc...)",
+                    f15: "HTTP Errors (Page Not Found with latest referrer, ...).",
+                    f16: "User defined reports based on url, url parameters, referrer (referer) fields extend AWStats' capabilities to provide even greater technical and marketing information.",
+                    f17: "Number of times your site is added to Bookmarks / Favorites.",
+                    f18: "Screen size (to capture this, some HTML tags must be added to a site's home page).",
+                    f19: "Ratio of integrated Browser Support for: Java, Flash, Real G2 player, Quicktime reader, PDF reader, WMA reader (as above, requires insertion of HTML tags in site's home page).",
+                    f20: "Cluster distribution for load balanced servers.",
+                    additionTitle: "In addition, AWStats provides the following:",
+                    a1: "Wide range of log formats. AWStats can analyze: Apache NCSA combined (XLF/ELF) or common (CLF) log files, Microsoft IIS log files (W3C), WebStar native log files and other web, proxy, wap, streaming media, ftp and mail server log files. See AWStats F.A.Q. for examples.",
+                    a2: "Reports can be run from the operating system command line and from a web browser as a CGI (common gateway interface). In CGI mode, dynamic filter capabilities are available for many charts.",
+                    a3: "Statistics update can be run from a web browser as well as scheduled for automatic processing.",
+                    a4: "Unlimited log file size",
+                    a5: "Load balancing system split log files.",
+                    a6: "Support 'nearly sorted' log files, even for entry and exit pages.",
+                    a7: "Reverse DNS lookup before or during analysis; supports DNS cache files.",
+                    a8: "Country detection from IP location (geoip) or domain name.",
+                    a9: "Plugins for US/Canadian Regions, Cities and major countries regions, ISP and/or Organizations reports (require non free third product geoipregion, geoipcity, geoipisp and/or geoiporg database).",
+                    a10: "WhoIS lookup links.",
+                    a11: "Vast array of configurable options/filters and plugins supported.",
+                    a12: "Modular design supports inclusion of addition features via plugins.",
+                    a13: "Multi-named web sites supported (virtual servers, great for web-hosting providers).",
+                    a14: "Cross Site Scripting Attacks protection.",
+                    a15: "Reports available in many international languages. See AWStats F.A.Q. for full list. Users can provide files for additional languages not yet available.",
+                    a16: "No need for esoteric perl libraries. AWStats works with all basic perl interpreters.",
+                    a17: "Dynamic reports through a CGI interface.",
+                    a18: "Static reports in one or framed HTML or XHTML pages; experimental PDF export through 3rd party \"htmldoc\" software.",
+                    a19: "Customize look and color scheme to match your site design; with or without CSS (cascading style sheets).",
+                    a20: "Help and HTML tooltips available in reports.",
+                    a21: "Easy to use - all configuration directives are confined to one file for each site.",
+                    a22: "Analysis database can be stored in XML format for easier use by external applications, like XSLT processing (one xslt transform example provided).",
+                    a23: "A Webmin module is supplied.",
+                    a24: "Absolutely free (even for web hosting providers); source code is included (GNU General Public License).",
+                    a25: "Works on all platforms with Perl support.",
+                    a26: "AWStats has a XML Portable Application Description.",
+                    reqTitle: "Requirements:",
+                    reqIntro: "AWStats usage has the following requirements:",
+                    req1: "You must have access to the server logs for the reporting you want to perform (web/ftp/mail).",
+                    req2: "You must be able to run perl scripts (.pl files) from command line and/or as a CGI. If not, you can solve this by downloading latest Perl version at ActivePerl (Win32) or Perl.com (Unix/Linux/Other).",
+                    req3: "See AWStats F.A.Q. for examples of supported OS and Web servers.",
+                    writtenBy: "Article written by Laurent Destailleur.",
+                    copyright: "© 2000 - {year} Laurent Destailleur & AWStats Team",
+                    licenseLink: "GNU General Public License",
+                    authorLink: "Author",
+                    darkAttr: "🌓 Adaptive dark mode · Multilingual docs",
+                    since1997: "since 1997",
+                },
+                zh: {
+                    siteTitle: "AWStats 8.1",
+                    headerSlogan: "⚡ 先进的日志分析器 · 官方文档",
+                    themeAuto: "自动",
+                    mainTitle: "什么是 AWStats / 功能概览",
+                    p1: "AWStats 是 Advanced Web Statistics 的缩写。AWStats 是一款强大的日志分析器，能够基于服务器日志中丰富的原始数据，生成高级的 web、ftp、邮件及流媒体服务器统计报告。数据以易于阅读的网页形式图形化呈现。",
+                    p2: "AWStats 项目始于1997年，至今仍由同一作者（Laurent Destailleur）维护。不过，目前的开发主要集中在“维护性修复”或小型新功能。原因是作者自2008年7月起，将大部分时间投入到另一个主要开源项目 Dolibarr ERP & CRM 的项目领导工作中，并全职供职于法国开源公司 TecLib。许多其他开发者也致力于维护该软件，提供补丁或软件包，尤其是为 Linux 发行版（如 fedora, debian, ubuntu 等）。",
+                    p3: "AWStats 设计灵活，可通过 Web 浏览器 CGI 运行，也可直接从操作系统命令行运行。通过使用中间数据库文件，AWStats 能够快速处理通常所需的大型日志文件。它支持标准及自定义日志格式定义，可以分析 Apache、Microsoft IIS、WebStar 以及大多数 web、代理、wap 和流媒体服务器，以及 ftp 和邮件服务器的日志文件。",
+                    p4: "查看此对比表，了解最著名的开源统计工具（AWStats, Analog, Webalizer）在功能上的逐项对比。",
+                    p5: "AWStats 是自由软件，遵循 GNU 通用公共许可证 v3 (GPL v3) 发布。许可说明阐明了您可以做什么和不能做什么。",
+                    p6: "由于 AWStats 既可在命令行运行，也可作为 CGI 运行，它兼容所有允许 CGI 和日志访问的虚拟主机提供商。",
+                    featuresTitle: "功能特性",
+                    featuresIntro: "AWStats 的报告包含关于您网站使用情况的广泛信息：",
+                    f1: "访问量 和 独立访客 数量。",
+                    f2: "访问时长 和最新访问记录。",
+                    f3: "认证用户 及最新认证访问。",
+                    f4: "按月份、星期和小时间的使用情况（页面数、文件数、KB）。",
+                    f5: "访客主机的域名/国家（以及通过 Maxmind 专有地理位置数据库获取的地区、城市和 ISP）（页面数、文件数、KB，检测到 269 个国家/地区）。",
+                    f6: "主机列表、最新访问和未解析的 IP 地址列表。",
+                    f7: "最常查看的页面、入口和出口页面。",
+                    f8: "最常请求的文件类型。",
+                    f9: "Web 压缩统计（针对使用 mod_gzip 或 mod_deflate 模块的 Apache 服务器）。",
+                    f10: "访客的浏览器（各浏览器、各版本的页面数、文件数、KB，检测到 123 种浏览器：Web、Wap、流媒体浏览器...，使用“手机浏览器”数据库时约为 482 种）。",
+                    f11: "访客的操作系统（各操作系统的页面数、文件数、KB，检测到 45 种操作系统）。",
+                    f12: "机器人访问，包括搜索引擎爬虫（检测到 381 种机器人）。",
+                    f13: "追踪下载，如 PDF、压缩文件等。",
+                    f14: "用于找到您网站的搜索引擎、关键词和短语（检测到 122 种最著名的搜索引擎，如 Yahoo、Google、Altavista 等）。",
+                    f15: "HTTP 错误（“找不到页面”及最新引用页，...）。",
+                    f16: "基于 url、url 参数、引用页字段的用户定义报告，扩展 AWStats 功能以提供更多技术和营销信息。",
+                    f17: "您网站被添加到书签/收藏夹的次数。",
+                    f18: "屏幕尺寸（要捕获此信息，需在网站主页添加一些 HTML 标签）。",
+                    f19: "浏览器对以下技术支持比率：Java、Flash、Real G2 player、Quicktime reader、PDF reader、WMA reader（同上，需在网站主页插入 HTML 标签）。",
+                    f20: "负载均衡服务器的集群分布。",
+                    additionTitle: "此外，AWStats 还提供以下功能：",
+                    a1: "广泛的日志格式支持。AWStats 可分析：Apache NCSA combined (XLF/ELF) 或 common (CLF) 日志文件、Microsoft IIS 日志文件 (W3C)、WebStar 本地日志文件以及其他 web、代理、wap、流媒体、ftp 和邮件服务器日志文件。示例见 AWStats F.A.Q.",
+                    a2: "报告可从操作系统命令行和作为 CGI 的 Web 浏览器运行。在 CGI 模式下，许多图表具备动态过滤功能。",
+                    a3: "统计更新可通过 Web 浏览器运行，也可计划自动处理。",
+                    a4: "无限制的日志文件大小。",
+                    a5: "支持负载均衡系统的分割日志文件。",
+                    a6: "支持“近乎已排序”的日志文件，即使对于入口和出口页面也是如此。",
+                    a7: "在分析之前或期间进行反向 DNS 查找；支持 DNS 缓存文件。",
+                    a8: "通过 IP 地理位置或域名进行国家检测。",
+                    a9: "用于美国/加拿大地区、城市和主要国家地区、ISP 和/或组织报告的插件（需要非免费的第三方产品 geoipregion、geoipcity、geoipisp 和/或 geoiporg 数据库）。",
+                    a10: "WhoIS 查询链接。",
+                    a11: "大量可配置的选项/过滤器和支持的插件。",
+                    a12: "模块化设计，支持通过插件添加附加功能。",
+                    a13: "支持多域名网站（虚拟服务器，非常适合虚拟主机提供商）。",
+                    a14: "跨站脚本攻击保护。",
+                    a15: "报告支持多种国际语言。完整列表见 AWStats F.A.Q. 用户可以贡献目前尚未提供的其他语言文件。",
+                    a16: "无需深奥的 perl 库。AWStats 适用于所有基本 perl 解释器。",
+                    a17: "通过 CGI 界面实现动态报告。",
+                    a18: "静态报告可生成为单个或带框架的 HTML 或 XHTML 页面；通过第三方软件“htmldoc”实验性导出 PDF。",
+                    a19: "自定义外观和配色方案以匹配您的网站设计；支持或不支持 CSS。",
+                    a20: "报告中提供帮助和 HTML 工具提示。",
+                    a21: "易于使用 - 每个站点的所有配置指令都集中在一个文件中。",
+                    a22: "分析数据库可存储为 XML 格式，以便外部应用程序（如 XSLT 处理）更容易使用（提供了一个 xslt 转换示例）。",
+                    a23: "提供了一个 Webmin 模块。",
+                    a24: "完全免费（即使对虚拟主机提供商也是如此）；包含源代码（GNU 通用公共许可证）。",
+                    a25: "适用于所有支持 Perl 的平台。",
+                    a26: "AWStats 有 XML 可移植应用描述。",
+                    reqTitle: "系统要求：",
+                    reqIntro: "使用 AWStats 需满足以下要求：",
+                    req1: "您必须有权访问要执行报告（web/ftp/邮件）的服务器日志。",
+                    req2: "您必须能够在命令行和/或作为 CGI 运行 perl 脚本（.pl 文件）。如果不能，可以通过在 ActivePerl（Win32）或 Perl.com（Unix/Linux/其他）下载最新 Perl 版本来解决。",
+                    req3: "支持的 OS 和 Web 服务器示例见 AWStats F.A.Q.",
+                    writtenBy: "文章作者：Laurent Destailleur。",
+                    copyright: "© 2000 - {year} Laurent Destailleur & AWStats 团队",
+                    licenseLink: "GNU通用公共许可证",
+                    authorLink: "原作者",
+                    darkAttr: "🌓 自适应暗黑 · 多语言文档",
+                    since1997: "始于1997",
+                }
+            };
+
+            // i18n 应用逻辑 (与主页相同)
+            const i18nElements = document.querySelectorAll('[data-i18n]');
+            const langSelector = document.getElementById('langSelector');
+            let currentLang = localStorage.getItem('awstats_lang') || 'en';
+            langSelector.value = currentLang;
+
+            function applyLanguage(lang) {
+                const t = translations[lang] || translations.en;
+                i18nElements.forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (t[key] !== undefined) {
+                        if (key === 'copyright') {
+                            const year = new Date().getFullYear();
+                            el.innerHTML = t[key].replace('{year}', year);
+                        } else {
+                            el.textContent = t[key];
+                        }
+                    }
+                });
+                localStorage.setItem('awstats_lang', lang);
+                // 更新主题按钮文本（保留状态）
+                const themeState = localStorage.getItem('awstats_theme') || 'auto';
+                const themeText = document.querySelector('.theme-text');
+                if (themeText) {
+                    if (themeState === 'auto') themeText.textContent = t.themeAuto;
+                    else if (themeState === 'light') themeText.textContent = (lang === 'zh' ? '浅色' : 'Light');
+                    else themeText.textContent = (lang === 'zh' ? '深色' : 'Dark');
+                }
+            }
+
+            applyLanguage(currentLang);
+
+            langSelector.addEventListener('change', (e) => {
+                currentLang = e.target.value;
+                applyLanguage(currentLang);
+            });
+
+            // 暗黑切换 (复用)
+            const root = document.documentElement;
+            const themeBtn = document.getElementById('themeToggleBtn');
+            let themeState = localStorage.getItem('awstats_theme') || 'auto';
+
+            function applyTheme(state) {
+                root.classList.remove('force-light', 'force-dark');
+                if (state === 'light') root.classList.add('force-light');
+                else if (state === 'dark') root.classList.add('force-dark');
+                const themeText = document.querySelector('.theme-text');
+                if (themeText) {
+                    const lang = currentLang;
+                    if (state === 'auto') themeText.textContent = translations[lang].themeAuto;
+                    else if (state === 'light') themeText.textContent = (lang === 'zh' ? '浅色' : 'Light');
+                    else themeText.textContent = (lang === 'zh' ? '深色' : 'Dark');
+                }
+                localStorage.setItem('awstats_theme', state);
+            }
+            applyTheme(themeState);
+            themeBtn.addEventListener('click', () => {
+                if (themeState === 'auto') themeState = 'light';
+                else if (themeState === 'light') themeState = 'dark';
+                else themeState = 'auto';
+                applyTheme(themeState);
+            });
+        })();
+    </script>
+</body>
+</html>

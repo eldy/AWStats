@@ -2,8 +2,8 @@ make
 CVS
 *~
 awstats-*.tgz
-awstats-*.exe
 awstats-*.rpm
 awstats-*.deb
 awstats-*.zip
 .cvsignore
+# make\tgz\tar.exclude

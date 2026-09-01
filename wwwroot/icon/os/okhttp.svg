@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xml:space="preserve"
+   width="51mm"
+   height="51mm"
+   style="clip-rule:evenodd;fill-rule:evenodd;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
+   viewBox="0 0 51 51"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="okhttp.svg"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><sodipodi:namedview
+   id="namedview1"
+   pagecolor="#ffffff"
+   bordercolor="#000000"
+   borderopacity="0.25"
+   inkscape:showpageshadow="2"
+   inkscape:pageopacity="0.0"
+   inkscape:pagecheckerboard="0"
+   inkscape:deskcolor="#d1d1d1"
+   inkscape:document-units="mm"
+   inkscape:zoom="1.6142256"
+   inkscape:cx="170.05058"
+   inkscape:cy="113.6768"
+   inkscape:window-width="1366"
+   inkscape:window-height="697"
+   inkscape:window-x="-8"
+   inkscape:window-y="-8"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="图层_x0020_1" />
+ <defs
+   id="defs1">
+  <style
+   type="text/css"
+   id="style1">
+   <![CDATA[
+    .fil0 {fill:#00923F}
+   ]]>
+  </style>
+ </defs>
+ <g
+   id="图层_x0020_1"
+   inkscape:label="图层 1"
+   inkscape:groupmode="layer">
+  <metadata
+   id="CorelCorpID_0Corel-Layer" />
+  <path
+   class="fil0"
+   d="M 5.9237333,0.7997 H 45.317133 c 2.9168,0 5.3033,2.3865 5.3033,5.3033 v 39.3934 c 0,2.9168 -2.3865,5.3033 -5.3033,5.3033 H 5.9237333 c -2.9168,0 -5.30329997,-2.3865 -5.30329997,-5.3033 V 6.103 c 0,-2.9168 2.38649997,-5.3033 5.30329997,-5.3033 z m 4.8901997,11.0257 1.6421,-0.8211 h 26.2714 l 1.6421,0.8211 v 27.9134 l -1.6421,0.8211 h -26.2714 l -1.6421,-0.8211 z m -6.5678997,-9.8518 -0.8209,0.8211 -0.8208,0.8208 -0.8211,0.8209 -0.82099997,0.8212 v 41.049 l 0.82099997,0.8212 0.8211,0.8209 0.8208,0.8208 0.8209,0.8211 0.8212,0.821 H 46.116233 l 0.8212,-0.821 0.8209,-0.8211 0.8208,-0.8208 0.8211,-0.8209 0.821,-0.8212 V 5.2576 l -0.821,-0.8212 -0.8211,-0.8209 -0.8208,-0.8208 -0.8209,-0.8211 -0.8212,-0.821 H 5.0672333 Z M 18.202833,19.2143 v 13.1356 l 1.6421,0.8211 h 11.4936 l 1.6421,-0.8211 V 19.2143 l -1.6421,-0.8211 h -11.4936 z"
+   id="path1" />
+ </g>
+</svg>

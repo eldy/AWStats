@@ -1,817 +1,1151 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html><head>
-<meta name="description" content="AWStats Documentation - Glossary of terms">
-<meta name="keywords" content="awstats, awstat, glossary, terms, definition, lexical, index">
-<meta name="robots" content="index,follow">
-<meta name="title" content="AWStats Documentation - Glossary"><title>AWStats Documentation - Glossary</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<link rel="stylesheet" href="styles.css" type="text/css">
-<link href="https://plus.google.com/+LaurentDestailleur-Open-Source-Expert" rel="publisher" />
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWStats · 术语表</title>
+    <meta name="description" content="AWStats Documentation - Glossary of terms (中文/English)">
+    <meta name="keywords" content="awstats, glossary, terms, 术语表">
+    <meta name="author" content="Laurent Destailleur (多语言重构)">
+    <meta name="robots" content="index,follow">
+    <style>
+        /* ========== 现代化全局设计 ========== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-page: #f8fafc; --surface: #ffffff; --surface-secondary: #f1f5f9;
+            --text-primary: #0f172a; --text-secondary: #475569; --accent: #4f46e5;
+            --accent-light: #818cf8; --accent-soft: #eef2ff; --border: #e2e8f0;
+            --card-shadow: 0 20px 25px -5px rgba(0,0,0,0.05), 0 10px 10px -5px rgba(0,0,0,0.02);
+            --header-bg: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            --footer-bg: #eef2ff; --link-color: #4f46e5; --link-visited: #7c3aed;
+            --code-bg: #f1f5f9; --success: #10b981; --warning: #f59e0b; --danger: #ef4444;
+            --http-1xx: #94a3b8; --http-2xx: #10b981; --http-3xx: #f59e0b; --http-4xx: #ef4444; --http-5xx: #8b5cf6;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-page: #0f172a; --surface: #1e293b; --surface-secondary: #334155;
+                --text-primary: #f1f5f9; --text-secondary: #cbd5e1; --accent: #818cf8;
+                --accent-light: #a5b4fc; --accent-soft: #2d3a5e; --border: #475569;
+                --card-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
+                --header-bg: linear-gradient(135deg, #4f46e5 0%, #6d28d9 100%);
+                --footer-bg: #1e293b; --link-color: #a5b4fc; --link-visited: #c4b5fd;
+                --code-bg: #334155; --success: #34d399; --warning: #fbbf24; --danger: #f87171;
+            }
+        }
+
+        body {
+            background-color: var(--bg-page); color: var(--text-primary);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6; margin: 0; padding: 0;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            display: flex; flex-direction: column; min-height: 100vh;
+        }
+        .container { max-width: 1300px; margin: 0 auto; padding: 0 28px; width: 100%; }
+
+        /* 现代化导航栏 */
+        .nav-bar {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+            background-color: rgba(var(--surface-rgb), 0.8);
+        }
+        .nav-container {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 20px;
+        }
+        .nav-home {
+            font-weight: 700; font-size: 1.3rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-decoration: none; display: flex; align-items: center; gap: 8px;
+        }
+        .nav-links {
+            display: flex; gap: 8px; flex-wrap: wrap;
+        }
+        .nav-links a {
+            color: var(--text-secondary); text-decoration: none;
+            font-weight: 500; padding: 8px 16px; border-radius: 40px;
+            transition: all 0.2s; font-size: 0.95rem;
+        }
+        .nav-links a:hover {
+            background: var(--accent-soft); color: var(--accent);
+        }
+        .nav-links a.active {
+            background: var(--accent); color: white;
+        }
+        .breadcrumb {
+            display: flex; gap: 8px; align-items: center;
+            color: var(--text-secondary); font-size: 0.9rem;
+        }
+        .breadcrumb a { color: var(--link-color); text-decoration: none; }
+
+        /* 现代化头部 */
+        .header {
+            background: var(--header-bg); color: white; border-radius: 0 0 40px 40px;
+            padding: 24px 0 32px; box-shadow: var(--card-shadow); margin-bottom: 30px;
+        }
+        .header-row {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 20px;
+        }
+        .logo-area { display: flex; align-items: center; gap: 16px; }
+        .logo-area img { height: 56px; width: auto; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
+        .site-title {
+            font-size: 2rem; font-weight: 700; background: rgba(255,255,255,0.1);
+            padding: 8px 24px; border-radius: 60px; backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .header-center {
+            flex: 1; text-align: center; font-weight: 500; font-size: 1.2rem;
+            background: rgba(0,0,0,0.1); padding: 8px 24px; border-radius: 60px;
+            backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.15);
+        }
+        .header-right { display: flex; gap: 12px; align-items: center; }
+        .lang-switch {
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 40px; padding: 6px 16px; color: white; font-weight: 500;
+            display: flex; align-items: center; gap: 8px; backdrop-filter: blur(8px);
+        }
+        .lang-switch select {
+            background: transparent; border: none; color: white; font-weight: 500;
+            outline: none; font-size: 0.95rem; cursor: pointer;
+        }
+        .lang-switch select option { background: var(--accent); color: white; }
+        .theme-toggle {
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 40px; padding: 8px 20px; font-size: 0.95rem; color: white;
+            cursor: pointer; display: flex; align-items: center; gap: 8px; backdrop-filter: blur(8px);
+        }
+
+        /* 现代化文档卡片 */
+        .doc-card {
+            background-color: var(--surface); border-radius: 40px;
+            padding: 3rem; box-shadow: var(--card-shadow);
+            border: 1px solid var(--border); margin: 20px 0 40px;
+        }
+        h1 {
+            font-size: 2.5rem; font-weight: 700; letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin: 0 0 25px 0;
+        }
+        h2 {
+            font-size: 2rem; font-weight: 600; margin: 2.5rem 0 1.5rem;
+            color: var(--text-primary); border-bottom: 3px solid var(--accent-soft);
+            padding-bottom: 12px;
+        }
+
+        /* 术语条目样式 */
+        .glossary-term {
+            margin: 40px 0;
+            scroll-margin-top: 100px;
+        }
+        .term-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .term-title a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .term-title a:hover {
+            text-decoration: underline;
+        }
+        .term-content {
+            background: var(--surface-secondary);
+            padding: 25px;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            line-height: 1.8;
+        }
+        .term-content p {
+            margin: 10px 0;
+        }
+        .term-content code {
+            background: var(--code-bg);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        .term-content i {
+            color: var(--accent);
+        }
+        hr {
+            border: none;
+            border-top: 2px dashed var(--border);
+            margin: 30px 0;
+        }
+
+        /* HTTP 状态码表格样式 */
+        .http-section {
+            margin: 40px 0;
+        }
+        .http-category {
+            margin: 30px 0;
+            padding: 20px;
+            background: var(--surface);
+            border-radius: 24px;
+            border: 1px solid var(--border);
+        }
+        .http-category-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid;
+        }
+        .http-1xx .http-category-title { color: var(--http-1xx); border-bottom-color: var(--http-1xx); }
+        .http-2xx .http-category-title { color: var(--http-2xx); border-bottom-color: var(--http-2xx); }
+        .http-3xx .http-category-title { color: var(--http-3xx); border-bottom-color: var(--http-3xx); }
+        .http-4xx .http-category-title { color: var(--http-4xx); border-bottom-color: var(--http-4xx); }
+        .http-5xx .http-category-title { color: var(--http-5xx); border-bottom-color: var(--http-5xx); }
+
+        .http-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        .http-item {
+            background: var(--surface-secondary);
+            padding: 15px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+        .http-code {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 5px;
+        }
+        .http-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* SMTP 状态码表格样式 */
+        .smtp-section {
+            margin: 40px 0;
+        }
+        .smtp-category {
+            margin: 30px 0;
+            padding: 20px;
+            background: var(--surface);
+            border-radius: 24px;
+            border: 1px solid var(--border);
+        }
+        .smtp-category-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid;
+        }
+        .smtp-23xx .smtp-category-title { color: var(--success); border-bottom-color: var(--success); }
+        .smtp-4xx .smtp-category-title { color: var(--warning); border-bottom-color: var(--warning); }
+        .smtp-5xx .smtp-category-title { color: var(--danger); border-bottom-color: var(--danger); }
+
+        .smtp-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        .smtp-item {
+            background: var(--surface-secondary);
+            padding: 15px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+        .smtp-code {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 5px;
+        }
+        .smtp-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* 现代化页脚 */
+        .footer {
+            background-color: var(--footer-bg); margin-top: 60px;
+            padding: 32px 24px; border-radius: 40px 40px 0 0;
+            border-top: 1px solid var(--border); color: var(--text-secondary);
+        }
+        .footer-content {
+            display: flex; flex-wrap: wrap; justify-content: space-between;
+            align-items: center; gap: 20px; max-width: 1300px; margin: 0 auto;
+        }
+        .footer-copyright {
+            background: var(--surface); padding: 8px 24px; border-radius: 60px;
+            border: 1px solid var(--border); font-size: 0.95rem;
+        }
+        
+        .back-to-top {
+            position: fixed; bottom: 30px; right: 30px;
+            background: var(--accent); color: white;
+            width: 56px; height: 56px; border-radius: 28px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; border: none; box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
+            transition: all 0.2s; z-index: 99; font-size: 1.2rem;
+        }
+        .back-to-top:hover {
+            transform: scale(1.1); background: var(--accent-light);
+        }
+        
+        @media (max-width: 700px) {
+            .header-row { flex-direction: column; }
+            .doc-card { padding: 1.8rem; }
+            h1 { font-size: 2rem; }
+            .http-grid, .smtp-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
-<body topmargin="10" leftmargin="5">
-<table style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10pt; line-height: normal; font-size-adjust: none; font-stretch: normal;" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" width="100%">
-<!-- Large -->
-<tbody>
-<tr style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">
-<td align="center" bgcolor="#9999cc"><a href="/"><img src="images/awstats_logo6.png" border="0"></a></td>
-<td align="center" bgcolor="#9999cc">
-<br>
-<font style="font-family: arial,helvetica,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 16pt; line-height: normal; font-size-adjust: none; font-stretch: normal;" color="#eeeeff"><b>AWStats logfile analyzer 8.0 Documentation</b></font><br>
-<br>
-</td>
-<td align="center" bgcolor="#9999cc">
-&nbsp;
-</td>
-</tr>
-</tbody>
-</table>
-<br>
-<br>
-<h1 style="font-family: arial,helvetica,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 26px; line-height: normal; font-size-adjust: none; font-stretch: normal;">Glossary</h1>
-<br>
-<a name="Unique Visitor"><b>Unique Visitor</b></a>:<br>
-A unique
-visitor is a person or computer (host) that has made at least 1 hit
-on 1 page of your web site during the current period shown by the
-report.
-If this user makes several visits during this period, it is counted
-only once. Visitors are tracked by IP address, so if multiple users are
-accessing your site from the same IP (such as a home or office
-network), they will be counted as a single unique visitor.<br>
-The period shown by AWStats reports is by default the current month.<br>
-However if you use AWStats as a CGI you can click on the "year" link to
-have a report for all the year.
-In such a report, period is a full year, so Unique Visitors are number
-of hosts that have made at least 1 hit
-on 1 page of your web site during the year.<br>
-<hr>
-<a name="Visits"><b>Visits</b></a>:<br>
-Number of visits made by all visitors.<br>
-Think "session" here, say a unique IP accesses a page, and then
-requests three other pages within an hour. All of the "pages" are
-included in the visit, therefore you should expect
-multiple pages per visit and multiple visits per unique visitor
-(assuming that some of the unique IPs are
-logged with more than an hour between requests)<br>
-<hr>
-<a name="Pages"><b>Pages</b></a>:<br>
-The number of "pages" viewed by visitors. Pages are usually HTML, PHP
-or ASP files, not images or other files requested as a result
-of loading a "Page" (like js,css... files). Files listed in the
-NotPageList config
-parameter (and match an entry of OnlyFiles config parameter if used)
-are not counted as "Pages".
-<hr><a name="Hits"><b>Hits</b></a>:<br>
-Any files requested from the server (including files that are "Pages")
-except those that match
-the SkipFiles config parameter.<br>
-<hr>
-<a name="Bandwidth"><b>Bandwidth</b></a>:<br>
-Total number of bytes for pages, images and files downloaded by web
-browsing.<br>
-Note 1: Of course, this number includes only traffic for web only (or
-mail only, or ftp only
-depending on value of LogType).<br>
-Note 2: This number does not include technical header data size used
-inside the HTTP or HTTPS protocol or by
-protocols at a lower level (TCP, IP...).<br>
-Because of two previous notes, this number is often lower than bandwith
-reported by your provider (your
-provider counts in most cases bandwitdh at a lower level and includes
-all IP and UDP traffic).<br>
-<hr>
-<a name="Entry Page"><b>Entry Page</b></a>:<br>
-First page viewed by a visitor during its visit.<br>
-Note: When a visit started at end of month to end at beginning of next
-month,
-you might have an Entry page for the month report and no Exit pages.<br>
-That's why Entry pages can be different than Exit pages.<br>
-<hr>
-<a name="Exit Page"><b>Exit Page</b></a>:<br>
-Last page viewed by a visitor during its visit.<br>
-Note: When a visit started at end of month to end at beginning of next
-month,
-you might have an Entry page for the month report and no Exit pages.<br>
-That's why Entry pages can be different than Exit pages.<br>
-<hr>
-<a name="Session Duration"><b>Session Duration</b></a>:<br>
-The time a visitor spent on your site for each visit.<br>
-Some Visits durations are 'unknown' because they can't always be
-calculated. This is the major reason for this:<br>
-- Visit was not finished when 'update' occured.<br>
-- Visit started the last hour (after 23:00) of the last day of a month
-(A technical reason prevents AWStats from
-calculating duration of such sessions).<br>
-<hr>
-<a name="Grabber"><b>Grabber</b></a>:<br>
-A browser that is used primarily for copying locally an entire site.
-These include
-for example "teleport", "webcapture", "webcopier"...<br>
-<hr>
-<a name="Direct"><b>Direct access / Bookmark</b></a>:<br>
-This number represent the number of hits or ratio of hits when a visit
-to your site comes
-from a direct access. This means the first page of your web site was
-called:<br>
-- By typing your URL on the web browser address bar<br>
-- By clicking on your URL stored by a visitor inside its favorites<br>
-- By clicking on your URL found everywhere but not another internet web
-pages (a link in a document,
-an application, etc...)<br>
-- Clicking an URL of your site inside a mail is often counted here.<br>
-<hr>
-<a name="AddToFavourites"><b>Add To Favourites</b></a>:<br>
-This value, available in the "miscellanous chart", reports an estimated
-indicator
-that can be used to have an idea of the number of times a visitor has
-added your web
-site into its favourite bookmarks.<br>
-The technical rules for that is the following formula:<br>
-<i>Number of Add to Favourites = round((x+y) / r)</i><br>
-where<br>
-x = Number of hits made by IE browsers for "/anydir/favicon.ico", with
-a referer field not defined, and with no 404 error code<br>
-y = Number of hits made by IE browsers for "/favicon.ico", with a
-referer field not defined, with or without 404 error code<br>
-r = Ratio of hits made by IE browsers compared to hits made by all
-browsers (r &lt;= 1)<br>
-<br>
-As you can see in formula, only IE is used to count reliable "add", the
-"Add to favourites"
-for other browsers are estimated using ratio of other browsers usage
-compared to ratio of
-IE usage. The reason is that only IE do a hit on favicon.ico nearly
-ONLY when a user add the
-page to its favourites. The other browsers make often hits on this file
-also for other reasons
-so we can't count one "hit" as one "add" since it might be a hit for
-another reason.<br>
-AWStats differentiate also hits with error and not to avoid counting
-multiple hits
-made recursively in upper path when favicon.ico file is not found in
-deeper directory
-of path.<br>
-Note that this number is just an indicator that is in most case higher
-than true value.
-The reason is that even IE browser sometimes make hit on favicon
-without an "Add to favourites"
-action by a user.
-<hr><a name="HTTP"><b>HTTP Status Codes</b></a>:<br>
-HTTP status codes are returned by web servers to indicate the status of
-a request.
-Codes <b>200</b> and <b>304</b> are used to
-tell the browser the page can be viewed.
-<span style="font-weight: bold;">206</span> codes indicate partial
-downloading of content and is reported in the Downloads section. All
-other codes generates hits and traffic 'not seen' by the visitor.
-For example a return
-code 301 or 302 will tell the browser to ask another page. The browser
-will do another hit
-and should finaly receive the page with a return code <b>200</b>
-and <b>304</b>.
-All codes that are 'unseen' traffic are isolated by AWStats in the HTTP
-Status report chart,
-enabled by the directives <a href="awstats_config.html#Show">ShowHTTPErrorsStats</a>.
-in config file. You can also change value for 'not error' hits (set by
-default to <b>200</b> and <b>304</b>
-with the <a href="awstats_config.html#ValidHTTPcodes">ValidHTTPcodes</a>
-directive.
-The following table outlines all status codes defined for the HTTP/1.1
-draft specification
-outlined in <a href="http://www.w3.org/Protocols/rfc2068/rfc2068">IETF
-rfc 2068</a>.<br>
-They are 3-digit codes where the first digit of this code identifies
-the class of the status
-code and the remaining 2 digits correspond to the specific condition
-within the response class.
-They are classified in 5 categories:<br>
-<ul>
-<li><font face="arial"><font size="-1"><a href="#1">1xx - informational</a></font></font></li>
-<li><font face="arial"><font size="-1"><a href="#2">2xx - successful</a></font></font></li>
-<li><font face="arial"><font size="-1"><a href="#3">3xx - redirection</a></font></font></li>
-<li><font face="arial"><font size="-1"><a href="#4">4xx - client error&nbsp;</a></font></font></li>
-<li><font face="arial"><font size="-1"><a href="#5">5xx - server error&nbsp;</a></font></font></li>
-</ul>
-<table width="90%">
-<tbody>
-<tr>
-<td bgcolor="#dadada" valign="top"><!-- HTTP 1xx codes -->
-<a name="1"></a><b><font face="arial">1xx
-class - Informational</font></b>
-<br>
-<font face="arial"><font size="-1">Informational
-status codes are provisional
-responses from the web server... they give the client a heads-up on
-what
-the server is doing. Informational codes do not indicate an error
-condition.&nbsp;</font></font>
-<table width="100%">
-<tbody>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">100</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">100 Continue</font></font></b>
-<br>
-<font face="arial"><font size="-1">The
-continue status code tells the
-browser to continue sending a request to the server.&nbsp;</font></font></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">101</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">101 Switching
-Protocols</font></font></b>
-<br>
-<font face="arial"><font size="-1">The
-server sends this response when
-the client asks to switch from HTTP/1.0 to HTTP/1.1&nbsp;</font></font></td>
-</tr>
-</tbody>
-</table>
-<p><a name="2"></a><b><font face="arial">2xx class - Successful</font></b>
-<br>
-<font face="arial"><font size="-1">This
-class of status code indicates
-that the client's request was received, understood, and
-successful.&nbsp;</font></font>
-<table width="100%">
-<tbody>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">200</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">200 Successful</font></font></b></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">201</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">201 Created</font></font></b></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">202</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">202 Accepted</font></font></b></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">203</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">203
-Non-Authorative Information</font></font></b></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">204</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">204 No Content</font></font></b></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">205</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">205 Reset Content</font></font></b></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">206</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">206 Partial Content</font></font></b>
-<br>
-<font face="arial"><font size="-1">The
-partial content success code is
-issued when the server fulfills a partial GET request. This happens
-when
-the client is downloading a multi-part document or part of a larger
-file.&nbsp;</font></font></td>
-</tr>
-</tbody>
-</table>
-<!-- HTTP 3xx codes -->
-<a name="3"></a><b><font face="arial">3xx
-class - Redirection</font></b>
-<br>
-<font face="arial"><font size="-1">This
-code tells the client that the
-browser should be redirected to another URL in order to complete the
-request.
-This is not an error condition.&nbsp;</font></font>
-<table width="100%">
-<tbody>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">300</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">300 Multiple
-Choices</font></font></b></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">301</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">301 Moved
-Permanently</font></font></b></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">302</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">302 Moved
-Temporarily</font></font></b></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">303</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">303 See Other</font></font></b></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">304</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">304 Not Modified</font></font></b></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">305</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">305 Use Proxy</font></font></b></td>
-</tr>
-</tbody>
-</table>
-<!-- HTTP 4xx codes -->
-<a name="4"></a><b><font face="arial">4xx
-class - Client Error</font></b>
-<br>
-<font face="arial"><font size="-1">This
-status code indicates that the
-client has sent bad data or a malformed request to the server. Client
-errors
-are generally issued by the webserver when a client tries to gain
-access
-to a protected area using a bad username and password.&nbsp;</font></font>
-<table width="100%">
-<tbody>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">400</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">400 Bad Request</font></font></b></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">401</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">401 Unauthorized</font></font></b></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">402</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">402 Payment
-Required</font></font></b></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">403</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">403 Forbidden</font></font></b></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">404</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">404 Not Found</font></font></b></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">405</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">400 Method Not
-Allowed</font></font></b></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">406</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">400 Not Acceptable</font></font></b></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">407</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">400 Proxy
-Authentication Required</font></font></b></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">408</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">400 Request Timeout</font></font></b></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">409</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">409 Conflict</font></font></b></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">410</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">410 Gone</font></font></b></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">411</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">411 Length Required</font></font></b></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">412</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">412 Precondition
-Failed</font></font></b></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">413</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">413 Request Entity
-Too Long</font></font></b></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">414</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">414 Request-URI
-Too Long</font></font></b></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">415</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">415 Unsupported
-Media Type</font></font></b></td>
-</tr>
-</tbody>
-</table>
-<!-- HTTP 5xx codes -->
-<a name="5"></a><b><font face="arial">5xx
-class - Server Error</font></b>
-<br>
-<font face="arial"><font size="-1">This
-status code indicates that the
-client's request couldn't be succesfully processed due to some internal
-error in the web server. These error codes may indicate something is
-seriously
-wrong with the web server.&nbsp;</font></font>
-<table width="100%">
-<tbody>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">500</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">500 Internal
-Server Error</font></font></b>
-<br>
-<font face="arial"><font size="-1">An
-internal server error has caused
-the server to abort your request. This is an error condition that may
-also
-indicate a misconfiguration with the web server. However, the most
-common
-reason for 500 server errors is when you try to execute a script that
-has
-syntax errors.&nbsp;</font></font></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">501</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">501 Not Implemented</font></font></b>
-<br>
-<font face="arial"><font size="-1">This
-code is generated by a webserver
-when the client requests a service that is not implemented on the
-server.
-Typically, not implemented codes are returned when a client attempts to
-POST data to a non-CGI (ie, the form action tag refers to a
-non-executable
-file).&nbsp;</font></font></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">502</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">502 Bad Gateway</font></font></b>
-<br>
-<font face="arial"><font size="-1">The
-server, when acting as a proxy,
-issues this response when it receives a bad response from an upstream
-or
-support server.&nbsp;</font></font></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">503</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">503 Service
-Unavailable</font></font></b>
-<br>
-<font face="arial"><font size="-1">The
-web server is too busy processing
-current requests to listen to a new client. This error represents a
-serious
-problem with the webserver (normally solved with a reboot).&nbsp;</font></font></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">504</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">504 Gateway Timeout</font></font></b>
-<br>
-<font face="arial"><font size="-1">Gateway
-timeouts are normally issued
-by proxy servers when an upstream or support server doesn't respond to
-a request in a timely fashion.&nbsp;</font></font></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">505</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">505 HTTP Version
-Not Supported</font></font></b>
-<br>
-<font face="arial"><font size="-1">The
-server issues this status code
-when a client tries to talk using an HTTP protocol that the server
-doesn't
-support or is configured to ignore.</font></font></td>
-</tr>
-</tbody>
-</table>
-</p>
-</td>
-<td align="left" valign="top"></td>
-</tr>
-</tbody>
-</table>
-<br>
-<hr>
-<a name="SMTP"><b>SMTP Status Codes</b></a><a>:<br>
-SMTP status codes are returned by mail servers to indicate the status
-of a sending/receiving mail.
-The status code depends on mail server and preprocessor used to analyze
-log file.<br>
-All codes that are failure codes are isolated by AWStats in the SMTP
-Status report chart,
-enabled by the directives </a><a href="awstats_config.html#Show">ShowSMTPErrorsStats</a>
-in AWStats
-config file. You can decide which codes are successfull mail transfer
-that should not appear
-in this chart with the <a href="awstats_config.html#ValidSMTPCodes">ValidSMTPCodes</a>
-directive.<br>
-Here are values reported for most mail servers (This should also be
-values when mail log file
-is preprocessing with maillogconvert.pl).<br>
-SMTP Errors are classified in 3 categories:<br>
-<ul>
-<li><font face="arial"><font size="-1"><a href="#SMTP23">2xx/3xx - successful</a></font></font></li>
-<li><font face="arial"><font size="-1"><a href="#SMTP4">4xx - failure, asking sender to try later</a></font></font></li>
-<li><font face="arial"><font size="-1"><a href="#SMTP5">5xx - permanent failure</a></font></font></li>
-</ul>
-<table width="90%">
-<tbody>
-<tr>
-<td bgcolor="#dadada" valign="top"><!-- SMTP 2xx/3xx -->
-<a name="SMTP23"></a><b><font face="arial">2xx/3xx class - Success</font></b>
-<br>
-<font face="arial"><font size="-1">They
-are SMTP protocols successfull answers
-</font></font>
-<table width="100%">
-<tbody>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">200</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">200 Non standard
-success response</font></font></b>
-<br>
-<font face="arial"><font size="-1">Non
-standard success response</font></font></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">211</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">211 System status,
-or system help reply</font></font></b>
-<br>
-<font face="arial"><font size="-1">System
-status, or system help reply</font></font></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">214</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">214 Help message</font></font></b>
-<br>
-<font face="arial"><font size="-1">Help
-message</font></font></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">220</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">220 <domain>
-Service ready</domain></font></font></b>
-<br>
-<font face="arial"><font size="-1"><domain>
-Service ready</domain></font></font></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">221</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">221 <domain>
-Service closing transmission channel</domain></font></font></b>
-<br>
-<font face="arial"><font size="-1"><domain>
-Service closing transmission channel</domain></font></font></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">250</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">250 Requested mail
-action taken and completed</font></font></b>
-<br>
-<font face="arial"><font size="-1">Your
-ISP mail server have successfully executes a command and the DNS is
-reporting a positive delivery.</font></font></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">251</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">251 User not
-local: will forward to <forward-path></forward-path></font></font></b>
-<br>
-<font face="arial"><font size="-1">Your
-message to a specified
-email address is not local to the mail server, but it will accept and
-forward the message to a different recipient email address.</font></font></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">252</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">252 Recipient
-cannot be verified</font></font></b>
-<br>
-<font face="arial"><font size="-1">Recipient
-cannot be verified but mail server accepts the message and attempts
-delivery</font></font></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">354</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">354 Start mail
-input and end with <crlf>.<crlf></crlf></crlf></font></font></b>
-<br>
-<font face="arial"><font size="-1">Indicates
-mail server is ready
-to accept the message or instruct your mail client to send the message
-body after the mail server have received the message headers.</font></font></td>
-</tr>
-</tbody>
-</table>
-<!-- SMTP 4xx -->
-<a name="SMTP4"></a><b><font face="arial">4xx class - Temporary Errors</font></b>
-<br>
-<font face="arial"><font size="-1">Those
-codes are temporary error message. They are used to tell client sender
-that
-an error occured but he can try to solve it but trying again, so in
-most cases, clients that
-receive such codes will keep the mail in their queue and will try again
-later.<br>
-</font></font>
-<table width="100%">
-<tbody>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">421</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">421 <domain>
-Service not available, closing transmission channel</domain></font></font></b>
-<br>
-<font face="arial"><font size="-1">This
-may be a reply to any command if the service knows it must shut down.</font></font></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">450</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">450 Requested mail
-action not taken: mailbox busy or access denied</font></font></b>
-<br>
-<font face="arial"><font size="-1">Your
-ISP mail server indicates
-that an email address does not exist or the mailbox is busy. It could
-be the network connection went down while sending, or it could also
-happen if the remote mail server does not want to accept mail from you
-for some reason i.e. (IP address, From address, Recipient, etc.)</font></font></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">451</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">451 Requested mail
-action aborted: error in processing</font></font></b>
-<br>
-<font face="arial"><font size="-1">Your
-ISP mail server indicates
-that the mailing has been interrupted, usually due to overloading from
-too many messages or transient failure is one in which the message sent
-is valid, but some temporary event prevents the successful sending of
-the message. Sending in the future may be successful.</font></font></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">452</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">452 Requested mail
-action not taken: insufficient system storage</font></font></b>
-<br>
-<font face="arial"><font size="-1">Your
-ISP mail server indicates, probable overloading from too many messages
-and sending in the future may be successful.</font></font></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">453</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">453 Too many
-messages</font></font></b>
-<br>
-<font face="arial"><font size="-1">Some
-mail servers have the
-option to reduce the number of concurrent connection and also the
-number of messages sent per connection. If you have a lot of messages
-queued up it could go over the max number of messages per connection.
-To see if this is the case you can try submitting only a few messages
-to that domain at a time and then keep increasing the number until you
-find the maximum number accepted by the server.</font></font></td>
-</tr>
-</tbody>
-</table>
-<!-- SMTP 5xx -->
-<a name="SMTP5"></a><b><font face="arial">5xx class - Permanent Errors</font></b>
-<br>
-<font face="arial"><font size="-1">This
-are permanent error codes. Mail transfer is definitly a failure. No
-other try will be done.
-</font></font>
-<table width="100%">
-<tbody>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">500</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">500 Syntax error,
-command unrecognized or command line too long</font></font></b>
-</td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">501</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">501 Syntax error
-in parameters or arguments</font></font></b>
-</td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">502</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">502 Command not
-implemented</font></font></b>
-</td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">503</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">503 Server
-encountered bad sequence of commands</font></font></b>
-</td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">504</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">504 Command
-parameter not implemented</font></font></b>
-</td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">521</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">521 <domain>
-does not accept mail or closing transmission channel</domain></font></font></b>
-<br>
-<font face="arial"><font size="-1">You
-must be pop-authenticated before you can use this SMTP server and you
-must use your mail address for the Sender/From field.</font></font></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">530</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">530 Access denied</font></font></b>
-<br>
-<font face="arial"><font size="-1">A
-sendmailism ?</font></font></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">550</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">550 Requested mail
-action not taken (Relaying not allowed, Unknown recipient user, ...)</font></font></b>
-<br>
-<font face="arial"><font size="-1">Sending
-an email to recipients
-outside of your domain are not allowed or your mail server does not
-know that you have access to use it for relaying messages and
-authentication is required. Or to prevent the sending of SPAM some mail
-servers will not allow (relay) send mail to any e-mail using another
-company&#8217;s network and computer resources.</font></font></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">551</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">551 User not
-local: please try <forward-path> or Invalid Address: Relay
-request denied</forward-path></font></font></b>
-</td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">552</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">552 Requested mail
-action aborted: exceeded storage allocation</font></font></b>
-<br>
-<font face="arial"><font size="-1">ISP
-mail server indicates, probable overloading from too many messages.</font></font></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">553</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">553 Requested mail
-action not taken: mailbox name not allowed</font></font></b>
-<br>
-<font face="arial"><font size="-1">Some
-mail servers have the
-option to reduce the number of concurrent connection and also the
-number of messages sent per connection. If you have a lot of messages
-queued up (being sent) for a domain, it could go over the maximum
-number of messages per connection and/or some change to the message
-and/or destination must be made for successful delivery.</font></font></td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">554</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">554 Requested mail
-action rejected: access denied</font></font></b>
-</td>
-</tr>
-<tr>
-<td align="center" bgcolor="#eeeeee" valign="top" width="80"><b><font face="arial"><font size="-1">557</font></font></b></td>
-<td bgcolor="#eeeeff" valign="top"><b><font face="arial"><font size="-1">557 Too many
-duplicate messages</font></font></b>
-<br>
-<font face="arial"><font size="-1">Resource
-temporarily unavailable Indicates (probable) that there is some kind of
-anti-spam system on the mail server.</font></font></td>
-</tr>
-<!-- # Postfix code for access_map_reject_code (postfix default=554) with access_map_reject_code rule '570'=>'Access denied: access_map violation (on SMTP client or HELO hostname, sender or recipient email address)', # Postfix code for maps_rbl_reject_code (postfix default=554) with maps_rbl_code rule '571'=>'Access denied: SMTP client listed in RBL', # Postfix code for relay_domains_reject_code (postfix default=554) with relay_domains_reject rule '572'=>'Access denied: Relay not authorized or not local host not a gateway', # Postfix code for unknown_client_reject_code (postfix default=450) with reject_unknown_client rule '573'=>'Access denied: Unknown SMTP client hostname (without DNS A or MX record)', # Postfix code for invalid_hostname_reject_code (postfix default=501) with reject_invalid_hostname rule '574'=>'Access denied: Bad syntax for client HELO hostname (Not RFC compliant)', # Postfix code for reject_code (postfix default=554) with smtpd_client_restrictions '575'=>'Access denied: SMTP client hostname rejected', # Postfix code for unknown_address_reject_code (postfix default=450) with reject_unknown_sender_domain or reject_unknown_recipient_domain rule '576'=>'Access denied: Unknown domain for sender or recipient email address (without DNS A or MX record)', # Postfix code for unknown_hostname_reject_code (postfix default=501) with reject_unknown_hostname rule '577'=>'Access denied: Unknown client HELO hostname (without DNS A or MX record)', # Postfix code for non_fqdn_reject_code (Postfix default=504) with reject_non_fqdn_hostname, reject_non_fqdn_sender or reject_non_fqdn_recipient rule '578'=>'Access denied: Invalid domain for client HELO hostname, sender or recipient email address (not FQDN)', -->
-</tbody>
-</table>
-</td>
-<td align="left" valign="top"></td>
-</tr>
-</tbody>
-</table>
-<br>
-<hr>
+<body>
+    <!-- 导航栏 -->
+    <div class="nav-bar">
+        <div class="container nav-container">
+            <a href="index.html" class="nav-home">
+                <span>🏠</span> AWStats 文档
+            </a>
+            <div class="nav-links">
+                <a href="index.html" data-i18n="navHome">主页</a>
+                <a href="awstats_what.html" data-i18n="navWhat">什么是AWStats</a>
+                <a href="awstats_setup.html" data-i18n="navSetup">安装配置</a>
+                <a href="awstats_webmin.html" data-i18n="navWebmin">Webmin模块</a>
+                <a href="awstats_upgrade.html" data-i18n="navUpgrade">升级指南</a>
+                <a href="awstats_tools.html" data-i18n="navTools">其他工具</a>
+                <a href="awstats_security.html" data-i18n="navSecurity">安全建议</a>
+                <a href="awstats_license.html" data-i18n="navLicense">许可证</a>
+                <a href="awstats_glossary.html" class="active" data-i18n="navGlossary">术语表</a>
+                <a href="awstats_faq.html" data-i18n="navFAQ">FAQ</a>
+            </div>
+            <div class="breadcrumb">
+                <a href="index.html" data-i18n="home">主页</a>
+                <span>›</span>
+                <span data-i18n="currentPage">术语表</span>
+            </div>
+        </div>
+    </div>
 
-<!-- You can remove this part if you distribution need documentation without external tags -->
-<!-- BEGIN_SOCIAL_NETWORKS -->
-<div class="htmldoc-ignore">
-<!-- google plus -->
-<span style="color: #bbb; font-weight: normal;">Article written by <a href="https://www.destailleur.fr" rel="author" style="color: #ccc; font-weight: normal;">Laurent Destailleur</a>.</span><br>
-<br>
-<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-<g:plusone></g:plusone>
-<!-- facebook -->
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/fr_FR/all.js#xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-<div class="fb-like" data-href="http://www.awstats.org/docs/awstats_glossary.html" data-layout="button_count" data-action="recommend" data-show-faces="false" data-share="true"></div>
-</div>
-<!-- END_SOCIAL_NETWORKS -->
+    <header class="header">
+        <div class="container header-row">
+            <div class="logo-area">
+                <img src="images/awstats_logo6.png" alt="AWStats" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'56\' height=\'56\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%234f46e5\' rx=\'20\'/%3E%3Ctext x=\'20\' y=\'68\' fill=\'%23ffffff\' font-size=\'60\' font-weight=\'bold\'%3EAW%3C/text%3E%3C/svg%3E';">
+                <span class="site-title" data-i18n="siteTitle">AWStats 8.1</span>
+            </div>
+            <div class="header-center" data-i18n="headerSlogan">
+                ⚡ 先进的日志分析器 · 官方文档
+            </div>
+            <div class="header-right">
+                <div class="lang-switch">
+                    <span>🌐</span>
+                    <select id="langSelector">
+                        <option value="zh" selected>中文</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+                <button class="theme-toggle" id="themeToggleBtn">
+                    <span>🌓</span> <span class="theme-text" data-i18n="themeAuto">自动</span>
+                </button>
+            </div>
+        </div>
+    </header>
 
-</body></html>
+    <main class="container">
+        <div class="doc-card">
+            <h1 data-i18n="mainTitle">📚 术语表</h1>
+
+            <!-- 独立访客 -->
+            <div class="glossary-term">
+                <a name="UniqueVisitor"></a>
+                <div class="term-title">
+                    <span>🔍</span>
+                    <a href="#UniqueVisitor" data-i18n="termUniqueVisitor">独立访客</a>
+                </div>
+                <div class="term-content">
+                    <p data-i18n="uniqueVisitorDesc">独立访客是指在当前报告显示的时间段内，至少访问了您网站1个页面的个人或计算机（主机）。如果该用户在此时间段内多次访问，仅计数一次。访客通过IP地址跟踪，因此如果多个用户从同一IP访问您的网站（例如家庭或办公室网络），他们将被计为一个独立访客。</p>
+                    <p data-i18n="uniqueVisitorNote">AWStats 报告默认显示的时间段是当前月份。如果您将 AWStats 作为 CGI 使用，可以点击"年度"链接查看全年报告。在此类报告中，时间段为全年，因此独立访客数是在一年内至少访问了您网站1个页面的主机数量。</p>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- 访问量 -->
+            <div class="glossary-term">
+                <a name="Visits"></a>
+                <div class="term-title">
+                    <span>🔍</span>
+                    <a href="#Visits" data-i18n="termVisits">访问量</a>
+                </div>
+                <div class="term-content">
+                    <p data-i18n="visitsDesc">所有访客的访问次数。可以理解为"会话"——一个唯一IP访问一个页面，然后在一小时内请求其他三个页面。所有这些"页面"都包含在一次访问中，因此您应该期望每次访问有多个页面，每个独立访客有多次访问（假设某些唯一IP的请求间隔超过一小时）。</p>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- 页面数 -->
+            <div class="glossary-term">
+                <a name="Pages"></a>
+                <div class="term-title">
+                    <span>🔍</span>
+                    <a href="#Pages" data-i18n="termPages">页面数</a>
+                </div>
+                <div class="term-content">
+                    <p data-i18n="pagesDesc">访客查看的"页面"数量。页面通常是 HTML、PHP 或 ASP 文件，而不是作为加载"页面"结果请求的图像或其他文件（如 js、css 等文件）。在 NotPageList 配置参数中列出的文件（如果使用 OnlyFiles 配置参数，则匹配其中的条目）不计为"页面"。</p>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- 文件数 -->
+            <div class="glossary-term">
+                <a name="Hits"></a>
+                <div class="term-title">
+                    <span>🔍</span>
+                    <a href="#Hits" data-i18n="termHits">文件数</a>
+                </div>
+                <div class="term-content">
+                    <p data-i18n="hitsDesc">从服务器请求的任何文件（包括作为"页面"的文件），但排除匹配 SkipFiles 配置参数的文件。</p>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- 带宽 -->
+            <div class="glossary-term">
+                <a name="Bandwidth"></a>
+                <div class="term-title">
+                    <span>🔍</span>
+                    <a href="#Bandwidth" data-i18n="termBandwidth">带宽</a>
+                </div>
+                <div class="term-content">
+                    <p data-i18n="bandwidthDesc">网页浏览下载的页面、图像和文件的总字节数。</p>
+                    <p data-i18n="bandwidthNote1">注意1：当然，此数字仅包括 Web 流量（或仅邮件、仅 FTP，取决于 LogType 的值）。</p>
+                    <p data-i18n="bandwidthNote2">注意2：此数字不包括 HTTP 或 HTTPS 协议内部使用的技术标头数据大小，也不包括更低级别协议（TCP、IP...）的数据。由于以上两个注意事项，此数字通常低于您的提供商报告的带宽（您的提供商在大多数情况下计算更低级别的带宽，包括所有 IP 和 UDP 流量）。</p>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- 入口页面 -->
+            <div class="glossary-term">
+                <a name="EntryPage"></a>
+                <div class="term-title">
+                    <span>🔍</span>
+                    <a href="#EntryPage" data-i18n="termEntryPage">入口页面</a>
+                </div>
+                <div class="term-content">
+                    <p data-i18n="entryPageDesc">访客在其访问期间查看的第一个页面。注意：当一次访问在月底开始并在下月初结束时，您可能在月度报告中看到入口页面而没有出口页面。这就是入口页面可能不同于出口页面的原因。</p>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- 出口页面 -->
+            <div class="glossary-term">
+                <a name="ExitPage"></a>
+                <div class="term-title">
+                    <span>🔍</span>
+                    <a href="#ExitPage" data-i18n="termExitPage">出口页面</a>
+                </div>
+                <div class="term-content">
+                    <p data-i18n="exitPageDesc">访客在其访问期间查看的最后一个页面。注意：当一次访问在月底开始并在下月初结束时，您可能在月度报告中看到入口页面而没有出口页面。这就是入口页面可能不同于出口页面的原因。</p>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- 会话时长 -->
+            <div class="glossary-term">
+                <a name="SessionDuration"></a>
+                <div class="term-title">
+                    <span>🔍</span>
+                    <a href="#SessionDuration" data-i18n="termSessionDuration">会话时长</a>
+                </div>
+                <div class="term-content">
+                    <p data-i18n="sessionDurationDesc">访客每次访问在您网站上花费的时间。某些访问时长为"未知"，因为它们并不总能被计算。主要原因如下：</p>
+                    <ul>
+                        <li data-i18n="sessionDurationReason1">访问在"更新"发生时尚未完成。</li>
+                        <li data-i18n="sessionDurationReason2">访问在每月最后一天的最后一小时（23:00之后）开始（技术原因阻止 AWStats 计算此类会话的时长）。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- 抓取器 -->
+            <div class="glossary-term">
+                <a name="Grabber"></a>
+                <div class="term-title">
+                    <span>🔍</span>
+                    <a href="#Grabber" data-i18n="termGrabber">抓取器</a>
+                </div>
+                <div class="term-content">
+                    <p data-i18n="grabberDesc">主要用于在本地复制整个网站的浏览器。例如包括"teleport"、"webcapture"、"webcopier"...</p>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- 直接访问/书签 -->
+            <div class="glossary-term">
+                <a name="Direct"></a>
+                <div class="term-title">
+                    <span>🔍</span>
+                    <a href="#Direct" data-i18n="termDirect">直接访问/书签</a>
+                </div>
+                <div class="term-content">
+                    <p data-i18n="directDesc">此数字表示当访问来自直接访问时，您网站的访问次数或访问比例。这意味着您网站的第一页面通过以下方式被调用：</p>
+                    <ul>
+                        <li data-i18n="direct1">在 Web 浏览器地址栏中输入您的 URL</li>
+                        <li data-i18n="direct2">点击访客在其收藏夹中存储的您的 URL</li>
+                        <li data-i18n="direct3">点击在任何地方找到的您的 URL，但不是其他互联网网页（文档中的链接、应用程序等）</li>
+                        <li data-i18n="direct4">邮件中点击您网站的 URL 通常也计在这里。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- 添加到收藏夹 -->
+            <div class="glossary-term">
+                <a name="AddToFavourites"></a>
+                <div class="term-title">
+                    <span>🔍</span>
+                    <a href="#AddToFavourites" data-i18n="termAddToFavourites">添加到收藏夹</a>
+                </div>
+                <div class="term-content">
+                    <p data-i18n="addToFavouritesDesc">此值在"杂项图表"中可用，报告一个估计指标，可用于了解访客将您的网站添加到其收藏夹书签的次数。技术规则如下：</p>
+                    <p><code data-i18n="addToFavouritesFormula">添加到收藏夹次数 = round((x + y) / r)</code></p>
+                    <p>其中：</p>
+                    <ul>
+                        <li data-i18n="addToFavouritesX">x = IE 浏览器对"/anydir/favicon.ico"的请求次数，引用字段未定义，且无 404 错误代码</li>
+                        <li data-i18n="addToFavouritesY">y = IE 浏览器对"/favicon.ico"的请求次数，引用字段未定义，无论是否有 404 错误代码</li>
+                        <li data-i18n="addToFavouritesR">r = IE 浏览器请求次数与所有浏览器请求次数的比率 (r ≤ 1)</li>
+                    </ul>
+                    <p data-i18n="addToFavouritesNote">如公式所示，仅使用 IE 计数可靠的"添加"，其他浏览器的"添加到收藏夹"通过其他浏览器使用率与 IE 使用率的比率估算。原因是只有 IE 在用户将页面添加到收藏夹时几乎唯一地请求 favicon.ico。其他浏览器也可能因其他原因请求此文件，因此我们不能将一个"请求"计为一次"添加"，因为它可能是其他原因的请求。AWStats 还区分有错误和无错误的请求，以避免在 favicon.ico 文件在路径的更深目录中未找到时递归计数。注意，此数字只是一个指标，在大多数情况下高于实际值。原因是即使 IE 浏览器有时也会在没有用户"添加到收藏夹"操作的情况下请求 favicon。</p>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- HTTP 状态码 -->
+            <div class="glossary-term">
+                <a name="HTTP"></a>
+                <div class="term-title">
+                    <span>🔍</span>
+                    <a href="#HTTP" data-i18n="termHTTP">HTTP 状态码</a>
+                </div>
+                <div class="term-content">
+                    <p data-i18n="httpDesc">HTTP 状态码由 Web 服务器返回，用于指示请求的状态。代码 <b>200</b> 和 <b>304</b> 用于告诉浏览器可以查看页面。<b>206</b> 代码表示内容部分下载，并在下载部分报告。所有其他代码都会产生访客"看不见"的请求和流量。例如，返回代码 301 或 302 将告诉浏览器请求另一个页面。浏览器将进行另一次请求，最终应该收到带有返回代码 <b>200</b> 和 <b>304</b> 的页面。所有"看不见"流量的代码都由 AWStats 在 HTTP 状态报告图表中隔离，由配置文件中的 <a href="awstats_config.html#Show">ShowHTTPErrorsStats</a> 指令启用。您也可以通过 <a href="awstats_config.html#ValidHTTPcodes">ValidHTTPcodes</a> 指令更改"非错误"请求的值（默认设置为 <b>200</b> 和 <b>304</b>）。</p>
+                    <p data-i18n="httpClasses">HTTP/1.1 规范定义的状态码分为5类：</p>
+                </div>
+            </div>
+
+            <!-- HTTP 状态码详细表格 -->
+            <div class="http-section">
+                <!-- 1xx 信息性 -->
+                <div class="http-category http-1xx">
+                    <div class="http-category-title" data-i18n="http1xx">1xx - 信息性</div>
+                    <p data-i18n="http1xxDesc">信息性状态码是 Web 服务器的临时响应...它们让客户端了解服务器正在做什么。信息性代码不表示错误条件。</p>
+                    <div class="http-grid">
+                        <div class="http-item"><div class="http-code">100</div><div class="http-desc" data-i18n="http100">继续</div></div>
+                        <div class="http-item"><div class="http-code">101</div><div class="http-desc" data-i18n="http101">切换协议</div></div>
+                    </div>
+                </div>
+
+                <!-- 2xx 成功 -->
+                <div class="http-category http-2xx">
+                    <div class="http-category-title" data-i18n="http2xx">2xx - 成功</div>
+                    <p data-i18n="http2xxDesc">此类状态码表示客户端的请求已被接收、理解并成功处理。</p>
+                    <div class="http-grid">
+                        <div class="http-item"><div class="http-code">200</div><div class="http-desc" data-i18n="http200">成功</div></div>
+                        <div class="http-item"><div class="http-code">201</div><div class="http-desc" data-i18n="http201">已创建</div></div>
+                        <div class="http-item"><div class="http-code">202</div><div class="http-desc" data-i18n="http202">已接受</div></div>
+                        <div class="http-item"><div class="http-code">203</div><div class="http-desc" data-i18n="http203">非权威信息</div></div>
+                        <div class="http-item"><div class="http-code">204</div><div class="http-desc" data-i18n="http204">无内容</div></div>
+                        <div class="http-item"><div class="http-code">205</div><div class="http-desc" data-i18n="http205">重置内容</div></div>
+                        <div class="http-item"><div class="http-code">206</div><div class="http-desc" data-i18n="http206">部分内容</div></div>
+                    </div>
+                </div>
+
+                <!-- 3xx 重定向 -->
+                <div class="http-category http-3xx">
+                    <div class="http-category-title" data-i18n="http3xx">3xx - 重定向</div>
+                    <p data-i18n="http3xxDesc">此代码告诉客户端，浏览器应重定向到另一个 URL 以完成请求。这不是错误条件。</p>
+                    <div class="http-grid">
+                        <div class="http-item"><div class="http-code">300</div><div class="http-desc" data-i18n="http300">多种选择</div></div>
+                        <div class="http-item"><div class="http-code">301</div><div class="http-desc" data-i18n="http301">永久移动</div></div>
+                        <div class="http-item"><div class="http-code">302</div><div class="http-desc" data-i18n="http302">临时移动</div></div>
+                        <div class="http-item"><div class="http-code">303</div><div class="http-desc" data-i18n="http303">查看其他</div></div>
+                        <div class="http-item"><div class="http-code">304</div><div class="http-desc" data-i18n="http304">未修改</div></div>
+                        <div class="http-item"><div class="http-code">305</div><div class="http-desc" data-i18n="http305">使用代理</div></div>
+                    </div>
+                </div>
+
+                <!-- 4xx 客户端错误 -->
+                <div class="http-category http-4xx">
+                    <div class="http-category-title" data-i18n="http4xx">4xx - 客户端错误</div>
+                    <p data-i18n="http4xxDesc">此状态码表示客户端向服务器发送了错误数据或格式错误的请求。当客户端尝试使用错误的用户名和密码访问受保护区域时，Web 服务器通常会发出客户端错误。</p>
+                    <div class="http-grid">
+                        <div class="http-item"><div class="http-code">400</div><div class="http-desc" data-i18n="http400">错误请求</div></div>
+                        <div class="http-item"><div class="http-code">401</div><div class="http-desc" data-i18n="http401">未授权</div></div>
+                        <div class="http-item"><div class="http-code">402</div><div class="http-desc" data-i18n="http402">需要付款</div></div>
+                        <div class="http-item"><div class="http-code">403</div><div class="http-desc" data-i18n="http403">禁止访问</div></div>
+                        <div class="http-item"><div class="http-code">404</div><div class="http-desc" data-i18n="http404">未找到</div></div>
+                        <div class="http-item"><div class="http-code">405</div><div class="http-desc" data-i18n="http405">方法不允许</div></div>
+                        <div class="http-item"><div class="http-code">406</div><div class="http-desc" data-i18n="http406">不可接受</div></div>
+                        <div class="http-item"><div class="http-code">407</div><div class="http-desc" data-i18n="http407">需要代理认证</div></div>
+                        <div class="http-item"><div class="http-code">408</div><div class="http-desc" data-i18n="http408">请求超时</div></div>
+                        <div class="http-item"><div class="http-code">409</div><div class="http-desc" data-i18n="http409">冲突</div></div>
+                        <div class="http-item"><div class="http-code">410</div><div class="http-desc" data-i18n="http410">已不存在</div></div>
+                        <div class="http-item"><div class="http-code">411</div><div class="http-desc" data-i18n="http411">需要长度</div></div>
+                        <div class="http-item"><div class="http-code">412</div><div class="http-desc" data-i18n="http412">前置条件失败</div></div>
+                        <div class="http-item"><div class="http-code">413</div><div class="http-desc" data-i18n="http413">请求实体过长</div></div>
+                        <div class="http-item"><div class="http-code">414</div><div class="http-desc" data-i18n="http414">请求URI过长</div></div>
+                        <div class="http-item"><div class="http-code">415</div><div class="http-desc" data-i18n="http415">不支持的媒体类型</div></div>
+                    </div>
+                </div>
+
+                <!-- 5xx 服务器错误 -->
+                <div class="http-category http-5xx">
+                    <div class="http-category-title" data-i18n="http5xx">5xx - 服务器错误</div>
+                    <p data-i18n="http5xxDesc">此状态码表示由于 Web 服务器内部错误，客户端的请求无法成功处理。这些错误代码可能表示 Web 服务器存在严重问题。</p>
+                    <div class="http-grid">
+                        <div class="http-item"><div class="http-code">500</div><div class="http-desc" data-i18n="http500">内部服务器错误</div></div>
+                        <div class="http-item"><div class="http-code">501</div><div class="http-desc" data-i18n="http501">未实现</div></div>
+                        <div class="http-item"><div class="http-code">502</div><div class="http-desc" data-i18n="http502">错误网关</div></div>
+                        <div class="http-item"><div class="http-code">503</div><div class="http-desc" data-i18n="http503">服务不可用</div></div>
+                        <div class="http-item"><div class="http-code">504</div><div class="http-desc" data-i18n="http504">网关超时</div></div>
+                        <div class="http-item"><div class="http-code">505</div><div class="http-desc" data-i18n="http505">HTTP版本不支持</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- SMTP 状态码 -->
+            <div class="glossary-term">
+                <a name="SMTP"></a>
+                <div class="term-title">
+                    <span>🔍</span>
+                    <a href="#SMTP" data-i18n="termSMTP">SMTP 状态码</a>
+                </div>
+                <div class="term-content">
+                    <p data-i18n="smtpDesc">SMTP 状态码由邮件服务器返回，用于指示发送/接收邮件的状态。状态码取决于邮件服务器和用于分析日志文件的预处理器。所有表示失败的代码都由 AWStats 在 SMTP 状态报告图表中隔离，由 AWStats 配置文件中的 <a href="awstats_config.html#Show">ShowSMTPErrorsStats</a> 指令启用。您可以通过 <a href="awstats_config.html#ValidSMTPCodes">ValidSMTPCodes</a> 指令决定哪些代码是成功的邮件传输，不应出现在此图表中。</p>
+                    <p data-i18n="smtpClasses">以下是大多数邮件服务器报告的值（当邮件日志文件用 maillogconvert.pl 预处理时也应是这些值）。SMTP 错误分为3类：</p>
+                </div>
+            </div>
+
+            <!-- SMTP 状态码详细表格 -->
+            <div class="smtp-section">
+                <!-- 2xx/3xx 成功 -->
+                <div class="smtp-category smtp-23xx">
+                    <div class="smtp-category-title" data-i18n="smtp23xx">2xx/3xx - 成功</div>
+                    <p data-i18n="smtp23xxDesc">这些是 SMTP 协议的成功响应。</p>
+                    <div class="smtp-grid">
+                        <div class="smtp-item"><div class="smtp-code">200</div><div class="smtp-desc" data-i18n="smtp200">非标准成功响应</div></div>
+                        <div class="smtp-item"><div class="smtp-code">211</div><div class="smtp-desc" data-i18n="smtp211">系统状态或系统帮助回复</div></div>
+                        <div class="smtp-item"><div class="smtp-code">214</div><div class="smtp-desc" data-i18n="smtp214">帮助消息</div></div>
+                        <div class="smtp-item"><div class="smtp-code">220</div><div class="smtp-desc" data-i18n="smtp220">服务就绪</div></div>
+                        <div class="smtp-item"><div class="smtp-code">221</div><div class="smtp-desc" data-i18n="smtp221">服务关闭传输通道</div></div>
+                        <div class="smtp-item"><div class="smtp-code">250</div><div class="smtp-desc" data-i18n="smtp250">请求的邮件操作已完成</div></div>
+                        <div class="smtp-item"><div class="smtp-code">251</div><div class="smtp-desc" data-i18n="smtp251">用户非本地，将转发</div></div>
+                        <div class="smtp-item"><div class="smtp-code">252</div><div class="smtp-desc" data-i18n="smtp252">无法验证收件人</div></div>
+                        <div class="smtp-item"><div class="smtp-code">354</div><div class="smtp-desc" data-i18n="smtp354">开始邮件输入</div></div>
+                    </div>
+                </div>
+
+                <!-- 4xx 临时错误 -->
+                <div class="smtp-category smtp-4xx">
+                    <div class="smtp-category-title" data-i18n="smtp4xx">4xx - 临时错误</div>
+                    <p data-i18n="smtp4xxDesc">这些是临时错误消息。它们用于告知客户端发送方发生错误，但可以尝试再次解决，因此在大多数情况下，收到此类代码的客户端会将邮件保留在队列中并稍后重试。</p>
+                    <div class="smtp-grid">
+                        <div class="smtp-item"><div class="smtp-code">421</div><div class="smtp-desc" data-i18n="smtp421">服务不可用，关闭传输通道</div></div>
+                        <div class="smtp-item"><div class="smtp-code">450</div><div class="smtp-desc" data-i18n="smtp450">邮箱忙或访问被拒绝</div></div>
+                        <div class="smtp-item"><div class="smtp-code">451</div><div class="smtp-desc" data-i18n="smtp451">处理中出错，操作中止</div></div>
+                        <div class="smtp-item"><div class="smtp-code">452</div><div class="smtp-desc" data-i18n="smtp452">系统存储不足</div></div>
+                        <div class="smtp-item"><div class="smtp-code">453</div><div class="smtp-desc" data-i18n="smtp453">消息过多</div></div>
+                    </div>
+                </div>
+
+                <!-- 5xx 永久错误 -->
+                <div class="smtp-category smtp-5xx">
+                    <div class="smtp-category-title" data-i18n="smtp5xx">5xx - 永久错误</div>
+                    <p data-i18n="smtp5xxDesc">这些是永久错误代码。邮件传输完全失败，不会再次尝试。</p>
+                    <div class="smtp-grid">
+                        <div class="smtp-item"><div class="smtp-code">500</div><div class="smtp-desc" data-i18n="smtp500">语法错误，命令无法识别</div></div>
+                        <div class="smtp-item"><div class="smtp-code">501</div><div class="smtp-desc" data-i18n="smtp501">参数或参数语法错误</div></div>
+                        <div class="smtp-item"><div class="smtp-code">502</div><div class="smtp-desc" data-i18n="smtp502">命令未实现</div></div>
+                        <div class="smtp-item"><div class="smtp-code">503</div><div class="smtp-desc" data-i18n="smtp503">命令序列错误</div></div>
+                        <div class="smtp-item"><div class="smtp-code">504</div><div class="smtp-desc" data-i18n="smtp504">命令参数未实现</div></div>
+                        <div class="smtp-item"><div class="smtp-code">521</div><div class="smtp-desc" data-i18n="smtp521">不接受邮件或关闭传输通道</div></div>
+                        <div class="smtp-item"><div class="smtp-code">530</div><div class="smtp-desc" data-i18n="smtp530">访问被拒绝</div></div>
+                        <div class="smtp-item"><div class="smtp-code">550</div><div class="smtp-desc" data-i18n="smtp550">请求的邮件操作未执行</div></div>
+                        <div class="smtp-item"><div class="smtp-code">551</div><div class="smtp-desc" data-i18n="smtp551">用户非本地，请尝试转发</div></div>
+                        <div class="smtp-item"><div class="smtp-code">552</div><div class="smtp-desc" data-i18n="smtp552">超出存储分配，操作中止</div></div>
+                        <div class="smtp-item"><div class="smtp-code">553</div><div class="smtp-desc" data-i18n="smtp553">邮箱名称不允许</div></div>
+                        <div class="smtp-item"><div class="smtp-code">554</div><div class="smtp-desc" data-i18n="smtp554">请求的邮件操作拒绝</div></div>
+                        <div class="smtp-item"><div class="smtp-code">557</div><div class="smtp-desc" data-i18n="smtp557">重复消息过多</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- 署名 -->
+            <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-top: 20px;">
+                <span style="color: var(--text-secondary);" data-i18n="writtenBy">文章作者：<a href="https://www.destailleur.fr" rel="author" style="color: var(--accent);">Laurent Destailleur</a>。</span>
+                <span class="license-badge" style="background: var(--accent); color: white; padding: 4px 12px; border-radius: 30px;" data-i18n="version">版本 8.1</span>
+            </div>
+        </div>
+    </main>
+
+    <!-- 返回顶部按钮 -->
+    <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="返回顶部">
+        ↑
+    </button>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-copyright">
+                © 1997 - <span id="currentYear"></span> Laurent Destailleur & AWStats <span data-i18n="copyright">团队</span>
+            </div>
+            <div class="footer-license">
+                <a href="awstats_license.html" data-i18n="licenseLink">GNU General Public License</a> · 
+                <a href="https://github.com/eldy/AWStats" rel="publisher" target="_blank" style="display: inline-flex; align-items: center;"><a data-i18n="authorLink"></a> 
+                </a>
+                    <img src="images/favicon.pub/github.svg" style="width: 24px; height: 24px;">
+                </div>
+            <div class="attribution" data-i18n="darkAttr">
+                🌓 自适应暗黑 · 现代化重构
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+            // 完整翻译资源
+            const translations = {
+                zh: {
+                    navHome: "主页",
+                    navWhat: "什么是AWStats",
+                    navSetup: "安装配置",
+                    navWebmin: "Webmin模块",
+                    navUpgrade: "升级指南",
+                    navTools: "其他工具",
+                    navSecurity: "安全建议",
+                    navLicense: "许可证",
+                    navGlossary: "术语表",
+                    navFAQ: "FAQ",
+                    home: "主页",
+                    currentPage: "术语表",
+                    
+                    siteTitle: "AWStats 8.1",
+                    headerSlogan: "⚡ 先进的日志分析器 · 官方文档",
+                    themeAuto: "自动",
+                    mainTitle: "📚 术语表",
+                    
+                    termUniqueVisitor: "独立访客",
+                    uniqueVisitorDesc: "独立访客是指在当前报告显示的时间段内，至少访问了您网站1个页面的个人或计算机（主机）。如果该用户在此时间段内多次访问，仅计数一次。访客通过IP地址跟踪，因此如果多个用户从同一IP访问您的网站（例如家庭或办公室网络），他们将被计为一个独立访客。",
+                    uniqueVisitorNote: "AWStats 报告默认显示的时间段是当前月份。如果您将 AWStats 作为 CGI 使用，可以点击\"年度\"链接查看全年报告。在此类报告中，时间段为全年，因此独立访客数是在一年内至少访问了您网站1个页面的主机数量。",
+                    
+                    termVisits: "访问量",
+                    visitsDesc: "所有访客的访问次数。可以理解为\"会话\"——一个唯一IP访问一个页面，然后在一小时内请求其他三个页面。所有这些\"页面\"都包含在一次访问中，因此您应该期望每次访问有多个页面，每个独立访客有多次访问（假设某些唯一IP的请求间隔超过一小时）。",
+                    
+                    termPages: "页面数",
+                    pagesDesc: "访客查看的\"页面\"数量。页面通常是 HTML、PHP 或 ASP 文件，而不是作为加载\"页面\"结果请求的图像或其他文件（如 js、css 等文件）。在 NotPageList 配置参数中列出的文件（如果使用 OnlyFiles 配置参数，则匹配其中的条目）不计为\"页面\"。",
+                    
+                    termHits: "文件数",
+                    hitsDesc: "从服务器请求的任何文件（包括作为\"页面\"的文件），但排除匹配 SkipFiles 配置参数的文件。",
+                    
+                    termBandwidth: "带宽",
+                    bandwidthDesc: "网页浏览下载的页面、图像和文件的总字节数。",
+                    bandwidthNote1: "注意1：当然，此数字仅包括 Web 流量（或仅邮件、仅 FTP，取决于 LogType 的值）。",
+                    bandwidthNote2: "注意2：此数字不包括 HTTP 或 HTTPS 协议内部使用的技术标头数据大小，也不包括更低级别协议（TCP、IP...）的数据。由于以上两个注意事项，此数字通常低于您的提供商报告的带宽（您的提供商在大多数情况下计算更低级别的带宽，包括所有 IP 和 UDP 流量）。",
+                    
+                    termEntryPage: "入口页面",
+                    entryPageDesc: "访客在其访问期间查看的第一个页面。注意：当一次访问在月底开始并在下月初结束时，您可能在月度报告中看到入口页面而没有出口页面。这就是入口页面可能不同于出口页面的原因。",
+                    
+                    termExitPage: "出口页面",
+                    exitPageDesc: "访客在其访问期间查看的最后一个页面。注意：当一次访问在月底开始并在下月初结束时，您可能在月度报告中看到入口页面而没有出口页面。这就是入口页面可能不同于出口页面的原因。",
+                    
+                    termSessionDuration: "会话时长",
+                    sessionDurationDesc: "访客每次访问在您网站上花费的时间。某些访问时长为\"未知\"，因为它们并不总能被计算。主要原因如下：",
+                    sessionDurationReason1: "访问在\"更新\"发生时尚未完成。",
+                    sessionDurationReason2: "访问在每月最后一天的最后一小时（23:00之后）开始（技术原因阻止 AWStats 计算此类会话的时长）。",
+                    
+                    termGrabber: "抓取器",
+                    grabberDesc: "主要用于在本地复制整个网站的浏览器。例如包括\"teleport\"、\"webcapture\"、\"webcopier\"...",
+                    
+                    termDirect: "直接访问/书签",
+                    directDesc: "此数字表示当访问来自直接访问时，您网站的访问次数或访问比例。这意味着您网站的第一页面通过以下方式被调用：",
+                    direct1: "在 Web 浏览器地址栏中输入您的 URL",
+                    direct2: "点击访客在其收藏夹中存储的您的 URL",
+                    direct3: "点击在任何地方找到的您的 URL，但不是其他互联网网页（文档中的链接、应用程序等）",
+                    direct4: "邮件中点击您网站的 URL 通常也计在这里。",
+                    
+                    termAddToFavourites: "添加到收藏夹",
+                    addToFavouritesDesc: "此值在\"杂项图表\"中可用，报告一个估计指标，可用于了解访客将您的网站添加到其收藏夹书签的次数。技术规则如下：",
+                    addToFavouritesFormula: "添加到收藏夹次数 = round((x + y) / r)",
+                    addToFavouritesX: "x = IE 浏览器对\"/anydir/favicon.ico\"的请求次数，引用字段未定义，且无 404 错误代码",
+                    addToFavouritesY: "y = IE 浏览器对\"/favicon.ico\"的请求次数，引用字段未定义，无论是否有 404 错误代码",
+                    addToFavouritesR: "r = IE 浏览器请求次数与所有浏览器请求次数的比率 (r ≤ 1)",
+                    addToFavouritesNote: "如公式所示，仅使用 IE 计数可靠的\"添加\"，其他浏览器的\"添加到收藏夹\"通过其他浏览器使用率与 IE 使用率的比率估算。原因是只有 IE 在用户将页面添加到收藏夹时几乎唯一地请求 favicon.ico。其他浏览器也可能因其他原因请求此文件，因此我们不能将一个\"请求\"计为一次\"添加\"，因为它可能是其他原因的请求。AWStats 还区分有错误和无错误的请求，以避免在 favicon.ico 文件在路径的更深目录中未找到时递归计数。注意，此数字只是一个指标，在大多数情况下高于实际值。原因是即使 IE 浏览器有时也会在没有用户\"添加到收藏夹\"操作的情况下请求 favicon。",
+                    
+                    termHTTP: "HTTP 状态码",
+                    httpDesc: "HTTP 状态码由 Web 服务器返回，用于指示请求的状态。代码 <b>200</b> 和 <b>304</b> 用于告诉浏览器可以查看页面。<b>206</b> 代码表示内容部分下载，并在下载部分报告。所有其他代码都会产生访客\"看不见\"的请求和流量。例如，返回代码 301 或 302 将告诉浏览器请求另一个页面。浏览器将进行另一次请求，最终应该收到带有返回代码 <b>200</b> 和 <b>304</b> 的页面。所有\"看不见\"流量的代码都由 AWStats 在 HTTP 状态报告图表中隔离，由配置文件中的 <a href=\"awstats_config.html#Show\">ShowHTTPErrorsStats</a> 指令启用。您也可以通过 <a href=\"awstats_config.html#ValidHTTPcodes\">ValidHTTPcodes</a> 指令更改\"非错误\"请求的值（默认设置为 <b>200</b> 和 <b>304</b>）。",
+                    httpClasses: "HTTP/1.1 规范定义的状态码分为5类：",
+                    
+                    http1xx: "1xx - 信息性",
+                    http1xxDesc: "信息性状态码是 Web 服务器的临时响应...它们让客户端了解服务器正在做什么。信息性代码不表示错误条件。",
+                    http100: "继续",
+                    http101: "切换协议",
+                    
+                    http2xx: "2xx - 成功",
+                    http2xxDesc: "此类状态码表示客户端的请求已被接收、理解并成功处理。",
+                    http200: "成功",
+                    http201: "已创建",
+                    http202: "已接受",
+                    http203: "非权威信息",
+                    http204: "无内容",
+                    http205: "重置内容",
+                    http206: "部分内容",
+                    
+                    http3xx: "3xx - 重定向",
+                    http3xxDesc: "此代码告诉客户端，浏览器应重定向到另一个 URL 以完成请求。这不是错误条件。",
+                    http300: "多种选择",
+                    http301: "永久移动",
+                    http302: "临时移动",
+                    http303: "查看其他",
+                    http304: "未修改",
+                    http305: "使用代理",
+                    
+                    http4xx: "4xx - 客户端错误",
+                    http4xxDesc: "此状态码表示客户端向服务器发送了错误数据或格式错误的请求。当客户端尝试使用错误的用户名和密码访问受保护区域时，Web 服务器通常会发出客户端错误。",
+                    http400: "错误请求",
+                    http401: "未授权",
+                    http402: "需要付款",
+                    http403: "禁止访问",
+                    http404: "未找到",
+                    http405: "方法不允许",
+                    http406: "不可接受",
+                    http407: "需要代理认证",
+                    http408: "请求超时",
+                    http409: "冲突",
+                    http410: "已不存在",
+                    http411: "需要长度",
+                    http412: "前置条件失败",
+                    http413: "请求实体过长",
+                    http414: "请求URI过长",
+                    http415: "不支持的媒体类型",
+                    
+                    http5xx: "5xx - 服务器错误",
+                    http5xxDesc: "此状态码表示由于 Web 服务器内部错误，客户端的请求无法成功处理。这些错误代码可能表示 Web 服务器存在严重问题。",
+                    http500: "内部服务器错误",
+                    http501: "未实现",
+                    http502: "错误网关",
+                    http503: "服务不可用",
+                    http504: "网关超时",
+                    http505: "HTTP版本不支持",
+                    
+                    termSMTP: "SMTP 状态码",
+                    smtpDesc: "SMTP 状态码由邮件服务器返回，用于指示发送/接收邮件的状态。状态码取决于邮件服务器和用于分析日志文件的预处理器。所有表示失败的代码都由 AWStats 在 SMTP 状态报告图表中隔离，由 AWStats 配置文件中的 <a href=\"awstats_config.html#Show\">ShowSMTPErrorsStats</a> 指令启用。您可以通过 <a href=\"awstats_config.html#ValidSMTPCodes\">ValidSMTPCodes</a> 指令决定哪些代码是成功的邮件传输，不应出现在此图表中。",
+                    smtpClasses: "以下是大多数邮件服务器报告的值（当邮件日志文件用 maillogconvert.pl 预处理时也应是这些值）。SMTP 错误分为3类：",
+                    
+                    smtp23xx: "2xx/3xx - 成功",
+                    smtp23xxDesc: "这些是 SMTP 协议的成功响应。",
+                    smtp200: "非标准成功响应",
+                    smtp211: "系统状态或系统帮助回复",
+                    smtp214: "帮助消息",
+                    smtp220: "服务就绪",
+                    smtp221: "服务关闭传输通道",
+                    smtp250: "请求的邮件操作已完成",
+                    smtp251: "用户非本地，将转发",
+                    smtp252: "无法验证收件人",
+                    smtp354: "开始邮件输入",
+                    
+                    smtp4xx: "4xx - 临时错误",
+                    smtp4xxDesc: "这些是临时错误消息。它们用于告知客户端发送方发生错误，但可以尝试再次解决，因此在大多数情况下，收到此类代码的客户端会将邮件保留在队列中并稍后重试。",
+                    smtp421: "服务不可用，关闭传输通道",
+                    smtp450: "邮箱忙或访问被拒绝",
+                    smtp451: "处理中出错，操作中止",
+                    smtp452: "系统存储不足",
+                    smtp453: "消息过多",
+                    
+                    smtp5xx: "5xx - 永久错误",
+                    smtp5xxDesc: "这些是永久错误代码。邮件传输完全失败，不会再次尝试。",
+                    smtp500: "语法错误，命令无法识别",
+                    smtp501: "参数或参数语法错误",
+                    smtp502: "命令未实现",
+                    smtp503: "命令序列错误",
+                    smtp504: "命令参数未实现",
+                    smtp521: "不接受邮件或关闭传输通道",
+                    smtp530: "访问被拒绝",
+                    smtp550: "请求的邮件操作未执行",
+                    smtp551: "用户非本地，请尝试转发",
+                    smtp552: "超出存储分配，操作中止",
+                    smtp553: "邮箱名称不允许",
+                    smtp554: "请求的邮件操作拒绝",
+                    smtp557: "重复消息过多",
+                    
+                    writtenBy: "文章作者：<a href=\"https://www.destailleur.fr\" rel=\"author\" style=\"color: var(--accent);\">Laurent Destailleur</a>。",
+                    version: "版本 8.1",
+                    copyright: "© 2000 - {year} Laurent Destailleur & AWStats 团队",
+                    licenseLink: "GNU通用公共许可证",
+                    authorLink: "原作者",
+                    darkAttr: "🌓 自适应暗黑 · 中文/English",
+                },
+                en: {
+                    navHome: "Home",
+                    navWhat: "What is AWStats",
+                    navSetup: "Setup",
+                    navWebmin: "Webmin Module",
+                    navUpgrade: "Upgrade Guide",
+                    navTools: "Other Tools",
+                    navSecurity: "Security Tips",
+                    navLicense: "License",
+                    navGlossary: "Glossary",
+                    navFAQ: "FAQ",
+                    home: "Home",
+                    currentPage: "Glossary",
+                    
+                    siteTitle: "AWStats 8.1",
+                    headerSlogan: "⚡ Advanced Log Analyzer · Official Docs",
+                    themeAuto: "Auto",
+                    mainTitle: "📚 Glossary",
+                    
+                    termUniqueVisitor: "Unique Visitor",
+                    uniqueVisitorDesc: "A unique visitor is a person or computer (host) that has made at least 1 hit on 1 page of your web site during the current period shown by the report. If this user makes several visits during this period, it is counted only once. Visitors are tracked by IP address, so if multiple users are accessing your site from the same IP (such as a home or office network), they will be counted as a single unique visitor.",
+                    uniqueVisitorNote: "The period shown by AWStats reports is by default the current month. However if you use AWStats as a CGI you can click on the \"year\" link to have a report for all the year. In such a report, period is a full year, so Unique Visitors are number of hosts that have made at least 1 hit on 1 page of your web site during the year.",
+                    
+                    termVisits: "Visits",
+                    visitsDesc: "Number of visits made by all visitors. Think \"session\" here, say a unique IP accesses a page, and then requests three other pages within an hour. All of the \"pages\" are included in the visit, therefore you should expect multiple pages per visit and multiple visits per unique visitor (assuming that some of the unique IPs are logged with more than an hour between requests)",
+                    
+                    termPages: "Pages",
+                    pagesDesc: "The number of \"pages\" viewed by visitors. Pages are usually HTML, PHP or ASP files, not images or other files requested as a result of loading a \"Page\" (like js,css... files). Files listed in the NotPageList config parameter (and match an entry of OnlyFiles config parameter if used) are not counted as \"Pages\".",
+                    
+                    termHits: "Hits",
+                    hitsDesc: "Any files requested from the server (including files that are \"Pages\") except those that match the SkipFiles config parameter.",
+                    
+                    termBandwidth: "Bandwidth",
+                    bandwidthDesc: "Total number of bytes for pages, images and files downloaded by web browsing.",
+                    bandwidthNote1: "Note 1: Of course, this number includes only traffic for web only (or mail only, or ftp only depending on value of LogType).",
+                    bandwidthNote2: "Note 2: This number does not include technical header data size used inside the HTTP or HTTPS protocol or by protocols at a lower level (TCP, IP...). Because of two previous notes, this number is often lower than bandwith reported by your provider (your provider counts in most cases bandwitdh at a lower level and includes all IP and UDP traffic).",
+                    
+                    termEntryPage: "Entry Page",
+                    entryPageDesc: "First page viewed by a visitor during its visit. Note: When a visit started at end of month to end at beginning of next month, you might have an Entry page for the month report and no Exit pages. That's why Entry pages can be different than Exit pages.",
+                    
+                    termExitPage: "Exit Page",
+                    exitPageDesc: "Last page viewed by a visitor during its visit. Note: When a visit started at end of month to end at beginning of next month, you might have an Entry page for the month report and no Exit pages. That's why Entry pages can be different than Exit pages.",
+                    
+                    termSessionDuration: "Session Duration",
+                    sessionDurationDesc: "The time a visitor spent on your site for each visit. Some Visits durations are 'unknown' because they can't always be calculated. This is the major reason for this:",
+                    sessionDurationReason1: "Visit was not finished when 'update' occured.",
+                    sessionDurationReason2: "Visit started the last hour (after 23:00) of the last day of a month (A technical reason prevents AWStats from calculating duration of such sessions).",
+                    
+                    termGrabber: "Grabber",
+                    grabberDesc: "A browser that is used primarily for copying locally an entire site. These include for example \"teleport\", \"webcapture\", \"webcopier\"...",
+                    
+                    termDirect: "Direct access / Bookmark",
+                    directDesc: "This number represent the number of hits or ratio of hits when a visit to your site comes from a direct access. This means the first page of your web site was called:",
+                    direct1: "By typing your URL on the web browser address bar",
+                    direct2: "By clicking on your URL stored by a visitor inside its favorites",
+                    direct3: "By clicking on your URL found everywhere but not another internet web pages (a link in a document, an application, etc...)",
+                    direct4: "Clicking an URL of your site inside a mail is often counted here.",
+                    
+                    termAddToFavourites: "Add To Favourites",
+                    addToFavouritesDesc: "This value, available in the \"miscellanous chart\", reports an estimated indicator that can be used to have an idea of the number of times a visitor has added your web site into its favourite bookmarks. The technical rules for that is the following formula:",
+                    addToFavouritesFormula: "Number of Add to Favourites = round((x + y) / r)",
+                    addToFavouritesX: "x = Number of hits made by IE browsers for \"/anydir/favicon.ico\", with a referer field not defined, and with no 404 error code",
+                    addToFavouritesY: "y = Number of hits made by IE browsers for \"/favicon.ico\", with a referer field not defined, with or without 404 error code",
+                    addToFavouritesR: "r = Ratio of hits made by IE browsers compared to hits made by all browsers (r ≤ 1)",
+                    addToFavouritesNote: "As you can see in formula, only IE is used to count reliable \"add\", the \"Add to favourites\" for other browsers are estimated using ratio of other browsers usage compared to ratio of IE usage. The reason is that only IE do a hit on favicon.ico nearly ONLY when a user add the page to its favourites. The other browsers make often hits on this file also for other reasons so we can't count one \"hit\" as one \"add\" since it might be a hit for another reason. AWStats differentiate also hits with error and not to avoid counting multiple hits made recursively in upper path when favicon.ico file is not found in deeper directory of path. Note that this number is just an indicator that is in most case higher than true value. The reason is that even IE browser sometimes make hit on favicon without an \"Add to favourites\" action by a user.",
+                    
+                    termHTTP: "HTTP Status Codes",
+                    httpDesc: "HTTP status codes are returned by web servers to indicate the status of a request. Codes <b>200</b> and <b>304</b> are used to tell the browser the page can be viewed. <b>206</b> codes indicate partial downloading of content and is reported in the Downloads section. All other codes generates hits and traffic 'not seen' by the visitor. For example a return code 301 or 302 will tell the browser to ask another page. The browser will do another hit and should finaly receive the page with a return code <b>200</b> and <b>304</b>. All codes that are 'unseen' traffic are isolated by AWStats in the HTTP Status report chart, enabled by the directives <a href=\"awstats_config.html#Show\">ShowHTTPErrorsStats</a> in config file. You can also change value for 'not error' hits (set by default to <b>200</b> and <b>304</b> with the <a href=\"awstats_config.html#ValidHTTPcodes\">ValidHTTPcodes</a> directive.",
+                    httpClasses: "They are classified in 5 categories:",
+                    
+                    http1xx: "1xx - Informational",
+                    http1xxDesc: "Informational status codes are provisional responses from the web server... they give the client a heads-up on what the server is doing. Informational codes do not indicate an error condition.",
+                    http100: "100 Continue",
+                    http101: "101 Switching Protocols",
+                    
+                    http2xx: "2xx - Successful",
+                    http2xxDesc: "This class of status code indicates that the client's request was received, understood, and successful.",
+                    http200: "200 Successful",
+                    http201: "201 Created",
+                    http202: "202 Accepted",
+                    http203: "203 Non-Authorative Information",
+                    http204: "204 No Content",
+                    http205: "205 Reset Content",
+                    http206: "206 Partial Content",
+                    
+                    http3xx: "3xx - Redirection",
+                    http3xxDesc: "This code tells the client that the browser should be redirected to another URL in order to complete the request. This is not an error condition.",
+                    http300: "300 Multiple Choices",
+                    http301: "301 Moved Permanently",
+                    http302: "302 Moved Temporarily",
+                    http303: "303 See Other",
+                    http304: "304 Not Modified",
+                    http305: "305 Use Proxy",
+                    
+                    http4xx: "4xx - Client Error",
+                    http4xxDesc: "This status code indicates that the client has sent bad data or a malformed request to the server. Client errors are generally issued by the webserver when a client tries to gain access to a protected area using a bad username and password.",
+                    http400: "400 Bad Request",
+                    http401: "401 Unauthorized",
+                    http402: "402 Payment Required",
+                    http403: "403 Forbidden",
+                    http404: "404 Not Found",
+                    http405: "405 Method Not Allowed",
+                    http406: "406 Not Acceptable",
+                    http407: "407 Proxy Authentication Required",
+                    http408: "408 Request Timeout",
+                    http409: "409 Conflict",
+                    http410: "410 Gone",
+                    http411: "411 Length Required",
+                    http412: "412 Precondition Failed",
+                    http413: "413 Request Entity Too Long",
+                    http414: "414 Request-URI Too Long",
+                    http415: "415 Unsupported Media Type",
+                    
+                    http5xx: "5xx - Server Error",
+                    http5xxDesc: "This status code indicates that the client's request couldn't be succesfully processed due to some internal error in the web server. These error codes may indicate something is seriously wrong with the web server.",
+                    http500: "500 Internal Server Error",
+                    http501: "501 Not Implemented",
+                    http502: "502 Bad Gateway",
+                    http503: "503 Service Unavailable",
+                    http504: "504 Gateway Timeout",
+                    http505: "505 HTTP Version Not Supported",
+                    
+                    termSMTP: "SMTP Status Codes",
+                    smtpDesc: "SMTP status codes are returned by mail servers to indicate the status of a sending/receiving mail. The status code depends on mail server and preprocessor used to analyze log file. All codes that are failure codes are isolated by AWStats in the SMTP Status report chart, enabled by the directives <a href=\"awstats_config.html#Show\">ShowSMTPErrorsStats</a> in AWStats config file. You can decide which codes are successfull mail transfer that should not appear in this chart with the <a href=\"awstats_config.html#ValidSMTPCodes\">ValidSMTPCodes</a> directive.",
+                    smtpClasses: "Here are values reported for most mail servers (This should also be values when mail log file is preprocessing with maillogconvert.pl). SMTP Errors are classified in 3 categories:",
+                    
+                    smtp23xx: "2xx/3xx - Successful",
+                    smtp23xxDesc: "They are SMTP protocols successfull answers",
+                    smtp200: "200 Non standard success response",
+                    smtp211: "211 System status, or system help reply",
+                    smtp214: "214 Help message",
+                    smtp220: "220 Service ready",
+                    smtp221: "221 Service closing transmission channel",
+                    smtp250: "250 Requested mail action taken and completed",
+                    smtp251: "251 User not local: will forward",
+                    smtp252: "252 Recipient cannot be verified",
+                    smtp354: "354 Start mail input",
+                    
+                    smtp4xx: "4xx - Temporary Errors",
+                    smtp4xxDesc: "Those codes are temporary error message. They are used to tell client sender that an error occured but he can try to solve it but trying again, so in most cases, clients that receive such codes will keep the mail in their queue and will try again later.",
+                    smtp421: "421 Service not available, closing transmission channel",
+                    smtp450: "450 mailbox busy or access denied",
+                    smtp451: "451 error in processing",
+                    smtp452: "452 insufficient system storage",
+                    smtp453: "453 Too many messages",
+                    
+                    smtp5xx: "5xx - Permanent Errors",
+                    smtp5xxDesc: "This are permanent error codes. Mail transfer is definitly a failure. No other try will be done.",
+                    smtp500: "500 Syntax error, command unrecognized",
+                    smtp501: "501 Syntax error in parameters",
+                    smtp502: "502 Command not implemented",
+                    smtp503: "503 Bad sequence of commands",
+                    smtp504: "504 Command parameter not implemented",
+                    smtp521: "521 does not accept mail or closing transmission channel",
+                    smtp530: "530 Access denied",
+                    smtp550: "550 Requested mail action not taken",
+                    smtp551: "551 User not local: please try forward",
+                    smtp552: "552 exceeded storage allocation",
+                    smtp553: "553 mailbox name not allowed",
+                    smtp554: "554 Requested mail action rejected",
+                    smtp557: "557 Too many duplicate messages",
+                    
+                    writtenBy: "Article written by <a href=\"https://www.destailleur.fr\" rel=\"author\" style=\"color: var(--accent);\">Laurent Destailleur</a>.",
+                    version: "Version 8.1",
+                    copyright: "© 2000 - {year} Laurent Destailleur & AWStats Team",
+                    licenseLink: "GNU General Public License",
+                    authorLink: "Author",
+                    darkAttr: "🌓 Adaptive dark mode · 中文/English",
+                }
+            };
+
+            const i18nElements = document.querySelectorAll('[data-i18n]');
+            const langSelector = document.getElementById('langSelector');
+            let currentLang = localStorage.getItem('awstats_lang') || 'zh';
+            langSelector.value = currentLang;
+
+            function applyLanguage(lang) {
+                const t = translations[lang] || translations.zh;
+                i18nElements.forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (t[key] !== undefined) {
+                        if (key === 'copyright') {
+                            const year = new Date().getFullYear();
+                            el.innerHTML = t[key].replace('{year}', year);
+                        } else if (key === 'writtenBy' || key === 'licenseDesc' || key.includes('Desc') || key.includes('Note') || key.includes('Reason') || key.includes('Classes') || key.includes('http') || key.includes('smtp')) {
+                            el.innerHTML = t[key];
+                        } else {
+                            el.textContent = t[key];
+                        }
+                    }
+                });
+                localStorage.setItem('awstats_lang', lang);
+                
+                const themeState = localStorage.getItem('awstats_theme') || 'auto';
+                const themeText = document.querySelector('.theme-text');
+                if (themeText) {
+                    if (themeState === 'auto') themeText.textContent = t.themeAuto;
+                    else if (themeState === 'light') themeText.textContent = (lang === 'zh' ? '浅色' : 'Light');
+                    else themeText.textContent = (lang === 'zh' ? '深色' : 'Dark');
+                }
+            }
+
+            applyLanguage(currentLang);
+
+            langSelector.addEventListener('change', (e) => {
+                currentLang = e.target.value;
+                applyLanguage(currentLang);
+            });
+
+            // 暗黑模式切换
+            const root = document.documentElement;
+            const themeBtn = document.getElementById('themeToggleBtn');
+            let themeState = localStorage.getItem('awstats_theme') || 'auto';
+
+            function applyTheme(state) {
+                root.classList.remove('force-light', 'force-dark');
+                if (state === 'light') root.classList.add('force-light');
+                else if (state === 'dark') root.classList.add('force-dark');
+                const themeText = document.querySelector('.theme-text');
+                if (themeText) {
+                    const lang = currentLang;
+                    const t = translations[lang];
+                    if (state === 'auto') themeText.textContent = t.themeAuto;
+                    else if (state === 'light') themeText.textContent = (lang === 'zh' ? '浅色' : 'Light');
+                    else themeText.textContent = (lang === 'zh' ? '深色' : 'Dark');
+                }
+                localStorage.setItem('awstats_theme', state);
+            }
+            applyTheme(themeState);
+            themeBtn.addEventListener('click', () => {
+                if (themeState === 'auto') themeState = 'light';
+                else if (themeState === 'light') themeState = 'dark';
+                else themeState = 'auto';
+                applyTheme(themeState);
+            });
+        })();
+    </script>
+</body>
+</html>

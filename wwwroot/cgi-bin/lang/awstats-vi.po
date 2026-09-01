@@ -1,0 +1,3312 @@
+# AWStats Vietnamese (vi) translations
+# Copyright (C) 2026 AWStats
+# This file is distributed under the same license as the AWStats package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: AWStats 8.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-10 12:00+0000\n"
+"PO-Revision-Date: 2026-05-10 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Vietnamese\n"
+"Language: vi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#------------------------------------------------------------------------------
+# Tên tháng
+#------------------------------------------------------------------------------
+
+msgid "month_01"
+msgstr "Tháng 1"
+
+msgid "month_02"
+msgstr "Tháng 2"
+
+msgid "month_03"
+msgstr "Tháng 3"
+
+msgid "month_04"
+msgstr "Tháng 4"
+
+msgid "month_05"
+msgstr "Tháng 5"
+
+msgid "month_06"
+msgstr "Tháng 6"
+
+msgid "month_07"
+msgstr "Tháng 7"
+
+msgid "month_08"
+msgstr "Tháng 8"
+
+msgid "month_09"
+msgstr "Tháng 9"
+
+msgid "month_10"
+msgstr "Tháng 10"
+
+msgid "month_11"
+msgstr "Tháng 11"
+
+msgid "month_12"
+msgstr "Tháng 12"
+
+#------------------------------------------------------------------------------
+# Tên ngày trong tuần
+#------------------------------------------------------------------------------
+
+msgid "DayOfWeek_0"
+msgstr "Chủ nhật"
+
+msgid "DayOfWeek_1"
+msgstr "Thứ hai"
+
+msgid "DayOfWeek_2"
+msgstr "Thứ ba"
+
+msgid "DayOfWeek_3"
+msgstr "Thứ tư"
+
+msgid "DayOfWeek_4"
+msgstr "Thứ năm"
+
+msgid "DayOfWeek_5"
+msgstr "Thứ sáu"
+
+msgid "DayOfWeek_6"
+msgstr "Thứ bảy"
+
+#------------------------------------------------------------------------------
+# Thành phần giao diện người dùng
+#------------------------------------------------------------------------------
+
+msgid "Advanced Web Statistics for"
+msgstr "Thống kê Web nâng cao cho"
+
+msgid "Statistics for"
+msgstr "Thống kê cho"
+
+msgid "main"
+msgstr "Tổng quan"
+
+msgid "Switch to light mode"
+msgstr "Chuyển sang chế độ sáng"
+
+msgid "Switch to dark mode"
+msgstr "Chuyển sang chế độ tối"
+
+msgid "TB"
+msgstr "TB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "Bytes"
+msgstr "Byte"
+
+msgid "Filter"
+msgstr "Lọc"
+
+msgid "Exclude filter"
+msgstr "Loại trừ bộ lọc"
+
+msgid "Top"
+msgstr "Hàng đầu"
+
+msgid "Full list"
+msgstr "Danh sách đầy đủ"
+
+msgid "Last"
+msgstr "Cuối cùng"
+
+msgid "Average"
+msgstr "Trung bình"
+
+msgid "Export"
+msgstr "Xuất"
+
+msgid "Details"
+msgstr "Chi tiết"
+
+msgid "Version"
+msgstr "Phiên bản"
+
+msgid "thousands_separator"
+msgstr ","
+
+msgid "dateformat_long"
+msgstr "dd/MM/yyyy HH:MM:SS"
+
+msgid "dateformat_short"
+msgstr "dd/MM/yyyy HH:MM"
+
+msgid "date_format_year"
+msgstr "Năm %s"
+
+msgid "date_format_month"
+msgstr "%1$s %2$s"
+
+#------------------------------------------------------------------------------
+# Thanh điều hướng
+#------------------------------------------------------------------------------
+
+msgid "AWStats Month Selector"
+msgstr "Bộ chọn tháng AWStats"
+
+msgid "nav_category_basic"
+msgstr "Tài liệu cơ bản"
+
+msgid "nav_category_guide"
+msgstr "Hướng dẫn sử dụng"
+
+msgid "nav_category_reference"
+msgstr "Tài nguyên tham khảo"
+
+msgid "nav_category_integration"
+msgstr "Tích hợp và mở rộng"
+
+msgid "nav_category_dev"
+msgstr "Tài liệu nhà phát triển"
+
+msgid "nav_changelog"
+msgstr "Nhật ký thay đổi"
+
+msgid "nav_what"
+msgstr "AWStats là gì"
+
+msgid "nav_license"
+msgstr "Giấy phép"
+
+msgid "nav_glossary"
+msgstr "Bảng thuật ngữ"
+
+msgid "nav_setup"
+msgstr "Cài đặt và cấu hình"
+
+msgid "nav_upgrade"
+msgstr "Hướng dẫn nâng cấp"
+
+msgid "nav_config"
+msgstr "Tham số cấu hình"
+
+msgid "nav_extra"
+msgstr "Phần mở rộng"
+
+msgid "nav_tools"
+msgstr "Công cụ khác"
+
+msgid "nav_faq"
+msgstr "Câu hỏi thường gặp"
+
+msgid "nav_security"
+msgstr "Khuyến nghị bảo mật"
+
+msgid "nav_compare"
+msgstr "So sánh"
+
+msgid "nav_benchmark"
+msgstr "Đo điểm chuẩn"
+
+msgid "nav_webmin"
+msgstr "Mô-đun Webmin"
+
+msgid "nav_dolibarr"
+msgstr "Mô-đun Dolibarr"
+
+msgid "nav_contrib"
+msgstr "Tài nguyên đóng góp"
+
+msgid "nav_plugins"
+msgstr "Phát triển plugin"
+
+msgid "nav_hooks"
+msgstr "Hook plugin"
+
+msgid "nav_graphs"
+msgstr "Biểu đồ plugin"
+
+msgid "Back to top"
+msgstr "Lên đầu trang"
+
+msgid "nav_select_month"
+msgstr "Chọn tháng"
+
+#------------------------------------------------------------------------------
+# Chỉ số chính
+#------------------------------------------------------------------------------
+
+msgid "Unique visitors"
+msgstr "Lượt truy cập duy nhất"
+
+msgid "Visits"
+msgstr "Số lượt truy cập"
+
+msgid "Visits duration"
+msgstr "Thời lượng truy cập"
+
+msgid "First visit"
+msgstr "Cập nhật lần đầu"
+
+msgid "Last visit"
+msgstr "Cập nhật lần cuối"
+
+msgid "Visits/Visitor"
+msgstr "Lượt truy cập/khách"
+
+msgid "Pages/Visit"
+msgstr "Trang/lượt truy cập"
+
+msgid "Hits/Visit"
+msgstr "Yêu cầu/lượt truy cập"
+
+msgid "KB/Visit"
+msgstr "KB/lượt truy cập"
+
+msgid "KB/Visits"
+msgstr "KB/số lượt truy cập"
+
+msgid "Pages"
+msgstr "Số trang"
+
+msgid "Hits"
+msgstr "Số yêu cầu"
+
+msgid "Bandwidth"
+msgstr "Băng thông"
+
+msgid "duration_format"
+msgstr "%s-%s"
+
+msgid "unit_s"
+msgstr "giây"
+
+msgid "unit_min"
+msgstr "phút"
+
+msgid "unit_h"
+msgstr "giờ"
+
+msgid "and"
+msgstr "-"
+
+msgid "Device Types"
+msgstr "Loại thiết bị"
+
+msgid "Device Type"
+msgstr "Loại thiết bị"
+
+msgid "Percent"
+msgstr "Phần trăm"
+
+msgid "Mobile"
+msgstr "Điện thoại di động"
+
+msgid "Pause & Go"
+msgstr "Tạm dừng và tiếp tục"
+
+msgid "Complete"
+msgstr "Hoàn tất"
+
+msgid "Tablet"
+msgstr "Máy tính bảng"
+
+msgid "Tv"
+msgstr "TV"
+
+msgid "Wearable"
+msgstr "Thiết bị đeo"
+
+msgid "Bot"
+msgstr "Bot"
+
+msgid "Desktop"
+msgstr "Máy tính để bàn"
+
+msgid "Normal browsing traffic"
+msgstr "Lưu lượng truy cập bình thường"
+
+msgid "Abnormal browsing traffic"
+msgstr "Lưu lượng truy cập bất thường"
+
+msgid "Viewed"
+msgstr "Đã xem"
+
+msgid "Not viewed"
+msgstr "Chưa xem"
+
+msgid "Abnormal browsing traffic note"
+msgstr "Lưu lượng truy cập bất thường bao gồm: bot tìm kiếm, bot huấn luyện AI, máy quét lỗ hổng và các yêu cầu không tuân thủ tiêu chuẩn HTTP/HTTPS"
+
+msgid "File size"
+msgstr "Kích thước tệp"
+
+msgid "File type"
+msgstr "Loại tệp"
+
+msgid "Downloads"
+msgstr "Tải xuống"
+
+msgid "Request time"
+msgstr "Thời gian yêu cầu"
+
+msgid "Total requests"
+msgstr "Tổng số yêu cầu"
+
+msgid "Frequency"
+msgstr "Tần suất"
+
+msgid "Average frequency"
+msgstr "Tần suất trung bình"
+
+msgid "Seconds"
+msgstr "Giây"
+
+msgid "First"
+msgstr "Lần đầu"
+
+msgid "Mails"
+msgstr "Số email"
+
+msgid "Size"
+msgstr "Kích thước"
+
+msgid "If you remove this file, all statistics for date"
+msgstr "Cảnh báo: Xóa tệp này sẽ làm mất/đặt lại vĩnh viễn tất cả thống kê của ngày"
+
+msgid "will be lost/reset."
+msgstr ""
+
+msgid "Last config file used to build this data file was"
+msgstr "Tệp cấu hình cuối cùng được sử dụng để xây dựng tệp dữ liệu này là"
+
+msgid "Position (offset in bytes) in this file for beginning of each section for"
+msgstr "Phần MAP trong tệp này ghi lại vị trí offset byte cho điểm bắt đầu của mỗi phần để"
+
+msgid "direct I/O access. If you made changes somewhere in this file, you should"
+msgstr "AWStats có thể truy cập dữ liệu trực tiếp. Nếu bạn sửa đổi bất kỳ đâu trong tệp này, bạn nên"
+
+msgid "also remove completely the MAP section (AWStats will rewrite it at next update)"
+msgstr "xóa hoàn toàn phần MAP (AWStats sẽ viết lại khi cập nhật lần sau)"
+
+msgid "LastLine    = Date of last record processed - Last record line number in last log - Last record offset in last log - Last record signature value"
+msgstr "LastLine    = Ngày của bản ghi cuối cùng được xử lý - Số dòng bản ghi cuối cùng trong nhật ký cuối cùng - Offset bản ghi cuối cùng trong nhật ký cuối cùng - Giá trị chữ ký bản ghi cuối cùng"
+
+msgid "FirstTime   = Date of first visit for history file"
+msgstr "FirstTime   = Ngày truy cập đầu tiên cho tệp lịch sử"
+
+msgid "LastTime    = Date of last visit for history file"
+msgstr "LastTime    = Ngày truy cập cuối cùng cho tệp lịch sử"
+
+msgid "LastUpdate  = Date of last update - Nb of parsed records - Nb of parsed old records - Nb of parsed new records - Nb of parsed corrupted - Nb of parsed dropped"
+msgstr "LastUpdate  = Ngày cập nhật cuối cùng - Số bản ghi đã phân tích - Số bản ghi cũ đã phân tích - Số bản ghi mới đã phân tích - Số bản ghi hỏng đã phân tích - Số bản ghi bị loại đã phân tích"
+
+msgid "TotalVisits = Number of visits"
+msgstr "TotalVisits = Số lượt truy cập"
+
+msgid "TotalUnique = Number of unique visitors"
+msgstr "TotalUnique = Số lượng khách truy cập duy nhất"
+
+msgid "MonthHostsKnown   = Number of hosts known"
+msgstr "MonthHostsKnown   = Số máy chủ đã biết"
+
+msgid "MonthHostsUnKnown = Number of hosts unknown"
+msgstr "MonthHostsUnKnown = Số máy chủ không xác định"
+
+msgid "Cluster ID - Pages - Hits - Bandwidth"
+msgstr "ID cụm - Số trang - Số yêu cầu - Băng thông"
+
+msgid "Hour - Pages - Hits - Bandwidth - Not viewed Pages - Not viewed Hits - Not viewed Bandwidth"
+msgstr "Giờ - Số trang - Số yêu cầu - Băng thông - Trang chưa xem - Yêu cầu chưa xem - Băng thông chưa xem"
+
+msgid "Date - Pages - Hits - Bandwidth - Visits"
+msgstr "Ngày - Số trang - Số yêu cầu - Băng thông - Lượt truy cập"
+
+msgid "Domain - Pages - Hits - Bandwidth"
+msgstr "Miền - Số trang - Số yêu cầu - Băng thông"
+
+msgid "The %s first Pages must be first (order not required for others)"
+msgstr "Trang chính sẽ chỉ hiển thị %s trang cao nhất, vui lòng xem danh sách đầy đủ trong trang chi tiết"
+
+msgid "Host - Pages - Hits - Bandwidth - Last visit date - [Start date of last visit] - [Last page of last visit]"
+msgstr "Máy chủ - Số trang - Số yêu cầu - Băng thông - Thời gian truy cập cuối cùng - [Thời gian bắt đầu truy cập cuối cùng] - [Trang cuối của lần truy cập cuối cùng]"
+
+msgid "[Start date of last visit] and [Last page of last visit] are saved only if session is not finished"
+msgstr "[Thời gian bắt đầu truy cập cuối cùng] và [Trang cuối của lần truy cập cuối cùng] chỉ được lưu khi phiên chưa kết thúc"
+
+msgid "The first %s items are sorted by hits in descending order; order of the remaining items is undefined."
+msgstr "%s mục đầu tiên được sắp xếp theo số lượt truy cập theo thứ tự giảm dần; thứ tự của các mục còn lại không được xác định."
+
+msgid "Login - Pages - Hits - Bandwidth - Last visit"
+msgstr "Người dùng đã đăng nhập - Số trang - Số yêu cầu - Băng thông - Thời gian truy cập cuối cùng"
+
+msgid "Robot ID - Hits - Bandwidth - Last visit - Hits on robots.txt"
+msgstr "ID robot - Số yêu cầu - Băng thông - Thời gian truy cập cuối cùng - Số yêu cầu robots.txt"
+
+msgid "Worm ID - Hits - Bandwidth - Last visit"
+msgstr "ID sâu - Số yêu cầu - Băng thông - Thời gian truy cập cuối cùng"
+
+msgid "EMail - Hits - Bandwidth - Last visit"
+msgstr "Email - Số yêu cầu - Băng thông - Thời gian truy cập cuối cùng"
+
+msgid "The first %s email addresses are sorted by hits in descending order; order of the remaining addresses is undefined."
+msgstr "%s địa chỉ email đầu tiên được sắp xếp theo số lượt truy cập theo thứ tự giảm dần; thứ tự của các địa chỉ còn lại không được xác định."
+
+msgid "URL - Pages - Bandwidth - Entry - Exit"
+msgstr "URL - Số trang - Băng thông - Vào - Ra"
+
+msgid "Files type - Hits - Bandwidth - Bandwidth without compression - Bandwidth after compression"
+msgstr "Loại tệp - Số yêu cầu - Băng thông - Băng thông trước nén - Băng thông sau nén"
+
+msgid "Request Time Range - Request Time Frequency"
+msgstr "Khoảng thời gian yêu cầu - Tần suất thời gian yêu cầu"
+
+msgid "Payload Range - Payload Frequency"
+msgstr "Khoảng kích thước tệp - Số lượng tệp"
+
+msgid "Session range - Number of visits"
+msgstr "Khoảng thời lượng phiên - Số lượt truy cập"
+
+msgid "URL with %s errors - Hits"
+msgstr "URL có lỗi %s - Số yêu cầu"
+
+msgid "Last URL referrer"
+msgstr "URL giới thiệu cuối cùng"
+
+msgid "Errors - Hits - Bandwidth"
+msgstr "Lỗi - Số yêu cầu - Băng thông"
+
+msgid "Search keywords - Number of search"
+msgstr "Từ khóa - Số lượt tìm kiếm"
+
+msgid "Only top %s keywords shown on main page (sorted by search count). See full list on detail page."
+msgstr "Trang chính sẽ chỉ hiển thị %s từ khóa cao nhất (sắp xếp theo số lượt tìm kiếm). Vui lòng xem danh sách đầy đủ trong trang chi tiết"
+
+msgid "Search keyphrases - Number of search"
+msgstr "Cụm từ khóa - Số lượt tìm kiếm"
+
+msgid "Only top %s keyphrases shown on main page (sorted by search count). See full list on detail page."
+msgstr "Trang chính sẽ chỉ hiển thị %s cụm từ khóa cao nhất (sắp xếp theo số lượt tìm kiếm). Vui lòng xem danh sách đầy đủ trong trang chi tiết"
+
+msgid "External page referers - Pages - Hits"
+msgstr "Người giới thiệu trang bên ngoài - Số trang - Số yêu cầu"
+
+msgid "Only top %s external referrers shown on main page (sorted by pages). See full list on detail page."
+msgstr "Trang chính sẽ chỉ hiển thị %s nguồn giới thiệu bên ngoài cao nhất (sắp xếp theo số trang). Vui lòng xem danh sách đầy đủ trong trang chi tiết"
+
+msgid "Search engine referers ID - Pages - Hits"
+msgstr "ID người giới thiệu từ công cụ tìm kiếm - Số trang - Số yêu cầu"
+
+msgid "Origin - Pages - Hits"
+msgstr "Nguồn gốc - Số trang - Số yêu cầu"
+
+msgid "Unknown referer Browser - Last visit date"
+msgstr "Trình duyệt giới thiệu không xác định - Thời gian truy cập cuối cùng"
+
+msgid "Unknown referer OS - Last visit date"
+msgstr "Hệ điều hành giới thiệu không xác định - Thời gian truy cập cuối cùng"
+
+msgid "Screen size - Hits"
+msgstr "Độ phân giải màn hình - Số yêu cầu"
+
+msgid "Browser ID - Hits - Pages"
+msgstr "ID trình duyệt - Số nhấp chuột - Số trang"
+
+msgid "Downloads - Hits - Bandwidth"
+msgstr "Tải xuống - Số yêu cầu - Băng thông"
+
+msgid "Protocol - Hits - Bandwidth"
+msgstr "Giao thức - Số yêu cầu - Băng thông"
+
+msgid "Icon Status - Type:200:404:Other"
+msgstr "Trạng thái biểu tượng - Loại:200:404:Khác"
+
+#------------------------------------------------------------------------------
+# Bản dịch khoảng thời gian
+#------------------------------------------------------------------------------
+
+msgid "period_00"
+msgstr "Nửa đêm · AWStats ngủ hết rồi, bạn vẫn xem dữ liệu à? Tình yêu đích thực"
+
+msgid "period_01"
+msgstr "1 giờ sáng · Truy cập giờ này? Bạn mất ngủ hay mới tan làm"
+
+msgid "period_02"
+msgstr "2 giờ sáng · Bot còn chăm chỉ hơn bạn, nó vẫn đang làm việc"
+
+msgid "period_03"
+msgstr "3 giờ sáng · Thành phố đang ngủ, máy chủ đang làm thêm giờ, ai tệ hơn?"
+
+msgid "period_04"
+msgstr "4 giờ sáng · Ngôi sao sáng nhất trong bóng tối, là màn hình của bạn hay đèn báo máy chủ"
+
+msgid "period_05"
+msgstr "5 giờ sáng · Chim dậy sớm có sâu ăn, bot dậy sớm có dữ liệu thu thập"
+
+msgid "period_06"
+msgstr "6 giờ sáng · Có người thức dậy, có người chưa ngủ, internet không bao giờ đóng cửa"
+
+msgid "period_07"
+msgstr "7 giờ sáng · Giờ chen lấn tàu điện, cũng là giờ lướt web"
+
+msgid "period_08"
+msgstr "8 giờ sáng · Việc đầu tiên khi bắt đầu làm việc: xem dữ liệu hôm qua"
+
+msgid "period_09"
+msgstr "9 giờ sáng · Giờ vàng, trốn việc cũng phải có nguyên tắc"
+
+msgid "period_10"
+msgstr "10 giờ sáng · Giờ cà phê, xem lưu lượng tăng chưa"
+
+msgid "period_11"
+msgstr "11 giờ sáng · Còn một giờ nữa đến giờ ăn cơm, cố gắng thêm chút nữa"
+
+msgid "period_12"
+msgstr "12 giờ trưa · Máy chủ: Các bạn đi ăn cơm hết rồi, tôi nghỉ ngơi chút"
+
+msgid "period_13"
+msgstr "1 giờ chiều · Buồn ngủ sau bữa trưa, nhưng dữ liệu không ngủ"
+
+msgid "period_14"
+msgstr "2 giờ chiều · Giờ trà chiều"
+
+msgid "period_15"
+msgstr "3 giờ chiều · Biểu đồ xu hướng lưu lượng hôm nay, giống biểu đồ cảm xúc của bạn không?"
+
+msgid "period_16"
+msgstr "4 giờ chiều · Còn X giờ nữa đến giờ tan làm, lưu lượng bắt đầu tăng tốc"
+
+msgid "period_17"
+msgstr "5 giờ chiều · Tan làm rồi! Nhưng máy chủ vẫn phải làm việc tiếp"
+
+msgid "period_18"
+msgstr "6 giờ tối · Giờ ăn tối, xem video một chút, thư giãn"
+
+msgid "period_19"
+msgstr "7 giờ tối · Giờ vàng, lưu lượng tăng cao, máy chủ: Tôi chịu được"
+
+msgid "period_20"
+msgstr "8 giờ tối · Nằm ghế, sô pha, bạn là khách truy cập số 114514"
+
+msgid "period_21"
+msgstr "9 giờ tối · Đêm yên tĩnh, người lén xem dữ liệu cú đêm +1"
+
+msgid "period_22"
+msgstr "10 giờ tối · Dữ liệu hôm nay sắp ra, hồi hộp không?"
+
+msgid "period_23"
+msgstr "11 giờ tối · AWStats: Nên đi ngủ thôi, mai còn phải làm việc nữa"
+
+#------------------------------------------------------------------------------
+# Chiều thời gian
+#------------------------------------------------------------------------------
+
+msgid "Period"
+msgstr "Kỳ thống kê"
+
+msgid "Year"
+msgstr "Năm"
+
+msgid "Month"
+msgstr "Tháng"
+
+msgid "Months"
+msgstr "Tháng"
+
+msgid "Date"
+msgstr "Ngày"
+
+msgid "Day"
+msgstr "Ngày"
+
+msgid "Hour"
+msgstr "Giờ"
+
+msgid "Hours"
+msgstr "Giờ"
+
+msgid "Day of week"
+msgstr "Thứ trong tuần"
+
+msgid "When"
+msgstr "Khi nào"
+
+msgid "%s Server Management Panel"
+msgstr "Bảng điều khiển quản lý máy chủ %s "
+
+msgid "Server Administration"
+msgstr "Giải pháp máy chủ đơn giản và hiệu quả"
+
+#------------------------------------------------------------------------------
+# Kích thước khách truy cập
+#------------------------------------------------------------------------------
+
+msgid "Invalid URL Parameters"
+msgstr "Tham số URL không hợp lệ"
+
+msgid "The requested page cannot be loaded due to invalid or malformed URL parameters."
+msgstr "Không thể tải trang được yêu cầu do tham số URL không hợp lệ hoặc sai định dạng."
+
+msgid "This may be caused by typing an incorrect URL, missing parameter separators, or using an invalid configuration name."
+msgstr "Điều này có thể do nhập sai URL, thiếu dấu phân cách tham số hoặc sử dụng tên cấu hình không hợp lệ."
+
+msgid "Please check the URL you entered and ensure all parameters are correctly formatted."
+msgstr "Vui lòng kiểm tra URL bạn đã nhập và đảm bảo tất cả các tham số được định dạng chính xác."
+
+msgid "SiteDomain parameter not defined in your config/domain file, or you may not have execution permission on the file."
+msgstr "Tham số SiteDomain không được định nghĩa trong tệp config/domain của bạn hoặc bạn có thể không có quyền thực thi trên tệp."
+
+msgid "Please run as Administrator to set permissions"
+msgstr "Vui lòng chạy với tư cách Quản trị viên để thiết lập quyền"
+
+msgid "This directory lacks read permission"
+msgstr "Thư mục này thiếu quyền đọc"
+
+msgid "Please set read permission for directory"
+msgstr "Vui lòng đặt quyền đọc cho thư mục"
+
+msgid "Missing required parameter in config file"
+msgstr "Thiếu tham số bắt buộc trong tệp cấu hình"
+
+msgid "Please check that 'DirData' is defined."
+msgstr "Vui lòng kiểm tra xem 'DirData' đã được xác định."
+
+msgid "Domain name in browser address appears to be missing or incomplete"
+msgstr "Tên miền trong địa chỉ trình duyệt dường như bị thiếu hoặc không đầy đủ"
+
+msgid "Please check the URL parameter"
+msgstr "Vui lòng kiểm tra tham số URL"
+
+msgid "Format description"
+msgstr "Mô tả định dạng"
+
+msgid "Please set execute permission"
+msgstr "Vui lòng thiết lập quyền thực thi"
+
+msgid "Or if you prefer numeric mode"
+msgstr "Hoặc nếu bạn thích chế độ số"
+
+msgid "View Report Directly"
+msgstr "Xem báo cáo trực tiếp"
+
+msgid "AWStats Log Viewer"
+msgstr "Trình xem nhật ký AWStats"
+
+msgid "Month Selection"
+msgstr "Lựa chọn tháng"
+
+msgid "Who"
+msgstr "Ai"
+
+msgid "Visitors"
+msgstr "Khách truy cập"
+
+msgid "Countries"
+msgstr "Quốc gia/Khu vực"
+
+msgid "flag_icon"
+msgstr "Cờ quốc gia"
+
+msgid "Country-Region-City"
+msgstr "Quốc gia/Khu vực/Thành phố"
+
+msgid "Code"
+msgstr "Mã"
+
+msgid "Known"
+msgstr "Đã biết"
+
+msgid "unknownos"
+msgstr "Hệ điều hành không xác định"
+
+msgid "unknownbrowser"
+msgstr "Trình duyệt không xác định"
+
+msgid "Unresolved IP Address"
+msgstr "Địa chỉ IP chưa phân giải"
+
+msgid "Unknown File Type"
+msgstr "Loại tệp không xác định"
+
+msgid "Unknown Size"
+msgstr "Kích thước tệp không xác định"
+
+msgid "Unknown Time"
+msgstr "Thời gian yêu cầu không xác định"
+
+msgid "Unknown Browser"
+msgstr "Trình duyệt không xác định"
+
+msgid "Unknown OS"
+msgstr "Hệ điều hành không xác định"
+
+msgid "Unknown Visitor"
+msgstr "Khách truy cập không xác định"
+
+msgid "Unknown Visitor (Total)"
+msgstr "Khách truy cập không xác định (Tổng)"
+
+msgid "Unknown Country"
+msgstr "Quốc gia/Khu vực không xác định"
+
+msgid "Unknown Country (Region)"
+msgstr "Quốc gia/Khu vực không xác định (Tổng)"
+
+msgid "Unknown Visitor (Title)"
+msgstr "Khách truy cập không xác định (Tiêu đề)"
+
+msgid "PageStayTime"
+msgstr "Không thể ước tính thời gian ở lại trang"
+
+msgid "Unknown OS (Link)"
+msgstr "Hệ điều hành không xác định (liên kết)"
+
+msgid "Unknown OS (Row)"
+msgstr "Hệ điều hành không xác định (danh sách)"
+
+msgid "Unknown Browser (Link)"
+msgstr "Trình duyệt không xác định (liên kết)"
+
+msgid "Unknown Browser (Row)"
+msgstr "Trình duyệt không xác định (danh sách)"
+
+msgid "Unknown Screen"
+msgstr "Kích thước màn hình không xác định"
+
+msgid "Login"
+msgstr "Tên đăng nhập"
+
+msgid "Anonymous"
+msgstr "Ẩn danh"
+
+msgid "Robots"
+msgstr "Robot"
+
+msgid "Different robots"
+msgstr "Các robot khác nhau"
+
+msgid "Hits on robots.txt"
+msgstr "Lưu lượng truy cập bất thường từ robot công cụ tìm kiếm được hiển thị ở trên không được bao gồm trong các biểu đồ khác. Số sau '+' là số bản ghi truy cập 'robots.txt' thành công"
+
+msgid "Worms"
+msgstr "Sâu"
+
+msgid "Different worms"
+msgstr "Các loại sâu khác nhau"
+
+msgid "Target"
+msgstr "Mục tiêu"
+
+msgid "Grabber"
+msgstr "Công cụ lấy dữ liệu"
+
+#------------------------------------------------------------------------------
+# Mô tả định dạng
+#------------------------------------------------------------------------------
+
+msgid "mime_text"
+msgstr "TXT tệp văn bản thuần túy (văn bản thuần túy không định dạng được chuẩn hóa bằng mã hóa ASCII năm 1963. Là nền tảng cơ bản của mọi mã nguồn, tệp cấu hình và nhật ký hệ thống, luồng điều khiển ngắt dòng đa nền tảng Windows (CRLF) và Unix (LF) của nó vẫn là tiêu chuẩn trao đổi dữ liệu phổ biến nhất trong thế giới máy tính)"
+
+msgid "mime_log"
+msgstr "LOG nhật ký hoạt động hệ thống (tài sản văn bản thuần túy ghi lại trạng thái thời gian chạy của hệ điều hành, nhân và ứng dụng ở cấp độ ứng dụng. Bao gồm nhật ký truy cập Nginx/Apache (Nhật ký kết hợp) và đặc tả syslog tiêu chuẩn, là nguồn dữ liệu cốt lõi để khắc phục sự cố, phân tích hiệu suất luồng và kiểm toán bảo mật)"
+
+msgid "mime_page"
+msgstr "HTML trang web siêu văn bản (nền tảng của World Wide Web được tạo bởi Tim Berners-Lee năm 1989. Là một ngôn ngữ đánh dấu siêu văn bản phổ quát miễn phí, đặc tả HTML5 của nó đã trở thành tiêu chuẩn chính thức của W3C vào năm 2014, hỗ trợ nguyên bản cho đa phương tiện có cấu trúc, tương tác ngữ nghĩa và bố cục trang luồng. Đã giành giải Turing năm 2016)"
+
+msgid "mime_khtml"
+msgstr "KHTML công cụ mẫu trang web (đặc tả công cụ hiển thị trình duyệt KDE 2.0 năm 1998. Là chuẩn mực của cộng đồng mã nguồn mở đặt nền móng cho hiển thị web hiện đại, di sản công nghệ của nó đã truyền cảm hứng trực tiếp và phát triển thành nhân Apple WebKit và Google Blink, vẫn tiếp tục mạch ngầm cốt lõi của mình thông qua kiến trúc web động luồng hiện đại)"
+
+msgid "mime_script"
+msgstr "SCRIPT kịch bản động được thông dịch (phân loại chung các luồng mã nguồn không cần biên dịch trước và được đọc và thực thi từng dòng bởi một thời gian chạy hoặc trình thông dịch cụ thể. Bao gồm ASP, JSP, CGI, Tcl, v.v., được sử dụng rộng rãi cho giao diện cổng chung phía máy chủ, điều khiển quy trình tự động và kết dính tác vụ cấp hệ thống)"
+
+msgid "mime_js"
+msgstr "Kịch bản JavaScript (môi trường lập trình gốc của trình duyệt Netscape năm 1995. Đã thiết lập tiêu chuẩn ngành ECMAScript vào năm 1997, thời gian chạy Node.js ra đời năm 2009, phá vỡ ranh giới trình duyệt và tạo ra kiến trúc bất đồng bộ không chặn toàn ngăn xếp, cùng với hệ sinh thái gói phần mềm npm lớn nhất thế giới)"
+
+msgid "mime_py"
+msgstr "Kịch bản Python (ngôn ngữ kịch bản thông dịch cấp cao được tạo bởi Guido van Rossum năm 1991. Nhờ thụt lề bắt buộc để có khả năng đọc không mất mát và thiết kế cấp thấp đa mô hình, nó hiện đã được thiết lập là ngôn ngữ tiêu chuẩn công nghiệp cho kiến trúc web hiện đại, khoa học dữ liệu toàn ngăn xếp, huấn luyện mô hình trí tuệ nhân tạo (AI) và vận hành tự động hóa bản địa đám mây)"
+
+msgid "mime_sh"
+msgstr "Kịch bản Shell (kịch bản thông dịch lệnh tiêu chuẩn từ thời Unix năm 1971. Bao gồm các đặc tả lệnh cấp nhân như Bash, Sh, Dash, thường được thực thi với phần mở rộng .sh, là chất kết dính cấp nhân phổ quát để điều khiển quy trình cấp thấp, cấu hình môi trường không cần cài đặt và triển khai tự động trong các hệ điều hành giống Unix hiện đại)"
+
+msgid "mime_rb"
+msgstr "Kịch bản Ruby (ngôn ngữ kịch bản hướng đối tượng được tạo bởi Yukihiro Matsumoto năm 1995. Với sự tôn trọng cực độ đối với trải nghiệm của nhà phát triển là triết lý thiết kế cốt lõi, khuôn khổ Ruby on Rails của nó đã thiết lập một cách mang tính cách mạng mô hình phát triển kiến trúc web cấp cao hiện đại 'Quy ước thay vì Cấu hình (CoC)')"
+
+msgid "mime_pl"
+msgstr "Kịch bản Perl (ngôn ngữ kịch bản thực dụng được tạo bởi Larry Wall năm 1987. Là người sáng lập trình quản lý gói hiện đại (CPAN), nó được mệnh danh là 'con dao quân đội Thụy Sĩ' để xử lý văn bản. Ở chế độ CGI hiện đại, nó vẫn đóng vai trò là nền tảng có độ tin cậy cao trong lĩnh vực phân tích cú pháp nhật ký nhờ chi phí bộ nhớ vật lý cực thấp và xử lý biểu thức chính quy hiệu quả cao)"
+
+msgid "mime_php"
+msgstr "Trang web động PHP (được tạo bởi Rasmus Lerdorf năm 1995, được thiết kế đặc biệt cho phát triển web. Là công nghệ cốt lõi điều khiển hơn 70% các trang web trên thế giới, nó hỗ trợ sâu rộng các ứng dụng cấp sản xuất lớn như WordPress, Wikipedia. Kể từ khi giới thiệu công cụ thời gian chạy biên dịch JIT (Just-In-Time) trong PHP 8, nó đã đạt được sự phát triển mô hình cơ bản hướng tới máy chủ phía sau toàn ngăn xếp hiệu suất cao)"
+
+msgid "mime_image"
+msgstr "IMAGE phân loại tài sản hình ảnh (bao gồm phân loại chung của bitmap nén mất dữ liệu/không mất dữ liệu, đồ họa web đáp ứng hiện đại và đồ họa vector. Là chỉ số chính để đánh giá chi phí tải tài nguyên hình ảnh của trang, tỷ lệ trúng bộ nhớ đệm phía máy khách và mức tiêu thụ băng thông mạng phương tiện)"
+
+msgid "mime_document"
+msgstr "DOCUMENT phân loại tài liệu có cấu trúc (bao gồm phân loại chung của văn bản thuần túy, bảng tính, tài liệu định dạng cố định (PDF) và ngôn ngữ đánh dấu nhẹ. Là chỉ số chính cho thống kê phân phối cơ sở tri thức tĩnh phía máy chủ, tải xuống tài sản thông tin doanh nghiệp và khả năng thông lượng luồng văn bản)"
+
+msgid "mime_package"
+msgstr "PACKAGE phân loại sản phẩm biên dịch và gói phần mềm (bao gồm phân loại chung của chương trình thực thi gốc của hệ điều hành, thư viện liên kết thời gian chạy (DLL/SO) và gói cài đặt phân phối ứng dụng. Thường được sử dụng làm chỉ số chính để đánh giá lưu lượng truy cập ra và đỉnh tải xuống của các trang phân phối phần mềm)"
+
+msgid "mime_archive"
+msgstr "ARCHIVE tệp lưu trữ và nén (phân loại chung của gói nén dữ liệu dựa trên các thuật toán cốt lõi như DEFLATE, LZMA. Ở lớp mạng, ngoài việc đại diện cho phân phối gói truyền thống, nó còn bao gồm luồng phản hồi động Gzip của dự án GNU năm 1992. Mặc dù thuật toán Brotli đang dần được giới thiệu trong các kịch bản hiện đại, phân loại này vẫn là chỉ số chính để đánh giá tỷ lệ thông lượng băng thông máy chủ và giảm áp suất lớp vận chuyển)"
+
+msgid "mime_audio"
+msgstr "AUDIO phân loại luồng âm thanh kỹ thuật số (bao gồm phân loại chung của âm thanh nén, sách nói và vùng chứa âm thanh truyền thông trực tuyến. Dựa trên các tiêu chuẩn codec âm thanh cụ thể, được sử dụng để giám sát tỷ lệ thông lượng luồng dữ liệu âm thanh của các trang đa phương tiện, băng thông truyền trực tuyến đồng thời và hiệu suất kết nối dài)"
+
+msgid "mime_video"
+msgstr "VIDEO phân loại luồng video kỹ thuật số (bao gồm phân loại chung của vùng chứa video độ phân giải cao, hoạt ảnh web hiện đại và phân đoạn truyền thông trực tuyến. Là chỉ số chính để đánh giá giới hạn đỉnh băng thông máy chủ và hiệu quả tăng tốc của Mạng phân phối nội dung (CDN) trong môi trường mạng có tải cao)"
+
+msgid "mime_jscript"
+msgstr "Kịch bản JScript (triển khai độc quyền kỹ thuật đảo ngược của Microsoft cho Internet Explorer 3.0 năm 1996. Là đối thủ cạnh tranh máy chủ của JavaScript cổ điển thời kỳ đầu, nó từng là công cụ cốt lõi của Windows Script Host (WSH) và phần phụ trợ ASP đầu tiên)"
+
+msgid "mime_json"
+msgstr "JSON dữ liệu có cấu trúc (định dạng trao đổi tuần tự hóa dữ liệu nhẹ được thiết lập bởi Douglas Crockford năm 2001. Dựa trên kiến trúc cặp khóa-giá trị và mảng dựa trên văn bản, có khả năng đọc rất cao của con người và đặc tính phân tích cú pháp luồng không mất dữ liệu. Là tiêu chuẩn thực tế cho API web hiện đại, kiến trúc vi dịch vụ và tương tác với các mô hình ngôn ngữ lớn)"
+
+msgid "mime_vbs"
+msgstr "Kịch bản VBScript (biến thể ngôn ngữ kịch bản được Microsoft phát hành cùng với IE 3.0 năm 1996. Đã từng là trình điều khiển cốt lõi của các trang web động ASP thời kỳ đầu và quản lý hệ thống Windows, hiện đã bị Microsoft chính thức ngừng sử dụng và loại bỏ khỏi nhân mới nhất của Windows 11. Nó thuộc về công nghệ kế thừa lịch sử)"
+
+msgid "mime_conf"
+msgstr "CONF tệp cấu hình hệ thống (phân loại chung của các tệp dữ liệu lưu trữ vĩnh viễn các tham số môi trường thời gian chạy phần mềm dưới dạng văn bản thuần túy. Bao gồm các đặc tả INI và YAML, TOML, JSON hiện đại. Trong các hệ thống Linux, chúng thường tập trung trong thư mục /etc. Là sự phụ thuộc cốt lõi để tối ưu hóa trạng thái thời gian chạy cấp hệ thống)"
+
+msgid "mime_css"
+msgstr "CSS bảng kiểu xếp tầng (tiêu chuẩn W3C năm 1996, cùng với HTML/JS được gọi là ba thành phần cốt lõi của giao diện người dùng. Đã trải qua quá trình định vị CSS2 và phát triển mô-đun CSS3, hỗ trợ nguyên bản cho Flexbox, Grid và thiết kế đáp ứng truy vấn phương tiện. Là tiêu chuẩn chi phối tuyệt đối để tách rời trình bày trang web trong các trình duyệt hiện đại)"
+
+msgid "mime_xsl"
+msgstr "XSL bảng kiểu (tiêu chuẩn W3C năm 1999, bao gồm ngôn ngữ chuyển đổi XSLT và ngôn ngữ định địa chỉ XPath, được sử dụng để hiển thị dữ liệu XML có cấu trúc thành HTML, PDF hoặc văn bản thuần túy. Trong phát triển hiện đại, hệ sinh thái của nó phần lớn đã bị thay thế bởi các công cụ tạo mẫu nhẹ hơn và định dạng dữ liệu JSON)"
+
+msgid "mime_runtime"
+msgstr "Tệp thực thi (các định dạng thực thi gốc của hệ điều hành như EXE, ELF, Mach-O, chứa mã máy cấp thấp đã được biên dịch, điểm vào và thông tin tải hệ thống)"
+
+msgid "mime_library"
+msgstr "Tệp thư viện (các thư viện liên kết động hoặc tĩnh như DLL, SO, dylib, chứa các ký hiệu dùng chung và mã định vị lại để các chương trình khác gọi và tải trong thời gian chạy)"
+
+msgid "mime_swf"
+msgstr "Hoạt hình Flash (được phát triển bởi Macromedia năm 1996, được Adobe mua lại năm 2005. Tiêu chuẩn hoạt hình web tương tác, từng thống trị hoạt hình và trò chơi internet. Điểm yếu: phụ thuộc vào plugin, không hỗ trợ thiết bị di động, rủi ro bảo mật cao. Adobe tuyên bố loại bỏ vào năm 2017, ngừng hỗ trợ hoàn toàn vào năm 2020, được thay thế bằng HTML5/CSS3/JS)"
+
+msgid "mime_dtd"
+msgstr "DTD định nghĩa loại tài liệu (được phát hành cùng với XML 1.0 vào năm 1998, được sử dụng để xác định cấu trúc tài liệu XML/HTML và xác thực tính hợp lệ. Trong phát triển hiện đại, nó đã dần được thay thế bằng các giải pháp linh hoạt hơn như Lược đồ XML, RELAX NG)"
+
+msgid "mime_csv"
+msgstr "Định dạng dữ liệu CSV (các giá trị được phân tách bằng dấu phẩy, định dạng bảng văn bản thuần túy phổ quát từ thời máy tính lớn năm 1972 (trình biên dịch IBM Fortran). Được chính thức chuẩn hóa bởi RFC 4180 vào năm 2005, như một tiêu chuẩn trao đổi dữ liệu không mất mát đa nền tảng, đa ngôn ngữ. Được sử dụng rộng rãi để nhập/xuất hiệu quả vào Excel, cơ sở dữ liệu quan hệ, phân tích dữ liệu (Pandas).)"
+
+msgid "mime_cur"
+msgstr "Tệp con trỏ chuột (định dạng .cur, được sử dụng để tùy chỉnh kiểu chuột, ví dụ: con trỏ ngón tay trên các trang web, biểu tượng đồng hồ cát chờ trong hệ thống. Nó là 'họ hàng' của biểu tượng .ico thông thường, nhưng nó có thêm một vị trí 'điểm nóng' — vị trí mà chuột thực sự nhấp. Lịch sử: được giới thiệu cùng với Windows 3.1 (1992), là một thành phần quan trọng trong quá trình chuyển đổi giao diện đồ họa từ dòng lệnh sang kỷ nguyên thao tác bằng chuột)"
+
+msgid "mime_jnlp"
+msgstr "Java Web Start (công nghệ phân phối ứng dụng máy tính để bàn Java những năm 2000, khởi động các chương trình Java từ xa thông qua tệp .jnlp. Do các vấn đề bảo mật và sự phổ biến của các phương pháp phân phối hiện đại, hiện nay về cơ bản đã bị loại bỏ)"
+
+msgid "mime_lit"
+msgstr "Sách điện tử Microsoft Reader (được Microsoft phát hành năm 2000, định dạng LIT. Đã bị loại bỏ, hiện có thể chuyển đổi sang EPUB hoặc PDF bằng các công cụ như Calibre)"
+
+msgid "mime_svg"
+msgstr "SVG đồ họa vector (tiêu chuẩn W3C năm 1999, định dạng hình ảnh vector hai chiều dựa trên kiến trúc XML. Có ưu điểm là tỷ lệ tùy ý không bị mất nét và truyền luồng văn bản. Tất cả các trình duyệt hiện đại đều hỗ trợ nó một cách tự nhiên. Được sử dụng rộng rãi cho các biểu tượng web độ phân giải cao, logo và hiển thị hoạt ảnh vector. Nó là tiêu chuẩn cốt lõi cho đồ họa web hiện đại)"
+
+msgid "mime_ai"
+msgstr "AI đồ họa vector (định dạng đồ họa vector độc quyền được Adobe phát triển độc lập vào năm 1987. Là tiêu chuẩn cốt lõi của ngành cho kiểu chữ, thiết kế in ấn và thiết kế nhận diện thương hiệu, nó hỗ trợ dữ liệu vector bố cục nhiều lớp và cấp cao. Nó là phương tiện được lựa chọn cho nghệ thuật thị giác chuyên nghiệp)"
+
+msgid "mime_phshop"
+msgstr "PSD hình ảnh lớp (định dạng tệp nguồn hình ảnh raster độc quyền được Adobe phát hành cùng với Photoshop vào năm 1990. Hỗ trợ phân lớp nhiều lớp, kênh, mặt nạ và dữ liệu chỉnh sửa không mất dữ liệu. Nó đã được thiết lập như một tiêu chuẩn ngành toàn cầu cho xử lý hình ảnh và vẽ kỹ thuật số)"
+
+msgid "mime_ttf"
+msgstr "Phông chữ TrueType (định dạng phông chữ đường viền kỹ thuật số được phát triển chung bởi Apple và Microsoft vào năm 1989. Dựa trên đường cong Bézier bậc hai, nó đạt được sự nhất quán tuyệt đối về điểm ảnh giữa hiển thị màn hình và đầu ra in ấn. Nó là định dạng phông chữ mặc định gốc của các hệ điều hành máy tính để bàn hiện đại)"
+
+msgid "mime_fon"
+msgstr "FON phông chữ bitmap (định dạng phông chữ ma trận điểm cấp hệ thống đầu tiên của Microsoft Windows từ những năm 1980. Không hỗ trợ tỷ lệ không mất mát tùy ý. Thường được sử dụng với các hệ thống kế thừa hoặc các thành phần thiết bị nhúng đầu tiên để hiển thị văn bản pixel hóa hạn chế)"
+
+msgid "mime_pdf"
+msgstr "PDF tài liệu điện tử (định dạng tài liệu bố cục cố định đa nền tảng được phát triển bởi Adobe vào năm 1993 và trở thành tiêu chuẩn quốc tế ISO 32000 vào năm 2008. Có độ trung thực bố cục và định dạng tuyệt đối. Nó là tiêu chuẩn phổ quát để phân phối tài liệu công vụ điện tử toàn cầu và xuất bản kỹ thuật số)"
+
+msgid "mime_dotnet"
+msgstr "ASP.NET trang động (công nghệ web động phía máy chủ được Microsoft phát hành cùng với kiến trúc .NET vào năm 2002. Được lưu trữ trên công cụ hiển thị IIS, được sử dụng để xây dựng các ứng dụng web động phía máy chủ Windows cấp doanh nghiệp và hệ thống phân tán)"
+
+msgid "mime_mdb"
+msgstr "MDB cơ sở dữ liệu quan hệ (định dạng lưu trữ cơ sở dữ liệu quan hệ cấp máy tính để bàn được Microsoft phát hành cùng với Access vào năm 1992. Có công cụ cơ sở dữ liệu Jet tích hợp, được sử dụng như một giải pháp cơ sở dữ liệu quan hệ trong quản lý tin học hóa đầu tiên của máy tính cá nhân và các doanh nghiệp vừa và nhỏ)"
+
+msgid "mime_md"
+msgstr "Tài liệu Markdown (ngôn ngữ đánh dấu nhẹ được tạo độc lập bởi John Gruber vào năm 2004. Triết lý thiết kế cốt lõi là 'có thể đọc được nghĩa là có thể hiển thị', điều này thúc đẩy các tiêu chuẩn phái sinh hiện đại như GFM và CommonMark. Được sử dụng rộng rãi như một tiêu chuẩn trao đổi cốt lõi cho tài liệu kỹ thuật, cơ sở tri thức (Obsidian) và các trình tạo trang web tĩnh hiện đại)"
+
+msgid "mime_crystal"
+msgstr "Crystal Reports (định dạng tệp báo cáo cấp doanh nghiệp chuyên nghiệp của nền tảng SAP Business Intelligence (BI). Có kết nối cấp thấp với nhiều nguồn dữ liệu và khả năng hiển thị biểu đồ động phức tạp, được sử dụng rộng rãi để tạo báo cáo chuyên nghiệp trong các hệ thống tài chính và phân tích dữ liệu của các công ty đa quốc gia)"
+
+msgid "mime_libreoffice"
+msgstr "Tài liệu LibreOffice (định dạng độc quyền của bộ ứng dụng văn phòng mã nguồn mở được xây dựng bởi The Document Foundation vào năm 2010 dựa trên nhánh OpenOffice. Triển khai sâu sắc tiêu chuẩn quốc tế ODF (Định dạng Tài liệu Mở) của W3C. Nó là nền tảng văn phòng của hệ sinh thái mã nguồn mở hiện đại)"
+
+msgid "mime_encrypt"
+msgstr "ENCRYPT tệp được mã hóa (dữ liệu nhị phân hoặc văn bản thô được xử lý thông qua một thuật toán mã hóa đối xứng hoặc bất đối xứng cụ thể. Bao gồm các định dạng phái sinh cốt lõi như .enc, .pgp, .gpg. Ở lớp mạng, được sử dụng để đảm bảo tính bảo mật và xác minh tính toàn vẹn của dữ liệu không công khai)"
+
+msgid "mime_gpx"
+msgstr "GPX dữ liệu quỹ đạo vệ tinh (định dạng trao đổi hệ thống định vị toàn cầu dựa trên kiến trúc XML. Được sử dụng đặc biệt để mô tả tọa độ địa lý, điểm đường, tuyến đường và quỹ đạo lịch sử. Nó là một tiêu chuẩn dữ liệu mở chung cho các thiết bị thể thao di động hiện đại, điều hướng xe hơi và Hệ thống Thông tin Địa lý (GIS))"
+
+msgid "mime_diskimage"
+msgstr "Disk Image ảnh đĩa (bao gồm các tệp ảnh khu vực cấp thấp từng byte một của đĩa vật lý hoặc phương tiện quang học như ISO, DMG, IMG. Được sử dụng để triển khai hệ thống cấp thấp, phân phối phần mềm dung lượng lớn an toàn và sao lưu dữ liệu hoàn chỉnh cấp vật lý của phương tiện lưu trữ)"
+
+msgid "mime_vm"
+msgstr "VM ảnh máy ảo (bao gồm các ảnh đĩa vật lý được ảo hóa như VMDK, VDI, VHDX, OVA. Là nền tảng của các nền tảng VMware, VirtualBox và Hyper-V, được sử dụng để mô phỏng phần cứng cấp thấp ở cấp hệ thống, ảnh chụp nhanh phiên bản và phân phối cơ sở hạ tầng đám mây)"
+
+msgid "mime_torrent"
+msgstr "BitTorrent tệp torrent (chỉ mục tải xuống phân tán P2P ngang hàng được thiết kế bởi Bram Cohen vào năm 2001. Dựa trên mã hóa Bencode, lưu trữ siêu dữ liệu tổng kiểm tra cấp thấp của tệp gốc và thông tin định địa chỉ máy chủ Tracker. Nó là phương tiện cốt lõi để phân phối luồng mạng phi tập trung)"
+
+msgid "mime_gis"
+msgstr "GIS dữ liệu không gian địa lý (tiêu chuẩn dữ liệu hệ thống thông tin địa lý với Shapefile và GeoJSON làm cốt lõi. Bao gồm tọa độ hình học đa chiều, cấu trúc liên kết lớp và dữ liệu thuộc tính. Được sử dụng rộng rãi để hiển thị bản đồ kỹ thuật số độ chính xác cao, viễn thám vệ tinh và phân tích hình học không gian)"
+
+msgid "mime_ebook"
+msgstr "EBOOK sách điện tử (định dạng xuất bản kỹ thuật số với tiêu chuẩn quốc tế mở EPUB của W3C và kiến trúc độc quyền MOBI/AZW của Amazon Kindle làm cốt lõi. Hỗ trợ bố cục luồng thích ứng, đóng gói siêu dữ liệu và bảo vệ bản quyền kỹ thuật số DRM. Nó là phương tiện phổ quát để đọc kỹ thuật số trên các thiết bị di động)"
+
+msgid "mime_avif"
+msgstr "AVIF hình ảnh hiệu quả cao (tiêu chuẩn hình ảnh siêu cao cấp thế hệ tiếp theo được giới thiệu bởi Liên minh Phương tiện Mở (AOMedia) vào năm 2019. Dựa trên công nghệ khung hình chính mã hóa video AV1, tỷ lệ nén tốt hơn WebP 50% và hỗ trợ nguyên bản Dải động cao (HDR). Nó là tiêu chuẩn chính thống để truyền hình ảnh web hiện đại)"
+
+msgid "mime_markdown"
+msgstr "Markdown tài liệu nhẹ (ngôn ngữ đánh dấu tài liệu văn bản được tạo độc lập bởi John Gruber vào năm 2004. Sử dụng thiết kế khai báo văn bản thuần túy, thiết kế cú pháp của nó được lấy cảm hứng từ reStructuredText. Được sử dụng rộng rãi cho các dự án GitHub, tài liệu kỹ thuật cấp kỹ sư và hệ sinh thái quản lý nội dung tĩnh hiện đại)"
+
+msgid "mime_yaml"
+msgstr "YAML cấu hình tuần tự hóa (định dạng tuần tự hóa dữ liệu có thể đọc được bằng con người được thiết kế bởi Clark Evans và những người khác vào năm 2001. Dựa trên thụt lề phân cấp và ánh xạ khóa-giá trị. Hiện đã được thiết lập như một tiêu chuẩn cấu hình cơ sở hạ tầng gốc đám mây cho điều phối vùng chứa Kubernetes, tự động hóa Ansible và Docker Compose)"
+
+msgid "mime_toml"
+msgstr "TOML cấu hình ngữ nghĩa (ngôn ngữ tối giản được thiết kế bởi Tom Preston-Werner vào năm 2013. Có các lợi thế thiết kế cấp thấp như kiểu mạnh, ánh xạ rõ ràng và rõ ràng về mặt ngữ nghĩa. Hiện được sử dụng rộng rãi như một tệp cấu hình chuẩn hóa cho các chuỗi công cụ hiện đại của Rust (Cargo), Python (pyproject.toml) và Go)"
+
+msgid "mime_vue"
+msgstr "Vue thành phần một tệp (định dạng SFC độc quyền của khuôn khổ web lũy tiến được giới thiệu bởi Evan You vào năm 2014. Trong một tệp duy nhất, nó thực hiện việc tách biệt các mối quan tâm của HTML/CSS/JS và ràng buộc trạng thái phản ứng, thúc đẩy sâu sắc các ứng dụng giao diện người dùng tương tác web hiện đại và các công cụ trang web tĩnh quy mô lớn)"
+
+msgid "mime_wasm"
+msgstr "WebAssembly mô-đun nhị phân (tiêu chuẩn mã byte cấp thấp hiệu suất cao cho web được thiết lập bởi W3C vào năm 2017. Cho phép các ngôn ngữ kiểu mạnh như C/C++/Rust biên dịch đến mục tiêu hộp cát trình duyệt, cung cấp hiệu quả thực thi gần với phần cứng gốc. Nó là nền tảng của điện toán biên web hiện đại)"
+
+msgid "mime_jsx"
+msgstr "React JSX thành phần (phần mở rộng cú pháp JavaScript XML được Facebook phát hành cùng với khuôn khổ React vào năm 2013. Hỗ trợ xây dựng cấu trúc ảo DOM một cách khai báo trong JavaScript, thực hiện mô hình phát triển giao diện người dùng dựa trên thành phần 'UI là một hàm của trạng thái')"
+
+msgid "mime_tsx"
+msgstr "TypeScript TSX thành phần (kết hợp luồng của cú pháp kiểu mạnh TypeScript được Microsoft phát triển vào năm 2012 và JSX. Tiêm kiểm tra kiểu thời gian biên dịch tĩnh và các ràng buộc giao diện vào phát triển thành phần React. Nó là một tiêu chuẩn mã để phát triển an toàn các hệ thống giao diện người dùng lớn hiện đại)"
+
+msgid "mime_heif"
+msgstr "HEIF hình ảnh hiệu quả cao (định dạng tệp hình ảnh hiệu quả cao được thiết lập bởi tổ chức MPEG vào năm 2015. Dựa trên thuật toán mã hóa video HEVC (H.265), hỗ trợ chứa nhiều hình ảnh khung, bản đồ độ sâu và siêu dữ liệu trong một khối lượng rất nhỏ. Nó là một tiêu chuẩn lưu trữ độc quyền cho các hệ điều hành di động hiện đại và các thiết bị đầu cuối thông minh)"
+
+msgid "mime_heic"
+msgstr "HEIC hình ảnh hiệu quả cao (định dạng bitmap độc quyền của Apple được triển khai dựa trên tiêu chuẩn quốc tế HEIF. Là tiêu chuẩn lưu trữ ảnh mặc định của iPhone hiện đại, nó nhận được mã hóa/giải mã cấp phần cứng iOS/macOS và hỗ trợ hệ điều hành gốc. Trong khi đảm bảo chất lượng hình ảnh cao, nó giảm đáng kể không gian lưu trữ cơ bản)"
+
+msgid "mime_gltf"
+msgstr "glTF mô hình tài sản 3D (tiêu chuẩn định dạng truyền GL được phát hành bởi Khronos Group vào năm 2015. Sử dụng kiến trúc JSON để mô tả cảnh ba chiều, được mệnh danh là 'JPEG của lĩnh vực 3D'. Nó là một tiêu chuẩn công nghiệp nhẹ để hiển thị WebGL/WebGPU hiện đại và thực tế ảo)"
+
+msgid "mime_glb"
+msgstr "GLB mô hình 3D nhị phân (phiên bản đóng gói nhị phân hoàn toàn, không mất dữ liệu của mô hình tài sản glTF. Kết hợp cấu trúc cảnh, dữ liệu đỉnh lưới cấp thấp, vật liệu và bản đồ kết cấu thành một tệp duy nhất. Được thiết kế đặc biệt để truyền tải hiệu quả và phân phối luồng các tài sản 3D web đa nền tảng)"
+
+msgid "mime_gls"
+msgstr "GLOSSARY bảng thuật ngữ dữ liệu (tệp định nghĩa tập hợp thuật ngữ dành riêng cho hệ thống quản lý tài liệu và ngữ liệu có cấu trúc. Chứa các định nghĩa thuật ngữ tiêu chuẩn tích hợp, ánh xạ đa ngôn ngữ và ánh xạ siêu dữ liệu. Được sử dụng để duy trì tính nhất quán về khái niệm trong phân tích văn bản tự động và hệ thống xuất bản nội dung)"
+
+msgid "mime_cbz"
+msgstr "CBZ sách truyện tranh (định dạng lưu trữ hình ảnh truyện tranh độc quyền dựa trên cấu trúc nén ZIP. Bên trong đóng gói một chuỗi bitmap tĩnh liên tục. Nó là một tiêu chuẩn vùng chứa nhẹ phổ quát để xuất bản truyện tranh kỹ thuật số và sưu tập cục bộ đa nền tảng)"
+
+msgid "mime_cbr"
+msgstr "CBR sách truyện tranh (định dạng lưu trữ hình ảnh truyện tranh độc quyền dựa trên cấu trúc nén RAR. Sử dụng thuật toán RAR để đóng gói chuỗi bitmap tĩnh, có tỷ lệ nén tương đối cao, có hỗ trợ khả năng tương thích rộng rãi trong lĩnh vực phân phối truyện tranh kỹ thuật số)"
+
+msgid "mime_fb2"
+msgstr "FB2 sách điện tử (tiêu chuẩn sách điện tử FictionBook 2.0 đầu những năm 2000. Sử dụng cấu trúc XML thuần túy để mô tả các thuộc tính sách và phân cấp văn bản. Có hỗ trợ rộng rãi trong hệ sinh thái sách điện tử mã nguồn mở và các trình đọc xuất bản kỹ thuật số kế thừa)"
+
+msgid "mime_kepub"
+msgstr "KEPUB sách điện tử (định dạng sách điện tử nâng cao độc quyền của Kobo phát triển từ tiêu chuẩn EPUB. Thực hiện tối ưu hóa hiển thị cấp thấp cho trình đọc sách điện tử cấp phần cứng của Kobo, cung cấp bố cục trang hiệu quả hơn và tương tác thống kê đọc)"
+
+msgid "mime_m4b"
+msgstr "M4B sách nói (định dạng sách nói dựa trên kiến trúc vùng chứa MPEG-4 Part 14 (MP4). Sử dụng mã hóa AAC, hỗ trợ nguyên bản định vị dấu trang cấp thấp, tiếp tục phát từ điểm dừng và nhúng chương. Đã từng là định dạng tiêu chuẩn của hệ sinh thái Apple iTunes)"
+
+msgid "mime_kfx"
+msgstr "Kindle KFX định dạng (định dạng xuất bản kỹ thuật số nâng cao độc quyền được Amazon phát hành cùng với Kindle vào năm 2015. Hỗ trợ bố cục chữ ghép nâng cao, hiển thị phông chữ động cao và tải trang luồng cấp nhân (Page Flip). Nó là tiêu chuẩn cốt lõi của nền tảng Kindle hiện đại)"
+
+msgid "mime_chm"
+msgstr "CHM tệp trợ giúp đã biên dịch (hệ thống thông tin trợ giúp HTML đã được biên dịch do Microsoft phát hành vào năm 1997. Đóng gói dữ liệu siêu văn bản và chỉ mục cơ bản vào một vùng chứa nhị phân duy nhất. Trong một thời gian dài, nó là định dạng tiêu chuẩn cho tài liệu trợ giúp ngoại tuyến cục bộ của phần mềm Windows)"
+
+msgid "mime_mht"
+msgstr "MHT kho lưu trữ trang web (định dạng siêu văn bản tổng hợp MIME được Microsoft phát hành vào năm 1999. Dựa trên tiêu chuẩn RFC 2557, nó đóng gói mã nguồn HTML, CSS, JS và hình ảnh nhúng vào một tệp văn bản duy nhất. Được sử dụng để lưu trang web ngoại tuyến trong các trình duyệt kế thừa)"
+
+msgid "mime_wml"
+msgstr "WML ngôn ngữ đánh dấu không dây (tiêu chuẩn đánh dấu thiết bị di động được thiết lập bởi diễn đàn WAP (Giao thức Ứng dụng Không dây) vào năm 1999. Dựa trên đặc tả XML, được thiết kế đặc biệt cho các mạng di động không dây băng thông hẹp thời kỳ đầu và điện thoại phổ thông có hiệu suất thấp. Trong hệ sinh thái web hiện đại, nó thuộc về công nghệ kế thừa đã nghỉ hưu)"
+
+msgid "mime_xhtml"
+msgstr "XHTML trang web siêu văn bản (tiêu chuẩn W3C năm 2000, đóng gói ngôn ngữ đánh dấu siêu văn bản nghiêm ngặt dựa trên kiến trúc XML. Năm 2009, W3C đã ngừng phát triển công nghệ của nó và chuyển hoàn toàn sang đặc tả HTML5. Hiện được sử dụng chủ yếu để hiển thị trang web ngữ nghĩa trong các hệ thống kế thừa)"
+
+msgid "mime_xml"
+msgstr "XML tài liệu có cấu trúc (ngôn ngữ đánh dấu có thể mở rộng từ tiêu chuẩn W3C năm 1998. Có kiến trúc thẻ tự mô tả. Nó là định dạng nền tảng cơ bản cho các dịch vụ web mạng (SOAP/REST), tệp cấu hình cấp hệ thống (XSD) và trao đổi dữ liệu đa nền tảng)"
+
+msgid "mime_sgml"
+msgstr "SGML ngôn ngữ đánh dấu tổng quát (tiêu chuẩn quốc tế ISO 8879 năm 1986 cho ngôn ngữ đánh dấu tổng quát tiêu chuẩn. Là người tiên phong trong ngành về mô tả có cấu trúc của tài liệu điện tử, cả XML và các đặc tả HTML ban đầu đều bắt nguồn từ ngôn ngữ siêu chuẩn này)"
+
+msgid "mime_apng"
+msgstr "APNG đồ họa động (phần mở rộng động của Đồ họa Mạng Di động (PNG) được phát triển bởi Mozilla vào năm 2004. Hỗ trợ màu thực 24-bit và độ trong suốt bán phần của kênh Alpha 8-bit. Nó là một giải pháp thay thế độ phân giải cao cho định dạng GIF trong các kịch bản web hiện đại)"
+
+msgid "mime_bmp"
+msgstr "BMP bitmap gốc (định dạng bitmap độc lập thiết bị của nền tảng Microsoft được thiết lập từ thời Windows 1.0. Sử dụng lưu trữ không mất dữ liệu, không nén, mặc dù kích thước của nó thường lớn hơn PNG từ 3-10 lần, nhưng do không có chi phí mã hóa/giải mã, nó vẫn được nhúng rộng rãi trong các thành phần cốt lõi của Windows 11, các phân đoạn tài nguyên EXE/MSI và bộ đệm đồ họa của trình điều khiển kế thừa)"
+
+msgid "mime_cdr"
+msgstr "CDR đồ họa vector (định dạng tệp nguồn thiết kế vector chuyên nghiệp CorelDRAW độc quyền của công ty Corel Canada. Hỗ trợ quản lý màu nhiều lớp, các nút đường viền toán học phức tạp và dữ liệu bố cục cấp in ấn. Nó là một định dạng chuyên dụng cho lĩnh vực in ấn phẳng chuyên nghiệp và thiết kế quảng cáo)"
+
+msgid "mime_gif"
+msgstr "GIF hình ảnh màu được lập chỉ mục (định dạng bitmap màu được lập chỉ mục 8-bit được phát triển bởi CompuServe vào năm 1987. Dựa trên thuật toán LZW, bị giới hạn ở 256 cấp độ màu và độ trong suốt một màu, ở tốc độ khung hình cao, kích thước trở nên cồng kềnh. Hiện đang dần được thay thế bởi các tiêu chuẩn hình ảnh động hiệu quả cao hiện đại như APNG, WebP)"
+
+msgid "mime_ico"
+msgstr "ICO biểu tượng hệ thống (định dạng đóng gói tài nguyên biểu tượng gốc của Windows. Hỗ trợ nhúng hỗn hợp các biến thể hình ảnh với nhiều độ phân giải pixel và độ sâu màu trong một vùng chứa duy nhất. Nó cũng là một tiêu chuẩn phân phối phổ quát cho số nhận dạng chính của trang web trình duyệt hiện đại (Favicon))"
+
+msgid "mime_jpeg"
+msgstr "JPEG hình ảnh nén (định dạng hình ảnh nén mất dữ liệu của tiêu chuẩn quốc tế ISO 10918 năm 1992. Dựa trên thuật toán Biến đổi Cosine rời rạc (DCT), đạt được tỷ lệ nén cao trong khi vẫn duy trì chất lượng hình ảnh hiện thực tuyệt vời. Nó là tiêu chuẩn thực tế tuyệt đối cho nhiếp ảnh tĩnh trên internet toàn cầu)"
+
+msgid "mime_jpg"
+msgstr "JPEG hình ảnh nén (định dạng hình ảnh nén mất dữ liệu của tiêu chuẩn quốc tế ISO 10918 năm 1992. Dựa trên thuật toán Biến đổi Cosine rời rạc (DCT), đạt được tỷ lệ nén cao trong khi vẫn duy trì chất lượng hình ảnh hiện thực tuyệt vời. Nó là tiêu chuẩn thực tế tuyệt đối cho nhiếp ảnh tĩnh trên internet toàn cầu)"
+
+msgid "mime_png"
+msgstr "PNG hình ảnh không mất dữ liệu (tiêu chuẩn Đồ họa Mạng Di động được W3C khuyến nghị vào năm 1996. Sử dụng thuật toán nén không mất dữ liệu, hỗ trợ nguyên bản màu thực 24-bit và độ trong suốt kênh Alpha 8-bit. Là một giải pháp thay thế độ phân giải cao cho GIF tĩnh cổ điển, nó là tiêu chuẩn thực tế tuyệt đối cho hình ảnh pixel không mất dữ liệu trên internet)"
+
+msgid "mime_ps"
+msgstr "PostScript tệp mô tả trang (ngôn ngữ mô tả trang dựa trên ngăn xếp được Adobe giới thiệu vào năm 1985. Là tiền thân công nghệ của định dạng PDF, nó thực hiện ở cấp thấp kiểu chữ độc lập phần cứng và hiển thị đồ họa vector độ chính xác cao. Nó là một tiêu chuẩn nền tảng cho lĩnh vực xuất bản in ấn chuyên nghiệp và in laser)"
+
+msgid "mime_psb"
+msgstr "PSB tài liệu lớp lớn (định dạng đóng gói tệp nguồn siêu lớn độc quyền của Adobe Photoshop. Nó phá vỡ kích thước vật lý 2GB và giới hạn định địa chỉ nội bộ 30.000 pixel của định dạng PSD tiêu chuẩn. Được thiết kế đặc biệt để lưu trữ các tài sản nghệ thuật kỹ thuật số khổng lồ, quy mô siêu lớn, có độ sâu lớp cao)"
+
+msgid "mime_psd"
+msgstr "PSD tệp nguồn thiết kế lớp (định dạng kỹ thuật hình ảnh phân lớp độc quyền của Adobe Photoshop. Là một vùng chứa tiêu chuẩn công nghiệp trong lĩnh vực đồ họa và hình ảnh, nó đóng gói một cách tự nhiên toàn bộ cây hiển thị lớp, kênh bitmap, đường cắt vector và các chế độ hòa trộn hỗn hợp, hỗ trợ chỉnh sửa toàn bộ dữ liệu không mất mát)"
+
+msgid "mime_webp"
+msgstr "WebP hình ảnh hiệu quả cao (tiêu chuẩn mã hóa đồ họa web phổ quát được Google giới thiệu vào năm 2010. Bắt nguồn từ công nghệ khung hình chính video VP8, tương thích hoàn hảo với hiển thị mất dữ liệu, không mất dữ liệu, bán trong suốt và động. Giảm kích thước 25-35% so với PNG cùng chất lượng. Nó là nền tảng để tải trang web hiện đại với hiệu suất cao)"
+
+msgid "mime_woff"
+msgstr "WOFF tệp glyph web (định dạng phông chữ web mở được tạo vào năm 2009 và trở thành tiêu chuẩn W3C vào năm 2012. Về bản chất, nó là một sự đóng gói nén không mất dữ liệu luồng của cấu trúc phông chữ TTF/OTF tiêu chuẩn, giúp tối ưu hóa đáng kể chi phí băng thông truyền mạng. Nó là một định dạng phổ quát cho các biểu tượng trang web hiện đại và phông chữ đám mây)"
+
+msgid "mime_7z"
+msgstr "7z kho lưu trữ nén (định dạng độc quyền của 7-Zip được phát triển bởi Igor Pavlov vào năm 1999. Dựa trên các thuật toán mã nguồn mở LZMA/LZMA2, có tỷ lệ nén cực cao. Trong cùng điều kiện, kích thước của nó thường nhỏ hơn ZIP 30-50%. Nó là một định dạng tỷ lệ nén cao phổ quát cho cộng đồng mã nguồn mở và phân phối phần mềm)"
+
+msgid "mime_ace"
+msgstr "ACE kho lưu trữ nén (định dạng nén độc quyền của WinACE từ những năm 1990. Đã từng cạnh tranh với định dạng RAR và có tỷ lệ nén tương đối cao. Sau năm 2007, quá trình phát triển công nghệ dừng lại, hiện đã được thay thế bằng các định dạng 7z và RAR. Thuộc về định dạng lưu trữ hệ thống kế thừa)"
+
+msgid "mime_bz2"
+msgstr "BZIP2 kho lưu trữ nén (định dạng nén sắp xếp khối được phát triển bởi Julian Seward vào năm 1996. Tỷ lệ nén của thuật toán cơ bản của nó cao hơn GZIP 15-20% nhưng chi phí tính toán cao hơn. Thường được sử dụng để phân phối mã nguồn nhân Linux và các gói phần mềm mã nguồn mở. Phần mở rộng tiêu chuẩn là .bz2)"
+
+msgid "mime_cab"
+msgstr "CAB kho lưu trữ nén (định dạng lưu trữ Cabinet được Microsoft phát triển độc lập vào năm 1995. Là tiêu chuẩn gói cài đặt gốc của hệ thống Windows, được sử dụng để phân phối trình điều khiển và tệp nhân. Nó cũng là vùng chứa lưu trữ cơ bản cho Windows Installer (MSI))"
+
+msgid "mime_dmg"
+msgstr "DMG ảnh đĩa (định dạng Ảnh Đĩa được Apple phát triển vào những năm 1980. Là vùng chứa tiêu chuẩn để phân phối phần mềm macOS, nó hỗ trợ gắn kết vật lý như một hệ thống tệp ảo, nén cấp thấp và mã hóa dữ liệu. Nó là định dạng chính thống để phân phối ứng dụng trong hệ sinh thái Mac)"
+
+msgid "mime_emz"
+msgstr "EMZ hình ảnh nén (phiên bản nén của Siêu tệp Nâng cao Windows EMF. Về bản chất, nó là đồ họa vector nhị phân được nén thông qua thuật toán GZIP. Được sử dụng rộng rãi để lưu trữ đồ họa vector nhúng trong các tài liệu của bộ Microsoft Office)"
+
+msgid "mime_gz"
+msgstr "GZIP kho lưu trữ nén (định dạng nén luồng tiêu chuẩn được phát triển bởi Jean-loup Gailly và Mark Adler của dự án GNU vào năm 1992. Là công cụ nén tiêu chuẩn của Unix/Linux, nó cũng là tiêu chuẩn cốt lõi để nén lớp vận chuyển HTTP (Gzip). Thường được sử dụng cùng với lưu trữ TAR)"
+
+msgid "mime_jar"
+msgstr "JAR kho lưu trữ nén (định dạng lưu trữ Java ARchive được Sun Microsystems giới thiệu vào năm 1997. Về bản chất, nó là một vùng chứa đóng gói dựa trên cấu trúc ZIP, được sử dụng để đóng gói các thư viện lớp Java và siêu dữ liệu. Nó là sản phẩm biên dịch cốt lõi cho Maven, Gradle và hệ sinh thái Android thời kỳ đầu)"
+
+msgid "mime_lzma"
+msgstr "LZMA kho lưu trữ nén (thuật toán nén chuỗi Lempel-Ziv-Markov được phát triển bởi Igor Pavlov vào năm 1998. Là công cụ cốt lõi của định dạng 7z, nó có tỷ lệ nén cực cao và các tính năng giải nén tốc độ cao. Được sử dụng rộng rãi để phân phối phần sụn phần cứng và các hệ thống nhúng)"
+
+msgid "mime_rar"
+msgstr "RAR kho lưu trữ nén (định dạng lưu trữ độc quyền của WinRAR được phát triển bởi Eugene Roshal vào năm 1993. Hỗ trợ chia thành nhiều tập, bản ghi phục hồi vật lý (ECC) và mã hóa cường độ cao. Tỷ lệ nén tốt hơn so với ZIP tiêu chuẩn, có hỗ trợ khả năng tương thích rộng rãi trong máy tính cá nhân và lĩnh vực thương mại)"
+
+msgid "mime_tar"
+msgstr "TAR gói lưu trữ (định dạng lưu trữ băng từ thời Unix V7 năm 1979. Chỉ thực hiện đóng gói luồng tệp mà không nén dữ liệu. Thường được kết hợp với GZIP/BZIP2/XZ, nó là tiêu chuẩn cơ bản cho các gói mã nguồn Linux và lưu trữ lớp hình ảnh Docker)"
+
+msgid "mime_tgz"
+msgstr "TGZ kho lưu trữ nén (định dạng kết hợp luồng của lưu trữ TAR và nén GZIP, phần mở rộng .tgz hoặc .tar.gz. Là định dạng phân phối gói phần mềm phổ biến nhất trong môi trường Unix/Linux, được sử dụng rộng rãi để triển khai biên dịch mã nguồn và phân phối gói nhị phân không cần cài đặt)"
+
+msgid "mime_tbz2"
+msgstr "TBZ2 kho lưu trữ nén (định dạng kết hợp luồng của lưu trữ TAR và nén BZIP2, phần mở rộng .tbz2 hoặc .tar.bz2. So với TGZ, có thể tăng thêm tỷ lệ nén 15-20%, phù hợp để truyền tệp lớn, đã được sử dụng trong một thời gian dài để phân phối mã nguồn nhân Linux)"
+
+msgid "mime_xz"
+msgstr "XZ kho lưu trữ nén (định dạng tỷ lệ nén cao thế hệ tiếp theo được giới thiệu vào năm 2009. Dựa trên thuật toán LZMA2, tỷ lệ nén dữ liệu cao hơn GZIP 30-50% trong khi vẫn duy trì giải nén tốc độ cao. Nó đã được thiết lập như một tiêu chuẩn phân phối được khuyến nghị bởi nhân Linux và các trình quản lý gói chính thống (như bên trong Debian .deb))"
+
+msgid "mime_z"
+msgstr "Z kho lưu trữ nén (định dạng nén LZW của lệnh Unix compress năm 1985. Là tiêu chuẩn nén tiêu chuẩn của các hệ thống Unix thời kỳ đầu, hiện đã được thay thế hoàn toàn bằng định dạng GZIP hiệu quả hơn. Trong lưu lượng truy cập mạng hiện đại, nó là một định dạng lịch sử kế thừa hiếm gặp)"
+
+msgid "mime_zip"
+msgstr "ZIP kho lưu trữ nén (định dạng lưu trữ phổ quát PKZIP được phát triển bởi Phil Katz vào năm 1989. Được hỗ trợ nguyên bản bởi các hệ điều hành chính thống. Nó là tiêu chuẩn vùng chứa được sử dụng rộng rãi nhất trên internet. JAR của Java hiện đại, APK của Android và các tài liệu Office (OOXML) đều dựa trên cấu trúc ZIP)"
+
+msgid "mime_zst"
+msgstr "Zstandard kho lưu trữ nén (tiêu chuẩn nén luồng thế hệ tiếp theo được thiết kế bởi Yann Collet của Facebook vào năm 2015. Tiếp cận tỷ lệ nén LZMA trong khi có thông lượng vượt trội hơn nhiều so với GZIP. Nó đã được áp dụng sâu rộng bởi nhân Linux (5.9+) và các trình quản lý gói Arch/Debian)"
+
+msgid "mime_lz4"
+msgstr "LZ4 kho lưu trữ nén (thuật toán nén luồng cực nhanh được phát triển bởi Yann Collet vào năm 2011. Tốc độ thông lượng nhanh hơn GZIP hơn 10 lần, có chi phí thời gian chạy CPU cực thấp. Được sử dụng rộng rãi trong nhân Linux, hệ thống tệp OpenZFS và xử lý luồng dữ liệu thời gian thực Hadoop)"
+
+msgid "mime_lzo"
+msgstr "LZO kho lưu trữ nén (thuật toán Lempel-Ziv-Oberhumer được phát triển bởi Markus Oberhumer vào năm 1996. Tập trung vào hiệu suất giải nén cực nhanh. Được nhúng rộng rãi trong các hình ảnh Squashfs của nhân Linux, phần sụn OpenWrt và các hệ thống nhúng khác nhau bị giới hạn tài nguyên)"
+
+msgid "mime_msi"
+msgstr "MSI gói cài đặt hệ thống (định dạng đóng gói dữ liệu Windows Installer được Microsoft giới thiệu vào năm 1999. Là một đặc tả triển khai tiêu chuẩn cấp ứng dụng Windows, nó hỗ trợ nguyên bản hoàn tác giao dịch cấp thấp, quản lý vòng đời thành phần và cài đặt im lặng không cần xử lý hàng loạt. Nó là tiêu chuẩn cốt lõi để phân phối phần mềm tập trung cấp doanh nghiệp và triển khai chính sách)"
+
+msgid "mime_pkg"
+msgstr "PKG gói cài đặt phần mềm đa nền tảng. 1. Gói phần mềm FreeBSD: tiêu chuẩn pkgng, phần mở rộng .pkg hoặc .txz, dựa trên nén TAR+XZ/Zstd, hỗ trợ phân giải phụ thuộc và xác minh chữ ký; 2. Gói cài đặt macOS: dựa trên định dạng Apple Installer, hỗ trợ các thành phần tùy chỉnh, tập lệnh cài đặt và gỡ cài đặt cấp hệ thống. Lần lượt là các phương tiện phân phối chính cho máy chủ BSD và hệ thống Mac."
+
+msgid "mime_apk"
+msgstr "APK gói ứng dụng Android (gói cài đặt ứng dụng truyền thống được Google phát hành cùng với Android vào năm 2008. Dựa trên cấu trúc lưu trữ ZIP, đóng gói mã byte Dalvik đã biên dịch (DEX), tệp kê khai siêu dữ liệu và tài nguyên toàn cầu. Hiện được sử dụng rộng rãi để gỡ lỗi phát triển cục bộ, phân phối bên thứ ba và cài đặt tải bên thiết bị)"
+
+msgid "mime_ipa"
+msgstr "IPA gói ứng dụng Apple (vùng chứa đóng gói dành riêng cho iOS/iPadOS được phát hành cùng với iPhone SDK vào năm 2008. Về bản chất, nó là một kho lưu trữ ZIP được bảo vệ bởi DRM FairPlay hoặc chữ ký mã cấp doanh nghiệp, chứa tệp thực thi nhị phân Mach-O, cây tài nguyên ứng dụng và cấu hình siêu dữ liệu Info.plist)"
+
+msgid "mime_hap"
+msgstr "HAP gói ứng dụng HarmonyOS (đơn vị cơ bản triển khai linh hoạt của HarmonyOS được phát hành cùng với HarmonyOS 2.0 vào năm 2020. Bao gồm mô-đun chính Entry hoặc các mô-đun chức năng mở rộng Feature. Nó là định dạng triển khai đa đầu cuối cốt lõi để phân phối thiết bị đầu cuối thông minh trong tất cả các tình huống đa đầu cuối (điện thoại, máy tính bảng, thiết bị đeo))"
+
+msgid "mime_har"
+msgstr "HAR gói chia sẻ tĩnh HarmonyOS (tệp lưu trữ thư viện chia sẻ tĩnh độc quyền của HarmonyOS. Được sử dụng để đóng gói các thành phần chung, mã tài nguyên cấp thấp và các phụ thuộc thời gian biên dịch, được liên kết tĩnh và chia sẻ bởi nhiều mô-đun HAP. Nó là nền tảng cốt lõi để phát triển dựa trên thành phần và tái sử dụng nhiều mô-đun của hệ thống HarmonyOS)"
+
+msgid "mime_aab"
+msgstr "AAB gói ứng dụng Android (định dạng phân phối động của Google Play được Google giới thiệu vào năm 2018 và được thiết lập vào năm 2021. Là một thực thể phân phối thuần túy, nó được cắt và biên dịch động bởi đám mây theo kiến trúc CPU, mật độ màn hình và ngôn ngữ của thiết bị đích, đồng thời tạo ra các APK được tối ưu hóa theo yêu cầu. Giảm chi phí băng thông truyền trung bình 35%)"
+
+msgid "mime_xapk"
+msgstr "XAPK gói ứng dụng mở rộng (tiêu chuẩn mở rộng ứng dụng không chính thức được thiết lập bởi cộng đồng Android bên thứ ba. Bằng cách đóng gói chung tệp APK tiêu chuẩn với gói mở rộng dữ liệu trò chơi OBB rất lớn, nó phá vỡ giới hạn kích thước tệp độc lập 100MB của Google Play về mặt vật lý. Được thấy rộng rãi trên các nền tảng phân phối trò chơi)"
+
+msgid "mime_appx"
+msgstr "APPX gói ứng dụng hiện đại (đặc tả triển khai ứng dụng UWP được Microsoft phát hành cùng với Windows 8 vào năm 2012. Có tính năng chạy cách ly hộp cát và gỡ cài đặt nhẹ. Là tiêu chuẩn thống trị ban đầu của Microsoft Store, trong hệ sinh thái Windows hiện đại, nó đã bước vào giai đoạn cuối của vòng đời phát triển theo hướng MSIX)"
+
+msgid "mime_msix"
+msgstr "MSIX gói ứng dụng thế hệ tiếp theo (đặc tả đóng gói tiêu chuẩn hóa hoàn toàn mới cho Windows được Microsoft phát hành vào năm 2018. Nó kết hợp hoàn hảo các tính năng hộp cát bảo mật ứng dụng của APPX với lợi thế quản lý tài sản cấp doanh nghiệp của MSI. Tương thích hoàn toàn với tất cả các loại ứng dụng Win32. Nó là tiêu chuẩn phân phối được khuyến nghị cho Windows 11)"
+
+msgid "mime_appimage"
+msgstr "AppImage gói ứng dụng không cần cài đặt (đặc tả lưu trữ thực thi duy nhất của Linux được bắt đầu vào năm 2004. Sử dụng kiến trúc tự đủ 'một ứng dụng là một tệp'. Trong thời gian chạy, nó được gắn trực tiếp thông qua cơ chế FUSE như một hệ thống tệp ảo chỉ đọc để thực thi, đạt được khả năng sử dụng ngay lập tức với không phụ thuộc trên tất cả các bản phân phối Linux)"
+
+msgid "mime_flatpak"
+msgstr "Flatpak gói ứng dụng hộp cát (tiêu chuẩn phân phối ứng dụng máy tính để bàn đa bản phân phối Linux do Red Hat và GNOME dẫn dắt vào năm 2015. Ở cấp thấp, nó dựa vào các cơ chế Namespace và Cgroups của nhân Linux để đạt được sự cô lập hộp cát bảo mật cấp ứng dụng cực kỳ nghiêm ngặt. Nó là nền tảng của các trung tâm phần mềm hệ điều hành mã nguồn mở hiện đại)"
+
+msgid "mime_snap"
+msgstr "Snap gói ứng dụng được container hóa (tiêu chuẩn triển khai Linux phổ quát được Canonical, công ty mẹ của Ubuntu, giới thiệu vào năm 2014. Sử dụng kiến trúc gắn kết hình ảnh SquashFS tự đủ, hỗ trợ cập nhật gia tăng tự động và cô lập hộp cát AppArmor nghiêm ngặt. Nó là định dạng mặc định cốt lõi của hệ sinh thái Trung tâm Phần mềm Ubuntu)"
+
+msgid "mime_deb"
+msgstr "DEB gói phần mềm hệ thống (đặc tả đóng gói mã nhị phân và mã nguồn được thiết lập bởi dự án Debian vào năm 1993. Là tiêu chuẩn cài đặt cơ bản cho Debian, Ubuntu và tất cả các hệ thống phái sinh của chúng, nó dựa trên nhân dpkg để giải nén và bảo trì, sử dụng APT làm giao diện người dùng hiệu quả của trình quản lý gói. Nó là nền tảng phân phối phần mềm trưởng thành nhất trong hệ sinh thái Linux)"
+
+msgid "mime_rpm"
+msgstr "RPM gói phần mềm hệ thống (đặc tả đóng gói trình quản lý gói Red Hat được Red Hat giới thiệu vào năm 1997. Cùng với DEB, nó được coi là một trong hai phe chính của quản lý gói truyền thống Linux. Có sẵn kiểm tra phụ thuộc cấp giao dịch và xác minh chữ ký số phần mềm cơ bản. Nó vẫn là tiêu chuẩn phân phối chính thống tuyệt đối cho các hệ sinh thái họ Red Hat như RHEL, Fedora và CentOS cho đến ngày nay)"
+
+msgid "mime_pacman"
+msgstr "Pacman gói phần mềm lưu trữ (định dạng đóng gói .pkg.tar.zst được Arch Linux thiết lập cùng với trình quản lý pacman vào năm 2002. Là cốt lõi của cơ chế cập nhật liên tục của Arch, dựa trên thuật toán nén cao tốc độ cao Zstandard, cùng với hệ sinh thái AUR (Kho lưu trữ phần mềm người dùng Arch). Nó là một tiêu chuẩn phân phối gói hiện đại thể hiện các nguyên tắc tối giản và KISS)"
+
+msgid "mime_exe"
+msgstr "EXE tệp thực thi gốc (định dạng chương trình nhị phân Thực thi Di động (PE) của nền tảng Windows. Công nghệ bắt nguồn từ cấu trúc tiêu đề MZ từ thời MS-DOS và từ năm 1993, Windows NT đã được thiết lập hoàn toàn như một đặc tả cấu trúc PE. Nó là tiêu chuẩn thực thi được sử dụng rộng rãi nhất trên thế giới cho các lệnh mã máy, phân đoạn tài nguyên tĩnh và khởi động nhân hệ thống)"
+
+msgid "mime_dll"
+msgstr "DLL thư viện liên kết động (đặc tả thư viện mã chia sẻ Thư viện Liên kết Động của nền tảng Windows. Bằng cách tải động và định vị lại các ký hiệu trong thời gian chạy, nó tiết kiệm đáng kể bộ nhớ vật lý và không gian đĩa. Là hình thức triển khai cốt lõi của Windows API, vấn đề 'Địa ngục DLL' ban đầu của nó đã được giải quyết triệt để trong thời gian hiện đại bằng cơ chế cô lập song song SxS)"
+
+msgid "mime_com"
+msgstr "COM tệp thực thi cổ điển (định dạng thực thi hình ảnh bộ nhớ (Lệnh) lâu đời nhất từ thời MS-DOS. Sử dụng thiết kế phân đoạn mã thuần túy không có cấu trúc, bị giới hạn ở giới hạn trên của phân đoạn định địa chỉ bộ nhớ vật lý 64KB. Hiện đã nghỉ hưu như một định dạng kế thừa lịch sử, nhưng trong kiến trúc Windows hiện đại, nó vẫn được sử dụng như một giao diện thành phần cụ thể để có khả năng tương thích hạn chế)"
+
+msgid "mime_aac"
+msgstr "Âm thanh AAC (tiêu chuẩn MPEG năm 1997, Advanced Audio Coding. Người kế nhiệm MP3, chất lượng âm thanh tốt hơn MP3 ở cùng tốc độ bit, định dạng âm thanh mặc định của YouTube, iTunes, Nintendo Switch)"
+
+msgid "mime_alac"
+msgstr "Âm thanh ALAC (Apple phát triển năm 2004, Apple Lossless Audio Codec. Định dạng không mất dữ liệu của Apple, mở nguồn năm 2011, định dạng mặc định cho âm thanh không mất dữ liệu trong iTunes và Apple Music)"
+
+msgid "mime_flac"
+msgstr "Âm thanh FLAC (Xiph.Org Foundation phát triển năm 2001, Free Lossless Audio Codec. Nén không mất dữ liệu, chất lượng âm thanh tương đương CD, tệp bằng khoảng một nửa WAV gốc. Mã nguồn mở miễn phí bản quyền, định dạng ưu tiên cho người đam mê âm thanh và sưu tầm nhạc số)"
+
+msgid "mime_mp3"
+msgstr "Âm thanh MP3 (Fraunhofer Institute phát triển năm 1993, MPEG-1 Audio Layer 3. Định dạng nén mất dữ liệu, tệp nhỏ chất lượng tạm được, định dạng cốt lõi của cuộc cách mạng nhạc số thập niên 2000, công thần của iPod và Napster. Bằng sáng chế hết hạn năm 2017, trở thành định dạng công cộng)"
+
+msgid "mime_oga"
+msgstr "Âm thanh Ogg Audio (Xiph.Org Foundation phát triển, định dạng âm thanh thuần túy của bộ chứa Ogg, sử dụng mã hóa Vorbis. Nguồn mở miễn phí bản quyền, hiệu quả nén tốt hơn MP3, được sử dụng rộng rãi trong các dự án nguồn mở)"
+
+msgid "mime_ogg"
+msgstr "Âm thanh OGG (Xiph.Org Foundation phát triển năm 2000, định dạng Ogg Vorbis. Nguồn mở miễn phí bản quyền, hiệu quả nén tốt hơn MP3, Spotify thời đầu sử dụng, được sử dụng rộng rãi trong hiệu ứng âm thanh game)"
+
+msgid "mime_opus"
+msgstr "Âm thanh Opus (IETF chuẩn hóa năm 2012, định dạng âm thanh nguồn mở miễn phí bản quyền, kết hợp công nghệ SILK và CELT, độ trễ cực thấp, hiệu quả nén cao nhất, định dạng âm thanh mặc định của WebRTC, WhatsApp, Discord)"
+
+msgid "mime_wav"
+msgstr "Âm thanh WAV (Microsoft và IBM phát triển năm 1991, định dạng âm thanh gốc của Windows. Mã hóa PCM không nén, chất lượng không mất dữ liệu nhưng tệp rất lớn, định dạng chuẩn cho biên tập âm thanh chuyên nghiệp)"
+
+msgid "mime_wma"
+msgstr "Âm thanh WMA (Microsoft phát triển năm 1999, Windows Media Audio. Có cả phiên bản nén mất dữ liệu/không mất dữ liệu, hỗ trợ nguyên bản trong Windows, phổ biến cùng Windows Media Player. Hiện đã bị lép vế, thay thế bởi MP3/AAC)"
+
+msgid "mime_dsf"
+msgstr "Âm thanh DSF (định dạng Direct Stream Digital, Sony và Philips phát triển. Lấy mẫu tần số cao 1 bit, định dạng âm thanh DSD tiêu chuẩn, phiên bản số của SACD, định dạng âm thanh cao cấp cho người đam mê, tệp rất lớn)"
+
+msgid "mime_ape"
+msgstr "Âm thanh APE (được Monkey's Audio phát triển vào năm 2000, định dạng nén không mất dữ liệu. Tỷ lệ nén cao hơn FLAC nhưng mã hóa chậm hơn, vẫn được sử dụng trên nền tảng Windows và trong giới đam mê âm thanh)"
+
+msgid "mime_mid"
+msgstr "Âm thanh MIDI (Hiệp hội MIDI thiết lập năm 1983, Giao diện thiết bị âm nhạc kỹ thuật số. Định dạng bản nhạc chứ không phải ghi âm, tệp rất nhỏ, tiêu chuẩn cho nhạc cụ điện tử, nhạc chuông điện thoại, hiệu ứng âm thanh game. General MIDI được chuẩn hóa năm 1991, định nghĩa 128 âm sắc nhạc cụ)"
+
+msgid "mime_m4a"
+msgstr "Âm thanh M4A (MPEG-4 Audio, định dạng bộ chứa của AAC. Định dạng tiêu chuẩn của iTunes Music Store, định dạng âm thanh chính trong hệ sinh thái Apple, hỗ trợ bảo vệ DRM)"
+
+msgid "mime_m3u"
+msgstr "Danh sách phát M3U (định dạng danh sách phát URL MP3, tệp văn bản thuần, ghi đường dẫn tệp âm thanh. Tiêu chuẩn thời Winamp, dùng cho phát thanh trực tuyến, phát trực tuyến nhạc trực tuyến. M3U8 là phiên bản UTF-8 của nó, dùng cho HTTP Live Streaming)"
+
+msgid "mime_asf"
+msgstr "Đa phương tiện trực tuyến ASF (Microsoft phát triển năm 1996, Advanced Systems Format. Bộ chứa đa phương tiện Windows Media, hỗ trợ truyền tải đồng bộ âm thanh và video. Dùng cho phát trực tiếp trên internet và phát video theo yêu cầu, WMA/WMV đều dựa trên bộ chứa ASF)"
+
+msgid "mime_avi"
+msgstr "Video AVI (Microsoft ra mắt năm 1992, tiêu chuẩn video Windows thời kỳ đầu. 'Audio Video Interleave', lưu trữ xen kẽ âm thanh và video, định dạng video phổ biến nhất thập niên 1990-2000, nay bị thay thế bởi MP4/MKV)"
+
+msgid "mime_divx"
+msgstr "Video DivX (DivX Corporation phát triển năm 1998, định dạng mã hóa video dựa trên MPEG-4. Định dạng chia sẻ video trực tuyến chính thống thập niên 2000, công nghệ đầu tiên nén chất lượng DVD xuống kích thước CD. Do tranh chấp bản quyền, sau chuyển thành bộ mã hóa thương mại)"
+
+msgid "mime_mp4"
+msgstr "Video MP4 (tiêu chuẩn MPEG năm 2001, MPEG-4 Part 14. Định dạng video phổ biến nhất thế giới, hỗ trợ mã hóa H.264/H.265, định dạng mặc định cho video trên internet, quay điện thoại, YouTube)"
+
+msgid "mime_m4v"
+msgstr "Video M4V (định dạng video của iTunes, biến thể của MP4. Định dạng video trong hệ sinh thái Apple, định dạng tiêu chuẩn cho phim và chương trình truyền hình trên iTunes Store, hỗ trợ bảo vệ bản quyền DRM)"
+
+msgid "mime_mpeg"
+msgstr "Video MPEG (tổ chức MPEG thiết lập năm 1988, Nhóm chuyên gia hình ảnh chuyển động. Người đặt nền móng cho tiêu chuẩn nén video kỹ thuật số, MPEG-1 (VCD), MPEG-2 (DVD), MPEG-4 (video trực tuyến) có ảnh hưởng sâu sắc)"
+
+msgid "mime_mkv"
+msgstr "Video MKV (dự án Matroska phát triển năm 2002, định dạng bộ chứa đa phương tiện nguồn mở. Hỗ trợ nhiều luồng âm thanh, nhiều phụ đề, chương, 'công cụ bọc', định dạng ưu tiên cho chia sẻ phim độ phân giải cao)"
+
+msgid "mime_mpg"
+msgstr "Video MPEG (phần mở rộng video MPEG-1/MPEG-2, định dạng tiêu chuẩn cho VCD và DVD. Định dạng chính cho video trên đĩa thập niên 1990-2000, nay bị thay thế bởi H.264/H.265)"
+
+msgid "mime_ogv"
+msgstr "Video Ogg Video (Xiph.Org Foundation phát triển, định dạng video của bộ chứa Ogg, sử dụng mã hóa Theora. Nguồn mở miễn phí bản quyền, một trong những tiêu chuẩn đầu tiên của video HTML5, Firefox hỗ trợ nguyên bản)"
+
+msgid "mime_ogx"
+msgstr "Bộ chứa đa phương tiện Ogg (Xiph.Org Foundation phát triển, phần mở rộng phổ dụng của bộ chứa Ogg, có thể chứa nhiều luồng như âm thanh, video, phụ đề. Tiêu chuẩn đa phương tiện nguồn mở, dùng cho game, phát trực tuyến)"
+
+msgid "mime_rm"
+msgstr "Video RealMedia (RealNetworks phát triển năm 1995, định dạng RealMedia. Người tiên phong phát trực tuyến trên internet thập niên 1990-2000, định dạng cốt lõi của trình phát RealPlayer. Điểm yếu: cần trình phát riêng, chất lượng nén kém, sau bị Flash/MP4 thay thế)"
+
+msgid "mime_flv"
+msgstr "Video Flash (định dạng xuất hiện năm 2002, định dạng Flash Video. Từng là định dạng chính của video trực tuyến, YouTube thời đầu sử dụng. Điểm yếu: cần plugin Flash, hiệu suất kém, nhiều lỗ hổng bảo mật. Từ 2015 các trang web chính chuyển sang video HTML5, nay đã bị loại bỏ)"
+
+msgid "mime_f4v"
+msgstr "Video F4V (định dạng video Flash do Adobe phát triển, người kế nhiệm của FLV. Dựa trên tiêu chuẩn MPEG-4, hỗ trợ mã hóa H.264. Bị loại bỏ cùng với công nghệ Flash, Adobe ngừng hỗ trợ năm 2020)"
+
+msgid "mime_wmv"
+msgstr "Video WMV (Microsoft phát triển năm 1999, Windows Media Video. Hỗ trợ nguyên bản trong Windows, tối ưu cho truyền tải phát trực tuyến, định dạng phổ biến trong video trực tuyến thời kỳ đầu, nay đã bị lép vế)"
+
+msgid "mime_wmf"
+msgstr "Định dạng đa phương tiện WMF (Windows Media Format, khuôn khổ đa phương tiện của Microsoft, bao gồm video WMV, âm thanh WMA, Windows Media Player hỗ trợ nguyên bản)"
+
+msgid "mime_mov"
+msgstr "Video MOV (Apple phát triển năm 1991, định dạng bộ chứa QuickTime. Định dạng chuẩn cho dựng video chuyên nghiệp, hỗ trợ nhiều codec, Final Cut Pro, Premiere hỗ trợ nguyên bản)"
+
+msgid "mime_qt"
+msgstr "Video QuickTime (Apple ra mắt năm 1991, định dạng QuickTime. Tiêu chuẩn video trên nền tảng Mac, MOV là bộ chứa, trình phát QuickTime từng được sử dụng rộng rãi. Apple ngừng phát triển phiên bản Windows năm 2016, dần bị MP4 thay thế)"
+
+msgid "mime_webm"
+msgstr "Video WebM (Google ra mắt năm 2010, định dạng video nguồn mở miễn phí bản quyền. Dựa trên bộ chứa Matroska, mã hóa VP8/VP9, định dạng video HTML5 tiêu chuẩn, định dạng phát mặc định của YouTube trên web)"
+
+msgid "mime_3gp"
+msgstr "Video 3GP (3GPP thiết lập năm 2000, định dạng video cho thiết bị di động. Tệp rất nhỏ, chất lượng hình ảnh thấp, định dạng quay video của điện thoại chức năng đời đầu, dùng để gửi MMS)"
+
+#------------------------------------------------------------------------------
+# Chiều kỹ thuật
+#------------------------------------------------------------------------------
+
+msgid "Operating Systems"
+msgstr "Hệ điều hành"
+
+msgid "Top 5 Operating Systems"
+msgstr "5 hệ điều hành hàng đầu"
+
+msgid "Unknown Robot"
+msgstr "Máy khách không xác định"
+
+msgid "User agent"
+msgstr "User agent"
+
+msgid "Browsers"
+msgstr "Trình duyệt"
+
+msgid "Top 5 Browsers"
+msgstr "5 trình duyệt hàng đầu"
+
+msgid "Unknown Robot RH"
+msgstr "Tiêu đề yêu cầu không xác định"
+
+msgid "Detailed"
+msgstr "Phiên bản thiết bị truy cập"
+
+msgid "DetailedOS"
+msgstr "Phiên bản hệ điều hành"
+
+msgid "DetailedBS"
+msgstr "Phiên bản trình duyệt"
+
+msgid "Screen sizes"
+msgstr "Kích thước màn hình"
+
+msgid "Compression"
+msgstr "Nén"
+
+msgid "In"
+msgstr "Đầu vào"
+
+msgid "Out"
+msgstr "Đầu ra"
+
+msgid "Saved"
+msgstr "Tiết kiệm"
+
+#------------------------------------------------------------------------------
+# Chiều nguồn
+#------------------------------------------------------------------------------
+
+msgid "Origin"
+msgstr "Nguồn gốc"
+
+msgid "Referers"
+msgstr "Nguồn"
+
+msgid "meta.description"
+msgstr "AWStats trình phân tích nhật ký web nâng cao - Giám sát lưu lượng truy cập web thời gian thực, phân tích khách truy cập, từ khóa công cụ tìm kiếm, thống kê trang lỗi. Hỗ trợ chế độ tối, giao diện đa ngôn ngữ, cung cấp phân tích dữ liệu toàn diện cho quản trị viên web."
+
+msgid "meta.keywords"
+msgstr "AWStats,thống kê web,phân tích nhật ký,giám sát lưu lượng,thống kê truy cập,phân tích SEO,công cụ phân tích web,Web Analytics,Log Analyzer"
+
+msgid "meta.author"
+msgstr "AWStats"
+
+msgid "og.title"
+msgstr "AWStats - Phân tích nhật ký web"
+
+msgid "og.description"
+msgstr "📊 Công cụ thống kê web nguồn mở chuyên nghiệp, phân tích lưu lượng truy cập web và hành vi khách truy cập của bạn theo thời gian thực."
+
+msgid "og.image.alt"
+msgstr "Biểu đồ thống kê AWStats"
+
+msgid "Created by"
+msgstr "Được tạo bởi %s"
+
+msgid "plugins"
+msgstr "plugin"
+
+msgid "dbip by"
+msgstr "dữ liệu từ"
+
+msgid "IPDB by"
+msgstr "dữ liệu vị trí địa lý bởi DB-IP"
+
+msgid "Configured"
+msgstr "Đã cấu hình"
+
+msgid "Missing"
+msgstr "Thiếu"
+
+msgid "OK"
+msgstr "Thành công"
+
+msgid "Unused"
+msgstr "Chưa sử dụng"
+
+msgid "Overall Health"
+msgstr "Sức khỏe tổng thể"
+
+msgid "Excellent"
+msgstr "Xuất sắc"
+
+msgid "Good"
+msgstr "Tốt"
+
+msgid "Fair"
+msgstr "Trung bình"
+
+msgid "Poor"
+msgstr "Kém"
+
+msgid "Missing icon types"
+msgstr "Loại biểu tượng bị thiếu"
+
+msgid "See"
+msgstr "Xem chi tiết"
+
+msgid "Expected Path"
+msgstr "Mô tả đường dẫn"
+
+msgid "column for file locations"
+msgstr "cột để lấy vị trí tệp"
+
+msgid "Tip: If you need to generate related icons, you can use %s to upload a logo image, and it will automatically generate all the above related icon files"
+msgstr "Mẹo: Nếu bạn cần tạo các biểu tượng liên quan, bạn có thể sử dụng %s để tải lên hình ảnh logo, nó sẽ tự động tạo tất cả các tệp biểu tượng liên quan ở trên"
+
+msgid "200: success, 404: failure"
+msgstr "200 là số thành công 404 là số thất bại"
+
+msgid "_PATH_FAVICON"
+msgstr "/favicon.ico"
+
+msgid "_PATH_APPLE_TOUCH"
+msgstr "/apple-touch-icon.png hoặc /apple-touch-icon-180x180.png"
+
+msgid "_PATH_LOGO"
+msgstr "/logo.svg hoặc /logo.png (cần tham chiếu trong HTML/JSON-LD)"
+
+msgid "_PATH_WEBMANIFEST"
+msgstr "/site.webmanifest hoặc /manifest.json"
+
+msgid "_PATH_BROWSERCONFIG"
+msgstr "/browserconfig.xml"
+
+msgid "_PATH_SAFARI_PINNED"
+msgstr "/safari-pinned-tab.svg"
+
+msgid "_PATH_SOCIAL_ICON"
+msgstr "/images/github.svg, /images/paypal.svg, v.v."
+
+msgid "Favicon"
+msgstr "Biểu tượng trang web"
+
+msgid "Apple Touch Icon (iOS/macOS)"
+msgstr "Biểu tượng Apple Touch (iPhone/iPad/Mac)"
+
+msgid "Site Logo"
+msgstr "Logo trang web"
+
+msgid "Web App Manifest (Android/Chrome)"
+msgstr "Tệp Manifest của ứng dụng web (Android/Chrome)"
+
+msgid "Windows Browser Config"
+msgstr "Cấu hình trình duyệt Windows"
+
+msgid "Safari Pinned Tab"
+msgstr "Biểu tượng tab ghim Safari"
+
+msgid "Social Icon"
+msgstr "Biểu tượng mạng xã hội"
+
+msgid "Icon Files Status"
+msgstr "Trạng thái tệp biểu tượng"
+
+msgid "Icon Type"
+msgstr "Loại biểu tượng"
+
+msgid "Total"
+msgstr "Tổng"
+
+msgid "Advanced Web Statistics"
+msgstr "Trình phân tích nhật ký nâng cao"
+
+msgid "Advanced Web Statistics %s"
+msgstr "Trình phân tích nhật ký nâng cao %s"
+
+msgid "Your browser does not support frames. Please use a modern browser."
+msgstr "Trình duyệt của bạn không hỗ trợ khung. Vui lòng sử dụng trình duyệt hiện đại."
+
+msgid "View statistics directly"
+msgstr "Xem thống kê trực tiếp"
+
+msgid "Close"
+msgstr "Đóng"
+
+msgid "Documentation Viewer"
+msgstr "Trình xem tài liệu"
+
+msgid "Direct address / Bookmarks"
+msgstr "Địa chỉ truy cập trực tiếp / Trang đánh dấu"
+
+msgid "Search Engines"
+msgstr "Công cụ tìm kiếm"
+
+msgid "Refering search engines"
+msgstr "Công cụ tìm kiếm giới thiệu"
+
+msgid "External pages"
+msgstr "Trang bên ngoài"
+
+msgid "Refering pages"
+msgstr "Trang giới thiệu"
+
+msgid "Internal pages"
+msgstr "Trang nội bộ"
+
+msgid "UnknownAccessSource"
+msgstr "Nguồn truy cập không xác định"
+
+msgid "Different refering pages"
+msgstr "Các trang giới thiệu khác nhau"
+
+msgid "Keyphrases"
+msgstr "Cụm từ khóa"
+
+msgid "Keywords"
+msgstr "Từ khóa"
+
+msgid "Keyphrases/Keywords"
+msgstr "Cụm từ khóa/Từ khóa"
+
+msgid "Different keyphrases"
+msgstr "Các cụm từ khóa khác nhau"
+
+msgid "Different keywords"
+msgstr "Các từ khóa khác nhau"
+
+#------------------------------------------------------------------------------
+# Chiều trang
+#------------------------------------------------------------------------------
+
+msgid "Viewed pages"
+msgstr "Trang đã xem"
+
+msgid "Different pages"
+msgstr "Các trang khác nhau"
+
+msgid "Entry"
+msgstr "Vị trí vào"
+
+msgid "Exit"
+msgstr "Vị trí ra"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Referer"
+msgstr "Người giới thiệu"
+
+msgid "Host"
+msgstr "Máy chủ"
+
+#------------------------------------------------------------------------------
+# Lỗi và trạng thái
+#------------------------------------------------------------------------------
+
+msgid "Error"
+msgstr "Lỗi"
+
+msgid "HTTP Status Statistics"
+msgstr "Thống kê mã trạng thái HTTP"
+
+msgid "SMTP Error codes"
+msgstr "Mã lỗi SMTP"
+
+msgid "Page not found"
+msgstr "Không tìm thấy trang được yêu cầu"
+
+msgid "Unknown error"
+msgstr "Lỗi không xác định"
+
+msgid "Abnormal traffic note"
+msgstr "Lưu lượng truy cập bất thường bao gồm: bot tìm kiếm, bot huấn luyện AI, máy quét lỗ hổng và các yêu cầu không tuân thủ đặc tả"
+
+msgid "Page detail"
+msgstr "Chi tiết trang"
+
+msgid "AWStats did not found the"
+msgstr "AWStats không tìm thấy"
+
+msgid "in your log records."
+msgstr "trong bản ghi nhật ký của bạn"
+
+msgid "AWStats did not find any valid log lines that match your"
+msgstr "AWStats không tìm thấy dòng nhật ký hợp lệ nào khớp với"
+
+msgid "parameter, in the"
+msgstr "tham số, trong"
+
+msgid "th first non commented lines read of your log."
+msgstr "dòng đầu tiên không phải nhận xét được đọc từ nhật ký của bạn"
+
+msgid "Your log file"
+msgstr "Tệp nhật ký của bạn"
+
+msgid "must have a bad format or"
+msgstr "có thể có định dạng không đúng hoặc"
+
+msgid "parameter setup does not match this format."
+msgstr "thiết lập tham số không khớp với định dạng này"
+
+msgid "Your AWStats"
+msgstr "AWStats của bạn"
+
+msgid "parameter is:"
+msgstr "tham số là:"
+
+msgid "This means each line in your web server log file need to have:"
+msgstr "Điều này có nghĩa là mỗi dòng trong tệp nhật ký máy chủ web của bạn cần có:"
+
+msgid "combined log format"
+msgstr "định dạng nhật ký kết hợp"
+
+msgid "MSIE Extended W3C log format"
+msgstr "định dạng nhật ký W3C mở rộng của MSIE"
+
+msgid "WebStar native log format"
+msgstr "định dạng nhật ký gốc của WebStar"
+
+msgid "common log format"
+msgstr "định dạng nhật ký phổ biến"
+
+msgid "Lotus Notes/Lotus Domino"
+msgstr "Lotus Notes/Lotus Domino"
+
+msgid "the following personalized log format:"
+msgstr "định dạng nhật ký cá nhân hóa sau:"
+
+msgid "And this is an example of records AWStats found in your log file (the record number"
+msgstr "Và đây là ví dụ về bản ghi AWStats tìm thấy trong tệp nhật ký của bạn (số bản ghi"
+
+msgid "in your log):"
+msgstr "trong nhật ký của bạn):"
+
+#------------------------------------------------------------------------------
+# Linh tinh
+#------------------------------------------------------------------------------
+
+msgid "Extra/Marketing"
+msgstr "Bổ sung/Tiếp thị"
+
+#------------------------------------------------------------------------------
+# Văn bản giao diện
+#------------------------------------------------------------------------------
+
+msgid "Current site"
+msgstr "Vị trí hiện tại"
+
+msgid "Web Site"
+msgstr "Trang web"
+
+msgid "Last Update"
+msgstr "Cập nhật lần cuối"
+
+msgid "Never updated"
+msgstr "Chưa bao giờ cập nhật"
+
+msgid "No qualified records found in log"
+msgstr "Không tìm thấy bản ghi đủ điều kiện trong nhật ký"
+
+msgid "corrupted"
+msgstr "bị hỏng"
+
+msgid "comments"
+msgstr "nhận xét"
+
+msgid "Blank"
+msgstr "Trống"
+
+msgid "dropped"
+msgstr "bị loại bỏ"
+
+msgid "Update now"
+msgstr "Cập nhật ngay"
+
+msgid "Back to main page"
+msgstr "Quay lại trang chính"
+
+msgid "Close window"
+msgstr "Đóng cửa sổ"
+
+msgid "Back page"
+msgstr "Quay lại trang trước"
+
+msgid "Navigation"
+msgstr "Điều hướng"
+
+msgid "Summary"
+msgstr "Tóm tắt"
+
+msgid "Local"
+msgstr "Nội bộ"
+
+msgid "External"
+msgstr "Bên ngoài"
+
+msgid "Others (email senders)"
+msgstr "Khác (người gửi email)"
+
+msgid "Others (email receivers)"
+msgstr "Khác (người nhận email)"
+
+msgid "Others"
+msgstr "Khác"
+
+msgid "Only 10 lines of browser data are currently displayed"
+msgstr "Hiện chỉ hiển thị 10 dòng dữ liệu trình duyệt, vui lòng xem danh sách đầy đủ"
+
+msgid "Others (unknown browsers)"
+msgstr "Khác (trình duyệt không xác định)"
+
+msgid "Others (operating systems)"
+msgstr "Khác (hệ điều hành)"
+
+msgid "Others (unknown OS)"
+msgstr "Khác (hệ điều hành không xác định)"
+
+msgid "Others (search engines)"
+msgstr "Khác (công cụ tìm kiếm)"
+
+msgid "Others (referring pages)"
+msgstr "Khác (trang giới thiệu)"
+
+msgid "Others (keyphrases)"
+msgstr "Khác (cụm từ khóa)"
+
+msgid "Others (keywords)"
+msgstr "Khác (từ khóa)"
+
+msgid "Only first 10 robots shown"
+msgstr "Danh sách hiện tại chỉ hiển thị 10 robot, vui lòng xem danh sách đầy đủ"
+
+msgid "Failed to obtain access record"
+msgstr "Không thể lấy bản ghi vào"
+
+msgid "Failed to obtain leave record"
+msgstr "Không thể lấy bản ghi ra"
+
+msgid "Other pages"
+msgstr "Trang khác"
+
+msgid "Low Traffic IP Summary"
+msgstr "Tổng hợp IP không xác định có lưu lượng thấp"
+
+msgid "Failed to obtain IP data"
+msgstr "Tổng hợp IP đã biết khác"
+
+msgid "Failed to obtain the relevant data"
+msgstr "Không lấy được dữ liệu liên quan"
+
+msgid "Limited list of countries and regions"
+msgstr "Hiện chỉ hiển thị 10 dòng, vui lòng xem danh sách đầy đủ cho các quốc gia và khu vực bổ sung"
+
+msgid "currentVisitorData"
+msgstr "Hiện chỉ hiển thị 10 dòng dữ liệu khách truy cập, vui lòng xem danh sách đầy đủ"
+
+msgid "Others (robots main)"
+msgstr "Khác (robot)"
+
+msgid "Others (worms)"
+msgstr "Khác (sâu)"
+
+msgid "Displaying10RowsPageMorePleaseViewFullList"
+msgstr "Danh sách hiện tại chỉ hiển thị 10 trang, vui lòng xem danh sách đầy đủ"
+
+msgid "Others (OS main)"
+msgstr "Khác (hệ thống)"
+
+msgid "Others (browsers main)"
+msgstr "Khác (trình duyệt)"
+
+msgid "Others (screen sizes)"
+msgstr "Khác (kích thước)"
+
+msgid "Others (search engines main)"
+msgstr "Khác (công cụ tìm kiếm)"
+
+msgid "Others (referring pages main)"
+msgstr "Khác (trang giới thiệu)"
+
+msgid "Others (keyphrases main)"
+msgstr "Khác (cụm từ khóa)"
+
+msgid "Others (keywords main)"
+msgstr "Khác (từ khóa)"
+
+# 1xx
+msgid "Continue"
+msgstr "Tiếp tục gửi nội dung còn lại"
+
+msgid "Switching Protocols"
+msgstr "Đang chuyển giao thức"
+
+msgid "Processing (WebDAV)"
+msgstr "Đang xử lý (vui lòng đợi)"
+
+msgid "Early Hints"
+msgstr "Máy chủ đang chuẩn bị tài nguyên"
+
+# 2xx
+msgid "[Miscellaneous successes]"
+msgstr "Trạng thái thành công khác"
+
+msgid "Request successful"
+msgstr "Yêu cầu thành công"
+
+msgid "Created successfully"
+msgstr "Tạo thành công"
+
+msgid "Accepted - processing"
+msgstr "Đã chấp nhận, đang xử lý"
+
+msgid "Non-authoritative information (from cache) (from cache)"
+msgstr "Thông tin không có thẩm quyền (từ bộ nhớ đệm)"
+
+msgid "Success, no content returned"
+msgstr "Thành công, không có nội dung trả về"
+
+msgid "Reset content"
+msgstr "Vui lòng đặt lại biểu mẫu"
+
+msgid "Partial content (resume download)"
+msgstr "Nội dung một phần (hỗ trợ tiếp tục tải xuống)"
+
+msgid "Multi-status (WebDAV)"
+msgstr "Đa trạng thái (thao tác hàng loạt WebDAV)"
+
+msgid "Already reported (WebDAV)"
+msgstr "Đã báo cáo (tránh trùng lặp)"
+
+msgid "IM used"
+msgstr "Đã sử dụng phần mở rộng giao thức IM"
+
+# 3xx
+msgid "[Miscellaneous redirections]"
+msgstr "Chuyển hướng khác"
+
+msgid "Multiple choices"
+msgstr "Nhiều lựa chọn"
+
+msgid "Moved permanently - update your links"
+msgstr "Đã di chuyển vĩnh viễn, vui lòng cập nhật liên kết của bạn"
+
+msgid "Temporary redirect - URL unchanged"
+msgstr "Chuyển hướng tạm thời, địa chỉ không thay đổi"
+
+msgid "See other"
+msgstr "Vui lòng xem địa chỉ khác"
+
+msgid "Not modified - using cached version"
+msgstr "Không sửa đổi, sử dụng phiên bản bộ nhớ đệm"
+
+msgid "Use proxy"
+msgstr "Vui lòng sử dụng proxy"
+
+msgid "Switch proxy"
+msgstr "Vui lòng chuyển proxy"
+
+msgid "Temporary redirect (keep method)"
+msgstr "Chuyển hướng tạm thời (giữ phương thức yêu cầu)"
+
+msgid "Permanent redirect - update your links"
+msgstr "Chuyển hướng vĩnh viễn, vui lòng cập nhật liên kết của bạn"
+
+# 4xx
+msgid "[Miscellaneous client/user errors]"
+msgstr "Lỗi máy khách khác"
+
+msgid "Bad request"
+msgstr "Định dạng yêu cầu sai"
+
+msgid "Unauthorized - please log in"
+msgstr "Không được ủy quyền, vui lòng đăng nhập trước"
+
+msgid "Payment required"
+msgstr "Cần thanh toán"
+
+msgid "Forbidden - access denied"
+msgstr "Bị cấm truy cập, không đủ quyền"
+
+msgid "Page not found (404) - check for broken links"
+msgstr "Không tìm thấy trang, vui lòng kiểm tra liên kết hỏng"
+
+msgid "Method not allowed"
+msgstr "Không cho phép phương thức yêu cầu"
+
+msgid "Not acceptable"
+msgstr "Định dạng phản hồi không thể chấp nhận"
+
+msgid "Proxy authentication required"
+msgstr "Cần xác thực qua proxy"
+
+msgid "Request timeout"
+msgstr "Yêu cầu hết thời gian"
+
+msgid "Conflict - please try again"
+msgstr "Yêu cầu xung đột, vui lòng thử lại sau"
+
+msgid "Gone - permanently deleted"
+msgstr "Tài nguyên đã bị xóa vĩnh viễn"
+
+msgid "Length required"
+msgstr "Cần chỉ định độ dài nội dung"
+
+msgid "Precondition failed"
+msgstr "Điều kiện tiên quyết không thỏa mãn"
+
+msgid "Payload too large"
+msgstr "Nội dung yêu cầu quá lớn"
+
+msgid "URI too long"
+msgstr "Địa chỉ yêu cầu quá dài"
+
+msgid "Unsupported media type"
+msgstr "Không hỗ trợ loại tệp"
+
+msgid "Range not satisfiable"
+msgstr "Phạm vi yêu cầu không hợp lệ"
+
+msgid "Expectation failed"
+msgstr "Không thể đáp ứng kỳ vọng Expect"
+
+msgid "I am a teapot (April Fools)"
+msgstr "Tôi là ấm trà (trò đùa ngày Cá tháng Tư)"
+
+msgid "Page expired (Laravel)"
+msgstr "Trang đã hết hạn, vui lòng làm mới và thử lại"
+
+msgid "Method failure (Spring)"
+msgstr "Phương thức thất bại"
+
+msgid "Misdirected request"
+msgstr "Yêu cầu bị chuyển hướng sai"
+
+msgid "Unprocessable entity (WebDAV)"
+msgstr "Định dạng yêu cầu đúng nhưng không thể xử lý"
+
+msgid "Locked (WebDAV)"
+msgstr "Tài nguyên đã bị khóa (WebDAV)"
+
+msgid "Failed dependency (WebDAV)"
+msgstr "Thao tác phụ thuộc thất bại"
+
+msgid "Too early"
+msgstr "Gửi yêu cầu quá sớm"
+
+msgid "Upgrade required"
+msgstr "Cần nâng cấp giao thức"
+
+msgid "Precondition required"
+msgstr "Thiếu điều kiện tiên quyết cần thiết"
+
+msgid "Too many requests - slow down"
+msgstr "Yêu cầu quá thường xuyên, vui lòng thử lại sau"
+
+msgid "Request header fields too large (Shopify)"
+msgstr "Trường tiêu đề yêu cầu quá lớn"
+
+msgid "Request header too large"
+msgstr "Tiêu đề yêu cầu quá lớn"
+
+msgid "Login timeout (IIS)"
+msgstr "Hết thời gian đăng nhập, vui lòng đăng nhập lại"
+
+msgid "No response (nginx)"
+msgstr "Máy chủ không phản hồi"
+
+msgid "Retry with (IIS)"
+msgstr "Vui lòng thử lại sau"
+
+msgid "Blocked by Windows parental controls"
+msgstr "Bị chặn bởi kiểm soát của phụ huynh Windows"
+
+msgid "Unavailable for legal reasons"
+msgstr "Không thể truy cập vì lý do pháp lý"
+
+msgid "Client closed connection before idle timeout (AWS ELB)"
+msgstr "Máy khách đã đóng kết nối trước khi hết thời gian chờ không hoạt động (AWS ELB)"
+
+msgid "X-Forwarded-For header with >30 IP addresses (AWS ELB)"
+msgstr "Chuỗi chuyển tiếp có hơn 30 địa chỉ IP"
+
+msgid "Incompatible protocol versions (AWS ELB)"
+msgstr "Phiên bản giao thức không tương thích"
+
+msgid "Request header too large (nginx)"
+msgstr "Tiêu đề yêu cầu quá lớn"
+
+msgid "SSL certificate error (nginx)"
+msgstr "Lỗi chứng chỉ SSL"
+
+msgid "SSL certificate required (nginx)"
+msgstr "Cần chứng chỉ SSL"
+
+msgid "HTTP request sent to HTTPS port (nginx)"
+msgstr "Đã gửi yêu cầu HTTP đến cổng HTTPS"
+
+msgid "Invalid token (ArcGIS)"
+msgstr "Token không hợp lệ"
+
+msgid "Token required (ArcGIS) / Client closed request (nginx)"
+msgstr "Cần token / Máy khách đã đóng yêu cầu"
+
+msgid "Resource limit reached (cPanel)"
+msgstr "Đạt giới hạn tài nguyên (CPU/bộ nhớ)"
+
+msgid "Bandwidth limit exceeded (Apache/cPanel)"
+msgstr "Vượt quá giới hạn băng thông"
+
+# 5xx
+msgid "[Miscellaneous server errors]"
+msgstr "Lỗi máy chủ khác"
+
+msgid "Internal server error - check logs"
+msgstr "Lỗi nội bộ máy chủ, vui lòng kiểm tra nhật ký"
+
+msgid "Not implemented"
+msgstr "Máy chủ không hỗ trợ chức năng này"
+
+msgid "Bad gateway - backend error"
+msgstr "Lỗi cổng, dịch vụ backend bất thường"
+
+msgid "Service unavailable - maintenance or overload"
+msgstr "Dịch vụ không khả dụng, đang bảo trì hoặc quá tải"
+
+msgid "Gateway timeout"
+msgstr "Cổng phản hồi hết thời gian"
+
+msgid "HTTP version not supported"
+msgstr "Không hỗ trợ phiên bản giao thức HTTP"
+
+msgid "Variant also negotiates"
+msgstr "Biến thể cũng tham gia thương lượng (lỗi cấu hình)"
+
+msgid "Insufficient storage (WebDAV)"
+msgstr "Không đủ dung lượng lưu trữ"
+
+msgid "Loop detected (WebDAV)"
+msgstr "Phát hiện tham chiếu vòng lặp"
+
+msgid "Not extended"
+msgstr "Cần mở rộng thêm"
+
+msgid "Network authentication required"
+msgstr "Cần xác thực mạng"
+
+# Cloudflare
+msgid "Unknown error (Cloudflare)"
+msgstr "Lỗi không xác định"
+
+msgid "Web server is down (Cloudflare)"
+msgstr "Máy chủ web đã đóng"
+
+msgid "Connection timeout (Cloudflare)"
+msgstr "Hết thời gian kết nối"
+
+msgid "Origin is unreachable (Cloudflare)"
+msgstr "Không thể truy cập nguồn"
+
+msgid "A timeout occurred (Cloudflare)"
+msgstr "Đã xảy ra hết thời gian"
+
+msgid "SSL handshake failed (Cloudflare)"
+msgstr "Bắt tay SSL thất bại"
+
+msgid "Invalid SSL certificate (Cloudflare)"
+msgstr "Chứng chỉ SSL không hợp lệ"
+
+msgid "Railgun error (Cloudflare - obsolete)"
+msgstr "Lỗi Railgun (đã ngừng sử dụng)"
+
+msgid "Site is overloaded (SSLLabs)"
+msgstr "Trang web quá tải"
+
+msgid "Origin DNS error (Cloudflare) / Site is frozen (Pantheon)"
+msgstr "Lỗi DNS nguồn (Cloudflare) / Trang web bị đóng băng (Pantheon)"
+
+msgid "Temporarily disabled (Shopify)"
+msgstr "Tạm thời vô hiệu hóa"
+
+msgid "Unauthorized (AWS ELB)"
+msgstr "Không được ủy quyền"
+
+msgid "Network read timeout error"
+msgstr "Lỗi hết thời gian đọc mạng"
+
+msgid "Network connect timeout error"
+msgstr "Lỗi hết thời gian kết nối mạng"
+
+msgid "Unexpected token (Shopify)"
+msgstr "Token không mong đợi"
+
+msgid "Request denied (LinkedIn)"
+msgstr "Yêu cầu bị từ chối"
+
+msgid "HTTP/2 GOAWAY (AWS ELB)"
+msgstr "Đóng kết nối HTTP/2"
+
+msgid "[Unknown]"
+msgstr "Mã trạng thái không xác định"
+
+msgid "Nonstandard success response (ESMTP)"
+msgstr "Phản hồi thành công không chuẩn (ESMTP)"
+
+msgid "System status, or system help reply"
+msgstr "Trạng thái hệ thống hoặc thông báo trợ giúp hệ thống"
+
+msgid "Help message"
+msgstr "Thông báo trợ giúp"
+
+msgid "SMTP service ready (LMTP)"
+msgstr "Dịch vụ SMTP đã sẵn sàng (LMTP)"
+
+msgid "Service ready - server is ready to receive mail"
+msgstr "Dịch vụ sẵn sàng - máy chủ thư sẵn sàng nhận email"
+
+msgid "Service closing - connection is being closed"
+msgstr "Dịch vụ đang đóng - kết nối đang được đóng"
+
+msgid "Authentication successful"
+msgstr "Xác thực thành công"
+
+msgid "Requested mail action taken and completed"
+msgstr "Hành động email được yêu cầu đã được thực hiện và hoàn tất"
+
+msgid "User not local - will forward to another address"
+msgstr "Người dùng không ở máy chủ này - sẽ chuyển tiếp đến địa chỉ khác"
+
+msgid "Cannot verify recipient, but will attempt delivery"
+msgstr "Không thể xác minh người nhận, nhưng sẽ cố gắng gửi"
+
+msgid "Message accepted for delivery (DSN)"
+msgstr "Email đã được chấp nhận để gửi (DSN)"
+
+msgid "User name is a mailbox"
+msgstr "Tên người dùng là hộp thư"
+
+msgid "Authentication challenge - please respond"
+msgstr "Thử thách xác thực - vui lòng phản hồi"
+
+msgid "Start mail input - end with <CRLF>.<CRLF>"
+msgstr "Bắt đầu nhập nội dung email - kết thúc bằng <CRLF>.<CRLF>"
+
+msgid "Continue (LMTP)"
+msgstr "Tiếp tục (LMTP)"
+
+msgid "Service not available - connection closing, try again later"
+msgstr "Dịch vụ không khả dụng - đóng kết nối, vui lòng thử lại sau"
+
+msgid "Mailbox busy or temporarily unavailable (Exchange)"
+msgstr "Hộp thư bận hoặc không khả dụng tạm thời (Exchange)"
+
+msgid "Connection rate limit exceeded (Postfix)"
+msgstr "Vượt quá giới hạn tốc độ kết nối (Postfix)"
+
+msgid "Too many concurrent connections (Postfix)"
+msgstr "Số lượng kết nối đồng thời quá nhiều (Postfix)"
+
+msgid "Unable to establish connection (Postfix)"
+msgstr "Không thể thiết lập kết nối (Postfix)"
+
+msgid "Connection timed out (Postfix)"
+msgstr "Hết thời gian kết nối (Postfix)"
+
+msgid "Connection dropped due to error (Postfix)"
+msgstr "Kết nối bị hủy do lỗi (Postfix)"
+
+msgid "Mailbox temporarily locked (Exchange)"
+msgstr "Hộp thư bị khóa tạm thời (Exchange)"
+
+msgid "Too many recipients (Postfix/Exim)"
+msgstr "Số lượng người nhận quá nhiều (Postfix/Exim)"
+
+msgid "Mail server error (Exchange)"
+msgstr "Lỗi máy chủ thư (Exchange)"
+
+msgid "Received loop detected (Exim)"
+msgstr "Phát hiện nhận dạng vòng lặp (Exim)"
+
+msgid "Too many hop count (Exim)"
+msgstr "Số lần nhảy quá nhiều (Exim)"
+
+msgid "DNS lookup failed (Postfix)"
+msgstr "Tra cứu DNS thất bại (Postfix)"
+
+msgid "Unable to authenticate (Postfix)"
+msgstr "Không thể xác thực (Postfix)"
+
+msgid "TLS handshake failed (Postfix)"
+msgstr "Bắt tay TLS thất bại (Postfix)"
+
+msgid "SMTP protocol violation (Postfix)"
+msgstr "Vi phạm giao thức SMTP (Postfix)"
+
+msgid "Message size exceeds limit (Exchange)"
+msgstr "Kích thước email vượt quá giới hạn (Exchange)"
+
+msgid "Message rate limit exceeded (Postfix)"
+msgstr "Vượt quá giới hạn tốc độ email (Postfix)"
+
+msgid "Mailbox quota exceeded - temporary"
+msgstr "Hộp thư đã đầy hạn mức - trạng thái tạm thời"
+
+msgid "Domain not found (Postfix)"
+msgstr "Không tìm thấy miền (Postfix)"
+
+msgid "Message header invalid (Postfix)"
+msgstr "Tiêu đề email không hợp lệ (Postfix)"
+
+msgid "Bounce loop detected (Postfix)"
+msgstr "Phát hiện trả lại dạng vòng lặp (Postfix)"
+
+msgid "Unable to route (Postfix)"
+msgstr "Không thể định tuyến (Postfix)"
+
+msgid "Sender domain not found (Postfix)"
+msgstr "Không tìm thấy miền người gửi (Postfix)"
+
+msgid "Recipient domain not found (Postfix)"
+msgstr "Không tìm thấy miền người nhận (Postfix)"
+
+msgid "Greylisting in progress - please try again (Postgrey)"
+msgstr "Đang kiểm tra Greylisting - vui lòng thử lại sau (Postgrey)"
+
+msgid "Spam filtering in progress (SpamAssassin)"
+msgstr "Đang lọc thư rác (SpamAssassin)"
+
+msgid "Virus scanning in progress (ClamAV)"
+msgstr "Đang quét vi-rút (ClamAV)"
+
+msgid "Mailbox unavailable - try again later"
+msgstr "Hộp thư không khả dụng - vui lòng thử lại sau"
+
+msgid "Requested action aborted - error in processing"
+msgstr "Hành động được yêu cầu đã bị hủy - xảy ra lỗi trong quá trình xử lý"
+
+msgid "Insufficient system storage - try again later"
+msgstr "Không đủ dung lượng lưu trữ hệ thống - vui lòng thử lại sau"
+
+msgid "Too many messages for this recipient (Exchange)"
+msgstr "Quá nhiều email cho người nhận này (Exchange)"
+
+msgid "TLS not available (Postfix)"
+msgstr "TLS không khả dụng (Postfix)"
+
+msgid "Server unable to accept messages (Postfix)"
+msgstr "Máy chủ không thể nhận email (Postfix)"
+
+msgid "Temporary failure in DNS lookup (Exim)"
+msgstr "Lỗi tạm thời trong tra cứu DNS (Exim)"
+
+msgid "Quota exceeded - temporary"
+msgstr "Vượt quá hạn mức - trạng thái tạm thời"
+
+msgid "Message too big - temporary"
+msgstr "Email quá lớn - trạng thái tạm thời"
+
+msgid "Too many messages per connection"
+msgstr "Quá nhiều email mỗi kết nối"
+
+msgid "Load average too high (Postfix)"
+msgstr "Tải trung bình quá cao (Postfix)"
+
+msgid "Connection refused (Postfix)"
+msgstr "Kết nối bị từ chối (Postfix)"
+
+msgid "Send rate limit exceeded (Postfix)"
+msgstr "Vượt quá giới hạn tốc độ gửi (Postfix)"
+
+msgid "Recipient rate limit exceeded (Postfix)"
+msgstr "Vượt quá giới hạn tốc độ người nhận (Postfix)"
+
+msgid "Sender rate limit exceeded (Postfix)"
+msgstr "Vượt quá giới hạn tốc độ người gửi (Postfix)"
+
+msgid "IP address rate limit exceeded (Postfix)"
+msgstr "Vượt quá giới hạn tốc độ địa chỉ IP (Postfix)"
+
+msgid "MX lookup failed (Postfix)"
+msgstr "Tra cứu MX thất bại (Postfix)"
+
+msgid "A record lookup failed (Postfix)"
+msgstr "Tra cứu bản ghi A thất bại (Postfix)"
+
+msgid "PTR record lookup failed (Postfix)"
+msgstr "Tra cứu bản ghi PTR thất bại (Postfix)"
+
+msgid "Greylisting active - please try again (Postgrey)"
+msgstr "Greylisting đang hoạt động - vui lòng thử lại sau (Postgrey)"
+
+msgid "Access denied - unknown domain for sender or recipient"
+msgstr "Truy cập bị từ chối - không xác định miền cho người gửi hoặc người nhận"
+
+msgid "Sender address rejected - domain not verified (DMARC pending)"
+msgstr "Địa chỉ người gửi bị từ chối - miền chưa được xác minh (DMARC đang chờ)"
+
+msgid "Recipient address rejected - domain not verified (DMARC pending)"
+msgstr "Địa chỉ người nhận bị từ chối - miền chưa được xác minh (DMARC đang chờ)"
+
+msgid "DKIM verification pending - temporary failure"
+msgstr "Xác minh DKIM đang chờ - lỗi tạm thời"
+
+msgid "SPF verification pending - temporary failure"
+msgstr "Xác minh SPF đang chờ - lỗi tạm thời"
+
+msgid "DMARC verification pending - temporary failure"
+msgstr "Xác minh DMARC đang chờ - lỗi tạm thời"
+
+msgid "DNSBL lookup temporary failure"
+msgstr "Tra cứu DNSBL lỗi tạm thời"
+
+msgid "RHSBL lookup temporary failure"
+msgstr "Tra cứu RHSBL lỗi tạm thời"
+
+msgid "URI DNSBL lookup temporary failure"
+msgstr "Tra cứu URI DNSBL lỗi tạm thời"
+
+msgid "Temporary authentication failure (Dovecot)"
+msgstr "Xác thực lỗi tạm thời (Dovecot)"
+
+msgid "Temporary authorization failure (Sendmail)"
+msgstr "Ủy quyền lỗi tạm thời (Sendmail)"
+
+msgid "Rate limit exceeded per sender (Exim)"
+msgstr "Vượt quá giới hạn tốc độ mỗi người gửi (Exim)"
+
+msgid "Rate limit exceeded per recipient (Exim)"
+msgstr "Vượt quá giới hạn tốc độ mỗi người nhận (Exim)"
+
+msgid "Rate limit exceeded per domain (Exim)"
+msgstr "Vượt quá giới hạn tốc độ mỗi miền (Exim)"
+
+msgid "Rate limit exceeded per IP (Exim)"
+msgstr "Vượt quá giới hạn tốc độ mỗi IP (Exim)"
+
+msgid "Message queued for later delivery (Postfix)"
+msgstr "Email được xếp hàng đợi để gửi sau (Postfix)"
+
+msgid "Delivery delayed due to policy (Exchange)"
+msgstr "Gửi bị chậm do chính sách (Exchange)"
+
+msgid "Temporary failure in content filter"
+msgstr "Bộ lọc nội dung lỗi tạm thời"
+
+msgid "Temporary failure in antivirus scanner"
+msgstr "Máy quét diệt vi-rút lỗi tạm thời"
+
+msgid "Temporary failure in spam filter"
+msgstr "Bộ lọc thư rác lỗi tạm thời"
+
+msgid "Temporary failure in milter (Postfix)"
+msgstr "Milter lỗi tạm thời (Postfix)"
+
+msgid "Greylisting - try again later"
+msgstr "Greylisting - vui lòng thử lại sau"
+
+msgid "DDoS protection active - try again later"
+msgstr "Bảo vệ DDoS đang hoạt động - vui lòng thử lại sau"
+
+msgid "SMTP policy violation - temporary"
+msgstr "Vi phạm chính sách SMTP - trạng thái tạm thời"
+
+msgid "Temporary error in RCPT TO processing"
+msgstr "Lỗi tạm thời trong xử lý RCPT TO"
+
+msgid "Temporary error in MAIL FROM processing"
+msgstr "Lỗi tạm thời trong xử lý MAIL FROM"
+
+msgid "Temporary error in EHLO/HELO processing"
+msgstr "Lỗi tạm thời trong xử lý EHLO/HELO"
+
+msgid "Temporary error in DATA processing"
+msgstr "Lỗi tạm thời trong xử lý DATA"
+
+msgid "Temporary error - service busy, try again later"
+msgstr "Lỗi tạm thời - dịch vụ bận, vui lòng thử lại sau"
+
+msgid "Syntax error - command unrecognized or too long"
+msgstr "Lỗi cú pháp - không nhận dạng được lệnh hoặc quá dài"
+
+msgid "Syntax error in parameters or arguments"
+msgstr "Lỗi cú pháp trong tham số hoặc đối số"
+
+msgid "Command not implemented"
+msgstr "Không sử dụng lệnh"
+
+msgid "Bad sequence of commands"
+msgstr "Thứ tự lệnh không đúng"
+
+msgid "Command parameter not implemented"
+msgstr "Không sử dụng tham số lệnh"
+
+msgid "Version not supported (ESMTP)"
+msgstr "Không hỗ trợ phiên bản (ESMTP)"
+
+msgid "Mailbox path invalid (LMTP)"
+msgstr "Đường dẫn hộp thư không hợp lệ (LMTP)"
+
+msgid "Too many commands in this session (Postfix)"
+msgstr "Quá nhiều lệnh trong phiên này (Postfix)"
+
+msgid "Recipient limit exceeded (Postfix)"
+msgstr "Vượt quá giới hạn người nhận (Postfix)"
+
+msgid "Sender limit exceeded (Postfix)"
+msgstr "Vượt quá giới hạn người gửi (Postfix)"
+
+msgid "Domain limit exceeded (Postfix)"
+msgstr "Vượt quá giới hạn miền (Postfix)"
+
+msgid "Mailbox does not exist (Exchange)"
+msgstr "Hộp thư không tồn tại (Exchange)"
+
+msgid "DNS failure - permanent"
+msgstr "DNS thất bại - lỗi vĩnh viễn"
+
+msgid "Address type not supported (Postfix)"
+msgstr "Không hỗ trợ loại địa chỉ (Postfix)"
+
+msgid "Unable to open mailbox (Postfix)"
+msgstr "Không thể mở hộp thư (Postfix)"
+
+msgid "Mailbox locked - permanent"
+msgstr "Hộp thư bị khóa - trạng thái vĩnh viễn"
+
+msgid "Message rejected due to policy (Exchange)"
+msgstr "Email bị từ chối do chính sách (Exchange)"
+
+msgid "Content rejected - permanent"
+msgstr "Nội dung bị từ chối - trạng thái vĩnh viễn"
+
+msgid "Attachment type not allowed"
+msgstr "Không cho phép loại tệp đính kèm"
+
+msgid "Message encoding not supported"
+msgstr "Không hỗ trợ mã hóa email"
+
+msgid "Sender domain does not exist - permanent"
+msgstr "Miền người gửi không tồn tại - trạng thái vĩnh viễn"
+
+msgid "Domain does not accept mail or is closing"
+msgstr "Miền không nhận email hoặc đang đóng"
+
+msgid "Recipient domain does not exist - permanent"
+msgstr "Miền người nhận không tồn tại - trạng thái vĩnh viễn"
+
+msgid "Mailbox quota exceeded - permanent"
+msgstr "Hộp thư đã đầy hạn mức - trạng thái vĩnh viễn"
+
+msgid "Message size exceeds limit - permanent"
+msgstr "Kích thước email vượt quá giới hạn - trạng thái vĩnh viễn"
+
+msgid "Authentication required (Sendmail)"
+msgstr "Cần xác thực (Sendmail)"
+
+msgid "Authentication failed (Sendmail)"
+msgstr "Xác thực thất bại (Sendmail)"
+
+msgid "Authentication mechanism not supported"
+msgstr "Không hỗ trợ cơ chế xác thực"
+
+msgid "Authentication credentials invalid"
+msgstr "Thông tin xác thực không hợp lệ"
+
+msgid "Authentication account expired"
+msgstr "Tài khoản xác thực đã hết hạn"
+
+msgid "Access denied - authentication required"
+msgstr "Truy cập bị từ chối - cần xác thực"
+
+msgid "Access denied (Sendmailism)"
+msgstr "Truy cập bị từ chối (Sendmail)"
+
+msgid "Access denied - not authenticated"
+msgstr "Truy cập bị từ chối - chưa được xác thực"
+
+msgid "Access denied - account locked"
+msgstr "Truy cập bị từ chối - tài khoản đã bị khóa"
+
+msgid "Access denied - account disabled"
+msgstr "Truy cập bị từ chối - tài khoản đã bị vô hiệu hóa"
+
+msgid "Authentication failed"
+msgstr "Xác thực thất bại"
+
+msgid "Authentication required for relay (Postfix)"
+msgstr "Chuyển tiếp cần xác thực (Postfix)"
+
+msgid "Authentication failed for relay (Postfix)"
+msgstr "Xác thực cho chuyển tiếp thất bại (Postfix)"
+
+msgid "Encryption required (STARTTLS)"
+msgstr "Cần kết nối được mã hóa (STARTTLS)"
+
+msgid "TLS required for this recipient"
+msgstr "Người nhận này cần mã hóa TLS"
+
+msgid "Encryption strength insufficient"
+msgstr "Độ mạnh mã hóa không đủ"
+
+msgid "Certificate validation failed"
+msgstr "Xác thực chứng chỉ thất bại"
+
+msgid "Invalid TLS certificate"
+msgstr "Chứng chỉ TLS không hợp lệ"
+
+msgid "TLS protocol version not supported"
+msgstr "Không hỗ trợ phiên bản giao thức TLS"
+
+msgid "Cipher suite not supported"
+msgstr "Không hỗ trợ bộ mật mã"
+
+msgid "Access denied - no valid recipient"
+msgstr "Truy cập bị từ chối - không có người nhận hợp lệ"
+
+msgid "Access denied - no valid sender"
+msgstr "Truy cập bị từ chối - không có người gửi hợp lệ"
+
+msgid "Access denied - domain not allowed"
+msgstr "Truy cập bị từ chối - không cho phép miền"
+
+msgid "Access denied - IP address blocked (permanent)"
+msgstr "Truy cập bị từ chối - địa chỉ IP đã bị chặn (vĩnh viễn)"
+
+msgid "Access denied - sender domain blacklisted"
+msgstr "Truy cập bị từ chối - miền người gửi nằm trong danh sách đen"
+
+msgid "Mailbox unavailable - requested action not taken"
+msgstr "Hộp thư không khả dụng - không thực hiện hành động được yêu cầu"
+
+msgid "User not local - please try forwarding address"
+msgstr "Người dùng không ở máy chủ này - vui lòng sử dụng địa chỉ chuyển tiếp"
+
+msgid "Requested action aborted - exceeded storage allocation"
+msgstr "Hành động được yêu cầu bị hủy - vượt quá phân bổ lưu trữ"
+
+msgid "Mailbox name not allowed"
+msgstr "Không cho phép tên hộp thư"
+
+msgid "Requested action rejected - access denied"
+msgstr "Hành động được yêu cầu bị từ chối - truy cập bị từ chối"
+
+msgid "MAIL FROM/RCPT TO parameters not recognized"
+msgstr "Không nhận dạng được tham số MAIL FROM/RCPT TO"
+
+msgid "Domain not allowed to send (DMARC reject)"
+msgstr "Không cho phép miền gửi (DMARC reject)"
+
+msgid "Too many duplicate messages - permanent"
+msgstr "Quá nhiều email trùng lặp - trạng thái vĩnh viễn"
+
+msgid "Sender address rejected - domain not in SPF"
+msgstr "Địa chỉ người gửi bị từ chối - miền không nằm trong SPF"
+
+msgid "Sender address rejected - DKIM verification failed"
+msgstr "Địa chỉ người gửi bị từ chối - xác minh DKIM thất bại"
+
+msgid "Sender address rejected - DMARC policy reject"
+msgstr "Địa chỉ người gửi bị từ chối - chính sách DMARC từ chối"
+
+msgid "Recipient address rejected - DMARC policy reject"
+msgstr "Địa chỉ người nhận bị từ chối - chính sách DMARC từ chối"
+
+msgid "Message rejected due to spam content"
+msgstr "Email bị từ chối do nội dung thư rác"
+
+msgid "Message rejected due to virus detected"
+msgstr "Email bị từ chối do phát hiện vi-rút"
+
+msgid "Message rejected due to malicious content"
+msgstr "Email bị từ chối do nội dung độc hại"
+
+msgid "Message rejected due to phishing detection"
+msgstr "Email bị từ chối do phát hiện lừa đảo"
+
+msgid "Message rejected due to malware detection"
+msgstr "Email bị từ chối do phát hiện phần mềm độc hại"
+
+msgid "Message rejected due to policy - permanent"
+msgstr "Email bị từ chối do chính sách - trạng thái vĩnh viễn"
+
+msgid "Message rejected due to content filtering"
+msgstr "Email bị từ chối do bộ lọc nội dung"
+
+msgid "Message rejected due to reputation"
+msgstr "Email bị từ chối do danh tiếng"
+
+msgid "Access denied - access_map violation"
+msgstr "Truy cập bị từ chối - vi phạm access_map"
+
+msgid "Access denied - SMTP client listed in RBL"
+msgstr "Truy cập bị từ chối - máy khách SMTP nằm trong RBL"
+
+msgid "Access denied - relay not authorized"
+msgstr "Truy cập bị từ chối - chuyển tiếp không được ủy quyền"
+
+msgid "Access denied - unknown SMTP client hostname"
+msgstr "Truy cập bị từ chối - không xác định tên máy chủ máy khách SMTP"
+
+msgid "Access denied - bad syntax for client HELO hostname"
+msgstr "Truy cập bị từ chối - cú pháp không đúng cho tên máy chủ HELO của máy khách"
+
+msgid "Access denied - SMTP client hostname rejected"
+msgstr "Truy cập bị từ chối - tên máy chủ máy khách SMTP bị từ chối"
+
+msgid "Access denied - unknown client HELO hostname"
+msgstr "Truy cập bị từ chối - không xác định tên máy chủ HELO của máy khách"
+
+msgid "Access denied - invalid domain (not FQDN)"
+msgstr "Truy cập bị từ chối - miền không hợp lệ (không phải FQDN)"
+
+msgid "Access denied - domain not qualified"
+msgstr "Truy cập bị từ chối - miền không đủ điều kiện"
+
+msgid "Access denied - mail server misconfigured"
+msgstr "Truy cập bị từ chối - cấu hình máy chủ thư không đúng"
+
+msgid "Access denied - open relay not allowed"
+msgstr "Truy cập bị từ chối - không cho phép chuyển tiếp mở"
+
+msgid "Access denied - proxy not allowed"
+msgstr "Truy cập bị từ chối - không cho phép sử dụng proxy"
+
+msgid "Access denied - dynamic IP not allowed"
+msgstr "Truy cập bị từ chối - không cho phép IP động"
+
+msgid "Access denied - residential IP not allowed"
+msgstr "Truy cập bị từ chối - không cho phép IP dân cư"
+
+msgid "Access denied - VPN/Tor detected"
+msgstr "Truy cập bị từ chối - phát hiện VPN/Tor"
+
+msgid "Access denied - Spamhaus DROP listed"
+msgstr "Truy cập bị từ chối - nằm trong danh sách Spamhaus DROP"
+
+msgid "Access denied - URL listed in URIBL"
+msgstr "Truy cập bị từ chối - URL nằm trong URIBL"
+
+msgid "Access denied - domain in RHSBL"
+msgstr "Truy cập bị từ chối - miền nằm trong RHSBL"
+
+msgid "Access denied - IP in DNSWL (policy)"
+msgstr "Truy cập bị từ chối - IP nằm trong DNSWL (chính sách)"
+
+msgid "Delivery failed - mailbox not found"
+msgstr "Gửi thất bại - không tìm thấy hộp thư"
+
+msgid "Delivery failed - recipient not local"
+msgstr "Gửi thất bại - người nhận không ở máy chủ này"
+
+msgid "Delivery failed - recipient rejected"
+msgstr "Gửi thất bại - người nhận bị từ chối"
+
+msgid "Delivery failed - sender rejected"
+msgstr "Gửi thất bại - người gửi bị từ chối"
+
+msgid "Delivery failed - relay rejected"
+msgstr "Gửi thất bại - chuyển tiếp bị từ chối"
+
+msgid "Delivery failed - DNS permanent error"
+msgstr "Gửi thất bại - lỗi DNS vĩnh viễn"
+
+msgid "Delivery failed - MX permanent error"
+msgstr "Gửi thất bại - lỗi MX vĩnh viễn"
+
+msgid "Delivery failed - A record permanent error"
+msgstr "Gửi thất bại - lỗi bản ghi A vĩnh viễn"
+
+msgid "Delivery failed - PTR record permanent error"
+msgstr "Gửi thất bại - lỗi bản ghi PTR vĩnh viễn"
+
+msgid "Delivery failed - policy permanent error"
+msgstr "Gửi thất bại - lỗi chính sách vĩnh viễn"
+
+msgid "DSN: Success - delivery status notification"
+msgstr "DSN: Thành công - thông báo trạng thái gửi"
+
+msgid "DSN: Delivery delayed"
+msgstr "DSN: Gửi bị chậm"
+
+msgid "DSN: Delivery failed - permanent"
+msgstr "DSN: Gửi thất bại - vĩnh viễn"
+
+msgid "DSN: Delivery failed - temporary"
+msgstr "DSN: Gửi thất bại - tạm thời"
+
+msgid "DSN: Message expired"
+msgstr "DSN: Email đã hết hạn"
+
+msgid "DSN: Message bounced"
+msgstr "DSN: Email bị trả lại"
+
+msgid "DSN: Message discarded"
+msgstr "DSN: Email bị loại bỏ"
+
+msgid "DSN: Message filtered"
+msgstr "DSN: Email đã được lọc"
+
+msgid "DSN: Message quarantined"
+msgstr "DSN: Email đã bị cách ly"
+
+msgid "DSN: Message held for review"
+msgstr "DSN: Email bị tạm giữ để xem xét"
+
+msgid "MTA-STS policy required"
+msgstr "Cần chính sách MTA-STS"
+
+msgid "MTA-STS policy validation failed"
+msgstr "Xác thực chính sách MTA-STS thất bại"
+
+msgid "TLS reporting required"
+msgstr "Cần báo cáo TLS"
+
+msgid "TLS report requested"
+msgstr "Đã yêu cầu báo cáo TLS"
+
+msgid "SMTP MTA Strict Transport Security active"
+msgstr "SMTP MTA Strict Transport Security đang hoạt động"
+
+msgid "DANE validation required"
+msgstr "Cần xác thực DANE"
+
+msgid "DANE validation failed"
+msgstr "Xác thực DANE thất bại"
+
+msgid "TLSA record missing"
+msgstr "Thiếu bản ghi TLSA"
+
+msgid "Certificate name mismatch"
+msgstr "Tên chứng chỉ không khớp"
+
+msgid "Certificate expired"
+msgstr "Chứng chỉ đã hết hạn"
+
+msgid "AUTH LOGIN required"
+msgstr "Cần AUTH LOGIN"
+
+msgid "AUTH PLAIN required"
+msgstr "Cần AUTH PLAIN"
+
+msgid "AUTH CRAM-MD5 required"
+msgstr "Cần AUTH CRAM-MD5"
+
+msgid "AUTH DIGEST-MD5 required"
+msgstr "Cần AUTH DIGEST-MD5"
+
+msgid "AUTH GSSAPI required"
+msgstr "Cần AUTH GSSAPI"
+
+msgid "AUTH NTLM required"
+msgstr "Cần AUTH NTLM"
+
+msgid "AUTH SCRAM required"
+msgstr "Cần AUTH SCRAM"
+
+msgid "AUTH OAUTHBEARER required"
+msgstr "Cần AUTH OAUTHBEARER"
+
+msgid "AUTH XOAUTH2 required"
+msgstr "Cần AUTH XOAUTH2"
+
+msgid "Exchange: Mailbox database error"
+msgstr "Exchange: Lỗi cơ sở dữ liệu hộp thư"
+
+msgid "Exchange: Store driver error"
+msgstr "Exchange: Lỗi trình điều khiển lưu trữ"
+
+msgid "Exchange: Transport agent error"
+msgstr "Exchange: Lỗi tác nhân vận chuyển"
+
+msgid "Exchange: Content conversion error"
+msgstr "Exchange: Lỗi chuyển đổi nội dung"
+
+msgid "Exchange: Routing error"
+msgstr "Exchange: Lỗi định tuyến"
+
+msgid "Exchange: Mail flow stalled"
+msgstr "Exchange: Luồng thư bị đình trệ"
+
+msgid "Exchange: Shadow redundancy error"
+msgstr "Exchange: Lỗi dự phòng bóng"
+
+msgid "Exchange: Safety net error"
+msgstr "Exchange: Lỗi mạng an toàn"
+
+msgid "Exchange: Queue database error"
+msgstr "Exchange: Lỗi cơ sở dữ liệu hàng đợi"
+
+msgid "Exchange: Message throttled"
+msgstr "Exchange: Email bị giới hạn tốc độ"
+
+msgid "Postfix: Bounce queue error"
+msgstr "Postfix: Lỗi hàng đợi trả lại"
+
+msgid "Postfix: Deferred queue error"
+msgstr "Postfix: Lỗi hàng đợi trì hoãn"
+
+msgid "Postfix: Hold queue error"
+msgstr "Postfix: Lỗi hàng đợi tạm giữ"
+
+msgid "Postfix: Incoming queue error"
+msgstr "Postfix: Lỗi hàng đợi đến"
+
+msgid "Postfix: Active queue error"
+msgstr "Postfix: Lỗi hàng đợi đang hoạt động"
+
+msgid "Postfix: Corrupted queue file"
+msgstr "Postfix: Tệp hàng đợi bị hỏng"
+
+msgid "Sendmail: Queue runner error"
+msgstr "Sendmail: Lỗi trình chạy hàng đợi"
+
+msgid "Sendmail: Alias database error"
+msgstr "Sendmail: Lỗi cơ sở dữ liệu bí danh"
+
+msgid "Sendmail: Virtuser table error"
+msgstr "Sendmail: Lỗi bảng người dùng ảo"
+
+msgid "Sendmail: Mailer definition error"
+msgstr "Sendmail: Lỗi định nghĩa trình gửi thư"
+
+msgid "Exim: Router configuration error"
+msgstr "Exim: Lỗi cấu hình bộ định tuyến"
+
+msgid "Exim: Transport configuration error"
+msgstr "Exim: Lỗi cấu hình vận chuyển"
+
+msgid "Exim: Director configuration error"
+msgstr "Exim: Lỗi cấu hình giám đốc"
+
+msgid "Exim: Retry configuration error"
+msgstr "Exim: Lỗi cấu hình thử lại"
+
+msgid "Exim: Rewrite configuration error"
+msgstr "Exim: Lỗi cấu hình viết lại"
+
+msgid "Exim: Authentication configuration error"
+msgstr "Exim: Lỗi cấu hình xác thực"
+
+msgid "Exim: ACL configuration error"
+msgstr "Exim: Lỗi cấu hình ACL"
+
+msgid "Exim: Local_scan configuration error"
+msgstr "Exim: Lỗi cấu hình Local_scan"
+
+msgid "Exim: Lookup configuration error"
+msgstr "Exim: Lỗi cấu hình tra cứu"
+
+msgid "Exim: Expansion configuration error"
+msgstr "Exim: Lỗi cấu hình mở rộng"
+
+msgid "HTTP Protocol Versions"
+msgstr "Phiên bản giao thức HTTP"
+
+msgid "Protocol"
+msgstr "Giao thức"
+
+msgid "Request %"
+msgstr "Tỷ lệ yêu cầu"
+
+msgid "Bandwidth %"
+msgstr "Tỷ lệ băng thông"
+
+msgid "Each request requires a new connection"
+msgstr "Mỗi yêu cầu cần tạo kết nối mới"
+
+msgid "Multiple requests can reuse one connection"
+msgstr "Nhiều yêu cầu có thể tái sử dụng cùng một kết nối"
+
+msgid "Multiple requests in parallel over one connection"
+msgstr "Có thể xử lý nhiều yêu cầu song song qua một kết nối"
+
+msgid "Faster connection, better performance on poor networks"
+msgstr "Kết nối nhanh hơn, hiệu suất tốt hơn trên mạng kém"
+
+msgid "No protocol data available"
+msgstr "Không có dữ liệu giao thức"
+
+msgid "of requests use HTTP/1.0"
+msgstr "của yêu cầu sử dụng giao thức HTTP/1.0"
+
+msgid "From access logs"
+msgstr "Từ nhật ký truy cập"
+
+msgid "No HTTP/2 requests detected"
+msgstr "Không phát hiện yêu cầu giao thức HTTP/2"
+
+msgid "All requests are HTTP/1.0, no HTTP/2 requests"
+msgstr "Tất cả yêu cầu hiện tại là HTTP/1.0, không có yêu cầu HTTP/2"
+
+msgid "HTTP/3 not detected"
+msgstr "Không phát hiện yêu cầu giao thức HTTP/3"
+
+msgid "all requests do not include QUIC/HTTP/3 protocol requests"
+msgstr "Tất cả yêu cầu hiện tại không có yêu cầu giao thức QUIC/HTTP/3"
+
+msgid "Mail Authentication Statistics"
+msgstr "Thống kê xác thực email"
+
+msgid "Authentication"
+msgstr "Loại xác thực"
+
+msgid "Pass"
+msgstr "Qua"
+
+msgid "Fail"
+msgstr "Thất bại"
+
+msgid "Softfail"
+msgstr "Thất bại nhẹ"
+
+msgid "Neutral"
+msgstr "Trung lập"
+
+msgid "None"
+msgstr "Không"
+
+msgid "Mail Queue Delay Statistics"
+msgstr "Thống kê độ trễ hàng đợi email"
+
+msgid "Delay Range"
+msgstr "Phạm vi độ trễ"
+
+msgid "Count"
+msgstr "Số lượng"
+
+msgid "Percentage"
+msgstr "Phần trăm"
+
+msgid "TLS Encryption Statistics"
+msgstr "Thống kê mã hóa TLS"
+
+msgid "TLS Versions"
+msgstr "Phiên bản TLS"
+
+msgid "Top Ciphers"
+msgstr "Bộ mật mã thường dùng"
+
+msgid "robot_hits_detail_both"
+msgstr "Tổng yêu cầu: %s lần (trang bình thường: %s lần, robots.txt: %s lần)"
+
+msgid "robot_hits_detail_only_robots"
+msgstr "Chỉ truy cập robots.txt: %s lần, không lấy dữ liệu trang khác"
+
+msgid "robot_hits_detail_normal"
+msgstr "Yêu cầu trang bình thường: %s lần"
+
+msgid "Troubleshooting"
+msgstr "Khắc phục sự cố"
+
+msgid "Did you use the correct URL?"
+msgstr "Bạn đã sử dụng URL chính xác chưa?"
+
+msgid "Example:"
+msgstr "Ví dụ:"
+
+msgid "Did you use correct config parameter?"
+msgstr "Bạn đã sử dụng tham số cấu hình chính xác chưa?"
+
+msgid "Example: If your config file is awstats.mysite.conf, use -config=mysite"
+msgstr "Ví dụ: Nếu tệp cấu hình của bạn là awstats.mysite.conf, hãy sử dụng -config=mysite"
+
+msgid "Did you create your config file 'awstats.$SiteConfig.conf'?"
+msgstr "Bạn đã tạo tệp cấu hình 'awstats.$SiteConfig.conf' chưa?"
+
+msgid "If not, you can run \"awstats_configure.pl\" from command line, or create it manually."
+msgstr "Nếu chưa, bạn có thể chạy \"awstats_configure.pl\" từ dòng lệnh, hoặc tạo thủ công."
+
+msgid "Setup"
+msgstr "Thiết lập"
+
+msgid "file, web server or permissions may be wrong."
+msgstr "tệp, máy chủ web hoặc quyền có thể không đúng."
+
+msgid "Check config file, permissions and AWStats documentation (in 'docs' directory)."
+msgstr "Kiểm tra tệp cấu hình, quyền và tài liệu AWStats (trong thư mục 'docs')."
+
+msgid "Warning: Can't find language files for \"%s\". English will be used."
+msgstr "Cảnh báo: Không tìm thấy tệp ngôn ngữ cho \"%s\". Sẽ sử dụng tiếng Anh."
+
+#------------------------------------------------------------------------------
+# Xử lý lỗi và tín hiệu
+#------------------------------------------------------------------------------
+
+msgid "%s process (ID %s) interrupted by signal %s."
+msgstr "Tiến trình %s (ID %s) bị gián đoạn bởi tín hiệu %s."
+
+msgid "An AWStats update process seems to be already running for this config file. Try later. If this is not true, remove manually lock file"
+msgstr "Có vẻ như một tiến trình cập nhật AWStats cho tệp cấu hình này đang chạy. Vui lòng thử lại sau. Nếu không đúng, hãy tự xóa tệp khóa"
+
+#------------------------------------------------------------------------------
+# Tiêu đề thống kê mới
+#------------------------------------------------------------------------------
+msgid "Report Overview"
+msgstr "Tổng quan báo cáo"
+
+msgid "Monthly Statistics"
+msgstr "Thống kê theo tháng"
+
+msgid "Daily Statistics"
+msgstr "Thống kê theo ngày"
+
+msgid "Statistics by Day of Week"
+msgstr "Thống kê theo thứ trong tuần"
+
+msgid "Hourly Page Views"
+msgstr "Số lượt xem mỗi giờ"
+
+msgid "Traffic Sources"
+msgstr "Nguồn lưu lượng"
+
+msgid "Other Sources"
+msgstr "Nguồn khác"
+
+msgid "tooltip_1"
+msgstr "Số phiên của khách truy cập trên trang web. Cùng một khách truy cập quay lại sau hơn 30 phút không hoạt động sẽ được tính là một lượt truy cập mới"
+
+msgid "tooltip_2"
+msgstr "Số lượng khách truy cập khác nhau đã truy cập trang web của bạn trong khoảng thời gian đã chọn. Dựa trên địa chỉ IP"
+
+msgid "tooltip_3"
+msgstr "Số yêu cầu được tính là trang (như HTML, PHP, ASP, v.v.), không bao gồm tệp tĩnh như hình ảnh, CSS, JS"
+
+msgid "tooltip_4"
+msgstr "Tổng số yêu cầu gửi đến máy chủ, bao gồm tất cả trang, hình ảnh, CSS, JS và các tệp khác"
+
+msgid "tooltip_5"
+msgstr "Tổng lượng dữ liệu máy chủ gửi khi phản hồi yêu cầu của người dùng"
+
+msgid "tooltip_13"
+msgstr "Thống kê nguồn truy cập trang web của bạn qua công cụ tìm kiếm. Hiển thị công cụ tìm kiếm nào mang lại lưu lượng truy cập cho bạn và từ khóa người dùng đã sử dụng"
+
+msgid "tooltip_14"
+msgstr "Thống kê nguồn truy cập trang web của bạn qua liên kết bên ngoài từ các trang web khác. Hiển thị trang web nào có liên kết đến bạn và lượng truy cập họ mang lại"
+
+msgid "tooltip_15"
+msgstr "Từ khóa người dùng sử dụng khi tìm kiếm trang web của bạn qua công cụ tìm kiếm. Từ khóa là một từ, cụm từ khóa là sự kết hợp của nhiều từ"
+
+msgid "tooltip_16"
+msgstr "Chương trình tự động như bot tìm kiếm, bot huấn luyện AI, máy quét lỗ hổng. Số trong ngoặc đơn hiển thị số yêu cầu trang bình thường và số yêu cầu robots.txt"
+
+msgid "tooltip_17"
+msgstr "Biểu đồ phân bổ lưu lượng 24 giờ. Hiển thị lưu lượng truy cập trang web của bạn vào từng khung giờ, giúp hiểu thời gian người dùng hoạt động"
+
+msgid "tooltip_18"
+msgstr "Cột này hiển thị giá trị trung bình hàng ngày/hàng tuần trong khoảng thời gian đã chọn, giúp bạn hiểu xu hướng tổng thể"
+
+msgid "tooltip_19"
+msgstr "Nhấp vào mục trong biểu đồ để xem chi tiết. Di chuột qua thành phần biểu đồ để xem giá trị cụ thể"
+
+msgid "tooltip_20"
+msgstr "Dữ liệu không thể phân loại vào phạm vi hiện có, thường do định dạng dữ liệu bất thường hoặc thiếu"
+
+msgid "tooltip_21"
+msgstr "Ghi nhận các cuộc tấn công của sâu máy tính được phát hiện. Sâu là chương trình độc hại tự lây lan, thường lây lan qua lỗ hổng mạng"
+
+#------------------------------------------------------------------------------
+# Hiển thị thông báo trợ giúp - Phiên bản cộng đồng
+#------------------------------------------------------------------------------
+msgid "AWStats %s - Advanced Web Statistics"
+msgstr "AWStats %s - Thống kê Web nâng cao"
+
+msgid "Copyright (c) 2000-2025 Laurent Destailleur"
+msgstr "Bản quyền (c) 2000-2025 Laurent Destailleur"
+
+msgid "Copyright (c) 2026-latest Community Edition"
+msgstr "Bản quyền (c) 2026-nay Phiên bản cộng đồng"
+
+msgid "AWStats comes with ABSOLUTELY NO WARRANTY. It's a free software distributed with a GNU General Public License (See LICENSE file for details)."
+msgstr "AWStats KHÔNG CÓ BẢO HÀNH GÌ CẢ. Đây là phần mềm miễn phí được phân phối theo Giấy phép Công cộng GNU (Xem tệp LICENSE để biết chi tiết)."
+
+msgid "Syntax: %s -config=virtualhostname [options]"
+msgstr "Cú pháp: %s -config=tên_máy_chủ_ảo [tùy_chọn]"
+
+msgid "This runs %s in command line to update statistics (-update option) of a web site, from the log file defined in AWStats config file, or build a HTML report (-output option)."
+msgstr "Lệnh này chạy %s trong dòng lệnh để cập nhật thống kê của trang web (-update option) từ tệp nhật ký được định nghĩa trong tệp cấu hình AWStats, hoặc tạo báo cáo HTML (-output option)."
+
+msgid "First, %s tries to read %s.virtualhostname.conf as the config file. If not found, %s tries to read %s.conf, and finally the full path passed to -config="
+msgstr "Đầu tiên, %s cố gắng đọc %s.tên_máy_chủ_ảo.conf làm tệp cấu hình. Nếu không tìm thấy, %s cố gắng đọc %s.conf, và cuối cùng là đường dẫn đầy đủ được truyền cho -config="
+
+msgid "Note 1: Config files (*.conf) must be in /etc/awstats, /usr/local/etc/awstats, /etc or same directory than awstats.pl script file."
+msgstr "Lưu ý 1: Tệp cấu hình (*.conf) phải nằm trong /etc/awstats, /usr/local/etc/awstats, /etc hoặc cùng thư mục với tệp kịch bản awstats.pl."
+
+msgid "Note 2: If AWSTATS_FORCE_CONFIG environment variable is defined, AWStats will use it as the 'config' value, whatever is the value on command line or URL."
+msgstr "Lưu ý 2: Nếu biến môi trường AWSTATS_FORCE_CONFIG được định nghĩa, AWStats sẽ sử dụng nó làm giá trị 'config', bất kể giá trị trên dòng lệnh hay URL."
+
+msgid "See AWStats documentation for all setup instructions."
+msgstr "Xem tài liệu AWStats để biết tất cả hướng dẫn thiết lập."
+
+msgid "Options to update statistics:"
+msgstr "Tùy chọn cập nhật thống kê:"
+
+msgid "  -update        to update statistics (default)"
+msgstr "  -update        cập nhật thống kê (mặc định)"
+
+msgid "  -showsteps     to add benchmark information every %s lines processed"
+msgstr "  -showsteps     thêm thông tin đo điểm chuẩn mỗi %s dòng được xử lý"
+
+msgid "  -showcorrupted to add output for each corrupted lines found, with reason"
+msgstr "  -showcorrupted thêm đầu ra cho mỗi dòng bị hỏng được tìm thấy, kèm lý do"
+
+msgid "  -showdropped   to add output for each dropped lines found, with reason"
+msgstr "  -showdropped   thêm đầu ra cho mỗi dòng bị loại bỏ được tìm thấy, kèm lý do"
+
+msgid "  -showunknownorigin  to output referer when it can't be parsed"
+msgstr "  -showunknownorigin   hiển thị người giới thiệu khi không thể phân tích cú pháp"
+
+msgid "  -showdirectorigin   to output log line when origin is a direct access"
+msgstr "  -showdirectorigin    hiển thị dòng nhật ký khi nguồn gốc là truy cập trực tiếp"
+
+msgid "  -updatefor=n   to stop the update process after parsing n lines"
+msgstr "  -updatefor=n    dừng quá trình cập nhật sau khi phân tích n dòng"
+
+msgid "  -LogFile=x     to change log to analyze whatever is 'LogFile' in config file"
+msgstr "  -LogFile=x      thay đổi nhật ký để phân tích bất kỳ thứ gì là 'LogFile' trong tệp cấu hình"
+
+msgid "  Be care to process log files in chronological order when updating statistics."
+msgstr "  Hãy cẩn thận xử lý tệp nhật ký theo thứ tự thời gian khi cập nhật thống kê."
+
+msgid "Options to show statistics:"
+msgstr "Tùy chọn hiển thị thống kê:"
+
+msgid "  -output      to output main HTML report (no update made except with -update)"
+msgstr "  -output      xuất báo cáo HTML chính (không cập nhật ngoại trừ khi dùng -update)"
+
+msgid "  -output=x    to output other report pages where x is:"
+msgstr "  -output=x    xuất các trang báo cáo khác với x là:"
+
+msgid "build page of all domains/countries"
+msgstr "tạo trang của tất cả miền/quốc gia"
+
+msgid "build page of all hosts"
+msgstr "tạo trang của tất cả máy chủ"
+
+msgid "build page of last hits for hosts"
+msgstr "tạo trang của các lượt nhấp cuối cùng cho máy chủ"
+
+msgid "build page of all unresolved IP"
+msgstr "tạo trang của tất cả IP chưa phân giải"
+
+msgid "build page of all email senders (maillog)"
+msgstr "tạo trang của tất cả người gửi email (maillog)"
+
+msgid "build page of last email senders (maillog)"
+msgstr "tạo trang của người gửi email cuối cùng (maillog)"
+
+msgid "build page of all email receivers (maillog)"
+msgstr "tạo trang của tất cả người nhận email (maillog)"
+
+msgid "build page of last email receivers (maillog)"
+msgstr "tạo trang của người nhận email cuối cùng (maillog)"
+
+msgid "build page of all logins used"
+msgstr "tạo trang của tất cả tên đăng nhập đã sử dụng"
+
+msgid "build page of last hits for logins"
+msgstr "tạo trang của các lượt nhấp cuối cùng cho tên đăng nhập"
+
+msgid "build page of all robots/spider visits"
+msgstr "tạo trang của tất cả lượt truy cập của robot/nhện"
+
+msgid "build page of last hits for robots"
+msgstr "tạo trang của các lượt nhấp cuối cùng cho robot"
+
+msgid "list most often viewed pages"
+msgstr "liệt kê các trang được xem thường xuyên nhất"
+
+msgid "list most often viewed pages matching filter"
+msgstr "liệt kê các trang được xem thường xuyên nhất khớp với bộ lọc"
+
+msgid "list entry pages"
+msgstr "liệt kê trang vào"
+
+msgid "list entry pages matching filter"
+msgstr "liệt kê trang vào khớp với bộ lọc"
+
+msgid "list exit pages"
+msgstr "liệt kê trang ra"
+
+msgid "list exit pages matching filter"
+msgstr "liệt kê trang ra khớp với bộ lọc"
+
+msgid "build page with os detailed versions"
+msgstr "tạo trang với phiên bản chi tiết hệ điều hành"
+
+msgid "build page with browsers detailed versions"
+msgstr "tạo trang với phiên bản chi tiết trình duyệt"
+
+msgid "list 'User Agents' with unknown browser"
+msgstr "liệt kê 'User Agents' có trình duyệt không xác định"
+
+msgid "list 'User Agents' with unknown OS"
+msgstr "liệt kê 'User Agents' có hệ điều hành không xác định"
+
+msgid "build page of all refering search engines"
+msgstr "tạo trang của tất cả công cụ tìm kiếm giới thiệu"
+
+msgid "build page of all refering pages"
+msgstr "tạo trang của tất cả trang giới thiệu"
+
+msgid "list all keyphrases used on search engines"
+msgstr "liệt kê tất cả cụm từ khóa được sử dụng trên công cụ tìm kiếm"
+
+msgid "list all keywords used on search engines"
+msgstr "liệt kê tất cả từ khóa được sử dụng trên công cụ tìm kiếm"
+
+msgid "list 'Referers' for 404 errors"
+msgstr "liệt kê 'Người giới thiệu' cho lỗi 404"
+
+msgid "build page of all values for ExtraSection X"
+msgstr "tạo trang của tất cả giá trị cho ExtraSection X"
+
+msgid "  -staticlinks           to have static links in HTML report page"
+msgstr "  -staticlinks           có liên kết tĩnh trong trang báo cáo HTML"
+
+msgid "  -staticlinksext=xxx    to have static links with .xxx extension instead of .html"
+msgstr "  -staticlinksext=xxx    có liên kết tĩnh với phần mở rộng .xxx thay vì .html"
+
+msgid "  -lang=LL     to output a HTML report in language LL (en,de,es,fr,it,nl,zh-cn,...)"
+msgstr "  -lang=LL     xuất báo cáo HTML bằng ngôn ngữ LL (en,de,es,fr,it,nl,vi,...)"
+
+msgid "  -month=MM    to output a HTML report for an old month MM"
+msgstr "  -month=MM    xuất báo cáo HTML cho tháng MM cũ"
+
+msgid "  -year=YYYY   to output a HTML report for an old year YYYY"
+msgstr "  -year=YYYY   xuất báo cáo HTML cho năm YYYY cũ"
+
+msgid "  The 'date' options doesn't allow you to process old log file. They only allow you to see a past report for a chosen month/year period instead of current month/year."
+msgstr "  Tùy chọn 'date' không cho phép bạn xử lý tệp nhật ký cũ. Chúng chỉ cho phép bạn xem báo cáo trong quá khứ cho kỳ tháng/năm đã chọn thay vì tháng/năm hiện tại."
+
+msgid "Other options:"
+msgstr "Tùy chọn khác:"
+
+msgid "  -debug=X     to add debug informations lesser than level X (speed reduced)"
+msgstr "  -debug=X     thêm thông tin gỡ lỗi nhỏ hơn cấp độ X (tốc độ giảm)"
+
+msgid "  -version     show AWStats version"
+msgstr "  -version, -v     hiển thị phiên bản AWStats"
+
+msgid "Now supports/detects:"
+msgstr "Hiện hỗ trợ/phát hiện:"
+
+msgid "  Web/Ftp/Mail/streaming server log analyzis (and load balanced log files)"
+msgstr "  Phân tích nhật ký máy chủ Web/FTP/Thư/phát trực tuyến (và tệp nhật ký cân bằng tải)"
+
+msgid "  Reverse DNS lookup (IPv4 and IPv6) and GeoIP lookup"
+msgstr "  Tra cứu DNS ngược (IPv4 và IPv6) và tra cứu GeoIP"
+
+msgid "  Number of visits, number of unique visitors"
+msgstr "  Số lượt truy cập, số lượng khách truy cập duy nhất"
+
+msgid "  Visits duration and list of last visits"
+msgstr "  Thời lượng truy cập và danh sách truy cập cuối cùng"
+
+msgid "  Authenticated users"
+msgstr "  Người dùng đã xác thực"
+
+msgid "  Days of week and rush hours"
+msgstr "  Ngày trong tuần và giờ cao điểm"
+
+msgid "  Hosts list and unresolved IP addresses list"
+msgstr "  Danh sách máy chủ và danh sách địa chỉ IP chưa phân giải"
+
+msgid "  Most viewed, entry and exit pages"
+msgstr "  Trang được xem nhiều nhất, trang vào và trang ra"
+
+msgid "  Files type and Web compression (mod_gzip, mod_deflate stats)"
+msgstr "  Loại tệp và nén web (thống kê mod_gzip, mod_deflate)"
+
+msgid "  Configured Database Statistics"
+msgstr "  Thống kê cơ sở dữ liệu đã cấu hình"
+
+msgid "  %s domains/countries"
+msgstr "  %s miền/quốc gia"
+
+msgid "  %s robots"
+msgstr "  %s robot"
+
+msgid "  %s worm's families"
+msgstr "  %s họ sâu"
+
+msgid "  %s operating systems"
+msgstr "  %s hệ điều hành"
+
+msgid "  %s browsers (%s with phone browsers database)"
+msgstr "  %s trình duyệt (bao gồm cơ sở dữ liệu trình duyệt điện thoại %s)"
+
+msgid "  %s search engines (and keyphrases/keywords used from them)"
+msgstr "  %s công cụ tìm kiếm (và cụm từ khóa/từ khóa được sử dụng từ chúng)"
+
+msgid "  All HTTP errors with last referrer"
+msgstr "  Tất cả lỗi HTTP kèm người giới thiệu cuối cùng"
+
+msgid "  Report by day/month/year"
+msgstr "  Báo cáo theo ngày/tháng/năm"
+
+msgid "  Dynamic or static HTML or XHTML reports, static PDF reports"
+msgstr "  Báo cáo HTML hoặc XHTML động hoặc tĩnh, báo cáo PDF tĩnh"
+
+msgid "  Indexed text or XML monthly database"
+msgstr "  Cơ sở dữ liệu tháng dạng văn bản hoặc XML có chỉ mục"
+
+msgid "  And a lot of other advanced features and options..."  
+msgstr "  Và rất nhiều tính năng và tùy chọn nâng cao khác..."
+
+msgid "  New versions and FAQ at http://www.awstats.org"
+msgstr "  Phiên bản mới và Câu hỏi thường gặp tại https://github.com/hestiacn/vstats/issues"

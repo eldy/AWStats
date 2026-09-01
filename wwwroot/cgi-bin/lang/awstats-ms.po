@@ -1,0 +1,3317 @@
+# AWStats Malay (ms) translations
+# Copyright (C) 2026 AWStats
+# This file is distributed under the same license as the AWStats package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: AWStats 8.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-10 12:00+0000\n"
+"PO-Revision-Date: 2026-05-10 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Malay\n"
+"Language: ms\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#------------------------------------------------------------------------------
+# Nama Bulan
+#------------------------------------------------------------------------------
+
+msgid "month_01"
+msgstr "Jan"
+
+msgid "month_02"
+msgstr "Feb"
+
+msgid "month_03"
+msgstr "Mac"
+
+msgid "month_04"
+msgstr "Apr"
+
+msgid "month_05"
+msgstr "Mei"
+
+msgid "month_06"
+msgstr "Jun"
+
+msgid "month_07"
+msgstr "Jul"
+
+msgid "month_08"
+msgstr "Ogo"
+
+msgid "month_09"
+msgstr "Sep"
+
+msgid "month_10"
+msgstr "Okt"
+
+msgid "month_11"
+msgstr "Nov"
+
+msgid "month_12"
+msgstr "Dis"
+
+#------------------------------------------------------------------------------
+# Nama Hari dalam Minggu
+#------------------------------------------------------------------------------
+
+msgid "DayOfWeek_0"
+msgstr "Ahad"
+
+msgid "DayOfWeek_1"
+msgstr "Isnin"
+
+msgid "DayOfWeek_2"
+msgstr "Selasa"
+
+msgid "DayOfWeek_3"
+msgstr "Rabu"
+
+msgid "DayOfWeek_4"
+msgstr "Khamis"
+
+msgid "DayOfWeek_5"
+msgstr "Jumaat"
+
+msgid "DayOfWeek_6"
+msgstr "Sabtu"
+
+#------------------------------------------------------------------------------
+# Elemen Antara Muka
+#------------------------------------------------------------------------------
+
+msgid "Advanced Web Statistics for"
+msgstr "Statistik Web Lanjutan untuk"
+
+msgid "Statistics for"
+msgstr "Statistik untuk"
+
+msgid "main"
+msgstr "utama"
+
+msgid "Switch to light mode"
+msgstr "Tukar ke mod terang"
+
+msgid "Switch to dark mode"
+msgstr "Tukar ke mod gelap"
+
+msgid "TB"
+msgstr "TB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "Bytes"
+msgstr "Bait"
+
+msgid "Filter"
+msgstr "Tapisan"
+
+msgid "Exclude filter"
+msgstr "Tapisan kecuali"
+
+msgid "Top"
+msgstr "Teratas"
+
+msgid "Full list"
+msgstr "Senarai penuh"
+
+msgid "Last"
+msgstr "Terakhir"
+
+msgid "Average"
+msgstr "Purata"
+
+msgid "Export"
+msgstr "Eksport"
+
+msgid "Details"
+msgstr "Butiran"
+
+msgid "Version"
+msgstr "Versi"
+
+msgid "thousands_separator"
+msgstr ","
+
+msgid "dateformat_long"
+msgstr "dd/mm/yyyy HH:MM:SS"
+
+msgid "dateformat_short"
+msgstr "dd/mm/yyyy HH:MM"
+
+msgid "date_format_year"
+msgstr "%s"
+
+msgid "date_format_month"
+msgstr "%1$s %2$s"
+
+#------------------------------------------------------------------------------
+# Bar Navigasi
+#------------------------------------------------------------------------------
+
+msgid "AWStats Month Selector"
+msgstr "Pemilih Bulan AWStats"
+
+msgid "nav_category_basic"
+msgstr "Dokumen Asas"
+
+msgid "nav_category_guide"
+msgstr "Panduan Pengguna"
+
+msgid "nav_category_reference"
+msgstr "Sumber Rujukan"
+
+msgid "nav_category_integration"
+msgstr "Integrasi & Pengembangan"
+
+msgid "nav_category_dev"
+msgstr "Dokumen Pembangun"
+
+msgid "nav_changelog"
+msgstr "Log Perubahan"
+
+msgid "nav_what"
+msgstr "Apa itu AWStats"
+
+msgid "nav_license"
+msgstr "Lesen"
+
+msgid "nav_glossary"
+msgstr "Glosari"
+
+msgid "nav_setup"
+msgstr "Pemasangan & Konfigurasi"
+
+msgid "nav_upgrade"
+msgstr "Panduan Naik Taraf"
+
+msgid "nav_config"
+msgstr "Parameter Konfigurasi"
+
+msgid "nav_extra"
+msgstr "Bahagian Tambahan"
+
+msgid "nav_tools"
+msgstr "Alatan Lain"
+
+msgid "nav_faq"
+msgstr "Soalan Lazim"
+
+msgid "nav_security"
+msgstr "Cadangan Keselamatan"
+
+msgid "nav_compare"
+msgstr "Perbandingan"
+
+msgid "nav_benchmark"
+msgstr "Ujian Prestasi"
+
+msgid "nav_webmin"
+msgstr "Modul Webmin"
+
+msgid "nav_dolibarr"
+msgstr "Modul Dolibarr"
+
+msgid "nav_contrib"
+msgstr "Sumber Sumbangan"
+
+msgid "nav_plugins"
+msgstr "Pembangunan Plugin"
+
+msgid "nav_hooks"
+msgstr "Kaitan Plugin"
+
+msgid "nav_graphs"
+msgstr "Graf Plugin"
+
+msgid "Back to top"
+msgstr "Kembali ke atas"
+
+msgid "nav_select_month"
+msgstr "Pilih bulan"
+
+#------------------------------------------------------------------------------
+# Penunjuk Statistik Utama
+#------------------------------------------------------------------------------
+
+msgid "Unique visitors"
+msgstr "Pelawat unik"
+
+msgid "Visits"
+msgstr "Lawatan"
+
+msgid "Visits duration"
+msgstr "Tempoh lawatan"
+
+msgid "First visit"
+msgstr "Lawatan pertama"
+
+msgid "Last visit"
+msgstr "Lawatan terakhir"
+
+msgid "Visits/Visitor"
+msgstr "Lawatan/Pelawat"
+
+msgid "Pages/Visit"
+msgstr "Halaman/Lawatan"
+
+msgid "Hits/Visit"
+msgstr "Hits/Lawatan"
+
+msgid "KB/Visit"
+msgstr "KB/Lawatan"
+
+msgid "KB/Visits"
+msgstr "KB/Lawatan"
+
+msgid "Pages"
+msgstr "Halaman"
+
+msgid "Hits"
+msgstr "Hits"
+
+msgid "Bandwidth"
+msgstr "Lebar jalur"
+
+msgid "duration_format"
+msgstr "%s-%s"
+
+msgid "unit_s"
+msgstr "saat"
+
+msgid "unit_min"
+msgstr "minit"
+
+msgid "unit_h"
+msgstr "jam"
+
+msgid "and"
+msgstr "-"
+
+msgid "Device Types"
+msgstr "Jenis Peranti"
+
+msgid "Device Type"
+msgstr "Jenis Peranti"
+
+msgid "Percent"
+msgstr "Peratus"
+
+msgid "Mobile"
+msgstr "Telefon bimbit"
+
+msgid "Pause & Go"
+msgstr "Berhenti sebentar & Teruskan"
+
+msgid "Complete"
+msgstr "Selesai"
+
+msgid "Tablet"
+msgstr "Tablet"
+
+msgid "Tv"
+msgstr "TV"
+
+msgid "Wearable"
+msgstr "Peranti boleh pakai"
+
+msgid "Bot"
+msgstr "Bot"
+
+msgid "Desktop"
+msgstr "Komputer meja"
+
+msgid "Normal browsing traffic"
+msgstr "Trafik pelayaran biasa"
+
+msgid "Abnormal browsing traffic"
+msgstr "Trafik pelayaran tidak normal"
+
+msgid "Viewed"
+msgstr "Dilihat"
+
+msgid "Not viewed"
+msgstr "Tidak dilihat"
+
+msgid "Abnormal browsing traffic note"
+msgstr "Trafik pelayaran tidak normal termasuk: robot enjin carian, robot latihan AI, pengimbas kelemahan dan permintaan yang tidak mematuhi spesifikasi HTTP/HTTPS"
+
+msgid "File size"
+msgstr "Saiz fail"
+
+msgid "File type"
+msgstr "Jenis fail"
+
+msgid "Downloads"
+msgstr "Muat turun"
+
+msgid "Request time"
+msgstr "Masa permintaan"
+
+msgid "Total requests"
+msgstr "Jumlah permintaan"
+
+msgid "Frequency"
+msgstr "Kekerapan"
+
+msgid "Average frequency"
+msgstr "Purata kekerapan"
+
+msgid "Seconds"
+msgstr "Saat"
+
+msgid "First"
+msgstr "Pertama"
+
+msgid "Mails"
+msgstr "E-mel"
+
+msgid "Size"
+msgstr "Saiz"
+
+msgid "If you remove this file, all statistics for date"
+msgstr "Amaran: Jika anda memadam fail ini, semua statistik untuk tarikh"
+
+msgid "will be lost/reset."
+msgstr "akan hilang/ditetapkan semula!"
+
+msgid "Last config file used to build this data file was"
+msgstr "Fail konfigurasi terakhir yang digunakan untuk membina fail data ini ialah"
+
+msgid "Position (offset in bytes) in this file for beginning of each section for"
+msgstr "Kedudukan (offset dalam bait) dalam fail ini untuk permulaan setiap bahagian untuk"
+
+msgid "direct I/O access. If you made changes somewhere in this file, you should"
+msgstr "akses I/O terus. Jika anda membuat perubahan di suatu tempat dalam fail ini, anda harus"
+
+msgid "also remove completely the MAP section (AWStats will rewrite it at next update)"
+msgstr "juga membuang sepenuhnya bahagian MAP (AWStats akan menulis semula pada kemas kini seterusnya)"
+
+msgid "LastLine    = Date of last record processed - Last record line number in last log - Last record offset in last log - Last record signature value"
+msgstr "LastLine    = Tarikh rekod terakhir diproses - Nombor garis rekod terakhir dalam log terakhir - Offset rekod terakhir dalam log terakhir - Nilai tandatangan rekod terakhir"
+
+msgid "FirstTime   = Date of first visit for history file"
+msgstr "FirstTime   = Tarikh lawatan pertama untuk fail sejarah"
+
+msgid "LastTime    = Date of last visit for history file"
+msgstr "LastTime    = Tarikh lawatan terakhir untuk fail sejarah"
+
+msgid "LastUpdate  = Date of last update - Nb of parsed records - Nb of parsed old records - Nb of parsed new records - Nb of parsed corrupted - Nb of parsed dropped"
+msgstr "LastUpdate  = Tarikh kemas kini terakhir - Bil rekod yang dihurai - Bil rekod lama yang dihurai - Bil rekod baharu yang dihurai - Bil rekod rosak yang dihurai - Bil rekod digugurkan yang dihurai"
+
+msgid "TotalVisits = Number of visits"
+msgstr "TotalVisits = Bilangan lawatan"
+
+msgid "TotalUnique = Number of unique visitors"
+msgstr "TotalUnique = Bilangan pelawat unik"
+
+msgid "MonthHostsKnown   = Number of hosts known"
+msgstr "MonthHostsKnown   = Bilangan hos yang diketahui"
+
+msgid "MonthHostsUnKnown = Number of hosts unknown"
+msgstr "MonthHostsUnKnown = Bilangan hos yang tidak diketahui"
+
+msgid "Cluster ID - Pages - Hits - Bandwidth"
+msgstr "ID Kluster - Halaman - Hits - Lebar jalur"
+
+msgid "Hour - Pages - Hits - Bandwidth - Not viewed Pages - Not viewed Hits - Not viewed Bandwidth"
+msgstr "Jam - Halaman - Hits - Lebar jalur - Halaman tidak dilihat - Hits tidak dilihat - Lebar jalur tidak dilihat"
+
+msgid "Date - Pages - Hits - Bandwidth - Visits"
+msgstr "Tarikh - Halaman - Hits - Lebar jalur - Lawatan"
+
+msgid "Domain - Pages - Hits - Bandwidth"
+msgstr "Domain - Halaman - Hits - Lebar jalur"
+
+msgid "The %s first Pages must be first (order not required for others)"
+msgstr "Halaman utama hanya memaparkan %s halaman pertama mengikut bilangan paparan, senarai penuh terdapat pada halaman butiran."
+
+msgid "Host - Pages - Hits - Bandwidth - Last visit date - [Start date of last visit] - [Last page of last visit]"
+msgstr "Hos - Halaman - Hits - Lebar jalur - Tarikh lawatan terakhir - [Tarikh mula lawatan terakhir] - [Halaman terakhir lawatan terakhir]"
+
+msgid "[Start date of last visit] and [Last page of last visit] are saved only if session is not finished"
+msgstr "[Tarikh mula lawatan terakhir] dan [Halaman terakhir lawatan terakhir] hanya disimpan jika sesi belum tamat"
+
+msgid "The first %s items are sorted by hits in descending order; order of the remaining items is undefined."
+msgstr "%s item pertama disusun mengikut jumlah hit secara menurun; susunan item yang selebihnya tidak ditentukan."
+
+msgid "Login - Pages - Hits - Bandwidth - Last visit"
+msgstr "Log masuk - Halaman - Hits - Lebar jalur - Lawatan terakhir"
+
+msgid "Robot ID - Hits - Bandwidth - Last visit - Hits on robots.txt"
+msgstr "ID Robot - Hits - Lebar jalur - Lawatan terakhir - Hits pada robots.txt"
+
+msgid "Worm ID - Hits - Bandwidth - Last visit"
+msgstr "ID Cacing - Hits - Lebar jalur - Lawatan terakhir"
+
+msgid "EMail - Hits - Bandwidth - Last visit"
+msgstr "E-mel - Hits - Lebar jalur - Lawatan terakhir"
+
+msgid "The first %s email addresses are sorted by hits in descending order; order of the remaining addresses is undefined."
+msgstr "%s alamat e-mel pertama disusun mengikut jumlah hit secara menurun; susunan alamat yang selebihnya tidak ditentukan."
+
+msgid "URL - Pages - Bandwidth - Entry - Exit"
+msgstr "URL - Halaman - Lebar jalur - Masuk - Keluar"
+
+msgid "Files type - Hits - Bandwidth - Bandwidth without compression - Bandwidth after compression"
+msgstr "Jenis fail - Hits - Lebar jalur - Lebar jalur tanpa mampatan - Lebar jalur selepas mampatan"
+
+msgid "Request Time Range - Request Time Frequency"
+msgstr "Julat Masa Permintaan - Kekerapan Masa Permintaan"
+
+msgid "Payload Range - Payload Frequency"
+msgstr "Julat Muatan - Kekerapan Muatan"
+
+msgid "Session range - Number of visits"
+msgstr "Julat sesi - Bilangan lawatan"
+
+msgid "URL with %s errors - Hits"
+msgstr "URL dengan ralat %s - Hits"
+
+msgid "Last URL referrer"
+msgstr "Perujuk URL terakhir"
+
+msgid "Errors - Hits - Bandwidth"
+msgstr "Ralat - Hits - Lebar jalur"
+
+msgid "Search keywords - Number of search"
+msgstr "Kata kunci carian - Bilangan carian"
+
+msgid "Only top %s keywords shown on main page (sorted by search count). See full list on detail page."
+msgstr "Halaman utama hanya memaparkan %s kata kunci teratas mengikut bilangan carian, senarai penuh terdapat pada halaman butiran."
+
+msgid "Search keyphrases - Number of search"
+msgstr "Frasa kunci carian - Bilangan carian"
+
+msgid "Only top %s keyphrases shown on main page (sorted by search count). See full list on detail page."
+msgstr "Halaman utama hanya memaparkan %s frasa kunci teratas mengikut bilangan carian, senarai penuh terdapat pada halaman butiran."
+
+msgid "External page referers - Pages - Hits"
+msgstr "Perujuk halaman luaran - Halaman - Hits"
+
+msgid "Only top %s external referrers shown on main page (sorted by pages). See full list on detail page."
+msgstr "Halaman utama hanya memaparkan %s perujuk luaran teratas mengikut bilangan halaman, senarai penuh terdapat pada halaman butiran."
+
+msgid "Search engine referers ID - Pages - Hits"
+msgstr "ID Perujuk enjin carian - Halaman - Hits"
+
+msgid "Origin - Pages - Hits"
+msgstr "Asal - Halaman - Hits"
+
+msgid "Unknown referer Browser - Last visit date"
+msgstr "Penyemak imbas perujuk tidak diketahui - Tarikh lawatan terakhir"
+
+msgid "Unknown referer OS - Last visit date"
+msgstr "OS perujuk tidak diketahui - Tarikh lawatan terakhir"
+
+msgid "Screen size - Hits"
+msgstr "Saiz skrin - Hits"
+
+msgid "Browser ID - Hits - Pages"
+msgstr "ID Penyemak imbas - Hits - Halaman"
+
+msgid "Downloads - Hits - Bandwidth"
+msgstr "Muat turun - Hits - Lebar jalur"
+
+msgid "Protocol - Hits - Bandwidth"
+msgstr "Protokol - Hits - Lebar jalur"
+
+msgid "Icon Status - Type:200:404:Other"
+msgstr "Status Ikon - Jenis:200:404:Lain"
+
+#------------------------------------------------------------------------------
+# Terjemahan Tempoh Masa
+#------------------------------------------------------------------------------
+
+msgid "period_00"
+msgstr "Tengah malam · AWStats sedang tidur, anda masih melihat data? Hebat"
+
+msgid "period_01"
+msgstr "Pukul 1 pagi · Anda tak boleh tidur atau baru habis kerja?"
+
+msgid "period_02"
+msgstr "Pukul 2 pagi · Bot pun lebih rajin daripada anda"
+
+msgid "period_03"
+msgstr "Pukul 3 pagi · Bandar sedang tidur, pelayan kerja lebih masa"
+
+msgid "period_04"
+msgstr "Pukul 4 pagi · Apa yang lebih terang, skrin anda atau lampu pelayan?"
+
+msgid "period_05"
+msgstr "Pukul 5 pagi · Burung awal dapat cacing"
+
+msgid "period_06"
+msgstr "Pukul 6 pagi · Ada yang bangun, ada yang belum tidur"
+
+msgid "period_07"
+msgstr "Pukul 7 pagi · Masa melayari internet sambil berulang-alik ke kerja"
+
+msgid "period_08"
+msgstr "Pukul 8 pagi · Tugas pertama: lihat data semalam"
+
+msgid "period_09"
+msgstr "Pukul 9 pagi · Waktu terbaik untuk bekerja"
+
+msgid "period_10"
+msgstr "Pukul 10 pagi · Masa kopi, sambil tengok trafik meningkat"
+
+msgid "period_11"
+msgstr "Pukul 11 pagi · Sejam lagi untuk makan tengah hari, bertahan sedikit lagi"
+
+msgid "period_12"
+msgstr "Pukul 12 tengah hari · Pelayan: semua orang pergi makan tengah hari, saya rehat sekejap"
+
+msgid "period_13"
+msgstr "Pukul 1 petang · Rasa mengantuk, tapi data tidak akan tidur"
+
+msgid "period_14"
+msgstr "Pukul 2 petang · Waktu minum petang, lebih sedap dengan data"
+
+msgid "period_15"
+msgstr "Pukul 3 petang · Graf trafik hari ini seperti perubahan mood anda"
+
+msgid "period_16"
+msgstr "Pukul 4 petang · Tinggal X jam lagi sebelum waktu kerja tamat, trafik mula laju"
+
+msgid "period_17"
+msgstr "Pukul 5 petang · Waktu kerja tamat! Tapi pelayan masih bekerja"
+
+msgid "period_18"
+msgstr "Pukul 6 petang · Waktu makan malam"
+
+msgid "period_19"
+msgstr "Pukul 7 malam · Waktu perdana, trafik puncak"
+
+msgid "period_20"
+msgstr "Pukul 8 malam · Baring di sofa, anda pelawat ke-114514"
+
+msgid "period_21"
+msgstr "Pukul 9 malam · Malam semakin larut, burung hantu yang tengok data secara rahsia +1"
+
+msgid "period_22"
+msgstr "Pukul 10 malam · Data hari ini akan siap tidak lama lagi, rasa cemas?"
+
+msgid "period_23"
+msgstr "Pukul 11 malam · AWStats: dah patut tidur, esok kena kerja lagi"
+
+#------------------------------------------------------------------------------
+# Dimensi Masa
+#------------------------------------------------------------------------------
+
+msgid "Period"
+msgstr "Tempoh"
+
+msgid "Year"
+msgstr "Tahun"
+
+msgid "Month"
+msgstr "Bulan"
+
+msgid "Months"
+msgstr "Bulan"
+
+msgid "Date"
+msgstr "Tarikh"
+
+msgid "Day"
+msgstr "Hari"
+
+msgid "Hour"
+msgstr "Jam"
+
+msgid "Hours"
+msgstr "Jam"
+
+msgid "Day of week"
+msgstr "Hari dalam minggu"
+
+msgid "When"
+msgstr "Bila"
+
+msgid "%s Server Management Panel"
+msgstr "Panel Pengurusan Pelayan %s "
+
+msgid "Server Administration"
+msgstr "Penyelesaian pelayan yang mudah dan cekap"
+
+#------------------------------------------------------------------------------
+# Dimensi pelawat
+#------------------------------------------------------------------------------
+
+msgid "Invalid URL Parameters"
+msgstr "Parameter URL tidak sah"
+
+msgid "The requested page cannot be loaded due to invalid or malformed URL parameters."
+msgstr "Halaman yang diminta tidak dapat dimuat disebabkan oleh parameter URL yang tidak sah atau tidak diformat dengan betul."
+
+msgid "This may be caused by typing an incorrect URL, missing parameter separators, or using an invalid configuration name."
+msgstr "Ini mungkin disebabkan oleh menaip URL yang salah, ketiadaan pemisah parameter, atau menggunakan nama konfigurasi yang tidak sah."
+
+msgid "Please check the URL you entered and ensure all parameters are correctly formatted."
+msgstr "Sila semak URL yang anda masukkan dan pastikan semua parameter diformat dengan betul."
+
+msgid "SiteDomain parameter not defined in your config/domain file, or you may not have execution permission on the file."
+msgstr "Parameter SiteDomain tidak ditakrifkan dalam fail config/domain anda, atau anda mungkin tidak mempunyai kebenaran untuk melaksanakan fail tersebut."
+
+msgid "Please run as Administrator to set permissions"
+msgstr "Sila jalankan sebagai Pentadbir untuk menetapkan kebenaran"
+
+msgid "This directory lacks read permission"
+msgstr "Direktori ini tidak mempunyai kebenaran baca"
+
+msgid "Please set read permission for directory"
+msgstr "Sila tetapkan kebenaran baca untuk direktori"
+
+msgid "Missing required parameter in config file"
+msgstr "Parameter diperlukan tiada dalam fail konfigurasi"
+
+msgid "Please check that 'DirData' is defined."
+msgstr "Sila pastikan 'DirData' ditakrifkan."
+
+msgid "Domain name in browser address appears to be missing or incomplete"
+msgstr "Nama domain dalam alamat penyemak imbas kelihatan tiada atau tidak lengkap"
+
+msgid "Please check the URL parameter"
+msgstr "Sila periksa parameter URL"
+
+msgid "Format description"
+msgstr "Penerangan format"
+
+msgid "Please set execute permission"
+msgstr "Sila tetapkan kebenaran laksana"
+
+msgid "Or if you prefer numeric mode"
+msgstr "Atau jika anda lebih suka mod angka"
+
+msgid "View Report Directly"
+msgstr "Lihat laporan secara langsung"
+
+msgid "AWStats Log Viewer"
+msgstr "Papar Log AWStats"
+
+msgid "Month Selection"
+msgstr "Pilihan Bulan"
+
+msgid "Who"
+msgstr "Siapa"
+
+msgid "Visitors"
+msgstr "Pelawat"
+
+msgid "Countries"
+msgstr "Negara"
+
+msgid "flag_icon"
+msgstr "bendera"
+
+msgid "Country-Region-City"
+msgstr "Negara-Wilayah-Bandar"
+
+msgid "Code"
+msgstr "Kod"
+
+msgid "Known"
+msgstr "Diketahui"
+
+msgid "unknownos"
+msgstr "OS tidak diketahui"
+
+msgid "unknownbrowser"
+msgstr "penyemak imbas tidak diketahui"
+
+msgid "Unresolved IP Address"
+msgstr "Alamat IP Tidak Selesai"
+
+msgid "Unknown File Type"
+msgstr "Jenis Fail Tidak Diketahui"
+
+msgid "Unknown Size"
+msgstr "Saiz Tidak Diketahui"
+
+msgid "Unknown Time"
+msgstr "Masa Tidak Diketahui"
+
+msgid "Unknown Browser"
+msgstr "Penyemak Imbas Tidak Diketahui"
+
+msgid "Unknown OS"
+msgstr "OS Tidak Diketahui"
+
+msgid "Unknown Visitor"
+msgstr "Pelawat Tidak Diketahui"
+
+msgid "Unknown Visitor (Total)"
+msgstr "Pelawat Tidak Diketahui (Jumlah)"
+
+msgid "Unknown Country"
+msgstr "Negara Tidak Diketahui"
+
+msgid "Unknown Country (Region)"
+msgstr "Negara Tidak Diketahui (Wilayah)"
+
+msgid "Unknown Visitor (Title)"
+msgstr "Pelawat Tidak Diketahui (tajuk)"
+
+msgid "PageStayTime"
+msgstr "Tidak dapat menganggarkan masa tinggal di halaman"
+
+msgid "Unknown OS (Link)"
+msgstr "OS Tidak Diketahui (pautan)"
+
+msgid "Unknown OS (Row)"
+msgstr "sistem pengendalian tidak diketahui"
+
+msgid "Unknown Browser (Link)"
+msgstr "Penyemak Imbas Tidak Diketahui (pautan)"
+
+msgid "Unknown Browser (Row)"
+msgstr "penyemak imbas tidak diketahui"
+
+msgid "Unknown Screen"
+msgstr "Saiz Skrin Tidak Diketahui"
+
+msgid "Login"
+msgstr "Log masuk"
+
+msgid "Anonymous"
+msgstr "Tanpa nama"
+
+msgid "Robots"
+msgstr "Robot"
+
+msgid "Different robots"
+msgstr "Robot berbeza"
+
+msgid "Hits on robots.txt"
+msgstr "Trafik daripada robot enjin carian yang disenaraikan di atas, dikategorikan sebagai \"trafik pelayaran tidak normal\", tidak disertakan dalam jadual dan graf lain. Nombor selepas tanda \"+\" mewakili bilangan permintaan berjaya ke fail robots.txt"
+
+msgid "Worms"
+msgstr "Cacing"
+
+msgid "Different worms"
+msgstr "Cacing berbeza"
+
+msgid "Target"
+msgstr "Sasaran"
+
+msgid "Grabber"
+msgstr "Grabber"
+
+#------------------------------------------------------------------------------
+# Penerangan Format
+#------------------------------------------------------------------------------
+
+msgid "mime_text"
+msgstr "TXT fail teks biasa (teks biasa tanpa format yang telah diseragamkan oleh pengekodan ASCII pada tahun 1963. Sebagai asas kepada semua kod sumber, fail konfigurasi dan log sistem, kawalan aliran baris baharu silang pelantar Windows (CRLF) dan Unix (LF) masih menjadi standard pertukaran data paling umum dalam dunia komputer sehingga hari ini)"
+
+msgid "mime_log"
+msgstr "LOG log operasi sistem (aset teks biasa yang merekodkan keadaan masa jalan sistem pengendalian, kernel dan aplikasi. Merangkumi log capaian Nginx/Apache (Combined Log) dan spesifikasi syslog standard, merupakan sumber data teras untuk penyelesaian masalah, analisis prestasi aliran dan audit keselamatan)"
+
+msgid "mime_page"
+msgstr "HTML laman web hiperteks (batu asas World Wide Web yang dicipta oleh Tim Berners-Lee pada tahun 1989. Sebagai bahasa markup hiperteks sejagat sumber terbuka percuma, spesifikasi HTML5nya menjadi standard rasmi W3C pada tahun 2014, dengan sokongan asli untuk multimedia berstruktur, interaksi semantik dan reka letak halaman aliran, menerima Anugerah Turing pada tahun 2016)"
+
+msgid "mime_khtml"
+msgstr "KHTML enjin templat web (spesifikasi enjin pemapar pelayar KDE 2.0 tahun 1998. Sebagai penanda aras komuniti sumber terbuka yang meletakkan asas untuk persembahan web moden, warisan teknologinya secara langsung mengilhamkan dan berkembang menjadi teras Apple WebKit dan Google Blink, yang masih meneruskan aliran asasnya melalui seni bina web dinamik aliran moden)"
+
+msgid "mime_script"
+msgstr "SCRIPT skrip dinamik ditafsir (merujuk kepada klasifikasi umum aliran kod sumber yang tidak perlu dikompilasi terlebih dahulu dan dibaca serta dilaksanakan baris demi baris oleh persekitaran masa jalan atau penterjemah tertentu. Merangkumi ASP, JSP, CGI dan Tcl, digunakan secara meluas untuk antara muka get laluan biasa pelayan, kawalan proses automasi dan gam tugas peringkat sistem)"
+
+msgid "mime_js"
+msgstr "Skrip JavaScript (persekitaran pengaturcaraan asli pelayar Netscape tahun 1995. Menetapkan standard industri ECMAScript pada tahun 1997, kelahiran persekitaran masa jalan Node.js pada tahun 2009 memecahkan sempadan pelayar dan mencipta seni bina tak segerak tidak menyekat tindanan penuh, disertai ekosistem pakej perisian npm terbesar di dunia)"
+
+msgid "mime_py"
+msgstr "Skrip Python (bahasa skrip ditafsir aras tinggi yang dicipta oleh Guido van Rossum pada tahun 1991. Dengan kebolehbacaan tanpa kehilangan melalui pengeindenan wajib dan reka bentuk aras rendah pelbagai paradigma, kini telah ditetapkan sebagai bahasa standard industri untuk seni bina web moden, sains data tindanan penuh, latihan model kecerdasan buatan (AI) dan operasi automasi asli awan)"
+
+msgid "mime_sh"
+msgstr "Skrip Shell (skrip penterjemah arahan standard era Unix tahun 1971. Merangkumi spesifikasi arahan peringkat kernel seperti Bash, Sh, Dash, biasanya dilaksanakan dengan sambungan .sh, merupakan gam peringkat kernel sejagat untuk kawalan proses aras rendah, konfigurasi persekitaran tanpa pemasangan dan penggunaan automasi dalam sistem pengendalian seperti Unix moden)"
+
+msgid "mime_rb"
+msgstr "Skrip Ruby (bahasa skrip berorientasikan objek yang dicipta oleh Yukihiro Matsumoto pada tahun 1995. Dengan falsafah reka bentuk teras penghormatan melampau terhadap pengalaman pembangun, rangka kerja Ruby on Rails-nya secara revolusioner menetapkan paradigma pembangunan seni bina web aras tinggi moden 'Konvensyen Mengatasi Konfigurasi (CoC)')"
+
+msgid "mime_pl"
+msgstr "Skrip Perl (bahasa skrip pragmatik yang dicipta oleh Larry Wall pada tahun 1987. Sebagai pengasas pengurus pakej moden (CPAN), ia digelar 'Pisau Tentera Switzerland' untuk pemprosesan teks. Dalam mod CGI moden, ia masih berfungsi sebagai pangkalan kebolehpercayaan tinggi dalam bidang penghuraian log kerana kos memori fizikal yang sangat rendah dan pemprosesan ungkapan biasa yang cekap)"
+
+msgid "mime_php"
+msgstr "Laman web dinamik PHP (dicipta oleh Rasmus Lerdorf pada tahun 1995, direka khas untuk pembangunan web. Sebagai teknologi teras yang memacu lebih 70% laman web di seluruh dunia, ia menyokong secara mendalam aplikasi pengeluaran besar seperti WordPress dan Wikipedia. Sejak pengenalan enjin masa jalan kompilasi JIT (Just-In-Time) dalam PHP 8, ia telah mencapai evolusi paradigma asas ke arah pelayan sisi tindanan penuh berprestasi tinggi)"
+
+msgid "mime_image"
+msgstr "IMAGE klasifikasi aset imej (merangkumi klasifikasi umum bitmap mampat rugi/tanpa rugi, grafik web responsif moden dan grafik vektor. Merupakan petunjuk utama untuk menilai kos pemuatan sumber visual laman, kadar capaian cache sisi klien dan penggunaan lebar jalur rangkaian media)"
+
+msgid "mime_document"
+msgstr "DOCUMENT klasifikasi dokumen berstruktur (merangkumi klasifikasi umum teks biasa, hamparan, dokumen format tetap (PDF) dan bahasa markup ringan. Merupakan petunjuk utama untuk statistik pengedaran pangkalan pengetahuan statik sisi pelayan, muat turun aset maklumat perusahaan dan keupayaan pemprosesan aliran teks)"
+
+msgid "mime_package"
+msgstr "PACKAGE klasifikasi produk kompilasi dan pakej perisian (merangkumi klasifikasi umum program boleh laku asli sistem pengendalian, pustaka pautan masa jalan (DLL/SO) dan pakej pemasangan pengedaran aplikasi. Kerap digunakan sebagai petunjuk utama untuk menilai trafik keluar dan puncak muat turun laman pengedaran perisian)"
+
+msgid "mime_archive"
+msgstr "ARCHIVE fail arkib dan mampatan (merujuk kepada klasifikasi umum pakej mampatan data yang dibalut berdasarkan algoritma teras seperti DEFLATE, LZMA. Dalam lapisan rangkaian, selain mewakili pengedaran pakej tradisional, ia juga merangkumi aliran respons dinamik Gzip Projek GNU 1992. Walaupun algoritma Brotli diperkenalkan secara beransur-ansur dalam senario moden, klasifikasi ini masih menjadi petunjuk utama untuk menilai kadar pemprosesan lebar jalur pelayan dan pengurangan tekanan lapisan pengangkutan)"
+
+msgid "mime_audio"
+msgstr "AUDIO klasifikasi aliran audio digital (merangkumi klasifikasi umum audio termampat, buku audio dan bekas audio media strim. Berdasarkan standard pengekodan/dekod audio tertentu, digunakan untuk memantau kadar pemprosesan aliran data audio laman multimedia, lebar jalur strim serentak dan prestasi sambungan panjang)"
+
+msgid "mime_video"
+msgstr "VIDEO klasifikasi aliran video digital (merangkumi klasifikasi umum bekas video definisi tinggi, animasi web moden dan segmen media strim. Merupakan petunjuk utama untuk menilai had puncak lebar jalur pelayan dan kesan pecutan Rangkaian Penghantaran Kandungan (CDN) dalam persekitaran rangkaian beban tinggi)"
+
+msgid "mime_jscript"
+msgstr "Skrip JScript (implementasi proprietari kejuruteraan terbalik yang dibangunkan oleh Microsoft untuk Internet Explorer 3.0 pada tahun 1996. Sebagai pesaing hos JavaScript klasik awal, ia pernah menjadi enjin teras Skrip Hos Windows (WSH) dan bahagian belakang ASP awal)"
+
+msgid "mime_json"
+msgstr "DATA berstruktur JSON (format pertukaran serialisasi data ringan yang ditetapkan oleh Douglas Crockford pada tahun 2001. Berdasarkan seni bina pasangan kunci-nilai dan tatasusunan berasaskan teks, ia mempunyai kebolehbacaan manusia yang sangat tinggi dan ciri penghuraian aliran tanpa kehilangan. Ia adalah standard de facto untuk API web moden, seni bina mikroperkhidmatan dan interaksi model bahasa besar)"
+
+msgid "mime_vbs"
+msgstr "Skrip VBScript (varian bahasa skrip yang dikeluarkan oleh Microsoft bersama IE 3.0 pada tahun 1996. Pernah menjadi pemacu teras untuk laman web dinamik ASP awal dan pengurusan sistem Windows, kini secara rasmi tidak digunakan dan dikeluarkan dari kernel Windows 11 terkini oleh Microsoft, tergolong dalam teknologi peninggalan sejarah)"
+
+msgid "mime_conf"
+msgstr "CONF fail konfigurasi sistem (merujuk kepada klasifikasi fail data yang menyimpan secara kekal parameter persekitaran masa jalan perisian dalam bentuk teks biasa. Merangkumi INI dan spesifikasi YAML, TOML, JSON moden, dalam sistem Linux kebanyakannya tertumpu di direktori /etc. Ia adalah kebergantungan teras untuk pengoptimuman keadaan masa jalan peringkat sistem)"
+
+msgid "mime_css"
+msgstr "CSS helaian gaya lata (standard W3C 1996, bersama HTML/JS dikenali sebagai tiga komponen teras bahagian hadapan. Melalui evolusi penentududukan CSS2 dan modular CSS3, ia menyokong asli kotak fleksibel (Flexbox), grid dan reka bentuk responsif pertanyaan media. Ia adalah standard dominasi mutlak untuk menyahganding persembahan laman web dalam pelayar moden)"
+
+msgid "mime_xsl"
+msgstr "XSL helaian gaya (standard W3C 1999, merangkumi bahasa transformasi XSLT dan bahasa pengalamatan XPath, digunakan untuk memaparkan data XML berstruktur ke HTML, PDF atau teks biasa. Dalam pembangunan moden, ekosistemnya banyak digantikan oleh enjin templat yang lebih ringan dan format data JSON)"
+
+msgid "mime_runtime"
+msgstr "Fail boleh laku (format pelaksanaan asli sistem pengendalian seperti EXE, ELF, Mach-O, mengandungi kod mesin aras rendah yang dikompilasi, titik masuk dan maklumat pemuatan sistem)"
+
+msgid "mime_library"
+msgstr "Fail pustaka (pustaka pautan dinamik atau statik seperti DLL, SO, dylib, mengandungi simbol kongsi dan kod penempatan semula untuk dipanggil oleh program lain dan dimuatkan semasa masa jalan)"
+
+msgid "mime_swf"
+msgstr "Animasi Flash (dibangunkan oleh Macromedia pada tahun 1996, diambil alih oleh Adobe pada tahun 2005. Standard animasi web interaktif, pernah menguasai animasi dan permainan internet. Kelemahan: bergantung pada pemalam, tidak disokong pada peranti mudah alih, risiko keselamatan tinggi. Adobe mengumumkan penghentian pada tahun 2017, menghentikan sepenuhnya sokongan pada tahun 2020, digantikan oleh HTML5/CSS3/JS)"
+
+msgid "mime_dtd"
+msgstr "DTD definisi jenis dokumen (dikeluarkan bersama XML 1.0 pada tahun 1998, digunakan untuk menentukan struktur dokumen XML/HTML dan mengesahkan kesahihan. Dalam pembangunan moden, ia telah digantikan secara beransur-ansur oleh penyelesaian yang lebih fleksibel seperti Skema XML, RELAX NG)"
+
+msgid "mime_csv"
+msgstr "Format data CSV (nilai dipisahkan koma, format jadual teks biasa sejagat era komputer besar tahun 1972 (Pengkompil IBM Fortran). Diseragamkan secara rasmi oleh RFC 4180 pada tahun 2005, sebagai standard pertukaran data tanpa kehilangan merentas platform dan bahasa. Digunakan secara meluas untuk import dan eksport cekap ke Excel, pangkalan data perhubungan, analisis data (Pandas).)"
+
+msgid "mime_cur"
+msgstr "Fail penunjuk tetikus (format .cur, digunakan untuk menyesuaikan gaya tetikus. Contohnya kursor jari pada laman web, ikon jam pasir menunggu dalam sistem. Ia adalah 'saudara' kepada ikon .ico biasa, tetapi ia mempunyai ciri tambahan lokasi 'titik panas' — iaitu lokasi di mana tetikus sebenarnya diklik. Sejarah: diperkenalkan dengan Windows 3.1 (1992), merupakan komponen utama dalam era peralihan antara muka grafik dari baris arahan ke operasi tetikus)"
+
+msgid "mime_jnlp"
+msgstr "Java Web Start (teknologi pengedaran aplikasi desktop Java tahun 2000-an, memulakan program Java jauh melalui fail .jnlp. Disebabkan masalah keselamatan dan kepopularan kaedah pengedaran moden, kini pada dasarnya telah dihapuskan)"
+
+msgid "mime_lit"
+msgstr "Buku elektronik Microsoft Reader (dikeluarkan oleh Microsoft pada tahun 2000, format LIT. Telah dihapuskan, kini boleh ditukar kepada EPUB atau PDF menggunakan alat seperti Calibre)"
+
+msgid "mime_svg"
+msgstr "Grafik vektor SVG (standard W3C 1999, format imej vektor dua dimensi berdasarkan seni bina XML. Mempunyai kelebihan penskalaan tanpa kehilangan ketajaman dan penghantaran teks aliran. Semua pelayar moden menyokongnya secara asli. Digunakan secara meluas untuk ikon web definisi tinggi, logo dan penyampaian animasi vektor. Ia adalah standard teras untuk grafik web moden)"
+
+msgid "mime_ai"
+msgstr "Grafik vektor AI (format grafik vektor proprietari yang dibangunkan secara bebas oleh Adobe pada tahun 1987. Sebagai standard teras industri untuk reka bentuk tipografi, percetakan dan identiti jenaka, ia menyokong data vektor reka letak pelbagai lapisan dan aras tinggi. Ia adalah pembawa pilihan untuk seni visual profesional)"
+
+msgid "mime_phshop"
+msgstr "PSD imej lapisan (format fail sumber imej raster proprietari yang dikeluarkan oleh Adobe bersama Photoshop pada tahun 1990. Menyokong pelapisan berbilang lapisan, saluran, topeng dan data penyuntingan tanpa kehilangan. Ia telah ditetapkan sebagai standard industri untuk pemprosesan imej dan lukisan digital global)"
+
+msgid "mime_ttf"
+msgstr "Fon TrueType (format fon kontur digital yang dibangunkan bersama oleh Apple dan Microsoft pada tahun 1989. Berdasarkan lengkung Bézier kuadratik, ia mencapai ketepatan piksel mutlak antara paparan skrin dan keluaran cetakan. Ia adalah format fon lalai asli untuk sistem pengendalian desktop moden)"
+
+msgid "mime_fon"
+msgstr "Fon bitmap (format fon matriks titik peringkat sistem awal Microsoft Windows dari tahun 1980-an. Tidak menyokong penskalaan tanpa kehilangan nisbah sewenang-wenangnya. Biasanya digunakan dengan sistem peninggalan atau komponen peranti terbenam awal untuk penyampaian teks terpiksel terhad)"
+
+msgid "mime_pdf"
+msgstr "Dokumen elektronik PDF (format dokumen reka letak tetap pelantar silang yang dibangunkan oleh Adobe pada tahun 1993 dan menjadi standard antarabangsa ISO 32000 pada tahun 2008. Mempunyai ketepatan reka letak dan format mutlak. Ia adalah standard sejagat untuk pengedaran dokumen rasmi elektronik global dan penerbitan digital)"
+
+msgid "mime_dotnet"
+msgstr "Laman dinamik ASP.NET (teknologi web dinamik sisi pelayan yang dikeluarkan oleh Microsoft bersama seni bina .NET pada tahun 2002. Beroperasi pada enjin persembahan IIS, digunakan untuk membina aplikasi web dinamik sisi pelayan Windows peringkat perusahaan dan sistem teragih)"
+
+msgid "mime_mdb"
+msgstr "Pangkalan data perhubungan MDB (format storan pangkalan data perhubungan peringkat desktop yang dikeluarkan oleh Microsoft bersama Access pada tahun 1992. Dengan enjin pangkalan data Jet terbina dalam, ia berfungsi sebagai penyelesaian pangkalan data perhubungan dalam pengurusan maklumat awal komputer peribadi dan perusahaan kecil dan sederhana)"
+
+msgid "mime_md"
+msgstr "Dokumen Markdown (bahasa markup ringan yang dicipta secara bebas oleh John Gruber pada tahun 2004. Falsafah reka bentuk terasnya 'boleh dibaca bermakna boleh dipaparkan', yang mendorong standard terbitan moden seperti GFM dan CommonMark. Digunakan secara meluas sebagai standard pertukaran teras untuk dokumentasi teknikal, pangkalan pengetahuan (Obsidian) dan penjana laman web statik moden)"
+
+msgid "mime_crystal"
+msgstr "Crystal Reports (format fail laporan peringkat perusahaan profesional platform Kecerdasan Perniagaan (BI) SAP. Mempunyai sambungan aras rendah pelbagai sumber data dan keupayaan persembahan carta dinamik kompleks, digunakan secara meluas untuk penjanaan laporan profesional dalam sistem kewangan dan analisis data syarikat multinasional)"
+
+msgid "mime_libreoffice"
+msgstr "Dokumen LibreOffice (format proprietari suite pejabat sumber terbuka yang dibina oleh The Document Foundation pada tahun 2010 berdasarkan cabang OpenOffice. Melaksanakan secara mendalam standard antarabangsa ODF (Format Dokumen Terbuka) W3C. Ia adalah asas pejabat untuk ekosistem sumber terbuka moden)"
+
+msgid "mime_encrypt"
+msgstr "ENCRYPT fail disulitkan (data binari atau teks mentah yang diproses melalui algoritma penyulitan simetri atau tidak simetri tertentu. Merangkumi format terbitan teras seperti .enc, .pgp, .gpg. Dalam lapisan rangkaian, ia digunakan untuk memastikan kerahsiaan dan pengesahan integriti data tidak awam)"
+
+msgid "mime_gpx"
+msgstr "GPX data trajektori satelit (format pertukaran sistem penentududukan global berasaskan seni bina XML. Dicipta khusus untuk menerangkan koordinat geografi, titik laluan, laluan dan trajektori sejarah. Ia adalah standard data terbuka umum untuk peranti sukan mudah alih moden, navigasi kenderaan dan Sistem Maklumat Geografi (GIS))"
+
+msgid "mime_diskimage"
+msgstr "Disk Image imej cakera (merangkumi fail imej sektor aras rendah bait demi bait cakera fizikal atau media optik seperti ISO, DMG, IMG. Digunakan untuk penggunaan sistem aras rendah, pengedaran perisian kapasiti besar secara selamat dan sandaran data lengkap peringkat fizikal media storan)"
+
+msgid "mime_vm"
+msgstr "VM imej mesin maya (merangkumi imej cakera fizikal maya seperti VMDK, VDI, VHDX, OVA. Sebagai asas platform VMware, VirtualBox dan Hyper-V, ia digunakan untuk emulasi perkakasan peringkat sistem aras rendah, syot kilat contoh dan pengedaran infrastruktur awan)"
+
+msgid "mime_torrent"
+msgstr "Fail torrent BitTorrent (indeks muat turun teragih P2P rakan ke rakan yang direka oleh Bram Cohen pada tahun 2001. Berdasarkan pengekodan Bencode, ia menyimpan metadata semak aras rendah fail asal dan maklumat pengalamatan pelayan Tracker. Ia adalah pembawa teras untuk pengedaran aliran rangkaian terpencar)"
+
+msgid "mime_gis"
+msgstr "GIS data ruang geografi (standard data sistem maklumat geografi dengan teras Shapefile dan GeoJSON. Merangkumi koordinat geometri pelbagai dimensi, topologi lapisan dan data atribut. Digunakan secara meluas untuk persembahan peta digital ketepatan tinggi, penderiaan jauh satelit dan analisis geometri spatial)"
+
+msgid "mime_ebook"
+msgstr "EBOOK buku elektronik (format penerbitan digital dengan teras pada standard antarabangsa terbuka EPUB W3C dan seni bina proprietari MOBI/AZW Amazon Kindle. Menyokong reka letak aliran adaptif, pembalut metadata dan perlindungan hak digital DRM. Ia adalah pembawa universal untuk pembacaan digital pada peranti mudah alih)"
+
+msgid "mime_avif"
+msgstr "AVIF imej cekap (standard imej ultra-definisi tinggi generasi akan datang yang diperkenalkan oleh Alliance for Open Media (AOMedia) pada tahun 2019. Berdasarkan teknologi bingkai kunci pengekodan video AV1, nisbah mampatan 50% lebih baik daripada WebP dan menyokong julat dinamik tinggi (HDR) secara asli. Ia adalah standard arus perdana untuk penghantaran imej web moden)"
+
+msgid "mime_markdown"
+msgstr "Markdown dokumen ringan (bahasa markup dokumen teks yang dicipta secara bebas oleh John Gruber pada tahun 2004. Menggunakan reka bentuk deklaratif teks biasa, reka bentuk sintaksnya diilhamkan oleh reStructuredText. Digunakan secara meluas untuk projek GitHub, dokumentasi teknikal peringkat kejuruteraan dan ekosistem pengurusan kandungan statik moden)"
+
+msgid "mime_yaml"
+msgstr "YAML konfigurasi bersiri (format serialisasi data boleh dibaca manusia yang direka oleh Clark Evans dan lain-lain pada tahun 2001. Berdasarkan inden hierarki dan pemetaan pasangan kunci-nilai, kini telah ditetapkan sebagai standard konfigurasi infrastruktur asli awan untuk orkestrasi bekas Kubernetes, automasi Ansible dan Docker Compose)"
+
+msgid "mime_toml"
+msgstr "TOML konfigurasi semantik (bahasa minimalis yang direka oleh Tom Preston-Werner pada tahun 2013. Mempunyai kelebihan reka bentuk aras rendah seperti taipan kuat, pemetaan eksplisit dan kejelasan semantik. Kini digunakan secara meluas sebagai fail konfigurasi piawai untuk rangkaian alat moden Rust (Cargo), Python (pyproject.toml) dan Go)"
+
+msgid "mime_vue"
+msgstr "Vue komponen fail tunggal (format SFC proprietari rangka kerja web progresif yang diperkenalkan oleh Evan You pada tahun 2014. Dalam satu fail, ia melaksanakan pengasingan tanggungjawab HTML/CSS/JS dan pengikatan keadaan reaktif. Ia memacu secara mendalam aplikasi bahagian hadapan interaktif web moden dan enjin laman statik berskala besar)"
+
+msgid "mime_wasm"
+msgstr "WebAssembly modul binari (standard kod bait aras rendah prestasi tinggi untuk web yang ditetapkan oleh W3C pada tahun 2017. Membenarkan bahasa jenis kuat seperti C/C++/Rust dikompilasi ke sasaran kotak pasir pelayar, memberikan kecekapan pelaksanaan menghampiri perkakasan asli. Ia adalah batu asas untuk pengkomputeran tepi web moden)"
+
+msgid "mime_jsx"
+msgstr "React JSX komponen (sambungan sintaks JavaScript XML yang dikeluarkan oleh Facebook bersama rangka kerja React pada tahun 2013. Menyokong pembinaan struktur maya DOM secara deklaratif dalam JavaScript, melaksanakan paradigma pembangunan berasaskan komponen bahagian hadapan 'UI adalah fungsi keadaan')"
+
+msgid "mime_tsx"
+msgstr "TypeScript TSX komponen (gabungan aliran sintaks taipan kuat TypeScript yang dibangunkan oleh Microsoft pada tahun 2012 dengan JSX. Menyuntik pemeriksaan jenis masa kompilasi statik dan kekangan antara muka dalam pembangunan komponen React. Ia adalah standard kod untuk pembangunan selamat sistem bahagian hadapan besar moden)"
+
+msgid "mime_heif"
+msgstr "HEIF imej cekap (format fail imej cekap yang ditetapkan oleh organisasi MPEG pada tahun 2015. Berdasarkan algoritma pengekodan video HEVC (H.265), ia menyokong imej berbilang bingkai, peta kedalaman dan metadata dalam isipadu yang sangat kecil. Ia adalah standard storan proprietari untuk sistem pengendalian mudah alih moden dan peranti terminal pintar)"
+
+msgid "mime_heic"
+msgstr "HEIC imej cekap (format bitmap proprietari Apple yang dilaksanakan berdasarkan standard antarabangsa HEIF. Sebagai standard storan foto lalai iPhone moden, ia mendapat sokongan pengekodan/penyahkodan peringkat perkakasan iOS/macOS dan sistem pengendalian asli. Sambil mengekalkan kualiti imej tinggi, ia mengurangkan secara drastik ruang storan asas)"
+
+msgid "mime_gltf"
+msgstr "glTF model aset 3D (standard format penghantaran GL yang dikeluarkan oleh Khronos Group pada tahun 2015. Menggunakan seni bina JSON untuk menggambarkan pemandangan tiga dimensi, digelar 'JPEG untuk bidang 3D'. Ia adalah standard industri ringan untuk persembahan WebGL/WebGPU dan realiti maya moden)"
+
+msgid "mime_glb"
+msgstr "GLB model 3D binari (versi pembalut tanpa kehilangan binari penuh model aset glTF. Menggabungkan struktur pemandangan, data bucu mesh aras rendah, bahan dan peta tekstur ke dalam satu fail. Dicipta khusus untuk penghantaran cekap dan pengedaran aliran aset web 3D pelantar silang)"
+
+msgid "mime_gls"
+msgstr "GLOSSARY glosari data (fail definisi set terminologi khusus untuk sistem pengurusan dokumen dan korpus berstruktur. Mengandungi definisi istilah standard terbina dalam, padanan pelbagai bahasa dan pemetaan metadata. Digunakan untuk mengekalkan konsistensi konsep dalam analisis teks automatik dan sistem penerbitan kandungan)"
+
+msgid "mime_cbz"
+msgstr "CBZ buku komik (format pengarkiban imej komik proprietari berdasarkan struktur mampatan ZIP. Secara dalaman membalut jujukan bitmap statik berterusan. Ia adalah standard bekas ringan universal untuk penerbitan komik digital dan koleksi tempatan pelantar silang)"
+
+msgid "mime_cbr"
+msgstr "CBR buku komik (format pengarkiban imej komik proprietari berdasarkan struktur mampatan RAR. Menggunakan algoritma RAR untuk membalut jujukan bitmap statik, mempunyai nisbah mampatan yang agak tinggi, mempunyai sokongan keserasian luas dalam domain pengedaran komik digital)"
+
+msgid "mime_fb2"
+msgstr "FB2 buku elektronik (standard buku elektronik FictionBook 2.0 awal tahun 2000-an. Menggunakan struktur XML tulen untuk menerangkan atribut buku dan hierarki teks. Mendapat sokongan luas dalam ekosistem buku elektronik sumber terbuka dan pembaca penerbitan digital peninggalan)"
+
+msgid "mime_kepub"
+msgstr "KEPUB buku elektronik (format buku elektronik dipertingkat proprietari Kobo yang berevolusi berdasarkan standard EPUB. Melakukan pengoptimuman persembahan aras rendah untuk pembaca buku elektronik peringkat perkakasan Kobo, menyediakan reka letak halaman yang lebih cekap dan interaksi statistik pembacaan)"
+
+msgid "mime_m4b"
+msgstr "M4B buku audio (format buku audio berdasarkan seni bina bekas MPEG-4 Part 14 (MP4). Menggunakan pengekodan AAC, menyokong asli penentuan penanda aras rendah, main semula sambungan dari titik putus dan pembenaman bab. Pernah menjadi format standard ekosistem Apple iTunes)"
+
+msgid "mime_kfx"
+msgstr "Kindle KFX format (format penerbitan digital dipertingkat proprietari yang dikeluarkan oleh Amazon bersama Kindle pada tahun 2015. Menyokong reka letak ligatur lanjutan, persembahan fon dinamik tinggi dan pemuatan halaman aliran peringkat kernel (Page Flip). Ia adalah standard teras untuk platform Kindle moden)"
+
+msgid "mime_chm"
+msgstr "CHM fail bantuan terkompilasi (sistem maklumat bantuan HTML terkompilasi yang dikeluarkan oleh Microsoft pada tahun 1997. Membungkus data hiperteks dan indeks asas ke dalam satu bekas binari. Untuk masa yang lama, ia adalah format standard untuk dokumentasi bantuan luar talian tempatan perisian Windows)"
+
+msgid "mime_mht"
+msgstr "MHT arkib laman web (format hiperteks agregat MIME yang dikeluarkan oleh Microsoft pada tahun 1999. Berdasarkan standard RFC 2557, ia membalut sumber HTML, CSS, JS dan imej terbenam ke dalam satu fail teks. Digunakan untuk penyimpanan laman web luar talian dalam pelayar peninggalan)"
+
+msgid "mime_wml"
+msgstr "WML bahasa markup tanpa wayar (standard markup mudah alih yang ditetapkan oleh forum WAP (Protokol Aplikasi Tanpa Wayar) pada tahun 1999. Berdasarkan spesifikasi XML, direka khusus untuk rangkaian selular tanpa wayar jalur sempit awal dan telefon ciri kuasa pemprosesan rendah. Dalam ekosistem web moden, ia tergolong dalam teknologi peninggalan yang telah dibersarakan)"
+
+msgid "mime_xhtml"
+msgstr "XHTML laman web hiperteks (standard W3C 2000, pembalut bahasa markup hiperteks jenis ketat berasaskan seni bina XML. Pada tahun 2009, W3C menghentikan evolusi teknologinya dan beralih sepenuhnya kepada spesifikasi HTML5. Kini kebanyakannya digunakan untuk persembahan laman web semantik dalam sistem peninggalan)"
+
+msgid "mime_xml"
+msgstr "XML dokumen berstruktur (bahasa markup boleh dikembangkan standard W3C 1998. Mempunyai seni bina tag yang boleh menerangkan sendiri. Ia adalah format batu asas untuk perkhidmatan web rangkaian (SOAP/REST), fail konfigurasi peringkat sistem (XSD) dan pertukaran data pelantar silang)"
+
+msgid "mime_sgml"
+msgstr "SGML bahasa markup umum (standard ISO 8879 1986 untuk bahasa markup umum standard. Sebagai perintis industri untuk penerangan berstruktur dokumen elektronik, kedua-dua spesifikasi XML dan HTML awal berasal daripada bahasa meta standard ini)"
+
+msgid "mime_apng"
+msgstr "APNG grafik dinamik (sambungan dinamik Grafik Rangkaian Mudah Alih (PNG) yang dibangunkan oleh Mozilla pada tahun 2004. Menyokong warna benar 24-bit dan ketelusan separa saluran Alfa 8-bit. Ia adalah alternatif definisi tinggi kepada format GIF dalam senario web moden)"
+
+msgid "mime_bmp"
+msgstr "BMP bitmap asli (format bitmap bebas peranti platform Microsoft yang ditetapkan sejak era Windows 1.0. Menggunakan storan tanpa kehilangan, tidak termampat, walaupun saiznya biasanya 3-10 kali lebih besar daripada PNG, kerana tiada kos pengekodan/penyahkodan, ia masih tertanam secara meluas dalam komponen teras Windows 11, segmen sumber EXE/MSI dan penimbal grafik pemacu peninggalan)"
+
+msgid "mime_cdr"
+msgstr "CDR grafik vektor (format fail sumber reka bentuk vektor profesional CorelDRAW proprietari syarikat Corel Kanada. Menyokong pengurusan warna pelbagai lapisan, nod kontur matematik kompleks dan data reka letak peringkat percetakan. Ia adalah format khusus untuk domain reka bentuk percetakan rata dan pengiklanan profesional)"
+
+msgid "mime_gif"
+msgstr "GIF imej warna terindeks (format bitmap warna terindeks 8-bit yang dibangunkan oleh CompuServe pada tahun 1987. Berdasarkan algoritma LZW, terhad kepada 256 aras warna dan ketelusan warna tunggal, pada kadar bingkai tinggi saiznya menjadi besar. Kini secara beransur-ansur digantikan oleh standard imej dinamik cekap moden seperti APNG, WebP)"
+
+msgid "mime_ico"
+msgstr "ICO ikon sistem (format pembalut sumber ikon asli Windows. Menyokong pembenaman campuran pelbagai resolusi piksel dan variasi imej kedalaman warna dalam satu bekas. Juga merupakan standard pengedaran universal untuk pengecam teras laman pelayar web moden (Favicon))"
+
+msgid "mime_jpeg"
+msgstr "JPEG imej termampat (format imej mampatan rugi standard antarabangsa ISO 10918 1992. Berdasarkan algoritma transformasi kosinus diskret (DCT), mencapai nisbah mampatan tinggi sambil mengekalkan kualiti imej realistik yang unggul. Ia adalah standard de facto mutlak untuk foto statik internet global)"
+
+msgid "mime_jpg"
+msgstr "JPEG imej termampat (format imej mampatan rugi standard antarabangsa ISO 10918 1992. Berdasarkan algoritma transformasi kosinus diskret (DCT), mencapai nisbah mampatan tinggi sambil mengekalkan kualiti imej realistik yang unggul. Ia adalah standard de facto mutlak untuk foto statik internet global)"
+
+msgid "mime_png"
+msgstr "PNG imej tanpa kehilangan (standard Grafik Rangkaian Mudah Alih yang disyorkan oleh W3C pada tahun 1996. Menggunakan algoritma mampatan tanpa kehilangan, menyokong asli warna benar 24-bit dan ketelusan saluran Alfa 8-bit. Sebagai alternatif definisi tinggi kepada GIF statik klasik, ia adalah standard de facto mutlak untuk imej piksel tanpa kehilangan di internet)"
+
+msgid "mime_ps"
+msgstr "PostScript fail perihalan halaman (bahasa perihalan halaman berasaskan timbunan yang dikeluarkan oleh Adobe pada tahun 1985. Sebagai pendahulu teknologi format PDF, ia melaksanakan pada aras rendah tipografi bebas perkakasan dan persembahan grafik vektor ketepatan tinggi. Ia adalah standard asas untuk domain penerbitan percetakan profesional dan percetakan laser)"
+
+msgid "mime_psb"
+msgstr "PSB dokumen lapisan besar (format pembalut fail sumber besar proprietari Adobe Photoshop. Ia memecahkan had saiz fizikal 2GB dan had pengalamatan dalaman 30,000 piksel format PSD standard. Dicipta khusus untuk menyimpan aset seni digital gergasi berskala sangat besar dengan kedalaman lapisan tinggi)"
+
+msgid "mime_psd"
+msgstr "PSD fail sumber reka bentuk lapisan (format kejuruteraan imej berlapis proprietari Adobe Photoshop. Sebagai bekas standard industri dalam bidang grafik dan imej, ia membalut secara asli pepohon persembahan lapisan lengkap, saluran bitmap, laluan keratan vektor dan mod campuran komposit, menyokong penyuntingan data penuh tanpa kehilangan)"
+
+msgid "mime_webp"
+msgstr "WebP imej cekap (standard pengekodan grafik web universal yang dikeluarkan oleh Google pada tahun 2010. Berasal daripada teknologi bingkai kunci video VP8, ia serasi sempurna dengan persembahan rugi, tanpa rugi, separa telus dan dinamik. Berbanding PNG berkualiti sama, ia mengurangkan saiz sebanyak 25-35%. Ia adalah batu asas untuk pemuatan prestasi tinggi laman web moden)"
+
+msgid "mime_woff"
+msgstr "WOFF fail glif web (format fon web terbuka yang dicipta pada tahun 2009 dan menjadi standard W3C pada tahun 2012. Pada dasarnya, ia adalah pembalut mampatan tanpa kehilangan aliran struktur fon TTF/OTF standard, yang secara optimum mengurangkan kos lebar jalur penghantaran rangkaian. Ia adalah format universal untuk ikon laman web moden dan fon awan)"
+
+msgid "mime_7z"
+msgstr "7z arkib termampat (format proprietari 7-Zip yang dibangunkan oleh Igor Pavlov pada tahun 1999. Berdasarkan algoritma sumber terbuka LZMA/LZMA2, mempunyai nisbah mampatan sangat tinggi. Dalam keadaan yang sama, saiznya biasanya 30-50% lebih kecil daripada ZIP. Ia adalah format nisbah mampatan tinggi universal untuk komuniti sumber terbuka dan pengedaran perisian)"
+
+msgid "mime_ace"
+msgstr "ACE arkib termampat (format mampatan proprietari WinACE tahun 1990-an. Pernah bersaing dengan format RAR dan mempunyai nisbah mampatan yang agak tinggi. Selepas tahun 2007, pembangunan teknologi terhenti, kini telah digantikan oleh format 7z dan RAR. Tergolong dalam format pengarkiban sistem peninggalan)"
+
+msgid "mime_bz2"
+msgstr "BZIP2 arkib termampat (format mampatan pengisihan blok yang dibangunkan oleh Julian Seward pada tahun 1996. Nisbah mampatan algoritma asasnya adalah 15-20% lebih tinggi daripada GZIP tetapi kos pengiraan lebih besar. Kerap digunakan untuk pengedaran kod sumber kernel Linux dan pakej perisian sumber terbuka. Sambungan standard ialah .bz2)"
+
+msgid "mime_cab"
+msgstr "CAB arkib termampat (format pengarkiban Cabinet yang dibangunkan secara bebas oleh Microsoft pada tahun 1995. Sebagai standard pakej pemasangan asli sistem Windows, ia digunakan untuk pengedaran pemacu dan fail kernel. Juga merupakan bekas storan asas untuk Windows Installer (MSI))"
+
+msgid "mime_dmg"
+msgstr "DMG imej cakera (format Imej Cakera yang dikembangkan oleh Apple pada tahun 1980-an. Sebagai bekas standard untuk pengedaran perisian macOS, ia menyokong pemasangan fizikal sebagai sistem fail maya, mampatan aras rendah dan penyulitan data. Ia adalah format arus perdana untuk pengedaran aplikasi ekosistem Mac)"
+
+msgid "mime_emz"
+msgstr "EMZ gambar termampat (versi termampat bagi EMF Metafail Dipertingkat Windows. Pada dasarnya, ia adalah grafik vektor binari yang dimampatkan melalui algoritma GZIP. Digunakan secara meluas untuk storan grafik vektor terbenam dalam dokumen siri Microsoft Office)"
+
+msgid "mime_gz"
+msgstr "GZIP arkib termampat (format mampatan aliran standard yang dibangunkan oleh Jean-loup Gailly dan Mark Adler dari Projek GNU pada tahun 1992. Sebagai alat mampatan standard Unix/Linux, ia juga merupakan standard teras untuk mampatan lapisan pengangkutan HTTP (Gzip). Kerap digunakan bersama pengarkiban TAR)"
+
+msgid "mime_jar"
+msgstr "JAR arkib termampat (format pengarkiban Java ARchive yang dikeluarkan oleh Sun Microsystems pada tahun 1997. Pada dasarnya, ia adalah bekas pembungkusan berasaskan struktur ZIP, digunakan untuk membalut pustaka kelas Java dan metadata. Ia adalah produk kompilasi teras untuk ekosistem Maven, Gradle dan Android awal)"
+
+msgid "mime_lzma"
+msgstr "LZMA arkib termampat (algoritma mampatan rantai Lempel-Ziv-Markov yang dibangunkan oleh Igor Pavlov pada tahun 1998. Sebagai enjin teras format 7z, ia mempunyai nisbah mampatan sangat tinggi dan ciri penyahmampatan berkelajuan tinggi. Digunakan secara meluas untuk pengedaran firmware perkakasan dan sistem terbenam)"
+
+msgid "mime_rar"
+msgstr "RAR arkib termampat (format pengarkiban proprietari WinRAR yang dibangunkan oleh Eugene Roshal pada tahun 1993. Menyokong mampatan bahagian, rekod pemulihan fizikal (ECC) dan penyulitan kekuatan tinggi. Nisbah mampatannya lebih baik daripada ZIP standard, dan mempunyai sokongan keserasian yang luas dalam komputer peribadi dan domain komersial)"
+
+msgid "mime_tar"
+msgstr "TAR pakej arkib (format pengarkiban pita era Unix V7 tahun 1979. Hanya melakukan pembungkusan aliran fail tanpa mampatan data. Kerap digabungkan dengan GZIP/BZIP2/XZ. Ia adalah standard asas untuk storan lapisan pakej sumber Linux dan imej Docker)"
+
+msgid "mime_tgz"
+msgstr "TGZ arkib termampat (format gabungan aliran Pengarkiban TAR dan Mampatan GZIP, sambungan .tgz atau .tar.gz. Sebagai format pengedaran pakej perisian paling universal dalam persekitaran Unix/Linux, ia digunakan secara meluas untuk penggunaan kompilasi sumber dan pengedaran pakej binari tanpa pemasangan)"
+
+msgid "mime_tbz2"
+msgstr "TBZ2 arkib termampat (format gabungan aliran Pengarkiban TAR dan Mampatan BZIP2, sambungan .tbz2 atau .tar.bz2. Berbanding TGZ, ia boleh meningkatkan lagi nisbah mampatan sebanyak 15-20%, sesuai untuk penghantaran fail besar, pernah digunakan untuk jangka masa panjang dalam pengedaran kod sumber kernel Linux)"
+
+msgid "mime_xz"
+msgstr "XZ arkib termampat (format nisbah mampatan tinggi generasi akan datang yang diperkenalkan pada tahun 2009. Berdasarkan algoritma LZMA2, nisbah mampatan data adalah 30-50% lebih tinggi daripada GZIP dan mengekalkan penyahmampatan berkelajuan tinggi. Ia telah ditetapkan sebagai standard pengedaran yang disyorkan oleh kernel Linux dan pengurus pakej utama (seperti di dalam Debian .deb))"
+
+msgid "mime_z"
+msgstr "Z arkib termampat (format mampatan LZW arahan Unix compress tahun 1985. Sebagai standard mampatan standard sistem Unix awal, kini telah digantikan sepenuhnya oleh format GZIP yang lebih cekap. Dalam trafik rangkaian moden, ia adalah format peninggalan sejarah yang jarang ditemui)"
+
+msgid "mime_zip"
+msgstr "ZIP arkib termampat (format pengarkiban universal PKZIP yang dibangunkan oleh Phil Katz pada tahun 1989. Menerima sokongan asli daripada sistem pengendalian utama. Ia adalah standard bekas yang paling banyak digunakan di internet. JAR Java moden, APK Android dan dokumen Office (OOXML) semuanya berasaskan struktur ZIP)"
+
+msgid "mime_zst"
+msgstr "Zstandard arkib termampat (standard mampatan aliran generasi baharu yang direka oleh Yann Collet dari Facebook pada tahun 2015. Mendekati nisbah mampatan LZMA sambil mempunyai daya pemprosesan yang jauh melebihi GZIP. Ia telah diterima secara meluas oleh kernel Linux (5.9+) dan pengurus pakej Arch/Debian)"
+
+msgid "mime_lz4"
+msgstr "LZ4 arkib termampat (algoritma mampatan aliran sangat pantas yang dibangunkan oleh Yann Collet pada tahun 2011. Kelajuan pemprosesan adalah lebih 10 kali ganda daripada GZIP, mempunyai kos masa jalan CPU yang sangat rendah. Digunakan secara meluas dalam kernel Linux, sistem fail OpenZFS dan pemprosesan aliran data masa nyata Hadoop)"
+
+msgid "mime_lzo"
+msgstr "LZO arkib termampat (algoritma Lempel-Ziv-Oberhumer yang dibangunkan oleh Markus Oberhumer pada tahun 1996. Memfokuskan pada prestasi penyahmampatan sangat pantas. Terbenam secara meluas dalam imej Squashfs kernel Linux, firmware OpenWrt dan pelbagai sistem terbenam terhad sumber)"
+
+msgid "mime_msi"
+msgstr "MSI pakej pemasangan sistem (format pembalut data Pemasang Windows yang dikeluarkan oleh Microsoft pada tahun 1999. Sebagai spesifikasi penggunaan standard peringkat aplikasi Windows, ia menyokong asli pembalikan urus niaga aras rendah, pengurusan kitaran hayat komponen dan pemasangan senyap tanpa pemprosesan kelompok. Ia adalah standard teras untuk pengedaran perisian terpusat peringkat perusahaan dan penggunaan dasar)"
+
+msgid "mime_pkg"
+msgstr "PKG pakej pemasangan perisian pelantar silang. 1. Pakej perisian FreeBSD: standard pkgng, sambungan .pkg atau .txz, berdasarkan mampatan TAR+XZ/Zstd, menyokong penyelesaian kebergantungan dan pengesahan tandatangan; 2. Pakej pemasangan macOS: berdasarkan format Pemasang Apple, menyokong komponen tersuai, skrip pemasangan dan nyahpasang peringkat sistem. Masing-masing adalah pembawa pengedaran utama untuk pelayan BSD dan sistem Mac."
+
+msgid "mime_apk"
+msgstr "APK pakej aplikasi Android (pakej pemasangan aplikasi tradisional yang dikeluarkan oleh Google bersama Android pada tahun 2008. Berasaskan struktur pengarkiban ZIP, membungkus bait kod Dalvik terkompilasi (DEX), manifes metadata dan sumber global. Kini digunakan secara meluas untuk penyahpepijatan pembangunan tempatan, pengedaran pihak ketiga dan pemasangan sisi peranti)"
+
+msgid "mime_ipa"
+msgstr "IPA pakej aplikasi Apple (bekas pembungkusan khusus iOS/iPadOS yang dikeluarkan bersama SDK iPhone pada tahun 2008. Pada dasarnya, ia adalah arkib ZIP yang dilindungi oleh Pengurusan Hak Digital FairPlay atau tandatangan kod peringkat perusahaan, mengandungi boleh laku binari Mach-O, pepohon sumber aplikasi dan konfigurasi metadata Info.plist)"
+
+msgid "mime_hap"
+msgstr "HAP pakej aplikasi HarmonyOS (unit asas penggunaan elastik HarmonyOS yang dikeluarkan bersama HarmonyOS 2.0 pada tahun 2020. Terdiri daripada modul utama Entry atau modul fungsi sambungan Feature. Ia adalah format penggunaan pelbagai hujung teras untuk pengedaran terminal pintar merentas hujung semua senario (telefon, tablet, peranti boleh pakai))"
+
+msgid "mime_har"
+msgstr "HAR pakej kongsi statik HarmonyOS (fail arkib pustaka kongsi statik proprietari HarmonyOS. Digunakan untuk membungkus komponen umum, kod sumber aras rendah dan kebergantungan masa kompilasi, yang dipautkan secara statik dan dikongsi oleh berbilang modul HAP. Ia adalah pangkalan teras untuk pembangunan berasaskan komponen dan penggunaan semula pelbagai modul sistem HarmonyOS)"
+
+msgid "mime_aab"
+msgstr "AAB berkas aplikasi Android (format pengedaran dinamik Google Play yang diperkenalkan oleh Google pada tahun 2018 dan ditetapkan pada tahun 2021. Sebagai entiti pengedaran tulen, ia dipotong dan dikompilasi secara dinamik oleh awan berdasarkan seni bina CPU peranti sasaran, ketumpatan skrin dan bahasa, serta menjana APK dioptimumkan mengikut keperluan. Secara purata mengurangkan kos lebar jalur penghantaran sebanyak 35%)"
+
+msgid "mime_xapk"
+msgstr "XAPK pakej aplikasi sambungan (standard sambungan aplikasi tidak rasmi yang ditetapkan oleh komuniti Android pihak ketiga. Dengan menggabungkan fail APK standard dan pakej sambungan data permainan OBB yang besar, ia secara fizikal memecahkan had saiz fail bebas 100MB Google Play. Banyak ditemui pada platform pengedaran permainan)"
+
+msgid "mime_appx"
+msgstr "APPX pakej aplikasi moden (spesifikasi penggunaan aplikasi UWP yang dikeluarkan oleh Microsoft bersama Windows 8 pada tahun 2012. Mempunyai ciri pengasingan kotak pasir dan nyahpasang ringan. Sebagai standard utama awal Gedung Microsoft, dalam ekosistem Windows moden ia telah memasuki fasa akhir kitaran hayat yang berkembang ke arah MSIX)"
+
+msgid "mime_msix"
+msgstr "MSIX pakej aplikasi generasi baharu (spesifikasi pembungkusan piawai baharu Windows yang dikeluarkan oleh Microsoft pada tahun 2018. Ia menggabungkan dengan sempurna ciri kotak pasir keselamatan aplikasi APPX dan kelebihan pengurusan aset peringkat perusahaan MSI. Serasi sepenuhnya dengan semua jenis aplikasi Win32. Ia adalah standard pengedaran yang disyorkan untuk Windows 11)"
+
+msgid "mime_appimage"
+msgstr "AppImage pakej aplikasi tanpa pemasangan (spesifikasi arkib boleh laku tunggal Linux yang dimulakan pada tahun 2004. Menggunakan seni bina yang serba lengkap 'satu aplikasi adalah satu fail'. Semasa masa jalan, ia dipasang terus melalui mekanisme FUSE sebagai sistem fail maya baca sahaja untuk dilaksanakan, mencapai penggunaan segera tanpa kebergantungan merentas pelbagai edaran Linux)"
+
+msgid "mime_flatpak"
+msgstr "Flatpak pakej aplikasi kotak pasir (standard pengedaran aplikasi desktop merentas pelbagai edaran Linux yang dipelopori oleh Red Hat dan GNOME pada tahun 2015. Pada aras rendah, ia bergantung pada mekanisme Namespace dan Cgroups kernel Linux untuk mencapai pengasingan kotak pasir keselamatan peringkat aplikasi yang sangat ketat. Ia adalah asas untuk pusat perisian OS sumber terbuka moden)"
+
+msgid "mime_snap"
+msgstr "Snap pakej aplikasi kontena (standard penggunaan universal Linux yang dikeluarkan oleh Canonical, syarikat induk Ubuntu, pada tahun 2014. Menggunakan seni bina pemasangan imej SquashFS yang serba lengkap, menyokong kemas kini tambahan automatik dan pengasingan kotak pasir AppArmor yang ketat. Ia adalah format lalai teras untuk ekosistem Pusat Perisian Ubuntu)"
+
+msgid "mime_deb"
+msgstr "DEB pakej perisian sistem (spesifikasi pembalut binari dan sumber yang ditetapkan oleh Projek Debian pada tahun 1993. Sebagai standard pemasangan asas untuk Debian, Ubuntu dan semua sistem terbitannya, ia bergantung pada dpkg teras untuk membuka bungkusan dan penyelenggaraan, dengan APT sebagai hadapan pengurus pakej cekap. Ia adalah asas pengedaran perisian paling matang dalam ekosistem Linux)"
+
+msgid "mime_rpm"
+msgstr "RPM pakej perisian sistem (spesifikasi pembalut pengurus pakej Red Hat yang dikeluarkan oleh Red Hat pada tahun 1997. Bersama DEB, ia dianggap sebagai dua kem besar pengurusan pakej tradisional Linux. Secara asli, ia mempunyai pemeriksaan kebergantungan peringkat urus niaga dan pengesahan tandatangan digital perisian asas. Ia masih menjadi standard pengedaran aliran utama mutlak untuk ekosistem keluarga Red Hat seperti RHEL, Fedora dan CentOS sehingga kini)"
+
+msgid "mime_pacman"
+msgstr "Pacman pakej perisian arkib (format pembalut .pkg.tar.zst yang ditetapkan oleh Arch Linux bersama pengurus pacman pada tahun 2002. Sebagai teras mekanisme kemas kini bergulir Arch, berdasarkan algoritma mampatan tinggi berkelajuan tinggi Zstandard, bersama ekosistem AUR (Repositori Perisian Pengguna Arch). Ia adalah standard pengedaran pakej moden yang mencerminkan prinsip minimalis dan KISS)"
+
+msgid "mime_exe"
+msgstr "EXE fail boleh laku asli (format program binari Boleh Laku Mudah Alih (PE) platform Windows. Perkembangan teknologinya berasal daripada struktur pengepala MZ era MS-DOS, dan sejak Windows NT 1993, ia telah ditetapkan sepenuhnya sebagai spesifikasi struktur PE. Ia adalah standard pelaksanaan yang paling banyak digunakan di dunia untuk arahan kod mesin, segmen sumber statik dan but kernel sistem)"
+
+msgid "mime_dll"
+msgstr "DLL pustaka pautan dinamik (spesifikasi pustaka kod kongsi Pustaka Pautan Dinamik platform Windows. Dengan memuat secara dinamik dan meletakkan semula simbol semasa masa jalan, ia menjimatkan memori fizikal dan ruang cakera dengan ketara. Sebagai bentuk pelaksanaan teras API Windows, masalah awal Neraka DLLnya telah diatasi pada masa moden melalui mekanisme pengasingan selari SxS)"
+
+msgid "mime_com"
+msgstr "COM fail boleh laku klasik (format pelaksanaan imej memori (Arahan) tertua era MS-DOS. Menggunakan reka bentuk segmen kod tulen tidak berstruktur, terhad kepada had atas segmen pengalamatan memori fizikal 64KB. Kini telah dibersarakan sebagai format peninggalan sejarah, tetapi dalam seni bina Windows moden, ia masih digunakan sebagai antara muka komponen tertentu untuk keserasian terhad)"
+
+msgid "mime_aac"
+msgstr "Audio AAC (standard MPEG 1997, Pengekodan Audio Lanjutan. Pengganti MP3, kualiti audio lebih baik daripada MP3 pada kadar bit yang sama, format audio lalai untuk YouTube, iTunes, Nintendo Switch)"
+
+msgid "mime_alac"
+msgstr "Audio ALAC (dibangunkan oleh Apple pada 2004, Pengekod Audio Lossless Apple. Format lossless Apple, sumber terbuka pada 2011, format lalai audio lossless untuk iTunes dan Apple Music)"
+
+msgid "mime_flac"
+msgstr "Audio FLAC (dibangunkan oleh Yayasan Xiph.Org pada 2001, Pengekod Audio Lossless Percuma. Mampatan lossless, kualiti audio sama seperti CD, saiz fail kira-kira separuh daripada WAV asal. Sumber terbuka tanpa paten, format pilihan untuk peminat audio dan pengumpul muzik digital)"
+
+msgid "mime_mp3"
+msgstr "Audio MP3 (dibangunkan oleh Institut Fraunhofer pada 1993, Lapisan Audio MPEG-1 3. Format mampatan lossy, saiz fail kecil kualiti sederhana, format teras revolusi muzik digital tahun 2000-an, tulang belakang iPod dan Napster. Paten tamat pada 2017, menjadi format domain awam)"
+
+msgid "mime_oga"
+msgstr "Audio Ogg Audio (dibangunkan oleh Yayasan Xiph.Org, format audio tulen bekas Ogg, menggunakan pengekodan Vorbis. Sumber terbuka tanpa paten, kecekapan mampatan lebih baik daripada MP3, digunakan secara meluas dalam projek sumber terbuka)"
+
+msgid "mime_ogg"
+msgstr "Audio OGG (dibangunkan oleh Yayasan Xiph.Org pada 2000, format Ogg Vorbis. Sumber terbuka tanpa paten, kecekapan mampatan lebih baik daripada MP3, awal digunakan oleh Spotify, digunakan secara meluas dalam kesan bunyi permainan)"
+
+msgid "mime_opus"
+msgstr "Audio Opus (distandardkan oleh IETF pada 2012, format audio sumber terbuka tanpa paten. Menggabungkan teknologi SILK dan CELT, kependaman sangat rendah, kecekapan mampatan tertinggi, format audio lalai untuk WebRTC, WhatsApp, Discord)"
+
+msgid "mime_wav"
+msgstr "Audio WAV (dibangunkan oleh Microsoft dan IBM pada 1991, format audio asli Windows. Pengekodan PCM tanpa mampatan, kualiti audio lossless, tetapi saiz fail besar, format standard penyuntingan audio profesional)"
+
+msgid "mime_wma"
+msgstr "Audio WMA (dibangunkan oleh Microsoft pada 1999, Audio Windows Media. Dua versi: lossy dan lossless, disokong secara asli oleh Windows, tersebar dengan Windows Media Player. Kini terpinggir, digantikan oleh MP3/AAC)"
+
+msgid "mime_dsf"
+msgstr "Audio DSF (format Direct Stream Digital, dibangunkan oleh Sony dan Philips. Kadar persampelan tinggi 1bit, format audio standard DSD, versi digital SACD, format audio tahap tinggi untuk peminat audio, saiz fail besar)"
+
+msgid "mime_ape"
+msgstr "Audio APE (dibangunkan oleh Monkey's Audio pada tahun 2000, format mampatan tanpa kehilangan. Mampatan lebih tinggi daripada FLAC tetapi pengekodan lebih perlahan, masih digunakan pada platform Windows dan dalam kalangan peminat audio)"
+
+msgid "mime_mid"
+msgstr "Audio MIDI (ditetapkan oleh Persatuan MIDI pada 1983, Antara Muka Digital Alat Muzik. Format skor muzik, bukan rakaman, saiz fail sangat kecil, standard untuk alat elektronik, nada dering telefon bimbit, kesan bunyi permainan. Pada 1991 General MIDI distandardkan, mentakrifkan 128 timbre alat)"
+
+msgid "mime_m4a"
+msgstr "Audio M4A (Audio MPEG-4, format bekas AAC. Format standard kedai muzik iTunes, format audio utama dalam ekosistem Apple, menyokong perlindungan DRM)"
+
+msgid "mime_m3u"
+msgstr "Senarai main M3U (format senarai main URL MP3, fail teks kosong, merekod laluan fail audio. Standard era Winamp, digunakan untuk radio internet, penstriman muzik dalam talian. M3U8 adalah versi UTF-8nya, digunakan untuk Penstriman Langsung HTTP)"
+
+msgid "mime_asf"
+msgstr "Penstriman ASF (dibangunkan oleh Microsoft pada 1996, Format Sistem Lanjutan. Bekas penstriman Windows Media, menyokong penghantaran audio-video segerak. Digunakan untuk siaran langsung dan penstriman video atas permintaan, WMA/WMV berdasarkan bekas ASF)"
+
+msgid "mime_avi"
+msgstr "Video AVI (dilancarkan oleh Microsoft pada 1992, standard video awal Windows. 'Selang Seling Audio Video', storan berselang-seli audio dan video, format video paling popular pada 1990-2000-an, kini digantikan oleh MP4/MKV)"
+
+msgid "mime_divx"
+msgstr "Video DivX (dibangunkan oleh syarikat DivX pada 1998, format pengekodan video berdasarkan MPEG-4. Format utama perkongsian video internet pada 2000-an, teknologi pertama yang memampatkan kualiti DVD ke saiz CD. Kerana pertikaian hak cipta, kemudian berubah menjadi pengekod komersial)"
+
+msgid "mime_mp4"
+msgstr "Video MP4 (standard MPEG 2001, MPEG-4 Bahagian 14. Format video paling universal di dunia, menyokong pengekodan H.264/H.265, format lalai untuk video internet, rakaman telefon, YouTube)"
+
+msgid "mime_m4v"
+msgstr "Video M4V (format video iTunes, varian MP4. Format video dalam ekosistem Apple, format standard untuk filem, rancangan TV di iTunes Store, menyokong perlindungan hak cipta DRM)"
+
+msgid "mime_mpeg"
+msgstr "Video MPEG (ditetapkan oleh organisasi MPEG pada 1988, Kumpulan Pakar Gambar Bergerak. Pengasas standard mampatan video digital, pengaruh mendalam MPEG-1 (VCD), MPEG-2 (DVD), MPEG-4 (video internet))"
+
+msgid "mime_mkv"
+msgstr "Video MKV (dibangunkan oleh projek Matroska pada 2002, bekas multimedia sumber terbuka. Menyokong berbilang trek audio, berbilang sarikata, bab, 'alat pembalut', format pilihan untuk perkongsian filem HD)"
+
+msgid "mime_mpg"
+msgstr "Video MPEG (sambungan video MPEG-1/MPEG-2, format standard untuk VCD dan DVD. Format video utama pada cakera optik 1990-2000-an, kini digantikan oleh H.264/H.265)"
+
+msgid "mime_ogv"
+msgstr "Video Ogg Video (dibangunkan oleh Yayasan Xiph.Org, format video bekas Ogg, menggunakan pengekodan Theora. Sumber terbuka tanpa paten, salah satu standard awal video HTML5, disokong secara asli oleh Firefox)"
+
+msgid "mime_ogx"
+msgstr "Bekas multimedia Ogg (dibangunkan oleh Yayasan Xiph.Org, sambungan universal bekas Ogg, boleh mengandungi berbilang trek seperti audio, video, sarikata dll. Standard multimedia sumber terbuka, digunakan untuk permainan, penstriman)"
+
+msgid "mime_rm"
+msgstr "Video RealMedia (dibangunkan oleh RealNetworks pada 1995, format RealMedia. Perintis penstriman internet pada 1990-2000-an, format teras pemain RealPlayer. Kelemahan: memerlukan pemain khas, kualiti mampatan lemah, kemudian digantikan oleh Flash/MP4)"
+
+msgid "mime_flv"
+msgstr "Video Flash (format muncul pada 2002, format Video Flash. Pernah menjadi format utama video internet, awal digunakan oleh YouTube. Kelemahan: memerlukan plugin Flash, prestasi lemah, banyak lubang keselamatan. Mulai 2015 laman web utama beralih ke video HTML5, kini dihapuskan)"
+
+msgid "mime_f4v"
+msgstr "Video F4V (format video Flash yang dibangunkan oleh Adobe, pengganti FLV. Berdasarkan standard MPEG-4, menyokong pengekodan H.264. Bersama teknologi Flash dihapuskan, Adobe menghentikan sokongan pada 2020)"
+
+msgid "mime_wmv"
+msgstr "Video WMV (dibangunkan oleh Microsoft pada 1999, Video Windows Media. Disokong secara asli oleh Windows, dioptimumkan untuk penghantaran penstriman, format biasa untuk video dalam talian awal, kini terpinggir)"
+
+msgid "mime_wmf"
+msgstr "Format media WMF (Format Windows Media, rangka kerja media Microsoft. Merangkumi video WMV dan audio WMA, disokong secara asli oleh Windows Media Player)"
+
+msgid "mime_mov"
+msgstr "Video MOV (dibangunkan oleh Apple pada 1991, format bekas QuickTime. Format standard suntingan video profesional, menyokong berbilang pengekod, disokong secara asli oleh Final Cut Pro, Premiere)"
+
+msgid "mime_qt"
+msgstr "Video QuickTime (dilancarkan oleh Apple pada 1991, format QuickTime. Standard video untuk platform Mac, MOV adalah bekasnya, pemain QuickTime pernah digunakan secara meluas. Pada 2016 Apple menghentikan pembangunan versi Windows, secara beransur-ansur digantikan oleh MP4)"
+
+msgid "mime_webm"
+msgstr "Video WebM (dilancarkan oleh Google pada 2010, format video sumber terbuka tanpa paten. Berdasarkan bekas Matroska, pengekodan VP8/VP9, format standard video HTML5, format mainan web lalai YouTube)"
+
+msgid "mime_3gp"
+msgstr "Video 3GP (ditetapkan oleh 3GPP pada 2000, format video untuk peranti mudah alih. Saiz fail sangat kecil, kualiti rendah, format rakaman video telefon bimbit awal, digunakan untuk penghantaran MMS)"
+
+#------------------------------------------------------------------------------
+# Dimensi Teknikal
+#------------------------------------------------------------------------------
+
+msgid "Operating Systems"
+msgstr "Sistem Pengendalian"
+
+msgid "Top 5 Operating Systems"
+msgstr "5 Sistem Pengendalian Teratas"
+
+msgid "Unknown Robot"
+msgstr "Klien tidak diketahui"
+
+msgid "User agent"
+msgstr "Ejen pengguna"
+
+msgid "Browsers"
+msgstr "Penyemak imbas"
+
+msgid "Top 5 Browsers"
+msgstr "5 Penyemak imbas Teratas"
+
+msgid "Unknown Robot RH"
+msgstr "Kepala permintaan tidak diketahui"
+
+msgid "Detailed"
+msgstr "Butiran"
+
+msgid "DetailedOS"
+msgstr "Versi sistem pengendalian"
+
+msgid "DetailedBS"
+msgstr "Versi penyemak imbas"
+
+msgid "Screen sizes"
+msgstr "Saiz skrin"
+
+msgid "Compression"
+msgstr "Mampatan"
+
+msgid "In"
+msgstr "Masuk"
+
+msgid "Out"
+msgstr "Keluar"
+
+msgid "Saved"
+msgstr "Disimpan"
+
+#------------------------------------------------------------------------------
+# Dimensi Sumber
+#------------------------------------------------------------------------------
+
+msgid "Origin"
+msgstr "Asal"
+
+msgid "Referers"
+msgstr "Perujuk"
+
+msgid "meta.description"
+msgstr "Penganalisis log web lanjutan AWStats - pemantauan trafik laman web masa nyata, analisis pelawat, kata kunci enjin carian, statistik halaman ralat. Menyokong mod gelap, antara muka pelbagai bahasa, menyediakan analisis data komprehensif untuk pentadbir laman web."
+
+msgid "meta.keywords"
+msgstr "AWStats,statistik laman web,analisis log,pemantauan trafik,statistik lawatan,analisis SEO,alat analisis laman web,Analitis Web,Penganalisis Log"
+
+msgid "meta.author"
+msgstr "AWStats"
+
+msgid "og.title"
+msgstr "AWStats - Analisis Log Web"
+
+msgid "og.description"
+msgstr "📊 Alat statistik laman web sumber terbuka profesional, menganalisis trafik laman web dan tingkah laku pelawat anda dalam masa nyata."
+
+msgid "og.image.alt"
+msgstr "Graf statistik AWStats"
+
+msgid "Created by"
+msgstr "Dicipta oleh %s"
+
+msgid "plugins"
+msgstr "plugin"
+
+msgid "dbip by"
+msgstr "data daripada"
+
+msgid "IPDB by"
+msgstr "Data lokasi geografi disediakan oleh DB-IP"
+
+# Kesihatan
+msgid "Configured"
+msgstr "Dikonfigurasi"
+
+msgid "Missing"
+msgstr "Hilang"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Unused"
+msgstr "Tidak digunakan"
+
+msgid "Overall Health"
+msgstr "Kesihatan Keseluruhan"
+
+msgid "Excellent"
+msgstr "Cemerlang"
+
+msgid "Good"
+msgstr "Baik"
+
+msgid "Fair"
+msgstr "Sederhana"
+
+msgid "Poor"
+msgstr "Lemah"
+
+msgid "Missing icon types"
+msgstr "Jenis ikon yang hilang"
+
+msgid "See"
+msgstr "Lihat"
+
+msgid "Expected Path"
+msgstr "Laluan Dijangka"
+
+msgid "column for file locations"
+msgstr "lajur untuk mendapatkan lokasi fail"
+
+msgid "Tip: If you need to generate related icons, you can use %s to upload a logo image, and it will automatically generate all the above related icon files"
+msgstr "Petua: Jika anda perlu menjana ikon berkaitan, anda boleh menggunakan %s untuk memuat naik imej logo, dan ia akan menjana secara automatik semua fail ikon berkaitan di atas"
+
+msgid "200: success, 404: failure"
+msgstr "200 ialah bilangan kejayaan, 404 ialah bilangan kegagalan"
+
+msgid "_PATH_FAVICON"
+msgstr "/favicon.ico"
+
+msgid "_PATH_APPLE_TOUCH"
+msgstr "/apple-touch-icon.png atau /apple-touch-icon-180x180.png"
+
+msgid "_PATH_LOGO"
+msgstr "/logo.svg atau /logo.png (perlu dirujuk dalam HTML/JSON-LD)"
+
+msgid "_PATH_WEBMANIFEST"
+msgstr "/site.webmanifest atau /manifest.json"
+
+msgid "_PATH_BROWSERCONFIG"
+msgstr "/browserconfig.xml"
+
+msgid "_PATH_SAFARI_PINNED"
+msgstr "/safari-pinned-tab.svg"
+
+msgid "_PATH_SOCIAL_ICON"
+msgstr "/images/github.svg, /images/paypal.svg dll."
+
+msgid "Favicon"
+msgstr "Ikon laman web"
+
+msgid "Apple Touch Icon (iOS/macOS)"
+msgstr "Ikon Sentuh Apple (iPhone/iPad/Mac)"
+
+msgid "Site Logo"
+msgstr "Logo Laman Web"
+
+msgid "Web App Manifest (Android/Chrome)"
+msgstr "Manifes Aplikasi Web (Android/Chrome)"
+
+msgid "Windows Browser Config"
+msgstr "Konfigurasi Pelayar Windows"
+
+msgid "Safari Pinned Tab"
+msgstr "Ikon tab terpegun Safari"
+
+msgid "Social Icon"
+msgstr "Ikon platform sosial"
+
+msgid "Icon Files Status"
+msgstr "Status Fail Ikon"
+
+msgid "Icon Type"
+msgstr "Jenis Ikon"
+
+msgid "Total"
+msgstr "Jumlah"
+
+msgid "Advanced Web Statistics"
+msgstr "Penganalisis log lanjutan"
+
+msgid "Advanced Web Statistics %s"
+msgstr "%s Penganalisis log lanjutan"
+
+msgid "Your browser does not support frames. Please use a modern browser."
+msgstr "Penyemak imbas anda tidak menyokong bingkai. Sila gunakan penyemak imbas moden."
+
+msgid "View statistics directly"
+msgstr "Lihat statistik secara langsung"
+
+msgid "Close"
+msgstr "Tutup"
+
+msgid "Documentation Viewer"
+msgstr "Papar Dokumentasi"
+
+msgid "Direct address / Bookmarks"
+msgstr "Alamat terus / Penanda halaman"
+
+msgid "Search Engines"
+msgstr "Enjin carian"
+
+msgid "Refering search engines"
+msgstr "Enjin carian perujuk"
+
+msgid "External pages"
+msgstr "Halaman luaran"
+
+msgid "Refering pages"
+msgstr "Halaman perujuk"
+
+msgid "Internal pages"
+msgstr "Halaman dalaman"
+
+msgid "UnknownAccessSource"
+msgstr "Sumber akses tidak diketahui"
+
+msgid "Different refering pages"
+msgstr "Halaman perujuk berbeza"
+
+msgid "Keyphrases"
+msgstr "Frasa kunci"
+
+msgid "Keywords"
+msgstr "Kata kunci"
+
+msgid "Keyphrases/Keywords"
+msgstr "Frasa kunci/Kata kunci"
+
+msgid "Different keyphrases"
+msgstr "Frasa kunci berbeza"
+
+msgid "Different keywords"
+msgstr "Kata kunci berbeza"
+
+#------------------------------------------------------------------------------
+# Dimensi Halaman
+#------------------------------------------------------------------------------
+
+msgid "Viewed pages"
+msgstr "Halaman dilihat"
+
+msgid "Different pages"
+msgstr "Halaman berbeza"
+
+msgid "Entry"
+msgstr "Masuk"
+
+msgid "Exit"
+msgstr "Keluar"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Referer"
+msgstr "Perujuk"
+
+msgid "Host"
+msgstr "Hos"
+
+#------------------------------------------------------------------------------
+# Ralat dan Status
+#------------------------------------------------------------------------------
+
+msgid "Error"
+msgstr "Ralat"
+
+msgid "HTTP Status Statistics"
+msgstr "Statistik kod status HTTP"
+
+msgid "SMTP Error codes"
+msgstr "Kod ralat SMTP"
+
+msgid "Page not found"
+msgstr "Halaman yang diminta tidak dijumpai"
+
+msgid "Unknown error"
+msgstr "Ralat tidak diketahui"
+
+msgid "Abnormal traffic note"
+msgstr "Trafik pelayaran tidak normal termasuk: robot enjin carian, robot latihan AI, pengimbas kelemahan dan permintaan yang tidak mematuhi spesifikasi"
+
+msgid "Page detail"
+msgstr "Butiran halaman"
+
+# Mesej ralat terperinci
+msgid "AWStats did not found the"
+msgstr "AWStats tidak menemui"
+
+msgid "in your log records."
+msgstr "dalam rekod log anda."
+
+msgid "AWStats did not find any valid log lines that match your"
+msgstr "AWStats tidak menemui sebarang baris log yang sah yang sepadan dengan"
+
+msgid "parameter, in the"
+msgstr "parameter anda, dalam"
+
+msgid "th first non commented lines read of your log."
+msgstr " baris pertama yang tidak dikomen yang dibaca dari log anda."
+
+msgid "Your log file"
+msgstr "Fail log anda"
+
+msgid "must have a bad format or"
+msgstr "mungkin mempunyai format yang buruk atau"
+
+msgid "parameter setup does not match this format."
+msgstr "persediaan parameter tidak sepadan dengan format ini."
+
+msgid "Your AWStats"
+msgstr "Parameter AWStats anda"
+
+msgid "parameter is:"
+msgstr "ialah:"
+
+msgid "This means each line in your web server log file need to have:"
+msgstr "Ini bermakna setiap baris dalam fail log pelayan web anda perlu mempunyai:"
+
+msgid "combined log format"
+msgstr "format log gabungan"
+
+msgid "MSIE Extended W3C log format"
+msgstr "format log W3C lanjutan MSIE"
+
+msgid "WebStar native log format"
+msgstr "format log asli WebStar"
+
+msgid "common log format"
+msgstr "format log biasa"
+
+msgid "Lotus Notes/Lotus Domino"
+msgstr "Lotus Notes/Lotus Domino"
+
+msgid "the following personalized log format:"
+msgstr "format log peribadi berikut:"
+
+msgid "And this is an example of records AWStats found in your log file (the record number"
+msgstr "Dan ini adalah contoh rekod yang AWStats temui dalam fail log anda (nombor rekod"
+
+msgid "in your log):"
+msgstr "dalam log anda):"
+
+#------------------------------------------------------------------------------
+# Lain-lain
+#------------------------------------------------------------------------------
+
+msgid "Extra/Marketing"
+msgstr "Tambahan/Pemasaran"
+
+#------------------------------------------------------------------------------
+# Teks Antara Muka
+#------------------------------------------------------------------------------
+
+msgid "Current site"
+msgstr "Tapak semasa"
+
+msgid "Web Site"
+msgstr "Laman Web"
+
+msgid "Last Update"
+msgstr "Kemas Kini Terakhir"
+
+msgid "Never updated"
+msgstr "Tidak pernah dikemas kini"
+
+msgid "No qualified records found in log"
+msgstr "Tiada rekod yang layak ditemui dalam log"
+
+msgid "corrupted"
+msgstr "rosak"
+
+msgid "comments"
+msgstr "komen"
+
+msgid "Blank"
+msgstr "Kosong"
+
+msgid "dropped"
+msgstr "digugurkan"
+
+msgid "Update now"
+msgstr "Kemas kini sekarang"
+
+msgid "Back to main page"
+msgstr "Kembali ke halaman utama"
+
+msgid "Close window"
+msgstr "Tutup tetingkap"
+
+msgid "Back page"
+msgstr "Halaman sebelumnya"
+
+msgid "Navigation"
+msgstr "Navigasi"
+
+msgid "Summary"
+msgstr "Ringkasan"
+
+msgid "Local"
+msgstr "Tempatan"
+
+msgid "External"
+msgstr "Luar"
+
+msgid "Others (email senders)"
+msgstr "Lain-lain (penghantar e-mel)"
+
+msgid "Others (email receivers)"
+msgstr "Lain-lain (penerima e-mel)"
+
+msgid "Others"
+msgstr "Lain-lain"
+
+msgid "Only 10 lines of browser data are currently displayed"
+msgstr "Hanya 10 baris data penyemak imbas dipaparkan buat masa ini, sila lihat senarai penuh pada halaman butiran"
+
+msgid "Others (unknown browsers)"
+msgstr "Lain-lain (penyemak imbas tidak diketahui)"
+
+msgid "Others (operating systems)"
+msgstr "Lain-lain (sistem pengendalian)"
+
+msgid "Others (unknown OS)"
+msgstr "Lain-lain (OS tidak diketahui)"
+
+msgid "Others (search engines)"
+msgstr "Lain-lain (enjin carian)"
+
+msgid "Others (referring pages)"
+msgstr "Lain-lain (halaman perujuk)"
+
+msgid "Others (keyphrases)"
+msgstr "Lain-lain (frasa)"
+
+msgid "Others (keywords)"
+msgstr "Lain-lain (kata kunci)"
+
+msgid "Only first 10 robots shown"
+msgstr "Hanya 10 robot pertama dipaparkan, sila lihat senarai penuh pada halaman butiran"
+
+msgid "Failed to obtain access record"
+msgstr "Gagal mendapatkan rekod masuk"
+
+msgid "Failed to obtain leave record"
+msgstr "Gagal mendapatkan rekod keluar"
+
+msgid "Other pages"
+msgstr "Halaman lain"
+
+msgid "Low Traffic IP Summary"
+msgstr "Ringkasan IP Tidak Diketahui Trafik Rendah"
+
+msgid "Failed to obtain IP data"
+msgstr "Ringkasan IP diketahui lain"
+
+msgid "Failed to obtain the relevant data"
+msgstr "Gagal mendapatkan data yang berkaitan"
+
+msgid "Limited list of countries and regions"
+msgstr "Hanya 10 baris data dipaparkan buat masa ini, sila lihat senarai penuh untuk lebih banyak negara dan wilayah pada halaman butiran"
+
+msgid "currentVisitorData"
+msgstr "Hanya 10 baris data pelawat dipaparkan buat masa ini, sila lihat senarai penuh pada halaman butiran"
+
+msgid "Others (robots main)"
+msgstr "Lain-lain (robot)"
+
+msgid "Others (worms)"
+msgstr "Lain-lain (cacing)"
+
+msgid "Displaying10RowsPageMorePleaseViewFullList"
+msgstr "Hanya 10 halaman dipaparkan buat masa ini, sila lihat senarai penuh pada halaman butiran"
+
+msgid "Others (OS main)"
+msgstr "Lain-lain (sistem)"
+
+msgid "Others (browsers main)"
+msgstr "Lain-lain (penyemak imbas)"
+
+msgid "Others (screen sizes)"
+msgstr "Lain-lain (saiz)"
+
+msgid "Others (search engines main)"
+msgstr "Lain-lain (enjin carian)"
+
+msgid "Others (referring pages main)"
+msgstr "Lain-lain (halaman perujuk)"
+
+msgid "Others (keyphrases main)"
+msgstr "Lain-lain (frasa)"
+
+msgid "Others (keywords main)"
+msgstr "Lain-lain (kata kunci)"
+
+# 1xx
+msgid "Continue"
+msgstr "Teruskan"
+
+msgid "Switching Protocols"
+msgstr "Menukar Protokol"
+
+msgid "Processing (WebDAV)"
+msgstr "Memproses (WebDAV)"
+
+msgid "Early Hints"
+msgstr "Petunjuk Awal"
+
+# 2xx
+msgid "[Miscellaneous successes]"
+msgstr "[Kejayaan lain-lain]"
+
+msgid "Request successful"
+msgstr "Permintaan berjaya"
+
+msgid "Created successfully"
+msgstr "Berjaya dicipta"
+
+msgid "Accepted - processing"
+msgstr "Diterima - memproses"
+
+msgid "Non-authoritative information (from cache) (from cache)"
+msgstr "Maklumat tidak berwibawa (dari cache)"
+
+msgid "Success, no content returned"
+msgstr "Berjaya, tiada kandungan dikembalikan"
+
+msgid "Reset content"
+msgstr "Tetapkan semula kandungan"
+
+msgid "Partial content (resume download)"
+msgstr "Kandungan separa (sambung muat turun)"
+
+msgid "Multi-status (WebDAV)"
+msgstr "Pelbagai status (WebDAV)"
+
+msgid "Already reported (WebDAV)"
+msgstr "Sudah dilaporkan (WebDAV)"
+
+msgid "IM used"
+msgstr "IM digunakan"
+
+# 3xx
+msgid "[Miscellaneous redirections]"
+msgstr "[Alihan lain-lain]"
+
+msgid "Multiple choices"
+msgstr "Pelbagai pilihan"
+
+msgid "Moved permanently - update your links"
+msgstr "Berpindah secara kekal - kemas kini pautan anda"
+
+msgid "Temporary redirect - URL unchanged"
+msgstr "Alihan sementara - URL tidak berubah"
+
+msgid "See other"
+msgstr "Lihat yang lain"
+
+msgid "Not modified - using cached version"
+msgstr "Tidak diubah suai - menggunakan versi cache"
+
+msgid "Use proxy"
+msgstr "Gunakan proksi"
+
+msgid "Switch proxy"
+msgstr "Tukar proksi"
+
+msgid "Temporary redirect (keep method)"
+msgstr "Alihan sementara (kekalkan kaedah)"
+
+msgid "Permanent redirect - update your links"
+msgstr "Alihan kekal - kemas kini pautan anda"
+
+# 4xx
+msgid "[Miscellaneous client/user errors]"
+msgstr "[Ralat klien/pengguna lain-lain]"
+
+msgid "Bad request"
+msgstr "Permintaan tidak sah"
+
+msgid "Unauthorized - please log in"
+msgstr "Tidak dibenarkan - sila log masuk"
+
+msgid "Payment required"
+msgstr "Bayaran diperlukan"
+
+msgid "Forbidden - access denied"
+msgstr "Dilarang - akses ditolak"
+
+msgid "Page not found (404) - check for broken links"
+msgstr "Halaman tidak dijumpai (404) - periksa pautan rosak"
+
+msgid "Method not allowed"
+msgstr "Kaedah tidak dibenarkan"
+
+msgid "Not acceptable"
+msgstr "Tidak boleh diterima"
+
+msgid "Proxy authentication required"
+msgstr "Pengesahan proksi diperlukan"
+
+msgid "Request timeout"
+msgstr "Permintaan tamat masa"
+
+msgid "Conflict - please try again"
+msgstr "Konflik - sila cuba lagi"
+
+msgid "Gone - permanently deleted"
+msgstr "Hilang - dipadam secara kekal"
+
+msgid "Length required"
+msgstr "Panjang diperlukan"
+
+msgid "Precondition failed"
+msgstr "Prasyarat gagal"
+
+msgid "Payload too large"
+msgstr "Muatan terlalu besar"
+
+msgid "URI too long"
+msgstr "URI terlalu panjang"
+
+msgid "Unsupported media type"
+msgstr "Jenis media tidak disokong"
+
+msgid "Range not satisfiable"
+msgstr "Julat tidak boleh dipenuhi"
+
+msgid "Expectation failed"
+msgstr "Jangkaan gagal"
+
+msgid "I am a teapot (April Fools)"
+msgstr "Saya teko (April Fools)"
+
+msgid "Page expired (Laravel)"
+msgstr "Halaman tamat tempoh (Laravel)"
+
+msgid "Method failure (Spring)"
+msgstr "Kegagalan kaedah (Spring)"
+
+msgid "Misdirected request"
+msgstr "Permintaan tersalah arah"
+
+msgid "Unprocessable entity (WebDAV)"
+msgstr "Entiti tidak boleh diproses (WebDAV)"
+
+msgid "Locked (WebDAV)"
+msgstr "Terkunci (WebDAV)"
+
+msgid "Failed dependency (WebDAV)"
+msgstr "Kebergantungan gagal (WebDAV)"
+
+msgid "Too early"
+msgstr "Terlalu awal"
+
+msgid "Upgrade required"
+msgstr "Naik taraf diperlukan"
+
+msgid "Precondition required"
+msgstr "Prasyarat diperlukan"
+
+msgid "Too many requests - slow down"
+msgstr "Terlalu banyak permintaan - perlahan"
+
+msgid "Request header fields too large (Shopify)"
+msgstr "Medan pengepala permintaan terlalu besar (Shopify)"
+
+msgid "Request header too large"
+msgstr "Pengepala permintaan terlalu besar"
+
+msgid "Login timeout (IIS)"
+msgstr "Log masuk tamat masa (IIS)"
+
+msgid "No response (nginx)"
+msgstr "Tiada respons (nginx)"
+
+msgid "Retry with (IIS)"
+msgstr "Cuba semula dengan (IIS)"
+
+msgid "Blocked by Windows parental controls"
+msgstr "Disekat oleh kawalan ibu bapa Windows"
+
+msgid "Unavailable for legal reasons"
+msgstr "Tidak tersedia atas sebab undang-undang"
+
+msgid "Client closed connection before idle timeout (AWS ELB)"
+msgstr "Klien menutup sambungan sebelum tamat masa terbiar (AWS ELB)"
+
+msgid "X-Forwarded-For header with >30 IP addresses (AWS ELB)"
+msgstr "Pengepala X-Forwarded-For dengan >30 alamat IP (AWS ELB)"
+
+msgid "Incompatible protocol versions (AWS ELB)"
+msgstr "Versi protokol tidak serasi (AWS ELB)"
+
+msgid "Request header too large (nginx)"
+msgstr "Pengepala permintaan terlalu besar (nginx)"
+
+msgid "SSL certificate error (nginx)"
+msgstr "Ralat sijil SSL (nginx)"
+
+msgid "SSL certificate required (nginx)"
+msgstr "Sijil SSL diperlukan (nginx)"
+
+msgid "HTTP request sent to HTTPS port (nginx)"
+msgstr "Permintaan HTTP dihantar ke port HTTPS (nginx)"
+
+msgid "Invalid token (ArcGIS)"
+msgstr "Token tidak sah (ArcGIS)"
+
+msgid "Token required (ArcGIS) / Client closed request (nginx)"
+msgstr "Token diperlukan (ArcGIS) / Klien menutup permintaan (nginx)"
+
+msgid "Resource limit reached (cPanel)"
+msgstr "Had sumber dicapai (cPanel)"
+
+msgid "Bandwidth limit exceeded (Apache/cPanel)"
+msgstr "Had lebar jalur melebihi (Apache/cPanel)"
+
+# 5xx
+msgid "[Miscellaneous server errors]"
+msgstr "[Ralat pelayan lain-lain]"
+
+msgid "Internal server error - check logs"
+msgstr "Ralat pelayan dalaman - periksa log"
+
+msgid "Not implemented"
+msgstr "Tidak dilaksanakan"
+
+msgid "Bad gateway - backend error"
+msgstr "Gerbang tidak baik - ralat bahagian belakang"
+
+msgid "Service unavailable - maintenance or overload"
+msgstr "Perkhidmatan tidak tersedia - penyelenggaraan atau beban berlebihan"
+
+msgid "Gateway timeout"
+msgstr "Gerbang tamat masa"
+
+msgid "HTTP version not supported"
+msgstr "Versi HTTP tidak disokong"
+
+msgid "Variant also negotiates"
+msgstr "Varian juga berunding"
+
+msgid "Insufficient storage (WebDAV)"
+msgstr "Storan tidak mencukupi (WebDAV)"
+
+msgid "Loop detected (WebDAV)"
+msgstr "Gelung dikesan (WebDAV)"
+
+msgid "Not extended"
+msgstr "Tidak dilanjutkan"
+
+msgid "Network authentication required"
+msgstr "Pengesahan rangkaian diperlukan"
+
+# Cloudflare
+msgid "Unknown error (Cloudflare)"
+msgstr "Ralat tidak diketahui (Cloudflare)"
+
+msgid "Web server is down (Cloudflare)"
+msgstr "Pelayan web tidak berfungsi (Cloudflare)"
+
+msgid "Connection timeout (Cloudflare)"
+msgstr "Sambungan tamat masa (Cloudflare)"
+
+msgid "Origin is unreachable (Cloudflare)"
+msgstr "Asal tidak dapat dicapai (Cloudflare)"
+
+msgid "A timeout occurred (Cloudflare)"
+msgstr "Tamat masa berlaku (Cloudflare)"
+
+msgid "SSL handshake failed (Cloudflare)"
+msgstr "Jabat tangan SSL gagal (Cloudflare)"
+
+msgid "Invalid SSL certificate (Cloudflare)"
+msgstr "Sijil SSL tidak sah (Cloudflare)"
+
+msgid "Railgun error (Cloudflare - obsolete)"
+msgstr "Ralat Railgun (Cloudflare - usang)"
+
+msgid "Site is overloaded (SSLLabs)"
+msgstr "Tapak terlebih beban (SSLLabs)"
+
+msgid "Origin DNS error (Cloudflare) / Site is frozen (Pantheon)"
+msgstr "Ralat DNS asal (Cloudflare) / Tapak dibekukan (Pantheon)"
+
+msgid "Temporarily disabled (Shopify)"
+msgstr "Dilumpuhkan buat sementara waktu (Shopify)"
+
+msgid "Unauthorized (AWS ELB)"
+msgstr "Tidak dibenarkan (AWS ELB)"
+
+msgid "Network read timeout error"
+msgstr "Ralat tamat masa baca rangkaian"
+
+msgid "Network connect timeout error"
+msgstr "Ralat tamat masa sambung rangkaian"
+
+msgid "Unexpected token (Shopify)"
+msgstr "Token tidak dijangka (Shopify)"
+
+msgid "Request denied (LinkedIn)"
+msgstr "Permintaan ditolak (LinkedIn)"
+
+msgid "HTTP/2 GOAWAY (AWS ELB)"
+msgstr "HTTP/2 GOAWAY (AWS ELB)"
+
+msgid "[Unknown]"
+msgstr "[Tidak diketahui]"
+
+msgid "Nonstandard success response (ESMTP)"
+msgstr "Respons kejayaan tidak standard (ESMTP)"
+
+msgid "System status, or system help reply"
+msgstr "Status sistem, atau balasan bantuan sistem"
+
+msgid "Help message"
+msgstr "Mesej bantuan"
+
+msgid "SMTP service ready (LMTP)"
+msgstr "Perkhidmatan SMTP sedia (LMTP)"
+
+msgid "Service ready - server is ready to receive mail"
+msgstr "Perkhidmatan sedia - pelayan sedia menerima mel"
+
+msgid "Service closing - connection is being closed"
+msgstr "Perkhidmatan ditutup - sambungan sedang ditutup"
+
+msgid "Authentication successful"
+msgstr "Pengesahan berjaya"
+
+msgid "Requested mail action taken and completed"
+msgstr "Tindakan mel yang diminta telah diambil dan selesai"
+
+msgid "User not local - will forward to another address"
+msgstr "Pengguna tidak tempatan - akan diteruskan ke alamat lain"
+
+msgid "Cannot verify recipient, but will attempt delivery"
+msgstr "Tidak dapat mengesahkan penerima, tetapi akan cuba menghantar"
+
+msgid "Message accepted for delivery (DSN)"
+msgstr "Mesej diterima untuk penghantaran (DSN)"
+
+msgid "User name is a mailbox"
+msgstr "Nama pengguna ialah peti mel"
+
+msgid "Authentication challenge - please respond"
+msgstr "Cabaran pengesahan - sila balas"
+
+msgid "Start mail input - end with <CRLF>.<CRLF>"
+msgstr "Mulakan input mel - akhiri dengan <CRLF>.<CRLF>"
+
+msgid "Continue (LMTP)"
+msgstr "Teruskan (LMTP)"
+
+msgid "Service not available - connection closing, try again later"
+msgstr "Perkhidmatan tidak tersedia - sambungan ditutup, cuba lagi nanti"
+
+msgid "Mailbox busy or temporarily unavailable (Exchange)"
+msgstr "Peti mel sibuk atau tidak tersedia buat sementara waktu (Exchange)"
+
+msgid "Connection rate limit exceeded (Postfix)"
+msgstr "Had kadar sambungan melebihi (Postfix)"
+
+msgid "Too many concurrent connections (Postfix)"
+msgstr "Terlalu banyak sambungan serentak (Postfix)"
+
+msgid "Unable to establish connection (Postfix)"
+msgstr "Tidak dapat mewujudkan sambungan (Postfix)"
+
+msgid "Connection timed out (Postfix)"
+msgstr "Sambungan tamat masa (Postfix)"
+
+msgid "Connection dropped due to error (Postfix)"
+msgstr "Sambungan terputus disebabkan ralat (Postfix)"
+
+msgid "Mailbox temporarily locked (Exchange)"
+msgstr "Peti mel dikunci buat sementara waktu (Exchange)"
+
+msgid "Too many recipients (Postfix/Exim)"
+msgstr "Terlalu banyak penerima (Postfix/Exim)"
+
+msgid "Mail server error (Exchange)"
+msgstr "Ralat pelayan mel (Exchange)"
+
+msgid "Received loop detected (Exim)"
+msgstr "Gelung diterima dikesan (Exim)"
+
+msgid "Too many hop count (Exim)"
+msgstr "Kiraan hop terlalu banyak (Exim)"
+
+msgid "DNS lookup failed (Postfix)"
+msgstr "Carian DNS gagal (Postfix)"
+
+msgid "Unable to authenticate (Postfix)"
+msgstr "Tidak dapat mengesahkan (Postfix)"
+
+msgid "TLS handshake failed (Postfix)"
+msgstr "Jabat tangan TLS gagal (Postfix)"
+
+msgid "SMTP protocol violation (Postfix)"
+msgstr "Pelanggaran protokol SMTP (Postfix)"
+
+msgid "Message size exceeds limit (Exchange)"
+msgstr "Saiz mesej melebihi had (Exchange)"
+
+msgid "Message rate limit exceeded (Postfix)"
+msgstr "Had kadar mesej melebihi (Postfix)"
+
+msgid "Mailbox quota exceeded - temporary"
+msgstr "Kuota peti mel melebihi - sementara"
+
+msgid "Domain not found (Postfix)"
+msgstr "Domain tidak dijumpai (Postfix)"
+
+msgid "Message header invalid (Postfix)"
+msgstr "Pengepala mesej tidak sah (Postfix)"
+
+msgid "Bounce loop detected (Postfix)"
+msgstr "Gelung lantunan dikesan (Postfix)"
+
+msgid "Unable to route (Postfix)"
+msgstr "Tidak dapat menghala (Postfix)"
+
+msgid "Sender domain not found (Postfix)"
+msgstr "Domain penghantar tidak dijumpai (Postfix)"
+
+msgid "Recipient domain not found (Postfix)"
+msgstr "Domain penerima tidak dijumpai (Postfix)"
+
+msgid "Greylisting in progress - please try again (Postgrey)"
+msgstr "Greylisting sedang dijalankan - sila cuba lagi (Postgrey)"
+
+msgid "Spam filtering in progress (SpamAssassin)"
+msgstr "Penapisan spam sedang dijalankan (SpamAssassin)"
+
+msgid "Virus scanning in progress (ClamAV)"
+msgstr "Pengimbasan virus sedang dijalankan (ClamAV)"
+
+msgid "Mailbox unavailable - try again later"
+msgstr "Peti mel tidak tersedia - cuba lagi nanti"
+
+msgid "Requested action aborted - error in processing"
+msgstr "Tindakan yang diminta dibatalkan - ralat dalam pemprosesan"
+
+msgid "Insufficient system storage - try again later"
+msgstr "Storan sistem tidak mencukupi - cuba lagi nanti"
+
+msgid "Too many messages for this recipient (Exchange)"
+msgstr "Terlalu banyak mesej untuk penerima ini (Exchange)"
+
+msgid "TLS not available (Postfix)"
+msgstr "TLS tidak tersedia (Postfix)"
+
+msgid "Server unable to accept messages (Postfix)"
+msgstr "Pelayan tidak dapat menerima mesej (Postfix)"
+
+msgid "Temporary failure in DNS lookup (Exim)"
+msgstr "Kegagalan sementara dalam carian DNS (Exim)"
+
+msgid "Quota exceeded - temporary"
+msgstr "Kuota melebihi - sementara"
+
+msgid "Message too big - temporary"
+msgstr "Mesej terlalu besar - sementara"
+
+msgid "Too many messages per connection"
+msgstr "Terlalu banyak mesej setiap sambungan"
+
+msgid "Load average too high (Postfix)"
+msgstr "Purata beban terlalu tinggi (Postfix)"
+
+msgid "Connection refused (Postfix)"
+msgstr "Sambungan ditolak (Postfix)"
+
+msgid "Send rate limit exceeded (Postfix)"
+msgstr "Had kadar hantar melebihi (Postfix)"
+
+msgid "Recipient rate limit exceeded (Postfix)"
+msgstr "Had kadar penerima melebihi (Postfix)"
+
+msgid "Sender rate limit exceeded (Postfix)"
+msgstr "Had kadar penghantar melebihi (Postfix)"
+
+msgid "IP address rate limit exceeded (Postfix)"
+msgstr "Had kadar alamat IP melebihi (Postfix)"
+
+msgid "MX lookup failed (Postfix)"
+msgstr "Carian MX gagal (Postfix)"
+
+msgid "A record lookup failed (Postfix)"
+msgstr "Carian rekod A gagal (Postfix)"
+
+msgid "PTR record lookup failed (Postfix)"
+msgstr "Carian rekod PTR gagal (Postfix)"
+
+msgid "Greylisting active - please try again (Postgrey)"
+msgstr "Greylisting aktif - sila cuba lagi (Postgrey)"
+
+msgid "Sender address rejected - domain not verified (DMARC pending)"
+msgstr "Alamat penghantar ditolak - domain tidak disahkan (DMARC belum selesai)"
+
+msgid "Recipient address rejected - domain not verified (DMARC pending)"
+msgstr "Alamat penerima ditolak - domain tidak disahkan (DMARC belum selesai)"
+
+msgid "DKIM verification pending - temporary failure"
+msgstr "Pengesahan DKIM belum selesai - kegagalan sementara"
+
+msgid "SPF verification pending - temporary failure"
+msgstr "Pengesahan SPF belum selesai - kegagalan sementara"
+
+msgid "DMARC verification pending - temporary failure"
+msgstr "Pengesahan DMARC belum selesai - kegagalan sementara"
+
+msgid "DNSBL lookup temporary failure"
+msgstr "Kegagalan sementara carian DNSBL"
+
+msgid "RHSBL lookup temporary failure"
+msgstr "Kegagalan sementara carian RHSBL"
+
+msgid "URI DNSBL lookup temporary failure"
+msgstr "Kegagalan sementara carian URI DNSBL"
+
+msgid "Temporary authentication failure (Dovecot)"
+msgstr "Kegagalan pengesahan sementara (Dovecot)"
+
+msgid "Temporary authorization failure (Sendmail)"
+msgstr "Kegagalan pemberian kuasa sementara (Sendmail)"
+
+msgid "Rate limit exceeded per sender (Exim)"
+msgstr "Had kadar melebihi setiap penghantar (Exim)"
+
+msgid "Rate limit exceeded per recipient (Exim)"
+msgstr "Had kadar melebihi setiap penerima (Exim)"
+
+msgid "Rate limit exceeded per domain (Exim)"
+msgstr "Had kadar melebihi setiap domain (Exim)"
+
+msgid "Rate limit exceeded per IP (Exim)"
+msgstr "Had kadar melebihi setiap IP (Exim)"
+
+msgid "Message queued for later delivery (Postfix)"
+msgstr "Mesej dimasukkan ke dalam baris gilir untuk penghantaran kemudian (Postfix)"
+
+msgid "Delivery delayed due to policy (Exchange)"
+msgstr "Penghantaran ditangguhkan disebabkan dasar (Exchange)"
+
+msgid "Temporary failure in content filter"
+msgstr "Kegagalan sementara dalam penapis kandungan"
+
+msgid "Temporary failure in antivirus scanner"
+msgstr "Kegagalan sementara dalam pengimbas antivirus"
+
+msgid "Temporary failure in spam filter"
+msgstr "Kegagalan sementara dalam penapis spam"
+
+msgid "Temporary failure in milter (Postfix)"
+msgstr "Kegagalan sementara dalam milter (Postfix)"
+
+msgid "Greylisting - try again later"
+msgstr "Greylisting - cuba lagi nanti"
+
+msgid "DDoS protection active - try again later"
+msgstr "Perlindungan DDoS aktif - cuba lagi nanti"
+
+msgid "SMTP policy violation - temporary"
+msgstr "Pelanggaran dasar SMTP - sementara"
+
+msgid "Temporary error in RCPT TO processing"
+msgstr "Ralat sementara dalam pemprosesan RCPT TO"
+
+msgid "Temporary error in MAIL FROM processing"
+msgstr "Ralat sementara dalam pemprosesan MAIL FROM"
+
+msgid "Temporary error in EHLO/HELO processing"
+msgstr "Ralat sementara dalam pemprosesan EHLO/HELO"
+
+msgid "Temporary error in DATA processing"
+msgstr "Ralat sementara dalam pemprosesan DATA"
+
+msgid "Temporary error - service busy, try again later"
+msgstr "Ralat sementara - perkhidmatan sibuk, cuba lagi nanti"
+
+msgid "Syntax error - command unrecognized or too long"
+msgstr "Ralat sintaks - arahan tidak dikenali atau terlalu panjang"
+
+msgid "Syntax error in parameters or arguments"
+msgstr "Ralat sintaks dalam parameter atau hujah"
+
+msgid "Command not implemented"
+msgstr "Arahan tidak dilaksanakan"
+
+msgid "Bad sequence of commands"
+msgstr "Urutan arahan yang tidak baik"
+
+msgid "Command parameter not implemented"
+msgstr "Parameter arahan tidak dilaksanakan"
+
+msgid "Version not supported (ESMTP)"
+msgstr "Versi tidak disokong (ESMTP)"
+
+msgid "Mailbox path invalid (LMTP)"
+msgstr "Laluan peti mel tidak sah (LMTP)"
+
+msgid "Too many commands in this session (Postfix)"
+msgstr "Terlalu banyak arahan dalam sesi ini (Postfix)"
+
+msgid "Recipient limit exceeded (Postfix)"
+msgstr "Had penerima melebihi (Postfix)"
+
+msgid "Sender limit exceeded (Postfix)"
+msgstr "Had penghantar melebihi (Postfix)"
+
+msgid "Domain limit exceeded (Postfix)"
+msgstr "Had domain melebihi (Postfix)"
+
+msgid "Mailbox does not exist (Exchange)"
+msgstr "Peti mel tidak wujud (Exchange)"
+
+msgid "DNS failure - permanent"
+msgstr "Kegagalan DNS - kekal"
+
+msgid "Address type not supported (Postfix)"
+msgstr "Jenis alamat tidak disokong (Postfix)"
+
+msgid "Unable to open mailbox (Postfix)"
+msgstr "Tidak dapat membuka peti mel (Postfix)"
+
+msgid "Mailbox locked - permanent"
+msgstr "Peti mel dikunci - kekal"
+
+msgid "Message rejected due to policy (Exchange)"
+msgstr "Mesej ditolak disebabkan dasar (Exchange)"
+
+msgid "Content rejected - permanent"
+msgstr "Kandungan ditolak - kekal"
+
+msgid "Attachment type not allowed"
+msgstr "Jenis lampiran tidak dibenarkan"
+
+msgid "Message encoding not supported"
+msgstr "Pengekodan mesej tidak disokong"
+
+msgid "Sender domain does not exist - permanent"
+msgstr "Domain penghantar tidak wujud - kekal"
+
+msgid "Domain does not accept mail or is closing"
+msgstr "Domain tidak menerima mel atau sedang ditutup"
+
+msgid "Recipient domain does not exist - permanent"
+msgstr "Domain penerima tidak wujud - kekal"
+
+msgid "Mailbox quota exceeded - permanent"
+msgstr "Kuota peti mel melebihi - kekal"
+
+msgid "Message size exceeds limit - permanent"
+msgstr "Saiz mesej melebihi had - kekal"
+
+msgid "Authentication required (Sendmail)"
+msgstr "Pengesahan diperlukan (Sendmail)"
+
+msgid "Authentication failed (Sendmail)"
+msgstr "Pengesahan gagal (Sendmail)"
+
+msgid "Authentication mechanism not supported"
+msgstr "Mekanisme pengesahan tidak disokong"
+
+msgid "Authentication credentials invalid"
+msgstr "Kelayakan pengesahan tidak sah"
+
+msgid "Authentication account expired"
+msgstr "Akaun pengesahan tamat tempoh"
+
+msgid "Access denied - authentication required"
+msgstr "Akses ditolak - pengesahan diperlukan"
+
+msgid "Access denied (Sendmailism)"
+msgstr "Akses ditolak (Sendmail)"
+
+msgid "Access denied - not authenticated"
+msgstr "Akses ditolak - tidak disahkan"
+
+msgid "Access denied - account locked"
+msgstr "Akses ditolak - akaun dikunci"
+
+msgid "Access denied - account disabled"
+msgstr "Akses ditolak - akaun dilumpuhkan"
+
+msgid "Authentication failed"
+msgstr "Pengesahan gagal"
+
+msgid "Authentication required for relay (Postfix)"
+msgstr "Pengesahan diperlukan untuk relay (Postfix)"
+
+msgid "Authentication failed for relay (Postfix)"
+msgstr "Pengesahan untuk relay gagal (Postfix)"
+
+msgid "Encryption required (STARTTLS)"
+msgstr "Penyulitan diperlukan (STARTTLS)"
+
+msgid "TLS required for this recipient"
+msgstr "TLS diperlukan untuk penerima ini"
+
+msgid "Encryption strength insufficient"
+msgstr "Kekuatan penyulitan tidak mencukupi"
+
+msgid "Certificate validation failed"
+msgstr "Pengesahan sijil gagal"
+
+msgid "Invalid TLS certificate"
+msgstr "Sijil TLS tidak sah"
+
+msgid "TLS protocol version not supported"
+msgstr "Versi protokol TLS tidak disokong"
+
+msgid "Cipher suite not supported"
+msgstr "Suite sifir tidak disokong"
+
+msgid "Access denied - no valid recipient"
+msgstr "Akses ditolak - tiada penerima yang sah"
+
+msgid "Access denied - no valid sender"
+msgstr "Akses ditolak - tiada penghantar yang sah"
+
+msgid "Access denied - domain not allowed"
+msgstr "Akses ditolak - domain tidak dibenarkan"
+
+msgid "Access denied - IP address blocked (permanent)"
+msgstr "Akses ditolak - alamat IP disekat (kekal)"
+
+msgid "Access denied - sender domain blacklisted"
+msgstr "Akses ditolak - domain penghantar disenaraihitamkan"
+
+msgid "Mailbox unavailable - requested action not taken"
+msgstr "Peti mel tidak tersedia - tindakan yang diminta tidak diambil"
+
+msgid "User not local - please try forwarding address"
+msgstr "Pengguna tidak tempatan - sila cuba alamat pemajuan"
+
+msgid "Requested action aborted - exceeded storage allocation"
+msgstr "Tindakan yang diminta dibatalkan - melebihi peruntukan storan"
+
+msgid "Mailbox name not allowed"
+msgstr "Nama peti mel tidak dibenarkan"
+
+msgid "Requested action rejected - access denied"
+msgstr "Tindakan yang diminta ditolak - akses ditolak"
+
+msgid "MAIL FROM/RCPT TO parameters not recognized"
+msgstr "Parameter MAIL FROM/RCPT TO tidak dikenali"
+
+msgid "Domain not allowed to send (DMARC reject)"
+msgstr "Domain tidak dibenarkan menghantar (DMARC tolak)"
+
+msgid "Too many duplicate messages - permanent"
+msgstr "Terlalu banyak mesej pendua - kekal"
+
+msgid "Sender address rejected - domain not in SPF"
+msgstr "Alamat penghantar ditolak - domain tiada dalam SPF"
+
+msgid "Sender address rejected - DKIM verification failed"
+msgstr "Alamat penghantar ditolak - pengesahan DKIM gagal"
+
+msgid "Sender address rejected - DMARC policy reject"
+msgstr "Alamat penghantar ditolak - dasar DMARC tolak"
+
+msgid "Recipient address rejected - DMARC policy reject"
+msgstr "Alamat penerima ditolak - dasar DMARC tolak"
+
+msgid "Message rejected due to spam content"
+msgstr "Mesej ditolak kerana kandungan spam"
+
+msgid "Message rejected due to virus detected"
+msgstr "Mesej ditolak kerana virus dikesan"
+
+msgid "Message rejected due to malicious content"
+msgstr "Mesej ditolak kerana kandungan berniat jahat"
+
+msgid "Message rejected due to phishing detection"
+msgstr "Mesej ditolak kerana pancingan data dikesan"
+
+msgid "Message rejected due to malware detection"
+msgstr "Mesej ditolak kerana perisian hasad dikesan"
+
+msgid "Message rejected due to policy - permanent"
+msgstr "Mesej ditolak kerana dasar - kekal"
+
+msgid "Message rejected due to content filtering"
+msgstr "Mesej ditolak kerana penapisan kandungan"
+
+msgid "Message rejected due to reputation"
+msgstr "Mesej ditolak kerana reputasi"
+
+msgid "Access denied - access_map violation"
+msgstr "Akses ditolak - pelanggaran access_map"
+
+msgid "Access denied - SMTP client listed in RBL"
+msgstr "Akses ditolak - klien SMTP tersenarai dalam RBL"
+
+msgid "Access denied - relay not authorized"
+msgstr "Akses ditolak - relay tidak dibenarkan"
+
+msgid "Access denied - unknown SMTP client hostname"
+msgstr "Akses ditolak - nama hos klien SMTP tidak diketahui"
+
+msgid "Access denied - bad syntax for client HELO hostname"
+msgstr "Akses ditolak - sintaks buruk untuk nama hos HELO klien"
+
+msgid "Access denied - SMTP client hostname rejected"
+msgstr "Akses ditolak - nama hos klien SMTP ditolak"
+
+msgid "Access denied - unknown domain for sender or recipient"
+msgstr "Akses ditolak - domain tidak diketahui untuk penghantar atau penerima"
+
+msgid "Access denied - unknown client HELO hostname"
+msgstr "Akses ditolak - nama hos HELO klien tidak diketahui"
+
+msgid "Access denied - invalid domain (not FQDN)"
+msgstr "Akses ditolak - domain tidak sah (bukan FQDN)"
+
+msgid "Access denied - domain not qualified"
+msgstr "Akses ditolak - domain tidak layak"
+
+msgid "Access denied - mail server misconfigured"
+msgstr "Akses ditolak - pelayan mel salah konfigurasi"
+
+msgid "Access denied - open relay not allowed"
+msgstr "Akses ditolak - relay terbuka tidak dibenarkan"
+
+msgid "Access denied - proxy not allowed"
+msgstr "Akses ditolak - proksi tidak dibenarkan"
+
+msgid "Access denied - dynamic IP not allowed"
+msgstr "Akses ditolak - IP dinamik tidak dibenarkan"
+
+msgid "Access denied - residential IP not allowed"
+msgstr "Akses ditolak - IP kediaman tidak dibenarkan"
+
+msgid "Access denied - VPN/Tor detected"
+msgstr "Akses ditolak - VPN/Tor dikesan"
+
+msgid "Access denied - Spamhaus DROP listed"
+msgstr "Akses ditolak - tersenarai dalam Spamhaus DROP"
+
+msgid "Access denied - URL listed in URIBL"
+msgstr "Akses ditolak - URL tersenarai dalam URIBL"
+
+msgid "Access denied - domain in RHSBL"
+msgstr "Akses ditolak - domain dalam RHSBL"
+
+msgid "Access denied - IP in DNSWL (policy)"
+msgstr "Akses ditolak - IP dalam DNSWL (dasar)"
+
+msgid "Delivery failed - mailbox not found"
+msgstr "Penghantaran gagal - peti mel tidak dijumpai"
+
+msgid "Delivery failed - recipient not local"
+msgstr "Penghantaran gagal - penerima tidak tempatan"
+
+msgid "Delivery failed - recipient rejected"
+msgstr "Penghantaran gagal - penerima ditolak"
+
+msgid "Delivery failed - sender rejected"
+msgstr "Penghantaran gagal - penghantar ditolak"
+
+msgid "Delivery failed - relay rejected"
+msgstr "Penghantaran gagal - relay ditolak"
+
+msgid "Delivery failed - DNS permanent error"
+msgstr "Penghantaran gagal - ralat DNS kekal"
+
+msgid "Delivery failed - MX permanent error"
+msgstr "Penghantaran gagal - ralat MX kekal"
+
+msgid "Delivery failed - A record permanent error"
+msgstr "Penghantaran gagal - ralat rekod A kekal"
+
+msgid "Delivery failed - PTR record permanent error"
+msgstr "Penghantaran gagal - ralat rekod PTR kekal"
+
+msgid "Delivery failed - policy permanent error"
+msgstr "Penghantaran gagal - ralat dasar kekal"
+
+msgid "DSN: Success - delivery status notification"
+msgstr "DSN: Berjaya - pemberitahuan status penghantaran"
+
+msgid "DSN: Delivery delayed"
+msgstr "DSN: Penghantaran ditangguhkan"
+
+msgid "DSN: Delivery failed - permanent"
+msgstr "DSN: Penghantaran gagal - kekal"
+
+msgid "DSN: Delivery failed - temporary"
+msgstr "DSN: Penghantaran gagal - sementara"
+
+msgid "DSN: Message expired"
+msgstr "DSN: Mesej tamat tempoh"
+
+msgid "DSN: Message bounced"
+msgstr "DSN: Mesej dilantunkan"
+
+msgid "DSN: Message discarded"
+msgstr "DSN: Mesej dibuang"
+
+msgid "DSN: Message filtered"
+msgstr "DSN: Mesej ditapis"
+
+msgid "DSN: Message quarantined"
+msgstr "DSN: Mesej dikuarantin"
+
+msgid "DSN: Message held for review"
+msgstr "DSN: Mesej ditahan untuk semakan"
+
+msgid "MTA-STS policy required"
+msgstr "Dasar MTA-STS diperlukan"
+
+msgid "MTA-STS policy validation failed"
+msgstr "Pengesahan dasar MTA-STS gagal"
+
+msgid "TLS reporting required"
+msgstr "Pelaporan TLS diperlukan"
+
+msgid "TLS report requested"
+msgstr "Laporan TLS diminta"
+
+msgid "SMTP MTA Strict Transport Security active"
+msgstr "Keselamatan Pengangkutan Ketat MTA SMTP aktif"
+
+msgid "DANE validation required"
+msgstr "Pengesahan DANE diperlukan"
+
+msgid "DANE validation failed"
+msgstr "Pengesahan DANE gagal"
+
+msgid "TLSA record missing"
+msgstr "Rekod TLSA hilang"
+
+msgid "Certificate name mismatch"
+msgstr "Nama sijil tidak sepadan"
+
+msgid "Certificate expired"
+msgstr "Sijil tamat tempoh"
+
+msgid "AUTH LOGIN required"
+msgstr "AUTH LOGIN diperlukan"
+
+msgid "AUTH PLAIN required"
+msgstr "AUTH PLAIN diperlukan"
+
+msgid "AUTH CRAM-MD5 required"
+msgstr "AUTH CRAM-MD5 diperlukan"
+
+msgid "AUTH DIGEST-MD5 required"
+msgstr "AUTH DIGEST-MD5 diperlukan"
+
+msgid "AUTH GSSAPI required"
+msgstr "AUTH GSSAPI diperlukan"
+
+msgid "AUTH NTLM required"
+msgstr "AUTH NTLM diperlukan"
+
+msgid "AUTH SCRAM required"
+msgstr "AUTH SCRAM diperlukan"
+
+msgid "AUTH OAUTHBEARER required"
+msgstr "AUTH OAUTHBEARER diperlukan"
+
+msgid "AUTH XOAUTH2 required"
+msgstr "AUTH XOAUTH2 diperlukan"
+
+msgid "Exchange: Mailbox database error"
+msgstr "Exchange: Ralat pangkalan data peti mel"
+
+msgid "Exchange: Store driver error"
+msgstr "Exchange: Ralat pemandu stor"
+
+msgid "Exchange: Transport agent error"
+msgstr "Exchange: Ralat ejen pengangkutan"
+
+msgid "Exchange: Content conversion error"
+msgstr "Exchange: Ralat penukaran kandungan"
+
+msgid "Exchange: Routing error"
+msgstr "Exchange: Ralat penghalaan"
+
+msgid "Exchange: Mail flow stalled"
+msgstr "Exchange: Aliran mel terhenti"
+
+msgid "Exchange: Shadow redundancy error"
+msgstr "Exchange: Ralat lebihan bayangan"
+
+msgid "Exchange: Safety net error"
+msgstr "Exchange: Ralat jaring keselamatan"
+
+msgid "Exchange: Queue database error"
+msgstr "Exchange: Ralat pangkalan data baris gilir"
+
+msgid "Exchange: Message throttled"
+msgstr "Exchange: Mesej dikawal"
+
+msgid "Postfix: Bounce queue error"
+msgstr "Postfix: Ralat baris gilir lantunan"
+
+msgid "Postfix: Deferred queue error"
+msgstr "Postfix: Ralat baris gilir tertunda"
+
+msgid "Postfix: Hold queue error"
+msgstr "Postfix: Ralat baris gilir tahan"
+
+msgid "Postfix: Incoming queue error"
+msgstr "Postfix: Ralat baris gilir masuk"
+
+msgid "Postfix: Active queue error"
+msgstr "Postfix: Ralat baris gilir aktif"
+
+msgid "Postfix: Corrupted queue file"
+msgstr "Postfix: Fail baris gilir rosak"
+
+msgid "Sendmail: Queue runner error"
+msgstr "Sendmail: Ralat pelari baris gilir"
+
+msgid "Sendmail: Alias database error"
+msgstr "Sendmail: Ralat pangkalan data alias"
+
+msgid "Sendmail: Virtuser table error"
+msgstr "Sendmail: Ralat jadual pengguna maya"
+
+msgid "Sendmail: Mailer definition error"
+msgstr "Sendmail: Ralat definisi penghantar mel"
+
+msgid "Exim: Router configuration error"
+msgstr "Exim: Ralat konfigurasi penghala"
+
+msgid "Exim: Transport configuration error"
+msgstr "Exim: Ralat konfigurasi pengangkutan"
+
+msgid "Exim: Director configuration error"
+msgstr "Exim: Ralat konfigurasi pengarah"
+
+msgid "Exim: Retry configuration error"
+msgstr "Exim: Ralat konfigurasi cuba semula"
+
+msgid "Exim: Rewrite configuration error"
+msgstr "Exim: Ralat konfigurasi tulis semula"
+
+msgid "Exim: Authentication configuration error"
+msgstr "Exim: Ralat konfigurasi pengesahan"
+
+msgid "Exim: ACL configuration error"
+msgstr "Exim: Ralat konfigurasi ACL"
+
+msgid "Exim: Local_scan configuration error"
+msgstr "Exim: Ralat konfigurasi Local_scan"
+
+msgid "Exim: Lookup configuration error"
+msgstr "Exim: Ralat konfigurasi carian"
+
+msgid "Exim: Expansion configuration error"
+msgstr "Exim: Ralat konfigurasi pengembangan"
+
+msgid "HTTP Protocol Versions"
+msgstr "Versi Protokol HTTP"
+
+msgid "Protocol"
+msgstr "Protokol"
+
+msgid "Request %"
+msgstr "Peratusan permintaan"
+
+msgid "Bandwidth %"
+msgstr "Peratusan lebar jalur"
+
+msgid "Each request requires a new connection"
+msgstr "Setiap permintaan memerlukan sambungan baharu"
+
+msgid "Multiple requests can reuse one connection"
+msgstr "Berbilang permintaan boleh menggunakan semula satu sambungan"
+
+msgid "Multiple requests in parallel over one connection"
+msgstr "Berbilang permintaan secara selari melalui satu sambungan"
+
+msgid "Faster connection, better performance on poor networks"
+msgstr "Sambungan lebih pantas, prestasi lebih baik pada rangkaian lemah"
+
+msgid "No protocol data available"
+msgstr "Tiada data protokol tersedia"
+
+msgid "of requests use HTTP/1.0"
+msgstr "daripada permintaan menggunakan HTTP/1.0"
+
+msgid "From access logs"
+msgstr "Dari log akses"
+
+msgid "No HTTP/2 requests detected"
+msgstr "Tiada permintaan HTTP/2 dikesan"
+
+msgid "All requests are HTTP/1.0, no HTTP/2 requests"
+msgstr "Semua permintaan adalah HTTP/1.0, tiada permintaan HTTP/2"
+
+msgid "HTTP/3 not detected"
+msgstr "HTTP/3 tidak dikesan"
+
+msgid "all requests do not include QUIC/HTTP/3 protocol requests"
+msgstr "semua permintaan tidak termasuk permintaan protokol QUIC/HTTP/3"
+
+msgid "Mail Authentication Statistics"
+msgstr "Statistik Pengesahan Mel"
+
+msgid "Authentication"
+msgstr "Jenis pengesahan"
+
+msgid "Pass"
+msgstr "Lulus"
+
+msgid "Fail"
+msgstr "Gagal"
+
+msgid "Softfail"
+msgstr "Gagal lembut"
+
+msgid "Neutral"
+msgstr "Neutral"
+
+msgid "None"
+msgstr "Tiada"
+
+msgid "Mail Queue Delay Statistics"
+msgstr "Statistik Kelewatan Baris Gilir Mel"
+
+msgid "Delay Range"
+msgstr "Julat Kelewatan"
+
+msgid "Count"
+msgstr "Kiraan"
+
+msgid "Percentage"
+msgstr "Peratusan"
+
+msgid "TLS Encryption Statistics"
+msgstr "Statistik Penyulitan TLS"
+
+msgid "TLS Versions"
+msgstr "Versi TLS"
+
+msgid "Top Ciphers"
+msgstr "Sifir teratas"
+
+msgid "robot_hits_detail_both"
+msgstr "Jumlah permintaan: %s (halaman biasa: %s, robots.txt: %s)"
+
+msgid "robot_hits_detail_only_robots"
+msgstr "Hanya permintaan robots.txt: %s, tiada halaman lain"
+
+msgid "robot_hits_detail_normal"
+msgstr "Permintaan halaman biasa: %s"
+
+# Bantuan dan petua
+msgid "Troubleshooting"
+msgstr "Penyelesaian masalah"
+
+msgid "Did you use the correct URL?"
+msgstr "Adakah anda menggunakan URL yang betul?"
+
+msgid "Example:"
+msgstr "Contoh:"
+
+msgid "Did you use correct config parameter?"
+msgstr "Adakah anda menggunakan parameter konfigurasi yang betul?"
+
+msgid "Example: If your config file is awstats.mysite.conf, use -config=mysite"
+msgstr "Contoh: Jika fail konfigurasi anda ialah awstats.mysite.conf, gunakan -config=mysite"
+
+msgid "Did you create your config file 'awstats.$SiteConfig.conf'?"
+msgstr "Adakah anda mencipta fail konfigurasi 'awstats.$SiteConfig.conf'?"
+
+msgid "If not, you can run \"awstats_configure.pl\" from command line, or create it manually."
+msgstr "Jika tidak, anda boleh menjalankan \"awstats_configure.pl\" dari baris arahan, atau menciptanya secara manual."
+
+msgid "Setup"
+msgstr "Persediaan"
+
+msgid "file, web server or permissions may be wrong."
+msgstr "fail, pelayan web atau kebenaran mungkin salah."
+
+msgid "Check config file, permissions and AWStats documentation (in 'docs' directory)."
+msgstr "Periksa fail konfigurasi, kebenaran dan dokumentasi AWStats (dalam direktori 'docs')."
+
+msgid "Warning: Can't find language files for \"%s\". English will be used."
+msgstr "Amaran: Tidak dapat mencari fail bahasa untuk \"%s\". Bahasa Inggeris akan digunakan."
+
+#------------------------------------------------------------------------------
+# Pengendalian ralat dan isyarat
+#------------------------------------------------------------------------------
+
+msgid "%s process (ID %s) interrupted by signal %s."
+msgstr "Proses %s (ID %s) diganggu oleh isyarat %s."
+
+msgid "An AWStats update process seems to be already running for this config file. Try later. If this is not true, remove manually lock file"
+msgstr "Proses kemas kini AWStats nampaknya sudah berjalan untuk fail konfigurasi ini. Cuba sebentar lagi. Jika ini tidak benar, keluarkan fail kunci secara manual"
+
+#------------------------------------------------------------------------------
+# Tajuk statistik baharu
+#------------------------------------------------------------------------------
+
+msgid "Report Overview"
+msgstr "Gambaran Keseluruhan Laporan"
+
+msgid "Monthly Statistics"
+msgstr "Statistik Bulanan"
+
+msgid "Daily Statistics"
+msgstr "Statistik Harian"
+
+msgid "Statistics by Day of Week"
+msgstr "Statistik mengikut Hari dalam Minggu"
+
+msgid "Hourly Page Views"
+msgstr "Paparan Halaman Setiap Jam"
+
+msgid "Traffic Sources"
+msgstr "Sumber Trafik"
+
+msgid "Other Sources"
+msgstr "Sumber Lain"
+
+msgid "tooltip_1"
+msgstr "Bilangan sesi pelawat di laman web. Dilawati semula selepas tidak aktif lebih 30 minit, dikira sebagai lawatan baharu."
+
+msgid "tooltip_2"
+msgstr "Bilangan pelawat berbeza yang melawat laman web anda dalam tempoh masa yang dipilih. Berdasarkan alamat IP."
+
+msgid "tooltip_3"
+msgstr "Bilangan permintaan yang dianggap sebagai halaman (HTML, PHP, ASP dll.), tidak termasuk imej, CSS, JS."
+
+msgid "tooltip_4"
+msgstr "Jumlah keseluruhan semua permintaan ke pelayan, termasuk halaman, imej, CSS, JS dan semua fail."
+
+msgid "tooltip_5"
+msgstr "Jumlah data yang dihantar oleh pelayan sebagai respons kepada permintaan pengguna."
+
+msgid "tooltip_13"
+msgstr "Statistik sumber trafik dari enjin carian. Menunjukkan enjin carian yang membawa trafik kepada anda dan istilah carian yang digunakan oleh pelawat."
+
+msgid "tooltip_14"
+msgstr "Statistik sumber trafik dari pautan luaran dari laman web lain. Menunjukkan laman web mana yang memaut ke anda dan trafik yang mereka bawa."
+
+msgid "tooltip_15"
+msgstr "Istilah carian yang digunakan oleh pelawat untuk mencari anda melalui enjin carian. Kata kunci adalah perkataan tunggal, frasa kunci adalah gabungan perkataan."
+
+msgid "tooltip_16"
+msgstr "Program automatik seperti robot enjin carian, robot latihan AI, pengimbas kelemahan dll. Nombor dalam kurungan menunjukkan bilangan permintaan halaman biasa dan permintaan robots.txt."
+
+msgid "tooltip_17"
+msgstr "Taburan trafik 24 jam. Menunjukkan masa laman web anda paling banyak dikunjungi, membantu memahami masa aktif pengguna."
+
+msgid "tooltip_18"
+msgstr "Lajur ini menunjukkan purata nilai harian/mingguan untuk tempoh masa yang dipilih, membantu memahami trend keseluruhan."
+
+msgid "tooltip_19"
+msgstr "Klik pada item dalam carta untuk melihat maklumat terperinci. Tuding tetikus pada elemen carta untuk melihat nilai."
+
+msgid "tooltip_20"
+msgstr "Data yang tidak dapat dikategorikan ke dalam julat yang sedia ada, biasanya disebabkan format data yang luar biasa atau hilang."
+
+msgid "tooltip_21"
+msgstr "Rekod serangan virus cacing yang dikesan. Cacing adalah program hasad yang mereplikasi diri sendiri, biasanya merebak melalui kelemahan rangkaian."
+
+#------------------------------------------------------------------------------
+# Memaparkan maklumat bantuan - Edisi Komuniti
+#------------------------------------------------------------------------------
+
+msgid "AWStats %s - Advanced Web Statistics"
+msgstr "AWStats %s - Statistik Web Lanjutan"
+
+msgid "Copyright (c) 2000-2025 Laurent Destailleur"
+msgstr "Hak cipta (c) 2000-2025 Laurent Destailleur"
+
+msgid "Copyright (c) 2026-latest Community Edition"
+msgstr "Hak cipta (c) 2026-terkini Edisi Komuniti"
+
+msgid "AWStats comes with ABSOLUTELY NO WARRANTY. It's a free software distributed with a GNU General Public License (See LICENSE file for details)."
+msgstr "AWStats datang TANPA JAMINAN LANGSUNG. Ia adalah perisian percuma yang diedarkan dengan Lesen Awam Am GNU (Lihat fail LICENSE untuk butiran)."
+
+msgid "Syntax: %s -config=virtualhostname [options]"
+msgstr "Sintaks: %s -config=nama_host_maya [pilihan]"
+
+msgid "This runs %s in command line to update statistics (-update option) of a web site, from the log file defined in AWStats config file, or build a HTML report (-output option)."
+msgstr "Ini menjalankan %s dalam baris arahan untuk mengemas kini statistik (-pilihan update) laman web, dari fail log yang ditakrifkan dalam fail konfigurasi AWStats, atau membina laporan HTML (-pilihan output)."
+
+msgid "First, %s tries to read %s.virtualhostname.conf as the config file. If not found, %s tries to read %s.conf, and finally the full path passed to -config="
+msgstr "Pertama, %s cuba membaca %s.nama_host_maya.conf sebagai fail konfigurasi. Jika tidak dijumpai, %s cuba membaca %s.conf, dan akhirnya laluan penuh yang dihantar ke -config="
+
+msgid "Note 1: Config files (*.conf) must be in /etc/awstats, /usr/local/etc/awstats, /etc or same directory than awstats.pl script file."
+msgstr "Nota 1: Fail konfigurasi (*.conf) mesti berada dalam /etc/awstats, /usr/local/etc/awstats, /etc atau direktori yang sama dengan fail skrip awstats.pl."
+
+msgid "Note 2: If AWSTATS_FORCE_CONFIG environment variable is defined, AWStats will use it as the 'config' value, whatever is the value on command line or URL."
+msgstr "Nota 2: Jika pembolehubah persekitaran AWSTATS_FORCE_CONFIG ditakrifkan, AWStats akan menggunakannya sebagai nilai 'config', tidak kira apa nilai pada baris arahan atau URL."
+
+msgid "See AWStats documentation for all setup instructions."
+msgstr "Lihat dokumentasi AWStats untuk semua arahan persediaan."
+
+msgid "Options to update statistics:"
+msgstr "Pilihan untuk mengemas kini statistik:"
+
+msgid "  -update        to update statistics (default)"
+msgstr "  -update        untuk mengemas kini statistik (lalai)"
+
+msgid "  -showsteps     to add benchmark information every %s lines processed"
+msgstr "  -showsteps     untuk menambah maklumat penanda aras setiap %s baris diproses"
+
+msgid "  -showcorrupted to add output for each corrupted lines found, with reason"
+msgstr "  -showcorrupted untuk menambah output untuk setiap baris rosak yang ditemui, dengan sebab"
+
+msgid "  -showdropped   to add output for each dropped lines found, with reason"
+msgstr "  -showdropped   untuk menambah output untuk setiap baris yang digugurkan ditemui, dengan sebab"
+
+msgid "  -showunknownorigin  to output referer when it can't be parsed"
+msgstr "  -showunknownorigin  untuk mengeluarkan perujuk apabila ia tidak boleh dihurai"
+
+msgid "  -showdirectorigin   to output log line when origin is a direct access"
+msgstr "  -showdirectorigin   untuk mengeluarkan baris log apabila asal adalah akses terus"
+
+msgid "  -updatefor=n   to stop the update process after parsing n lines"
+msgstr "  -updatefor=n   untuk menghentikan proses kemas kini selepas menghurai n baris"
+
+msgid "  -LogFile=x     to change log to analyze whatever is 'LogFile' in config file"
+msgstr "  -LogFile=x     untuk menukar log kepada analisis apa sahaja 'LogFile' dalam fail konfigurasi"
+
+msgid "  Be care to process log files in chronological order when updating statistics."
+msgstr "  Berhati-hati untuk memproses fail log mengikut susunan kronologi semasa mengemas kini statistik."
+
+msgid "Options to show statistics:"
+msgstr "Pilihan untuk menunjukkan statistik:"
+
+msgid "  -output      to output main HTML report (no update made except with -update)"
+msgstr "  -output      untuk mengeluarkan laporan HTML utama (tiada kemas kini dibuat kecuali dengan -update)"
+
+msgid "  -output=x    to output other report pages where x is:"
+msgstr "  -output=x    untuk mengeluarkan halaman laporan lain di mana x ialah:"
+
+msgid "build page of all domains/countries"
+msgstr "bina halaman semua domain/negara"
+
+msgid "build page of all hosts"
+msgstr "bina halaman semua hos"
+
+msgid "build page of last hits for hosts"
+msgstr "bina halaman hits terakhir untuk hos"
+
+msgid "build page of all unresolved IP"
+msgstr "bina halaman semua IP yang tidak dapat diselesaikan"
+
+msgid "build page of all email senders (maillog)"
+msgstr "bina halaman semua penghantar e-mel (log mel)"
+
+msgid "build page of last email senders (maillog)"
+msgstr "bina halaman penghantar e-mel terakhir (log mel)"
+
+msgid "build page of all email receivers (maillog)"
+msgstr "bina halaman semua penerima e-mel (log mel)"
+
+msgid "build page of last email receivers (maillog)"
+msgstr "bina halaman penerima e-mel terakhir (log mel)"
+
+msgid "build page of all logins used"
+msgstr "bina halaman semua log masuk yang digunakan"
+
+msgid "build page of last hits for logins"
+msgstr "bina halaman hits terakhir untuk log masuk"
+
+msgid "build page of all robots/spider visits"
+msgstr "bina halaman semua lawatan robot/labah-labah"
+
+msgid "build page of last hits for robots"
+msgstr "bina halaman hits terakhir untuk robot"
+
+msgid "list most often viewed pages"
+msgstr "senarai halaman paling kerap dilihat"
+
+msgid "list most often viewed pages matching filter"
+msgstr "senarai halaman paling kerap dilihat yang sepadan dengan penapis"
+
+msgid "list entry pages"
+msgstr "senarai halaman masuk"
+
+msgid "list entry pages matching filter"
+msgstr "senarai halaman masuk yang sepadan dengan penapis"
+
+msgid "list exit pages"
+msgstr "senarai halaman keluar"
+
+msgid "list exit pages matching filter"
+msgstr "senarai halaman keluar yang sepadan dengan penapis"
+
+msgid "build page with os detailed versions"
+msgstr "bina halaman dengan versi terperinci OS"
+
+msgid "build page with browsers detailed versions"
+msgstr "bina halaman dengan versi terperinci penyemak imbas"
+
+msgid "list 'User Agents' with unknown browser"
+msgstr "senarai 'Ejen Pengguna' dengan penyemak imbas tidak diketahui"
+
+msgid "list 'User Agents' with unknown OS"
+msgstr "senarai 'Ejen Pengguna' dengan OS tidak diketahui"
+
+msgid "build page of all refering search engines"
+msgstr "bina halaman semua enjin carian perujuk"
+
+msgid "build page of all refering pages"
+msgstr "bina halaman semua halaman perujuk"
+
+msgid "list all keyphrases used on search engines"
+msgstr "senarai semua frasa kunci yang digunakan pada enjin carian"
+
+msgid "list all keywords used on search engines"
+msgstr "senarai semua kata kunci yang digunakan pada enjin carian"
+
+msgid "list 'Referers' for 404 errors"
+msgstr "senarai 'Perujuk' untuk ralat 404"
+
+msgid "build page of all values for ExtraSection X"
+msgstr "bina halaman semua nilai untuk Bahagian Tambahan X"
+
+msgid "  -staticlinks           to have static links in HTML report page"
+msgstr "  -staticlinks           untuk mempunyai pautan statik dalam halaman laporan HTML"
+
+msgid "  -staticlinksext=xxx    to have static links with .xxx extension instead of .html"
+msgstr "  -staticlinksext=xxx    untuk mempunyai pautan statik dengan sambungan .xxx dan bukannya .html"
+
+msgid "  -lang=LL     to output a HTML report in language LL (en,de,es,fr,it,nl,zh-cn,...)"
+msgstr "  -lang=LL     untuk mengeluarkan laporan HTML dalam bahasa LL (ms,en,de,fr,...)"
+
+msgid "  -month=MM    to output a HTML report for an old month MM"
+msgstr "  -month=MM    untuk mengeluarkan laporan HTML untuk bulan lama MM"
+
+msgid "  -year=YYYY   to output a HTML report for an old year YYYY"
+msgstr "  -year=YYYY   untuk mengeluarkan laporan HTML untuk tahun lama YYYY"
+
+msgid "  The 'date' options doesn't allow you to process old log file. They only allow you to see a past report for a chosen month/year period instead of current month/year."
+msgstr "  Pilihan 'tarikh' tidak membenarkan anda memproses fail log lama. Ia hanya membenarkan anda melihat laporan lepas untuk tempoh bulan/tahun yang dipilih dan bukannya bulan/tahun semasa."
+
+msgid "Other options:"
+msgstr "Pilihan lain:"
+
+msgid "  -debug=X     to add debug informations lesser than level X (speed reduced)"
+msgstr "  -debug=X     untuk menambah maklumat nyahpepijat kurang daripada tahap X (kelajuan berkurang)"
+
+msgid "  -version     show AWStats version"
+msgstr "  -version, -v     menunjukkan versi AWStats"
+
+msgid "Now supports/detects:"
+msgstr "Kini menyokong/mengesan:"
+
+msgid "  Web/Ftp/Mail/streaming server log analyzis (and load balanced log files)"
+msgstr "  Analisis log pelayan Web/Ftp/Mel/streaming (dan fail log seimbang beban)"
+
+msgid "  Reverse DNS lookup (IPv4 and IPv6) and GeoIP lookup"
+msgstr "  Carian DNS terbalik (IPv4 dan IPv6) dan carian GeoIP"
+
+msgid "  Number of visits, number of unique visitors"
+msgstr "  Bilangan lawatan, bilangan pelawat unik"
+
+msgid "  Visits duration and list of last visits"
+msgstr "  Tempoh lawatan dan senarai lawatan terakhir"
+
+msgid "  Authenticated users"
+msgstr "  Pengguna yang disahkan"
+
+msgid "  Days of week and rush hours"
+msgstr "  Hari dalam minggu dan waktu puncak"
+
+msgid "  Hosts list and unresolved IP addresses list"
+msgstr "  Senarai hos dan senarai alamat IP yang tidak dapat diselesaikan"
+
+msgid "  Most viewed, entry and exit pages"
+msgstr "  Halaman paling banyak dilihat, masuk dan keluar"
+
+msgid "  Files type and Web compression (mod_gzip, mod_deflate stats)"
+msgstr "  Jenis fail dan mampatan Web (statistik mod_gzip, mod_deflate)"
+
+msgid "  Configured Database Statistics"
+msgstr "  Statistik Pangkalan Data yang Dikonfigurasi"
+
+msgid "  %s domains/countries"
+msgstr "  %s domain/negara"
+
+msgid "  %s robots"
+msgstr "  %s robot"
+
+msgid "  %s worm's families"
+msgstr "  %s keluarga cacing"
+
+msgid "  %s operating systems"
+msgstr "  %s sistem pengendalian"
+
+msgid "  %s browsers (%s with phone browsers database)"
+msgstr "  %s penyemak imbas (%s dengan pangkalan data penyemak imbas telefon)"
+
+msgid "  %s search engines (and keyphrases/keywords used from them)"
+msgstr "  %s enjin carian (dan frasa kunci/kata kunci yang digunakan daripadanya)"
+
+msgid "  All HTTP errors with last referrer"
+msgstr "  Semua ralat HTTP dengan perujuk terakhir"
+
+msgid "  Report by day/month/year"
+msgstr "  Laporan mengikut hari/bulan/tahun"
+
+msgid "  Dynamic or static HTML or XHTML reports, static PDF reports"
+msgstr "  Laporan HTML atau XHTML dinamik atau statik, laporan PDF statik"
+
+msgid "  Indexed text or XML monthly database"
+msgstr "  Pangkalan data berindeks teks atau XML bulanan"
+
+msgid "  And a lot of other advanced features and options..."
+msgstr "  Dan banyak ciri dan pilihan lanjutan yang lain..."
+
+msgid "  New versions and FAQ at http://www.awstats.org"
+msgstr "  Versi baharu dan Soalan Lazim di https://github.com/hestiacn/vstats/issues"

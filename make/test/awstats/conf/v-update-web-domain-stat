@@ -1,0 +1,539 @@
+#!/bin/bash
+# info: update domain statistics
+# options: USER DOMAIN
+#
+# example: v-update-web-domain-stat alice acme.com
+#
+# This function runs log analyser for specific webdomain.
+
+#----------------------------------------------------------#
+#                Variables & Functions                     #
+#----------------------------------------------------------#
+
+# Argument definition
+user=$1
+domain=$2
+domain_idn=$2
+
+# Use different log file names for different domains
+LOG_DIR="/var/log/awstats"
+mkdir -p "$LOG_DIR" 2>/dev/null
+chmod 755 "$LOG_DIR" 2>/dev/null
+
+LOG_FILE="$LOG_DIR/awstats-update-${domain}.log"
+> "$LOG_FILE" 2>/dev/null 
+
+log_message() {
+    local level="$1"
+    local message="$2"
+    local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
+    echo "[$timestamp] [$level] $message" >> "$LOG_FILE"
+}
+
+log_message "INFO" "Starting statistics update for domain $domain"
+log_message "INFO" "User: $user"
+
+#----------------------------------------------------------#
+#                     Lock File Check & Cleanup            #
+#----------------------------------------------------------#
+
+LOCK_FILE="/tmp/awstats-update-${domain}.lock"
+
+if [ -f "$LOCK_FILE" ]; then
+    LOCK_PID=$(cat "$LOCK_FILE" 2>/dev/null)
+    if [ -n "$LOCK_PID" ] && kill -0 "$LOCK_PID" 2>/dev/null; then
+        log_message "ERROR" "AWStats update process already running (PID: $LOCK_PID, Lock file: $LOCK_FILE)"
+        exit 1
+    else
+        log_message "WARNING" "Found stale lock file (PID: $LOCK_PID no longer exists), cleaning up..."
+        rm -f "$LOCK_FILE"
+        log_message "INFO" "Cleaned up stale lock file: $LOCK_FILE"
+    fi
+fi
+
+# Create new lock file
+exec 200>"$LOCK_FILE"
+flock -n 200 || {
+    log_message "ERROR" "AWStats update process already running (Lock file: $LOCK_FILE)"
+    exit 1
+}
+
+echo $$ >&200
+log_message "INFO" "Acquired lock file: $LOCK_FILE (PID: $$)"
+
+trap 'rm -f "$LOCK_FILE"; exec 200>&-; log_message "INFO" "Released lock file: $LOCK_FILE"' EXIT
+
+source /etc/hestiacp/hestia.conf
+source $HESTIA/func/main.sh
+source $HESTIA/func/domain.sh
+source_conf "$HESTIA/conf/hestia.conf"
+
+current_lang="${LANGUAGE:-en}"
+log_message "INFO" "System language: $current_lang"
+
+case "$current_lang" in
+    zh-cn|zh-sg)                      awstats_lang="zh-cn" ;;
+    zh-tw|zh-hk|zh-mo)                awstats_lang="zh-tw" ;;
+    pt-br)                            awstats_lang="pt-br" ;;
+    no|nb|nn)                         awstats_lang="nb" ;;
+    *)                                awstats_lang="$current_lang" ;;
+esac
+
+# Additional argument formatting
+format_domain
+format_domain_idn
+
+#----------------------------------------------------------#
+#                    Verifications                         #
+#----------------------------------------------------------#
+
+check_args '2' "$#" 'USER DOMAIN'
+is_format_valid 'user' 'domain'
+is_system_enabled "$WEB_SYSTEM" 'WEB_SYSTEM'
+is_object_valid 'user' 'USER' "$user"
+is_object_unsuspended 'user' 'USER' "$user"
+is_object_valid 'web' 'DOMAIN' "$domain"
+is_object_unsuspended 'web' 'DOMAIN' "$domain"
+is_object_value_exist 'web' 'DOMAIN' "$domain" '$STATS'
+
+log_message "INFO" "Verification passed"
+
+#----------------------------------------------------------#
+#                       Action                             #
+#----------------------------------------------------------#
+
+get_domain_values 'web'
+
+# Checking config
+config="$HOMEDIR/$user/conf/web/$domain/$STATS.conf"
+if [ ! -e "$config" ]; then
+    check_result $E_NOTEXISTS "$config doesn't exist"
+fi
+
+user_group="$user"
+
+# Checking statistics directory
+dir="$HOMEDIR/$user/web/$domain/stats"
+if [ ! -e "$dir" ]; then
+    mkdir -p $dir
+    chown "$user:$user_group" "$dir" 2>/dev/null
+    chmod 755 "$dir"
+else
+    # Check directory permissions; if they are not 755, change them to 755.
+    current_perms=$(stat -c "%a" "$dir")
+    if [ "$current_perms" != "755" ]; then
+        log_message "INFO" "Stats directory permission is $current_perms, changing to 755"
+        chmod 755 "$dir"
+    fi
+    chown "$user:$user_group" "$dir" 2>/dev/null
+fi
+
+#----------------------------------------------------------#
+#                 AWStats Core Adaptive Update Engine      #
+#----------------------------------------------------------#
+
+build_awstats() {
+    awstats="/usr/lib/cgi-bin/awstats.pl"
+    wwwroot="/usr/share/awstats"
+    local current_year=$(date "+%Y")
+    local current_month=$(date "+%m")
+    
+    echo "Using AWStats: $awstats"
+    echo "Using WWWROOT: $wwwroot"
+    log_message "INFO" "Using AWStats: $awstats"
+    log_message "INFO" "Using WWWROOT: $wwwroot"
+    log_message "INFO" "Current processing month: ${current_year}-${current_month}"
+
+    if [ ! -x "$awstats" ]; then
+        echo "Error: AWStats does not exist or is not executable: $awstats" >&2
+        log_message "ERROR" "AWStats does not exist or is not executable: $awstats"
+        return 1
+    fi
+    
+
+    local index_file="$dir/index.cgi"
+    local index_created=0
+
+    if [ ! -f "$index_file" ]; then
+        log_message "INFO" "index.cgi does not exist, creating: $index_file"
+    
+        cat > "$index_file" << 'EOF'
+#!/usr/bin/perl
+use strict;
+use warnings;
+
+# Ensure output is refreshed immediately
+$| = 1;
+
+# Get current year and month using efficient slice
+my ($mon, $year_num) = (localtime(time))[4, 5];
+my $year  = $year_num + 1900;
+my $month = sprintf("%02d", $mon + 1);
+
+# Get the domain name from the configuration file
+my $config = "DOMAIN_PLACEHOLDER";
+
+# Build the target URL
+my $target = "/cgi-bin/awstats.pl?config=$config&framename=mainright&year=$year&month=$month";
+
+# Send HTTP redirect (Strict RFC Standard)
+print "Status: 302 Found\r\n";
+print "Location: $target\r\n";
+print "Content-Type: text/html; charset=utf-8\r\n";
+print "\r\n";
+
+print "<!DOCTYPE html>\n<html>\n<head>\n<title>Redirecting...</title>\n";
+print "<meta http-equiv=\"refresh\" content=\"0;url=$target\"></head>\n";
+print "<body>Redirecting to <a href=\"$target\">AWStats</a>...</body>\n</html>\n";
+EOF
+
+        sed -i "s#DOMAIN_PLACEHOLDER#$domain#g" "$index_file"
+        
+        [ -n "$user_group" ] && chown "$user:$user_group" "$index_file" 2>/dev/null
+        chmod 755 "$index_file"
+        log_message "INFO" "index.cgi created: $index_file"
+        index_created=1
+    else
+        log_message "INFO" "index.cgi already exists: $index_file"
+    fi
+
+    if command -v apache2 >/dev/null 2>&1 || command -v httpd >/dev/null 2>&1; then
+        log_message "INFO" "Detected Apache is installed, starting Apache-specific configuration process..."
+        
+        local conf_dir="$HOMEDIR/$user/conf/web/$domain"
+        local conf_file="$conf_dir/apache2.conf_cgi"
+        local file_created=0
+
+        if [ ! -f "$conf_file" ]; then
+            log_message "INFO" "Configuration file does not exist, creating: $conf_file"
+            mkdir -p "$conf_dir"
+            
+            cat > "$conf_file" << EOF
+# CGI Configuration - Use the correct syntax for cgid_module
+<FilesMatch "\.(pl|cgi)$">
+    SetHandler cgi-script
+</FilesMatch>
+
+# Configure the cgi-bin directory
+ScriptAlias /cgi-bin/ $HOMEDIR/$user/web/$domain/cgi-bin/
+
+<Directory "$HOMEDIR/$user/web/$domain/cgi-bin">
+    Options +ExecCGI -Indexes
+    <FilesMatch "\.(pl|cgi)$">
+        SetHandler cgi-script
+    </FilesMatch>
+    Require all granted
+</Directory>
+
+# Make sure it's ScriptAlias, not Alias
+ScriptAlias /vstats/ $HOMEDIR/$user/web/$domain/stats/
+
+<Directory "$HOMEDIR/$user/web/$domain/stats">
+    Options +ExecCGI -Indexes
+    AddHandler cgi-script .cgi
+    DirectoryIndex index.cgi
+    Require all granted
+</Directory>
+EOF
+        
+            [ -n "$user_group" ] && chown "$user:$user_group" "$conf_file" 2>/dev/null
+            chmod 644 "$conf_file"
+            log_message "INFO" "Apache configuration file created: $conf_file"
+            file_created=1
+        else
+            log_message "INFO" "Apache configuration file already exists: $conf_file"
+        fi
+
+        # Check and create .htaccess file (Apache environment only)
+        local htaccess_file="$dir/.htaccess"
+        local htaccess_created=0
+
+        if [ ! -f "$htaccess_file" ]; then
+            log_message "INFO" ".htaccess does not exist, creating: $htaccess_file"
+            cat > "$htaccess_file" << EOF
+Options +ExecCGI
+AddHandler cgi-script .cgi
+DirectoryIndex index.cgi
+EOF
+            [ -n "$user_group" ] && chown "$user:$user_group" "$htaccess_file" 2>/dev/null
+            chmod 644 "$htaccess_file"
+            log_message "INFO" ".htaccess created: $htaccess_file"
+            htaccess_created=1
+        else
+            log_message "INFO" ".htaccess already exists: $htaccess_file"
+        fi
+
+        # Trigger Apache CGI module check
+        if [ $file_created -eq 1 ] || [ $index_created -eq 1 ] || [ $htaccess_created -eq 1 ]; then
+            log_message "INFO" "New file creation detected, checking Apache CGI module..."
+
+            if command -v apache2ctl >/dev/null 2>&1; then
+                if ! apache2ctl -M 2>/dev/null | grep -q "cgid_module"; then
+                    log_message "INFO" "Enabling cgid module (Debian)..."
+                    a2enmod cgid
+                    systemctl restart apache2
+                    log_message "INFO" "cgid module enabled, Apache restarted"
+                fi
+
+            elif command -v httpd >/dev/null 2>&1; then
+                if ! httpd -M 2>/dev/null | grep -q "cgid_module"; then
+                    log_message "INFO" "Red Hat environment detected. cgid module is NOT enabled."
+                    
+                    HTTPD_ROOT=$(httpd -V | grep "HTTPD_ROOT" | cut -d'"' -f2)
+                    [ -z "$HTTPD_ROOT" ] && HTTPD_ROOT="/etc/httpd"
+                    
+                    MOD_DIR="$HTTPD_ROOT/conf.modules.d"
+                    
+                    if [ -d "$MOD_DIR" ]; then
+                        AUTO_CONF="$MOD_DIR/99-auto-cgid.conf"
+                        
+                        log_message "INFO" "Creating independent config: $AUTO_CONF"
+                        echo "LoadModule cgid_module modules/mod_cgid.so" > "$AUTO_CONF"
+
+                        if httpd -t >/dev/null 2>&1; then
+                            systemctl restart httpd
+                            log_message "INFO" "httpd service restarted successfully with cgid enabled via $AUTO_CONF"
+                        else
+                            log_message "WARNING" "Direct loading conflicted. Attempting standard uncomment fallback..."
+                            rm -f "$AUTO_CONF"
+                            
+                            TARGET_FILE=$(grep -l "mod_cgid.so" "$MOD_DIR"/*.conf 2>/dev/null | head -n 1)
+                            
+                            if [ -n "$TARGET_FILE" ] && grep -q "^#.*LoadModule cgid_module" "$TARGET_FILE"; then
+                                sed -i 's/^#\(.*LoadModule cgid_module.*\)/\1/' "$TARGET_FILE"
+                                log_message "INFO" "Uncommented cgid_module in dynamically found file: $TARGET_FILE"
+                                
+                                if httpd -t >/dev/null 2>&1; then
+                                    systemctl restart httpd
+                                    log_message "INFO" "httpd restarted successfully after modifying $TARGET_FILE"
+                                else
+                                    log_message "ERROR" "Syntax error persists. Automatic enabling failed."
+                                fi
+                            else
+                                log_message "ERROR" "Cannot find valid cgid_module config file to modify."
+                            fi
+                        fi
+                    else
+                        log_message "ERROR" "Apache modules directory not found at $MOD_DIR"
+                    fi
+                else
+                    log_message "INFO" "cgid module is already enabled on Red Hat."
+                fi
+            fi
+        fi
+        
+    else
+        log_message "INFO" "Apache not detected, switching to pure Nginx + fcgiwrap environment..."
+        
+        # 1. Cross-platform check and install fcgiwrap and its dependencies
+        log_message "INFO" "Checking and installing fcgiwrap..."
+        local socket_path="unix:/var/run/fcgiwrap.socket" 
+
+        if ! command -v fcgiwrap >/dev/null 2>&1; then
+            if command -v dnf >/dev/null 2>&1; then
+                log_message "INFO" "Detected RHEL family system, enabling EPEL and installing fcgiwrap..."
+                dnf install -y epel-release >/dev/null 2>&1
+                dnf install -y fcgiwrap >/dev/null 2>&1
+                socket_path="127.0.0.1:9000" 
+            elif command -v apt-get >/dev/null 2>&1; then
+                log_message "INFO" "Detected Debian family system, installing fcgiwrap..."
+                apt-get update >/dev/null 2>&1
+                apt-get install -y fcgiwrap >/dev/null 2>&1
+            fi
+        else
+            if command -v dnf >/dev/null 2>&1; then
+                socket_path="127.0.0.1:9000"
+            fi
+        fi
+        
+        # 2. Check fcgiwrap service status and set auto-start
+        log_message "INFO" "Configuring fcgiwrap service..."
+        systemctl daemon-reload
+        
+        if systemctl list-unit-files | grep -q "fcgiwrap"; then
+            systemctl enable fcgiwrap >/dev/null 2>&1
+            systemctl restart fcgiwrap >/dev/null 2>&1
+        fi
+
+        # 3. Declare target file paths
+        local ssl_conf="$HOMEDIR/$user/conf/web/$domain/nginx.ssl.conf"
+        local norm_conf="$HOMEDIR/$user/conf/web/$domain/nginx.conf"
+        local nginx_need_reload=0
+
+        local new_nginx_block="	location /cgi-bin/ {
+	    alias   $HOMEDIR/$user/web/$domain/cgi-bin/;
+	    location ~ \.(pl|cgi)$ {
+	        include fastcgi_params;
+	        fastcgi_param SCRIPT_FILENAME \$request_filename;
+	        fastcgi_pass $socket_path;
+	    }
+	}
+
+	location /vstats/ {
+	    alias   $HOMEDIR/$user/web/$domain/stats/;
+	    include $HOMEDIR/$user/web/$domain/stats/auth.conf*;
+	    index index.cgi;
+	    location ~ \.cgi$ {
+	        include $HOMEDIR/$user/web/$domain/stats/auth.conf*;
+	        include fastcgi_params;
+	        fastcgi_param SCRIPT_FILENAME \$request_filename;
+	        fastcgi_pass $socket_path;
+	    }
+	}"
+
+        for conf_file in "$ssl_conf" "$norm_conf"; do
+            if [ -f "$conf_file" ]; then
+
+                if grep -q "location /cgi-bin/" "$conf_file"; then
+                    log_message "INFO" "Configuration file already uses new CGI architecture, skipping upgrade: $conf_file"
+                    continue
+                fi
+
+                log_message "INFO" "Upgrading configuration file to new CGI architecture: $conf_file"
+
+                cp "$conf_file" "${conf_file}.bak"
+                sed -i '/location \/vstats\/ {/,/}/c\__AWSTATS_PLACEHOLDER__' "$conf_file"
+
+                local tmp_conf="${conf_file}.tmp"
+                rm -f "$tmp_conf"
+
+                while IFS= read -r line; do
+                    if [[ "$line" == *"__AWSTATS_PLACEHOLDER__"* ]]; then
+                        echo "$new_nginx_block" >> "$tmp_conf"
+                    else
+                        echo "$line" >> "$tmp_conf"
+                    fi
+                done < "$conf_file"
+
+                mv "$tmp_conf" "$conf_file"
+                rm -f "${conf_file}.bak"
+                log_message "INFO" "Configuration file upgraded successfully: $conf_file"
+                nginx_need_reload=1
+            fi
+        done
+
+        # 4. Safely reload Nginx
+        if [ "$nginx_need_reload" = "1" ] && command -v nginx >/dev/null 2>&1; then
+            if nginx -t >/dev/null 2>&1; then
+                systemctl reload nginx
+                log_message "INFO" "Nginx configuration validation successful, gracefully reloaded!"
+            else
+                log_message "ERROR" "⚠️ Warning: Nginx configuration syntax test failed, please check the file!"
+            fi
+        fi
+    fi
+
+    # Icon directory check
+    if [ ! -e "$dir/icon" ]; then
+        ln -s "$wwwroot/icon" "$dir/icon" 2>/dev/null
+        log_message "INFO" "Created icon symlink"
+    fi
+    
+    # Logo file check
+    if [ ! -e "$dir/logo.svg" ]; then
+        ln -s "$HESTIA/web/images/logo.svg" "$dir/logo.svg" 2>/dev/null
+        log_message "INFO" "Created logo symlink"
+    fi
+
+    cgi_bin_dir="$HOMEDIR/$user/web/$domain/cgi-bin"
+    if [ ! -e "$cgi_bin_dir/awstats.pl" ]; then
+        mkdir -p "$cgi_bin_dir" 2>/dev/null
+        ln -s /usr/lib/cgi-bin/awstats.pl "$cgi_bin_dir/awstats.pl" 2>/dev/null
+        [ -n "$user_group" ] && chown -h "$user:$user_group" "$cgi_bin_dir/awstats.pl" 2>/dev/null
+        log_message "INFO" "Created awstats.pl symlink: $cgi_bin_dir/awstats.pl"
+    fi
+    
+    # Clean up AWStats stale lock file
+    local awstats_lock="/tmp/awstats.${domain_idn}.lock"
+    if [ -f "$awstats_lock" ]; then
+        local lock_pid=$(cat "$awstats_lock" 2>/dev/null)
+        if [ -n "$lock_pid" ] && ! kill -0 "$lock_pid" 2>/dev/null; then
+            log_message "INFO" "Cleaning up stale AWStats lock file: $awstats_lock"
+            rm -f "$awstats_lock"
+        fi
+    fi
+    
+    # Process only current month
+    local data_file="$dir/awstats${current_month}${current_year}.${domain_idn}.txt"
+
+    log_message "INFO" "Processing current month: ${current_year}-${current_month}"
+    log_message "INFO" "Data file: $data_file"
+    
+    # Check if data file exists
+    if [ ! -f "$data_file" ]; then
+        echo "Data file does not exist, performing initial update"
+        log_message "INFO" "Data file does not exist, performing initial update"
+        
+        # Initial update: do not use -databasepath, let AWStats create the data file
+        $awstats -config="$domain_idn" -lang="$awstats_lang" -year="$current_year" -month="$current_month" -update >> "$LOG_FILE" 2>&1
+        
+        # Check if data file was successfully generated
+        if [ -f "$data_file" ] && [ -s "$data_file" ]; then
+            log_message "INFO" "Initial update successful: ${current_year}-${current_month}"
+            [ -n "$user_group" ] && chown "$user:$user_group" "$data_file" 2>/dev/null
+            log_message "INFO" "Set data file permissions: $data_file"
+            if [ -f "${data_file}.bak" ]; then
+                [ -n "$user_group" ] && chown "$user:$user_group" "${data_file}.bak" 2>/dev/null
+            fi
+        else
+            log_message "ERROR" "Initial update failed: ${current_year}-${current_month}"
+            echo "Error: AWStats initial update failed, please check log: $LOG_FILE"
+            return 1
+        fi
+    else
+        echo "Data file exists, performing incremental update"
+        log_message "INFO" "Data file exists, performing incremental update"
+        
+        # Record file modification time before update
+        local old_mtime=$(stat -c %Y "$data_file" 2>/dev/null || echo 0)
+        
+        # Incremental update: use -databasepath (ignore exit code, as warnings also cause non-zero)
+        $awstats -config="$domain_idn" -lang="$awstats_lang" -year="$current_year" -month="$current_month" -update -databasepath="$data_file" >> "$LOG_FILE" 2>&1
+        
+        # Check if file was updated (timestamp changed)
+        local new_mtime=$(stat -c %Y "$data_file" 2>/dev/null || echo 0)
+        
+        if [ "$new_mtime" -gt "$old_mtime" ]; then
+            log_message "INFO" "Incremental update successful: ${current_year}-${current_month}"
+            [ -n "$user_group" ] && chown "$user:$user_group" "$data_file" 2>/dev/null
+            if [ -f "${data_file}.bak" ]; then
+                [ -n "$user_group" ] && chown "$user:$user_group" "${data_file}.bak" 2>/dev/null
+            fi
+        else
+            # File not updated, possibly no new logs
+            log_message "INFO" "Incremental update completed: ${current_year}-${current_month} (no new logs)"
+        fi
+    fi
+    
+    # Verify data file exists and output final result
+    if [ -f "$data_file" ] && [ -s "$data_file" ]; then
+        local file_size=$(stat -c%s "$data_file")
+        echo "✅ AWStats update completed!"
+        echo "Data file: $data_file"
+        echo "File size: $file_size bytes"
+        log_message "INFO" "AWStats update completed, data file size: $file_size bytes"
+        return 0
+    else
+        echo "⚠️  Warning: Data file was not generated or is empty"
+        log_message "WARNING" "Data file was not generated or is empty: $data_file"
+        return 1
+    fi
+}
+
+# Safely trigger update based on statistics type
+case $STATS in
+    awstats) 
+        build_awstats
+        exit_code=$? 
+        ;;
+    *)
+        exit_code=0
+        ;;
+esac
+chown -Rh "$user:$user" "$dir" 2>/dev/null
+
+#----------------------------------------------------------#
+#                       Hestia                             #
+#----------------------------------------------------------#
+
+exit $exit_code

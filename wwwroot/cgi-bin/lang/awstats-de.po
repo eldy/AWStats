@@ -1,0 +1,3332 @@
+# AWStats German (de) translations
+# Copyright (C) 2026 AWStats
+# This file is distributed under the same license as the AWStats package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: AWStats 8.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-10 12:00+0000\n"
+"PO-Revision-Date: 2026-05-10 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: German\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#------------------------------------------------------------------------------
+# Monatsnamen
+#------------------------------------------------------------------------------
+
+msgid "month_01"
+msgstr "Januar"
+
+msgid "month_02"
+msgstr "Februar"
+
+msgid "month_03"
+msgstr "März"
+
+msgid "month_04"
+msgstr "April"
+
+msgid "month_05"
+msgstr "Mai"
+
+msgid "month_06"
+msgstr "Juni"
+
+msgid "month_07"
+msgstr "Juli"
+
+msgid "month_08"
+msgstr "August"
+
+msgid "month_09"
+msgstr "September"
+
+msgid "month_10"
+msgstr "Oktober"
+
+msgid "month_11"
+msgstr "November"
+
+msgid "month_12"
+msgstr "Dezember"
+
+#------------------------------------------------------------------------------
+# Wochentage
+#------------------------------------------------------------------------------
+
+msgid "DayOfWeek_0"
+msgstr "Sonntag"
+
+msgid "DayOfWeek_1"
+msgstr "Montag"
+
+msgid "DayOfWeek_2"
+msgstr "Dienstag"
+
+msgid "DayOfWeek_3"
+msgstr "Mittwoch"
+
+msgid "DayOfWeek_4"
+msgstr "Donnerstag"
+
+msgid "DayOfWeek_5"
+msgstr "Freitag"
+
+msgid "DayOfWeek_6"
+msgstr "Samstag"
+
+#------------------------------------------------------------------------------
+# Oberflächenelemente
+#------------------------------------------------------------------------------
+
+msgid "Advanced Web Statistics for"
+msgstr "Erweiterte Webstatistiken für"
+
+msgid "Statistics for"
+msgstr "Statistiken für"
+
+msgid "main"
+msgstr "Übersicht"
+
+# Themenumschaltung
+msgid "Switch to light mode"
+msgstr "Zum hellen Modus wechseln"
+
+msgid "Switch to dark mode"
+msgstr "Zum dunklen Modus wechseln"
+
+# Kapazitätseinheiten
+msgid "TB"
+msgstr "TB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "Bytes"
+msgstr "Bytes"
+
+# Formularelemente
+msgid "Filter"
+msgstr "Filtern"
+
+msgid "Exclude filter"
+msgstr "Ausschlussfilter"
+
+msgid "Top"
+msgstr "Top"
+
+msgid "Full list"
+msgstr "Vollständige Liste"
+
+msgid "Last"
+msgstr "Letzte"
+
+msgid "Average"
+msgstr "Durchschnitt"
+
+msgid "Total"
+msgstr "Gesamt"
+
+msgid "Percent"
+msgstr "Prozent"
+
+msgid "Export"
+msgstr "Exportieren"
+
+msgid "Details"
+msgstr "Details"
+
+msgid "Version"
+msgstr "Version"
+
+# Tausendertrennzeichen
+msgid "thousands_separator"
+msgstr "."
+
+# Lange Datumsformatierung (für letzte Aktualisierung, ersten Besuch usw.)
+msgid "dateformat_long"
+msgstr "dd.mm.yyyy HH:MM:SS"
+
+# Kurze Datumsformatierung (für Diagrammbeschriftungen usw.)
+msgid "dateformat_short"
+msgstr "dd.mm.yyyy HH:MM"
+
+msgid "date_format_year"
+msgstr "%s"
+
+msgid "date_format_month"
+msgstr "%1$s %2$s"
+
+#------------------------------------------------------------------------------
+# Navigationsleiste
+#------------------------------------------------------------------------------
+
+msgid "AWStats Month Selector"
+msgstr "AWStats Monatsauswahl"
+
+msgid "nav_category_basic"
+msgstr "Grundlegende Dokumentation"
+
+msgid "nav_category_guide"
+msgstr "Benutzerhandbuch"
+
+msgid "nav_category_reference"
+msgstr "Referenzressourcen"
+
+msgid "nav_category_integration"
+msgstr "Integration und Erweiterung"
+
+msgid "nav_category_dev"
+msgstr "Entwicklerdokumentation"
+
+msgid "nav_changelog"
+msgstr "Änderungsprotokoll"
+
+msgid "nav_what"
+msgstr "Was ist AWStats"
+
+msgid "nav_license"
+msgstr "Lizenz"
+
+msgid "nav_glossary"
+msgstr "Glossar"
+
+msgid "nav_setup"
+msgstr "Installation und Konfiguration"
+
+msgid "nav_upgrade"
+msgstr "Upgrade-Anleitung"
+
+msgid "nav_config"
+msgstr "Konfigurationsparameter"
+
+msgid "nav_extra"
+msgstr "Zusätzliche Abschnitte"
+
+msgid "nav_tools"
+msgstr "Andere Werkzeuge"
+
+msgid "nav_faq"
+msgstr "Häufig gestellte Fragen"
+
+msgid "nav_security"
+msgstr "Sicherheitsempfehlungen"
+
+msgid "nav_compare"
+msgstr "Vergleich"
+
+msgid "nav_benchmark"
+msgstr "Benchmark"
+
+msgid "nav_webmin"
+msgstr "Webmin-Modul"
+
+msgid "nav_dolibarr"
+msgstr "Dolibarr-Modul"
+
+msgid "nav_contrib"
+msgstr "Beiträge"
+
+msgid "nav_plugins"
+msgstr "Plugin-Entwicklung"
+
+msgid "nav_hooks"
+msgstr "Plugin-Hooks"
+
+msgid "nav_graphs"
+msgstr "Plugin-Diagramme"
+
+msgid "Back to top"
+msgstr "Nach oben"
+
+msgid "nav_select_month"
+msgstr "Monat auswählen"
+
+#------------------------------------------------------------------------------
+# Wichtigste statistische Kennzahlen
+#------------------------------------------------------------------------------
+
+# Besuche
+msgid "Unique visitors"
+msgstr "Eindeutige Besucher"
+
+msgid "Visits"
+msgstr "Besuche"
+
+msgid "Visits duration"
+msgstr "Besuchsdauer"
+
+msgid "First visit"
+msgstr "Erste Aktualisierung"
+
+msgid "Last visit"
+msgstr "Letzte Aktualisierung"
+
+msgid "Visits/Visitor"
+msgstr "Besuche/Besucher"
+
+msgid "Pages/Visit"
+msgstr "Seiten/Besuch"
+
+msgid "Hits/Visit"
+msgstr "Anfragen/Besuch"
+
+msgid "KB/Visit"
+msgstr "KB/Besuch"
+
+msgid "KB/Visits"
+msgstr "KB/Besuche"
+
+# Verkehr
+msgid "Pages"
+msgstr "Seitenanzahl"
+
+msgid "Hits"
+msgstr "Anfragenanzahl"
+
+msgid "Bandwidth"
+msgstr "Bandbreite"
+
+msgid "duration_format"
+msgstr "%s-%s"
+
+msgid "unit_s"
+msgstr "s"
+
+msgid "unit_min"
+msgstr "min"
+
+msgid "unit_h"
+msgstr "h"
+
+msgid "and"
+msgstr "-"
+
+msgid "Device Types"
+msgstr "Gerätetypen"
+
+msgid "Device Type"
+msgstr "Gerätetyp"
+
+# Namen der Gerätetypen
+msgid "Mobile"
+msgstr "Mobiltelefon"
+
+msgid "Pause & Go"
+msgstr "Anhalten und Fortsetzen"
+
+msgid "Complete"
+msgstr "Abschließen"
+
+msgid "Tablet"
+msgstr "Tablet"
+
+msgid "Tv"
+msgstr "Fernseher"
+
+msgid "Wearable"
+msgstr "Tragbares Gerät"
+
+msgid "Bot"
+msgstr "Bot"
+
+msgid "Desktop"
+msgstr "Desktop-Computer"
+
+msgid "Normal browsing traffic"
+msgstr "Normaler Browsing-Verkehr"
+
+msgid "Abnormal browsing traffic"
+msgstr "Abnormaler Browsing-Verkehr"
+
+msgid "Viewed"
+msgstr "Angesehen"
+
+msgid "Not viewed"
+msgstr "Nicht angesehen"
+
+msgid "Abnormal browsing traffic note"
+msgstr "Abnormaler Browsing-Verkehr umfasst: Suchroboter, KI-Trainings-Bots, Schwachstellenscanner und Anforderungen, die nicht den HTTP/HTTPS-Spezifikationen entsprechen"
+
+# Dateien
+msgid "File size"
+msgstr "Dateigröße"
+
+msgid "File type"
+msgstr "Dateityp"
+
+msgid "Downloads"
+msgstr "Downloads"
+
+msgid "Request time"
+msgstr "Anfragezeit"
+
+msgid "Total requests"
+msgstr "Anfragen insgesamt"
+
+msgid "Frequency"
+msgstr "Häufigkeit"
+
+msgid "Average frequency"
+msgstr "Durchschnittliche Häufigkeit"
+
+msgid "Seconds"
+msgstr "Sekunden"
+
+# E-Mail (für LogType eq 'M')
+msgid "First"
+msgstr "Erste"
+
+msgid "Mails"
+msgstr "E-Mail-Anzahl"
+
+msgid "Size"
+msgstr "Größe"
+
+msgid "If you remove this file, all statistics for date"
+msgstr "Warnung: Wenn Sie diese Datei entfernen, gehen alle Statistiken für das Datum"
+
+msgid "will be lost/reset."
+msgstr "dauerhaft verloren/zurückgesetzt."
+
+msgid "Last config file used to build this data file was"
+msgstr "Die letzte Konfigurationsdatei, die zum Erstellen dieser Datendatei verwendet wurde, war"
+
+msgid "Position (offset in bytes) in this file for beginning of each section for"
+msgstr "Der MAP-Abschnitt in dieser Datei zeichnet die Byte-Offset-Positionen für den Beginn jedes Abschnitts auf, damit"
+
+msgid "direct I/O access. If you made changes somewhere in this file, you should"
+msgstr "AWStats schnell auf Daten zugreifen kann. Wenn Sie manuelle Änderungen an dieser Datei vorgenommen haben, sollten Sie"
+
+msgid "also remove completely the MAP section (AWStats will rewrite it at next update)"
+msgstr "den MAP-Abschnitt vollständig entfernen (AWStats wird ihn bei der nächsten Aktualisierung neu schreiben)."
+
+msgid "LastLine    = Date of last record processed - Last record line number in last log - Last record offset in last log - Last record signature value"
+msgstr "LastLine    = Datum des letzten verarbeiteten Datensatzes - Zeilennummer des letzten Datensatzes im letzten Log - Offset des letzten Datensatzes im letzten Log - Signaturwert des letzten Datensatzes"
+
+msgid "FirstTime   = Date of first visit for history file"
+msgstr "FirstTime   = Datum des ersten Besuchs für die Historiendatei"
+
+msgid "LastTime    = Date of last visit for history file"
+msgstr "LastTime    = Datum des letzten Besuchs für die Historiendatei"
+
+msgid "LastUpdate  = Date of last update - Nb of parsed records - Nb of parsed old records - Nb of parsed new records - Nb of parsed corrupted - Nb of parsed dropped"
+msgstr "LastUpdate  = Datum der letzten Aktualisierung - Anzahl verarbeiteter Datensätze - Anzahl verarbeiteter alter Datensätze - Anzahl verarbeiteter neuer Datensätze - Anzahl verarbeiteter beschädigter - Anzahl verarbeiteter verworfener"
+
+msgid "TotalVisits = Number of visits"
+msgstr "TotalVisits = Anzahl der Besuche"
+
+msgid "TotalUnique = Number of unique visitors"
+msgstr "TotalUnique = Anzahl der eindeutigen Besucher"
+
+msgid "MonthHostsKnown   = Number of hosts known"
+msgstr "MonthHostsKnown   = Anzahl bekannter Hosts"
+
+msgid "MonthHostsUnKnown = Number of hosts unknown"
+msgstr "MonthHostsUnKnown = Anzahl unbekannter Hosts"
+
+msgid "Cluster ID - Pages - Hits - Bandwidth"
+msgstr "Cluster-ID - Seitenanzahl - Anfragenanzahl - Bandbreite"
+
+msgid "Hour - Pages - Hits - Bandwidth - Not viewed Pages - Not viewed Hits - Not viewed Bandwidth"
+msgstr "Stunde - Seitenanzahl - Anfragenanzahl - Bandbreite - Nicht angesehene Seiten - Nicht angesehene Anfragen - Nicht angesehene Bandbreite"
+
+msgid "Date - Pages - Hits - Bandwidth - Visits"
+msgstr "Datum - Seitenanzahl - Anfragenanzahl - Bandbreite - Besuche"
+
+msgid "Domain - Pages - Hits - Bandwidth"
+msgstr "Domain - Seitenanzahl - Anfragenanzahl - Bandbreite"
+
+msgid "The %s first Pages must be first (order not required for others)"
+msgstr "Die Hauptseite zeigt nur die ersten %s Seiten mit den meisten Aufrufen. Die vollständige Liste finden Sie auf der Detailseite."
+
+msgid "Host - Pages - Hits - Bandwidth - Last visit date - [Start date of last visit] - [Last page of last visit]"
+msgstr "Host - Seitenanzahl - Anfragenanzahl - Bandbreite - Datum des letzten Besuchs - [Startdatum des letzten Besuchs] - [Letzte Seite des letzten Besuchs]"
+
+msgid "[Start date of last visit] and [Last page of last visit] are saved only if session is not finished"
+msgstr "[Startdatum des letzten Besuchs] und [Letzte Seite des letzten Besuchs] werden nur gespeichert, wenn die Sitzung nicht beendet ist"
+
+msgid "The first %s items are sorted by hits in descending order; order of the remaining items is undefined."
+msgstr "Die ersten %s Einträge sind absteigend nach der Anzahl der Zugriffe sortiert; die Reihenfolge der restlichen Einträge ist nicht definiert."
+
+msgid "Login - Pages - Hits - Bandwidth - Last visit"
+msgstr "Angemeldeter Benutzer - Seitenanzahl - Anfragenanzahl - Bandbreite - Zeitpunkt des letzten Besuchs"
+
+msgid "Robot ID - Hits - Bandwidth - Last visit - Hits on robots.txt"
+msgstr "Robot-ID - Anfragenanzahl - Bandbreite - Zeitpunkt des letzten Besuchs - Anfragen auf robots.txt"
+
+msgid "Worm ID - Hits - Bandwidth - Last visit"
+msgstr "Wurm-ID - Anfragenanzahl - Bandbreite - Zeitpunkt des letzten Besuchs"
+
+msgid "EMail - Hits - Bandwidth - Last visit"
+msgstr "E-Mail - Anfragenanzahl - Bandbreite - Zeitpunkt des letzten Besuchs"
+
+msgid "The first %s email addresses are sorted by hits in descending order; order of the remaining addresses is undefined."
+msgstr "Die ersten %s E-Mail-Adressen sind absteigend nach der Anzahl der Zugriffe sortiert; die Reihenfolge der restlichen Adressen ist nicht definiert."
+
+msgid "URL - Pages - Bandwidth - Entry - Exit"
+msgstr "URL - Seitenanzahl - Bandbreite - Eingang - Ausgang"
+
+msgid "Files type - Hits - Bandwidth - Bandwidth without compression - Bandwidth after compression"
+msgstr "Dateityp - Anfragenanzahl - Bandbreite - Bandbreite vor Komprimierung - Bandbreite nach Komprimierung"
+
+msgid "Request Time Range - Request Time Frequency"
+msgstr "Zeitspanne der Anfrage - Häufigkeit der Anfragezeit"
+
+msgid "Payload Range - Payload Frequency"
+msgstr "Dateigrößenspanne - Anzahl der Dateien"
+
+msgid "Session range - Number of visits"
+msgstr "Sitzungsdauerspanne - Anzahl der Besuche"
+
+msgid "URL with %s errors - Hits"
+msgstr "URL mit %s Fehlern - Anfragenanzahl"
+
+msgid "Last URL referrer"
+msgstr "Letzte URL-Referenz"
+
+msgid "Errors - Hits - Bandwidth"
+msgstr "Fehler - Anfragenanzahl - Bandbreite"
+
+msgid "Search keywords - Number of search"
+msgstr "Suchbegriffe - Anzahl der Suchanfragen"
+
+msgid "Only top %s keywords shown on main page (sorted by search count). See full list on detail page."
+msgstr "Die Hauptseite zeigt nur die ersten %s Schlüsselwörter (sortiert nach Anzahl der Suchanfragen). Die vollständige Liste finden Sie auf der Detailseite."
+
+msgid "Search keyphrases - Number of search"
+msgstr "Suchphrasen - Anzahl der Suchanfragen"
+
+msgid "Only top %s keyphrases shown on main page (sorted by search count). See full list on detail page."
+msgstr "Die Hauptseite zeigt nur die ersten %s Schlüsselphrasen (sortiert nach Anzahl der Suchanfragen). Die vollständige Liste finden Sie auf der Detailseite."
+
+msgid "External page referers - Pages - Hits"
+msgstr "Externe Seitenverweise - Seitenanzahl - Anfragenanzahl"
+
+msgid "Only top %s external referrers shown on main page (sorted by pages). See full list on detail page."
+msgstr "Die Hauptseite zeigt nur die ersten %s externen Verweise (sortiert nach Seitenanzahl). Die vollständige Liste finden Sie auf der Detailseite."
+
+msgid "Search engine referers ID - Pages - Hits"
+msgstr "ID des Suchmaschinenverweises - Seitenanzahl - Anfragenanzahl"
+
+msgid "Origin - Pages - Hits"
+msgstr "Herkunft - Seitenanzahl - Anfragenanzahl"
+
+msgid "Unknown referer Browser - Last visit date"
+msgstr "Unbekannter verweisender Browser - Datum des letzten Besuchs"
+
+msgid "Unknown referer OS - Last visit date"
+msgstr "Unbekanntes verweisendes OS - Datum des letzten Besuchs"
+
+msgid "Screen size - Hits"
+msgstr "Bildschirmauflösung - Anfragenanzahl"
+
+msgid "Browser ID - Hits - Pages"
+msgstr "Browser-ID - Klicks - Seitenanzahl"
+
+msgid "Downloads - Hits - Bandwidth"
+msgstr "Downloads - Anfragenanzahl - Bandbreite"
+
+msgid "Protocol - Hits - Bandwidth"
+msgstr "Protokoll - Anfragenanzahl - Bandbreite"
+
+msgid "Icon Status - Type:200:404:Other"
+msgstr "Ikonenstatus - Typ:200:404:Andere"
+
+#------------------------------------------------------------------------------
+# Übersetzungen der Zeiträume
+#------------------------------------------------------------------------------
+
+msgid "period_00"
+msgstr "Mitternacht · AWStats schläft, aber du schaust dir noch die Daten an? Wahre Liebe"
+
+msgid "period_01"
+msgstr "1 Uhr · Besuch um diese Zeit? Schlaflosigkeit oder gerade mit der Arbeit fertig"
+
+msgid "period_02"
+msgstr "2 Uhr · Bots sind fleißiger als du, sie arbeiten noch"
+
+msgid "period_03"
+msgstr "3 Uhr · Die Stadt schläft, der Server macht Überstunden, wer ist schlimmer dran?"
+
+msgid "period_04"
+msgstr "4 Uhr · Der hellste Stern in der Dunkelheit, dein Bildschirm oder die Kontrollleuchte des Servers"
+
+msgid "period_05"
+msgstr "5 Uhr · Der frühe Vogel fängt den Wurm, der frühe Bot sammelt die Daten"
+
+msgid "period_06"
+msgstr "6 Uhr · Jemand steht auf, jemand hat noch nicht geschlafen, das Internet schließt nie"
+
+msgid "period_07"
+msgstr "7 Uhr · Zeit für die Rushhour in der U-Bahn, auch Zeit zum Surfen im Internet"
+
+msgid "period_08"
+msgstr "8 Uhr · Das Erste, wenn die Arbeit beginnt: Schau dir die Daten von gestern an"
+
+msgid "period_09"
+msgstr "9 Uhr · Goldene Zeit, selbst das Herumlungern hat seine Regeln"
+
+msgid "period_10"
+msgstr "10 Uhr · Zeit für Kaffee, nebenbei prüfen, ob der Verkehr gestiegen ist"
+
+msgid "period_11"
+msgstr "11 Uhr · Noch eine Stunde bis zum Mittagessen, halt noch ein bisschen durch"
+
+msgid "period_12"
+msgstr "12 Uhr · Server: Ihr seid alle zum Mittagessen gegangen, ich ruhe mich ein wenig aus"
+
+msgid "period_13"
+msgstr "13 Uhr · Mittagstief, aber die Daten schlafen nicht"
+
+msgid "period_14"
+msgstr "14 Uhr · Zeit für einen Nachmittagssnack, mit Daten schmeckt es besser"
+
+msgid "period_15"
+msgstr "15 Uhr · Der heutige Verkehrstrendgraf, ähnelt er deiner Stimmungskurve?"
+
+msgid "period_16"
+msgstr "16 Uhr · Noch X Stunden bis Feierabend, der Verkehr beginnt zu sprinten"
+
+msgid "period_17"
+msgstr "17 Uhr · Feierabend! Aber der Server muss weiterarbeiten"
+
+msgid "period_18"
+msgstr "18 Uhr · Abendessenszeit, schau ein Video zum Entspannen"
+
+msgid "period_19"
+msgstr "19 Uhr · Hauptsendezeit, Verkehrsspitze, Server: Ich halte durch"
+
+msgid "period_20"
+msgstr "20 Uhr · Auf dem Sofa lümmeln, du bist Besucher Nummer 114514"
+
+msgid "period_21"
+msgstr "21 Uhr · Spät in der Nacht, die heimlichen Datenbeobachter +1"
+
+msgid "period_22"
+msgstr "22 Uhr · Die heutigen Daten kommen bald, aufgeregt?"
+
+msgid "period_23"
+msgstr "23 Uhr · AWStats: Zeit zum Schlafen, morgen wird wieder gearbeitet"
+
+#------------------------------------------------------------------------------
+# Zeitdimensionen
+#------------------------------------------------------------------------------
+
+msgid "Period"
+msgstr "Statistikzeitraum"
+
+msgid "Year"
+msgstr "Jahr"
+
+msgid "Month"
+msgstr "Monat"
+
+msgid "Months"
+msgstr "Monate"
+
+msgid "Date"
+msgstr "Datum"
+
+msgid "Day"
+msgstr "Tag"
+
+msgid "Hour"
+msgstr "Stunde"
+
+msgid "Hours"
+msgstr "Stunden"
+
+msgid "Day of week"
+msgstr "Wochentag"
+
+msgid "When"
+msgstr "Wann"
+
+msgid "%s Server Management Panel"
+msgstr "%s  Server Verwaltungspanel"
+
+msgid "Server Administration"
+msgstr "Einfache und effiziente Serverlösung"
+
+#------------------------------------------------------------------------------
+# Besucherdimensionen
+#------------------------------------------------------------------------------
+
+msgid "Invalid URL Parameters"
+msgstr "Ungültige URL-Parameter"
+
+msgid "The requested page cannot be loaded due to invalid or malformed URL parameters."
+msgstr "Die angeforderte Seite kann aufgrund ungültiger oder falsch formatierter URL-Parameter nicht geladen werden."
+
+msgid "This may be caused by typing an incorrect URL, missing parameter separators, or using an invalid configuration name."
+msgstr "Dies kann durch die Eingabe einer falschen URL, fehlende Parameter-Trennzeichen oder die Verwendung eines ungültigen Konfigurationsnamens verursacht werden."
+
+msgid "Please check the URL you entered and ensure all parameters are correctly formatted."
+msgstr "Bitte überprüfen Sie die eingegebene URL und stellen Sie sicher, dass alle Parameter korrekt formatiert sind."
+
+msgid "SiteDomain parameter not defined in your config/domain file, or you may not have execution permission on the file."
+msgstr "Der SiteDomain-Parameter ist in Ihrer config/domain-Datei nicht definiert, oder Sie haben möglicherweise keine Ausführungsberechtigung für die Datei."
+
+msgid "Please run as Administrator to set permissions"
+msgstr "Bitte führen Sie das Programm als Administrator aus, um Berechtigungen festzulegen"
+
+msgid "This directory lacks read permission"
+msgstr "Diesem Verzeichnis fehlt die Leserberechtigung"
+
+msgid "Please set read permission for directory"
+msgstr "Bitte setzen Sie die Leserberechtigung für das Verzeichnis"
+
+msgid "Missing required parameter in config file"
+msgstr "Fehlender erforderlicher Parameter in der Konfigurationsdatei"
+
+msgid "Please check that 'DirData' is defined."
+msgstr "Bitte überprüfen Sie, ob 'DirData' definiert ist."
+
+msgid "Domain name in browser address appears to be missing or incomplete"
+msgstr "Der Domainname in der Browseradresse scheint zu fehlen oder unvollständig zu sein"
+
+msgid "Please check the URL parameter"
+msgstr "Bitte überprüfen Sie den URL-Parameter"
+
+msgid "Format description"
+msgstr "Formatbeschreibung"
+
+msgid "Please set execute permission"
+msgstr "Bitte setzen Sie die Ausführungsberechtigung"
+
+msgid "Or if you prefer numeric mode"
+msgstr "Oder wenn Sie den numerischen Modus bevorzugen"
+
+msgid "View Report Directly"
+msgstr "Bericht direkt anzeigen"
+
+msgid "AWStats Log Viewer"
+msgstr "AWStats Log-Betrachter"
+
+msgid "Month Selection"
+msgstr "Monatsauswahl"
+
+msgid "Who"
+msgstr "Wer"
+
+msgid "Visitors"
+msgstr "Besucher"
+
+msgid "Countries"
+msgstr "Länder/Regionen"
+
+msgid "flag_icon"
+msgstr "Flagge"
+
+msgid "Country-Region-City"
+msgstr "Land/Region/Stadt"
+
+msgid "Code"
+msgstr "Code"
+
+msgid "Known"
+msgstr "Bekannt"
+
+msgid "unknownos"
+msgstr "Unbekanntes Betriebssystem"
+
+msgid "unknownbrowser"
+msgstr "Unbekannter Browser"
+
+msgid "Unresolved IP Address"
+msgstr "Nicht aufgelöste IP-Adresse"
+
+msgid "Unknown File Type"
+msgstr "Unbekannter Dateityp"
+
+msgid "Unknown Size"
+msgstr "Unbekannte Größe"
+
+msgid "Unknown Time"
+msgstr "Unbekannte Anfragezeit"
+
+msgid "Unknown Browser"
+msgstr "Unbekannter Browser"
+
+msgid "Unknown OS"
+msgstr "Unbekanntes Betriebssystem"
+
+msgid "Unknown Visitor"
+msgstr "Unbekannter Besucher"
+
+msgid "Unknown Visitor (Total)"
+msgstr "Unbekannter Besucher (Insgesamt)"
+
+msgid "Unknown Country"
+msgstr "Unbekanntes Land/Region"
+
+msgid "Unknown Country (Region)"
+msgstr "Unbekanntes Land/Region (Insgesamt)"
+
+msgid "Unknown Visitor (Title)"
+msgstr "Unbekannter Besucher (Titel)"
+
+msgid "PageStayTime"
+msgstr "Verweildauer auf der Seite kann nicht geschätzt werden"
+
+msgid "Unknown OS (Link)"
+msgstr "Unbekanntes Betriebssystem (Link)"
+
+msgid "Unknown OS (Row)"
+msgstr "Unbekanntes Betriebssystem (Liste)"
+
+msgid "Unknown Browser (Link)"
+msgstr "Unbekannter Browser (Link)"
+
+msgid "Unknown Browser (Row)"
+msgstr "Unbekannter Browser (Liste)"
+
+msgid "Unknown Screen"
+msgstr "Unbekannte Bildschirmgröße"
+
+msgid "Login"
+msgstr "Benutzername"
+
+msgid "Anonymous"
+msgstr "Anonym"
+
+msgid "Robots"
+msgstr "Roboter"
+
+msgid "Different robots"
+msgstr "Verschiedene Roboter"
+
+msgid "Hits on robots.txt"
+msgstr "Die oben aufgeführten Suchmaschinen-Roboter erzeugen \"abnormalen\" Browsing-Verkehr, der nicht in anderen Diagrammen enthalten ist. Die Zahl nach dem '+' ist die Anzahl der erfolgreichen Zugriffe auf die Datei \"robots.txt\"."
+
+msgid "Worms"
+msgstr "Würmer"
+
+msgid "Different worms"
+msgstr "Verschiedene Würmer"
+
+msgid "Target"
+msgstr "Ziel"
+
+msgid "Grabber"
+msgstr "Extraktionswerkzeug"
+
+#------------------------------------------------------------------------------
+# Formatbeschreibungen
+#------------------------------------------------------------------------------
+
+msgid "mime_text"
+msgstr "TXT reine Textdatei (1963 durch ASCII standardisierter unformatierter Klartext. Als grundlegender Baustein für Quellcode, Konfigurationsdateien und Systemprotokolle sind seine plattformübergreifenden Zeilenumbrüche (CRLF unter Windows, LF unter Unix) bis heute der universellste Standard für Datenaustausch in der Computerwelt)"
+
+msgid "mime_log"
+msgstr "LOG Systemlaufzeitprotokoll (zeichnet Betriebssystem-, Kernel- und Anwendungszustände als reine Textdateien auf. Umfasst Nginx/Apache-Zugriffsprotokolle (Combined Log) und die Syslog-Spezifikation, ist die zentrale Datenquelle für Fehlersuche, Streaming-Performance-Analyse und Sicherheitsaudits)"
+
+msgid "mime_page"
+msgstr "HTML Hypertext-Webseite (1989 von Tim Berners-Lee geschaffen, Grundstein des World Wide Web. Als quelloffene universelle Hypertext-Auszeichnungssprache wurde die HTML5-Spezifikation 2014 offizieller W3C-Standard, unterstützt nativ strukturierte Multimedia-Inhalte, semantische Interaktion und fließende Seitenlayouts, erhielt 2016 den Turing-Preis)"
+
+msgid "mime_khtml"
+msgstr "KHTML Web-Vorlagen-Engine (1998 KDE 2.0 Browser-Rendering-Spezifikation. Als Open-Source-Grundstein für modernes Web-Rendering inspirierte ihr technologisches Erbe direkt die WebKit- und Google-Blink-Kerne und wirkt bis heute über moderne Streaming-Dynamik-Webarchitekturen fort)"
+
+msgid "mime_script"
+msgstr "SCRIPT interpretiertes dynamisches Skript (Oberbegriff für Quellcode-Streams, die ohne vorherige Kompilierung zeilenweise von einer bestimmten Laufzeitumgebung oder einem Interpreter ausgeführt werden. Umfasst ASP, JSP, CGI und Tcl, weit verbreitet für serverseitige Common Gateway Interfaces, Automatisierungsprozesssteuerung und systemnahe Aufgabenverknüpfung)"
+
+msgid "mime_js"
+msgstr "JavaScript Skript (1995 native Programmierumgebung des Netscape-Browsers. 1997 wurde der ECMAScript-Industriestandard etabliert, 2009 entstand die Node.js-Laufzeitumgebung, die browserseitige Grenzen durchbrach und eine asynchrone, nicht blockierende Full-Stack-Architektur schuf, begleitet vom weltweit größten npm-Softwarepaket-Ökosystem)"
+
+msgid "mime_py"
+msgstr "Python Skript (1991 von Guido van Rossum geschaffene hochsprachliche interpretierte Skriptsprache. Dank ihrer verlustfreien Lesbarkeit durch erzwungene Einrückungen und ihrem Multi-Paradigmen-Design hat sie sich als Industriestandard für moderne Webarchitektur, Full-Stack-Datenwissenschaft, Training von KI-Modellen und cloud-native automatisierte Betriebsführung etabliert)"
+
+msgid "mime_sh"
+msgstr "Shell Skript (1971 Standard-Kommandointerpreter-Skript der Unix-Ära. Enthält kernelle Kommandos wie Bash, Sh, Dash, wird typischerweise mit der Endung .sh ausgeführt, ist der universelle systemnahe Klebstoff für Prozesssteuerung, installationsfreie Umgebungskonfiguration und automatisierte Bereitstellung in modernen Unix-ähnlichen Systemen)"
+
+msgid "mime_rb"
+msgstr "Ruby Skript (1995 von Yukihiro Matsumoto geschaffene objektorientierte Skriptsprache. Mit ihrer Philosophie des extremen Respekts vor der Entwicklererfahrung als Kerndesign revolutionierte das Ruby-on-Rails-Framework moderne Webarchitekturen auf hohem Niveau durch die Etablierung von ‚Konvention vor Konfiguration‘ (CoC))"
+
+msgid "mime_pl"
+msgstr "Perl Skript (1987 von Larry Wall geschaffene pragmatische Skriptsprache. Als Erfinder des modernen Paketmanagers (CPAN) bekannt, gilt sie als das ‚Schweizer Taschenmesser‘ der Textverarbeitung. Im modernen CGI-Modus dient sie mit extrem geringem physischem Speicherbedarf und effizienter RegEx-Verarbeitung als hochzuverlässige Basis für die Loganalyse)"
+
+msgid "mime_php"
+msgstr "PHP dynamische Webseite (1995 von Rasmus Lerdorf geschaffen, speziell für die Webentwicklung ausgelegt. Als Kerntechnologie, die über 70 % aller Websites weltweit antreibt, bildet sie die Grundlage für große Produktionsanwendungen wie WordPress und Wikipedia. Mit der Einführung der JIT-Laufzeitumgebung (Just-in-Time) in PHP 8 erfolgte die Entwicklung hin zu einer hochleistungsfähigen Full-Stack-Serverarchitektur)"
+
+msgid "mime_image"
+msgstr "IMAGE Bild-Asset-Klassifizierung (umfasst verlustbehaftete/verlustfreie komprimierte Bitmaps, moderne responsive Webgrafiken und Vektorgrafiken. Schlüsselindikator zur Bewertung der visuellen Ressourcenlast einer Website, der clientseitigen Cache-Trefferquote und des Medienbandbreitenverbrauchs)"
+
+msgid "mime_document"
+msgstr "DOCUMENT Strukturierte Dokumentenklassifizierung (umfasst reine Textdateien, Tabellenkalkulationen, amtliche PDF-Dokumente und leichte Auszeichnungssprachen. Schlüsselindikator für die statistische Verteilung serverseitiger statischer Wissensbasen, den Download von Unternehmensressourcen und die Textstrom-Durchsatzkapazität)"
+
+msgid "mime_package"
+msgstr "PACKAGE Kompilierte Produkte und Softwarepaketklassifizierung (umfasst betriebssystemnative ausführbare Programme, Laufzeitbibliotheken (DLL/SO) und Anwendungsinstallationspakete. Häufiger Indikator zur Bewertung von ausgehendem Datenverkehr und Download-Spitzen auf Softwaredistributionsseiten)"
+
+msgid "mime_archive"
+msgstr "ARCHIVE Archiv- und komprimierte Dateien (Oberbegriff für auf DEFLATE-, LZMA-Kernalgorithmen basierende Datenkomprimierungspakete. Auf Netzwerkebene umfasst es neben der traditionellen Paketverteilung auch die dynamischen Gzip-Antwortströme des GNU-Projekts von 1992. Obwohl der Brotli-Algorithmus in modernen Szenarien schrittweise eingeführt wird, bleibt diese Klassifizierung ein Schlüsselindikator für die Bewertung der Serverbandbreitenauslastung und der Transportkomprimierung)"
+
+msgid "mime_audio"
+msgstr "AUDIO Digitale Audiostrom-Klassifizierung (umfasst komprimierte Audioinhalte, Hörbücher und Streaming-Audio-Container. Basierend auf bestimmten Audiocodec-Standards zur Überwachung der Audiodatenstrom-Durchsatzrate auf Multimedia-Websites, der gleichzeitigen Streaming-Bandbreite und des Verhaltens langer Verbindungen)"
+
+msgid "mime_video"
+msgstr "VIDEO Digitaler Videostrom-Klassifizierung (umfasst hochauflösende Video-Container, moderne Webanimationen und Streaming-Fragmente. Schlüsselindikator zur Bewertung der Server-Bandbreitenspitzenbelastung und der Effektivität von Content Delivery Networks (CDN) unter hoher Netzwerklast)"
+
+msgid "mime_jscript"
+msgstr "JScript Skript (1996 von Microsoft entwickelte proprietäre Reverse-Engineering-Implementierung für den Internet Explorer 3.0. Als früher konkurrierende Wirtsumgebung zum klassischen JavaScript diente es als Kern-Engine für Windows Script Host (WSH) und frühe ASP-Backends)"
+
+msgid "mime_json"
+msgstr "JSON Strukturierte Daten (2001 von Douglas Crockford etabliertes leichtgewichtiges Datenserialisierungs-Austauschformat. Basierend auf textbasierten Schlüssel-Wert-Paaren und Array-Strukturen mit hoher menschlicher Lesbarkeit und verlustfreien Streaming-Parsing-Eigenschaften, ist es der De-facto-Standard für moderne Web-APIs, Mikroservices-Architekturen und die Interaktion mit großen Sprachmodellen)"
+
+msgid "mime_vbs"
+msgstr "VBScript Skript (1996 von Microsoft mit dem IE 3.0 eingeführte Skriptsprachenvariante. Diente als Kernantrieb für frühe dynamische ASP-Websites und die Windows-Systemverwaltung, wurde jedoch in den neuesten Windows-11-Kernen offiziell veraltet und entfernt und gehört damit zu den historischen Hinterlassenschaften)"
+
+msgid "mime_conf"
+msgstr "CONF Systemkonfigurationsdatei (Oberbegriff für Dateien, die Software-Laufzeitumgebungsparameter im Klartext speichern. Umfasst INI- sowie moderne YAML-, TOML- und JSON-Spezifikationen. In Linux-Systemen meist im Verzeichnis /etc zu finden, ist sie eine Kernabhängigkeit für die Optimierung des Systemlaufzeitzustands)"
+
+msgid "mime_css"
+msgstr "CSS Kaskadierendes Stylesheet (1996 W3C-Standard, bildet zusammen mit HTML/JS die drei Kernsprachen der Frontendentwicklung. Von CSS2-Positionierung über die modulare Entwicklung von CSS3 unterstützt es nativ Flexbox, Grid und responsives Design mit Media Queries, ist der dominierende Standard zur Entkopplung der Webdarstellung in modernen Browsern)"
+
+msgid "mime_xsl"
+msgstr "XSL Stylesheet (1999 W3C-Standard, enthält XSLT-Transformation und XPath-Adressierungssprache zur Umwandlung strukturierter XML-Daten in HTML, PDF oder reinen Text. In der modernen Entwicklung wurde sein Ökosystem weitgehend durch leichtere Template-Engines und das JSON-Datenformat ersetzt)"
+
+msgid "mime_runtime"
+msgstr "ausführbare Datei (EXE-, ELF-, Mach-O-native Betriebssystemformate, enthält kompilierten maschinennahen Code, Einstiegspunkt und Systemladeinformationen)"
+
+msgid "mime_library"
+msgstr "Bibliotheksdatei (DLL-, SO-, dylib-Dateien etc., dynamische oder statische Bibliotheken, die gemeinsam genutzte Symbole und Relokationscode enthalten, die von anderen Programmen zur Laufzeit geladen werden können)"
+
+msgid "mime_swf"
+msgstr "Flash-Animation (1996 von Macromedia entwickelt, 2005 von Adobe übernommen. Interaktiver Webanimationsstandard, dominierte einst Internetanimationen und -spiele. Nachteile: Abhängigkeit von Plugins, keine mobile Unterstützung, hohes Sicherheitsrisiko. 2017 kündigte Adobe die Einstellung an, 2020 wurde die Unterstützung vollständig eingestellt, abgelöst durch HTML5/CSS3/JS)"
+
+msgid "mime_dtd"
+msgstr "DTD Dokumenttypdefinition (1998 mit XML 1.0 veröffentlicht, dient der Definition der Struktur von XML/HTML-Dokumenten und deren Validierung. In der modernen Entwicklung weitgehend durch flexiblere Lösungen wie XML Schema, RELAX NG etc. ersetzt)"
+
+msgid "mime_csv"
+msgstr "CSV Datenformat (Komma-getrennte Werte, universelles reines Tabellenformat aus der Mainframe-Ära (1972, IBM-Fortran-Compiler). 2005 durch RFC 4180 formal als verlustfreier, plattform- und sprachübergreifender Standard für Datenumtausch standardisiert. Weit verbreitet für effizienten Import/Export mit Excel, relationalen Datenbanken und Datenanalyse (Pandas))"
+
+msgid "mime_cur"
+msgstr "Cursor-Datei (.cur-Format zur individuellen Anpassung des Mauszeigerstils, z. B. Handzeiger auf Webseiten oder Sanduhr-Symbol beim Warten. Mit dem bekannten .ico-Format verwandt, jedoch mit einem zusätzlichen ‚Hotspot‘ – der tatsächlichen Klickposition. Geschichte: Mit Windows 3.1 (1992) eingeführt, Schlüsselkomponente der Ära des Übergangs von der Befehlszeile zur grafischen Benutzeroberfläche mit Mausbedienung)"
+
+msgid "mime_jnlp"
+msgstr "Java Web Start (Verteilungstechnologie für Java-Desktop-Anwendungen der 2000er Jahre, startet entfernte Java-Programme über .jnlp-Dateien. Aufgrund von Sicherheitsproblemen und moderneren Verteilungsmethoden weitgehend veraltet)"
+
+msgid "mime_lit"
+msgstr "Microsoft Reader E-Book (2000 von Microsoft eingeführt, LIT-Format. Veraltet, kann heute mit Tools wie Calibre in EPUB oder PDF konvertiert werden)"
+
+msgid "mime_svg"
+msgstr "SVG Vektorgrafik (1999 W3C-Standard, XML-basiertes zweidimensionales Vektorbildformat. Bietet verlustfreie Skalierbarkeit und textbasierte Streaming-Übertragung. Von allen modernen Browsern nativ unterstützt, weit verbreitet für hochauflösende Web-Icons, Logos und Vektoranimationen, ist der zentrale Standard moderner Webgrafiken)"
+
+msgid "mime_ai"
+msgstr "AI Vektorgrafik (1987 von Adobe entwickeltes proprietäres Vektorformat. Als Industriestandard für Layout, Printdesign und Markenidentität unterstützt es mehrere Ebenen und erweiterte Layout-Vektordaten, ist der bevorzugte Träger professioneller visueller Kunst)"
+
+msgid "mime_phshop"
+msgstr "PSD Ebenenbild (1990 von Adobe mit Photoshop veröffentlichtes proprietäres Bitmap-Quellformat. Unterstützt mehrere Ebenen, Kanäle, Masken und verlustfreie Bearbeitungsdaten, hat sich als globaler Industriestandard für Bildbearbeitung und digitales Malen etabliert)"
+
+msgid "mime_ttf"
+msgstr "TrueType-Schriftart (1989 gemeinsam von Apple und Microsoft entwickeltes digitales Konturschriftformat. Basierend auf quadratischen Bézier-Kurven, ermöglicht es absolute Pixelkonsistenz zwischen Bildschirmdarstellung und Druckausgabe, ist das native Standardschriftformat moderner Desktop-Betriebssysteme)"
+
+msgid "mime_fon"
+msgstr "FON Bitmap-Schriftart (frühes systemnahes Punktmatrix-Schriftformat von Microsoft aus den 1980er Jahren. Unterstützt keine verlustfreie proportionale Skalierung, wird typischerweise nur zur pixelbasierten Textwiedergabe in veralteten Systemen oder frühen Komponenten eingebetteter Geräte verwendet)"
+
+msgid "mime_pdf"
+msgstr "PDF Elektronisches Dokument (1993 von Adobe entwickelt, 2008 zum internationalen ISO-32000-Standard geworden. Plattformunabhängiges seitengetreues Dokumentformat mit absoluter Layout- und Formattreue, ist der globale Standard für elektronischen Dokumentenaustausch und digitale Publikationen)"
+
+msgid "mime_dotnet"
+msgstr "ASP.NET dynamische Seite (2002 von Microsoft mit der .NET-Architektur eingeführte serverseitige dynamische Webtechnologie. Wird von der IIS-Engine ausgeführt und dient der Erstellung dynamischer Webanwendungen und verteilter Systeme auf Unternehmensniveau unter Windows-Servern)"
+
+msgid "mime_mdb"
+msgstr "MDB relationale Datenbank (1992 von Microsoft mit Access veröffentlichtes desktopfähiges relationales Datenbankspeicherformat. Enthält die Jet-Datenbank-Engine, war eine relationale Datenbanklösung in der frühen Informationsverarbeitung von PCs und kleinen bis mittelständischen Unternehmen)"
+
+msgid "mime_md"
+msgstr "Markdown Dokument (2004 von John Gruber entwickelte leichte Auszeichnungssprache. Ihre Kerndesignphilosophie ‚lesbar ist gerendert‘ treibt moderne Derivate wie GFM und CommonMark an. Weit verbreitet als Austauschstandard für technische Dokumentation, Wissensdatenbanken (Obsidian) und moderne Generatoren statischer Websites)"
+
+msgid "mime_crystal"
+msgstr "Crystal Reports (Professionelles unternehmensweites Berichtsdateiformat der SAP Business Intelligence (BI)-Plattform. Bietet Anbindung an mehrere Datenquellen und komplexe dynamische Diagramm-Rendering-Funktionen, weit verbreitet für die professionelle Berichterstellung in Finanz- und Datenanalysesystemen multinationaler Unternehmen)"
+
+msgid "mime_libreoffice"
+msgstr "LibreOffice Dokument (2010 von The Document Foundation basierend auf OpenOffice entwickeltes proprietäres Open-Source-Büroformat. Implementiert tiefgehend den internationalen ODF-Standard (OpenDocument Format) des W3C, ist der Büro-Grundstein des modernen Open-Source-Ökosystems)"
+
+msgid "mime_encrypt"
+msgstr "ENCRYPT verschlüsselte Datei (ursprüngliche binäre oder Textdaten, die mit bestimmten symmetrischen oder asymmetrischen Verschlüsselungsalgorithmen verarbeitet wurden. Umfasst die Kernformate .enc, .pgp, .gpg etc., dient auf Netzwerkebene der Gewährleistung von Vertraulichkeit und Integritätsprüfung nicht-öffentlicher Daten)"
+
+msgid "mime_gpx"
+msgstr "GPX Satellitentracking-Daten (XML-basiertes globales Positionsbestimmungssystem-Austauschformat. Spezialisiert auf die Beschreibung geografischer Koordinaten, Wegpunkte, Routen und historischer Trails, ist es ein offener Datenstandard für moderne mobile Sportgeräte, Fahrzeugnavigation und geografische Informationssysteme (GIS))"
+
+msgid "mime_diskimage"
+msgstr "Disk Image (ISO-, DMG-, IMG-Dateien etc., sektorweise sektorgenaues Abbild einer physischen Festplatte oder eines optischen Datenträgers. Dient der systemnahen Bereitstellung, der sicheren Verteilung großer Softwaremengen und der vollständigen physischen Datensicherung von Speichermedien)"
+
+msgid "mime_vm"
+msgstr "VM Virtuelles Maschinen-Image (VMDK-, VDI-, VHDX-, OVA-Images etc., virtualisierte physische Festplattenabbilder. Grundlage für VMware-, VirtualBox- und Hyper-V-Plattformen, verwendet für systemnahe Hardware-Emulation, Instanz-Snapshots und Cloud-Infrastrukturverteilung)"
+
+msgid "mime_torrent"
+msgstr "BitTorrent Torrent-Datei (2001 von Bram Cohen entwickeltes P2P-Indexformat für verteilte Downloads. Basiert auf Bencode-Kodierung, speichert ursprüngliche Dateiprüfungs-Metadaten und Tracker-Server-Adressierungsinformationen, ist der zentrale Träger dezentraler Netzwerkstromverteilung)"
+
+msgid "mime_gis"
+msgstr "GIS Geodaten (Geoinformationssystem-Datenstandard mit Shapefile und GeoJSON als Kern. Enthält mehrdimensionale geometrische Koordinaten, Layertopologie und Attributdaten, weit verbreitet für hochauflösendes digitales Kartenrendering, Satellitenfernerkundung und räumliche geometrische Analyse)"
+
+msgid "mime_ebook"
+msgstr "EBOOK E-Book (digitales Publikationsformat mit dem internationalen EPUB-Open-Standard des W3C und der proprietären MOBI/AZW-Architektur von Amazon Kindle als Kern. Unterstützt adaptives fließendes Layout, Metadatenkapselung und DRM-Digital Rights Management, ist der universelle Träger für mobile digitale Lektüre)"
+
+msgid "mime_avif"
+msgstr "AVIF hocheffizientes Bild (2019 von der Alliance for Open Media (AOMedia) eingeführter Ultra-HD-Bildstandard der nächsten Generation. Basierend auf AV1-Videokodierungs-Keyframe-Technologie, 50 % bessere Kompressionsrate als WebP und native Unterstützung für hohen Dynamikumfang (HDR), ist der moderne Standard für die Web-Bildübertragung)"
+
+msgid "mime_markdown"
+msgstr "Markdown leichtgewichtiges Dokument (2004 von John Gruber entwickeltes Textdokument-Auszeichnungssprache. Verwendet reines Textdeklarationsdesign, seine Syntax wurde von reStructuredText inspiriert, weit verbreitet für GitHub-Projekte, technische Dokumentation auf Ingenieursebene und moderne Ökosysteme für statisches Inhaltsmanagement)"
+
+msgid "mime_yaml"
+msgstr "YAML serialisierte Konfiguration (2001 von Clark Evans u. a. entwickeltes menschenlesbares Datenserialisierungsformat. Basierend auf hierarchischer Einrückung und Schlüssel-Wert-Zuordnung, hat sich als Cloud-native Infrastrukturkonfigurationsstandard für Kubernetes, Ansible-Automatisierung und Docker Compose etabliert)"
+
+msgid "mime_toml"
+msgstr "TOML semantische Konfiguration (2013 von Tom Preston-Werner entwickeltes minimalistische Sprache. Mit Designvorteilen wie starker Typisierung, expliziter Zuordnung und klarer Semantik, wird es heute als standardisierte Konfigurationsdatei für moderne Werkzeugketten in Rust (Cargo), Python (pyproject.toml) und Go verwendet)"
+
+msgid "mime_vue"
+msgstr "Vue Single-File Component (2014 von Evan You eingeführtes proprietäres SFC-Format des progressiven Webframeworks. Ermöglicht die Trennung von HTML/CSS/JS und reaktive Zustandsbindung in einer einzigen Datei, treibt moderne interaktive Frontend-Webanwendungen und große statische Site-Engines maßgeblich an)"
+
+msgid "mime_wasm"
+msgstr "WebAssembly binäres Modul (2017 vom W3C etablierter hochleistungsfähiger Web-Niedriglevel-Bytecode-Standard. Erlaubt die Kompilierung stark typisierter Sprachen wie C/C++/Rust in die Browser-Sandbox-Umgebung, bietet nahezu native Hardware-Ausführungseffizienz, ist ein Eckpfeiler moderner Web-Edge-Computing)"
+
+msgid "mime_jsx"
+msgstr "React JSX Komponente (2013 von Facebook mit dem React-Framework eingeführte JavaScript-XML-Syntaxerweiterung. Unterstützt deklarativen Aufbau virtueller DOM-Strukturen in JavaScript, ermöglicht das frontend-seitige Komponentenentwicklungsparadigma ‚UI als Zustandsfunktion‘)"
+
+msgid "mime_tsx"
+msgstr "TypeScript TSX Komponente (2012 von Microsoft entwickelte starke TypeScript-Typsyntax in Kombination mit JSX. Injiziert statische Compilezeit-Typprüfungen und Schnittstellenbeschränkungen in die React-Komponentenentwicklung, ist der Codestandard für sichere Entwicklung großer moderner Frontendsysteme)"
+
+msgid "mime_heif"
+msgstr "HEIF hocheffizientes Bild (2015 von der MPEG-Organisation etabliertes hocheffizientes Bildformat. Basierend auf dem HEVC (H.265)-Videokodierungsalgorithmus unterstützt es mehrere Bildframes, Tiefenkarten und Metadaten in sehr geringem Volumen, ist der proprietäre Speicherstandard moderner mobiler Betriebssysteme und intelligenter Endgeräte)"
+
+msgid "mime_heic"
+msgstr "HEIC hocheffizientes Bild (Apples proprietäres, auf dem internationalen HEIF-Standard basierendes Bitmapformat. Als standardmäßiges Fotospeicherformat moderner iPhones wird es hardwarenah von iOS/macOS codiert/decodiert und nativ vom Betriebssystem unterstützt, reduziert den Speicherplatzbedarf erheblich bei gleichzeitig hoher Bildqualität)"
+
+msgid "mime_gltf"
+msgstr "glTF 3D-Asset-Modell (2015 von der Khronos Group veröffentlichter GL-Übertragungsformatstandard. Verwendet eine JSON-Architektur zur Beschreibung dreidimensionaler Szenen, gilt als das ‚JPEG für 3D‘, ist der leichtgewichtige Industriestandard für modernes WebGL/WebGPU und Virtual-Reality-Rendering)"
+
+msgid "mime_glb"
+msgstr "GLB binäres 3D-Modell (verlustfreie binäre Verkapselungsversion des glTF-Asset-Modells. Verschmilzt Szenenstruktur, Mesh-Scheitelpunktdaten, Materialien und Texturen in einer einzigen Datei, konzipiert für effiziente Übertragung und Streaming-Verteilung von Web-3D-Assets über Plattformen hinweg)"
+
+msgid "mime_gls"
+msgstr "GLOSSARY Datenvokabular (speziell für Dokumentenverwaltungssysteme und strukturierte Korpora definierte Terminologiedatei. Enthält standardisierte Termdefinitionen, mehrsprachige Zuordnungen und Metadaten-Mappings, dient der Aufrechterhaltung begrifflicher Konsistenz in automatisierten Textanalysen und Inhaltsveröffentlichungssystemen)"
+
+msgid "mime_cbz"
+msgstr "CBZ Comicbuch (proprietäres, auf ZIP-Komprimierung basierendes Comic-Bildarchivierungsformat. Enthält eine fortlaufende Sequenz statischer Bitmapbilder, ist ein universeller leichter Containerstandard für digitale Comic-Publikationen und plattformübergreifende lokale Sammlungen)"
+
+msgid "mime_cbr"
+msgstr "CBR Comicbuch (proprietäres, auf RAR-Komprimierung basierendes Comic-Bildarchivierungsformat. Verwendet den RAR-Algorithmus zur Verkapselung statischer Bitmapsequenzen, bietet eine hohe Kompressionsrate und breite Kompatibilitätsunterstützung im digitalen Comic-Vertriebsbereich)"
+
+msgid "mime_fb2"
+msgstr "FB2 E-Book (FictionBook 2.0-E-Book-Standard aus den frühen 2000er Jahren. Verwendet reine XML-Strukturen zur Beschreibung von Bucheigenschaften und Texthierarchie, wird im Open-Source-E-Book-Ökosystem und in älteren digitalen Publikationsreadern weitgehend unterstützt)"
+
+msgid "mime_kepub"
+msgstr "KEPUB E-Book (Kobos proprietäres, auf dem EPUB-Standard basierendes erweitertes E-Book-Format. Hardwarenah für Kobo-E-Book-Reader optimiert, bietet effizienteres Seitenlayout und interaktive Lesestatistiken)"
+
+msgid "mime_m4b"
+msgstr "M4B Hörbuch (auf MPEG-4 Part 14 (MP4)-Containerarchitektur basierendes Hörbuchformat. Verwendet AAC-Kodierung, unterstützt nativ systemnahe Lesezeichen, Fortsetzung an der Unterbrechungsstelle und Kapitel-Einbettung, war einst das Standardformat im Apple iTunes-Ökosystem)"
+
+msgid "mime_kfx"
+msgstr "Kindle KFX Format (2015 von Amazon mit dem Kindle eingeführtes proprietäres erweitertes digitales Publikationsformat. Unterstützt erweiterte typografische Ligaturen, hochdynamisches Schriftrendering und kernelnahes seitenweises Streaming-Laden (Page Flip), ist der zentrale Standard der modernen Kindle-Plattform)"
+
+msgid "mime_chm"
+msgstr "CHM kompilierte Hilfsdatei (1997 von Microsoft eingeführtes kompiliertes HTML-Hilfe-Informationssystem. Verpackt Hypertext-Daten und systemnahe Indizes in einem einzigen binären Container, ist seit langem der Standard für lokale Offline-Softwaredokumentation unter Windows)"
+
+msgid "mime_mht"
+msgstr "MHT Webarchiv (1999 von Microsoft eingeführtes MIME-aggregierendes Hypertextformat. Basierend auf dem RFC-2557-Standard, verpackt HTML-Quellcode, CSS, JS und eingebettete Bilder in einer einzigen Textdatei, dient zur Offline-Webseitenspeicherung in älteren Browsern)"
+
+msgid "mime_wml"
+msgstr "WML Wireless Markup Language (1999 vom WAP-Forum etablierter mobiler Markup-Standard. Basierend auf der XML-Spezifikation, speziell für schmalbandige zellulare Mobilfunknetze der ersten Generation und rechenschwache Feature-Phones entwickelt, ist eine ausgemusterte Hinterlassenschaft im modernen Web-Ökosystem)"
+
+msgid "mime_xhtml"
+msgstr "XHTML Hypertext-Webseite (2000 W3C-Standard, auf XML-Architektur basierende strenge Hypertext-Auszeichnungssprache. 2009 stellte das W3C seine technische Weiterentwicklung ein und konzentrierte sich vollständig auf die HTML5-Spezifikation, heute hauptsächlich für semantisches Webseiten-Rendering in veralteten Systemen verwendet)"
+
+msgid "mime_xml"
+msgstr "XML strukturiertes Dokument (1998 W3C-Standard erweiterbare Auszeichnungssprache. Mit selbstbeschreibender Tag-Architektur grundlegendes Format für Webdienste (SOAP/REST), systemnahe Konfigurationsdateien (XSD) und plattformübergreifenden Datenaustausch)"
+
+msgid "mime_sgml"
+msgstr "SGML Standard Generalized Markup Language (1986 internationaler ISO-8879-Standard. Als Pionier der strukturierten Beschreibung elektronischer Dokumente leiten sich XML und frühe HTML-Spezifikationen von dieser standardisierten Metasprache ab)"
+
+msgid "mime_apng"
+msgstr "APNG dynamische Grafik (2004 von Mozilla entwickelte PNG-Dynamikerweiterung. Unterstützt 24-Bit-Echtfarben und 8-Bit-Alphakanal-Transparenz, ist eine hochauflösende Alternative zum GIF-Format in modernen Web-Szenarien)"
+
+msgid "mime_bmp"
+msgstr "BMP native Bitmap (seit der Windows-1.0-Ära etabliertes geräteunabhängiges Bitmap-Format der Microsoft-Plattform. Verwendet verlustfreie, unkomprimierte Speicherung, daher typischerweise 3-10 Mal voluminöser als PNG, aber da kein Codierungs-/Decodierungs-Overhead anfällt, bis heute weit verbreitet in Windows-11-Kernkomponenten, EXE/MSI-Ressourcenabschnitten und älteren Treiber-Grafikpuffern eingebettet)"
+
+msgid "mime_cdr"
+msgstr "CDR Vektorgrafik (proprietäres CorelDRAW-Professional-Vektordesign-Quellformat des kanadischen Unternehmens Corel. Unterstützt schichtbasierte Farbverwaltung, komplexe mathematische Kurvenknoten und druckreife Layoutdaten, ist ein Spezialformat für professionelles Grafikdesign und Werbung im Drucksektor)"
+
+msgid "mime_gif"
+msgstr "GIF indiziertes Farbbild (1987 von CompuServe entwickeltes 8-Bit-indiziertes Farbbitmapformat. Basiert auf dem LZW-Algorithmus, begrenzt auf 256 Farbstufen und monochrome Transparenz, bei hohen Bildraten volumenmäßig aufgebläht, wird schrittweise durch moderne effiziente Animationsstandards wie APNG, WebP etc. ersetzt)"
+
+msgid "mime_ico"
+msgstr "ICO System-Icon (Windows-native Iconsourcen-Verkapselungsformat. Unterstützt die Kombination mehrerer Bildvarianten mit unterschiedlichen Pixelauflösungen und Farbtiefen in einem einzigen Container, ist auch der universelle Verteilungsstandard für den Website-Favicon moderner Webbrowser)"
+
+msgid "mime_jpeg"
+msgstr "JPEG komprimiertes Bild (1992 internationaler ISO-10918-Standard für verlustbehaftete Komprimierung. Basierend auf der Diskreten Kosinustransformation (DCT) erreicht es bei hoher Kompressionsrate eine hervorragende realistische Bildqualität, ist der absolute De-facto-Standard für statische Fotos im weltweiten Internet)"
+
+msgid "mime_jpg"
+msgstr "JPEG komprimiertes Bild (1992 internationaler ISO-10918-Standard für verlustbehaftete Komprimierung. Basierend auf der Diskreten Kosinustransformation (DCT) erreicht es bei hoher Kompressionsrate eine hervorragende realistische Bildqualität, ist der absolute De-facto-Standard für statische Fotos im weltweiten Internet)"
+
+msgid "mime_png"
+msgstr "PNG verlustfreies Bild (1996 vom W3C empfohlener Standard für tragbare Netzwerkgrafiken. Verwendet verlustfreie Komprimierung, unterstützt nativ 24-Bit-Echtfarben und 8-Bit-Alphakanal-Transparenz, als hochauflösende Alternative zum klassischen statischen GIF der absolute De-facto-Standard für verlustfreie Pixelgrafiken im Internet)"
+
+msgid "mime_ps"
+msgstr "PostScript Seitendeskriptionsdatei (1985 von Adobe eingeführte stapelbasierte Seitenbeschreibungssprache. Als technologischer Vorläufer des PDF-Formats ermöglicht sie hardwareunabhängigen Textsatz und hochpräzises Vektorgrafik-Rendering auf niedriger Ebene, ist der grundlegende Standard für professionelle Druckausgabe und Laserdruck)"
+
+msgid "mime_psb"
+msgstr "PSB großes Ebenendokument (proprietäres Adobe-Photoshop-Verkapselungsformat für extrem große Quelldateien. Durchbricht die physikalische Volumengrenze von 2 GB und die interne Adressierungsgrenze von 30.000 Pixeln des standardmäßigen PSD-Formats, speziell zur Speicherung extrem großer, tief geschichteter, massiver digitaler Kunstwerke konzipiert)"
+
+msgid "mime_psd"
+msgstr "PSD Ebenendesign-Quelldatei (proprietäres Adobe-Photoshop-Containerformat für mehrschichtige Bilder. Als Industriestandard-Container im Bereich Grafikdesign und -verarbeitung kapselt es nativ den vollständigen Ebenen-Renderbaum, Bitmap-Kanäle, Vektor-Schnittpfade und komplexe Mischmodi, unterstützt verlustfreie Voll-Datenbearbeitung)"
+
+msgid "mime_webp"
+msgstr "WebP hocheffizientes Bild (2010 von Google eingeführter universeller Webgrafik-Kodierungsstandard. Von VP8-Video-Keyframe-Technologie abgeleitet, perfekt kompatibel mit verlustbehafteter, verlustfreier, halbtransparenter und dynamischer Wiedergabe, 25-35 % kleiner als PNG bei gleicher Qualität, ist der Grundpfeiler hochperformanter Ladeprozesse moderner Webseiten)"
+
+msgid "mime_woff"
+msgstr "WOFF Webglyphen-Datei (2009 erstellt, 2012 als W3C-Standard für Web Open Font Format anerkannt. Im Wesentlichen eine verlustfreie komprimierte Kapselung von standardmäßigen TTF/OTF-Schriftstrukturen, optimiert drastisch den Netzwerkbandbreitenbedarf, ist ein universelles Format für moderne Website-Icons und Cloud-Schriften)"
+
+msgid "mime_7z"
+msgstr "7z komprimiertes Paket (1999 von Igor Pavlov entwickeltes proprietäres 7-Zip-Format. Basierend auf den Open-Source-Algorithmen LZMA/LZMA2, extrem hohe Kompressionsrate. Unter gleichen Bedingungen typischerweise 30-50 % kleiner als ZIP, ist es ein universelles Hochkompressionsformat in der Open-Source-Community und bei Softwaredistributionen)"
+
+msgid "mime_ace"
+msgstr "ACE komprimiertes Paket (proprietäres WinACE-Komprimierungsformat aus den 1990er Jahren. Konkurrierte einst mit dem RAR-Format und erreichte hohe Kompressionsraten. Technische Entwicklung wurde nach 2007 eingestellt, heute durch 7z- und RAR-Format abgelöst, gehört zu den Hinterlassenschaften älterer Systemarchivformate)"
+
+msgid "mime_bz2"
+msgstr "BZIP2 komprimiertes Paket (1996 von Julian Seward entwickeltes Blockkomprimierungsformat. Die zugrundeliegende Algorithmus-Kompressionsrate ist 15-20 % höher als bei GZIP, jedoch mit höherem Rechenaufwand. Häufig für die Verteilung von Linux-Kernelquellcode und Open-Source-Softwarepaketen verwendet, Standarddateiendung .bz2)"
+
+msgid "mime_cab"
+msgstr "CAB komprimiertes Paket (1995 von Microsoft entwickeltes Cabinet-Archivformat. Als nativer Windows-Systeminstallationsstandard für Treiber- und Kernel-Dateiverteilung, dient auch als zugrundeliegender Speichercontainer für Windows Installer (MSI))"
+
+msgid "mime_dmg"
+msgstr "DMG Disk-Image (von Apple ab den 1980er Jahren weiterentwickeltes Disk-Image-Format. Als Standardcontainer für macOS-Softwaredistribution unterstützt es die Einbindung als virtuelles Dateisystem, systemnahe Komprimierung und Datenverschlüsselung, ist das dominierende Format für die App-Verteilung im Mac-Ökosystem)"
+
+msgid "mime_emz"
+msgstr "EMZ komprimiertes Bild (komprimierte Version des Windows Enhanced Metafile EMF. Im Wesentlichen binäre Vektorgrafiken, die über den GZIP-Algorithmus komprimiert wurden, weit verbreitet zur Speicherung eingebetteter Vektorgrafiken in Microsoft Office-Dokumenten)"
+
+msgid "mime_gz"
+msgstr "GZIP komprimiertes Paket (1992 von Jean-loup Gailly und Mark Adler für das GNU-Projekt entwickelter Standardkomprimierungsformat für Streams. Als Unix/Linux-Standardkomprimierungswerkzeug auch Kernstandard für HTTP-Transportkomprimierung (Gzip), häufig in Kombination mit TAR-Archiv verwendet)"
+
+msgid "mime_jar"
+msgstr "JAR komprimiertes Paket (1997 von Sun Microsystems eingeführtes Java-Archivformat. Im Wesentlichen ein ZIP-basierter Paketcontainer für die Kapselung von Java-Klassenbibliotheken und Metadaten, ist ein zentrales Kompilierungsprodukt für Maven, Gradle und das frühe Android-Ökosystem)"
+
+msgid "mime_lzma"
+msgstr "LZMA komprimiertes Paket (1998 von Igor Pavlov entwickelter Lempel-Ziv-Markov-Kettenkomprimierungsalgorithmus. Als Kern-Engine des 7z-Formats mit extrem hoher Kompressionsrate und schneller Dekompression, weit verbreitet für Hardware-Firmware- und eingebettete Systemdistributionen)"
+
+msgid "mime_rar"
+msgstr "RAR komprimiertes Paket (1993 von Eugene Roshal entwickeltes proprietäres WinRAR-Archivformat. Unterstützt volumenaufgeteilte Archive, physische Wiederherstellungsdatensätze (ECC) und starke Verschlüsselung. Kompressionsrate überlegen gegenüber Standard-ZIP, genießt breite Kompatibilitätsunterstützung im privaten und kommerziellen Bereich)"
+
+msgid "mime_tar"
+msgstr "TAR Archivpaket (1979 aus der Unix-V7-Ära stammendes Tape-Archivformat. Führt nur Dateistrom-Paketierung ohne Datenkomprimierung durch, häufig mit GZIP/BZIP2/XZ kombiniert, ist der grundlegende Standard für Linux-Quellcode-Pakete und das schichtweise Speichern von Docker-Images)"
+
+msgid "mime_tgz"
+msgstr "TGZ komprimiertes Paket (kombiniertes Stromformat von TAR-Archiv und GZIP-Komprimierung, Dateiendungen .tgz oder .tar.gz. Als universellstes Softwarepaketverteilungsformat unter Unix/Linux weit verbreitet für quellcodebasierte Kompilierung und Bereitstellung sowie für die Verteilung installationsfreier Binärpakete)"
+
+msgid "mime_tbz2"
+msgstr "TBZ2 komprimiertes Paket (kombiniertes Stromformat von TAR-Archiv und BZIP2-Komprimierung, Dateiendungen .tbz2 oder .tar.bz2. Gegenüber TGZ kann die Kompressionsrate um weitere 15-20 % verbessert werden, geeignet für große Dateiübertragungen, wurde lange Zeit für die Verteilung von Linux-Kernelquellcode verwendet)"
+
+msgid "mime_xz"
+msgstr "XZ komprimiertes Paket (2009 eingeführtes Hochkompressionsformat der nächsten Generation. Basierend auf dem LZMA2-Algorithmus, 30-50 % bessere Datenkompressionsrate als GZIP bei gleichzeitig schneller Dekompression. Vom Linux-Kernel und gängigen Paketmanagern (z. B. intern bei Debian .deb) als empfohlener Verteilungsstandard etabliert)"
+
+msgid "mime_z"
+msgstr "Z komprimiertes Paket (1985 LZW-Komprimierungsformat des Unix-Befehls compress. Als Standard-Komprimierung in frühen Unix-Systemen, heute vollständig durch das effizientere GZIP-Format ersetzt, im modernen Netzwerkverkehr eine seltene historische Hinterlassenschaft)"
+
+msgid "mime_zip"
+msgstr "ZIP komprimiertes Paket (1989 von Phil Katz entwickeltes universelles PKZIP-Archivformat. Von allen gängigen Betriebssystemen nativ unterstützt, ist es der am weitesten verbreitete Containerstandard im Internet. Moderne Java-JAR-, Android-APK- und Office-Dokumente (OOXML) basieren alle auf der ZIP-Struktur)"
+
+msgid "mime_zst"
+msgstr "Zstandard komprimiertes Paket (2015 von Facebooks Yann Collet entworfener Streaming-Komprimierungsstandard der nächsten Generation. Nähert sich der LZMA-Kompressionsrate bei gleichzeitig weit höherem Durchsatz als GZIP. Vom Linux-Kernel (5.9+) und Paketmanagern wie Arch/Debian tiefgehend übernommen)"
+
+msgid "mime_lz4"
+msgstr "LZ4 komprimiertes Paket (2011 von Yann Collet entwickelter extrem schneller Streaming-Komprimierungsalgorithmus. Durchsatzgeschwindigkeit über 10-mal schneller als GZIP, mit extrem niedrigem CPU-Laufzeit-Overhead. Weit verbreitet im Linux-Kernel, im OpenZFS-Dateisystem und in der Hadoop-Echtzeit-Datenstromverarbeitung)"
+
+msgid "mime_lzo"
+msgstr "LZO komprimiertes Paket (1996 von Markus Oberhumer entwickelter Lempel-Ziv-Oberhumer-Algorithmus. Konzentriert sich auf extrem schnelle Dekompressionsleistung. Weit verbreitet eingebettet in Linux-Kernel-Squashfs-Images, OpenWrt-Firmware und verschiedene ressourcenbeschränkte eingebettete Systeme)"
+
+msgid "mime_msi"
+msgstr "MSI Systeminstallationspaket (1999 von Microsoft eingeführtes Windows-Installer-Datenkapselungsformat. Als Windows-Standard für anwendungsseitige Bereitstellung unterstützt es nativ systemnahe Transaktionsrückrollung, Komponentenlebenszyklusverwaltung und batchfreie, unbeaufsichtigte Installation, ist der Kernstandard für zentralisierte Unternehmenssoftwareverteilung und richtlinienbasierte Bereitstellung)"
+
+msgid "mime_pkg"
+msgstr "PKG plattformübergreifendes Softwareinstallationspaket. 1. FreeBSD-Softwarepaket: pkgng-Standard, Dateiendung .pkg oder .txz, basierend auf TAR+XZ/Zstd-Komprimierung, unterstützt Abhängigkeitsauflösung und Signaturprüfung; 2. macOS-Installationspaket: basierend auf Apple Installer-Format, unterstützt benutzerdefinierte Komponenten, Installationsskripte und systemweite Deinstallation. Sind die wichtigsten Distributionsformate für BSD-Server bzw. das Mac-System."
+
+msgid "mime_apk"
+msgstr "APK Android-Anwendungspaket (2008 von Google mit Android eingeführtes traditionelles App-Installationspaket. Basierend auf der zugrundeliegenden ZIP-Archivstruktur, verpackt kompilierten Dalvik-Bytecode (DEX), Metadaten-Manifest und globale Ressourcen, heute weit verbreitet für lokale Entwicklungsfehlersuche, Drittanbieterdistribution und seitliche Installation auf Geräten)"
+
+msgid "mime_ipa"
+msgstr "IPA Apple-Anwendungspaket (2008 mit dem iPhone SDK veröffentlichter exklusiver iOS/iPadOS-Paketcontainer. Im Wesentlichen ein durch FairPlay-DRM oder Unternehmenszertifikat geschütztes ZIP-Archiv, enthält binär ausführbare MachO-Datei, Anwendungsressourcenbaum und Info.plist-Metadatenkonfiguration)"
+
+msgid "mime_hap"
+msgstr "HAP HarmonyOS-Anwendungspaket (2020 mit HarmonyOS 2.0 veröffentlichte elastische HarmonyOS-Basiseinheit. Bestehend aus Entry-Hauptmodul oder Feature-Erweiterungsfunktionsmodulen, ist es das Multi-End (Handys, Tablets, Wearables) geräteübergreifende Verteilungsformat für die Verteilung auf smarten Endgeräten)"
+
+msgid "mime_har"
+msgstr "HAR HarmonyOS statisch geteiltes Paket (HarmonyOS-spezifische statisch geteilte Bibliotheksarchivdatei. Dient der Kapselung gemeinsamer Komponenten, zugrundeliegender Ressourcen und Compilezeit-Abhängigkeiten, wird von mehreren HAP-Modulen statisch gemeinsam gelinkt, ist die Grundlage für komponentenbasiertes Entwickeln und Mehrfachmodul-Wiederverwendung im HarmonyOS-System)"
+
+msgid "mime_aab"
+msgstr "AAB Android App Bundle (2018 von Google eingeführter und 2021 etablierter dynamischer Google Play-Verteilungsformat. Als reine Verteilungsentität wird die Verteilung in der Cloud dynamisch basierend auf CPU-Architektur, Bildschirmdichte und Sprache des Zielgeräts individuell angepasst und kompiliert, um optimierte APKs nach Bedarf zu erzeugen, was den Übertragungsbandbreitenbedarf im Durchschnitt um 35 % reduziert)"
+
+msgid "mime_xapk"
+msgstr "XAPK erweitertes Anwendungspaket (von der Drittanbieter-Android-Community etablierter nicht offizieller App-Erweiterungsstandard. Bündelt die Standard-APK-Datei mit einer großen OBB-Spielerweiterungsdatei, überschreitet physisch das 100-MB-Limit von Google Play für einzelne Dateien, häufig auf Spieleverteilungsplattformen zu finden)"
+
+msgid "mime_appx"
+msgstr "APPX modernes Anwendungspaket (2012 von Microsoft mit Windows 8 eingeführter UWP-App-Bereitstellungsstandard. Bietet Sandbox-isolierte Ausführung und leichtgewichtige Deinstallation, war ein früher dominierender Standard im Microsoft Store, befindet sich im modernen Windows-Ökosystem jedoch in einer auslaufenden Lebenszyklusphase hin zur MSIX-Weiterentwicklung)"
+
+msgid "mime_msix"
+msgstr "MSIX neues Standard-Anwendungspaket (2018 von Microsoft veröffentlichter, vollständig standardisierter Windows-Verkapselungsstandard. Verschmilzt perfekt die App-Sicherheits-Sandbox-Eigenschaften von APPX mit den unternehmensweiten Asset-Management-Vorteilen von MSI, vollständig kompatibel mit allen Win32-Anwendungstypen, ist der empfohlene Verteilungsstandard für Windows 11)"
+
+msgid "mime_appimage"
+msgstr "AppImage installationsfreies Anwendungspaket (2004 entwickelte Linux-Spezifikation für einzelne ausführbare Archive. Verwendet die eigenständige Architektur ‚Eine Anwendung ist eine Datei‘, die zur Laufzeit über den FUSE-Mechanismus direkt als schreibgeschütztes virtuelles Dateisystem eingebunden wird, ermöglicht sofortige Nutzung ohne Abhängigkeiten über verschiedene Linux-Distributionen hinweg)"
+
+msgid "mime_flatpak"
+msgstr "Flatpak Sandbox-Anwendungspaket (2015 von Red Hat und GNOME entwickelter Linux-kreuzdistributions Standard für Desktop-App-Verteilung. Basiert auf Linux-Kernel-Namespace- und Cgroups-Mechanismen, um eine extrem strenge Anwendungssicherheits-Sandbox-Isolierung zu erreichen, ist die Grundlage für Softwarezentren moderner Open-Source-Betriebssysteme)"
+
+msgid "mime_snap"
+msgstr "Snap containerisiertes Anwendungspaket (2014 von Canonical, der Muttergesellschaft von Ubuntu, eingeführter universeller Linux-Bereitstellungsstandard. Verwendet eine eigenständige SquashFS-Image-Einbindungsarchitektur, unterstützt automatische inkrementelle Aktualisierungen und strenge AppArmor-Sandbox-Isolierung, ist das standardmäßige Kernformat des Ubuntu-Softwarezentrums-Ökosystems)"
+
+msgid "mime_deb"
+msgstr "DEB Systemsoftwarepaket (1993 vom Debian-Projekt etablierte Binär- und Quellcode-Verkapselungsspezifikation. Als Installationsstandard für Debian, Ubuntu und alle ihre Derivaten basiert es auf dpkg für die Paketverwaltung im Kern und nutzt APT als leistungsfähigen Paketmanager-Frontend, ist der ausgereifteste Softwaredistributions-Grundstein im Linux-Ökosystem)"
+
+msgid "mime_rpm"
+msgstr "RPM Systemsoftwarepaket (1997 von Red Hat eingeführte Red-Hat-Paketmanager-Verkapselungsspezifikation. Bildet mit DEB die zwei großen traditionellen Linux-Paketmanagement-Lager, bietet native transaktionsbasierte Abhängigkeitsprüfung und digitale Signaturprüfung auf niedriger Ebene, ist bis heute der absolute Mainstream-Verteilungsstandard für Red-Hat-basierte Ökosysteme wie RHEL, Fedora und CentOS)"
+
+msgid "mime_pacman"
+msgstr "Pacman Archivsoftwarepaket (2002 von Arch Linux mit dem pacman-Manager etabliertes .pkg.tar.zst-Verkapselungsformat. Als Kern des rollenden Aktualisierungsmechanismus von Arch, basierend auf dem schnellen Zstandard-Hochkompressionsalgorithmus, zusammen mit dem AUR-Ökosystem (Arch User Software Repository), ist es ein moderner Paketverteilungsstandard, der Minimalismus und das KISS-Prinzip (Keep It Simple, Stupid) verkörpert)"
+
+msgid "mime_exe"
+msgstr "EXE native ausführbare Datei (Portable-Executable(PE)-Binärprogrammformat der Windows-Plattform. Technisch abgeleitet von der MZ-Kopfstruktur aus der MS-DOS-Ära und ab Windows NT 1993 vollständig als PE-Struktur etabliert, ist es der weltweit am weitesten verbreitete Ausführungsstandard für Maschinencode-Anweisungen, statische Ressourcenabschnitte und Systemkernel-Bootstrap-Prozesse)"
+
+msgid "mime_dll"
+msgstr "DLL Dynamische Linkbibliothek (Dynamic Link Library-Spezifikation für gemeinsam genutzte Codebibliotheken der Windows-Plattform. Durch dynamisches Laden und Symbolumplatzierung während der Laufzeit werden physikalischer Speicher und Festplattenplatz erheblich eingespart, als Kernimplementierungsform der Windows-API; das frühe ‚DLL-Hell‘-Problem wurde in der modernen Zeit durch den SxS-parallelen Isolationsmechanismus behoben)"
+
+msgid "mime_com"
+msgstr "COM klassische ausführbare Datei (ältestes Speicherabbild-Ausführungsformat aus der MS-DOS-Ära. Verwendet strukturloses reinen Codesegment-Design, begrenzt auf das 64-KB-Physikalische-Adressraumsegment, heute als historische Hinterlassenschaft ausgemustert, wird aber in modernen Windows-Architekturen als bestimmte Komponentenschnittstelle noch begrenzt kompatibel gehalten)"
+
+msgid "mime_aac"
+msgstr "AAC-Audio (MPEG-Standard von 1997, Advanced Audio Coding. Nachfolger von MP3, Audioqualität besser als MP3 bei gleicher Bitrate, Standardaudioformat für YouTube, iTunes, Nintendo Switch)"
+
+msgid "mime_alac"
+msgstr "ALAC-Audio (Apple entwickelte es 2004, Apple Lossless Audio Codec. Apples verlustfreies Format, 2011 Open Source, Standardverlustfreies Format für iTunes und Apple Music)"
+
+msgid "mime_flac"
+msgstr "FLAC-Audio (Xiph.Org Foundation entwickelte es 2001, Free Lossless Audio Codec. Verlustfreie Komprimierung, Audioqualität wie CD, Dateigröße etwa die Hälfte der ursprünglichen WAV-Datei. Open Source und patentfrei, bevorzugtes Format für Audiophile und digitale Musiksammlungen)"
+
+msgid "mime_mp3"
+msgstr "MP3-Audio (Fraunhofer Institute entwickelte es 1993, MPEG-1 Audio Layer 3. Verlustbehaftetes Komprimierungsformat, kleine Datei mit akzeptabler Audioqualität, das wichtigste Format der digitalen Musikrevolution der 2000er Jahre, verantwortlich für iPod und Napster. Patente liefen 2017 aus, wurde zum Public-Domain-Format)"
+
+msgid "mime_oga"
+msgstr "Ogg Audio-Audio (entwickelt von der Xiph.Org Foundation, reines Audioformat des Ogg-Containers, verwendet Vorbis-Codierung. Open Source und patentfrei, Komprimierungseffizienz besser als MP3, weit verbreitet in Open-Source-Projekten)"
+
+msgid "mime_ogg"
+msgstr "OGG-Audio (Xiph.Org Foundation entwickelte es 2000, Ogg Vorbis-Format. Open Source und patentfrei, Komprimierungseffizienz besser als MP3, frühes Spotify verwendete es, weit verbreitet für Soundeffekte in Spielen)"
+
+msgid "mime_opus"
+msgstr "Opus-Audio (IETF standardisierte es 2012, offenes und patentfreies Audioformat, kombiniert SILK- und CELT-Technologien, extrem niedrige Latenz, höchste Komprimierungseffizienz, Standardaudioformat für WebRTC, WhatsApp, Discord)"
+
+msgid "mime_wav"
+msgstr "WAV-Audio (Microsoft und IBM entwickelten es 1991, natives Audioformat von Windows. PCM-Codierung, unkomprimiert, verlustfreie Audioqualität, aber sehr große Datei, Standardformat für professionelle Audiobearbeitung)"
+
+msgid "mime_wma"
+msgstr "WMA-Audio (Microsoft entwickelte es 1999, Windows Media Audio. Hat verlustbehaftete/verlustfreie Versionen, nativ von Windows unterstützt, verbreitete sich mit dem Windows Media Player. Jetzt marginalisiert, durch MP3/AAC ersetzt)"
+
+msgid "mime_dsf"
+msgstr "DSF-Audio (Direct Stream Digital-Format, entwickelt von Sony und Philips. 1-Bit hohe Abtastrate, DSD-Audio-Standardformat, digitale Version von SACD, hochwertiges Audioformat für Audiophile, sehr große Datei)"
+
+msgid "mime_ape"
+msgstr "APE Audio (2000 von Monkey's Audio entwickelt, verlustfreies Komprimierungsformat. Höhere Komprimierung als FLAC, aber langsamere Kodierung, wird weiterhin auf Windows-Plattform und unter Audio-Enthusiasten verwendet)"
+
+msgid "mime_mid"
+msgstr "MIDI-Audio (MIDI Association legte 1983 fest, Musical Instrument Digital Interface. Notenformat, keine Aufnahme, Datei sehr klein, Standard für elektronische Musikinstrumente, Telefonklingeltöne, Soundeffekte in Spielen. General MIDI wurde 1991 standardisiert, definiert 128 Instrumente)"
+
+msgid "mime_m4a"
+msgstr "M4A-Audio (MPEG-4 Audio, Containerformat für AAC. Standardformat des iTunes-Musikshops, wichtigstes Audioformat im Apple-Ökosystem, unterstützt DRM-Schutz)"
+
+msgid "mime_m3u"
+msgstr "M3U-Playlist (MP3 URL-Playlist-Format, einfache Textdatei, zeichnet Pfade von Audiodateien auf. Standard aus der Winamp-Ära, verwendet für Internetradio, Online-Musik-Streaming. M3U8 ist seine UTF-8-Version, verwendet für HTTP Live Streaming)"
+
+msgid "mime_asf"
+msgstr "ASF-Streaming (Microsoft entwickelte es 1996, Advanced Systems Format. Windows Media-Streaming-Container, unterstützt synchrone Übertragung von Audio und Video. Verwendet für Live-Übertragungen im Internet und Video-on-Demand-Streaming, WMA/WMV basieren auf dem ASF-Container)"
+
+msgid "mime_avi"
+msgstr "AVI-Video (Microsoft brachte es 1992 heraus, früher Windows-Videostandard. 'Audio Video Interleave', wechselt Audio und Video ab, war das beliebteste Videoformat in den 1990er-2000er Jahren, jetzt durch MP4/MKV ersetzt)"
+
+msgid "mime_divx"
+msgstr "DivX-Video (DivX Corporation entwickelte es 1998, Video-Codec-Format basierend auf MPEG-4. Hauptformat für die Online-Videoverteilung in den 2000er Jahren, erste Technologie, die DVD-Qualität auf CD-Größe komprimierte. Wegen Urheberrechtskontroversen später in einen kommerziellen Encoder umgewandelt)"
+
+msgid "mime_mp4"
+msgstr "MP4-Video (MPEG-Standard von 2001, MPEG-4 Teil 14. Das am weitesten verbreitete Videoformat der Welt, unterstützt H.264/H.265-Codierung, Standardformat für Internetvideo, Handyaufnahmen, YouTube)"
+
+msgid "mime_m4v"
+msgstr "M4V-Video (iTunes-Videoformat, Variante von MP4. Videoformat im Apple-Ökosystem, Standardformat für Filme und Fernsehsendungen im iTunes Store, unterstützt DRM-Urheberrechtsschutz)"
+
+msgid "mime_mpeg"
+msgstr "MPEG-Video (MPEG-Organisation legte 1988 fest, Moving Picture Experts Group. Legte den Grundstein für Standards der digitalen Videokomprimierung, MPEG-1 (VCD), MPEG-2 (DVD), MPEG-4 (Internetvideo) hatten tiefgreifenden Einfluss)"
+
+msgid "mime_mkv"
+msgstr "MKV-Video (Matroska-Projekt entwickelte es 2002, offener Multimedia-Container. Unterstützt mehrere Audiospuren, mehrere Untertitel, Kapitel, 'Paketierwerkzeug', bevorzugtes Format für den Austausch von Filmen in hoher Auflösung)"
+
+msgid "mime_mpg"
+msgstr "MPEG-Video (MPEG-1/MPEG-2-Videoerweiterungen, Standardformat für VCD und DVD. Hauptformat für Video auf optischen Datenträgern in den 1990er-2000er Jahren, jetzt durch H.264/H.265 ersetzt)"
+
+msgid "mime_ogv"
+msgstr "Ogg Video-Video (entwickelt von der Xiph.Org Foundation, Videoformat des Ogg-Containers, verwendet Theora-Codierung. Offen und patentfrei, einer der frühen Standards für HTML5-Video, Firefox unterstützt es nativ)"
+
+msgid "mime_ogx"
+msgstr "Ogg-Multimedia-Container (entwickelt von der Xiph.Org Foundation, allgemeine Erweiterung des Ogg-Containers, kann mehrere Spuren wie Audio, Video, Untertitel enthalten. Offener Multimedia-Standard, verwendet für Spiele, Streaming)"
+
+msgid "mime_rm"
+msgstr "RealMedia-Video (RealNetworks entwickelte es 1995, RealMedia-Format. Pionier des Internet-Streamings in den 1990er-2000er Jahren, Hauptformat des RealPlayer-Players. Nachteile: benötigt speziellen Player, schlechte Komprimierungsqualität, später durch Flash/MP4 ersetzt)"
+
+msgid "mime_flv"
+msgstr "Flash-Video (das Format erschien 2002, Flash-Video-Format. War einst das wichtigste Online-Videoformat. Frühes YouTube verwendete es. Nachteile: benötigt Flash-Plugin, schlechte Leistung, viele Sicherheitslücken. Ab 2015 wechselten die wichtigsten Websites zu HTML5-Video, heute veraltet)"
+
+msgid "mime_f4v"
+msgstr "F4V-Video (Flash-Videoformat entwickelt von Adobe, Nachfolger von FLV. Basierend auf dem MPEG-4-Standard, unterstützt H.264-Codierung. Veraltet zusammen mit der Flash-Technologie, Adobe stellte die Unterstützung 2020 ein)"
+
+msgid "mime_wmv"
+msgstr "WMV-Video (Microsoft entwickelte es 1999, Windows Media Video. Nativ von Windows unterstützt, optimiert für Streaming, war ein gebräuchliches Format in frühen Online-Videos, heute marginalisiert)"
+
+msgid "mime_wmf"
+msgstr "WMF-Medienformat (Windows Media Format, Microsofts Medienframework, umfasst WMV-Video, WMA-Audio, nativ vom Windows Media Player unterstützt)"
+
+msgid "mime_mov"
+msgstr "MOV-Video (Apple entwickelte es 1991, QuickTime-Containerformat. Standardformat für die professionelle Videobearbeitung, unterstützt mehrere Codecs, nativ von Final Cut Pro, Premiere unterstützt)"
+
+msgid "mime_qt"
+msgstr "QuickTime-Video (Apple brachte es 1991 heraus, QuickTime-Format. Videostandard auf der Mac-Plattform, MOV ist sein Container, der QuickTime-Player war einst weit verbreitet. Apple stellte die Entwicklung der Windows-Version 2016 ein, ersetzt es allmählich durch MP4)"
+
+msgid "mime_webm"
+msgstr "WebM-Video (Google brachte es 2010 heraus, offenes und patentfreies Videoformat. Basierend auf dem Matroska-Container, VP8/VP9-Codierung, Standard-HTML5-Videoformat, Standardformat für die Wiedergabe auf YouTube im Web)"
+
+msgid "mime_3gp"
+msgstr "3GP-Video (3GPP legte es 2000 fest, Videoformat für mobile Geräte. Sehr kleine Datei, niedrige Qualität, Format für Videoaufnahmen auf frühen Tastenhandys, wurde für den MMS-Versand verwendet)"
+
+#------------------------------------------------------------------------------
+# Technische Dimensionen
+#------------------------------------------------------------------------------
+
+msgid "Operating Systems"
+msgstr "Betriebssysteme"
+
+msgid "Top 5 Operating Systems"
+msgstr "Top 5 Betriebssysteme"
+
+msgid "Unknown Robot"
+msgstr "Unbekannter Client"
+
+msgid "User agent"
+msgstr "User Agent"
+
+msgid "Browsers"
+msgstr "Browser"
+
+msgid "Top 5 Browsers"
+msgstr "Top 5 Browser"
+
+msgid "Unknown Robot RH"
+msgstr "Unbekannter Anforderungs-Header"
+
+msgid "Detailed"
+msgstr "Version des zugreifenden Geräts"
+
+msgid "DetailedOS"
+msgstr "Betriebssystemversion"
+
+msgid "DetailedBS"
+msgstr "Browserversion"
+
+msgid "Screen sizes"
+msgstr "Bildschirmgrößen"
+
+msgid "Compression"
+msgstr "Komprimierung"
+
+msgid "In"
+msgstr "Eingang"
+
+msgid "Out"
+msgstr "Ausgang"
+
+msgid "Saved"
+msgstr "Gespeichert"
+
+#------------------------------------------------------------------------------
+# Quellendimensionen
+#------------------------------------------------------------------------------
+
+msgid "Origin"
+msgstr "Herkunft"
+
+msgid "Referers"
+msgstr "Referenzen"
+
+msgid "meta.description"
+msgstr "AWStats erweiterter Webserver-Log-Analysator - Überwachung des Website-Verkehrs in Echtzeit, Besucheranalyse, Suchmaschinenschlüsselwörter, Fehlerseitenstatistiken. Unterstützt den dunklen Modus und mehrsprachige Oberfläche, bietet Website-Administratoren eine umfassende Datenanalyse."
+
+msgid "meta.keywords"
+msgstr "AWStats,Webstatistiken,Loganalyse,Verkehrsüberwachung,Zugriffsstatistiken,SEO-Analyse,Website-Analyse-Tool,Web Analytics,Log Analyzer"
+
+msgid "meta.author"
+msgstr "AWStats"
+
+msgid "og.title"
+msgstr "AWStats - Web-Log-Analyse"
+
+msgid "og.description"
+msgstr "📊 Professionelles Open-Source-Website-Statistik-Tool, analysiert den Verkehr Ihrer Website und das Besucherverhalten in Echtzeit."
+
+msgid "og.image.alt"
+msgstr "AWStats statistische Diagramme"
+
+msgid "Created by"
+msgstr "Erstellt von %s"
+
+msgid "plugins"
+msgstr "Plugins"
+
+msgid "dbip by"
+msgstr "Daten von"
+
+msgid "IPDB by"
+msgstr "Geografische Standortdaten bereitgestellt von DB-IP"
+
+# Gesundheitsstatus
+msgid "Configured"
+msgstr "Konfiguriert"
+
+msgid "Missing"
+msgstr "Fehlt"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Unused"
+msgstr "Nicht verwendet"
+
+# Sonstiges
+msgid "Overall Health"
+msgstr "Allgemeiner Gesundheitszustand"
+
+msgid "Excellent"
+msgstr "Ausgezeichnet"
+
+msgid "Good"
+msgstr "Gut"
+
+msgid "Fair"
+msgstr "Befriedigend"
+
+msgid "Poor"
+msgstr "Schlecht"
+
+msgid "Missing icon types"
+msgstr "Fehlende Ikonentypen"
+
+msgid "See"
+msgstr "Siehe Details"
+
+msgid "Expected Path"
+msgstr "Pfadbeschreibung"
+
+msgid "column for file locations"
+msgstr "Spalte zum Abrufen von Dateispeicherorten"
+
+# Tipp
+msgid "Tip: If you need to generate related icons, you can use %s to upload a logo image, and it will automatically generate all the above related icon files"
+msgstr "Tipp: Wenn Sie verwandte Icons generieren müssen, können Sie %s verwenden, um ein Logo-Bild hochzuladen. Das Tool generiert dann automatisch alle oben genannten verwandten Icon-Dateien."
+
+msgid "200: success, 404: failure"
+msgstr "200 ist die Anzahl der Erfolge, 404 ist die Anzahl der Fehlschläge"
+
+# Erwartete Pfade
+msgid "_PATH_FAVICON"
+msgstr "/favicon.ico"
+
+msgid "_PATH_APPLE_TOUCH"
+msgstr "/apple-touch-icon.png oder /apple-touch-icon-180x180.png"
+
+msgid "_PATH_LOGO"
+msgstr "/logo.svg oder /logo.png (muss in HTML/JSON-LD referenziert werden)"
+
+msgid "_PATH_WEBMANIFEST"
+msgstr "/site.webmanifest oder /manifest.json"
+
+msgid "_PATH_BROWSERCONFIG"
+msgstr "/browserconfig.xml"
+
+msgid "_PATH_SAFARI_PINNED"
+msgstr "/safari-pinned-tab.svg"
+
+msgid "_PATH_SOCIAL_ICON"
+msgstr "/images/github.svg, /images/paypal.svg usw."
+
+# Namen der Ikonentypen
+msgid "Favicon"
+msgstr "Website-Icon"
+
+msgid "Apple Touch Icon (iOS/macOS)"
+msgstr "Apple Touch-Symbol (iPhone/iPad/Mac)"
+
+msgid "Site Logo"
+msgstr "Website-Logo"
+
+msgid "Web App Manifest (Android/Chrome)"
+msgstr "Web-App-Manifest (Android/Chrome)"
+
+msgid "Windows Browser Config"
+msgstr "Windows-Browser-Konfiguration"
+
+msgid "Safari Pinned Tab"
+msgstr "Angeheftetes Safari-Registerkarten-Symbol"
+
+msgid "Social Icon"
+msgstr "Social-Media-Icon"
+
+# Kopfzeilen
+msgid "Icon Files Status"
+msgstr "Status der Ikonendateien"
+
+msgid "Icon Type"
+msgstr "Ikonentyp"
+
+msgid "Advanced Web Statistics"
+msgstr "Erweiterter Log-Analysator"
+
+msgid "Advanced Web Statistics %s"
+msgstr "Erweiterter Log-Analysator %s"
+
+msgid "Your browser does not support frames. Please use a modern browser."
+msgstr "Ihr Browser unterstützt keine Frames. Bitte verwenden Sie einen modernen Browser."
+
+msgid "View statistics directly"
+msgstr "Statistiken direkt anzeigen"
+
+msgid "Close"
+msgstr "Schließen"
+
+msgid "Documentation Viewer"
+msgstr "Dokumentationsbetrachter"
+
+msgid "Direct address / Bookmarks"
+msgstr "Direkte Adresse / Lesezeichen"
+
+msgid "Search Engines"
+msgstr "Suchmaschinen"
+
+msgid "Refering search engines"
+msgstr "Verweisende Suchmaschinen"
+
+msgid "External pages"
+msgstr "Externe Seiten"
+
+msgid "Refering pages"
+msgstr "Verweisende Seiten"
+
+msgid "Internal pages"
+msgstr "Interne Seiten"
+
+msgid "UnknownAccessSource"
+msgstr "Unbekannte Zugriffsquelle"
+
+msgid "Different refering pages"
+msgstr "Verschiedene verweisende Seiten"
+
+msgid "Keyphrases"
+msgstr "Schlüsselphrasen"
+
+msgid "Keywords"
+msgstr "Schlüsselwörter"
+
+msgid "Keyphrases/Keywords"
+msgstr "Schlüsselphrasen/Schlüsselwörter"
+
+msgid "Different keyphrases"
+msgstr "Verschiedene Schlüsselphrasen"
+
+msgid "Different keywords"
+msgstr "Verschiedene Schlüsselwörter"
+
+#------------------------------------------------------------------------------
+# Seitendimensionen
+#------------------------------------------------------------------------------
+
+msgid "Viewed pages"
+msgstr "Angesehene Seiten"
+
+msgid "Different pages"
+msgstr "Verschiedene Seiten"
+
+msgid "Entry"
+msgstr "Eintrittsposition"
+
+msgid "Exit"
+msgstr "Austrittsposition"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Referer"
+msgstr "Referer"
+
+msgid "Host"
+msgstr "Host"
+
+#------------------------------------------------------------------------------
+# Fehler und Status
+#------------------------------------------------------------------------------
+
+msgid "Error"
+msgstr "Fehler"
+
+msgid "HTTP Status Statistics"
+msgstr "HTTP-Statuscode-Statistiken"
+
+msgid "SMTP Error codes"
+msgstr "SMTP-Fehlercodes"
+
+msgid "Page not found"
+msgstr "Angeforderte Seite nicht gefunden"
+
+msgid "Unknown error"
+msgstr "Unbekannter Fehler"
+
+msgid "Abnormal traffic note"
+msgstr "Abnormaler Browsing-Verkehr umfasst: Suchroboter, KI-Trainings-Bots, Schwachstellenscanner und Anforderungen, die nicht den Spezifikationen entsprechen"
+
+msgid "Page detail"
+msgstr "Seitendetails"
+
+# Details der Fehlermeldung
+msgid "AWStats did not found the"
+msgstr "AWStats hat das nicht gefunden"
+
+msgid "in your log records."
+msgstr "in Ihren Logaufzeichnungen."
+
+msgid "AWStats did not find any valid log lines that match your"
+msgstr "AWStats hat keine gültigen Logzeilen gefunden, die Ihrem"
+
+msgid "parameter, in the"
+msgstr "Parameter entsprechen, in den"
+
+msgid "th first non commented lines read of your log."
+msgstr "ersten nicht auskommentierten Zeilen Ihres Logs."
+
+msgid "Your log file"
+msgstr "Ihre Logdatei"
+
+msgid "must have a bad format or"
+msgstr "hat wahrscheinlich ein schlechtes Format oder"
+
+msgid "parameter setup does not match this format."
+msgstr "parametereinstellung stimmt nicht mit diesem Format überein."
+
+msgid "Your AWStats"
+msgstr "Ihr AWStats"
+
+msgid "parameter is:"
+msgstr "Parameter ist:"
+
+msgid "This means each line in your web server log file need to have:"
+msgstr "Das bedeutet, dass jede Zeile in Ihrer Webserver-Logdatei enthalten muss:"
+
+msgid "combined log format"
+msgstr "kombiniertes Logformat"
+
+msgid "MSIE Extended W3C log format"
+msgstr "MSIE Extended W3C-Logformat"
+
+msgid "WebStar native log format"
+msgstr "WebStar-natives Logformat"
+
+msgid "common log format"
+msgstr "allgemeines Logformat"
+
+msgid "Lotus Notes/Lotus Domino"
+msgstr "Lotus Notes/Lotus Domino"
+
+msgid "the following personalized log format:"
+msgstr "das folgende personalisierte Logformat:"
+
+msgid "And this is an example of records AWStats found in your log file (the record number"
+msgstr "Und dies ist ein Beispiel für Datensätze, die AWStats in Ihrer Logdatei gefunden hat (die Datensatznummer"
+
+msgid "in your log):"
+msgstr "in Ihrem Log):"
+
+#------------------------------------------------------------------------------
+# Verschiedenes
+#------------------------------------------------------------------------------
+
+msgid "Extra/Marketing"
+msgstr "Extra/Marketing"
+
+#------------------------------------------------------------------------------
+# Oberflächentext
+#------------------------------------------------------------------------------
+
+msgid "Current site"
+msgstr "Aktuelle Website"
+
+msgid "Web Site"
+msgstr "Website"
+
+msgid "Last Update"
+msgstr "Letzte Aktualisierung"
+
+msgid "Never updated"
+msgstr "Nie aktualisiert"
+
+msgid "No qualified records found in log"
+msgstr "Keine qualifizierten Datensätze im Log gefunden"
+
+msgid "corrupted"
+msgstr "beschädigt"
+
+msgid "comments"
+msgstr "Kommentare"
+
+msgid "Blank"
+msgstr "Leer"
+
+msgid "dropped"
+msgstr "verworfen"
+
+msgid "Update now"
+msgstr "Jetzt aktualisieren"
+
+msgid "Back to main page"
+msgstr "Zurück zur Hauptseite"
+
+msgid "Close window"
+msgstr "Fenster schließen"
+
+msgid "Back page"
+msgstr "Zurück zur vorherigen Seite"
+
+msgid "Navigation"
+msgstr "Navigation"
+
+msgid "Summary"
+msgstr "Zusammenfassung"
+
+msgid "Local"
+msgstr "Lokal"
+
+msgid "External"
+msgstr "Extern"
+
+msgid "Others (email senders)"
+msgstr "Andere (E-Mail-Absender)"
+
+msgid "Others (email receivers)"
+msgstr "Andere (E-Mail-Empfänger)"
+
+msgid "Others"
+msgstr "Andere"
+
+msgid "Only 10 lines of browser data are currently displayed"
+msgstr "Derzeit werden nur 10 Zeilen Browserdaten angezeigt, bitte sehen Sie die vollständige Liste"
+
+msgid "Others (unknown browsers)"
+msgstr "Andere (unbekannte Browser)"
+
+msgid "Others (operating systems)"
+msgstr "Andere (Betriebssysteme)"
+
+msgid "Others (unknown OS)"
+msgstr "Andere (unbekanntes Betriebssystem)"
+
+msgid "Others (search engines)"
+msgstr "Andere (Suchmaschinen)"
+
+msgid "Others (referring pages)"
+msgstr "Andere (verweisende Seiten)"
+
+msgid "Others (keyphrases)"
+msgstr "Andere (Schlüsselphrasen)"
+
+msgid "Others (keywords)"
+msgstr "Andere (Schlüsselwörter)"
+
+msgid "Only first 10 robots shown"
+msgstr "Die aktuelle Liste zeigt nur 10 Roboter, bitte sehen Sie die vollständige Liste"
+
+msgid "Failed to obtain access record"
+msgstr "Zugriffsdatensatz konnte nicht abgerufen werden"
+
+msgid "Failed to obtain leave record"
+msgstr "Austrittsdatensatz konnte nicht abgerufen werden"
+
+msgid "Other pages"
+msgstr "Andere Seiten"
+
+msgid "Low Traffic IP Summary"
+msgstr "Zusammenfassung unbekannter IPs mit niedrigem Verkehr"
+
+msgid "Failed to obtain IP data"
+msgstr "Zusammenfassung anderer bekannter IPs"
+
+msgid "Failed to obtain the relevant data"
+msgstr "Die relevanten Daten konnten nicht abgerufen werden"
+
+msgid "Limited list of countries and regions"
+msgstr "Derzeit werden nur 10 Zeilen angezeigt, bitte sehen Sie die vollständige Liste für weitere Länder/Regionen"
+
+msgid "currentVisitorData"
+msgstr "Derzeit werden nur 10 Zeilen Besucherdaten angezeigt, bitte sehen Sie die vollständige Liste"
+
+msgid "Others (robots main)"
+msgstr "Andere (Roboter)"
+
+msgid "Others (worms)"
+msgstr "Andere (Würmer)"
+
+msgid "Displaying10RowsPageMorePleaseViewFullList"
+msgstr "Die aktuelle Liste zeigt nur 10 Seiten, bitte sehen Sie die vollständige Liste"
+
+msgid "Others (OS main)"
+msgstr "Andere (System)"
+
+msgid "Others (browsers main)"
+msgstr "Andere (Browser)"
+
+msgid "Others (screen sizes)"
+msgstr "Andere (Größe)"
+
+msgid "Others (search engines main)"
+msgstr "Andere (Suchmaschinen)"
+
+msgid "Others (referring pages main)"
+msgstr "Andere (verweisende Seiten)"
+
+msgid "Others (keyphrases main)"
+msgstr "Andere (Schlüsselphrasen)"
+
+msgid "Others (keywords main)"
+msgstr "Andere (Schlüsselwörter)"
+
+# 1xx
+msgid "Continue"
+msgstr "Senden Sie den restlichen Inhalt weiter"
+
+msgid "Switching Protocols"
+msgstr "Wechsel des Protokolls"
+
+msgid "Processing (WebDAV)"
+msgstr "Verarbeitung läuft (bitte warten)"
+
+msgid "Early Hints"
+msgstr "Server bereitet Ressourcen vor"
+
+# 2xx
+msgid "[Miscellaneous successes]"
+msgstr "Andere Erfolgsstatus"
+
+msgid "Request successful"
+msgstr "Anfrage erfolgreich"
+
+msgid "Created successfully"
+msgstr "Erfolgreich erstellt"
+
+msgid "Accepted - processing"
+msgstr "Akzeptiert, wird verarbeitet"
+
+msgid "Non-authoritative information (from cache) (from cache)"
+msgstr "Nicht autoritative Information (aus dem Cache)"
+
+msgid "Success, no content returned"
+msgstr "Erfolg, kein Inhalt zurückgegeben"
+
+msgid "Reset content"
+msgstr "Bitte setzen Sie das Formular zurück"
+
+msgid "Partial content (resume download)"
+msgstr "Teilinhalt (unterstützt Fortsetzung des Downloads)"
+
+msgid "Multi-status (WebDAV)"
+msgstr "Multi-Status (WebDAV-Stapelverarbeitung)"
+
+msgid "Already reported (WebDAV)"
+msgstr "Bereits gemeldet (verhindert Duplizierung)"
+
+msgid "IM used"
+msgstr "IM-Protokollerweiterung verwendet"
+
+# 3xx
+msgid "[Miscellaneous redirections]"
+msgstr "Andere Weiterleitungen"
+
+msgid "Multiple choices"
+msgstr "Mehrere Auswahlmöglichkeiten"
+
+msgid "Moved permanently - update your links"
+msgstr "Permanent verschoben, bitte aktualisieren Sie Ihre Links"
+
+msgid "Temporary redirect - URL unchanged"
+msgstr "Temporäre Weiterleitung, Adresse ändert sich nicht"
+
+msgid "See other"
+msgstr "Bitte sehen Sie eine andere Adresse"
+
+msgid "Not modified - using cached version"
+msgstr "Nicht verändert, zwischengespeicherte Version wird verwendet"
+
+msgid "Use proxy"
+msgstr "Proxy verwenden"
+
+msgid "Switch proxy"
+msgstr "Proxy wechseln"
+
+msgid "Temporary redirect (keep method)"
+msgstr "Temporäre Weiterleitung (behält die Anfragemethode bei)"
+
+msgid "Permanent redirect - update your links"
+msgstr "Permanente Weiterleitung, bitte aktualisieren Sie Ihre Links"
+
+# 4xx
+msgid "[Miscellaneous client/user errors]"
+msgstr "Andere Client-Fehler"
+
+msgid "Bad request"
+msgstr "Anfrageformat ist falsch"
+
+msgid "Unauthorized - please log in"
+msgstr "Nicht autorisiert, bitte melden Sie sich zuerst an"
+
+msgid "Payment required"
+msgstr "Zahlung erforderlich"
+
+msgid "Forbidden - access denied"
+msgstr "Zugriff verweigert, unzureichende Berechtigungen"
+
+msgid "Page not found (404) - check for broken links"
+msgstr "Seite nicht gefunden, bitte überprüfen Sie defekte Links"
+
+msgid "Method not allowed"
+msgstr "Anfragemethode nicht erlaubt"
+
+msgid "Not acceptable"
+msgstr "Nicht akzeptables Antwortformat"
+
+msgid "Proxy authentication required"
+msgstr "Authentifizierung über Proxy erforderlich"
+
+msgid "Request timeout"
+msgstr "Zeitüberschreitung der Anfrage"
+
+msgid "Conflict - please try again"
+msgstr "Konflikt bei der Anfrage, bitte versuchen Sie es später erneut"
+
+msgid "Gone - permanently deleted"
+msgstr "Ressource wurde dauerhaft gelöscht"
+
+msgid "Length required"
+msgstr "Die Länge des Inhalts muss angegeben werden"
+
+msgid "Precondition failed"
+msgstr "Voraussetzungen nicht erfüllt"
+
+msgid "Payload too large"
+msgstr "Inhalt der Anfrage ist zu groß"
+
+msgid "URI too long"
+msgstr "Anfrageadresse ist zu lang"
+
+msgid "Unsupported media type"
+msgstr "Dateityp nicht unterstützt"
+
+msgid "Range not satisfiable"
+msgstr "Anfragebereich ist ungültig"
+
+msgid "Expectation failed"
+msgstr "Erwartung kann nicht erfüllt werden"
+
+msgid "I am a teapot (April Fools)"
+msgstr "Ich bin eine Teekanne (Aprilscherz)"
+
+msgid "Page expired (Laravel)"
+msgstr "Seite abgelaufen, bitte aktualisieren Sie die Seite und versuchen Sie es erneut"
+
+msgid "Method failure (Spring)"
+msgstr "Methode fehlgeschlagen"
+
+msgid "Misdirected request"
+msgstr "Anfrage falsch weitergeleitet"
+
+msgid "Unprocessable entity (WebDAV)"
+msgstr "Anfrageformat ist korrekt, kann aber nicht verarbeitet werden"
+
+msgid "Locked (WebDAV)"
+msgstr "Ressource ist gesperrt"
+
+msgid "Failed dependency (WebDAV)"
+msgstr "Abhängige Operation fehlgeschlagen"
+
+msgid "Too early"
+msgstr "Anfrage zu früh gesendet"
+
+msgid "Upgrade required"
+msgstr "Protokoll-Upgrade erforderlich"
+
+msgid "Precondition required"
+msgstr "Fehlende erforderliche Voraussetzungen"
+
+msgid "Too many requests - slow down"
+msgstr "Anfragen sind zu häufig, bitte versuchen Sie es später erneut"
+
+msgid "Request header fields too large (Shopify)"
+msgstr "Anfrage-Header-Felder sind zu groß"
+
+msgid "Request header too large"
+msgstr "Anfrage-Header ist zu groß"
+
+msgid "Login timeout (IIS)"
+msgstr "Zeitüberschreitung der Anmeldung, bitte melden Sie sich erneut an"
+
+msgid "No response (nginx)"
+msgstr "Server antwortet nicht"
+
+msgid "Retry with (IIS)"
+msgstr "Bitte versuchen Sie es später erneut"
+
+msgid "Blocked by Windows parental controls"
+msgstr "Durch die Windows-Elternkontrolle blockiert"
+
+msgid "Unavailable for legal reasons"
+msgstr "Aus rechtlichen Gründen nicht verfügbar"
+
+msgid "Client closed connection before idle timeout (AWS ELB)"
+msgstr "Client hat die Verbindung vor Ablauf der Inaktivitätszeit getrennt"
+
+msgid "X-Forwarded-For header with >30 IP addresses (AWS ELB)"
+msgstr "Weiterleitungskette hat mehr als 30 IP-Adressen"
+
+msgid "Incompatible protocol versions (AWS ELB)"
+msgstr "Protokollversionen sind inkompatibel"
+
+msgid "Request header too large (nginx)"
+msgstr "Anfrage-Header ist zu groß"
+
+msgid "SSL certificate error (nginx)"
+msgstr "SSL-Zertifikatsfehler"
+
+msgid "SSL certificate required (nginx)"
+msgstr "SSL-Zertifikat erforderlich"
+
+msgid "HTTP request sent to HTTPS port (nginx)"
+msgstr "HTTP-Anfrage an HTTPS-Port gesendet"
+
+msgid "Invalid token (ArcGIS)"
+msgstr "Ungültiger Token"
+
+msgid "Token required (ArcGIS) / Client closed request (nginx)"
+msgstr "Token erforderlich / Client hat die Anfrage geschlossen"
+
+msgid "Resource limit reached (cPanel)"
+msgstr "Ressourcenlimit erreicht (CPU/Speicher)"
+
+msgid "Bandwidth limit exceeded (Apache/cPanel)"
+msgstr "Bandbreitenlimit überschritten"
+
+# 5xx
+msgid "[Miscellaneous server errors]"
+msgstr "Andere Serverfehler"
+
+msgid "Internal server error - check logs"
+msgstr "Interner Serverfehler, bitte überprüfen Sie die Logdateien"
+
+msgid "Not implemented"
+msgstr "Funktion wird auf dem Server nicht unterstützt"
+
+msgid "Bad gateway - backend error"
+msgstr "Gateway-Fehler, Backend-Dienst ist ungewöhnlich"
+
+msgid "Service unavailable - maintenance or overload"
+msgstr "Dienst nicht verfügbar, Wartung oder Überlastung"
+
+msgid "Gateway timeout"
+msgstr "Zeitüberschreitung des Gateways"
+
+msgid "HTTP version not supported"
+msgstr "HTTP-Protokollversion nicht unterstützt"
+
+msgid "Variant also negotiates"
+msgstr "Variante nimmt auch an der Aushandlung teil (Konfigurationsfehler)"
+
+msgid "Insufficient storage (WebDAV)"
+msgstr "Nicht genügend Speicherplatz"
+
+msgid "Loop detected (WebDAV)"
+msgstr "Zirkelverweis erkannt"
+
+msgid "Not extended"
+msgstr "Weitere Erweiterung erforderlich"
+
+msgid "Network authentication required"
+msgstr "Netzwerkauthentifizierung erforderlich"
+
+# Cloudflare
+msgid "Unknown error (Cloudflare)"
+msgstr "Unbekannter Fehler"
+
+msgid "Web server is down (Cloudflare)"
+msgstr "Webserver ist ausgefallen"
+
+msgid "Connection timeout (Cloudflare)"
+msgstr "Verbindungszeitüberschreitung"
+
+msgid "Origin is unreachable (Cloudflare)"
+msgstr "Ursprung ist nicht erreichbar"
+
+msgid "A timeout occurred (Cloudflare)"
+msgstr "Eine Zeitüberschreitung ist aufgetreten"
+
+msgid "SSL handshake failed (Cloudflare)"
+msgstr "SSL-Handshake fehlgeschlagen"
+
+msgid "Invalid SSL certificate (Cloudflare)"
+msgstr "Ungültiges SSL-Zertifikat"
+
+msgid "Railgun error (Cloudflare - obsolete)"
+msgstr "Railgun-Fehler (veraltet)"
+
+msgid "Site is overloaded (SSLLabs)"
+msgstr "Website ist überlastet"
+
+msgid "Origin DNS error (Cloudflare) / Site is frozen (Pantheon)"
+msgstr "DNS-Fehler der Ursprungsseite (Cloudflare) / Website eingefroren (Pantheon)"
+
+msgid "Temporarily disabled (Shopify)"
+msgstr "Vorübergehend deaktiviert"
+
+msgid "Unauthorized (AWS ELB)"
+msgstr "Nicht autorisiert"
+
+msgid "Network read timeout error"
+msgstr "Netzwerk-Lesezeitüberschreitungsfehler"
+
+msgid "Network connect timeout error"
+msgstr "Netzwerk-Verbindungszeitüberschreitungsfehler"
+
+msgid "Unexpected token (Shopify)"
+msgstr "Unerwarteter Token"
+
+msgid "Request denied (LinkedIn)"
+msgstr "Anfrage abgelehnt"
+
+msgid "HTTP/2 GOAWAY (AWS ELB)"
+msgstr "HTTP/2-Verbindung wird geschlossen"
+
+msgid "[Unknown]"
+msgstr "Unbekannter Statuscode"
+
+# SMTP und E-Mail
+msgid "Nonstandard success response (ESMTP)"
+msgstr "Nicht standardmäßige Erfolgsantwort (ESMTP)"
+
+msgid "System status, or system help reply"
+msgstr "Systemstatus oder Systemhilfeantwort"
+
+msgid "Help message"
+msgstr "Hilfenachricht"
+
+msgid "SMTP service ready (LMTP)"
+msgstr "SMTP-Dienst bereit (LMTP)"
+
+msgid "Service ready - server is ready to receive mail"
+msgstr "Dienst bereit - E-Mail-Server ist bereit, E-Mails zu empfangen"
+
+msgid "Service closing - connection is being closed"
+msgstr "Dienst wird geschlossen - Verbindung wird getrennt"
+
+msgid "Authentication successful"
+msgstr "Authentifizierung erfolgreich"
+
+msgid "Requested mail action taken and completed"
+msgstr "Angeforderte E-Mail-Aktion wurde ausgeführt und abgeschlossen"
+
+msgid "User not local - will forward to another address"
+msgstr "Benutzer ist nicht lokal - wird an eine andere Adresse weitergeleitet"
+
+msgid "Cannot verify recipient, but will attempt delivery"
+msgstr "Empfänger kann nicht verifiziert werden, Zustellung wird jedoch versucht"
+
+msgid "Message accepted for delivery (DSN)"
+msgstr "E-Mail zur Zustellung angenommen (DSN)"
+
+msgid "User name is a mailbox"
+msgstr "Benutzername ist ein Postfach"
+
+msgid "Authentication challenge - please respond"
+msgstr "Authentifizierungs-Challenge - bitte antworten Sie"
+
+msgid "Start mail input - end with <CRLF>.<CRLF>"
+msgstr "Beginnen Sie mit der Eingabe des E-Mail-Inhalts - beenden Sie mit <CRLF>.<CRLF>"
+
+msgid "Continue (LMTP)"
+msgstr "Fortsetzen (LMTP)"
+
+msgid "Service not available - connection closing, try again later"
+msgstr "Dienst nicht verfügbar - Verbindung wird geschlossen, bitte versuchen Sie es später erneut"
+
+msgid "Mailbox busy or temporarily unavailable (Exchange)"
+msgstr "Postfach ist besetzt oder vorübergehend nicht verfügbar (Exchange)"
+
+msgid "Connection rate limit exceeded (Postfix)"
+msgstr "Verbindungsratenlimit überschritten (Postfix)"
+
+msgid "Too many concurrent connections (Postfix)"
+msgstr "Zu viele gleichzeitige Verbindungen (Postfix)"
+
+msgid "Unable to establish connection (Postfix)"
+msgstr "Verbindung kann nicht hergestellt werden (Postfix)"
+
+msgid "Connection timed out (Postfix)"
+msgstr "Verbindungszeitüberschreitung (Postfix)"
+
+msgid "Connection dropped due to error (Postfix)"
+msgstr "Verbindung aufgrund eines Fehlers abgebrochen (Postfix)"
+
+msgid "Mailbox temporarily locked (Exchange)"
+msgstr "Postfach vorübergehend gesperrt (Exchange)"
+
+msgid "Too many recipients (Postfix/Exim)"
+msgstr "Zu viele Empfänger (Postfix/Exim)"
+
+msgid "Mail server error (Exchange)"
+msgstr "E-Mail-Serverfehler (Exchange)"
+
+msgid "Received loop detected (Exim)"
+msgstr "Empfangsschleife erkannt (Exim)"
+
+msgid "Too many hop count (Exim)"
+msgstr "Zu viele Hops (Exim)"
+
+msgid "DNS lookup failed (Postfix)"
+msgstr "DNS-Suche fehlgeschlagen (Postfix)"
+
+msgid "Unable to authenticate (Postfix)"
+msgstr "Authentifizierung nicht möglich (Postfix)"
+
+msgid "TLS handshake failed (Postfix)"
+msgstr "TLS-Handshake fehlgeschlagen (Postfix)"
+
+msgid "SMTP protocol violation (Postfix)"
+msgstr "SMTP-Protokollverletzung (Postfix)"
+
+msgid "Message size exceeds limit (Exchange)"
+msgstr "E-Mail-Größe überschreitet das Limit (Exchange)"
+
+msgid "Message rate limit exceeded (Postfix)"
+msgstr "E-Mail-Ratenlimit überschritten (Postfix)"
+
+msgid "Mailbox quota exceeded - temporary"
+msgstr "Postfach-Kontingent voll - vorübergehender Zustand"
+
+msgid "Domain not found (Postfix)"
+msgstr "Domain nicht gefunden (Postfix)"
+
+msgid "Message header invalid (Postfix)"
+msgstr "E-Mail-Header ungültig (Postfix)"
+
+msgid "Bounce loop detected (Postfix)"
+msgstr "Bounce-Schleife erkannt (Postfix)"
+
+msgid "Unable to route (Postfix)"
+msgstr "Routing nicht möglich (Postfix)"
+
+msgid "Sender domain not found (Postfix)"
+msgstr "Absenderdomain nicht gefunden (Postfix)"
+
+msgid "Recipient domain not found (Postfix)"
+msgstr "Empfängerdomain nicht gefunden (Postfix)"
+
+msgid "Greylisting in progress - please try again (Postgrey)"
+msgstr "Greylisting läuft - bitte versuchen Sie es erneut (Postgrey)"
+
+msgid "Spam filtering in progress (SpamAssassin)"
+msgstr "Spam-Filterung läuft (SpamAssassin)"
+
+msgid "Virus scanning in progress (ClamAV)"
+msgstr "Virenscanner läuft (ClamAV)"
+
+msgid "Mailbox unavailable - try again later"
+msgstr "Postfach nicht verfügbar - bitte versuchen Sie es später erneut"
+
+msgid "Requested action aborted - error in processing"
+msgstr "Angeforderte Aktion abgebrochen - Fehler bei der Verarbeitung"
+
+msgid "Insufficient system storage - try again later"
+msgstr "Nicht genügend Systemspeicherplatz - bitte versuchen Sie es später erneut"
+
+msgid "Too many messages for this recipient (Exchange)"
+msgstr "Zu viele Nachrichten für diesen Empfänger (Exchange)"
+
+msgid "TLS not available (Postfix)"
+msgstr "TLS nicht verfügbar (Postfix)"
+
+msgid "Server unable to accept messages (Postfix)"
+msgstr "Server kann keine Nachrichten annehmen (Postfix)"
+
+msgid "Temporary failure in DNS lookup (Exim)"
+msgstr "Vorübergehender Fehler bei der DNS-Suche (Exim)"
+
+msgid "Quota exceeded - temporary"
+msgstr "Kontingent überschritten - vorübergehender Zustand"
+
+msgid "Message too big - temporary"
+msgstr "E-Mail zu groß - vorübergehender Zustand"
+
+msgid "Too many messages per connection"
+msgstr "Zu viele E-Mails pro Verbindung"
+
+msgid "Load average too high (Postfix)"
+msgstr "Systemlastdurchschnitt zu hoch (Postfix)"
+
+msgid "Connection refused (Postfix)"
+msgstr "Verbindung abgelehnt (Postfix)"
+
+msgid "Send rate limit exceeded (Postfix)"
+msgstr "Senderatenlimit überschritten (Postfix)"
+
+msgid "Recipient rate limit exceeded (Postfix)"
+msgstr "Empfängerratenlimit überschritten (Postfix)"
+
+msgid "Sender rate limit exceeded (Postfix)"
+msgstr "Absenderratenlimit überschritten (Postfix)"
+
+msgid "IP address rate limit exceeded (Postfix)"
+msgstr "IP-Adressratenlimit überschritten (Postfix)"
+
+msgid "MX lookup failed (Postfix)"
+msgstr "MX-Suche fehlgeschlagen (Postfix)"
+
+msgid "A record lookup failed (Postfix)"
+msgstr "A-Eintrag-Suche fehlgeschlagen (Postfix)"
+
+msgid "PTR record lookup failed (Postfix)"
+msgstr "PTR-Eintrag-Suche fehlgeschlagen (Postfix)"
+
+msgid "Greylisting active - please try again (Postgrey)"
+msgstr "Greylisting aktiv - bitte versuchen Sie es erneut (Postgrey)"
+
+msgid "Access denied - unknown SMTP client hostname"
+msgstr "Zugriff verweigert - unbekannter SMTP-Client-Hostname"
+
+msgid "Access denied - bad syntax for client HELO hostname"
+msgstr "Zugriff verweigert - ungültige Syntax für Client-HELO-Hostname"
+
+msgid "Access denied - SMTP client hostname rejected"
+msgstr "Zugriff verweigert - SMTP-Client-Hostname abgelehnt"
+
+msgid "Access denied - unknown domain for sender or recipient"
+msgstr "Zugriff verweigert - unbekannte Domain für Absender oder Empfänger"
+
+msgid "Sender address rejected - domain not verified (DMARC pending)"
+msgstr "Absenderadresse abgelehnt - Domain nicht verifiziert (DMARC ausstehend)"
+
+msgid "Recipient address rejected - domain not verified (DMARC pending)"
+msgstr "Empfängeradresse abgelehnt - Domain nicht verifiziert (DMARC ausstehend)"
+
+msgid "DKIM verification pending - temporary failure"
+msgstr "DKIM-Überprüfung ausstehend - vorübergehender Fehler"
+
+msgid "SPF verification pending - temporary failure"
+msgstr "SPF-Überprüfung ausstehend - vorübergehender Fehler"
+
+msgid "DMARC verification pending - temporary failure"
+msgstr "DMARC-Überprüfung ausstehend - vorübergehender Fehler"
+
+msgid "DNSBL lookup temporary failure"
+msgstr "DNSBL-Suche - vorübergehender Fehler"
+
+msgid "RHSBL lookup temporary failure"
+msgstr "RHSBL-Suche - vorübergehender Fehler"
+
+msgid "URI DNSBL lookup temporary failure"
+msgstr "URI DNSBL-Suche - vorübergehender Fehler"
+
+msgid "Temporary authentication failure (Dovecot)"
+msgstr "Vorübergehender Authentifizierungsfehler (Dovecot)"
+
+msgid "Temporary authorization failure (Sendmail)"
+msgstr "Vorübergehender Autorisierungsfehler (Sendmail)"
+
+msgid "Rate limit exceeded per sender (Exim)"
+msgstr "Ratenlimit pro Absender überschritten (Exim)"
+
+msgid "Rate limit exceeded per recipient (Exim)"
+msgstr "Ratenlimit pro Empfänger überschritten (Exim)"
+
+msgid "Rate limit exceeded per domain (Exim)"
+msgstr "Ratenlimit pro Domain überschritten (Exim)"
+
+msgid "Rate limit exceeded per IP (Exim)"
+msgstr "Ratenlimit pro IP-Adresse überschritten (Exim)"
+
+msgid "Message queued for later delivery (Postfix)"
+msgstr "E-Mail für spätere Zustellung in die Warteschlange gestellt (Postfix)"
+
+msgid "Delivery delayed due to policy (Exchange)"
+msgstr "Zustellung aufgrund von Richtlinien verzögert (Exchange)"
+
+msgid "Temporary failure in content filter"
+msgstr "Vorübergehender Fehler im Inhaltsfilter"
+
+msgid "Temporary failure in antivirus scanner"
+msgstr "Vorübergehender Fehler im Antivirenscanner"
+
+msgid "Temporary failure in spam filter"
+msgstr "Vorübergehender Fehler im Spamfilter"
+
+msgid "Temporary failure in milter (Postfix)"
+msgstr "Vorübergehender Fehler im Milter (Postfix)"
+
+msgid "Greylisting - try again later"
+msgstr "Greylisting - bitte versuchen Sie es später erneut"
+
+msgid "DDoS protection active - try again later"
+msgstr "DDoS-Schutz aktiv - bitte versuchen Sie es später erneut"
+
+msgid "SMTP policy violation - temporary"
+msgstr "Verletzung der SMTP-Richtlinien - vorübergehender Zustand"
+
+msgid "Temporary error in RCPT TO processing"
+msgstr "Vorübergehender Fehler bei der RCPT TO-Verarbeitung"
+
+msgid "Temporary error in MAIL FROM processing"
+msgstr "Vorübergehender Fehler bei der MAIL FROM-Verarbeitung"
+
+msgid "Temporary error in EHLO/HELO processing"
+msgstr "Vorübergehender Fehler bei der EHLO/HELO-Verarbeitung"
+
+msgid "Temporary error in DATA processing"
+msgstr "Vorübergehender Fehler bei der DATA-Verarbeitung"
+
+msgid "Temporary error - service busy, try again later"
+msgstr "Vorübergehender Fehler - Dienst beschäftigt, bitte versuchen Sie es später erneut"
+
+msgid "Syntax error - command unrecognized or too long"
+msgstr "Syntaxfehler - Befehl nicht erkannt oder zu lang"
+
+msgid "Syntax error in parameters or arguments"
+msgstr "Syntaxfehler in Parametern oder Argumenten"
+
+msgid "Command not implemented"
+msgstr "Befehl nicht implementiert"
+
+msgid "Bad sequence of commands"
+msgstr "Schlechte Befehlsreihenfolge"
+
+msgid "Command parameter not implemented"
+msgstr "Befehlsparameter nicht implementiert"
+
+msgid "Version not supported (ESMTP)"
+msgstr "Version nicht unterstützt (ESMTP)"
+
+msgid "Mailbox path invalid (LMTP)"
+msgstr "Postfachpfad ungültig (LMTP)"
+
+msgid "Too many commands in this session (Postfix)"
+msgstr "Zu viele Befehle in dieser Sitzung (Postfix)"
+
+msgid "Recipient limit exceeded (Postfix)"
+msgstr "Empfängerlimit überschritten (Postfix)"
+
+msgid "Sender limit exceeded (Postfix)"
+msgstr "Absenderlimit überschritten (Postfix)"
+
+msgid "Domain limit exceeded (Postfix)"
+msgstr "Domainlimit überschritten (Postfix)"
+
+msgid "Mailbox does not exist (Exchange)"
+msgstr "Postfach existiert nicht (Exchange)"
+
+msgid "DNS failure - permanent"
+msgstr "DNS-Fehler - dauerhaft"
+
+msgid "Address type not supported (Postfix)"
+msgstr "Adresstyp nicht unterstützt (Postfix)"
+
+msgid "Unable to open mailbox (Postfix)"
+msgstr "Postfach kann nicht geöffnet werden (Postfix)"
+
+msgid "Mailbox locked - permanent"
+msgstr "Postfach gesperrt - dauerhafter Zustand"
+
+msgid "Message rejected due to policy (Exchange)"
+msgstr "E-Mail aufgrund von Richtlinien abgelehnt (Exchange)"
+
+msgid "Content rejected - permanent"
+msgstr "Inhalt abgelehnt - dauerhaft"
+
+msgid "Attachment type not allowed"
+msgstr "Anhangstyp nicht erlaubt"
+
+msgid "Message encoding not supported"
+msgstr "E-Mail-Kodierung nicht unterstützt"
+
+msgid "Sender domain does not exist - permanent"
+msgstr "Absenderdomain existiert nicht - dauerhaft"
+
+msgid "Domain does not accept mail or is closing"
+msgstr "Domain akzeptiert keine E-Mails oder wird geschlossen"
+
+msgid "Recipient domain does not exist - permanent"
+msgstr "Empfängerdomain existiert nicht - dauerhaft"
+
+msgid "Mailbox quota exceeded - permanent"
+msgstr "Postfach-Kontingent voll - dauerhafter Zustand"
+
+msgid "Message size exceeds limit - permanent"
+msgstr "E-Mail-Größe überschreitet das Limit - dauerhaft"
+
+msgid "Authentication required (Sendmail)"
+msgstr "Authentifizierung erforderlich (Sendmail)"
+
+msgid "Authentication failed (Sendmail)"
+msgstr "Authentifizierung fehlgeschlagen (Sendmail)"
+
+msgid "Authentication mechanism not supported"
+msgstr "Authentifizierungsmechanismus nicht unterstützt"
+
+msgid "Authentication credentials invalid"
+msgstr "Authentifizierungsdaten ungültig"
+
+msgid "Authentication account expired"
+msgstr "Authentifizierungskonto abgelaufen"
+
+msgid "Access denied - authentication required"
+msgstr "Zugriff verweigert - Authentifizierung erforderlich"
+
+msgid "Access denied (Sendmailism)"
+msgstr "Zugriff verweigert (Sendmail)"
+
+msgid "Access denied - not authenticated"
+msgstr "Zugriff verweigert - nicht authentifiziert"
+
+msgid "Access denied - account locked"
+msgstr "Zugriff verweigert - Konto gesperrt"
+
+msgid "Access denied - account disabled"
+msgstr "Zugriff verweigert - Konto deaktiviert"
+
+msgid "Authentication failed"
+msgstr "Authentifizierung fehlgeschlagen"
+
+msgid "Authentication required for relay (Postfix)"
+msgstr "Authentifizierung für Relay erforderlich (Postfix)"
+
+msgid "Authentication failed for relay (Postfix)"
+msgstr "Authentifizierung für Relay fehlgeschlagen (Postfix)"
+
+msgid "Encryption required (STARTTLS)"
+msgstr "Verschlüsselte Verbindung erforderlich (STARTTLS)"
+
+msgid "TLS required for this recipient"
+msgstr "Dieser Empfänger benötigt TLS-Verschlüsselung"
+
+msgid "Encryption strength insufficient"
+msgstr "Verschlüsselungsstärke unzureichend"
+
+msgid "Certificate validation failed"
+msgstr "Zertifikatsüberprüfung fehlgeschlagen"
+
+msgid "Invalid TLS certificate"
+msgstr "Ungültiges TLS-Zertifikat"
+
+msgid "TLS protocol version not supported"
+msgstr "TLS-Protokollversion nicht unterstützt"
+
+msgid "Cipher suite not supported"
+msgstr "Verschlüsselungssuite nicht unterstützt"
+
+msgid "Access denied - no valid recipient"
+msgstr "Zugriff verweigert - kein gültiger Empfänger"
+
+msgid "Access denied - no valid sender"
+msgstr "Zugriff verweigert - kein gültiger Absender"
+
+msgid "Access denied - domain not allowed"
+msgstr "Zugriff verweigert - Domain nicht erlaubt"
+
+msgid "Access denied - IP address blocked (permanent)"
+msgstr "Zugriff verweigert - IP-Adresse blockiert (dauerhaft)"
+
+msgid "Access denied - sender domain blacklisted"
+msgstr "Zugriff verweigert - Absenderdomain auf schwarzer Liste"
+
+msgid "Mailbox unavailable - requested action not taken"
+msgstr "Postfach nicht verfügbar - angeforderte Aktion nicht ausgeführt"
+
+msgid "User not local - please try forwarding address"
+msgstr "Benutzer nicht lokal - bitte verwenden Sie die Weiterleitungsadresse"
+
+msgid "Requested action aborted - exceeded storage allocation"
+msgstr "Angeforderte Aktion abgebrochen - Speicherzuweisung überschritten"
+
+msgid "Mailbox name not allowed"
+msgstr "Postfachname nicht erlaubt"
+
+msgid "Requested action rejected - access denied"
+msgstr "Angeforderte Aktion abgelehnt - Zugriff verweigert"
+
+msgid "MAIL FROM/RCPT TO parameters not recognized"
+msgstr "MAIL FROM/RCPT TO-Parameter nicht erkannt"
+
+msgid "Domain not allowed to send (DMARC reject)"
+msgstr "Domain darf nicht senden (DMARC-Ablehnung)"
+
+msgid "Too many duplicate messages - permanent"
+msgstr "Zu viele doppelte Nachrichten - dauerhaft"
+
+msgid "Sender address rejected - domain not in SPF"
+msgstr "Absenderadresse abgelehnt - Domain nicht in SPF"
+
+msgid "Sender address rejected - DKIM verification failed"
+msgstr "Absenderadresse abgelehnt - DKIM-Überprüfung fehlgeschlagen"
+
+msgid "Sender address rejected - DMARC policy reject"
+msgstr "Absenderadresse abgelehnt - DMARC-Richtlinie lehnt ab"
+
+msgid "Recipient address rejected - DMARC policy reject"
+msgstr "Empfängeradresse abgelehnt - DMARC-Richtlinie lehnt ab"
+
+msgid "Message rejected due to spam content"
+msgstr "E-Mail aufgrund von Spam-Inhalt abgelehnt"
+
+msgid "Message rejected due to virus detected"
+msgstr "E-Mail aufgrund von Virenerkennung abgelehnt"
+
+msgid "Message rejected due to malicious content"
+msgstr "E-Mail aufgrund von schädlichem Inhalt abgelehnt"
+
+msgid "Message rejected due to phishing detection"
+msgstr "E-Mail aufgrund von Phishing-Erkennung abgelehnt"
+
+msgid "Message rejected due to malware detection"
+msgstr "E-Mail aufgrund von Malware-Erkennung abgelehnt"
+
+msgid "Message rejected due to policy - permanent"
+msgstr "E-Mail aufgrund von Richtlinien abgelehnt - dauerhaft"
+
+msgid "Message rejected due to content filtering"
+msgstr "E-Mail aufgrund von Inhaltsfilterung abgelehnt"
+
+msgid "Message rejected due to reputation"
+msgstr "E-Mail aufgrund von Reputation abgelehnt"
+
+msgid "Access denied - access_map violation"
+msgstr "Zugriff verweigert - Verstoß gegen access_map"
+
+msgid "Access denied - SMTP client listed in RBL"
+msgstr "Zugriff verweigert - SMTP-Client auf RBL-Liste"
+
+msgid "Access denied - relay not authorized"
+msgstr "Zugriff verweigert - Relay nicht autorisiert"
+
+msgid "Access denied - unknown client HELO hostname"
+msgstr "Zugriff verweigert - unbekannter Client-HELO-Hostname"
+
+msgid "Access denied - invalid domain (not FQDN)"
+msgstr "Zugriff verweigert - ungültige Domain (kein FQDN)"
+
+msgid "Access denied - domain not qualified"
+msgstr "Zugriff verweigert - Domain nicht qualifiziert"
+
+msgid "Access denied - mail server misconfigured"
+msgstr "Zugriff verweigert - E-Mail-Server falsch konfiguriert"
+
+msgid "Access denied - open relay not allowed"
+msgstr "Zugriff verweigert - Offenes Relay nicht erlaubt"
+
+msgid "Access denied - proxy not allowed"
+msgstr "Zugriff verweigert - Proxy nicht erlaubt"
+
+msgid "Access denied - dynamic IP not allowed"
+msgstr "Zugriff verweigert - Dynamische IP-Adresse nicht erlaubt"
+
+msgid "Access denied - residential IP not allowed"
+msgstr "Zugriff verweigert - Private IP-Adresse nicht erlaubt"
+
+msgid "Access denied - VPN/Tor detected"
+msgstr "Zugriff verweigert - VPN/Tor erkannt"
+
+msgid "Access denied - Spamhaus DROP listed"
+msgstr "Zugriff verweigert - Auf Spamhaus DROP-Liste"
+
+msgid "Access denied - URL listed in URIBL"
+msgstr "Zugriff verweigert - URL auf URIBL-Liste"
+
+msgid "Access denied - domain in RHSBL"
+msgstr "Zugriff verweigert - Domain auf RHSBL-Liste"
+
+msgid "Access denied - IP in DNSWL (policy)"
+msgstr "Zugriff verweigert - IP-Adresse auf DNSWL-Liste (Richtlinie)"
+
+msgid "Delivery failed - mailbox not found"
+msgstr "Zustellung fehlgeschlagen - Postfach nicht gefunden"
+
+msgid "Delivery failed - recipient not local"
+msgstr "Zustellung fehlgeschlagen - Empfänger nicht lokal"
+
+msgid "Delivery failed - recipient rejected"
+msgstr "Zustellung fehlgeschlagen - Empfänger abgelehnt"
+
+msgid "Delivery failed - sender rejected"
+msgstr "Zustellung fehlgeschlagen - Absender abgelehnt"
+
+msgid "Delivery failed - relay rejected"
+msgstr "Zustellung fehlgeschlagen - Relay abgelehnt"
+
+msgid "Delivery failed - DNS permanent error"
+msgstr "Zustellung fehlgeschlagen - dauerhafter DNS-Fehler"
+
+msgid "Delivery failed - MX permanent error"
+msgstr "Zustellung fehlgeschlagen - dauerhafter MX-Fehler"
+
+msgid "Delivery failed - A record permanent error"
+msgstr "Zustellung fehlgeschlagen - dauerhafter A-Eintrag-Fehler"
+
+msgid "Delivery failed - PTR record permanent error"
+msgstr "Zustellung fehlgeschlagen - dauerhafter PTR-Eintrag-Fehler"
+
+msgid "Delivery failed - policy permanent error"
+msgstr "Zustellung fehlgeschlagen - dauerhafter Richtlinienfehler"
+
+msgid "DSN: Success - delivery status notification"
+msgstr "DSN: Erfolg - Zustellstatusbenachrichtigung"
+
+msgid "DSN: Delivery delayed"
+msgstr "DSN: Zustellung verzögert"
+
+msgid "DSN: Delivery failed - permanent"
+msgstr "DSN: Zustellung fehlgeschlagen - dauerhaft"
+
+msgid "DSN: Delivery failed - temporary"
+msgstr "DSN: Zustellung fehlgeschlagen - vorübergehend"
+
+msgid "DSN: Message expired"
+msgstr "DSN: Nachricht abgelaufen"
+
+msgid "DSN: Message bounced"
+msgstr "DSN: Nachricht zurückgesendet"
+
+msgid "DSN: Message discarded"
+msgstr "DSN: Nachricht verworfen"
+
+msgid "DSN: Message filtered"
+msgstr "DSN: Nachricht gefiltert"
+
+msgid "DSN: Message quarantined"
+msgstr "DSN: Nachricht unter Quarantäne gestellt"
+
+msgid "DSN: Message held for review"
+msgstr "DSN: Nachricht zur Überprüfung zurückgehalten"
+
+msgid "MTA-STS policy required"
+msgstr "MTA-STS-Richtlinie erforderlich"
+
+msgid "MTA-STS policy validation failed"
+msgstr "Validierung der MTA-STS-Richtlinie fehlgeschlagen"
+
+msgid "TLS reporting required"
+msgstr "TLS-Berichterstattung erforderlich"
+
+msgid "TLS report requested"
+msgstr "TLS-Bericht angefordert"
+
+msgid "SMTP MTA Strict Transport Security active"
+msgstr "SMTP MTA Strict Transport Security aktiv"
+
+msgid "DANE validation required"
+msgstr "DANE-Validierung erforderlich"
+
+msgid "DANE validation failed"
+msgstr "DANE-Validierung fehlgeschlagen"
+
+msgid "TLSA record missing"
+msgstr "TLSA-Eintrag fehlt"
+
+msgid "Certificate name mismatch"
+msgstr "Zertifikatsname stimmt nicht überein"
+
+msgid "Certificate expired"
+msgstr "Zertifikat abgelaufen"
+
+msgid "AUTH LOGIN required"
+msgstr "AUTH LOGIN erforderlich"
+
+msgid "AUTH PLAIN required"
+msgstr "AUTH PLAIN erforderlich"
+
+msgid "AUTH CRAM-MD5 required"
+msgstr "AUTH CRAM-MD5 erforderlich"
+
+msgid "AUTH DIGEST-MD5 required"
+msgstr "AUTH DIGEST-MD5 erforderlich"
+
+msgid "AUTH GSSAPI required"
+msgstr "AUTH GSSAPI erforderlich"
+
+msgid "AUTH NTLM required"
+msgstr "AUTH NTLM erforderlich"
+
+msgid "AUTH SCRAM required"
+msgstr "AUTH SCRAM erforderlich"
+
+msgid "AUTH OAUTHBEARER required"
+msgstr "AUTH OAUTHBEARER erforderlich"
+
+msgid "AUTH XOAUTH2 required"
+msgstr "AUTH XOAUTH2 erforderlich"
+
+msgid "Exchange: Mailbox database error"
+msgstr "Exchange: Fehler in der Postfachdatenbank"
+
+msgid "Exchange: Store driver error"
+msgstr "Exchange: Fehler im Speichertreiber"
+
+msgid "Exchange: Transport agent error"
+msgstr "Exchange: Fehler im Transportagenten"
+
+msgid "Exchange: Content conversion error"
+msgstr "Exchange: Fehler bei der Inhaltskonvertierung"
+
+msgid "Exchange: Routing error"
+msgstr "Exchange: Routing-Fehler"
+
+msgid "Exchange: Mail flow stalled"
+msgstr "Exchange: E-Mail-Fluss angehalten"
+
+msgid "Exchange: Shadow redundancy error"
+msgstr "Exchange: Fehler in der Schattenredundanz"
+
+msgid "Exchange: Safety net error"
+msgstr "Exchange: Fehler im Sicherheitsnetz"
+
+msgid "Exchange: Queue database error"
+msgstr "Exchange: Fehler in der Warteschlangendatenbank"
+
+msgid "Exchange: Message throttled"
+msgstr "Exchange: Nachricht gedrosselt"
+
+msgid "Postfix: Bounce queue error"
+msgstr "Postfix: Fehler in der Bounce-Warteschlange"
+
+msgid "Postfix: Deferred queue error"
+msgstr "Postfix: Fehler in der zurückgestellten Warteschlange"
+
+msgid "Postfix: Hold queue error"
+msgstr "Postfix: Fehler in der Haltewarteschlange"
+
+msgid "Postfix: Incoming queue error"
+msgstr "Postfix: Fehler in der Eingangswarteschlange"
+
+msgid "Postfix: Active queue error"
+msgstr "Postfix: Fehler in der aktiven Warteschlange"
+
+msgid "Postfix: Corrupted queue file"
+msgstr "Postfix: Beschädigte Warteschlangendatei"
+
+msgid "Sendmail: Queue runner error"
+msgstr "Sendmail: Fehler im Warteschlangen-Ausführer"
+
+msgid "Sendmail: Alias database error"
+msgstr "Sendmail: Fehler in der Alias-Datenbank"
+
+msgid "Sendmail: Virtuser table error"
+msgstr "Sendmail: Fehler in der Virtuser-Tabelle"
+
+msgid "Sendmail: Mailer definition error"
+msgstr "Sendmail: Fehler in der Mailer-Definition"
+
+msgid "Exim: Router configuration error"
+msgstr "Exim: Fehler in der Router-Konfiguration"
+
+msgid "Exim: Transport configuration error"
+msgstr "Exim: Fehler in der Transportkonfiguration"
+
+msgid "Exim: Director configuration error"
+msgstr "Exim: Fehler in der Director-Konfiguration"
+
+msgid "Exim: Retry configuration error"
+msgstr "Exim: Fehler in der Wiederholungskonfiguration"
+
+msgid "Exim: Rewrite configuration error"
+msgstr "Exim: Fehler in der Umschreibungskonfiguration"
+
+msgid "Exim: Authentication configuration error"
+msgstr "Exim: Fehler in der Authentifizierungskonfiguration"
+
+msgid "Exim: ACL configuration error"
+msgstr "Exim: Fehler in der ACL-Konfiguration"
+
+msgid "Exim: Local_scan configuration error"
+msgstr "Exim: Fehler in der Local_scan-Konfiguration"
+
+msgid "Exim: Lookup configuration error"
+msgstr "Exim: Fehler in der Lookup-Konfiguration"
+
+msgid "Exim: Expansion configuration error"
+msgstr "Exim: Fehler in der Erweiterungskonfiguration"
+
+msgid "HTTP Protocol Versions"
+msgstr "HTTP-Protokollversionen"
+
+msgid "Protocol"
+msgstr "Protokoll"
+
+msgid "Request %"
+msgstr "Anteil der Anfragen"
+
+msgid "Bandwidth %"
+msgstr "Anteil der Bandbreite"
+
+msgid "Each request requires a new connection"
+msgstr "Jede Anfrage erfordert eine neue Verbindung"
+
+msgid "Multiple requests can reuse one connection"
+msgstr "Mehrere Anfragen können eine Verbindung wiederverwenden"
+
+msgid "Multiple requests in parallel over one connection"
+msgstr "Mehrere Anfragen parallel über eine Verbindung"
+
+msgid "Faster connection, better performance on poor networks"
+msgstr "Schnellere Verbindung, bessere Leistung in schlechten Netzwerken"
+
+msgid "No protocol data available"
+msgstr "Keine Protokolldaten verfügbar"
+
+msgid "of requests use HTTP/1.0"
+msgstr "der Anfragen verwenden das HTTP/1.0-Protokoll"
+
+msgid "From access logs"
+msgstr "Aus den Zugriffsprotokollen"
+
+msgid "No HTTP/2 requests detected"
+msgstr "Keine HTTP/2-Anfragen erkannt"
+
+msgid "All requests are HTTP/1.0, no HTTP/2 requests"
+msgstr "Alle aktuellen Anfragen sind HTTP/1.0, keine HTTP/2-Anfragen"
+
+msgid "HTTP/3 not detected"
+msgstr "Keine HTTP/3-Anfragen erkannt"
+
+msgid "all requests do not include QUIC/HTTP/3 protocol requests"
+msgstr "alle aktuellen Anfragen enthalten keine QUIC/HTTP/3-Protokollanfragen"
+
+msgid "Mail Authentication Statistics"
+msgstr "E-Mail-Authentifizierungsstatistiken"
+
+msgid "Authentication"
+msgstr "Authentifizierungstyp"
+
+msgid "Pass"
+msgstr "Erfolg"
+
+msgid "Fail"
+msgstr "Fehlgeschlagen"
+
+msgid "Softfail"
+msgstr "Weicher Fehlschlag"
+
+msgid "Neutral"
+msgstr "Neutral"
+
+msgid "None"
+msgstr "Keine"
+
+msgid "Mail Queue Delay Statistics"
+msgstr "Statistiken zur E-Mail-Warteschlangenverzögerung"
+
+msgid "Delay Range"
+msgstr "Verzögerungsbereich"
+
+msgid "Count"
+msgstr "Anzahl"
+
+msgid "Percentage"
+msgstr "Prozentsatz"
+
+msgid "TLS Encryption Statistics"
+msgstr "TLS-Verschlüsselungsstatistiken"
+
+msgid "TLS Versions"
+msgstr "TLS-Versionen"
+
+msgid "Top Ciphers"
+msgstr "Häufigste Chiffren"
+
+msgid "robot_hits_detail_both"
+msgstr "Anfragen insgesamt: %s (normale Seiten: %s, robots.txt: %s)"
+
+msgid "robot_hits_detail_only_robots"
+msgstr "Nur robots.txt: %s mal, keine anderen Seiten abgerufen"
+
+msgid "robot_hits_detail_normal"
+msgstr "Anfragen auf normale Seiten: %s"
+
+# Hilfe und Tipps
+msgid "Troubleshooting"
+msgstr "Fehlerbehebung"
+
+msgid "Did you use the correct URL?"
+msgstr "Haben Sie die richtige URL verwendet?"
+
+msgid "Example:"
+msgstr "Beispiel:"
+
+msgid "Did you use correct config parameter?"
+msgstr "Haben Sie den richtigen Konfigurationsparameter verwendet?"
+
+msgid "Example: If your config file is awstats.mysite.conf, use -config=mysite"
+msgstr "Beispiel: Wenn Ihre Konfigurationsdatei awstats.meineseite.conf heißt, verwenden Sie -config=meineseite"
+
+msgid "Did you create your config file 'awstats.$SiteConfig.conf'?"
+msgstr "Haben Sie Ihre Konfigurationsdatei 'awstats.$SiteConfig.conf' erstellt?"
+
+msgid "If not, you can run \"awstats_configure.pl\" from command line, or create it manually."
+msgstr "Wenn nicht, können Sie \"awstats_configure.pl\" über die Befehlszeile ausführen oder die Datei manuell erstellen."
+
+msgid "Setup"
+msgstr "Einrichtung"
+
+msgid "file, web server or permissions may be wrong."
+msgstr "Datei, Webserver oder Berechtigungen könnten falsch sein."
+
+msgid "Check config file, permissions and AWStats documentation (in 'docs' directory)."
+msgstr "Überprüfen Sie die Konfigurationsdatei, die Berechtigungen und die AWStats-Dokumentation (im Verzeichnis 'docs')."
+
+msgid "Warning: Can't find language files for \"%s\". English will be used."
+msgstr "Warnung: Sprachdateien für \"%s\" nicht gefunden. Es wird Englisch verwendet."
+
+#------------------------------------------------------------------------------
+# Fehler- und Signalbehandlung
+#------------------------------------------------------------------------------
+
+msgid "%s process (ID %s) interrupted by signal %s."
+msgstr "%s-Prozess (ID %s) wurde durch Signal %s unterbrochen."
+
+msgid "An AWStats update process seems to be already running for this config file. Try later. If this is not true, remove manually lock file"
+msgstr "Es scheint bereits ein AWStats-Aktualisierungsprozess für diese Konfigurationsdatei zu laufen. Versuchen Sie es später erneut. Wenn dies nicht zutrifft, entfernen Sie manuell die Sperrdatei"
+
+#------------------------------------------------------------------------------
+# Neue Statistiktitel
+#------------------------------------------------------------------------------
+msgid "Report Overview"
+msgstr "Berichtsübersicht"
+
+msgid "Monthly Statistics"
+msgstr "Monatliche Statistiken"
+
+msgid "Daily Statistics"
+msgstr "Tägliche Statistiken"
+
+msgid "Statistics by Day of Week"
+msgstr "Statistiken nach Wochentag"
+
+msgid "Hourly Page Views"
+msgstr "Seitenaufrufe pro Stunde"
+
+msgid "Traffic Sources"
+msgstr "Verkehrsquellen"
+
+msgid "Other Sources"
+msgstr "Andere Quellen"
+
+msgid "tooltip_1"
+msgstr "Anzahl der Sitzungen der Besucher auf der Website. Wenn derselbe Besucher nach mehr als 30 Minuten Inaktivität erneut zugreift, wird dies als neuer Besuch gezählt"
+
+msgid "tooltip_2"
+msgstr "Anzahl der verschiedenen Besucher, die Ihre Website im ausgewählten Zeitraum besucht haben. Statistik basierend auf IP-Adressen"
+
+msgid "tooltip_3"
+msgstr "Anzahl der Anfragen, die als Seiten betrachtet werden (z. B. HTML, PHP, ASP), ohne statische Dateien wie Bilder, CSS, JS"
+
+msgid "tooltip_4"
+msgstr "Gesamtzahl aller an den Server gesendeten Anfragen, einschließlich Seiten, Bilder, CSS, JS und aller anderen Dateien"
+
+msgid "tooltip_5"
+msgstr "Gesamtdatenmenge, die übertragen wurde, während der Server auf Benutzeranfragen antwortet"
+
+msgid "tooltip_13"
+msgstr "Statistik der Quellen, die über Suchmaschinen kommen. Zeigt, welche Suchmaschinen Verkehr bringen und welche Suchbegriffe die Besucher verwenden."
+
+msgid "tooltip_14"
+msgstr "Statistik der Quellen, die über externe Links von anderen Websites kommen. Zeigt, welche Websites auf Sie verlinken und wie viel Verkehr sie bringen."
+
+msgid "tooltip_15"
+msgstr "Wörter, die Besucher verwenden, wenn sie Sie über Suchmaschinen finden. Schlüsselwörter sind einzelne Wörter, Schlüsselphrasen sind Kombinationen mehrerer Wörter."
+
+msgid "tooltip_16"
+msgstr "Automatische Programme wie Suchroboter, KI-Trainings-Bots, Schwachstellenscanner. Die Zahlen in Klammern zeigen die Anfragen für normale Seiten und robots.txt an."
+
+msgid "tooltip_17"
+msgstr "24-Stunden-Verkehrsverteilungsdiagramm. Zeigt die Besuche Ihrer Website zu verschiedenen Tageszeiten und hilft, die aktiven Zeiten der Benutzer zu verstehen."
+
+msgid "tooltip_18"
+msgstr "Diese Spalte zeigt die täglichen/wöchentlichen Durchschnittswerte im ausgewählten Zeitraum und hilft, den Gesamttrend zu verstehen."
+
+msgid "tooltip_19"
+msgstr "Klicken Sie auf einen Punkt im Diagramm, um Details anzuzeigen. Halten Sie den Mauszeiger über ein Diagrammelement, um bestimmte Werte anzuzeigen."
+
+msgid "tooltip_20"
+msgstr "Daten, die nicht in vorhandene Kategorien eingeordnet werden können, normalerweise aufgrund eines ungewöhnlichen Datenformats oder fehlender Informationen."
+
+msgid "tooltip_21"
+msgstr "Erkannte Wurmangriffe. Würmer sind sich selbst replizierende Schadprogramme, die sich normalerweise über Netzwerksicherheitslücken verbreiten."
+
+#------------------------------------------------------------------------------
+# Hilfeinformationen anzeigen - Community Edition
+#------------------------------------------------------------------------------
+msgid "AWStats %s - Advanced Web Statistics"
+msgstr "AWStats %s - Erweiterte Webstatistiken"
+
+msgid "Copyright (c) 2000-2025 Laurent Destailleur"
+msgstr "Copyright (c) 2000-2025 Laurent Destailleur"
+
+msgid "Copyright (c) 2026-latest Community Edition"
+msgstr "Copyright (c) 2026-neueste Community Edition"
+
+msgid "AWStats comes with ABSOLUTELY NO WARRANTY. It's a free software distributed with a GNU General Public License (See LICENSE file for details)."
+msgstr "AWStats wird OHNE JEGLICHE GARANTIE bereitgestellt. Es ist eine freie Software, die unter der GNU General Public License vertrieben wird (Einzelheiten finden Sie in der LICENSE-Datei)."
+
+msgid "Syntax: %s -config=virtualhostname [options]"
+msgstr "Syntax: %s -config=virtueller_hostname [Optionen]"
+
+msgid "This runs %s in command line to update statistics (-update option) of a web site, from the log file defined in AWStats config file, or build a HTML report (-output option)."
+msgstr "Dieser Befehl führt %s in der Befehlszeile aus, um Statistiken (-update-Option) einer Website aus der in der AWStats-Konfigurationsdatei definierten Logdatei zu aktualisieren oder einen HTML-Bericht (-output-Option) zu erstellen."
+
+msgid "First, %s tries to read %s.virtualhostname.conf as the config file. If not found, %s tries to read %s.conf, and finally the full path passed to -config="
+msgstr "Zuerst versucht %s, %s.virtueller_hostname.conf als Konfigurationsdatei zu lesen. Wenn nicht gefunden, versucht %s, %s.conf zu lesen, und schließlich den vollständigen Pfad, der an -config= übergeben wurde."
+
+msgid "Note 1: Config files (*.conf) must be in /etc/awstats, /usr/local/etc/awstats, /etc or same directory than awstats.pl script file."
+msgstr "Hinweis 1: Konfigurationsdateien (*.conf) müssen sich in /etc/awstats, /usr/local/etc/awstats, /etc oder im selben Verzeichnis wie die awstats.pl-Skriptdatei befinden."
+
+msgid "Note 2: If AWSTATS_FORCE_CONFIG environment variable is defined, AWStats will use it as the 'config' value, whatever is the value on command line or URL."
+msgstr "Hinweis 2: Wenn die Umgebungsvariable AWSTATS_FORCE_CONFIG definiert ist, verwendet AWStats sie als 'config'-Wert, unabhängig vom Wert in der Befehlszeile oder URL."
+
+msgid "See AWStats documentation for all setup instructions."
+msgstr "Alle Installationsanweisungen finden Sie in der AWStats-Dokumentation."
+
+msgid "Options to update statistics:"
+msgstr "Optionen zum Aktualisieren von Statistiken:"
+
+msgid "  -update        to update statistics (default)"
+msgstr "  -update        aktualisiert die Statistiken (Standard)"
+
+msgid "  -showsteps     to add benchmark information every %s lines processed"
+msgstr "  -showsteps     fügt Benchmark-Informationen alle %s verarbeiteten Zeilen hinzu"
+
+msgid "  -showcorrupted to add output for each corrupted lines found, with reason"
+msgstr "  -showcorrupted fügt für jede gefundene beschädigte Zeile eine Ausgabe mit Grund hinzu"
+
+msgid "  -showdropped   to add output for each dropped lines found, with reason"
+msgstr "  -showdropped   fügt für jede gefundene verworfene Zeile eine Ausgabe mit Grund hinzu"
+
+msgid "  -showunknownorigin  to output referer when it can't be parsed"
+msgstr "  -showunknownorigin   gibt den Referer aus, wenn er nicht analysiert werden kann"
+
+msgid "  -showdirectorigin   to output log line when origin is a direct access"
+msgstr "  -showdirectorigin    gibt die Logzeile aus, wenn die Herkunft ein direkter Zugriff ist"
+
+msgid "  -updatefor=n   to stop the update process after parsing n lines"
+msgstr "  -updatefor=n   stoppt den Aktualisierungsprozess nach der Analyse von n Zeilen"
+
+msgid "  -LogFile=x     to change log to analyze whatever is 'LogFile' in config file"
+msgstr "  -LogFile=x     ändert die zu analysierende Logdatei, unabhängig von 'LogFile' in der Konfigurationsdatei"
+
+msgid "  Be care to process log files in chronological order when updating statistics."
+msgstr "  Achten Sie darauf, Logdateien beim Aktualisieren der Statistiken in chronologischer Reihenfolge zu verarbeiten."
+
+msgid "Options to show statistics:"
+msgstr "Optionen zum Anzeigen von Statistiken:"
+
+msgid "  -output      to output main HTML report (no update made except with -update)"
+msgstr "  -output       gibt den Haupt-HTML-Bericht aus (keine Aktualisierung außer mit -update)"
+
+msgid "  -output=x    to output other report pages where x is:"
+msgstr "  -output=x     gibt andere Berichtsseiten aus, wobei x ist:"
+
+msgid "build page of all domains/countries"
+msgstr "erstellt die Seite aller Domains/Länder"
+
+msgid "build page of all hosts"
+msgstr "erstellt die Seite aller Hosts"
+
+msgid "build page of last hits for hosts"
+msgstr "erstellt die Seite der letzten Anfragen für Hosts"
+
+msgid "build page of all unresolved IP"
+msgstr "erstellt die Seite aller nicht aufgelösten IPs"
+
+msgid "build page of all email senders (maillog)"
+msgstr "erstellt die Seite aller E-Mail-Absender (maillog)"
+
+msgid "build page of last email senders (maillog)"
+msgstr "erstellt die Seite der letzten E-Mail-Absender (maillog)"
+
+msgid "build page of all email receivers (maillog)"
+msgstr "erstellt die Seite aller E-Mail-Empfänger (maillog)"
+
+msgid "build page of last email receivers (maillog)"
+msgstr "erstellt die Seite der letzten E-Mail-Empfänger (maillog)"
+
+msgid "build page of all logins used"
+msgstr "erstellt die Seite aller verwendeten Logins"
+
+msgid "build page of last hits for logins"
+msgstr "erstellt die Seite der letzten Anfragen für Logins"
+
+msgid "build page of all robots/spider visits"
+msgstr "erstellt die Seite aller Roboter/Spider-Besuche"
+
+msgid "build page of last hits for robots"
+msgstr "erstellt die Seite der letzten Anfragen für Roboter"
+
+msgid "list most often viewed pages"
+msgstr "listet die am häufigsten aufgerufenen Seiten auf"
+
+msgid "list most often viewed pages matching filter"
+msgstr "listet die am häufigsten aufgerufenen Seiten auf, die dem Filter entsprechen"
+
+msgid "list entry pages"
+msgstr "listet die Einstiegsseiten auf"
+
+msgid "list entry pages matching filter"
+msgstr "listet die Einstiegsseiten auf, die dem Filter entsprechen"
+
+msgid "list exit pages"
+msgstr "listet die Ausstiegsseiten auf"
+
+msgid "list exit pages matching filter"
+msgstr "listet die Ausstiegsseiten auf, die dem Filter entsprechen"
+
+msgid "build page with os detailed versions"
+msgstr "erstellt die Seite mit detaillierten Betriebssystemversionen"
+
+msgid "build page with browsers detailed versions"
+msgstr "erstellt die Seite mit detaillierten Browserversionen"
+
+msgid "list 'User Agents' with unknown browser"
+msgstr "listet 'User Agents' mit unbekanntem Browser auf"
+
+msgid "list 'User Agents' with unknown OS"
+msgstr "listet 'User Agents' mit unbekanntem Betriebssystem auf"
+
+msgid "build page of all refering search engines"
+msgstr "erstellt die Seite aller verweisenden Suchmaschinen"
+
+msgid "build page of all refering pages"
+msgstr "erstellt die Seite aller verweisenden Seiten"
+
+msgid "list all keyphrases used on search engines"
+msgstr "listet alle in Suchmaschinen verwendeten Schlüsselphrasen auf"
+
+msgid "list all keywords used on search engines"
+msgstr "listet alle in Suchmaschinen verwendeten Schlüsselwörter auf"
+
+msgid "list 'Referers' for 404 errors"
+msgstr "listet 'Referer' für 404-Fehler auf"
+
+msgid "build page of all values for ExtraSection X"
+msgstr "erstellt die Seite aller Werte für ExtraSection X"
+
+msgid "  -staticlinks           to have static links in HTML report page"
+msgstr "  -staticlinks           verwendet statische Links in der HTML-Berichtsseite"
+
+msgid "  -staticlinksext=xxx    to have static links with .xxx extension instead of .html"
+msgstr "  -staticlinksext=xxx    verwendet statische Links mit der Endung .xxx anstelle von .html"
+
+msgid "  -lang=LL     to output a HTML report in language LL (en,de,es,fr,it,nl,zh-cn,...)"
+msgstr "  -lang=LL     gibt einen HTML-Bericht in der Sprache LL aus (de,en,es,fr,it,nl,zh-cn,...)"
+
+msgid "  -month=MM    to output a HTML report for an old month MM"
+msgstr "  -month=MM    gibt einen HTML-Bericht für einen alten Monat MM aus"
+
+msgid "  -year=YYYY   to output a HTML report for an old year YYYY"
+msgstr "  -year=YYYY   gibt einen HTML-Bericht für ein altes Jahr YYYY aus"
+
+msgid "  The 'date' options doesn't allow you to process old log file. They only allow you to see a past report for a chosen month/year period instead of current month/year."
+msgstr "  Die 'date'-Optionen erlauben Ihnen nicht, alte Logdateien zu verarbeiten. Sie erlauben Ihnen nur, einen vergangenen Bericht für einen ausgewählten Monat/Jahreszeitraum anstelle des aktuellen Monats/Jahres zu sehen."
+
+msgid "Other options:"
+msgstr "Andere Optionen:"
+
+msgid "  -debug=X     to add debug informations lesser than level X (speed reduced)"
+msgstr "  -debug=X     fügt Debug-Informationen unterhalb der Ebene X hinzu (Geschwindigkeit reduziert)"
+
+msgid "  -version     show AWStats version"
+msgstr "  -version, -v     zeigt die AWStats-Version an"
+
+msgid "Now supports/detects:"
+msgstr "Unterstützt/erkennt derzeit:"
+
+msgid "  Web/Ftp/Mail/streaming server log analyzis (and load balanced log files)"
+msgstr "  Loganalyse von Web/FTP/E-Mail/Streaming-Servern (und Load-Balanced-Logdateien)"
+
+msgid "  Reverse DNS lookup (IPv4 and IPv6) and GeoIP lookup"
+msgstr "  Reverse-DNS-Suche (IPv4 und IPv6) und GeoIP-Suche"
+
+msgid "  Number of visits, number of unique visitors"
+msgstr "  Anzahl der Besuche, Anzahl der eindeutigen Besucher"
+
+msgid "  Visits duration and list of last visits"
+msgstr "  Besuchsdauer und Liste der letzten Besuche"
+
+msgid "  Authenticated users"
+msgstr "  Authentifizierte Benutzer"
+
+msgid "  Days of week and rush hours"
+msgstr "  Wochentage und Stoßzeiten"
+
+msgid "  Hosts list and unresolved IP addresses list"
+msgstr "  Hostliste und Liste nicht aufgelöster IP-Adressen"
+
+msgid "  Most viewed, entry and exit pages"
+msgstr "  Meistaufgerufene, Einstiegs- und Ausstiegsseiten"
+
+msgid "  Files type and Web compression (mod_gzip, mod_deflate stats)"
+msgstr "  Dateitypen und Webkomprimierung (mod_gzip-, mod_deflate-Statistiken)"
+
+msgid "  Configured Database Statistics"
+msgstr "  Konfigurierte Datenbankstatistiken"
+
+msgid "  %s domains/countries"
+msgstr "  %s Domains/Länder"
+
+msgid "  %s robots"
+msgstr "  %s Roboter"
+
+msgid "  %s worm's families"
+msgstr "  %s Wurmfamilien"
+
+msgid "  %s operating systems"
+msgstr "  %s Betriebssysteme"
+
+msgid "  %s browsers (%s with phone browsers database)"
+msgstr "  %s Browser (einschließlich Mobilbrowser-Datenbank %s)"
+
+msgid "  %s search engines (and keyphrases/keywords used from them)"
+msgstr "  %s Suchmaschinen (und daraus verwendete Schlüsselphrasen/Schlüsselwörter)"
+
+msgid "  All HTTP errors with last referrer"
+msgstr "  Alle HTTP-Fehler mit letztem Referer"
+
+msgid "  Report by day/month/year"
+msgstr "  Bericht nach Tag/Monat/Jahr"
+
+msgid "  Dynamic or static HTML or XHTML reports, static PDF reports"
+msgstr "  Dynamische oder statische HTML- oder XHTML-Berichte, statische PDF-Berichte"
+
+msgid "  Indexed text or XML monthly database"
+msgstr "  Indexierte Text- oder XML-Monatsdatenbank"
+
+msgid "  And a lot of other advanced features and options..."
+msgstr "  Und viele andere erweiterte Funktionen und Optionen..."
+
+msgid "  New versions and FAQ at http://www.awstats.org"
+msgstr "  Neue Versionen und FAQ auf https://github.com/hestiacn/vstats/issues"

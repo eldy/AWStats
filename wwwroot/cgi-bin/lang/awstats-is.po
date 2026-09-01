@@ -1,0 +1,3332 @@
+# AWStats Icelandic (is) translations
+# Copyright (C) 2026 AWStats
+# This file is distributed under the same license as the AWStats package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: AWStats 8.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-10 12:00+0000\n"
+"PO-Revision-Date: 2026-05-10 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Icelandic\n"
+"Language: is\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#------------------------------------------------------------------------------
+# Mánuðir
+#------------------------------------------------------------------------------
+
+msgid "month_01"
+msgstr "Janúar"
+
+msgid "month_02"
+msgstr "Febrúar"
+
+msgid "month_03"
+msgstr "Mars"
+
+msgid "month_04"
+msgstr "Apríl"
+
+msgid "month_05"
+msgstr "Maí"
+
+msgid "month_06"
+msgstr "Júní"
+
+msgid "month_07"
+msgstr "Júlí"
+
+msgid "month_08"
+msgstr "Ágúst"
+
+msgid "month_09"
+msgstr "September"
+
+msgid "month_10"
+msgstr "Október"
+
+msgid "month_11"
+msgstr "Nóvember"
+
+msgid "month_12"
+msgstr "Desember"
+
+#------------------------------------------------------------------------------
+# Vikudagar
+#------------------------------------------------------------------------------
+
+msgid "DayOfWeek_0"
+msgstr "Sunnudagur"
+
+msgid "DayOfWeek_1"
+msgstr "Mánudagur"
+
+msgid "DayOfWeek_2"
+msgstr "Þriðjudagur"
+
+msgid "DayOfWeek_3"
+msgstr "Miðvikudagur"
+
+msgid "DayOfWeek_4"
+msgstr "Fimmtudagur"
+
+msgid "DayOfWeek_5"
+msgstr "Föstudagur"
+
+msgid "DayOfWeek_6"
+msgstr "Laugardagur"
+
+#------------------------------------------------------------------------------
+# Viðmótsþættir
+#------------------------------------------------------------------------------
+
+msgid "Advanced Web Statistics for"
+msgstr "Háþróuð vefeftirlit fyrir"
+
+msgid "Statistics for"
+msgstr "Tölfræði fyrir"
+
+msgid "main"
+msgstr "Yfirlit"
+
+# Þemaskipti
+msgid "Switch to light mode"
+msgstr "Skipta yfir í ljósan ham"
+
+msgid "Switch to dark mode"
+msgstr "Skipta yfir í dökkan ham"
+
+# Rýmdareiningar
+msgid "TB"
+msgstr "TB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "Bytes"
+msgstr "Bæti"
+
+# Formþættir
+msgid "Filter"
+msgstr "Sía"
+
+msgid "Exclude filter"
+msgstr "Útiloka sía"
+
+msgid "Top"
+msgstr "Efst"
+
+msgid "Full list"
+msgstr "Heill listi"
+
+msgid "Last"
+msgstr "Síðasta"
+
+msgid "Average"
+msgstr "Meðaltal"
+
+msgid "Total"
+msgstr "Samtals"
+
+msgid "Percent"
+msgstr "Prósenta"
+
+msgid "Export"
+msgstr "Flytja út"
+
+msgid "Details"
+msgstr "Smáatriði"
+
+msgid "Version"
+msgstr "Útgáfa"
+
+# Þúsundasundraskil
+msgid "thousands_separator"
+msgstr "."
+
+# Langt dagsetningarsnið (fyrir síðustu uppfærslu, fyrstu heimsókn o.fl.)
+msgid "dateformat_long"
+msgstr "dd.mm.yyyy HH:MM:SS"
+
+# Stutt dagsetningarsnið (fyrir línuritamerki o.fl.)
+msgid "dateformat_short"
+msgstr "dd.mm.yyyy HH:MM"
+
+msgid "date_format_year"
+msgstr "%s"
+
+msgid "date_format_month"
+msgstr "%1$s %2$s"
+
+#------------------------------------------------------------------------------
+# Flakkstika
+#------------------------------------------------------------------------------
+
+msgid "AWStats Month Selector"
+msgstr "AWStats mánaðarval"
+
+msgid "nav_category_basic"
+msgstr "Grunnskjölun"
+
+msgid "nav_category_guide"
+msgstr "Notkunarhandbók"
+
+msgid "nav_category_reference"
+msgstr "Tilvísunarefni"
+
+msgid "nav_category_integration"
+msgstr "Samþætting og framlenging"
+
+msgid "nav_category_dev"
+msgstr "Þróunarskjölun"
+
+msgid "nav_changelog"
+msgstr "Breytingaskrá"
+
+msgid "nav_what"
+msgstr "Hvað er AWStats"
+
+msgid "nav_license"
+msgstr "Leyfi"
+
+msgid "nav_glossary"
+msgstr "Orðaskýringar"
+
+msgid "nav_setup"
+msgstr "Uppsetning og stillingar"
+
+msgid "nav_upgrade"
+msgstr "Uppfærsluleiðbeiningar"
+
+msgid "nav_config"
+msgstr "Stillingafæribreytur"
+
+msgid "nav_extra"
+msgstr "Aukahlutar"
+
+msgid "nav_tools"
+msgstr "Önnur verkfæri"
+
+msgid "nav_faq"
+msgstr "Algengar spurningar"
+
+msgid "nav_security"
+msgstr "Öryggisráðleggingar"
+
+msgid "nav_compare"
+msgstr "Samanburður"
+
+msgid "nav_benchmark"
+msgstr "Afkastapróf"
+
+msgid "nav_webmin"
+msgstr "Webmin eining"
+
+msgid "nav_dolibarr"
+msgstr "Dolibarr eining"
+
+msgid "nav_contrib"
+msgstr "Framlög"
+
+msgid "nav_plugins"
+msgstr "Þróun viðbóta"
+
+msgid "nav_hooks"
+msgstr "Viðbótarkrókar"
+
+msgid "nav_graphs"
+msgstr "Viðbótarlínurit"
+
+msgid "Back to top"
+msgstr "Til baka efst"
+
+msgid "nav_select_month"
+msgstr "Veldu mánuð"
+
+#------------------------------------------------------------------------------
+# Helstu tölfræðileg mælikvarðar
+#------------------------------------------------------------------------------
+
+# Heimsóknir
+msgid "Unique visitors"
+msgstr "Einstakir gestir"
+
+msgid "Visits"
+msgstr "Heimsóknir"
+
+msgid "Visits duration"
+msgstr "Lengd heimsókna"
+
+msgid "First visit"
+msgstr "Fyrsta uppfærsla"
+
+msgid "Last visit"
+msgstr "Síðasta uppfærsla"
+
+msgid "Visits/Visitor"
+msgstr "Heimsóknir/Gestur"
+
+msgid "Pages/Visit"
+msgstr "Síður/Heimsókn"
+
+msgid "Hits/Visit"
+msgstr "Beiðnir/Heimsókn"
+
+msgid "KB/Visit"
+msgstr "KB/Heimsókn"
+
+msgid "KB/Visits"
+msgstr "KB/Heimsóknir"
+
+# Umferð
+msgid "Pages"
+msgstr "Fjöldi síðna"
+
+msgid "Hits"
+msgstr "Fjöldi beiðna"
+
+msgid "Bandwidth"
+msgstr "Bandbreidd"
+
+msgid "duration_format"
+msgstr "%s-%s"
+
+msgid "unit_s"
+msgstr "s"
+
+msgid "unit_min"
+msgstr "mín"
+
+msgid "unit_h"
+msgstr "klst"
+
+msgid "and"
+msgstr "-"
+
+msgid "Device Types"
+msgstr "Tegundir tækja"
+
+msgid "Device Type"
+msgstr "Tegund tækis"
+
+# Heiti tækjategunda
+msgid "Mobile"
+msgstr "Farsími"
+
+msgid "Pause & Go"
+msgstr "Gera hlé og halda áfram"
+
+msgid "Complete"
+msgstr "Ljúka"
+
+msgid "Tablet"
+msgstr "Spjaldtölva"
+
+msgid "Tv"
+msgstr "Sjónvarp"
+
+msgid "Wearable"
+msgstr "Fatnaðartæki"
+
+msgid "Bot"
+msgstr "Vélmenni"
+
+msgid "Desktop"
+msgstr "Borðtölva"
+
+msgid "Normal browsing traffic"
+msgstr "Venjuleg vafraumferð"
+
+msgid "Abnormal browsing traffic"
+msgstr "Óeðlileg vafraumferð"
+
+msgid "Viewed"
+msgstr "Skoðað"
+
+msgid "Not viewed"
+msgstr "Ekki skoðað"
+
+msgid "Abnormal browsing traffic note"
+msgstr "Óeðlileg vafraumferð felur í sér: leitarvélavélmenni, þjálfunarvélmenna gervigreindar, veikleikaskanna og beiðnir sem ekki uppfylla HTTP/HTTPS forskriftir"
+
+# Skrár
+msgid "File size"
+msgstr "Skráarstærð"
+
+msgid "File type"
+msgstr "Skráagerð"
+
+msgid "Downloads"
+msgstr "Niðurhal"
+
+msgid "Request time"
+msgstr "Beiðnartími"
+
+msgid "Total requests"
+msgstr "Beiðnir alls"
+
+msgid "Frequency"
+msgstr "Tíðni"
+
+msgid "Average frequency"
+msgstr "Meðaltíðni"
+
+msgid "Seconds"
+msgstr "Sekúndur"
+
+# Tölvupóstur (fyrir LogType eq 'M')
+msgid "First"
+msgstr "Fyrsta"
+
+msgid "Mails"
+msgstr "Fjöldi tölvupósta"
+
+msgid "Size"
+msgstr "Stærð"
+
+msgid "If you remove this file, all statistics for date"
+msgstr "Viðvörun: Ef þú fjarlægir þessa skrá, mun öll tölfræði fyrir dagsetningu"
+
+msgid "will be lost/reset."
+msgstr "tapast/verður endurstillt varanlega."
+
+msgid "Last config file used to build this data file was"
+msgstr "Síðasta stillingaskrá sem notuð var til að byggja þessa gagnaskrá var"
+
+msgid "Position (offset in bytes) in this file for beginning of each section for"
+msgstr "MAP hluti í þessari skrá skráir bætafærslu stöður fyrir upphaf hvers hluta, svo"
+
+msgid "direct I/O access. If you made changes somewhere in this file, you should"
+msgstr "AWStats geti fljótt nálgast gögn. Ef þú hefur gert handvægar breytingar einhvers staðar í þessari skrá, ættir þú"
+
+msgid "also remove completely the MAP section (AWStats will rewrite it at next update)"
+msgstr "að fjarlægja MAP hlutann alveg (AWStats mun endurskrifa hann í næstu uppfærslu)."
+
+msgid "LastLine    = Date of last record processed - Last record line number in last log - Last record offset in last log - Last record signature value"
+msgstr "LastLine    = Dagsetning síðustu vinnslu færslu - Línunúmer síðustu færslu í síðasta atvikaskrá - Frávik síðustu færslu í síðasta atvikaskrá - Undirskriftargildi síðustu færslu"
+
+msgid "FirstTime   = Date of first visit for history file"
+msgstr "FirstTime   = Dagsetning fyrstu heimsóknar fyrir söguskrá"
+
+msgid "LastTime    = Date of last visit for history file"
+msgstr "LastTime    = Dagsetning síðustu heimsóknar fyrir söguskrá"
+
+msgid "LastUpdate  = Date of last update - Nb of parsed records - Nb of parsed old records - Nb of parsed new records - Nb of parsed corrupted - Nb of parsed dropped"
+msgstr "LastUpdate  = Dagsetning síðustu uppfærslu - Fjöldi þáttaðra færslna - Fjöldi þáttaðra gamalla færslna - Fjöldi þáttaðra nýrra færslna - Fjöldi þáttaðra spilltra - Fjöldi þáttaðra hentra"
+
+msgid "TotalVisits = Number of visits"
+msgstr "TotalVisits = Fjöldi heimsókna"
+
+msgid "TotalUnique = Number of unique visitors"
+msgstr "TotalUnique = Fjöldi einstakra gesta"
+
+msgid "MonthHostsKnown   = Number of hosts known"
+msgstr "MonthHostsKnown   = Fjöldi þekktra hýsla"
+
+msgid "MonthHostsUnKnown = Number of hosts unknown"
+msgstr "MonthHostsUnKnown = Fjöldi óþekktra hýsla"
+
+msgid "Cluster ID - Pages - Hits - Bandwidth"
+msgstr "Þyrpingarkenni - Fjöldi síðna - Fjöldi beiðna - Bandbreidd"
+
+msgid "Hour - Pages - Hits - Bandwidth - Not viewed Pages - Not viewed Hits - Not viewed Bandwidth"
+msgstr "Klukkustund - Fjöldi síðna - Fjöldi beiðna - Bandbreidd - Óskoðaðar síður - Óskoðaðar beiðnir - Óskoðuð bandbreidd"
+
+msgid "Date - Pages - Hits - Bandwidth - Visits"
+msgstr "Dagsetning - Fjöldi síðna - Fjöldi beiðna - Bandbreidd - Heimsóknir"
+
+msgid "Domain - Pages - Hits - Bandwidth"
+msgstr "Lén - Fjöldi síðna - Fjöldi beiðna - Bandbreidd"
+
+msgid "The %s first Pages must be first (order not required for others)"
+msgstr "Aðalsíðan sýnir aðeins fyrstu %s síðurnar með flestar skoðanir. Sjáðu heildarlistann á smáatriðasíðunni."
+
+msgid "Host - Pages - Hits - Bandwidth - Last visit date - [Start date of last visit] - [Last page of last visit]"
+msgstr "Hýsill - Fjöldi síðna - Fjöldi beiðna - Bandbreidd - Dagsetning síðustu heimsóknar - [Upphafsdagsetning síðustu heimsóknar] - [Síðasta síða síðustu heimsóknar]"
+
+msgid "[Start date of last visit] and [Last page of last visit] are saved only if session is not finished"
+msgstr "[Upphafsdagsetning síðustu heimsóknar] og [Síðasta síða síðustu heimsóknar] eru aðeins vistuð ef líftími er ekki búinn"
+
+msgid "The first %s items are sorted by hits in descending order; order of the remaining items is undefined."
+msgstr "Fyrstu %s atriðin eru raðað eftir fjölda högga í lækkandi röð; röð hinna atriðanna er ekki skilgreind."
+
+msgid "Login - Pages - Hits - Bandwidth - Last visit"
+msgstr "Innskráður notandi - Fjöldi síðna - Fjöldi beiðna - Bandbreidd - Tími síðustu heimsóknar"
+
+msgid "Robot ID - Hits - Bandwidth - Last visit - Hits on robots.txt"
+msgstr "Kenni vélmennis - Fjöldi beiðna - Bandbreidd - Tími síðustu heimsóknar - Beiðnir á robots.txt"
+
+msgid "Worm ID - Hits - Bandwidth - Last visit"
+msgstr "Kenni orms - Fjöldi beiðna - Bandbreidd - Tími síðustu heimsóknar"
+
+msgid "EMail - Hits - Bandwidth - Last visit"
+msgstr "Tölvupóstur - Fjöldi beiðna - Bandbreidd - Tími síðustu heimsóknar"
+
+msgid "The first %s email addresses are sorted by hits in descending order; order of the remaining addresses is undefined."
+msgstr "Fyrstu %s tölvupóstföngin eru raðað eftir fjölda högga í lækkandi röð; röð hinna tölvupóstfanganna er ekki skilgreind."
+
+msgid "URL - Pages - Bandwidth - Entry - Exit"
+msgstr "URL - Fjöldi síðna - Bandbreidd - Inngangur - Útgangur"
+
+msgid "Files type - Hits - Bandwidth - Bandwidth without compression - Bandwidth after compression"
+msgstr "Skráagerð - Fjöldi beiðna - Bandbreidd - Bandbreidd án þjöppunar - Bandbreidd eftir þjöppun"
+
+msgid "Request Time Range - Request Time Frequency"
+msgstr "Beiðnitímabil - Tíðni beiðnitíma"
+
+msgid "Payload Range - Payload Frequency"
+msgstr "Skráarstærðarbil - Fjöldi skráa"
+
+msgid "Session range - Number of visits"
+msgstr "Líftímabil - Fjöldi heimsókna"
+
+msgid "URL with %s errors - Hits"
+msgstr "URL með %s villur - Fjöldi beiðna"
+
+msgid "Last URL referrer"
+msgstr "Síðasti URL tilvísunaraðili"
+
+msgid "Errors - Hits - Bandwidth"
+msgstr "Villur - Fjöldi beiðna - Bandbreidd"
+
+msgid "Search keywords - Number of search"
+msgstr "Leitarorð - Fjöldi leita"
+
+msgid "Only top %s keywords shown on main page (sorted by search count). See full list on detail page."
+msgstr "Aðalsíðan sýnir aðeins fyrstu %s leitarorð (raðað eftir leitafjölda). Sjáðu heildarlistann á smáatriðasíðunni."
+
+msgid "Search keyphrases - Number of search"
+msgstr "Leitarsetningar - Fjöldi leita"
+
+msgid "Only top %s keyphrases shown on main page (sorted by search count). See full list on detail page."
+msgstr "Aðalsíðan sýnir aðeins fyrstu %s leitarsetningar (raðað eftir leitafjölda). Sjáðu heildarlistann á smáatriðasíðunni."
+
+msgid "External page referers - Pages - Hits"
+msgstr "Ytri tilvísunaraðilar síðna - Fjöldi síðna - Fjöldi beiðna"
+
+msgid "Only top %s external referrers shown on main page (sorted by pages). See full list on detail page."
+msgstr "Aðalsíðan sýnir aðeins fyrstu %s ytri tilvísunaraðila (raðað eftir fjölda síðna). Sjáðu heildarlistann á smáatriðasíðunni."
+
+msgid "Search engine referers ID - Pages - Hits"
+msgstr "Kenni tilvísunaraðila leitarvélar - Fjöldi síðna - Fjöldi beiðna"
+
+msgid "Origin - Pages - Hits"
+msgstr "Uppruni - Fjöldi síðna - Fjöldi beiðna"
+
+msgid "Unknown referer Browser - Last visit date"
+msgstr "Óþekktur tilvísunarvafri - Dagsetning síðustu heimsóknar"
+
+msgid "Unknown referer OS - Last visit date"
+msgstr "Óþekkt tilvísunarstýrikerfi - Dagsetning síðustu heimsóknar"
+
+msgid "Screen size - Hits"
+msgstr "Skjáupplausn - Fjöldi beiðna"
+
+msgid "Browser ID - Hits - Pages"
+msgstr "Kenni vafra - Fjöldi smella - Fjöldi síðna"
+
+msgid "Downloads - Hits - Bandwidth"
+msgstr "Niðurhöl - Fjöldi beiðna - Bandbreidd"
+
+msgid "Protocol - Hits - Bandwidth"
+msgstr "Samskiptaregla - Fjöldi beiðna - Bandbreidd"
+
+msgid "Icon Status - Type:200:404:Other"
+msgstr "Staða tákns - Tegund:200:404:Annað"
+
+#------------------------------------------------------------------------------
+# Þýðingar tímabila
+#------------------------------------------------------------------------------
+
+msgid "period_00"
+msgstr "Miðnætti · AWStats sefur, en þú ert enn að skoða gögn? Sönn ást"
+
+msgid "period_01"
+msgstr "Klukkan 1 · Heimsækir á þessum tíma? Svefnleysi eða nýbúinn að ljúka vinnu"
+
+msgid "period_02"
+msgstr "Klukkan 2 · Vélmenni eru duglegri en þú, þau vinna ennþá"
+
+msgid "period_03"
+msgstr "Klukkan 3 · Borgin sefur, netþjónninn vinnur yfirvinnu, hver er verr staddur?"
+
+msgid "period_04"
+msgstr "Klukkan 4 · Bjartasta stjarnan í myrkrinu, skjárinn þinn eða viðvörunarljós netþjónsins"
+
+msgid "period_05"
+msgstr "Klukkan 5 · Snemmfuglinn fær orminn, snemm-vélmennið safnar gögnunum"
+
+msgid "period_06"
+msgstr "Klukkan 6 · Einhver vaknar, einhver hefur ekki sofið enn, internetið lokar aldrei"
+
+msgid "period_07"
+msgstr "Klukkan 7 · Tími fyrir troðning í neðanjarðarlest, einnig tími til að vafra á netinu"
+
+msgid "period_08"
+msgstr "Klukkan 8 · Fyrsta verkefnið þegar vinnu hefst: kíktu á gærdagsgögnin"
+
+msgid "period_09"
+msgstr "Klukkan 9 · Gullna tímabilið, jafnvel leti hefur sínar reglur"
+
+msgid "period_10"
+msgstr "Klukkan 10 · Kaffitími, athugaðu hvort umferð hafi aukist"
+
+msgid "period_11"
+msgstr "Klukkan 11 · Klukkustund í hádegismat, haltu áfram smá lengur"
+
+msgid "period_12"
+msgstr "Hádegi · Netþjónn: Þið eruð öll farin í hádegismat, ég hvíli mig smá"
+
+msgid "period_13"
+msgstr "Klukkan 13 · Svefnhöfgi eftir hádegismat, en gögnin sofa ekki"
+
+msgid "period_14"
+msgstr "Klukkan 14 · Síðdegishressingartími, með gögnum er það bragðmeira"
+
+msgid "period_15"
+msgstr "Klukkan 15 · Línurit umferðarþróunar dagsins, líkist það skaplyndisferlinum þínum?"
+
+msgid "period_16"
+msgstr "Klukkan 16 · Það eru X klukkustundir þar til vinnu lýkur, umferðin fer að spretta"
+
+msgid "period_17"
+msgstr "Klukkan 17 · Vinnu lokið! En netþjónninn verður að halda áfram að vinna"
+
+msgid "period_18"
+msgstr "Klukkan 18 · Kvöldmatur, horfðu á myndband til að slappa af"
+
+msgid "period_19"
+msgstr "Klukkan 19 · Aðalútsendingartími, umferðarhámark, netþjónn: Ég stendst"
+
+msgid "period_20"
+msgstr "Klukkan 20 · Leggst í sófann, þú ert gestur númer 114514"
+
+msgid "period_21"
+msgstr "Klukkan 21 · Seint á kvöldin, gagnaskoðarar í leyni +1"
+
+msgid "period_22"
+msgstr "Klukkan 22 · Gögn dagsins verða fljótlega tilbúin, spenntur?"
+
+msgid "period_23"
+msgstr "Klukkan 23 · AWStats: Tími til að sofa, á morgun er aftur að vinna"
+
+#------------------------------------------------------------------------------
+# Tímavíddir
+#------------------------------------------------------------------------------
+
+msgid "Period"
+msgstr "Tölfræðitímabil"
+
+msgid "Year"
+msgstr "Ár"
+
+msgid "Month"
+msgstr "Mánuður"
+
+msgid "Months"
+msgstr "Mánuðir"
+
+msgid "Date"
+msgstr "Dagsetning"
+
+msgid "Day"
+msgstr "Dagur"
+
+msgid "Hour"
+msgstr "Klukkustund"
+
+msgid "Hours"
+msgstr "Klukkustundir"
+
+msgid "Day of week"
+msgstr "Vikudagur"
+
+msgid "When"
+msgstr "Hvenær"
+
+msgid "%s Server Management Panel"
+msgstr "%s  stjórnborð þjóns"
+
+msgid "Server Administration"
+msgstr "Einföld og skilvirk þjónslausn"
+
+#------------------------------------------------------------------------------
+# Víddir gesta
+#------------------------------------------------------------------------------
+
+msgid "Invalid URL Parameters"
+msgstr "Ógildir URL færibreytur"
+
+msgid "The requested page cannot be loaded due to invalid or malformed URL parameters."
+msgstr "Ekki er hægt að hlaða umbeðinni síðu vegna ógildra eða rangt sniðinna URL færibreyta."
+
+msgid "This may be caused by typing an incorrect URL, missing parameter separators, or using an invalid configuration name."
+msgstr "Þetta getur stafað af því að slá inn rangt URL, vantar færibreytuaðskilnað, eða nota ógilt stillingarheiti."
+
+msgid "Please check the URL you entered and ensure all parameters are correctly formatted."
+msgstr "Vinsamlegast athugaðu URL sem þú slóst inn og vertu viss um að allar færibreytur séu rétt sniðnar."
+
+msgid "SiteDomain parameter not defined in your config/domain file, or you may not have execution permission on the file."
+msgstr "SiteDomain færibreytan er ekki skilgreind í config/domain skránni þinni, eða þú gætir ekki haft keyrsluheimild á skránni."
+
+msgid "Please run as Administrator to set permissions"
+msgstr "Keyrið sem Stjórnandi til að stilla heimildir"
+
+msgid "This directory lacks read permission"
+msgstr "Þessu skráarsafni skortir lesréttindi"
+
+msgid "Please set read permission for directory"
+msgstr "Vinsamlegast stilltu lesréttindi fyrir skráarsafn"
+
+msgid "Missing required parameter in config file"
+msgstr "Vantar nauðsynlega breytu í stillingarskrá"
+
+msgid "Please check that 'DirData' is defined."
+msgstr "Vinsamlegast athugaðu að 'DirData' sé skilgreint."
+
+msgid "Domain name in browser address appears to be missing or incomplete"
+msgstr "Lénsnafn í vafra veffangi virðist vanta eða vera ófullnægjandi"
+
+msgid "Please check the URL parameter"
+msgstr "Vinsamlegast athugaðu vefslóðar breytuna"
+
+msgid "Format description"
+msgstr "Sniðlýsing"
+
+msgid "Please set execute permission"
+msgstr "Vinsamlegast stilltu keyrsluheimild"
+
+msgid "Or if you prefer numeric mode"
+msgstr "Eða ef þú vilt frekar notast við tölulegan ham"
+
+msgid "View Report Directly"
+msgstr "Skoða skýrslu beint"
+
+msgid "AWStats Log Viewer"
+msgstr "AWStats skoðari atburðaskráa"
+
+msgid "Month Selection"
+msgstr "Mánaðarval"
+
+msgid "Who"
+msgstr "Hver"
+
+msgid "Visitors"
+msgstr "Gestir"
+
+msgid "Countries"
+msgstr "Lönd/Svæði"
+
+msgid "flag_icon"
+msgstr "Fáni"
+
+msgid "Country-Region-City"
+msgstr "Land/Svæði/Borg"
+
+msgid "Code"
+msgstr "Kóði"
+
+msgid "Known"
+msgstr "Þekkt"
+
+msgid "unknownos"
+msgstr "Óþekkt stýrikerfi"
+
+msgid "unknownbrowser"
+msgstr "Óþekktur vafri"
+
+msgid "Unresolved IP Address"
+msgstr "Óleyst IP-tala"
+
+msgid "Unknown File Type"
+msgstr "Óþekkt skráagerð"
+
+msgid "Unknown Size"
+msgstr "Óþekkt stærð"
+
+msgid "Unknown Time"
+msgstr "Óþekktur beiðnitími"
+
+msgid "Unknown Browser"
+msgstr "Óþekktur vafri"
+
+msgid "Unknown OS"
+msgstr "Óþekkt stýrikerfi"
+
+msgid "Unknown Visitor"
+msgstr "Óþekktur gestur"
+
+msgid "Unknown Visitor (Total)"
+msgstr "Óþekktur gestur (alls)"
+
+msgid "Unknown Country"
+msgstr "Óþekkt land/svæði"
+
+msgid "Unknown Country (Region)"
+msgstr "Óþekkt land/svæði (alls)"
+
+msgid "Unknown Visitor (Title)"
+msgstr "Óþekktur gestur (titill)"
+
+msgid "PageStayTime"
+msgstr "Ekki er hægt að meta dvalartíma á síðu"
+
+msgid "Unknown OS (Link)"
+msgstr "Óþekkt stýrikerfi (tengill)"
+
+msgid "Unknown OS (Row)"
+msgstr "Óþekkt stýrikerfi (listi)"
+
+msgid "Unknown Browser (Link)"
+msgstr "Óþekktur vafri (tengill)"
+
+msgid "Unknown Browser (Row)"
+msgstr "Óþekktur vafri (listi)"
+
+msgid "Unknown Screen"
+msgstr "Óþekkt skjástærð"
+
+msgid "Login"
+msgstr "Notandanafn"
+
+msgid "Anonymous"
+msgstr "Nafnlaus"
+
+msgid "Robots"
+msgstr "Vélmenni"
+
+msgid "Different robots"
+msgstr "Mismunandi vélmenni"
+
+msgid "Hits on robots.txt"
+msgstr "Leitarvélavélmennin sem talin eru upp hér að ofan búa til \"óeðlilega\" vafraumferð sem er ekki innifalin í öðrum línuritum. Talan á eftir '+' er fjöldi árangursríkra aðanska að \"robots.txt\" skránni."
+
+msgid "Worms"
+msgstr "Ormar"
+
+msgid "Different worms"
+msgstr "Mismunandi ormar"
+
+msgid "Target"
+msgstr "Markmið"
+
+msgid "Grabber"
+msgstr "Sláttutól"
+
+#------------------------------------------------------------------------------
+# Formlýsingar
+#------------------------------------------------------------------------------
+
+msgid "mime_text"
+msgstr "TXT hreinn textaskrá (1963 ASCII-staðlaður ósniðinn hreinn texti. Sem undirstaða alls kóða, stillingarskráa og kerfisskráa, er krosspallakerfislínustjórnun þess (CRLF í Windows, LF í Unix) enn algildasta gagnaskiptastaðallinn í tölvunarfræði)"
+
+msgid "mime_log"
+msgstr "LOG kerfiskeyrsluskrá (skráir keyrsluástand stýrikerfis, kjarna og forrita sem hreinan texta. Nær yfir Nginx/Apache aðgangsskrár (Combined Log) og staðlaða syslog upplýsingatækni, er kjarnagjafagjafi fyrir bilanaleit, streymisárangursgreiningu og öryggisúttektir)"
+
+msgid "mime_page"
+msgstr "HTML vefsíða (búin til af Tim Berners-Lee árið 1989, hornsteinn World Wide Web. Sem ókeypis algilt hypertexta merkjamál varð HTML5 upplýsingatæknin opinber W3C staðall árið 2014, styður innfæddan uppbyggða margmiðlun, merkingarfræðileg samskipti og fljótandi síðuuppsetningu, hlaut Turing verðlaunin árið 2016)"
+
+msgid "mime_khtml"
+msgstr "KHTML vefsniðmótsvél (1998 KDE 2.0 vafra útgáfuvéla upplýsingatækni. Sem opinn hugbúnaður sem lagði grunninn að nútíma vefútgáfu, innblásti tæknileg arfleifð hennar beint WebKit kjarna Apple og Blink kjarna Google, og heldur áfram í nútíma streymandi kraftmiklum vefbyggingum)"
+
+msgid "mime_script"
+msgstr "SCRIPT túlkað kraftmikið skrift (almennur flokkur fyrir strauma grunnkóða sem eru keyrðir línu fyrir línu af tilteknu keyrsluumhverfi eða túlki án fyrirframþýðingar. Nær yfir ASP, JSP, CGI og Tcl, mikið notað fyrir netþjónahlið almenna hliðstæð viðmót, sjálfvirkniferlisstýringu og kerfisverkefnalím)"
+
+msgid "mime_js"
+msgstr "JavaScript skrift (1995 Netscape vafra innfædda forritunarumhverfi. 1997 var ECMAScript iðnaðarstaðallinn settur, 2009 fæddist Node.js keyrsluumhverfið, sem braut vaframörk og bjó til ósamstillta, óblokkara fulla stafla byggingu, ásamt stærsta npm hugbúnaðarpakka vistkerfi heims)"
+
+msgid "mime_py"
+msgstr "Python skrift (1991 Guido van Rossum hár þróunarháttur túlkað skriftunarmál. Vegna tapslauss læsileika með skyldubundinni inndrátt og fjölbreyttu hönnunarfyrirkomulagi, hefur það verið staðfest sem iðnaðarstaðalsmál fyrir nútíma vefbyggingu, fullan stafla gagnavísindi, þjálfun gervigreindarlíkana (AI) og skýjafræðilega sjálfvirkni reksturs)"
+
+msgid "mime_sh"
+msgstr "Shell skrift (1971 Unix tímans staðlað skipanatúlksskrift. Inniheldur kjarnastigs skipanir eins og Bash, Sh, Dash, venjulega keyrt með .sh viðskeyti, er algilt kjarnastigs lím fyrir lággráðu ferlistýringu, uppsetningarlausa umhverfisstillingu og sjálfvirka dreifingu í nútíma Unix-líkum stýrikerfum)"
+
+msgid "mime_rb"
+msgstr "Ruby skrift (1995 Yukihiro Matsumoto hlutbundin skriftunarmál. Með kjarnahönnunarheimspeki sinni sem einbeitir sér að mikilli virðingu fyrir þróunarupplifun, gjörbylti Ruby on Rails umgjörð nútíma hágæða vefbyggingum með því að koma á 'Venju fremur en stillingu' (CoC))"
+
+msgid "mime_pl"
+msgstr "Perl skrift (1987 Larry Wall hagnýt skriftunarmál. Sem brautryðjandi nútíma pakkastjóra (CPAN), þekkt sem 'Svissneski hernaðarhnífur' textavinnslu. Í nútíma CGI ham, með mjög litla eðlilega minniskostnað og skilvirka reglulega segðavinnslu, þjónar það sem mjög áreiðanleg burðarás fyrir skráagreiningu)"
+
+msgid "mime_php"
+msgstr "PHP kraftmikil vefsíða (1995 Rasmus Lerdorf, hannað sérstaklega fyrir vefþróun. Sem kjarnatækni sem knýr yfir 70% vefsvæða heims, styður það stórar framleiðsluforrit eins og WordPress og Wikipedia. Frá PHP 8, með kynningu á JIT (just-in-time) keyrslu vél, hefur það þróast í átt að háafla fullan stafla netþjónsbyggingu)"
+
+msgid "mime_image"
+msgstr "IMAGE mynda eigna flokkun (nær yfir tapað/tapslaust þjappað bitakort, nútíma móttækilega vefmyndir og vigra. Lykilvísir til að meta sjónræna auðlindarálag vefsvæðis, viðskiptavinar skyndiminni högg hlutfall og fjölmiðla netbandbreiddar eyðslu)"
+
+msgid "mime_document"
+msgstr "DOCUMENT uppbyggð skjalaflokkun (nær yfir hreinan texta, töflureikna, fasta skipulag opinber skjöl (PDF) og létt merkingarmál. Lykilvísir fyrir tölfræði um dreifingu kyrrstæðrar þekkingargrunns netþjóna, niðurhal fyrirtækjaeigna og textastraums afkastagetu)"
+
+msgid "mime_package"
+msgstr "PACKAGE þýdd vara og hugbúnaðarpakka flokkun (nær yfir innfædd keyrsluhæf forrit stýrikerfisins, keyrslutíma tengibókasöfn (DLL/SO) og dreifingaruppsetningarpakka forrita. Oft notað sem vísir til að meta útleið umferð og niðurhalshadda á hugbúnaðardreifingarstöðum)"
+
+msgid "mime_archive"
+msgstr "ARCHIVE skjala- og þjappaðar skrár (almennur flokkur fyrir gagnapökkun byggða á kjarnaalgrímum eins og DEFLATE, LZMA. Á netlaginu, auk hefðbundinnar pakkadreifingar, nær það einnig yfir 1992 GNU verkefnisins Gzip kraftmikla svörunarstrauma. Þótt Brotli algrímið sé smám saman tekið upp í sumum nútíma atburðarásum, er þessi flokkun enn lykilvísir til að meta netþjóns bandbreiddarafköst og þjöppun skilvirkni flutningslags)"
+
+msgid "mime_audio"
+msgstr "AUDIO stafræns hljóðstraums flokkun (nær yfir þjappað hljóð, hljóðbækur og straumhlaða hljóðílát. Byggt á tilteknum hljóðkóðunarstöðlum, notað til að fylgjast með hljóðgagnastraums afköstum á margmiðlunarsvæðum, samtíma streymis bandbreidd og langtenginga hegðun)"
+
+msgid "mime_video"
+msgstr "VIDEO stafræns myndbandsstraums flokkun (nær yfir hágæða myndbandsílát, nútíma vefteiknimyndir og straumhluta. Lykilvísir til að meta netþjóns bandbreiddar hámarksmörk og efni dreifingarnets (CDN) hröðunar skilvirkni undir miklu netálagi)"
+
+msgid "mime_jscript"
+msgstr "JScript skrift (1996 Microsoft öfugt hugbúnaðarverkfræði einkarekin framkvæmd fyrir Internet Explorer 3.0. Sem snemma hýsingarkeppinautur klassísks JavaScript, þjónaði það sem kjarnavél fyrir Windows Script Host (WSH) og snemma ASP bakenda)"
+
+msgid "mime_json"
+msgstr "JSON uppbyggð gögn (2001 Douglas Crockford létt gagnaröðunarskiptastaðall. Byggt á texta byggðum lykla-gildi pörum og fylkisbyggingu, með mikla mannlega læsileika og tapi lausa straumgreiningareiginleika, er það raunverulegur staðall fyrir nútíma vef API, smáþjónustubyggingar og samskipti við stór tungumálalíkön)"
+
+msgid "mime_vbs"
+msgstr "VBScript skrift (1996 Microsoft skriftunarmálsafbrigði með IE 3.0. Þjónaði sem kjarnadrifkraftur fyrir snemma kraftmiklar ASP vefsíður og Windows kerfisstjórnun, en hefur nú verið formlega úrelt og fjarlægt úr nýjustu Windows 11 kjarnum, tilheyrir sögulegri arfleifðartækni)"
+
+msgid "mime_conf"
+msgstr "CONF kerfisstillingarskrá (almennur flokkur gagnaskráa sem geyma hugbúnaðar keyrsluumhverfisbreytur í hreinum texta. Nær yfir INI og nútíma YAML, TOML, JSON upplýsingar. Í Linux kerfum, aðallega í /etc skráarsafninu, eru þær kjarnafíkni fyrir stillingu kerfisstigs keyrsluástands)"
+
+msgid "mime_css"
+msgstr "CSS stílsíða í röð (1996 W3C staðall, ásamt HTML/JS myndar það þrjá kjarna framendaþróunar. Með þróun frá CSS2 staðsetningu til CSS3 einingavæðingar, styður það innfæddan Flexbox, Grid og miðlafyrirspurnir móttækilega hönnun, og er ríkjandi staðall til að aftengja vefsíðukynningu í nútíma vöfrum)"
+
+msgid "mime_xsl"
+msgstr "XSL stílsíða (1999 W3C staðall, inniheldur XSLT umbreytingu og XPath vistfangsmál, til að birta uppbyggð XML gögn sem HTML, PDF eða hreinan texta. Í nútíma þróun hefur vistkerfi þess að mestu verið skipt út fyrir léttari sniðmótsvélar og JSON gagnasnið)"
+
+msgid "mime_runtime"
+msgstr "keyrsluhæf skrá (EXE, ELF, Mach-O o.s.frv. innfædd keyrslusnið stýrikerfisins, innihalda þýddan lággráðu vélamálskóða, inngangspunkt og kerfisálagsupplýsingar)"
+
+msgid "mime_library"
+msgstr "bókasafnsskrá (DLL, SO, dylib o.s.frv., kraftmikil eða kyrrstæð tengibókasöfn, innihalda sameiginleg tákn og tilfærslukóða fyrir önnur forrit til að kalla á og hlaða við keyrslu)"
+
+msgid "mime_swf"
+msgstr "Flash teiknimynd (1996 Macromedia, keypt af Adobe 2005. Gagnvirkur vefteiknimyndastaðall, réði áður ríkjum yfir teiknimyndum og leikjum á netinu. Gallar: viðbótarþráhyggja, skortur á farsímastuðningi, mikil öryggisáhætta. Adobe tilkynnti hættir árið 2017, stuðningi lauk alfarið 2020, skipt út fyrir HTML5/CSS3/JS)"
+
+msgid "mime_dtd"
+msgstr "DTD skjalategundar skilgreining (gefið út með XML 1.0 árið 1998, notað til að skilgreina XML/HTML skjalabyggingu og staðfesta lögmæti. Í nútíma þróun hefur því að mestu verið skipt út fyrir sveigjanlegri lausnir eins og XML skema, RELAX NG o.s.frv.)"
+
+msgid "mime_csv"
+msgstr "CSV gagnasnið (gildi aðskilin með kommum, algilt hreint texta töflusnið frá stórtölvu tímum (IBM Fortran þýðanda) árið 1972. Formlegt af RFC 4180 árið 2005 sem taplaus, krossvettvangur, krosstungumál gagnaskiptastaðall. Mikið notað fyrir skilvirkan innflutning/útflutning með Excel, tengslagagnagrunna og gagnagreiningu (Pandas))"
+
+msgid "mime_cur"
+msgstr "músarbendilsskrá (.cur snið, notað til að sérsníða músarbendil stíl, eins og fingrabendill á vefsíðum eða sandúrs táknmynd biðar. Það er 'ættingi' hins almenna .ico táknmyndar, en hefur auka 'heitan reit' – raunverulegan smellistað. Saga: kynnt með Windows 3.1 (1992), lykilþáttur í umskiptum úr skipanalínu yfir í músarstýrða myndræna notendaviðmótið)"
+
+msgid "mime_jnlp"
+msgstr "Java Web Start (2000 Java skjáborðsforritadreifingartækni, ræsir fjarlæg Java forrit í gegnum .jnlp skrár. Vegna öryggisvandamála og útbreiðslu nútíma dreifingaraðferða, er það nú að mestu úrelt)"
+
+msgid "mime_lit"
+msgstr "Microsoft Reader rafbók (2000 Microsoft, LIT snið. Úrelt, hægt að breyta nú í EPUB eða PDF með verkfærum eins og Calibre)"
+
+msgid "mime_svg"
+msgstr "SVG vigurmyndir (1999 W3C staðall, XML byggt 2D vigurmyndasnið. Býður upp á tapi laust stærðarbreytingu og textastreymi kosti. Allir nútíma vafrar styðja það innfæddan, mikið notað fyrir hágæða vef táknmyndir, lógó og vigurteiknimyndir, er kjarnastaðall nútíma vefmyndrænna)"
+
+msgid "mime_ai"
+msgstr "AI vigurmyndir (1987 Adobe einka vigursnið. Sem iðnaðarstaðall fyrir útlit, prentun hönnun og vörumerkja auðkenni, styður það mörg lög og háþróuð útlit vigurgögn, og er ákjósanlegur miðill fyrir faglegt sjónlist)"
+
+msgid "mime_phshop"
+msgstr "PSD lagskipt mynd (1990 Adobe einka bitakorts frumskrá gefin út með Photoshop. Styður mörg lög, rásir, grímur og taplaust breytingargögn, og hefur orðið alþjóðlegur iðnaðarstaðall fyrir myndvinnslu og stafræna málun)"
+
+msgid "mime_ttf"
+msgstr "TrueType leturgerð (1989 Apple og Microsoft sameiginlega þróað stafrænt útlínuletursnið. Byggt á ferningslaga Bézier ferlum, nær það algerri pixla samræmi milli skjásýningar og prentaðs úttaks, og er innfædd sjálfgefin leturgerð nútíma skjáborðs stýrikerfa)"
+
+msgid "mime_fon"
+msgstr "FON bitakorts leturgerð (1980 Microsoft snemma kerfisstigs punktakerfis letursnið. Styður ekki tapslaust hlutfallslegt stærðarbreytingu, venjulega takmarkað við pixla byggða textaútgáfu í arfleifðarkerfum eða snemma innbyggðum tækjahlutum)"
+
+msgid "mime_pdf"
+msgstr "PDF rafrænt skjal (þróað af Adobe árið 1993 og varð alþjóðlegur ISO 32000 staðall árið 2008. Krossvettvangur fasta útlitsskjalsnið með algeru útlit og snið tryggð, það er alþjóðlegur staðall fyrir dreifingu rafrænna skjala og stafræna útgáfu)"
+
+msgid "mime_dotnet"
+msgstr "ASP.NET kraftmikil síða (2002 Microsoft netþjónshlið kraftmikil vefsíðutækni gefin út með .NET byggingunni. Hýst á IIS vél, notuð til að byggja fyrirtækisstigs Windows netþjónshlið kraftmikla vefforrit og dreifð kerfi)"
+
+msgid "mime_mdb"
+msgstr "MDB tengslagagnagrunnur (1992 Microsoft skjáborðsstigs tengslagagnagrunns geymslusnið gefið út með Access. Með innbyggðri Jet gagnagrunnsvél, þjónaði sem tengslagagnagrunna lausn fyrir snemma persónulegum tölvum og lítil og meðalstór fyrirtæki upplýsingastjórnun)"
+
+msgid "mime_md"
+msgstr "Markdown skjal (2004 John Gruber létt merkingarmál. Kjarnahönnunarheimspeki þess 'læsilegt er birt' knýr nútíma afleiddar upplýsingar eins og GFM og CommonMark. Mikið notað sem skiptastaðall fyrir tæknilega skjölun, þekkingargrunna (Obsidian) og nútíma kyrrstæðar vefsíðugerðarvélar)"
+
+msgid "mime_crystal"
+msgstr "Crystal Reports skýrsla (SAP Business Intelligence (BI) vettvangs faglega fyrirtækisstigs skýrsluskráarsnið. Býður upp á marga gagnaveitu tengingu og flókna kraftmikla töfluritunargetu, mikið notað fyrir faglega skýrslugerð í fjölþjóðlegra fyrirtækja fjármála- og gagnagreiningarkerfum)"
+
+msgid "mime_libreoffice"
+msgstr "LibreOffice skjal (opinn hugbúnaður skrifstofupakka einka snið byggt á OpenOffice, stofnað af The Document Foundation árið 2010. Útfærir djúpt W3C ODF (Opna skjalasniðið) alþjóðlega staðla, er skrifstofuhornsteinn nútíma opins hugbúnaðar vistkerfis)"
+
+msgid "mime_encrypt"
+msgstr "ENCRYPT dulritað skrá (upprunaleg tvöföld eða textagögn unnin af tilteknum samhverfum eða ósamhverfum dulritunaralgrímum. Inniheldur kjarnaafleidd snið eins og .enc, .pgp, .gpg o.s.frv., notuð á netlaginu til að tryggja trúnað og heilleikasannprófun óopinberra gagna)"
+
+msgid "mime_gpx"
+msgstr "GPX gervihnattarakningargögn (XML byggt alþjóðlegt staðsetningarkerfi skiptasnið. Sérhæfir sig í að lýsa landfræðilegum hnitum, leiðarpunktum, leiðarlínum og sögulegum slóðum, það er algengur opinn gagnastaðall fyrir nútíma farsíma íþróttatæki, bíla leiðsögn og landfræðilegar upplýsingakerfi (GIS))"
+
+msgid "mime_diskimage"
+msgstr "Disk Image diskmynd (ISO, DMG, IMG o.s.frv., líkamlegs disks eða sjóntækja miðils geira fyrir geira lággráðu myndskrá. Notuð fyrir lággráðu kerfisuppsetningu, örugga dreifingu á stórum hugbúnaði og fulla líkamlega stigs öryggisafritun geymslum iðla)"
+
+msgid "mime_vm"
+msgstr "VM sýndarvélarmynd (VMDK, VDI, VHDX, OVA o.s.frv., sýndarvædd líkamleg diskmynd. Grunnur fyrir VMware, VirtualBox og Hyper-V vettvang, notuð fyrir lággráðu vélbúnaðar eftirhermu, eintök myndatökur og skýja innviða dreifingu)"
+
+msgid "mime_torrent"
+msgstr "BitTorrent torrent skrá (2001 Bram Cohen hannaði P2P jafningi-til-jafningi dreifða niðurhalsvísitölu. Byggt á Bencode kóðun, geymir upprunalega skráar staðfestingar lýsigögn og Tracker netþjóns vistfang upplýsingar, er kjarnamiðill dreifðra netstraums dreifingar)"
+
+msgid "mime_gis"
+msgstr "GIS landfræðileg rúmgögn (landfræðileg upplýsingakerfi gagnastaðall með Shapefile og GeoJSON í kjarna. Inniheldur fjölvíða rúmfræðileg hnit, lag skipulagsfræði og eiginleikagögn, mikið notað fyrir hágæða stafrænna kortagerð, gervihnattafjarkönnun og rúmfræðilega greiningu)"
+
+msgid "mime_ebook"
+msgstr "EBOOK rafbók (stafrænt útgáfuform með W3C alþjóðlega opna EPUB staðlinum og Amazon Kindle einka MOBI/AZW byggingunni í kjarna. Styður aðlögunarhæft streymandi útlit, lýsigagna innhyltingu og DRM stafræn réttindastjórnun, er algildur miðill fyrir farsíma stafræna lestur)"
+
+msgid "mime_avif"
+msgstr "AVIF mikil nýtni mynd (2019 Alliance for Open Media (AOMedia) næsta kynslóðar ofur-hágæða myndastaðall. Byggt á AV1 myndbandskóðunarlyklahrönnum tækni, með þjöppunarhlutfall 50% betra en WebP og innfæddur stuðningur fyrir Hár Dynamic Range (HDR), er það almennur staðall fyrir nútíma vefmyndaflutning)"
+
+msgid "mime_markdown"
+msgstr "Markdown létt skjal (2004 John Gruber textaskjals merkingarmál. Notar hreinan texta yfirlýsingarhönnun, setningafræði þess var innblásin af reStructuredText, mikið notað fyrir GitHub verkefni, verkfræðistigs tæknilega skjölun og nútíma kyrrstæðu efnisstjórnun vistkerfi)"
+
+msgid "mime_yaml"
+msgstr "YAML raðað stilling (2001 Clark Evans o.fl. mannlæsilegt gagnaröðunarsnið. Byggt á stigveldis inndraetti og lykla-gildi kortlagningu, hefur það verið staðfest sem skýjafræðileg innviða stillingastaðall fyrir Kubernetes, Ansible sjálfvirkni og Docker Compose)"
+
+msgid "mime_toml"
+msgstr "TOML merkingarfræðileg stilling (2013 Tom Preston-Werner minimalískt mál. Með lággráðu hönnunarkostum eins og sterkri tegund, skýrri kortlagningu og skýrri merkingarfræði, er það nú mikið notað sem staðlað stillingarskrá fyrir nútíma Rust (Cargo), Python (pyproject.toml) og Go verkfæra keðjur)"
+
+msgid "mime_vue"
+msgstr "Vue einfaldrar skráar hluti (2014 Evan You framsækin vef umgjörð einka SFC snið. Nær á einni skrá aðskilnaði áhyggna HTML/CSS/JS og viðbragðs ástandstengingu, knýr djúpt nútíma gagnvirkar framenda vefforrit og stórfelldar kyrrstæðar vefsíðuvélar)"
+
+msgid "mime_wasm"
+msgstr "WebAssembly tvöfaldur eining (2017 W3C staðfestur hár árangur lággráðu bætkóða staðall fyrir vefinn. Leyfir sterklega tegund málum eins og C/C++/Rust að þýða í vafra sandkassa umhverfi, veitir nálægt innfæddum vélbúnaðar framkvæmdar skilvirkni, er hornsteinn nútíma vefja úttaks tölvunar)"
+
+msgid "mime_jsx"
+msgstr "React JSX hluti (2013 Facebook JavaScript XML setningafræði viðbót gefin út með React umgjörð. Styður yfirlýsandi byggingu sýndar DOM bygginga innan JavaScript, gerir framenda 'Viðmót sem fall ástands' íhlutamiðaða þróunar fyrirmynd kleift)"
+
+msgid "mime_tsx"
+msgstr "TypeScript TSX hluti (2012 Microsoft TypeScript sterk tegund setningafræði og JSX streymandi samsetning. Sprautar kyrrstæðri þýðingartíma tegundaskoðun og viðmóts takmörkunum inn í React hluta þróun, er kóðastaðall fyrir örugga þróun nútíma stórra framenda kerfa)"
+
+msgid "mime_heif"
+msgstr "HEIF mikil nýtni mynd (2015 MPEG stofnun staðfest mikil nýtni myndasnið. Byggt á HEVC (H.265) myndbandskóðun algrími, styður margar myndahrönnur, dýptarkort og lýsigögn í mjög litlu rúmmáli, er einka geymslustaðall fyrir nútíma farsíma stýrikerfi og snjöll endatæki)"
+
+msgid "mime_heic"
+msgstr "HEIC mikil nýtni mynd (Apple einka bitakorts snið byggt á alþjóðlega HEIF staðlinum. Sem sjálfgefið ljósmynda geymsluform fyrir nútíma iPhone, hefur það vélbúnaðarstigs kóðun/afkóðun frá iOS/macOS og innfæddan stýrikerfis stuðning, minnkar gríðarlega undirliggjandi geymslupláss á meðan viðheldur háum myndgæðum)"
+
+msgid "mime_gltf"
+msgstr "glTF 3D eign líkan (2015 Khronos Group gefin út GL flutningssniðs staðall. Notar JSON byggingu til að lýsa þrívíðum senum, þekkt sem 'JPEG fyrir 3D', er léttur iðnaðarstaðall fyrir nútíma WebGL/WebGPU og sýndarveruleika útgáfu)"
+
+msgid "mime_glb"
+msgstr "GLB tvöfaldur 3D líkan (tapslaus tvöföld innhylting útgáfa af glTF eign líkani. Sameinar sena byggingu, undirliggjandi möskva hornpunkta gögn, efni og áferðir í eina skrá, sérstaklega hönnuð fyrir skilvirka sendingu og streymisdreifingu vefs 3D eigna yfir vettvanga)"
+
+msgid "mime_gls"
+msgstr "GLOSSARY gagna orðasafn (hugtakaskilgreiningarskrá sérstaklega fyrir skjalastjórnunarkerfi og uppbyggð gagnasöfn. Inniheldur staðlaðar hugtakaskilgreiningar, fjöltyngd kortlagningu og lýsigagna kortlagningu, notuð til að viðhalda huglægu samræmi í sjálfvirkri textagreiningu og efnisútgáfukerfum)"
+
+msgid "mime_cbz"
+msgstr "CBZ myndasaga (ZIP þjöppun byggt einka myndasagnamynda skjalasafns snið. Inniheldur samfellt röð af kyrrstæðum bitakortamyndum, þjónar sem algilt létt ílát staðall fyrir stafræna myndasöguútgáfu og krossvettvang staðbundna söfnun)"
+
+msgid "mime_cbr"
+msgstr "CBR myndasaga (RAR þjöppun byggt einka myndasagnamynda skjalasafns snið. Notar RAR algrímið til að innhylta kyrrstæðar bitakortaraðir, með háa þjöppunarhlutfall og víðtækan samhæfnisstuðning á sviði stafrænnar myndasögudreifingar)"
+
+msgid "mime_fb2"
+msgstr "FB2 rafbók (snemma 2000 FictionBook 2.0 rafbókastaðall. Notar hreina XML byggingu til að lýsa bókareiginleikum og textastigveldi, með víðtækan stuðning í opnum hugbúnaði rafbóka vistkerfi og arfleifð stafrænni útgáfu lesendum)"
+
+msgid "mime_kepub"
+msgstr "KEPUB rafbók (Kobo einka bætt rafbókasnið byggt á EPUB staðlinum. Hagrætt á vélbúnaðarstigi fyrir Kobo rafbóka lesendur, býður upp á skilvirkara síðuútlit og lestrartölfræði samskipti)"
+
+msgid "mime_m4b"
+msgstr "M4B hljóðbók (MPEG-4 Part 14 (MP4) ílát bygging byggt hljóðbókasnið. Notar AAC kóðun, styður innfæddan lággráðu bókamerkjastaðsetningu, endurheimtun frá slökkt og kafla innfellingu, var einu sinni staðlað snið í Apple iTunes vistkerfi)"
+
+msgid "mime_kfx"
+msgstr "Kindle KFX snið (2015 Amazon einka bætt stafrænt útgáfusnið gefið út með Kindle. Styður háþróaða leturgerð tengingu, háa kraftmikla leturgerð útgáfu og kjarnastigs streymandi síðuhleðslu (Page Flip), er kjarnastaðall nútíma Kindle vettvangs)"
+
+msgid "mime_chm"
+msgstr "CHM þýdd hjálparskrá (1997 Microsoft þýdd HTML hjálparupplýsingakerfi. Pakkar hypertexta gögnum og undirliggjandi vísitölum í eitt tvöfalt ílát, hefur lengi verið staðlað snið fyrir Windows hugbúnað staðbundna nettengda hjálparskjölun)"
+
+msgid "mime_mht"
+msgstr "MHT vefsafn (1999 Microsoft MIME samansafn hypertexta snið. Byggt á RFC 2557 staðli, pakkar HTML frumkóða, CSS, JS og innfelldum myndum í eina textaskrá, notuð fyrir arfleifð vafra nettengda vefsíðuvistun)"
+
+msgid "mime_wml"
+msgstr "WML þráðlaus merkingarmál (1999 WAP (Þráðlaus forrits staðall) vettvangur staðfestur farsíma merkingarstaðall. Byggt á XML upplýsingatækni, sérstaklega hannað fyrir snemma mjóa band breiðslu þráðlausra farsímakerfa og lág-reikniafls eiginleika síma, tilheyrir starfslokum arfleifðartækni í nútíma vefs vistkerfi)"
+
+msgid "mime_xhtml"
+msgstr "XHTML hypertexta vefsíða (2000 W3C staðall, XML bygging byggð strangt hypertexta merkingarmál. Árið 2009, W3C stöðvaði tæknilega þróun þess og sneri sér alfarið að HTML5 upplýsingatækninni, nú aðallega notað fyrir merkingarfræðilega vefsíðuútgáfu í arfleifðarkerfum)"
+
+msgid "mime_xml"
+msgstr "XML uppbyggt skjal (1998 W3C staðall útvíkkanlegt merkingarmál. Með sjálfslýsandi merkja byggingu, er það grundvallarsnið fyrir net vefþjónustur (SOAP/REST), kerfisstigs stillingarskrár (XSD) og krossvettvang gagnaskipti)"
+
+msgid "mime_sgml"
+msgstr "SGML staðlað almennt merkingarmál (1986 ISO 8879 alþjóðlegur staðall. Sem iðnaðar brautryðjandi í uppbyggðri lýsingu rafrænna skjala, eru bæði XML og snemma HTML upplýsingar afleiddar af þessu stöðluðu yfirmáli)"
+
+msgid "mime_apng"
+msgstr "APNG kraftmikil mynd (2004 Mozilla þróað PNG kraftmikil viðbót. Styður 24-bita sannan lit og 8-bita alfa rás hálfgagnsæi, þjónar sem hágæða valkostur við GIF snið fyrir nútíma vef atburðarásir)"
+
+msgid "mime_bmp"
+msgstr "BMP innfædd bitakort (Microsoft vettvangur tækisóháð bitakortasnið staðfest frá Windows 1.0 tímum. Notar tapslaust óþjappað geymslu, því rúmmál þess er venjulega 3-10 sinnum stærra en PNG, en þar sem það þarfnast ekki kóðunar/afkóðunar yfirkostnaðar, er það enn víða innfellt í Windows 11 kjarnaíhluti, EXE/MSI auðlindahluta og arfleifð reklstjóra grafískra vinnsluminnis)"
+
+msgid "mime_cdr"
+msgstr "CDR vigurmyndir (Corel Corporation einka CorelDRAW fagmannlegt vigurhönnunar frumskrársnið. Styður lög byggða lita stjórnun, flókin stærðfræðileg ferilhnút og prentstigs útlit gögn, er sérhæft snið fyrir fagmannlega grafíska prentun og auglýsingahönnunarsvið)"
+
+msgid "mime_gif"
+msgstr "GIF flokkaður litamynd (1987 CompuServe 8-bita flokkað lit bitakortasnið. Byggt á LZW algrími, takmarkað við 256 lita stig og einkróma gagnsæi, með uppþustu rúmmáli á háum myndhraða, smám saman skipt út fyrir nútíma skilvirk teiknimyndastaðla eins og APNG, WebP o.s.frv.)"
+
+msgid "mime_ico"
+msgstr "ICO kerfistáknmynd (Windows innfædd táknmynd auðlindainnhyltingarsnið. Styður blöndun margra myndbreytinga með mismunandi pixla upplausn og litadýpt í einu íláti, er einnig algildur dreifingarstaðall fyrir nútíma vafra vefsvæðis auðkenni (Favicon))"
+
+msgid "mime_jpeg"
+msgstr "JPEG þjöppuð mynd (1992 ISO 10918 alþjóðlegur staðall tapandi þjöppunar snið. Byggt á stakri kósínus umbreytingu (DCT) algrími, nær háu þjöppunarhlutfalli en viðheldur framúrskarandi raunsærri myndgæðum, er algildur de facto staðall fyrir kyrrstæðar ljósmyndir á alþjóðlegu internetinu)"
+
+msgid "mime_jpg"
+msgstr "JPEG þjöppuð mynd (1992 ISO 10918 alþjóðlegur staðall tapandi þjöppunar snið. Byggt á stakri kósínus umbreytingu (DCT) algrími, nær háu þjöppunarhlutfalli en viðheldur framúrskarandi raunsærri myndgæðum, er algildur de facto staðall fyrir kyrrstæðar ljósmyndir á alþjóðlegu internetinu)"
+
+msgid "mime_png"
+msgstr "PNG taplaus mynd (1996 W3C-mælt með færanlegu netmyndastöðlum. Notar tapslaust þjöppunaralgrím, styður innfæddan 24-bita sannan lit og 8-bita alfa rás gagnsæi, sem hágæða valkostur við klassískt kyrrstæða GIF, er algildur de facto staðall fyrir tapslausa pixlamyndir á internetinu)"
+
+msgid "mime_ps"
+msgstr "PostScript síðulýsingarskrá (1985 Adobe stafla byggt síðulýsingarmál. Sem tæknilegur forveri PDF sniðsins, nær það á lággráðu vélbúnaðaróháðu textaútlagningu og mikilli nákvæmni vigurmyndagerð, og er grundvallarstaðall fyrir faglega prentun og leysiprentunarsvið)"
+
+msgid "mime_psb"
+msgstr "PSB stórt lag skjal (Adobe Photoshop einka mjög stór frumskrá innhyltingarsnið. Brýtur staðlaða PSD sniðs 2GB líkamlegt rúmmál og 30.000 pixla innra vistfangstakmarkanir, sérstaklega hannað til að geyma mjög stór, djúpt lögð, risastór stafræn listauðlindir)"
+
+msgid "mime_psd"
+msgstr "PSD laghönnunar frumskrá (Adobe Photoshop einka lagað mynd verkfræði ílát. Sem iðnaðarstaðlað ílát á sviði grafískrar myndgreiningar, innhyltar það innfædda fulla lagagerðartréð, bitakort rásir, vigur klippingarleiðir og flóknar blöndunarstillingar, styður tapslaust fullt gagnabreytingar)"
+
+msgid "mime_webp"
+msgstr "WebP mikil nýtni mynd (2010 Google algilt vefmyndkóðunarstaðall. Dregið af VP8 myndbandskylduhrönnum tækni, fullkomlega samhæft við tapandi, tapslaust, hálfgagnsætt og kraftmikið útgáfu, 25-35% minni en PNG við sömu gæði, er hornsteinn háafla hleðslu nútíma vefsíðna)"
+
+msgid "mime_woff"
+msgstr "WOFF vef leturgerðarskrá (2009 búið til og 2012 W3C staðall vefs opin leturgerðarsnið. Kjarni þess er tapslaus straumþjöppun á stöðluðum TTF/OTF leturgerðarbyggingu, hagræðir verulega netbandbreiddarkostnaði, er algilt snið fyrir nútíma vefsvæða táknmyndir og ský leturgerðir)"
+
+msgid "mime_7z"
+msgstr "7z þjappaður pakki (1999 Igor Pavlov 7-Zip einkasnið. Byggt á opnum hugbúnaði LZMA/LZMA2 algrímum, með mjög hátt þjöppunarhlutfall. Við sambærilegar aðstæður er það venjulega 30-50% minna en ZIP, og er algilt háþjöppunarhlutfallssnið í opnum hugbúnaðarsamfélaginu og hugbúnaðardreifingu)"
+
+msgid "mime_ace"
+msgstr "ACE þjappaður pakki (1990 WinACE einka þjöppunarsnið. Keppti einu sinni við RAR snið og bauð upp á hátt þjöppunarhlutfall. Tæknileg þróun hætti eftir 2007, nú skipt út fyrir 7z og RAR snið, tilheyrir arfleifðarkerfa skjalasafns sniðum)"
+
+msgid "mime_bz2"
+msgstr "BZIP2 þjappaður pakki (1996 Julian Seward blokka flokkunar þjöppunarsnið. Undirliggjandi algríms þjöppunarhlutfall er 15-20% hærra en GZIP en með hærri reiknikostnaði. Oft notað til dreifingar Linux kjarna frumkóða og opins hugbúnaðar pakka, staðlað skráarviðskeyti er .bz2)"
+
+msgid "mime_cab"
+msgstr "CAB þjappaður pakki (1995 Microsoft þróað skjalasafnssnið. Sem Windows kerfis innfæddur uppsetningarstaðall, notaður til dreifingar reklstjóra og kjarna skráa, einnig þjónar sem undirliggjandi geymsluílát fyrir Windows uppsetningarforrit (MSI))"
+
+msgid "mime_dmg"
+msgstr "DMG diskmynd (1980 Apple þróað diskmyndarsnið. Sem staðlað ílát fyrir macOS hugbúnaðardreifingu, styður tengingu sem sýndarskráarkerfi, lággráðu þjöppun og gagnadulritun, og er ríkjandi snið fyrir forritadreifingu í Mac vistkerfinu)"
+
+msgid "mime_emz"
+msgstr "EMZ þjöppuð mynd (þjöppuð útgáfa af Windows aukinni myndasafnsskrá EMF. Aðallega tvöföld vigurmynd þjöppuð í gegnum GZIP algrím, mikið notuð til að geyma innfellda vigurmynd í Microsoft Office pakka skjölum)"
+
+msgid "mime_gz"
+msgstr "GZIP þjappaður pakki (1992 GNU verkefni Jean-loup Gailly og Mark Adler staðlað straumþjöppunarsnið. Sem staðlað Unix/Linux þjöppunarverkfæri, einnig kjarnastaðall fyrir HTTP flutningslags þjöppun (Gzip), oft notað í samsettningu með TAR skjalasafni)"
+
+msgid "mime_jar"
+msgstr "JAR þjappaður pakki (1997 Sun Microsystems Java ARchive skjalasafnssnið. Aðallega ZIP byggingu byggt pökkunarílát, notað til að innhylta Java klassa bókasöfn og lýsigögn, er kjarnasett vara fyrir Maven, Gradle og snemma Android vistkerfi)"
+
+msgid "mime_lzma"
+msgstr "LZMA þjappaður pakki (1998 Igor Pavlov Lempel-Ziv-Markov keðju þjöppunaralgrím. Sem kjarnavél 7z sniðsins, með mjög hátt þjöppunarhlutfall og hratt afþjöppun, mikið notað til dreifingar vélbúnaðar fastbúnaðar og innbyggðra kerfa)"
+
+msgid "mime_rar"
+msgstr "RAR þjappaður pakki (1993 Eugene Roshal WinRAR einka skjalasafnssnið. Styður bindiaskiptingu, líkamlega endurheimtarfærslur (ECC) og sterka dulritun. Þjöppunarhlutfall þess er betra en staðlaðs ZIP, með víðtækan samhæfnisstuðning á persónulegum og viðskiptasviðum)"
+
+msgid "mime_tar"
+msgstr "TAR skjalasafnspakki (1979 Unix V7 tímans segulbanda skjalasafnssnið. Framkvæmir aðeins skráarstraumspökkun án gagnaþjöppunar, oft sameinað með GZIP/BZIP2/XZ, er undirliggjandi staðall fyrir Linux frumkóða og Docker mynda lagskipta geymslu)"
+
+msgid "mime_tgz"
+msgstr "TGZ þjappaður pakki (TAR skjalasafns og GZIP þjöppunar straumsamsett snið, skráarviðskeyti .tgz eða .tar.gz. Sem algengasta hugbúnaðarpakkadreifingarsniðið í Unix/Linux umhverfi, mikið notað fyrir frumkóðaþýðingaruppsetningu og uppsetningarlausa tvöfalda pakkadreifingu)"
+
+msgid "mime_tbz2"
+msgstr "TBZ2 þjappaður pakki (TAR skjalasafns og BZIP2 þjöppunar straumsamsett snið, skráarviðskeyti .tbz2 eða .tar.bz2. Samanborið við TGZ, getur það bætt þjöppunarhlutfallið um viðbótar 15-20%, hentugt fyrir stórar skráaflutningar, var lengi notað fyrir dreifingu Linux kjarna frumkóða)"
+
+msgid "mime_xz"
+msgstr "XZ þjappaður pakki (2009 næsta kynslóðar háþjöppunarhlutfallssnið. Byggt á LZMA2 algrími, gagnaþjöppunarhlutfall 30-50% betra en GZIP en viðheldur hröðum afþjöppun. Hefur verið staðfest sem mælt með dreifingarstaðli af Linux kjarna og almennum pakkastjórum (eins og inni í Debian .deb))"
+
+msgid "mime_z"
+msgstr "Z þjappaður pakki (1985 Unix compress skipunar LZW þjöppunarsnið. Sem staðlað þjöppunarsnið í snemma Unix kerfum, nú alfarið skipt út fyrir skilvirkara GZIP snið, er sjaldgæft sögulegt arfleifðarsnið í nútíma netumferð)"
+
+msgid "mime_zip"
+msgstr "ZIP þjappaður pakki (1989 Phil Katz PKZIP algilt skjalasafnssnið. Innfæddur stuðningur frá öllum helstu stýrikerfum, það er mest notaða ílátastaðallinn á internetinu. Nútíma Java JAR, Android APK og Office skjöl (OOXML) eru öll byggð á ZIP byggingu)"
+
+msgid "mime_zst"
+msgstr "Zstandard þjappaður pakki (2015 Facebook Yann Collet næsta kynslóðar straumþjöppunarstaðall. Nálgast LZMA þjöppunarhlutfall á meðan það hefur verulega meiri afköst en GZIP. Hefur verið djúpt tekið upp af Linux kjarna (5.9+) og Arch/Debian pakkastjórum)"
+
+msgid "mime_lz4"
+msgstr "LZ4 þjappaður pakki (2011 Yann Collet ofurhratt straumþjöppunaralgrím. Afköst hraði þess er meira en 10 sinnum hraðari en GZIP, með mjög litlum CPU keyrslutíma yfirkostnaði. Mikið notað í Linux kjarna, OpenZFS skráarkerfi og Hadoop rauntíma gagnastraumsvinnslu)"
+
+msgid "mime_lzo"
+msgstr "LZO þjappaður pakki (1996 Markus Oberhumer Lempel-Ziv-Oberhumer algrím. Einbeitir sér að ofurhröðum afþjöppunarárangri. Mikið innfellt í Linux kjarna Squashfs myndir, OpenWrt fastbúnað og ýmis auðlindatakmörkuð innbyggð kerfi)"
+
+msgid "mime_msi"
+msgstr "MSI kerfisuppsetningarpakki (1999 Microsoft Windows uppsetningarforrit gagnainnhyltingarsnið. Sem Windows forritastigs uppsetningarstaðall, styður innfæddan lággráðu viðskiptabakkfærslu, íhluta líftímastjórnun og lotulausa hljóðláta uppsetningu, er kjarnastaðall fyrir miðlæga dreifingu fyrirtækjahugbúnaðar og stefnubundna dreifingu)"
+
+msgid "mime_pkg"
+msgstr "PKG krossvettvangur hugbúnaðaruppsetningarpakki. 1. FreeBSD hugbúnaðarpakki: pkgng staðall, skráarviðskeyti .pkg eða .txz, byggt á TAR+XZ/Zstd þjöppun, styður fíkniupplausn og undirskriftarsannprófun; 2. macOS uppsetningarpakki: byggt á Apple uppsetningarforritssniði, styður sérsniðna íhluti, uppsetningarskriftir og kerfisstigs afpökkun. Þeir eru aðal dreifingarmiðlar fyrir BSD netþjóna og Mac kerfið, í sömu röð."
+
+msgid "mime_apk"
+msgstr "APK Android forritspakki (2008 Google með Android gefinn út hefðbundinn forritauppsetningarpakki. Undirliggjandi byggt á ZIP skjalasafnsbyggingu, pakkar þýddum Dalvik bætkóða (DEX), lýsigagna yfirlýsingu og alþjóðlegum auðlindum, nú mikið notað fyrir staðbundna þróunar kembiforrit, þriðja aðila dreifingu og hliðaruppsetningu á tækjum)"
+
+msgid "mime_ipa"
+msgstr "IPA Apple forritspakki (2008 iPhone SDK gefinn út iOS/iPadOS einkarétt pökkunarílát. Aðallega FairPlay DRM eða fyrirtækjavottorð undirritað ZIP skjalasafn, inniheldur Mach-O tvöfalt keyrsluhæft, forritsaðlindatré og Info.plist lýsigagnastillingar)"
+
+msgid "mime_hap"
+msgstr "HAP HarmonyOS forritspakki (2020 HarmonyOS 2.0 gefinn út HarmonyOS sveigjanleg dreifingareining. Samanstendur af Entry aðaleiningu eða Feature víkkaðri virknieiningu, er margenda (símar, spjaldtölvur, klæðanleg tæki) yfirtækja dreifingarsnið fyrir snjöll endatæki)"
+
+msgid "mime_har"
+msgstr "HAR HarmonyOS kyrrstæð sameiginleg pakki (HarmonyOS einka kyrrstætt sameiginlegt bókasafnsskjalasafn. Notað til að innhylta sameiginlega íhluti, undirliggjandi auðlindakóða og þýðingartíma fíkni, kyrrstætt tengt af mörgum HAP einingum fyrir miðlun, er grundvallargrunnur fyrir íhlutamiðaða þróun og fjöleininga endurnotkun í HarmonyOS kerfinu)"
+
+msgid "mime_aab"
+msgstr "AAB Android forritasafn (2018 Google hleypt af stokkunum og 2021 staðfest Google Play kraftmikil dreifingarsnið. Sem hreint dreifingaraðili, sker og þýðir skýið kraftmikið miðað við marktækis CPU byggingu, skjáþéttleika og tungumál til að búa til hagrædda APK að ósk, dregur úr flutningsbandbreiddarkostnaði að meðaltali um 35%)"
+
+msgid "mime_xapk"
+msgstr "XAPK víkkaður forritspakki (þriðja aðila Android samfélags staðfestur óopinber forritavíkkunarstaðall. Sameinar staðlaða APK skrá með stórum OBB leikjagagna víkkunarpakka, brýtur líkamlega í gegnum Google Play 100MB einstaka skráarstærðarmörk, mikið séð á leikjadreifingarvettvangi)"
+
+msgid "mime_appx"
+msgstr "APPX nútíma forritspakki (2012 Microsoft með Windows 8 gefinn út UWP forritadreifingarstaðall. Hefur sandkassa einangraða keyrslu og léttan afpökkunareiginleika, þjónaði sem snemma ríkjandi staðall fyrir Microsoft Store, en í nútíma Windows vistkerfi hefur það farið inn í síðasta líftímastig í þróun í átt að MSIX)"
+
+msgid "mime_msix"
+msgstr "MSIX næsta kynslóðar forritspakki (2018 Microsoft gefið út nýtt fullkomlega staðlað Windows pökkunarupplýsingatækni. Sameinar fullkomlega APPX forritsturvörn sandkassa eiginleika við MSIX fyrirtækjaeignastjórnunarkosti, fullkomlega samhæft við allar Win32 forritagerðir, og er mælt með dreifingarstaðli fyrir Windows 11)"
+
+msgid "mime_appimage"
+msgstr "AppImage sjálfumlykjandi forritspakki (2004 hafin Linux ein keyrsluhæft skjalasafnsupplýsingatækni. Tekur upp 'eitt forrit er ein skrá' sjálfumlykjandi byggingu, sem tengist beint við keyrslu sem skrifvarið sýndarskráarkerfi í gegnum FUSE kerfi, nær engum fíkni kassa út keyrslu yfir Linux dreifingar)"
+
+msgid "mime_flatpak"
+msgstr "Flatpak sandkassa forritspakki (2015 Red Hat og GNOME leidd Linux krossdreifing skjáborðsforritadreifingarstaðall. Stutt af Linux kjarna Nafnarými og Cgroups kerfum til að ná mjög ströngu forritastigs öryggis sandkassa einangrun, er grunnur nútíma opins hugbúnaðar stýrikerfa hugbúnaðarmiðstöðva)"
+
+msgid "mime_snap"
+msgstr "Snap ílátsvæddur forritspakki (2014 Ubuntu móðurfyrirtæki Canonical Linux algildur dreifingarstaðall. Tekur upp forrit-sjálfumlykjandi SquashFS myndatengingarbyggingu, styður sjálfvirkar stigvaxandi uppfærslur og stranga AppArmor sandkassa einangrun, og er sjálfgefið kjarnasnið Ubuntu hugbúnaðarmiðstöðvar vistkerfisins)"
+
+msgid "mime_deb"
+msgstr "DEB kerfishugbúnaðarpakki (1993 Debian verkefni staðfest tvöfalt og frumkóða pökkunarupplýsingatækni. Sem undirliggjandi uppsetningarstaðall fyrir Debian, Ubuntu og allar afleiður þeirra, treystir á dpkg fyrir útpökkun og viðhald, og notar APT sem skilvirkan pakkastjóra framenda, er fullþroskaðasta hugbúnaðardreifingar hornsteinninn í Linux vistkerfinu)"
+
+msgid "mime_rpm"
+msgstr "RPM kerfishugbúnaðarpakki (1997 Red Hat gefinn út Red Hat pakkastjóra pökkunarupplýsingatækni. Saman með DEB, mynda þeir tvö helstu hefðbundnu Linux pakkastjórnunarbúðirnar, hafa innfædda viðskiptabyggða fíkniskoðun og lággráðu hugbúnaðar stafræna undirskriftarsannprófun, og er enn algjör ríkjandi dreifingarstaðall fyrir Red Hat vistkerfi dreifinga eins og RHEL, Fedora og CentOS)"
+
+msgid "mime_pacman"
+msgstr "Pacman skjalasafnshugbúnaðarpakki (2002 Arch Linux með pacman stjórnanda staðfest .pkg.tar.zst pökkunarsnið. Sem kjarni Arch veltingur uppfærslukerfis, byggt á Zstandard háhraða háþjöppunaralgrími, ásamt AUR (Arch notenda hugbúnaðar safn) vistkerfi, er nútíma pakkadreifingarstaðall sem fyrirmyndir einfaldleika og KISS meginregluna (Keep It Simple, Stupid))"
+
+msgid "mime_exe"
+msgstr "EXE innfædd keyrsluhæf skrá (Windows vettvangs flytjanlegt keyrsluhæft (PE) tvöfalt forritarsnið. Tæknileg ættbók þess stafar af MS-DOS tímans MZ hausbyggingu, og frá 1993 Windows NT var það fullkomlega staðfest sem PE byggingarupplýsingatækni, er mest notaða keyrslustaðallinn í heiminum fyrir vélakóða skipanir, kyrrstæðar auðlindahluta og kerfiskjarna ræsingu)"
+
+msgid "mime_dll"
+msgstr "DLL kraftmikil tengibókasafn (Windows vettvangs kraftmikil tengibókasafn sameiginleg kóðabókasafns upplýsingatækni. Með kraftmikilli hleðslu og tákna tilfærslu við keyrslu, sparar verulega eðlilega minni og diskpláss, sem kjarna framkvæmdarform Windows API. Snemma 'DLL helvíti' sársaukapunktur var rótgróinn í nútíma með SxS samhliða einangrunarkerfi)"
+
+msgid "mime_com"
+msgstr "COM klassísk keyrsluhæf skrá (elsta minnismynd (Skipun) keyrslusnið frá MS-DOS tímum. Notar byggingarlausa hreinan kóðahlutahönnun, takmarkað við 64KB eðlilega minnis vistfangshluta mörk, nú starfslok sem sögulegt arfleifðarsnið, en í nútíma Windows byggingum heldur það takmörkuðu samhæfi sem sérstakur íhlutaviðmót)"
+
+msgid "mime_aac"
+msgstr "AAC hljóð (MPEG staðall 1997, Advanced Audio Coding. Eftirmaður MP3, hljóðgæði betri en MP3 við sama bitahraða, sjálfgefið hljóðsnið fyrir YouTube, iTunes, Nintendo Switch)"
+
+msgid "mime_alac"
+msgstr "ALAC hljóð (Apple þróaði 2004, Apple Lossless Audio Codec. Apple gagnatapalaust snið, opinn frumkóði 2011, sjálfgefið gagnatapalaust snið fyrir iTunes og Apple Music)"
+
+msgid "mime_flac"
+msgstr "FLAC hljóð (Xiph.Org stofnunin þróaði 2001, Free Lossless Audio Codec. Gagnatapalaus þjöppun, hljóðgæði eins og á geislaplötu, skráarstærð um helming upprunalegs WAV. Opinn frumkóði og einkaleyfislaus, valið snið fyrir hljóðfræðinga og stafræna tónlistarsöfn)"
+
+msgid "mime_mp3"
+msgstr "MP3 hljóð (Fraunhofer stofnunin þróaði 1993, MPEG-1 Audio Layer 3. Gagnatapandi þjöppunarsnið, lítil skrá með ásættanlegum hljóðgæðum, aðalsniðið í stafrænu tónlistarbyltingunni á 21. öld, ábyrgt fyrir iPod og Napster. Einkaleyfi runnu út árið 2017, varð almenningseign)"
+
+msgid "mime_oga"
+msgstr "Ogg Audio hljóð (þróað af Xiph.Org stofnuninni, hreint hljóðsnið af Ogg íláti, notar Vorbis kóðun. Opinn frumkóði og einkaleyfislaus, skilvirkni þjöppunar betri en MP3, mikið notað í opnum frumkóða verkefnum)"
+
+msgid "mime_ogg"
+msgstr "OGG hljóð (Xiph.Org stofnunin þróaði 2000, Ogg Vorbis snið. Opinn frumkóði og einkaleyfislaus, skilvirkni þjöppunar betri en MP3, snemma Spotify notaði það, mikið notað fyrir hljóðbrellur í leikjum)"
+
+msgid "mime_opus"
+msgstr "Opus hljóð (IETF staðlaði 2012, opið og einkaleyfislaust hljóðsnið, sameinar SILK og CELT tækni, mjög lítil töf, hæsta skilvirkni þjöppunar, sjálfgefið hljóðsnið fyrir WebRTC, WhatsApp, Discord)"
+
+msgid "mime_wav"
+msgstr "WAV hljóð (Microsoft og IBM þróuðu 1991, innfæddur hljóðsnið Windows. PCM kóðun, óþjappað, gagnatapalaus hljóðgæði en mjög stór skrá, staðlað snið fyrir faglega hljóðvinnslu)"
+
+msgid "mime_wma"
+msgstr "WMA hljóð (Microsoft þróaði 1999, Windows Media Audio. Er með gagnatapandi/gagnatapalausar útgáfur, innfæddur stuðningur Windows, dreifðist með Windows Media Player. Nú á jaðrinum, skipt út fyrir MP3/AAC)"
+
+msgid "mime_dsf"
+msgstr "DSF hljóð (Direct Stream Digital snið, þróað af Sony og Philips. 1 bita há tíðni sýnatöku, staðlað DSD hljóðsnið, stafræn útgáfa af SACD, hágæða hljóðsnið fyrir hljóðfræðinga, mjög stór skrá)"
+
+msgid "mime_ape"
+msgstr "APE Hljóð (þróað af Monkey's Audio árið 2000, tapþjöppunarsnið. Meiri þjöppun en FLAC en hægari kóðun, enn notað á Windows vettvangi og meðal hljóðáhugamanna)"
+
+msgid "mime_mid"
+msgstr "MIDI hljóð (MIDI samtökin settu 1983, Musical Instrument Digital Interface. Nótna snið, ekki upptaka, mjög lítil skrá, staðall fyrir rafræn hljóðfæri, hringitóna síma, hljóðbrellur í leikjum. General MIDI var staðlað 1991, skilgreinir 128 hljóðfæri)"
+
+msgid "mime_m4a"
+msgstr "M4A hljóð (MPEG-4 Audio, ílátssnið fyrir AAC. Staðlað snið iTunes tónlistarverslunar, aðal hljóðsnið í Apple vistkerfinu, styður DRM vernd)"
+
+msgid "mime_m3u"
+msgstr "M3U spilunarlisti (MP3 URL spilunarlistasnið, venjuleg textaskrá, skráir slóðir hljóðskráa. Staðall frá Winamp tímabilinu, notað fyrir netútvörp, streymi tónlistar á netinu. M3U8 er UTF-8 útgáfa þess, notuð fyrir HTTP Live Streaming)"
+
+msgid "mime_asf"
+msgstr "ASF streymi (Microsoft þróaði 1996, Advanced Systems Format. Windows Media streymisílát, styður samstillta flutning á hljóði og myndbandi. Notað fyrir beinar netútsendingar og myndband á eftirspurn streymi, WMA/WMV byggja á ASF ílátinu)"
+
+msgid "mime_avi"
+msgstr "AVI myndband (Microsoft gaf út 1992, snemma Windows myndbandsstaðall. 'Audio Video Interleave', víxlar hljóði og myndbandi, var vinsælasta myndbandssniðið á árunum 1990-2000, nú skipt út fyrir MP4/MKV)"
+
+msgid "mime_divx"
+msgstr "DivX myndband (DivX fyrirtækið þróaði 1998, myndbandskódek snið byggt á MPEG-4. Aðalsnið fyrir miðlun myndbanda á netinu á 20. öld, fyrsta tæknin sem þjappaði DVD gæðum á geislaplötustærð. Vegna höfundarréttardeilna, breyttist síðar í viðskiptalegan kóðara)"
+
+msgid "mime_mp4"
+msgstr "MP4 myndband (MPEG staðall 2001, MPEG-4 Part 14. Algengasta myndbandssnið heims, styður H.264/H.265 kóðun, sjálfgefið snið fyrir myndband á netinu, upptöku með farsíma, YouTube)"
+
+msgid "mime_m4v"
+msgstr "M4V myndband (iTunes myndbandssnið, afbrigði af MP4. Myndbandssnið í Apple vistkerfinu, staðlað snið fyrir kvikmyndir og sjónvarpsefni í iTunes Store, styður DRM höfundarréttarvernd)"
+
+msgid "mime_mpeg"
+msgstr "MPEG myndband (MPEG samtökin settu 1988, Moving Picture Experts Group. Lögðu grunninn að stöðlum fyrir þjöppun stafræns myndbands, MPEG-1 (VCD), MPEG-2 (DVD), MPEG-4 (netmyndband) höfðu mikil áhrif)"
+
+msgid "mime_mkv"
+msgstr "MKV myndband (Matroska verkefnið þróaði 2002, opið margmiðlunarílát. Styður margar hljóðrásir, marga texta, kafla, 'umbúðatól', valið snið fyrir miðlun á hárri upplausn kvikmynda)"
+
+msgid "mime_mpg"
+msgstr "MPEG myndband (MPEG-1/MPEG-2 myndbandaviðbætur, staðlað snið fyrir VCD og DVD. Aðal myndbandssnið á geisladiskum á árunum 1990-2000, nú skipt út fyrir H.264/H.265)"
+
+msgid "mime_ogv"
+msgstr "Ogg Video myndband (þróað af Xiph.Org stofnuninni, myndbandssnið Ogg íláts, notar Theora kóðun. Opið og einkaleyfislaust, einn af fyrstu stöðlunum fyrir HTML5 myndband, Firefox styður það innfædda)"
+
+msgid "mime_ogx"
+msgstr "Ogg margmiðlunarílát (þróað af Xiph.Org stofnuninni, almenn framlenging á Ogg íláti, getur innihaldið margar rásir eins og hljóð, myndband, texta. Opinn margmiðlunarstaðall, notað fyrir leiki, streymi)"
+
+msgid "mime_rm"
+msgstr "RealMedia myndband (RealNetworks þróaði 1995, RealMedia snið. Brautryðjandi netstreymis á árunum 1990-2000, aðalsnið RealPlayer spilarans. Gallar: krefst sérstaks spilara, léleg þjöppunargæði, síðar skipt út fyrir Flash/MP4)"
+
+msgid "mime_flv"
+msgstr "Flash myndband (sniðið kom fram 2002, Flash Video snið. Var einu sinni aðal myndbandssnið á netinu. Snemma YouTube notaði það. Gallar: þörf fyrir Flash viðbót, léleg afköst, margir öryggisveikleikar. Frá 2015 hafa helstu vefsíður skipt yfir í HTML5 myndband, nú úrelt)"
+
+msgid "mime_f4v"
+msgstr "F4V myndband (Flash myndbandssnið þróað af Adobe, eftirmaður FLV. Byggt á MPEG-4 staðlinum, styður H.264 kóðun. Úrelt ásamt Flash tækninni, Adobe lagði niður stuðning árið 2020)"
+
+msgid "mime_wmv"
+msgstr "WMV myndband (Microsoft þróaði 1999, Windows Media Video. Innfæddur stuðningur Windows, bestað fyrir streymi, var algengt snið í snemma netmyndbandi, nú á jaðrinum)"
+
+msgid "mime_wmf"
+msgstr "WMF margmiðlunarsnið (Windows Media Format, margmiðlunarrammi Microsoft, nær yfir WMV myndband, WMA hljóð, Windows Media Player styður innfædda)"
+
+msgid "mime_mov"
+msgstr "MOV myndband (Apple þróaði 1991, QuickTime ílátssnið. Staðlað snið fyrir faglega myndbands klippingu, styður marga kóða, Final Cut Pro og Premiere styðja innfædda)"
+
+msgid "mime_qt"
+msgstr "QuickTime myndband (Apple gaf út 1991, QuickTime snið. Myndbandsstaðall á Mac vettvangi, MOV er ílát hans, QuickTime spilarinn var áður mikið notaður. Apple lagði niður þróun Windows útgáfunnar árið 2016, skiptir smám saman út fyrir MP4)"
+
+msgid "mime_webm"
+msgstr "WebM myndband (Google gaf út 2010, opið og einkaleyfislaust myndbandssnið. Byggt á Matroska ílátinu, VP8/VP9 kóðun, staðlað HTML5 myndbandssnið, sjálfgefið snið fyrir spilun á YouTube á vefnum)"
+
+msgid "mime_3gp"
+msgstr "3GP myndband (3GPP setti 2000, myndbandssnið fyrir farsíma. Mjög lítil skrá, lág gæði, snið fyrir myndbandsupptöku á fyrstu farsímum, notað fyrir MMS sendingar)"
+
+#------------------------------------------------------------------------------
+# Tæknilegar víddir
+#------------------------------------------------------------------------------
+
+msgid "Operating Systems"
+msgstr "Stýrikerfi"
+
+msgid "Top 5 Operating Systems"
+msgstr "5 efstu stýrikerfi"
+
+msgid "Unknown Robot"
+msgstr "Óþekktur viðskiptavinur"
+
+msgid "User agent"
+msgstr "Notanda umboð"
+
+msgid "Browsers"
+msgstr "Vafrar"
+
+msgid "Top 5 Browsers"
+msgstr "5 efstu vafrar"
+
+msgid "Unknown Robot RH"
+msgstr "Óþekkt beiðnishaus"
+
+msgid "Detailed"
+msgstr "Útgáfa aðgangstækis"
+
+msgid "DetailedOS"
+msgstr "Útgáfa stýrikerfis"
+
+msgid "DetailedBS"
+msgstr "Útgáfa vafra"
+
+msgid "Screen sizes"
+msgstr "Skjástærðir"
+
+msgid "Compression"
+msgstr "Þjöppun"
+
+msgid "In"
+msgstr "Inn"
+
+msgid "Out"
+msgstr "Út"
+
+msgid "Saved"
+msgstr "Vistað"
+
+#------------------------------------------------------------------------------
+# Uppruna víddir
+#------------------------------------------------------------------------------
+
+msgid "Origin"
+msgstr "Uppruni"
+
+msgid "Referers"
+msgstr "Tilvísunaraðilar"
+
+msgid "meta.description"
+msgstr "AWStats háþróaður greinir vefatvikaskráa - rauntíma eftirlit með vefumferð, greining gesta, leitarorð leitarvéla, tölfræði villusíðna. Styður dökkan ham og fjöltyngt viðmót, veitir yfirgripsmikla gagnagreiningu fyrir vefstjóra."
+
+msgid "meta.keywords"
+msgstr "AWStats,veftölfræði,atvikaskrágreining,umferðareftirlit,aðgangstölfræði,SEO greining,vefgreiningartól,Web Analytics,Log Analyzer"
+
+msgid "meta.author"
+msgstr "AWStats"
+
+msgid "og.title"
+msgstr "AWStats - Greining vefatvikaskráa"
+
+msgid "og.description"
+msgstr "📊 Faglegt opinn frumkóða vef tölfræðitól, greinir umferð á vefsvæðinu þínu og hegðun gesta í rauntíma."
+
+msgid "og.image.alt"
+msgstr "AWStats tölfræðilínurit"
+
+msgid "Created by"
+msgstr "Búið til af %s"
+
+msgid "plugins"
+msgstr "viðbætur"
+
+msgid "dbip by"
+msgstr "gögn frá"
+
+msgid "IPDB by"
+msgstr "landfræðileg staðsetningargögn veitt af DB-IP"
+
+# Heilsufar
+msgid "Configured"
+msgstr "Stillað"
+
+msgid "Missing"
+msgstr "Vantar"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Unused"
+msgstr "Ónotað"
+
+# Annað
+msgid "Overall Health"
+msgstr "Almennt heilsufar"
+
+msgid "Excellent"
+msgstr "Frábært"
+
+msgid "Good"
+msgstr "Gott"
+
+msgid "Fair"
+msgstr "Sæmilegt"
+
+msgid "Poor"
+msgstr "Slæmt"
+
+msgid "Missing icon types"
+msgstr "Vantar táknategundir"
+
+msgid "See"
+msgstr "Sjá nánar"
+
+msgid "Expected Path"
+msgstr "Lýsing slóðar"
+
+msgid "column for file locations"
+msgstr "dálkur til að fá staðsetningu skráa"
+
+# Ábending
+msgid "Tip: If you need to generate related icons, you can use %s to upload a logo image, and it will automatically generate all the above related icon files"
+msgstr "Ábending: Ef þú þarft að búa til tengd tákn, getur þú notað %s til að hlaða upp lógómynd, og það mun sjálfkrafa búa til allar ofangreindar tengdar táknaskrár"
+
+msgid "200: success, 404: failure"
+msgstr "200 er fjöldi velgengna, 404 er fjöldi bilana"
+
+# Væntar slóðir
+msgid "_PATH_FAVICON"
+msgstr "/favicon.ico"
+
+msgid "_PATH_APPLE_TOUCH"
+msgstr "/apple-touch-icon.png eða /apple-touch-icon-180x180.png"
+
+msgid "_PATH_LOGO"
+msgstr "/logo.svg eða /logo.png (þarf að vísa til í HTML/JSON-LD)"
+
+msgid "_PATH_WEBMANIFEST"
+msgstr "/site.webmanifest eða /manifest.json"
+
+msgid "_PATH_BROWSERCONFIG"
+msgstr "/browserconfig.xml"
+
+msgid "_PATH_SAFARI_PINNED"
+msgstr "/safari-pinned-tab.svg"
+
+msgid "_PATH_SOCIAL_ICON"
+msgstr "/images/github.svg, /images/paypal.svg o.fl."
+
+# Heiti táknategunda
+msgid "Favicon"
+msgstr "Vefsvæðistákn"
+
+msgid "Apple Touch Icon (iOS/macOS)"
+msgstr "Apple Touch tákn (iPhone/iPad/Mac)"
+
+msgid "Site Logo"
+msgstr "Lógó vefsvæðis"
+
+msgid "Web App Manifest (Android/Chrome)"
+msgstr "Vefapp handritsskrá (Android/Chrome)"
+
+msgid "Windows Browser Config"
+msgstr "Windows vafrastilling"
+
+msgid "Safari Pinned Tab"
+msgstr "Safari festi flipa tákn"
+
+msgid "Social Icon"
+msgstr "Samfélagsmiðla tákn"
+
+# Hausar
+msgid "Icon Files Status"
+msgstr "Staða táknaskráa"
+
+msgid "Icon Type"
+msgstr "Tegund tákns"
+
+msgid "Advanced Web Statistics"
+msgstr "Háþróaður atvikaskráagreinir"
+
+msgid "Advanced Web Statistics %s"
+msgstr "Háþróaður atvikaskráagreinir %s"
+
+msgid "Your browser does not support frames. Please use a modern browser."
+msgstr "Vafrinn þinn styður ekki ramma. Vinsamlegast notið nútíma vafra."
+
+msgid "View statistics directly"
+msgstr "Skoða tölfræði beint"
+
+msgid "Close"
+msgstr "Loka"
+
+msgid "Documentation Viewer"
+msgstr "Skjölunarskoðari"
+
+msgid "Direct address / Bookmarks"
+msgstr "Beint vistfang / Bókamerki"
+
+msgid "Search Engines"
+msgstr "Leitarvélar"
+
+msgid "Refering search engines"
+msgstr "Tilvísandi leitarvélar"
+
+msgid "External pages"
+msgstr "Ytri síður"
+
+msgid "Refering pages"
+msgstr "Tilvísandi síður"
+
+msgid "Internal pages"
+msgstr "Innri síður"
+
+msgid "UnknownAccessSource"
+msgstr "Óþekktur aðgangsuppruni"
+
+msgid "Different refering pages"
+msgstr "Mismunandi tilvísandi síður"
+
+msgid "Keyphrases"
+msgstr "Leitarsetningar"
+
+msgid "Keywords"
+msgstr "Leitarorð"
+
+msgid "Keyphrases/Keywords"
+msgstr "Leitarsetningar/Leitarorð"
+
+msgid "Different keyphrases"
+msgstr "Mismunandi leitarsetningar"
+
+msgid "Different keywords"
+msgstr "Mismunandi leitarorð"
+
+#------------------------------------------------------------------------------
+# Síðuvíddir
+#------------------------------------------------------------------------------
+
+msgid "Viewed pages"
+msgstr "Skoðaðar síður"
+
+msgid "Different pages"
+msgstr "Mismunandi síður"
+
+msgid "Entry"
+msgstr "Inngangsstaða"
+
+msgid "Exit"
+msgstr "Útgangsstaða"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Referer"
+msgstr "Tilvísun"
+
+msgid "Host"
+msgstr "Hýsill"
+
+#------------------------------------------------------------------------------
+# Villur og stöður
+#------------------------------------------------------------------------------
+
+msgid "Error"
+msgstr "Villa"
+
+msgid "HTTP Status Statistics"
+msgstr "HTTP stöðukóða tölfræði"
+
+msgid "SMTP Error codes"
+msgstr "SMTP villukóðar"
+
+msgid "Page not found"
+msgstr "Beiðni um síðu fannst ekki"
+
+msgid "Unknown error"
+msgstr "Óþekkt villa"
+
+msgid "Abnormal traffic note"
+msgstr "Óeðlileg vafraumferð felur í sér: leitarvélavélmenni, þjálfunarvélmenna gervigreindar, veikleikaskanna og beiðnir sem ekki eru í samræmi við forskriftir"
+
+msgid "Page detail"
+msgstr "Upplýsingar um síðu"
+
+# Upplýsingar um villuboð
+msgid "AWStats did not found the"
+msgstr "AWStats fann ekki"
+
+msgid "in your log records."
+msgstr "í atvikaskrá færslunum þínum."
+
+msgid "AWStats did not find any valid log lines that match your"
+msgstr "AWStats fann engar gildar línur í atvikaskrá sem passa við"
+
+msgid "parameter, in the"
+msgstr "færibreytuna þína, í"
+
+msgid "th first non commented lines read of your log."
+msgstr "fyrstu ekki athugasemdir línur lesnar úr atvikaskránni þinni."
+
+msgid "Your log file"
+msgstr "Atvikaskráin þín"
+
+msgid "must have a bad format or"
+msgstr "hlýtur að hafa slæmt snið eða"
+
+msgid "parameter setup does not match this format."
+msgstr "uppsetning færibreytu passar ekki við þetta snið."
+
+msgid "Your AWStats"
+msgstr "AWStats þitt"
+
+msgid "parameter is:"
+msgstr "færibreytan er:"
+
+msgid "This means each line in your web server log file need to have:"
+msgstr "Þetta þýðir að hver lína í atvikaskrá vefþjónsins þíns þarf að hafa:"
+
+msgid "combined log format"
+msgstr "samsett atvikaskrá snið"
+
+msgid "MSIE Extended W3C log format"
+msgstr "MSIE framlengt W3C atvikaskrá snið"
+
+msgid "WebStar native log format"
+msgstr "WebStar innfætt atvikaskrá snið"
+
+msgid "common log format"
+msgstr "algengt atvikaskrá snið"
+
+msgid "Lotus Notes/Lotus Domino"
+msgstr "Lotus Notes/Lotus Domino"
+
+msgid "the following personalized log format:"
+msgstr "eftirfarandi persónulega atvikaskrá snið:"
+
+msgid "And this is an example of records AWStats found in your log file (the record number"
+msgstr "Og þetta er dæmi um færslur sem AWStats fann í atvikaskránni þinni (færslunúmerið"
+
+msgid "in your log):"
+msgstr "í atvikaskránni þinni):"
+
+#------------------------------------------------------------------------------
+# Ýmislegt
+#------------------------------------------------------------------------------
+
+msgid "Extra/Marketing"
+msgstr "Auka/Markaðssetning"
+
+#------------------------------------------------------------------------------
+# Viðmóts texti
+#------------------------------------------------------------------------------
+
+msgid "Current site"
+msgstr "Núverandi staðsetning"
+
+msgid "Web Site"
+msgstr "Vefsvæði"
+
+msgid "Last Update"
+msgstr "Síðasta uppfærsla"
+
+msgid "Never updated"
+msgstr "Aldrei uppfært"
+
+msgid "No qualified records found in log"
+msgstr "Engar hæfar færslur fundust í atvikaskrá"
+
+msgid "corrupted"
+msgstr "spillt"
+
+msgid "comments"
+msgstr "athugasemdir"
+
+msgid "Blank"
+msgstr "Autt"
+
+msgid "dropped"
+msgstr "hent"
+
+msgid "Update now"
+msgstr "Uppfæra núna"
+
+msgid "Back to main page"
+msgstr "Til baka á aðalsíðu"
+
+msgid "Close window"
+msgstr "Loka glugga"
+
+msgid "Back page"
+msgstr "Til baka á fyrri síðu"
+
+msgid "Navigation"
+msgstr "Flakk"
+
+msgid "Summary"
+msgstr "Samantekt"
+
+msgid "Local"
+msgstr "Staðbundið"
+
+msgid "External"
+msgstr "Ytra"
+
+msgid "Others (email senders)"
+msgstr "Annað (sendendur tölvupósts)"
+
+msgid "Others (email receivers)"
+msgstr "Annað (móttakendur tölvupósts)"
+
+msgid "Others"
+msgstr "Annað"
+
+msgid "Only 10 lines of browser data are currently displayed"
+msgstr "Aðeins 10 línur af vafragögnum eru birtar í augnablikinu, sjáðu heildarlistann"
+
+msgid "Others (unknown browsers)"
+msgstr "Annað (óþekktir vafrar)"
+
+msgid "Others (operating systems)"
+msgstr "Annað (stýrikerfi)"
+
+msgid "Others (unknown OS)"
+msgstr "Annað (óþekkt stýrikerfi)"
+
+msgid "Others (search engines)"
+msgstr "Annað (leitarvélar)"
+
+msgid "Others (referring pages)"
+msgstr "Annað (tilvísandi síður)"
+
+msgid "Others (keyphrases)"
+msgstr "Annað (leitarsetningar)"
+
+msgid "Others (keywords)"
+msgstr "Annað (leitarorð)"
+
+msgid "Only first 10 robots shown"
+msgstr "Núverandi listi sýnir aðeins 10 vélmenni, sjáðu heildarlistann"
+
+msgid "Failed to obtain access record"
+msgstr "Mistókst að fá aðgangsfærslu"
+
+msgid "Failed to obtain leave record"
+msgstr "Mistókst að fá brottfararfærslu"
+
+msgid "Other pages"
+msgstr "Aðrar síður"
+
+msgid "Low Traffic IP Summary"
+msgstr "Yfirlit óþekktra IP með litla umferð"
+
+msgid "Failed to obtain IP data"
+msgstr "Yfirlit annarra þekktra IP"
+
+msgid "Failed to obtain the relevant data"
+msgstr "Mistókst að fá viðeigandi gögn"
+
+msgid "Limited list of countries and regions"
+msgstr "Aðeins 10 línur eru birtar í augnablikinu, sjáðu heildarlistann fyrir fleiri lönd/svæði"
+
+msgid "currentVisitorData"
+msgstr "Aðeins 10 línur af gestagögnum eru birtar í augnablikinu, sjáðu heildarlistann"
+
+msgid "Others (robots main)"
+msgstr "Annað (vélmenni)"
+
+msgid "Others (worms)"
+msgstr "Annað (ormar)"
+
+msgid "Displaying10RowsPageMorePleaseViewFullList"
+msgstr "Núverandi listi sýnir aðeins 10 síður, sjáðu heildarlistann"
+
+msgid "Others (OS main)"
+msgstr "Annað (kerfi)"
+
+msgid "Others (browsers main)"
+msgstr "Annað (vafrar)"
+
+msgid "Others (screen sizes)"
+msgstr "Annað (stærð)"
+
+msgid "Others (search engines main)"
+msgstr "Annað (leitarvélar)"
+
+msgid "Others (referring pages main)"
+msgstr "Annað (tilvísandi síður)"
+
+msgid "Others (keyphrases main)"
+msgstr "Annað (leitarsetningar)"
+
+msgid "Others (keywords main)"
+msgstr "Annað (leitarorð)"
+
+# 1xx
+msgid "Continue"
+msgstr "Haltu áfram að senda eftirstandandi efni"
+
+msgid "Switching Protocols"
+msgstr "Skipti um samskiptareglur"
+
+msgid "Processing (WebDAV)"
+msgstr "Vinna (vinsamlegast bíddu)"
+
+msgid "Early Hints"
+msgstr "Þjónninn er að undirbúa auðlindir"
+
+# 2xx
+msgid "[Miscellaneous successes]"
+msgstr "Aðrar farsælar stöður"
+
+msgid "Request successful"
+msgstr "Beiðni tókst"
+
+msgid "Created successfully"
+msgstr "Búið til með góðum árangri"
+
+msgid "Accepted - processing"
+msgstr "Samþykkt, vinnsla"
+
+msgid "Non-authoritative information (from cache) (from cache)"
+msgstr "Óviðurkennt upplýsingar (úr skyndiminni)"
+
+msgid "Success, no content returned"
+msgstr "Árangur, ekkert efni skilað"
+
+msgid "Reset content"
+msgstr "Endurstilla lýsingu"
+
+msgid "Partial content (resume download)"
+msgstr "Hluta efni (styður endurheimt niðurhals)"
+
+msgid "Multi-status (WebDAV)"
+msgstr "Fjölstaða (WebDAV runuaðgerðir)"
+
+msgid "Already reported (WebDAV)"
+msgstr "Þegar tilkynnt (forðast tvítekningu)"
+
+msgid "IM used"
+msgstr "IM samskiptareglur framlenging notuð"
+
+# 3xx
+msgid "[Miscellaneous redirections]"
+msgstr "Aðrar tilvísanir"
+
+msgid "Multiple choices"
+msgstr "Fjölval"
+
+msgid "Moved permanently - update your links"
+msgstr "Fært varanlega, vinsamlegast uppfærðu tenglana þína"
+
+msgid "Temporary redirect - URL unchanged"
+msgstr "Tímabundin tilvísun, vistfang breytist ekki"
+
+msgid "See other"
+msgstr "Skoðaðu annað vistfang"
+
+msgid "Not modified - using cached version"
+msgstr "Ekki breytt, nota skyndiminni útgáfu"
+
+msgid "Use proxy"
+msgstr "Notaðu milliþjón"
+
+msgid "Switch proxy"
+msgstr "Skiptu um milliþjón"
+
+msgid "Temporary redirect (keep method)"
+msgstr "Tímabundin tilvísun (heldur aðferð beiðni)"
+
+msgid "Permanent redirect - update your links"
+msgstr "Varanleg tilvísun, vinsamlegast uppfærðu tenglana þína"
+
+# 4xx
+msgid "[Miscellaneous client/user errors]"
+msgstr "Aðrar villur viðskiptavinar"
+
+msgid "Bad request"
+msgstr "Snið beiðni er rangt"
+
+msgid "Unauthorized - please log in"
+msgstr "Óheimilt, vinsamlegast skráðu þig inn fyrst"
+
+msgid "Payment required"
+msgstr "Greiðsla krafist"
+
+msgid "Forbidden - access denied"
+msgstr "Aðgangur bannaður, ófullnægjandi heimildir"
+
+msgid "Page not found (404) - check for broken links"
+msgstr "Síða finnst ekki, athugaðu bilaða tengla"
+
+msgid "Method not allowed"
+msgstr "Aðferð beiðni ekki leyfð"
+
+msgid "Not acceptable"
+msgstr "Óviðunandi svar snið"
+
+msgid "Proxy authentication required"
+msgstr "Auðkenning í gegnum milliþjón krafist"
+
+msgid "Request timeout"
+msgstr "Beiðni tími rann út"
+
+msgid "Conflict - please try again"
+msgstr "Árekstur beiðni, vinsamlegast reyndu aftur síðar"
+
+msgid "Gone - permanently deleted"
+msgstr "Auðlind hefur verið eytt varanlega"
+
+msgid "Length required"
+msgstr "Þarf að tilgreina lengd efnis"
+
+msgid "Precondition failed"
+msgstr "Skilyrði ekki uppfyllt"
+
+msgid "Payload too large"
+msgstr "Efni beiðni er of stórt"
+
+msgid "URI too long"
+msgstr "Vistfang beiðni er of langt"
+
+msgid "Unsupported media type"
+msgstr "Skráagerð ekki studd"
+
+msgid "Range not satisfiable"
+msgstr "Beiðni svið er ógilt"
+
+msgid "Expectation failed"
+msgstr "Ekki hægt að uppfylla væntingar"
+
+msgid "I am a teapot (April Fools)"
+msgstr "Ég er teketill (Aprílgabb)"
+
+msgid "Page expired (Laravel)"
+msgstr "Síða er útrunnin, endurnýjaðu og reyndu aftur"
+
+msgid "Method failure (Spring)"
+msgstr "Aðferð mistókst"
+
+msgid "Misdirected request"
+msgstr "Beiðni var rangt vísað"
+
+msgid "Unprocessable entity (WebDAV)"
+msgstr "Snið beiðni er rétt en ekki hægt að vinna úr"
+
+msgid "Locked (WebDAV)"
+msgstr "Auðlind er læst"
+
+msgid "Failed dependency (WebDAV)"
+msgstr "Háð aðgerð mistókst"
+
+msgid "Too early"
+msgstr "Beiðni send of snemma"
+
+msgid "Upgrade required"
+msgstr "Þörf á uppfærslu samskiptaregla"
+
+msgid "Precondition required"
+msgstr "Skortir nauðsynleg skilyrði"
+
+msgid "Too many requests - slow down"
+msgstr "Beiðnir eru of tíðar, vinsamlegast reyndu aftur síðar"
+
+msgid "Request header fields too large (Shopify)"
+msgstr "Beiðni haus reitir eru of stórir"
+
+msgid "Request header too large"
+msgstr "Beiðni haus er of stór"
+
+msgid "Login timeout (IIS)"
+msgstr "Innskráningartími rann út, vinsamlegast skráðu þig aftur inn"
+
+msgid "No response (nginx)"
+msgstr "Þjónninn svarar ekki"
+
+msgid "Retry with (IIS)"
+msgstr "Vinsamlegast reyndu aftur síðar"
+
+msgid "Blocked by Windows parental controls"
+msgstr "Lokað af Windows foreldraeftirliti"
+
+msgid "Unavailable for legal reasons"
+msgstr "Ekki tiltækt af lagalegum ástæðum"
+
+msgid "Client closed connection before idle timeout (AWS ELB)"
+msgstr "Viðskiptavinur lokaði tengingunni áður en aðgerðalaus tími rann út"
+
+msgid "X-Forwarded-For header with >30 IP addresses (AWS ELB)"
+msgstr "Áframsendingarkeðja hefur meira en 30 IP vistföng"
+
+msgid "Incompatible protocol versions (AWS ELB)"
+msgstr "Samskiptareglur útgáfur eru ekki samhæfar"
+
+msgid "Request header too large (nginx)"
+msgstr "Beiðni haus er of stór"
+
+msgid "SSL certificate error (nginx)"
+msgstr "SSL vottorðsvilla"
+
+msgid "SSL certificate required (nginx)"
+msgstr "SSL vottorð krafist"
+
+msgid "HTTP request sent to HTTPS port (nginx)"
+msgstr "HTTP beiðni send á HTTPS tengi"
+
+msgid "Invalid token (ArcGIS)"
+msgstr "Ógilt tákn"
+
+msgid "Token required (ArcGIS) / Client closed request (nginx)"
+msgstr "Tákn krafist / Viðskiptavinur lokaði beiðni"
+
+msgid "Resource limit reached (cPanel)"
+msgstr "Náð takmörkum auðlinda (CPU/minni)"
+
+msgid "Bandwidth limit exceeded (Apache/cPanel)"
+msgstr "Bandbreiddartakmark farið yfir"
+
+# 5xx
+msgid "[Miscellaneous server errors]"
+msgstr "Aðrar þjónsvillur"
+
+msgid "Internal server error - check logs"
+msgstr "Innri þjónsvilla, athugaðu atvikaskrár"
+
+msgid "Not implemented"
+msgstr "Aðgerð er ekki studd á þjóni"
+
+msgid "Bad gateway - backend error"
+msgstr "Gáttavilla, bakendaþjónusta er óeðlileg"
+
+msgid "Service unavailable - maintenance or overload"
+msgstr "Þjónusta ekki tiltæk, viðhald eða ofhleðsla"
+
+msgid "Gateway timeout"
+msgstr "Tími gáttar rann út"
+
+msgid "HTTP version not supported"
+msgstr "HTTP samskiptaregla útgáfa ekki studd"
+
+msgid "Variant also negotiates"
+msgstr "Afbrigði tekur einnig þátt í samningaviðræðum (stillingavilla)"
+
+msgid "Insufficient storage (WebDAV)"
+msgstr "Ófullnægjandi geymslurými"
+
+msgid "Loop detected (WebDAV)"
+msgstr "Hringvitnun greind"
+
+msgid "Not extended"
+msgstr "Þörf á frekari framlengingu"
+
+msgid "Network authentication required"
+msgstr "Þörf á net auðkenningu"
+
+# Cloudflare
+msgid "Unknown error (Cloudflare)"
+msgstr "Óþekkt villa"
+
+msgid "Web server is down (Cloudflare)"
+msgstr "Vefþjónn er niðri"
+
+msgid "Connection timeout (Cloudflare)"
+msgstr "Tengingartími rann út"
+
+msgid "Origin is unreachable (Cloudflare)"
+msgstr "Uppruni er ekki aðgengilegur"
+
+msgid "A timeout occurred (Cloudflare)"
+msgstr "Tímamörk áttu sér stað"
+
+msgid "SSL handshake failed (Cloudflare)"
+msgstr "SSL handtak mistókst"
+
+msgid "Invalid SSL certificate (Cloudflare)"
+msgstr "Ógilt SSL vottorð"
+
+msgid "Railgun error (Cloudflare - obsolete)"
+msgstr "Railgun villa (úrelt)"
+
+msgid "Site is overloaded (SSLLabs)"
+msgstr "Vefsvæði er ofhlaðið"
+
+msgid "Origin DNS error (Cloudflare) / Site is frozen (Pantheon)"
+msgstr "DNS villa uppruna (Cloudflare) / Vefsvæði er frosið (Pantheon)"
+
+msgid "Temporarily disabled (Shopify)"
+msgstr "Tímabundið óvirkt"
+
+msgid "Unauthorized (AWS ELB)"
+msgstr "Óheimilt"
+
+msgid "Network read timeout error"
+msgstr "Villa við lestur nettíma"
+
+msgid "Network connect timeout error"
+msgstr "Villa við tengingu nettíma"
+
+msgid "Unexpected token (Shopify)"
+msgstr "Óvænt tákn"
+
+msgid "Request denied (LinkedIn)"
+msgstr "Beiðni hafnað"
+
+msgid "HTTP/2 GOAWAY (AWS ELB)"
+msgstr "HTTP/2 tengingu lokað"
+
+msgid "[Unknown]"
+msgstr "Óþekktur stöðukóði"
+
+# SMTP og tölvupóstur
+msgid "Nonstandard success response (ESMTP)"
+msgstr "Óstaðlaður árangursríkur viðbragð (ESMTP)"
+
+msgid "System status, or system help reply"
+msgstr "Staða kerfis, eða kerfisaðstoðarsvar"
+
+msgid "Help message"
+msgstr "Aðstoðarskilaboð"
+
+msgid "SMTP service ready (LMTP)"
+msgstr "SMTP þjónusta tilbúin (LMTP)"
+
+msgid "Service ready - server is ready to receive mail"
+msgstr "Þjónusta tilbúin - tölvupóstsþjónn er tilbúinn að taka á móti tölvupósti"
+
+msgid "Service closing - connection is being closed"
+msgstr "Þjónusta lokar - tengingu er að loka"
+
+msgid "Authentication successful"
+msgstr "Auðkenning tókst"
+
+msgid "Requested mail action taken and completed"
+msgstr "Umbeðin tölvupóstsaðgerð framkvæmd og lokið"
+
+msgid "User not local - will forward to another address"
+msgstr "Notandi ekki staðbundinn - verður áframsent á annað vistfang"
+
+msgid "Cannot verify recipient, but will attempt delivery"
+msgstr "Get ekki staðfest viðtakanda, en mun reyna afhendingu"
+
+msgid "Message accepted for delivery (DSN)"
+msgstr "Skilaboð samþykkt fyrir afhendingu (DSN)"
+
+msgid "User name is a mailbox"
+msgstr "Notandanafn er tölvupósthólf"
+
+msgid "Authentication challenge - please respond"
+msgstr "Auðkenningar áskorun - vinsamlegast svaraðu"
+
+msgid "Start mail input - end with <CRLF>.<CRLF>"
+msgstr "Byrjaðu að slá inn efni tölvupósts - endaðu með <CRLF>.<CRLF>"
+
+msgid "Continue (LMTP)"
+msgstr "Haltu áfram (LMTP)"
+
+msgid "Service not available - connection closing, try again later"
+msgstr "Þjónusta ekki tiltæk - tengingu lokað, vinsamlegast reyndu aftur síðar"
+
+msgid "Mailbox busy or temporarily unavailable (Exchange)"
+msgstr "Tölvupósthólf upptekið eða tímabundið ekki tiltækt (Exchange)"
+
+msgid "Connection rate limit exceeded (Postfix)"
+msgstr "Takmörk tengingartíðni farið yfir (Postfix)"
+
+msgid "Too many concurrent connections (Postfix)"
+msgstr "Of margar samtímis tengingar (Postfix)"
+
+msgid "Unable to establish connection (Postfix)"
+msgstr "Get ekki komið á tengingu (Postfix)"
+
+msgid "Connection timed out (Postfix)"
+msgstr "Tengingartími rann út (Postfix)"
+
+msgid "Connection dropped due to error (Postfix)"
+msgstr "Tenging rofnaði vegna villu (Postfix)"
+
+msgid "Mailbox temporarily locked (Exchange)"
+msgstr "Tölvupósthólf tímabundið læst (Exchange)"
+
+msgid "Too many recipients (Postfix/Exim)"
+msgstr "Of margir viðtakendur (Postfix/Exim)"
+
+msgid "Mail server error (Exchange)"
+msgstr "Tölvupóstsþjónsvilla (Exchange)"
+
+msgid "Received loop detected (Exim)"
+msgstr "Móttöku lykkja greind (Exim)"
+
+msgid "Too many hop count (Exim)"
+msgstr "Of margar stökk (Exim)"
+
+msgid "DNS lookup failed (Postfix)"
+msgstr "DNS leit mistókst (Postfix)"
+
+msgid "Unable to authenticate (Postfix)"
+msgstr "Get ekki auðkennt (Postfix)"
+
+msgid "TLS handshake failed (Postfix)"
+msgstr "TLS handtak mistókst (Postfix)"
+
+msgid "SMTP protocol violation (Postfix)"
+msgstr "Brot á SMTP samskiptareglum (Postfix)"
+
+msgid "Message size exceeds limit (Exchange)"
+msgstr "Skilaboðastærð fer yfir takmörk (Exchange)"
+
+msgid "Message rate limit exceeded (Postfix)"
+msgstr "Takmörk skilaboðatíðni farið yfir (Postfix)"
+
+msgid "Mailbox quota exceeded - temporary"
+msgstr "Pósthólfskvóti fullur - tímabundið ástand"
+
+msgid "Domain not found (Postfix)"
+msgstr "Lén finnst ekki (Postfix)"
+
+msgid "Message header invalid (Postfix)"
+msgstr "Skilaboðahaus er ógildur (Postfix)"
+
+msgid "Bounce loop detected (Postfix)"
+msgstr "Endurhvarfs lykkja greind (Postfix)"
+
+msgid "Unable to route (Postfix)"
+msgstr "Get ekki beint (Postfix)"
+
+msgid "Sender domain not found (Postfix)"
+msgstr "Lén sendanda finnst ekki (Postfix)"
+
+msgid "Recipient domain not found (Postfix)"
+msgstr "Lén viðtakanda finnst ekki (Postfix)"
+
+msgid "Greylisting in progress - please try again (Postgrey)"
+msgstr "Greylisting í gangi - vinsamlegast reyndu aftur (Postgrey)"
+
+msgid "Spam filtering in progress (SpamAssassin)"
+msgstr "Ruslpóstsíun í gangi (SpamAssassin)"
+
+msgid "Virus scanning in progress (ClamAV)"
+msgstr "Veiruskönnun í gangi (ClamAV)"
+
+msgid "Mailbox unavailable - try again later"
+msgstr "Tölvupósthólf ekki tiltækt - reyndu aftur síðar"
+
+msgid "Requested action aborted - error in processing"
+msgstr "Umbeðin aðgerð hætt - villa í vinnslu"
+
+msgid "Insufficient system storage - try again later"
+msgstr "Ófullnægjandi kerfisgeymsla - reyndu aftur síðar"
+
+msgid "Too many messages for this recipient (Exchange)"
+msgstr "Of mörg skilaboð fyrir þennan viðtakanda (Exchange)"
+
+msgid "TLS not available (Postfix)"
+msgstr "TLS ekki tiltækt (Postfix)"
+
+msgid "Server unable to accept messages (Postfix)"
+msgstr "Þjónn getur ekki tekið við skilaboðum (Postfix)"
+
+msgid "Temporary failure in DNS lookup (Exim)"
+msgstr "Tímabundin villa í DNS leit (Exim)"
+
+msgid "Quota exceeded - temporary"
+msgstr "Kvóti farið yfir - tímabundið ástand"
+
+msgid "Message too big - temporary"
+msgstr "Skilaboð of stór - tímabundið ástand"
+
+msgid "Too many messages per connection"
+msgstr "Of mörg skilaboð á tengingu"
+
+msgid "Load average too high (Postfix)"
+msgstr "Meðalálag kerfis of hátt (Postfix)"
+
+msgid "Connection refused (Postfix)"
+msgstr "Tengingu hafnað (Postfix)"
+
+msgid "Send rate limit exceeded (Postfix)"
+msgstr "Takmörk sendingartíðni farið yfir (Postfix)"
+
+msgid "Recipient rate limit exceeded (Postfix)"
+msgstr "Takmörk viðtakandatíðni farið yfir (Postfix)"
+
+msgid "Sender rate limit exceeded (Postfix)"
+msgstr "Takmörk sendandatíðni farið yfir (Postfix)"
+
+msgid "IP address rate limit exceeded (Postfix)"
+msgstr "Takmörk IP-tölu tíðni farið yfir (Postfix)"
+
+msgid "MX lookup failed (Postfix)"
+msgstr "MX leit mistókst (Postfix)"
+
+msgid "A record lookup failed (Postfix)"
+msgstr "A færslu leit mistókst (Postfix)"
+
+msgid "PTR record lookup failed (Postfix)"
+msgstr "PTR færslu leit mistókst (Postfix)"
+
+msgid "Greylisting active - please try again (Postgrey)"
+msgstr "Greylisting virkt - vinsamlegast reyndu aftur (Postgrey)"
+
+msgid "Access denied - unknown SMTP client hostname"
+msgstr "Aðgangur bannaður - óþekkt SMTP viðskiptavin hýsilnafn"
+
+msgid "Access denied - bad syntax for client HELO hostname"
+msgstr "Aðgangur bannaður - slæm setningafræði fyrir HELO hýsilnafn viðskiptavinar"
+
+msgid "Access denied - SMTP client hostname rejected"
+msgstr "Aðgangur bannaður - SMTP viðskiptavinur hýsilnafn hafnað"
+
+msgid "Access denied - unknown domain for sender or recipient"
+msgstr "Aðgangur bannaður - óþekkt lén fyrir sendanda eða viðtakanda"
+
+msgid "Sender address rejected - domain not verified (DMARC pending)"
+msgstr "Heimilisfangi sendanda hafnað - lén ekki staðfest (DMARC í bið)"
+
+msgid "Recipient address rejected - domain not verified (DMARC pending)"
+msgstr "Heimilisfangi viðtakanda hafnað - lén ekki staðfest (DMARC í bið)"
+
+msgid "DKIM verification pending - temporary failure"
+msgstr "DKIM staðfesting í bið - tímabundin villa"
+
+msgid "SPF verification pending - temporary failure"
+msgstr "SPF staðfesting í bið - tímabundin villa"
+
+msgid "DMARC verification pending - temporary failure"
+msgstr "DMARC staðfesting í bið - tímabundin villa"
+
+msgid "DNSBL lookup temporary failure"
+msgstr "DNSBL leit - tímabundin villa"
+
+msgid "RHSBL lookup temporary failure"
+msgstr "RHSBL leit - tímabundin villa"
+
+msgid "URI DNSBL lookup temporary failure"
+msgstr "URI DNSBL leit - tímabundin villa"
+
+msgid "Temporary authentication failure (Dovecot)"
+msgstr "Tímabundin auðkenningarvilla (Dovecot)"
+
+msgid "Temporary authorization failure (Sendmail)"
+msgstr "Tímabundin heimildarvilla (Sendmail)"
+
+msgid "Rate limit exceeded per sender (Exim)"
+msgstr "Takmörk tíðni farið yfir á hvern sendanda (Exim)"
+
+msgid "Rate limit exceeded per recipient (Exim)"
+msgstr "Takmörk tíðni farið yfir á hvern viðtakanda (Exim)"
+
+msgid "Rate limit exceeded per domain (Exim)"
+msgstr "Takmörk tíðni farið yfir á hvert lén (Exim)"
+
+msgid "Rate limit exceeded per IP (Exim)"
+msgstr "Takmörk tíðni farið yfir á hverja IP-tölu (Exim)"
+
+msgid "Message queued for later delivery (Postfix)"
+msgstr "Skilaboð sett í biðröð fyrir síðari afhendingu (Postfix)"
+
+msgid "Delivery delayed due to policy (Exchange)"
+msgstr "Afhending seinkað vegna stefnu (Exchange)"
+
+msgid "Temporary failure in content filter"
+msgstr "Tímabundin villa í innihaldssíu"
+
+msgid "Temporary failure in antivirus scanner"
+msgstr "Tímabundin villa í vírus skanna"
+
+msgid "Temporary failure in spam filter"
+msgstr "Tímabundin villa í ruslpóstsíu"
+
+msgid "Temporary failure in milter (Postfix)"
+msgstr "Tímabundin villa í milter (Postfix)"
+
+msgid "Greylisting - try again later"
+msgstr "Greylisting - reyndu aftur síðar"
+
+msgid "DDoS protection active - try again later"
+msgstr "DDoS vörn virk - reyndu aftur síðar"
+
+msgid "SMTP policy violation - temporary"
+msgstr "Brot á SMTP stefnu - tímabundið ástand"
+
+msgid "Temporary error in RCPT TO processing"
+msgstr "Tímabundin villa í RCPT TO vinnslu"
+
+msgid "Temporary error in MAIL FROM processing"
+msgstr "Tímabundin villa í MAIL FROM vinnslu"
+
+msgid "Temporary error in EHLO/HELO processing"
+msgstr "Tímabundin villa í EHLO/HELO vinnslu"
+
+msgid "Temporary error in DATA processing"
+msgstr "Tímabundin villa í DATA vinnslu"
+
+msgid "Temporary error - service busy, try again later"
+msgstr "Tímabundin villa - þjónusta upptekin, reyndu aftur síðar"
+
+msgid "Syntax error - command unrecognized or too long"
+msgstr "Setningafræðivilla - skipun ekki þekkt eða of löng"
+
+msgid "Syntax error in parameters or arguments"
+msgstr "Setningafræðivilla í breytum eða röksemdum"
+
+msgid "Command not implemented"
+msgstr "Skipun ekki útfærð"
+
+msgid "Bad sequence of commands"
+msgstr "Slæm röð skipana"
+
+msgid "Command parameter not implemented"
+msgstr "Skipunarbreyta ekki útfærð"
+
+msgid "Version not supported (ESMTP)"
+msgstr "Útgáfa ekki studd (ESMTP)"
+
+msgid "Mailbox path invalid (LMTP)"
+msgstr "Slóð tölvupósthólfs er ógild (LMTP)"
+
+msgid "Too many commands in this session (Postfix)"
+msgstr "Of margar skipanir í þessari lotu (Postfix)"
+
+msgid "Recipient limit exceeded (Postfix)"
+msgstr "Takmörk viðtakenda farið yfir (Postfix)"
+
+msgid "Sender limit exceeded (Postfix)"
+msgstr "Takmörk sendanda farið yfir (Postfix)"
+
+msgid "Domain limit exceeded (Postfix)"
+msgstr "Takmörk léna farið yfir (Postfix)"
+
+msgid "Mailbox does not exist (Exchange)"
+msgstr "Tölvupósthólf er ekki til (Exchange)"
+
+msgid "DNS failure - permanent"
+msgstr "DNS villa - varanleg"
+
+msgid "Address type not supported (Postfix)"
+msgstr "Tegund heimilisfangs ekki studd (Postfix)"
+
+msgid "Unable to open mailbox (Postfix)"
+msgstr "Get ekki opnað tölvupósthólf (Postfix)"
+
+msgid "Mailbox locked - permanent"
+msgstr "Tölvupósthólf læst - varanlegt ástand"
+
+msgid "Message rejected due to policy (Exchange)"
+msgstr "Skilaboð hafnað vegna stefnu (Exchange)"
+
+msgid "Content rejected - permanent"
+msgstr "Efni hafnað - varanlegt"
+
+msgid "Attachment type not allowed"
+msgstr "Viðhengi tegund ekki leyfð"
+
+msgid "Message encoding not supported"
+msgstr "Skilaboða kóðun ekki studd"
+
+msgid "Sender domain does not exist - permanent"
+msgstr "Lén sendanda er ekki til - varanlegt"
+
+msgid "Domain does not accept mail or is closing"
+msgstr "Lén tekur ekki við pósti eða er að loka"
+
+msgid "Recipient domain does not exist - permanent"
+msgstr "Lén viðtakanda er ekki til - varanlegt"
+
+msgid "Mailbox quota exceeded - permanent"
+msgstr "Pósthólfskvóti fullur - varanlegt"
+
+msgid "Message size exceeds limit - permanent"
+msgstr "Skilaboðastærð fer yfir takmörk - varanlegt"
+
+msgid "Authentication required (Sendmail)"
+msgstr "Auðkenning krafist (Sendmail)"
+
+msgid "Authentication failed (Sendmail)"
+msgstr "Auðkenning mistókst (Sendmail)"
+
+msgid "Authentication mechanism not supported"
+msgstr "Auðkenningar kerfi ekki studd"
+
+msgid "Authentication credentials invalid"
+msgstr "Auðkenningar upplýsingar ógildar"
+
+msgid "Authentication account expired"
+msgstr "Auðkenningar reikningur er útrunninn"
+
+msgid "Access denied - authentication required"
+msgstr "Aðgangur bannaður - auðkenning krafist"
+
+msgid "Access denied (Sendmailism)"
+msgstr "Aðgangur bannaður (Sendmail)"
+
+msgid "Access denied - not authenticated"
+msgstr "Aðgangur bannaður - ekki auðkennt"
+
+msgid "Access denied - account locked"
+msgstr "Aðgangur bannaður - reikningur læstur"
+
+msgid "Access denied - account disabled"
+msgstr "Aðgangur bannaður - reikningur óvirkur"
+
+msgid "Authentication failed"
+msgstr "Auðkenning mistókst"
+
+msgid "Authentication required for relay (Postfix)"
+msgstr "Auðkenning krafist fyrir endurvarp (Postfix)"
+
+msgid "Authentication failed for relay (Postfix)"
+msgstr "Auðkenning fyrir endurvarp mistókst (Postfix)"
+
+msgid "Encryption required (STARTTLS)"
+msgstr "Dulkóðuð tenging krafist (STARTTLS)"
+
+msgid "TLS required for this recipient"
+msgstr "Þessi viðtakandi krefst TLS dulkóðunar"
+
+msgid "Encryption strength insufficient"
+msgstr "Staða dulkóðunar er ófullnægjandi"
+
+msgid "Certificate validation failed"
+msgstr "Staðfesting skírteinis mistókst"
+
+msgid "Invalid TLS certificate"
+msgstr "Ógilt TLS skírteini"
+
+msgid "TLS protocol version not supported"
+msgstr "TLS samskiptaregla útgáfa ekki studd"
+
+msgid "Cipher suite not supported"
+msgstr "Dulkóðunar pakki ekki studdur"
+
+msgid "Access denied - no valid recipient"
+msgstr "Aðgangur bannaður - engin gildur viðtakandi"
+
+msgid "Access denied - no valid sender"
+msgstr "Aðgangur bannaður - engin gildur sendandi"
+
+msgid "Access denied - domain not allowed"
+msgstr "Aðgangur bannaður - lén ekki leyft"
+
+msgid "Access denied - IP address blocked (permanent)"
+msgstr "Aðgangur bannaður - IP-tala lokuð (varanleg)"
+
+msgid "Access denied - sender domain blacklisted"
+msgstr "Aðgangur bannaður - lén sendanda á svörtum lista"
+
+msgid "Mailbox unavailable - requested action not taken"
+msgstr "Tölvupósthólf ekki tiltækt - umbeðin aðgerð ekki framkvæmd"
+
+msgid "User not local - please try forwarding address"
+msgstr "Notandi ekki staðbundinn - vinsamlegast reyndu áframsendingar heimilisfang"
+
+msgid "Requested action aborted - exceeded storage allocation"
+msgstr "Umbeðin aðgerð hætt - farið yfir geymsluúthlutun"
+
+msgid "Mailbox name not allowed"
+msgstr "Nafn tölvupósthólfs ekki leyft"
+
+msgid "Requested action rejected - access denied"
+msgstr "Umbeðin aðgerð hafnað - aðgangur bannaður"
+
+msgid "MAIL FROM/RCPT TO parameters not recognized"
+msgstr "MAIL FROM/RCPT TO breytur ekki þekktar"
+
+msgid "Domain not allowed to send (DMARC reject)"
+msgstr "Léni ekki leyft að senda (DMARC höfnun)"
+
+msgid "Too many duplicate messages - permanent"
+msgstr "Of mörg tvítekin skilaboð - varanlegt"
+
+msgid "Sender address rejected - domain not in SPF"
+msgstr "Heimilisfangi sendanda hafnað - lén ekki í SPF"
+
+msgid "Sender address rejected - DKIM verification failed"
+msgstr "Heimilisfangi sendanda hafnað - DKIM staðfesting mistókst"
+
+msgid "Sender address rejected - DMARC policy reject"
+msgstr "Heimilisfangi sendanda hafnað - DMARC stefna hafnar"
+
+msgid "Recipient address rejected - DMARC policy reject"
+msgstr "Heimilisfangi viðtakanda hafnað - DMARC stefna hafnar"
+
+msgid "Message rejected due to spam content"
+msgstr "Skilaboð hafnað vegna ruslpósts efnis"
+
+msgid "Message rejected due to virus detected"
+msgstr "Skilaboð hafnað vegna uppgötvunar vírus"
+
+msgid "Message rejected due to malicious content"
+msgstr "Skilaboð hafnað vegna illgjarns efnis"
+
+msgid "Message rejected due to phishing detection"
+msgstr "Skilaboð hafnað vegna uppgötvunar vefveiðar"
+
+msgid "Message rejected due to malware detection"
+msgstr "Skilaboð hafnað vegna uppgötvunar spilliforrits"
+
+msgid "Message rejected due to policy - permanent"
+msgstr "Skilaboð hafnað vegna stefnu - varanlegt"
+
+msgid "Message rejected due to content filtering"
+msgstr "Skilaboð hafnað vegna efnis sía"
+
+msgid "Message rejected due to reputation"
+msgstr "Skilaboð hafnað vegna orðspors"
+
+msgid "Access denied - access_map violation"
+msgstr "Aðgangur bannaður - access_map brot"
+
+msgid "Access denied - SMTP client listed in RBL"
+msgstr "Aðgangur bannaður - SMTP viðskiptavinur á RBL lista"
+
+msgid "Access denied - relay not authorized"
+msgstr "Aðgangur bannaður - endurvarp ekki heimilað"
+
+msgid "Access denied - unknown client HELO hostname"
+msgstr "Aðgangur bannaður - óþekkt HELO hýsilnafn viðskiptavinar"
+
+msgid "Access denied - invalid domain (not FQDN)"
+msgstr "Aðgangur bannaður - ógilt lén (ekki FQDN)"
+
+msgid "Access denied - domain not qualified"
+msgstr "Aðgangur bannaður - lén ekki hæft"
+
+msgid "Access denied - mail server misconfigured"
+msgstr "Aðgangur bannaður - tölvupóstsþjónn rangt stilltur"
+
+msgid "Access denied - open relay not allowed"
+msgstr "Aðgangur bannaður - opið endurvarp ekki leyft"
+
+msgid "Access denied - proxy not allowed"
+msgstr "Aðgangur bannaður - milliþjónn ekki leyfður"
+
+msgid "Access denied - dynamic IP not allowed"
+msgstr "Aðgangur bannaður - kraftmikil IP-tala ekki leyfð"
+
+msgid "Access denied - residential IP not allowed"
+msgstr "Aðgangur bannaður - heimilis IP-tala ekki leyfð"
+
+msgid "Access denied - VPN/Tor detected"
+msgstr "Aðgangur bannaður - VPN/Tor greind"
+
+msgid "Access denied - Spamhaus DROP listed"
+msgstr "Aðgangur bannaður - á Spamhaus DROP lista"
+
+msgid "Access denied - URL listed in URIBL"
+msgstr "Aðgangur bannaður - URL á URIBL lista"
+
+msgid "Access denied - domain in RHSBL"
+msgstr "Aðgangur bannaður - lén á RHSBL lista"
+
+msgid "Access denied - IP in DNSWL (policy)"
+msgstr "Aðgangur bannaður - IP-tala á DNSWL lista (stefna)"
+
+msgid "Delivery failed - mailbox not found"
+msgstr "Afhending mistókst - tölvupósthólf ekki fundið"
+
+msgid "Delivery failed - recipient not local"
+msgstr "Afhending mistókst - viðtakandi ekki staðbundinn"
+
+msgid "Delivery failed - recipient rejected"
+msgstr "Afhending mistókst - viðtakanda hafnað"
+
+msgid "Delivery failed - sender rejected"
+msgstr "Afhending mistókst - sendanda hafnað"
+
+msgid "Delivery failed - relay rejected"
+msgstr "Afhending mistókst - endurvarpi hafnað"
+
+msgid "Delivery failed - DNS permanent error"
+msgstr "Afhending mistókst - varanleg DNS villa"
+
+msgid "Delivery failed - MX permanent error"
+msgstr "Afhending mistókst - varanleg MX villa"
+
+msgid "Delivery failed - A record permanent error"
+msgstr "Afhending mistókst - varanleg A færslu villa"
+
+msgid "Delivery failed - PTR record permanent error"
+msgstr "Afhending mistókst - varanleg PTR færslu villa"
+
+msgid "Delivery failed - policy permanent error"
+msgstr "Afhending mistókst - varanleg stefnu villa"
+
+msgid "DSN: Success - delivery status notification"
+msgstr "DSN: Árangur - afhendingarstöðu tilkynning"
+
+msgid "DSN: Delivery delayed"
+msgstr "DSN: Afhending seinkað"
+
+msgid "DSN: Delivery failed - permanent"
+msgstr "DSN: Afhending mistókst - varanleg"
+
+msgid "DSN: Delivery failed - temporary"
+msgstr "DSN: Afhending mistókst - tímabundin"
+
+msgid "DSN: Message expired"
+msgstr "DSN: Skilaboð runnin út"
+
+msgid "DSN: Message bounced"
+msgstr "DSN: Skilaboð skoppuð"
+
+msgid "DSN: Message discarded"
+msgstr "DSN: Skilaboð hent"
+
+msgid "DSN: Message filtered"
+msgstr "DSN: Skilaboð síuð"
+
+msgid "DSN: Message quarantined"
+msgstr "DSN: Skilaboð í sóttkví"
+
+msgid "DSN: Message held for review"
+msgstr "DSN: Skilaboð haldið til skoðunar"
+
+msgid "MTA-STS policy required"
+msgstr "MTA-STS stefna krafist"
+
+msgid "MTA-STS policy validation failed"
+msgstr "Staðfesting MTA-STS stefnu mistókst"
+
+msgid "TLS reporting required"
+msgstr "TLS skýrslugerð krafist"
+
+msgid "TLS report requested"
+msgstr "TLS skýrsla beðin"
+
+msgid "SMTP MTA Strict Transport Security active"
+msgstr "SMTP MTA Strict Transport Security virkt"
+
+msgid "DANE validation required"
+msgstr "DANE staðfesting krafist"
+
+msgid "DANE validation failed"
+msgstr "DANE staðfesting mistókst"
+
+msgid "TLSA record missing"
+msgstr "TLSA færsla vantar"
+
+msgid "Certificate name mismatch"
+msgstr "Nafn skírteinis passar ekki"
+
+msgid "Certificate expired"
+msgstr "Skírteini runnið út"
+
+msgid "AUTH LOGIN required"
+msgstr "AUTH LOGIN krafist"
+
+msgid "AUTH PLAIN required"
+msgstr "AUTH PLAIN krafist"
+
+msgid "AUTH CRAM-MD5 required"
+msgstr "AUTH CRAM-MD5 krafist"
+
+msgid "AUTH DIGEST-MD5 required"
+msgstr "AUTH DIGEST-MD5 krafist"
+
+msgid "AUTH GSSAPI required"
+msgstr "AUTH GSSAPI krafist"
+
+msgid "AUTH NTLM required"
+msgstr "AUTH NTLM krafist"
+
+msgid "AUTH SCRAM required"
+msgstr "AUTH SCRAM krafist"
+
+msgid "AUTH OAUTHBEARER required"
+msgstr "AUTH OAUTHBEARER krafist"
+
+msgid "AUTH XOAUTH2 required"
+msgstr "AUTH XOAUTH2 krafist"
+
+msgid "Exchange: Mailbox database error"
+msgstr "Exchange: Villa í gagnagrunni tölvupósthólfs"
+
+msgid "Exchange: Store driver error"
+msgstr "Exchange: Villa í geymslu rekl"
+
+msgid "Exchange: Transport agent error"
+msgstr "Exchange: Villa í flutnings umboði"
+
+msgid "Exchange: Content conversion error"
+msgstr "Exchange: Villa í umbreytingu efnis"
+
+msgid "Exchange: Routing error"
+msgstr "Exchange: Villa í beiningu"
+
+msgid "Exchange: Mail flow stalled"
+msgstr "Exchange: Flæði tölvupósts stöðvast"
+
+msgid "Exchange: Shadow redundancy error"
+msgstr "Exchange: Villa í skugga offramboði"
+
+msgid "Exchange: Safety net error"
+msgstr "Exchange: Villa í öryggisneti"
+
+msgid "Exchange: Queue database error"
+msgstr "Exchange: Villa í biðröð gagnagrunni"
+
+msgid "Exchange: Message throttled"
+msgstr "Exchange: Skilaboðum hægt"
+
+msgid "Postfix: Bounce queue error"
+msgstr "Postfix: Villa í endurhvarfs biðröð"
+
+msgid "Postfix: Deferred queue error"
+msgstr "Postfix: Villa í frestaðri biðröð"
+
+msgid "Postfix: Hold queue error"
+msgstr "Postfix: Villa í biðröð"
+
+msgid "Postfix: Incoming queue error"
+msgstr "Postfix: Villa í innkomandi biðröð"
+
+msgid "Postfix: Active queue error"
+msgstr "Postfix: Villa í virkri biðröð"
+
+msgid "Postfix: Corrupted queue file"
+msgstr "Postfix: Spillt biðröð skrá"
+
+msgid "Sendmail: Queue runner error"
+msgstr "Sendmail: Villa í biðröð hlaupara"
+
+msgid "Sendmail: Alias database error"
+msgstr "Sendmail: Villa í gagnagrunni samnefna"
+
+msgid "Sendmail: Virtuser table error"
+msgstr "Sendmail: Villa í raunverulegum notenda töflu"
+
+msgid "Sendmail: Mailer definition error"
+msgstr "Sendmail: Villa í skilgreiningu póstsenda"
+
+msgid "Exim: Router configuration error"
+msgstr "Exim: Villa í stillingu beinis"
+
+msgid "Exim: Transport configuration error"
+msgstr "Exim: Villa í stillingu flutnings"
+
+msgid "Exim: Director configuration error"
+msgstr "Exim: Villa í stillingu leikstjóra"
+
+msgid "Exim: Retry configuration error"
+msgstr "Exim: Villa í stillingu endurtakunar"
+
+msgid "Exim: Rewrite configuration error"
+msgstr "Exim: Villa í stillingu endurskriftar"
+
+msgid "Exim: Authentication configuration error"
+msgstr "Exim: Villa í stillingu auðkenningar"
+
+msgid "Exim: ACL configuration error"
+msgstr "Exim: Villa í ACL stillingu"
+
+msgid "Exim: Local_scan configuration error"
+msgstr "Exim: Villa í Local_scan stillingu"
+
+msgid "Exim: Lookup configuration error"
+msgstr "Exim: Villa í stillingu leitar"
+
+msgid "Exim: Expansion configuration error"
+msgstr "Exim: Villa í stillingu útrásar"
+
+msgid "HTTP Protocol Versions"
+msgstr "HTTP samskiptaregla útgáfur"
+
+msgid "Protocol"
+msgstr "Samskiptaregla"
+
+msgid "Request %"
+msgstr "Beiðni %"
+
+msgid "Bandwidth %"
+msgstr "Bandbreidd %"
+
+msgid "Each request requires a new connection"
+msgstr "Sérhver beiðni krefst nýrrar tengingar"
+
+msgid "Multiple requests can reuse one connection"
+msgstr "Margar beiðnir geta endurnýtt eina tengingu"
+
+msgid "Multiple requests in parallel over one connection"
+msgstr "Margar beiðnir samhliða yfir eina tengingu"
+
+msgid "Faster connection, better performance on poor networks"
+msgstr "Hraðari tenging, betri frammistaða á slæmum netum"
+
+msgid "No protocol data available"
+msgstr "Engin samskiptaregla gögn tiltæk"
+
+msgid "of requests use HTTP/1.0"
+msgstr "beiðna nota HTTP/1.0 samskiptareglu"
+
+msgid "From access logs"
+msgstr "Frá aðgangs atvikaskrám"
+
+msgid "No HTTP/2 requests detected"
+msgstr "Engar HTTP/2 beiðnir greindar"
+
+msgid "All requests are HTTP/1.0, no HTTP/2 requests"
+msgstr "Allar núverandi beiðnir eru HTTP/1.0, engar HTTP/2 beiðnir"
+
+msgid "HTTP/3 not detected"
+msgstr "Engar HTTP/3 beiðnir greindar"
+
+msgid "all requests do not include QUIC/HTTP/3 protocol requests"
+msgstr "allar núverandi beiðnir innihalda ekki QUIC/HTTP/3 samskiptareglu beiðnir"
+
+msgid "Mail Authentication Statistics"
+msgstr "Tölfræði auðkenningar tölvupósts"
+
+msgid "Authentication"
+msgstr "Tegund auðkenningar"
+
+msgid "Pass"
+msgstr "Gekk"
+
+msgid "Fail"
+msgstr "Mistókst"
+
+msgid "Softfail"
+msgstr "Mjúkt mistókst"
+
+msgid "Neutral"
+msgstr "Hlutlaust"
+
+msgid "None"
+msgstr "Ekkert"
+
+msgid "Mail Queue Delay Statistics"
+msgstr "Tölfræði seinkunar biðraðar tölvupósts"
+
+msgid "Delay Range"
+msgstr "Seinkun svið"
+
+msgid "Count"
+msgstr "Fjöldi"
+
+msgid "Percentage"
+msgstr "Hlutfall"
+
+msgid "TLS Encryption Statistics"
+msgstr "TLS dulkóðunar tölfræði"
+
+msgid "TLS Versions"
+msgstr "TLS útgáfur"
+
+msgid "Top Ciphers"
+msgstr "Algengustu dulmál"
+
+msgid "robot_hits_detail_both"
+msgstr "Beiðnir samtals: %s (venjulegar síður: %s, robots.txt: %s)"
+
+msgid "robot_hits_detail_only_robots"
+msgstr "Aðeins robots.txt: %s sinnum, engin sækja aðrar síður"
+
+msgid "robot_hits_detail_normal"
+msgstr "Beiðnir um venjulegar síður: %s"
+
+# Hjálp og ábendingar
+msgid "Troubleshooting"
+msgstr "Bilanagreining"
+
+msgid "Did you use the correct URL?"
+msgstr "Notaðir þú rétt URL?"
+
+msgid "Example:"
+msgstr "Dæmi:"
+
+msgid "Did you use correct config parameter?"
+msgstr "Notaðir þú réttan stillingarbreytu?"
+
+msgid "Example: If your config file is awstats.mysite.conf, use -config=mysite"
+msgstr "Dæmi: Ef stillingarskráin þín er awstats.minsvaedi.is.conf, notaðu -config=minsvaedi.is"
+
+msgid "Did you create your config file 'awstats.$SiteConfig.conf'?"
+msgstr "Búaðir þú til stillingaskrána 'awstats.$SiteConfig.conf'?"
+
+msgid "If not, you can run \"awstats_configure.pl\" from command line, or create it manually."
+msgstr "Ef ekki, getur þú keyrt \"awstats_configure.pl\" frá skipanalínu, eða búið hana til handvirkt."
+
+msgid "Setup"
+msgstr "Uppsetning"
+
+msgid "file, web server or permissions may be wrong."
+msgstr "skrá, vefþjónn eða heimildir geta verið rangar."
+
+msgid "Check config file, permissions and AWStats documentation (in 'docs' directory)."
+msgstr "Athugaðu stillingaskrá, heimildir og AWStats skjölun (í 'docs' skráasafni)."
+
+msgid "Warning: Can't find language files for \"%s\". English will be used."
+msgstr "Aðvörun: Get ekki fundið tungumálaskrár fyrir \"%s\". Enska verður notuð."
+
+#------------------------------------------------------------------------------
+# Villa og merki meðhöndlun
+#------------------------------------------------------------------------------
+
+msgid "%s process (ID %s) interrupted by signal %s."
+msgstr "%s ferli (ID %s) truflað af merki %s."
+
+msgid "An AWStats update process seems to be already running for this config file. Try later. If this is not true, remove manually lock file"
+msgstr "Það virðist sem AWStats uppfærsluferli sé þegar í gangi fyrir þessa stillingaskrá. Reyndu síðar. Ef þetta er ekki raunin, fjarlægðu handvirkt læsiskrána"
+
+#------------------------------------------------------------------------------
+# Ný tölfræði titlar
+#------------------------------------------------------------------------------
+msgid "Report Overview"
+msgstr "Skýrslu yfirlit"
+
+msgid "Monthly Statistics"
+msgstr "Mánaðarleg tölfræði"
+
+msgid "Daily Statistics"
+msgstr "Daglega tölfræði"
+
+msgid "Statistics by Day of Week"
+msgstr "Tölfræði eftir vikudegi"
+
+msgid "Hourly Page Views"
+msgstr "Síðuskoðanir á klukkustund"
+
+msgid "Traffic Sources"
+msgstr "Umferðaruppruni"
+
+msgid "Other Sources"
+msgstr "Aðrir upprunar"
+
+msgid "tooltip_1"
+msgstr "Fjöldi setna gesta á vefsvæði. Ef sami gestur kemur aftur eftir meira en 30 mínútur af óvirkni, telst það sem ný heimsókn"
+
+msgid "tooltip_2"
+msgstr "Fjöldi mismunandi gesta sem heimsóttu vefsvæðið þitt á valda tímabili. Tölfræði byggð á IP-tölum"
+
+msgid "tooltip_3"
+msgstr "Fjöldi beiðna sem taldar eru sem síður (eins og HTML, PHP, ASP), felur ekki í sér kyrrstæðar skrár eins og myndir, CSS, JS"
+
+msgid "tooltip_4"
+msgstr "Heildarfjöldi allra beiðna senda til þjónsins, þar á meðal síður, myndir, CSS, JS og allar aðrar skrár"
+
+msgid "tooltip_5"
+msgstr "Heildarmagn gagna flutt meðan þjónninn svarar beiðnum notenda"
+
+msgid "tooltip_13"
+msgstr "Tölfræði uppruna sem kemur frá leitarvélum. Sýnir hvaða leitarvélar koma með umferð og hvaða leitarorð gestir nota."
+
+msgid "tooltip_14"
+msgstr "Tölfræði uppruna sem kemur frá ytri tenglum frá öðrum vefsvæðum. Sýnir hvaða vefsvæði tengja á þig og hversu mikla umferð þau koma með."
+
+msgid "tooltip_15"
+msgstr "Orð sem gestir nota þegar þeir finna þig í gegnum leitarvélar. Leitarorð eru einstök orð, leitarsetningar eru samsetningar af mörgum orðum."
+
+msgid "tooltip_16"
+msgstr "Sjálfvirk forrit eins og leitarvélavélmenni, AI þjálfunarvélmenni, veikleikaskanna. Tölurnar í svigum merkja beiðnir um venjulegar síður og robots.txt."
+
+msgid "tooltip_17"
+msgstr "24 tíma umferðardreifingarrit. Sýnir heimsóknir á vefsvæðið þitt á mismunandi tímum dags, hjálpar til við að skilja virkan tíma notenda."
+
+msgid "tooltip_18"
+msgstr "Þessi dálkur sýnir daglega/vikulega meðaltöl á valda tímabili, hjálpar til við að skilja heildarþróun."
+
+msgid "tooltip_19"
+msgstr "Smelltu á atriði í ritinu til að sjá upplýsingar. Haltu músarbendlinum yfir ritþætti til að sjá sérstök gildi."
+
+msgid "tooltip_20"
+msgstr "Gögn sem ekki er hægt að flokka í núverandi flokka, venjulega vegna óeðlilegs gagnasniðs eða vantar upplýsingar."
+
+msgid "tooltip_21"
+msgstr "Skráðar ormaárásir. Ormar eru sjálfafritandi illgjarn forrit sem venjulega dreifast í gegnum netveikleika."
+
+#------------------------------------------------------------------------------
+# Sýna hjálparupplýsingar - Samfélagsútgáfa
+#------------------------------------------------------------------------------
+msgid "AWStats %s - Advanced Web Statistics"
+msgstr "AWStats %s - Háþróuð vef tölfræði"
+
+msgid "Copyright (c) 2000-2025 Laurent Destailleur"
+msgstr "Höfundarréttur (c) 2000-2025 Laurent Destailleur"
+
+msgid "Copyright (c) 2026-latest Community Edition"
+msgstr "Höfundarréttur (c) 2026-nýjasta Samfélagsútgáfa"
+
+msgid "AWStats comes with ABSOLUTELY NO WARRANTY. It's a free software distributed with a GNU General Public License (See LICENSE file for details)."
+msgstr "AWStats kemur með ENGA ÁBYRGÐ. Það er frjáls hugbúnaður dreift undir GNU General Public License (Sjáðu LICENSE skrá fyrir upplýsingar)."
+
+msgid "Syntax: %s -config=virtualhostname [options]"
+msgstr "Setningafræði: %s -config=sýndarþjónsnafn [valkostir]"
+
+msgid "This runs %s in command line to update statistics (-update option) of a web site, from the log file defined in AWStats config file, or build a HTML report (-output option)."
+msgstr "Þetta keyrir %s í skipanalínu til að uppfæra tölfræði (-update valkostur) vefsvæðis, úr atvikaskrá skilgreindri í AWStats stillingarskrá, eða byggja HTML skýrslu (-output valkostur)."
+
+msgid "First, %s tries to read %s.virtualhostname.conf as the config file. If not found, %s tries to read %s.conf, and finally the full path passed to -config="
+msgstr "Fyrst reynir %s að lesa %s.sýndarþjónsnafn.conf sem stillingarskrá. Ef ekki finnst, reynir %s að lesa %s.conf, og að lokum fulla slóðina send í -config="
+
+msgid "Note 1: Config files (*.conf) must be in /etc/awstats, /usr/local/etc/awstats, /etc or same directory than awstats.pl script file."
+msgstr "Athugasemd 1: Stillingarskrár (*.conf) verða að vera í /etc/awstats, /usr/local/etc/awstats, /etc eða sama skráasafni og awstats.pl handritsskráin."
+
+msgid "Note 2: If AWSTATS_FORCE_CONFIG environment variable is defined, AWStats will use it as the 'config' value, whatever is the value on command line or URL."
+msgstr "Athugasemd 2: Ef umhverfisbreytan AWSTATS_FORCE_CONFIG er skilgreind, mun AWStats nota hana sem 'config' gildi, sama hvaða gildi er í skipanalínu eða URL."
+
+msgid "See AWStats documentation for all setup instructions."
+msgstr "Sjáðu AWStats skjölun fyrir allar uppsetningarleiðbeiningar."
+
+msgid "Options to update statistics:"
+msgstr "Valkostir til að uppfæra tölfræði:"
+
+msgid "  -update        to update statistics (default)"
+msgstr "  -update        uppfærir tölfræði (sjálfgefið)"
+
+msgid "  -showsteps     to add benchmark information every %s lines processed"
+msgstr "  -showsteps     bætir við viðmiðunarupplýsingum á hverjum %s línum unnum"
+
+msgid "  -showcorrupted to add output for each corrupted lines found, with reason"
+msgstr "  -showcorrupted bætir við úttaki fyrir hverja spillta línu sem finnst, með ástæðu"
+
+msgid "  -showdropped   to add output for each dropped lines found, with reason"
+msgstr "  -showdropped   bætir við úttaki fyrir hverja hentu línu sem finnst, með ástæðu"
+
+msgid "  -showunknownorigin  to output referer when it can't be parsed"
+msgstr "  -showunknownorigin   sýnir tilvísunaraðila þegar ekki er hægt að þátta hann"
+
+msgid "  -showdirectorigin   to output log line when origin is a direct access"
+msgstr "  -showdirectorigin    sýnir atvikaskrá línu þegar uppruni er beinn aðgangur"
+
+msgid "  -updatefor=n   to stop the update process after parsing n lines"
+msgstr "  -updatefor=n   stöðvar uppfærsluferlið eftir að hafa þáttað n línur"
+
+msgid "  -LogFile=x     to change log to analyze whatever is 'LogFile' in config file"
+msgstr "  -LogFile=x     breytir atvikaskrá sem á að greina, sama hvað 'LogFile' er í stillingarskrá"
+
+msgid "  Be care to process log files in chronological order when updating statistics."
+msgstr "  Gættu þess að vinna atvikaskrár í tímaröð þegar þú uppfærir tölfræði."
+
+msgid "Options to show statistics:"
+msgstr "Valkostir til að sýna tölfræði:"
+
+msgid "  -output      to output main HTML report (no update made except with -update)"
+msgstr "  -output       sýnir aðal HTML skýrslu (engin uppfærsla nema með -update)"
+
+msgid "  -output=x    to output other report pages where x is:"
+msgstr "  -output=x     sýnir aðrar skýrslusíður þar sem x er:"
+
+msgid "build page of all domains/countries"
+msgstr "byggir síðu allra léna/landa"
+
+msgid "build page of all hosts"
+msgstr "byggir síðu allra hýsla"
+
+msgid "build page of last hits for hosts"
+msgstr "byggir síðu síðustu högga fyrir hýsla"
+
+msgid "build page of all unresolved IP"
+msgstr "byggir síðu allra óleystra IP-tala"
+
+msgid "build page of all email senders (maillog)"
+msgstr "byggir síðu allra sendenda tölvupósts (maillog)"
+
+msgid "build page of last email senders (maillog)"
+msgstr "byggir síðu síðustu sendenda tölvupósts (maillog)"
+
+msgid "build page of all email receivers (maillog)"
+msgstr "byggir síðu allra viðtakenda tölvupósts (maillog)"
+
+msgid "build page of last email receivers (maillog)"
+msgstr "byggir síðu síðustu viðtakenda tölvupósts (maillog)"
+
+msgid "build page of all logins used"
+msgstr "byggir síðu allra notaðra innskráninga"
+
+msgid "build page of last hits for logins"
+msgstr "byggir síðu síðustu högga fyrir innskráningar"
+
+msgid "build page of all robots/spider visits"
+msgstr "byggir síðu allra heimsókna véla/kóngulóar"
+
+msgid "build page of last hits for robots"
+msgstr "byggir síðu síðustu högga fyrir vélmenni"
+
+msgid "list most often viewed pages"
+msgstr "listar oftast skoðaðar síður"
+
+msgid "list most often viewed pages matching filter"
+msgstr "listar oftast skoðaðar síður sem passa við síu"
+
+msgid "list entry pages"
+msgstr "listar inngangs síður"
+
+msgid "list entry pages matching filter"
+msgstr "listar inngangs síður sem passa við síu"
+
+msgid "list exit pages"
+msgstr "listar útgöngu síður"
+
+msgid "list exit pages matching filter"
+msgstr "listar útgöngu síður sem passa við síu"
+
+msgid "build page with os detailed versions"
+msgstr "byggir síðu með nákvæmum útgáfum stýrikerfa"
+
+msgid "build page with browsers detailed versions"
+msgstr "byggir síðu með nákvæmum útgáfum vafra"
+
+msgid "list 'User Agents' with unknown browser"
+msgstr "listar 'Notendaumboð' með óþekktum vafra"
+
+msgid "list 'User Agents' with unknown OS"
+msgstr "listar 'Notendaumboð' með óþekktu stýrikerfi"
+
+msgid "build page of all refering search engines"
+msgstr "byggir síðu allra tilvísandi leitarvéla"
+
+msgid "build page of all refering pages"
+msgstr "byggir síðu allra tilvísandi síðna"
+
+msgid "list all keyphrases used on search engines"
+msgstr "listar allar leitarsetningar notaðar á leitarvélum"
+
+msgid "list all keywords used on search engines"
+msgstr "listar öll leitarorð notuð á leitarvélum"
+
+msgid "list 'Referers' for 404 errors"
+msgstr "listar 'Tilvísunaraðila' fyrir 404 villur"
+
+msgid "build page of all values for ExtraSection X"
+msgstr "byggir síðu allra gilda fyrir ExtraSection X"
+
+msgid "  -staticlinks           to have static links in HTML report page"
+msgstr "  -staticlinks           notar kyrrstæða tengla í HTML skýrslusíðu"
+
+msgid "  -staticlinksext=xxx    to have static links with .xxx extension instead of .html"
+msgstr "  -staticlinksext=xxx    notar kyrrstæða tengla með .xxx viðbót í stað .html"
+
+msgid "  -lang=LL     to output a HTML report in language LL (en,de,es,fr,it,nl,zh-cn,...)"
+msgstr "  -lang=LL     sýnir HTML skýrslu á tungumáli LL (is,en,de,es,fr,it,nl,zh-cn,...)"
+
+msgid "  -month=MM    to output a HTML report for an old month MM"
+msgstr "  -month=MM    sýnir HTML skýrslu fyrir gamlan mánuð MM"
+
+msgid "  -year=YYYY   to output a HTML report for an old year YYYY"
+msgstr "  -year=YYYY   sýnir HTML skýrslu fyrir gamalt ár YYYY"
+
+msgid "  The 'date' options doesn't allow you to process old log file. They only allow you to see a past report for a chosen month/year period instead of current month/year."
+msgstr "  'date' valkostirnir leyfa þér ekki að vinna gamla atvikaskrá. Þeir leyfa þér aðeins að sjá fyrri skýrslu fyrir valið mánuð/ár tímabil í stað núverandi mánaðar/árs."
+
+msgid "Other options:"
+msgstr "Aðrir valkostir:"
+
+msgid "  -debug=X     to add debug informations lesser than level X (speed reduced)"
+msgstr "  -debug=X     bætir við villuleitarupplýsingum minni en stig X (hraði minnkaður)"
+
+msgid "  -version     show AWStats version"
+msgstr "  -version, -v     sýnir AWStats útgáfu"
+
+msgid "Now supports/detects:"
+msgstr "Styður/greinir nú:"
+
+msgid "  Web/Ftp/Mail/streaming server log analyzis (and load balanced log files)"
+msgstr "  Greining atvikaskráa vef/FTP/tölvupósts/streymis þjóna (og hlaðajafnvægðar atvikaskrár)"
+
+msgid "  Reverse DNS lookup (IPv4 and IPv6) and GeoIP lookup"
+msgstr "  Öfug DNS leit (IPv4 og IPv6) og GeoIP leit"
+
+msgid "  Number of visits, number of unique visitors"
+msgstr "  Fjöldi heimsókna, fjöldi einstakra gesta"
+
+msgid "  Visits duration and list of last visits"
+msgstr "  Lengd heimsókna og listi yfir síðustu heimsóknir"
+
+msgid "  Authenticated users"
+msgstr "  Auðkenndir notendur"
+
+msgid "  Days of week and rush hours"
+msgstr "  Vikudagar og álagstímar"
+
+msgid "  Hosts list and unresolved IP addresses list"
+msgstr "  Listi yfir hýsla og listi yfir óleystar IP-tölur"
+
+msgid "  Most viewed, entry and exit pages"
+msgstr "  Oftast skoðaðar, inngangs- og útgöngusíður"
+
+msgid "  Files type and Web compression (mod_gzip, mod_deflate stats)"
+msgstr "  Tegundir skráa og vefþjöppun (mod_gzip, mod_deflate tölfræði)"
+
+msgid "  Configured Database Statistics"
+msgstr "  Stillað gagnagrunns tölfræði"
+
+msgid "  %s domains/countries"
+msgstr "  %s lén/lönd"
+
+msgid "  %s robots"
+msgstr "  %s vélmenni"
+
+msgid "  %s worm's families"
+msgstr "  %s orma fjölskyldur"
+
+msgid "  %s operating systems"
+msgstr "  %s stýrikerfi"
+
+msgid "  %s browsers (%s with phone browsers database)"
+msgstr "  %s vafrar (með farsímavafra gagnagrunni %s)"
+
+msgid "  %s search engines (and keyphrases/keywords used from them)"
+msgstr "  %s leitarvélar (og leitarsetningar/leitarorð notað frá þeim)"
+
+msgid "  All HTTP errors with last referrer"
+msgstr "  Allar HTTP villur með síðasta tilvísunaraðila"
+
+msgid "  Report by day/month/year"
+msgstr "  Skýrsla eftir degi/mánuði/ári"
+
+msgid "  Dynamic or static HTML or XHTML reports, static PDF reports"
+msgstr "  Dynamic eða static HTML eða XHTML skýrslur, static PDF skýrslur"
+
+msgid "  Indexed text or XML monthly database"
+msgstr "  Vísitaður texti eða XML mánaðarlegur gagnagrunnur"
+
+msgid "  And a lot of other advanced features and options..."  
+msgstr "  Og margt fleira af háþróuðum eiginleikum og valkostum..."
+
+msgid "  New versions and FAQ at http://www.awstats.org"
+msgstr "  Nýjar útgáfur og algengar spurningar á https://github.com/hestiacn/vstats/issues"

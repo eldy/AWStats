@@ -1,0 +1,3333 @@
+# AWStats Slovenian (sl) translations
+# Copyright (C) 2026 AWStats
+# This file is distributed under the same license as the AWStats package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: AWStats 8.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-10 12:00+0000\n"
+"PO-Revision-Date: 2026-05-10 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Slovenian\n"
+"Language: sl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+
+#------------------------------------------------------------------------------
+# Imena mesecev
+#------------------------------------------------------------------------------
+
+msgid "month_01"
+msgstr "Januar"
+
+msgid "month_02"
+msgstr "Februar"
+
+msgid "month_03"
+msgstr "Marec"
+
+msgid "month_04"
+msgstr "April"
+
+msgid "month_05"
+msgstr "Maj"
+
+msgid "month_06"
+msgstr "Junij"
+
+msgid "month_07"
+msgstr "Julij"
+
+msgid "month_08"
+msgstr "Avgust"
+
+msgid "month_09"
+msgstr "September"
+
+msgid "month_10"
+msgstr "Oktober"
+
+msgid "month_11"
+msgstr "November"
+
+msgid "month_12"
+msgstr "December"
+
+#------------------------------------------------------------------------------
+# Imena dni v tednu
+#------------------------------------------------------------------------------
+
+msgid "DayOfWeek_0"
+msgstr "Nedelja"
+
+msgid "DayOfWeek_1"
+msgstr "Ponedeljek"
+
+msgid "DayOfWeek_2"
+msgstr "Torek"
+
+msgid "DayOfWeek_3"
+msgstr "Sreda"
+
+msgid "DayOfWeek_4"
+msgstr "Četrtek"
+
+msgid "DayOfWeek_5"
+msgstr "Petek"
+
+msgid "DayOfWeek_6"
+msgstr "Sobota"
+
+#------------------------------------------------------------------------------
+# Elementi vmesnika
+#------------------------------------------------------------------------------
+
+msgid "Advanced Web Statistics for"
+msgstr "Napredna spletna statistika za"
+
+msgid "Statistics for"
+msgstr "Statistika za"
+
+msgid "main"
+msgstr "Pregled"
+
+# Preklop teme
+msgid "Switch to light mode"
+msgstr "Preklopi na svetli način"
+
+msgid "Switch to dark mode"
+msgstr "Preklopi na temni način"
+
+# Enote kapacitete
+msgid "TB"
+msgstr "TB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "Bytes"
+msgstr "Bajtov"
+
+# Elementi obrazca
+msgid "Filter"
+msgstr "Filter"
+
+msgid "Exclude filter"
+msgstr "Filter izključitve"
+
+msgid "Top"
+msgstr "Prvih"
+
+msgid "Full list"
+msgstr "Celoten seznam"
+
+msgid "Last"
+msgstr "Zadnji"
+
+msgid "Average"
+msgstr "Povprečje"
+
+msgid "Export"
+msgstr "Izvoz"
+
+msgid "Details"
+msgstr "Podrobnosti"
+
+msgid "Version"
+msgstr "Različica"
+
+# Ločilo tisočic
+msgid "thousands_separator"
+msgstr "."
+
+# Dolgi format datuma (za zadnjo posodobitev, prvi obisk itd.)
+msgid "dateformat_long"
+msgstr "dd.mm.yyyy HH:MM:SS"
+
+# Kratki format datuma (za oznake grafov itd.)
+msgid "dateformat_short"
+msgstr "dd.mm.yyyy HH:MM"
+
+msgid "date_format_year"
+msgstr "%s"
+
+msgid "date_format_month"
+msgstr "%1$s %2$s"
+
+#------------------------------------------------------------------------------
+# Navigacijski meni
+#------------------------------------------------------------------------------
+
+msgid "AWStats Month Selector"
+msgstr "AWStats izbirnik meseca"
+
+msgid "nav_category_basic"
+msgstr "Osnovna dokumentacija"
+
+msgid "nav_category_guide"
+msgstr "Vodniki za uporabo"
+
+msgid "nav_category_reference"
+msgstr "Referenčni viri"
+
+msgid "nav_category_integration"
+msgstr "Integracija in razširitve"
+
+msgid "nav_category_dev"
+msgstr "Dokumentacija za razvijalce"
+
+msgid "nav_changelog"
+msgstr "Dnevnik sprememb"
+
+msgid "nav_what"
+msgstr "Kaj je AWStats"
+
+msgid "nav_license"
+msgstr "Licenca"
+
+msgid "nav_glossary"
+msgstr "Slovar pojmov"
+
+msgid "nav_setup"
+msgstr "Namestitev in konfiguracija"
+
+msgid "nav_upgrade"
+msgstr "Vodnik za nadgradnjo"
+
+msgid "nav_config"
+msgstr "Konfiguracijski parametri"
+
+msgid "nav_extra"
+msgstr "Dodatni oddelki"
+
+msgid "nav_tools"
+msgstr "Druga orodja"
+
+msgid "nav_faq"
+msgstr "Pogosta vprašanja"
+
+msgid "nav_security"
+msgstr "Varnostna priporočila"
+
+msgid "nav_compare"
+msgstr "Primerjava"
+
+msgid "nav_benchmark"
+msgstr "Merjenje uspešnosti"
+
+msgid "nav_webmin"
+msgstr "Webmin modul"
+
+msgid "nav_dolibarr"
+msgstr "Dolibarr modul"
+
+msgid "nav_contrib"
+msgstr "Prispevki"
+
+msgid "nav_plugins"
+msgstr "Razvoj vtičnikov"
+
+msgid "nav_hooks"
+msgstr "Vtičniki kavlji"
+
+msgid "nav_graphs"
+msgstr "Grafi vtičnikov"
+
+msgid "Back to top"
+msgstr "Nazaj na vrh"
+
+msgid "nav_select_month"
+msgstr "Izberite mesec"
+
+#------------------------------------------------------------------------------
+# Glavni statistični kazalniki
+#------------------------------------------------------------------------------
+
+# Obiski
+msgid "Unique visitors"
+msgstr "Edinstveni obiskovalci"
+
+msgid "Visits"
+msgstr "Obiski"
+
+msgid "Visits duration"
+msgstr "Trajanje obiskov"
+
+msgid "First visit"
+msgstr "Prva posodobitev"
+
+msgid "Last visit"
+msgstr "Zadnja posodobitev"
+
+msgid "Visits/Visitor"
+msgstr "Obiskov/obiskovalca"
+
+msgid "Pages/Visit"
+msgstr "Strani/obiska"
+
+msgid "Hits/Visit"
+msgstr "Zahtevkov/obiska"
+
+msgid "KB/Visit"
+msgstr "KB/obiska"
+
+msgid "KB/Visits"
+msgstr "KB/obiskov"
+
+# Promet
+msgid "Pages"
+msgstr "Strani"
+
+msgid "Hits"
+msgstr "Zahtevki"
+
+msgid "Bandwidth"
+msgstr "Pasovna širina"
+
+msgid "duration_format"
+msgstr "%s-%s"
+
+msgid "unit_s"
+msgstr "sekund"
+
+msgid "unit_min"
+msgstr "minut"
+
+msgid "unit_h"
+msgstr "ur"
+
+msgid "and"
+msgstr "-"
+
+msgid "Device Types"
+msgstr "Vrste naprav"
+
+msgid "Device Type"
+msgstr "Vrsta naprave"
+
+msgid "Percent"
+msgstr "Odstotek"
+
+# Imena vrst naprav
+msgid "Mobile"
+msgstr "Mobilni telefon"
+
+msgid "Pause & Go"
+msgstr "Nadaljevanje prekinitve"
+
+msgid "Complete"
+msgstr "Končano"
+
+msgid "Tablet"
+msgstr "Tablični računalnik"
+
+msgid "Tv"
+msgstr "Televizor"
+
+msgid "Wearable"
+msgstr "Nosljiva naprava"
+
+msgid "Bot"
+msgstr "Robot"
+
+msgid "Desktop"
+msgstr "Namizni računalnik"
+
+msgid "Normal browsing traffic"
+msgstr "Običajni promet brskanja"
+
+msgid "Abnormal browsing traffic"
+msgstr "Nenormalni promet brskanja"
+
+msgid "Viewed"
+msgstr "Ogledano"
+
+msgid "Not viewed"
+msgstr "Ni ogledano"
+
+msgid "Abnormal browsing traffic note"
+msgstr "Nenormalni promet brskanja vključuje: iskalne robote, robote za AI usposabljanje, skenerje ranljivosti in zahteve, ki ne sledijo HTTP/HTTPS specifikacijam"
+
+# Datoteke
+msgid "File size"
+msgstr "Velikost datoteke"
+
+msgid "File type"
+msgstr "Vrsta datoteke"
+
+msgid "Downloads"
+msgstr "Prenosi"
+
+msgid "Request time"
+msgstr "Čas zahteve"
+
+msgid "Total requests"
+msgstr "Skupaj zahtevkov"
+
+msgid "Frequency"
+msgstr "Pogostost"
+
+msgid "Average frequency"
+msgstr "Povprečna pogostost"
+
+msgid "Seconds"
+msgstr "Sekunde"
+
+# E-pošta (za LogType eq 'M')
+msgid "First"
+msgstr "Prvi"
+
+msgid "Mails"
+msgstr "Pošta"
+
+msgid "Size"
+msgstr "Velikost"
+
+msgid "If you remove this file, all statistics for date"
+msgstr "Opozorilo: Če izbrišete to datoteko, bodo vse statistike za datum"
+
+msgid "will be lost/reset."
+msgstr "trajno izgubljene/ponastavljene!"
+
+msgid "Last config file used to build this data file was"
+msgstr "Zadnja konfiguracijska datoteka, uporabljena za izdelavo te podatkovne datoteke, je bila"
+
+msgid "Position (offset in bytes) in this file for beginning of each section for"
+msgstr "Položaj (premik v bajtih) v tej datoteki za začetek vsakega oddelka za"
+
+msgid "direct I/O access. If you made changes somewhere in this file, you should"
+msgstr "neposreden I/O dostop. Če ste nekje v tej datoteki naredili spremembe, bi morali"
+
+msgid "also remove completely the MAP section (AWStats will rewrite it at next update)"
+msgstr "tudi popolnoma odstraniti MAP odsek (AWStats ga bo ob naslednji posodobitvi ponovno zapisal)."
+
+msgid "LastLine    = Date of last record processed - Last record line number in last log - Last record offset in last log - Last record signature value"
+msgstr "LastLine    = Datum zadnje obdelane evidence - Številka vrstice zadnje evidence v zadnjem dnevniku - Premik zadnje evidence v zadnjem dnevniku - Vrednost podpisa zadnje evidence"
+
+msgid "FirstTime   = Date of first visit for history file"
+msgstr "FirstTime   = Datum prvega obiska za zgodovinsko datoteko"
+
+msgid "LastTime    = Date of last visit for history file"
+msgstr "LastTime    = Datum zadnjega obiska za zgodovinsko datoteko"
+
+msgid "LastUpdate  = Date of last update - Nb of parsed records - Nb of parsed old records - Nb of parsed new records - Nb of parsed corrupted - Nb of parsed dropped"
+msgstr "LastUpdate  = Datum zadnje posodobitve - Število obdelanih evidenc - Število obdelanih starih evidenc - Število obdelanih novih evidenc - Število obdelanih pokvarjenih - Število obdelanih zavrženih"
+
+msgid "TotalVisits = Number of visits"
+msgstr "TotalVisits = Število obiskov"
+
+msgid "TotalUnique = Number of unique visitors"
+msgstr "TotalUnique = Število edinstvenih obiskovalcev"
+
+msgid "MonthHostsKnown   = Number of hosts known"
+msgstr "MonthHostsKnown   = Število znanih gostiteljev"
+
+msgid "MonthHostsUnKnown = Number of hosts unknown"
+msgstr "MonthHostsUnKnown = Število neznanih gostiteljev"
+
+msgid "Cluster ID - Pages - Hits - Bandwidth"
+msgstr "ID gruče - Število strani - Število zahtevkov - Pasovna širina"
+
+msgid "Hour - Pages - Hits - Bandwidth - Not viewed Pages - Not viewed Hits - Not viewed Bandwidth"
+msgstr "Ura - Število strani - Število zahtevkov - Pasovna širina - Neogledane strani - Neogledani zahtevki - Neogledana pasovna širina"
+
+msgid "Date - Pages - Hits - Bandwidth - Visits"
+msgstr "Datum - Število strani - Število zahtevkov - Pasovna širina - Število obiskov"
+
+msgid "Domain - Pages - Hits - Bandwidth"
+msgstr "Domena - Število strani - Število zahtevkov - Pasovna širina"
+
+msgid "The %s first Pages must be first (order not required for others)"
+msgstr "Na začetni strani je prikazanih le prvih %s strani z največ ogledi. Celoten seznam si oglejte na strani s podrobnostmi."
+
+msgid "Host - Pages - Hits - Bandwidth - Last visit date - [Start date of last visit] - [Last page of last visit]"
+msgstr "Gostitelj - Število strani - Število zahtevkov - Pasovna širina - Čas zadnjega obiska - [Čas začetka zadnjega obiska] - [Zadnja stran zadnjega obiska]"
+
+msgid "[Start date of last visit] and [Last page of last visit] are saved only if session is not finished"
+msgstr "[Čas začetka zadnjega obiska] in [Zadnja stran zadnjega obiska] se shranita le, če seja ni končana"
+
+msgid "The first %s items are sorted by hits in descending order; order of the remaining items is undefined."
+msgstr "Prvih %s elementov je razvrščenih po številu zadetkov v padajočem vrstnem redu; vrstni red preostalih elementov ni določen."
+
+msgid "Login - Pages - Hits - Bandwidth - Last visit"
+msgstr "Prijavljeni uporabnik - Število strani - Število zahtevkov - Pasovna širina - Čas zadnjega obiska"
+
+msgid "Robot ID - Hits - Bandwidth - Last visit - Hits on robots.txt"
+msgstr "ID robota - Število zahtevkov - Pasovna širina - Čas zadnjega obiska - Število zahtevkov za robots.txt"
+
+msgid "Worm ID - Hits - Bandwidth - Last visit"
+msgstr "ID črva - Število zahtevkov - Pasovna širina - Čas zadnjega obiska"
+
+msgid "EMail - Hits - Bandwidth - Last visit"
+msgstr "E-pošta - Število zahtevkov - Pasovna širina - Čas zadnjega obiska"
+
+msgid "The first %s email addresses are sorted by hits in descending order; order of the remaining addresses is undefined."
+msgstr "Prvih %s e-poštnih naslovov je razvrščenih po številu zadetkov v padajočem vrstnem redu; vrstni red preostalih naslovov ni določen."
+
+msgid "URL - Pages - Bandwidth - Entry - Exit"
+msgstr "URL - Število strani - Pasovna širina - Vhod - Izhod"
+
+msgid "Files type - Hits - Bandwidth - Bandwidth without compression - Bandwidth after compression"
+msgstr "Vrsta datotek - Število zahtevkov - Pasovna širina - Pasovna širina pred stiskanjem - Pasovna širina po stiskanju"
+
+msgid "Request Time Range - Request Time Frequency"
+msgstr "Razpon časa zahteve - Število zahtevkov"
+
+msgid "Payload Range - Payload Frequency"
+msgstr "Razpon velikosti datoteke - Število datotek"
+
+msgid "Session range - Number of visits"
+msgstr "Razpon trajanja seje - Število obiskov"
+
+msgid "URL with %s errors - Hits"
+msgstr "URL z %s napakami - Število zahtevkov"
+
+msgid "Last URL referrer"
+msgstr "Zadnji URL napotitelj"
+
+msgid "Errors - Hits - Bandwidth"
+msgstr "Napake - Število zahtevkov - Pasovna širina"
+
+msgid "Search keywords - Number of search"
+msgstr "Ključne besede za iskanje - Število iskanj"
+
+msgid "Only top %s keywords shown on main page (sorted by search count). See full list on detail page."
+msgstr "Na začetni strani je prikazanih le prvih %s ključnih besed po številu iskanj. Celoten seznam si oglejte na strani s podrobnostmi."
+
+msgid "Search keyphrases - Number of search"
+msgstr "Ključne fraze za iskanje - Število iskanj"
+
+msgid "Only top %s keyphrases shown on main page (sorted by search count). See full list on detail page."
+msgstr "Na začetni strani je prikazanih le prvih %s ključnih fraz po številu iskanj. Celoten seznam si oglejte na strani s podrobnostmi."
+
+msgid "External page referers - Pages - Hits"
+msgstr "Zunanje strani napotitelji - Število strani - Število zahtevkov"
+
+msgid "Only top %s external referrers shown on main page (sorted by pages). See full list on detail page."
+msgstr "Na začetni strani je prikazanih le prvih %s zunanjih napotiteljev po številu strani. Celoten seznam si oglejte na strani s podrobnostmi."
+
+msgid "Search engine referers ID - Pages - Hits"
+msgstr "ID napotitelja iskalnika - Število strani - Število zahtevkov"
+
+msgid "Origin - Pages - Hits"
+msgstr "Izvor - Število strani - Število zahtevkov"
+
+msgid "Unknown referer Browser - Last visit date"
+msgstr "Neznani napotitelj brskalnik - Čas zadnjega obiska"
+
+msgid "Unknown referer OS - Last visit date"
+msgstr "Neznani napotitelj OS - Čas zadnjega obiska"
+
+msgid "Screen size - Hits"
+msgstr "Ločljivost zaslona - Število zahtevkov"
+
+msgid "Browser ID - Hits - Pages"
+msgstr "ID brskalnika - Število zahtevkov - Število strani"
+
+msgid "Downloads - Hits - Bandwidth"
+msgstr "Prenosi - Število zahtevkov - Pasovna širina"
+
+msgid "Protocol - Hits - Bandwidth"
+msgstr "Protokol - Število zahtevkov - Pasovna širina"
+
+msgid "Icon Status - Type:200:404:Other"
+msgstr "Stanje ikone - Vrsta:200:404:Drugo"
+
+#------------------------------------------------------------------------------
+# Prevodi časovnih obdobij
+#------------------------------------------------------------------------------
+
+msgid "period_00"
+msgstr "Polnoč · Statistika spi, vi pa še vedno gledate podatke? Prava predanost"
+
+msgid "period_01"
+msgstr "Ena ura po polnoči · Dostopate ob tem času? Nespečnost ali ravnokar s službe"
+
+msgid "period_02"
+msgstr "Dve uri po polnoči · Tudi roboti so pridnejši, še vedno delajo"
+
+msgid "period_03"
+msgstr "Tri ure po polnoči · Mesto spi, strežnik dela nadure, kdo je na slabšem?"
+
+msgid "period_04"
+msgstr "Štiri ure po polnoči · Najsvetlejša zvezda v temi je vaš zaslon ali indikatorska lučka strežnika"
+
+msgid "period_05"
+msgstr "Pet zjutraj · Zgodnja ptica ujame črva, zgodnji robot zajame podatke"
+
+msgid "period_06"
+msgstr "Šest zjutraj · Nekdo je vstal, nekdo še ni legel, internet nikoli ne spi"
+
+msgid "period_07"
+msgstr "Sedem zjutraj · Čas gneče v prometu, čas za brskanje po spletu"
+
+msgid "period_08"
+msgstr "Osem zjutraj · Prva stvar v službi: pogledati včerajšnje podatke"
+
+msgid "period_09"
+msgstr "Devet zjutraj · Zlati čas, tudi zabava ima svoja pravila"
+
+msgid "period_10"
+msgstr "Deset dopoldne · Čas je za kavo, mimogrede preverite, ali je promet narasel"
+
+msgid "period_11"
+msgstr "Enajst dopoldne · Še ena ura do kosila, zdržite še malo"
+
+msgid "period_12"
+msgstr "Poldne · Strežnik: vsi ste odšli na kosilo, tudi jaz se bom odpočil"
+
+msgid "period_13"
+msgstr "Trinajst · Popoldanska zaspanost, ampak podatki ne dremajo"
+
+msgid "period_14"
+msgstr "Štirinajst · Čas za popoldansko malico, s podatki je še bolj okusno"
+
+msgid "period_15"
+msgstr "Petnajst · Graf današnjega prometa, spominja na krivuljo vašega razpoloženja?"
+
+msgid "period_16"
+msgstr "Šestnajst · Še X ur do konca delovnega časa, promet začenja pospeševati"
+
+msgid "period_17"
+msgstr "Sedemnajst · Konec delovnega dne! Ampak strežnik nadaljuje z delom"
+
+msgid "period_18"
+msgstr "Osemnajst · Čas večerje, sprostite se ob videu"
+
+msgid "period_19"
+msgstr "Devetnajst · Udarni čas, vrhunec prometa, strežnik: bom zdržal"
+
+msgid "period_20"
+msgstr "Dvajset · Zavaljen na kavču, vi ste 114514. obiskovalec"
+
+msgid "period_21"
+msgstr "Enaindvajset · Pozna noč, nočna ptica, ki skrivaj gleda podatke +1"
+
+msgid "period_22"
+msgstr "Dvaindvajset · Današnji podatki kmalu prihajajo, živčni?"
+
+msgid "period_23"
+msgstr "Triindvajset · AWStats: čas je za spanje, jutri spet delamo"
+
+#------------------------------------------------------------------------------
+# Časovne dimenzije
+#------------------------------------------------------------------------------
+
+msgid "Period"
+msgstr "Statistično obdobje"
+
+msgid "Year"
+msgstr "Leto"
+
+msgid "Month"
+msgstr "Mesec"
+
+msgid "Months"
+msgstr "Meseci"
+
+msgid "Date"
+msgstr "Datum"
+
+msgid "Day"
+msgstr "Dan"
+
+msgid "Hour"
+msgstr "Ura"
+
+msgid "Hours"
+msgstr "Ure"
+
+msgid "Day of week"
+msgstr "Dan v tednu"
+
+msgid "When"
+msgstr "Kdaj"
+
+msgid "%s Server Management Panel"
+msgstr "%s  plošča za upravljanje strežnika"
+
+msgid "Server Administration"
+msgstr "Preprosta in učinkovita rešitev za strežnik"
+
+#------------------------------------------------------------------------------
+# Dimenzija obiskovalcev
+#------------------------------------------------------------------------------
+
+msgid "Invalid URL Parameters"
+msgstr "Neveljavni URL parametri"
+
+msgid "The requested page cannot be loaded due to invalid or malformed URL parameters."
+msgstr "Zahtevane strani ni mogoče naložiti zaradi neveljavnih ali nepravilno oblikovanih URL parametrov."
+
+msgid "This may be caused by typing an incorrect URL, missing parameter separators, or using an invalid configuration name."
+msgstr "To je lahko posledica vnosa nepravilnega URL-ja, manjkajočih ločil parametrov ali uporabe neveljavnega imena konfiguracije."
+
+msgid "Please check the URL you entered and ensure all parameters are correctly formatted."
+msgstr "Preverite vneseni URL in se prepričajte, da so vsi parametri pravilno oblikovani."
+
+msgid "SiteDomain parameter not defined in your config/domain file, or you may not have execution permission on the file."
+msgstr "Parameter SiteDomain ni definiran v vaši datoteki config/domain ali pa morda nimate dovoljenja za izvajanje te datoteke."
+
+msgid "Please run as Administrator to set permissions"
+msgstr "Za nastavitev dovoljenj zaženite kot skrbnik"
+
+msgid "This directory lacks read permission"
+msgstr "Ta imenik nima dovoljenja za branje"
+
+msgid "Please set read permission for directory"
+msgstr "Nastavite dovoljenje za branje za imenik"
+
+msgid "Missing required parameter in config file"
+msgstr "Manjka obvezni parameter v konfiguracijski datoteki"
+
+msgid "Please check that 'DirData' is defined."
+msgstr "Preverite, ali je 'DirData' definiran."
+
+msgid "Domain name in browser address appears to be missing or incomplete"
+msgstr "Zdi se, da ime domene v naslovu brskalnika manjka ali je nepopolno"
+
+msgid "Please check the URL parameter"
+msgstr "Preverite parameter URL"
+
+msgid "Format description"
+msgstr "Opis formata"
+
+msgid "Please set execute permission"
+msgstr "Prosimo, nastavite dovoljenje za izvajanje"
+
+msgid "Or if you prefer numeric mode"
+msgstr "Ali če imate raje številski način"
+
+msgid "View Report Directly"
+msgstr "Oglejte si poročilo neposredno"
+
+msgid "AWStats Log Viewer"
+msgstr "AWStats pregledovalnik dnevnikov"
+
+msgid "Month Selection"
+msgstr "Izbira meseca"
+
+msgid "Who"
+msgstr "Kdo"
+
+msgid "Visitors"
+msgstr "Obiskovalci"
+
+msgid "Countries"
+msgstr "Države/regije"
+
+msgid "flag_icon"
+msgstr "Zastava"
+
+msgid "Country-Region-City"
+msgstr "Država/regija/mesto"
+
+msgid "Code"
+msgstr "Koda"
+
+msgid "Known"
+msgstr "Znan"
+
+msgid "unknownos"
+msgstr "neznan operacijski sistem"
+
+msgid "unknownbrowser"
+msgstr "neznan brskalnik"
+
+msgid "Unresolved IP Address"
+msgstr "Nerešen IP naslov"
+
+msgid "Unknown File Type"
+msgstr "Neznana vrsta datoteke"
+
+msgid "Unknown Size"
+msgstr "Neznana velikost"
+
+msgid "Unknown Time"
+msgstr "Neznan čas zahteve"
+
+msgid "Unknown Browser"
+msgstr "Neznan brskalnik"
+
+msgid "Unknown OS"
+msgstr "Neznan operacijski sistem"
+
+msgid "Unknown Visitor"
+msgstr "Neznan obiskovalec"
+
+msgid "Unknown Visitor (Total)"
+msgstr "Neznani obiskovalci (skupaj)"
+
+msgid "Unknown Country"
+msgstr "Neznana država/regija"
+
+msgid "Unknown Country (Region)"
+msgstr "Neznana država/regija (skupaj)"
+
+msgid "Unknown Visitor (Title)"
+msgstr "Neznan obiskovalec (naslov)"
+
+msgid "PageStayTime"
+msgstr "Časa zadrževanja na strani ni mogoče oceniti"
+
+msgid "Unknown OS (Link)"
+msgstr "Neznan operacijski sistem (povezava)"
+
+msgid "Unknown OS (Row)"
+msgstr "Neznan operacijski sistem (seznam)"
+
+msgid "Unknown Browser (Link)"
+msgstr "Neznan brskalnik (povezava)"
+
+msgid "Unknown Browser (Row)"
+msgstr "Neznan brskalnik (seznam)"
+
+msgid "Unknown Screen"
+msgstr "Neznana velikost zaslona"
+
+msgid "Login"
+msgstr "Uporabniško ime"
+
+msgid "Anonymous"
+msgstr "Anonimno"
+
+msgid "Robots"
+msgstr "Roboti"
+
+msgid "Different robots"
+msgstr "Različni roboti"
+
+msgid "Hits on robots.txt"
+msgstr "Promet 'nenormalnega brskanja', ki ga ustvarjajo zgoraj navedeni iskalni roboti, ni vključen v druge grafikone. Število za '+' predstavlja uspešne obiske datoteke 'robots.txt'"
+
+msgid "Worms"
+msgstr "Črvi"
+
+msgid "Different worms"
+msgstr "Različni črvi"
+
+msgid "Target"
+msgstr "Cilj"
+
+msgid "Grabber"
+msgstr "Orodje za zajemanje"
+
+#------------------------------------------------------------------------------
+# Opisi formatov datotek
+#------------------------------------------------------------------------------
+
+msgid "mime_text"
+msgstr "TXT datoteka z navadnim besedilom (neoblikovano navadno besedilo, standardizirano s kodiranjem ASCII leta 1963. Kot temeljna osnova vse izvorne kode, konfiguracijskih datotek in sistemskih dnevnikov, je njen medplatformski nadzor pretoka prelomov vrstic Windows (CRLF) in Unix (LF) še vedno najbolj univerzalni standard za izmenjavo podatkov v računalniškem svetu)"
+
+msgid "mime_log"
+msgstr "LOG sistemski dnevnik delovanja (sredstvo v obliki navadnega besedila, ki beleži stanje operacijskega sistema, jedra in aplikacij med izvajanjem. Zajema dnevnike dostopa Nginx/Apache (kombinirani dnevnik) in standardno specifikacijo syslog. Je osrednji vir podatkov za odpravljanje težav, analizo zmogljivosti pretoka in varnostno revizijo)"
+
+msgid "mime_page"
+msgstr "HTML hiperbesedilna spletna stran (temeljni kamen svetovnega spleta, ki ga je ustvaril Tim Berners-Lee leta 1989. Kot brezplačno dostopen univerzalni jezik za označevanje hiperbesedila je njegova specifikacija HTML5 leta 2014 postala uradni standard W3C z izvorno podporo za strukturirane večpredstavne vsebine, semantične interakcije in postavitev strani v pretoku. Prejel je Turingovo nagrado leta 2016)"
+
+msgid "mime_khtml"
+msgstr "KHTML predlog za spletne predloge (specifikacija pogona za upodabljanje brskalnika KDE 2.0 iz leta 1998. Kot referenčna točka skupnosti odprte kode, ki je postavila temelje za sodobno upodabljanje spleta, je njegova tehnološka dediščina neposredno navdihnila in se razvila v jedri Apple WebKit in Google Blink, ki še danes nadaljujeta svojo osnovno nit s sodobno dinamično spletno arhitekturo, ki temelji na pretoku)"
+
+msgid "mime_script"
+msgstr "SCRIPT interpretirani dinamični skript (splošna klasifikacija tokov izvorne kode, ki jih ni treba vnaprej prevesti in jih določeno izvajalno okolje ali tolmač bere in izvaja vrstico za vrstico. Zajema ASP, JSP, CGI, Tcl itd., široko uporabljen za skupne prehodne vmesnike na strani strežnika, avtomatiziran nadzor procesov in lepljenje opravil na sistemski ravni)"
+
+msgid "mime_js"
+msgstr "Skript JavaScript (izvorno programsko okolje brskalnika Netscape iz leta 1995. Leta 1997 je bil vzpostavljen industrijski standard ECMAScript, leta 2009 se je rodilo izvajalno okolje Node.js, ki je prekinilo meje brskalnika in ustvarilo asinhrono neblokirajočo arhitekturo celotnega sklada, spremlja pa ga največji ekosistem paketov programske opreme npm na svetu)"
+
+msgid "mime_py"
+msgstr "Skript Python (visokonivojski interpretirani skriptni jezik, ki ga je ustvaril Guido van Rossum leta 1991. Zaradi obveznega zamikanja za neizgubno berljivost in večparadigmatskega nizkonivojskega oblikovanja je zdaj uveljavljen kot industrijski standardni jezik za sodobno spletno arhitekturo, podatkovno znanost celotnega sklada, usposabljanje modelov umetne inteligence (AI) in avtomatizirano upravljanje, prilagojeno oblaku)"
+
+msgid "mime_sh"
+msgstr "Skript Shell (standardni skript interpreta ukazov iz dobe Unix leta 1971. Vsebuje specifikacije ukazov na ravni jedra, kot so Bash, Sh, Dash, običajno se izvaja s pripono .sh. Je univerzalno lepilo na ravni jedra za nizkonivojski nadzor procesov, konfiguracijo okolja brez namestitve in avtomatizirano uvajanje v sodobnih operacijskih sistemih, podobnih Unixu)"
+
+msgid "mime_rb"
+msgstr "Skript Ruby (objektno usmerjen skriptni jezik, ki ga je ustvaril Yukihiro Matsumoto leta 1995. S skrajnim spoštovanjem do izkušenj razvijalca kot osrednjo oblikovalsko filozofijo je njegovo ogrodje Ruby on Rails revolucionarno vzpostavilo sodobno razvojno paradigmo spletne arhitekture visoke ravni 'Konvencija pred konfiguracijo (CoC)')"
+
+msgid "mime_pl"
+msgstr "Skript Perl (pragmatičen skriptni jezik, ki ga je ustvaril Larry Wall leta 1987. Kot utemeljitelj sodobnih upravljavcev paketov (CPAN) je znan kot 'švicarski vojaški nož' za obdelavo besedil. V sodobnem načinu CGI še vedno služi kot visoko zanesljiva osnova na področju razčlenjevanja dnevnikov zaradi zelo nizkih stroškov fizičnega pomnilnika in zelo učinkovite obdelave regularnih izrazov)"
+
+msgid "mime_php"
+msgstr "PHP dinamična spletna stran (ustvaril Rasmus Lerdorf leta 1995, posebej zasnovan za spletni razvoj. Kot ključna tehnologija, ki poganja več kot 70% spletnih strani na svetu, globoko podpira velike produkcijske aplikacije, kot sta WordPress in Wikipedia. Od uvedbe izvajalnega okolja za prevajanje JIT (Just-In-Time) v PHP 8 je dosegel osnovno evolucijo paradigme proti visoko zmogljivi strežniški strani celotnega sklada)"
+
+msgid "mime_image"
+msgstr "IMAGE klasifikacija slikovnih sredstev (zajema splošno klasifikacijo bitnih slik s stiskanjem z izgubo/brez izgube, sodobne odzivne spletne grafike in vektorske grafike. Je ključni kazalnik za oceno stroškov nalaganja vizualnih virov spletnega mesta, stopnje zadetkov predpomnilnika na strani odjemalca in porabe pasovne širine medijskega omrežja)"
+
+msgid "mime_document"
+msgstr "DOCUMENT klasifikacija strukturiranih dokumentov (zajema splošno klasifikacijo navadnega besedila, preglednic, dokumentov s fiksnim formatom (PDF) in lahkih označevalnih jezikov. Je ključni kazalnik za statistiko distribucije statičnih baz znanja na strani strežnika, prenos sredstev informacijskih sistemov podjetja in zmogljivost prepustnosti besedilnega toka)"
+
+msgid "mime_package"
+msgstr "PACKAGE klasifikacija produktov prevajanja in programskih paketov (zajema splošno klasifikacijo izvornih izvedljivih programov operacijskega sistema, knjižnic za povezovanje med izvajanjem (DLL/SO) in namestitvenih paketov za distribucijo aplikacij. Pogosto se uporablja kot ključni kazalnik za oceno odhodnega prometa in najvišjih vrednosti prenosov spletnih mest za distribucijo programske opreme)"
+
+msgid "mime_archive"
+msgstr "ARCHIVE arhivske in stisnjene datoteke (splošna klasifikacija paketov za stiskanje podatkov, ki temeljijo na osrednjih algoritmih, kot sta DEFLATE, LZMA. V omrežni plasti poleg predstavljanja tradicionalne distribucije paketov zajema tudi dinamični odzivni tok Gzip projekta GNU iz leta 1992. Čeprav se v sodobnih scenarijih postopoma uvaja algoritem Brotli, ta klasifikacija ostaja ključni kazalnik za oceno stopnje prepustnosti pasovne širine strežnika in zmanjšanja pritiska v transportni plasti)"
+
+msgid "mime_audio"
+msgstr "AUDIO klasifikacija digitalnega zvočnega toka (zajema splošno klasifikacijo stisnjenega zvoka, zvočnih knjig in vsebnikov zvočnih tokov. Na podlagi posebnih standardov zvočnih kodekov se uporablja za spremljanje stopnje prepustnosti zvočnih podatkovnih tokov večpredstavnostnih spletnih mest, sočasne pasovne širine pretakanja in zmogljivosti dolgih povezav)"
+
+msgid "mime_video"
+msgstr "VIDEO klasifikacija digitalnega video toka (zajema splošno klasifikacijo vsebnikov videa visoke ločljivosti, sodobnih spletnih animacij in segmentov pretakanja predstavnosti. Je ključni kazalnik za oceno najvišje meje pasovne širine strežnika in učinka pospeševanja omrežja za distribucijo vsebin (CDN) v okolju z visoko obremenitvijo omrežja)"
+
+msgid "mime_jscript"
+msgstr "Skript JScript (proprietarna implementacija reverznega inženiringa, ki jo je Microsoft razvil za Internet Explorer 3.0 leta 1996. Kot zgodnji konkurent gostitelja klasičnega JavaScripta je bil osrednji pogon okolja Windows Script Host (WSH) in zgodnjega zaledja ASP)"
+
+msgid "mime_json"
+msgstr "JSON strukturirani podatki (lahek format za izmenjavo serializacije podatkov, ki ga je leta 2001 vzpostavil Douglas Crockford. Temelji na besedilnih parih ključ-vrednost in arhitekturi polj, ima izjemno visoko berljivost za človeka in lastnost razčlenjevanja toka brez izgube. Je dejanski standard za sodobne spletne API-je, arhitekturo mikrostoritev in interakcijo z velikimi jezikovnimi modeli)"
+
+msgid "mime_vbs"
+msgstr "Skript VBScript (različica skriptnega jezika, ki jo je Microsoft izdal skupaj z IE 3.0 leta 1996. Nekoč je bil osrednji gonilo zgodnjih dinamičnih spletnih strani ASP in upravljanja sistema Windows, zdaj pa ga je Microsoft uradno opustil in odstranil iz najnovejšega jedra Windows 11. Spada med zgodovinsko podedovano tehnologijo)"
+
+msgid "mime_conf"
+msgstr "CONF sistemska konfiguracijska datoteka (splošna klasifikacija podatkovnih datotek, ki trajno shranjujejo parametre okolja izvajanja programske opreme v obliki navadnega besedila. Zajema specifikacije INI in sodobne YAML, TOML, JSON. V sistemih Linux so večinoma zbrane v imeniku /etc. Je ključna odvisnost za optimizacijo stanja izvajanja na sistemski ravni)"
+
+msgid "mime_css"
+msgstr "CSS kaskadne slogovne liste (standard W3C iz leta 1996, skupaj s HTML/JS tvori tri osrednje komponente sprednjega dela. Šel je skozi pozicioniranje CSS2 in modularni razvoj CSS3, izvorno podpira Flexbox, Grid in odzivno oblikovanje s poizvedbami medijev. Je absolutno prevladujoči standard za ločevanje predstavitve spletnih strani v sodobnih brskalnikih)"
+
+msgid "mime_xsl"
+msgstr "XSL slogovna lista (standard W3C iz leta 1999, vsebuje transformacijski jezik XSLT in jezik za naslavljanje XPath, uporablja se za pretvorbo strukturiranih podatkov XML v HTML, PDF ali navadno besedilo. V sodobnem razvoju je njegov ekosistem v veliki meri nadomestila lažja predlogovna pogona in format podatkov JSON)"
+
+msgid "mime_runtime"
+msgstr "Izvedljiva datoteka (izvorni formati izvajanja operacijskega sistema, kot so EXE, ELF, Mach-O, ki vsebujejo prevedeno nizkonivojsko strojno kodo, vstopno točko in informacije o nalaganju sistema)"
+
+msgid "mime_library"
+msgstr "Knjižnična datoteka (dinamične ali statične povezovalne knjižnice, kot so DLL, SO, dylib, ki vsebujejo skupne simbole in kodo za premestitev, ki jih lahko kličejo drugi programi in naložijo med izvajanjem)"
+
+msgid "mime_swf"
+msgstr "Flash animacija (razvila jo je Macromedia leta 1996, leta 2005 jo je prevzel Adobe. Interaktivni standard spletne animacije, nekoč je prevladoval v spletnih animacijah in igrah. Slabosti: odvisnost od vtičnikov, nepodpora mobilnim napravam, visoko varnostno tveganje. Adobe je leta 2017 napovedal opustitev, leta 2020 popolnoma ukinil podporo, nadomestili so ga HTML5/CSS3/JS)"
+
+msgid "mime_dtd"
+msgstr "DTD definicija vrste dokumenta (izdano skupaj z XML 1.0 leta 1998, uporablja se za določanje strukture dokumenta XML/HTML in preverjanje veljavnosti. V sodobnem razvoju so ga postopoma nadomestili bolj prilagodljive rešitve, kot sta XML Schema, RELAX NG)"
+
+msgid "mime_csv"
+msgstr "CSV format podatkov (vrednosti, ločene z vejicami, univerzalni format tabele z navadnim besedilom iz obdobja glavnih računalnikov leta 1972 (prevajalnik IBM Fortran). Uradno ga je leta 2005 standardiziral RFC 4180 kot medplatformni, medjezikovni standard za izmenjavo podatkov brez izgube. Široko se uporablja za učinkovit uvoz/izvoz v Excel, relacijske baze podatkov, analizo podatkov (Pandas).)"
+
+msgid "mime_cur"
+msgstr "Datoteka kazalca miške (format .cur, uporablja se za prilagajanje sloga miške, na primer kazalec prsta na spletnih straneh, ikona peščene ure čakanja v sistemu. Je 'sorodnik' običajne ikone .ico, vendar ima dodatno lokacijo 'vroče točke' – to je mesto, kamor miška dejansko klikne. Zgodovina: predstavljen z operacijskim sistemom Windows 3.1 (1992), je bil ključna komponenta prehoda grafičnega vmesnika iz ukazne vrstice v obdobje upravljanja z miško)"
+
+msgid "mime_jnlp"
+msgstr "Java Web Start (tehnologija distribucije namiznih aplikacij Java iz leta 2000, ki prek datotek .jnlp zažene oddaljene programe Java. Zaradi varnostnih težav in razširjenosti sodobnih načinov distribucije je danes v veliki meri opuščena)"
+
+msgid "mime_lit"
+msgstr "Microsoft Reader elektronska knjiga (Microsoft jo je izdal leta 2000, format LIT. Opuščena, zdaj jo je mogoče pretvoriti v EPUB ali PDF z orodji, kot je Calibre)"
+
+msgid "mime_svg"
+msgstr "SVG vektorska grafika (standard W3C iz leta 1999, dvodimenzionalni format vektorske slike, ki temelji na arhitekturi XML. Ima prednost poljubnega spreminjanja velikosti brez izgube ostrine in prenosa besedilnega toka. Vsi sodobni brskalniki ga podpirajo izvorno. Široko se uporablja za spletne ikone visoke ločljivosti, logotipe in upodabljanje vektorskih animacij. Je osrednji standard sodobne spletne grafike)"
+
+msgid "mime_ai"
+msgstr "AI vektorska grafika (proprietarni format vektorske grafike, ki ga je neodvisno razvil Adobe leta 1987. Kot ključni industrijski standard za tipografijo, oblikovanje tiska in oblikovanje identitete blagovne znamke podpira večplastne in visokonivojske podatke o postavitvi vektorjev. Je prednostni nosilec za profesionalno vizualno umetnost)"
+
+msgid "mime_phshop"
+msgstr "PSD slika s plastmi (proprietarni format izvorne datoteke rastrske slike, ki ga je Adobe izdal skupaj s Photoshopom leta 1990. Podpira večplastno plastenje, kanale, maske in podatke za urejanje brez izgube. Uveljavil se je kot svetovni industrijski standard za obdelavo slik in digitalno slikanje)"
+
+msgid "mime_ttf"
+msgstr "Pisava TrueType (digitalni format obrisne pisave, ki sta ga skupaj razvili Apple in Microsoft leta 1989. Temelji na kvadratnih Bézierjevih krivuljah in dosega absolutno ujemanje slikovnih pik med prikazom na zaslonu in izpisom na tiskalniku. Je izvorna privzeta oblika pisave sodobnih namiznih operacijskih sistemov)"
+
+msgid "mime_fon"
+msgstr "FON bitna pisava (zgodnji sistemski format točkovne matrične pisave Microsoft Windows iz osemdesetih let. Ne podpira poljubnega razmerja brez izgube. Običajno se uporablja s podedovanimi sistemi ali zgodnjimi komponentami vgrajenih naprav za omejeno upodabljanje pikselsko oblikovanega besedila)"
+
+msgid "mime_pdf"
+msgstr "PDF elektronski dokument (medplatformni format dokumenta s fiksno postavitvijo, ki ga je razvil Adobe leta 1993 in leta 2008 postal mednarodni standard ISO 32000. Ima absolutno zvestobo postavitve in formata. Je univerzalni standard za globalno distribucijo elektronskih uradnih dokumentov in digitalno založništvo)"
+
+msgid "mime_dotnet"
+msgstr "ASP.NET dinamična stran (strežniška dinamična spletna tehnologija, ki jo je Microsoft izdal skupaj z arhitekturo .NET leta 2002. Deluje na pogonu za upodabljanje IIS in se uporablja za izdelavo dinamičnih spletnih aplikacij na strani strežnika Windows na ravni podjetja in porazdeljenih sistemov)"
+
+msgid "mime_mdb"
+msgstr "MDB relacijska baza podatkov (format shranjevanja relacijske baze podatkov na ravni namizja, ki ga je Microsoft izdal skupaj z Accessom leta 1992. Z vgrajenim pogonom baze podatkov Jet se je uporabljal kot rešitev relacijske baze podatkov v zgodnjem upravljanju informatike osebnih računalnikov ter malih in srednjih podjetij)"
+
+msgid "mime_md"
+msgstr "Dokument Markdown (lahek označevalni jezik, ki ga je neodvisno ustvaril John Gruber leta 2004. Osrednja oblikovalska filozofija je 'berljivo pomeni upodobljivo', ki poganja sodobne izpeljane standarde, kot sta GFM in CommonMark. Široko se uporablja kot ključni standard izmenjave za tehnično dokumentacijo, baze znanja (Obsidian) in sodobne generatorje statičnih spletnih strani)"
+
+msgid "mime_crystal"
+msgstr "Crystal Reports (profesionalni format datoteke poročil na ravni podjetja platforme SAP Business Intelligence (BI). Ima nizkonivojsko povezavo z več viri podatkov in zapletene zmožnosti dinamičnega upodabljanja grafikonov, široko se uporablja za profesionalno generiranje poročil v finančnih sistemih in sistemih za analizo podatkov mednarodnih podjetij)"
+
+msgid "mime_libreoffice"
+msgstr "Dokument LibreOffice (proprietarni format pisarniškega paketa odprte kode, ki ga je leta 2010 zgradila organizacija The Document Foundation na podlagi razvejitve OpenOffice. Globoko izvaja mednarodni standard ODF (Open Document Format) W3C. Je pisarniška osnova sodobnega ekosistema odprte kode)"
+
+msgid "mime_encrypt"
+msgstr "ENCRYPT šifrirana datoteka (surovi binarni ali besedilni podatki, obdelani s posebnim simetričnim ali asimetričnim šifrirnim algoritmom. Vključuje osrednje izpeljane formate, kot so .enc, .pgp, .gpg. V omrežni plasti se uporablja za zagotavljanje zaupnosti in preverjanje celovitosti nejavnih podatkov)"
+
+msgid "mime_gpx"
+msgstr "GPX podatki satelitskih poti (format izmenjave globalnega pozicionirnega sistema, ki temelji na arhitekturi XML. Posebej se uporablja za opisovanje geografskih koordinat, točk poti, poti in zgodovinskih trajektorij. Je skupen odprti standard podatkov za sodobne mobilne športne naprave, avtomobilsko navigacijo in geografske informacijske sisteme (GIS))"
+
+msgid "mime_diskimage"
+msgstr "Disk Image slika diska (vključuje slikovne datoteke sektorjev nizke ravni bajt za bajtom fizičnih diskov ali optičnih medijev, kot so ISO, DMG, IMG. Uporablja se za nizkonivojsko uvajanje sistema, varno distribucijo programske opreme velike zmogljivosti in popolno varnostno kopiranje podatkov na fizični ravni pomnilniških medijev)"
+
+msgid "mime_vm"
+msgstr "VM slika navideznega računalnika (vključuje virtualizirane slike fizičnih diskov, kot so VMDK, VDI, VHDX, OVA. Kot osnova platform VMware, VirtualBox in Hyper-V se uporablja za nizkonivojsko emulacijo strojne opreme na sistemski ravni, posnetke primerkov in distribucijo infrastrukture v oblaku)"
+
+msgid "mime_torrent"
+msgstr "BitTorrent torrent datoteka (porazdeljeni indeks prenosa P2P, ki ga je zasnoval Bram Cohen leta 2001. Temelji na kodiranju Bencode, shranjuje nizkonivojske kontrolne metapodatke izvirne datoteke in informacije o naslavljanju strežnika Tracker. Je osrednji nosilec za distribucijo tokov v decentraliziranih omrežjih)"
+
+msgid "mime_gis"
+msgstr "GIS geoprostorski podatki (standard podatkov geografskega informacijskega sistema s Shapefile in GeoJSON kot jedrom. Vključuje večdimenzionalne geometrijske koordinate, topologijo plasti in atributne podatke. Široko se uporablja za upodabljanje digitalnih zemljevidov visoke natančnosti, satelitsko daljinsko zaznavanje in prostorsko geometrijsko analizo)"
+
+msgid "mime_ebook"
+msgstr "EBOOK elektronska knjiga (digitalni založniški format z odprtim mednarodnim standardom EPUB W3C in lastniško arhitekturo MOBI/AZW podjetja Amazon Kindle kot jedrom. Podpira prilagodljivo postavitev toka, zapiranje metapodatkov in zaščito digitalnih pravic DRM. Je univerzalni nosilec za digitalno branje na mobilnih napravah)"
+
+msgid "mime_avif"
+msgstr "AVIF učinkovita slika (standard slike ultra visoke ločljivosti naslednje generacije, ki ga je leta 2019 predstavilo združenje Open Media Alliance (AOMedia). Temelji na tehnologiji ključnih sličic kodiranja videa AV1, stopnja stiskanja je 50% boljša od WebP in izvorno podpira visok dinamični razpon (HDR). Je glavni standard za prenos sodobnih spletnih slik)"
+
+msgid "mime_markdown"
+msgstr "Markdown lahek dokument (jezik za označevanje besedilnih dokumentov, ki ga je neodvisno ustvaril John Gruber leta 2004. Uporablja deklarativno oblikovanje navadnega besedila, njegova oblika sintakse je navdihnjena z reStructuredText. Široko se uporablja za projekte GitHub, tehnično dokumentacijo na inženirski ravni in sodobni ekosistem upravljanja statičnih vsebin)"
+
+msgid "mime_yaml"
+msgstr "YAML konfiguracija serializacije (format serializacije podatkov, berljiv za človeka, ki so ga zasnovali Clark Evans in drugi leta 2001. Temelji na hierarhičnem zamikanju in preslikavi ključ-vrednost. Zdaj je uveljavljen kot standard konfiguracije infrastrukture, prilagojene oblaku, za orkestracijo zabojnikov Kubernetes, avtomatizacijo Ansible in Docker Compose)"
+
+msgid "mime_toml"
+msgstr "TOML semantična konfiguracija (minimalistični jezik, ki ga je zasnoval Tom Preston-Werner leta 2013. Ima nizkonivojske oblikovalske prednosti, kot so močno tipkanje, eksplicitno preslikavo in semantična jasnost. Zdaj se široko uporablja kot standardizirana konfiguracijska datoteka za sodobne verige orodij Rust (Cargo), Python (pyproject.toml) in Go)"
+
+msgid "mime_vue"
+msgstr "Vue komponenta z eno datoteko (lastniški format SFC progresivnega spletnega ogrodja, ki ga je predstavil Evan You leta 2014. V eni sami datoteki uresničuje ločevanje skrbi HTML/CSS/JS in reaktivno povezovanje stanja, pri čemer globoko poganja sodobne interaktivne sprednje aplikacije in velike motorje statičnih spletnih mest)"
+
+msgid "mime_wasm"
+msgstr "WebAssembly binarni modul (standard bajtne kode nizke ravni z visoko zmogljivostjo za splet, ki ga je leta 2017 vzpostavil W3C. Omogoča prevajanje močno tipkanih jezikov, kot so C/C++/Rust, v cilj peskovnika brskalnika, kar zagotavlja učinkovitost izvajanja, ki je blizu izvorni strojni opremi. Je temeljni kamen sodobnega računalništva na robu spleta)"
+
+msgid "mime_jsx"
+msgstr "React JSX komponenta (razširitev sintakse JavaScript XML, ki jo je Facebook izdal skupaj z ogrodjem React leta 2013. Podpira deklarativno gradnjo navidezne strukture DOM v JavaScriptu, kar uresničuje razvojno paradigmo sprednjega dela 'UI je funkcija stanja', ki temelji na komponentah)"
+
+msgid "mime_tsx"
+msgstr "TypeScript TSX komponenta (kombinacija toka močno tipkane sintakse TypeScript, ki ga je Microsoft razvil leta 2012, in JSX. V razvoj komponent React vbrizga statično preverjanje tipov med prevajanjem in omejitve vmesnikov. Je standard kode za varen razvoj sodobnih velikih sprednjih sistemov)"
+
+msgid "mime_heif"
+msgstr "HEIF učinkovita slika (format datoteke učinkovite slike, ki ga je leta 2015 vzpostavila organizacija MPEG. Temelji na algoritmu kodiranja videa HEVC (H.265), podpira namestitev več sličic, zemljevidov globine in metapodatkov v zelo majhnem obsegu. Je lastniški standard shranjevanja za sodobne mobilne operacijske sisteme in pametne terminalske naprave)"
+
+msgid "mime_heic"
+msgstr "HEIC učinkovita slika (lastniški bitni format podjetja Apple, implementiran na podlagi mednarodnega standarda HEIF. Kot privzeti standard shranjevanja fotografij sodobnih iPhonov prejema strojno kodiranje/dekodiranje na ravni iOS/macOS in izvorno podporo operacijskega sistema. Ob zagotavljanju visoke kakovosti slike dramatično zmanjša osnovni prostor za shranjevanje)"
+
+msgid "mime_gltf"
+msgstr "glTF 3D model sredstev (standard formata prenosa GL, ki ga je leta 2015 objavila skupina Khronos Group. Za opisovanje tridimenzionalnih prizorov uporablja arhitekturo JSON, znan je kot 'JPEG za področje 3D'. Je lahek industrijski standard za sodobno upodabljanje WebGL/WebGPU in navidezne resničnosti)"
+
+msgid "mime_glb"
+msgstr "GLB binarni 3D model (popolnoma binarna, brezizgubna zaprta različica modela sredstev glTF. Združuje strukturo prizora, nizkonivojske podatke oglišč mreže, materiale in teksturne karte v eno samo datoteko. Posebej zasnovan za učinkovit prenos in distribucijo toka medplatformnih spletnih 3D sredstev)"
+
+msgid "mime_gls"
+msgstr "GLOSSARY podatkovni glosar (datoteka za definiranje nabora terminologije, posebej namenjena sistemom za upravljanje dokumentov in strukturiranim korpusom. Vsebuje vgrajene standardne definicije izrazov, večjezična preslikave in preslikave metapodatkov. Uporablja se za vzdrževanje konceptualne skladnosti v sistemih za samodejno analizo besedila in objavljanje vsebin)"
+
+msgid "mime_cbz"
+msgstr "CBZ stripovska knjiga (lastniški format arhiviranja slik stripov, ki temelji na strukturi stiskanja ZIP. Notranje zapira neprekinjeno zaporedje statičnih bitnih slik. Je univerzalni lahki standard vsebnika za digitalno založništvo stripov in medplatformno lokalno zbiranje)"
+
+msgid "mime_cbr"
+msgstr "CBR stripovska knjiga (lastniški format arhiviranja slik stripov, ki temelji na strukturi stiskanja RAR. Za zapiranje zaporedij statičnih bitnih slik uporablja algoritem RAR, ima razmeroma visoko stopnjo stiskanja, ima široko podporo združljivosti na področju distribucije digitalnih stripov)"
+
+msgid "mime_fb2"
+msgstr "FB2 elektronska knjiga (standard elektronske knjige FictionBook 2.0 iz zgodnjih 2000-ih. Za opisovanje atributov knjige in besedilne hierarhije uporablja čisto strukturo XML. Ima široko podporo v ekosistemu elektronskih knjig odprte kode in v podedovanih bralnikih digitalnih publikacij)"
+
+msgid "mime_kepub"
+msgstr "KEPUB elektronska knjiga (lastniški izboljšani format elektronske knjige Kobo, ki se je razvil iz standarda EPUB. Izvaja nizkonivojsko optimizacijo upodabljanja za bralnike elektronskih knjig Kobo na ravni strojne opreme, kar zagotavlja učinkovitejšo postavitev strani in interakcijo s statistikami branja)"
+
+msgid "mime_m4b"
+msgstr "M4B zvočna knjiga (format zvočne knjige, ki temelji na arhitekturi vsebnika MPEG-4 Part 14 (MP4). Uporablja kodiranje AAC, izvorno podpira nizkonivojsko določanje zaznamkov, nadaljevanje predvajanja od točke prekinitve in vdelavo poglavij. Nekoč je bil standardni format ekosistema Apple iTunes)"
+
+msgid "mime_kfx"
+msgstr "Kindle KFX format (lastniški izboljšani format digitalnega založništva, ki ga je Amazon izdal skupaj s Kindlom leta 2015. Podpira napredno postavitev ligatur, upodabljanje pisav z visoko dinamiko in nalaganje strani v toku na ravni jedra (Page Flip). Je osrednji standard sodobne platforme Kindle)"
+
+msgid "mime_chm"
+msgstr "CHM prevedena datoteka pomoči (preveden sistem informacijske pomoči HTML, ki ga je Microsoft izdal leta 1997. Zapakira hiperbesedilne podatke in osnovno kazalo v en sam binarni vsebnik. Dolgo časa je bil standardni format lokalne nespletne dokumentacije pomoči za programsko opremo Windows)"
+
+msgid "mime_mht"
+msgstr "MHT spletni arhiv (agregirani hiperbesedilni format MIME, ki ga je Microsoft izdal leta 1999. Na podlagi standarda RFC 2557 zapira izvorno kodo HTML, CSS, JS in vdelane slike v eno samo besedilno datoteko. Uporablja se za nespletno shranjevanje spletnih strani v podedovanih brskalnikih)"
+
+msgid "mime_wml"
+msgstr "WML brezžični označevalni jezik (mobilni standard označevanja, ki ga je leta 1999 vzpostavil forum WAP (Wireless Application Protocol). Temelji na specifikaciji XML, posebej zasnovan za zgodnja ozkopasovna brezžična celična omrežja in funkcijske telefone z nizko zmogljivostjo. V sodobnem spletnem ekosistemu spada med upokojeno podedovano tehnologijo)"
+
+msgid "mime_xhtml"
+msgstr "XHTML hiperbesedilna spletna stran (standard W3C iz leta 2000, zapiranje strogega hiperbesedilnega označevalnega jezika, ki temelji na arhitekturi XML. Leta 2009 je W3C ustavil njegov tehnološki razvoj in v celoti prešel na specifikacijo HTML5. Zdaj se večinoma uporablja za semantično upodabljanje spletnih strani v podedovanih sistemih)"
+
+msgid "mime_xml"
+msgstr "XML strukturirani dokument (razširljivi označevalni jezik iz standarda W3C iz leta 1998. Ima samoopisno arhitekturo oznak. Je temeljni format za spletne storitve v omrežju (SOAP/REST), sistemske konfiguracijske datoteke (XSD) in medplatformno izmenjavo podatkov)"
+
+msgid "mime_sgml"
+msgstr "SGML splošni označevalni jezik (mednarodni standard ISO 8879 iz leta 1986 za standardni splošni označevalni jezik. Kot industrijski pionir strukturiranega opisa elektronskih dokumentov izhajata tako XML kot zgodnji specifikaciji HTML iz tega standardnega metajezika)"
+
+msgid "mime_apng"
+msgstr "APNG dinamična grafika (dinamična razširitev prenosne omrežne grafike (PNG), ki jo je razvil Mozilla leta 2004. Podpira 24-bitne prave barve in 8-bitno polprosojnost kanala alfa. Je visokoločljivostna alternativa formatu GIF v sodobnih spletnih scenarijih)"
+
+msgid "mime_bmp"
+msgstr "BMP izvorna bitna slika (format bitne slike, neodvisen od naprave, platforme Microsoft, vzpostavljen že v obdobju Windows 1.0. Uporablja shranjevanje brez izgube in brez stiskanja, čeprav je njegova velikost običajno 3- do 10-krat večja od PNG, se zaradi odsotnosti stroškov kodiranja/dekodiranja še danes pogosto uporablja v osrednjih komponentah Windows 11, segmentih virov EXE/MSI in grafičnih medpomnilnikih podedovanih gonilnikov)"
+
+msgid "mime_cdr"
+msgstr "CDR vektorska grafika (lastniški format izvorne datoteke profesionalnega vektorskega oblikovanja CorelDRAW kanadskega podjetja Corel. Podpira večplastno upravljanje barv, zapletene matematične vozle obrisov in podatke o postavitvi na ravni tiska. Je specializiran format za profesionalno ravninsko tiskanje in oblikovanje reklam)"
+
+msgid "mime_gif"
+msgstr "GIF slika z indeksiranimi barvami (8-bitni format bitne slike z indeksiranimi barvami, ki ga je razvilo podjetje CompuServe leta 1987. Temelji na algoritmu LZW, omejen na 256 barvnih ravni in enobarvno prosojnost, pri visoki hitrosti sličic postane obsežen. Zdaj ga postopoma nadomeščajo sodobni visoko učinkoviti standardi dinamičnih slik, kot sta APNG in WebP)"
+
+msgid "mime_ico"
+msgstr "ICO sistemska ikona (izvorni format zapiranja virov ikon Windows. Podpira mešano vgrajevanje različic slik z več ločljivostmi slikovnih pik in barvnimi globinami v en sam vsebnik. Je tudi univerzalni distribucijski standard za osrednji identifikator spletnega mesta sodobnih spletnih brskalnikov (Favicon))"
+
+msgid "mime_jpeg"
+msgstr "JPEG stisnjena slika (format slike s stiskanjem z izgubo mednarodnega standarda ISO 10918 iz leta 1992. Temelji na algoritmu diskretne kosinusne transformacije (DCT), dosega visoko stopnjo stiskanja ob ohranjanju odlične realistične kakovosti slike. Je absolutni dejanski standard za statično fotografijo na svetovnem internetu)"
+
+msgid "mime_jpg"
+msgstr "JPEG stisnjena slika (format slike s stiskanjem z izgubo mednarodnega standarda ISO 10918 iz leta 1992. Temelji na algoritmu diskretne kosinusne transformacije (DCT), dosega visoko stopnjo stiskanja ob ohranjanju odlične realistične kakovosti slike. Je absolutni dejanski standard za statično fotografijo na svetovnem internetu)"
+
+msgid "mime_png"
+msgstr "PNG slika brez izgube (standard prenosne omrežne grafike, ki ga je leta 1996 priporočil W3C. Uporablja algoritem stiskanja brez izgube, izvorno podpira 24-bitne prave barve in 8-bitno prosojnost kanala alfa. Kot visokoločljivostna alternativa klasični statični GIF je absolutni dejanski standard za slikovne pike brez izgube na internetu)"
+
+msgid "mime_ps"
+msgstr "PostScript datoteka opisa strani (jezik opisa strani, ki temelji na skladu, ki ga je Adobe predstavil leta 1985. Kot tehnološki predhodnik formata PDF na nizki ravni uresničuje tipografijo, neodvisno od strojne opreme, in visoko natančno upodabljanje vektorske grafike. Je temeljni standard za profesionalno tiskarsko založništvo in lasersko tiskanje)"
+
+msgid "mime_psb"
+msgstr "PSB dokument z velikimi plastmi (lastniški format zapiranja zelo velikih izvornih datotek Adobe Photoshop. Premaga fizično velikost 2 GB in notranje omejitve naslavljanja 30.000 slikovnih pik standardnega formata PSD. Posebej zasnovan za shranjevanje zelo velikih, visoko plastnih digitalnih umetniških sredstev)"
+
+msgid "mime_psd"
+msgstr "PSD izvorna datoteka načrtovanja plasti (lastniški format inženiringa večplastne slike Adobe Photoshop. Kot industrijski standardni vsebnik na področju grafike in slik izvorno zapira celotno drevo upodabljanja plasti, bitne kanale, vektorske poti izrezovanja in sestavljene načine mešanja, kar podpira urejanje vseh podatkov brez izgube)"
+
+msgid "mime_webp"
+msgstr "WebP učinkovita slika (univerzalni standard kodiranja spletne grafike, ki ga je Google predstavil leta 2010. Izvira iz tehnologije ključnih sličic videa VP8, popolnoma združljiv z upodabljanjem z izgubo, brez izgube, polprosojno in dinamično. V primerjavi s PNG enake kakovosti zmanjša velikost za 25-35%. Je temeljni kamen za visoko zmogljivo nalaganje sodobnih spletnih strani)"
+
+msgid "mime_woff"
+msgstr "WOFF spletna datoteka glifov (odprti format spletnih pisav, ustvarjen leta 2009 in postal standard W3C leta 2012. V bistvu gre za brezizgubno zapiranje stiskanja toka standardnih struktur pisav TTF/OTF, kar znatno optimizira stroške pasovne širine omrežnega prenosa. Je univerzalni format za ikone sodobnih spletnih mest in pisave v oblaku)"
+
+msgid "mime_7z"
+msgstr "7z stisnjen arhiv (lastniški format 7-Zip, ki ga je razvil Igor Pavlov leta 1999. Temelji na odprtokodnih algoritmih LZMA/LZMA2, ima izjemno visoko stopnjo stiskanja. V enakih pogojih je njegova velikost običajno 30-50% manjša od ZIP. Je univerzalni format visokega razmerja stiskanja za skupnost odprte kode in distribucijo programske opreme)"
+
+msgid "mime_ace"
+msgstr "ACE stisnjen arhiv (lastniški format stiskanja WinACE iz 1990-ih. Nekoč je tekmoval z obliko RAR in imel razmeroma visoko stopnjo stiskanja. Po letu 2007 se je tehnološki razvoj ustavil, zdaj so ga nadomestili formati 7z in RAR. Spada med formate arhiviranja podedovanih sistemov)"
+
+msgid "mime_bz2"
+msgstr "BZIP2 stisnjen arhiv (format stiskanja z razvrščanjem blokov, ki ga je razvil Julian Seward leta 1996. Njegov osnovni algoritem ima stopnjo stiskanja 15-20% višjo od GZIP, vendar z večjimi računskimi stroški. Pogosto se uporablja za distribucijo izvorne kode jedra Linux in paketov programske opreme odprte kode. Standardna pripona je .bz2)"
+
+msgid "mime_cab"
+msgstr "CAB stisnjen arhiv (format arhiviranja Cabinet, ki ga je Microsoft neodvisno razvil leta 1995. Kot izvorni standard namestitvenega paketa sistema Windows se uporablja za distribucijo gonilnikov in datotek jedra. Je tudi osnovni pomnilniški vsebnik za namestitveni program Windows (MSI))"
+
+msgid "mime_dmg"
+msgstr "DMG slika diska (format slike diska, ki ga je razvil Apple v 1980-ih. Kot standardni vsebnik za distribucijo programske opreme macOS podpira fizično priklop kot navidezni datotečni sistem, nizkonivojsko stiskanje in šifriranje podatkov. Je glavni format distribucije aplikacij v ekosistemu Mac)"
+
+msgid "mime_emz"
+msgstr "EMZ stisnjena slika (stisnjena različica izboljšane metadatoteke Windows EMF. V bistvu gre za binarno vektorsko grafiko, stisnjeno z algoritmom GZIP. Široko se uporablja za shranjevanje vdelane vektorske grafike v dokumentih paketa Microsoft Office)"
+
+msgid "mime_gz"
+msgstr "GZIP stisnjen arhiv (standardni format stiskanja toka, ki sta ga razvila Jean-loup Gailly in Mark Adler iz projekta GNU leta 1992. Kot standardno orodje za stiskanje Unix/Linux je tudi osrednji standard za stiskanje transportne plasti HTTP (Gzip). Pogosto se uporablja skupaj z arhiviranjem TAR)"
+
+msgid "mime_jar"
+msgstr "JAR stisnjen arhiv (format arhiviranja Java ARchive, ki ga je predstavilo podjetje Sun Microsystems leta 1997. V bistvu gre za pakirni vsebnik, ki temelji na strukturi ZIP, in se uporablja za zapiranje knjižnic razredov Java in metapodatkov. Je osrednji produkt prevajanja za Maven, Gradle in zgodnji ekosistem Android)"
+
+msgid "mime_lzma"
+msgstr "LZMA stisnjen arhiv (algoritem stiskanja verige Lempel-Ziv-Markov, ki ga je razvil Igor Pavlov leta 1998. Kot osrednji pogon formata 7z ima izjemno visoko stopnjo stiskanja in hitro dekompresijo. Široko se uporablja za distribucijo strojne programske opreme in vgrajenih sistemov)"
+
+msgid "mime_rar"
+msgstr "RAR stisnjen arhiv (lastniški arhivski format WinRAR, ki ga je razvil Eugene Roshal leta 1993. Podpira razdelitev na zvezke, fizične zapise za obnovitev (ECC) in šifriranje visoke trdnosti. Stopnja stiskanja je boljša od standardnega ZIP, ima široko podporo združljivosti v osebnih računalnikih in komercialnem sektorju)"
+
+msgid "mime_tar"
+msgstr "TAR arhivski paket (format arhiviranja na trak iz obdobja Unix V7 leta 1979. Izvaja samo pakiranje toka datotek brez stiskanja podatkov. Pogosto se kombinira z GZIP/BZIP2/XZ, je osnovni standard za pakete izvorne kode Linux in plastovno shranjevanje slik Docker)"
+
+msgid "mime_tgz"
+msgstr "TGZ stisnjen arhiv (kombinirani format toka arhiviranja TAR in stiskanja GZIP, pripone .tgz ali .tar.gz. Kot najbolj univerzalni format distribucije paketov programske opreme v okolju Unix/Linux se široko uporablja za uvajanje s prevajanjem izvorne kode in distribucijo binarnih paketov brez namestitve)"
+
+msgid "mime_tbz2"
+msgstr "TBZ2 stisnjen arhiv (kombinirani format toka arhiviranja TAR in stiskanja BZIP2, pripone .tbz2 ali .tar.bz2. V primerjavi s TGZ lahko dodatno poveča stopnjo stiskanja za 15-20%, primeren za prenos velikih datotek, dolgo se je uporabljal za distribucijo izvorne kode jedra Linux)"
+
+msgid "mime_xz"
+msgstr "XZ stisnjen arhiv (format visokega razmerja stiskanja naslednje generacije, predstavljen leta 2009. Temelji na algoritmu LZMA2, stopnja stiskanja podatkov je 30-50% višja od GZIP, hkrati pa ohranja hitro dekompresijo. Jedro Linux in glavni upravljavci paketov (kot je znotraj Debian .deb) so ga vzpostavili kot priporočeni distribucijski standard)"
+
+msgid "mime_z"
+msgstr "Z stisnjen arhiv (LZW format stiskanja ukaza Unix compress iz leta 1985. Kot zgodnji standard stiskanja sistemov Unix so ga zdaj v celoti nadomestili z učinkovitejšim formatom GZIP. V sodobnem omrežnem prometu je redek zgodovinski podedovani format)"
+
+msgid "mime_zip"
+msgstr "ZIP stisnjen arhiv (univerzalni arhivski format PKZIP, ki ga je razvil Phil Katz leta 1989. Ima izvorno podporo glavnih operacijskih sistemov. Je najbolj razširjen standard vsebnika na internetu. Sodobni JAR Jave, APK Androida in dokumenti Office (OOXML) temeljijo na strukturi ZIP)"
+
+msgid "mime_zst"
+msgstr "Zstandard stisnjen arhiv (standard stiskanja toka nove generacije, ki ga je zasnoval Yann Collet iz Facebooka leta 2015. Približuje se stopnji stiskanja LZMA, hkrati pa ima veliko večjo prepustnost kot GZIP. Sprejelo ga je jedro Linux (5.9+) in upravljavca paketov Arch/Debian)"
+
+msgid "mime_lz4"
+msgstr "LZ4 stisnjen arhiv (izjemno hiter algoritem stiskanja toka, ki ga je razvil Yann Collet leta 2011. Hitrost prepustnosti je več kot 10-krat hitrejša od GZIP, z izjemno nizkimi stroški procesorskega časa med izvajanjem. Široko se uporablja v jedru Linux, datotečnem sistemu OpenZFS in obdelavi podatkovnih tokov v realnem času Hadoop)"
+
+msgid "mime_lzo"
+msgstr "LZO stisnjen arhiv (algoritem Lempel-Ziv-Oberhumer, ki ga je razvil Markus Oberhumer leta 1996. Osredotoča se na izjemno hitro delovanje dekompresije. Široko je vgrajen v slike Squashfs jedra Linux, vdelano programsko opremo OpenWrt in različne vgrajene sisteme z omejenimi viri)"
+
+msgid "mime_msi"
+msgstr "MSI sistemski namestitveni paket (format zapiranja podatkov namestitvenega programa Windows, ki ga je Microsoft predstavil leta 1999. Kot standardna specifikacija uvajanja aplikacij Windows izvorno podpira nizkonivojsko vračanje transakcij, upravljanje življenjskega cikla komponent in tiho namestitev brez paketne obdelave. Je osrednji standard za centralizirano distribucijo programske opreme na ravni podjetja in uvajanje pravilnikov)"
+
+msgid "mime_pkg"
+msgstr "PKG medplatformni namestitveni paket programske opreme. 1. Paket programske opreme FreeBSD: standard pkgng, pripona .pkg ali .txz, temelji na stiskanju TAR+XZ/Zstd, podpira razreševanje odvisnosti in preverjanje podpisov; 2. Namestitveni paket macOS: temelji na formatu namestitvenega programa Apple, podpira prilagojene komponente, namestitvene skripte in odstranitev na sistemski ravni. So glavni distribucijski nosilci za strežnike BSD in sisteme Mac."
+
+msgid "mime_apk"
+msgstr "APK paket aplikacij Android (tradicionalni namestitveni paket aplikacij, ki ga je Google izdal skupaj z Androidom leta 2008. Temelji na strukturi arhiva ZIP, pakira prevedeno Dalivkovo bajtno kodo (DEX), manifest metapodatkov in globalne vire. Zdaj se pogosto uporablja za lokalno razhroščevanje razvoja, distribucijo tretjih oseb in namestitev s stranskim nalaganjem na naprave)"
+
+msgid "mime_ipa"
+msgstr "IPA paket aplikacij Apple (ekskluzivni pakirni vsebnik za iOS/iPadOS, izdan skupaj z iPhone SDK leta 2008. V bistvu gre za arhiv ZIP, zaščiten z DRM FairPlay ali podpisom kode na ravni podjetja, ki vsebuje binarno izvedljivo datoteko Mach-O, drevo virov aplikacije in konfiguracijo metapodatkov Info.plist)"
+
+msgid "mime_hap"
+msgstr "HAP paket aplikacij HarmonyOS (osnovna enota elastičnega uvajanja HarmonyOS, izdana skupaj s HarmonyOS 2.0 leta 2020. Sestavljajo jo glavni modul Entry ali funkcijski moduli razširitve Feature. Je osrednji večkončni format uvajanja za distribucijo pametnih terminalov v večkončnih scenarijih (telefoni, tablice, nosljive naprave))"
+
+msgid "mime_har"
+msgstr "HAR statični deljeni paket HarmonyOS (lastniška arhivska datoteka statične deljene knjižnice HarmonyOS. Uporablja se za zapiranje skupnih komponent, nizkonivojske izvorne kode in odvisnosti med prevajanjem, ki jih statično poveže in deli več modulov HAP. Je osrednja osnova za razvoj na podlagi komponent in večkratno uporabo več modulov sistema HarmonyOS)"
+
+msgid "mime_aab"
+msgstr "AAB paket aplikacij Android (dinamični distribucijski format Google Play, ki ga je Google predstavil leta 2018 in vzpostavil leta 2021. Kot čista distribucijska entiteta ga oblak dinamično odreže in prevede glede na arhitekturo CPE, gostoto zaslona in jezik ciljne naprave ter po potrebi ustvari optimizirane APK-je. Povprečno zmanjša stroške pasovne širine prenosa za 35%)"
+
+msgid "mime_xapk"
+msgstr "XAPK razširjeni paket aplikacij (neuradni standard razširitve aplikacij, ki ga je vzpostavila skupnost tretjih oseb Android. S skupnim zapiranjem standardne datoteke APK in zelo velikega razširitvenega paketa podatkov iger OBB fizično premaga omejitev velikosti posamezne datoteke 100 MB storitve Google Play. Široko se pojavlja na platformah za distribucijo iger)"
+
+msgid "mime_appx"
+msgstr "APPX sodobni paket aplikacij (specifikacija uvajanja aplikacij UWP, ki jo je Microsoft izdal skupaj z operacijskim sistemom Windows 8 leta 2012. Ima izolirano izvajanje v peskovniku in možnost lažjega odstranjevanja. Kot zgodnji prevladujoči standard trgovine Microsoft Store je v sodobnem ekosistemu Windows vstopil v zadnjo fazo življenjskega cikla, ki se razvija v MSIX)"
+
+msgid "mime_msix"
+msgstr "MSIX paket aplikacij nove generacije (popolnoma nova standardizirana specifikacija pakiranja za Windows, ki jo je Microsoft izdal leta 2018. Popolnoma združuje funkcije varnostnega peskovnika aplikacij APPX s prednostmi upravljanja sredstev na ravni podjetja MSI. Popolnoma združljiv z vsemi vrstami aplikacij Win32. Je priporočeni distribucijski standard za Windows 11)"
+
+msgid "mime_appimage"
+msgstr "AppImage paket aplikacij brez namestitve (specifikacija enega samega izvedljivega arhiva za Linux, začeta leta 2004. Uporablja samozadostno arhitekturo 'ena aplikacija je ena datoteka'. Med izvajanjem se neposredno priklopi prek mehanizma FUSE kot navidezni datotečni sistem samo za branje za izvedbo, kar omogoča takojšnjo uporabo brez odvisnosti v vseh distribucijah Linuxa)"
+
+msgid "mime_flatpak"
+msgstr "Flatpak paket aplikacij v peskovniku (standard distribucije namiznih aplikacij med distribucijami Linuxa, ki sta ga vodila Red Hat in GNOME leta 2015. Na nizki ravni se opira na mehanizma Namespace in Cgroups jedra Linux za doseganje izjemno stroge izolacije varnostnega peskovnika na ravni aplikacij. Je osnova sodobnih centrov programske opreme OS odprte kode)"
+
+msgid "mime_snap"
+msgstr "Snap kontainerizirani paket aplikacij (univerzalni standard uvajanja za Linux, ki ga je leta 2014 predstavilo podjetje Canonical, matično podjetje Ubuntuja. Uporablja samozadostno arhitekturo prikopa slike SquashFS, podpira samodejne postopne posodobitve in strogo izolacijo peskovnika AppArmor. Je osrednji privzeti format ekosistema centra programske opreme Ubuntu)"
+
+msgid "mime_deb"
+msgstr "DEB sistemski paket programske opreme (specifikacija zapiranja binarnih in izvornih kod, ki jo je leta 1993 vzpostavil projekt Debian. Kot osnovni namestitveni standard za Debian, Ubuntu in vse njihove izpeljane sisteme se opira na jedro dpkg za razpakiranje in vzdrževanje, pri čemer uporablja APT kot učinkovito čelno stran upravljavca paketov. Je najbolj zrela osnova distribucije programske opreme v ekosistemu Linux)"
+
+msgid "mime_rpm"
+msgstr "RPM sistemski paket programske opreme (specifikacija zapiranja upravljavca paketov Red Hat, ki jo je leta 1997 predstavilo podjetje Red Hat. Skupaj z DEB velja za enega od dveh glavnih taborov tradicionalnega upravljanja paketov Linuxa. Ima vgrajeno preverjanje odvisnosti na ravni transakcij in osnovno preverjanje digitalnih podpisov programske opreme. Še danes je absolutni glavni distribucijski standard za ekosisteme družine Red Hat, kot so RHEL, Fedora in CentOS)"
+
+msgid "mime_pacman"
+msgstr "Pacman arhivirani paket programske opreme (format zapiranja .pkg.tar.zst, ki ga je Arch Linux vzpostavil skupaj z upravljavcem pacman leta 2002. Kot jedro mehanizma tekočih posodobitev Archa temelji na visokohitrostnem visokokompresijskem algoritmu Zstandard, skupaj z ekosistemom AUR (skladišče programske opreme uporabnikov Arch). Je sodoben standard distribucije paketov, ki uteleša minimalistična načela in načelo KISS)"
+
+msgid "mime_exe"
+msgstr "EXE izvorni izvedljivi program (format binarnega programa Portable Executable (PE) platforme Windows. Tehnološko izhaja iz strukture glave MZ iz obdobja MS-DOS in je od leta 1993 Windows NT v celoti vzpostavljen kot specifikacija strukture PE. Je najbolj razširjen standard izvajanja na svetu za strojne kode, segmente statičnih virov in zagon jedra sistema)"
+
+msgid "mime_dll"
+msgstr "DLL dinamična povezovalna knjižnica (specifikacija knjižnice skupne kode Dynamic Link Library platforme Windows. Z dinamičnim nalaganjem in premestitvijo simbolov med izvajanjem znatno prihrani fizični pomnilnik in prostor na disku. Kot osrednja oblika izvajanja Windows API je bila njena zgodnja težava 'DLL pekel' v sodobnem času odpravljena z mehanizmom vzporedne izolacije SxS)"
+
+msgid "mime_com"
+msgstr "COM klasični izvedljivi program (najstarejši format izvajanja slike pomnilnika (Command) iz obdobja MS-DOS. Uporablja nestrukturirano oblikovanje čistega segmenta kode, omejeno na zgornjo mejo segmenta naslavljanja fizičnega pomnilnika 64 KB. Zdaj je upokojen kot zgodovinski podedovani format, vendar se v sodobni arhitekturi Windows še vedno uporablja kot določen vmesnik komponent za omejeno združljivost)"
+
+msgid "mime_aac"
+msgstr "AAC avdio (MPEG standard 1997, Advanced Audio Coding. Naslednik MP3, kakovost zvoka je boljša od MP3 pri enaki bitni hitrosti, privzeti avdio format za YouTube, iTunes, Nintendo Switch)"
+
+msgid "mime_alac"
+msgstr "ALAC avdio (Apple ga je razvil leta 2004, Apple Lossless Audio Codec. Apple brezizgubni format, postal odprtokoden leta 2011, privzeti format za brezžični avdio v iTunes in Apple Music)"
+
+msgid "mime_flac"
+msgstr "FLAC avdio (razvila Xiph.Org fundacija leta 2001, Free Lossless Audio Codec. Brezizgubno stiskanje, kakovost zvoka je enaka kot na CD, datoteka je približno polovica manjša od originalnega WAV. Odprtokoden in brez patenta, prva izbira za ljubitelje zvoka in zbiratelje digitalne glasbe)"
+
+msgid "mime_mp3"
+msgstr "MP3 avdio (razvil Fraunhofer inštitut leta 1993, MPEG-1 Audio Layer 3. Format stiskanja z izgubo, majhne datoteke s spodobno kakovostjo zvoka, bil je osnovni format digitalne glasbene revolucije v 2000-ih, zaslužen za iPod in Napster. Patent je potekel leta 2017, postal je javno dobro)"
+
+msgid "mime_oga"
+msgstr "Ogg Audio avdio (razvila Xiph.Org fundacija, čisti avdio format Ogg vsebnika, uporablja Vorbis kodek. Odprtokoden in brez patenta, učinkovitost stiskanja je boljša od MP3, široko se uporablja v odprtokodnih projektih)"
+
+msgid "mime_ogg"
+msgstr "OGG avdio (razvila Xiph.Org fundacija leta 2000, Ogg Vorbis format. Odprtokoden in brez patenta, učinkovitost stiskanja je boljša od MP3, zgodaj ga je uporabljal Spotify, široko se uporablja v zvočnih učinkih za igre)"
+
+msgid "mime_opus"
+msgstr "Opus avdio (IETF standardiziran leta 2012, odprtokoden in brez patenta. Kombinira SILK in CELT tehnologiji, izjemno nizka zakasnitev, največja učinkovitost stiskanja, privzeti avdio format za WebRTC, WhatsApp, Discord)"
+
+msgid "mime_wav"
+msgstr "WAV avdio (razvila Microsoft in IBM leta 1991, Windows izvorni avdio format. PCM kodiranje brez stiskanja, brezhibna kakovost, vendar so datoteke ogromne, standardni format za profesionalno avdio montažo)"
+
+msgid "mime_wma"
+msgstr "WMA avdio (Microsoft ga je razvil leta 1999, Windows Media Audio. Ima različici z izgubo in brez izgube, Windows izvorno podpira, postal je priljubljen z Windows Media Player. Danes je na robu, zamenjala sta ga MP3/AAC)"
+
+msgid "mime_dsf"
+msgstr "DSF avdio (Direct Stream Digital format, razvila sta ga Sony in Philips. 1-bit visoka hitrost vzorčenja, standardni format DSD avdio, digitalna različica SACD, vrhunski avdio format za ljubitelje zvoka, ogromne datoteke)"
+
+msgid "mime_ape"
+msgstr "APE Avdio (razvil Monkey's Audio leta 2000, format stiskanja brez izgub. Višje stiskanje kot FLAC, vendar počasnejše kodiranje, še vedno v uporabi na platformi Windows in med avdio navdušenci)"
+
+msgid "mime_mid"
+msgstr "MIDI avdio (MIDI združenje je vzpostavilo standard leta 1983, Musical Instrument Digital Interface. Format notnega zapisa, ne posnetka, izjemno majhne datoteke, standard za elektronske glasbene instrumente, melodije mobilnih telefonov, zvočne učinke v igrah. General MIDI je bil standardiziran leta 1991, definira 128 instrumentov)"
+
+msgid "mime_m4a"
+msgstr "M4A avdio (MPEG-4 Audio, vsebniški format za AAC. Standardni format za iTunes Music Store, glavni avdio format v Apple ekosistemu, podpira DRM zaščito)"
+
+msgid "mime_m3u"
+msgstr "M3U predvajalni seznam (seznam za predvajanje MP3 URL, običajna besedilna datoteka, beleži poti avdio datotek. Standard iz ere Winamp, uporablja se za internetni radio, spletno pretakanje glasbe. M3U8 je njegova UTF-8 različica, uporablja se za HTTP Live Streaming)"
+
+msgid "mime_asf"
+msgstr "ASF pretakanje medijev (Microsoft ga je razvil leta 1996, Advanced Systems Format. Windows Media pretakalni vsebnik, podpira sinhroniziran prenos avdio in video zapisov. Uporablja se za spletni prenos v živo in pretakanje videa na zahtevo, WMA/WMV temeljijo na ASF vsebniku)"
+
+msgid "mime_avi"
+msgstr "AVI video (Microsoft ga je predstavil leta 1992, zgodnji Windows video standard. 'Audio Video Interleave', avdio in video zapis sta prepletena, bil je najbolj priljubljen video format v 1990-ih in 2000-ih, danes ga je zamenjal MP4/MKV)"
+
+msgid "mime_divx"
+msgstr "DivX video (razvila DivX družba leta 1998, video kodek na podlagi MPEG-4. Bil je glavni format za deljenje video posnetkov na internetu v 2000-ih, prvič je omogočil stiskanje DVD kakovosti na velikost CD. Zaradi avtorskih sporov se je pozneje preoblikoval v komercialni kodek)"
+
+msgid "mime_mp4"
+msgstr "MP4 video (MPEG standard 2001, MPEG-4 Part 14. Najbolj univerzalni video format na svetu, podpira H.264/H.265 kodiranje, privzeti format za spletni video, snemanje z mobilnim telefonom, YouTube)"
+
+msgid "mime_m4v"
+msgstr "M4V video (iTunes video format, različica MP4. Video format v Apple ekosistemu, standardni format za filme in TV serije v iTunes Store, podpira DRM zaščito avtorskih pravic)"
+
+msgid "mime_mpeg"
+msgstr "MPEG video (MPEG organizacija je vzpostavila standard leta 1988, Moving Picture Experts Group. Temeljni standardi za stiskanje digitalnega videa, MPEG-1 (VCD), MPEG-2 (DVD), MPEG-4 (spletni video) so imeli globok vpliv)"
+
+msgid "mime_mkv"
+msgstr "MKV video (razvil Matroska projekt leta 2002, odprtokodni večpredstavnostni vsebniški format. Podpira več avdio posnetkov, več podnapisov, poglavja, 'sposoben pakirati vse', prva izbira za deljenje filmov visoke ločljivosti)"
+
+msgid "mime_mpg"
+msgstr "MPEG video (končnica za MPEG-1/MPEG-2 video, standardni format za VCD in DVD. Bil je glavni format za video na CD-jih v 1990-ih in 2000-ih, danes ga je zamenjala H.264/H.265)"
+
+msgid "mime_ogv"
+msgstr "Ogg Video video (razvila Xiph.Org fundacija, video format Ogg vsebnika, uporablja Theora kodek. Odprtokoden in brez patenta, bil je eden od zgodnjih standardov za HTML5 video, Firefox ga izvorno podpira)"
+
+msgid "mime_ogx"
+msgstr "Ogg večpredstavnostni vsebnik (razvila Xiph.Org fundacija, univerzalna razširitev Ogg vsebnika, lahko vsebuje več posnetkov, kot so avdio, video, podnapisi. Odprtokodni večpredstavnostni standard, uporablja se v igrah in pretakanju medijev)"
+
+msgid "mime_rm"
+msgstr "RealMedia video (RealNetworks ga je razvil leta 1995, RealMedia format. Bil je pionir pretakanja medijev na internetu v 1990-ih in 2000-ih, osnovni format RealPlayer. Pomanjkljivosti: potreben je specializiran predvajalnik, slaba kakovost stiskanja, zamenjala sta ga Flash/MP4)"
+
+msgid "mime_flv"
+msgstr "Flash video (format se je pojavil leta 2002, Flash Video format. Nekoč je bil glavna oblika spletnega videa, zgodaj ga je uporabljal YouTube. Pomanjkljivosti: potreben Flash vtičnik, slabe zmogljivosti, veliko varnostnih lukenj. Od leta 2015 so glavne spletne strani prešle na HTML5 video, danes je ukinjen)"
+
+msgid "mime_f4v"
+msgstr "F4V video (Flash video format, ki ga je razvil Adobe, naslednik FLV. Na podlagi MPEG-4 standarda, podpira H.264 kodiranje. Umaknjen je skupaj s Flash tehnologijo, Adobe je ukinil podporo leta 2020)"
+
+msgid "mime_wmv"
+msgstr "WMV video (Microsoft ga je razvil leta 1999, Windows Media Video. Windows izvorno podpira, optimiziran za prenos pretakanja medijev, bil je pogost format za spletne videe v 2000-ih, danes je na robu)"
+
+msgid "mime_wmf"
+msgstr "WMF medijski format (Windows Media Format, Microsoftov okvir za medije. Vključuje WMV video, WMA avdio, Windows Media Player ga izvorno podpira)"
+
+msgid "mime_mov"
+msgstr "MOV video (Apple ga je razvil leta 1991, QuickTime vsebniški format. Standardni format za profesionalno video montažo, podpira več kodekov, izvorno ga podpirata Final Cut Pro, Premiere)"
+
+msgid "mime_qt"
+msgstr "QuickTime video (Apple ga je predstavil leta 1991, QuickTime format. Standard za video na Mac platformi, MOV je njegov vsebnik, QuickTime predvajalnik je bil široko uporabljen. Apple je leta 2016 ukinil razvoj Windows različice, postopoma ga zamenjuje MP4)"
+
+msgid "mime_webm"
+msgstr "WebM video (Google ga je predstavil leta 2010, odprtokoden in brez patenta. Na podlagi Matroska vsebnika, VP8/VP9 kodiranje, standardni format za HTML5 video, privzeti format za YouTube Web predvajalnik)"
+
+msgid "mime_3gp"
+msgstr "3GP video (vzpostavil 3GPP leta 2000, video format za mobilne naprave. Izjemno majhne datoteke, nizka kakovost, format za snemanje na starih mobilnih telefonih, uporabljen za pošiljanje prek MMS)"
+
+#------------------------------------------------------------------------------
+# Tehnološka dimenzija
+#------------------------------------------------------------------------------
+
+msgid "Operating Systems"
+msgstr "Operacijski sistemi"
+
+msgid "Top 5 Operating Systems"
+msgstr "Prvih 5 operacijskih sistemov"
+
+msgid "Unknown Robot"
+msgstr "Neznani odjemalec"
+
+msgid "User agent"
+msgstr "Uporabniški agent"
+
+msgid "Browsers"
+msgstr "Brskalniki"
+
+msgid "Top 5 Browsers"
+msgstr "Prvih 5 brskalnikov"
+
+msgid "Unknown Robot RH"
+msgstr "Neznana glava zahteve"
+
+msgid "Detailed"
+msgstr "Različica naprave za dostop"
+
+msgid "DetailedOS"
+msgstr "Različica operacijskega sistema"
+
+msgid "DetailedBS"
+msgstr "Različica brskalnika"
+
+msgid "Screen sizes"
+msgstr "Velikosti zaslona"
+
+msgid "Compression"
+msgstr "Stiskanje"
+
+msgid "In"
+msgstr "Vhod"
+
+msgid "Out"
+msgstr "Izhod"
+
+msgid "Saved"
+msgstr "Prihranek"
+
+#------------------------------------------------------------------------------
+# Dimenzija vira
+#------------------------------------------------------------------------------
+
+msgid "Origin"
+msgstr "Izvor"
+
+msgid "Referers"
+msgstr "Napotitelji"
+
+msgid "meta.description"
+msgstr "AWStats napredni analizator spletnih dnevnikov - spremljajte promet spletnega mesta v realnem času, analizo obiskovalcev, ključne besede iskalnikov, statistiko napak. Podpira temni način, večjezični vmesnik, zagotavlja celovito analizo podatkov za skrbnike spletnih mest."
+
+msgid "meta.keywords"
+msgstr "AWStats,spletna statistika,analiza dnevnika,spremljanje prometa,analiza obiska,SEO analiza,orodje za analizo spletnega mesta,Web Analytics,Log Analyzer"
+
+msgid "meta.author"
+msgstr "AWStats"
+
+msgid "og.title"
+msgstr "AWStats - analiza spletnega dnevnika"
+
+msgid "og.description"
+msgstr "📊 Profesionalno odprtokodno orodje za statistiko spletnega mesta, analizirajte promet vašega spletnega mesta in vedenje obiskovalcev v realnem času."
+
+msgid "og.image.alt"
+msgstr "AWStats statistični graf"
+
+msgid "Created by"
+msgstr "Ustvaril %s"
+
+msgid "plugins"
+msgstr "Vtičniki"
+
+msgid "dbip by"
+msgstr "Podatki iz"
+
+msgid "IPDB by"
+msgstr "Podatki o geolokaciji zagotavlja DB-IP"
+
+# Health
+msgid "Configured"
+msgstr "Konfigurirano"
+
+msgid "Missing"
+msgstr "Manjka"
+
+msgid "OK"
+msgstr "Uspešno"
+
+msgid "Unused"
+msgstr "Neuporabljeno"
+
+# Other
+msgid "Overall Health"
+msgstr "Skupno zdravstveno stanje"
+
+msgid "Excellent"
+msgstr "Odlično"
+
+msgid "Good"
+msgstr "Dobro"
+
+msgid "Fair"
+msgstr "Srednje"
+
+msgid "Poor"
+msgstr "Slabo"
+
+msgid "Missing icon types"
+msgstr "Manjkajoče vrste ikon"
+
+msgid "See"
+msgstr "Glej podrobnosti"
+
+msgid "Expected Path"
+msgstr "Razlaga poti"
+
+msgid "column for file locations"
+msgstr "stolpec za lokacije datotek"
+
+# Tips
+msgid "Tip: If you need to generate related icons, you can use %s to upload a logo image, and it will automatically generate all the above related icon files"
+msgstr "Namig: Če morate ustvariti povezane ikone, lahko uporabite %s za nalaganje slike logotipa, ki bo samodejno ustvaril vse zgoraj navedene povezane ikonske datoteke"
+
+msgid "200: success, 404: failure"
+msgstr "200 je število uspehov, 404 je število neuspehov"
+
+# Expected paths
+msgid "_PATH_FAVICON"
+msgstr "/favicon.ico"
+
+msgid "_PATH_APPLE_TOUCH"
+msgstr "/apple-touch-icon.png ali /apple-touch-icon-180x180.png"
+
+msgid "_PATH_LOGO"
+msgstr "/logo.svg ali /logo.png (potrebno ga je sklicevati v HTML/JSON-LD)"
+
+msgid "_PATH_WEBMANIFEST"
+msgstr "/site.webmanifest ali /manifest.json"
+
+msgid "_PATH_BROWSERCONFIG"
+msgstr "/browserconfig.xml"
+
+msgid "_PATH_SAFARI_PINNED"
+msgstr "/safari-pinned-tab.svg"
+
+msgid "_PATH_SOCIAL_ICON"
+msgstr "/images/github.svg, /images/paypal.svg itd."
+
+# Icon type names
+msgid "Favicon"
+msgstr "Ikona spletnega mesta"
+
+msgid "Apple Touch Icon (iOS/macOS)"
+msgstr "Apple Touch ikona (iPhone/iPad/Mac)"
+
+msgid "Site Logo"
+msgstr "Logotip spletnega mesta"
+
+msgid "Web App Manifest (Android/Chrome)"
+msgstr "Web App manifest (Android/Chrome)"
+
+msgid "Windows Browser Config"
+msgstr "Windows Browser konfiguracija"
+
+msgid "Safari Pinned Tab"
+msgstr "Safari pripeta ikona zavihka"
+
+msgid "Social Icon"
+msgstr "Ikona družbenega omrežja"
+
+# Table headers
+msgid "Icon Files Status"
+msgstr "Stanje ikonskih datotek"
+
+msgid "Icon Type"
+msgstr "Vrsta ikone"
+
+msgid "Total"
+msgstr "Skupaj"
+
+msgid "Advanced Web Statistics"
+msgstr "Napredni analizator dnevnika"
+
+msgid "Advanced Web Statistics %s"
+msgstr "%s napredni analizator dnevnika"
+
+msgid "Your browser does not support frames. Please use a modern browser."
+msgstr "Vaš brskalnik ne podpira okvirjev. Uporabite sodobni brskalnik."
+
+msgid "View statistics directly"
+msgstr "Oglejte si statistiko neposredno"
+
+msgid "Close"
+msgstr "Zapri"
+
+msgid "Documentation Viewer"
+msgstr "Pregledovalnik dokumentacije"
+
+msgid "Direct address / Bookmarks"
+msgstr "Neposredni naslov / Zaznamki"
+
+msgid "Search Engines"
+msgstr "Iskalniki"
+
+msgid "Refering search engines"
+msgstr "Napotitveni iskalniki"
+
+msgid "External pages"
+msgstr "Zunanje strani"
+
+msgid "Refering pages"
+msgstr "Napotitvene strani"
+
+msgid "Internal pages"
+msgstr "Notranje strani"
+
+msgid "UnknownAccessSource"
+msgstr "Neznan vir dostopa"
+
+msgid "Different refering pages"
+msgstr "Različne napotitvene strani"
+
+msgid "Keyphrases"
+msgstr "Ključne fraze"
+
+msgid "Keywords"
+msgstr "Ključne besede"
+
+msgid "Keyphrases/Keywords"
+msgstr "Ključne fraze/besede"
+
+msgid "Different keyphrases"
+msgstr "Različne ključne fraze"
+
+msgid "Different keywords"
+msgstr "Različne ključne besede"
+
+#------------------------------------------------------------------------------
+# Dimenzija strani
+#------------------------------------------------------------------------------
+
+msgid "Viewed pages"
+msgstr "Ogledane strani"
+
+msgid "Different pages"
+msgstr "Različne strani"
+
+msgid "Entry"
+msgstr "Vhodna pozicija"
+
+msgid "Exit"
+msgstr "Izhodna pozicija"
+
+msgid "URL"
+msgstr "Spletni naslov"
+
+msgid "Referer"
+msgstr "Napotitelj"
+
+msgid "Host"
+msgstr "Gostitelj"
+
+#------------------------------------------------------------------------------
+# Napake in statusi
+#------------------------------------------------------------------------------
+
+msgid "Error"
+msgstr "Napaka"
+
+msgid "HTTP Status Statistics"
+msgstr "Statistika HTTP statusnih kod"
+
+msgid "SMTP Error codes"
+msgstr "SMTP kode napak"
+
+msgid "Page not found"
+msgstr "Zahtevana stran ni najdena"
+
+msgid "Unknown error"
+msgstr "Neznana napaka"
+
+msgid "Abnormal traffic note"
+msgstr "Nenormalni promet brskanja vključuje: iskalne robote, robote za AI usposabljanje, skenerje ranljivosti in zahteve, ki ne sledijo specifikacijam"
+
+msgid "Page detail"
+msgstr "Podrobnosti strani"
+
+# Error message details
+msgid "AWStats did not found the"
+msgstr "AWStats ni našel"
+
+msgid "in your log records."
+msgstr "v vaših zapisih dnevnika."
+
+msgid "AWStats did not find any valid log lines that match your"
+msgstr "AWStats ni našel nobene veljavne vrstice dnevnika, ki bi ustrezala vašemu"
+
+msgid "parameter, in the"
+msgstr "parametru, v"
+
+msgid "th first non commented lines read of your log."
+msgstr "-i prvih nekaj nekomentiranih vrstic, prebranih iz vašega dnevnika."
+
+msgid "Your log file"
+msgstr "Vaša datoteka dnevnika"
+
+msgid "must have a bad format or"
+msgstr "verjetno ima napačen format ali"
+
+msgid "parameter setup does not match this format."
+msgstr "nastavitev parametra ne ustreza temu formatu."
+
+msgid "Your AWStats"
+msgstr "Vaš AWStats"
+
+msgid "parameter is:"
+msgstr "parameter je:"
+
+msgid "This means each line in your web server log file need to have:"
+msgstr "To pomeni, da mora vsaka vrstica v datoteki dnevnika vašega spletnega strežnika vsebovati:"
+
+msgid "combined log format"
+msgstr "kombinirani log format"
+
+msgid "MSIE Extended W3C log format"
+msgstr "MSIE Extended W3C log format"
+
+msgid "WebStar native log format"
+msgstr "WebStar izvorni log format"
+
+msgid "common log format"
+msgstr "običajni log format"
+
+msgid "Lotus Notes/Lotus Domino"
+msgstr "Lotus Notes/Lotus Domino"
+
+msgid "the following personalized log format:"
+msgstr "naslednji personalizirani log format:"
+
+msgid "And this is an example of records AWStats found in your log file (the record number"
+msgstr "In to je primer zapisov, ki jih je AWStats našel v vaši datoteki dnevnika (številka zapisa"
+
+msgid "in your log):"
+msgstr "v vašem dnevniku):"
+
+#------------------------------------------------------------------------------
+# Razno
+#------------------------------------------------------------------------------
+
+msgid "Extra/Marketing"
+msgstr "Dodatno/Marketing"
+
+#------------------------------------------------------------------------------
+# Besedilo vmesnika
+#------------------------------------------------------------------------------
+
+msgid "Current site"
+msgstr "Trenutna stran"
+
+msgid "Web Site"
+msgstr "Spletna stran"
+
+msgid "Last Update"
+msgstr "Zadnja posodobitev"
+
+msgid "Never updated"
+msgstr "Nikoli posodobljeno"
+
+msgid "No qualified records found in log"
+msgstr "V dnevniku ni najdenih ustreznih zapisov"
+
+msgid "corrupted"
+msgstr "pokvarjeno"
+
+msgid "comments"
+msgstr "komentarji"
+
+msgid "Blank"
+msgstr "Prazno"
+
+msgid "dropped"
+msgstr "zavrženo"
+
+msgid "Update now"
+msgstr "Posodobi zdaj"
+
+msgid "Back to main page"
+msgstr "Nazaj na začetno stran"
+
+msgid "Close window"
+msgstr "Zapri okno"
+
+msgid "Back page"
+msgstr "Nazaj na prejšnjo stran"
+
+msgid "Navigation"
+msgstr "Navigacija"
+
+msgid "Summary"
+msgstr "Povzetek"
+
+msgid "Local"
+msgstr "Lokalno"
+
+msgid "External"
+msgstr "Zunanje"
+
+msgid "Others (email senders)"
+msgstr "Drugi (pošiljatelji)"
+
+msgid "Others (email receivers)"
+msgstr "Drugi (prejemniki)"
+
+msgid "Others"
+msgstr "Drugi"
+
+msgid "Only 10 lines of browser data are currently displayed"
+msgstr "Trenutno je prikazanih le 10 vrstic podatkov o brskalniku, več si oglejte v celotnem seznamu"
+
+msgid "Others (unknown browsers)"
+msgstr "Drugi (neznani brskalniki)"
+
+msgid "Others (operating systems)"
+msgstr "Drugi (operacijski sistemi)"
+
+msgid "Others (unknown OS)"
+msgstr "Drugi (neznani sistem)"
+
+msgid "Others (search engines)"
+msgstr "Drugi (iskalniki)"
+
+msgid "Others (referring pages)"
+msgstr "Drugi (napotitvene strani)"
+
+msgid "Others (keyphrases)"
+msgstr "Drugi (fraze)"
+
+msgid "Others (keywords)"
+msgstr "Drugi (ključne besede)"
+
+msgid "Only first 10 robots shown"
+msgstr "Trenutni seznam podpira samo prikaz 10 vrstic podatkov o robotih, več si oglejte v celotnem seznamu"
+
+msgid "Failed to obtain access record"
+msgstr "Ni mogoče pridobiti zapisa o vstopu"
+
+msgid "Failed to obtain leave record"
+msgstr "Ni mogoče pridobiti zapisa o izstopu"
+
+msgid "Other pages"
+msgstr "Druge strani"
+
+msgid "Low Traffic IP Summary"
+msgstr "Povzetek nizkega prometa neznanih IP naslovov"
+
+msgid "Failed to obtain IP data"
+msgstr "Povzetek drugih znanih IP naslovov"
+
+msgid "Failed to obtain the relevant data"
+msgstr "Ni uspelo pridobiti ustreznih podatkov"
+
+msgid "Limited list of countries and regions"
+msgstr "Trenutno je prikazanih le 10 vrstic podatkov, več držav in regij si oglejte v celotnem seznamu"
+
+msgid "currentVisitorData"
+msgstr "Trenutno je prikazanih le 10 vrstic podatkov o obiskovalcih, več si oglejte v celotnem seznamu"
+
+msgid "Others (robots main)"
+msgstr "Drugi (roboti)"
+
+msgid "Others (worms)"
+msgstr "Drugi (črvi)"
+
+msgid "Displaying10RowsPageMorePleaseViewFullList"
+msgstr "Trenutni seznam podpira samo prikaz 10 vrstic strani, več si oglejte v celotnem seznamu"
+
+msgid "Others (OS main)"
+msgstr "Drugi (sistemi)"
+
+msgid "Others (browsers main)"
+msgstr "Drugi (brskalniki)"
+
+msgid "Others (screen sizes)"
+msgstr "Drugi (velikosti)"
+
+msgid "Others (search engines main)"
+msgstr "Drugi (iskalniki)"
+
+msgid "Others (referring pages main)"
+msgstr "Drugi (izvorne strani)"
+
+msgid "Others (keyphrases main)"
+msgstr "Drugi (fraze)"
+
+msgid "Others (keywords main)"
+msgstr "Drugi (ključne besede)"
+
+# 1xx
+msgid "Continue"
+msgstr "Nadaljujte s pošiljanjem preostale vsebine"
+
+msgid "Switching Protocols"
+msgstr "V teku je preklop protokola"
+
+msgid "Processing (WebDAV)"
+msgstr "V obdelavi (prosim počakajte)"
+
+msgid "Early Hints"
+msgstr "Strežnik pripravlja vire"
+
+# 2xx
+msgid "[Miscellaneous successes]"
+msgstr "Drugi statusi uspeha"
+
+msgid "Request successful"
+msgstr "Zahteva uspešna"
+
+msgid "Created successfully"
+msgstr "Uspešno ustvarjeno"
+
+msgid "Accepted - processing"
+msgstr "Sprejeto, v obdelavi"
+
+msgid "Non-authoritative information (from cache) (from cache)"
+msgstr "Neverodostojne informacije (iz predpomnilnika)"
+
+msgid "Success, no content returned"
+msgstr "Uspešno, ni vrnjene vsebine"
+
+msgid "Reset content"
+msgstr "Ponastavite obrazec"
+
+msgid "Partial content (resume download)"
+msgstr "Delna vsebina (podpira nadaljevanje prenosa)"
+
+msgid "Multi-status (WebDAV)"
+msgstr "Večstanjsko (WebDAV skupinske operacije)"
+
+msgid "Already reported (WebDAV)"
+msgstr "Že prijavljeno (preprečuje podvajanje)"
+
+msgid "IM used"
+msgstr "Uporabljen je IM razširjeni protokol"
+
+# 3xx
+msgid "[Miscellaneous redirections]"
+msgstr "Druga preusmerjanja"
+
+msgid "Multiple choices"
+msgstr "Več možnosti"
+
+msgid "Moved permanently - update your links"
+msgstr "Trajno premaknjeno, posodobite povezave"
+
+msgid "Temporary redirect - URL unchanged"
+msgstr "Začasno preusmerjanje, naslov ni spremenjen"
+
+msgid "See other"
+msgstr "Oglejte si drug naslov"
+
+msgid "Not modified - using cached version"
+msgstr "Ni spremenjeno, uporabljena predpomnjena različica"
+
+msgid "Use proxy"
+msgstr "Uporabite posrednik"
+
+msgid "Switch proxy"
+msgstr "Spremenite posrednik"
+
+msgid "Temporary redirect (keep method)"
+msgstr "Začasno preusmerjanje (ohrani metodo zahteve)"
+
+msgid "Permanent redirect - update your links"
+msgstr "Trajno preusmerjanje, posodobite povezave"
+
+# 4xx
+msgid "[Miscellaneous client/user errors]"
+msgstr "Druge napake na strani odjemalca/uporabnika"
+
+msgid "Bad request"
+msgstr "Napačna oblika zahteve"
+
+msgid "Unauthorized - please log in"
+msgstr "Nepooblaščeno, prosimo prijavite se"
+
+msgid "Payment required"
+msgstr "Zahtevano je plačilo"
+
+msgid "Forbidden - access denied"
+msgstr "Prepovedan dostop, nezadostna dovoljenja"
+
+msgid "Page not found (404) - check for broken links"
+msgstr "Stran ne obstaja, preverite nedelujoče povezave"
+
+msgid "Method not allowed"
+msgstr "Metoda zahteve ni dovoljena"
+
+msgid "Not acceptable"
+msgstr "Nesprejemljiva oblika odziva"
+
+msgid "Proxy authentication required"
+msgstr "Potrebna je avtentikacija posrednika"
+
+msgid "Request timeout"
+msgstr "Potekel je čas zahteve"
+
+msgid "Conflict - please try again"
+msgstr "Spor zahteve, poskusite pozneje znova"
+
+msgid "Gone - permanently deleted"
+msgstr "Vir je trajno izbrisan"
+
+msgid "Length required"
+msgstr "Določiti je treba dolžino vsebine"
+
+msgid "Precondition failed"
+msgstr "Pogoji niso izpolnjeni"
+
+msgid "Payload too large"
+msgstr "Vsebina zahteve je prevelika"
+
+msgid "URI too long"
+msgstr "Naslov zahteve je predolg"
+
+msgid "Unsupported media type"
+msgstr "Nepodprta vrsta datoteke"
+
+msgid "Range not satisfiable"
+msgstr "Zahtevani obseg ni veljaven"
+
+msgid "Expectation failed"
+msgstr "Ni mogoče izpolniti Expect zahteve"
+
+msgid "I am a teapot (April Fools)"
+msgstr "Jaz sem čajnik (prvoaprilska šala)"
+
+msgid "Page expired (Laravel)"
+msgstr "Stran je potekla, osvežite in poskusite znova"
+
+msgid "Method failure (Spring)"
+msgstr "Metoda ni uspela"
+
+msgid "Misdirected request"
+msgstr "Zahteva je napačno usmerjena"
+
+msgid "Unprocessable entity (WebDAV)"
+msgstr "Oblika zahteve je pravilna, vendar je ni mogoče obdelati"
+
+msgid "Locked (WebDAV)"
+msgstr "Vir je zaklenjen"
+
+msgid "Failed dependency (WebDAV)"
+msgstr "Odvisna operacija ni uspela"
+
+msgid "Too early"
+msgstr "Zahteva je bila poslana prezgodaj"
+
+msgid "Upgrade required"
+msgstr "Treba je nadgraditi protokol"
+
+msgid "Precondition required"
+msgstr "Manjkajo potrebni predpogoji"
+
+msgid "Too many requests - slow down"
+msgstr "Zahteve so prepogoste, poskusite pozneje znova"
+
+msgid "Request header fields too large (Shopify)"
+msgstr "Polja glave zahteve so prevelika"
+
+msgid "Request header too large"
+msgstr "Glava zahteve je prevelika"
+
+msgid "Login timeout (IIS)"
+msgstr "Potekel je čas prijave, prijavite se znova"
+
+msgid "No response (nginx)"
+msgstr "Ni odziva s strežnika"
+
+msgid "Retry with (IIS)"
+msgstr "Poskusite pozneje znova"
+
+msgid "Blocked by Windows parental controls"
+msgstr "Blokirano s strani Windows starševskega nadzora"
+
+msgid "Unavailable for legal reasons"
+msgstr "Nedostopno iz pravnih razlogov"
+
+msgid "Client closed connection before idle timeout (AWS ELB)"
+msgstr "Odjemalec je aktivno prekinil povezavo"
+
+msgid "X-Forwarded-For header with >30 IP addresses (AWS ELB)"
+msgstr "Veriga posredovanja presega 30 IP naslovov"
+
+msgid "Incompatible protocol versions (AWS ELB)"
+msgstr "Nezdružljive različice protokola"
+
+msgid "Request header too large (nginx)"
+msgstr "Glava zahteve je prevelika"
+
+msgid "SSL certificate error (nginx)"
+msgstr "Napaka SSL potrdila"
+
+msgid "SSL certificate required (nginx)"
+msgstr "Potrebno je SSL potrdilo"
+
+msgid "HTTP request sent to HTTPS port (nginx)"
+msgstr "HTTP zahteva poslana na HTTPS vrata"
+
+msgid "Invalid token (ArcGIS)"
+msgstr "Neveljaven žeton"
+
+msgid "Token required (ArcGIS) / Client closed request (nginx)"
+msgstr "Žeton je potreben / Odjemalec je zaprl zahtevo"
+
+msgid "Resource limit reached (cPanel)"
+msgstr "Dosežena omejitev virov (CPU/pomnilnik)"
+
+msgid "Bandwidth limit exceeded (Apache/cPanel)"
+msgstr "Prekoračena omejitev pasovne širine"
+
+# 5xx
+msgid "[Miscellaneous server errors]"
+msgstr "Druge napake na strežniku"
+
+msgid "Internal server error - check logs"
+msgstr "Notranja napaka strežnika, preverite dnevnike"
+
+msgid "Not implemented"
+msgstr "Strežnik ne podpira te funkcije"
+
+msgid "Bad gateway - backend error"
+msgstr "Napaka prehoda, storitev ozadja ne deluje pravilno"
+
+msgid "Service unavailable - maintenance or overload"
+msgstr "Storitev nedosegljiva, vzdrževanje ali preobremenitev"
+
+msgid "Gateway timeout"
+msgstr "Potekel je čas odziva prehoda"
+
+msgid "HTTP version not supported"
+msgstr "Nepodprta različica HTTP protokola"
+
+msgid "Variant also negotiates"
+msgstr "Različica prav tako sodeluje v pogajanju (napačna konfiguracija)"
+
+msgid "Insufficient storage (WebDAV)"
+msgstr "Nezadostno prostora za shranjevanje"
+
+msgid "Loop detected (WebDAV)"
+msgstr "Zaznano krožno sklicevanje"
+
+msgid "Not extended"
+msgstr "Potrebna je nadaljnja razširitev"
+
+msgid "Network authentication required"
+msgstr "Potrebna je mrežna avtentikacija"
+
+# Cloudflare
+msgid "Unknown error (Cloudflare)"
+msgstr "Neznana napaka"
+
+msgid "Web server is down (Cloudflare)"
+msgstr "Spletni strežnik je ugasnjen"
+
+msgid "Connection timeout (Cloudflare)"
+msgstr "Potekel je čas povezave"
+
+msgid "Origin is unreachable (Cloudflare)"
+msgstr "Izvorni strežnik ni dosegljiv"
+
+msgid "A timeout occurred (Cloudflare)"
+msgstr "Prišlo je do časovne prekoračitve"
+
+msgid "SSL handshake failed (Cloudflare)"
+msgstr "SSL rokovanje ni uspelo"
+
+msgid "Invalid SSL certificate (Cloudflare)"
+msgstr "Neveljavno SSL potrdilo"
+
+msgid "Railgun error (Cloudflare - obsolete)"
+msgstr "Railgun napaka (zastarelo)"
+
+msgid "Site is overloaded (SSLLabs)"
+msgstr "Stran je preobremenjena"
+
+msgid "Origin DNS error (Cloudflare) / Site is frozen (Pantheon)"
+msgstr "Napaka DNS izvornega strežnika / Stran je zamrznjena"
+
+msgid "Temporarily disabled (Shopify)"
+msgstr "Začasno onemogočeno"
+
+msgid "Unauthorized (AWS ELB)"
+msgstr "Nepooblaščeno"
+
+msgid "Network read timeout error"
+msgstr "Časovna prekoračitev branja omrežja"
+
+msgid "Network connect timeout error"
+msgstr "Časovna prekoračitev povezovanja na omrežje"
+
+msgid "Unexpected token (Shopify)"
+msgstr "Nepričakovan žeton"
+
+msgid "Request denied (LinkedIn)"
+msgstr "Zahteva je zavrnjena"
+
+msgid "HTTP/2 GOAWAY (AWS ELB)"
+msgstr "HTTP/2 povezava zaprta"
+
+msgid "[Unknown]"
+msgstr "Neznana statusna koda"
+
+msgid "Nonstandard success response (ESMTP)"
+msgstr "Nestandardni uspešni odziv (ESMTP)"
+
+msgid "System status, or system help reply"
+msgstr "Stanje sistema ali pomoč"
+
+msgid "Help message"
+msgstr "Sporočilo pomoči"
+
+msgid "SMTP service ready (LMTP)"
+msgstr "SMTP storitev pripravljena (LMTP)"
+
+msgid "Service ready - server is ready to receive mail"
+msgstr "Storitev pripravljena - strežnik e-pošte lahko sprejema pošto"
+
+msgid "Service closing - connection is being closed"
+msgstr "Storitev se zapira - povezava bo kmalu prekinjena"
+
+msgid "Authentication successful"
+msgstr "Avtentikacija uspešna"
+
+msgid "Requested mail action taken and completed"
+msgstr "Zahtevano dejanje s pošto je izvedeno in končano"
+
+msgid "User not local - will forward to another address"
+msgstr "Uporabnik ni na tem strežniku - bo posredovan na drug naslov"
+
+msgid "Cannot verify recipient, but will attempt delivery"
+msgstr "Prejemnika ni mogoče preveriti, vendar bo poskus dostave"
+
+msgid "Message accepted for delivery (DSN)"
+msgstr "Sporočilo sprejeto za dostavo (DSN)"
+
+msgid "User name is a mailbox"
+msgstr "Uporabniško ime je poštni nabiralnik"
+
+msgid "Authentication challenge - please respond"
+msgstr "Izziv avtentikacije - prosimo odgovorite"
+
+msgid "Start mail input - end with <CRLF>.<CRLF>"
+msgstr "Začnite vnašati vsebino e-pošte - končajte z <CRLF>.<CRLF>"
+
+msgid "Continue (LMTP)"
+msgstr "Nadaljuj (LMTP)"
+
+msgid "Service not available - connection closing, try again later"
+msgstr "Storitev nedosegljiva - povezava se zapira, poskusite pozneje znova"
+
+msgid "Mailbox busy or temporarily unavailable (Exchange)"
+msgstr "Poštni nabiralnik zaseden ali začasno nedosegljiv (Exchange)"
+
+msgid "Connection rate limit exceeded (Postfix)"
+msgstr "Prekoračena pogostost povezovanja (Postfix)"
+
+msgid "Too many concurrent connections (Postfix)"
+msgstr "Preveč sočasnih povezav (Postfix)"
+
+msgid "Unable to establish connection (Postfix)"
+msgstr "Povezave ni mogoče vzpostaviti (Postfix)"
+
+msgid "Connection timed out (Postfix)"
+msgstr "Potekel je čas povezave (Postfix)"
+
+msgid "Connection dropped due to error (Postfix)"
+msgstr "Povezava prekinjena zaradi napake (Postfix)"
+
+msgid "Mailbox temporarily locked (Exchange)"
+msgstr "Poštni nabiralnik začasno zaklenjen (Exchange)"
+
+msgid "Too many recipients (Postfix/Exim)"
+msgstr "Preveč prejemnikov (Postfix/Exim)"
+
+msgid "Mail server error (Exchange)"
+msgstr "Napaka strežnika e-pošte (Exchange)"
+
+msgid "Received loop detected (Exim)"
+msgstr "Zaznana zanka prejema (Exim)"
+
+msgid "Too many hop count (Exim)"
+msgstr "Preveč skokov (Exim)"
+
+msgid "DNS lookup failed (Postfix)"
+msgstr "DNS poizvedba ni uspela (Postfix)"
+
+msgid "Unable to authenticate (Postfix)"
+msgstr "Avtentikacije ni mogoče izvesti (Postfix)"
+
+msgid "TLS handshake failed (Postfix)"
+msgstr "TLS rokovanje ni uspelo (Postfix)"
+
+msgid "SMTP protocol violation (Postfix)"
+msgstr "Kršitev SMTP protokola (Postfix)"
+
+msgid "Message size exceeds limit (Exchange)"
+msgstr "Velikost e-pošte presega omejitev (Exchange)"
+
+msgid "Message rate limit exceeded (Postfix)"
+msgstr "Prekoračena pogostost pošiljanja e-pošte (Postfix)"
+
+msgid "Mailbox quota exceeded - temporary"
+msgstr "Kvota poštnega nabiralnika je polna - začasno stanje"
+
+msgid "Domain not found (Postfix)"
+msgstr "Domena ni najdena (Postfix)"
+
+msgid "Message header invalid (Postfix)"
+msgstr "Glava e-pošte neveljavna (Postfix)"
+
+msgid "Bounce loop detected (Postfix)"
+msgstr "Zaznana zanka vračanja e-pošte (Postfix)"
+
+msgid "Unable to route (Postfix)"
+msgstr "Ni mogoče usmeriti (Postfix)"
+
+msgid "Sender domain not found (Postfix)"
+msgstr "Domena pošiljatelja ni najdena (Postfix)"
+
+msgid "Recipient domain not found (Postfix)"
+msgstr "Domena prejemnika ni najdena (Postfix)"
+
+msgid "Greylisting in progress - please try again (Postgrey)"
+msgstr "Sivi seznam v teku - poskusite pozneje znova (Postgrey)"
+
+msgid "Spam filtering in progress (SpamAssassin)"
+msgstr "Filtriranje neželene e-pošte v teku (SpamAssassin)"
+
+msgid "Virus scanning in progress (ClamAV)"
+msgstr "Skeniranje virusov v teku (ClamAV)"
+
+msgid "Mailbox unavailable - try again later"
+msgstr "Poštni nabiralnik nedosegljiv - poskusite pozneje znova"
+
+msgid "Requested action aborted - error in processing"
+msgstr "Zahtevano dejanje prekinjeno - napaka v obdelavi"
+
+msgid "Insufficient system storage - try again later"
+msgstr "Nezadostno sistemskega prostora - poskusite pozneje znova"
+
+msgid "Too many messages for this recipient (Exchange)"
+msgstr "Preveč sporočil za tega prejemnika (Exchange)"
+
+msgid "TLS not available (Postfix)"
+msgstr "TLS ni na voljo (Postfix)"
+
+msgid "Server unable to accept messages (Postfix)"
+msgstr "Strežnik ne more sprejeti e-pošte (Postfix)"
+
+msgid "Temporary failure in DNS lookup (Exim)"
+msgstr "Začasni neuspeh DNS poizvedbe (Exim)"
+
+msgid "Quota exceeded - temporary"
+msgstr "Kvota prekoračena - začasno stanje"
+
+msgid "Message too big - temporary"
+msgstr "E-pošta prevelika - začasno stanje"
+
+msgid "Too many messages per connection"
+msgstr "Preveč sporočil na povezavo"
+
+msgid "Load average too high (Postfix)"
+msgstr "Povprečna obremenitev sistema previsoka (Postfix)"
+
+msgid "Connection refused (Postfix)"
+msgstr "Povezava zavrnjena (Postfix)"
+
+msgid "Send rate limit exceeded (Postfix)"
+msgstr "Prekoračena pogostost pošiljanja (Postfix)"
+
+msgid "Recipient rate limit exceeded (Postfix)"
+msgstr "Prekoračena pogostost za prejemnika (Postfix)"
+
+msgid "Sender rate limit exceeded (Postfix)"
+msgstr "Prekoračena pogostost za pošiljatelja (Postfix)"
+
+msgid "IP address rate limit exceeded (Postfix)"
+msgstr "Prekoračena pogostost za IP naslov (Postfix)"
+
+msgid "MX lookup failed (Postfix)"
+msgstr "MX poizvedba ni uspela (Postfix)"
+
+msgid "A record lookup failed (Postfix)"
+msgstr "A zapis poizvedba ni uspela (Postfix)"
+
+msgid "PTR record lookup failed (Postfix)"
+msgstr "PTR zapis poizvedba ni uspela (Postfix)"
+
+msgid "Greylisting active - please try again (Postgrey)"
+msgstr "Sivi seznam aktiven - poskusite pozneje znova (Postgrey)"
+
+msgid "Sender address rejected - domain not verified (DMARC pending)"
+msgstr "Naslov pošiljatelja zavrnjen - domena ni potrjena (DMARC čaka)"
+
+msgid "Recipient address rejected - domain not verified (DMARC pending)"
+msgstr "Naslov prejemnika zavrnjen - domena ni potrjena (DMARC čaka)"
+
+msgid "DKIM verification pending - temporary failure"
+msgstr "DKIM preverjanje čaka - začasni neuspeh"
+
+msgid "SPF verification pending - temporary failure"
+msgstr "SPF preverjanje čaka - začasni neuspeh"
+
+msgid "DMARC verification pending - temporary failure"
+msgstr "DMARC preverjanje čaka - začasni neuspeh"
+
+msgid "DNSBL lookup temporary failure"
+msgstr "DNSBL poizvedba začasno neuspešna"
+
+msgid "RHSBL lookup temporary failure"
+msgstr "RHSBL poizvedba začasno neuspešna"
+
+msgid "URI DNSBL lookup temporary failure"
+msgstr "URI DNSBL poizvedba začasno neuspešna"
+
+msgid "Temporary authentication failure (Dovecot)"
+msgstr "Začasni neuspeh avtentikacije (Dovecot)"
+
+msgid "Temporary authorization failure (Sendmail)"
+msgstr "Začasni neuspeh avtorizacije (Sendmail)"
+
+msgid "Rate limit exceeded per sender (Exim)"
+msgstr "Prekoračena pogostost za posameznega pošiljatelja (Exim)"
+
+msgid "Rate limit exceeded per recipient (Exim)"
+msgstr "Prekoračena pogostost za posameznega prejemnika (Exim)"
+
+msgid "Rate limit exceeded per domain (Exim)"
+msgstr "Prekoračena pogostost za posamezno domeno (Exim)"
+
+msgid "Rate limit exceeded per IP (Exim)"
+msgstr "Prekoračena pogostost za posamezen IP naslov (Exim)"
+
+msgid "Message queued for later delivery (Postfix)"
+msgstr "E-pošta dana v čakalno vrsto za kasnejšo dostavo (Postfix)"
+
+msgid "Delivery delayed due to policy (Exchange)"
+msgstr "Dostava odložena zaradi pravil (Exchange)"
+
+msgid "Temporary failure in content filter"
+msgstr "Začasni neuspeh filtra vsebine"
+
+msgid "Temporary failure in antivirus scanner"
+msgstr "Začasni neuspeh protivirusnega skenerja"
+
+msgid "Temporary failure in spam filter"
+msgstr "Začasni neuspeh filtra neželene pošte"
+
+msgid "Temporary failure in milter (Postfix)"
+msgstr "Začasni neuspeh milterja (Postfix)"
+
+msgid "Greylisting - try again later"
+msgstr "Sivi seznam - poskusite pozneje znova"
+
+msgid "DDoS protection active - try again later"
+msgstr "DDoS zaščita aktivna - poskusite pozneje znova"
+
+msgid "SMTP policy violation - temporary"
+msgstr "Kršitev SMTP pravil - začasno stanje"
+
+msgid "Temporary error in RCPT TO processing"
+msgstr "Začasna napaka v obdelavi RCPT TO"
+
+msgid "Temporary error in MAIL FROM processing"
+msgstr "Začasna napaka v obdelavi MAIL FROM"
+
+msgid "Temporary error in EHLO/HELO processing"
+msgstr "Začasna napaka v obdelavi EHLO/HELO"
+
+msgid "Temporary error in DATA processing"
+msgstr "Začasna napaka v obdelavi DATA"
+
+msgid "Temporary error - service busy, try again later"
+msgstr "Začasna napaka - storitev zasedena, poskusite pozneje znova"
+
+msgid "Syntax error - command unrecognized or too long"
+msgstr "Sintaktična napaka - ukaz neprepoznan ali predolg"
+
+msgid "Syntax error in parameters or arguments"
+msgstr "Sintaktična napaka v parametrih ali argumentih"
+
+msgid "Command not implemented"
+msgstr "Ukaz ni implementiran"
+
+msgid "Bad sequence of commands"
+msgstr "Napačen vrstni red ukazov"
+
+msgid "Command parameter not implemented"
+msgstr "Parameter ukaza ni implementiran"
+
+msgid "Version not supported (ESMTP)"
+msgstr "Različica ni podprta (ESMTP)"
+
+msgid "Mailbox path invalid (LMTP)"
+msgstr "Pot poštnega nabiralnika neveljavna (LMTP)"
+
+msgid "Too many commands in this session (Postfix)"
+msgstr "Preveč ukazov v tej seji (Postfix)"
+
+msgid "Recipient limit exceeded (Postfix)"
+msgstr "Število prejemnikov presega omejitev (Postfix)"
+
+msgid "Sender limit exceeded (Postfix)"
+msgstr "Število pošiljateljev presega omejitev (Postfix)"
+
+msgid "Domain limit exceeded (Postfix)"
+msgstr "Število domen presega omejitev (Postfix)"
+
+msgid "Mailbox does not exist (Exchange)"
+msgstr "Poštni nabiralnik ne obstaja (Exchange)"
+
+msgid "DNS failure - permanent"
+msgstr "DNS neuspeh - trajna napaka"
+
+msgid "Address type not supported (Postfix)"
+msgstr "Vrsta naslova ni podprta (Postfix)"
+
+msgid "Unable to open mailbox (Postfix)"
+msgstr "Poštnega nabiralnika ni mogoče odpreti (Postfix)"
+
+msgid "Mailbox locked - permanent"
+msgstr "Poštni nabiralnik zaklenjen - trajno stanje"
+
+msgid "Message rejected due to policy (Exchange)"
+msgstr "Sporočilo zavrnjeno zaradi pravil (Exchange)"
+
+msgid "Content rejected - permanent"
+msgstr "Vsebina zavrnjena - trajno stanje"
+
+msgid "Attachment type not allowed"
+msgstr "Vrsta priponke ni dovoljena"
+
+msgid "Message encoding not supported"
+msgstr "Kodiranje sporočila ni podprto"
+
+msgid "Sender domain does not exist - permanent"
+msgstr "Domena pošiljatelja ne obstaja - trajna napaka"
+
+msgid "Domain does not accept mail or is closing"
+msgstr "Domena ne sprejema e-pošte ali se zapira"
+
+msgid "Recipient domain does not exist - permanent"
+msgstr "Domena prejemnika ne obstaja - trajna napaka"
+
+msgid "Mailbox quota exceeded - permanent"
+msgstr "Kvota poštnega nabiralnika prekoračena - trajno stanje"
+
+msgid "Message size exceeds limit - permanent"
+msgstr "Velikost sporočila presega omejitev - trajno stanje"
+
+msgid "Authentication required (Sendmail)"
+msgstr "Potrebna je avtentikacija (Sendmail)"
+
+msgid "Authentication failed (Sendmail)"
+msgstr "Avtentikacija ni uspela (Sendmail)"
+
+msgid "Authentication mechanism not supported"
+msgstr "Mehanizem avtentikacije ni podprt"
+
+msgid "Authentication credentials invalid"
+msgstr "Poverilnice za avtentikacijo neveljavne"
+
+msgid "Authentication account expired"
+msgstr "Račun za avtentikacijo je potekel"
+
+msgid "Access denied - authentication required"
+msgstr "Dostop zavrnjen - potrebna je avtentikacija"
+
+msgid "Access denied (Sendmailism)"
+msgstr "Dostop zavrnjen (Sendmail)"
+
+msgid "Access denied - not authenticated"
+msgstr "Dostop zavrnjen - niste avtenticirani"
+
+msgid "Access denied - account locked"
+msgstr "Dostop zavrnjen - račun je zaklenjen"
+
+msgid "Access denied - account disabled"
+msgstr "Dostop zavrnjen - račun je onemogočen"
+
+msgid "Authentication failed"
+msgstr "Avtentikacija ni uspela"
+
+msgid "Authentication required for relay (Postfix)"
+msgstr "Za posredovanje (relay) je potrebna avtentikacija (Postfix)"
+
+msgid "Authentication failed for relay (Postfix)"
+msgstr "Avtentikacija za posredovanje (relay) ni uspela (Postfix)"
+
+msgid "Encryption required (STARTTLS)"
+msgstr "Potrebna je šifrirana povezava (STARTTLS)"
+
+msgid "TLS required for this recipient"
+msgstr "Za tega prejemnika je potrebna TLS šifra"
+
+msgid "Encryption strength insufficient"
+msgstr "Moč šifriranja nezadostna"
+
+msgid "Certificate validation failed"
+msgstr "Preverjanje potrdila ni uspelo"
+
+msgid "Invalid TLS certificate"
+msgstr "Neveljavno TLS potrdilo"
+
+msgid "TLS protocol version not supported"
+msgstr "Različica TLS protokola ni podprta"
+
+msgid "Cipher suite not supported"
+msgstr "Komplet šifriranja ni podprt"
+
+msgid "Access denied - no valid recipient"
+msgstr "Dostop zavrnjen - ni veljavnega prejemnika"
+
+msgid "Access denied - no valid sender"
+msgstr "Dostop zavrnjen - ni veljavnega pošiljatelja"
+
+msgid "Access denied - domain not allowed"
+msgstr "Dostop zavrnjen - domena ni dovoljena"
+
+msgid "Access denied - IP address blocked (permanent)"
+msgstr "Dostop zavrnjen - IP naslov trajno blokiran"
+
+msgid "Access denied - sender domain blacklisted"
+msgstr "Dostop zavrnjen - domena pošiljatelja na črnem seznamu"
+
+msgid "Mailbox unavailable - requested action not taken"
+msgstr "Poštni nabiralnik nedosegljiv - zahtevano dejanje ni izvedeno"
+
+msgid "User not local - please try forwarding address"
+msgstr "Uporabnik ni lokalni - poskusite z naslovom za posredovanje"
+
+msgid "Requested action aborted - exceeded storage allocation"
+msgstr "Zahtevano dejanje prekinjeno - presežena dodeljena shramba"
+
+msgid "Mailbox name not allowed"
+msgstr "Ime poštnega nabiralnika ni dovoljeno"
+
+msgid "Requested action rejected - access denied"
+msgstr "Zahtevano dejanje zavrnjeno - dostop zavrnjen"
+
+msgid "MAIL FROM/RCPT TO parameters not recognized"
+msgstr "Parametri MAIL FROM/RCPT TO niso prepoznani"
+
+msgid "Domain not allowed to send (DMARC reject)"
+msgstr "Domeni ni dovoljeno pošiljanje (DMARC zavrnitev)"
+
+msgid "Too many duplicate messages - permanent"
+msgstr "Preveč podvojenih sporočil - trajno stanje"
+
+msgid "Sender address rejected - domain not in SPF"
+msgstr "Naslov pošiljatelja zavrnjen - domena ni v SPF zapisu"
+
+msgid "Sender address rejected - DKIM verification failed"
+msgstr "Naslov pošiljatelja zavrnjen - DKIM preverjanje ni uspelo"
+
+msgid "Sender address rejected - DMARC policy reject"
+msgstr "Naslov pošiljatelja zavrnjen - DMARC pravilo zavrnitve"
+
+msgid "Recipient address rejected - DMARC policy reject"
+msgstr "Naslov prejemnika zavrnjen - DMARC pravilo zavrnitve"
+
+msgid "Message rejected due to spam content"
+msgstr "Sporočilo zavrnjeno zaradi neželene vsebine"
+
+msgid "Message rejected due to virus detected"
+msgstr "Sporočilo zavrnjeno zaradi odkritega virusa"
+
+msgid "Message rejected due to malicious content"
+msgstr "Sporočilo zavrnjeno zaradi zlonamerne vsebine"
+
+msgid "Message rejected due to phishing detection"
+msgstr "Sporočilo zavrnjeno zaradi odkritja lažnega predstavljanja"
+
+msgid "Message rejected due to malware detection"
+msgstr "Sporočilo zavrnjeno zaradi odkritja zlonamerne programske opreme"
+
+msgid "Message rejected due to policy - permanent"
+msgstr "Sporočilo zavrnjeno zaradi pravil - trajno stanje"
+
+msgid "Message rejected due to content filtering"
+msgstr "Sporočilo zavrnjeno zaradi filtriranja vsebine"
+
+msgid "Message rejected due to reputation"
+msgstr "Sporočilo zavrnjeno zaradi ugleda"
+
+msgid "Access denied - access_map violation"
+msgstr "Dostop zavrnjen - kršitev access_map pravil"
+
+msgid "Access denied - SMTP client listed in RBL"
+msgstr "Dostop zavrnjen - SMTP odjemalec je na RBL seznamu"
+
+msgid "Access denied - relay not authorized"
+msgstr "Dostop zavrnjen - posredovanje ni pooblaščeno"
+
+msgid "Access denied - unknown SMTP client hostname"
+msgstr "Dostop zavrnjen - neznano ime gostitelja SMTP odjemalca"
+
+msgid "Access denied - bad syntax for client HELO hostname"
+msgstr "Dostop zavrnjen - napačna sintaksa v HELO imenu gostitelja odjemalca"
+
+msgid "Access denied - SMTP client hostname rejected"
+msgstr "Dostop zavrnjen - ime gostitelja SMTP odjemalca zavrnjeno"
+
+msgid "Access denied - unknown domain for sender or recipient"
+msgstr "Dostop zavrnjen - neznana domena pošiljatelja ali prejemnika"
+
+msgid "Access denied - unknown client HELO hostname"
+msgstr "Dostop zavrnjen - neznano HELO ime gostitelja odjemalca"
+
+msgid "Access denied - invalid domain (not FQDN)"
+msgstr "Dostop zavrnjen - neveljavna domena (ni FQDN)"
+
+msgid "Access denied - domain not qualified"
+msgstr "Dostop zavrnjen - domena ni kvalificirana"
+
+msgid "Access denied - mail server misconfigured"
+msgstr "Dostop zavrnjen - strežnik e-pošte napačno konfiguriran"
+
+msgid "Access denied - open relay not allowed"
+msgstr "Dostop zavrnjen - odprto posredovanje ni dovoljeno"
+
+msgid "Access denied - proxy not allowed"
+msgstr "Dostop zavrnjen - posrednik ni dovoljen"
+
+msgid "Access denied - dynamic IP not allowed"
+msgstr "Dostop zavrnjen - dinamični IP naslov ni dovoljen"
+
+msgid "Access denied - residential IP not allowed"
+msgstr "Dostop zavrnjen - stanovanjski IP naslov ni dovoljen"
+
+msgid "Access denied - VPN/Tor detected"
+msgstr "Dostop zavrnjen - odkrit VPN/Tor"
+
+msgid "Access denied - Spamhaus DROP listed"
+msgstr "Dostop zavrnjen - IP naslov na Spamhaus DROP seznamu"
+
+msgid "Access denied - URL listed in URIBL"
+msgstr "Dostop zavrnjen - URL je na URIBL seznamu"
+
+msgid "Access denied - domain in RHSBL"
+msgstr "Dostop zavrnjen - domena je na RHSBL seznamu"
+
+msgid "Access denied - IP in DNSWL (policy)"
+msgstr "Dostop zavrnjen - IP na DNSWL seznamu (pravilo)"
+
+msgid "Delivery failed - mailbox not found"
+msgstr "Dostava ni uspela - poštni nabiralnik ni najden"
+
+msgid "Delivery failed - recipient not local"
+msgstr "Dostava ni uspela - prejemnik ni lokalni"
+
+msgid "Delivery failed - recipient rejected"
+msgstr "Dostava ni uspela - prejemnik zavrnjen"
+
+msgid "Delivery failed - sender rejected"
+msgstr "Dostava ni uspela - pošiljatelj zavrnjen"
+
+msgid "Delivery failed - relay rejected"
+msgstr "Dostava ni uspela - posredovanje zavrnjeno"
+
+msgid "Delivery failed - DNS permanent error"
+msgstr "Dostava ni uspela - trajna DNS napaka"
+
+msgid "Delivery failed - MX permanent error"
+msgstr "Dostava ni uspela - trajna MX napaka"
+
+msgid "Delivery failed - A record permanent error"
+msgstr "Dostava ni uspela - trajna napaka A zapisa"
+
+msgid "Delivery failed - PTR record permanent error"
+msgstr "Dostava ni uspela - trajna napaka PTR zapisa"
+
+msgid "Delivery failed - policy permanent error"
+msgstr "Dostava ni uspela - trajna napaka pravil"
+
+msgid "DSN: Success - delivery status notification"
+msgstr "DSN: Uspeh - obvestilo o stanju dostave"
+
+msgid "DSN: Delivery delayed"
+msgstr "DSN: Dostava odložena"
+
+msgid "DSN: Delivery failed - permanent"
+msgstr "DSN: Dostava ni uspela - trajno"
+
+msgid "DSN: Delivery failed - temporary"
+msgstr "DSN: Dostava ni uspela - začasno"
+
+msgid "DSN: Message expired"
+msgstr "DSN: Sporočilo je poteklo"
+
+msgid "DSN: Message bounced"
+msgstr "DSN: Sporočilo vrnjeno"
+
+msgid "DSN: Message discarded"
+msgstr "DSN: Sporočilo zavrženo"
+
+msgid "DSN: Message filtered"
+msgstr "DSN: Sporočilo filtrirano"
+
+msgid "DSN: Message quarantined"
+msgstr "DSN: Sporočilo v karanteni"
+
+msgid "DSN: Message held for review"
+msgstr "DSN: Sporočilo zadržano za pregled"
+
+msgid "MTA-STS policy required"
+msgstr "Potrebno je MTA-STS pravilo"
+
+msgid "MTA-STS policy validation failed"
+msgstr "Preverjanje MTA-STS pravila ni uspelo"
+
+msgid "TLS reporting required"
+msgstr "Potrebno je TLS poročanje"
+
+msgid "TLS report requested"
+msgstr "TLS poročilo zahtevano"
+
+msgid "SMTP MTA Strict Transport Security active"
+msgstr "SMTP MTA Strict Transport Security aktiviran"
+
+msgid "DANE validation required"
+msgstr "Potrebno je DANE preverjanje"
+
+msgid "DANE validation failed"
+msgstr "DANE preverjanje ni uspelo"
+
+msgid "TLSA record missing"
+msgstr "TLSA zapis manjka"
+
+msgid "Certificate name mismatch"
+msgstr "Ime potrdila se ne ujema"
+
+msgid "Certificate expired"
+msgstr "Potrdilo je poteklo"
+
+msgid "AUTH LOGIN required"
+msgstr "Potrebna je AUTH LOGIN avtentikacija"
+
+msgid "AUTH PLAIN required"
+msgstr "Potrebna je AUTH PLAIN avtentikacija"
+
+msgid "AUTH CRAM-MD5 required"
+msgstr "Potrebna je AUTH CRAM-MD5 avtentikacija"
+
+msgid "AUTH DIGEST-MD5 required"
+msgstr "Potrebna je AUTH DIGEST-MD5 avtentikacija"
+
+msgid "AUTH GSSAPI required"
+msgstr "Potrebna je AUTH GSSAPI avtentikacija"
+
+msgid "AUTH NTLM required"
+msgstr "Potrebna je AUTH NTLM avtentikacija"
+
+msgid "AUTH SCRAM required"
+msgstr "Potrebna je AUTH SCRAM avtentikacija"
+
+msgid "AUTH OAUTHBEARER required"
+msgstr "Potrebna je AUTH OAUTHBEARER avtentikacija"
+
+msgid "AUTH XOAUTH2 required"
+msgstr "Potrebna je AUTH XOAUTH2 avtentikacija"
+
+msgid "Exchange: Mailbox database error"
+msgstr "Exchange: Napaka podatkovne baze poštnega nabiralnika"
+
+msgid "Exchange: Store driver error"
+msgstr "Exchange: Napaka gonilnika za shranjevanje"
+
+msgid "Exchange: Transport agent error"
+msgstr "Exchange: Napaka agenta za prenos"
+
+msgid "Exchange: Content conversion error"
+msgstr "Exchange: Napaka pretvorbe vsebine"
+
+msgid "Exchange: Routing error"
+msgstr "Exchange: Napaka usmerjanja"
+
+msgid "Exchange: Mail flow stalled"
+msgstr "Exchange: Tok e-pošte se je ustavil"
+
+msgid "Exchange: Shadow redundancy error"
+msgstr "Exchange: Napaka redundantnosti v senci"
+
+msgid "Exchange: Safety net error"
+msgstr "Exchange: Napaka varnostne mreže"
+
+msgid "Exchange: Queue database error"
+msgstr "Exchange: Napaka podatkovne baze čakalne vrste"
+
+msgid "Exchange: Message throttled"
+msgstr "Exchange: Sporočilo omejeno"
+
+msgid "Postfix: Bounce queue error"
+msgstr "Postfix: Napaka čakalne vrste za vrnjena sporočila"
+
+msgid "Postfix: Deferred queue error"
+msgstr "Postfix: Napaka čakalne vrste za odložena sporočila"
+
+msgid "Postfix: Hold queue error"
+msgstr "Postfix: Napaka čakalne vrste za zadržana sporočila"
+
+msgid "Postfix: Incoming queue error"
+msgstr "Postfix: Napaka čakalne vrste za dohodna sporočila"
+
+msgid "Postfix: Active queue error"
+msgstr "Postfix: Napaka čakalne vrste za aktivna sporočila"
+
+msgid "Postfix: Corrupted queue file"
+msgstr "Postfix: Pokvarjena datoteka čakalne vrste"
+
+msgid "Sendmail: Queue runner error"
+msgstr "Sendmail: Napaka izvajalca čakalne vrste"
+
+msgid "Sendmail: Alias database error"
+msgstr "Sendmail: Napaka podatkovne baze vzdevkov"
+
+msgid "Sendmail: Virtuser table error"
+msgstr "Sendmail: Napaka tabele virtualnih uporabnikov"
+
+msgid "Sendmail: Mailer definition error"
+msgstr "Sendmail: Napaka definicije programa za e-pošto"
+
+msgid "Exim: Router configuration error"
+msgstr "Exim: Napaka konfiguracije usmerjevalnika"
+
+msgid "Exim: Transport configuration error"
+msgstr "Exim: Napaka konfiguracije prenosa"
+
+msgid "Exim: Director configuration error"
+msgstr "Exim: Napaka konfiguracije usmerjevalnika"
+
+msgid "Exim: Retry configuration error"
+msgstr "Exim: Napaka konfiguracije ponovnih poskusov"
+
+msgid "Exim: Rewrite configuration error"
+msgstr "Exim: Napaka konfiguracije prepisovanja"
+
+msgid "Exim: Authentication configuration error"
+msgstr "Exim: Napaka konfiguracije avtentikacije"
+
+msgid "Exim: ACL configuration error"
+msgstr "Exim: Napaka konfiguracije ACL"
+
+msgid "Exim: Local_scan configuration error"
+msgstr "Exim: Napaka konfiguracije Local_scan"
+
+msgid "Exim: Lookup configuration error"
+msgstr "Exim: Napaka konfiguracije iskanja"
+
+msgid "Exim: Expansion configuration error"
+msgstr "Exim: Napaka konfiguracije razširitev"
+
+msgid "HTTP Protocol Versions"
+msgstr "Različice HTTP protokola"
+
+msgid "Protocol"
+msgstr "Protokol"
+
+msgid "Request %"
+msgstr "Delež zahtev"
+
+msgid "Bandwidth %"
+msgstr "Delež pasovne širine"
+
+msgid "Each request requires a new connection"
+msgstr "Vsaka zahteva zahteva novo povezavo"
+
+msgid "Multiple requests can reuse one connection"
+msgstr "Več zahtev lahko deli isto povezavo"
+
+msgid "Multiple requests in parallel over one connection"
+msgstr "Več zahtev se lahko obdeluje vzporedno znotraj ene povezave"
+
+msgid "Faster connection, better performance on poor networks"
+msgstr "Hitrejše povezovanje, boljše zmogljivosti na počasnih omrežjih"
+
+msgid "No protocol data available"
+msgstr "Trenutno ni podatkov o protokolu"
+
+msgid "of requests use HTTP/1.0"
+msgstr "zahtev uporablja HTTP/1.0 protokol"
+
+msgid "From access logs"
+msgstr "Iz dnevnikov dostopa"
+
+msgid "No HTTP/2 requests detected"
+msgstr "Ni zaznanih HTTP/2 zahtev"
+
+msgid "All requests are HTTP/1.0, no HTTP/2 requests"
+msgstr "Trenutno so vse zahteve HTTP/1.0, ni HTTP/2 zahtev"
+
+msgid "HTTP/3 not detected"
+msgstr "Ni zaznanih HTTP/3 zahtev"
+
+msgid "all requests do not include QUIC/HTTP/3 protocol requests"
+msgstr "Trenutno vse zahteve ne vključujejo QUIC/HTTP/3 protokola"
+
+msgid "Mail Authentication Statistics"
+msgstr "Statistika avtentikacije e-pošte"
+
+msgid "Authentication"
+msgstr "Vrsta avtentikacije"
+
+msgid "Pass"
+msgstr "Opravljeno"
+
+msgid "Fail"
+msgstr "Neuspeh"
+
+msgid "Softfail"
+msgstr "Mehki neuspeh"
+
+msgid "Neutral"
+msgstr "Neutralno"
+
+msgid "None"
+msgstr "Brez"
+
+msgid "Mail Queue Delay Statistics"
+msgstr "Statistika zamud v čakalni vrsti e-pošte"
+
+msgid "Delay Range"
+msgstr "Razpon zamude"
+
+msgid "Count"
+msgstr "Število"
+
+msgid "Percentage"
+msgstr "Odstotek"
+
+msgid "TLS Encryption Statistics"
+msgstr "Statistika TLS šifriranja"
+
+msgid "TLS Versions"
+msgstr "Različice TLS"
+
+msgid "Top Ciphers"
+msgstr "Najpogostejši kompleti za šifriranje"
+
+msgid "robot_hits_detail_both"
+msgstr "Skupaj zahtev: %s (normalne strani: %s, robots.txt: %s)"
+
+msgid "robot_hits_detail_only_robots"
+msgstr "Dostop samo do robots.txt: %s-krat, ni prikopal drugih strani"
+
+msgid "robot_hits_detail_normal"
+msgstr "Zahteve za normalne strani: %s"
+
+# Help and tips
+msgid "Troubleshooting"
+msgstr "Odpravljanje težav"
+
+msgid "Did you use the correct URL?"
+msgstr "Ste uporabili pravilen URL?"
+
+msgid "Example:"
+msgstr "Primer:"
+
+msgid "Did you use correct config parameter?"
+msgstr "Ste uporabili pravilen konfiguracijski parameter?"
+
+msgid "Example: If your config file is awstats.mysite.conf, use -config=mysite"
+msgstr "Primer: Če je vaša konfiguracijska datoteka awstats.mysite.conf, uporabite -config=mysite"
+
+msgid "Did you create your config file 'awstats.$SiteConfig.conf'?"
+msgstr "Ste ustvarili konfiguracijsko datoteko 'awstats.$SiteConfig.conf'?"
+
+msgid "If not, you can run \"awstats_configure.pl\" from command line, or create it manually."
+msgstr "Če ne, lahko zaženete \"awstats_configure.pl\" iz ukazne vrstice ali jo ustvarite ročno."
+
+msgid "Setup"
+msgstr "Nastavitev"
+
+msgid "file, web server or permissions may be wrong."
+msgstr "datoteka, spletni strežnik ali dovoljenja so lahko napačni."
+
+msgid "Check config file, permissions and AWStats documentation (in 'docs' directory)."
+msgstr "Preverite konfiguracijsko datoteko, dovoljenja in AWStats dokumentacijo (v 'docs' mapi)."
+
+msgid "Warning: Can't find language files for \"%s\". English will be used."
+msgstr "Opozorilo: Jezikovnih datotek za \"%s\" ni mogoče najti. Uporabljena bo angleščina."
+
+#------------------------------------------------------------------------------
+# Napake in signali
+#------------------------------------------------------------------------------
+
+msgid "%s process (ID %s) interrupted by signal %s."
+msgstr "%s proces (ID %s) je prekinil signal %s."
+
+msgid "An AWStats update process seems to be already running for this config file. Try later. If this is not true, remove manually lock file"
+msgstr "Zdi se, da proces posodabljanja AWStats že teče za to konfiguracijsko datoteko. Poskusite kasneje. Če to ne drži, ročno odstranite zaklepno datoteko"
+
+#------------------------------------------------------------------------------
+# Novi naslovi statistike
+#------------------------------------------------------------------------------
+
+msgid "Report Overview"
+msgstr "Pregled poročila"
+
+msgid "Monthly Statistics"
+msgstr "Statistika po mesecih"
+
+msgid "Daily Statistics"
+msgstr "Statistika po datumih"
+
+msgid "Statistics by Day of Week"
+msgstr "Statistika po dnevih v tednu"
+
+msgid "Hourly Page Views"
+msgstr "Ogledi strani po urah"
+
+msgid "Traffic Sources"
+msgstr "Viri prometa"
+
+msgid "Other Sources"
+msgstr "Drugi viri"
+
+msgid "tooltip_1"
+msgstr "Število sej obiskovalca na spletni strani. Ko obiskovalec nima aktivnosti več kot 30 minut, se naslednji obisk šteje kot nov."
+
+msgid "tooltip_2"
+msgstr "Število različnih obiskovalcev, ki so obiskali vašo spletno stran v izbranem časovnem obdobju. Statistika temelji na IP naslovu."
+
+msgid "tooltip_3"
+msgstr "Število zahtev, ki se štejejo za strani (kot so HTML, PHP, ASP itd.), razen statičnih datotek, kot so slike, CSS, JS."
+
+msgid "tooltip_4"
+msgstr "Skupno število vseh zahtev, poslanih strežniku, vključno s stranmi, slikami, CSS, JS in vsemi drugimi datotekami."
+
+msgid "tooltip_5"
+msgstr "Skupna količina podatkov, ki jih je strežnik prenesel kot odgovor na zahteve uporabnikov."
+
+msgid "tooltip_13"
+msgstr "Statistika virov, ki prihajajo na vašo spletno stran prek iskalnikov. Prikazuje, kateri iskalniki prinašajo promet in katere iskalne izraze obiskovalci uporabljajo."
+
+msgid "tooltip_14"
+msgstr "Statistika virov, ki prihajajo na vašo spletno stran prek zunanjih povezav z drugih spletnih strani. Prikazuje, katere spletne strani povezujejo na vas in koliko prometa prinašajo."
+
+msgid "tooltip_15"
+msgstr "Iskalni izrazi, ki jih obiskovalci uporabljajo, da najdejo vašo spletno stran prek iskalnikov. Ključne besede so posamezne besede, ključne fraze so kombinacije več besed."
+
+msgid "tooltip_16"
+msgstr "Avtomatizirani programi, kot so iskalni roboti, roboti za AI usposabljanje, skenerji ranljivosti itd. Številka v oklepaju predstavlja število zahtev za normalne strani in robots.txt."
+
+msgid "tooltip_17"
+msgstr "Graf porazdelitve prometa v 24 urah. Prikazuje promet vaše spletne strani v različnih urah, pomaga vam razumeti čas aktivnosti uporabnikov."
+
+msgid "tooltip_18"
+msgstr "Ta stolpec prikazuje povprečne vrednosti za vsak dan/teden v izbranem časovnem obdobju, pomaga vam razumeti splošni trend."
+
+msgid "tooltip_19"
+msgstr "Kliknite na elemente v grafu za podrobne informacije. Premik miške nad elemente grafa prikaže specifične vrednosti."
+
+msgid "tooltip_20"
+msgstr "Podatki, ki jih ni mogoče uvrstiti v obstoječe razpone, običajno zaradi nenavadne ali manjkajoče oblike podatkov."
+
+msgid "tooltip_21"
+msgstr "Zabeleženi napadi črvov. Črvi so samoreplicirajoči zlonamerni programi, ki se običajno širijo prek omrežnih ranljivosti."
+
+#------------------------------------------------------------------------------
+# Prikaz informacij o pomoči - Community Edition
+#------------------------------------------------------------------------------
+
+msgid "AWStats %s - Advanced Web Statistics"
+msgstr "AWStats %s - napredna spletna statistika"
+
+msgid "Copyright (c) 2000-2025 Laurent Destailleur"
+msgstr "Avtorske pravice (c) 2000-2025 Laurent Destailleur"
+
+msgid "Copyright (c) 2026-latest Community Edition"
+msgstr "Avtorske pravice (c) 2026-naprej Community Edition"
+
+msgid "AWStats comes with ABSOLUTELY NO WARRANTY. It's a free software distributed with a GNU General Public License (See LICENSE file for details)."
+msgstr "AWStats se distribuira BREZ KAKRŠNE KOLI GARANCIJE. Je brezplačna programska oprema, distribuirana pod GNU General Public licenco (za podrobnosti glejte datoteko LICENSE)."
+
+msgid "Syntax: %s -config=virtualhostname [options]"
+msgstr "Sintaksa: %s -config=imevirtualnegagostitelja [možnosti]"
+
+msgid "This runs %s in command line to update statistics (-update option) of a web site, from the log file defined in AWStats config file, or build a HTML report (-output option)."
+msgstr "Ta ukaz zažene %s iz ukazne vrstice za posodabljanje statistike (-update možnost) spletne strani iz datoteke dnevnika, definirane v AWStats konfiguracijski datoteki, ali za izdelavo HTML poročila (-output možnost)."
+
+msgid "First, %s tries to read %s.virtualhostname.conf as the config file. If not found, %s tries to read %s.conf, and finally the full path passed to -config="
+msgstr "Najprej %s poskuša brati %s.imevirtualnegagostitelja.conf kot konfiguracijsko datoteko. Če ni najdena, %s poskuša brati %s.conf in na koncu celotno pot, posredovano parametru -config="
+
+msgid "Note 1: Config files (*.conf) must be in /etc/awstats, /usr/local/etc/awstats, /etc or same directory than awstats.pl script file."
+msgstr "Opomba 1: Konfiguracijske datoteke (*.conf) morajo biti v /etc/awstats, /usr/local/etc/awstats, /etc ali isti mapi kot skripta awstats.pl."
+
+msgid "Note 2: If AWSTATS_FORCE_CONFIG environment variable is defined, AWStats will use it as the 'config' value, whatever is the value on command line or URL."
+msgstr "Opomba 2: Če je definirana okoljska spremenljivka AWSTATS_FORCE_CONFIG, jo bo AWStats uporabil kot vrednost 'config', ne glede na vrednost v ukazni vrstici ali URL-ju."
+
+msgid "See AWStats documentation for all setup instructions."
+msgstr "Za vsa navodila za namestitev glejte dokumentacijo AWStats."
+
+msgid "Options to update statistics:"
+msgstr "Možnosti za posodabljanje statistike:"
+
+msgid "  -update        to update statistics (default)"
+msgstr "  -update        posodobi statistiko (privzeto)"
+
+msgid "  -showsteps     to add benchmark information every %s lines processed"
+msgstr "  -showsteps     doda informacije o zmogljivosti po vsakih obdelanih %s vrsticah"
+
+msgid "  -showcorrupted to add output for each corrupted lines found, with reason"
+msgstr "  -showcorrupted prikaže izpis za vsako najdeno pokvarjeno vrstico z razlogom"
+
+msgid "  -showdropped   to add output for each dropped lines found, with reason"
+msgstr "  -showdropped   prikaže izpis za vsako najdeno zavrženo vrstico z razlogom"
+
+msgid "  -showunknownorigin  to output referer when it can't be parsed"
+msgstr "  -showunknownorigin    prikaže napotitelja, ko ga ni mogoče razčleniti"
+
+msgid "  -showdirectorigin   to output log line when origin is a direct access"
+msgstr "  -showdirectorigin     prikaže vrstico dnevnika, ko je vir neposreden dostop"
+
+msgid "  -updatefor=n   to stop the update process after parsing n lines"
+msgstr "  -updatefor=n    ustavi postopek posodabljanja po razčlenitvi n vrstic"
+
+msgid "  -LogFile=x     to change log to analyze whatever is 'LogFile' in config file"
+msgstr "  -LogFile=x      spremeni dnevnik za analizo, ne glede na 'LogFile' v konfiguracijski datoteki"
+
+msgid "  Be care to process log files in chronological order when updating statistics."
+msgstr "  Pazite, da pri posodabljanju statistike obdelujete dnevniške datoteke v kronološkem vrstnem redu."
+
+msgid "Options to show statistics:"
+msgstr "Možnosti za prikaz statistike:"
+
+msgid "  -output      to output main HTML report (no update made except with -update)"
+msgstr "  -output       prikaže glavno HTML poročilo (ni posodobitev razen z -update)"
+
+msgid "  -output=x    to output other report pages where x is:"
+msgstr "  -output=x     prikaže druge strani poročila, kjer je x:"
+
+msgid "build page of all domains/countries"
+msgstr "zgradi stran vseh domen/držav"
+
+msgid "build page of all hosts"
+msgstr "zgradi stran vseh gostiteljev"
+
+msgid "build page of last hits for hosts"
+msgstr "zgradi stran zadnjih zahtev za gostitelje"
+
+msgid "build page of all unresolved IP"
+msgstr "zgradi stran vseh nerešenih IP naslovov"
+
+msgid "build page of all email senders (maillog)"
+msgstr "zgradi stran vseh pošiljateljev e-pošte (maillog)"
+
+msgid "build page of last email senders (maillog)"
+msgstr "zgradi stran zadnjih pošiljateljev e-pošte (maillog)"
+
+msgid "build page of all email receivers (maillog)"
+msgstr "zgradi stran vseh prejemnikov e-pošte (maillog)"
+
+msgid "build page of last email receivers (maillog)"
+msgstr "zgradi stran zadnjih prejemnikov e-pošte (maillog)"
+
+msgid "build page of all logins used"
+msgstr "zgradi stran vseh uporabljenih prijav"
+
+msgid "build page of last hits for logins"
+msgstr "zgradi stran zadnjih zahtev za prijave"
+
+msgid "build page of all robots/spider visits"
+msgstr "zgradi stran vseh obiskov robotov/pajkov"
+
+msgid "build page of last hits for robots"
+msgstr "zgradi stran zadnjih zahtev za robote"
+
+msgid "list most often viewed pages"
+msgstr "prikaže najpogosteje ogledane strani"
+
+msgid "list most often viewed pages matching filter"
+msgstr "prikaže najpogosteje ogledane strani, ki ustrezajo filtru"
+
+msgid "list entry pages"
+msgstr "prikaže vhodne strani"
+
+msgid "list entry pages matching filter"
+msgstr "prikaže vhodne strani, ki ustrezajo filtru"
+
+msgid "list exit pages"
+msgstr "prikaže izhodne strani"
+
+msgid "list exit pages matching filter"
+msgstr "prikaže izhodne strani, ki ustrezajo filtru"
+
+msgid "build page with os detailed versions"
+msgstr "zgradi stran s podrobnimi različicami operacijskih sistemov"
+
+msgid "build page with browsers detailed versions"
+msgstr "zgradi stran s podrobnimi različicami brskalnikov"
+
+msgid "list 'User Agents' with unknown browser"
+msgstr "prikaže 'User Agents' z neznanim brskalnikom"
+
+msgid "list 'User Agents' with unknown OS"
+msgstr "prikaže 'User Agents' z neznanim operacijskim sistemom"
+
+msgid "build page of all refering search engines"
+msgstr "zgradi stran vseh napotitvenih iskalnikov"
+
+msgid "build page of all refering pages"
+msgstr "zgradi stran vseh napotitvenih strani"
+
+msgid "list all keyphrases used on search engines"
+msgstr "prikaže vse ključne fraze, uporabljene na iskalnikih"
+
+msgid "list all keywords used on search engines"
+msgstr "prikaže vse ključne besede, uporabljene na iskalnikih"
+
+msgid "list 'Referers' for 404 errors"
+msgstr "prikaže 'Napotitelje' za 404 napake"
+
+msgid "build page of all values for ExtraSection X"
+msgstr "zgradi stran vseh vrednosti za ExtraSection X"
+
+msgid "  -staticlinks           to have static links in HTML report page"
+msgstr "  -staticlinks           uporabi statične povezave na strani HTML poročila"
+
+msgid "  -staticlinksext=xxx    to have static links with .xxx extension instead of .html"
+msgstr "  -staticlinksext=xxx    uporabi statične povezave s končnico .xxx namesto .html"
+
+msgid "  -lang=LL     to output a HTML report in language LL (en,de,es,fr,it,nl,sl,...)"
+msgstr "  -lang=LL     prikaže HTML poročilo v jeziku LL (en,de,es,fr,it,nl,sl,...)"
+
+msgid "  -month=MM    to output a HTML report for an old month MM"
+msgstr "  -month=MM    prikaže HTML poročilo za stari mesec MM"
+
+msgid "  -year=YYYY   to output a HTML report for an old year YYYY"
+msgstr "  -year=YYYY   prikaže HTML poročilo za staro leto YYYY"
+
+msgid "  The 'date' options doesn't allow you to process old log file. They only allow you to see a past report for a chosen month/year period instead of current month/year."
+msgstr "  Možnosti 'datuma' vam ne dovoljujejo obdelave starih dnevniških datotek. Omogočajo vam le ogled preteklega poročila za izbrano obdobje meseca/leta namesto tekočega meseca/leta."
+
+msgid "Other options:"
+msgstr "Druge možnosti:"
+
+msgid "  -debug=X     to add debug informations lesser than level X (speed reduced)"
+msgstr "  -debug=X     doda informacije za razhroščevanje pod nivojem X (zmanjšana hitrost)"
+
+msgid "  -version     show AWStats version"
+msgstr "  -version, -v      prikaže različico AWStats"
+
+msgid "Now supports/detects:"
+msgstr "Trenutno podpira/zaznava:"
+
+msgid "  Web/Ftp/Mail/streaming server log analyzis (and load balanced log files)"
+msgstr "  Analiza dnevnikov spletnega/FTP/e-poštnega/pretakalnega strežnika (in uravnoteženih dnevnikov)"
+
+msgid "  Reverse DNS lookup (IPv4 and IPv6) and GeoIP lookup"
+msgstr "  Povratno iskanje DNS (IPv4 in IPv6) in iskanje GeoIP"
+
+msgid "  Number of visits, number of unique visitors"
+msgstr "  Število obiskov, število edinstvenih obiskovalcev"
+
+msgid "  Visits duration and list of last visits"
+msgstr "  Trajanje obiskov in seznam zadnjih obiskov"
+
+msgid "  Authenticated users"
+msgstr "  Avtenticirani uporabniki"
+
+msgid "  Days of week and rush hours"
+msgstr "  Dnevi v tednu in prometne konice"
+
+msgid "  Hosts list and unresolved IP addresses list"
+msgstr "  Seznam gostiteljev in seznam nerešenih IP naslovov"
+
+msgid "  Most viewed, entry and exit pages"
+msgstr "  Najbolj gledane, vhodne in izhodne strani"
+
+msgid "  Files type and Web compression (mod_gzip, mod_deflate stats)"
+msgstr "  Vrste datotek in spletno stiskanje (mod_gzip, mod_deflate statistika)"
+
+msgid "  Configured Database Statistics"
+msgstr "  Konfigurirana statistika podatkovne baze"
+
+msgid "  %s domains/countries"
+msgstr "  %s domen/držav"
+
+msgid "  %s robots"
+msgstr "  %s robotov"
+
+msgid "  %s worm's families"
+msgstr "  %s družin črvov"
+
+msgid "  %s operating systems"
+msgstr "  %s operacijskih sistemov"
+
+msgid "  %s browsers (%s with phone browsers database)"
+msgstr "  %s brskalnikov (%s z bazo mobilnih brskalnikov)"
+
+msgid "  %s search engines (and keyphrases/keywords used from them)"
+msgstr "  %s iskalnikov (in ključne fraze/besede, uporabljene na njih)"
+
+msgid "  All HTTP errors with last referrer"
+msgstr "  Vse HTTP napake z zadnjim napotiteljem"
+
+msgid "  Report by day/month/year"
+msgstr "  Poročilo po dnevu/mesecu/letu"
+
+msgid "  Dynamic or static HTML or XHTML reports, static PDF reports"
+msgstr "  Dinamična ali statična HTML ali XHTML poročila, statična PDF poročila"
+
+msgid "  Indexed text or XML monthly database"
+msgstr "  Indeksirano besedilo ali XML mesečna podatkovna baza"
+
+msgid "  And a lot of other advanced features and options..."
+msgstr "  In številne druge napredne funkcije in možnosti..."
+
+msgid "  New versions and FAQ at http://www.awstats.org"
+msgstr "  Nove različice in pogosta vprašanja na https://github.com/hestiacn/vstats/issues"

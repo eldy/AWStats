@@ -117,6 +117,7 @@ foreach my $file (@filesindir) {
     if ($file =~ /^awstats\.(.*)conf$/) {
         my $conf=$1; $conf =~ s/\.$//;
 		if ($conf eq 'model') { next; }
+        if ($conf eq 'default') { next; }
         if ($confexcluded{$conf}) { next; }
     }
     push @files, $file;
@@ -126,17 +127,31 @@ debug("List of files qualified :".join(",",@files));
 
 # Run update process for each config file found
 if (@files) {
-	# Check if AWSTATS prog is found
-	my $AwstatsFound=0;
-	if (-s "$Awstats") { $AwstatsFound=1; }
-	elsif (-s "/usr/local/awstats/wwwroot/cgi-bin/awstats.pl") {
-		$Awstats="/usr/local/awstats/wwwroot/cgi-bin/awstats.pl";
-		$AwstatsFound=1;
-	}
-	if (! $AwstatsFound) {
-		error("Can't find AWStats program ('$Awstats').\nUse -awstatsprog option to solve this");
-		exit 1;
-	}
+    # Check if AWSTATS prog is found
+    my $AwstatsFound = 0;
+    if (!$AwstatsFound) {
+        my @possible_paths = (
+            "awstats.pl",
+            "./awstats.pl",
+            "/usr/lib/cgi-bin/awstats.pl",
+            "/usr/local/www/cgi-bin/awstats.pl",
+            "/usr/local/awstats/wwwroot/cgi-bin/awstats.pl",
+            "/usr/share/awstats/wwwroot/cgi-bin/awstats.pl",
+        );
+        
+        foreach my $path (@possible_paths) {
+            if (-s $path) {
+                $Awstats = $path;
+                $AwstatsFound = 1;
+                last;
+            }
+        }
+    }
+    
+    if (! $AwstatsFound) {
+        error("Can't find AWStats program ('$Awstats').\nUse -awstatsprog option to solve this");
+        exit 1;
+    }
 	# Define AwstatsDir and AwstatsProg
 	($AwstatsDir=$Awstats) =~ s/([^\/\\]+)$//; $AwstatsProg=$1;
 	$AwstatsDir||='.'; $AwstatsDir =~ s/([^\/\\])[\\\/]+$/$1/;
@@ -163,5 +178,4 @@ if (@files) {
 	print "No AWStats config file found in $DIRCONFIG\n";
 }
 
-0;	# Do not remove this line
-
+0;

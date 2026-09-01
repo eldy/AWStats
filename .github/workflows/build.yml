@@ -1,0 +1,1321 @@
+name: AWStats Community Edition Released
+
+on:
+  push:
+    tags: 
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build-unix:
+    name: 构建 Linux 包
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: release
+          fetch-depth: 0
+      
+      - name: 检查文件结构
+        run: |
+          echo "📁 当前目录结构："
+          pwd
+          ls -la
+          echo "\n📁 make 目录："
+          ls -la make/ || echo "make 目录不存在"
+          echo "\n📁 make/tgz 目录："
+          ls -la make/tgz/ || echo "tgz 目录不存在"
+          echo "\n📁 make/rpm 目录："
+          ls -la make/rpm/ || echo "rpm 目录不存在"
+      
+      - name: 安装打包依赖
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            rpm \
+            dpkg-dev \
+            debhelper \
+            build-essential \
+            p7zip-full \
+            tar \
+            gzip \
+            zip \
+            make \
+            libgeo-ip-perl \
+            geoip-database
+          
+          # 验证安装
+          echo "✅ 已安装工具版本："
+          rpmbuild --version || echo "rpmbuild 未安装"
+          dpkg-buildpackage --version || echo "dpkg-buildpackage 未安装"
+          7z --version | head -1 || echo "7z 未安装"
+          dpkg -l debhelper | grep debhelper || echo "debhelper 未安装"
+          # 或者直接检查命令是否存在
+          which dh && echo "dh 已安装" || echo "dh 未安装"
+
+      - name: 安装 Perl 模块
+        run: |
+          sudo cpan install JSON::XS Try::Tiny Encode || echo "CPAN 安装失败，继续"
+      
+      - name: 设置版本号
+        id: version
+        run: |
+          VERSION="${GITHUB_REF#refs/tags/}"
+          VERSION="${VERSION#v}"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "构建版本: $VERSION"
+      
+      - name: 修复 RPM spec 文件
+        run: |
+          if [ -f "make/rpm/awstats.spec" ]; then
+            echo "📝 修复 RPM spec 文件..."
+            # 备份原文件
+            cp make/rpm/awstats.spec make/rpm/awstats.spec.bak
+            # 在 %prep 阶段从 docs/images/ 复制图标
+            sed -i '/%prep/a # 复制图标文件\ncp -pr $RPM_BUILD_DIR/%{name}-%{version}/docs/images/* $RPM_BUILD_DIR/%{name}-%{version}/ 2>/dev/null || true' make/rpm/awstats.spec
+            echo "✅ RPM spec 文件已修复"
+          else
+            echo "⚠️ RPM spec 文件不存在，跳过修复"
+          fi
+
+      - name: 复制 RPM spec 文件到正确位置
+        run: |
+          mkdir -p ../../awstats/make/rpm
+          cp make/rpm/awstats.spec ../../awstats/make/rpm/awstats.spec
+          echo "✅ 已复制 RPM spec 文件"
+          ls -la ../../awstats/make/rpm/
+          
+      - name: Prepare RPM source structure
+        run: |
+          cd /home/runner/work/vstats/vstats
+          mkdir -p awstats-8.1
+          cp -r * awstats-8.1/ 2>/dev/null || true
+
+      - name: Debug RPM build environment
+        run: |
+          echo "=== 当前工作目录 ==="
+          pwd
+          ls -la
+          
+          echo "=== BUILDROOT 目录 ==="
+          ls -la /home/runner/work/vstats/vstats/make/buildroot/ 2>/dev/null || echo "BUILDROOT 不存在"
+          
+          echo "=== RPM SOURCES 目录 ==="
+          ls -la /home/runner/rpmbuild/SOURCES/ 2>/dev/null || echo "SOURCES 目录不存在"
+          
+          echo "=== 查找源码目录 ==="
+          find /home/runner/work/vstats/vstats -name "awstats-8.1" -type d 2>/dev/null
+          
+          echo "=== 查看 BUILDROOT 内容 ==="
+          ls -la /home/runner/work/vstats/vstats/make/buildroot/awstats-8.1/ 2>/dev/null || echo "awstats-8.1 子目录不存在"
+          
+          echo "=== 查看 BUILDROOT 顶层 ==="
+          ls -la /home/runner/work/vstats/vstats/make/buildroot/ 2>/dev/null || echo "BUILDROOT 为空"
+          
+          echo "=== 检查 lang 目录位置 ==="
+          find /home/runner/work/vstats/vstats -name "lang" -type d 2>/dev/null
+          
+          echo "=== 检查 wwwroot/cgi-bin 结构 ==="
+          find /home/runner/work/vstats/vstats -path "*/wwwroot/cgi-bin" -type d 2>/dev/null | head -5
+          
+          echo "=== 查看 build_rpm 函数 ==="
+          grep -A 20 "sub build_rpm" make/makepack-awstats.pl | head -30
+          
+          echo "=== 查看 prepare_buildroot 函数 ==="
+          grep -A 30 "sub prepare_buildroot" make/makepack-awstats.pl | head -40
+          
+      - name: 显示 RPM 构建日志
+        if: always()
+        run: |
+          echo "📋 RPM 构建日志:"
+          if [ -f "make/rpm-build.log" ]; then
+            cat make/rpm-build.log | grep -E "error|Error|FAILED|failed|No such file|not found" || echo "  无错误信息"
+          else
+            echo "  rpm-build.log 不存在"
+          fi
+
+      - name: Debug generated rules file
+        run: |
+          cd make
+          if [ -f deb-build/awstats-8.1/debian/rules ]; then
+            echo "=== Rules file content (first 20 lines) ==="
+            head -20 deb-build/awstats-8.1/debian/rules | cat -A
+            echo ""
+            echo "=== Check line 64 ==="
+            sed -n '50,100p' deb-build/awstats-8.1/debian/rules | cat -A
+          else
+            echo "Rules file not found!"
+          fi
+
+      - name: Debug DEB build environment
+        run: |
+          echo "=== DEB 调试信息 ==="
+          echo "当前工作目录: $(pwd)"
+          
+          echo "=== 检查 debian 目录 ==="
+          ls -la deb-build/awstats-8.1/debian/ 2>/dev/null || echo "debian 目录不存在"
+          
+          echo "=== 检查 rules 文件 ==="
+          if [ -f deb-build/awstats-8.1/debian/rules ]; then
+            echo "rules 文件存在，检查第 71 行附近:"
+            sed -n '65,75p' deb-build/awstats-8.1/debian/rules | cat -A
+          else
+            echo "rules 文件不存在"
+          fi
+          
+          echo "=== 检查 control 文件 ==="
+          head -20 deb-build/awstats-8.1/debian/control 2>/dev/null || echo "control 文件不存在"
+          
+          echo "=== 检查 changelog ==="
+          head -10 deb-build/awstats-8.1/debian/changelog 2>/dev/null || echo "changelog 不存在"
+          
+          echo "=== 检查 postinst ==="
+          head -20 deb-build/awstats-8.1/debian/postinst 2>/dev/null || echo "postinst 不存在"
+          
+          echo "=== 查看构建日志中的 tab 错误 ==="
+          if [ -f deb-build.log ]; then
+            grep -n "missing separator" deb-build.log || echo "未发现 missing separator 错误"
+          fi
+
+      - name: 显示 DEB 构建日志
+        if: always()
+        run: |
+          echo "📋 DEB 构建日志:"
+          if [ -f "deb-build.log" ]; then
+            cat deb-build.log | grep -E "error|Error|missing separator|Failed|failed" || echo "  无错误信息"
+          else
+            echo "  deb-build.log 不存在"
+          fi
+
+      - name: 检测打包依赖
+        id: check-deps
+        run: |
+          echo "🔍 检测打包依赖..."
+          
+          # 检测 7z (ZIP)
+          if command -v 7z &> /dev/null; then
+            ZIP_VER=$(7z | head -1 | cut -d ' ' -f 3)
+            echo "✅ 7z 已安装: $ZIP_VER"
+            echo "HAS_ZIP=true" >> $GITHUB_OUTPUT
+          else
+            echo "❌ 7z 未安装 - ZIP 包将无法构建"
+            echo "HAS_ZIP=false" >> $GITHUB_OUTPUT
+          fi
+          
+          # 检测 rpmbuild (RPM)
+          if command -v rpmbuild &> /dev/null; then
+            RPM_VER=$(rpmbuild --version)
+            echo "✅ rpmbuild 已安装: $RPM_VER"
+            echo "HAS_RPM=true" >> $GITHUB_OUTPUT
+            
+            # 检查 RPM 配置
+            echo "  检查 RPM 构建环境:"
+            echo "  HOME: $HOME"
+            if [ -d "$HOME/rpmbuild" ]; then
+              echo "  ✅ rpmbuild 目录存在"
+            else
+              echo "  ⚠️ rpmbuild 目录不存在，将自动创建"
+              mkdir -p $HOME/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
+            fi
+          else
+            echo "❌ rpmbuild 未安装 - RPM 包将无法构建"
+            echo "HAS_RPM=false" >> $GITHUB_OUTPUT
+          fi
+          
+          # 检测 debhelper (DEB)
+          if dpkg -l debhelper &> /dev/null; then
+            DEB_VER=$(dpkg -l debhelper | grep debhelper | awk '{print $3}')
+            echo "✅ debhelper 已安装: $DEB_VER"
+            echo "HAS_DEB=true" >> $GITHUB_OUTPUT
+            
+            # 检查 dpkg-buildpackage
+            if command -v dpkg-buildpackage &> /dev/null; then
+              echo "  ✅ dpkg-buildpackage 已安装"
+            else
+              echo "  ❌ dpkg-buildpackage 未安装 - 需要安装 dpkg-dev"
+              echo "HAS_DEB=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "❌ debhelper 未安装 - DEB 包将无法构建"
+            echo "HAS_DEB=false" >> $GITHUB_OUTPUT
+          fi
+          
+          # 检测 tar (TGZ)
+          if command -v tar &> /dev/null; then
+            TAR_VER=$(tar --version | head -1)
+            echo "✅ tar 已安装: $TAR_VER"
+          fi
+    
+      - name: 根据依赖选择打包目标
+        id: targets
+        run: |
+          TARGETS="TGZ"  # TGZ 是基础，总是打包
+          
+          if [[ "${{ steps.check-deps.outputs.HAS_ZIP }}" == "true" ]]; then
+            TARGETS="$TARGETS,ZIP"
+            echo "✅ 添加 ZIP 目标"
+          else
+            echo "❌ 跳过 ZIP 目标 (7z 未安装)"
+          fi
+          
+          if [[ "${{ steps.check-deps.outputs.HAS_RPM }}" == "true" ]]; then
+            TARGETS="$TARGETS,RPM"
+            echo "✅ 添加 RPM 目标"
+          else
+            echo "❌ 跳过 RPM 目标 (rpmbuild 未安装)"
+          fi
+          
+          if [[ "${{ steps.check-deps.outputs.HAS_DEB }}" == "true" ]]; then
+            TARGETS="$TARGETS,DEB"
+            echo "✅ 添加 DEB 目标"
+          else
+            echo "❌ 跳过 DEB 目标 (debhelper 未安装)"
+          fi
+          
+          echo "targets=$TARGETS" >> $GITHUB_OUTPUT
+          echo "最终打包目标: $TARGETS"
+        shell: bash
+
+      - name: 修复 RPM 构建路径
+        run: |
+          cd make
+          
+          # 备份原脚本
+          cp makepack-awstats.pl makepack-awstats.pl.bak
+          
+          # 1. 修复 check_requirements 函数
+          perl -pi -e 's/system\("\$req --version > \/dev\/null 2>&1"\)/system("which \$req > \/dev\/null 2>&1")/g' makepack-awstats.pl
+          
+          # 2. 修复 spec 文件路径为绝对路径（解决 chdir 问题）
+          SPEC_ABS_PATH="$(pwd)/rpm/awstats.spec"
+          sed -i "s|my \$spec_template = \"rpm/\$PROJECT\.spec\";|my \$spec_template = \"$SPEC_ABS_PATH\";|g" makepack-awstats.pl
+          
+          # 3. 创建 rpm 目录并复制 spec 文件
+          mkdir -p rpm
+          if [ -f "make/rpm/awstats.spec" ]; then
+            cp make/rpm/awstats.spec rpm/awstats.spec
+            echo "✅ 已复制 spec 文件到 rpm/awstats.spec"
+          elif [ -f "rpm/awstats.spec" ]; then
+            echo "✅ spec 文件已存在"
+          else
+            echo "❌ 找不到 spec 文件"
+            find . -name "awstats.spec" -type f
+            exit 1
+          fi
+          
+          # 验证
+          ls -la rpm/awstats.spec
+          echo "✅ 已修复 RPM 构建路径"
+        shell: bash
+
+      - name: 运行打包脚本（带详细日志）
+        id: build
+        continue-on-error: true
+        env:
+          RELEASE_VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          cd make
+          echo "运行打包脚本，目标: ${{ steps.targets.outputs.targets }}"
+          
+          # 打包指定格式，并保存详细日志
+          perl makepack-awstats.pl --target=${{ steps.targets.outputs.targets }} 2>&1 | tee build.log
+          
+          # 提取各包构建相关日志
+          grep -A 10 -B 5 "Building TGZ package" build.log > tgz-build.log || true
+          grep -A 10 -B 5 "Building ZIP package" build.log > zip-build.log || true
+          grep -A 10 -B 5 "Building RPM package" build.log > rpm-build.log || true
+          grep -A 10 -B 5 "Building DEB package" build.log > deb-build.log || true
+          
+          echo "打包脚本返回码: $?"
+        shell: bash
+
+      - name: 生成构建报告（Linux）
+        if: always()
+        run: |
+          cd make
+          
+          # 创建构建报告
+          cat > BUILD_REPORT_LINUX.md << EOF
+          # 🔨 Linux 构建报告
+          
+          ## 构建信息
+          - **版本**: ${{ steps.version.outputs.version }}
+          - **目标**: ${{ steps.targets.outputs.targets }}
+          - **时间**: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+        
+          # RPM
+          if ls *.rpm 1> /dev/null 2>&1; then
+            echo "| RPM | ✅ 成功 | \`$(basename *.rpm)\` |" >> BUILD_REPORT_LINUX.md
+          else
+            echo "| RPM | ❌ 失败 | - |" >> BUILD_REPORT_LINUX.md
+            if [ -f "rpm-build.log" ] && [ -s "rpm-build.log" ]; then
+              echo "" >> BUILD_REPORT_LINUX.md
+              echo "### ❌ RPM 构建日志" >> BUILD_REPORT_LINUX.md
+              echo '```' >> BUILD_REPORT_LINUX.md
+              cat rpm-build.log >> BUILD_REPORT_LINUX.md
+              echo '```' >> BUILD_REPORT_LINUX.md
+            fi
+          fi
+          
+          # DEB
+          if ls *.deb 1> /dev/null 2>&1; then
+            echo "| DEB | ✅ 成功 | \`$(basename *.deb)\` |" >> BUILD_REPORT_LINUX.md
+          else
+            echo "| DEB | ❌ 失败 | - |" >> BUILD_REPORT_LINUX.md
+            if [ -f "deb-build.log" ] && [ -s "deb-build.log" ]; then
+              echo "" >> BUILD_REPORT_LINUX.md
+              echo "### ❌ DEB 构建日志" >> BUILD_REPORT_LINUX.md
+              echo '```' >> BUILD_REPORT_LINUX.md
+              cat deb-build.log >> BUILD_REPORT_LINUX.md
+              echo '```' >> BUILD_REPORT_LINUX.md
+            fi
+          fi
+          
+          # 输出报告
+          echo "📄 Linux 构建报告："
+          cat BUILD_REPORT_LINUX.md
+
+      - name: 检查 RPM 构建目录内容
+        run: |
+          echo "📂 检查构建目录（在 clean 之前）"
+          if [ -d "/home/runner/rpmbuild/BUILDROOT/awstats-8.1-1.x86_64" ]; then
+            echo "构建目录存在"
+            echo "文件列表："
+            find /home/runner/rpmbuild/BUILDROOT/awstats-8.1-1.x86_64 -type f | head -50
+            echo "文件总数：$(find /home/runner/rpmbuild/BUILDROOT/awstats-8.1-1.x86_64 -type f | wc -l)"
+          fi
+        shell: bash
+
+      - name: 查看原始日志
+        if: always()
+        run: |
+          cd make
+          echo "📋 build.log 内容（最后100行）:"
+          tail -100 build.log 2>/dev/null || echo "build.log 不存在"
+          
+          echo -e "\n📋 包含 '7z' 的行:"
+          grep -i "7z" build.log 2>/dev/null || echo "没有找到 7z 相关日志"
+          
+          echo -e "\n📋 包含 'ZIP' 的行:"
+          grep -i "ZIP" build.log 2>/dev/null || echo "没有找到 ZIP 相关日志"
+          
+          # ========== 检查 RPM ==========
+          echo -e "\n📦 RPM 包检查:"
+          if [ -f "awstats-8.1-1.noarch.rpm" ]; then
+              echo "文件大小: $(ls -lh awstats-8.1-1.noarch.rpm | awk '{print $5}')"
+              echo ""
+              echo "=== 包内文件列表 (前100行) ==="
+              rpm -qpl awstats-8.1-1.noarch.rpm 2>/dev/null | head -100
+              echo ""
+              echo "文件总数: $(rpm -qpl awstats-8.1-1.noarch.rpm 2>/dev/null | wc -l)"
+          else
+              echo "RPM 文件不存在"
+          fi
+          
+          # ========== 检查 RPM 构建目录中实际安装的文件 ==========
+          echo -e "\n📂 RPM %install 阶段复制的文件（构建目录内容）:"
+          if [ -d "/home/runner/rpmbuild/BUILDROOT/awstats-8.1-1.x86_64" ]; then
+              echo "构建目录大小: $(du -sh /home/runner/rpmbuild/BUILDROOT/awstats-8.1-1.x86_64 2>/dev/null | awk '{print $1}')"
+              echo ""
+              echo "=== 构建目录文件列表 (前100行) ==="
+              find /home/runner/rpmbuild/BUILDROOT/awstats-8.1-1.x86_64 -type f 2>/dev/null | head -100
+              echo ""
+              echo "文件总数: $(find /home/runner/rpmbuild/BUILDROOT/awstats-8.1-1.x86_64 -type f 2>/dev/null | wc -l)"
+          else
+              echo "RPM 构建目录不存在"
+          fi
+          
+          # ========== 检查 DEB ==========
+          echo -e "\n📦 DEB 包检查:"
+          if ls *.deb 2>/dev/null | grep -q .; then
+              DEB_FILE=$(ls *.deb 2>/dev/null | head -1)
+              echo "文件: $DEB_FILE"
+              echo "大小: $(ls -lh "$DEB_FILE" | awk '{print $5}')"
+              echo ""
+              echo "=== 包内文件列表 (前100行) ==="
+              dpkg -c "$DEB_FILE" 2>/dev/null | head -100
+              echo ""
+              echo "文件总数: $(dpkg -c "$DEB_FILE" 2>/dev/null | wc -l)"
+          else
+              echo "DEB 文件不存在"
+          fi
+          
+          # ========== 检查 DEB 构建目录 ==========
+          echo -e "\n📂 DEB 构建目录内容:"
+          if [ -d "/home/runner/work/vstats/vstats/deb-build/awstats-8.1" ]; then
+              echo "DEB 源码目录大小: $(du -sh /home/runner/work/vstats/vstats/deb-build/awstats-8.1 2>/dev/null | awk '{print $1}')"
+              echo ""
+              echo "=== DEB 源码目录文件列表 (前50行) ==="
+              find /home/runner/work/vstats/vstats/deb-build/awstats-8.1 -type f 2>/dev/null | head -50
+              echo ""
+              echo "文件总数: $(find /home/runner/work/vstats/vstats/deb-build/awstats-8.1 -type f 2>/dev/null | wc -l)"
+          else
+              echo "DEB 构建目录不存在"
+          fi
+          
+          # ========== 检查 debian 目录 ==========
+          echo -e "\n📂 debian 打包目录内容:"
+          if [ -d "/home/runner/work/vstats/vstats/deb-build/awstats-8.1/debian" ]; then
+              echo "=== debian 目录文件列表 ==="
+              ls -la /home/runner/work/vstats/vstats/deb-build/awstats-8.1/debian/
+              echo ""
+              echo "=== rules 文件内容 (前30行) ==="
+              head -30 /home/runner/work/vstats/vstats/deb-build/awstats-8.1/debian/rules 2>/dev/null | cat -A
+          else
+              echo "debian 目录不存在"
+          fi
+
+          # ========== 完整打印 rules 文件 ==========
+          echo -e "\n📋 完整 rules 文件内容 (带行号和可见字符):"
+          if [ -f "/home/runner/work/vstats/vstats/deb-build/awstats-8.1/debian/rules" ]; then
+              cat -n /home/runner/work/vstats/vstats/deb-build/awstats-8.1/debian/rules | cat -A
+          else
+              echo "rules 文件不存在"
+          fi
+
+      - name: 列出所有生成的包
+        if: always()
+        run: |
+          echo "📦 已生成的包"
+          cd make
+          ls -la *.tar.gz *.zip *.rpm *.deb 2>/dev/null || echo "  没有找到任何包"
+          echo ""
+
+      - name: 上传构建日志
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: build-logs
+          path: |
+            make/build.log
+            make/tgz-build.log
+            make/zip-build.log
+            make/rpm-build.log
+            make/deb-build.log
+          if-no-files-found: warn
+
+      - name: 检查打包结果
+        if: always()
+        run: |
+          echo "📦 检查生成的文件："
+          cd make
+          
+          # 详细列出每个包
+          echo "TGZ 包:"
+          ls -la *.tar.gz 2>/dev/null || echo "  ❌ 未生成"
+          
+          echo -e "\nZIP 包:"
+          ls -la *.zip 2>/dev/null || echo "  ❌ 未生成"
+          
+          echo -e "\nRPM 包:"
+          ls -la *.rpm 2>/dev/null || echo "  ❌ 未生成"
+          
+          echo -e "\nDEB 包:"
+          ls -la *.deb 2>/dev/null || echo "  ❌ 未生成"
+          
+          echo -e "\n📋 所有文件列表:"
+          ls -la
+          
+          echo "打包脚本执行状态: ${{ steps.build.outcome }}"
+
+      - name: 上传产物
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: unix-packages
+          path: |
+            make/*.tar.gz
+            make/*.zip
+            make/*.rpm
+            make/*.deb
+            make/*.txt
+          if-no-files-found: warn
+          retention-days: 1
+
+  build-freebsd:
+      name: 构建 FreeBSD 包
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v6
+          with:
+            fetch-depth: 0
+        
+        - name: 设置版本号
+          id: version
+          run: |
+            VERSION="${GITHUB_REF#refs/tags/}"
+            VERSION="${VERSION#v}"
+            echo "version=$VERSION" >> $GITHUB_OUTPUT
+        
+        - name: 在 FreeBSD 中构建 PKG
+          uses: vmactions/freebsd-vm@v1
+          with:
+            usesh: true
+            sync: rsync
+            mem: 4096
+            prepare: |
+              pkg install -y perl5 p5-JSON-XS p5-Try-Tiny p5-MaxMind-DB-Reader wget
+            run: |
+              cd /home/runner/work/vstats/vstats/make
+              
+              echo "=== 运行打包脚本 ==="
+              perl makepack-awstats.pl --target=PKG
+              
+              # --- 核心对齐：+PLIST 已转移至更安全的独立的元数据目录 meta-stage ---
+              echo "=== 查看 +PLIST 内容 ==="
+              head -20 /tmp/awstats-buildroot/meta-stage/+PLIST
+              echo ""
+              
+              echo "=== 查看文件数量 ==="
+              wc -l /tmp/awstats-buildroot/meta-stage/+PLIST
+              echo ""
+              
+              echo "=== 检查文件路径格式 ==="
+              grep -E "^(bin|etc|share|www)" /tmp/awstats-buildroot/meta-stage/+PLIST | head -10
+              echo ""
+              
+              echo "=== 验证 +POST_INSTALL 是否在包中 ==="
+              PKG_FILE="/home/runner/work/vstats/vstats/make/awstats-8.1-1.pkg"
+
+              tar -xzf "$PKG_FILE" -O +MANIFEST 2>/dev/null | grep -q "dbip-city-lite"
+              if [ $? -eq 0 ]; then
+                  echo "✅ +POST_INSTALL 脚本已完美合规融合到 +MANIFEST 的元数据中！"
+                  echo "=== 验证元数据中的脚本片段 ==="
+                  tar -xzf "$PKG_FILE" -O +MANIFEST 2>/dev/null | grep -A 5 -B 2 "dbip-city" | head -10
+              else
+                  echo "❌ 脚本未成功融入包元数据中"
+              fi
+              echo ""
+              
+              echo "=== 备份并整理 pkg 文件 ==="
+              cd /home/runner/work/vstats/vstats/make
+              if [ -f "awstats-8.1-1.pkg" ]; then
+                  rm -f awstats-*_1.pkg 2>/dev/null || true
+                  sha256sum awstats-8.1-1.pkg > SHA256SUMS.txt
+                  echo "✅ 已生成校验和"
+              fi
+              ls -la *.pkg
+
+        - name: 上传 FreeBSD 包
+          uses: actions/upload-artifact@v7
+          with:
+            name: freebsd-packages
+            path: |
+              /home/runner/work/vstats/vstats/make/*.pkg
+              /home/runner/work/vstats/vstats/make/SHA256SUMS.txt
+            if-no-files-found: warn
+            retention-days: 1
+  webmin-modules:
+    name: 测试 Webmin 模块打包
+    runs-on: ubuntu-latest
+    steps:
+      # 1. 检出 GitHub 仓库源码
+      - name: Checkout Code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      # 2. 补齐打包测试所需的系统工具环境
+      - name: 安装基本打包工具依赖
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y tar zip perl
+
+      # 3. 运行精简优化后的 Perl 打包脚本 (同时打出三种格式)
+      - name: 编译构建 Webmin 模块
+        run: |
+          cd make
+          echo "=== 开始构建 Webmin 专用模块 ==="
+          perl makepack-awstats_webmin.pl --target=WBM,TGZ,ZIP
+          
+          echo "=== 核心安全对齐：为 Webmin 插件独立刷出 SHA256 校验和 ==="
+          # 核心修复：精准锁定新命名的 -webmin- 文件，确保算出来的哈希文本清单 100% 正确
+          sha256sum *webmin* > SHA256SUMS-webmin.txt 2>/dev/null || true
+          
+          echo "=== 校验和清单内容预览 ==="
+          cat SHA256SUMS-webmin.txt
+          echo ""
+
+      # 4. 自动化回归测试：严密验证压缩包内部 FHS 结构是否合规
+      - name: 自动化自检验证包体结构
+        run: |
+          cd make
+          WBM_FILE=$(ls *webmin*.wbm | head -n 1)
+          if [ -f "$WBM_FILE" ]; then
+              echo "✅ 成功找到 WBM 核心包: $WBM_FILE"
+              echo "=== 检查包内根目录是否符合 Webmin 规范 (必须直接暴露项目名) ==="
+              tar -tf "$WBM_FILE" | head -n 5
+              
+              if tar -tf "$WBM_FILE" | grep -q "^awstats/module.info"; then
+                  echo "✅ 结构校验成功：Webmin 元数据控制信息已正确定位！"
+              else
+                  echo "❌ 结构校验失败：包内根目录未包含标准 awstats/ 隔离层"
+                  exit 1
+              fi
+          else
+              echo "❌ 致命错误：WBM 包未成功生成"
+              exit 1
+          fi
+
+      # 5. 将构建成功的 Webmin 独立插件包上传为 Artifacts 存档
+      - name: 上传 Webmin 插件工件
+        uses: actions/upload-artifact@v7
+        with:
+          name: webmin-modules
+          path: |
+            make/awstats-webmin-2.000.*
+            make/SHA256SUMS-webmin.txt
+          if-no-files-found: error
+          retention-days: 1
+
+  build-windows:
+    name: 构建 Windows 包
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      
+      - name: 检查文件结构
+        run: |
+          echo "📁 当前目录结构："
+          Get-Location
+          Get-ChildItem
+          echo "`n📁 make 目录："
+          Get-ChildItem make -ErrorAction SilentlyContinue
+        shell: pwsh
+      
+      - name: 安装 Strawberry Perl
+        run: |
+          choco install strawberryperl --no-progress --limit-output
+          echo "Strawberry Perl 安装完成"
+          echo "C:\Strawberry\perl\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          echo "C:\Strawberry\c\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+        shell: pwsh
+      
+      - name: 验证 Perl
+        run: |
+          perl --version
+          where perl
+        shell: pwsh
+      
+      - name: 安装 NSIS
+        run: |
+          choco install nsis --no-progress --limit-output --force
+          echo "C:\Program Files (x86)\NSIS\Bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+        shell: pwsh
+
+      - name: 检测 NSIS 文件路径
+        run: |
+          cd make
+          
+          Write-Host "=== 查找 awstats-update.ps1 的实际位置 ==="
+          Get-ChildItem -Path . -Filter "awstats-update.ps1" -Recurse | ForEach-Object {
+            Write-Host "找到: $($_.FullName)"
+          }
+          
+          Write-Host "`n=== NSI 脚本第 218 行附近 ==="
+          $nsiLines = Get-Content "exe\awstats.nsi"
+          Write-Host $nsiLines[217]  # 第218行
+          
+          Write-Host "`n=== NSIS 编译时的当前目录 ==="
+          Get-Location
+          
+          Write-Host "`n=== exe 目录内容 ==="
+          Get-ChildItem exe
+        shell: pwsh
+
+      - name: 验证 NSI 文件编码
+        run: |
+          cd make/exe
+          
+          $nsiFile = "awstats.nsi"
+          $fullPath = Join-Path (Get-Location) $nsiFile
+          
+          Write-Host "----------------------------------------"
+          Write-Host "验证 NSI 文件编码"
+          Write-Host "文件: $fullPath"
+          Write-Host "----------------------------------------"
+          
+          # 1. 检测 BOM
+          Write-Host "`n[1] 检测 BOM 签名:"
+          $bytes = [System.IO.File]::ReadAllBytes($fullPath)
+          Write-Host "    前4字节: $($bytes[0..3] -join ' ')"
+          
+          if ($bytes[0] -eq 0xEF -and $bytes[1] -eq 0xBB -and $bytes[2] -eq 0xBF) {
+            Write-Host "    ✅ 结果: UTF-8 with BOM" -ForegroundColor Green
+          } elseif ($bytes[0] -eq 0xFF -and $bytes[1] -eq 0xFE) {
+            Write-Host "    ⚠️ 结果: UTF-16 LE" -ForegroundColor Yellow
+          } else {
+            Write-Host "    ⚠️ 结果: 无 BOM (ANSI 或 UTF-8 without BOM)" -ForegroundColor Yellow
+          }
+          
+          # 2. 读取并显示 LangString 行
+          Write-Host "`n[2] 读取 LangString 定义:"
+          $content = Get-Content $fullPath -Raw -Encoding UTF8
+          $langLines = $content -split "`r`n" | Select-String "LangString.*SIMPCHINESE"
+          
+          foreach ($line in $langLines) {
+            Write-Host "    $line"
+          }
+          
+          # 3. 验证中文是否正常
+          Write-Host "`n[3] 验证中文内容:"
+          
+          $testStrings = @(
+            @{Pattern = '核心文件'; Name = '核心文件'},
+            @{Pattern = 'GeoIP 支持'; Name = 'GeoIP 支持'},
+            @{Pattern = '任务计划'; Name = '任务计划'},
+            @{Pattern = '快捷方式'; Name = '快捷方式'},
+            @{Pattern = '保留配置文件'; Name = '保留配置文件'}
+          )
+          
+          foreach ($test in $testStrings) {
+            if ($content -match $test.Pattern) {
+              Write-Host "    ✅ 找到: $($test.Name)" -ForegroundColor Green
+            } else {
+              Write-Host "    ❌ 未找到: $($test.Name)" -ForegroundColor Red
+            }
+          }
+          
+          # 4. 检查是否有未转换的 Unicode 转义
+          Write-Host "`n[4] 检查 Unicode 转义序列:"
+          if ($content -match '\\u[0-9A-Fa-f]{4}') {
+            Write-Host "    ⚠️ 警告: 发现未转换的 Unicode 转义序列" -ForegroundColor Yellow
+            $matches = [System.Text.RegularExpressions.Regex]::Matches($content, '\\u[0-9A-Fa-f]{4}')
+            foreach ($m in $matches | Select-Object -First 5) {
+              Write-Host "       $($m.Value)"
+            }
+          } else {
+            Write-Host "    ✅ 没有未转换的 Unicode 转义序列" -ForegroundColor Green
+          }
+          
+          # 5. 显示文件大小和行数
+          Write-Host "`n[5] 文件统计:"
+          $lineCount = ($content -split "`r`n").Count
+          $fileSize = [math]::Round((Get-Item $fullPath).Length / 1KB, 2)
+          Write-Host "    行数: $lineCount"
+          Write-Host "    大小: $fileSize KB"
+          
+          Write-Host "`n----------------------------------------"
+          Write-Host "验证完成"
+          Write-Host "----------------------------------------"
+        shell: pwsh
+
+      - name: 设置版本号
+        id: version
+        run: |
+          $VERSION = $env:GITHUB_REF -replace 'refs/tags/v', ''
+          echo "version=$VERSION" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "构建版本: $VERSION"
+        shell: pwsh
+
+      - name: 直接编译 NSIS 安装包
+        id: build_package
+        run: |
+          cd make/exe
+          
+          # 直接使用 makensis 编译
+          & "C:\Program Files (x86)\NSIS\Bin\makensis.exe" "/DMUI_VERSION_DOT=$env:version" "awstats.nsi"
+          
+          # 使用通配符查找生成的 exe 文件
+          $exeFiles = Get-ChildItem -Path ".." -Filter "awstats-*.exe"
+          
+          if ($exeFiles.Count -gt 0) {
+            $exeFile = $exeFiles[0].FullName
+            Write-Host "找到 EXE 文件: $exeFile"
+            
+            # 重命名为标准名称
+            Move-Item $exeFile "awstats-$env:version.exe" -Force
+            Write-Host "✅ EXE 生成成功: awstats-$env:version.exe"
+            
+            # 移动到 make 目录供上传
+            Move-Item "awstats-$env:version.exe" "..\awstats-$env:version.exe" -Force
+          } else {
+            Write-Host "❌ 没有找到 EXE 文件"
+            Write-Host "当前目录文件："
+            Get-ChildItem
+            Write-Host "上级目录文件："
+            Get-ChildItem ..
+            exit 1
+          }
+        shell: pwsh
+
+      - name: 生成 exe 校验和文件
+        run: |
+          cd make
+          $hash = (Get-FileHash "awstats-$env:version.exe" -Algorithm SHA256).Hash.ToLower()
+          "$hash  awstats-$env:version.exe" | Out-File -FilePath SHA256SUMS.txt -Encoding ascii
+          Write-Host "✅ 已生成 SHA256SUMS.txt"
+        shell: pwsh
+
+      - name: 上传 Windows 包
+        uses: actions/upload-artifact@v7
+        with:
+          name: windows-packages
+          path: |
+            make/*.exe
+            make/SHA256SUMS.txt
+          if-no-files-found: warn
+          retention-days: 1
+
+  release:
+    name: 发布所有包
+    needs: [build-unix, build-freebsd, build-windows, webmin-modules]
+    runs-on: ubuntu-latest
+    steps:
+    - name: 下载所有构建产物
+      uses: actions/download-artifact@v8
+      with:
+        path: releases
+
+    - name: 检查提取的临时工件
+      run: |
+        echo "📥 提取到的所有临时构建工件："
+        find releases -type f | sort
+        echo ""
+        echo "📊 各编译 Job 产物容器统计："
+        find releases -type d | sort
+    
+    - name: 整理最终发布文件并合并校验和
+      run: |
+        mkdir -p final
+        
+        # 1. 精准提取系统级核心二进制安装包 (彻底排除 Webmin 的全部干扰，主线极度纯净)
+        find releases -type f -name "*.tar.gz" -exec cp -v {} final/ \;
+        find releases -type f -name "*.pkg" -exec cp -v {} final/ \;
+        find releases -type f -name "*.rpm" -exec cp -v {} final/ \;
+        find releases -type f -name "*.deb" -exec cp -v {} final/ \;
+        find releases -type f -name "*.exe" -exec cp -v {} final/ \;
+        find releases -type f -name "*.zip" ! -path "*webmin-modules*" -exec cp -v {} final/ \;
+        
+        # 2. 合并全平台主线系统包校验和
+        echo "=== 正在合并全平台主线二进制包校验和 ==="
+        > final/SHA256SUMS.txt
+        
+        if [ -f "releases/unix-packages/SHA256SUMS.txt" ]; then
+          cat releases/unix-packages/SHA256SUMS.txt >> final/SHA256SUMS.txt
+          echo "✅ 已合并 Linux 包校验和"
+        fi
+        if [ -f "releases/freebsd-packages/SHA256SUMS.txt" ]; then
+          cat releases/freebsd-packages/SHA256SUMS.txt >> final/SHA256SUMS.txt
+          echo "✅ 已合并 FreeBSD 包校验和"
+        fi
+        if [ -f "releases/windows-packages/SHA256SUMS.txt" ]; then
+          cat releases/windows-packages/SHA256SUMS.txt >> final/SHA256SUMS.txt
+          echo "✅ 已合并 Windows 包校验和"
+        fi
+        
+        # 排序去重
+        sort -u final/SHA256SUMS.txt -o final/SHA256SUMS.txt
+        
+        # 3. Webmin 插件校验和
+        if [ -f "releases/webmin-modules/SHA256SUMS-webmin.txt" ]; then
+          echo "=== 正在收网 Webmin 专属插件包与独立校验和 ==="
+          cp -v releases/webmin-modules/awstats-webmin-2.000.* final/ 2>/dev/null || true
+          cp -v releases/webmin-modules/SHA256SUMS-webmin.txt final/ 2>/dev/null || true
+          echo "✅ 已同步 Webmin 插件专属校验和清单"
+        fi
+        
+        echo ""
+        echo "=================================================="
+        echo " 📦 最终交付给 GitHub Release 页面的资产包列表："
+        echo "=================================================="
+        ls -la final/
+        echo ""
+        echo "=== 最终系统包主线校验和内容 (SHA256SUMS.txt) ==="
+        cat final/SHA256SUMS.txt
+        echo ""
+        if [ -f "final/SHA256SUMS-webmin.txt" ]; then
+          echo "=== 最终Webmin插件校验和内容 (SHA256SUMS-webmin.txt) ==="
+          cat final/SHA256SUMS-webmin.txt
+        fi
+    
+    - name: 获取标签版本号
+      id: version
+      run: |
+        VERSION="${GITHUB_REF#refs/tags/}"
+        VERSION="${VERSION#v}"
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "发布版本: $VERSION"
+    
+    - name: 生成详细构建报告
+      id: report
+      run: |
+        # 创建 BUILD_REPORT.md
+        cat > BUILD_REPORT.md << EOF
+        # 📊 AWStats 构建报告
+        
+        ## 构建信息
+        - **版本**: ${{ steps.version.outputs.version }}
+        - **提交**: ${{ github.sha }}
+        - **时间**: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+        - **触发者**: ${{ github.actor }}
+        
+        ## 📦 包生成状态
+        
+        ### Linux/Unix 包
+        | 格式 | 状态 | 文件 | 大小 |
+        |------|------|------|------|
+        EOF
+        
+        # TGZ
+        if [ -f "final/awstats-${{ steps.version.outputs.version }}.tar.gz" ]; then
+          SIZE=$(du -h "final/awstats-${{ steps.version.outputs.version }}.tar.gz" | cut -f1)
+          echo "| TGZ | ✅ 成功 | \`awstats-${{ steps.version.outputs.version }}.tar.gz\` | $SIZE |" >> BUILD_REPORT.md
+        else
+          echo "| TGZ | ❌ 失败 | - | - |" >> BUILD_REPORT.md
+        fi
+        
+        # ZIP
+        if [ -f "final/awstats-${{ steps.version.outputs.version }}.zip" ]; then
+          SIZE=$(du -h "final/awstats-${{ steps.version.outputs.version }}.zip" | cut -f1)
+          echo "| ZIP | ✅ 成功 | \`awstats-${{ steps.version.outputs.version }}.zip\` | $SIZE |" >> BUILD_REPORT.md
+        else
+          echo "| ZIP | ❌ 失败 | - | - |" >> BUILD_REPORT.md
+        fi
+        
+        # RPM
+        RPM_FOUND=0
+        for file in final/*.rpm; do
+          if [ -f "$file" ]; then
+            SIZE=$(du -h "$file" | cut -f1)
+            NAME=$(basename "$file")
+            echo "| RPM | ✅ 成功 | \`$NAME\` | $SIZE |" >> BUILD_REPORT.md
+            RPM_FOUND=1
+          fi
+        done
+        if [ $RPM_FOUND -eq 0 ]; then
+          echo "| RPM | ❌ 失败 | - | - |" >> BUILD_REPORT.md
+        fi
+        
+        # DEB
+        DEB_FOUND=0
+        for file in final/*.deb; do
+          if [ -f "$file" ]; then
+            SIZE=$(du -h "$file" | cut -f1)
+            NAME=$(basename "$file")
+            echo "| DEB | ✅ 成功 | \`$NAME\` | $SIZE |" >> BUILD_REPORT.md
+            DEB_FOUND=1
+          fi
+        done
+        if [ $DEB_FOUND -eq 0 ]; then
+          echo "| DEB | ❌ 失败 | - | - |" >> BUILD_REPORT.md
+        fi
+        
+        echo "" >> BUILD_REPORT.md
+        echo "### Windows 包" >> BUILD_REPORT.md
+        echo "| 格式 | 状态 | 文件 | 大小 |" >> BUILD_REPORT.md
+        echo "|------|------|------|------|" >> BUILD_REPORT.md
+        
+        # EXE
+        EXE_FOUND=0
+        for file in final/*.exe; do
+          if [ -f "$file" ]; then
+            SIZE=$(du -h "$file" | cut -f1)
+            NAME=$(basename "$file")
+            echo "| EXE | ✅ 成功 | \`$NAME\` | $SIZE |" >> BUILD_REPORT.md
+            EXE_FOUND=1
+          fi
+        done
+        if [ $EXE_FOUND -eq 0 ]; then
+          echo "| EXE | ❌ 失败 | - | - |" >> BUILD_REPORT.md
+        fi
+        
+        echo "" >> BUILD_REPORT.md
+        echo "## 🔍 详细文件列表" >> BUILD_REPORT.md
+        echo '```' >> BUILD_REPORT.md
+        ls -la final/ >> BUILD_REPORT.md
+        echo '```' >> BUILD_REPORT.md
+        
+        echo "" >> BUILD_REPORT.md
+        echo "## 📝 校验和" >> BUILD_REPORT.md
+        echo '```' >> BUILD_REPORT.md
+        if [ -f "final/SHA256SUMS.txt" ]; then
+          cat final/SHA256SUMS.txt >> BUILD_REPORT.md
+        else
+          echo "无校验和文件" >> BUILD_REPORT.md
+        fi
+        echo '```' >> BUILD_REPORT.md
+        
+        # 打印到控制台
+        echo "📄 构建报告："
+        cat BUILD_REPORT.md
+        
+        # 保存报告
+        cp BUILD_REPORT.md final/
+
+    - name: 上传构建报告
+      uses: actions/upload-artifact@v7
+      with:
+        name: build-report
+        path: final/BUILD_REPORT.md
+    
+    - name: 创建 GitHub Release
+      uses: softprops/action-gh-release@v3
+      with:
+        name: AWStats Community Edition ${{ steps.version.outputs.version }}
+        body: |
+            # AWStats Community Edition ${{ steps.version.outputs.version }}
+            
+            ## ✨ Main Updates
+            
+            ### 🎯 Version 8.1 (UTF-8 Community Edition)
+            
+            ### 🏷️ New Feature: Custom Branding Display
+
+            > **🚀 vstats: Bringing Warmth to Statistics**
+            AWStats is no longer just a cold data page. Now you can easily embed your brand identity at the top of reports. Combined with powerful support for 73 languages and 13 calendar systems, users worldwide can access statistics without cultural or language barriers.
+
+            ### 🚀 Branding Features
+
+            - **Universal Compatibility**: Perfectly displays whether you're using mainstream Linux distributions or various operating systems
+            - **Visual Consistency**: Supports vector SVG logos, ensuring sharp clarity at any resolution (including Retina displays)
+            - **Smart Concatenation**: The system automatically combines your brand name with the multilingual `Server Management Panel` field, achieving brand localization across all languages
+
+            ### 🖼️ Usage Examples
+
+            | Type | Examples |
+            |:---:|:---:|
+            | 🐧 Linux Distributions | `RHEL`, `Debian`, `Ubuntu`, `CentOS`, `Arch Linux`, `Fedora`, `Rocky Linux` |
+            | 🖥️ Operating Systems | `macOS`, `Windows`, `FreeBSD` |
+            | ☁️ Cloud Providers | `Aliyun`, `Tencent`, `AWS`, `Azure`, `Google Cloud` |
+
+            ### 📝 Configuration Example
+
+            Add the following to your AWStats configuration file (e.g., `/etc/awstats/awstats.yourdomain.conf`):
+
+            ```perl
+            # --- Brand Customization Settings ---
+            BrandLink="https://your-company.com"   # Logo click redirect URL
+            BrandPlatform="CloudStack"             # Your platform name (English characters recommended)
+            StatsUrl="/vstats"                     # AWStats deployment web path
+            ```
+
+            **Effects**
+            - `BrandPlatform="HestiaCP"` → Displays **"HestiaCP Server Management Panel"**
+            - `BrandPlatform="cPanel"` → Displays **"cPanel Server Management Panel"**
+            - `BrandPlatform="Plesk"` → Displays **"Plesk Server Management Panel"**
+            - `BrandPlatform="DirectAdmin"` → Displays **"DirectAdmin Server Management Panel"**
+            - `BrandPlatform="CyberPanel"` → Displays **"CyberPanel Server Management Panel"**
+            - `BrandPlatform="aapanel"` → Displays **"aapanel Server Management Panel"**
+            - `BrandPlatform="Portainer"` → Displays **"Portainer Server Management Panel"**
+            - `BrandPlatform="CasaOS"` → Displays **"CasaOS Server Management Panel"**
+            - `BrandPlatform="NPM"` → Displays **"NPM Server Management Panel"**
+
+            ### 🌐 Automated Localization Effects
+
+            **vstats** automatically embeds `BrandPlatform` into 73 native language contexts, achieving true global branding:
+
+            | Language | Real-time Rendering Preview |
+            | :---: | :--- |
+            | **简体中文** | `HestiaCP 服务器管理面板` |
+            | **English** | `HestiaCP Server Management Panel` |
+            | **Kannada** | `HestiaCP ಸರ್ವರ್ ನಿರ್ವಹಣಾ ಫಲಕ` |
+            | **Georgian** | `HestiaCP სერვერის მართვის පැනელი` |
+            | **Arabic** | `لوحة إدارة خوادم HestiaCP` |
+
+            > 📌 **Note**: The system will automatically handle the word order of different languages (such as right-to-left display for Arabic), ensuring that the brand is presented professionally and authentically in any cultural context.
+            
+            ### ⚠️ Activation Condition
+
+            To keep the interface clean, the branding area **only activates when the `logo.svg` file exists and is readable**.
+
+            - **File Location**: Place your brand icon named `logo.svg` in your site's AWStats directory
+            - **Default Link**: If `BrandLink` is not configured, the system defaults to `https://hestiacp.com`
+
+            ### 🗓️ **New localdate calendar plugin** Automatically switches calendar display based on user language
+
+            > **Enabled by default**, if you need to disable it, please add `EnableLocaldatePlugin=0` in the configuration file
+            > ⚠️ **Note:** The start date for the Japanese era name needs to be manually configured. See the notes within the `plugins/localdate.pm` for details.
+            - 🇯🇵 Japanese era (Reiwa): Open `plugins/localdate.pm` and locate lines 80-86. Remove the `#` comment before the era you wish to enable, and fill in the correct start date (`start_year`, `start_month`, `start_day`). Also add the corresponding era translation key in `lang/awstats-ja.po` (`calendar_era_2` → `New Era Name`). Subsequent eras follow the same pattern (`calendar_era_3`, `calendar_era_4`...)
+            - 🇹🇭 Buddhist calendar (Thailand, Cambodia, Laos)
+            - 🇹🇼 Minguo calendar (ROC)
+            - 🇨🇳 Ganzhi calendar (Heavenly Stems + Earthly Branches + Zodiac)
+            - 🇻🇳 Vietnamese Ganzhi calendar (Heavenly Stems + Earthly Branches + Zodiac, Rabbit → Cat)
+            - 🇰🇷 Dangun calendar
+            - 🕌 Islamic (Hijri) calendar
+            - 🇮🇷 Persian calendar
+            - 🇲🇲 Burmese calendar
+            - 🇳🇵 Vikram Samvat
+            - 🇮🇳 Saka calendar
+            - 🇪🇹 Ethiopian calendar
+            - 🇧🇩 Bengali calendar
+            - ✡️ Hebrew calendar
+
+            > 📌 **Ethiopian calendar**: First 12 months have 30 days each, the 13th month has 6 days in leap years and 5 days in common years.
+            > 📌 **Hebrew calendar**: 7 leap years in a 19-year cycle, adds one month (Adar I, 30 days) in leap years, totaling 13 months.
+
+            If you find any issues, please report them on [issues](https://github.com/hestiacn/vstats/issues). This feature automatically adapts the calendar display of report dates to match the site's current language (e.g., Arabic shows Islamic calendar, Japanese shows Japanese era), no additional configuration required.
+
+            #### 🎨 UI & Experience
+            - 📱 Adopted HTML5 standard with responsive design, perfectly adapted for mobile, tablet and desktop
+            - 🌙 Added dark/light theme toggle with system theme follow support
+            - 🧭 Added navigation menu allowing site administrators to read official documentation in their native language
+            - 📖 Added documentation viewer (iframe) - click menu links to view docs within the page with a close button
+            - 😊 Replaced country/region flag icons with Emoji, more modern and lightweight
+            - 📊 Modernized table styling: rounded borders, hover highlight effects
+            - 🎨 Defined theme colors using CSS variables, support one-click dark/light mode toggle
+            - 📊 Rebuilt chart engine: removed PNG image dependency, using pure CSS progress bars and bar charts
+            - 🖼️ Upgraded icon system: all PNG icons replaced with vector SVG format
+            - 🎨 Significantly upgraded OS/device icon library, added 200+ recognitions
+            - 🔝 Added back-to-top button with smooth scroll
+            - 🕐 Optimized hour chart tooltip hints with 24-hour independent copy
+
+            ## 🚀 Quick Start
+
+            ### Using HestiaCP (Recommended)
+            If you use [Hestia Control Panel](https://hestiacp.com/), AWStats will be configured automatically:
+            1. AWStats is automatically enabled when adding a domain
+            2. Log path is automatically configured
+            3. Scheduled updates are automatically added
+            4. Visit `https://your-domain/vstats/` to view statistics
+
+            ## 🔄 Pre-Upgrade Conversion (Only for Upgrading from Older Versions)
+
+            If upgrading the site, please first run `/usr/share/awstats/tools/awstats_convert-zh.pl` to convert the historical data files (*.txt) from format version 7.0-7.9 to 8.1. The script will automatically detect and batch convert all AWStats data files (*.txt) located under the `/home/*/web/*/stats/` directory. Please feel free to run it — it will automatically back up the original files before conversion. If your site is not located under the `home` directory, adjust the path according to this structure: `/home/site_running_username/web/your_domain_name/stats/`. After the conversion is complete, proceed with the data update operation; otherwise, the update will fail due to format incompatibility.
+
+            > **Note**: If your site version is below 7.0, please adjust the script's regex matching parameter `s/AWSTATS DATA FILE 7.[0-9]{1,2}/AWSTATS DATA FILE 8.1/` according to your actual version number.
+            >
+            > **💡 Tip**: Backup files are by default saved in the directory `/backup/awstats_converter/backup_<timestamp>/`.
+            
+            ## 📋 Changelog
+            - [English Changelog](https://github.com/${{ github.repository }}/blob/release/docs/CHANGELOG.md)
+            
+            ---
+            ## ✨ 主要更新
+
+            ### 🎯 8.1 版本（UTF-8 社区版）
+
+            ### 🏷️ 新增功能：自定义品牌展示
+
+            > **🚀 vstats: 让统计充满温度**
+            AWStats 不再只是一个冷冰冰的数据页面。现在，您可以轻松将品牌标识植入报告顶部。配合强大的 73 国语言翻译与 13 种历法适配，让全球用户都能跨越文化与语言的障碍。
+
+            ### 🚀 品牌化特性
+
+            - **全平台适配**：不论是主流 Linux 发行版、各类操作系统，均能完美显示
+            - **视觉一致性**：支持矢量 SVG Logo，确保在各种分辨率（甚至是 Retina 屏）下都能清晰锐利
+            - **智能拼接**：系统会自动将您的品牌名与多语言包中的 `Server Management Panel` 字段拼接，实现全语种的品牌本地化
+
+            ### 🖼️ 适用场景示例
+
+            | 类型 | 示例 |
+            |:---:|:---:|
+            | 🐧 Linux 发行版 | `RHEL`、`Debian`、`Ubuntu`、`CentOS`、`Arch Linux`、`Fedora`、`Rocky Linux` |
+            | 🖥️ 操作系统 | `macOS`、`Windows`、`FreeBSD` |
+            | ☁️ 云主机商 | `Aliyun`、`Tencent`、`AWS`、`Azure`、`Google Cloud` |
+
+            ### 📝 配置示例
+
+            在 AWStats 配置文件（如 `/etc/awstats/awstats.yourdomain.conf`）中添加：
+
+            ```perl
+            # --- 品牌自定义设置 ---
+            BrandLink="https://your-company.com"   # 点击 Logo 跳转的网址
+            BrandPlatform="CloudStack"             # 您的平台名称（建议英文字符）
+            StatsUrl="/vstats"                     # AWStats 部署的 Web 路径
+            ```
+
+            **效果**
+            - BrandPlatform="HestiaCP" → 显示 **"HestiaCP 服务器管理面板"**
+            - BrandPlatform="cPanel" → 显示 **"cPanel 服务器管理面板"**
+            - BrandPlatform="Plesk" → 显示 **"Plesk 服务器管理面板"**
+            - BrandPlatform="DirectAdmin" → 显示 **"DirectAdmin 服务器管理面板"**
+            - BrandPlatform="CyberPanel" → 显示 **"CyberPanel 服务器管理面板"**
+            - BrandPlatform="aapanel" → 显示 **"aapanel 服务器管理面板"**
+            - BrandPlatform="Portainer" → 显示 **"Portainer 服务器管理面板"**
+            - BrandPlatform="CasaOS" → 显示 **"CasaOS 服务器管理面板"**
+            - BrandPlatform="NPM" → 显示 **"NPM 服务器管理面板"**
+
+            ### 🌐 自动化本地化效果
+
+            **vstats** 会自动将 `BrandPlatform` 嵌入到 73 种母语语境中，实现真正的品牌全球化：
+
+            | 语言 | 实时渲染效果预览 |
+            | :---: | :---: |
+            | **简体中文** | `HestiaCP 服务器管理面板` |
+            | **English** | `HestiaCP Server Management Panel` |
+            | **Kannada** | `HestiaCP ಸರ್ವರ್ ನಿರ್ವಹಣಾ ಫಲಕ` |
+            | **Georgian** | `HestiaCP სერვერის მართვის පැනელი` |
+            | **Arabic** | `لوحة إدارة خوادم HestiaCP` |
+
+            > 📌 **注**：系统会自动处理不同语言的语序（如阿拉伯语的从右往左显示），确保品牌展示在任何文化背景下都显得专业且地道。
+            
+            ### ⚠️ 激活条件
+
+            为保持页面简洁，品牌展示区域**仅在检测到 `logo.svg` 文件存在且可读时**才会激活。
+
+            - **文件位置**：请将您的品牌图标命名为 `logo.svg` 并放置在站点 AWStats 目录下
+            - **默认链接**：若未配置 `BrandLink`，系统将指向 `https://hestiacp.com`
+
+            ### 🗓️ **新增 localdate 日历插件** 根据用户语言自动切换历法显示
+
+            > **默认开启**，如需关闭请在配置文件中添加 `EnableLocaldatePlugin=0`
+            > ⚠️ **注意**：日本年号需要手动配置起始日期，详见`plugins/localdate.pm`内注释。
+            - 🇯🇵 日本年号（令和）：打开 `plugins/localdate.pm` 找到第 80-86 行，删除需要启用的年号前的 `#` 注释，并填写正确的起始年月日（`start_year`、`start_month`、`start_day`）。同时在 `lang/awstats-ja.po` 中添加对应年号翻译键（`calendar_era_2` → `新年号名称`），后续年号依次类推（`calendar_era_3`、`calendar_era_4`...）
+            - 🇹🇭 佛历（泰国、柬埔寨、老挝）
+            - 🇹🇼 民国纪年
+            - 🇨🇳 甲子纪年（天干地支 + 生肖）
+            - 🇻🇳 越南甲子纪年（天干地支 + 生肖，兔→猫）
+            - 🇰🇷 檀君纪年
+            - 🕌 伊斯兰历（希吉拉历）
+            - 🇮🇷 波斯历
+            - 🇲🇲 缅甸历
+            - 🇳🇵 维克拉姆历
+            - 🇮🇳 萨卡历
+            - 🇪🇹 埃塞俄比亚历
+            - 🇧🇩 孟加拉历
+            - ✡️ 希伯来历
+
+            > 📌 **埃塞俄比亚历**：前 12 个月各 30 天，第 13 个月闰年 6 天平年 5 天。
+            > 📌 **希伯来历**：19 年 7 闰，闰年增加一个月（Adar I，30 天），共 13 个月。
+
+            如有错误，欢迎在[issues](https://github.com/hestiacn/vstats/issues)提交问题反馈。此功能让报告日期的历法显示自动匹配站点当前语言（如阿拉伯语显示伊斯兰历、日语显示日本年号），无需额外配置。
+
+            #### 🎨 界面与体验
+            - 📱 采用 HTML5 标准，支持响应式设计，完美适配手机、平板和电脑
+            - 🌙 新增深色/浅色主题切换功能，支持跟随系统主题，保护眼睛
+            - 🧭 新增导航菜单，网站部署人员可使用本土化语言查看官方文档
+            - 📖 新增文档查看器（iframe），点击菜单链接在页面内查看文档，支持关闭按钮，无需离开当前页
+            - 😊 国家/地区旗帜图标全面替换为 Emoji，更现代轻量，无需维护图片资源
+            - 📊 表格样式现代化：圆角边框、悬停高亮效果
+            - 🎨 使用 CSS 变量定义主题颜色，支持一键切换深色/浅色模式
+            - 📊 图表引擎重构：移除 PNG 图片依赖，改用纯 CSS 实现横向进度条和竖向柱状图，加载更快、支持主题色自动适配
+            - 🖼️ 图标系统全面升级：所有 PNG 图标替换为矢量 SVG 格式，支持任意缩放，深色模式下自动适配颜色
+            - 🎨 操作系统/设备图标库全面升级，新增手机品牌、Linux 发行版、游戏主机、开发工具、文本浏览器等 200+ 识别
+            - 🔝 新增返回顶部按钮：滚动超过 300px 自动显示，点击平滑返回顶部，支持深色模式和 RTL 布局
+            - 🕐 小时图表鼠标悬停提示优化：24 小时独立文案，结合 AWStats 特色与人文关怀
+
+            ## 🚀 快速开始
+
+            ### 使用 HestiaCP（推荐）
+            如果你使用 [Hestia Control Panel](https://hestiacp.com/)，AWStats 会自动配置：
+            1. 添加域名时自动启用 AWStats
+            2. 日志路径自动配置
+            3. 定时更新自动添加
+            4. 访问 `https://your-domain/vstats/` 查看统计
+
+            ## 🔄 升级前转换（仅限从旧版升级）
+
+            若涉及站点升级，请先执行 `/usr/share/awstats/tools/awstats_convert-zh.pl` 对历史数据文件（*.txt）进行格式转换（7.0-7.9 → 8.1）。程序将自动检测 `/home/*/web/*/stats/` 目录下的所有 AWStats 数据文件（*.txt）并进行自动批量转换。请放心执行，它将在转换前自动备份原文件。若您的站点不在 `home` 目录下，请参考这个路径结构 `/home/站点运行用户名/web/您的域名/stats/` 微调。转换完成后，再执行数据更新操作，否则将因格式不兼容导致更新失败。
+            
+            > **注意**：若您的站点版本低于 7.0，请根据实际版本号调整脚本中 `s/AWSTATS DATA FILE 7\.[0-9]{1,2}/AWSTATS DATA FILE 8.1/` 正则表达式的匹配参数。
+            >
+            > **💡 提示**：备份文件默认保存在 `/backup/awstats_converter/backup_执行时的时间戳命名/` 目录下。
+            
+            ## 📋 更新日志
+            - [中文更新日志](https://github.com/${{ github.repository }}/blob/release/docs/CHANGELOG-zh_CN.md)
+
+        files: |
+          final/*.tar.gz
+          final/*.zip
+          final/*.rpm
+          final/*.deb
+          final/*.pkg
+          final/*.exe
+          final/*.txt
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

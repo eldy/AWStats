@@ -1,0 +1,24 @@
+
+
+<!-- Creator: CorelDRAW X6 -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="100%" height="100%" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 500 500"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .fil0 {fill:#0099FF}
+    .fil1 {fill:#2EACFF}
+    .fil3 {fill:#F2F2F2}
+    .fil2 {fill:#E5E5E5;fill-rule:nonzero}
+   ]]>
+  </style>
+ </defs>
+ <g id="Layer_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <rect class="fil0" x="20" y="80" width="460" height="340" rx="45" ry="45"/>
+  <path class="fil1" d="M65 80l185 0 0 340 -185 0c-25,0 -45,-20 -45,-45l0 -250c0,-25 20,-45 45,-45z"/>
+  <path class="fil2" d="M333 242l-65 -37 -65 -38c-3,-1 -6,-1 -9,0 -3,2 -4,5 -4,8l0 150c0,3 1,6 4,8 3,1 6,1 9,0l65 -38 65 -37c3,-2 4,-5 4,-8 0,-3 -1,-6 -4,-8z"/>
+  <path class="fil3" d="M60 120l50 0 0 50 -50 0 0 -50zm0 70l50 0 0 50 -50 0 0 -50zm0 70l50 0 0 50 -50 0 0 -50zm0 70l50 0 0 50 -50 0 0 -50zm331 -210l50 0 0 50 -50 0 0 -50zm0 70l50 0 0 50 -50 0 0 -50zm0 70l50 0 0 50 -50 0 0 -50zm0 70l50 0 0 50 -50 0 0 -50z"/>
+ </g>
+</svg>

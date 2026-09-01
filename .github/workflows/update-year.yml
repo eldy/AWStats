@@ -1,0 +1,25 @@
+name: Update Copyright Year
+
+on:
+  schedule:
+    - cron: '0 0 1 1 *'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      
+      - name: Update copyright year in README
+        id: update
+        run: |
+          YEAR=$(date +%Y)
+          echo "YEAR=$YEAR" >> $GITHUB_OUTPUT
+          sed -i "s/2026-{{YEAR}}/2026-$YEAR/" README*.md
+          
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          commit_message: "chore: update copyright year to ${{ steps.update.outputs.YEAR }}"
+          branch: release

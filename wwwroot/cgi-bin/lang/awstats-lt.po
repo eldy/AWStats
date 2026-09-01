@@ -1,0 +1,3332 @@
+# AWStats Lithuanian (lt) translations
+# Copyright (C) 2026 AWStats
+# This file is distributed under the same license as the AWStats package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: AWStats 8.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-10 12:00+0000\n"
+"PO-Revision-Date: 2026-05-10 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Lithuanian\n"
+"Language: lt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#------------------------------------------------------------------------------
+# Mėnesių pavadinimai
+#------------------------------------------------------------------------------
+
+msgid "month_01"
+msgstr "Sausis"
+
+msgid "month_02"
+msgstr "Vasaris"
+
+msgid "month_03"
+msgstr "Kovas"
+
+msgid "month_04"
+msgstr "Balandis"
+
+msgid "month_05"
+msgstr "Gegužė"
+
+msgid "month_06"
+msgstr "Birželis"
+
+msgid "month_07"
+msgstr "Liepa"
+
+msgid "month_08"
+msgstr "Rugpjūtis"
+
+msgid "month_09"
+msgstr "Rugsėjis"
+
+msgid "month_10"
+msgstr "Spalis"
+
+msgid "month_11"
+msgstr "Lapkritis"
+
+msgid "month_12"
+msgstr "Gruodis"
+
+#------------------------------------------------------------------------------
+# Dienų pavadinimai
+#------------------------------------------------------------------------------
+
+msgid "DayOfWeek_0"
+msgstr "Sekmadienis"
+
+msgid "DayOfWeek_1"
+msgstr "Pirmadienis"
+
+msgid "DayOfWeek_2"
+msgstr "Antradienis"
+
+msgid "DayOfWeek_3"
+msgstr "Trečiadienis"
+
+msgid "DayOfWeek_4"
+msgstr "Ketvirtadienis"
+
+msgid "DayOfWeek_5"
+msgstr "Penktadienis"
+
+msgid "DayOfWeek_6"
+msgstr "Šeštadienis"
+
+#------------------------------------------------------------------------------
+# Sąsajos elementai
+#------------------------------------------------------------------------------
+
+msgid "Advanced Web Statistics for"
+msgstr "Išplėstinė interneto statistika už"
+
+msgid "Statistics for"
+msgstr "Statistika už"
+
+msgid "main"
+msgstr "Apžvalga"
+
+# Temos keitimas
+msgid "Switch to light mode"
+msgstr "Perjungti į šviesųjį režimą"
+
+msgid "Switch to dark mode"
+msgstr "Perjungti į tamsųjį režimą"
+
+# Talpos vienetai
+msgid "TB"
+msgstr "TB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "Bytes"
+msgstr "Baitai"
+
+# Formos elementai
+msgid "Filter"
+msgstr "Filtruoti"
+
+msgid "Exclude filter"
+msgstr "Išskirti filtrą"
+
+msgid "Top"
+msgstr "Populiariausi"
+
+msgid "Full list"
+msgstr "Visas sąrašas"
+
+msgid "Last"
+msgstr "Paskutiniai"
+
+msgid "Average"
+msgstr "Vidurkis"
+
+msgid "Total"
+msgstr "Iš viso"
+
+msgid "Percent"
+msgstr "Procentai"
+
+msgid "Export"
+msgstr "Eksportuoti"
+
+msgid "Details"
+msgstr "Išsamiau"
+
+msgid "Version"
+msgstr "Versija"
+
+# Tūkstančių skyriklis
+msgid "thousands_separator"
+msgstr " "
+
+# Ilgas datos formatas (paskutiniam atnaujinimui, pirmam apsilankymui ir kt.)
+msgid "dateformat_long"
+msgstr "dd.mm.yyyy HH:MM:SS"
+
+# Trumpas datos formatas (diagramų etiketėms ir kt.)
+msgid "dateformat_short"
+msgstr "dd.mm.yyyy HH:MM"
+
+msgid "date_format_year"
+msgstr "%s m."
+
+msgid "date_format_month"
+msgstr "%2$s %1$s"
+
+#------------------------------------------------------------------------------
+# Naršymo juosta
+#------------------------------------------------------------------------------
+
+msgid "AWStats Month Selector"
+msgstr "AWStats mėnesio parinkiklis"
+
+msgid "nav_category_basic"
+msgstr "Pagrindinė dokumentacija"
+
+msgid "nav_category_guide"
+msgstr "Naudojimo vadovas"
+
+msgid "nav_category_reference"
+msgstr "Informaciniai ištekliai"
+
+msgid "nav_category_integration"
+msgstr "Integracija ir plėtra"
+
+msgid "nav_category_dev"
+msgstr "Kūrėjo dokumentacija"
+
+msgid "nav_changelog"
+msgstr "Pakeitimų žurnalas"
+
+msgid "nav_what"
+msgstr "Kas yra AWStats"
+
+msgid "nav_license"
+msgstr "Licencija"
+
+msgid "nav_glossary"
+msgstr "Terminų žodynas"
+
+msgid "nav_setup"
+msgstr "Diegimas ir konfigūravimas"
+
+msgid "nav_upgrade"
+msgstr "Atnaujinimo vadovas"
+
+msgid "nav_config"
+msgstr "Konfigūracijos parametrai"
+
+msgid "nav_extra"
+msgstr "Papildomi skyriai"
+
+msgid "nav_tools"
+msgstr "Kiti įrankiai"
+
+msgid "nav_faq"
+msgstr "DUK"
+
+msgid "nav_security"
+msgstr "Saugumo patarimai"
+
+msgid "nav_compare"
+msgstr "Palyginimas"
+
+msgid "nav_benchmark"
+msgstr "Testavimas"
+
+msgid "nav_webmin"
+msgstr "Webmin modulis"
+
+msgid "nav_dolibarr"
+msgstr "Dolibarr modulis"
+
+msgid "nav_contrib"
+msgstr "Indėlio ištekliai"
+
+msgid "nav_plugins"
+msgstr "Priedų kūrimas"
+
+msgid "nav_hooks"
+msgstr "Priedų kabliukai"
+
+msgid "nav_graphs"
+msgstr "Priedų grafikai"
+
+msgid "Back to top"
+msgstr "Atgal į viršų"
+
+msgid "nav_select_month"
+msgstr "Pasirinkite mėnesį"
+
+#------------------------------------------------------------------------------
+# Pagrindiniai statistiniai rodikliai
+#------------------------------------------------------------------------------
+
+# Apsilankymai
+msgid "Unique visitors"
+msgstr "Unikalūs lankytojai"
+
+msgid "Visits"
+msgstr "Apsilankymai"
+
+msgid "Visits duration"
+msgstr "Apsilankymų trukmė"
+
+msgid "First visit"
+msgstr "Pirmas atnaujinimas"
+
+msgid "Last visit"
+msgstr "Paskutinis atnaujinimas"
+
+msgid "Visits/Visitor"
+msgstr "Apsilankymų/Lankytojų"
+
+msgid "Pages/Visit"
+msgstr "Puslapių/Apsilankymų"
+
+msgid "Hits/Visit"
+msgstr "Užklausų/Apsilankymų"
+
+msgid "KB/Visit"
+msgstr "KB/Apsilankymų"
+
+msgid "KB/Visits"
+msgstr "KB/Apsilankymų"
+
+# Srautas
+msgid "Pages"
+msgstr "Puslapių skaičius"
+
+msgid "Hits"
+msgstr "Užklausų skaičius"
+
+msgid "Bandwidth"
+msgstr "Pralaidumas"
+
+msgid "duration_format"
+msgstr "%s-%s"
+
+msgid "unit_s"
+msgstr "s"
+
+msgid "unit_min"
+msgstr "min"
+
+msgid "unit_h"
+msgstr "val"
+
+msgid "and"
+msgstr "-"
+
+msgid "Device Types"
+msgstr "Įrenginių tipai"
+
+msgid "Device Type"
+msgstr "Įrenginio tipas"
+
+# Įrenginių tipų pavadinimai
+msgid "Mobile"
+msgstr "Mobilusis telefonas"
+
+msgid "Pause & Go"
+msgstr "Pristabdyti ir tęsti"
+
+msgid "Complete"
+msgstr "Užbaigti"
+
+msgid "Tablet"
+msgstr "Planšetė"
+
+msgid "Tv"
+msgstr "Televizorius"
+
+msgid "Wearable"
+msgstr "Nešiojamasis įrenginys"
+
+msgid "Bot"
+msgstr "Botas"
+
+msgid "Desktop"
+msgstr "Stalinis kompiuteris"
+
+msgid "Normal browsing traffic"
+msgstr "Normalus naršymo srautas"
+
+msgid "Abnormal browsing traffic"
+msgstr "Nenormalus naršymo srautas"
+
+msgid "Viewed"
+msgstr "Peržiūrėta"
+
+msgid "Not viewed"
+msgstr "Neperžiūrėta"
+
+msgid "Abnormal browsing traffic note"
+msgstr "Nenormalus naršymo srautas apima: paieškos robotus, AI mokymo botus, pažeidžiamumo skaitytuvus ir užklausas, kurios neatitinka HTTP/HTTPS specifikacijų"
+
+# Failai
+msgid "File size"
+msgstr "Failo dydis"
+
+msgid "File type"
+msgstr "Failo tipas"
+
+msgid "Downloads"
+msgstr "Atsisiuntimai"
+
+msgid "Request time"
+msgstr "Užklausos laikas"
+
+msgid "Total requests"
+msgstr "Iš viso užklausų"
+
+msgid "Frequency"
+msgstr "Dažnis"
+
+msgid "Average frequency"
+msgstr "Vidutinis dažnis"
+
+msgid "Seconds"
+msgstr "Sekundės"
+
+# El. paštas (skirta LogType eq 'M')
+msgid "First"
+msgstr "Pirmas"
+
+msgid "Mails"
+msgstr "Laiškų skaičius"
+
+msgid "Size"
+msgstr "Dydis"
+
+msgid "If you remove this file, all statistics for date"
+msgstr "Įspėjimas: jei pašalinsite šį failą, visa statistika už datą"
+
+msgid "will be lost/reset."
+msgstr "bus visam laikui prarasta/atstatyta."
+
+msgid "Last config file used to build this data file was"
+msgstr "Paskutinis konfigūracijos failas, naudotas šiam duomenų failui sukurti, buvo"
+
+msgid "Position (offset in bytes) in this file for beginning of each section for"
+msgstr "MAP segmentas šiame faile nustato baitų poslinkio pozicijas kiekvienos sekcijos pradžiai, kad"
+
+msgid "direct I/O access. If you made changes somewhere in this file, you should"
+msgstr "AWStats galėtų greitai pasiekti duomenis. Jei kur nors šiame faile atlikote rankinius pakeitimus, turėtumėte"
+
+msgid "also remove completely the MAP section (AWStats will rewrite it at next update)"
+msgstr "visiškai pašalinti MAP segmentą (AWStats jį perrašys kito atnaujinimo metu)."
+
+msgid "LastLine    = Date of last record processed - Last record line number in last log - Last record offset in last log - Last record signature value"
+msgstr "LastLine    = Paskutinio apdoroto įrašo data - Paskutinio įrašo eilutės numeris paskutiniame žurnale - Paskutinio įrašo poslinkis paskutiniame žurnale - Paskutinio įrašo parašo reikšmė"
+
+msgid "FirstTime   = Date of first visit for history file"
+msgstr "FirstTime   = Pirmojo apsilankymo data istorijos failui"
+
+msgid "LastTime    = Date of last visit for history file"
+msgstr "LastTime    = Paskutinio apsilankymo data istorijos failui"
+
+msgid "LastUpdate  = Date of last update - Nb of parsed records - Nb of parsed old records - Nb of parsed new records - Nb of parsed corrupted - Nb of parsed dropped"
+msgstr "LastUpdate  = Paskutinio atnaujinimo data - Apdorotų įrašų skaičius - Apdorotų senų įrašų skaičius - Apdorotų naujų įrašų skaičius - Apdorotų sugadintų įrašų skaičius - Apdorotų atmestų įrašų skaičius"
+
+msgid "TotalVisits = Number of visits"
+msgstr "TotalVisits = Apsilankymų skaičius"
+
+msgid "TotalUnique = Number of unique visitors"
+msgstr "TotalUnique = Unikalių lankytojų skaičius"
+
+msgid "MonthHostsKnown   = Number of hosts known"
+msgstr "MonthHostsKnown   = Žinomų serverių skaičius"
+
+msgid "MonthHostsUnKnown = Number of hosts unknown"
+msgstr "MonthHostsUnKnown = Nežinomų serverių skaičius"
+
+msgid "Cluster ID - Pages - Hits - Bandwidth"
+msgstr "Klasterio ID - Puslapių skaičius - Užklausų skaičius - Pralaidumas"
+
+msgid "Hour - Pages - Hits - Bandwidth - Not viewed Pages - Not viewed Hits - Not viewed Bandwidth"
+msgstr "Valanda - Puslapių skaičius - Užklausų skaičius - Pralaidumas - Neperžiūrėti puslapiai - Neperžiūrėtos užklausos - Neperžiūrėtas pralaidumas"
+
+msgid "Date - Pages - Hits - Bandwidth - Visits"
+msgstr "Data - Puslapių skaičius - Užklausų skaičius - Pralaidumas - Apsilankymai"
+
+msgid "Domain - Pages - Hits - Bandwidth"
+msgstr "Domenas - Puslapių skaičius - Užklausų skaičius - Pralaidumas"
+
+msgid "The %s first Pages must be first (order not required for others)"
+msgstr "Pagrindiniame puslapyje rodomi tik pirmi %s puslapiai su daugiausiai peržiūrų. Išsamų sąrašą rasite išsamiame puslapyje."
+
+msgid "Host - Pages - Hits - Bandwidth - Last visit date - [Start date of last visit] - [Last page of last visit]"
+msgstr "Serveris - Puslapių skaičius - Užklausų skaičius - Pralaidumas - Paskutinio apsilankymo data - [Paskutinio apsilankymo pradžios data] - [Paskutinio apsilankymo paskutinis puslapis]"
+
+msgid "[Start date of last visit] and [Last page of last visit] are saved only if session is not finished"
+msgstr "[Paskutinio apsilankymo pradžios data] ir [Paskutinio apsilankymo paskutinis puslapis] išsaugomi tik tuo atveju, jei sesija nebaigta"
+
+msgid "The first %s items are sorted by hits in descending order; order of the remaining items is undefined."
+msgstr "Pirmieji %s elementai surūšiuoti pagal pataikymų skaičių mažėjančia tvarka; likusių elementų tvarka nėra apibrėžta."
+
+msgid "Login - Pages - Hits - Bandwidth - Last visit"
+msgstr "Prisijungęs naudotojas - Puslapių skaičius - Užklausų skaičius - Pralaidumas - Paskutinio apsilankymo laikas"
+
+msgid "Robot ID - Hits - Bandwidth - Last visit - Hits on robots.txt"
+msgstr "Roboto ID - Užklausų skaičius - Pralaidumas - Paskutinio apsilankymo laikas - Užklausos į robots.txt"
+
+msgid "Worm ID - Hits - Bandwidth - Last visit"
+msgstr "Kirmino ID - Užklausų skaičius - Pralaidumas - Paskutinio apsilankymo laikas"
+
+msgid "EMail - Hits - Bandwidth - Last visit"
+msgstr "El. paštas - Užklausų skaičius - Pralaidumas - Paskutinio apsilankymo laikas"
+
+msgid "The first %s email addresses are sorted by hits in descending order; order of the remaining addresses is undefined."
+msgstr "Pirmieji %s el. pašto adresai surūšiuoti pagal pataikymų skaičių mažėjančia tvarka; likusių adresų tvarka nėra apibrėžta."
+
+msgid "URL - Pages - Bandwidth - Entry - Exit"
+msgstr "URL - Puslapių skaičius - Pralaidumas - Įėjimas - Išėjimas"
+
+msgid "Files type - Hits - Bandwidth - Bandwidth without compression - Bandwidth after compression"
+msgstr "Failo tipas - Užklausų skaičius - Pralaidumas - Pralaidumas be glaudinimo - Pralaidumas po glaudinimo"
+
+msgid "Request Time Range - Request Time Frequency"
+msgstr "Užklausos laiko intervalas - Užklausos laiko dažnis"
+
+msgid "Payload Range - Payload Frequency"
+msgstr "Failo dydžio intervalas - Failų skaičius"
+
+msgid "Session range - Number of visits"
+msgstr "Sesijos trukmės intervalas - Apsilankymų skaičius"
+
+msgid "URL with %s errors - Hits"
+msgstr "URL su %s klaidų - Užklausų skaičius"
+
+msgid "Last URL referrer"
+msgstr "Paskutinis URL šaltinis"
+
+msgid "Errors - Hits - Bandwidth"
+msgstr "Klaidos - Užklausų skaičius - Pralaidumas"
+
+msgid "Search keywords - Number of search"
+msgstr "Paieškos raktiniai žodžiai - Paieškų skaičius"
+
+msgid "Only top %s keywords shown on main page (sorted by search count). See full list on detail page."
+msgstr "Pagrindiniame puslapyje rodomi tik pirmi %s raktažodžiai (rūšiuojami pagal paieškų skaičių). Išsamų sąrašą rasite išsamiame puslapyje."
+
+msgid "Search keyphrases - Number of search"
+msgstr "Paieškos frazės - Paieškų skaičius"
+
+msgid "Only top %s keyphrases shown on main page (sorted by search count). See full list on detail page."
+msgstr "Pagrindiniame puslapyje rodomos tik pirmos %s frazės (rūšiuojamos pagal paieškų skaičių). Išsamų sąrašą rasite išsamiame puslapyje."
+
+msgid "External page referers - Pages - Hits"
+msgstr "Išorinių puslapių šaltiniai - Puslapių skaičius - Užklausų skaičius"
+
+msgid "Only top %s external referrers shown on main page (sorted by pages). See full list on detail page."
+msgstr "Pagrindiniame puslapyje rodomi tik pirmi %s išoriniai šaltiniai (rūšiuojami pagal puslapių skaičių). Išsamų sąrašą rasite išsamiame puslapyje."
+
+msgid "Search engine referers ID - Pages - Hits"
+msgstr "Paieškos variklio šaltinio ID - Puslapių skaičius - Užklausų skaičius"
+
+msgid "Origin - Pages - Hits"
+msgstr "Kilmė - Puslapių skaičius - Užklausų skaičius"
+
+msgid "Unknown referer Browser - Last visit date"
+msgstr "Nežinoma šaltinio naršyklė - Paskutinio apsilankymo data"
+
+msgid "Unknown referer OS - Last visit date"
+msgstr "Nežinoma šaltinio OS - Paskutinio apsilankymo data"
+
+msgid "Screen size - Hits"
+msgstr "Ekrano raiška - Užklausų skaičius"
+
+msgid "Browser ID - Hits - Pages"
+msgstr "Naršyklės ID - Paspaudimų skaičius - Puslapių skaičius"
+
+msgid "Downloads - Hits - Bandwidth"
+msgstr "Atsisiuntimai - Užklausų skaičius - Pralaidumas"
+
+msgid "Protocol - Hits - Bandwidth"
+msgstr "Protokolas - Užklausų skaičius - Pralaidumas"
+
+msgid "Icon Status - Type:200:404:Other"
+msgstr "Piktogramos būsena - Tipas:200:404:Kita"
+
+#------------------------------------------------------------------------------
+# Laikotarpių vertimai
+#------------------------------------------------------------------------------
+
+msgid "period_00"
+msgstr "Vidurnaktis · AWStats miega, o jūs vis dar žiūrite duomenis? Tikra meilė"
+
+msgid "period_01"
+msgstr "1 val. · Lankotės šiuo metu? Nemiga ar ką tik baigėte darbą"
+
+msgid "period_02"
+msgstr "2 val. · Botai darbštesni už jus, jie vis dar dirba"
+
+msgid "period_03"
+msgstr "3 val. · Miestas miega, serveris dirba viršvalandžius, kam blogiau?"
+
+msgid "period_04"
+msgstr "4 val. · Ryškiausia žvaigždė tamsoje, jūsų ekranas ar serverio indikatoriaus lemputė"
+
+msgid "period_05"
+msgstr "5 val. · Ankstyvas paukštis gaudo kirminą, ankstyvas botas renka duomenis"
+
+msgid "period_06"
+msgstr "6 val. · Kas nors keliasi, kas nors dar nemiegojo, internetas niekada neužsidaro"
+
+msgid "period_07"
+msgstr "7 val. · Spūsčių metas metro, taip pat laikas naršyti internete"
+
+msgid "period_08"
+msgstr "8 val. · Pirmas dalykas pradėjus darbą: pažvelkite į vakarykščius duomenis"
+
+msgid "period_09"
+msgstr "9 val. · Auksinis laikas, net tinginiavimas turi savo taisykles"
+
+msgid "period_10"
+msgstr "10 val. · Kavos laikas, tuo pačiu patikrinkite, ar srautas padidėjo"
+
+msgid "period_11"
+msgstr "11 val. · Dar valanda iki pietų, palaikykite dar šiek tiek"
+
+msgid "period_12"
+msgstr "12 val. · Serveris: Jūs visi išėjote pietauti, aš šiek tiek pailsėsiu"
+
+msgid "period_13"
+msgstr "13 val. · Mieguistumas po pietų, tačiau duomenys nemiega"
+
+msgid "period_14"
+msgstr "14 val. · Popietės užkandžio laikas, su duomenimis skaniau"
+
+msgid "period_15"
+msgstr "15 val. · Šios dienos eismo tendencijų diagrama, ar primena jūsų nuotaikos kreivę?"
+
+msgid "period_16"
+msgstr "16 val. · X valandų iki darbo pabaigos, eismas pradeda bėgti"
+
+msgid "period_17"
+msgstr "17 val. · Darbo diena baigta! Tačiau serveris turi toliau dirbti"
+
+msgid "period_18"
+msgstr "18 val. · Vakarienės laikas, pažiūrėkite vaizdo įrašą, kad atsipalaiduotumėte"
+
+msgid "period_19"
+msgstr "19 val. · Geriausias laikas, eismo pikas, serveris: Aš atlaikysiu"
+
+msgid "period_20"
+msgstr "20 val. · Išsidrėbęs ant sofos, jūs esate lankytojas numeris 114514"
+
+msgid "period_21"
+msgstr "21 val. · Vėlus vakaras, slapti duomenų stebėtojai +1"
+
+msgid "period_22"
+msgstr "22 val. · Šios dienos duomenys bus greitai paruošti, ar jaudinatės?"
+
+msgid "period_23"
+msgstr "23 val. · AWStats: Laikas miegoti, rytoj vėl dirbsime"
+
+#------------------------------------------------------------------------------
+# Laiko dimensijos
+#------------------------------------------------------------------------------
+
+msgid "Period"
+msgstr "Statistinis laikotarpis"
+
+msgid "Year"
+msgstr "Metai"
+
+msgid "Month"
+msgstr "Mėnuo"
+
+msgid "Months"
+msgstr "Mėnesiai"
+
+msgid "Date"
+msgstr "Data"
+
+msgid "Day"
+msgstr "Diena"
+
+msgid "Hour"
+msgstr "Valanda"
+
+msgid "Hours"
+msgstr "Valandos"
+
+msgid "Day of week"
+msgstr "Savaitės diena"
+
+msgid "When"
+msgstr "Kada"
+
+msgid "%s Server Management Panel"
+msgstr "%s  serverio valdymo skydelis"
+
+msgid "Server Administration"
+msgstr "Paprastas ir efektyvus serverio sprendimas"
+
+#------------------------------------------------------------------------------
+# Lankytojo matmenys
+#------------------------------------------------------------------------------
+
+msgid "Invalid URL Parameters"
+msgstr "Netinkami URL parametrai"
+
+msgid "The requested page cannot be loaded due to invalid or malformed URL parameters."
+msgstr "Puslapio nepavyko įkelti dėl netinkamų arba neteisingai suformatuotų URL parametrų."
+
+msgid "This may be caused by typing an incorrect URL, missing parameter separators, or using an invalid configuration name."
+msgstr "Tai gali lemti neteisingai įvestas URL, trūkstami parametrų skirtukai arba netinkamas konfigūracijos pavadinimas."
+
+msgid "Please check the URL you entered and ensure all parameters are correctly formatted."
+msgstr "Patikrinkite įvestą URL ir įsitikinkite, kad visi parametrai yra tinkamai suformatuoti."
+
+msgid "SiteDomain parameter not defined in your config/domain file, or you may not have execution permission on the file."
+msgstr "SiteDomain parametras nėra apibrėžtas jūsų config/domain faile arba galite neturėti vykdymo teisių šiam failui."
+
+msgid "Please run as Administrator to set permissions"
+msgstr "Paleiskite kaip administratorius, norėdami nustatyti teises"
+
+msgid "This directory lacks read permission"
+msgstr "Šiam katalogui trūksta skaitymo teisių"
+
+msgid "Please set read permission for directory"
+msgstr "Nustatykite katalogo skaitymo teises"
+
+msgid "Missing required parameter in config file"
+msgstr "Konfigūracijos faile trūksta būtino parametro"
+
+msgid "Please check that 'DirData' is defined."
+msgstr "Patikrinkite, ar apibrėžtas 'DirData' parametras."
+
+msgid "Domain name in browser address appears to be missing or incomplete"
+msgstr "Atrodo, kad naršyklės adreso eilutėje trūksta domeno vardo arba jis yra neišsamus"
+
+msgid "Please check the URL parameter"
+msgstr "Patikrinkite URL parametrą"
+
+msgid "Format description"
+msgstr "Formato aprašymas"
+
+msgid "Please set execute permission"
+msgstr "Nustatykite vykdymo teisę"
+
+msgid "Or if you prefer numeric mode"
+msgstr "Arba jei pageidaujate skaitmeninio režimo"
+
+msgid "View Report Directly"
+msgstr "Peržiūrėti ataskaitą tiesiogiai"
+
+msgid "AWStats Log Viewer"
+msgstr "AWStats žurnalų peržiūros priemonė"
+
+msgid "Month Selection"
+msgstr "Mėnesio pasirinkimas"
+
+msgid "Who"
+msgstr "Kas"
+
+msgid "Visitors"
+msgstr "Lankytojai"
+
+msgid "Countries"
+msgstr "Šalys/Regionai"
+
+msgid "flag_icon"
+msgstr "Vėliava"
+
+msgid "Country-Region-City"
+msgstr "Šalis/Regionas/Miestas"
+
+msgid "Code"
+msgstr "Kodas"
+
+msgid "Known"
+msgstr "Žinomas"
+
+msgid "unknownos"
+msgstr "Nežinoma operacinė sistema"
+
+msgid "unknownbrowser"
+msgstr "Nežinoma naršyklė"
+
+msgid "Unresolved IP Address"
+msgstr "Neišspręstas IP adresas"
+
+msgid "Unknown File Type"
+msgstr "Nežinomas failo tipas"
+
+msgid "Unknown Size"
+msgstr "Nežinomas dydis"
+
+msgid "Unknown Time"
+msgstr "Nežinomas užklausos laikas"
+
+msgid "Unknown Browser"
+msgstr "Nežinoma naršyklė"
+
+msgid "Unknown OS"
+msgstr "Nežinoma operacinė sistema"
+
+msgid "Unknown Visitor"
+msgstr "Nežinomas lankytojas"
+
+msgid "Unknown Visitor (Total)"
+msgstr "Nežinomas lankytojas (iš viso)"
+
+msgid "Unknown Country"
+msgstr "Nežinoma šalis/regionas"
+
+msgid "Unknown Country (Region)"
+msgstr "Nežinoma šalis/regionas (iš viso)"
+
+msgid "Unknown Visitor (Title)"
+msgstr "Nežinomas lankytojas (pavadinimas)"
+
+msgid "PageStayTime"
+msgstr "Neįmanoma įvertinti laiko, praleisto puslapyje"
+
+msgid "Unknown OS (Link)"
+msgstr "Nežinoma operacinė sistema (nuoroda)"
+
+msgid "Unknown OS (Row)"
+msgstr "Nežinoma operacinė sistema (sąrašas)"
+
+msgid "Unknown Browser (Link)"
+msgstr "Nežinoma naršyklė (nuoroda)"
+
+msgid "Unknown Browser (Row)"
+msgstr "Nežinoma naršyklė (sąrašas)"
+
+msgid "Unknown Screen"
+msgstr "Nežinomas ekrano dydis"
+
+msgid "Login"
+msgstr "Vartotojo vardas"
+
+msgid "Anonymous"
+msgstr "Anoniminis"
+
+msgid "Robots"
+msgstr "Robotai"
+
+msgid "Different robots"
+msgstr "Skirtingi robotai"
+
+msgid "Hits on robots.txt"
+msgstr "Aukščiau išvardyti paieškos robotai sukuria \"nenormalų\" naršymo srautą, kuris neįtrauktas į kitus grafikus. Skaičius po '+' yra sėkmingų prisijungimų prie \"robots.txt\" failo skaičius."
+
+msgid "Worms"
+msgstr "Kirminai"
+
+msgid "Different worms"
+msgstr "Skirtingi kirminai"
+
+msgid "Target"
+msgstr "Tikslas"
+
+msgid "Grabber"
+msgstr "Surinkimo įrankis"
+
+#------------------------------------------------------------------------------
+# Formato aprašymai
+#------------------------------------------------------------------------------
+
+msgid "mime_text"
+msgstr "TXT grynojo teksto failas (nestilizuotas tekstas, standartizuotas pagal ASCII kodavimą 1963 m. Kaip pagrindinis visų šaltinio kodų, konfigūracijos failų ir sistemų žurnalų pamatas, jo kryžminės platformos Windows (CRLF) ir Unix (LF) eilučių pabaigos valdymo srautai iki šiol išlieka universaliausiu kompiuterių pasaulio duomenų mainų standartu)"
+
+msgid "mime_log"
+msgstr "LOG sistemos veikimo žurnalas (grynojo teksto turtas, fiksuojantis operacinės sistemos, branduolio ir taikomųjų programų veikimo būseną. Apima Nginx/Apache prieigos žurnalus (Combined Log) ir standartinę syslog specifikaciją, yra pagrindinis duomenų šaltinis trikčių šalinimui, srauto našumo analizei ir saugos auditui)"
+
+msgid "mime_page"
+msgstr "HTML hiperteksto tinklalapis (1989 m. Tim Berners-Lee sukurtas pasaulinio tinklo pagrindas. Kaip nemokama, atvira universali hiperteksto žymėjimo kalba, jos HTML5 specifikacija 2014 m. tapo oficialiu W3C standartu, kuriame gimtai palaikomas struktūrinis multimedija, semantinis sąveikumas ir srauto puslapių išdėstymas. 2016 m. apdovanota Tiuringo premija)"
+
+msgid "mime_khtml"
+msgstr "KHTML žiniatinklio šablonų variklis (1998 m. KDE 2.0 naršyklės atvaizdavimo variklio specifikacija. Kaip atvirojo kodo bendruomenės pamatas, nulėmęs šiuolaikinį žiniatinklio atvaizdavimą, jos techninis paveldas tiesiogiai įkvėpė ir išsivystė į Apple WebKit ir Google Blink branduolius. Dar ir šiandien tęsia savo pagrindinę giją per šiuolaikinę srauto dinaminę žiniatinklio architektūrą)"
+
+msgid "mime_script"
+msgstr "SCRIPT interpretuojamas dinaminis skriptas (bendra šaltinio kodo srautų, kuriems nereikia išankstinio kompiliavimo ir kurie vykdomi eilutė po eilutės pagal konkrečią vykdymo aplinką ar interpretatorių, kategorija. Apima ASP, JSP, CGI, Tcl ir kt., plačiai naudojamas serverio pusės bendrosios sąsajos, automatizuotų procesų valdymo ir sisteminių užduočių integravimui)"
+
+msgid "mime_js"
+msgstr "JavaScript scenarijus (1995 m. Netscape naršyklės gimtoji programavimo aplinka. 1997 m. nustatytas ECMAScript pramonės standartas, 2009 m. atsiradusi Node.js vykdymo aplinka panaikino naršyklės ribas ir sukūrė viso krūvo asinchroninę neblokuojančią architektūrą, lydimą didžiausios pasaulyje npm programinės įrangos paketų ekosistemos)"
+
+msgid "mime_py"
+msgstr "Python scenarijus (1991 m. Guido van Rossum sukurta aukšto lygio interpretuojama scenarijų kalba. Dėl privalomo įtraukimo užtikrinamo neprarandamo skaitomumo ir kelių paradigmų pagrindinio dizaino, dabar yra nustatyta kaip pramonės standartinė kalba šiuolaikinei žiniatinklio architektūrai, viso krūvo duomenų mokslui, dirbtinio intelekto modelių mokymui ir debesijos natyviai automatizuotai operacijai)"
+
+msgid "mime_sh"
+msgstr "Shell scenarijus (1971 m. Unix eros standartinių komandų interpretatoriaus scenarijus. Apima tokias branduolio lygio komandų specifikacijas kaip Bash, Sh, Dash, paprastai vykdomas su .sh plėtiniu. Tai universalus branduolio lygio klijantas, skirtas žemo lygio procesų valdymui, diegimo nereikalaujančiai aplinkos konfigūracijai ir automatizuotam diegimui šiuolaikinėse Unix tipo operacinėse sistemose)"
+
+msgid "mime_rb"
+msgstr "Ruby scenarijus (1995 m. Yukihiro Matsumoto sukurta objektinė scenarijų kalba. Jos pagrindinė dizaino filosofija yra itin didelė pagarba kūrėjo patirčiai. Jos karkasas Ruby on Rails revoliucingai nustatė šiuolaikinės aukšto lygio žiniatinklio architektūros paradigmą „Konvencija prieš konfigūraciją“ (CoC))"
+
+msgid "mime_pl"
+msgstr "Perl scenarijus (1987 m. Larry Wall sukurta pragmatiška scenarijų kalba. Kaip šiuolaikinių paketų tvarkyklių pradininko (CPAN) kūrėjas, ji vadinama tekstų apdorojimo „šveicarišku peiliuku“. Šiuolaikiniu CGI režimu, vis dar tarnauja kaip patikimas pagrindas žurnalų analizės srityje dėl ypač mažų fizinės atminties sąnaudų ir efektyvaus reguliariųjų išraiškų apdorojimo)"
+
+msgid "mime_php"
+msgstr "PHP dinaminis tinklalapis (1995 m. Rasmus Lerdorf sukurtas, specialiai žiniatinklio kūrimui. Kaip pagrindinė technologija, varanti daugiau nei 70% visų pasaulio svetainių, ji giliai palaiko tokias didelio masto gamybines programas kaip WordPress ir Wikipedia. Nuo PHP 8 įvedus JIT (tiesioginio kompiliavimo) vykdymo variklį, įvyko pagrindinė paradigmos raida link aukštos kokybės viso krūvo serverio pusės)"
+
+msgid "mime_image"
+msgstr "IMAGE vaizdo turto klasifikacija (apima bendrą vaizdų, gautų naudojant nuostolingą/nenuostolingą bitų žemėlapių glaudinimą, šiuolaikinę atsakingą žiniatinklio grafiką ir vektorinę grafiką, klasifikaciją. Tai pagrindinis rodiklis, skirtas įvertinti svetainės vaizdo išteklių įkėlimo sąnaudas, kliento pusės podėlio (Cache) pataikymo dažnį ir medijos tinklo pralaidumo suvartojimą)"
+
+msgid "mime_document"
+msgstr "DOCUMENT struktūrizuotų dokumentų klasifikacija (apima bendrą grynojo teksto, skaičiuoklių, fiksuoto formato dokumentų (PDF) ir lengvosios žymėjimo kalbų klasifikaciją. Tai pagrindinis rodiklis, skirtas statistinei serverio pusės statinių žinių bazių platinimo, įmonės informatizavimo turto atsisiuntimo ir teksto srauto pralaidumo analizei)"
+
+msgid "mime_package"
+msgstr "PACKAGE kompiliavimo produktų ir programinės įrangos paketų klasifikacija (apima bendrą operacinės sistemos gimtųjų vykdomųjų failų, vykdymo metu susiejamų bibliotekų (DLL/SO) ir taikomųjų programų platinimo diegimo paketų klasifikaciją. Dažnai naudojama kaip pagrindinis rodiklis, skirtas įvertinti programinės įrangos platinimo svetainių išeinantį srautą ir atsisiuntimo pikus)"
+
+msgid "mime_archive"
+msgstr "ARCHIVE archyvavimo ir glaudinimo failai (bendra duomenų glaudinimo paketų, pagrįstų pagrindiniais algoritmais, tokiais kaip DEFLATE, LZMA, klasifikacija. Tinklo sluoksnyje, be tradicinio paketų platinimo, taip pat apima 1992 m. GNU projekto Gzip dinaminio atsako srautą. Nors šiuolaikiniuose scenarijuose palaipsniui diegiamas Brotli algoritmas, ši klasifikacija vis dar yra pagrindinis rodiklis, skirtas įvertinti serverio pralaidumo dažnį ir perdavimo sluoksnio slėgio mažinimą)"
+
+msgid "mime_audio"
+msgstr "AUDIO skaitmeninio garso srauto klasifikacija (apima bendrą glaudintų garsų, garsinių knygų ir srautinio garso konteinerių klasifikaciją. Remiantis konkrečiais garso kodavimo/dekodavimo standartais, naudojama stebėti daugialypės terpės svetainių garso duomenų srautų pralaidumą, lygiagrečių srautinio perdavimo pralaidumą ir ilgų jungčių veikimą)"
+
+msgid "mime_video"
+msgstr "VIDEO skaitmeninio vaizdo srauto klasifikacija (apima bendrą aukštos raiškos vaizdo konteinerių, šiuolaikinės žiniatinklio animacijos ir srautinio perdavimo segmentų klasifikaciją. Tai pagrindinis rodiklis, skirtas įvertinti serverio pralaidumo piką ir turinio paskirstymo tinklo (CDN) spartinimo efektyvumą esant didelei tinklo apkrovai)"
+
+msgid "mime_jscript"
+msgstr "JScript scenarijus (1996 m. Microsoft sukurtas atvirkštinės inžinerijos būdu gautas patentuotas įgyvendinimas, skirtas Internet Explorer 3.0. Kaip ankstyvos klasikinės JavaScript šeimininkės konkurentas, jis kadaise buvo pagrindinis Windows scenarijų šeimininko (WSH) ir ankstyvos ASP serverio pusės variklis)"
+
+msgid "mime_json"
+msgstr "JSON struktūrizuoti duomenys (2001 m. Douglas Crockford nustatytas lengvas duomenų serializavimo mainų formatas. Pagrįstas tekstinėmis rakto-reikšmės poromis ir masyvų architektūra, pasižymi ypač dideliu žmonių skaitomumu ir nenuostolingu srauto analizės savybėmis. Tai faktinis standartas šiuolaikinėms žiniatinklio API, mikroservisų architektūrai ir sąveikai su dideliais kalbos modeliais)"
+
+msgid "mime_vbs"
+msgstr "VBScript scenarijus (1996 m. Microsoft kartu su IE 3.0 išleista scenarijų kalbos variacija. Kadaise buvo pagrindinis ankstyvų ASP dinaminių svetainių ir Windows sistemų valdymo variklis. Dabar oficialiai atsisakyta ir pašalinta iš naujausio Windows 11 branduolio, todėl tai priklauso istoriniam palikimui)"
+
+msgid "mime_conf"
+msgstr "CONF sistemos konfigūracijos failas (bendra duomenų failų, kurie nuolat saugo programinės įrangos vykdymo aplinkos parametrus grynojo teksto pavidalu, klasifikacija. Apima INI ir šiuolaikines YAML, TOML, JSON specifikacijas. Linux sistemoje dažniausiai sutelkiami /etc kataloge. Tai pagrindinė priklausomybė sisteminės būsenos veikimo optimizavimui)"
+
+msgid "mime_css"
+msgstr "CSS kaskadiniai stiliaus lapai (1996 m. W3C standartas, kartu su HTML/JS vadinamas trimis pagrindiniais frontendo komponentais. Perėjęs CSS2 pozicionavimo ir CSS3 modulinės raidos etapus, gimtai palaiko lanksčią dėžę (Flexbox), tinklelį (Grid) ir reaktyvųjį dizainą su medijos užklausomis. Tai absoliučiai dominuojantis standartas, leidžiantis atsieti tinklalapio išvaizdą šiuolaikinėse naršyklėse)"
+
+msgid "mime_xsl"
+msgstr "XSL stiliaus lapas (1999 m. W3C standartas, apimantis XSLT transformaciją ir XPath adresavimo kalbą, skirtą struktūrizuotiems XML duomenims atvaizduoti į HTML, PDF arba grynąjį tekstą. Šiuolaikinėje kūryboje jo ekosistemą dažniausiai pakeičia lengvesni šablonų varikliai ir JSON duomenų formatas)"
+
+msgid "mime_runtime"
+msgstr "Vykdomasis failas (operacinės sistemos gimtieji vykdomieji formatai, tokie kaip EXE, ELF, Mach-O, kuriuose yra kompiliuotas žemo lygio mašininis kodas, įėjimo taškas ir sistemos įkėlimo informacija)"
+
+msgid "mime_library"
+msgstr "Bibliotekos failas (dinaminės arba statinės susiejimo bibliotekos, tokios kaip DLL, SO, dylib, kuriose yra bendrai naudojamų simbolių ir perkėlimo kodo, skirto iškviesti kitų programų ir įkelti vykdymo metu)"
+
+msgid "mime_swf"
+msgstr "Flash animacija (1996 m. sukurta Macromedia, 2005 m. įsigyta Adobe. Interaktyvios žiniatinklio animacijos standartas, kadaise dominavęs interneto animacijoje ir žaidimuose. Trūkumai: priklausomybė nuo papildinių, nepalaikymas mobiliuosiuose įrenginiuose, didelė saugumo rizika. 2017 m. Adobe paskelbė apie atsisakymą, 2020 m. visiškai nutraukė palaikymą, pakeistas HTML5/CSS3/JS)"
+
+msgid "mime_dtd"
+msgstr "DTD dokumento tipo apibrėžimas (išleistas 1998 m. kartu su XML 1.0, skirtas apibrėžti XML/HTML dokumento struktūrą ir patvirtinti teisėtumą. Šiuolaikinėje kūryboje jį palaipsniui keičia lankstesni sprendimai, tokie kaip XML Schema, RELAX NG)"
+
+msgid "mime_csv"
+msgstr "CSV duomenų formatas (kableliais atskirtos reikšmės, 1972 m. didžiųjų kompiuterių eros (IBM Fortran kompiliatorius) universalus grynojo teksto lentelių formatas. 2005 m. oficialiai standartizuotas RFC 4180, kaip nuostolingas kryžminės platformos ir kryžminės kalbos duomenų mainų standartas. Plačiai naudojamas efektyviam importui ir eksportui į Excel, reliacines duomenų bazes, duomenų analizę (Pandas))"
+
+msgid "mime_cur"
+msgstr "Pelės žymeklio failas (.cur formatas, skirtas tinkinti pelės stilių, pvz., piršto žymeklis tinklalapiuose, smėlio laikrodžio piktograma laukimo metu sistemoje. Jis yra „giminaitis“ su įprasta .ico piktograma, tačiau turi papildomą „karštojo taško“ nustatymą – tai vieta, kurioje pelė faktiškai spusteli. Istorija: Pasirodė su Windows 3.1 (1992 m.), buvo pagrindinis grafinės sąsajos perėjimo nuo komandinės eilutės prie pelės valdymo eros komponentas)"
+
+msgid "mime_jnlp"
+msgstr "Java Web Start (2000-ųjų Java darbalaukio programų platinimo technologija, leidžianti paleisti nuotolines Java programas per .jnlp failą. Dabar beveik išnykusi dėl saugumo problemų ir šiuolaikinių platinimo būdų paplitimo)"
+
+msgid "mime_lit"
+msgstr "Microsoft Reader elektroninė knyga (2000 m. Microsoft išleista, LIT formatas. Pasenęs, dabar galima konvertuoti į EPUB arba PDF naudojant įrankius, tokius kaip Calibre)"
+
+msgid "mime_svg"
+msgstr "SVG vektorinė grafika (1999 m. W3C standartas, dvimatis vektorinio vaizdo formatas, pagrįstas XML architektūra. Pasižymi galimybe masteliuoti neprarandant kokybės ir teksto srauto perdavimo pranašumais. Visos šiuolaikinės naršyklės palaiko jį gimtai. Plačiai naudojamas aukštos raiškos žiniatinklio piktogramoms, logotipams ir vektorinei animacijai atvaizduoti. Tai pagrindinis šiuolaikinės žiniatinklio grafikos standartas)"
+
+msgid "mime_ai"
+msgstr "AI vektorinė grafika (1987 m. Adobe sukurtas patentuotas vektorinės grafikos formatas. Kaip pagrindinis maketavimo, spaudos dizaino ir prekės ženklo identiteto kūrimo pramonės standartas, palaiko daugiasluoksnius ir aukšto lygio maketavimo vektorinius duomenis. Tai pageidaujamas profesionalaus vizualinio meno nešiklis)"
+
+msgid "mime_phshop"
+msgstr "PSD sluoksniuotas vaizdas (1990 m. Adobe kartu su Photoshop išleistas patentuotas rastrinio vaizdo šaltinio failo formatas. Palaiko daugiasluoksnį sluoksniavimą, kanalus, kaukes ir nenuostolingus redagavimo duomenis. Jis nustatytas kaip pasaulinis vaizdų apdorojimo ir skaitmeninės tapybos pramonės standartas)"
+
+msgid "mime_ttf"
+msgstr "TrueType šriftas (1989 m. Apple ir Microsoft kartu sukurtas skaitmeninio kontūro šrifto formatas. Pagrįstas kvadratinėmis Bézier kreivėmis, užtikrina absoliutų pikselių tikslumą tarp ekrano rodymo ir spausdinimo. Tai gimtasis numatytasis šrifto formatas šiuolaikinėse darbalaukio operacinėse sistemose)"
+
+msgid "mime_fon"
+msgstr "FON bitmap šriftas (1980-ųjų Microsoft Windows ankstyvojo sisteminio taškinio šrifto formatas. Nepalaiko nuostolingo mastelio keitimo pagal proporcijas. Paprastai naudojamas su palikimo sistemomis arba ankstyvuose įterptiniuose įrenginiuose ribotam pikselių teksto atvaizdavimui)"
+
+msgid "mime_pdf"
+msgstr "PDF elektroninis dokumentas (1993 m. Adobe sukurtas ir 2008 m. tapęs ISO 32000 tarptautiniu standartu, skirtas kryžminės platformos fiksuoto maketo dokumentams. Pasižymi absoliučiu maketo ir formato tikslumu. Tai universalus standartas, skirtas visuotiniam elektroninių oficialių dokumentų platinimui ir skaitmeninei leidybai)"
+
+msgid "mime_dotnet"
+msgstr "ASP.NET dinaminis puslapis (2002 m. Microsoft kartu su .NET architektūra išleista serverio pusės dinaminio žiniatinklio technologija. Veikia IIS atvaizdavimo variklyje, skirta kurti įmonių lygio Windows serverio pusės dinamines žiniatinklio programas ir paskirstytąsias sistemas)"
+
+msgid "mime_mdb"
+msgstr "MDB reliacinė duomenų bazė (1992 m. Microsoft kartu su Access išleistas darbalaukio lygio reliacinės duomenų bazės saugyklos formatas. Su įmontuotu Jet duomenų bazės varikliu, ankstyvoje asmeninių kompiuterių ir mažų bei vidutinių įmonių informatikos valdymo informacinėje sistemoje buvo naudojamas kaip reliacinės duomenų bazės sprendimas)"
+
+msgid "mime_md"
+msgstr "Markdown dokumentas (2004 m. John Gruber sukurtas lengvosios žymėjimo kalba. Pagrindinė dizaino filosofija – „skaitoma reiškia atvaizduojama“, davusi pradžią tokioms šiuolaikinėms išvestinėms specifikacijoms kaip GFM ir CommonMark. Plačiai naudojamas kaip pagrindinis mainų standartas techniniams dokumentams, žinių bazėms (Obsidian) ir šiuolaikiniams statinių svetainių generatoriams)"
+
+msgid "mime_crystal"
+msgstr "Crystal Reports (SAP verslo analitikos (BI) platformos profesionalus įmonių lygio ataskaitų failo formatas. Pasižymi daugelio duomenų šaltinių pagrindiniu ryšiu ir sudėtingomis dinaminio diagramų atvaizdavimo galimybėmis. Plačiai naudojamas profesionalioms ataskaitoms generuoti tarptautinių įmonių finansų ir duomenų analizės sistemose)"
+
+msgid "mime_libreoffice"
+msgstr "LibreOffice dokumentas (2010 m. The Document Foundation, remdamasi OpenOffice atšaka, sukurtas atvirojo kodo biuro programų rinkinio patentuotas formatas. Giliai įgyvendina W3C ODF (atviro dokumento formato) tarptautinį standartą. Tai šiuolaikinės atvirojo kodo ekosistemos biuro darbo pagrindas)"
+
+msgid "mime_encrypt"
+msgstr "ENCRYPT šifruotas failas (pirminiai dvejetainiai arba tekstiniai duomenys, apdoroti specifiniu simetriniu arba asimetriniu šifravimo algoritmu. Apima tokius pagrindinius išvestinius formatus kaip .enc, .pgp, .gpg. Tinklo sluoksnyje naudojamas neviešų duomenų konfidencialumui ir vientisumo patvirtinimui užtikrinti)"
+
+msgid "mime_gpx"
+msgstr "GPX palydovinės trajektorijos duomenys (pasaulinės padėties nustatymo sistemos mainų formatas, pagrįstas XML architektūra. Specialiai skirtas apibūdinti geografines koordinates, maršruto taškus, trasas ir istorines trajektorijas. Tai atviras duomenų standartas, bendras šiuolaikiniams mobiliems sporto įrenginiams, automobilių navigacijai ir geografinėms informacinėms sistemoms (GIS))"
+
+msgid "mime_diskimage"
+msgstr "Disk Image disko atvaizdis (apima fizinių diskų arba optinių laikmenų sektorių lygio atvaizdų failus, tokius kaip ISO, DMG, IMG. Naudojamas žemo lygio sistemos diegimui, didelės talpos programinės įrangos saugiam platinimui ir fizinio lygio pilnam laikmenų duomenų atsarginiam kopijavimui)"
+
+msgid "mime_vm"
+msgstr "VM virtualios mašinos atvaizdis (apima virtualių fizinių diskų atvaizdus, tokius kaip VMDK, VDI, VHDX, OVA. Kaip VMware, VirtualBox ir Hyper-V platformų pagrindas, naudojamas žemo lygio sistemos lygio aparatinės įrangos emuliacijai, egzempliorių momentinėms kopijoms ir debesijos infrastruktūros platinimui)"
+
+msgid "mime_torrent"
+msgstr "BitTorrent sėklos failas (2001 m. Bram Cohen sukurtas P2P taškas į tašką paskirstytojo atsisiuntimo indeksas. Pagrįstas Bencode kodavimu, saugo pirminio failo pagrindinius tikrinimo metaduomenis ir Tracker serverio adresavimo informaciją. Tai pagrindinis decentralizuoto tinklo srautų platinimo nešiklis)"
+
+msgid "mime_gis"
+msgstr "GIS geografinės erdvės duomenys (geografinės informacijos sistemos duomenų standartas, kurio pagrindą sudaro Shapefile ir GeoJSON. Apima daugiamates geometrines koordinates, sluoksnių topologiją ir atributų duomenis. Plačiai naudojamas aukštos kokybės skaitmeninių žemėlapių atvaizdavimui, palydoviniams nuotoliniams tyrimams ir erdvinei geometrinei analizei)"
+
+msgid "mime_ebook"
+msgstr "EBOOK elektroninė knyga (skaitmeninio leidybos formatas, kurio pagrindą sudaro atviras W3C EPUB tarptautinis standartas ir patentuota Amazon Kindle MOBI/AZW architektūra. Palaiko adaptyvų srauto maketą, metaduomenų įpakavimą ir DRM skaitmeninės teisių apsaugą. Tai universalus nešiklis, skirtas skaitmeniniam skaitymui mobiliuosiuose įrenginiuose)"
+
+msgid "mime_avif"
+msgstr "AVIF efektyvus vaizdas (2019 m. Atvirosios medijos aljanso (AOMedia) pristatytas kitos kartos itin aukštos raiškos vaizdo standartas. Pagrįstas AV1 vaizdo kodavimo raktinių kadrų technologija, jo glaudinimo efektyvumas yra 50% didesnis nei WebP, be to, jis gimtai palaiko didelį dinaminį diapazoną (HDR). Tai pagrindinis šiuolaikinio žiniatinklio vaizdų perdavimo standartas)"
+
+msgid "mime_markdown"
+msgstr "Markdown lengvasis dokumentas (2004 m. John Gruber sukurtos tekstinio dokumento žymėjimo kalba. Naudoja grynojo teksto deklaratyvųjį dizainą, jos sintaksė įkvėpta reStructuredText. Plačiai naudojama GitHub projektuose, inžinerinėje techninėje dokumentacijoje ir šiuolaikinėje statinio turinio valdymo ekosistemoje)"
+
+msgid "mime_yaml"
+msgstr "YAML serializavimo konfigūracija (2001 m. Clark Evans ir kt. sukurta žmogui skaitomo duomenų serializavimo formatas. Pagrįstas hierarchiniu įtraukimu ir rakto-reikšmės mapavimu. Dabar jis nustatytas kaip debesijos natyvios infrastruktūros konfigūracijos standartas, skirtas Kubernetes konteinerių orkestravimui, Ansible automatizavimui ir Docker Compose)"
+
+msgid "mime_toml"
+msgstr "TOML semantinė konfigūracija (2013 m. Tom Preston-Werner sukurta minimalistinė, kuo mažesnė kalba. Pasižymi pagrindinio dizaino pranašumais, tokiais kaip griežtas tipavimas, aiškus mapavimas ir semantinis aiškumas. Dabar plačiai naudojama kaip standartizuotas konfigūracijos failas šiuolaikiniams įrankių tinklams, tokiems kaip Rust (Cargo), Python (pyproject.toml) ir Go)"
+
+msgid "mime_vue"
+msgstr "Vue vieno failo komponentas (2014 m. Evan You pristatytas progresyvaus žiniatinklio karkaso patentuotas SFC formatas. Viename faile įgyvendina atsakomybių atskyrimą HTML/CSS/JS ir reaktyvų būsenos susiejimą. Giliai varo šiuolaikines interaktyvias priekinio galo programas ir didelio masto statinių svetainių variklius)"
+
+msgid "mime_wasm"
+msgstr "WebAssembly dvejetainis modulis (2017 m. W3C nustatytas aukštos kokybės žemo lygio baitų kodo standartas žiniatinkliui. Leidžia tokioms griežto tipo kalboms kaip C/C++/Rust būti kompiliuojamoms į naršyklės smėlio dėžės tikslą, užtikrinant beveik gimtojo aparatinės įrangos vykdymo efektyvumą. Tai pagrindinis šiuolaikinio žiniatinklio krašto skaičiavimo akmuo)"
+
+msgid "mime_jsx"
+msgstr "React JSX komponentas (2013 m. Facebook kartu su React karkasu pristatytas JavaScript XML sintaksės plėtinys. Palaiko deklaratyvų DOM virtualiosios struktūros kūrimą JavaScript, įgyvendinant priekinio galo kūrimo paradigmą „UI kaip būsenos funkcija“, pagrįstą komponentais)"
+
+msgid "mime_tsx"
+msgstr "TypeScript TSX komponentas (2012 m. Microsoft sukurtos griežto tipo TypeScript kalbos sintaksės ir JSX srauto derinys. Įpurškia statinio kompiliavimo metu vykdomą tipų tikrinimą ir sąsajos apribojimus kuriant React komponentus. Tai kodo standartas, užtikrinantis saugų šiuolaikinių didelių priekinio galo sistemų kūrimą)"
+
+msgid "mime_heif"
+msgstr "HEIF efektyvus vaizdas (2015 m. MPEG organizacijos nustatytas efektyvaus vaizdo failo formatas. Pagrįstas HEVC (H.265) vaizdo kodavimo algoritmu, palaiko kelių kadrų vaizdus, gylio žemėlapius ir metaduomenis labai mažoje apimtyje. Tai patentuotas saugojimo standartas, skirtas šiuolaikinėms mobiliosioms operacinėms sistemoms ir išmaniesiems galiniams įrenginiams)"
+
+msgid "mime_heic"
+msgstr "HEIC efektyvus vaizdas (Apple patentuotas bitmap formatas, įgyvendintas pagal HEIF tarptautinį standartą. Kaip numatytasis šiuolaikinių iPhone nuotraukų saugojimo standartas, gauna iOS/macOS aparatinės įrangos lygio kodavimo/dekodavimo ir gimtosios operacinės sistemos palaikymą. Užtikrindamas aukštą vaizdo kokybę, žymiai sumažina pagrindinės saugyklos vietą)"
+
+msgid "mime_gltf"
+msgstr "glTF 3D turto modelis (2015 m. Khronos Group išleistas GL perdavimo formato standartas. Naudoja JSON architektūrą trimatei scenai aprašyti, vadinamas „3D srities JPEG“. Tai lengvas pramonės standartas, skirtas šiuolaikiniam WebGL/WebGPU ir virtualios realybės atvaizdavimui)"
+
+msgid "mime_glb"
+msgstr "GLB dvejetainis 3D modelis (visiškai dvejetainis, nenuostolingas glTF turto modelio įpakavimo variantas. Sujungia scenos struktūrą, pagrindinius tinklelio viršūnių duomenis, medžiagas ir tekstūrų žemėlapius į vieną failą. Specialiai skirtas efektyviam perdavimui ir srautiniam platinimui kryžminės platformos žiniatinklio 3D turtui)"
+
+msgid "mime_gls"
+msgstr "GLOSSARY duomenų žodynėlis (specialiai dokumentų valdymo sistemoms ir struktūrizuotam tekstynui skirtas terminų rinkinio apibrėžimo failas. Su įmontuotais standartiniais terminų apibrėžimais, daugiakalbe atitiktimi ir metaduomenų mapavimu. Naudojamas automatizuotos teksto analizės ir turinio publikavimo sistemų konceptualiam nuoseklumui palaikyti)"
+
+msgid "mime_cbz"
+msgstr "CBZ komiksų knyga (patentuotas komiksų vaizdų archyvavimo formatas, pagrįstas ZIP glaudinimo struktūra. Vidinėje struktūroje įpakuoja ištisinę statinių bitmap vaizdų seką. Tai universalus lengvas konteinerio standartas, skirtas skaitmeninių komiksų leidybai ir kryžminės platformos vietiniam kolekcionavimui)"
+
+msgid "mime_cbr"
+msgstr "CBR komiksų knyga (patentuotas komiksų vaizdų archyvavimo formatas, pagrįstas RAR glaudinimo struktūra. Statinių bitmap vaizdų sekai įpakavimui naudoja RAR algoritmą, pasižymi gana dideliu glaudinimo laipsniu. Turi platų suderinamumo palaikymą skaitmeninių komiksų platinimo srityje)"
+
+msgid "mime_fb2"
+msgstr "FB2 elektroninė knyga (2000-ųjų pradžios FictionBook 2.0 elektroninės knygos standartas. Naudoja gryną XML struktūrą knygos atributams ir teksto hierarchijai aprašyti. Turi platų palaikymą atvirojo kodo elektroninių knygų ekosistemoje ir palikimo skaitmeninės leidybos skaitytuvuose)"
+
+msgid "mime_kepub"
+msgstr "KEPUB elektroninė knyga (Kobo patentuotas patobulintas elektroninės knygos formatas, sukurtas remiantis EPUB standartu. Atliktas pagrindinis atvaizdavimo optimizavimas, skirtas Kobo aparatinės įrangos lygio elektroninių knygų skaitytuvams, užtikrinantis efektyvesnį puslapių išdėstymą ir skaitymo statistikos sąveiką)"
+
+msgid "mime_m4b"
+msgstr "M4B garsinė knyga (garsinės knygos formatas, pagrįstas MPEG-4 Part 14 (MP4) konteinerio architektūra. Naudoja AAC kodavimą, gimtai palaiko pagrindinį žymių nustatymą, sustojusios vietos tęsimą ir skyrių įterpimą. Kadaise buvo standartinis Apple iTunes ekosistemos formatas)"
+
+msgid "mime_kfx"
+msgstr "Kindle KFX formatas (2015 m. Amazon kartu su Kindle išleistas patentuotas patobulintas skaitmeninės leidybos formatas. Palaiko aukšto lygio šriftų jungimą, dinaminį aukštos kokybės šriftų atvaizdavimą ir branduolio lygio srauto puslapių įkėlimą (Page Flip). Tai pagrindinis šiuolaikinės Kindle platformos standartas)"
+
+msgid "mime_chm"
+msgstr "CHM kompiliuota pagalbos byla (1997 m. Microsoft išleista kompiliuota HTML pagalbos informacinė sistema. Sujungia hiperteksto duomenis ir pagrindinį indeksą į vieną dvejetainį konteinerį. Ilgą laiką buvo standartinis vietinės neprisijungusios pagalbos dokumentacijos formatas, skirtas Windows programinei įrangai)"
+
+msgid "mime_mht"
+msgstr "MHT tinklalapio archyvas (1999 m. Microsoft išleistas MIME suvestinis hiperteksto formatas. Remiantis RFC 2557 standartu, HTML šaltinio kodą, CSS, JS ir įterptus vaizdus įpakuoja į vieną tekstinį failą. Naudojamas neprisijungusiam tinklalapių išsaugojimui senesnėse naršyklėse)"
+
+msgid "mime_wml"
+msgstr "WML belaidė žymėjimo kalba (1999 m. WAP forumo nustatytas mobiliesiems skirtas žymėjimo standartas. Pagrįstas XML specifikacija, specialiai skirtas ankstyviesiems siaurajuosčiams belaidžiams koriniams tinklams ir mažos galios funkciniams telefonams. Šiuolaikinėje žiniatinklio ekosistemoje priskiriamas prie pasenusių, nebenaudojamų technologijų)"
+
+msgid "mime_xhtml"
+msgstr "XHTML hiperteksto tinklalapis (2000 m. W3C standartas, griežtos hiperteksto žymėjimo kalbos, pagrįstos XML architektūra, įpakavimas. 2009 m. W3C nutraukė jo techninę raidą ir visiškai perėjo prie HTML5 specifikacijos. Dabar daugiausia naudojamas semantiniam tinklalapių atvaizdavimui palikimo sistemose)"
+
+msgid "mime_xml"
+msgstr "XML struktūrizuotas dokumentas (1998 m. W3C standarto plečiama žymėjimo kalba. Pasižymi savaime aprašančia žymų architektūra. Tai pagrindinis formatas, skirtas žiniatinklio paslaugoms (SOAP/REST), sisteminio lygio konfigūracijos failams (XSD) ir kryžminės platformos duomenų mainams)"
+
+msgid "mime_sgml"
+msgstr "SGML universali žymėjimo kalba (1986 m. ISO 8879 tarptautinio standarto universali žymėjimo kalba. Kaip elektroninių dokumentų struktūrizuoto aprašymo pramonės pradininkė, XML ir ankstyvosios HTML specifikacijos yra kilusios iš šios standartinės metakalbos)"
+
+msgid "mime_apng"
+msgstr "APNG dinaminė grafika (2004 m. Mozilla sukurtas Portable Network Graphics (PNG) dinaminis plėtinys. Palaiko 24 bitų tikras spalvas ir 8 bitų alfa kanalo skaidrumo savybes. Tai aukštos kokybės GIF formato alternatyva šiuolaikinio žiniatinklio scenarijuose)"
+
+msgid "mime_bmp"
+msgstr "BMP gimtoji bitmap (nuo Windows 1.0 eros nustatytas Microsoft platformos nuo įrenginio nepriklausantis bitmap formatas. Naudoja nenuostolingą, neglaudintą saugojimą. Nors jo dydis paprastai yra 3–10 kartų didesnis nei PNG, dėl to, kad nereikia kodavimo/dekodavimo išlaidų, jis vis dar plačiai įterptas į pagrindinius Windows 11 komponentus, EXE/MSI išteklių skyrius ir palikimo tvarkyklių grafinius buferius)"
+
+msgid "mime_cdr"
+msgstr "CDR vektorinė grafika (Kanados įmonės Corel patentuotas profesionalaus vektorinio dizaino CorelDRAW šaltinio failo formatas. Palaiko daugiasluoksnį spalvų valdymą, sudėtingus matematinius kontūrų mazgus ir spaudos lygio maketavimo duomenis. Tai specializuotas formatas, skirtas profesinei plokščiosios spaudos ir reklamos dizaino sritims)"
+
+msgid "mime_gif"
+msgstr "GIF indeksuotų spalvų vaizdas (1987 m. CompuServe sukurtas 8 bitų indeksuotų spalvų bitmap formatas. Pagrįstas LZW algoritmu, ribojamas 256 spalvų lygių ir vienos spalvos skaidrumo. Esant dideliam kadrų dažniui, tampa dėl dydžio. Dabar palaipsniui keičiamas šiuolaikiniais efektyviais dinaminės grafikos standartais, tokiais kaip APNG, WebP)"
+
+msgid "mime_ico"
+msgstr "ICO sisteminė piktograma (Windows gimtosios piktogramų išteklių įpakavimo formatas. Palaiko mišrų įvairių pikselių raiškų ir spalvų gylių vaizdo variantų įterpimą į vieną konteinerį. Taip pat yra universalus platinimo standartas, skirtas pagrindinei šiuolaikinių žiniatinklio naršyklių svetainių identifikacijai (Favicon))"
+
+msgid "mime_jpeg"
+msgstr "JPEG glaudintas vaizdas (1992 m. ISO 10918 tarptautinio standarto nuostolingas vaizdo formatas. Pagrįstas diskrečiuoju kosinuso transformacijos (DCT) algoritmu, pasiekdamas aukštą glaudinimo laipsnį, tuo pačiu išlaiko puikią tikrovišką vaizdo kokybę. Tai absoliutus faktinis pasaulinio interneto statinių nuotraukų standartas)"
+
+msgid "mime_jpg"
+msgstr "JPEG glaudintas vaizdas (1992 m. ISO 10918 tarptautinio standarto nuostolingas vaizdo formatas. Pagrįstas diskrečiuoju kosinuso transformacijos (DCT) algoritmu, pasiekdamas aukštą glaudinimo laipsnį, tuo pačiu išlaiko puikią tikrovišką vaizdo kokybę. Tai absoliutus faktinis pasaulinio interneto statinių nuotraukų standartas)"
+
+msgid "mime_png"
+msgstr "PNG nenuostolingas vaizdas (1996 m. W3C rekomenduojamas nešiojamos tinklo grafikos standartas. Naudoja nenuostolingą glaudinimo algoritmą, gimtai palaiko 24 bitų tikras spalvas ir 8 bitų alfa kanalo skaidrumą. Kaip aukštos kokybės klasikinio statinio GIF alternatyva, tai absoliutus faktinis interneto nenuostolingų pikselių vaizdų standartas)"
+
+msgid "mime_ps"
+msgstr "PostScript puslapio aprašymo failas (1985 m. Adobe pristatyta krūvinė puslapio aprašymo kalba. Kaip PDF formato technologinis pirmtakas, jis įgyvendina nuo aparatinės įrangos nepriklausomą teksto maketavimą ir aukštos kokybės vektorinės grafikos atvaizdavimą. Tai pamatinis profesionalios spaudos leidybos ir lazerinio spausdinimo sričių standartas)"
+
+msgid "mime_psb"
+msgstr "PSB didelio dydžio sluoksniuotas dokumentas (Adobe Photoshop patentuotas ypač didelio šaltinio failo įpakavimo formatas. Jis pralaužia standartinio PSD formato 2 GB fizinio dydžio ir 30 000 pikselių vidinio adresavimo ribas. Specialiai skirtas saugoti didžiulį, aukšto sluoksnių gylio skaitmeninį meno turtą)"
+
+msgid "mime_psd"
+msgstr "PSD sluoksniuoto dizaino šaltinio failas (Adobe Photoshop patentuotas sluoksniuoto vaizdo inžinerinis formatas. Kaip pramonės standartinis konteineris grafikos ir vaizdų srityje, jis gimtai įpakuoja pilną sluoksnių atvaizdavimo medį, bitmap kanalus, vektorinius kirpimo kelius ir sudėtinius maišymo režimus, palaikydamas nenuostolingą visų duomenų redagavimą)"
+
+msgid "mime_webp"
+msgstr "WebP efektyvus vaizdas (2010 m. Google pristatytas universalus žiniatinklio grafikos kodavimo standartas. Kilęs iš VP8 vaizdo raktinių kadrų technologijos, tobulai suderinamas su nuostolingu, nenuostolingu, skaidriu ir dinaminiu atvaizdavimu. Lyginant su tokios pačios kokybės PNG, sumažina dydį 25-35%. Tai pagrindinis aukštos kokybės šiuolaikinių tinklalapių įkėlimo akmuo)"
+
+msgid "mime_woff"
+msgstr "WOFF žiniatinklio šriftų failas (2009 m. sukurtas ir 2012 m. tapęs W3C standartu, atviras žiniatinklio šriftų formatas. Iš esmės tai yra standartinės TTF/OTF šriftų struktūros srauto nenuostolingas glaudinimo įpakavimas, žymiai optimizuojantis tinklo perdavimo pralaidumo sąnaudas. Tai universalus šiuolaikinių svetainių piktogramų ir debesijos šriftų formatas)"
+
+msgid "mime_7z"
+msgstr "7z glaudintas archyvas (1999 m. Igor Pavlov sukurtas patentuotas 7-Zip formatas. Pagrįstas atvirojo kodo LZMA/LZMA2 algoritmais, pasižymi ypač dideliu glaudinimo laipsniu. Esant tokioms pačioms sąlygoms, jo dydis paprastai būna 30-50% mažesnis nei ZIP. Tai universalus aukšto glaudinimo laipsnio formatas, skirtas atvirojo kodo bendruomenei ir programinės įrangos platinimui)"
+
+msgid "mime_ace"
+msgstr "ACE glaudintas archyvas (1990-ųjų patentuotas WinACE glaudinimo formatas. Kadaise konkuravo su RAR formatu ir pasižymėjo gana dideliu glaudinimo laipsniu. Po 2007 m. technologinė raida sustojo, dabar jį pakeitė 7z ir RAR formatai. Priskiriamas prie palikimo sistemų archyvavimo formatų)"
+
+msgid "mime_bz2"
+msgstr "BZIP2 glaudintas archyvas (1996 m. Julian Seward sukurtas blokų rūšiavimo glaudinimo formatas. Jo pagrindinio algoritmo glaudinimo laipsnis yra 15-20% didesnis nei GZIP, tačiau skaičiavimo sąnaudos didesnės. Dažnai naudojamas Linux branduolio šaltinio kodams ir atvirojo kodo programinės įrangos paketams platinti. Standartinis plėtinys yra .bz2)"
+
+msgid "mime_cab"
+msgstr "CAB glaudintas archyvas (1995 m. Microsoft savarankiškai sukurtas Cabinet archyvavimo formatas. Kaip gimtasis Windows sistemos diegimo paketų standartas, naudojamas tvarkyklėms ir branduolio failams platinti. Taip pat yra pagrindinis saugojimo konteineris, skirtas Windows Installer (MSI))"
+
+msgid "mime_dmg"
+msgstr "DMG disko atvaizdis (1980-aisiais Apple sukurta Disk Image formato evoliucija. Kaip standartinis macOS programinės įrangos platinimo konteineris, palaiko fizinį prijungimą kaip virtualią failų sistemą, pagrindinį glaudinimą ir duomenų šifravimą. Tai pagrindinis Mac ekosistemos programų platinimo formatas)"
+
+msgid "mime_emz"
+msgstr "EMZ glaudintas vaizdas (suglaudinta Windows patobulinto metafailo EMF versija. Iš esmės tai dvejetainė vektorinė grafika, suglaudinta naudojant GZIP algoritmą. Plačiai naudojama vektoriniams paveikslėliams, įterptiems į Microsoft Office serijos dokumentus, saugoti)"
+
+msgid "mime_gz"
+msgstr "GZIP glaudintas archyvas (1992 m. GNU projekto Jean-loup Gailly ir Mark Adler sukurtas standartinis srauto glaudinimo formatas. Kaip Unix/Linux standartinis glaudinimo įrankis, taip pat yra pagrindinis HTTP perdavimo sluoksnio glaudinimo (Gzip) standartas. Dažnai naudojamas kartu su TAR archyvavimu)"
+
+msgid "mime_jar"
+msgstr "JAR glaudintas archyvas (1997 m. Sun Microsystems pristatytas Java ARchive archyvavimo formatas. Iš esmės tai yra pakavimo konteineris, pagrįstas ZIP struktūra, skirtas Java klasių bibliotekoms ir metaduomenims įpakauti. Tai pagrindinis Maven, Gradle ir ankstyvosios Android ekosistemos kompiliavimo produktas)"
+
+msgid "mime_lzma"
+msgstr "LZMA glaudintas archyvas (1998 m. Igor Pavlov sukurtas Lempel-Ziv-Markov grandinės glaudinimo algoritmas. Kaip pagrindinis 7z formato variklis, pasižymi ypač dideliu glaudinimo laipsniu ir dideliu išpakavimo greičiu. Plačiai naudojamas aparatinės įrangos programinei įrangai ir įterptinėms sistemoms platinti)"
+
+msgid "mime_rar"
+msgstr "RAR glaudintas archyvas (1993 m. Eugene Roshal sukurtas patentuotas WinRAR archyvavimo formatas. Palaiko padalijimą į dalis, fizinius atkūrimo įrašus (ECC) ir aukšto stiprumo šifravimą. Jo glaudinimo laipsnis yra geresnis nei standartinio ZIP, jis turi platų suderinamumo palaikymą asmeninių kompiuterių ir komercinėje srityse)"
+
+msgid "mime_tar"
+msgstr "TAR archyvavimo paketas (1979 m. Unix V7 eros juostos archyvavimo formatas. Atlinka tik failų srauto pakavimą be duomenų glaudinimo. Dažnai derinamas su GZIP/BZIP2/XZ. Tai pagrindinis Linux šaltinio kodų paketų ir Docker atvaizdų sluoksniuotos saugyklos standartas)"
+
+msgid "mime_tgz"
+msgstr "TGZ glaudintas archyvas (TAR archyvavimo ir GZIP glaudinimo srauto derinys, plėtiniai .tgz arba .tar.gz. Tai universaliausias programinės įrangos paketų platinimo formatas Unix/Linux aplinkoje, plačiai naudojamas diegiant iš šaltinio kodų ir platinant diegimo nereikalaujančius dvejetainius paketus)"
+
+msgid "mime_tbz2"
+msgstr "TBZ2 glaudintas archyvas (TAR archyvavimo ir BZIP2 glaudinimo srauto derinys, plėtiniai .tbz2 arba .tar.bz2. Palyginti su TGZ, gali padidinti glaudinimo laipsnį dar 15-20%, tinka dideliems failams perduoti. Ilgą laiką buvo naudojamas Linux branduolio šaltinio kodams platinti)"
+
+msgid "mime_xz"
+msgstr "XZ glaudintas archyvas (2009 m. pristatytas kitos kartos aukšto glaudinimo laipsnio formatas. Pagrįstas LZMA2 algoritmu, duomenų glaudinimo laipsnis yra 30-50% didesnis nei GZIP, išlaikant didelį išpakavimo greitį. Jis nustatytas kaip rekomenduojamas platinimo standartas, naudojamas Linux branduolio ir pagrindinių paketų tvarkyklių (pvz., Debian .deb viduje))"
+
+msgid "mime_z"
+msgstr "Z glaudintas archyvas (1985 m. Unix komandos compress LZW glaudinimo formatas. Kaip standartinis glaudinimo standartas ankstyvojoje Unix sistemoje, dabar jį visiškai pakeitė efektyvesnis GZIP formatas. Šiuolaikiniame tinklo sraute tai retas istorinis formatas)"
+
+msgid "mime_zip"
+msgstr "ZIP glaudintas archyvas (1989 m. Phil Katz sukurtas PKZIP universalus archyvavimo formatas. Turi pagrindinių operacinių sistemų gimtąjį palaikymą. Tai plačiausiai naudojamas konteinerio standartas internete. Šiuolaikinis Java JAR, Android APK ir Office dokumentai (OOXML) yra pagrįsti ZIP struktūra)"
+
+msgid "mime_zst"
+msgstr "Zstandard glaudintas archyvas (2015 m. Facebook darbuotojo Yann Collet sukurtas naujos kartos srauto glaudinimo standartas. Pasiekia beveik LZMA glaudinimo laipsnį ir tuo pačiu turi daug didesnį pralaidumą nei GZIP. Jį giliai įdiegė Linux branduolys (5.9+) ir Arch/Debian paketų tvarkyklės)"
+
+msgid "mime_lz4"
+msgstr "LZ4 glaudintas archyvas (2011 m. Yann Collet sukurtas itin greitas srauto glaudinimo algoritmas. Jo pralaidumo greitis yra daugiau nei 10 kartų didesnis nei GZIP, jis turi labai mažas CPU vykdymo išlaidas. Plačiai naudojamas Linux branduolyje, OpenZFS failų sistemoje ir Hadoop realaus laiko duomenų srautų apdorojime)"
+
+msgid "mime_lzo"
+msgstr "LZO glaudintas archyvas (1996 m. Markus Oberhumer sukurtas Lempel-Ziv-Oberhumer algoritmas. Suteikia pirmenybę itin greitam išpakavimo našumui. Plačiai įterptas į Linux branduolio Squashfs atvaizdus, OpenWrt programinę įrangą ir įvairias išteklių ribojamas įterptines sistemas)"
+
+msgid "mime_msi"
+msgstr "MSI sistemos diegimo paketas (1999 m. Microsoft pristatytas Windows Installer duomenų įpakavimo formatas. Kaip standartinis Windows taikomųjų programų lygio diegimo standartas, gimtai palaiko pagrindinį operacijų atšaukimą, komponentų gyvavimo ciklo valdymą ir tylų diegimą be paketinio apdorojimo. Tai pagrindinis įmonių lygio centralizuoto programinės įrangos platinimo ir strategijų diegimo standartas)"
+
+msgid "mime_pkg"
+msgstr "PKG kryžminės platformos programinės įrangos diegimo paketas. 1. FreeBSD programinės įrangos paketas: pkgng standartas, plėtiniai .pkg arba .txz, pagrįstas TAR+XZ/Zstd glaudinimu, palaiko priklausomybių išaiškinimą ir parašų patikrinimą; 2. macOS diegimo paketas: pagrįstas Apple Installer formatu, palaiko tinkintus komponentus, diegimo scenarijus ir sisteminį pašalinimą. Tai atitinkamai pagrindiniai BSD serverių ir Mac sistemų platinimo nešikliai."
+
+msgid "mime_apk"
+msgstr "APK Android programų paketas (2008 m. Google kartu su Android išleistas tradicinis programų diegimo paketas. Pagrįstas ZIP archyvavimo struktūra, įpakuoja kompiliuotą Dalvik baito kodą (DEX), metaduomenų manifestą ir globaliuosius išteklius. Dabar plačiai naudojamas vietiniam kūrimo derinimui, trečiųjų šalių platinimui ir diegimui iš šono)"
+
+msgid "mime_ipa"
+msgstr "IPA Apple programų paketas (2008 m. kartu su iPhone SDK išleistas iOS/iPadOS skirtas pakavimo konteineris. Iš esmės tai ZIP archyvas, apsaugotas FairPlay skaitmeninės teisių apsaugos arba įmonės lygio kodo parašu. Jame yra Mach-O dvejetainis vykdomasis failas, programos išteklių medis ir Info.plist metaduomenų konfigūracija)"
+
+msgid "mime_hap"
+msgstr "HAP HarmonyOS programų paketas (2020 m. kartu su HarmonyOS 2.0 išleistas pagrindinis HarmonyOS lankstaus diegimo vienetas. Sudarytas iš pagrindinio Entry modulio arba Feature plėtinių funkcinių modulių. Tai pagrindinis kelių galinių įrenginių (telefonų, planšečių, nešiojamų įrenginių) išmaniesiems galiniams įrenginiams platinti skirtas formatas)"
+
+msgid "mime_har"
+msgstr "HAR HarmonyOS statinis bendrinamas paketas (HarmonyOS patentuotas statinės bendrinamos bibliotekos archyvavimo failas. Naudojamas bendriems komponentams, pagrindiniams išteklių kodams ir kompiliavimo metu reikalingoms priklausomybėms įpakauti. Jį statiškai susieja ir dalijasi keli HAP moduliai. Tai pagrindinis HarmonyOS sistemos komponentinio kūrimo ir kelių modulių pakartotinio naudojimo pagrindas)"
+
+msgid "mime_aab"
+msgstr "AAB Android programų rinkinys (2018 m. Google pristatytas ir 2021 m. nustatytas Google Play dinaminio platinimo formatas. Kaip grynas platinimo objektas, debesyje dinamiškai apkerpamas ir kompiliuojamas pagal tikslinio įrenginio CPU architektūrą, ekrano tankį ir kalbą, pagal poreikį generuojant optimizuotus APK failus. Tai vidutiniškai 35% sumažina perdavimo pralaidumo sąnaudas)"
+
+msgid "mime_xapk"
+msgstr "XAPK išplėstinis programų paketas (trečiųjų šalių Android bendruomenės nustatytas neoficialus programų plėtinio standartas. Sujungdamas standartinį APK failą su dideliu OBB žaidimo duomenų plėtiniu, fiziškai pralaužia Google Play 100 MB vieno failo dydžio apribojimą. Dažnai randamas žaidimų platinimo platformose)"
+
+msgid "mime_appx"
+msgstr "APPX šiuolaikinis programų paketas (2012 m. Microsoft kartu su Windows 8 išleista UWP programų diegimo specifikacija. Pasižymi smėlio dėžės izoliacijos vykdymu ir lengvu pašalinimu. Kaip ankstyvas pagrindinis Microsoft Store standartas, šiuolaikinėje Windows ekosistemoje jau yra įžengęs į gyvavimo ciklo pabaigos etapą, evoliucionuodamas į MSIX)"
+
+msgid "mime_msix"
+msgstr "MSIX naujos kartos programų paketas (2018 m. Microsoft išleistas visiškai naujas Windows standartizavimo pakavimo standartas. Puikiai sujungia APPX programų saugos smėlio dėžės savybes su MSIX įmonių lygio turto valdymo pranašumais. Visiškai suderinamas su visų tipų Win32 programomis. Tai rekomenduojamas platinimo standartas, skirtas Windows 11)"
+
+msgid "mime_appimage"
+msgstr "AppImage diegimo nereikalaujantis programų paketas (2004 m. pradėta Linux vieno vykdomojo archyvo specifikacija. Naudoja „viena programa – vienas failas“ savarankišką architektūrą. Vykdymo metu per FUSE mechanizmą tiesiogiai prijungiamas kaip tik skirta virtuali failų sistema vykdymui, įgyvendinant nulinės priklausomybės darbą iš karto visuose Linux platinimuose)"
+
+msgid "mime_flatpak"
+msgstr "Flatpak smėlio dėžės programų paketas (2015 m. Red Hat ir GNOME sukurtas kryžminės Linux platinimų darbalaukio programų platinimo standartas. Pagrinde remiasi Linux branduolio Namespace ir Cgroups mechanizmais, kad įgyvendintų itin griežtą taikomųjų programų lygio saugos smėlio dėžės izoliaciją. Tai šiuolaikinių atvirojo kodo OS programinės įrangos centrų pagrindas)"
+
+msgid "mime_snap"
+msgstr "Snap konteinerizuotas programų paketas (2014 m. Ubuntu motininės įmonės Canonical pristatytas universalus Linux diegimo standartas. Naudoja savarankišką SquashFS atvaizdo prijungimo architektūrą, palaiko automatizuotus papildomus atnaujinimus ir griežtą AppArmor smėlio dėžės izoliaciją. Tai pagrindinis numatytasis Ubuntu programinės įrangos centro ekosistemos formatas)"
+
+msgid "mime_deb"
+msgstr "DEB sistemos programinės įrangos paketas (1993 m. Debian projekto nustatyta dvejetainių ir šaltinio kodų pakavimo specifikacija. Kaip pagrindinis Debian, Ubuntu ir visų jų išvestinių sistemų diegimo standartas, remiasi dpkg branduoliu pakavimo išpakavimui ir priežiūrai, o APT naudoja kaip efektyvia paketų tvarkyklės priekine dalimi. Tai brandžiausias programinės įrangos platinimo pagrindas Linux ekosistemoje)"
+
+msgid "mime_rpm"
+msgstr "RPM sistemos programinės įrangos paketas (1997 m. Red Hat pristatyta Red Hat paketų tvarkyklės pakavimo specifikacija. Kartu su DEB vadinama viena iš dviejų pagrindinių tradicinės Linux paketų valdymo krypčių. Gimtai turi operacijų lygio priklausomybių tikrinimą ir pagrindinį skaitmeninio parašo programinės įrangos patvirtinimą. Iki šiol yra absoliučiai pagrindinis platinimo standartas, skirtas RHEL, Fedora, CentOS ir kitoms Red Hat ekosistemoms)"
+
+msgid "mime_pacman"
+msgstr "Pacman archyvavimo programinės įrangos paketas (2002 m. Arch Linux kartu su pacman tvarkykle nustatytas .pkg.tar.zst pakavimo formatas. Kaip Arch valcavimo atnaujinimo mechanizmo pagrindas, pagrįstas Zstandard didelės spartos ir aukšto glaudinimo laipsnio algoritmu, kartu su AUR (Arch vartotojų programinės įrangos saugykla) ekosistema. Tai modernus paketų platinimo standartas, atspindintis minimalistinį ir KISS principą)"
+
+msgid "mime_exe"
+msgstr "EXE gimtasis vykdomasis failas (Windows platformos nešiojamo vykdomojo (PE) dvejetainės programos formatas. Technologiškai kildinamas iš MS-DOS eros MZ antraštės struktūros. Nuo 1993 m. Windows NT visiškai nustatytas kaip PE struktūros specifikacija. Tai plačiausiai pasaulyje naudojamas vykdymo standartas, skirtas mašininio kodo instrukcijoms, statinių išteklių skyriams ir sistemos branduolio paleidimui)"
+
+msgid "mime_dll"
+msgstr "DLL dinaminė susiejimo biblioteka (Windows platformos Dynamic Link Library bendro kodo bibliotekos specifikacija. Dinamiškai įkeldama ir perkeldama simbolius vykdymo metu, žymiai taupo fizinę atmintį ir disko vietą. Kaip pagrindinė Windows API įgyvendinimo forma, jos ankstyvoji DLL Hell problema šiuolaikiniuose įrenginiuose išspręsta naudojant SxS lygiagrečios izoliacijos mechanizmą)"
+
+msgid "mime_com"
+msgstr "COM klasikinis vykdomasis failas (seniausias MS-DOS eros atminties atvaizdo (Command) vykdymo formatas. Naudoja nestruktūrizuotą gryno kodo skyriaus dizainą, ribojamas 64 KB fizinės atminties adresavimo segmento viršutinės ribos. Dabar jau pasenęs ir priskiriamas prie istorinio palikimo, tačiau šiuolaikinėje Windows architektūroje vis dar naudojamas kaip konkretus komponentų sąsajos, siekiant riboto suderinamumo)"
+
+msgid "mime_aac"
+msgstr "AAC garsas (MPEG standartas 1997 m., „Advanced Audio Coding“. MP3 įpėdinis, garso kokybė geresnė nei MP3 tuo pačiu bitų dažniu, numatytasis garso formatas, skirtas „YouTube“, „iTunes“, „Nintendo Switch“)"
+
+msgid "mime_alac"
+msgstr "ALAC garsas („Apple“ sukūrė 2004 m., „Apple Lossless Audio Codec“. „Apple“ nenostolingas formatas, atvirojo kodo 2011 m., numatytasis nenostolingas formatas, skirtas „iTunes“ ir „Apple Music“)"
+
+msgid "mime_flac"
+msgstr "FLAC garsas (Xiph.Org fondas sukūrė 2001 m., „Free Lossless Audio Codec“. Nenostolingas glaudinimas, garso kokybė tokia pati kaip CD, failo dydis yra maždaug pusė originalaus WAV. Atvirojo kodo ir be patentų, pageidaujamas formatas audiofilams ir skaitmeninės muzikos kolekcijoms)"
+
+msgid "mime_mp3"
+msgstr "MP3 garsas (Fraunhofer institutas sukūrė 1993 m., MPEG-1 Audio Layer 3. Nuostolingas glaudinimo formatas, mažas failas, priimtinos garso kokybės, pagrindinis 2000-ųjų skaitmeninės muzikos revoliucijos formatas, atsakingas už iPod ir Napster. Patentai baigėsi 2017 m., tapo viešo domeno formatas)"
+
+msgid "mime_oga"
+msgstr "Ogg Audio garsas (sukūrė Xiph.Org fondas, gryno garso Ogg konteinerio formatas, naudoja Vorbis kodavimą. Atvirojo kodo ir be patentų, glaudinimo efektyvumas geresnis nei MP3, plačiai naudojamas atvirojo kodo projektuose)"
+
+msgid "mime_ogg"
+msgstr "OGG garsas (Xiph.Org fondas sukūrė 2000 m., Ogg Vorbis formatas. Atvirojo kodo ir be patentų, glaudinimo efektyvumas geresnis nei MP3, ankstyvasis „Spotify“ jį naudojo, plačiai naudojamas garso efektams žaidimuose)"
+
+msgid "mime_opus"
+msgstr "Opus garsas (IETF standartizavo 2012 m., atviras ir be patentų garso formatas, sujungia SILK ir CELT technologijas, labai mažas vėlavimas, didžiausias glaudinimo efektyvumas, numatytasis garso formatas, skirtas WebRTC, „WhatsApp“, „Discord“)"
+
+msgid "mime_wav"
+msgstr "WAV garsas („Microsoft“ ir „IBM“ sukūrė 1991 m., gimtoji „Windows“ garso formatas. PCM kodavimas, nesuspaustas, nenostolinga garso kokybė, bet failas labai didelis, standartinis profesionalaus garso redagavimo formatas)"
+
+msgid "mime_wma"
+msgstr "WMA garsas („Microsoft“ sukūrė 1999 m., „Windows Media Audio“. Turi nuostolingas / nenostolingas versijas, „Windows“ palaiko iš pradžių, išplito su „Windows Media Player“. Dabar marginalizuotas, pakeistas MP3 / AAC)"
+
+msgid "mime_dsf"
+msgstr "DSF garsas („Direct Stream Digital“ formatas, sukūrė „Sony“ ir „Philips“. 1 bito didelė atrankos dažnis, standartinis DSD garso formatas, skaitmeninė SACD versija, aukštos kokybės garso formatas audiofilams, failas labai didelis)"
+
+msgid "mime_ape"
+msgstr "APE Audio (sukurtas Monkey's Audio 2000 m., nuostolingo glaudinimo formatas. Didesnis glaudinimas nei FLAC, bet lėtesnis kodavimas, vis dar naudojamas Windows platformoje ir tarp audio entuziastų)"
+
+msgid "mime_mid"
+msgstr "MIDI garsas (MIDI asociacija nustatė 1983 m., „Musical Instrument Digital Interface“. Natų formatas, ne įrašas, failas labai mažas, standartas, skirtas elektroniniams muzikos instrumentams, telefono skambučiams, garso efektams žaidimuose. Bendras MIDI buvo standartizuotas 1991 m., apibrėžia 128 instrumentus)"
+
+msgid "mime_m4a"
+msgstr "M4A garsas (MPEG-4 Audio, AAC konteinerio formatas. Standartinis „iTunes“ muzikos parduotuvės formatas, pagrindinis garso formatas „Apple“ ekosistemoje, palaiko DRM apsaugą)"
+
+msgid "mime_m3u"
+msgstr "M3U grojaraštis (MP3 URL grojaraščio formatas, paprastas teksto failas, registruoja garso failų kelius. „Winamp“ eros standartas, naudojamas interneto radijui, muzikos srautiniam perdavimui internete. M3U8 yra jo UTF-8 versija, naudojama HTTP tiesioginiam srautiniam perdavimui)"
+
+msgid "mime_asf"
+msgstr "ASF srautas („Microsoft“ sukūrė 1996 m., „Advanced Systems Format“. „Windows Media“ srautinio perdavimo konteineris, palaiko sinchroninį garso ir vaizdo perdavimą. Naudojamas tiesioginėms interneto transliacijoms ir vaizdo įrašams pagal pareikalavimą, WMA / WMV yra pagrįsti ASF konteineriu)"
+
+msgid "mime_avi"
+msgstr "AVI vaizdo įrašas („Microsoft“ išleido 1992 m., ankstyvasis „Windows“ vaizdo standartas. „Audio Video Interleave“, kaitalioja garsą ir vaizdą, buvo populiariausias vaizdo formatas 1990–2000 m., dabar pakeistas MP4 / MKV)"
+
+msgid "mime_divx"
+msgstr "DivX vaizdo įrašas („DivX Corporation“ sukūrė 1998 m., MPEG-4 pagrįstas vaizdo kodeko formatas. Pagrindinis internetinio vaizdo įrašų dalijimosi formatas 2000-aisiais, pirmoji technologija, suspaudusi DVD kokybę iki CD dydžio. Dėl autorių teisių ginčų vėliau virto komerciniu koduotuvu)"
+
+msgid "mime_mp4"
+msgstr "MP4 vaizdo įrašas (MPEG standartas 2001 m., MPEG-4 14 dalis. Labiausiai paplitęs vaizdo formatas pasaulyje, palaiko H.264 / H.265 kodavimą, numatytasis interneto vaizdo įrašų, mobiliųjų telefonų filmavimo, „YouTube“ formatas)"
+
+msgid "mime_m4v"
+msgstr "M4V vaizdo įrašas („iTunes“ vaizdo formatas, MP4 variantas. Vaizdo formatas „Apple“ ekosistemoje, standartinis „iTunes Store“ filmų ir televizijos laidų formatas, palaiko DRM autorių teisių apsaugą)"
+
+msgid "mime_mpeg"
+msgstr "MPEG vaizdo įrašas (MPEG organizacija nustatė 1988 m., „Moving Picture Experts Group“. Padėjo skaitmeninio vaizdo glaudinimo standartų pagrindus, MPEG-1 (VCD), MPEG-2 (DVD), MPEG-4 (interneto vaizdo įrašai) turėjo didelę įtaką)"
+
+msgid "mime_mkv"
+msgstr "MKV vaizdo įrašas („Matroska“ projektas sukūrė 2002 m., atvirojo kodo daugialypės terpės konteineris. Palaiko kelis garso takelius, kelis subtitrus, skyrius, „pakavimo įrankis“, pageidaujamas aukštos raiškos filmų dalijimosi formatas)"
+
+msgid "mime_mpg"
+msgstr "MPEG vaizdo įrašas (MPEG-1 / MPEG-2 vaizdo plėtiniai, standartinis VCD ir DVD formatas. Pagrindinis vaizdo formatas optiniuose diskuose 1990–2000 m., dabar pakeistas H.264 / H.265)"
+
+msgid "mime_ogv"
+msgstr "Ogg Video vaizdo įrašas (sukūrė Xiph.Org fondas, Ogg konteinerio vaizdo formatas, naudoja Theora kodavimą. Atviras ir be patentų, vienas iš ankstyvųjų HTML5 vaizdo standartų, „Firefox“ palaiko iš pradžių)"
+
+msgid "mime_ogx"
+msgstr "Ogg daugialypės terpės konteineris (sukūrė Xiph.Org fondas, bendras Ogg konteinerio plėtinys, gali turėti kelias juostas, pavyzdžiui, garsą, vaizdą, subtitrus. Atviras daugialypės terpės standartas, naudojamas žaidimuose, srautiniame perdavime)"
+
+msgid "mime_rm"
+msgstr "RealMedia vaizdo įrašas (RealNetworks sukūrė 1995 m., RealMedia formatas. Interneto srautinio perdavimo pradininkas 1990–2000 m., pagrindinis „RealPlayer“ grotuvo formatas. Trūkumai: reikalauja specialaus grotuvo, bloga glaudinimo kokybė, vėliau pakeistas Flash / MP4)"
+
+msgid "mime_flv"
+msgstr "Flash vaizdo įrašas (formatas pasirodė 2002 m., „Flash Video“ formatas. Kažkada buvo pagrindinis interneto vaizdo formatas. Ankstyvasis „YouTube“ jį naudojo. Trūkumai: reikalingas „Flash“ papildinys, prastas našumas, daug saugumo spragų. Nuo 2015 m. pagrindinės svetainės perėjo prie HTML5 vaizdo, dabar pasenęs)"
+
+msgid "mime_f4v"
+msgstr "F4V vaizdo įrašas („Flash“ vaizdo formatas, kurį sukūrė „Adobe“, FLV įpėdinis. Pagrįstas MPEG-4 standartu, palaiko H.264 kodavimą. Pasenęs kartu su „Flash“ technologija, „Adobe“ nutraukė palaikymą 2020 m.)"
+
+msgid "mime_wmv"
+msgstr "WMV vaizdo įrašas („Microsoft“ sukūrė 1999 m., „Windows Media Video“. „Windows“ palaiko iš pradžių, optimizuotas srautiniam perdavimui, buvo įprastas formatas ankstyvajame interneto vaizdo įraše, dabar marginalizuotas)"
+
+msgid "mime_wmf"
+msgstr "WMF laikmenos formatas („Windows Media Format“, „Microsoft“ laikmenos sistemos struktūra, apima WMV vaizdo įrašą, WMA garsą, „Windows Media Player“ palaiko iš pradžių)"
+
+msgid "mime_mov"
+msgstr "MOV vaizdo įrašas („Apple“ sukūrė 1991 m., „QuickTime“ konteinerio formatas. Standartinis profesionalaus vaizdo redagavimo formatas, palaiko kelis kodekus, „Final Cut Pro“ ir „Premiere“ palaiko iš pradžių)"
+
+msgid "mime_qt"
+msgstr "„QuickTime“ vaizdo įrašas („Apple“ išleido 1991 m., „QuickTime“ formatas. Vaizdo standartas „Mac“ platformoje, MOV yra jo konteineris, „QuickTime“ grotuvas kažkada buvo plačiai naudojamas. „Apple“ nutraukė „Windows“ versijos kūrimą 2016 m., palaipsniui jį keisdama MP4)"
+
+msgid "mime_webm"
+msgstr "WebM vaizdo įrašas („Google“ išleido 2010 m., atviras ir be patentų vaizdo formatas. Pagrįstas „Matroska“ konteineriu, VP8 / VP9 kodavimu, standartinis HTML5 vaizdo formatas, numatytasis „YouTube“ atkūrimo formatas internete)"
+
+msgid "mime_3gp"
+msgstr "3GP vaizdo įrašas (3GPP nustatė 2000 m., vaizdo formatas, skirtas mobiliesiems įrenginiams. Labai mažas failas, žemos kokybės, formatas, skirtas filmuoti ankstyvaisiais mobiliaisiais telefonais, naudojamas MMS siuntimui)"
+
+#------------------------------------------------------------------------------
+# Techninės dimensijos
+#------------------------------------------------------------------------------
+
+msgid "Operating Systems"
+msgstr "Operacinės sistemos"
+
+msgid "Top 5 Operating Systems"
+msgstr "5 populiariausios operacinės sistemos"
+
+msgid "Unknown Robot"
+msgstr "Nežinomas klientas"
+
+msgid "User agent"
+msgstr "Naudotojo agentas"
+
+msgid "Browsers"
+msgstr "Naršyklės"
+
+msgid "Top 5 Browsers"
+msgstr "5 populiariausios naršyklės"
+
+msgid "Unknown Robot RH"
+msgstr "Nežinomas užklausos antraštė"
+
+msgid "Detailed"
+msgstr "Prisijungiančio įrenginio versija"
+
+msgid "DetailedOS"
+msgstr "Operacinės sistemos versija"
+
+msgid "DetailedBS"
+msgstr "Naršyklės versija"
+
+msgid "Screen sizes"
+msgstr "Ekrano dydžiai"
+
+msgid "Compression"
+msgstr "Glaudinimas"
+
+msgid "In"
+msgstr "Įėjimas"
+
+msgid "Out"
+msgstr "Išėjimas"
+
+msgid "Saved"
+msgstr "Sutaupyta"
+
+#------------------------------------------------------------------------------
+# Šaltinių dimensijos
+#------------------------------------------------------------------------------
+
+msgid "Origin"
+msgstr "Kilmė"
+
+msgid "Referers"
+msgstr "Šaltiniai"
+
+msgid "meta.description"
+msgstr "AWStats pažangus žiniatinklio žurnalų analizatorius - realiuoju laiku stebi svetainės srautą, lankytojų analizę, paieškos sistemų raktažodžius, klaidų puslapių statistiką. Palaiko tamsųjį režimą ir daugiakalbę sąsają, suteikia išsamią duomenų analizę svetainių administratoriams."
+
+msgid "meta.keywords"
+msgstr "AWStats,žiniatinklio statistika,žurnalų analizė,srauto stebėjimas,prieigos statistika,SEO analizė,žiniatinklio analizės įrankis,Web Analytics,Log Analyzer"
+
+msgid "meta.author"
+msgstr "AWStats"
+
+msgid "og.title"
+msgstr "AWStats - žiniatinklio žurnalų analizė"
+
+msgid "og.description"
+msgstr "📊 Profesionalus atvirojo kodo žiniatinklio statistikos įrankis, realiuoju laiku analizuoja jūsų svetainės srautą ir lankytojų elgesį."
+
+msgid "og.image.alt"
+msgstr "AWStats statistikos grafikai"
+
+msgid "Created by"
+msgstr "Sukūrė %s"
+
+msgid "plugins"
+msgstr "papildiniai"
+
+msgid "dbip by"
+msgstr "duomenys iš"
+
+msgid "IPDB by"
+msgstr "geografinės vietos duomenis teikia DB-IP"
+
+# Sveikatos būklė
+msgid "Configured"
+msgstr "Sukonfigūruota"
+
+msgid "Missing"
+msgstr "Trūksta"
+
+msgid "OK"
+msgstr "Gerai"
+
+msgid "Unused"
+msgstr "Nenaudojama"
+
+# Kita
+msgid "Overall Health"
+msgstr "Bendra sveikatos būklė"
+
+msgid "Excellent"
+msgstr "Puikiai"
+
+msgid "Good"
+msgstr "Gerai"
+
+msgid "Fair"
+msgstr "Patenkinamai"
+
+msgid "Poor"
+msgstr "Blogai"
+
+msgid "Missing icon types"
+msgstr "Trūkstami piktogramų tipai"
+
+msgid "See"
+msgstr "Išsami informacija"
+
+msgid "Expected Path"
+msgstr "Kelio aprašymas"
+
+msgid "column for file locations"
+msgstr "stulpelis failų vietoms gauti"
+
+# Patarimas
+msgid "Tip: If you need to generate related icons, you can use %s to upload a logo image, and it will automatically generate all the above related icon files"
+msgstr "Patarimas: jei reikia sugeneruoti susijusias piktogramas, galite naudoti %s norėdami įkelti logotipo vaizdą, ir jis automatiškai sugeneruos visus aukščiau nurodytus susijusius piktogramų failus"
+
+msgid "200: success, 404: failure"
+msgstr "200 yra sėkmingų bandymų skaičius, 404 yra nesėkmingų bandymų skaičius"
+
+# Tikėtini keliai
+msgid "_PATH_FAVICON"
+msgstr "/favicon.ico"
+
+msgid "_PATH_APPLE_TOUCH"
+msgstr "/apple-touch-icon.png arba /apple-touch-icon-180x180.png"
+
+msgid "_PATH_LOGO"
+msgstr "/logo.svg arba /logo.png (reikia nurodyti HTML / JSON-LD)"
+
+msgid "_PATH_WEBMANIFEST"
+msgstr "/site.webmanifest arba /manifest.json"
+
+msgid "_PATH_BROWSERCONFIG"
+msgstr "/browserconfig.xml"
+
+msgid "_PATH_SAFARI_PINNED"
+msgstr "/safari-pinned-tab.svg"
+
+msgid "_PATH_SOCIAL_ICON"
+msgstr "/images/github.svg, /images/paypal.svg ir kt."
+
+# Piktogramų tipų pavadinimai
+msgid "Favicon"
+msgstr "Svetainės piktograma"
+
+msgid "Apple Touch Icon (iOS/macOS)"
+msgstr "„Apple Touch“ piktograma (iPhone / iPad / Mac)"
+
+msgid "Site Logo"
+msgstr "Svetainės logotipas"
+
+msgid "Web App Manifest (Android/Chrome)"
+msgstr "Žiniatinklio programos manifesto failas („Android“ / „Chrome“)"
+
+msgid "Windows Browser Config"
+msgstr "„Windows“ naršyklės konfigūracija"
+
+msgid "Safari Pinned Tab"
+msgstr "Priskirta „Safari“ skirtuko piktograma"
+
+msgid "Social Icon"
+msgstr "Socialinės žiniasklaidos piktograma"
+
+# Antraštės
+msgid "Icon Files Status"
+msgstr "Piktogramų failų būsena"
+
+msgid "Icon Type"
+msgstr "Piktogramos tipas"
+
+msgid "Advanced Web Statistics"
+msgstr "Pažangus žurnalų analizatorius"
+
+msgid "Advanced Web Statistics %s"
+msgstr "Pažangus žurnalų analizatorius %s"
+
+msgid "Your browser does not support frames. Please use a modern browser."
+msgstr "Jūsų naršyklė nepalaiko rėmų. Naudokite šiuolaikinę naršyklę."
+
+msgid "View statistics directly"
+msgstr "Tiesiogiai peržiūrėti statistiką"
+
+msgid "Close"
+msgstr "Uždaryti"
+
+msgid "Documentation Viewer"
+msgstr "Dokumentacijos peržiūros programa"
+
+msgid "Direct address / Bookmarks"
+msgstr "Tiesioginis adresas / žymės"
+
+msgid "Search Engines"
+msgstr "Paieškos sistemos"
+
+msgid "Refering search engines"
+msgstr "Šaltinio paieškos sistemos"
+
+msgid "External pages"
+msgstr "Išoriniai puslapiai"
+
+msgid "Refering pages"
+msgstr "Šaltinio puslapiai"
+
+msgid "Internal pages"
+msgstr "Vidiniai puslapiai"
+
+msgid "UnknownAccessSource"
+msgstr "Nežinomas prieigos šaltinis"
+
+msgid "Different refering pages"
+msgstr "Skirtingi šaltinio puslapiai"
+
+msgid "Keyphrases"
+msgstr "Frazės"
+
+msgid "Keywords"
+msgstr "Raktažodžiai"
+
+msgid "Keyphrases/Keywords"
+msgstr "Frazės / Raktažodžiai"
+
+msgid "Different keyphrases"
+msgstr "Skirtingos frazės"
+
+msgid "Different keywords"
+msgstr "Skirtingi raktažodžiai"
+
+#------------------------------------------------------------------------------
+# Puslapių dimensijos
+#------------------------------------------------------------------------------
+
+msgid "Viewed pages"
+msgstr "Peržiūrėti puslapiai"
+
+msgid "Different pages"
+msgstr "Skirtingi puslapiai"
+
+msgid "Entry"
+msgstr "Įėjimo vieta"
+
+msgid "Exit"
+msgstr "Išėjimo vieta"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Referer"
+msgstr "Šaltinis"
+
+msgid "Host"
+msgstr "Serveris"
+
+#------------------------------------------------------------------------------
+# Klaidos ir būsenos
+#------------------------------------------------------------------------------
+
+msgid "Error"
+msgstr "Klaida"
+
+msgid "HTTP Status Statistics"
+msgstr "HTTP būsenos kodų statistika"
+
+msgid "SMTP Error codes"
+msgstr "SMTP klaidų kodai"
+
+msgid "Page not found"
+msgstr "Reikalingas puslapis nerastas"
+
+msgid "Unknown error"
+msgstr "Nežinoma klaida"
+
+msgid "Abnormal traffic note"
+msgstr "Nenormalus naršymo srautas apima: paieškos robotus, AI mokymo botus, pažeidžiamumo skaitytuvus ir užklausas, kurios neatitinka specifikacijų"
+
+msgid "Page detail"
+msgstr "Puslapio informacija"
+
+# Išsamios klaidų informacijos
+msgid "AWStats did not found the"
+msgstr "AWStats nerado"
+
+msgid "in your log records."
+msgstr "jūsų žurnalo įrašuose."
+
+msgid "AWStats did not find any valid log lines that match your"
+msgstr "AWStats nerado jokių tinkamų žurnalo eilučių, atitinkančių jūsų"
+
+msgid "parameter, in the"
+msgstr "parametrą,"
+
+msgid "th first non commented lines read of your log."
+msgstr "-tose pirmosiose nekomentuojamose eilutėse, perskaitytose iš jūsų žurnalo."
+
+msgid "Your log file"
+msgstr "Jūsų žurnalo failas"
+
+msgid "must have a bad format or"
+msgstr "turi būti blogo formato arba"
+
+msgid "parameter setup does not match this format."
+msgstr "parametro nustatymas neatitinka šio formato."
+
+msgid "Your AWStats"
+msgstr "Jūsų AWStats"
+
+msgid "parameter is:"
+msgstr "parametras yra:"
+
+msgid "This means each line in your web server log file need to have:"
+msgstr "Tai reiškia, kad kiekvienoje jūsų žiniatinklio serverio žurnalo failo eilutėje turi būti:"
+
+msgid "combined log format"
+msgstr "kombinuotas žurnalo formatas"
+
+msgid "MSIE Extended W3C log format"
+msgstr "„MSIE“ išplėstas W3C žurnalo formatas"
+
+msgid "WebStar native log format"
+msgstr "„WebStar“ savasis žurnalo formatas"
+
+msgid "common log format"
+msgstr "bendras žurnalo formatas"
+
+msgid "Lotus Notes/Lotus Domino"
+msgstr "„Lotus Notes“ / „Lotus Domino“"
+
+msgid "the following personalized log format:"
+msgstr "šis suasmenintas žurnalo formatas:"
+
+msgid "And this is an example of records AWStats found in your log file (the record number"
+msgstr "Ir tai yra įrašų, kuriuos AWStats rado jūsų žurnalo faile, pavyzdys (įrašo numeris"
+
+msgid "in your log):"
+msgstr "jūsų žurnale):"
+
+#------------------------------------------------------------------------------
+# Įvairūs
+#------------------------------------------------------------------------------
+
+msgid "Extra/Marketing"
+msgstr "Papildoma / Rinkodara"
+
+#------------------------------------------------------------------------------
+# Sąsajos tekstas
+#------------------------------------------------------------------------------
+
+msgid "Current site"
+msgstr "Dabartinė svetainė"
+
+msgid "Web Site"
+msgstr "Svetainė"
+
+msgid "Last Update"
+msgstr "Paskutinis atnaujinimas"
+
+msgid "Never updated"
+msgstr "Niekada neatnaujinta"
+
+msgid "No qualified records found in log"
+msgstr "Žurnale nerasta tinkamų įrašų"
+
+msgid "corrupted"
+msgstr "sugadintas"
+
+msgid "comments"
+msgstr "komentarai"
+
+msgid "Blank"
+msgstr "Tuščia"
+
+msgid "dropped"
+msgstr "atmesta"
+
+msgid "Update now"
+msgstr "Atnaujinti dabar"
+
+msgid "Back to main page"
+msgstr "Atgal į pagrindinį puslapį"
+
+msgid "Close window"
+msgstr "Uždaryti langą"
+
+msgid "Back page"
+msgstr "Atgal į ankstesnį puslapį"
+
+msgid "Navigation"
+msgstr "Navigacija"
+
+msgid "Summary"
+msgstr "Santrauka"
+
+msgid "Local"
+msgstr "Vietinis"
+
+msgid "External"
+msgstr "Išorinis"
+
+msgid "Others (email senders)"
+msgstr "Kita (siuntėjai)"
+
+msgid "Others (email receivers)"
+msgstr "Kita (gavėjai)"
+
+msgid "Others"
+msgstr "Kita"
+
+msgid "Only 10 lines of browser data are currently displayed"
+msgstr "Šiuo metu rodomos tik 10 naršyklės duomenų eilučių, išsamų sąrašą rasite išsamiame puslapyje"
+
+msgid "Others (unknown browsers)"
+msgstr "Kita (nežinomos naršyklės)"
+
+msgid "Others (operating systems)"
+msgstr "Kita (operacinės sistemos)"
+
+msgid "Others (unknown OS)"
+msgstr "Kita (nežinoma OS)"
+
+msgid "Others (search engines)"
+msgstr "Kita (paieškos sistemos)"
+
+msgid "Others (referring pages)"
+msgstr "Kita (šaltinio puslapiai)"
+
+msgid "Others (keyphrases)"
+msgstr "Kita (frazės)"
+
+msgid "Others (keywords)"
+msgstr "Kita (raktažodžiai)"
+
+msgid "Only first 10 robots shown"
+msgstr "Dabartiniame sąraše rodomi tik 10 robotų, išsamų sąrašą rasite išsamiame puslapyje"
+
+msgid "Failed to obtain access record"
+msgstr "Nepavyko gauti įėjimo įrašo"
+
+msgid "Failed to obtain leave record"
+msgstr "Nepavyko gauti išėjimo įrašo"
+
+msgid "Other pages"
+msgstr "Kiti puslapiai"
+
+msgid "Low Traffic IP Summary"
+msgstr "Mažo srauto nežinomų IP santrauka"
+
+msgid "Failed to obtain IP data"
+msgstr "Kitų žinomų IP santrauka"
+
+msgid "Failed to obtain the relevant data"
+msgstr "Nepavyko gauti atitinkamų duomenų"
+
+msgid "Limited list of countries and regions"
+msgstr "Šiuo metu rodomos tik 10 eilučių, išsamų šalių / regionų sąrašą rasite išsamiame puslapyje"
+
+msgid "currentVisitorData"
+msgstr "Šiuo metu rodomos tik 10 lankytojų duomenų eilučių, išsamų sąrašą rasite išsamiame puslapyje"
+
+msgid "Others (robots main)"
+msgstr "Kita (robotai)"
+
+msgid "Others (worms)"
+msgstr "Kita (kirminai)"
+
+msgid "Displaying10RowsPageMorePleaseViewFullList"
+msgstr "Dabartiniame sąraše rodomi tik 10 puslapių, išsamų sąrašą rasite išsamiame puslapyje"
+
+msgid "Others (OS main)"
+msgstr "Kita (sistema)"
+
+msgid "Others (browsers main)"
+msgstr "Kita (naršyklės)"
+
+msgid "Others (screen sizes)"
+msgstr "Kita (dydis)"
+
+msgid "Others (search engines main)"
+msgstr "Kita (paieškos sistemos)"
+
+msgid "Others (referring pages main)"
+msgstr "Kita (šaltinio puslapiai)"
+
+msgid "Others (keyphrases main)"
+msgstr "Kita (frazės)"
+
+msgid "Others (keywords main)"
+msgstr "Kita (raktažodžiai)"
+
+# 1xx
+msgid "Continue"
+msgstr "Tęskite likusio turinio siuntimą"
+
+msgid "Switching Protocols"
+msgstr "Keičiami protokolai"
+
+msgid "Processing (WebDAV)"
+msgstr "Apdorojama (palaukite)"
+
+msgid "Early Hints"
+msgstr "Serveris ruošia išteklius"
+
+# 2xx
+msgid "[Miscellaneous successes]"
+msgstr "Kitos sėkmingos būsenos"
+
+msgid "Request successful"
+msgstr "Užklausa sėkminga"
+
+msgid "Created successfully"
+msgstr "Sėkmingai sukurta"
+
+msgid "Accepted - processing"
+msgstr "Priimta, apdorojama"
+
+msgid "Non-authoritative information (from cache) (from cache)"
+msgstr "Neautoritetinga informacija (iš podėlio)"
+
+msgid "Success, no content returned"
+msgstr "Sėkminga, nebuvo grąžinta turinio"
+
+msgid "Reset content"
+msgstr "Iš naujo nustatykite formą"
+
+msgid "Partial content (resume download)"
+msgstr "Dalinis turinys (palaiko atsisiuntimo tęsimą)"
+
+msgid "Multi-status (WebDAV)"
+msgstr "Kelių būsenų (WebDAV paketinės operacijos)"
+
+msgid "Already reported (WebDAV)"
+msgstr "Jau pranešta (išvengiama dubliavimo)"
+
+msgid "IM used"
+msgstr "Naudotas IM protokolo plėtinys"
+
+# 3xx
+msgid "[Miscellaneous redirections]"
+msgstr "Kiti nukreipimai"
+
+msgid "Multiple choices"
+msgstr "Keli pasirinkimai"
+
+msgid "Moved permanently - update your links"
+msgstr "Visam laikui perkelta, atnaujinkite nuorodas"
+
+msgid "Temporary redirect - URL unchanged"
+msgstr "Laikinas nukreipimas, adresas nesikeičia"
+
+msgid "See other"
+msgstr "Žiūrėkite kitą adresą"
+
+msgid "Not modified - using cached version"
+msgstr "Nepakeista, naudojama podėliuota versija"
+
+msgid "Use proxy"
+msgstr "Naudokite įgaliotąjį serverį"
+
+msgid "Switch proxy"
+msgstr "Pakeiskite įgaliotąjį serverį"
+
+msgid "Temporary redirect (keep method)"
+msgstr "Laikinas nukreipimas (išlaiko užklausos metodą)"
+
+msgid "Permanent redirect - update your links"
+msgstr "Nuolatinis nukreipimas, atnaujinkite nuorodas"
+
+# 4xx
+msgid "[Miscellaneous client/user errors]"
+msgstr "Kitos kliento klaidos"
+
+msgid "Bad request"
+msgstr "Netinkamas užklausos formatas"
+
+msgid "Unauthorized - please log in"
+msgstr "Neįgaliota, pirmiausia prisijunkite"
+
+msgid "Payment required"
+msgstr "Reikalingas mokėjimas"
+
+msgid "Forbidden - access denied"
+msgstr "Prieiga uždrausta, nepakanka teisių"
+
+msgid "Page not found (404) - check for broken links"
+msgstr "Puslapis neegzistuoja, patikrinkite nutrūkusias nuorodas"
+
+msgid "Method not allowed"
+msgstr "Užklausos metodas neleidžiamas"
+
+msgid "Not acceptable"
+msgstr "Nepriimtinas atsakymo formatas"
+
+msgid "Proxy authentication required"
+msgstr "Reikalingas autentifikavimas per įgaliotąjį serverį"
+
+msgid "Request timeout"
+msgstr "Baigėsi užklausos laikas"
+
+msgid "Conflict - please try again"
+msgstr "Užklausų konfliktas, bandykite dar kartą vėliau"
+
+msgid "Gone - permanently deleted"
+msgstr "Išteklius visam laikui ištrintas"
+
+msgid "Length required"
+msgstr "Būtina nurodyti turinio ilgį"
+
+msgid "Precondition failed"
+msgstr "Neįvykdytos išankstinės sąlygos"
+
+msgid "Payload too large"
+msgstr "Užklausos turinys per didelis"
+
+msgid "URI too long"
+msgstr "Užklausos adresas per ilgas"
+
+msgid "Unsupported media type"
+msgstr "Nepalaikomas failo tipas"
+
+msgid "Range not satisfiable"
+msgstr "Užklausos diapazonas neteisingas"
+
+msgid "Expectation failed"
+msgstr "Nepavyko patenkinti lūkesčio"
+
+msgid "I am a teapot (April Fools)"
+msgstr "Aš esu arbatinukas (balandžio pirmosios pokštas)"
+
+msgid "Page expired (Laravel)"
+msgstr "Puslapio galiojimas baigėsi, atnaujinkite ir bandykite dar kartą"
+
+msgid "Method failure (Spring)"
+msgstr "Metodo klaida"
+
+msgid "Misdirected request"
+msgstr "Užklausa nukreipta klaidingai"
+
+msgid "Unprocessable entity (WebDAV)"
+msgstr "Užklausos formatas teisingas, bet jo negalima apdoroti"
+
+msgid "Locked (WebDAV)"
+msgstr "Išteklius užrakintas"
+
+msgid "Failed dependency (WebDAV)"
+msgstr "Priklausoma operacija nepavyko"
+
+msgid "Too early"
+msgstr "Užklausa išsiųsta per anksti"
+
+msgid "Upgrade required"
+msgstr "Reikia atnaujinti protokolą"
+
+msgid "Precondition required"
+msgstr "Trūksta būtinų išankstinių sąlygų"
+
+msgid "Too many requests - slow down"
+msgstr "Užklausos per dažnos, bandykite dar kartą vėliau"
+
+msgid "Request header fields too large (Shopify)"
+msgstr "Užklausos antraštės laukai per dideli"
+
+msgid "Request header too large"
+msgstr "Užklausos antraštė per didelė"
+
+msgid "Login timeout (IIS)"
+msgstr "Prisijungimo laikas baigėsi, prisijunkite dar kartą"
+
+msgid "No response (nginx)"
+msgstr "Serveris neatsako"
+
+msgid "Retry with (IIS)"
+msgstr "Bandykite dar kartą vėliau"
+
+msgid "Blocked by Windows parental controls"
+msgstr "Užblokuota „Windows“ tėvų kontrolės"
+
+msgid "Unavailable for legal reasons"
+msgstr "Neprieinama dėl teisinių priežasčių"
+
+msgid "Client closed connection before idle timeout (AWS ELB)"
+msgstr "Klientas nutraukė ryšį prieš neveiklumo laiko pabaigą"
+
+msgid "X-Forwarded-For header with >30 IP addresses (AWS ELB)"
+msgstr "Perdavimo grandinėje yra daugiau nei 30 IP adresų"
+
+msgid "Incompatible protocol versions (AWS ELB)"
+msgstr "Protokolų versijos nesuderinamos"
+
+msgid "Request header too large (nginx)"
+msgstr "Užklausos antraštė per didelė"
+
+msgid "SSL certificate error (nginx)"
+msgstr "SSL sertifikato klaida"
+
+msgid "SSL certificate required (nginx)"
+msgstr "Reikalingas SSL sertifikatas"
+
+msgid "HTTP request sent to HTTPS port (nginx)"
+msgstr "HTTP užklausa išsiųsta į HTTPS prievadą"
+
+msgid "Invalid token (ArcGIS)"
+msgstr "Neteisingas prieigos raktas"
+
+msgid "Token required (ArcGIS) / Client closed request (nginx)"
+msgstr "Reikalingas prieigos raktas / Klientas uždarė užklausą"
+
+msgid "Resource limit reached (cPanel)"
+msgstr "Pasiektas išteklių limitas (CPU / atmintis)"
+
+msgid "Bandwidth limit exceeded (Apache/cPanel)"
+msgstr "Viršytas pralaidumo limitas"
+
+# 5xx
+msgid "[Miscellaneous server errors]"
+msgstr "Kitos serverio klaidos"
+
+msgid "Internal server error - check logs"
+msgstr "Vidinė serverio klaida, patikrinkite žurnalus"
+
+msgid "Not implemented"
+msgstr "Funkcija nepalaikoma serveryje"
+
+msgid "Bad gateway - backend error"
+msgstr "Netinkama tarpinė stotis, vidinė tarnyba yra nenormali"
+
+msgid "Service unavailable - maintenance or overload"
+msgstr "Paslauga nepasiekiama, techninė priežiūra arba perkrova"
+
+msgid "Gateway timeout"
+msgstr "Tarpinės stoties laikas baigėsi"
+
+msgid "HTTP version not supported"
+msgstr "HTTP protokolo versija nepalaikoma"
+
+msgid "Variant also negotiates"
+msgstr "Variantas taip pat dalyvauja derybose (konfigūracijos klaida)"
+
+msgid "Insufficient storage (WebDAV)"
+msgstr "Nepakankamai saugyklos vietos"
+
+msgid "Loop detected (WebDAV)"
+msgstr "Aptikta ciklinė nuoroda"
+
+msgid "Not extended"
+msgstr "Reikia tolesnio praplėtimo"
+
+msgid "Network authentication required"
+msgstr "Reikalingas tinklo autentifikavimas"
+
+# Cloudflare
+msgid "Unknown error (Cloudflare)"
+msgstr "Nežinoma klaida"
+
+msgid "Web server is down (Cloudflare)"
+msgstr "Žiniatinklio serveris neveikia"
+
+msgid "Connection timeout (Cloudflare)"
+msgstr "Ryšio laikas baigėsi"
+
+msgid "Origin is unreachable (Cloudflare)"
+msgstr "Kilmė nepasiekiama"
+
+msgid "A timeout occurred (Cloudflare)"
+msgstr "Įvyko laiko perteklius"
+
+msgid "SSL handshake failed (Cloudflare)"
+msgstr "SSL rankos paspaudimas nepavyko"
+
+msgid "Invalid SSL certificate (Cloudflare)"
+msgstr "Neteisingas SSL sertifikatas"
+
+msgid "Railgun error (Cloudflare - obsolete)"
+msgstr "„Railgun“ klaida (pasenusi)"
+
+msgid "Site is overloaded (SSLLabs)"
+msgstr "Svetainė perkrauta"
+
+msgid "Origin DNS error (Cloudflare) / Site is frozen (Pantheon)"
+msgstr "Kilmės DNS klaida (Cloudflare) / Svetainė užšaldyta (Pantheon)"
+
+msgid "Temporarily disabled (Shopify)"
+msgstr "Laikinai išjungta"
+
+msgid "Unauthorized (AWS ELB)"
+msgstr "Neįgaliota"
+
+msgid "Network read timeout error"
+msgstr "Tinklo skaitymo laiko pertekliaus klaida"
+
+msgid "Network connect timeout error"
+msgstr "Tinklo prisijungimo laiko pertekliaus klaida"
+
+msgid "Unexpected token (Shopify)"
+msgstr "Netikėtas prieigos raktas"
+
+msgid "Request denied (LinkedIn)"
+msgstr "Užklausa atmesta"
+
+msgid "HTTP/2 GOAWAY (AWS ELB)"
+msgstr "HTTP/2 ryšys uždaromas"
+
+msgid "[Unknown]"
+msgstr "Nežinomas būsenos kodas"
+
+# SMTP ir paštas
+msgid "Nonstandard success response (ESMTP)"
+msgstr "Nestandartinis sėkmingas atsakymas (ESMTP)"
+
+msgid "System status, or system help reply"
+msgstr "Sistemos būsena arba sistemos pagalbos atsakymas"
+
+msgid "Help message"
+msgstr "Pagalbos pranešimas"
+
+msgid "SMTP service ready (LMTP)"
+msgstr "SMTP paslauga paruošta (LMTP)"
+
+msgid "Service ready - server is ready to receive mail"
+msgstr "Paslauga paruošta - pašto serveris pasirengęs priimti paštą"
+
+msgid "Service closing - connection is being closed"
+msgstr "Paslauga uždaroma - ryšys uždaromas"
+
+msgid "Authentication successful"
+msgstr "Autentifikacija sėkminga"
+
+msgid "Requested mail action taken and completed"
+msgstr "Prašomas pašto veiksmas atliktas ir baigtas"
+
+msgid "User not local - will forward to another address"
+msgstr "Vartotojas nėra vietinis - bus persiųstas į kitą adresą"
+
+msgid "Cannot verify recipient, but will attempt delivery"
+msgstr "Nepavyko patvirtinti gavėjo, bet bus bandoma pristatyti"
+
+msgid "Message accepted for delivery (DSN)"
+msgstr "Pranešimas priimtas pristatymui (DSN)"
+
+msgid "User name is a mailbox"
+msgstr "Vartotojo vardas yra pašto dėžutė"
+
+msgid "Authentication challenge - please respond"
+msgstr "Autentifikacijos iššūkis - atsakykite"
+
+msgid "Start mail input - end with <CRLF>.<CRLF>"
+msgstr "Pradėkite pašto turinio įvedimą - užbaikite <CRLF>.<CRLF>"
+
+msgid "Continue (LMTP)"
+msgstr "Tęsti (LMTP)"
+
+msgid "Service not available - connection closing, try again later"
+msgstr "Paslauga nepasiekiama - ryšys uždaromas, bandykite dar kartą vėliau"
+
+msgid "Mailbox busy or temporarily unavailable (Exchange)"
+msgstr "Pašto dėžutė užimta arba laikinai nepasiekiama (Exchange)"
+
+msgid "Connection rate limit exceeded (Postfix)"
+msgstr "Viršytas ryšio dažnio limitas (Postfix)"
+
+msgid "Too many concurrent connections (Postfix)"
+msgstr "Per daug vienalaikių ryšių (Postfix)"
+
+msgid "Unable to establish connection (Postfix)"
+msgstr "Nepavyko užmegzti ryšio (Postfix)"
+
+msgid "Connection timed out (Postfix)"
+msgstr "Ryšio laikas baigėsi (Postfix)"
+
+msgid "Connection dropped due to error (Postfix)"
+msgstr "Ryšys nutrauktas dėl klaidos (Postfix)"
+
+msgid "Mailbox temporarily locked (Exchange)"
+msgstr "Pašto dėžutė laikinai užrakinta (Exchange)"
+
+msgid "Too many recipients (Postfix/Exim)"
+msgstr "Per daug gavėjų (Postfix/Exim)"
+
+msgid "Mail server error (Exchange)"
+msgstr "Pašto serverio klaida (Exchange)"
+
+msgid "Received loop detected (Exim)"
+msgstr "Aptiktas gavimo ciklas (Exim)"
+
+msgid "Too many hop count (Exim)"
+msgstr "Per daug šuolių (Exim)"
+
+msgid "DNS lookup failed (Postfix)"
+msgstr "DNS paieška nepavyko (Postfix)"
+
+msgid "Unable to authenticate (Postfix)"
+msgstr "Nepavyko autentifikuoti (Postfix)"
+
+msgid "TLS handshake failed (Postfix)"
+msgstr "TLS rankos paspaudimas nepavyko (Postfix)"
+
+msgid "SMTP protocol violation (Postfix)"
+msgstr "SMTP protokolo pažeidimas (Postfix)"
+
+msgid "Message size exceeds limit (Exchange)"
+msgstr "Pranešimo dydis viršija limitą (Exchange)"
+
+msgid "Message rate limit exceeded (Postfix)"
+msgstr "Viršytas pranešimų dažnio limitas (Postfix)"
+
+msgid "Mailbox quota exceeded - temporary"
+msgstr "Pašto dėžutės kvota viršyta - laikina būsena"
+
+msgid "Domain not found (Postfix)"
+msgstr "Domenas nerastas (Postfix)"
+
+msgid "Message header invalid (Postfix)"
+msgstr "Pranešimo antraštė neteisinga (Postfix)"
+
+msgid "Bounce loop detected (Postfix)"
+msgstr "Aptiktas grąžinimo ciklas (Postfix)"
+
+msgid "Unable to route (Postfix)"
+msgstr "Nepavyko nukreipti (Postfix)"
+
+msgid "Sender domain not found (Postfix)"
+msgstr "Siuntėjo domenas nerastas (Postfix)"
+
+msgid "Recipient domain not found (Postfix)"
+msgstr "Gavėjo domenas nerastas (Postfix)"
+
+msgid "Greylisting in progress - please try again (Postgrey)"
+msgstr "Vykdomas pilkasis sąrašas - bandykite dar kartą (Postgrey)"
+
+msgid "Spam filtering in progress (SpamAssassin)"
+msgstr "Vykdomas šlamšto filtravimas (SpamAssassin)"
+
+msgid "Virus scanning in progress (ClamAV)"
+msgstr "Vykdomas virusų skenavimas (ClamAV)"
+
+msgid "Mailbox unavailable - try again later"
+msgstr "Pašto dėžutė nepasiekiama - bandykite dar kartą vėliau"
+
+msgid "Requested action aborted - error in processing"
+msgstr "Prašomas veiksmas nutrauktas - klaida apdorojant"
+
+msgid "Insufficient system storage - try again later"
+msgstr "Nepakanka sistemos saugyklos vietos - bandykite dar kartą vėliau"
+
+msgid "Too many messages for this recipient (Exchange)"
+msgstr "Per daug pranešimų šiam gavėjui (Exchange)"
+
+msgid "TLS not available (Postfix)"
+msgstr "TLS nepasiekiamas (Postfix)"
+
+msgid "Server unable to accept messages (Postfix)"
+msgstr "Serveris negali priimti pranešimų (Postfix)"
+
+msgid "Temporary failure in DNS lookup (Exim)"
+msgstr "Laikina DNS paieškos klaida (Exim)"
+
+msgid "Quota exceeded - temporary"
+msgstr "Kvota viršyta - laikina būsena"
+
+msgid "Message too big - temporary"
+msgstr "Pranešimas per didelis - laikina būsena"
+
+msgid "Too many messages per connection"
+msgstr "Per daug pranešimų vienam ryšiui"
+
+msgid "Load average too high (Postfix)"
+msgstr "Vidutinė sistemos apkrova per didelė (Postfix)"
+
+msgid "Connection refused (Postfix)"
+msgstr "Ryšys atmestas (Postfix)"
+
+msgid "Send rate limit exceeded (Postfix)"
+msgstr "Viršytas siuntimo dažnio limitas (Postfix)"
+
+msgid "Recipient rate limit exceeded (Postfix)"
+msgstr "Viršytas gavėjo dažnio limitas (Postfix)"
+
+msgid "Sender rate limit exceeded (Postfix)"
+msgstr "Viršytas siuntėjo dažnio limitas (Postfix)"
+
+msgid "IP address rate limit exceeded (Postfix)"
+msgstr "Viršytas IP adreso dažnio limitas (Postfix)"
+
+msgid "MX lookup failed (Postfix)"
+msgstr "MX paieška nepavyko (Postfix)"
+
+msgid "A record lookup failed (Postfix)"
+msgstr "A įrašo paieška nepavyko (Postfix)"
+
+msgid "PTR record lookup failed (Postfix)"
+msgstr "PTR įrašo paieška nepavyko (Postfix)"
+
+msgid "Greylisting active - please try again (Postgrey)"
+msgstr "Pilkasis sąrašas aktyvus - bandykite dar kartą (Postgrey)"
+
+msgid "Access denied - unknown SMTP client hostname"
+msgstr "Prieiga atmesta - nežinomas SMTP kliento serverio pavadinimas"
+
+msgid "Access denied - bad syntax for client HELO hostname"
+msgstr "Prieiga atmesta - neteisinga kliento HELO serverio pavadinimo sintaksė"
+
+msgid "Access denied - SMTP client hostname rejected"
+msgstr "Prieiga atmesta - SMTP kliento serverio pavadinimas atmestas"
+
+msgid "Access denied - unknown domain for sender or recipient"
+msgstr "Prieiga atmesta - nežinomas siuntėjo ar gavėjo domenas"
+
+msgid "Sender address rejected - domain not verified (DMARC pending)"
+msgstr "Siuntėjo adresas atmestas - domenas nepatvirtintas (DMARC laukia)"
+
+msgid "Recipient address rejected - domain not verified (DMARC pending)"
+msgstr "Gavėjo adresas atmestas - domenas nepatvirtintas (DMARC laukia)"
+
+msgid "DKIM verification pending - temporary failure"
+msgstr "DKIM patvirtinimas laukia - laikina klaida"
+
+msgid "SPF verification pending - temporary failure"
+msgstr "SPF patvirtinimas laukia - laikina klaida"
+
+msgid "DMARC verification pending - temporary failure"
+msgstr "DMARC patvirtinimas laukia - laikina klaida"
+
+msgid "DNSBL lookup temporary failure"
+msgstr "DNSBL paieška - laikina klaida"
+
+msgid "RHSBL lookup temporary failure"
+msgstr "RHSBL paieška - laikina klaida"
+
+msgid "URI DNSBL lookup temporary failure"
+msgstr "URI DNSBL paieška - laikina klaida"
+
+msgid "Temporary authentication failure (Dovecot)"
+msgstr "Laikina autentifikacijos klaida (Dovecot)"
+
+msgid "Temporary authorization failure (Sendmail)"
+msgstr "Laikina autorizacijos klaida (Sendmail)"
+
+msgid "Rate limit exceeded per sender (Exim)"
+msgstr "Viršytas dažnio limitas vienam siuntėjui (Exim)"
+
+msgid "Rate limit exceeded per recipient (Exim)"
+msgstr "Viršytas dažnio limitas vienam gavėjui (Exim)"
+
+msgid "Rate limit exceeded per domain (Exim)"
+msgstr "Viršytas dažnio limitas vienam domenui (Exim)"
+
+msgid "Rate limit exceeded per IP (Exim)"
+msgstr "Viršytas dažnio limitas vienam IP adresui (Exim)"
+
+msgid "Message queued for later delivery (Postfix)"
+msgstr "Pranešimas įtrauktas į eilę vėlesniam pristatymui (Postfix)"
+
+msgid "Delivery delayed due to policy (Exchange)"
+msgstr "Pristatymas atidėtas dėl politikos (Exchange)"
+
+msgid "Temporary failure in content filter"
+msgstr "Laikina turinio filtro klaida"
+
+msgid "Temporary failure in antivirus scanner"
+msgstr "Laikina antivirusinio skaitytuvo klaida"
+
+msgid "Temporary failure in spam filter"
+msgstr "Laikina šlamšto filtro klaida"
+
+msgid "Temporary failure in milter (Postfix)"
+msgstr "Laikina milter klaida (Postfix)"
+
+msgid "Greylisting - try again later"
+msgstr "Pilkasis sąrašas - bandykite dar kartą vėliau"
+
+msgid "DDoS protection active - try again later"
+msgstr "DDoS apsauga aktyvi - bandykite dar kartą vėliau"
+
+msgid "SMTP policy violation - temporary"
+msgstr "SMTP politikos pažeidimas - laikina būsena"
+
+msgid "Temporary error in RCPT TO processing"
+msgstr "Laikina RCPT TO apdorojimo klaida"
+
+msgid "Temporary error in MAIL FROM processing"
+msgstr "Laikina MAIL FROM apdorojimo klaida"
+
+msgid "Temporary error in EHLO/HELO processing"
+msgstr "Laikina EHLO/HELO apdorojimo klaida"
+
+msgid "Temporary error in DATA processing"
+msgstr "Laikina DATA apdorojimo klaida"
+
+msgid "Temporary error - service busy, try again later"
+msgstr "Laikina klaida - paslauga užimta, bandykite dar kartą vėliau"
+
+msgid "Syntax error - command unrecognized or too long"
+msgstr "Sintaksės klaida - komanda neatpažinta arba per ilga"
+
+msgid "Syntax error in parameters or arguments"
+msgstr "Sintaksės klaida parametruose arba argumentuose"
+
+msgid "Command not implemented"
+msgstr "Komanda neįdiegta"
+
+msgid "Bad sequence of commands"
+msgstr "Bloga komandų seka"
+
+msgid "Command parameter not implemented"
+msgstr "Komandos parametras neįdiegtas"
+
+msgid "Version not supported (ESMTP)"
+msgstr "Versija nepalaikoma (ESMTP)"
+
+msgid "Mailbox path invalid (LMTP)"
+msgstr "Pašto dėžutės kelias neteisingas (LMTP)"
+
+msgid "Too many commands in this session (Postfix)"
+msgstr "Per daug komandų šioje sesijoje (Postfix)"
+
+msgid "Recipient limit exceeded (Postfix)"
+msgstr "Viršytas gavėjų limitas (Postfix)"
+
+msgid "Sender limit exceeded (Postfix)"
+msgstr "Viršytas siuntėjų limitas (Postfix)"
+
+msgid "Domain limit exceeded (Postfix)"
+msgstr "Viršytas domenų limitas (Postfix)"
+
+msgid "Mailbox does not exist (Exchange)"
+msgstr "Pašto dėžutė neegzistuoja (Exchange)"
+
+msgid "DNS failure - permanent"
+msgstr "DNS klaida - nuolatinė"
+
+msgid "Address type not supported (Postfix)"
+msgstr "Adreso tipas nepalaikomas (Postfix)"
+
+msgid "Unable to open mailbox (Postfix)"
+msgstr "Nepavyko atidaryti pašto dėžutės (Postfix)"
+
+msgid "Mailbox locked - permanent"
+msgstr "Pašto dėžutė užrakinta - nuolatinė būsena"
+
+msgid "Message rejected due to policy (Exchange)"
+msgstr "Pranešimas atmestas dėl politikos (Exchange)"
+
+msgid "Content rejected - permanent"
+msgstr "Turinys atmestas - nuolatinis"
+
+msgid "Attachment type not allowed"
+msgstr "Priedo tipas neleidžiamas"
+
+msgid "Message encoding not supported"
+msgstr "Pranešimo kodavimas nepalaikomas"
+
+msgid "Sender domain does not exist - permanent"
+msgstr "Siuntėjo domenas neegzistuoja - nuolatinis"
+
+msgid "Domain does not accept mail or is closing"
+msgstr "Domenas nepriima pašto arba uždaromas"
+
+msgid "Recipient domain does not exist - permanent"
+msgstr "Gavėjo domenas neegzistuoja - nuolatinis"
+
+msgid "Mailbox quota exceeded - permanent"
+msgstr "Pašto dėžutės kvota viršyta - nuolatinė būsena"
+
+msgid "Message size exceeds limit - permanent"
+msgstr "Pranešimo dydis viršija limitą - nuolatinis"
+
+msgid "Authentication required (Sendmail)"
+msgstr "Reikalingas autentifikavimas (Sendmail)"
+
+msgid "Authentication failed (Sendmail)"
+msgstr "Autentifikacija nepavyko (Sendmail)"
+
+msgid "Authentication mechanism not supported"
+msgstr "Autentifikavimo mechanizmas nepalaikomas"
+
+msgid "Authentication credentials invalid"
+msgstr "Autentifikavimo duomenys neteisingi"
+
+msgid "Authentication account expired"
+msgstr "Autentifikavimo paskyros galiojimas baigėsi"
+
+msgid "Access denied - authentication required"
+msgstr "Prieiga atmesta - reikalingas autentifikavimas"
+
+msgid "Access denied (Sendmailism)"
+msgstr "Prieiga atmesta (Sendmail)"
+
+msgid "Access denied - not authenticated"
+msgstr "Prieiga atmesta - neautentifikuotas"
+
+msgid "Access denied - account locked"
+msgstr "Prieiga atmesta - paskyra užrakinta"
+
+msgid "Access denied - account disabled"
+msgstr "Prieiga atmesta - paskyra išjungta"
+
+msgid "Authentication failed"
+msgstr "Autentifikacija nepavyko"
+
+msgid "Authentication required for relay (Postfix)"
+msgstr "Reikalingas autentifikavimas perdavimui (Postfix)"
+
+msgid "Authentication failed for relay (Postfix)"
+msgstr "Autentifikacija perdavimui nepavyko (Postfix)"
+
+msgid "Encryption required (STARTTLS)"
+msgstr "Reikalingas šifruotas ryšys (STARTTLS)"
+
+msgid "TLS required for this recipient"
+msgstr "Šiam gavėjui reikalingas TLS šifravimas"
+
+msgid "Encryption strength insufficient"
+msgstr "Šifravimo stiprumas nepakankamas"
+
+msgid "Certificate validation failed"
+msgstr "Sertifikato patvirtinimas nepavyko"
+
+msgid "Invalid TLS certificate"
+msgstr "Neteisingas TLS sertifikatas"
+
+msgid "TLS protocol version not supported"
+msgstr "TLS protokolo versija nepalaikoma"
+
+msgid "Cipher suite not supported"
+msgstr "Šifrų rinkinys nepalaikomas"
+
+msgid "Access denied - no valid recipient"
+msgstr "Prieiga atmesta - nėra tinkamo gavėjo"
+
+msgid "Access denied - no valid sender"
+msgstr "Prieiga atmesta - nėra tinkamo siuntėjo"
+
+msgid "Access denied - domain not allowed"
+msgstr "Prieiga atmesta - domenas neleidžiamas"
+
+msgid "Access denied - IP address blocked (permanent)"
+msgstr "Prieiga atmesta - IP adresas užblokuotas (nuolatinis)"
+
+msgid "Access denied - sender domain blacklisted"
+msgstr "Prieiga atmesta - siuntėjo domenas juodajame sąraše"
+
+msgid "Mailbox unavailable - requested action not taken"
+msgstr "Pašto dėžutė nepasiekiama - prašomas veiksmas neatliktas"
+
+msgid "User not local - please try forwarding address"
+msgstr "Vartotojas nėra vietinis - pabandykite persiuntimo adresą"
+
+msgid "Requested action aborted - exceeded storage allocation"
+msgstr "Prašomas veiksmas nutrauktas - viršytas saugyklos paskirstymas"
+
+msgid "Mailbox name not allowed"
+msgstr "Pašto dėžutės pavadinimas neleidžiamas"
+
+msgid "Requested action rejected - access denied"
+msgstr "Prašomas veiksmas atmestas - prieiga atmesta"
+
+msgid "MAIL FROM/RCPT TO parameters not recognized"
+msgstr "MAIL FROM / RCPT TO parametrai neatpažinti"
+
+msgid "Domain not allowed to send (DMARC reject)"
+msgstr "Domenui neleidžiama siųsti (DMARC atmetimas)"
+
+msgid "Too many duplicate messages - permanent"
+msgstr "Per daug pasikartojančių pranešimų - nuolatinis"
+
+msgid "Sender address rejected - domain not in SPF"
+msgstr "Siuntėjo adresas atmestas - domenas nėra SPF"
+
+msgid "Sender address rejected - DKIM verification failed"
+msgstr "Siuntėjo adresas atmestas - DKIM patvirtinimas nepavyko"
+
+msgid "Sender address rejected - DMARC policy reject"
+msgstr "Siuntėjo adresas atmestas - DMARC politika atmeta"
+
+msgid "Recipient address rejected - DMARC policy reject"
+msgstr "Gavėjo adresas atmestas - DMARC politika atmeta"
+
+msgid "Message rejected due to spam content"
+msgstr "Pranešimas atmestas dėl šlamšto turinio"
+
+msgid "Message rejected due to virus detected"
+msgstr "Pranešimas atmestas dėl aptikto viruso"
+
+msgid "Message rejected due to malicious content"
+msgstr "Pranešimas atmestas dėl kenkėjiško turinio"
+
+msgid "Message rejected due to phishing detection"
+msgstr "Pranešimas atmestas dėl sukčiavimo aptikimo"
+
+msgid "Message rejected due to malware detection"
+msgstr "Pranešimas atmestas dėl kenkėjiškų programų aptikimo"
+
+msgid "Message rejected due to policy - permanent"
+msgstr "Pranešimas atmestas dėl politikos - nuolatinis"
+
+msgid "Message rejected due to content filtering"
+msgstr "Pranešimas atmestas dėl turinio filtravimo"
+
+msgid "Message rejected due to reputation"
+msgstr "Pranešimas atmestas dėl reputacijos"
+
+msgid "Access denied - access_map violation"
+msgstr "Prieiga atmesta - access_map pažeidimas"
+
+msgid "Access denied - SMTP client listed in RBL"
+msgstr "Prieiga atmesta - SMTP klientas įtrauktas į RBL"
+
+msgid "Access denied - relay not authorized"
+msgstr "Prieiga atmesta - perdavimas neleistinas"
+
+msgid "Access denied - unknown client HELO hostname"
+msgstr "Prieiga atmesta - nežinomas kliento HELO serverio pavadinimas"
+
+msgid "Access denied - invalid domain (not FQDN)"
+msgstr "Prieiga atmesta - neteisingas domenas (ne FQDN)"
+
+msgid "Access denied - domain not qualified"
+msgstr "Prieiga atmesta - domenas neatitinka reikalavimų"
+
+msgid "Access denied - mail server misconfigured"
+msgstr "Prieiga atmesta - pašto serveris neteisingai sukonfigūruotas"
+
+msgid "Access denied - open relay not allowed"
+msgstr "Prieiga atmesta - atviras perdavimas neleidžiamas"
+
+msgid "Access denied - proxy not allowed"
+msgstr "Prieiga atmesta - įgaliotasis serveris neleidžiamas"
+
+msgid "Access denied - dynamic IP not allowed"
+msgstr "Prieiga atmesta - dinaminis IP adresas neleidžiamas"
+
+msgid "Access denied - residential IP not allowed"
+msgstr "Prieiga atmesta - gyvenamosios paskirties IP adresas neleidžiamas"
+
+msgid "Access denied - VPN/Tor detected"
+msgstr "Prieiga atmesta - aptiktas VPN / Tor"
+
+msgid "Access denied - Spamhaus DROP listed"
+msgstr "Prieiga atmesta - įtrauktas į Spamhaus DROP"
+
+msgid "Access denied - URL listed in URIBL"
+msgstr "Prieiga atmesta - URL įtrauktas į URIBL"
+
+msgid "Access denied - domain in RHSBL"
+msgstr "Prieiga atmesta - domenas įtrauktas į RHSBL"
+
+msgid "Access denied - IP in DNSWL (policy)"
+msgstr "Prieiga atmesta - IP adresas įtrauktas į DNSWL (politika)"
+
+msgid "Delivery failed - mailbox not found"
+msgstr "Pristatymas nepavyko - pašto dėžutė nerasta"
+
+msgid "Delivery failed - recipient not local"
+msgstr "Pristatymas nepavyko - gavėjas nėra vietinis"
+
+msgid "Delivery failed - recipient rejected"
+msgstr "Pristatymas nepavyko - gavėjas atmestas"
+
+msgid "Delivery failed - sender rejected"
+msgstr "Pristatymas nepavyko - siuntėjas atmestas"
+
+msgid "Delivery failed - relay rejected"
+msgstr "Pristatymas nepavyko - perdavimas atmestas"
+
+msgid "Delivery failed - DNS permanent error"
+msgstr "Pristatymas nepavyko - nuolatinė DNS klaida"
+
+msgid "Delivery failed - MX permanent error"
+msgstr "Pristatymas nepavyko - nuolatinė MX klaida"
+
+msgid "Delivery failed - A record permanent error"
+msgstr "Pristatymas nepavyko - nuolatinė A įrašo klaida"
+
+msgid "Delivery failed - PTR record permanent error"
+msgstr "Pristatymas nepavyko - nuolatinė PTR įrašo klaida"
+
+msgid "Delivery failed - policy permanent error"
+msgstr "Pristatymas nepavyko - nuolatinė politikos klaida"
+
+msgid "DSN: Success - delivery status notification"
+msgstr "DSN: Sėkminga - pristatymo būsenos pranešimas"
+
+msgid "DSN: Delivery delayed"
+msgstr "DSN: Pristatymas atidėtas"
+
+msgid "DSN: Delivery failed - permanent"
+msgstr "DSN: Pristatymas nepavyko - nuolatinis"
+
+msgid "DSN: Delivery failed - temporary"
+msgstr "DSN: Pristatymas nepavyko - laikinas"
+
+msgid "DSN: Message expired"
+msgstr "DSN: Pranešimo galiojimas baigėsi"
+
+msgid "DSN: Message bounced"
+msgstr "DSN: Pranešimas grąžintas"
+
+msgid "DSN: Message discarded"
+msgstr "DSN: Pranešimas atmestas"
+
+msgid "DSN: Message filtered"
+msgstr "DSN: Pranešimas filtruotas"
+
+msgid "DSN: Message quarantined"
+msgstr "DSN: Pranešimas karantine"
+
+msgid "DSN: Message held for review"
+msgstr "DSN: Pranešimas sulaikytas peržiūrai"
+
+msgid "MTA-STS policy required"
+msgstr "Reikalinga MTA-STS politika"
+
+msgid "MTA-STS policy validation failed"
+msgstr "MTA-STS politikos patvirtinimas nepavyko"
+
+msgid "TLS reporting required"
+msgstr "Reikalingas TLS ataskaitų teikimas"
+
+msgid "TLS report requested"
+msgstr "TLS ataskaita prašyta"
+
+msgid "SMTP MTA Strict Transport Security active"
+msgstr "SMTP MTA Strict Transport Security aktyvus"
+
+msgid "DANE validation required"
+msgstr "Reikalingas DANE patvirtinimas"
+
+msgid "DANE validation failed"
+msgstr "DANE patvirtinimas nepavyko"
+
+msgid "TLSA record missing"
+msgstr "Trūksta TLSA įrašo"
+
+msgid "Certificate name mismatch"
+msgstr "Sertifikato pavadinimas neatitinka"
+
+msgid "Certificate expired"
+msgstr "Sertifikatas pasenęs"
+
+msgid "AUTH LOGIN required"
+msgstr "Reikalingas AUTH LOGIN"
+
+msgid "AUTH PLAIN required"
+msgstr "Reikalingas AUTH PLAIN"
+
+msgid "AUTH CRAM-MD5 required"
+msgstr "Reikalingas AUTH CRAM-MD5"
+
+msgid "AUTH DIGEST-MD5 required"
+msgstr "Reikalingas AUTH DIGEST-MD5"
+
+msgid "AUTH GSSAPI required"
+msgstr "Reikalingas AUTH GSSAPI"
+
+msgid "AUTH NTLM required"
+msgstr "Reikalingas AUTH NTLM"
+
+msgid "AUTH SCRAM required"
+msgstr "Reikalingas AUTH SCRAM"
+
+msgid "AUTH OAUTHBEARER required"
+msgstr "Reikalingas AUTH OAUTHBEARER"
+
+msgid "AUTH XOAUTH2 required"
+msgstr "Reikalingas AUTH XOAUTH2"
+
+msgid "Exchange: Mailbox database error"
+msgstr "Exchange: Pašto dėžutės duomenų bazės klaida"
+
+msgid "Exchange: Store driver error"
+msgstr "Exchange: Saugyklos tvarkyklės klaida"
+
+msgid "Exchange: Transport agent error"
+msgstr "Exchange: Transporto agento klaida"
+
+msgid "Exchange: Content conversion error"
+msgstr "Exchange: Turinio konvertavimo klaida"
+
+msgid "Exchange: Routing error"
+msgstr "Exchange: Maršruto parinkimo klaida"
+
+msgid "Exchange: Mail flow stalled"
+msgstr "Exchange: Pašto srautas sustojo"
+
+msgid "Exchange: Shadow redundancy error"
+msgstr "Exchange: Šešėlinio perteklinio kodo klaida"
+
+msgid "Exchange: Safety net error"
+msgstr "Exchange: Apsaugos tinklo klaida"
+
+msgid "Exchange: Queue database error"
+msgstr "Exchange: Eilės duomenų bazės klaida"
+
+msgid "Exchange: Message throttled"
+msgstr "Exchange: Pranešimas apribotas"
+
+msgid "Postfix: Bounce queue error"
+msgstr "Postfix: Grąžinimų eilės klaida"
+
+msgid "Postfix: Deferred queue error"
+msgstr "Postfix: Atidėtų pranešimų eilės klaida"
+
+msgid "Postfix: Hold queue error"
+msgstr "Postfix: Sulaikymo eilės klaida"
+
+msgid "Postfix: Incoming queue error"
+msgstr "Postfix: Gaunamųjų pranešimų eilės klaida"
+
+msgid "Postfix: Active queue error"
+msgstr "Postfix: Aktyvios eilės klaida"
+
+msgid "Postfix: Corrupted queue file"
+msgstr "Postfix: Sugadintas eilės failas"
+
+msgid "Sendmail: Queue runner error"
+msgstr "Sendmail: Eilės vykdytojo klaida"
+
+msgid "Sendmail: Alias database error"
+msgstr "Sendmail: Aliasų duomenų bazės klaida"
+
+msgid "Sendmail: Virtuser table error"
+msgstr "Sendmail: Virtualių vartotojų lentelės klaida"
+
+msgid "Sendmail: Mailer definition error"
+msgstr "Sendmail: Pašto siuntėjo apibrėžimo klaida"
+
+msgid "Exim: Router configuration error"
+msgstr "Exim: Maršrutizatoriaus konfigūracijos klaida"
+
+msgid "Exim: Transport configuration error"
+msgstr "Exim: Transporto konfigūracijos klaida"
+
+msgid "Exim: Director configuration error"
+msgstr "Exim: Direktoriaus konfigūracijos klaida"
+
+msgid "Exim: Retry configuration error"
+msgstr "Exim: Pakartojimo konfigūracijos klaida"
+
+msgid "Exim: Rewrite configuration error"
+msgstr "Exim: Perrašymo konfigūracijos klaida"
+
+msgid "Exim: Authentication configuration error"
+msgstr "Exim: Autentifikacijos konfigūracijos klaida"
+
+msgid "Exim: ACL configuration error"
+msgstr "Exim: ACL konfigūracijos klaida"
+
+msgid "Exim: Local_scan configuration error"
+msgstr "Exim: Local_scan konfigūracijos klaida"
+
+msgid "Exim: Lookup configuration error"
+msgstr "Exim: Paieškos konfigūracijos klaida"
+
+msgid "Exim: Expansion configuration error"
+msgstr "Exim: Išplėtimo konfigūracijos klaida"
+
+msgid "HTTP Protocol Versions"
+msgstr "HTTP protokolo versijos"
+
+msgid "Protocol"
+msgstr "Protokolas"
+
+msgid "Request %"
+msgstr "Užklausų dalis"
+
+msgid "Bandwidth %"
+msgstr "Pralaidumo dalis"
+
+msgid "Each request requires a new connection"
+msgstr "Kiekvienai užklausai reikalingas naujas ryšys"
+
+msgid "Multiple requests can reuse one connection"
+msgstr "Kelios užklausos gali pakartotinai naudoti vieną ryšį"
+
+msgid "Multiple requests in parallel over one connection"
+msgstr "Kelios užklausos lygiagrečiai per vieną ryšį"
+
+msgid "Faster connection, better performance on poor networks"
+msgstr "Greitesnis ryšys, geresnis našumas prastuose tinkluose"
+
+msgid "No protocol data available"
+msgstr "Nėra protokolo duomenų"
+
+msgid "of requests use HTTP/1.0"
+msgstr "užklausų naudoja HTTP/1.0 protokolą"
+
+msgid "From access logs"
+msgstr "Iš prieigos žurnalų"
+
+msgid "No HTTP/2 requests detected"
+msgstr "Neaptikta HTTP/2 protokolo užklausų"
+
+msgid "All requests are HTTP/1.0, no HTTP/2 requests"
+msgstr "Visos dabartinės užklausos yra HTTP/1.0, nėra HTTP/2 užklausų"
+
+msgid "HTTP/3 not detected"
+msgstr "Neaptikta HTTP/3 protokolo užklausų"
+
+msgid "all requests do not include QUIC/HTTP/3 protocol requests"
+msgstr "visos dabartinės užklausos neapima QUIC/HTTP/3 protokolo užklausų"
+
+msgid "Mail Authentication Statistics"
+msgstr "Pašto autentifikavimo statistika"
+
+msgid "Authentication"
+msgstr "Autentifikavimo tipas"
+
+msgid "Pass"
+msgstr "Sėkmingas"
+
+msgid "Fail"
+msgstr "Nesėkmingas"
+
+msgid "Softfail"
+msgstr "Minkštas nesėkmingas"
+
+msgid "Neutral"
+msgstr "Neutralus"
+
+msgid "None"
+msgstr "Nėra"
+
+msgid "Mail Queue Delay Statistics"
+msgstr "Pašto eilės vėlavimo statistika"
+
+msgid "Delay Range"
+msgstr "Vėlavimo intervalas"
+
+msgid "Count"
+msgstr "Skaičius"
+
+msgid "Percentage"
+msgstr "Procentas"
+
+msgid "TLS Encryption Statistics"
+msgstr "TLS šifravimo statistika"
+
+msgid "TLS Versions"
+msgstr "TLS versijos"
+
+msgid "Top Ciphers"
+msgstr "Dažniausiai naudojami šifrai"
+
+msgid "robot_hits_detail_both"
+msgstr "Iš viso užklausų: %s (įprasti puslapiai: %s, robots.txt: %s)"
+
+msgid "robot_hits_detail_only_robots"
+msgstr "Tik robots.txt: %s kartų, be kitų puslapių gavimo"
+
+msgid "robot_hits_detail_normal"
+msgstr "Įprastų puslapių užklausos: %s"
+
+# Pagalba ir patarimai
+msgid "Troubleshooting"
+msgstr "Trikčių šalinimas"
+
+msgid "Did you use the correct URL?"
+msgstr "Ar naudojote teisingą URL?"
+
+msgid "Example:"
+msgstr "Pavyzdys:"
+
+msgid "Did you use correct config parameter?"
+msgstr "Ar naudojote teisingą konfigūracijos parametrą?"
+
+msgid "Example: If your config file is awstats.mysite.conf, use -config=mysite"
+msgstr "Pavyzdys: jei jūsų konfigūracijos failas yra awstats.mansvetaine.conf, naudokite -config=mansvetaine"
+
+msgid "Did you create your config file 'awstats.$SiteConfig.conf'?"
+msgstr "Ar sukūrėte konfigūracijos failą 'awstats.$SiteConfig.conf'?"
+
+msgid "If not, you can run \"awstats_configure.pl\" from command line, or create it manually."
+msgstr "Jei ne, galite paleisti \"awstats_configure.pl\" iš komandinės eilutės arba sukurti rankiniu būdu."
+
+msgid "Setup"
+msgstr "Nustatymas"
+
+msgid "file, web server or permissions may be wrong."
+msgstr "failas, žiniatinklio serveris ar leidimai gali būti neteisingi."
+
+msgid "Check config file, permissions and AWStats documentation (in 'docs' directory)."
+msgstr "Patikrinkite konfigūracijos failą, leidimus ir AWStats dokumentaciją (kataloge 'docs')."
+
+msgid "Warning: Can't find language files for \"%s\". English will be used."
+msgstr "Įspėjimas: nepavyksta rasti kalbos failų \"%s\". Bus naudojama anglų kalba."
+
+#------------------------------------------------------------------------------
+# Klaidų ir signalų apdorojimas
+#------------------------------------------------------------------------------
+
+msgid "%s process (ID %s) interrupted by signal %s."
+msgstr "%s procesas (ID %s) buvo pertrauktas signalu %s."
+
+msgid "An AWStats update process seems to be already running for this config file. Try later. If this is not true, remove manually lock file"
+msgstr "Panašu, kad AWStats atnaujinimo procesas jau veikia pagal šį konfigūracijos failą. Bandykite vėliau. Jei tai netiesa, pašalinkite užrakto failą rankiniu būdu"
+
+#------------------------------------------------------------------------------
+# Nauji statistikos pavadinimai
+#------------------------------------------------------------------------------
+msgid "Report Overview"
+msgstr "Ataskaitos apžvalga"
+
+msgid "Monthly Statistics"
+msgstr "Mėnesio statistika"
+
+msgid "Daily Statistics"
+msgstr "Dienos statistika"
+
+msgid "Statistics by Day of Week"
+msgstr "Statistika pagal savaitės dieną"
+
+msgid "Hourly Page Views"
+msgstr "Puslapio peržiūros per valandą"
+
+msgid "Traffic Sources"
+msgstr "Srauto šaltiniai"
+
+msgid "Other Sources"
+msgstr "Kiti šaltiniai"
+
+msgid "tooltip_1"
+msgstr "Lankytojų sesijų skaičius svetainėje. Jei tas pats lankytojas sugrįžta po daugiau nei 30 minučių neveiklumo, tai laikoma nauju apsilankymu"
+
+msgid "tooltip_2"
+msgstr "Skirtingų lankytojų, apsilankiusių jūsų svetainėje pasirinktu laikotarpiu, skaičius. Statistika pagrįsta IP adresais"
+
+msgid "tooltip_3"
+msgstr "Užklausų, laikomų puslapiais (pvz., HTML, PHP, ASP), skaičius, neįtraukiant statinių failų, tokių kaip vaizdai, CSS, JS"
+
+msgid "tooltip_4"
+msgstr "Bendras visų užklausų, išsiųstų serveriui, skaičius, įskaitant puslapius, vaizdus, CSS, JS ir visus kitus failus"
+
+msgid "tooltip_5"
+msgstr "Bendras duomenų kiekis, perduotas serveriui atsakant į vartotojų užklausas"
+
+msgid "tooltip_13"
+msgstr "Statistika apie šaltinius, gaunamus iš paieškos sistemų. Rodo, kurios paieškos sistemos atneša srautą ir kokius paieškos žodžius naudoja lankytojai."
+
+msgid "tooltip_14"
+msgstr "Statistika apie šaltinius, gaunamus iš išorinių nuorodų iš kitų svetainių. Rodo, kurios svetainės nukreipia į jus ir kiek srauto jos atneša."
+
+msgid "tooltip_15"
+msgstr "Žodžiai, kuriuos lankytojai naudoja, kai randa jus per paieškos sistemas. Raktažodžiai yra pavieniai žodžiai, frazės yra kelių žodžių deriniai."
+
+msgid "tooltip_16"
+msgstr "Automatinės programos, tokios kaip paieškos robotai, AI mokymo botai, pažeidžiamumo skaitytuvai. Skliausteliuose esantys skaičiai rodo įprastų puslapių ir robots.txt užklausas."
+
+msgid "tooltip_17"
+msgstr "24 valandų srauto pasiskirstymo grafikas. Rodo jūsų svetainės lankomumą skirtingu paros metu, padeda suprasti vartotojų aktyvumo laiką."
+
+msgid "tooltip_18"
+msgstr "Šiame stulpelyje rodomi dienos / savaitės vidurkiai pasirinktu laikotarpiu, padeda suprasti bendrą tendenciją."
+
+msgid "tooltip_19"
+msgstr "Spustelėkite grafiko elementą, kad pamatytumėte išsamią informaciją. Užveskite pelės žymeklį ant grafiko elemento, kad pamatytumėte konkrečias reikšmes."
+
+msgid "tooltip_20"
+msgstr "Duomenys, kurių negalima suskirstyti į esamas kategorijas, paprastai dėl netinkamo duomenų formato arba trūkstamos informacijos."
+
+msgid "tooltip_21"
+msgstr "Užfiksuotos kirminų atakos. Kirminai yra savaime besidauginančios kenkėjiškos programos, kurios paprastai plinta per tinklo spragas."
+
+#------------------------------------------------------------------------------
+# Pagalbos informacijos rodymas - Bendruomenės leidimas
+#------------------------------------------------------------------------------
+msgid "AWStats %s - Advanced Web Statistics"
+msgstr "AWStats %s - Išplėstinė žiniatinklio statistika"
+
+msgid "Copyright (c) 2000-2025 Laurent Destailleur"
+msgstr "Autoriaus teisės (c) 2000-2025 Laurent Destailleur"
+
+msgid "Copyright (c) 2026-latest Community Edition"
+msgstr "Autoriaus teisės (c) 2026-naujausias Bendruomenės leidimas"
+
+msgid "AWStats comes with ABSOLUTELY NO WARRANTY. It's a free software distributed with a GNU General Public License (See LICENSE file for details)."
+msgstr "AWStats NĖRA JOKIŲ GARANTIJŲ. Tai nemokama programinė įranga, platinama pagal GNU bendrąją viešąją licenciją (išsamią informaciją rasite LICENSE faile)."
+
+msgid "Syntax: %s -config=virtualhostname [options]"
+msgstr "Sintaksė: %s -config=virtualaus_hosto_vardas [parinktys]"
+
+msgid "This runs %s in command line to update statistics (-update option) of a web site, from the log file defined in AWStats config file, or build a HTML report (-output option)."
+msgstr "Ši komanda paleidžia %s komandinėje eilutėje, kad atnaujintų svetainės statistiką (-update parinktis) iš AWStats konfigūracijos faile apibrėžto žurnalo failo, arba sukurtų HTML ataskaitą (-output parinktis)."
+
+msgid "First, %s tries to read %s.virtualhostname.conf as the config file. If not found, %s tries to read %s.conf, and finally the full path passed to -config="
+msgstr "Pirma, %s bando nuskaityti %s.virtualaus_hosto_vardas.conf kaip konfigūracijos failą. Jei nerasta, %s bando nuskaityti %s.conf ir galiausiai visą kelią, perduotą -config="
+
+msgid "Note 1: Config files (*.conf) must be in /etc/awstats, /usr/local/etc/awstats, /etc or same directory than awstats.pl script file."
+msgstr "Pastaba 1: Konfigūracijos failai (*.conf) turi būti /etc/awstats, /usr/local/etc/awstats, /etc arba tame pačiame kataloge kaip ir awstats.pl scenarijaus failas."
+
+msgid "Note 2: If AWSTATS_FORCE_CONFIG environment variable is defined, AWStats will use it as the 'config' value, whatever is the value on command line or URL."
+msgstr "Pastaba 2: Jei apibrėžtas aplinkos kintamasis AWSTATS_FORCE_CONFIG, AWStats jį naudos kaip 'config' reikšmę, nepaisant komandinėje eilutėje ar URL nurodytos reikšmės."
+
+msgid "See AWStats documentation for all setup instructions."
+msgstr "Visas diegimo instrukcijas rasite AWStats dokumentacijoje."
+
+msgid "Options to update statistics:"
+msgstr "Statistikos atnaujinimo parinktys:"
+
+msgid "  -update        to update statistics (default)"
+msgstr "  -update        atnaujina statistiką (numatyta)"
+
+msgid "  -showsteps     to add benchmark information every %s lines processed"
+msgstr "  -showsteps     prideda našumo informaciją kas %s apdorotų eilučių"
+
+msgid "  -showcorrupted to add output for each corrupted lines found, with reason"
+msgstr "  -showcorrupted prideda išvestį kiekvienai rastai sugadintai eilutei su priežastimi"
+
+msgid "  -showdropped   to add output for each dropped lines found, with reason"
+msgstr "  -showdropped   prideda išvestį kiekvienai rastai atmestai eilutei su priežastimi"
+
+msgid "  -showunknownorigin  to output referer when it can't be parsed"
+msgstr "  -showunknownorigin   išveda šaltinį, kai jo nepavyksta išanalizuoti"
+
+msgid "  -showdirectorigin   to output log line when origin is a direct access"
+msgstr "  -showdirectorigin    išveda žurnalo eilutę, kai kilmė yra tiesioginė prieiga"
+
+msgid "  -updatefor=n   to stop the update process after parsing n lines"
+msgstr "  -updatefor=n   sustabdo atnaujinimo procesą po n eilučių išanalizavimo"
+
+msgid "  -LogFile=x     to change log to analyze whatever is 'LogFile' in config file"
+msgstr "  -LogFile=x     pakeičia analizuojamą žurnalo failą, nepriklausomai nuo 'LogFile' konfigūracijos faile"
+
+msgid "  Be care to process log files in chronological order when updating statistics."
+msgstr "  Atnaujindami statistiką, žurnalo failus tvarkykite chronologine tvarka."
+
+msgid "Options to show statistics:"
+msgstr "Statistikos rodymo parinktys:"
+
+msgid "  -output      to output main HTML report (no update made except with -update)"
+msgstr "  -output       išveda pagrindinę HTML ataskaitą (joks atnaujinimas neatliekamas, išskyrus su -update)"
+
+msgid "  -output=x    to output other report pages where x is:"
+msgstr "  -output=x     išveda kitus ataskaitos puslapius, kur x yra:"
+
+msgid "build page of all domains/countries"
+msgstr "sukuria visų domenų / šalių puslapį"
+
+msgid "build page of all hosts"
+msgstr "sukuria visų serverių puslapį"
+
+msgid "build page of last hits for hosts"
+msgstr "sukuria paskutinių serverių užklausų puslapį"
+
+msgid "build page of all unresolved IP"
+msgstr "sukuria visų neišspręstų IP puslapį"
+
+msgid "build page of all email senders (maillog)"
+msgstr "sukuria visų el. pašto siuntėjų puslapį (maillog)"
+
+msgid "build page of last email senders (maillog)"
+msgstr "sukuria paskutinių el. pašto siuntėjų puslapį (maillog)"
+
+msgid "build page of all email receivers (maillog)"
+msgstr "sukuria visų el. pašto gavėjų puslapį (maillog)"
+
+msgid "build page of last email receivers (maillog)"
+msgstr "sukuria paskutinių el. pašto gavėjų puslapį (maillog)"
+
+msgid "build page of all logins used"
+msgstr "sukuria visų naudotų prisijungimų puslapį"
+
+msgid "build page of last hits for logins"
+msgstr "sukuria paskutinių prisijungimų užklausų puslapį"
+
+msgid "build page of all robots/spider visits"
+msgstr "sukuria visų robotų / vorų apsilankymų puslapį"
+
+msgid "build page of last hits for robots"
+msgstr "sukuria paskutinių robotų užklausų puslapį"
+
+msgid "list most often viewed pages"
+msgstr "sąrašas dažniausiai peržiūrimų puslapių"
+
+msgid "list most often viewed pages matching filter"
+msgstr "sąrašas dažniausiai peržiūrimų puslapių, atitinkančių filtrą"
+
+msgid "list entry pages"
+msgstr "sąrašas įėjimo puslapių"
+
+msgid "list entry pages matching filter"
+msgstr "sąrašas įėjimo puslapių, atitinkančių filtrą"
+
+msgid "list exit pages"
+msgstr "sąrašas išėjimo puslapių"
+
+msgid "list exit pages matching filter"
+msgstr "sąrašas išėjimo puslapių, atitinkančių filtrą"
+
+msgid "build page with os detailed versions"
+msgstr "sukuria puslapį su išsamiomis OS versijomis"
+
+msgid "build page with browsers detailed versions"
+msgstr "sukuria puslapį su išsamiomis naršyklių versijomis"
+
+msgid "list 'User Agents' with unknown browser"
+msgstr "sąrašas 'Naudotojo agentų' su nežinoma naršykle"
+
+msgid "list 'User Agents' with unknown OS"
+msgstr "sąrašas 'Naudotojo agentų' su nežinoma OS"
+
+msgid "build page of all refering search engines"
+msgstr "sukuria visų nukreipiančių paieškos sistemų puslapį"
+
+msgid "build page of all refering pages"
+msgstr "sukuria visų nukreipiančių puslapių puslapį"
+
+msgid "list all keyphrases used on search engines"
+msgstr "sąrašas visų paieškos sistemose naudotų frazių"
+
+msgid "list all keywords used on search engines"
+msgstr "sąrašas visų paieškos sistemose naudotų raktažodžių"
+
+msgid "list 'Referers' for 404 errors"
+msgstr "sąrašas 'Šaltinių', sukėlusių 404 klaidas"
+
+msgid "build page of all values for ExtraSection X"
+msgstr "sukuria puslapį su visomis ExtraSection X reikšmėmis"
+
+msgid "  -staticlinks           to have static links in HTML report page"
+msgstr "  -staticlinks           naudoja statines nuorodas HTML ataskaitos puslapyje"
+
+msgid "  -staticlinksext=xxx    to have static links with .xxx extension instead of .html"
+msgstr "  -staticlinksext=xxx    naudoja statines nuorodas su .xxx plėtiniu vietoj .html"
+
+msgid "  -lang=LL     to output a HTML report in language LL (en,de,es,fr,it,nl,zh-cn,...)"
+msgstr "  -lang=LL     išveda HTML ataskaitą LL kalba (lt,en,de,es,fr,it,nl,zh-cn,...)"
+
+msgid "  -month=MM    to output a HTML report for an old month MM"
+msgstr "  -month=MM    išveda HTML ataskaitą senam mėnesiui MM"
+
+msgid "  -year=YYYY   to output a HTML report for an old year YYYY"
+msgstr "  -year=YYYY   išveda HTML ataskaitą seniems metams YYYY"
+
+msgid "  The 'date' options doesn't allow you to process old log file. They only allow you to see a past report for a chosen month/year period instead of current month/year."
+msgstr "  'date' parinktys neleidžia jums apdoroti seno žurnalo failo. Jos leidžia tik pamatyti praeities ataskaitą pasirinktam mėnesio / metų laikotarpiui, o ne dabartiniam mėnesiui / metams."
+
+msgid "Other options:"
+msgstr "Kitos parinktys:"
+
+msgid "  -debug=X     to add debug informations lesser than level X (speed reduced)"
+msgstr "  -debug=X     prideda derinimo informacijos, mažesnės nei X lygis (sumažėja greitis)"
+
+msgid "  -version     show AWStats version"
+msgstr "  -version, -v     rodo AWStats versiją"
+
+msgid "Now supports/detects:"
+msgstr "Dabar palaiko / aptinka:"
+
+msgid "  Web/Ftp/Mail/streaming server log analyzis (and load balanced log files)"
+msgstr "  Žiniatinklio / FTP / pašto / srautinio perdavimo serverio žurnalų analizė (ir subalansuotos apkrovos žurnalo failai)"
+
+msgid "  Reverse DNS lookup (IPv4 and IPv6) and GeoIP lookup"
+msgstr "  Atvirkštinė DNS paieška (IPv4 ir IPv6) ir GeoIP paieška"
+
+msgid "  Number of visits, number of unique visitors"
+msgstr "  Apsilankymų skaičius, unikalių lankytojų skaičius"
+
+msgid "  Visits duration and list of last visits"
+msgstr "  Apsilankymų trukmė ir paskutinių apsilankymų sąrašas"
+
+msgid "  Authenticated users"
+msgstr "  Autentifikuoti naudotojai"
+
+msgid "  Days of week and rush hours"
+msgstr "  Savaitės dienos ir piko valandos"
+
+msgid "  Hosts list and unresolved IP addresses list"
+msgstr "  Serverių sąrašas ir neišspręstų IP adresų sąrašas"
+
+msgid "  Most viewed, entry and exit pages"
+msgstr "  Dažniausiai peržiūrimi, įėjimo ir išėjimo puslapiai"
+
+msgid "  Files type and Web compression (mod_gzip, mod_deflate stats)"
+msgstr "  Failų tipai ir žiniatinklio glaudinimas (mod_gzip, mod_deflate statistika)"
+
+msgid "  Configured Database Statistics"
+msgstr "  Konfigūruota duomenų bazės statistika"
+
+msgid "  %s domains/countries"
+msgstr "  %s domenų / šalių"
+
+msgid "  %s robots"
+msgstr "  %s robotų"
+
+msgid "  %s worm's families"
+msgstr "  %s kirminų šeimų"
+
+msgid "  %s operating systems"
+msgstr "  %s operacinių sistemų"
+
+msgid "  %s browsers (%s with phone browsers database)"
+msgstr "  %s naršyklių (įskaitant mobiliųjų naršyklių duomenų bazę %s)"
+
+msgid "  %s search engines (and keyphrases/keywords used from them)"
+msgstr "  %s paieškos sistemų (ir jose naudotų frazių / raktažodžių)"
+
+msgid "  All HTTP errors with last referrer"
+msgstr "  Visos HTTP klaidos su paskutiniu šaltiniu"
+
+msgid "  Report by day/month/year"
+msgstr "  Ataskaita pagal dieną / mėnesį / metus"
+
+msgid "  Dynamic or static HTML or XHTML reports, static PDF reports"
+msgstr "  Dinaminės arba statinės HTML ar XHTML ataskaitos, statinės PDF ataskaitos"
+
+msgid "  Indexed text or XML monthly database"
+msgstr "  Indeksuotas tekstas arba XML mėnesio duomenų bazė"
+
+msgid "  And a lot of other advanced features and options..."  
+msgstr "  Ir daug kitų išplėstinių funkcijų ir parinkčių..."
+
+msgid "  New versions and FAQ at http://www.awstats.org"
+msgstr "  Naujos versijos ir DUK adresu https://github.com/hestiacn/vstats/issues"
